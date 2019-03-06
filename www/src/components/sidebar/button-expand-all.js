@@ -9,8 +9,8 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
   <button
     onClick={onClick}
     css={{
-      ...scale(-2 / 3),
-      lineHeight: 1,
+      fontSize: scale(-2 / 3).fontSize,
+      lineHeight: presets.lineHeights.solid,
       background: `transparent`,
       border: `none`,
       borderRadius: presets.radius,

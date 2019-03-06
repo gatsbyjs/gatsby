@@ -57,7 +57,7 @@ const SegmentTitle = ({ children }) => (
       fontWeight: `normal`,
       letterSpacing: `.5px`,
       ...scale(-2 / 5),
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -136,7 +136,7 @@ const SourceItem = ({ children }) => (
       css={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: 1.2,
+        lineHeight: presets.lineHeights.dense,
         textAlign: `left`,
       }}
     >
@@ -161,7 +161,7 @@ const ItemTitle = ({ children }) => (
 const ItemDescription = ({ children }) => (
   <small
     css={{
-      lineHeight: 1.2,
+      lineHeight: presets.lineHeights.dense,
       display: `block`,
       color: colors.gatsby,
       [presets.Xl]: {

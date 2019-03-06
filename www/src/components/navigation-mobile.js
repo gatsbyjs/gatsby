@@ -120,7 +120,7 @@ const styles = {
       borderRadius: presets.radius,
       fontSize: scale(-1 / 2).fontSize,
       flexShrink: 0,
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       width: 64,
       padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
         options.blockMarginBottom / 4

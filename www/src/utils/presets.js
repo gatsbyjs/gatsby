@@ -38,4 +38,9 @@ module.exports = {
     card: { boxShadow: `0 3px 10px rgba(25, 17, 34, 0.075)` },
     cardHover: { boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)` },
   },
+  lineHeights: {
+    solid: 1,
+    dense: 1.25,
+    default: 1.5,
+  },
 }

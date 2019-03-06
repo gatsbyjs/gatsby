@@ -165,7 +165,7 @@ const styles = {
   CreatorsHeaderLink: {
     "&&": {
       ...scale(-1 / 3),
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       letterSpacing: `0.03em`,
       textTransform: `uppercase`,
       fontWeight: `normal`,

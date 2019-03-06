@@ -406,7 +406,6 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: `inherit`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
-            lineHeight: 1.2,
             display: `flex`,
             alignItems: `center`,
             marginBottom: 0,
@@ -468,8 +467,7 @@ const Result = ({ hit, pathname, query }) => {
       <div
         css={{
           color: selected ? `inherit` : colors.gray.calm,
-          fontSize: scale(-1 / 2).fontSize,
-          lineHeight: 1.5,
+          fontSize: scale(-1 / 6).fontSize,
         }}
       >
         {removeMD(unescape(hit.description))}

@@ -121,7 +121,6 @@ const Author = styled(Link)`
 const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
   font-size: 0.875rem;
-  line-height: 1.5;
   padding: 0 ${rhythm(4 / 5)};
 
   ${presets.Lg} {

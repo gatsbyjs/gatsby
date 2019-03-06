@@ -198,14 +198,13 @@ const styles = {
   sidebarHeader: {
     margin: 0,
     [presets.Lg]: {
-      ...scale(1 / 8),
-      // display: `flex`,
+      fontSize: scale(1 / 8).fontSize,
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
       color: colors.gray.calm,
       fontWeight: `normal`,
       flexShrink: 0,
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       height: presets.headerHeight,
       margin: 0,
       paddingLeft: rhythm(3 / 4),
@@ -225,7 +224,6 @@ const styles = {
   sidebarContainer: {
     display: `none`,
     [presets.Lg]: {
-      // background: colors.ui.whisper,
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,
@@ -253,8 +251,8 @@ const styles = {
   contentTitle: {
     color: colors.gatsby,
     margin: 0,
-    ...scale(1 / 5),
-    lineHeight: 1,
+    fontSize: scale(1 / 5).fontSize,
+    lineHeight: presets.lineHeights.solid,
   },
   resultCount: {
     color: colors.lilac,

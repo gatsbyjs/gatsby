@@ -43,20 +43,18 @@ class BlogPostTemplate extends React.Component {
       marginBottom: 0,
       color: colors.gray.calm,
       fontWeight: `normal`,
-      ...scale(0),
-      lineHeight: 1,
+      fontSize: scale(0).fontSize,
+      lineHeight: presets.lineHeights.solid,
     }
     const BioLine = ({ children }) => (
       <p
         css={{
-          ...scale(-2 / 5),
+          fontSize: scale(-2 / 5).fontSize,
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          lineHeight: 1.3,
           margin: 0,
           color: colors.gray.calm,
           [presets.Xs]: {
-            ...scale(-1 / 5),
-            lineHeight: 1.3,
+            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >

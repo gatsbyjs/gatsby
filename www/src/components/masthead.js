@@ -23,7 +23,7 @@ const MastheadContent = () => (
         color: colors.gatsby,
         fontSize: `calc(12px + 2vh + 3.5vw)`,
         letterSpacing: `-1px`,
-        lineHeight: 1.1,
+        lineHeight: presets.lineHeights.solid,
         margin: `0 auto 1.75rem`,
         maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,

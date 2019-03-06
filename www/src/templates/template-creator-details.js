@@ -186,7 +186,7 @@ class CreatorTemplate extends Component {
                     "&&": {
                       border: 0,
                       boxShadow: `none`,
-                      lineHeight: 1,
+                      lineHeight: presets.lineHeights.solid,
                       "&:hover": {
                         background: `none`,
                         color: colors.gatsby,

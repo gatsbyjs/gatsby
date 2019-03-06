@@ -147,7 +147,7 @@ class EvaluationTable extends Component {
                               textAlign: `left`,
                               verticalAlign: `middle`,
                               fontSize: `90%`,
-                              lineHeight: `${rhythm(3 / 4)}`,
+                              lineHeight: presets.lineHeights.solid,
                             }}
                             id={
                               j === 0

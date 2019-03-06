@@ -32,13 +32,11 @@ const _options = {
   headerFontFamily,
   monospaceFontFamily,
   systemFontFamily,
-  baseLineHeight: 1.5,
-  baseFontSize: `16px`,
-  headerLineHeight: 1.075,
+  baseLineHeight: presets.lineHeights.default,
+  headerLineHeight: presets.lineHeights.dense,
   headerColor: colors.gray.dark,
   bodyColor: colors.gray.copy,
   blockMarginBottom: 0.75,
-  scaleRatio: 2,
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
@@ -59,7 +57,7 @@ const _options = {
         backgroundColor: colors.ui.light,
       },
       "tt, code, kbd, samp": {
-        // reset line-height: 1.4rem set by
+        // reset line-height set by
         // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198
         lineHeight: `inherit`,
       },
@@ -175,7 +173,6 @@ const _options = {
       ".gatsby-highlight pre code": {
         display: `block`,
         fontSize: `94%`,
-        lineHeight: 1.5,
         // reset code vertical padding declared earlier
         padding: 0,
       },
@@ -204,8 +201,8 @@ const _options = {
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        ...scale(-1 / 5),
-        lineHeight: 1.3,
+        fontSize: scale(-1 / 5).fontSize,
+        lineHeight: presets.lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(options.blockMarginBottom * 2),
         display: `block`,
