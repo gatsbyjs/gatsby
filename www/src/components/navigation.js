@@ -206,7 +206,7 @@ const styles = {
     height: `100%`,
   },
   navItem: {
-    ...scale(-1 / 4),
+    ...scale(-1 / 6),
     borderBottom: `0.125rem solid transparent`,
     color: `inherit`,
     display: `block`,
