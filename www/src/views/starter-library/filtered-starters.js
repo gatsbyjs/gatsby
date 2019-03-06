@@ -192,7 +192,7 @@ export default class FilteredStarterLibrary extends Component {
                   display: `none`,
                   [presets.Lg]: {
                     border: 0,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: presets.radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     paddingTop: rhythm(1 / 8),
@@ -210,7 +210,7 @@ export default class FilteredStarterLibrary extends Component {
                 <DebounceInput
                   css={{
                     border: 0,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: presets.radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     marginTop: rhythm(1 / 8),
@@ -222,7 +222,7 @@ export default class FilteredStarterLibrary extends Component {
                     ":focus": {
                       outline: `${colors.wisteria} solid thin`,
                       backgroundColor: colors.ui.light,
-                      borderRadius: presets.radiusLg,
+                      borderRadius: presets.radii[2],
                       transition: `width ${presets.animation.speedDefault} ${
                         presets.animation.curveDefault
                       }, background-color ${presets.animation.speedDefault} ${

@@ -12,7 +12,7 @@ const ResetFilters = ({ onClick }) => (
         alignItems: `center`,
         background: colors.ui.light,
         border: 0,
-        borderRadius: presets.radius,
+        borderRadius: presets.radii[1],
         color: colors.gatsby,
         cursor: `pointer`,
         display: `flex`,

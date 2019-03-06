@@ -135,7 +135,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             href={demo}
             css={{
               border: 0,
-              borderRadius: presets.radius,
+              borderRadius: presets.radii[1],
               color: colors.accent,
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,

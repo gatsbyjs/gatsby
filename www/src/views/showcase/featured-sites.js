@@ -223,7 +223,7 @@ class FeaturedSites extends Component {
                 css={{
                   marginRight: `${rhythm(3 / 4)} !important`,
                   backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                  borderRadius: presets.radius,
+                  borderRadius: presets.radii[1],
                   textAlign: `center`,
                   "&&": {
                     border: `1px solid ${colors.ui.light}`,
@@ -243,7 +243,7 @@ class FeaturedSites extends Component {
               >
                 <div
                   css={{
-                    borderRadius: presets.radius,
+                    borderRadius: presets.radii[1],
                     display: `flex`,
                     alignItems: `center`,
                     position: `relative`,

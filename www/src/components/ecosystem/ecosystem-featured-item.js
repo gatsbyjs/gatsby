@@ -28,7 +28,7 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 
 export const BlockLink = styled(Link)`
   background: #fff;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;

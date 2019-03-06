@@ -383,7 +383,7 @@ class SearchForm extends Component {
               appearance: `none`,
               backgroundColor: `transparent`,
               border: 0,
-              borderRadius: presets.radius,
+              borderRadius: presets.radii[1],
               color: colors.lilac,
               paddingTop: rhythm(1 / 8),
               paddingRight: rhythm(1 / 4),

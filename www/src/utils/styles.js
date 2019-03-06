@@ -30,7 +30,7 @@ export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
@@ -75,7 +75,6 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    // borderRadius: presets.radiusLg,
     fontSize: scale(1 / 5).fontSize,
     padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
     [presets.Md]: {
@@ -162,7 +161,7 @@ export const linkStyles = {
 export const formInput = {
   backgroundColor: `#fff`,
   border: `1px solid ${colors.ui.bright}`,
-  borderRadius: presets.radius,
+  borderRadius: presets.radii[1],
   color: colors.brand,
   fontFamily: options.headerFontFamily.join(`,`),
   padding: rhythm(1 / 2),

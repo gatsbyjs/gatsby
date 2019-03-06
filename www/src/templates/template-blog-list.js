@@ -72,7 +72,7 @@ class BlogPostsIndex extends React.Component {
                   [presets.Md]: {
                     ...presets.boxShadows.card,
                     background: `#fff`,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: presets.radii[2],
                     padding: rhythm(options.blockMarginBottom * 2),
                     paddingLeft: rhythm(options.blockMarginBottom * 3),
                     paddingRight: rhythm(options.blockMarginBottom * 3),

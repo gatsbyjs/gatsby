@@ -16,7 +16,7 @@ const EcosystemSectionRoot = styled(`section`)`
 
   ${presets.Md} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: ${presets.radiusLg}px;
+    border-radius: ${presets.radii[2]}px;
     display: flex;
     flex-basis: calc(50% - 20px);
     flex-direction: column;

@@ -13,7 +13,7 @@ const stripedBorderHeight = `8px`
 
 const Container = styled(`div`)`
   border: 1px solid ${colors.ui.light};
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   display: flex;
   flex-direction: column;
   margin-bottom: ${rhythm(presets.gutters.default)};
@@ -24,7 +24,7 @@ const Container = styled(`div`)`
   position: relative;
 
   :after {
-    border-radius: 0 0 ${presets.radiusLg}px ${presets.radiusLg}px;
+    border-radius: 0 0 ${presets.radii[2]}px ${presets.radii[2]}px;
     background: ${colors.ui.whisper}
       repeating-linear-gradient(
         135deg,

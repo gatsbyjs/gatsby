@@ -60,7 +60,7 @@ const searchBoxStyles = css`
     -webkit-appearance: none;
     background: #fff;
     border: 1px solid ${colors.ui.bright};
-    border-radius: ${presets.radiusLg}px;
+    border-radius: ${presets.radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
     font-size: 18px;
@@ -119,7 +119,7 @@ const searchBoxStyles = css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+    border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
   }
   .ais-SearchBox__submit:focus {
     outline: 0;
@@ -158,7 +158,7 @@ const searchBoxStyles = css`
   .ais-InfiniteHits__loadMore {
     background-color: transparent;
     border: 1px solid ${colors.gatsby};
-    border-radius: ${presets.radius}px;
+    border-radius: ${presets.radii[1]}px;
     color: ${colors.gatsby};
     cursor: pointer;
     width: calc(100% - ${rhythm(6 / 4)});
@@ -355,7 +355,6 @@ const Result = ({ hit, pathname, query }) => {
       to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
-          boxShadow: `none`,
           background: selected ? `#fff` : false,
           borderBottom: 0,
           color: colors.gray.dark,

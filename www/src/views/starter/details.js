@@ -122,7 +122,7 @@ export default Details
 const styles = {
   showMoreButton: {
     border: 0,
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,

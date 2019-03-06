@@ -117,7 +117,7 @@ const styles = {
   link: {
     default: {
       color: colors.gatsby,
-      borderRadius: presets.radius,
+      borderRadius: presets.radii[1],
       fontSize: scale(-1 / 2).fontSize,
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,

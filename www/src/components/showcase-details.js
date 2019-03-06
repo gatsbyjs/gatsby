@@ -41,7 +41,7 @@ const styles = {
     fontWeight: `bold`,
   },
   prevNextImage: {
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     boxShadow: `0 0 38px -8px ${colors.gatsby}`,
   },
   prevNextPermalinkLabel: {
@@ -450,7 +450,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       href={data.sitesYaml.main_url}
                       css={{
                         border: 0,
-                        borderRadius: presets.radius,
+                        borderRadius: presets.radii[1],
                         color: colors.gatsby,
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: options.headerFontFamily.join(`,`),

@@ -32,11 +32,11 @@ const superHeader = () => (
           color: colors.gray.calm,
           background: colors.ui.whisper,
           "span:first-of-type": {
-            borderTopLeftRadius: presets.radiusLg,
+            borderTopLeftRadius: presets.radii[2],
             textAlign: `left`,
           },
           "&:last-child": {
-            borderTopRightRadius: presets.radiusLg,
+            borderTopRightRadius: presets.radii[2],
           },
           [presets.Xs]: {
             display: `table-cell`,

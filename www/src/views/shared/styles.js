@@ -42,8 +42,8 @@ const styles = {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
-      borderTopRightRadius: presets.radius,
-      borderBottomLeftRadius: presets.radius,
+      borderTopRightRadius: presets.radii[1],
+      borderBottomLeftRadius: presets.radii[1],
       boxShadow: `none`,
       cursor: `pointer`,
       display: `flex`,
@@ -110,7 +110,7 @@ const styles = {
     },
   },
   screenshot: {
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     ...presets.boxShadows.card,
     marginBottom: rhythm(options.blockMarginBottom / 2),
     transition: `all ${presets.animation.speedDefault} ${
@@ -149,7 +149,7 @@ const styles = {
     appearance: `none`,
     backgroundColor: `transparent`,
     border: 0,
-    borderRadius: presets.radiusLg,
+    borderRadius: presets.radii[2],
     color: colors.gatsby,
     paddingTop: rhythm(1 / 8),
     paddingRight: rhythm(1 / 4),

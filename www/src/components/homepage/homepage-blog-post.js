@@ -46,7 +46,7 @@ const HomepageBlogPostRoot = styled(
 `
 
 const Cover = styled(Img)`
-  border-radius: ${presets.radiusLg}px ${presets.radiusLg}px 0 0;
+  border-radius: ${presets.radii[2]}px ${presets.radii[2]}px 0 0;
   display: block;
   margin-bottom: -${rhythm(0.5)};
 `

@@ -74,9 +74,10 @@ const _options = {
         WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
         fontFeatureSettings: `"clig" 0, "calt" 0`,
       },
+      // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        borderRadius: `${presets.radius}px`,
+        borderRadius: `${presets.radii[1]}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
         overflow: `auto`,
@@ -196,7 +197,7 @@ const _options = {
       },
       ".gatsby-highlight::-webkit-scrollbar-track": {
         background: colors.code.border,
-        borderRadius: `0 0 ${presets.radiusLg}px ${presets.radiusLg}px`,
+        borderRadius: `0 0 ${presets.radii[2]}px ${presets.radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
@@ -270,7 +271,7 @@ const _options = {
         marginRight: rhythm(-options.blockMarginBottom),
       },
       ".gatsby-resp-image-link": {
-        borderRadius: `${presets.radius}px`,
+        borderRadius: `${presets.radii[1]}px`,
         overflow: `hidden`,
       },
       // gatsby-remark-code-titles styles

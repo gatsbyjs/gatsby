@@ -2,6 +2,7 @@ const colors = require(`./colors`).default
 
 module.exports = {
   colors,
+  // breakpoints
   xs: `(min-width: 400px)`,
   Xs: `@media (min-width: 400px)`,
   sm: `(min-width: 550px)`,
@@ -14,13 +15,17 @@ module.exports = {
   Xl: `@media (min-width: 1200px)`,
   xxl: `(min-width: 1600px)`,
   Xxl: `@media (min-width: 1600px)`,
+  // layout stuff
+  // main content container max-width
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  radius: 2,
-  radiusLg: 4,
   gutters: {
     default: 1.25,
   },
+  headerHeight: `3.5rem`,
+  bannerHeight: `2.5rem`,
+  sidebarUtilityHeight: `2.5rem`,
+  pageHeadingDesktopWidth: `3.5rem`,
   shadowKeyUmbraOpacity: 0.1,
   shadowKeyPenumbraOpacity: 0.07,
   shadowAmbientShadowOpacity: 0.06,
@@ -30,10 +35,7 @@ module.exports = {
     speedFast: `100ms`,
     speedSlow: `350ms`,
   },
-  headerHeight: `3.5rem`,
-  bannerHeight: `2.5rem`,
-  sidebarUtilityHeight: `2.5rem`,
-  pageHeadingDesktopWidth: `3.5rem`,
+  radii: [0, 2, 4, 8, 16, 9999, `100%`],
   boxShadows: {
     card: { boxShadow: `0 3px 10px rgba(25, 17, 34, 0.075)` },
     cardHover: { boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)` },

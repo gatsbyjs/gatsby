@@ -119,7 +119,7 @@ class CreatorTemplate extends Component {
           >
             <Img
               alt={`${creator.name}`}
-              css={{ borderRadius: presets.radius }}
+              css={{ borderRadius: presets.radii[1] }}
               fluid={creator.image.childImageSharp.fluid}
             />
           </div>

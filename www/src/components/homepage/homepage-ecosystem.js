@@ -35,7 +35,7 @@ const Sections = styled(`div`)`
 
 const Section = styled(EcosystemSection)`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   margin-bottom: ${rhythm(presets.gutters.default / 2)};
   padding: ${rhythm(options.blockMarginBottom)};
 
@@ -103,7 +103,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     position: relative;
 
     ${presets.Md} {
-      border-radius: ${presets.radiusLg}px;
+      border-radius: ${presets.radii[2]}px;
     }
 
     ${presets.Lg} {
@@ -115,7 +115,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     :before {
       background: ${props =>
         props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
-      border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+      border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;

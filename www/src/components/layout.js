@@ -1,6 +1,5 @@
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import mousetrap from "mousetrap"
 import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
@@ -54,10 +53,6 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const pathname = this.props.location.pathname
-    const isBlog =
-      pathname === `/blog/` || pathname.indexOf(`/blog/page/`) === 0
-
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
       this.props.isSidebarDisabled || !this.props.itemList
@@ -108,8 +103,8 @@ class DefaultLayout extends React.Component {
           >
             <div
               css={{
-                backgroundColor: `#ffffff`,
-                borderRadius: presets.radius,
+                backgroundColor: `#fff`,
+                borderRadius: presets.radii[1],
                 boxShadow: `0 0 90px -24px ${colors.gatsby}`,
                 position: `relative`,
               }}
@@ -119,8 +114,8 @@ class DefaultLayout extends React.Component {
                 css={{
                   background: colors.ui.bright,
                   border: 0,
-                  borderBottomLeftRadius: presets.radius,
-                  borderTopRightRadius: presets.radius,
+                  borderBottomLeftRadius: presets.radii[1],
+                  borderTopRightRadius: presets.radii[1],
                   color: colors.gatsby,
                   cursor: `pointer`,
                   position: `absolute`,
@@ -146,7 +141,7 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <div>
+      <>
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
         <Banner />
@@ -158,8 +153,6 @@ class DefaultLayout extends React.Component {
             paddingRight: `env(safe-area-inset-right)`,
             paddingTop: presets.bannerHeight,
             [presets.Md]: {
-              background: isBlog ? colors.ui.whisper : false,
-              margin: `0 auto`,
               paddingTop: `calc(${presets.bannerHeight} + ${
                 presets.headerHeight
               } + 1.5rem)`,
@@ -175,7 +168,7 @@ class DefaultLayout extends React.Component {
           />
         </div>
         <MobileNavigation />
-      </div>
+      </>
     )
   }
 }

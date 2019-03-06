@@ -74,7 +74,7 @@ const FeedbackForm = styled(`div`)`
   width: 90%;
   background-color: ${colors.gatsby};
   box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
   ${presets.Md} {

@@ -9,7 +9,7 @@ import presets, { colors } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   color: ${colors.gatsby};
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: 1.2rem;

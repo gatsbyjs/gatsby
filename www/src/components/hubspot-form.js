@@ -18,7 +18,7 @@ export default class GatsbyHubspotForm extends Component {
       <div
         css={{
           backgroundColor: colors.ui.light,
-          borderRadius: presets.radius,
+          borderRadius: presets.radii[1],
           color: colors.gatsby,
           fontFamily: options.headerFontFamily.join(`,`),
           padding: `15px`,

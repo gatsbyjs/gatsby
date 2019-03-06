@@ -49,7 +49,7 @@ const SegmentTitle = ({ children }) => (
       display: `inline`,
       background: colors.accent,
       color: colors.gray.copy,
-      borderRadius: presets.radius,
+      borderRadius: presets.radii[1],
       margin: `0 auto`,
       position: `relative`,
       bottom: `-.5rem`,
@@ -88,7 +88,7 @@ const VerticalLine = () => (
 
 const box = {
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radiusLg,
+  borderRadius: presets.radii[2],
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
   background: `#fff`,
 }
@@ -98,7 +98,7 @@ const borderAndBoxShadow = {
   border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
   width: `100%`,
-  borderRadius: presets.radius,
+  borderRadius: presets.radii[1],
   transform: `translateZ(0)`,
 }
 

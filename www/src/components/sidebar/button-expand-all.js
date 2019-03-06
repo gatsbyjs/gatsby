@@ -13,7 +13,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       lineHeight: presets.lineHeights.solid,
       background: `transparent`,
       border: `none`,
-      borderRadius: presets.radius,
+      borderRadius: presets.radii[1],
       color: colors.gatsby,
       display: `flex`,
       cursor: `pointer`,
