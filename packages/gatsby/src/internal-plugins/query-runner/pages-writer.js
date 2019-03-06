@@ -72,17 +72,17 @@ const writePages = async () => {
   components = _.uniqBy(components, c => c.componentChunkName)
 
   // Create file with sync requires of components/json files.
-  let syncRequires = `const { hot } = require("react-hot-loader/root")
-
+  let syncRequires = `
 // prefer default export if available
 const preferDefault = m => m && m.default || m
+const loadable = preferDefault(require("@loadable/component"));
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": hot(preferDefault(require("${joinPath(
+        `  "${c.componentChunkName}": loadable(() => import("${joinPath(
           c.component
-        )}")))`
+        )}" /* webpackChunkName: "${c.componentChunkName}" */))`
     )
     .join(`,\n`)}
 }\n\n`

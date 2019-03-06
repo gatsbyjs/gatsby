@@ -17,6 +17,7 @@
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
     "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.2",
+    "@loadable/component": "^5.6.1",
     "@reach/router": "^1.1.1",
     "address": "1.0.3",
     "autoprefixer": "^9.4.3",
