@@ -9,7 +9,7 @@ const _ = require(`lodash`)
 const TagsSection = ({ tags }) => {
   if (!tags) return null
   const tagLinks = tags.map((tag, i) => {
-    const divider = i < tags.length - 1 && <span>{` | `}</span>
+    const divider = i < tags.length - 1 && <span>{`, `}</span>
     return (
       <span key={tag}>
         <Link to={`/blog/tags/${_.kebabCase(tag.toLowerCase())}`}>{tag}</Link>
@@ -30,10 +30,12 @@ const TagsSection = ({ tags }) => {
         css={{
           ...scale(-1 / 5),
           display: `block`,
-          marginBottom: rhythm(1),
-          marginRight: rhythm(2),
           flexBasis: `60%`,
           flexGrow: 1,
+          fontStyle: `normal`,
+          marginBottom: rhythm(1),
+          marginRight: rhythm(2),
+          marginTop: rhythm(3),
         }}
       >
         Tagged with {tagLinks}
