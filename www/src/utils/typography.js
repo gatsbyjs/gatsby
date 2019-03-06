@@ -7,17 +7,14 @@ const systemFontFamily = [
   `BlinkMacSystemFont`,
   `Segoe UI`,
   `Roboto`,
-  `Oxygen`,
-  `Ubuntu`,
-  `Cantarell`,
-  `Fira Sans`,
-  `Droid Sans`,
   `Helvetica Neue`,
   `Arial`,
+  `Noto Sans`,
   `sans-serif`,
   `Apple Color Emoji`,
   `Segoe UI Emoji`,
   `Segoe UI Symbol`,
+  `Noto Color Emoji`,
 ]
 const headerFontFamily = [`Futura PT`, ...systemFontFamily]
 const monospaceFontFamily = [
