@@ -16,7 +16,6 @@ const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
 const searchDropdownOffsetTop = rhythm(2)
-const homepageSearchDropdownOffsetTop = rhythm(4.5)
 
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
@@ -355,7 +354,7 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
-    const { iconColor, isHomepage, offsetVertical } = this.props
+    const { iconColor, offsetVertical } = this.props
     return (
       <form
         css={{
@@ -400,16 +399,11 @@ class SearchForm extends Component {
                 width: rhythm(5),
               },
               [presets.Lg]: {
-                backgroundColor: !isHomepage && `#fff`,
-                width: !isHomepage && rhythm(3.75),
+                backgroundColor: `#fff`,
+                width: rhythm(3.75),
                 ":focus": {
                   backgroundColor: colors.ui.light,
                 },
-              },
-              [presets.Xl]: {
-                backgroundColor: isHomepage && colors.lilac,
-                color: isHomepage && colors.ui.light,
-                width: isHomepage && rhythm(3.75),
               },
             }}
             type="search"
@@ -434,7 +428,7 @@ class SearchForm extends Component {
               transition: `fill ${speedDefault} ${curveDefault}`,
               transform: `translateY(-55%)`,
               [presets.Sm]: {
-                fill: focussed ? colors.gatsby : isHomepage ? iconColor : false,
+                fill: focussed ? colors.gatsby : false,
               },
             }}
           />
@@ -444,7 +438,6 @@ class SearchForm extends Component {
   }
 }
 SearchForm.propTypes = {
-  isHomepage: PropTypes.bool,
   iconColor: PropTypes.string,
   offsetVertical: PropTypes.string,
 }
