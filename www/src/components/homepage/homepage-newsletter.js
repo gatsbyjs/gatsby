@@ -16,10 +16,10 @@ const Container = styled(`div`)`
   border-radius: ${presets.radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${rhythm(presets.gutters.default)};
-  padding: ${rhythm(presets.gutters.default * 1.2)};
+  margin-bottom: ${rhythm(presets.space[2])};
+  padding: ${rhythm(presets.space[2] * 1.2)};
   padding-bottom: calc(
-    ${rhythm(presets.gutters.default * 1.2)} + ${stripedBorderHeight}
+    ${rhythm(presets.space[2] * 1.2)} + ${stripedBorderHeight}
   );
   position: relative;
 

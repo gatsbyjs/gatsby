@@ -19,9 +19,6 @@ module.exports = {
   // main content container max-width
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  gutters: {
-    default: 1.25,
-  },
   headerHeight: `3.75rem`,
   bannerHeight: `2.5rem`,
   sidebarUtilityHeight: `2.5rem`,
@@ -46,4 +43,5 @@ module.exports = {
     default: 1.5,
     loose: 1.75,
   },
+  space: [0, 0.625, 1.25],
 }
