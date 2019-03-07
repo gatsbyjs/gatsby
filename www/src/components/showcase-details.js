@@ -18,7 +18,7 @@ import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = rhythm(space[6])
-const gutterDesktop = rhythm(space[9])
+const gutterDesktop = rhythm(space[8])
 
 const styles = {
   link: {
@@ -78,7 +78,7 @@ const styles = {
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(space[9]),
+    marginLeft: rhythm(space[8]),
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,

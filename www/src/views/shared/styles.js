@@ -14,7 +14,7 @@ const styles = {
     marginRight: rhythm(space[6]),
     [presets.Xl]: {
       width: 360,
-      marginRight: rhythm(space[9]),
+      marginRight: rhythm(space[8]),
     },
     [presets.Xxl]: {
       width: 400,

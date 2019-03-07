@@ -23,7 +23,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         paddingBottom: 0,
       },
       [presets.Lg]: {
-        padding: rhythm(space[9]),
+        padding: rhythm(space[8]),
         paddingTop: 0,
         paddingBottom: 0,
       },

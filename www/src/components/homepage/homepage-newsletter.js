@@ -16,9 +16,10 @@ const Container = styled(`div`)`
   border-radius: ${presets.radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${rhythm(space[9])};
-  padding: ${rhythm(space[9] * 1.2)};
-  padding-bottom: calc(${rhythm(space[9] * 1.2)} + ${stripedBorderHeight});
+  margin-bottom: ${rhythm(space[8])};
+  padding: ${rhythm(space[8] * 1.2)};
+  background: red;
+  padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
   position: relative;
 
   :after {

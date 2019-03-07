@@ -247,7 +247,7 @@ const Diagram = () => (
         className="Diagram"
         css={{
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: rhythm(space[9]),
+          padding: rhythm(space[8]),
           textAlign: `center`,
           flex: `1 1 100%`,
         }}

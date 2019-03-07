@@ -16,7 +16,7 @@ const Details = ({
     css={{
       padding: rhythm(space[6]),
       [presets.Lg]: {
-        padding: rhythm(space[9]),
+        padding: rhythm(space[8]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
         gridRowGap: `20px`,

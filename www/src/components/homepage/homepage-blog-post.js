@@ -35,7 +35,7 @@ const HomepageBlogPostRoot = styled(
   ${presets.Lg} {
     flex-shrink: 0;
     margin-right: 0;
-    margin-bottom: ${rhythm(space[9])};
+    margin-bottom: ${rhythm(space[8])};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
 

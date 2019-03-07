@@ -16,7 +16,7 @@ const Source = ({ startersYaml, repoUrl }) => (
         borderTop: 0,
       },
       [presets.Lg]: {
-        margin: `0 ${rhythm(space[9])}`,
+        margin: `0 ${rhythm(space[8])}`,
       },
     }}
   >

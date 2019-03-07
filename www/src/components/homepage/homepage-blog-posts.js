@@ -33,7 +33,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${rhythm(space[9])};
+  margin-right: ${rhythm(space[8])};
   position: relative;
 
   :last-child {
@@ -79,7 +79,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${rhythm(space[9])};
+    margin-left: ${rhythm(space[8])};
     width: 125px;
 
     a {

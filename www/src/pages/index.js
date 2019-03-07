@@ -108,7 +108,7 @@ class IndexRoute extends React.Component {
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
               [presets.Xl]: {
-                padding: rhythm(space[9]),
+                padding: rhythm(space[8]),
               },
             }}
           >

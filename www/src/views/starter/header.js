@@ -16,7 +16,7 @@ const Header = ({ stub }) => (
         paddingBottom: 0,
       },
       [presets.Lg]: {
-        padding: rhythm(space[9]),
+        padding: rhythm(space[8]),
         paddingBottom: 0,
       },
     }}

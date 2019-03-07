@@ -59,7 +59,7 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: rhythm(space[9]),
+      padding: rhythm(space[8]),
       paddingTop: rhythm(space[5]),
       paddingBottom: rhythm(space[5]),
       marginBottom: rhythm(3),
