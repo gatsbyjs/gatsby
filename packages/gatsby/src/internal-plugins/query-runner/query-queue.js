@@ -3,7 +3,7 @@ const Queue = require(`better-queue`)
 const queryRunner = require(`./query-runner`)
 const { store, emitter } = require(`../../redux`)
 const websocketManager = require(`../../utils/websocket-manager`)
-const { FastMemoryStore } = require(`./fast-memory-store`).default
+const FastMemoryStore = require(`./fast-memory-store`)
 
 const processing = new Set()
 const waiting = new Map()
