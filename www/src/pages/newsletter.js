@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 import { rhythm } from "../utils/typography"
-import { colors } from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
