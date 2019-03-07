@@ -4,7 +4,10 @@ const {
   GraphQLInputObjectType,
   GraphQLEnumType,
   GraphQLList,
+  isSpecifiedScalarType,
 } = require(`graphql`)
+const { GraphQLJSON } = require(`graphql-compose`)
+const { GraphQLDate } = require(`./date`)
 
 const convert = ({
   schemaComposer,
@@ -53,7 +56,6 @@ const convert = ({
       convertedFields[fieldName] = isListType
         ? getQueryOperatorListInput({
             schemaComposer,
-            type: type,
             inputTypeComposer: operatorsInputTC,
           })
         : operatorsInputTC
@@ -70,39 +72,11 @@ const convert = ({
   return convertedITC
 }
 
-const removeEmptyFields = (
-  { schemaComposer, inputTypeComposer },
-  cache = new Set()
-) => {
-  const convert = itc => {
-    if (cache.has(itc)) {
-      return itc
-    }
-    cache.add(itc)
-    const fields = itc.getFields()
-    const nonEmptyFields = {}
-    Object.keys(fields).forEach(fieldName => {
-      const fieldITC = fields[fieldName]
-      if (fieldITC instanceof schemaComposer.InputTypeComposer) {
-        const convertedITC = convert(fieldITC)
-        if (convertedITC.getFieldNames().length) {
-          nonEmptyFields[fieldName] = convertedITC
-        }
-      } else {
-        nonEmptyFields[fieldName] = fieldITC
-      }
-    })
-    itc.setFields(nonEmptyFields)
-    return itc
-  }
-  return convert(inputTypeComposer)
-}
-
-const getFilterInput = ({
-  schemaComposer,
-  typeComposer,
-  filterInputComposer,
-}) => {
+const getFilterInput = ({ schemaComposer, typeComposer }) => {
+  const typeName = typeComposer.getTypeName()
+  const filterInputComposer = schemaComposer.getOrCreateITC(
+    `${typeName}FilterInput`
+  )
   const inputTypeComposer = typeComposer.getInputTypeComposer()
 
   // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
@@ -114,19 +88,11 @@ const getFilterInput = ({
     inputTypeComposer.extendField(`id`, { type: `String` })
   }
 
-  const filterInputTC = convert({
+  return convert({
     schemaComposer,
     inputTypeComposer,
     filterInputComposer,
   })
-  // Filter out any fields whose type has no query operator fields.
-  // This will be the case if the input type has only had fields whose types
-  // don't define query operators, e.g. a input type with JSON fields only.
-  // We cannot already filter this out further above, because we need
-  // to handle circular definitions, e.g. like in `NodeInput`.
-  // NOTE: We can remove this if we can guarantee that every type has query
-  // operators.
-  return removeEmptyFields({ schemaComposer, inputTypeComposer: filterInputTC })
 }
 
 module.exports = { getFilterInput }
@@ -148,8 +114,10 @@ const ALLOWED_OPERATORS = {
   Float: [EQ, NE, GT, GTE, LT, LTE, IN, NIN],
   ID: [EQ, NE, IN, NIN],
   Int: [EQ, NE, GT, GTE, LT, LTE, IN, NIN],
+  JSON: [EQ, NE, IN, NIN, REGEX, GLOB],
   String: [EQ, NE, IN, NIN, REGEX, GLOB],
   Enum: [EQ, NE, IN, NIN],
+  CustomScalar: [EQ, NE, IN, NIN],
 }
 
 const ARRAY_OPERATORS = [IN, NIN]
@@ -170,18 +138,15 @@ const getQueryOperatorInput = ({ schemaComposer, type }) => {
   let typeName
   if (type instanceof GraphQLEnumType) {
     typeName = `Enum`
-  } else {
+  } else if (isBuiltInScalarType(type)) {
     typeName = type.name
+  } else {
+    typeName = `CustomScalar`
   }
   const operators = ALLOWED_OPERATORS[typeName]
-  if (operators) {
-    return schemaComposer.getOrCreateITC(
-      type.name + `QueryOperatorInput`,
-      itc => itc.addFields(getOperatorFields(type, operators))
-    )
-  } else {
-    return null
-  }
+  return schemaComposer.getOrCreateITC(type.name + `QueryOperatorInput`, itc =>
+    itc.addFields(getOperatorFields(type, operators))
+  )
 }
 
 const getQueryOperatorListInput = ({ schemaComposer, inputTypeComposer }) => {
@@ -192,3 +157,6 @@ const getQueryOperatorListInput = ({ schemaComposer, inputTypeComposer }) => {
     })
   })
 }
+
+const isBuiltInScalarType = type =>
+  isSpecifiedScalarType(type) || type === GraphQLDate || type === GraphQLJSON

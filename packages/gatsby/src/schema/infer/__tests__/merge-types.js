@@ -276,7 +276,4 @@ describe(`merges explicit and inferred type definitions`, () => {
     // Date resolvers
     expect(fields.explicitDate.resolve).toBeUndefined()
   })
-
-  // FIXME: Currently we don't do that
-  it.todo(`warns in case of user-defined Node interface`)
 })

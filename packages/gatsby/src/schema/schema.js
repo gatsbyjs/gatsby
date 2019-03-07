@@ -355,7 +355,6 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
 
   // TODO: We should have an abstraction for keeping and clearing
   // related TypeComposers and InputTypeComposers.
-  // NOTE: No need to clear the SortInput, that will be regenerated anyway.
   // Also see the comment on the skipped test in `rebuild-schema`.
   typeComposer.removeInputTypeComposer()
 
@@ -366,9 +365,6 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
   const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
-    filterInputComposer: schemaComposer.getOrCreateITC(
-      `${typeName}FilterInput`
-    ),
   })
   const paginationTC = getPagination({
     schemaComposer,
