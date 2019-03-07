@@ -37,7 +37,7 @@ const Card = ({ children }) => (
         padding: rhythm(space[6]),
         paddingBottom: 0,
         transform: `translateZ(0)`,
-        [presets.Xs]: {
+        [presets.Sm]: {
           padding: rhythm(space[8]),
         },
       }}

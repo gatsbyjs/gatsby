@@ -33,7 +33,7 @@ const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
-      maxWidth: rhythm(30),
+      maxWidth: rhythm(32),
       margin: `0 auto`,
       textAlign: `center`,
     }}
@@ -56,7 +56,7 @@ const SegmentTitle = ({ children }) => (
       padding: `.35rem .6rem`,
       fontWeight: `normal`,
       letterSpacing: `.5px`,
-      ...scale(-2 / 5),
+      ...scale(-1 / 5),
       lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
