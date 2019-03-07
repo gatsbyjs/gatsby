@@ -53,6 +53,9 @@ FastMemoryStore.prototype.takeFirstN = function(n, cb) {
     const grabbedTasks = this._queueMap.get(key).splice(0, remainingTasks)
     taskIds = taskIds.concat(grabbedTasks)
     remainingTasks -= grabbedTasks.length
+    if (remainingTasks > 0) {
+        this._queueMap.delete(priority)
+    }
   }
   const tasks = {}
   taskIds.forEach(function(taskId) {
@@ -77,6 +80,9 @@ FastMemoryStore.prototype.takeLastN = function(n, cb) {
     const grabbedTasks = this._queueMap.get(key).splice(-remainingTasks)
     taskIds = taskIds.concat(grabbedTasks)
     remainingTasks -= grabbedTasks.length
+    if (remainingTasks > 0) {
+        this._queueMap.delete(priority)
+    }
   }
   taskIds = taskIds.reverse()
   const tasks = {}
