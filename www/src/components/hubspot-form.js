@@ -36,7 +36,7 @@ export default class GatsbyHubspotForm extends Component {
             listStyleType: `none`,
             margin: 0,
             color: colors.warning,
-            fontSize: rhythm(1 / 2),
+            fontSize: rhythm(presets.space[3]),
           },
           "& .hs-form-required": {
             color: colors.warning,

@@ -11,7 +11,7 @@ import presets, { colors } from "../utils/presets"
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(1 / 3)
+const navItemHorizontalSpacing = rhythm(presets.space[2])
 
 const iconColor = colors.lilac
 
@@ -142,8 +142,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Lg]: { display: !isHomepage && `flex` },
-              [presets.Xl]: { display: `flex` },
+              [presets.Lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -197,8 +196,8 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(3 / 4),
-    paddingRight: rhythm(3 / 4),
+    paddingLeft: rhythm(presets.space[6]),
+    paddingRight: rhythm(presets.space[6]),
     fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
@@ -248,7 +247,7 @@ const styles = {
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(1 / 2),
+    marginRight: rhythm(presets.space[3]),
     textDecoration: `none`,
   },
 }

@@ -28,7 +28,9 @@ class FeaturedSites extends Component {
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
+          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(
+            presets.space[6]
+          )} 0`,
           position: `relative`,
           display: `none`,
           [presets.Lg]: {
@@ -148,8 +150,8 @@ class FeaturedSites extends Component {
               display: `flex`,
               overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${rhythm(3 / 4)}`,
-              padding: `3px ${rhythm(3 / 4)} 0`,
+              margin: `0 -${rhythm(presets.space[6])}`,
+              padding: `3px ${rhythm(presets.space[6])} 0`,
               ...styles.scrollbar,
             }}
           >
@@ -221,7 +223,7 @@ class FeaturedSites extends Component {
               <a
                 href="#showcase"
                 css={{
-                  marginRight: `${rhythm(3 / 4)} !important`,
+                  marginRight: `${rhythm(presets.space[6])} !important`,
                   backgroundColor: hex2rgba(colors.ui.light, 0.25),
                   borderRadius: presets.radii[1],
                   textAlign: `center`,
@@ -290,7 +292,7 @@ class FeaturedSites extends Component {
               position: `absolute`,
               top: `0`,
               bottom: rhythm(options.blockMarginBottom),
-              right: `-${rhythm(3 / 4)}`,
+              right: `-${rhythm(presets.space[6])}`,
               width: 60,
               pointerEvents: `none`,
               background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,

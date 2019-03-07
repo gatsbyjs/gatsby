@@ -35,7 +35,7 @@ class Pagination extends React.Component {
         css={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: `${rhythm(1)} 0`,
+          margin: `${rhythm(presets.space[5])} 0`,
           flexDirection: `column`,
           [presets.Md]: {
             flexDirection: `row`,
@@ -49,7 +49,7 @@ class Pagination extends React.Component {
             padding: `0`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            marginBottom: rhythm(1 / 2),
+            marginBottom: rhythm(presets.space[3]),
             [presets.Md]: {
               width: `15rem`,
               marginBottom: 0,

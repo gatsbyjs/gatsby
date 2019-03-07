@@ -15,17 +15,11 @@ module.exports = {
   Xl: `@media (min-width: 1200px)`,
   xxl: `(min-width: 1600px)`,
   Xxl: `@media (min-width: 1600px)`,
-  // layout stuff
-  // main content container max-width
-  maxWidth: 35,
-  maxWidthWithSidebar: 26,
+  // layout
   headerHeight: `3.75rem`,
   bannerHeight: `2.5rem`,
   sidebarUtilityHeight: `2.5rem`,
   pageHeadingDesktopWidth: `3.5rem`,
-  shadowKeyUmbraOpacity: 0.1,
-  shadowKeyPenumbraOpacity: 0.07,
-  shadowAmbientShadowOpacity: 0.06,
   animation: {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,
@@ -43,5 +37,5 @@ module.exports = {
     default: 1.5,
     loose: 1.75,
   },
-  space: [0, 0.625, 1.25],
+  space: [0, 1 / 6, 1 / 3, 1 / 2, 2 / 3, 5 / 6, 1, 4 / 3, 5 / 3],
 }

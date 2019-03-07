@@ -12,7 +12,7 @@ import presets, { colors } from "../../utils/presets"
 const EcosystemSectionRoot = styled(`section`)`
   background: #fff;
   padding: 0 ${rhythm(options.blockMarginBottom)};
-  margin-bottom: ${rhythm(1 / 2)};
+  margin-bottom: ${rhythm(presets.space[3])};
 
   ${presets.Md} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
@@ -77,7 +77,7 @@ const SubTitle = styled(`h2`)`
   font-weight: 300;
   letter-spacing: 0.05em;
   margin: 0;
-  margin-top: ${rhythm(1)};
+  margin-top: ${rhythm(presets.space[5])};
   text-transform: uppercase;
 `
 

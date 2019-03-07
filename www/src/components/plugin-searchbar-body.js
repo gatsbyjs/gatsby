@@ -32,7 +32,7 @@ const updateAfter = 700
 // A couple constants for CSS
 const searchInputHeight = rhythm(7 / 4)
 const searchMetaHeight = rhythm(8 / 4)
-const searchInputWrapperMargin = rhythm(3 / 4)
+const searchInputWrapperMargin = rhythm(presets.space[6])
 
 /* stylelint-disable */
 const searchBoxStyles = css`
@@ -162,7 +162,7 @@ const searchBoxStyles = css`
     color: ${colors.gatsby};
     cursor: pointer;
     width: calc(100% - ${rhythm(6 / 4)});
-    margin: ${rhythm(3 / 4)};
+    margin: ${rhythm(presets.space[6])};
     height: ${rhythm(2)};
     outline: none;
     transition: all ${presets.animation.speedDefault}
@@ -258,8 +258,8 @@ class Search extends Component {
               fontFamily: typography.options.headerFontFamily.join(`,`),
               fontSize: scale(1),
               height: searchMetaHeight,
-              paddingLeft: rhythm(3 / 4),
-              paddingRight: rhythm(3 / 4),
+              paddingLeft: rhythm(presets.space[6]),
+              paddingRight: rhythm(presets.space[6]),
               [presets.Md]: {
                 fontSize: scale(-1 / 4).fontSize,
               },
@@ -305,7 +305,7 @@ class Search extends Component {
             fontSize: 0,
             lineHeight: 0,
             height: 20,
-            marginTop: rhythm(3 / 4),
+            marginTop: rhythm(presets.space[6]),
             display: `none`,
           }}
         >
@@ -360,7 +360,7 @@ const Result = ({ hit, pathname, query }) => {
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
-          padding: rhythm(3 / 4),
+          padding: rhythm(presets.space[6]),
           position: `relative`,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
@@ -455,7 +455,7 @@ const Result = ({ hit, pathname, query }) => {
             <span
               css={{
                 color: selected ? colors.lilac : colors.gray.bright,
-                marginLeft: rhythm(1 / 6),
+                marginLeft: rhythm(presets.space[1]),
               }}
             >
               <DownloadArrow />

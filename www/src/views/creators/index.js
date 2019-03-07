@@ -109,11 +109,11 @@ class CreatorsView extends Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            padding: rhythm(3 / 4),
+            padding: rhythm(presets.space[6]),
             paddingBottom: `10vh`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             [presets.Md]: {
-              paddingBottom: rhythm(3 / 4),
+              paddingBottom: rhythm(presets.space[6]),
             },
           }}
         >
@@ -190,7 +190,7 @@ const styles = {
   creatorCard: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(3 / 4),
+    margin: rhythm(presets.space[6]),
     minWidth: 200,
     maxWidth: 240,
     flex: `1 0 0`,

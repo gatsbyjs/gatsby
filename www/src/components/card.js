@@ -34,11 +34,11 @@ const Card = ({ children }) => (
   >
     <div
       css={{
-        padding: rhythm(presets.space[1]),
+        padding: rhythm(presets.space[6]),
         paddingBottom: 0,
         transform: `translateZ(0)`,
         [presets.Xs]: {
-          padding: rhythm(presets.space[2]),
+          padding: rhythm(presets.space[9]),
         },
       }}
     >

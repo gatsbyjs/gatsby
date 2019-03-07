@@ -46,7 +46,7 @@ const Param = (param, depth = 0) => {
         />
       )}
       {param.properties && (
-        <div css={{ marginBottom: rhythm(1), marginTop: rhythm(1 / 2) }}>
+        <div css={{ marginBottom: rhythm(presets.space[5]), marginTop: rhythm(presets.space[3]) }}>
           {param.properties.map(param => Param(param, depth + 1))}
         </div>
       )}
@@ -60,7 +60,7 @@ export default ({ functions }) => (
       <div
         id={node.name}
         key={`reference list ${node.name}`}
-        css={{ marginBottom: rhythm(1) }}
+        css={{ marginBottom: rhythm(presets.space[5]) }}
       >
         {i !== 0 && <hr />}
         <h3>
@@ -115,7 +115,7 @@ export default ({ functions }) => (
 
         {node.examples && node.examples.length > 0 && (
           <div>
-            <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
+            <h4 css={{ marginTop: rhythm(presets.space[5]) }}>Example</h4>
             {` `}
             {node.examples.map((example, i) => (
               <div

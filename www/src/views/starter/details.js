@@ -14,9 +14,9 @@ const Details = ({
 }) => (
   <div
     css={{
-      padding: sharedStyles.gutter,
+      padding: rhythm(presets.space[6]),
       [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
+        padding: rhythm(presets.space[9]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
         gridRowGap: `20px`,
@@ -88,24 +88,25 @@ const Details = ({
         }}
       >
         {shownDeps &&
-          shownDeps.map(dep =>
-            /^gatsby-/.test(dep) ? (
-              <div key={dep}>
-                <Link to={`/packages/${dep}`}>{dep}</Link>
-              </div>
-            ) : (
-              <div
-                key={dep}
-                css={{
-                  ...sharedStyles.truncate,
-                }}
-              >
-                <a href={`https://npm.im/${dep}`}>
-                  {`${dep} `}
-                  <FaExtLink />
-                </a>
-              </div>
-            )
+          shownDeps.map(
+            dep =>
+              /^gatsby-/.test(dep) ? (
+                <div key={dep}>
+                  <Link to={`/packages/${dep}`}>{dep}</Link>
+                </div>
+              ) : (
+                <div
+                  key={dep}
+                  css={{
+                    ...sharedStyles.truncate,
+                  }}
+                >
+                  <a href={`https://npm.im/${dep}`}>
+                    {`${dep} `}
+                    <FaExtLink />
+                  </a>
+                </div>
+              )
           )}
         {showMore && (
           <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
@@ -126,7 +127,7 @@ const styles = {
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+    padding: `${rhythm(1 / 5)} ${rhythm(presets.space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       backgroundColor: colors.gatsby,

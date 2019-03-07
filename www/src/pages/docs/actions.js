@@ -51,7 +51,7 @@ class ActionCreatorsDocs extends React.Component {
               }}
             />
           </div>
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
+          <h2 css={{ marginBottom: rhythm(presets.space[3]) }}>Functions</h2>
           <ul css={{ ...scale(-1 / 5) }}>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>

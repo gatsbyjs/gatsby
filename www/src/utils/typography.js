@@ -36,7 +36,6 @@ const _options = {
   headerLineHeight: presets.lineHeights.dense,
   headerColor: colors.gray.dark,
   bodyColor: colors.gray.copy,
-  blockMarginBottom: 0.75,
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
@@ -47,7 +46,7 @@ const _options = {
         letterSpacing: `-0.0075em`,
       },
       h2: {
-        marginTop: rhythm(options.blockMarginBottom * 3),
+        marginTop: rhythm(options.blockMarginBottom * 2),
       },
       h3: {
         marginTop: rhythm(options.blockMarginBottom * 2),

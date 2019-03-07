@@ -8,9 +8,7 @@ import presets, { colors } from "../utils/presets"
 const BlogPostPreviewItem = ({ post, className }) => (
   <article className={className} css={{ position: `relative` }}>
     <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
-      <h2 css={{ marginTop: rhythm(options.blockMarginBottom * 2) }}>
-        {post.frontmatter.title}
-      </h2>
+      <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
       <p css={{ fontWeight: `normal` }}>
         {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
       </p>
@@ -19,7 +17,6 @@ const BlogPostPreviewItem = ({ post, className }) => (
       css={{
         display: `flex`,
         alignItems: `center`,
-        marginBottom: rhythm(2),
       }}
     >
       <Link
@@ -43,7 +40,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
           css={{
             borderRadius: presets.radii[6],
             display: `inline-block`,
-            marginRight: rhythm(1 / 2),
+            marginRight: rhythm(presets.space[3]),
             marginBottom: 0,
             verticalAlign: `top`,
             // prevents image twitch in Chrome when hovering the card

@@ -43,9 +43,9 @@ const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
       background: background ? background : colors.ui.whisper,
-      marginLeft: rhythm(-3 / 4),
-      marginRight: rhythm(-3 / 4),
-      padding: rhythm(3 / 4),
+      marginLeft: rhythm(-presets.scale[1]),
+      marginRight: rhythm(-presets.scale[1]),
+      padding: rhythm(presets.scale[1]),
       borderTop: first ? `1px solid ${colors.ui.light}` : null,
       borderBottom: last ? null : `1px solid ${colors.ui.light}`,
       [breakpoint2Columns]: {
@@ -87,7 +87,7 @@ class CreatorTemplate extends Component {
         <main
           role="main"
           css={{
-            padding: rhythm(3 / 4),
+            padding: rhythm(presets.space[6]),
             paddingBottom: `10vh`,
             display: `flex`,
             flexDirection: `column`,
@@ -95,7 +95,7 @@ class CreatorTemplate extends Component {
             justifyContent: `center`,
             width: `100%`,
             [breakpoint2Columns]: {
-              paddingBottom: rhythm(3 / 4),
+              paddingBottom: rhythm(presets.space[6]),
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
@@ -104,7 +104,7 @@ class CreatorTemplate extends Component {
         >
           <div
             css={{
-              margin: rhythm(3 / 4),
+              margin: rhythm(presets.space[6]),
               marginBottom: rhythm(options.blockMarginBottom / 4),
               flexGrow: `1`,
               width: `100%`,
@@ -125,7 +125,7 @@ class CreatorTemplate extends Component {
           </div>
           <div
             css={{
-              margin: rhythm(3 / 4),
+              margin: rhythm(presets.space[6]),
               flex: `1`,
               width: `100%`,
               [presets.Lg]: {
@@ -225,45 +225,46 @@ class CreatorTemplate extends Component {
                 {creator.location}
               </p>
             </MetaSection>
-            {creator.portfolio === true && sites.length > 0 && (
-              <MetaSection background="transparent" last>
-                <MetaTitle>Worked On</MetaTitle>
-                <div
-                  css={{
-                    display: `flex`,
-                    alignItems: `flex-start`,
-                  }}
-                >
-                  {sites.map(site => (
-                    <Link
-                      key={site.node.title}
-                      css={{
-                        "&&": {
-                          marginRight: rhythm(3 / 4),
-                          borderBottom: `none`,
-                          boxShadow: `none`,
-                          transition: `all ${presets.animation.speedDefault} ${
-                            presets.animation.curveDefault
-                          }`,
-                          "&:hover": {
-                            background: `none`,
+            {creator.portfolio === true &&
+              sites.length > 0 && (
+                <MetaSection background="transparent" last>
+                  <MetaTitle>Worked On</MetaTitle>
+                  <div
+                    css={{
+                      display: `flex`,
+                      alignItems: `flex-start`,
+                    }}
+                  >
+                    {sites.map(site => (
+                      <Link
+                        key={site.node.title}
+                        css={{
+                          "&&": {
+                            marginRight: rhythm(presets.space[6]),
+                            borderBottom: `none`,
+                            boxShadow: `none`,
+                            transition: `all ${
+                              presets.animation.speedDefault
+                            } ${presets.animation.curveDefault}`,
+                            "&:hover": {
+                              background: `none`,
+                            },
                           },
-                        },
-                      }}
-                      to={site.node.fields.slug}
-                    >
-                      <Img
-                        alt={`${site.node.title}`}
-                        fixed={
-                          site.node.childScreenshot.screenshotFile
-                            .childImageSharp.fixed
-                        }
-                      />
-                    </Link>
-                  ))}
-                </div>
-              </MetaSection>
-            )}
+                        }}
+                        to={site.node.fields.slug}
+                      >
+                        <Img
+                          alt={`${site.node.title}`}
+                          fixed={
+                            site.node.childScreenshot.screenshotFile
+                              .childImageSharp.fixed
+                          }
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </MetaSection>
+              )}
           </div>
         </main>
       </Layout>

@@ -47,7 +47,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
               >
                 <div
                   css={{
-                    paddingRight: rhythm(1),
+                    paddingRight: rhythm(presets.space[5]),
                     lineHeight: presets.lineHeights.dense,
                   }}
                 >

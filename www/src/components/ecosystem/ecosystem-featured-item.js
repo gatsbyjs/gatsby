@@ -33,7 +33,7 @@ export const BlockLink = styled(Link)`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(3 / 4)};
+  padding: ${rhythm(presets.space[6])};
 
   ${presets.Md} {
     border-radius: 0;
@@ -86,7 +86,7 @@ const Digest = styled(`div`)`
 
 const Thumbnail = styled(`div`)`
   height: 64px;
-  padding-right: ${rhythm(2 / 3)};
+  padding-right: ${rhythm(presets.space[4])};
   margin-top: ${rhythm(1 / 12)};
 
   img {

@@ -64,14 +64,14 @@ class NodeAPIDocs extends React.Component {
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
-          <p css={{ marginBottom: rhythm(1) }}>
+          <h2 css={{ marginBottom: rhythm(presets.space[3]) }}>Usage</h2>
+          <p css={{ marginBottom: rhythm(presets.space[5]) }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
+          <h2 css={{ marginBottom: rhythm(presets.space[3]) }}>APIs</h2>
           <ul css={{ ...scale(-1 / 5) }}>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>

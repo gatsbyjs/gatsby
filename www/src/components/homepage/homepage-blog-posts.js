@@ -17,7 +17,7 @@ import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${rhythm(presets.space[1])};
+  margin: -6px -${rhythm(presets.space[6])};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -33,7 +33,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${rhythm(presets.space[2])};
+  margin-right: ${rhythm(presets.space[9])};
   position: relative;
 
   :last-child {
@@ -79,11 +79,11 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${rhythm(presets.space[2])};
+    margin-left: ${rhythm(presets.space[9])};
     width: 125px;
 
     a {
-      padding: ${rhythm(1)};
+      padding: ${rhythm(presets.space[5])};
       justify-content: flex-start;
 
       &:hover {

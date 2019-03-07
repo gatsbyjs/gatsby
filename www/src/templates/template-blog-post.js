@@ -133,9 +133,9 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginTop: rhythm(-1 / 4),
-                marginBottom: rhythm(1),
+                marginBottom: rhythm(presets.space[5]),
                 [presets.Md]: {
-                  marginTop: rhythm(1 / 2),
+                  marginTop: rhythm(presets.space[3]),
                   marginBottom: rhythm(2),
                 },
               }}
@@ -173,7 +173,7 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   flex: `1 1 auto`,
-                  marginLeft: rhythm(1 / 2),
+                  marginLeft: rhythm(presets.space[3]),
                 }}
               >
                 <Link to={post.frontmatter.author.fields.slug}>
@@ -232,7 +232,7 @@ class BlogPostTemplate extends React.Component {
               !(post.frontmatter.showImageInArticle === false) && (
                 <div
                   css={{
-                    marginBottom: rhythm(1),
+                    marginBottom: rhythm(presets.space[5]),
                   }}
                 >
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
@@ -263,8 +263,8 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(2),
             [presets.Md]: {
               marginTop: rhythm(2),
-              paddingBottom: rhythm(1),
-              paddingTop: rhythm(1),
+              paddingBottom: rhythm(presets.space[5]),
+              paddingTop: rhythm(presets.space[5]),
             },
             [presets.Lg]: {
               marginTop: rhythm(3),
@@ -301,7 +301,7 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(1),
+                  marginTop: rhythm(presets.space[5]),
                   [presets.Sm]: { marginTop: 0, width: `50%` },
                 }}
               >

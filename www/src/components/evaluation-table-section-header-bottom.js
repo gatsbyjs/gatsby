@@ -7,7 +7,7 @@ import squarespace from "../assets/squarespace-compressed.png"
 import { rhythm, scale, options } from "../utils/typography"
 
 const subHeaderTitleStyles = {
-  height: rhythm(3 / 4),
+  height: rhythm(presets.space[6]),
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
@@ -59,19 +59,19 @@ const renderSubHeader = props => (
           "&&": {
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),
-            paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
+            paddingRight: i >= 1 ? rhythm(presets.space[3]) : 0,
             paddingBottom: rhythm(1 / 4),
             "&:last-child": {
-              paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
+              paddingRight: i >= 1 ? rhythm(presets.space[3]) : 0,
             },
           },
           [presets.Xs]: {
-            paddingTop: rhythm(1 / 2),
-            paddingLeft: `${rhythm(1 / 2)} !important`,
-            paddingRight: rhythm(1 / 2),
-            paddingBottom: rhythm(1 / 2),
+            paddingTop: rhythm(presets.space[3]),
+            paddingLeft: `${rhythm(presets.space[3])} !important`,
+            paddingRight: rhythm(presets.space[3]),
+            paddingBottom: rhythm(presets.space[3]),
             "&:last-child": {
-              paddingRight: rhythm(1 / 2),
+              paddingRight: rhythm(presets.space[3]),
             },
           },
         }}

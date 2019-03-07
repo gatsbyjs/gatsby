@@ -11,10 +11,10 @@ const styles = {
     flexShrink: 0,
     width: 320,
     marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(3 / 4),
+    marginRight: rhythm(presets.space[6]),
     [presets.Xl]: {
       width: 360,
-      marginRight: rhythm(6 / 4),
+      marginRight: rhythm(presets.space[9]),
     },
     [presets.Xxl]: {
       width: 400,
@@ -23,13 +23,13 @@ const styles = {
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
-    padding: rhythm(3 / 4),
+    padding: rhythm(presets.space[6]),
     justifyContent: `space-evenly`,
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(3 / 4),
+    margin: rhythm(presets.space[6]),
     minWidth: 259, //shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
@@ -154,7 +154,7 @@ const styles = {
     paddingTop: rhythm(1 / 8),
     paddingRight: rhythm(1 / 4),
     paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(1),
+    paddingLeft: rhythm(presets.space[5]),
     overflow: `hidden`,
     fontFamily: typography.options.headerFontFamily.join(`,`),
     transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
@@ -183,7 +183,7 @@ const styles = {
     justifyContent: `space-between`,
     outline: `none`,
     padding: 0,
-    paddingRight: rhythm(1),
+    paddingRight: rhythm(presets.space[5]),
     paddingBottom: rhythm(options.blockMarginBottom / 8),
     paddingTop: rhythm(options.blockMarginBottom / 8),
     width: `100%`,
@@ -207,14 +207,14 @@ const styles = {
       lineHeight: presets.lineHeights.solid,
       height: presets.headerHeight,
       margin: 0,
-      paddingLeft: rhythm(3 / 4),
-      paddingRight: rhythm(3 / 4),
+      paddingLeft: rhythm(presets.space[6]),
+      paddingRight: rhythm(presets.space[6]),
       paddingTop: rhythm(options.blockMarginBottom),
       paddingBottom: rhythm(options.blockMarginBottom),
     },
   },
   sidebarBody: {
-    paddingLeft: rhythm(3 / 4),
+    paddingLeft: rhythm(presets.space[6]),
     height: `calc(100vh - ((${presets.headerHeight}) + ${
       presets.bannerHeight
     }))`,
@@ -237,15 +237,14 @@ const styles = {
   contentHeader: {
     alignItems: `center`,
     background: `rgba(255,255,255,0.98)`,
-    // background: colors.ui.whisper,
     borderBottom: `1px solid ${colors.ui.light}`,
     display: `flex`,
     flexDirection: `row`,
     flexWrap: `wrap`,
     height: presets.headerHeight,
     justifyContent: `space-between`,
-    paddingLeft: `${rhythm(3 / 4)}`,
-    paddingRight: `${rhythm(3 / 4)}`,
+    paddingLeft: rhythm(presets.space[6]),
+    paddingRight: rhythm(presets.space[6]),
     zIndex: 1,
   },
   contentTitle: {
@@ -258,8 +257,6 @@ const styles = {
     color: colors.lilac,
     fontWeight: `normal`,
   },
-  gutter: rhythm(3 / 4),
-  gutterDesktop: rhythm(6 / 4),
 }
 
 export default styles

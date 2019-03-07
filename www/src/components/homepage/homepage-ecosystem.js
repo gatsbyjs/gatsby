@@ -36,7 +36,7 @@ const Sections = styled(`div`)`
 const Section = styled(EcosystemSection)`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
   border-radius: ${presets.radii[2]}px;
-  margin-bottom: ${rhythm(presets.space[1])};
+  margin-bottom: ${rhythm(presets.space[6])};
   padding: ${rhythm(options.blockMarginBottom)};
 
   ${presets.Md} {
@@ -62,7 +62,7 @@ const SubTitle = styled(`h3`)`
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(presets.space[1])};
+  margin: 0 -${rhythm(presets.space[6])};
 
   ${presets.Lg} {
     margin: 0;
@@ -80,11 +80,11 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${rhythm(presets.space[1])};
+  margin-right: ${rhythm(presets.space[6])};
 
   ${presets.Md} {
     border-bottom: none;
-    margin: ${rhythm(presets.space[1])};
+    margin: ${rhythm(presets.space[6])};
     margin-top: 0;
     margin-left: 0;
     width: 320px;
@@ -99,7 +99,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(3 / 4)} + 1.1rem);
+    padding-left: calc(${rhythm(presets.space[6])} + 1.1rem);
     position: relative;
 
     ${presets.Md} {

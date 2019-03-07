@@ -10,13 +10,13 @@ const Header = ({ stub }) => (
     className="starter-detail-header"
     css={{
       fontFamily: options.headerFontFamily.join(`,`),
-      padding: sharedStyles.gutter,
+      padding: rhythm(presets.space[6]),
       paddingBottom: rhythm(options.blockMarginBottom),
       [presets.Sm]: {
         paddingBottom: 0,
       },
       [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
+        padding: rhythm(presets.space[9]),
         paddingBottom: 0,
       },
     }}

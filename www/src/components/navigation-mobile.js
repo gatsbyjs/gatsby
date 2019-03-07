@@ -10,7 +10,7 @@ import {
 } from "../assets/mobile-nav-icons"
 import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -66,9 +66,10 @@ const MobileNavigation = () => (
         right: 0,
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.border}`,
-        background: colors.ui.whisper,
+        // background: colors.ui.whisper,
+        background: `#fff`,
         minHeight: presets.headerHeight,
-        fontFamily: typography.options.headerFontFamily.join(`,`),
+        fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
         [presets.Md]: {
           display: `none`,

@@ -5,7 +5,7 @@ import { options, scale, rhythm } from "../../utils/typography"
 import presets, { colors } from "../../utils/presets"
 
 const ResetFilters = ({ onClick }) => (
-  <div css={{ paddingRight: rhythm(3 / 4) }}>
+  <div css={{ paddingRight: rhythm(presets.space[6]) }}>
     <button
       css={{
         ...scale(-1 / 6),
@@ -18,7 +18,7 @@ const ResetFilters = ({ onClick }) => (
         display: `flex`,
         fontFamily: options.headerFontFamily.join(`,`),
         marginTop: rhythm(options.blockMarginBottom),
-        paddingRight: rhythm(3 / 4),
+        paddingRight: rhythm(presets.space[6]),
         textAlign: `left`,
         "&:hover": {
           background: colors.gatsby,

@@ -33,7 +33,7 @@ const TagsSection = ({ tags }) => {
           flexBasis: `60%`,
           flexGrow: 1,
           fontStyle: `normal`,
-          marginBottom: rhythm(1),
+          marginBottom: rhythm(presets.space[5]),
           marginRight: rhythm(2),
           marginTop: rhythm(3),
         }}

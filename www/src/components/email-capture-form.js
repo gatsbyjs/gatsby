@@ -251,7 +251,7 @@ class EmailCaptureForm extends React.Component {
               borderTop: `1px solid ${colors.ui.light}`,
               fontFamily: options.headerFontFamily.join(`,`),
               marginTop: rhythm(3),
-              paddingTop: `${rhythm(1)}`,
+              paddingTop: `${rhythm(presets.space[5])}`,
               ...overrideCSS,
             }}
           >

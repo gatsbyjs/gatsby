@@ -101,14 +101,14 @@ class IndexRoute extends React.Component {
         >
           <div
             css={{
-              padding: rhythm(presets.space[1]),
+              padding: rhythm(presets.space[6]),
               paddingTop: 0,
               width: `100%`,
               borderBottom: `1px solid ${colors.ui.light}`,
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
               [presets.Xl]: {
-                padding: rhythm(presets.space[2]),
+                padding: rhythm(presets.space[9]),
               },
             }}
           >
@@ -120,7 +120,7 @@ class IndexRoute extends React.Component {
               <div
                 css={{
                   textAlign: `center`,
-                  padding: `${rhythm(1)} 0 ${rhythm(1.5)}`,
+                  padding: `${rhythm(presets.space[5])} 0 ${rhythm(1.5)}`,
                 }}
               >
                 <h1 css={{ marginTop: 0 }}>Curious yet?</h1>

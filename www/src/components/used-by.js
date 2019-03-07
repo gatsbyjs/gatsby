@@ -6,7 +6,7 @@ import { FormidableIcon, FabricIcon } from "../assets/logos"
 const Icon = ({ icon, alt, href }) => (
   <li
     css={{
-      marginRight: rhythm(3 / 4),
+      marginRight: rhythm(presets.space[6]),
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
@@ -59,9 +59,9 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: rhythm(presets.space[2]),
-      paddingTop: rhythm(1),
-      paddingBottom: rhythm(1),
+      padding: rhythm(presets.space[9]),
+      paddingTop: rhythm(presets.space[5]),
+      paddingBottom: rhythm(presets.space[5]),
       marginBottom: rhythm(3),
       transition: `padding-top ${presets.animation.speedFast} ${
         presets.animation.curveDefault

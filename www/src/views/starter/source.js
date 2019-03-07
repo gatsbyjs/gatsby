@@ -1,7 +1,6 @@
 import React from "react"
 import presets, { colors } from "../../utils/presets"
-import { options, scale } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
+import { options, scale, rhythm } from "../../utils/typography"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
@@ -12,12 +11,12 @@ const Source = ({ startersYaml, repoUrl }) => (
       display: `flex`,
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: options.headerFontFamily.join(`,`),
-      margin: `0 ${sharedStyles.gutter}`,
+      margin: `0 ${rhythm(presets.space[6])}`,
       [presets.Sm]: {
         borderTop: 0,
       },
       [presets.Lg]: {
-        margin: `0 ${sharedStyles.gutterDesktop}`,
+        margin: `0 ${rhythm(presets.space[9])}`,
       },
     }}
   >

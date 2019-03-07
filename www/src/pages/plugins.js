@@ -3,7 +3,7 @@ import Container from "../components/container"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
-import { rhythm, options } from "../utils/typography"
+import { rhythm, options, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 
 class Plugins extends Component {
@@ -28,8 +28,8 @@ class Plugins extends Component {
             src={logo}
             css={{
               display: `inline-block`,
-              height: rhythm(5.2),
-              width: rhythm(5.2),
+              height: rhythm(4),
+              width: rhythm(4),
               marginLeft: `auto`,
               marginRight: `auto`,
             }}
@@ -37,10 +37,10 @@ class Plugins extends Component {
           />
           <h1
             css={{
-              fontSize: rhythm(1),
+              fontSize: rhythm(presets.space[5]),
               marginTop: rhythm(1 / 4),
-              marginLeft: rhythm(1),
-              marginRight: rhythm(1),
+              marginLeft: rhythm(presets.space[5]),
+              marginRight: rhythm(presets.space[5]),
               textAlign: `center`,
             }}
           >
@@ -49,9 +49,9 @@ class Plugins extends Component {
           <p
             css={{
               color: colors.gray.calm,
-              marginLeft: rhythm(3),
-              marginRight: rhythm(3),
-              fontSize: rhythm(3 / 4),
+              marginLeft: rhythm(2),
+              marginRight: rhythm(2),
+              fontSize: scale(2 / 6).fontSize,
               fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
             }}

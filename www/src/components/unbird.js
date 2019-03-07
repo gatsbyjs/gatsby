@@ -49,7 +49,7 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${rhythm(1)};
+  font-size: ${rhythm(presets.space[5])};
 `
 const CancelIcon = styled(CancelMdIcon)`
   font-size: ${rhythm(1.2)};

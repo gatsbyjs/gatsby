@@ -23,7 +23,7 @@ const algoliaStyles = css`
     top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
     left: ${rhythm(0.5)} !important;
     right: ${rhythm(0.5)} !important;
-    min-width: calc(100vw - ${rhythm(1)}) !important;
+    min-width: calc(100vw - ${rhythm(presets.space[5])}) !important;
     max-width: calc(100vw - 2rem) !important;
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
   }
@@ -362,7 +362,7 @@ class SearchForm extends Component {
           flex: `0 0 auto`,
           flexDirection: `row`,
           alignItems: `center`,
-          marginLeft: rhythm(1 / 2),
+          marginLeft: rhythm(presets.space[3]),
           marginBottom: 0,
           marginTop: offsetVertical ? offsetVertical : false,
         }}
@@ -390,7 +390,7 @@ class SearchForm extends Component {
               paddingBottom: rhythm(1 / 8),
               paddingLeft: rhythm(5 / 4),
               overflow: `hidden`,
-              width: rhythm(1),
+              width: rhythm(presets.space[5]),
               transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
               ":focus": {
                 backgroundColor: colors.ui.light,

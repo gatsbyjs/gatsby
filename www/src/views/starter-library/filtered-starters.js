@@ -158,7 +158,7 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${rhythm(3 / 4)}`,
+              paddingTop: `${rhythm(presets.space[6])}`,
               [presets.Sm]: {
                 height: presets.headerHeight,
                 paddingTop: `0px`,
@@ -217,7 +217,7 @@ export default class FilteredStarterLibrary extends Component {
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(1),
+                    paddingLeft: rhythm(presets.space[5]),
                     width: rhythm(6),
                     ":focus": {
                       outline: `${colors.wisteria} solid thin`,

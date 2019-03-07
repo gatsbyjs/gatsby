@@ -141,8 +141,7 @@ const styles = {
     borderBottom: `1px solid ${colors.ui.light}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
-    // padding: `${rhythm(2 / 4)} ${rhythm(3 / 4)} 0 ${rhythm(3 / 4)}`,
-    padding: `0 ${rhythm(3 / 4)}`,
+    padding: `0 ${rhythm(presets.space[6])}`,
     height: presets.headerHeight,
     fontFamily: typography.options.headerFontFamily.join(`,`),
   },
@@ -153,7 +152,7 @@ const styles = {
       color: colors.gatsby,
       boxShadow: `none`,
       borderBottom: `none`,
-      marginRight: rhythm(1 / 2),
+      marginRight: rhythm(presets.space[3]),
       "&:hover": {
         backgroundColor: `initial`,
       },
@@ -172,7 +171,7 @@ const styles = {
       boxShadow: `none`,
       borderBottom: `none`,
       padding: `${rhythm(typography.options.blockMarginBottom / 4)} .5rem`,
-      marginRight: rhythm(1 / 3),
+      marginRight: rhythm(presets.space[2]),
       borderRadius: 40,
       "&:hover": {
         backgroundColor: colors.gatsby,
@@ -183,7 +182,7 @@ const styles = {
   filter: {
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: 40,
-    margin: `${rhythm(3 / 4)} ${rhythm(1 / 6)}`,
+    margin: `${rhythm(presets.space[6])} ${rhythm(presets.space[1])}`,
     paddingLeft: rhythm(1 / 4),
     paddingRight: rhythm(1 / 4),
     display: `flex`,
