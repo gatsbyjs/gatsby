@@ -80,10 +80,7 @@ ${formatErrorDetails(errorDetails)}`)
   }
 
   const resultJSON = JSON.stringify(result)
-  const resultHash = require(`crypto`)
-    .createHash(`sha1`)
-    .update(resultJSON)
-    .digest(`base64`)
+  const resultHash = require(`../../utils/create-content-digest`)(resultJSON)
     // Remove potentially unsafe characters. This increases chances of collisions
     // slightly but it should still be very safe + we get a shorter
     // url vs hex.

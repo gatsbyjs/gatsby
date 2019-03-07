@@ -1,10 +1,6 @@
 const documentation = require(`documentation`)
-const crypto = require(`crypto`)
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const digest = str => createContentDigest(str)
 const remark = require(`remark`)
 const _ = require(`lodash`)
 const Prism = require(`prismjs`)

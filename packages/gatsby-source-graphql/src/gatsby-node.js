@@ -1,4 +1,4 @@
-const crypto = require(`crypto`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`graphql`)
 const {
@@ -114,10 +114,7 @@ exports.sourceNodes = async (
 
 function createSchemaNode({ id, typeName, fieldName }) {
   const nodeContent = uuidv4()
-  const nodeContentDigest = crypto
-    .createHash(`md5`)
-    .update(nodeContent)
-    .digest(`hex`)
+  const nodeContentDigest = createContentDigest(nodeContent)
   return {
     id,
     typeName: typeName,

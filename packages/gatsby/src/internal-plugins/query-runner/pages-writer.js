@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
-const crypto = require(`crypto`)
+const createContentDigest = require(`../../utils/create-content-digest`)
 
 const { store, emitter } = require(`../../redux/`)
 
@@ -48,10 +48,7 @@ const writePages = async () => {
         }`
     )
     .value()
-  const newHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(pagesComponentDependencies))
-    .digest(`hex`)
+  const newHash = createContentDigest(pagesComponentDependencies)
 
   if (newHash === lastHash) {
     // components didn't change - no need to rewrite pages.json

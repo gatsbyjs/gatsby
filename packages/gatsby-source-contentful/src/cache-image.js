@@ -1,4 +1,4 @@
-const crypto = require(`crypto`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const { resolve, parse } = require(`path`)
 
 const axios = require(`axios`)
@@ -37,11 +37,7 @@ module.exports = async function cacheImage(store, image, options) {
     params.push(`bg=${background}`)
   }
 
-  // TODO convert to `createContentDigest` using dependency import
-  const optionsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify([url, ...params]))
-    .digest(`hex`)
+  const optionsHash = createContentDigest(JSON.stringify([url, ...params]))
 
   const { name, ext } = parse(fileName)
   const absolutePath = resolve(CACHE_DIR, `${name}-${optionsHash}${ext}`)

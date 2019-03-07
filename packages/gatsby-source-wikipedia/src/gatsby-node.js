@@ -17,10 +17,9 @@ exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
             type: `WikipediaArticle`,
           },
         }
-        node.internal.contentDigest = require(`crypto`)
-          .createHash(`md5`)
-          .update(JSON.stringify(node))
-          .digest(`hex`)
+        node.internal.contentDigest = require(`../../gatsby/src/utils/create-content-digest`)(
+          node
+        )
         createNode(node)
       })
     )

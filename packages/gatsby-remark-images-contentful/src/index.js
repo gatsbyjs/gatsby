@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const select = require(`unist-util-select`)
 const sharp = require(`sharp`)
 const axios = require(`axios`)
@@ -6,6 +5,7 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const { buildResponsiveSizes } = require(`./utils`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 // If the image is hosted on contentful
 // 1. Find the image file
@@ -49,10 +49,7 @@ module.exports = async (
     const fileName = srcSplit[srcSplit.length - 1]
     const options = _.defaults(pluginOptions, defaults)
 
-    const optionsHash = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(options))
-      .digest(`hex`)
+    const optionsHash = createContentDigest(options)
 
     const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
     let cahedRawHTML = await cache.get(cacheKey)
