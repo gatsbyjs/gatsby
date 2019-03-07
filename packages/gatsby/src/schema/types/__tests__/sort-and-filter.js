@@ -13,10 +13,13 @@ const {
   GraphQLString,
   GraphQLObjectType,
   GraphQLScalarType,
+  GraphQLEnumType,
   GraphQLList,
   GraphQLInputObjectType,
   Kind,
 } = require(`graphql`)
+const { GraphQLDate } = require(`../date`)
+const { GraphQLJSON } = require(`graphql-compose`)
 
 const getInferredFields = fields => {
   const schemaComposer = createSchemaComposer()
@@ -41,6 +44,21 @@ function isIntInput(type) {
   })
 }
 
+function isDateInput(type) {
+  expect(type.name).toBe(`DateQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLDate },
+    ne: { name: `ne`, type: GraphQLDate },
+    lt: { name: `lt`, type: GraphQLDate },
+    lte: { name: `lte`, type: GraphQLDate },
+    gt: { name: `gt`, type: GraphQLDate },
+    gte: { name: `gte`, type: GraphQLDate },
+    in: { name: `in`, type: new GraphQLList(GraphQLDate) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLDate) },
+  })
+}
+
 function isIdInput(type) {
   expect(type.name).toBe(`IDQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
@@ -62,6 +80,19 @@ function isStringInput(type) {
     glob: { name: `glob`, type: GraphQLString },
     in: { name: `in`, type: new GraphQLList(GraphQLString) },
     nin: { name: `nin`, type: new GraphQLList(GraphQLString) },
+  })
+}
+
+function isJsonInput(type) {
+  expect(type.name).toBe(`JSONQueryOperatorInput`)
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLJSON },
+    ne: { name: `ne`, type: GraphQLJSON },
+    regex: { name: `regex`, type: GraphQLJSON },
+    glob: { name: `glob`, type: GraphQLJSON },
+    in: { name: `in`, type: new GraphQLList(GraphQLJSON) },
+    nin: { name: `nin`, type: new GraphQLList(GraphQLJSON) },
   })
 }
 
@@ -91,7 +122,27 @@ function isBoolInput(type) {
   })
 }
 
-describe(`GraphQL Input args from fields, test-only`, () => {
+function isCustomScalarInput(queryType, type) {
+  expect(queryType instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(queryType.getFields()).toEqual({
+    eq: { name: `eq`, type },
+    ne: { name: `ne`, type },
+    in: { name: `in`, type: new GraphQLList(type) },
+    nin: { name: `nin`, type: new GraphQLList(type) },
+  })
+}
+
+function isEnumInput(queryType, type) {
+  expect(queryType instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(queryType.getFields()).toEqual({
+    eq: { name: `eq`, type },
+    ne: { name: `ne`, type },
+    in: { name: `in`, type: new GraphQLList(type) },
+    nin: { name: `nin`, type: new GraphQLList(type) },
+  })
+}
+
+describe(`GraphQL Input args from fields`, () => {
   function oddValue(value) {
     return value % 2 === 1 ? value : null
   }
@@ -110,14 +161,26 @@ describe(`GraphQL Input args from fields, test-only`, () => {
 
   it(`handles all known scalars`, async () => {
     const fields = {
+      scal_id: `ID`,
       scal_int: `Int`,
       scal_float: `Float`,
       scal_string: `String`,
       scal_bool: `Boolean`,
-      scal_odd_unknown: { type: OddType },
+      scal_json: `JSON`,
+      scal_date: `Date`,
+      scal_odd: { type: OddType },
+      scal_enum: {
+        type: new GraphQLEnumType({
+          name: `CustomEnum`,
+          values: { FOO: { value: `foo` } },
+        }),
+      },
     }
 
     const inferredFields = getInferredFields(fields)
+
+    const id = inferredFields.scal_id.type
+    isIdInput(id)
 
     const int = inferredFields.scal_int.type
     isIntInput(int)
@@ -131,7 +194,17 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     const bool = inferredFields.scal_bool.type
     isBoolInput(bool)
 
-    expect(inferredFields).not.toHaveProperty(`scal_odd_unknown`)
+    const date = inferredFields.scal_date.type
+    isDateInput(date)
+
+    const json = inferredFields.scal_json.type
+    isJsonInput(json)
+
+    const custom_scalar = inferredFields.scal_odd.type
+    isCustomScalarInput(custom_scalar, fields.scal_odd.type)
+
+    const custom_enum = inferredFields.scal_enum.type
+    isEnumInput(custom_enum, fields.scal_enum.type)
   })
 
   it(`recursively converts object types`, async () => {
@@ -245,7 +318,8 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     expect(entryPointBFields.typea.type.name).toBe(`TypeAFilterInput`)
   })
 
-  it(`recovers from unknown output types`, async () => {
+  // NOTE: We now convert all scalars and enums
+  it.skip(`recovers from unknown output types`, async () => {
     const fields = {
       obj: {
         type: new GraphQLObjectType({

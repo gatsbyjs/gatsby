@@ -87,7 +87,7 @@ describe(`build and update schema`, () => {
 
   // FIXME: This is not a problem as long as the only use of rebuilding the
   // schema to add a `context` field to `SitePage`. But it needs to work
-  // if we want to enable on-the-fly schema regeneration.
+  // if we want to enable on-demand schema regeneration.
   // This currently does not work because we need to invalidate all FilterInput
   // composers on nested types as well. Alternatively, use a local cache
   // in `filter.js` instead of checking `schemaComposer.has()`.

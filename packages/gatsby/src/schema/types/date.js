@@ -85,7 +85,7 @@ const formatDate = ({
   return normalizedDate
 }
 
-export const dateResolver = {
+const dateResolver = {
   type: `Date`,
   args: {
     formatString: {
