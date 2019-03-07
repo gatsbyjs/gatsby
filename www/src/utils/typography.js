@@ -66,6 +66,10 @@ const _options = {
         // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198
         lineHeight: `inherit`,
       },
+      "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code": {
+        fontWeight: `normal`,
+        fontSize: `82.5%`,
+      },
       "tt, code, kbd": {
         background: colors.code.bgInline,
         paddingTop: `0.2em`,
@@ -73,7 +77,7 @@ const _options = {
       },
       "tt, code, kbd, .gatsby-code-title": {
         fontFamily: options.monospaceFontFamily.join(`,`),
-        fontSize: `80%`,
+        fontSize: `90%`,
         // Disable ligatures as they look funny as code.
         fontVariant: `none`,
         WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
@@ -178,7 +182,7 @@ const _options = {
       },
       ".gatsby-highlight pre code": {
         display: `block`,
-        fontSize: `94%`,
+        fontSize: `100%`,
         // reset code vertical padding declared earlier
         padding: 0,
       },
