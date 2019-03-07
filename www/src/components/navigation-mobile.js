@@ -66,7 +66,6 @@ const MobileNavigation = () => (
         right: 0,
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.border}`,
-        // background: colors.ui.whisper,
         background: `#fff`,
         minHeight: presets.headerHeight,
         fontFamily: options.headerFontFamily.join(`,`),
@@ -117,9 +116,9 @@ const styles = {
   },
   link: {
     default: {
-      color: colors.gatsby,
+      color: colors.lilac,
       borderRadius: presets.radii[1],
-      fontSize: scale(-1 / 2).fontSize,
+      fontSize: scale(-1 / 3).fontSize,
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,
       width: 64,
@@ -128,6 +127,7 @@ const styles = {
       )} 0`,
       textDecoration: `none`,
       textAlign: `center`,
+      WebkitFontSmoothing: `antialiased`,
       "& svg": {
         display: `block`,
         height: 32,
@@ -143,7 +143,6 @@ const styles = {
       "&&": {
         color: colors.gatsby,
         fontWeight: `bold`,
-        // WebkitFontSmoothing: `antialiased`,
       },
     },
   },
