@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
-import { rhythm, scale } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
