@@ -53,7 +53,7 @@ class ActionCreatorsDocs extends React.Component {
             />
           </div>
           <h2 css={{ marginBottom: rhythm(space[3]) }}>Functions</h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>

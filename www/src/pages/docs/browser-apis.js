@@ -34,7 +34,7 @@ class BrowserAPIDocs extends React.Component {
           </p>
           <hr />
           <h2 css={{ marginBottom: rhythm(space[3]) }}>APIs</h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
