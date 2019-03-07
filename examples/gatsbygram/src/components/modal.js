@@ -23,13 +23,13 @@ class GatsbyGramModal extends React.Component {
   componentDidMount() {
     mousetrap.bind(`left`, () => this.previous())
     mousetrap.bind(`right`, () => this.next())
-    mousetrap.bind(`spacebar`, () => this.next())
+    mousetrap.bind(`space`, () => this.next())
   }
 
   componentWillUnmount() {
     mousetrap.unbind(`left`)
     mousetrap.unbind(`right`)
-    mousetrap.unbind(`spacebar`)
+    mousetrap.unbind(`space`)
   }
 
   findCurrentIndex() {

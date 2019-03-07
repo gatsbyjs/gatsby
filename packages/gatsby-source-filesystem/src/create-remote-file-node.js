@@ -145,7 +145,7 @@ async function pushToQueue(task, cb) {
 const requestRemoteNode = (url, headers, tmpFilename) =>
   new Promise((resolve, reject) => {
     const responseStream = got.stream(url, {
-      ...headers,
+      headers,
       timeout: 30000,
       retries: 5,
     })
@@ -225,8 +225,11 @@ async function processRemoteNode({
 
   // Fetch the file.
   const response = await requestRemoteNode(url, headers, tmpFilename)
-  // Save the response headers for future requests.
-  await cache.set(cacheId(url), response.headers)
+
+  if (response.statusCode == 200) {
+    // Save the response headers for future requests.
+    await cache.set(cacheId(url), response.headers)
+  }
 
   // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
   if (ext === ``) {

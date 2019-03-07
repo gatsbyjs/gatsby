@@ -211,7 +211,7 @@ module.exports = {
 
 ## Removing `theme-color` meta tag
 
-By default `gatsby-plugin-manifest` inserts `<meta content={theme_color} name="theme-color" />` tag to html output. This can be problematic if you want to programatically control that tag - for example when implementing light/dark themes in your project. You can set `theme_color_in_head` plugin option to `false` to opt-out of this behaviour.
+By default `gatsby-plugin-manifest` inserts `<meta content={theme_color} name="theme-color" />` tag to html output. This can be problematic if you want to programatically control that tag - for example when implementing light/dark themes in your project. You can set `theme_color_in_head` plugin option to `false` to opt-out of this behavior.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -252,6 +252,36 @@ module.exports = {
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         theme_color_in_head: false, // This will avoid adding theme-color meta tag.
         include_favicon: false, // This will exclude favicon link tag
+      },
+    },
+  ],
+}
+```
+
+## Enable CORS using `crossorigin` attribute
+
+Add a `crossorigin` attribute to the manifest `<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />` link tag.
+
+You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to `'anonymous'`.
+
+You can find more information about `crossorigin` on MDN.
+
+[https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes)
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        crossOrigin: `use-credentials`,
       },
     },
   ],

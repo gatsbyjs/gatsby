@@ -225,7 +225,7 @@ class SidebarBody extends Component {
             height: itemList[0].disableExpandAll
               ? `100%`
               : `calc(100% - ${presets.sidebarUtilityHeight})`,
-            [presets.Tablet]: {
+            [presets.Md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}
@@ -297,7 +297,7 @@ const styles = {
     paddingTop: 20,
     paddingBottom: 104,
     fontSize: scale(-2 / 10).fontSize,
-    [presets.Tablet]: {
+    [presets.Md]: {
       fontSize: scale(-4 / 10).fontSize,
       paddingBottom: 20,
     },

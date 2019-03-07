@@ -36,8 +36,10 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
       href={withPrefix(`/manifest.webmanifest`)}
+      crossOrigin={pluginOptions.crossOrigin}
     />
   )
+
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
     let insertMetaTag = Object.keys(pluginOptions).includes(
