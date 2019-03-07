@@ -43,9 +43,9 @@ const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
       background: background ? background : colors.ui.whisper,
-      marginLeft: rhythm(-presets.scale[1]),
-      marginRight: rhythm(-presets.scale[1]),
-      padding: rhythm(presets.scale[1]),
+      marginLeft: rhythm(-scale[1]),
+      marginRight: rhythm(-scale[1]),
+      padding: rhythm(scale[1]),
       borderTop: first ? `1px solid ${colors.ui.light}` : null,
       borderBottom: last ? null : `1px solid ${colors.ui.light}`,
       [breakpoint2Columns]: {
