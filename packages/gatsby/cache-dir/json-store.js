@@ -70,7 +70,6 @@ class JSONStore extends React.Component {
     // - location changed
     // - page data for path changed
     // - static query results changed
-
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
@@ -84,6 +83,7 @@ class JSONStore extends React.Component {
     const data = this.state.pageQueryData[getPathFromProps(this.props)]
     // eslint-disable-next-line
     const { pages, ...propsWithoutPages } = this.props
+
     if (!data) {
       return <div />
     }

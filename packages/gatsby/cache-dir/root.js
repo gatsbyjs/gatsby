@@ -1,14 +1,14 @@
 import React, { createElement } from "react"
 import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-
+import loadable from "@loadable/component"
 import {
   shouldUpdateScroll,
   init as navigationInit,
   RouteUpdates,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
-import syncRequires from "./sync-requires"
+import asyncRequires from "./async-requires"
 import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
@@ -64,7 +64,9 @@ class RouteHandler extends React.Component {
       )
     } else {
       const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
-      const Dev404Page = syncRequires.components[dev404Page.componentChunkName]
+      const Dev404Page = loadable(
+        asyncRequires.components[dev404Page.componentChunkName]
+      )
 
       if (!loader.getPage(`/404.html`)) {
         return (

@@ -22,7 +22,7 @@ window.___loader = loader
 
 loader.addPagesArray([window.page])
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
-loader.addProdRequires(asyncRequires)
+loader.addRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)
 
 navigationInit()

@@ -15,6 +15,7 @@ const writePages = async () => {
   pages = [...pages.values()]
 
   const pagesComponentDependencies = {}
+  const isDevelop = program._[0] === `develop`
 
   // Write out pages.json
   let pagesData = []
@@ -23,7 +24,7 @@ const writePages = async () => {
       componentChunkName,
     }
 
-    if (program._[0] === `develop`) {
+    if (isDevelop) {
       pagesComponentDependencies[path] = pageComponentsChunkNames
     }
 
@@ -75,12 +76,11 @@ const writePages = async () => {
   let syncRequires = `
 // prefer default export if available
 const preferDefault = m => m && m.default || m
-const loadable = preferDefault(require("@loadable/component"));
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": loadable(() => import("${joinPath(
+        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
           c.component
         )}" /* webpackChunkName: "${c.componentChunkName}" */))`
     )
@@ -94,9 +94,11 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": () => import("${joinPath(
-          c.component
-        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+        `  "${c.componentChunkName}": () => import("${
+          isDevelop ? `react-hot-loader-loader!` : ``
+        }${joinPath(c.component)}" /* webpackChunkName: "${
+          c.componentChunkName
+        }" */)`
     )
     .join(`,\n`)}
 }\n\n`

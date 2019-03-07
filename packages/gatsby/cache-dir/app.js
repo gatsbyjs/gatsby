@@ -6,8 +6,9 @@ import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
-import syncRequires from "./sync-requires"
-import pages from "./pages.json"
+// import syncRequires from "./sync-requires"
+import asyncRequires from "./async-requires"
+import { dataPaths, pages } from "./data.json"
 
 window.___emitter = emitter
 setApiRunnerForLoader(apiRunner)
@@ -47,7 +48,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   )[0]
 
   loader.addPagesArray(pages)
-  loader.addDevRequires(syncRequires)
+  loader.addDataPaths(dataPaths)
+  loader.addRequires(asyncRequires)
 
   loader.getResourcesForPathname(window.location.pathname).then(() => {
     const preferDefault = m => (m && m.default) || m

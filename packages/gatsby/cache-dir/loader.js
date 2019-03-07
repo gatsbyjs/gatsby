@@ -7,7 +7,6 @@ const preferDefault = m => (m && m.default) || m
 let devGetPageData
 let inInitialRender = true
 let hasFetched = Object.create(null)
-let syncRequires = {}
 let asyncRequires = {}
 let jsonDataPaths = {}
 let fetchHistory = []
@@ -25,7 +24,9 @@ const MAX_HISTORY = 5
 
 const jsonPromiseStore = {}
 
-if (process.env.NODE_ENV !== `production`) {
+if (process.env.NODE_ENV === `production`) {
+  devGetPageData = () => Promise.resolve()
+} else {
   devGetPageData = require(`./socketIo`).getPageData
 }
 
@@ -205,11 +206,8 @@ const queue = {
   addPagesArray: newPages => {
     findPage = pageFinderFactory(newPages, __PATH_PREFIX__)
   },
-  addDevRequires: devRequires => {
-    syncRequires = devRequires
-  },
-  addProdRequires: prodRequires => {
-    asyncRequires = prodRequires
+  addRequires: requires => {
+    asyncRequires = requires
   },
   addDataPaths: dataPaths => {
     jsonDataPaths = dataPaths
@@ -373,54 +371,33 @@ const queue = {
 
       // In development we know the code is loaded already
       // so we just return with it immediately.
-      if (process.env.NODE_ENV !== `production`) {
-        const pageResources = {
-          component: syncRequires.components[page.componentChunkName],
-          page,
+      Promise.all([
+        getResourceModule(page.componentChunkName),
+        getResourceModule(page.jsonName),
+        devGetPageData(page.path),
+      ]).then(([component, json]) => {
+        if (!(component && json)) {
+          resolve(null)
+          return
         }
 
-        // Add to the cache.
+        const pageResources = {
+          component,
+          json,
+          page,
+        }
+        pageResources.page.jsonURL = createJsonURL(jsonDataPaths[page.jsonName])
         pathScriptsCache[path] = pageResources
-        devGetPageData(page.path).then(pageData => {
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources,
-          })
-          // Tell plugins the path has been successfully prefetched
-          onPostPrefetchPathname(path)
+        resolve(pageResources)
 
-          resolve(pageResources)
+        emitter.emit(`onPostLoadPageResources`, {
+          page,
+          pageResources,
         })
-      } else {
-        Promise.all([
-          getResourceModule(page.componentChunkName),
-          getResourceModule(page.jsonName),
-        ]).then(([component, json]) => {
-          if (!(component && json)) {
-            resolve(null)
-            return
-          }
 
-          const pageResources = {
-            component,
-            json,
-            page,
-          }
-          pageResources.page.jsonURL = createJsonURL(
-            jsonDataPaths[page.jsonName]
-          )
-          pathScriptsCache[path] = pageResources
-          resolve(pageResources)
-
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources,
-          })
-
-          // Tell plugins the path has been successfully prefetched
-          onPostPrefetchPathname(path)
-        })
-      }
+        // Tell plugins the path has been successfully prefetched
+        onPostPrefetchPathname(path)
+      })
     }),
 }
 

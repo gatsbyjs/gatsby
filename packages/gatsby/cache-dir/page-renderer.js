@@ -15,7 +15,6 @@ class PageRenderer extends React.Component {
       props: this.props,
       loader: publicLoader,
     })
-
     const pageElement =
       replacementElement ||
       createElement(this.props.pageResources.component, {
