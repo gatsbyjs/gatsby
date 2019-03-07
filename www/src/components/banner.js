@@ -5,7 +5,7 @@ import { OutboundLink } from "gatsby-plugin-google-analytics"
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
-const horizontalPadding = rhythm(1 / 2)
+const horizontalPadding = rhythm(3 / 4)
 const backgroundColor = colors.gatsby
 
 const BannerContainer = styled(`div`)`
