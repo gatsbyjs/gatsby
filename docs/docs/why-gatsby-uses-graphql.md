@@ -8,6 +8,15 @@ Without providing some context, it can seem like GraphQL is overkill for somethi
 
 ## Create a page without any data
 
+<iframe
+  title="Screencast on egghead of creating pages in Gatsby from hard-coded React components."
+  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-1-create-a-page-without-any-data/embed"
+  class="egghead-video"
+  width=600 height=348
+/>
+
+Video hosted on [egghead.io][egghead].
+
 For any kind of pages that aren’t directly created in `src/pages/`, you’ll need Gatsby’s [`createPages` Node API](/docs/node-apis/#createPages) to create pages programmatically.
 
 All that’s required to create a page is a `path` where it should be created and the component that should be rendered there.
@@ -47,6 +56,15 @@ After running `npm run develop`, you’ll see the following at `localhost:8000/n
 In the simplest cases, this is all that’s required for building pages with Gatsby. However, you’ll often want to pass data to the page so that the template component is reusable.
 
 ## Create a page with hard-coded data
+
+<iframe
+  title="Screencast on egghead of creating pages from hard-coded context data in Gatsby."
+  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-2-create-a-page-with-hard-coded-data/embed"
+  class="egghead-video"
+  width=600 height=348
+/>
+
+Video hosted on [egghead.io][egghead].
 
 To pass data to the created pages, you’ll need to pass `context` to the `createPage` call.
 
@@ -91,6 +109,15 @@ Start the development server with `npm run develop` and visit `localhost:8000/pa
 In some cases, this approach may be enough. However, it’s often necessary to create pages from data that can't be hard-coded.
 
 ## Create pages from JSON with images
+
+<iframe
+  title="Screencast on egghead of creating pages from JSON data in Gatsby."
+  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-3-create-pages-from-json-with-images/embed"
+  class="egghead-video"
+  width=600 height=348
+/>
+
+Video hosted on [egghead.io][egghead].
 
 In many cases, the data for pages can't feasibly be hard-coded into `gatsby-node.js`. More likely it will come from an external source, such as a third-party API, local Markdown, or JSON files.
 
@@ -193,6 +220,15 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
 
 ### Add the necessary plugins to load data into GraphQL
 
+<iframe
+  title="Screencast on egghead of adding data to GraphQL in Gatsby."
+  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-4-make-data-queryable-in-graphql-with-gatsby/embed"
+  class="egghead-video"
+  width=600 height=348
+/>
+
+Video hosted on [egghead.io][egghead].
+
 In order to load the product and image data into GraphQL, we need to add a few [Gatsby plugins](/plugins/). Namely, we need plugins to:
 
 - Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
@@ -261,6 +297,15 @@ The results will appear in the panel between the query and the docs, and they’
 ![GraphQL Playground](./images/why-gql-playground.png)
 
 ### Generate pages with GraphQL
+
+<iframe
+  title="Screencast on egghead of generating pages using GraphQL in Gatsby."
+  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-5-create-pages-in-gatsby-using-graphql/embed"
+  class="egghead-video"
+  width=600 height=348
+/>
+
+Video hosted on [egghead.io][egghead].
 
 In `gatsby-node.js`, we can use the GraphQL query we just wrote to generate pages.
 
@@ -360,3 +405,5 @@ The image is now optimized and lazy loaded.
 After the initial setup, loading data with GraphQL is fairly similar to directly loading JSON, but it provides extra benefits like automatically optimizing images and keeping the data loading in the same place where it’s used.
 
 GraphQL is certainly not required, but the benefits of adopting GraphQL are significant. GraphQL will simplify the process of building and optimizing your pages, so it’s considered a best practice for structuring and writing Gatsby applications.
+
+[egghead]: https://egghead.io/playlists/why-gatsby-uses-graphql-1c319a1c
