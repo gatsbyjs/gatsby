@@ -12,8 +12,8 @@ showImageInArticle: false
 ---
 At the last Gatsby Days conference a couple months ago, I gave a talk about how to talk about Gatsby to your clients or team. See [a recording of that talk here.](https://www.gatsbyjs.com/gatsby-days-positioning-linda) This post is a compliment to that talk and goes into a bit more detail on how to talk about Gatsby to a less-technical audience.
 
-When you’re a developer, choosing the best tool for the job is essential in doing great work but then you may have to convince another stakeholder about your choice. Or if you work with clients, letting them know why you chose a certain tech stack is important because it may impact the final product.   
-  
+When you’re a developer, choosing the best tool for the job is essential in doing great work but then you may have to convince another stakeholder about your choice. Or if you work with clients, letting them know why you chose a certain tech stack is important because it may impact the final product.
+
 So how do you explain all the technical nuance to an audience that doesn’t work in front-end website development every day?
 
 I’ve worked at tech companies large and small over the past decade and one thing I’ve learned over the years is that highly skilled technical people can have a hard time explaining deep technical concepts to a not-as-technical audience. This makes sense because since there is so much to know about certain topics, it’s difficult to know where to start and how to simplify the concepts and still be accurate. To help, I’ve put together some thoughts on how to position Gatsby to your clients and team members.
