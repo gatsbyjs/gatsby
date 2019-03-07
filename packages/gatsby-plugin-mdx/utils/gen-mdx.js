@@ -108,7 +108,16 @@ module.exports = async function genMDX({
   const result = babel.transform(code, {
     configFile: false,
     plugins: [instance.plugin, objRestSpread, htmlAttrToJSXAttr],
-    presets: [require("@babel/preset-react")]
+    presets: [
+      require("@babel/preset-react"),
+      [
+        require("@babel/preset-env"),
+        {
+          useBuiltIns: "entry",
+          modules: "false"
+        }
+      ]
+    ]
   });
 
   const identifiers = Array.from(instance.state.identifiers);
@@ -126,7 +135,7 @@ module.exports = async function genMDX({
   results.scopeIdentifiers = identifiers;
   // TODO: be more sophisticated about these replacements
   results.body = result.code
-    .replace("export default", "return")
+    .replace("export { MDXContent as default };", "return MDXContent;")
     .replace(/\nexport /g, "\n");
 
   /* results.html = renderToStaticMarkup(
