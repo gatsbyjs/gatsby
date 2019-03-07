@@ -5,7 +5,7 @@ import { rhythm, options } from "../utils/typography"
 const Container = ({ children, hasSideBar = true, overrideCSS }) => (
   <div
     css={{
-      maxWidth: hasSideBar ? rhythm(26) : rhythm(36),
+      maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
       margin: `0 auto`,
       padding: `${rhythm(options.blockMarginBottom * 2)} ${rhythm(
         options.blockMarginBottom
