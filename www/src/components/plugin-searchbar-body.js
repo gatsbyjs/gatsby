@@ -360,7 +360,7 @@ const Result = ({ hit, pathname, query }) => {
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
-          padding: rhythm(space[6]),
+          padding: `${rhythm(space[4])} ${rhythm(space[6])}`,
           position: `relative`,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
