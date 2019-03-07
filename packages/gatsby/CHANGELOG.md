@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.23...gatsby@2.1.24) (2019-03-07)
+
+### Features
+
+- **gatsby:** add pnp resolving by passing rootdir in pkg resolving ([#12163](https://github.com/gatsbyjs/gatsby/issues/12163)) ([72e0d6f](https://github.com/gatsbyjs/gatsby/commit/72e0d6f)), closes [#10245](https://github.com/gatsbyjs/gatsby/issues/10245)
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.22...gatsby@2.1.23) (2019-03-05)
 
 ### Bug Fixes
