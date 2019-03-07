@@ -27,9 +27,9 @@ module.exports = {
     speedSlow: `350ms`,
   },
   radii: [0, 2, 4, 8, 16, 9999, `100%`],
-  boxShadows: {
-    card: { boxShadow: `0 3px 10px rgba(25, 17, 34, 0.075)` },
-    cardHover: { boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)` },
+  shadows: {
+    card: `0 3px 10px rgba(25, 17, 34, 0.075)`,
+    cardHover: `0 10px 42px rgba(25, 17, 34, 0.1)`,
   },
   lineHeights: {
     solid: 1,
