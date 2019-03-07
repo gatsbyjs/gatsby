@@ -38,6 +38,23 @@ class LocalNodeModel {
     this.path = path
   }
 
+  /**
+   * Optional page dependency information.
+   *
+   * @typedef {Object} PageDependencies
+   * @property {string} path
+   * @property {string} [connectionType]
+   */
+
+  /**
+   * Get a node from the store by ID and optional type.
+   *
+   * @param {Object} args
+   * @param {string} args.id ID of the requested node
+   * @param {(string|GraphQLOutputType)} [args.type] Optional type of the node
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {(Node|null)}
+   */
   getNodeById(args, pageDependencies) {
     const { id, type } = args || {}
 
@@ -60,6 +77,15 @@ class LocalNodeModel {
     )
   }
 
+  /**
+   * Get nodes from the store by IDs and optional type.
+   *
+   * @param {Object} args
+   * @param {string[]} args.ids IDs of the requested nodes
+   * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
+   * @param {PageDependencies} [pageDependencies]   *
+   * @returns {Node[]}
+   */
   getNodesByIds(args, pageDependencies) {
     const { ids, type } = args || {}
 
@@ -82,6 +108,14 @@ class LocalNodeModel {
     )
   }
 
+  /**
+   * Get all nodes in the store, or all nodes of a specified type.
+   *
+   * @param {Object} args
+   * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
+   * @param {PageDependencies} [pageDependencies]   *
+   * @returns {Node[]}
+   */
   getAllNodes(args, pageDependencies) {
     const { type } = args || {}
 
@@ -104,6 +138,16 @@ class LocalNodeModel {
     )
   }
 
+  /**
+   * Get nodes of a type matching the specified query.
+   *
+   * @param {Object} args
+   * @param {Object} args.query Query arguments
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {boolean} [args.firstOnly] If true, return only first match
+   * @param {PageDependencies} [pageDependencies]   *
+   * @returns {Promise<Node[]>}
+   */
   async runQuery(args, pageDependencies) {
     const { query, firstOnly, type } = args || {}
 
@@ -149,10 +193,23 @@ class LocalNodeModel {
     )
   }
 
+  /**
+   * Get the names of all node types in the store.
+   *
+   * @returns {string[]}
+   */
   getTypes() {
     return this.nodeStore.getTypes()
   }
 
+  /**
+   * Get the root ancestor node for an object's parent node, or its first
+   * ancestor matching a specified condition.
+   *
+   * @param {Object} obj The object you want to retrieve an ancestor node for
+   * @param {Function} [predicate] Optional condition to match
+   * @returns {(Node|null)}
+   */
   findRootNodeAncestor(...args) {
     return this.nodeStore.findRootNodeAncestor(...args)
   }
@@ -161,7 +218,7 @@ class LocalNodeModel {
 const getNodeById = (nodeStore, id) => {
   // This is for cases when the `id` has already been resolved
   // to a full Node for the input filter, and is also in the selection
-  // set. E.g. `{ foo(parent: { id: { eq: 1 } } ) { parent { id }} }`.
+  // set. E.g. `{ foo(parent: { id: { eq: 1 } } ) { parent { id } } }`.
   if (_.isPlainObject(id) && id.id) {
     return id
   }
