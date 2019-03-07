@@ -4756,6 +4756,7 @@
     - Auction
     - Real Estate
     - Government
+  featured: false
 - title: SpotYou
   main_url: "https://spotyou.joshglazer.com"
   url: "https://spotyou.joshglazer.com"
