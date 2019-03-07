@@ -199,15 +199,12 @@ jobs:
 
   build_gatsbyjs_org:
     executor: node
+    environment:
+      GATSBY_SCREENSHOT_PLACEHOLDER: true
     steps:
       - link_and_run:
           path: www
           command: yarn build
-          steps:
-            - run: |
-                echo 'export GATSBY_SCREENSHOT_PLACEHOLDER=true' >> $BASH_ENV
-                echo 'export GITHUB_API_TOKEN="$GITHUB_API_TOKEN"' >> $BASH_ENV
-                source $BASH_ENV
 
 workflows:
   version: 2

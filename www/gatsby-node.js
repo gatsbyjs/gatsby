@@ -10,11 +10,14 @@ const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
+const isCI = require(`is-ci`)
+
 const startersRedirects = require(`./starter-redirects.json`)
 
 let ecosystemFeaturedItems
 
 if (
+  !isCI &&
   process.env.gatsby_executing_command === `build` &&
   !process.env.GITHUB_API_TOKEN
 ) {
