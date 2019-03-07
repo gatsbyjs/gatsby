@@ -83,6 +83,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     width: 125px;
 
     a {
+      color: white;
       padding: ${rhythm(space[5])};
       justify-content: flex-start;
 
