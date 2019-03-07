@@ -87,19 +87,19 @@ const VerticalLine = () => (
 )
 
 const box = {
+  background: `#fff`,
   border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radii[2],
-  padding: `${rhythm(space[5])} ${rhythm(space[5])} 0`,
-  background: `#fff`,
+  padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
 }
 
 const borderAndBoxShadow = {
-  boxShadow: presets.shadows.card,
-  border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
-  width: `100%`,
+  border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radii[1],
+  boxShadow: presets.shadows.card,
   transform: `translateZ(0)`,
+  width: `100%`,
 }
 
 const SourceItems = ({ children }) => (
@@ -115,7 +115,7 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(space[2])} ${rhythm(2 / 4)}` }
+const boxPadding = { padding: `${rhythm(space[3])} ${rhythm(space[4])}` }
 
 const SourceItem = ({ children }) => (
   <div
@@ -148,10 +148,10 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: colors.gatsby,
+      color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      ...scale(0),
+      ...scale(1 / 5),
     }}
   >
     {children}
@@ -163,10 +163,9 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: presets.lineHeights.dense,
       display: `block`,
-      color: colors.gatsby,
-      [presets.Xl]: {
-        fontSize: scale(-1 / 5).fontSize,
-      },
+      color: colors.gray.calm,
+      fontSize: scale(-1 / 4).fontSize,
+      fontFamily: options.systemFontFamily.join(`,`),
     }}
   >
     {children}
@@ -179,7 +178,7 @@ const ItemDescriptionLink = ({ to, children }) => (
   </Link>
 )
 
-const Gatsby = ({ children }) => (
+const Gatsby = () => (
   <div
     css={{
       ...borderAndBoxShadow,
@@ -254,9 +253,8 @@ const Diagram = () => (
       >
         <h1
           css={{
-            marginTop: 0, //rhythm(1 / 4),
+            marginTop: 0,
             marginBottom: rhythm(space[6]),
-            ...scale(0.9),
             [presets.Md]: {
               marginTop: rhythm(space[6]),
             },
