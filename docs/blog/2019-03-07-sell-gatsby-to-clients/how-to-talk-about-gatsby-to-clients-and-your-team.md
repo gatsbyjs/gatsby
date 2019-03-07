@@ -12,7 +12,7 @@ showImageInArticle: false
 ---
 At the last Gatsby Days conference a couple months ago, I gave a talk about how to talk about Gatsby to your clients or team. See [a recording of that talk here.](https://www.gatsbyjs.com/gatsby-days-positioning-linda "gatsby days selling gatsby to clients") This post is a compliment to that talk and goes into a bit more detail on how to talk about Gatsby to a less-technical audience.
 
-When you’re a developer, choosing the best tool for the job is essential in doing great work but then you may have to convince another stakeholder about your choice. Or if you work with clients, letting them know why you chose a certain tech stack is important because it may impact the final product. 
+When you’re a developer, choosing the best tool for the job is essential in doing great work but then you may have to convince another stakeholder about your choice. Or if you work with clients, letting them know why you chose a certain tech stack is important because it may impact the final product.
 
 So how do you explain all the technical nuance to an audience that doesn’t work in front-end website development every day?
 
@@ -27,6 +27,7 @@ The website goal could be to increase brand awareness, generate leads, sell prod
 * SEO (Search Engine Optimization)
 * Lead conversion
 * Bounce rates
+* Team Productivity
 * Revenue
 
 Keep your audience and their priorities in mind and be sure to talk about these things when you recommend tools for the job. I’ll dive into a few of these business outcomes later.
