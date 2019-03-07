@@ -13,8 +13,9 @@ const MastheadContent = () => (
       paddingBottom: rhythm(2),
       paddingTop: rhythm(2),
       textAlign: `center`,
-      [presets.Lg]: {
+      [presets.Md]: {
         paddingBottom: rhythm(3),
+        paddingTop: rhythm(3),
       },
     }}
   >
@@ -35,16 +36,16 @@ const MastheadContent = () => (
       css={{
         color: colors.gray.copy,
         fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: scale(1 / 5).fontSize,
+        fontSize: scale(1 / 4).fontSize,
         maxWidth: rhythm(26),
         margin: `0 auto 2rem`,
         WebkitFontSmoothing: `antialiased`,
         [presets.Sm]: {
-          fontSize: scale(2 / 5).fontSize,
+          fontSize: scale(2 / 4).fontSize,
         },
         [presets.Lg]: {
           maxWidth: rhythm(28),
-          fontSize: scale(3 / 5).fontSize,
+          fontSize: scale(3 / 4).fontSize,
         },
       }}
     >
