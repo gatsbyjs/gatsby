@@ -446,7 +446,7 @@ const Result = ({ hit, pathname, query }) => {
             )}
           <span
             css={{
-              width: `4.5em`,
+              width: `5em`,
               textAlign: `right`,
             }}
           >
