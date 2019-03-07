@@ -45,6 +45,7 @@ const _options = {
       "h1,h2,h4,h5,h6": {
         letterSpacing: `-0.0075em`,
       },
+      h1: { color: `#000` },
       h2: {
         marginTop: rhythm(options.blockMarginBottom * 2),
       },
