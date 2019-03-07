@@ -12,6 +12,17 @@ module.exports = Machine(
       componentPath: ``,
       query: ``,
     },
+    on: {
+      BOOTSTRAP_FINISHED: {
+        actions: `setBootstrapFinished`,
+      },
+      DELETE_PAGE: {
+        actions: `deletePage`,
+      },
+      NEW_PAGE_CREATED: {
+        actions: `setPage`,
+      },
+    },
     states: {
       inactive: {
         on: {
@@ -33,75 +44,36 @@ module.exports = Machine(
           QUERY_EXTRACTED: `runningPageQueries`,
           QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
-          NEW_PAGE_CREATED: {
-            actions: `setPage`,
-          },
-          DELETE_PAGE: {
-            actions: `deletePage`,
-          },
         },
       },
       extractingQueries: {
         onEntry: [`extractQueries`],
         on: {
-          BOOTSTRAP_FINISHED: {
-            actions: `setBootstrapFinished`,
-          },
           QUERY_CHANGED: `runningPageQueries`,
           QUERY_DID_NOT_CHANGE: `idle`,
           QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
-          NEW_PAGE_CREATED: {
-            actions: `setPage`,
-          },
-          DELETE_PAGE: {
-            actions: `deletePage`,
-          },
         },
       },
       queryExtractionGraphQLError: {
         on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
-          BOOTSTRAP_FINISHED: {
-            actions: `setBootstrapFinished`,
-          },
         },
       },
       queryExtractionBabelError: {
         on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
-          BOOTSTRAP_FINISHED: {
-            actions: `setBootstrapFinished`,
-          },
         },
       },
       runningPageQueries: {
         onEntry: [`setQuery`, `runPageComponentQueries`],
         on: {
-          BOOTSTRAP_FINISHED: {
-            actions: `setBootstrapFinished`,
-          },
           QUERIES_COMPLETE: `idle`,
-          NEW_PAGE_CREATED: {
-            actions: `setPage`,
-          },
-          DELETE_PAGE: {
-            actions: `deletePage`,
-          },
         },
       },
       idle: {
         on: {
           PAGE_COMPONENT_CHANGED: `extractingQueries`,
-          BOOTSTRAP_FINISHED: {
-            actions: `setBootstrapFinished`,
-          },
-          NEW_PAGE_CREATED: {
-            actions: `setPage`,
-          },
-          DELETE_PAGE: {
-            actions: `deletePage`,
-          },
         },
       },
     },
