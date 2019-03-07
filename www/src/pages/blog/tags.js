@@ -144,7 +144,7 @@ class TagsPage extends React.Component {
                   if (currentLetter !== firstLetter) {
                     currentLetter = firstLetter
                     return (
-                      <React.Fragment>
+                      <React.Fragment key={`letterheader-${currentLetter}`}>
                         <h4 css={{ width: `100%`, flexBasis: `100%` }}>
                           {currentLetter.toUpperCase()}
                         </h4>
@@ -175,7 +175,10 @@ export const pageQuery = graphql`
   query {
     allMarkdownRemark(
       limit: 2000
-      filter: { fileAbsolutePath: { regex: "/docs.blog/" } }
+      filter: {
+        fields: { released: { eq: true } }
+        fileAbsolutePath: { regex: "/docs.blog/" }
+      }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

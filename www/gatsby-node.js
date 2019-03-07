@@ -66,9 +66,90 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  // Redirects for new top-level Contributing section
   createRedirect({
-    fromPath: `/community/`, // Moved "Community" page from /community to /docs/community
-    toPath: `/docs/community/`,
+    fromPath: `/community/`, // Moved "Community" page from /community to /contributing/community
+    toPath: `/contributing/community/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/community/`, // Moved "Community" page from /docs/community to /contributing/community
+    toPath: `/contributing/community/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/pair-programming/`,
+    toPath: `/contributing/pair-programming/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-create-an-issue/`,
+    toPath: `/contributing/how-to-create-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-label-an-issue/`,
+    toPath: `/contributing/how-to-label-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/contributor-swag/`,
+    toPath: `/contributing/contributor-swag/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-run-a-gatsby-workshop/`,
+    toPath: `/contributing/how-to-run-a-gatsby-workshop/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-pitch-gatsby/`,
+    toPath: `/contributing/how-to-pitch-gatsby/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/code-of-conduct/`,
+    toPath: `/contributing/code-of-conduct/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/gatsby-style-guide/`,
+    toPath: `/contributing/gatsby-style-guide/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-contribute/`,
+    toPath: `/contributing/how-to-contribute/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/templates/`,
+    toPath: `/contributing/docs-templates/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/site-showcase-submissions/`,
+    toPath: `/contributing/site-showcase-submissions/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/submit-to-creator-showcase/`,
+    toPath: `/contributing/submit-to-creator-showcase/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/submit-to-starter-library/`,
+    toPath: `/contributing/submit-to-starter-library/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/submit-to-plugin-library/`,
+    toPath: `/contributing/submit-to-plugin-library/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/rfc-process/`,
+    toPath: `/contributing/rfc-process/`,
     isPermanent: true,
   })
 
@@ -129,6 +210,24 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/add-offline-support`,
     toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-source-plugin/`,
+    toPath: `/docs/creating-a-source-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-transformer-plugin/`,
+    toPath: `/docs/creating-a-transformer-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/plugin-authoring/`,
+    toPath: `/docs/how-plugins-work/`,
     isPermanent: true,
   })
 
@@ -441,6 +540,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         }
       })
 
+      // redirecting cypress-gatsby => gatsby-cypress
+      createRedirect({
+        fromPath: `/packages/cypress-gatsby/`,
+        toPath: `/packages/gatsby-cypress/`,
+        isPermanent: true,
+      })
+
       // Read featured starters and plugins for Ecosystem
       ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 
@@ -488,7 +594,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         let released = false
         const date = _.get(node, `frontmatter.date`)
         if (date) {
-          released = moment().isSameOrAfter(moment.utc(date))
+          released = moment.utc().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
 

@@ -54,7 +54,7 @@ class BlogPostTemplate extends React.Component {
           lineHeight: 1.3,
           margin: 0,
           color: colors.gray.calm,
-          [presets.Mobile]: {
+          [presets.Xs]: {
             ...scale(-1 / 5),
             lineHeight: 1.3,
           },
@@ -137,7 +137,7 @@ class BlogPostTemplate extends React.Component {
                 display: `flex`,
                 marginTop: rhythm(-1 / 4),
                 marginBottom: rhythm(1),
-                [presets.Tablet]: {
+                [presets.Md]: {
                   marginTop: rhythm(1 / 2),
                   marginBottom: rhythm(2),
                 },
@@ -224,7 +224,7 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Desktop]: {
+                [presets.Lg]: {
                   marginBottom: rhythm(5 / 4),
                 },
               }}
@@ -264,12 +264,12 @@ class BlogPostTemplate extends React.Component {
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(2),
-            [presets.Tablet]: {
+            [presets.Md]: {
               marginTop: rhythm(2),
               paddingBottom: rhythm(1),
               paddingTop: rhythm(1),
             },
-            [presets.Desktop]: {
+            [presets.Lg]: {
               marginTop: rhythm(3),
               paddingBottom: rhythm(2),
               paddingTop: rhythm(2),
@@ -277,12 +277,10 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <div
-              css={{ [presets.Phablet]: { display: `flex`, width: `100%` } }}
-            >
+            <div css={{ [presets.Sm]: { display: `flex`, width: `100%` } }}>
               <div
                 css={{
-                  [presets.Phablet]: {
+                  [presets.Sm]: {
                     width: `50%`,
                   },
                 }}
@@ -292,7 +290,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Tablet]: {
+                        [presets.Md]: {
                           marginLeft: `-1rem`,
                         },
                       }}
@@ -307,7 +305,7 @@ class BlogPostTemplate extends React.Component {
                 css={{
                   textAlign: `right`,
                   marginTop: rhythm(1),
-                  [presets.Phablet]: { marginTop: 0, width: `50%` },
+                  [presets.Sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -315,7 +313,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Tablet]: {
+                        [presets.Md]: {
                           marginRight: `-1rem`,
                         },
                       }}

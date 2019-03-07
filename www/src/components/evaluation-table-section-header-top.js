@@ -31,21 +31,21 @@ const superHeader = () => (
           // fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
           background: colors.ui.whisper,
-          "&:first-child": {
+          "span:first-of-type": {
             borderTopLeftRadius: presets.radiusLg,
             textAlign: `left`,
           },
           "&:last-child": {
             borderTopRightRadius: presets.radiusLg,
           },
-          [presets.Mobile]: {
+          [presets.Xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [presets.Tablet]: {
+          [presets.Md]: {
             width: 150,
           },
-          [presets.Desktop]: {
+          [presets.Lg]: {
             width: 175,
           },
         }}
