@@ -1,10 +1,11 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import { colors } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import { colors, space } from "../../utils/presets"
+import { options, rhythm } from "../../utils/typography"
 
-const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
+const paddingLeft = level =>
+  level === 0 ? rhythm((level + 1) * space[6]) : rhythm((level + 1) * space[3])
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -94,7 +95,7 @@ const SplitButton = ({
     <span
       css={{
         flexGrow: 1,
-        borderRight: `1px solid ${colors.ui.light}`,
+        borderRight: `1px solid ${colors.ui.border}`,
       }}
     >
       {createLink({
