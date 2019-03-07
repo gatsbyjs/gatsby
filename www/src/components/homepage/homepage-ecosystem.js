@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
@@ -27,7 +27,7 @@ const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     flex-direction: row;
     margin: 0 -8px;
   }
@@ -39,7 +39,7 @@ const Section = styled(EcosystemSection)`
   margin-bottom: ${rhythm(presets.gutters.default / 2)};
   padding: ${rhythm(options.blockMarginBottom)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin: 0 8px 0px;
     padding: ${rhythm(options.blockMarginBottom)};
 
@@ -55,7 +55,7 @@ const SubTitle = styled(`h3`)`
   margin-bottom: 0.25rem;
   margin-top: 2rem;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-left: 3rem;
     margin-bottom: 1rem;
   }
@@ -64,14 +64,14 @@ const SubTitle = styled(`h3`)`
 const FeaturedItems = styled(HorizontalScroller)`
   margin: 0 -${rhythm(presets.gutters.default / 2)};
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin: 0;
     overflow-x: visible;
   }
 `
 
 const FeaturedItemsList = styled(HorizontalScrollerContent)`
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -82,7 +82,7 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 const FeaturedItem = styled(EcosystemFeaturedItem)`
   margin-right: ${rhythm(presets.gutters.default / 2)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     border-bottom: none;
     margin: ${rhythm(presets.gutters.default / 2)};
     margin-top: 0;
@@ -90,10 +90,10 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     width: 320px;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-basis: 28%;
 
-    :nth-child(4) {
+    :nth-of-type(4) {
       margin-left: 8%;
     }
   }
@@ -106,11 +106,11 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     box-shadow: none;
     font-weight: normal;
 
-    ${presets.Tablet} {
+    ${presets.Md} {
       border-radius: ${presets.radiusLg}px;
     }
 
-    ${presets.Desktop} {
+    ${presets.Lg} {
       :hover {
         background: ${colors.ui.whisper};
       }
@@ -155,6 +155,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
         label: `Explore the Gatsby Ecosystem`,
         to: `/ecosystem/`,
         icon: ArrowForwardIcon,
+        tracking: `Plugins - Explore the Gatsby Ecosystem`,
       },
     ]}
     inverseStyle={true}

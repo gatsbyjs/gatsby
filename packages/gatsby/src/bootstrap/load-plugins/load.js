@@ -8,6 +8,7 @@ const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
 const createNodeId = require(`../../utils/create-node-id`)
+const createRequireFromPath = require(`../../utils/create-require-from-path`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -46,9 +47,11 @@ const createPluginId = (name, pluginObject = null) =>
  * This can be a name of a local plugin, the name of a plugin located in
  * node_modules, or a Gatsby internal plugin. In the last case the pluginName
  * will be an absolute path.
+ * @param {string} rootDir
+ * This is the project location, from which are found the plugins
  * @return {PluginInfo}
  */
-function resolvePlugin(pluginName) {
+function resolvePlugin(pluginName, rootDir) {
   // Only find plugins when we're not given an absolute path
   if (!existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
@@ -81,7 +84,11 @@ function resolvePlugin(pluginName) {
    * which should be located in node_modules.
    */
   try {
-    const resolvedPath = slash(path.dirname(require.resolve(pluginName)))
+    const requireSource =
+      rootDir !== null
+        ? createRequireFromPath(`${rootDir}/:internal:`)
+        : require
+    const resolvedPath = slash(path.dirname(requireSource.resolve(pluginName)))
 
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
@@ -101,7 +108,7 @@ function resolvePlugin(pluginName) {
   }
 }
 
-module.exports = (config = {}) => {
+module.exports = (config = {}, rootDir = null) => {
   // Instantiate plugins.
   const plugins = []
 
@@ -110,7 +117,7 @@ module.exports = (config = {}) => {
   // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const info = resolvePlugin(plugin)
+      const info = resolvePlugin(plugin, rootDir)
 
       return {
         ...info,
@@ -145,7 +152,7 @@ module.exports = (config = {}) => {
         }
       }
 
-      const info = resolvePlugin(plugin.resolve)
+      const info = resolvePlugin(plugin.resolve, rootDir)
 
       return {
         ...info,
@@ -190,7 +197,7 @@ module.exports = (config = {}) => {
   const program = store.getState().program
   plugins.push(
     processPlugin({
-      resolve: `gatsby-plugin-page-creator`,
+      resolve: require.resolve(`gatsby-plugin-page-creator`),
       options: {
         path: slash(path.join(program.directory, `src/pages`)),
         pathCheck: false,

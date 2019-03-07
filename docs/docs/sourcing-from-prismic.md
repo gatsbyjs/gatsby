@@ -31,7 +31,7 @@ In order for Gatsby to grab all information from Prismic you'll need to generate
 First, open a new terminal window and run the following command to create a new site:
 
 ```shell
-npx gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change `prismic-tutorial` in the command above to whatever name you prefer!

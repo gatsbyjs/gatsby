@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
@@ -24,7 +24,7 @@ const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   padding-bottom: 3.5rem;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     margin-left: ${presets.pageHeadingDesktopWidth};
     padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
     padding-bottom: 0;

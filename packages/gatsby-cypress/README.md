@@ -1,11 +1,11 @@
-# cypress-gatsby
+# gatsby-cypress
 
 This package provies additional Cypress commands for use with testing Gatsby
 websites. To use these commands, import the plugin in `cypress/support/index.js`
 as follows:
 
 ```js
-import "cypress-gatsby/commands"
+import "gatsby-cypress/commands"
 ```
 
 Once imported, the following additional commands are available:

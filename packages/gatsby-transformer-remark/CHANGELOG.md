@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.0...gatsby-transformer-remark@2.3.1) (2019-03-05)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Fix unreturned Promise warning ([#12303](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12303)) ([6f8f2c3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/6f8f2c3))
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.6...gatsby-transformer-remark@2.3.0) (2019-02-25)
+
+### Features
+
+- **gatsby-transformer-remark:** add excerptAst to be exported as a GraphQL field ([#11237](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11237)) ([e59d4ca](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/e59d4ca))
+
+## [2.2.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.5...gatsby-transformer-remark@2.2.6) (2019-02-22)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Handle headings with nested text ([#11881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11881)) ([4c0c5c0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/4c0c5c0)), closes [#11879](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11879) [#11879](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11879)
+
 ## [2.2.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.4...gatsby-transformer-remark@2.2.5) (2019-02-12)
 
 ### Bug Fixes

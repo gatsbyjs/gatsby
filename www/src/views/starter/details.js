@@ -15,7 +15,7 @@ const Details = ({
   <div
     css={{
       padding: sharedStyles.gutter,
-      [presets.Desktop]: {
+      [presets.Lg]: {
         padding: sharedStyles.gutterDesktop,
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
@@ -81,7 +81,7 @@ const Details = ({
         css={{
           display: `grid`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
-          [presets.Desktop]: {
+          [presets.Lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
             gridGap: 20,
           },
