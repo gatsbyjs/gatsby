@@ -4769,7 +4769,6 @@
   built_by: Josh Glazer
   built_by_url: https://linkedin.com/in/joshglazer/
   featured: false
-- title: A blog with great seo that using gatsby-source-wordpress to fetch posts from backend
 - title: Hesam Kaveh's blog
   description: >
     A blog with great seo that using gatsby-source-wordpress to fetch posts from backend
