@@ -6,6 +6,7 @@ import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import typography, { rhythm, options } from "../utils/typography"
+import presets from "../utils/presets"
 
 class ContributorPageTemplate extends React.Component {
   render() {
