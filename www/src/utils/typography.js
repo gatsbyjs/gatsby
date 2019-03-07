@@ -271,7 +271,7 @@ const _options = {
         background: `none`,
         boxShadow: `none`,
       },
-      ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
+      ".gatsby-highlight, .post .gatsby-resp-image-link": {
         marginLeft: rhythm(-options.blockMarginBottom),
         marginRight: rhythm(-options.blockMarginBottom),
       },
@@ -307,12 +307,10 @@ const _options = {
         margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
       },
       ".egghead-video": {
-        width: `620px`,
-        height: `348px`,
         border: `none`,
       },
       [presets.Lg]: {
-        ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link, .gatsby-code-title": {
+        ".gatsby-highlight, .post .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-options.blockMarginBottom * 1.5),
           marginRight: rhythm(-options.blockMarginBottom * 1.5),
         },
