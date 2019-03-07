@@ -161,7 +161,7 @@ const searchBoxStyles = css`
     border-radius: ${presets.radii[1]}px;
     color: ${colors.gatsby};
     cursor: pointer;
-    width: calc(100% - ${rhythm(6 / 4)});
+    width: calc(100% - ${rhythm(space[6] * 2)});
     margin: ${rhythm(space[6])};
     height: ${rhythm(2)};
     outline: none;
