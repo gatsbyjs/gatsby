@@ -19,7 +19,7 @@ const queueOptions = {
     if (job.id && activePaths.includes(job.id)) {
       cb(null, 10)
     } else {
-      cb(null, undefined)
+      cb(null, 1)
     }
   },
   // Filter out new query jobs if that query is already running.  When the
