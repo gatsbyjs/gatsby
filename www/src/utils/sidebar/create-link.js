@@ -1,7 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import presets, { colors } from "../presets"
+import presets, { colors, space } from "../presets"
+import { rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
@@ -55,7 +56,7 @@ const createLink = ({
 
 const bulletOffset = {
   default: {
-    left: -25,
+    left: -28,
     top: `1.15em`,
   },
   desktop: {
@@ -92,7 +93,7 @@ const styles = {
     },
   },
   link: {
-    paddingRight: 40,
+    paddingRight: rhythm(space[3]),
     minHeight: 40,
     paddingTop: 10,
     paddingBottom: 10,
@@ -102,7 +103,7 @@ const styles = {
     "&&": {
       border: 0,
       boxShadow: `none`,
-      color: colors.gray.copy,
+      color: colors.gray.lightCopy,
       fontWeight: `normal`,
       "&:hover": {
         background: `transparent`,

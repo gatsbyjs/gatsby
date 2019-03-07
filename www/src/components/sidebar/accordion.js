@@ -4,7 +4,7 @@ import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
 import { colors } from "../../utils/presets"
 
-const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
+const paddingLeft = level => level + 1 * 24
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -117,7 +117,7 @@ class Accordion extends React.Component {
           css={{
             ...styles.ul,
             display: isExpanded ? `block` : `none`,
-            paddingBottom: level === 0 && isExpanded ? 40 : false,
+            paddingBottom: level === 0 && isExpanded ? 24 : false,
             "& li": {
               paddingLeft: paddingLeft(level),
             },

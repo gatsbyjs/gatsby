@@ -51,13 +51,13 @@ const TitleButton = ({
     css={{
       ...styles.resetButton,
       ...styles.button,
-      paddingLeft: level === 0 ? 40 : 0,
+      paddingLeft: level === 0 ? 24 : 0,
       paddingRight: `0 !important`,
       minHeight: 40,
       "&:before": {
         ...styles.ulHorizontalDivider,
         bottom: 0,
-        left: level === 0 ? 40 : 0,
+        left: level === 0 ? 24 : 0,
         top: `auto`,
       },
     }}
@@ -86,7 +86,7 @@ const SplitButton = ({
     css={{
       alignItems: `flex-end`,
       display: `flex`,
-      paddingLeft: level === 0 ? 40 : 0,
+      paddingLeft: level === 0 ? 24 : 0,
       position: `relative`,
       width: `100%`,
     }}
@@ -94,7 +94,7 @@ const SplitButton = ({
     <span
       css={{
         flexGrow: 1,
-        borderRight: `1px solid ${colors.ui.border}`,
+        borderRight: `1px solid ${colors.ui.light}`,
       }}
     >
       {createLink({
@@ -194,7 +194,7 @@ const styles = {
     height: 1,
     position: `absolute`,
     right: 0,
-    left: 40,
+    left: 24,
   },
   smallCaps: {
     fontFamily: options.headerFontFamily.join(`,`),

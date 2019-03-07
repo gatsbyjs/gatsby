@@ -9,7 +9,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
   <button
     onClick={onClick}
     css={{
-      fontSize: scale(-2 / 3).fontSize,
+      fontSize: scale(-9 / 21).fontSize,
       lineHeight: presets.lineHeights.solid,
       background: `transparent`,
       border: `none`,
@@ -19,7 +19,6 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       cursor: `pointer`,
       alignItems: `center`,
       flexGrow: 0,
-      marginLeft: `auto`,
       paddingTop: rhythm(options.blockMarginBottom / 3),
       paddingBottom: rhythm(options.blockMarginBottom / 3),
       textAlign: `left`,
@@ -52,7 +51,6 @@ export default ExpandAllButton
 const styles = {
   icon: {
     display: `inline-block`,
-    fontSize: `.9rem`,
     marginLeft: 8,
   },
 }

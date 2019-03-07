@@ -256,12 +256,12 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.ui.border}`,
+    borderRight: `1px solid ${colors.ui.light}`,
     display: `flex`,
     alignItems: `center`,
     height: presets.sidebarUtilityHeight,
     background: colors.ui.whisper,
-    paddingLeft: 40,
+    paddingLeft: 20,
     paddingRight: 8,
     borderBottom: `1px solid ${colors.ui.border}`,
   },
@@ -273,7 +273,7 @@ const styles = {
     overflowY: `auto`,
     transition: `opacity 0.5s ease`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.ui.border}`,
+    borderRight: `1px solid ${colors.ui.light}`,
     "::-webkit-scrollbar": {
       height: `6px`,
       width: `6px`,
