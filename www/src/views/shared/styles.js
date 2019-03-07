@@ -169,9 +169,6 @@ const styles = {
   },
   filterButton: {
     ...scale(-1 / 5),
-    [presets.Md]: {
-      ...scale(-2 / 5),
-    },
     margin: 0,
     alignItems: `flex-start`,
     background: `none`,
