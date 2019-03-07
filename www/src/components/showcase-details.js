@@ -32,7 +32,7 @@ const styles = {
     top: 280,
     width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       ...scale(-1 / 6),
     },
   },
@@ -290,7 +290,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   fontFamily: options.headerFontFamily.join(`,`),
                   padding: gutter,
                   paddingBottom: rhythm(1.5 / 4),
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     padding: gutterDesktop,
                     paddingBottom: rhythm(3 / 4),
                   },
@@ -308,7 +308,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   css={{
                     ...styles.link,
                     fontWeight: `bold`,
-                    [presets.Desktop]: {
+                    [presets.Lg]: {
                       ...scale(-1 / 6),
                     },
                   }}
@@ -319,7 +319,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <span
                     css={{
                       color: colors.gray.calm,
-                      [presets.Desktop]: {
+                      [presets.Lg]: {
                         ...scale(-1 / 6),
                       },
                     }}
@@ -355,7 +355,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   margin: `0 ${gutter}`,
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -369,7 +369,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       fontWeight: `bold`,
                       padding: 20,
                       paddingLeft: 0,
-                      [presets.Desktop]: {
+                      [presets.Lg]: {
                         ...scale(-1 / 6),
                       },
                     }}
@@ -392,7 +392,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
                       borderRight: `1px solid ${colors.ui.light}`,
-                      [presets.Desktop]: {
+                      [presets.Lg]: {
                         ...scale(-1 / 6),
                       },
                     }}
@@ -468,7 +468,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                             backgroundColor: colors.gatsby,
                           },
                         },
-                        [shouldShowVisitButtonOnMobile && presets.Phablet]: {
+                        [shouldShowVisitButtonOnMobile && presets.Sm]: {
                           display: `block`,
                         },
                       }}
@@ -515,7 +515,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     padding: gutterDesktop,
                   },
                 }}

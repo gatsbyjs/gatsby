@@ -11,7 +11,7 @@ const subHeaderTitleStyles = {
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [presets.Mobile]: {
+  [presets.Xs]: {
     height: rhythm(5 / 4),
   },
 }
@@ -65,7 +65,7 @@ const renderSubHeader = props => (
               paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
             },
           },
-          [presets.Mobile]: {
+          [presets.Xs]: {
             paddingTop: rhythm(1 / 2),
             paddingLeft: `${rhythm(1 / 2)} !important`,
             paddingRight: rhythm(1 / 2),

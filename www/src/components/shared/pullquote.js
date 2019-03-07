@@ -25,7 +25,7 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: 2.5rem 0;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     line-height: 1.7;
     margin: 2.5rem -3.5rem;
     padding: 2.8rem 3.5rem;
@@ -55,7 +55,7 @@ const QuotationMark = styled(`span`)`
     fill: ${colors.gatsbyDark};
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -86,7 +86,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${presets.Desktop} {
+    ${presets.Lg} {
       height: 27px;
       width: 27px;
     }

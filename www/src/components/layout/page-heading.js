@@ -8,7 +8,7 @@ import { rhythm, options } from "../../utils/typography"
 const PageHeadingContainer = styled(`header`)`
   padding: ${rhythm(options.blockMarginBottom)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     left: 0;
     position: fixed;
     padding: 0;
@@ -25,7 +25,7 @@ const H1 = styled(`h1`)`
   position: relative;
   width: 100%;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     transform: rotate(-90deg) translate(calc(-100% - 2rem), 0.7rem);
     transform-origin: top left;
   }
@@ -40,7 +40,7 @@ const H1 = styled(`h1`)`
     right: -0.7rem;
     z-index: -1;
 
-    ${presets.Tablet} {
+    ${presets.Md} {
       display: block;
     }
   }
