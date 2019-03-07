@@ -4,7 +4,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import { options, scale, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
@@ -17,8 +17,8 @@ import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = rhythm(presets.space[6])
-const gutterDesktop = rhythm(presets.space[9])
+const gutter = rhythm(space[6])
+const gutterDesktop = rhythm(space[9])
 
 const styles = {
   link: {
@@ -73,12 +73,12 @@ const styles = {
     marginRight: 4,
     verticalAlign: `sub`,
     position: `absolute`,
-    left: `-${rhythm(presets.space[6])}`,
+    left: `-${rhythm(space[6])}`,
     top: `50%`,
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(presets.space[9]),
+    marginLeft: rhythm(space[9]),
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -292,7 +292,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   paddingBottom: rhythm(1.5 / 4),
                   [presets.Lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: rhythm(presets.space[6]),
+                    paddingBottom: rhythm(space[6]),
                   },
                 }}
               >
@@ -456,7 +456,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         fontFamily: options.headerFontFamily.join(`,`),
                         fontWeight: `bold`,
                         marginRight: rhythm(1.5 / 4),
-                        padding: `${rhythm(1 / 5)} ${rhythm(presets.space[4])}`,
+                        padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {

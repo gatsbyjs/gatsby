@@ -3,7 +3,7 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 
 const BlogPostPreviewItem = ({ post, className }) => (
   <article className={className} css={{ position: `relative` }}>
@@ -40,7 +40,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
           css={{
             borderRadius: presets.radii[6],
             display: `inline-block`,
-            marginRight: rhythm(presets.space[3]),
+            marginRight: rhythm(space[3]),
             marginBottom: 0,
             verticalAlign: `top`,
             // prevents image twitch in Chrome when hovering the card

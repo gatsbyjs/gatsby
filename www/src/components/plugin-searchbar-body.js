@@ -17,7 +17,7 @@ import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
-import presets from "../utils/presets"
+import presets, { space } from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { Global, css } from "@emotion/core"
@@ -32,7 +32,7 @@ const updateAfter = 700
 // A couple constants for CSS
 const searchInputHeight = rhythm(7 / 4)
 const searchMetaHeight = rhythm(8 / 4)
-const searchInputWrapperMargin = rhythm(presets.space[6])
+const searchInputWrapperMargin = rhythm(space[6])
 
 /* stylelint-disable */
 const searchBoxStyles = css`
@@ -162,7 +162,7 @@ const searchBoxStyles = css`
     color: ${colors.gatsby};
     cursor: pointer;
     width: calc(100% - ${rhythm(6 / 4)});
-    margin: ${rhythm(presets.space[6])};
+    margin: ${rhythm(space[6])};
     height: ${rhythm(2)};
     outline: none;
     transition: all ${presets.animation.speedDefault}
@@ -258,8 +258,8 @@ class Search extends Component {
               fontFamily: typography.options.headerFontFamily.join(`,`),
               fontSize: scale(1),
               height: searchMetaHeight,
-              paddingLeft: rhythm(presets.space[6]),
-              paddingRight: rhythm(presets.space[6]),
+              paddingLeft: rhythm(space[6]),
+              paddingRight: rhythm(space[6]),
               [presets.Md]: {
                 fontSize: scale(-1 / 4).fontSize,
               },
@@ -305,7 +305,7 @@ class Search extends Component {
             fontSize: 0,
             lineHeight: 0,
             height: 20,
-            marginTop: rhythm(presets.space[6]),
+            marginTop: rhythm(space[6]),
             display: `none`,
           }}
         >
@@ -360,7 +360,7 @@ const Result = ({ hit, pathname, query }) => {
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
-          padding: rhythm(presets.space[6]),
+          padding: rhythm(space[6]),
           position: `relative`,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
@@ -455,7 +455,7 @@ const Result = ({ hit, pathname, query }) => {
             <span
               css={{
                 color: selected ? colors.lilac : colors.gray.bright,
-                marginLeft: rhythm(presets.space[1]),
+                marginLeft: rhythm(space[1]),
               }}
             >
               <DownloadArrow />

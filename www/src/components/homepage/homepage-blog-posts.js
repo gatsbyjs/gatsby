@@ -12,12 +12,12 @@ import {
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${rhythm(presets.space[6])};
+  margin: -6px -${rhythm(space[6])};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -33,7 +33,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${rhythm(presets.space[9])};
+  margin-right: ${rhythm(space[9])};
   position: relative;
 
   :last-child {
@@ -79,11 +79,11 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${rhythm(presets.space[9])};
+    margin-left: ${rhythm(space[9])};
     width: 125px;
 
     a {
-      padding: ${rhythm(presets.space[5])};
+      padding: ${rhythm(space[5])};
       justify-content: flex-start;
 
       &:hover {

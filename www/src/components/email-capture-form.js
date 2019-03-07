@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 import SendIcon from "react-icons/lib/md/send"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
@@ -251,7 +251,7 @@ class EmailCaptureForm extends React.Component {
               borderTop: `1px solid ${colors.ui.light}`,
               fontFamily: options.headerFontFamily.join(`,`),
               marginTop: rhythm(3),
-              paddingTop: `${rhythm(presets.space[5])}`,
+              paddingTop: `${rhythm(space[5])}`,
               ...overrideCSS,
             }}
           >

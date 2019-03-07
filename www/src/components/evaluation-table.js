@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
@@ -58,7 +58,7 @@ class EvaluationTable extends Component {
                 marginRight: `auto`,
                 padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
                 [presets.Xs]: {
-                  padding: `${rhythm(presets.space[3])} 0 ${rhythm(
+                  padding: `${rhythm(space[3])} 0 ${rhythm(
                     presets.space[3]
                   )} ${rhythm(1 / 2)}`,
                 },
@@ -181,8 +181,8 @@ class EvaluationTable extends Component {
                               paddingRight: `${rhythm(1 / 4)}`,
                               paddingLeft: `${rhythm(1 / 4)}`,
                               [presets.Xs]: {
-                                paddingRight: `${rhythm(presets.space[3])}`,
-                                paddingLeft: `${rhythm(presets.space[3])}`,
+                                paddingRight: `${rhythm(space[3])}`,
+                                paddingLeft: `${rhythm(space[3])}`,
                               },
                               [presets.Sm]: {
                                 paddingRight: `${rhythm(2)}`,

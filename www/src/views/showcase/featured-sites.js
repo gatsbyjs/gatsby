@@ -9,7 +9,7 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
 import { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -150,8 +150,8 @@ class FeaturedSites extends Component {
               display: `flex`,
               overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${rhythm(presets.space[6])}`,
-              padding: `3px ${rhythm(presets.space[6])} 0`,
+              margin: `0 -${rhythm(space[6])}`,
+              padding: `3px ${rhythm(space[6])} 0`,
               ...styles.scrollbar,
             }}
           >
@@ -223,7 +223,7 @@ class FeaturedSites extends Component {
               <a
                 href="#showcase"
                 css={{
-                  marginRight: `${rhythm(presets.space[6])} !important`,
+                  marginRight: `${rhythm(space[6])} !important`,
                   backgroundColor: hex2rgba(colors.ui.light, 0.25),
                   borderRadius: presets.radii[1],
                   textAlign: `center`,
@@ -292,7 +292,7 @@ class FeaturedSites extends Component {
               position: `absolute`,
               top: `0`,
               bottom: rhythm(options.blockMarginBottom),
-              right: `-${rhythm(presets.space[6])}`,
+              right: `-${rhythm(space[6])}`,
               width: 60,
               pointerEvents: `none`,
               background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,

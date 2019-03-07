@@ -8,7 +8,7 @@ import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 
 const legendBorderColor = colors.ui.light
 
@@ -207,7 +207,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: `80%`, marginTop: rhythm(presets.space[5]) }}>
+  <p css={{ fontSize: `80%`, marginTop: rhythm(space[5]) }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

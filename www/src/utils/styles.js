@@ -1,7 +1,7 @@
 import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
-import presets, { colors } from "./presets"
+import presets, { colors, space } from "./presets"
 import { rhythm, scale, options } from "./typography"
 
 const stripeAnimation = keyframes({
@@ -45,7 +45,7 @@ export const buttonStyles = {
     textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${rhythm(2 / 5)} ${rhythm(presets.space[3])}`,
+    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     backgroundSize: `30px 30px`,
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
@@ -68,7 +68,7 @@ export const buttonStyles = {
       padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
     },
     [presets.Xxl]: {
-      padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[5])}`,
+      padding: `${rhythm(space[3])} ${rhythm(space[5])}`,
     },
   },
   secondary: {
@@ -78,37 +78,37 @@ export const buttonStyles = {
   },
   large: {
     fontSize: scale(1 / 5).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(presets.space[3])}`,
+    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
       fontSize: scale(2 / 5).fontSize,
       padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
     },
     [presets.Xxl]: {
-      padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[5])}`,
+      padding: `${rhythm(space[3])} ${rhythm(space[5])}`,
     },
   },
   small: {
     fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(presets.space[3])}`,
+    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
       fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(presets.space[3])}`,
+      padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     },
     [presets.Xxl]: {
       fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(presets.space[3])}`,
+      padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     },
   },
   tiny: {
     fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(1 / 5)} ${rhythm(presets.space[2])}`,
+    padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     [presets.Md]: {
       fontSize: scale(-1 / 4).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(presets.space[2])}`,
+      padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     },
     [presets.Xxl]: {
       fontSize: scale(-1 / 5).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(presets.space[2])}`,
+      padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     },
   },
   ondark: {
@@ -168,7 +168,7 @@ export const formInput = {
   borderRadius: presets.radii[1],
   color: colors.brand,
   fontFamily: options.headerFontFamily.join(`,`),
-  padding: rhythm(presets.space[3]),
+  padding: rhythm(space[3]),
   verticalAlign: `middle`,
   transition: `all ${presets.animation.speedDefault} ${
     presets.animation.curveDefault

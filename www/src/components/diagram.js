@@ -3,7 +3,7 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -89,7 +89,7 @@ const VerticalLine = () => (
 const box = {
   border: `1px solid ${colors.ui.light}`,
   borderRadius: presets.radii[2],
-  padding: `${rhythm(presets.space[5])} ${rhythm(presets.space[5])} 0`,
+  padding: `${rhythm(space[5])} ${rhythm(space[5])} 0`,
   background: `#fff`,
 }
 
@@ -115,13 +115,13 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(presets.space[2])} ${rhythm(2 / 4)}` }
+const boxPadding = { padding: `${rhythm(space[2])} ${rhythm(2 / 4)}` }
 
 const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
-      padding: `0 ${rhythm(presets.space[4])} ${rhythm(presets.space[5])}`,
+      padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
       display: `flex`,
       [presets.Xs]: {
         flex: `1 1 50%`,
@@ -183,7 +183,7 @@ const Gatsby = ({ children }) => (
   <div
     css={{
       ...borderAndBoxShadow,
-      padding: rhythm(presets.space[5]),
+      padding: rhythm(space[5]),
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
@@ -247,7 +247,7 @@ const Diagram = () => (
         className="Diagram"
         css={{
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: rhythm(presets.space[9]),
+          padding: rhythm(space[9]),
           textAlign: `center`,
           flex: `1 1 100%`,
         }}
@@ -255,10 +255,10 @@ const Diagram = () => (
         <h1
           css={{
             marginTop: 0, //rhythm(1 / 4),
-            marginBottom: rhythm(presets.space[6]),
+            marginBottom: rhythm(space[6]),
             ...scale(0.9),
             [presets.Md]: {
-              marginTop: rhythm(presets.space[6]),
+              marginTop: rhythm(space[6]),
             },
           }}
         >
@@ -310,8 +310,8 @@ const Diagram = () => (
               css={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
-                paddingTop: rhythm(presets.space[3]),
-                paddingBottom: rhythm(presets.space[3]),
+                paddingTop: rhythm(space[3]),
+                paddingBottom: rhythm(space[3]),
                 width: `auto`,
                 display: `inline-block`,
               }}
@@ -334,7 +334,7 @@ const Diagram = () => (
           <div
             css={{
               ...box,
-              paddingBottom: rhythm(presets.space[5]),
+              paddingBottom: rhythm(space[5]),
             }}
           >
             <ItemTitle>Static Web Host</ItemTitle>

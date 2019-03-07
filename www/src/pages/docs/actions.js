@@ -5,7 +5,7 @@ import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
-import presets from "../../utils/presets"
+import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -52,7 +52,7 @@ class ActionCreatorsDocs extends React.Component {
               }}
             />
           </div>
-          <h2 css={{ marginBottom: rhythm(presets.space[3]) }}>Functions</h2>
+          <h2 css={{ marginBottom: rhythm(space[3]) }}>Functions</h2>
           <ul css={{ ...scale(-1 / 5) }}>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>

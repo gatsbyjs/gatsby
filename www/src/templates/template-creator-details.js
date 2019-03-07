@@ -6,7 +6,7 @@ import typography, { rhythm, scale, options } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
@@ -87,7 +87,7 @@ class CreatorTemplate extends Component {
         <main
           role="main"
           css={{
-            padding: rhythm(presets.space[6]),
+            padding: rhythm(space[6]),
             paddingBottom: `10vh`,
             display: `flex`,
             flexDirection: `column`,
@@ -95,7 +95,7 @@ class CreatorTemplate extends Component {
             justifyContent: `center`,
             width: `100%`,
             [breakpoint2Columns]: {
-              paddingBottom: rhythm(presets.space[6]),
+              paddingBottom: rhythm(space[6]),
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
@@ -104,7 +104,7 @@ class CreatorTemplate extends Component {
         >
           <div
             css={{
-              margin: rhythm(presets.space[6]),
+              margin: rhythm(space[6]),
               marginBottom: rhythm(options.blockMarginBottom / 4),
               flexGrow: `1`,
               width: `100%`,
@@ -125,7 +125,7 @@ class CreatorTemplate extends Component {
           </div>
           <div
             css={{
-              margin: rhythm(presets.space[6]),
+              margin: rhythm(space[6]),
               flex: `1`,
               width: `100%`,
               [presets.Lg]: {
@@ -239,7 +239,7 @@ class CreatorTemplate extends Component {
                       key={site.node.title}
                       css={{
                         "&&": {
-                          marginRight: rhythm(presets.space[6]),
+                          marginRight: rhythm(space[6]),
                           borderBottom: `none`,
                           boxShadow: `none`,
                           transition: `all ${presets.animation.speedDefault} ${

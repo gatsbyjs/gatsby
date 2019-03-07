@@ -5,7 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -158,7 +158,7 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${rhythm(presets.space[6])}`,
+              paddingTop: `${rhythm(space[6])}`,
               [presets.Sm]: {
                 height: presets.headerHeight,
                 paddingTop: `0px`,
@@ -217,7 +217,7 @@ export default class FilteredStarterLibrary extends Component {
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(presets.space[5]),
+                    paddingLeft: rhythm(space[5]),
                     width: rhythm(6),
                     ":focus": {
                       outline: `${colors.wisteria} solid thin`,

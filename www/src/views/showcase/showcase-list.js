@@ -8,7 +8,7 @@ import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { rhythm } from "../../utils/typography"
-import presets from "../../utils/presets"
+import presets, { space } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
@@ -47,7 +47,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
               >
                 <div
                   css={{
-                    paddingRight: rhythm(presets.space[5]),
+                    paddingRight: rhythm(space[5]),
                     lineHeight: presets.lineHeights.dense,
                   }}
                 >

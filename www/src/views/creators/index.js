@@ -6,7 +6,7 @@ import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -109,11 +109,11 @@ class CreatorsView extends Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            padding: rhythm(presets.space[6]),
+            padding: rhythm(space[6]),
             paddingBottom: `10vh`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             [presets.Md]: {
-              paddingBottom: rhythm(presets.space[6]),
+              paddingBottom: rhythm(space[6]),
             },
           }}
         >
@@ -190,7 +190,7 @@ const styles = {
   creatorCard: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(presets.space[6]),
+    margin: rhythm(space[6]),
     minWidth: 200,
     maxWidth: 240,
     flex: `1 0 0`,

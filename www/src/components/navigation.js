@@ -6,12 +6,12 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(presets.space[2])
+const navItemHorizontalSpacing = rhythm(space[2])
 
 const iconColor = colors.lilac
 
@@ -196,8 +196,8 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(presets.space[6]),
-    paddingRight: rhythm(presets.space[6]),
+    paddingLeft: rhythm(space[6]),
+    paddingRight: rhythm(space[6]),
     fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
@@ -247,7 +247,7 @@ const styles = {
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(presets.space[3]),
+    marginRight: rhythm(space[3]),
     textDecoration: `none`,
   },
 }

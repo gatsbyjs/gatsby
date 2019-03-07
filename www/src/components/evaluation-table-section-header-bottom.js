@@ -1,13 +1,14 @@
-import presets, { colors } from "../utils/presets"
 import React from "react"
+
 import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
+import presets, { colors, space } from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
 
 const subHeaderTitleStyles = {
-  height: rhythm(presets.space[6]),
+  height: rhythm(space[6]),
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
@@ -59,19 +60,19 @@ const renderSubHeader = props => (
           "&&": {
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),
-            paddingRight: i >= 1 ? rhythm(presets.space[3]) : 0,
+            paddingRight: i >= 1 ? rhythm(space[3]) : 0,
             paddingBottom: rhythm(1 / 4),
             "&:last-child": {
-              paddingRight: i >= 1 ? rhythm(presets.space[3]) : 0,
+              paddingRight: i >= 1 ? rhythm(space[3]) : 0,
             },
           },
           [presets.Xs]: {
-            paddingTop: rhythm(presets.space[3]),
-            paddingLeft: `${rhythm(presets.space[3])} !important`,
-            paddingRight: rhythm(presets.space[3]),
-            paddingBottom: rhythm(presets.space[3]),
+            paddingTop: rhythm(space[3]),
+            paddingLeft: `${rhythm(space[3])} !important`,
+            paddingRight: rhythm(space[3]),
+            paddingBottom: rhythm(space[3]),
             "&:last-child": {
-              paddingRight: rhythm(presets.space[3]),
+              paddingRight: rhythm(space[3]),
             },
           },
         }}

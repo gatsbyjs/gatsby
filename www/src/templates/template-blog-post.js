@@ -6,7 +6,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import DocSearchContent from "../components/docsearch-content"
@@ -133,9 +133,9 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginTop: rhythm(-1 / 4),
-                marginBottom: rhythm(presets.space[5]),
+                marginBottom: rhythm(space[5]),
                 [presets.Md]: {
-                  marginTop: rhythm(presets.space[3]),
+                  marginTop: rhythm(space[3]),
                   marginBottom: rhythm(2),
                 },
               }}
@@ -173,7 +173,7 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   flex: `1 1 auto`,
-                  marginLeft: rhythm(presets.space[3]),
+                  marginLeft: rhythm(space[3]),
                 }}
               >
                 <Link to={post.frontmatter.author.fields.slug}>
@@ -232,7 +232,7 @@ class BlogPostTemplate extends React.Component {
               !(post.frontmatter.showImageInArticle === false) && (
                 <div
                   css={{
-                    marginBottom: rhythm(presets.space[5]),
+                    marginBottom: rhythm(space[5]),
                   }}
                 >
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
@@ -263,8 +263,8 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(2),
             [presets.Md]: {
               marginTop: rhythm(2),
-              paddingBottom: rhythm(presets.space[5]),
-              paddingTop: rhythm(presets.space[5]),
+              paddingBottom: rhythm(space[5]),
+              paddingTop: rhythm(space[5]),
             },
             [presets.Lg]: {
               marginTop: rhythm(3),
@@ -301,7 +301,7 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(presets.space[5]),
+                  marginTop: rhythm(space[5]),
                   [presets.Sm]: { marginTop: 0, width: `50%` },
                 }}
               >

@@ -1,6 +1,6 @@
 import React from "react"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 
 const bgDefault = `#edebf0`
 const bgFeatureAvailability = colors.accent
@@ -24,8 +24,8 @@ const getBackground = num => {
 }
 
 const basicStyling = {
-  height: rhythm(presets.space[6]),
-  width: rhythm(presets.space[6]),
+  height: rhythm(space[6]),
+  width: rhythm(space[6]),
   borderRadius: `50%`,
   margin: `0 auto`,
   [presets.Xs]: {

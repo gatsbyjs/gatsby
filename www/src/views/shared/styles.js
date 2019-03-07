@@ -1,5 +1,5 @@
 import typography, { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 const { curveDefault, speedDefault } = presets.animation
 
@@ -11,10 +11,10 @@ const styles = {
     flexShrink: 0,
     width: 320,
     marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(presets.space[6]),
+    marginRight: rhythm(space[6]),
     [presets.Xl]: {
       width: 360,
-      marginRight: rhythm(presets.space[9]),
+      marginRight: rhythm(space[9]),
     },
     [presets.Xxl]: {
       width: 400,
@@ -23,13 +23,13 @@ const styles = {
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
-    padding: rhythm(presets.space[6]),
+    padding: rhythm(space[6]),
     justifyContent: `space-evenly`,
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(presets.space[6]),
+    margin: rhythm(space[6]),
     minWidth: 259, //shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
@@ -154,7 +154,7 @@ const styles = {
     paddingTop: rhythm(1 / 8),
     paddingRight: rhythm(1 / 4),
     paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(presets.space[5]),
+    paddingLeft: rhythm(space[5]),
     overflow: `hidden`,
     fontFamily: typography.options.headerFontFamily.join(`,`),
     transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
@@ -183,7 +183,7 @@ const styles = {
     justifyContent: `space-between`,
     outline: `none`,
     padding: 0,
-    paddingRight: rhythm(presets.space[5]),
+    paddingRight: rhythm(space[5]),
     paddingBottom: rhythm(options.blockMarginBottom / 8),
     paddingTop: rhythm(options.blockMarginBottom / 8),
     width: `100%`,
@@ -207,14 +207,14 @@ const styles = {
       lineHeight: presets.lineHeights.solid,
       height: presets.headerHeight,
       margin: 0,
-      paddingLeft: rhythm(presets.space[6]),
-      paddingRight: rhythm(presets.space[6]),
+      paddingLeft: rhythm(space[6]),
+      paddingRight: rhythm(space[6]),
       paddingTop: rhythm(options.blockMarginBottom),
       paddingBottom: rhythm(options.blockMarginBottom),
     },
   },
   sidebarBody: {
-    paddingLeft: rhythm(presets.space[6]),
+    paddingLeft: rhythm(space[6]),
     height: `calc(100vh - ((${presets.headerHeight}) + ${
       presets.bannerHeight
     }))`,
@@ -243,8 +243,8 @@ const styles = {
     flexWrap: `wrap`,
     height: presets.headerHeight,
     justifyContent: `space-between`,
-    paddingLeft: rhythm(presets.space[6]),
-    paddingRight: rhythm(presets.space[6]),
+    paddingLeft: rhythm(space[6]),
+    paddingRight: rhythm(space[6]),
     zIndex: 1,
   },
   contentTitle: {

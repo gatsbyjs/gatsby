@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import typography, { rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -141,7 +141,7 @@ const styles = {
     borderBottom: `1px solid ${colors.ui.light}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
-    padding: `0 ${rhythm(presets.space[6])}`,
+    padding: `0 ${rhythm(space[6])}`,
     height: presets.headerHeight,
     fontFamily: typography.options.headerFontFamily.join(`,`),
   },
@@ -152,7 +152,7 @@ const styles = {
       color: colors.gatsby,
       boxShadow: `none`,
       borderBottom: `none`,
-      marginRight: rhythm(presets.space[3]),
+      marginRight: rhythm(space[3]),
       "&:hover": {
         backgroundColor: `initial`,
       },
@@ -171,7 +171,7 @@ const styles = {
       boxShadow: `none`,
       borderBottom: `none`,
       padding: `${rhythm(typography.options.blockMarginBottom / 4)} .5rem`,
-      marginRight: rhythm(presets.space[2]),
+      marginRight: rhythm(space[2]),
       borderRadius: 40,
       "&:hover": {
         backgroundColor: colors.gatsby,
@@ -182,7 +182,7 @@ const styles = {
   filter: {
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: 40,
-    margin: `${rhythm(presets.space[6])} ${rhythm(presets.space[1])}`,
+    margin: `${rhythm(space[6])} ${rhythm(space[1])}`,
     paddingLeft: rhythm(1 / 4),
     paddingRight: rhythm(1 / 4),
     display: `flex`,

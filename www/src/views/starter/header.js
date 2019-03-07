@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { rhythm, scale, options } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
@@ -10,13 +10,13 @@ const Header = ({ stub }) => (
     className="starter-detail-header"
     css={{
       fontFamily: options.headerFontFamily.join(`,`),
-      padding: rhythm(presets.space[6]),
+      padding: rhythm(space[6]),
       paddingBottom: rhythm(options.blockMarginBottom),
       [presets.Sm]: {
         paddingBottom: 0,
       },
       [presets.Lg]: {
-        padding: rhythm(presets.space[9]),
+        padding: rhythm(space[9]),
         paddingBottom: 0,
       },
     }}

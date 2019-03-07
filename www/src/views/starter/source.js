@@ -1,5 +1,5 @@
 import React from "react"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { options, scale, rhythm } from "../../utils/typography"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
@@ -11,12 +11,12 @@ const Source = ({ startersYaml, repoUrl }) => (
       display: `flex`,
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: options.headerFontFamily.join(`,`),
-      margin: `0 ${rhythm(presets.space[6])}`,
+      margin: `0 ${rhythm(space[6])}`,
       [presets.Sm]: {
         borderTop: 0,
       },
       [presets.Lg]: {
-        margin: `0 ${rhythm(presets.space[9])}`,
+        margin: `0 ${rhythm(space[9])}`,
       },
     }}
   >

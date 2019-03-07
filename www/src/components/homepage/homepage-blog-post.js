@@ -8,7 +8,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
@@ -35,7 +35,7 @@ const HomepageBlogPostRoot = styled(
   ${presets.Lg} {
     flex-shrink: 0;
     margin-right: 0;
-    margin-bottom: ${rhythm(presets.space[9])};
+    margin-bottom: ${rhythm(space[9])};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
 

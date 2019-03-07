@@ -2,14 +2,14 @@ import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${rhythm(presets.space[9])}`,
+      margin: `0 ${rhythm(space[9])}`,
       paddingBottom: rhythm(2),
       paddingTop: rhythm(2),
       textAlign: `center`,

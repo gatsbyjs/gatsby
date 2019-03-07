@@ -10,7 +10,7 @@ import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -33,7 +33,7 @@ export const BlockLink = styled(Link)`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(presets.space[6])};
+  padding: ${rhythm(space[6])};
 
   ${presets.Md} {
     border-radius: 0;
@@ -86,7 +86,7 @@ const Digest = styled(`div`)`
 
 const Thumbnail = styled(`div`)`
   height: 64px;
-  padding-right: ${rhythm(presets.space[4])};
+  padding-right: ${rhythm(space[4])};
   margin-top: ${rhythm(1 / 12)};
 
   img {
