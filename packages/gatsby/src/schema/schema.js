@@ -1,8 +1,10 @@
 const _ = require(`lodash`)
+const invariant = require(`invariant`)
 const {
   isSpecifiedScalarType,
   isIntrospectionType,
   defaultFieldResolver,
+  assertValidName,
 } = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -149,6 +151,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
 
 const processAddedType = ({ schemaComposer, type, parentSpan }) => {
   const typeName = schemaComposer.addAsComposer(type)
+  checkIsAllowedTypeName(typeName)
   const typeComposer = schemaComposer.get(typeName)
   if (
     typeComposer instanceof schemaComposer.InterfaceTypeComposer ||
@@ -159,6 +162,22 @@ const processAddedType = ({ schemaComposer, type, parentSpan }) => {
     }
   }
   schemaComposer.addSchemaMustHaveType(typeComposer)
+}
+
+const checkIsAllowedTypeName = name => {
+  invariant(
+    name !== `Node`,
+    `The GraphQL type name "Node" is reserved for internal use.`
+  )
+  invariant(
+    !name.endsWith(`FilterInput`) && !name.endsWith(`SortInput`),
+    `GraphQL type names ending with "FilterInput" or "SortInput" are reserved for internal use.`
+  )
+  invariant(
+    ![`Boolean`, `Date`, `Float`, `ID`, `Int`, `JSON`, `String`].includes(name),
+    `The GraphQL type name "${name}" is reserved for internal use by built-in scalar types.`
+  )
+  assertValidName(name)
 }
 
 const createTypeComposerFromGatsbyType = ({
