@@ -4757,3 +4757,15 @@
     - Real Estate
     - Government
   featured: false
+- title: SpotYou
+  main_url: "https://spotyou.joshglazer.com"
+  url: "https://spotyou.joshglazer.com"
+  source_url: "https://github.com/joshglazer/spotyou"
+  description: >
+    SpotYou allows you to watch your favorite music videos on Youtube based on your Spotify Preferences
+  categories:
+    - Entertainment
+    - Music
+  built_by: Josh Glazer
+  built_by_url: https://linkedin.com/in/joshglazer/
+  featured: false
