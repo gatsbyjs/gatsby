@@ -463,7 +463,7 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
   // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
   const queryName = _.camelCase(typeName)
-  const queryNamePlural = _.camelCase(`all` + typeName)
+  const queryNamePlural = _.camelCase(`all ${typeName}`)
   schemaComposer.Query.addFields({
     [queryName]: typeComposer.getResolver(`findOne`),
     [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
