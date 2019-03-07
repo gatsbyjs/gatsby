@@ -32,3 +32,5 @@ fields:
   type: boolean
   hidden: false
   default: ''
+pages:
+- docs/blog/2019-03-07-sell-gatsby-to-clients/how-to-talk-about-gatsby-to-clients-and-your-team.md
