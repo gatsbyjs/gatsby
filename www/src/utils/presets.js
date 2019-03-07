@@ -22,7 +22,7 @@ module.exports = {
   gutters: {
     default: 1.25,
   },
-  headerHeight: `3.5rem`,
+  headerHeight: `3.75rem`,
   bannerHeight: `2.5rem`,
   sidebarUtilityHeight: `2.5rem`,
   pageHeadingDesktopWidth: `3.5rem`,
