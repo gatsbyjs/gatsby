@@ -1,7 +1,6 @@
 ---
 label: blog
 hide_body: false
-is_partial: false
 fields:
 - name: title
   label: Title
@@ -33,5 +32,3 @@ fields:
   type: boolean
   hidden: false
   default: ''
-pages:
-- docs/blog/2019-02-04-Hapticmedia-Case-Study/index.md
