@@ -66,10 +66,9 @@ const styles = {
   withTitleHover: {
     "& .title": {
       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-      boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
     },
     "&:hover .title": {
-      boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
+      boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
     },
   },
   loadMoreButton: {
@@ -139,7 +138,7 @@ const styles = {
     },
   },
   meta: {
-    ...scale(-1 / 4),
+    fontSize: scale(-1 / 5).fontSize,
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -169,9 +168,9 @@ const styles = {
     },
   },
   filterButton: {
-    ...scale(-2 / 10),
+    ...scale(-1 / 5),
     [presets.Md]: {
-      ...scale(-4 / 10),
+      ...scale(-2 / 5),
     },
     margin: 0,
     alignItems: `flex-start`,

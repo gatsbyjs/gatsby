@@ -3,7 +3,7 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import styles from "./styles"
-import presets from "../../utils/presets"
+import presets, { colors } from "../../utils/presets"
 import { options } from "../../utils/typography"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
@@ -27,6 +27,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
         "&&": {
           borderBottom: `none`,
           boxShadow: `none`,
+          color: colors.gray.dark,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
           }`,

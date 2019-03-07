@@ -83,6 +83,8 @@ class FeaturedSites extends Component {
             href="#showcase"
             css={{
               ...styles.withTitleHover,
+              fontFamily: options.headerFontFamily.join(`,`),
+
               display: `none`,
               [presets.Sm]: {
                 display: `block`,
@@ -168,6 +170,7 @@ class FeaturedSites extends Component {
                     "&&": {
                       borderBottom: `none`,
                       boxShadow: `none`,
+                      fontFamily: options.headerFontFamily.join(`,`),
                       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
                       "&:hover": { ...styles.screenshotHover },
                     },

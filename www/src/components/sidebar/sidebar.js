@@ -296,7 +296,7 @@ const styles = {
     margin: 0,
     paddingTop: rhythm(options.blockMarginBottom),
     paddingBottom: rhythm(options.blockMarginBottom),
-    fontSize: scale(-2 / 10).fontSize,
+    fontSize: scale(-1 / 5).fontSize,
     "& li": {
       margin: 0,
       listStyle: `none`,

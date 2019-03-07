@@ -164,7 +164,7 @@ const ItemDescription = ({ children }) => (
       lineHeight: presets.lineHeights.dense,
       display: `block`,
       color: colors.gray.calm,
-      fontSize: scale(-1 / 4).fontSize,
+      fontSize: scale(-1 / 5).fontSize,
       fontFamily: options.systemFontFamily.join(`,`),
     }}
   >

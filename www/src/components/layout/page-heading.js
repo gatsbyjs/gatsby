@@ -26,7 +26,7 @@ const H1 = styled(`h1`)`
   width: 100%;
 
   ${presets.Md} {
-    transform: rotate(-90deg) translate(calc(-100% - 2rem), 0.7rem);
+    transform: rotate(-90deg) translate(calc(-100% - 2rem), 1rem);
     transform-origin: top left;
   }
 

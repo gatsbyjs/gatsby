@@ -261,7 +261,7 @@ class Search extends Component {
               paddingLeft: rhythm(space[6]),
               paddingRight: rhythm(space[6]),
               [presets.Md]: {
-                fontSize: scale(-1 / 4).fontSize,
+                fontSize: scale(-1 / 5).fontSize,
               },
             }}
           >
