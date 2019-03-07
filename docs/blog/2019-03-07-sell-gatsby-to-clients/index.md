@@ -1,15 +1,13 @@
 ---
 title: How to Talk about Gatsby to Clients and Your Team
-date: 2019-03-07T08:00:00+00:00
+date: 2019-03-07
 author: Linda Watkins
 tags:
-- agencies
-- sales
-- clients
-image: ''
-showImageInArticle: false
-
+  - agencies
+  - sales
+  - clients
 ---
+
 At the last Gatsby Days conference a couple months ago, I gave a talk about how to talk about Gatsby to your clients or team. See [a recording of that talk here.](https://www.gatsbyjs.com/gatsby-days-positioning-linda "gatsby days selling gatsby to clients") This post is a compliment to that talk and goes into a bit more detail on how to talk about Gatsby to a less-technical audience.
 
 When you’re a developer, choosing the best tool for the job is essential in doing great work but then you may have to convince another stakeholder about your choice. Or if you work with clients, letting them know why you chose a certain tech stack is important because it may impact the final product.
@@ -24,11 +22,11 @@ When talking to a client, marketer, or any team member, consider what they care 
 
 The website goal could be to increase brand awareness, generate leads, sell products, increase revenue, or a combination of several of these. But they may not care that a website development tool leverages React or that it’s the cool new tool among developers. Some business outcomes that marketers and others may care about include:
 
-* SEO (Search Engine Optimization)
-* Lead conversion
-* Bounce rates
-* Team Productivity
-* Revenue
+- SEO (Search Engine Optimization)
+- Lead conversion
+- Bounce rates
+- Team Productivity
+- Revenue
 
 Keep your audience and their priorities in mind and be sure to talk about these things when you recommend tools for the job. I’ll dive into a few of these business outcomes later.
 
@@ -60,18 +58,19 @@ Give examples of websites that use the tech stack you’re recommending for the 
 
 **SEO for the Win!:** In a recent [case study](https://www.gatsbyjs.org/blog/2019-01-30-flamingo-case-study/ "Flamingo case study") with [Harry’s](https://www.harrys.com/en/us "Harry's"), Johnny Lin (Engineering Manager) and his team needed to launch a new website to support the launch of a new brand, [Flamingo](https://www.shopflamingo.com/ "Flamingo"). Flamingo is an e-commerce site that sells shaving products for women. The Flamingo team was preparing a big product launch on a tight timeline and needed a stable, secure website that was optimized for SEO. They knew they needed high search rankings to compete in this competitive market and a Gatsby website was the perfect fit. Johnny talked about the importance of the website:
 
-> We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later. And as an e-commerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.
+<pullquote citation="Johnny Lin">We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later. And as an e-commerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</pullquote>
 
 **60% More Leads:** Zach Muha, Director of Digital Marketing with [Youfit Health Clubs](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study/ "Youfit Health Clubs"), depended on the website to attract new customers. But their site was bogged down with excruciatingly slow page load times (some pages took 22 seconds to load!). This led to a high bounce rate which was killing the lead conversion numbers. Since [rebuilding the site with Gatsby](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study/ "Youfit case study"), Youfit saw a 22% increase in organic search results and a 60% increase in lead conversion. Prior to the website rebuild, Youfit Health Clubs viewed their website as an “add-on” because the team did not see it as critical to the success of the company. But now that they are experiencing first-hand the benefits of Gatsby, their website has become a primary channel for lead generation.
 
 **Easy Onboarding for the Team:** For the Flamingo website launch, it was important that the team worked well together since they were working on a tight timeline. There was no room for major miscommunications or big errors. But because of Gatsby’s excellent documentation and ease of use, Johnny felt confident his team would be successful. He even had confidence in new team members handling the post-launch support.
 
-> We were able to allow newer teammates to be part of the on-call for the launch because Gatsby made it so easy to maintain.
+<pullquote>We were able to allow newer teammates to be part of the on-call for the launch because Gatsby made it so easy to maintain.</pullquote>
 
 **Return on Investment:** When Youfit Health Clubs did a complete site overhaul with Gatsby, they found the page load times decreased by at least a half. Lead conversion rates increased as more people were able to access the website and sign up for a free trial which led to more revenue. By using Gatsby, Youfit significantly increased their organic traffic, lead capture, and ROI.
 
-> We are very happy with the results so far, especially the 60% increase in leads. The website went from a burden to a strategic tool we use to capture leads and generate ROI.  
-> — Zach Muha, Director of Digital Marketing, [Youfit](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study/ "Youfit")
+<pullquote citation="Zach Muha, Director of Digital Marketing @ Youfit">
+We are very happy with the results so far, especially the 60% increase in leads. The website went from a burden to a strategic tool we use to capture leads and generate ROI.  
+</pullquote>
 
 Case studies like the ones above can help show (not just tell) a team member or client what they can expect with Gatsby. So when talking to a marketer, client, or coworker, be sure to touch on the points that are important to them. Let them see what Gatsby can do for them and how it can impact the team, outcomes, and the business.
 
