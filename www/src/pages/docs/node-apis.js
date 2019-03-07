@@ -43,11 +43,12 @@ class NodeAPIDocs extends React.Component {
             {` `}
             for more info.
           </p>
-          <pre>
-            <code
-              className="language-javascript"
-              dangerouslySetInnerHTML={{
-                __html: `// Promise API
+          <div className="gatsby-highlight">
+            <pre className="language-javascript">
+              <code
+                className="language-javascript"
+                dangerouslySetInnerHTML={{
+                  __html: `// Promise API
   exports.createPages = () => {
     return new Promise((resolve, reject) => {
       // do async work
@@ -59,9 +60,10 @@ class NodeAPIDocs extends React.Component {
     // do Async work
     cb()
   }`,
-              }}
-            />
-          </pre>
+                }}
+              />
+            </pre>
+          </div>
           <p>
             If your plugin does not do async work, you can just return directly.
           </p>
