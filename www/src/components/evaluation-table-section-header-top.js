@@ -17,7 +17,9 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[3])} ${rhythm(3 / 8)}`,
+            padding: `${rhythm(presets.space[3])} ${rhythm(
+              presets.space[3]
+            )} ${rhythm(3 / 8)}`,
           },
           display: `none`,
           textTransform: `uppercase`,

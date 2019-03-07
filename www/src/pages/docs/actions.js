@@ -5,6 +5,7 @@ import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
+import presets from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"

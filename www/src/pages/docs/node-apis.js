@@ -5,6 +5,7 @@ import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
+import presets from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -34,7 +35,8 @@ class NodeAPIDocs extends React.Component {
             calling remote APIs, etc.) you must either return a promise or use
             the callback passed to the 3rd argument. Gatsby needs to know when
             plugins are finished as some APIs, to work correctly, require
-            previous APIs to be complete first. See{` `}
+            previous APIs to be complete first. See
+            {` `}
             <Link to="/docs/debugging-async-lifecycles/">
               Debugging Async Lifecycles
             </Link>

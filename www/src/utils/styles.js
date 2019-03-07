@@ -67,7 +67,9 @@ export const buttonStyles = {
       ...scale(1 / 5),
       padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
     },
-    [presets.Xxl]: { padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[5])}` },
+    [presets.Xxl]: {
+      padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[5])}`,
+    },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -81,7 +83,9 @@ export const buttonStyles = {
       fontSize: scale(2 / 5).fontSize,
       padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
     },
-    [presets.Xxl]: { padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[5])}` },
+    [presets.Xxl]: {
+      padding: `${rhythm(presets.space[3])} ${rhythm(presets.space[5])}`,
+    },
   },
   small: {
     fontSize: scale(-1 / 3).fontSize,

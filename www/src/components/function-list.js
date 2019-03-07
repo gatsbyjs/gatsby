@@ -2,6 +2,7 @@ import { graphql } from "gatsby"
 import React from "react"
 
 import { rhythm, scale, options } from "../utils/typography"
+import presets from "../utils/presets"
 
 const Param = (param, depth = 0) => {
   // The "plugin" parameter is used internally but not
@@ -46,7 +47,12 @@ const Param = (param, depth = 0) => {
         />
       )}
       {param.properties && (
-        <div css={{ marginBottom: rhythm(presets.space[5]), marginTop: rhythm(presets.space[3]) }}>
+        <div
+          css={{
+            marginBottom: rhythm(presets.space[5]),
+            marginTop: rhythm(presets.space[3]),
+          }}
+        >
           {param.properties.map(param => Param(param, depth + 1))}
         </div>
       )}

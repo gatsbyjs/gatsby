@@ -1,7 +1,6 @@
 import React from "react"
 import presets, { colors } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
@@ -140,7 +139,9 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: rhythm(1.5 / 4),
-              padding: `${rhythm(presets.space[1])} ${rhythm(presets.space[4])}`, // @todo same as site showcase but wrong for some reason
+              padding: `${rhythm(presets.space[1])} ${rhythm(
+                presets.space[4]
+              )}`, // @todo same as site showcase but wrong for some reason
               textDecoration: `none`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {

@@ -58,9 +58,9 @@ class EvaluationTable extends Component {
                 marginRight: `auto`,
                 padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
                 [presets.Xs]: {
-                  padding: `${rhythm(presets.space[3])} 0 ${rhythm(presets.space[3])} ${rhythm(
-                    1 / 2
-                  )}`,
+                  padding: `${rhythm(presets.space[3])} 0 ${rhythm(
+                    presets.space[3]
+                  )} ${rhythm(1 / 2)}`,
                 },
               }}
             >
@@ -174,7 +174,9 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
-                            paddingBottom: `calc(${rhythm(presets.space[5])} - 1px)`,
+                            paddingBottom: `calc(${rhythm(
+                              presets.space[5]
+                            )} - 1px)`,
                             "&&": {
                               paddingRight: `${rhythm(1 / 4)}`,
                               paddingLeft: `${rhythm(1 / 4)}`,

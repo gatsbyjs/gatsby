@@ -4,6 +4,7 @@ import TagsIcon from "react-icons/lib/ti/tags"
 
 import Button from "./button"
 import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
 const _ = require(`lodash`)
 
 const TagsSection = ({ tags }) => {

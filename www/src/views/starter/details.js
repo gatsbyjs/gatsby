@@ -88,25 +88,24 @@ const Details = ({
         }}
       >
         {shownDeps &&
-          shownDeps.map(
-            dep =>
-              /^gatsby-/.test(dep) ? (
-                <div key={dep}>
-                  <Link to={`/packages/${dep}`}>{dep}</Link>
-                </div>
-              ) : (
-                <div
-                  key={dep}
-                  css={{
-                    ...sharedStyles.truncate,
-                  }}
-                >
-                  <a href={`https://npm.im/${dep}`}>
-                    {`${dep} `}
-                    <FaExtLink />
-                  </a>
-                </div>
-              )
+          shownDeps.map(dep =>
+            /^gatsby-/.test(dep) ? (
+              <div key={dep}>
+                <Link to={`/packages/${dep}`}>{dep}</Link>
+              </div>
+            ) : (
+              <div
+                key={dep}
+                css={{
+                  ...sharedStyles.truncate,
+                }}
+              >
+                <a href={`https://npm.im/${dep}`}>
+                  {`${dep} `}
+                  <FaExtLink />
+                </a>
+              </div>
+            )
           )}
         {showMore && (
           <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
