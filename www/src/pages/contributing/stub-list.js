@@ -57,9 +57,7 @@ class StubListRoute extends React.Component {
             <ul>
               {stubs.map(stub => (
                 <li key={stub.title}>
-                  <Link to={stub.link}>
-                    {stub.title.slice(0, -1)}
-                  </Link>
+                  <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
                 </li>
               ))}
             </ul>
