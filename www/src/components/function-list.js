@@ -2,7 +2,7 @@ import { graphql } from "gatsby"
 import React from "react"
 
 import { rhythm, scale, options } from "../utils/typography"
-import { space } from "../utils/presets"
+import presets, { space } from "../utils/presets"
 
 const Param = (param, depth = 0) => {
   // The "plugin" parameter is used internally but not

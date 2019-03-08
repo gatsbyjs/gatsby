@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import presets, { colors, space } from "../../utils/presets"
-import { rhythm, scale, options } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 

@@ -5,7 +5,7 @@ import Img from "gatsby-image"
 import qs from "qs"
 
 import presets, { colors, space } from "../utils/presets"
-import { options, scale, rhythm } from "../utils/typography"
+import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"

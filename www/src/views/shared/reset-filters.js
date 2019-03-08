@@ -1,7 +1,7 @@
 import React from "react"
 import MdClear from "react-icons/lib/md/clear"
 
-import { options, scale, rhythm } from "../../utils/typography"
+import { options, rhythm } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 
 const ResetFilters = ({ onClick }) => (

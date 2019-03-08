@@ -1,4 +1,4 @@
-import typography, { options, rhythm, scale } from "../../utils/typography"
+import typography, { options, rhythm } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 
 const { curveDefault, speedDefault } = presets.animation

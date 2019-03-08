@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
-import typography, { rhythm, scale } from "../../utils/typography"
+import typography, { rhythm } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"

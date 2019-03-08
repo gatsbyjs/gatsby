@@ -4,8 +4,7 @@ import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import Collapsible from "../shared/collapsible"
 
-import { rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import { colors } from "../../utils/presets"
 import styles from "../../views/shared/styles"
 
 const CollapsibleFilterList = ({

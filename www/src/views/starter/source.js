@@ -1,6 +1,6 @@
 import React from "react"
 import presets, { colors, space } from "../../utils/presets"
-import { options, scale, rhythm } from "../../utils/typography"
+import { options, rhythm } from "../../utils/typography"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
