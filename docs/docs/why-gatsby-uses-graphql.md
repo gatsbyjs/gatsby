@@ -10,7 +10,7 @@ Without providing some context, it can seem like GraphQL is overkill for somethi
 
 <iframe
   title="Screencast on egghead of creating pages in Gatsby from hard-coded React components."
-  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-1-create-a-page-without-any-data/embed"
+  src="https://egghead.io/lessons/gatsby-create-a-gatsby-page-without-any-data/embed"
   class="egghead-video"
   width=600 height=348
 />
@@ -59,7 +59,7 @@ In the simplest cases, this is all that’s required for building pages with Gat
 
 <iframe
   title="Screencast on egghead of creating pages from hard-coded context data in Gatsby."
-  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-2-create-a-page-with-hard-coded-data/embed"
+  src="https://egghead.io/lessons/gatsby-create-a-gatsby-page-with-hard-coded-data/embed"
   class="egghead-video"
   width=600 height=348
 />
@@ -112,7 +112,7 @@ In some cases, this approach may be enough. However, it’s often necessary to c
 
 <iframe
   title="Screencast on egghead of creating pages from JSON data in Gatsby."
-  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-3-create-pages-from-json-with-images/embed"
+  src="https://egghead.io/lessons/gatsby-create-pages-from-json-with-images/embed"
   class="egghead-video"
   width=600 height=348
 />
@@ -222,7 +222,7 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
 
 <iframe
   title="Screencast on egghead of adding data to GraphQL in Gatsby."
-  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-4-make-data-queryable-in-graphql-with-gatsby/embed"
+  src="https://egghead.io/lessons/gatsby-make-data-queryable-in-graphql-with-gatsby/embed"
   class="egghead-video"
   width=600 height=348
 />
@@ -300,7 +300,7 @@ The results will appear in the panel between the query and the docs, and they’
 
 <iframe
   title="Screencast on egghead of generating pages using GraphQL in Gatsby."
-  src="https://egghead.io/lessons/gatsby-why-gatsby-uses-graphql-part-5-create-pages-in-gatsby-using-graphql/embed"
+  src="https://egghead.io/lessons/gatsby-create-pages-in-gatsby-using-graphql/embed"
   class="egghead-video"
   width=600 height=348
 />
