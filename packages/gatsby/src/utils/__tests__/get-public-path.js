@@ -31,4 +31,51 @@ describe(`basic functionality`, () => {
       })
     ).toBe(`${assetPrefix}${pathPrefix}`)
   })
+
+  describe(`assetPrefix variations`, () => {
+    it(`handles relative assetPrefix`, () => {
+      const localAssetPrefix = `/assets`
+      expect(
+        getPublicPath({
+          pathPrefix,
+          assetPrefix: localAssetPrefix,
+          prefixPaths: true,
+        })
+      ).toBe(`${localAssetPrefix}${pathPrefix}`)
+    })
+
+    it(`handles URL assetPrefix, e.g. a CDN`, () => {
+      const cdn = `https://cdn.example.org`
+      expect(
+        getPublicPath({
+          pathPrefix,
+          assetPrefix: cdn,
+          prefixPaths: true,
+        })
+      ).toBe(`${cdn}${pathPrefix}`)
+    })
+
+    it(`handles double slashes`, () => {
+      const cdn = `//cdn.example.org`
+      expect(
+        getPublicPath({
+          pathPrefix,
+          assetPrefix: cdn,
+          prefixPaths: true,
+        })
+      ).toBe(`${cdn}${pathPrefix}`)
+    })
+
+    it(`handles trailing slashes`, () => {
+      ;[`/assets/`, `https://cdn.example.org/`].forEach(prefix => {
+        expect(
+          getPublicPath({
+            pathPrefix,
+            assetPrefix: prefix,
+            prefixPaths: true,
+          })
+        ).toBe(`${prefix.slice(0, -1)}${pathPrefix}`)
+      })
+    })
+  })
 })

@@ -1,8 +1,7 @@
-const url = require(`url`)
+const trimSlashes = part => part.replace(/(^\/)|(\/$)/g, ``)
 
-// url.resolve adds a trailing slash if part #2 is defined but empty string
-const stripTrailingSlash = part =>
-  part.endsWith(`/`) ? part.slice(0, -1) : part
+const isURL = possibleUrl =>
+  [`http`, `//`].some(expr => possibleUrl.startsWith(expr))
 
 module.exports = function getPublicPath({
   assetPrefix,
@@ -10,9 +9,12 @@ module.exports = function getPublicPath({
   prefixPaths,
 }) {
   if (prefixPaths && (assetPrefix || pathPrefix)) {
-    return stripTrailingSlash(
-      url.resolve(...[assetPrefix, pathPrefix].map(part => part || ``))
-    )
+    const normalized = [assetPrefix, pathPrefix]
+      .filter(part => part && part.length > 0)
+      .map(part => trimSlashes(part))
+      .join(`/`)
+
+    return isURL(normalized) ? normalized : `/${normalized}`
   }
 
   return ``
