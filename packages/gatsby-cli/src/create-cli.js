@@ -2,6 +2,7 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
@@ -316,7 +317,17 @@ module.exports = argv => {
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
-    .showHelpOnFail(true)
-    .recommendCommands()
+    .fail((msg, err, yargs) => {
+      const availableCommands = yargs.getCommands().map(commandDescription => {
+        const [command] = commandDescription
+        return command.split(` `)[0]
+      })
+      const arg = argv.slice(2)[0]
+      const suggestion = arg ? didYouMean(arg, availableCommands) : ``
+
+      cli.showHelp()
+      report.log(suggestion)
+      report.log(msg)
+    })
     .parse(argv.slice(2))
 }
