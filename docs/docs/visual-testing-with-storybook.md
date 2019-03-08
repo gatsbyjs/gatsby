@@ -95,7 +95,8 @@ module.exports = ({ config }) => {
 
 > Note: The API for custom webpack configuration has been simplifed in Storybook v5.0 , but it's a breaking [change](https://github.com/storybooks/storybook/blob/next/MIGRATION.md#webpack-config-simplification).
 
-Here is webpack config for Storybook v4:    
+Here is webpack config for Storybook v4:
+
 ```js:title=.storybook/webpack.config.js
 module.exports = (baseConfig, env, defaultConfig) => {
   // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
