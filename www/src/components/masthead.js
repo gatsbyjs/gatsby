@@ -37,7 +37,7 @@ const MastheadContent = () => (
         color: colors.gray.copy,
         fontFamily: options.headerFontFamily.join(`,`),
         fontSize: presets.scale[4],
-        maxWidth: rhythm(26),
+        maxWidth: rhythm(30),
         margin: `0 auto 2rem`,
         WebkitFontSmoothing: `antialiased`,
         [presets.Sm]: {
