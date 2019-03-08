@@ -9,21 +9,27 @@ exports.sourceNodes = (
 ) => {
   const { createNode } = actions
 
-  let serverOptions = pluginOptions.server || {
-    address: `localhost`,
-    port: 27017,
-  }
-  let dbName = pluginOptions.dbName || `local`,
-    authUrlPart = ``
-  if (pluginOptions.auth)
-    authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
+a  let connectionURL = pluginOptions.connectionURL
 
-  let connectionExtraParams = getConnectionExtraParams(
-    pluginOptions.extraParams
-  )
-  const connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
-    serverOptions.port
-  }/${dbName}${connectionExtraParams}`
+  const dbName = pluginOptions.dbName || `local`
+  if (!connectionURL) {
+    const serverOptions = pluginOptions.server || {
+      address: `localhost`,
+      port: 27017,
+    }
+
+    const authUrlPart = pluginOptions.auth
+      ? `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
+      : ""
+
+    const connectionExtraParams = getConnectionExtraParams(
+      pluginOptions.extraParams
+    )
+
+    connectionURL = `mongodb://${authUrlPart}${serverOptions.address}:${
+      serverOptions.port
+    }/${dbName}${connectionExtraParams}`
+  }
 
   return MongoClient.connect(connectionURL)
     .then(db => {
