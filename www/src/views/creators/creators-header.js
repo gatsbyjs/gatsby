@@ -135,7 +135,6 @@ export default CreatorsHeader
 const styles = {
   header: {
     display: `flex`,
-    // flexDirection: `column`,
     flexDirection: `row`,
     alignItems: `center`,
     borderBottom: `1px solid ${colors.ui.light}`,
@@ -147,23 +146,18 @@ const styles = {
   },
   creatorsLink: {
     "&&": {
-      ...scale(1 / 3),
-      // display: `none`,
+      fontSize: presets.scale[4],
       color: colors.gatsby,
-      boxShadow: `none`,
       borderBottom: `none`,
       marginRight: rhythm(space[3]),
       "&:hover": {
         backgroundColor: `initial`,
       },
-      [presets.Lg]: {
-        // display: `inline`,
-      },
     },
   },
   CreatorsHeaderLink: {
     "&&": {
-      ...scale(-1 / 3),
+      fontSize: presets.scale[2],
       lineHeight: presets.lineHeights.solid,
       letterSpacing: `0.03em`,
       textTransform: `uppercase`,

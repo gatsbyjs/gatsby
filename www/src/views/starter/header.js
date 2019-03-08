@@ -9,7 +9,6 @@ const Header = ({ stub }) => (
   <div
     className="starter-detail-header"
     css={{
-      fontFamily: options.headerFontFamily.join(`,`),
       padding: rhythm(space[6]),
       paddingBottom: rhythm(options.blockMarginBottom),
       [presets.Sm]: {
@@ -30,15 +29,12 @@ const Header = ({ stub }) => (
         to={`/starters`}
         css={{
           "&&": {
-            ...scale(1 / 5),
+            fontSize: presets.scale[1],
             boxShadow: `none`,
             borderBottom: 0,
             color: colors.gatsby,
-            cursor: `pointer`,
-            fontFamily: options.headerFontFamily.join(`,`),
             fontWeight: `normal`,
             "&:hover": {
-              background: `transparent`,
               color: colors.lilac,
             },
           },

@@ -168,7 +168,7 @@ const styles = {
     },
   },
   filterButton: {
-    ...scale(-1 / 5),
+    fontSize: presets.scale[1],
     margin: 0,
     alignItems: `flex-start`,
     background: `none`,
@@ -187,6 +187,10 @@ const styles = {
     ":hover": {
       color: colors.gatsby,
     },
+  },
+  filterCheckbox: {
+    marginRight: rhythm(space[2]),
+    fontSize: presets.scale[2],
   },
   filterCount: {
     color: colors.gray.bright,

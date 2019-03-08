@@ -46,8 +46,7 @@ export default function LHSFilter({
               <div
                 css={{
                   color: filters.has(c) ? colors.gatsby : colors.ui.bright,
-                  ...scale(0),
-                  marginRight: 8,
+                  ...styles.filterCheckbox,
                 }}
               >
                 {filters.has(c) ? (

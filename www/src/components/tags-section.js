@@ -3,8 +3,8 @@ import { Link } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
 
 import Button from "./button"
-import { rhythm, scale } from "../utils/typography"
-import { space } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import presets, { space } from "../utils/presets"
 const _ = require(`lodash`)
 
 const TagsSection = ({ tags }) => {
@@ -29,7 +29,7 @@ const TagsSection = ({ tags }) => {
     >
       <em
         css={{
-          ...scale(-1 / 5),
+          fontSize: presets.scale[1],
           display: `block`,
           flexBasis: `60%`,
           flexGrow: 1,

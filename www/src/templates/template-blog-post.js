@@ -7,7 +7,7 @@ import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
 import presets, { colors, space } from "../utils/presets"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import typography, { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -177,16 +177,14 @@ class BlogPostTemplate extends React.Component {
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      ...scale(0),
-                      fontWeight: 400,
-                      margin: 0,
+                      fontSize: presets.scale[3],
+                      marginBottom: rhythm(space[1]),
                       color: `${colors.gatsby}`,
                     }}
                   >
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.ui.bright}`,
-                        boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
                         transition: `all ${presets.animation.speedFast} ${
                           presets.animation.curveDefault
                         }`,

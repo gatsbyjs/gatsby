@@ -2,7 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { colors, space } from "../utils/presets"
 
 const BlogPostPreviewItem = ({ post, className }) => (
@@ -53,13 +53,6 @@ const BlogPostPreviewItem = ({ post, className }) => (
           display: `inline-block`,
           fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
-          ...scale(-2 / 5),
-          [presets.Xs]: {
-            ...scale(-1 / 5),
-          },
-          [presets.Lg]: {
-            ...scale(0),
-          },
         }}
       >
         <div>

@@ -111,7 +111,6 @@ class CreatorsView extends Component {
           css={{
             padding: rhythm(space[6]),
             paddingBottom: `10vh`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
             [presets.Md]: {
               paddingBottom: rhythm(space[6]),
             },
@@ -144,7 +143,6 @@ class CreatorsView extends Component {
                       css={{
                         margin: `0 0 ${rhythm(1 / 8)}`,
                         color: colors.gray.calm,
-                        ...scale(-1 / 3),
                       }}
                     >
                       {item.node.location}
@@ -165,7 +163,7 @@ class CreatorsView extends Component {
                     <div
                       css={{
                         alignSelf: `flex-start`,
-                        ...scale(-1 / 3),
+                        fontSize: presets.scale[0],
                       }}
                     >
                       <Badge forHire={item.node.for_hire}>

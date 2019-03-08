@@ -93,7 +93,7 @@ export default ({ functions }) => (
                 key={`ret ${JSON.stringify(ret)}`}
                 css={{
                   marginLeft: `1.05rem`,
-                  ...scale(-1 / 5),
+                  fontSize: presets.scale[1],
                   lineHeight: options.baseLineHeight,
                 }}
               >

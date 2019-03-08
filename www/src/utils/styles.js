@@ -2,7 +2,7 @@ import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
 import presets, { colors, space } from "./presets"
-import { rhythm, scale, options } from "./typography"
+import { rhythm, options } from "./typography"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -130,8 +130,9 @@ export const svgStyles = {
 
 // This is an exceptionally bad name
 export const linkStyles = {
-  ...scale(-1 / 6),
-  alignItems: `center`,
+  fontSize: presets.scale[1],
+  lineHeight: presets.lineHeights.solid,
+  padding: `${rhythm(space[3])} 0`,
   "&&": {
     border: 0,
     boxShadow: `none`,

@@ -67,8 +67,8 @@ class FeaturedSites extends Component {
           />
           <h1
             css={{
-              ...scale(1 / 5),
-              color: colors.gatsby,
+              fontSize: presets.scale[4],
+              color: colors.gray.dark,
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: 30,
@@ -83,22 +83,15 @@ class FeaturedSites extends Component {
             href="#showcase"
             css={{
               ...styles.withTitleHover,
-              fontFamily: options.headerFontFamily.join(`,`),
-
               display: `none`,
+              fontSize: presets.scale[1],
               [presets.Sm]: {
                 display: `block`,
               },
               "&&": {
-                ...scale(-1 / 6),
-                boxShadow: `none`,
                 borderBottom: 0,
-                color: colors.lilac,
                 cursor: `pointer`,
-                fontFamily: options.headerFontFamily.join(`,`),
-                fontWeight: `normal`,
                 "&:hover": {
-                  background: `transparent`,
                   color: colors.gatsby,
                 },
               },
@@ -118,10 +111,9 @@ class FeaturedSites extends Component {
           >
             <div
               css={{
-                ...scale(-1 / 6),
                 color: colors.gray.calm,
+                fontSize: presets.scale[1],
                 marginRight: 15,
-                fontFamily: options.headerFontFamily.join(`,`),
                 display: `none`,
                 [presets.Md]: {
                   display: `block`,
@@ -169,7 +161,9 @@ class FeaturedSites extends Component {
                   css={{
                     "&&": {
                       borderBottom: `none`,
-                      boxShadow: `none`,
+                      fontSize: presets.scale[3],
+                      fontWeight: `bold`,
+                      color: colors.gray.dark,
                       fontFamily: options.headerFontFamily.join(`,`),
                       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
                       "&:hover": { ...styles.screenshotHover },
@@ -194,7 +188,7 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   css={{
-                    ...scale(-1 / 6),
+                    fontSize: presets.scale[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
                     [presets.Lg]: {

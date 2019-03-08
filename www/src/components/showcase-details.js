@@ -32,9 +32,6 @@ const styles = {
     top: 280,
     width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
-    [presets.Lg]: {
-      ...scale(-1 / 6),
-    },
   },
   prevNextLinkSiteTitle: {
     color: colors.gatsby,
@@ -287,7 +284,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               </Helmet>
               <div
                 css={{
-                  fontFamily: options.headerFontFamily.join(`,`),
                   padding: gutter,
                   paddingBottom: rhythm(1.5 / 4),
                   [presets.Lg]: {
@@ -308,9 +304,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   css={{
                     ...styles.link,
                     fontWeight: `bold`,
-                    [presets.Lg]: {
-                      ...scale(-1 / 6),
-                    },
                   }}
                 >
                   {cleanUrl(data.sitesYaml.main_url)}
@@ -319,9 +312,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <span
                     css={{
                       color: colors.gray.calm,
-                      [presets.Lg]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <span
@@ -369,9 +359,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       fontWeight: `bold`,
                       padding: 20,
                       paddingLeft: 0,
-                      [presets.Lg]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <img
@@ -392,9 +379,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
                       borderRight: `1px solid ${colors.ui.light}`,
-                      [presets.Lg]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <a

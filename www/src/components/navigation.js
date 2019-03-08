@@ -5,7 +5,7 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { colors, space } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
@@ -205,7 +205,7 @@ const styles = {
     height: `100%`,
   },
   navItem: {
-    ...scale(-1 / 6),
+    fontSize: presets.scale[1],
     borderBottom: `0.125rem solid transparent`,
     color: `inherit`,
     display: `block`,

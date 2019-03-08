@@ -8,7 +8,6 @@ const ResetFilters = ({ onClick }) => (
   <div css={{ paddingRight: rhythm(space[6]) }}>
     <button
       css={{
-        ...scale(-1 / 6),
         alignItems: `center`,
         background: colors.ui.light,
         border: 0,

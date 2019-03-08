@@ -17,20 +17,14 @@ const MetaTitle = ({ children }) => (
   <p
     css={{
       margin: `0`,
-      textTransform: `uppercase`,
       color: colors.gray.calm,
-      letterSpacing: `0.03em`,
-      ...scale(-1 / 3),
       marginBottom: rhythm(options.blockMarginBottom / 4),
       [presets.Xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
         fontWeight: `600`,
-        letterSpacing: 0,
-        ...scale(0),
         marginBottom: 0,
-        color: colors.gray.dark,
         textTransform: `none`,
       },
     }}
@@ -99,7 +93,6 @@ class CreatorTemplate extends Component {
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
-            fontFamily: typography.options.headerFontFamily.join(`,`),
           }}
         >
           <div
@@ -163,7 +156,7 @@ class CreatorTemplate extends Component {
                 <div
                   css={{
                     alignSelf: `flex-start`,
-                    ...scale(-1 / 3),
+                    fontSize: presets.scale[1],
                     marginRight: `.5rem`,
                   }}
                 >
