@@ -1,13 +1,8 @@
 const toml = require(`toml`)
 const _ = require(`lodash`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
-async function onCreateNode({
-  node,
-  actions,
-  loadNodeContent,
-  createNodeId,
-  createContentDigest,
-}) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-toml content
   // Currently TOML files are considered null in 'mime-db'

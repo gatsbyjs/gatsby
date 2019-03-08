@@ -4,7 +4,7 @@ const normalize = require(`./normalize`)
 const typePrefix = `lever__`
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId, createContentDigest },
+  { actions, getNode, store, cache, createNodeId },
   { site, verboseOutput }
 ) => {
   const { createNode } = actions
@@ -30,11 +30,7 @@ exports.sourceNodes = async (
   entities = normalize.createGatsbyIds(createNodeId, entities)
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({
-    entities,
-    createNode,
-    createContentDigest,
-  })
+  normalize.createNodesFromEntities({ entities, createNode })
 
   return
 }

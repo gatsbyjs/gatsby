@@ -1,9 +1,10 @@
 const MongoClient = require(`mongodb`).MongoClient
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const prepareMappingChildNode = require(`./mapping`)
 const queryString = require(`query-string`)
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, createContentDigest, hasNodeChanged },
+  { actions, getNode, createNodeId, hasNodeChanged },
   pluginOptions
 ) => {
   const { createNode } = actions
@@ -33,15 +34,7 @@ exports.sourceNodes = (
 
       return Promise.all(
         collection.map(col =>
-          createNodes(
-            db,
-            pluginOptions,
-            dbName,
-            createNode,
-            createNodeId,
-            createContentDigest,
-            col
-          )
+          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
         )
       )
         .then(() => {
@@ -65,7 +58,6 @@ function createNodes(
   dbName,
   createNode,
   createNodeId,
-  createContentDigest,
   collectionName
 ) {
   return new Promise((resolve, reject) => {
@@ -115,8 +107,7 @@ function createNodes(
                 mediaItemFieldKey,
                 node[mediaItemFieldKey],
                 mapObj[mediaItemFieldKey],
-                createNode,
-                createContentDigest
+                createNode
               )
 
               node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id

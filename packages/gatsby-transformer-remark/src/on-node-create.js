@@ -1,5 +1,5 @@
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const grayMatter = require(`gray-matter`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(

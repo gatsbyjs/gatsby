@@ -1,14 +1,9 @@
 const _ = require(`lodash`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const path = require(`path`)
 const HJSON = require(`hjson`)
 
-async function onCreateNode({
-  node,
-  actions,
-  loadNodeContent,
-  createNodeId,
-  createContentDigest,
-}) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   const { createNode, createParentChildLink } = actions
 
   function transformObject(obj, id, type) {

@@ -1,3 +1,4 @@
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const deepMapKeys = require(`deep-map-keys`)
 const stringify = require(`json-stringify-safe`)
 
@@ -12,14 +13,7 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
  * @param {any} type
  * @param {any} createNode
  */
-async function createGraphQLNode(
-  ent,
-  type,
-  createNode,
-  createContentDigest,
-  store,
-  cache
-) {
+async function createGraphQLNode(ent, type, createNode, store, cache) {
   let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
   let node = {
     id: `${type}_${id.toString()}`,
@@ -128,11 +122,7 @@ exports.createGatsbyIds = (createNodeId, entities) =>
     return e
   })
 
-exports.createNodesFromEntities = ({
-  entities,
-  createNode,
-  createContentDigest,
-}) => {
+exports.createNodesFromEntities = ({ entities, createNode }) => {
   entities.forEach(e => {
     let { ...entity } = e
     let node = {
@@ -141,7 +131,7 @@ exports.createNodesFromEntities = ({
       children: [],
       internal: {
         type: `lever`,
-        contentDigest: createContentDigest(JSON.stringify(entity)),
+        contentDigest: createContentDigest(entity),
       },
     }
     createNode(node)

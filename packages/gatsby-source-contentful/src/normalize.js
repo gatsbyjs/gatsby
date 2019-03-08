@@ -213,7 +213,6 @@ function prepareRichTextNode(node, key, content, createNodeId) {
 
   return richTextNode
 }
-
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {

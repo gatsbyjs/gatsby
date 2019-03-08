@@ -1,7 +1,5 @@
 const { onCreateNode } = require(`../gatsby-node`)
 
-const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
-
 describe(`Process TOML nodes correctly`, () => {
   const node = {
     id: `whatever`,
@@ -50,7 +48,6 @@ describe(`Process TOML nodes correctly`, () => {
       loadNodeContent,
       actions,
       createNodeId,
-      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

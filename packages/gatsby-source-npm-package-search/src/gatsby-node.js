@@ -1,4 +1,5 @@
 const algoliasearch = require(`algoliasearch`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
 var index = client.initIndex(`npm-search`)
@@ -15,7 +16,7 @@ function browse({ index, ...params }) {
 }
 
 exports.sourceNodes = async (
-  { boundActionCreators, createNodeId, createContentDigest },
+  { boundActionCreators, createNodeId },
   { keywords }
 ) => {
   const { createNode } = boundActionCreators

@@ -12,7 +12,6 @@ const {
 const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)
-const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
 
 let node
 let actions
@@ -49,7 +48,6 @@ Where oh where is my little pony?
         loadNodeContent,
         actions,
         createNodeId,
-        createContentDigest,
       }).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
@@ -87,7 +85,6 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
           loadNodeContent,
           actions,
           createNodeId,
-          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       ).then(() => {
@@ -223,7 +220,6 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           loadNodeContent,
           actions,
           createNodeId,
-          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       )
@@ -279,7 +275,6 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         loadNodeContent,
         actions,
         createNodeId,
-        createContentDigest,
       })
     })
   })

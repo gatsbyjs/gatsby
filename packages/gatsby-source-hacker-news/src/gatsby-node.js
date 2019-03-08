@@ -1,4 +1,5 @@
 const axios = require(`axios`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const url = require(`url`)
 const _ = require(`lodash`)
 
@@ -11,7 +12,6 @@ exports.sourceNodes = async ({
   actions,
   getNode,
   createNodeId,
-  createContentDigest,
   hasNodeChanged,
 }) => {
   const { createNode } = actions
