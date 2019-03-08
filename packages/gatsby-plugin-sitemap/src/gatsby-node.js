@@ -15,21 +15,12 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   delete options.plugins
   delete options.createLinkInHead
 
-  const {
-    query,
-    serialize,
-    output,
-    exclude,
-    hostname,
-    targetFolder,
-    ...rest
-  } = {
+  const { query, serialize, output, exclude, hostname, ...rest } = {
     ...defaultOptions,
     ...options,
   }
 
-  const distDir = targetFolder || publicPath
-  const saved = path.join(distDir, output)
+  const saved = path.join(publicPath, output)
 
   // Paths we're excluding...
   const excludeOptions = exclude.concat(defaultOptions.exclude)
@@ -56,13 +47,13 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   return new Promise(resolve => {
     // sitemapv-index.xml is default file name. (https://git.io/fhNgG)
     const indexFilePath = path.join(
-      distDir,
+      publicPath,
       `${rest.sitemapName || `sitemap`}-index.xml`
     )
     const sitemapIndexOptions = {
       ...rest,
       hostname: hostname || withoutTrailingSlash(siteUrl),
-      targetFolder: distDir,
+      targetFolder: publicPath,
       urls,
       callback: error => {
         if (error) throw new Error(error)

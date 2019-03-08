@@ -1,3 +1,5 @@
+jest.mock(`fs`)
+
 const fs = require(`fs`)
 const path = require(`path`)
 const { onPostBuild } = require(`../gatsby-node`)
@@ -100,7 +102,8 @@ describe(`Test plugin sitemap`, async () => {
     expect(graphql).toBeCalledWith(customQuery)
   })
   describe(`sitemap index`, () => {
-    let queryResult = {
+    let graphql = null
+    const queryResult = {
       data: {
         site: {
           siteMetadata: {
@@ -123,38 +126,54 @@ describe(`Test plugin sitemap`, async () => {
         },
       },
     }
-    it(`set sitemap size and urls are more than it.`, async () => {
-      const tmp = require(`os`).tmpdir()
-      const graphql = jest.fn()
-      const expectedFiles = [
-        tmp + `/sitemap-0.xml`,
-        tmp + `/sitemap-1.xml`,
-        tmp + `/sitemap.xml`,
-      ]
+    beforeEach(() => {
+      graphql = jest.fn()
       graphql.mockResolvedValue(queryResult)
-      const options = {
-        sitemapSize: 1,
-        targetFolder: tmp,
-      }
-      await onPostBuild({ graphql, pathPrefix }, options)
-      expectedFiles.forEach(expectedFile => {
-        expect(fs.existsSync(expectedFile)).toBe(true)
-        fs.unlinkSync(expectedFile)
-      })
-    })
-    it(`set sitempa size and urls are less than it.`, async () => {
-      const tmp = require(`os`).tmpdir()
+
+      internals.renameFile = jest.fn()
+      internals.renameFile.mockResolvedValue(true)
+
       internals.writeFile = jest.fn()
       internals.writeFile.mockResolvedValue(true)
-      const graphql = jest.fn()
-      graphql.mockResolvedValue(queryResult)
+
+      fs.createWriteStream.mockReset()
+      fs.createWriteStream.mockReturnValue({
+        once: jest.fn((event, cb) => cb()),
+        write: jest.fn(),
+        end: jest.fn(),
+      })
+
+      fs.statSync.mockReset()
+      fs.statSync.mockReturnValue({
+        isDirectory: jest.fn(() => true),
+      })
+    })
+
+    it(`set sitemap size and urls are more than it.`, async () => {
+      const options = {
+        sitemapSize: 1,
+      }
+      await onPostBuild({ graphql, pathPrefix }, options)
+      expect(fs.createWriteStream.mock.calls[0][0]).toEqual(
+        `./public/sitemap-0.xml`
+      )
+      expect(fs.createWriteStream.mock.calls[1][0]).toEqual(
+        `./public/sitemap-1.xml`
+      )
+      expect(fs.createWriteStream.mock.calls[2][0]).toEqual(
+        `./public/sitemap-index.xml`
+      )
+      const [originalFile, newFile] = internals.renameFile.mock.calls[0]
+      expect(originalFile).toEqual(path.join(`public`, `sitemap-index.xml`))
+      expect(newFile).toEqual(path.join(`public`, `sitemap.xml`))
+    })
+    it(`set sitempa size and urls are less than it.`, async () => {
       const options = {
         sitemapSize: 100,
-        targetFolder: tmp,
       }
       await onPostBuild({ graphql, pathPrefix }, options)
       const [filePath, contents] = internals.writeFile.mock.calls[0]
-      expect(filePath).toEqual(path.join(tmp, `sitemap.xml`))
+      expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
       expect(contents).toMatchSnapshot()
     })
   })
