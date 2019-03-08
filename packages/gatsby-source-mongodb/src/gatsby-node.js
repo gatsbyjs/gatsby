@@ -9,7 +9,7 @@ exports.sourceNodes = (
 ) => {
   const { createNode } = actions
 
-a  let connectionURL = pluginOptions.connectionURL
+  let connectionURL = pluginOptions.connectionURL
 
   const dbName = pluginOptions.dbName || `local`
   if (!connectionURL) {
@@ -20,7 +20,7 @@ a  let connectionURL = pluginOptions.connectionURL
 
     const authUrlPart = pluginOptions.auth
       ? `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
-      : ""
+      : ``
 
     const connectionExtraParams = getConnectionExtraParams(
       pluginOptions.extraParams
