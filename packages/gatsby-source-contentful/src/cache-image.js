@@ -37,7 +37,7 @@ module.exports = async function cacheImage(store, image, options) {
     params.push(`bg=${background}`)
   }
 
-  const optionsHash = createContentDigest(JSON.stringify([url, ...params]))
+  const optionsHash = createContentDigest([url, ...params])
 
   const { name, ext } = parse(fileName)
   const absolutePath = resolve(CACHE_DIR, `${name}-${optionsHash}${ext}`)

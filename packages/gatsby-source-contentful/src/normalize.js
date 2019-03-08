@@ -168,7 +168,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNodeId, createContentDigest) {
+function prepareTextNode(node, key, text, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -209,14 +209,7 @@ function prepareRichTextNode(node, key, content, createNodeId) {
   return richTextNode
 }
 
-function prepareJSONNode(
-  node,
-  key,
-  content,
-  createNodeId,
-  createContentDigest,
-  i = ``
-) {
+function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...(_.isPlainObject(content) ? { ...content } : { content: content }),
@@ -243,7 +236,6 @@ exports.createContentTypeNodes = ({
   entries,
   createNode,
   createNodeId,
-  createContentDigest,
   resolvable,
   foreignReferenceMap,
   defaultLocale,
@@ -398,8 +390,7 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNodeId,
-            createContentDigest
+            createNodeId
           )
 
           childrenNodes.push(textNode)
@@ -414,8 +405,7 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNodeId,
-            createContentDigest
+            createNodeId
           )
 
           childrenNodes.push(richTextNode)
@@ -430,8 +420,7 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNodeId,
-            createContentDigest
+            createNodeId
           )
 
           childrenNodes.push(jsonNode)
@@ -450,7 +439,6 @@ exports.createContentTypeNodes = ({
               entryItemFieldKey,
               obj,
               createNodeId,
-              createContentDigest,
               i
             )
 
@@ -504,7 +492,6 @@ exports.createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,
-  createContentDigest,
   defaultLocale,
   locales,
 }) => {
