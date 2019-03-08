@@ -1,8 +1,13 @@
 const _ = require(`lodash`)
+const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -179,7 +184,7 @@ function prepareTextNode(node, key, text, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
       mediaType: `text/markdown`,
       content: str,
-      contentDigest: createContentDigest(str),
+      contentDigest: digest(str),
     },
   }
 
@@ -200,7 +205,7 @@ function prepareRichTextNode(node, key, content, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
       mediaType: `text/richtext`,
       content: str,
-      contentDigest: createContentDigest(str),
+      contentDigest: digest(str),
     },
   }
 
@@ -220,7 +225,7 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
       type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
       mediaType: `application/json`,
       content: str,
-      contentDigest: createContentDigest(str),
+      contentDigest: digest(str),
     },
   }
 
@@ -453,7 +458,7 @@ exports.createContentTypeNodes = ({
       entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }
 
       // Get content digest of node.
-      const contentDigest = createContentDigest(stringify(entryNode))
+      const contentDigest = digest(stringify(entryNode))
 
       entryNode.internal.contentDigest = contentDigest
 
@@ -474,7 +479,7 @@ exports.createContentTypeNodes = ({
     }
 
     // Get content digest of node.
-    const contentDigest = createContentDigest(stringify(contentTypeNode))
+    const contentDigest = digest(stringify(contentTypeNode))
 
     contentTypeNode.internal.contentDigest = contentDigest
 
@@ -535,7 +540,7 @@ exports.createAssetNodes = ({
     }
 
     // Get content digest of node.
-    const contentDigest = createContentDigest(stringify(assetNode))
+    const contentDigest = digest(stringify(assetNode))
 
     assetNode.internal.contentDigest = contentDigest
 
