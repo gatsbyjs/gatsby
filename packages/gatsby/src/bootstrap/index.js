@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
-const createContentDigest = require(`../../src/utils/create-content-digest`)
+const createContentDigest = require(`../utils/create-content-digest`)
 const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
@@ -480,7 +480,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await writeRedirects(createContentDigest)
+  await writeRedirects()
   activity.end()
 
   let onEndJob
