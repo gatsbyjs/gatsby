@@ -130,10 +130,14 @@ const processTypeComposer = async ({
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(typeOrTypeDef => {
     if (typeof typeOrTypeDef === `string`) {
-      const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
-      addedTypes.forEach(type =>
-        processAddedType({ schemaComposer, type, parentSpan })
-      )
+      try {
+        const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
+        addedTypes.forEach(type =>
+          processAddedType({ schemaComposer, type, parentSpan })
+        )
+      } catch (error) {
+        reportParsingError(error)
+      }
     } else if (isGatsbyType(typeOrTypeDef)) {
       const type = createTypeComposerFromGatsbyType({
         schemaComposer,
@@ -475,4 +479,23 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
     [queryName]: typeComposer.getResolver(`findOne`),
     [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
   })
+}
+
+const reportParsingError = error => {
+  const report = require(`gatsby-cli/lib/reporter`)
+  const { codeFrameColumns } = require(`@babel/code-frame`)
+
+  const { message, source, locations } = error
+  const frame = codeFrameColumns(
+    report.stripIndent(source.body),
+    { start: locations[0] },
+    { linesAbove: 5, linesBelow: 5 }
+  )
+  report.panic(
+    `Encountered an error parsing the provided GraphQL type definitions:\n` +
+      message +
+      `\n\n` +
+      frame +
+      `\n`
+  )
 }
