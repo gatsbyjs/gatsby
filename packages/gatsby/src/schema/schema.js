@@ -130,14 +130,15 @@ const processTypeComposer = async ({
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(typeOrTypeDef => {
     if (typeof typeOrTypeDef === `string`) {
+      let addedTypes
       try {
-        const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
-        addedTypes.forEach(type =>
-          processAddedType({ schemaComposer, type, parentSpan })
-        )
+        addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
       } catch (error) {
         reportParsingError(error)
       }
+      addedTypes.forEach(type =>
+        processAddedType({ schemaComposer, type, parentSpan })
+      )
     } else if (isGatsbyType(typeOrTypeDef)) {
       const type = createTypeComposerFromGatsbyType({
         schemaComposer,
