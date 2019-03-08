@@ -3,7 +3,99 @@ title: Triaging GitHub Issues
 issue: https://github.com/gatsbyjs/gatsby/issues/11810
 ---
 
-This is a stub. Help our community expand it.
+## What is the aim of this document?
 
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+If you would like to dive into our issues and help, here’s how the Gatsby core team does it. This document should answer any questions you might have along the way. We’ll answer common questions, list guidelines and illustrate a decision tree to help you do first touch maintenance effectively.
+
+## What is first touch maintenance?
+
+For Gatsby the first line of communication between a user and the team is the issue tracker on GitHub. Typically, several issues are opened in a day.
+
+These issues could be:
+
+- a question that can be answered immediately
+- a bug report
+- a request for a feature
+- or a discussion on a complicated use case
+
+As a first touch maintainer, you might sift through, triage, communicate and manage this first line of communication.
+
+They typically:
+
+- answer questions that can be answered immediately
+  -test and reproduce possible bug reports and label them appropriately
+- communicate feature requests to the rest of the team and ensure a valid response
+- enable discussions on complicated use cases, whether themselves or via the rest of team
+
+## Why do we do first touch maintenance?
+
+We do first touch maintenance so that:
+
+- Questions are answered swiftly and correctly, therefore making users happy
+- Bug reports are reproducible and the most relevant data is collected before someone jumps in with a fix
+- Unrelated issues are resolved swiftly so we don't spend too much time on them
+
+## What is unique to Gatsby?
+
+Gatsby is unique among most open source projects because:
+
+- Gatsby integrates with many third party tools (WordPress, Drupal, Contentful etc) via source plugins and hence the typical scope of issues is widened significantly
+- Gatsby aims to be really beginner friendly (we want to be the new way someone gets started with web development) and this means that we need to accommodate a wide range of skill levels
+- At Gatsby, we've defined a couple of metrics that we measure to ensure we're responsive and helpful to our open source community
+
+## How do we do first touch maintenance?
+
+### General Guidelines
+
+- Be empathic. The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
+- Add context. When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
+- Give issue authors time to close their own issues. Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
+- Encourage community contributions. Getting people involved makes a huge impact. It’s often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
+
+### Labelling
+
+Labelling helps group issues into manageable sets and also improves searchability and scannability. We have a set of labels that we use to group issues based on their type and status. While we want to limit adding too many labels, feel free to add one if it seems relevant and helps with this grouping!
+
+It's nice to update labels as the state of an issue changes or if for example, a question becomes a feature request or a bug report
+
+### Resolution Flow Chart
+
+https://whimsical.co/QvuMgo31T2C3xcWbou8xhy
+
+### Saved Replies
+
+https://github.com/orgs/gatsbyjs/teams/admin/discussions/3
+
+## Bot
+
+We have a bot that helps us automate some aspects:
+
+- Issues with a question mark in their title or starting with "how" are automatically labelled as questions
+- Issues with an empty body are closed
+- Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless anyone comments saying not stale or adds the not stale label
+
+## Frequently Asked Questions
+
+> When do I do a demo for an issue?
+
+When a feature or pattern is not documented, it may be nice to make a demo to add clarity for the author and help future readers as well.
+
+> How much time do I spend on an issue?
+
+Some issues might need more time than others and there isn’t any hard and fast rule. However, it's best to spend time on an issue after the relevant info and reproduction is available.
+
+> Do I have look at Discord?
+
+You don’t have to. Some of us are active on Discord and you can be too if you like.
+
+> Do I use the same issue to track documentation additions or open a new one?
+
+If the issue describes the context well enough, then it is okay to update its title and use the same issue to track the addition of relevant documentation.
+
+> When do I follow up on an issue?
+
+If an author hasn’t responded to a comment for a week or two, it might be nice to follow up and ask if there’s anything else we can do to help. If the issue goes stale after that, our bot should be able to clean it up.
+
+> What do I do if an issue relates to something upstream?
+
+It’s a good practise to open an issue in the upstream repository in cases like this but isn’t strictly necessary.
