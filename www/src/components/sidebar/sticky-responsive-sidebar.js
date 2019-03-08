@@ -116,10 +116,10 @@ const styles = {
       opacity: `1 !important`,
       pointerEvents: `auto`,
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(10),
+      width: rhythm(presets.sidebar.width.default),
     },
     [presets.Lg]: {
-      width: rhythm(12),
+      width: rhythm(presets.sidebar.width.large),
     },
   },
   sidebar: {

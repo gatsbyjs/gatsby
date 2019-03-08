@@ -10,7 +10,7 @@ import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
@@ -28,12 +28,12 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 
 export const BlockLink = styled(Link)`
   background: #fff;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(3 / 4)};
+  padding: ${rhythm(space[6])};
 
   ${presets.Md} {
     border-radius: 0;
@@ -56,7 +56,7 @@ const Header = styled(`header`)`
 
   h3 {
     color: ${colors.gatsbyDark};
-    font-size: 1rem;
+    font-size: ${presets.scale[2]};
     margin: 0;
   }
 
@@ -64,8 +64,7 @@ const Header = styled(`header`)`
     align-items: center;
     color: ${colors.lilac};
     display: flex;
-    font-size: 0.8125rem;
-    font-family: ${options.systemFontFamily.join(`,`)};
+    font-size: ${presets.scale[1]};
     padding-left: 5px;
 
     svg {
@@ -87,7 +86,7 @@ const Digest = styled(`div`)`
 
 const Thumbnail = styled(`div`)`
   height: 64px;
-  padding-right: ${rhythm(2 / 3)};
+  padding-right: ${rhythm(space[4])};
   margin-top: ${rhythm(1 / 12)};
 
   img {
@@ -98,7 +97,7 @@ const Thumbnail = styled(`div`)`
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
-  font-size: 0.85rem;
+  font-size: ${presets.scale[1]};
   margin: 0;
 `
 

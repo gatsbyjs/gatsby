@@ -1,11 +1,11 @@
 import React, { Component } from "react"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { options, rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
@@ -58,9 +58,9 @@ class EvaluationTable extends Component {
                 marginRight: `auto`,
                 padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
                 [presets.Xs]: {
-                  padding: `${rhythm(1 / 2)} 0 ${rhythm(1 / 2)} ${rhythm(
-                    1 / 2
-                  )}`,
+                  padding: `${rhythm(space[3])} 0 ${rhythm(
+                    presets.space[3]
+                  )} ${rhythm(1 / 2)}`,
                 },
               }}
             >
@@ -146,8 +146,8 @@ class EvaluationTable extends Component {
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: `90%`,
-                              lineHeight: `${rhythm(3 / 4)}`,
+                              fontSize: presets.scale[1],
+                              lineHeight: presets.lineHeights.solid,
                             }}
                             id={
                               j === 0
@@ -174,14 +174,15 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
-                            fontFamily: options.headerFontFamily.join(`,`),
-                            paddingBottom: `calc(${rhythm(1)} - 1px)`,
+                            paddingBottom: `calc(${rhythm(
+                              presets.space[5]
+                            )} - 1px)`,
                             "&&": {
                               paddingRight: `${rhythm(1 / 4)}`,
                               paddingLeft: `${rhythm(1 / 4)}`,
                               [presets.Xs]: {
-                                paddingRight: `${rhythm(1 / 2)}`,
-                                paddingLeft: `${rhythm(1 / 2)}`,
+                                paddingRight: `${rhythm(space[3])}`,
+                                paddingLeft: `${rhythm(space[3])}`,
                               },
                               [presets.Sm]: {
                                 paddingRight: `${rhythm(2)}`,

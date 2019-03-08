@@ -6,9 +6,10 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
-import presets, { colors } from "../utils/presets"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
+import typography, { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
+import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
@@ -43,21 +44,15 @@ class BlogPostTemplate extends React.Component {
       marginBottom: 0,
       color: colors.gray.calm,
       fontWeight: `normal`,
-      ...scale(0),
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
     }
     const BioLine = ({ children }) => (
       <p
         css={{
-          ...scale(-2 / 5),
+          lineHeight: presets.lineHeights.dense,
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          lineHeight: 1.3,
           margin: 0,
           color: colors.gray.calm,
-          [presets.Xs]: {
-            ...scale(-1 / 5),
-            lineHeight: 1.3,
-          },
         }}
       >
         {children}
@@ -72,8 +67,8 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <Container className="post" css={{ paddingBottom: `0` }}>
-          <main id={`reach-skip-nav`}>
+        <Container>
+          <DocSearchContent>
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>
@@ -136,9 +131,9 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginTop: rhythm(-1 / 4),
-                marginBottom: rhythm(1),
+                marginBottom: rhythm(space[5]),
                 [presets.Md]: {
-                  marginTop: rhythm(1 / 2),
+                  marginTop: rhythm(space[3]),
                   marginBottom: rhythm(2),
                 },
               }}
@@ -166,7 +161,7 @@ class BlogPostTemplate extends React.Component {
                       height: rhythm(2.3),
                       width: rhythm(2.3),
                       margin: 0,
-                      borderRadius: `100%`,
+                      borderRadius: presets.radii[6],
                       display: `inline-block`,
                       verticalAlign: `middle`,
                     }}
@@ -176,22 +171,20 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   flex: `1 1 auto`,
-                  marginLeft: rhythm(1 / 2),
+                  marginLeft: rhythm(space[3]),
                 }}
               >
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      ...scale(0),
-                      fontWeight: 400,
-                      margin: 0,
+                      fontSize: presets.scale[3],
+                      marginBottom: rhythm(space[1]),
                       color: `${colors.gatsby}`,
                     }}
                   >
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.ui.bright}`,
-                        boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
                         transition: `all ${presets.animation.speedFast} ${
                           presets.animation.curveDefault
                         }`,
@@ -235,7 +228,7 @@ class BlogPostTemplate extends React.Component {
               !(post.frontmatter.showImageInArticle === false) && (
                 <div
                   css={{
-                    marginBottom: rhythm(1),
+                    marginBottom: rhythm(space[5]),
                   }}
                 >
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
@@ -258,7 +251,7 @@ class BlogPostTemplate extends React.Component {
               tags={this.props.data.markdownRemark.frontmatter.tags}
             />
             <EmailCaptureForm />
-          </main>
+          </DocSearchContent>
         </Container>
         <div
           css={{
@@ -266,8 +259,8 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(2),
             [presets.Md]: {
               marginTop: rhythm(2),
-              paddingBottom: rhythm(1),
-              paddingTop: rhythm(1),
+              paddingBottom: rhythm(space[5]),
+              paddingTop: rhythm(space[5]),
             },
             [presets.Lg]: {
               marginTop: rhythm(3),
@@ -304,7 +297,7 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(1),
+                  marginTop: rhythm(space[5]),
                   [presets.Sm]: { marginTop: 0, width: `50%` },
                 }}
               >

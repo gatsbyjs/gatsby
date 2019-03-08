@@ -5,7 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -158,7 +158,7 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${rhythm(3 / 4)}`,
+              paddingTop: `${rhythm(space[6])}`,
               [presets.Sm]: {
                 height: presets.headerHeight,
                 paddingTop: `0px`,
@@ -192,7 +192,7 @@ export default class FilteredStarterLibrary extends Component {
                   display: `none`,
                   [presets.Lg]: {
                     border: 0,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: presets.radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     paddingTop: rhythm(1 / 8),
@@ -210,19 +210,19 @@ export default class FilteredStarterLibrary extends Component {
                 <DebounceInput
                   css={{
                     border: 0,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: presets.radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     marginTop: rhythm(1 / 8),
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(1),
+                    paddingLeft: rhythm(space[5]),
                     width: rhythm(6),
                     ":focus": {
                       outline: `${colors.wisteria} solid thin`,
                       backgroundColor: colors.ui.light,
-                      borderRadius: presets.radiusLg,
+                      borderRadius: presets.radii[2],
                       transition: `width ${presets.animation.speedDefault} ${
                         presets.animation.curveDefault
                       }, background-color ${presets.animation.speedDefault} ${
