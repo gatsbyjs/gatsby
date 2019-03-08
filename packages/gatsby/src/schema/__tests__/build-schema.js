@@ -285,7 +285,7 @@ describe(`Build schema`, () => {
           store.dispatch({ type: `DELETE_CACHE` })
           createTypes(def)
           return expect(buildSchema()).rejects.toThrow(
-            `The GraphQL type name "Node" is reserved for internal use.`
+            `The GraphQL type \`Node\` is reserved for internal use.`
           )
         })
       )
@@ -293,17 +293,27 @@ describe(`Build schema`, () => {
 
     it(`displays error message for reserved type names`, () => {
       const typeDefs = [
-        `type TestSortInput { foo: Boolean }`,
-        `type TestFilterInput implements Node { foo: Boolean }`,
-        new GraphQLObjectType({ name: `TestSortInput`, fields: {} }),
-        buildObjectType({ name: `TestFilterInput`, fields: {} }),
+        [`TestSortInput`, `type TestSortInput { foo: Boolean }`],
+        [
+          `TestFilterInput`,
+          `type TestFilterInput implements Node { foo: Boolean }`,
+        ],
+        [
+          `TestSortInput`,
+          new GraphQLObjectType({ name: `TestSortInput`, fields: {} }),
+        ],
+        [
+          `TestFilterInput`,
+          buildObjectType({ name: `TestFilterInput`, fields: {} }),
+        ],
       ]
       return Promise.all(
-        typeDefs.map(def => {
+        typeDefs.map(([name, def]) => {
           store.dispatch({ type: `DELETE_CACHE` })
           createTypes(def)
           return expect(buildSchema()).rejects.toThrow(
-            `GraphQL type names ending with "FilterInput" or "SortInput" are reserved for internal use.`
+            `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
+              `reserved for internal use. Please rename \`${name}\`.`
           )
         })
       )
@@ -320,7 +330,8 @@ describe(`Build schema`, () => {
           store.dispatch({ type: `DELETE_CACHE` })
           createTypes(def)
           return expect(buildSchema()).rejects.toThrow(
-            `The GraphQL type name "${name}" is reserved for internal use by built-in scalar types.`
+            `The GraphQL type \`${name}\` is reserved for internal use by ` +
+              `built-in scalar types.`
           )
         })
       )

@@ -130,7 +130,12 @@ const processTypeComposer = async ({
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(typeOrTypeDef => {
     if (typeof typeOrTypeDef === `string`) {
-      const addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
+      let addedTypes
+      try {
+        addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
+      } catch (error) {
+        reportParsingError(error)
+      }
       addedTypes.forEach(type =>
         processAddedType({ schemaComposer, type, parentSpan })
       )
@@ -167,15 +172,17 @@ const processAddedType = ({ schemaComposer, type, parentSpan }) => {
 const checkIsAllowedTypeName = name => {
   invariant(
     name !== `Node`,
-    `The GraphQL type name "Node" is reserved for internal use.`
+    `The GraphQL type \`Node\` is reserved for internal use.`
   )
   invariant(
     !name.endsWith(`FilterInput`) && !name.endsWith(`SortInput`),
-    `GraphQL type names ending with "FilterInput" or "SortInput" are reserved for internal use.`
+    `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
+      `reserved for internal use. Please rename \`${name}\`.`
   )
   invariant(
     ![`Boolean`, `Date`, `Float`, `ID`, `Int`, `JSON`, `String`].includes(name),
-    `The GraphQL type name "${name}" is reserved for internal use by built-in scalar types.`
+    `The GraphQL type \`${name}\` is reserved for internal use by ` +
+      `built-in scalar types.`
   )
   assertValidName(name)
 }
@@ -328,7 +335,10 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
               report.warn(
-                `\`createResolvers\` passed resolvers for field \`${typeName}.${fieldName}\` with type ${fieldTypeName}. Such field with type ${originalTypeName} already exists on the type. Use \`createTypes\` to override type fields.`
+                `\`createResolvers\` passed resolvers for field ` +
+                  `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
+                  `Such a field with type \`${originalTypeName}\` already exists ` +
+                  `on the type. Use \`createTypes\` to override type fields.`
               )
             }
           } else {
@@ -337,7 +347,9 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
         })
       } else {
         report.warn(
-          `\`createResolvers\` passed resolvers for type \`${typeName}\` that doesn't exist in the schema. Use \`createTypes\` to add the type before adding resolvers.`
+          `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
+            `doesn't exist in the schema. Use \`createTypes\` to add the type ` +
+            `before adding resolvers.`
         )
       }
     })
@@ -468,4 +480,28 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
     [queryName]: typeComposer.getResolver(`findOne`),
     [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
   })
+}
+
+const reportParsingError = error => {
+  const { message, source, locations } = error
+
+  if (source && locations && locations.length) {
+    const report = require(`gatsby-cli/lib/reporter`)
+    const { codeFrameColumns } = require(`@babel/code-frame`)
+
+    const frame = codeFrameColumns(
+      source.body,
+      { start: locations[0] },
+      { linesAbove: 5, linesBelow: 5 }
+    )
+    report.panic(
+      `Encountered an error parsing the provided GraphQL type definitions:\n` +
+        message +
+        `\n\n` +
+        frame +
+        `\n`
+    )
+  } else {
+    throw error
+  }
 }

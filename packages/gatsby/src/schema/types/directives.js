@@ -7,7 +7,7 @@ const {
 
 const InferDirective = new GraphQLDirective({
   name: `infer`,
-  description: `Infer fields for this types from nodes`,
+  description: `Infer fields for this type from nodes.`,
   locations: [DirectiveLocation.OBJECT],
   args: {
     noDefaultResolvers: {
@@ -20,7 +20,7 @@ const InferDirective = new GraphQLDirective({
 
 const DontInferDirective = new GraphQLDirective({
   name: `dontInfer`,
-  description: `Do not infer additional fields for this type from nodes`,
+  description: `Do not infer additional fields for this type from nodes.`,
   locations: [DirectiveLocation.OBJECT],
   args: {
     noDefaultResolvers: {

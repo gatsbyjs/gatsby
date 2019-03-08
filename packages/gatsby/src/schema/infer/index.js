@@ -81,14 +81,16 @@ const addInferredTypes = ({
 
   if (noNodeInterfaceTypes.length > 0) {
     noNodeInterfaceTypes.forEach(type => {
-      report.warn(`Type \`${type}\` declared in typeDefs looks like a node, but doesn't implement a \`Node\` interface. It's likely that you should add the \`Node\` interface to you type def:
-
-  type ${type} implements Node {
-
-  If you know that you don't want it to be a node (which would mean no root queries to retrieve it), you can explicitly disable inferrence for it:
-
-  type ${type} @dontInfer {
-   `)
+      report.warn(
+        `Type \`${type}\` declared in \`createTypes\` looks like a node, ` +
+          `but doesn't implement a \`Node\` interface. It's likely that you should ` +
+          `add the \`Node\` interface to your type def:\n\n` +
+          `\`type ${type} implements Node { ... }\`\n\n` +
+          `If you know that you don't want it to be a node (which would mean no ` +
+          `root queries to retrieve it), you can explicitly disable inference ` +
+          `for it:\n\n` +
+          `\`type ${type} @dontInfer { ... }\``
+      )
     })
     report.panic(`Building schema failed`)
   }

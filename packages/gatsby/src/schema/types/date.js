@@ -91,23 +91,23 @@ const dateResolver = {
     formatString: {
       type: GraphQLString,
       description: oneLine`
-        Format the date using Moment.js' date tokens e.g.
-        "date(formatString: "YYYY MMMM DD)"
+        Format the date using Moment.js' date tokens, e.g.
+        \`date(formatString: "YYYY MMMM DD")\`.
         See https://momentjs.com/docs/#/displaying/format/
-        for documentation for different tokens`,
+        for documentation for different tokens.`,
     },
     fromNow: {
       type: GraphQLBoolean,
       description: oneLine`
-        Returns a string generated with Moment.js' fromNow function`,
+        Returns a string generated with Moment.js' \`fromNow\` function`,
     },
     difference: {
       type: GraphQLString,
       description: oneLine`
         Returns the difference between this date and the current time.
-        Defaults to miliseconds but you can also pass in as the
-        measurement years, months, weeks, days, hours, minutes,
-        and seconds.`,
+        Defaults to "miliseconds" but you can also pass in as the
+        measurement "years", "months", "weeks", "days", "hours", "minutes",
+        and "seconds".`,
     },
     locale: {
       type: GraphQLString,

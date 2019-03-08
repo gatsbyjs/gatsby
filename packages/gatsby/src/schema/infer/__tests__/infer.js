@@ -847,7 +847,7 @@ describe(`GraphQL type inference`, () => {
       } catch (e) {
         expect(e.message).toEqual(
           `Encountered an error trying to infer a GraphQL type ` +
-            `for: "linked___NODE". There is no corresponding node with the id ` +
+            `for: \`linked___NODE\`. There is no corresponding node with the \`id\` ` +
             `field matching: "baz".`
         )
       }
@@ -862,8 +862,8 @@ describe(`GraphQL type inference`, () => {
         ])
       }).toThrow(
         `Encountered an error trying to infer a GraphQL type ` +
-          `for: "linked___NODE". There is no corresponding GraphQL type ` +
-          `"Bar" available to link to this node.`
+          `for: \`linked___NODE\`. There is no corresponding GraphQL type ` +
+          `\`Bar\` available to link to this node.`
       )
     })
 

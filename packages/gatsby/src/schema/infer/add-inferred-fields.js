@@ -74,14 +74,14 @@ const addInferredFieldsImpl = ({
     if (possibleFields.length > 1) {
       const field = resolveMultipleFields(possibleFields)
       const possibleFieldsNames = possibleFields
-        .map(field => field.unsanitizedKey)
+        .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field "${
+        `Multiple node fields resolve to the same GraphQL field \`${
           field.key
-        }" - "[${possibleFieldsNames}]". Gatsby will use "${
+        }\` - [${possibleFieldsNames}]. Gatsby will use \`${
           field.unsanitizedKey
-        }".`
+        }\`.`
       )
       fieldConfig = field.fieldConfig
     } else {
@@ -275,7 +275,8 @@ const getFieldConfigFromFieldNameConvention = ({
 
   invariant(
     linkedTypes.length,
-    `Encountered an error trying to infer a GraphQL type for: "${key}". There is no corresponding node with the id field matching: "${value}".`
+    `Encountered an error trying to infer a GraphQL type for: \`${key}\`. ` +
+      `There is no corresponding node with the \`id\` field matching: "${value}".`
   )
 
   let type
@@ -376,7 +377,7 @@ const getSimpleFieldConfig = ({
         }
       }
   }
-  throw new Error(`Can't determine type for \`${value}\` in \`${selector}\`.`)
+  throw new Error(`Can't determine type for "${value}" in \`${selector}\`.`)
 }
 
 const createTypeName = selector => {
@@ -399,7 +400,7 @@ const createFieldName = key => {
   // Check if the key is really a string otherwise GraphQL will throw.
   invariant(
     typeof key === `string`,
-    `Graphql field name (key) is not a string -> ${key}`
+    `GraphQL field name (key) is not a string: \`${key}\`.`
   )
 
   const replaced = key.replace(NON_ALPHA_NUMERIC_EXPR, `_`)
