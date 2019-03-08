@@ -1,8 +1,8 @@
 import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
-import presets, { colors } from "./presets"
-import { rhythm, scale, options } from "./typography"
+import presets, { colors, space } from "./presets"
+import { rhythm, options } from "./typography"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -30,7 +30,7 @@ export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
@@ -41,10 +41,11 @@ export const buttonStyles = {
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: 1,
+    lineHeight: presets.lineHeights.solid,
+    textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     backgroundSize: `30px 30px`,
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
@@ -62,11 +63,6 @@ export const buttonStyles = {
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
-    [presets.Md]: {
-      ...scale(1 / 5),
-      padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
-    },
-    [presets.Xxl]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -74,37 +70,28 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    // borderRadius: presets.radiusLg,
-    fontSize: scale(1 / 5).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+    fontSize: presets.scale[3],
+    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
-      fontSize: scale(2 / 5).fontSize,
+      fontSize: presets.scale[4],
       padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
     },
-    [presets.Xxl]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
+    [presets.Xxl]: {
+      padding: `${rhythm(space[3])} ${rhythm(space[5])}`,
+    },
   },
   small: {
-    fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+    fontSize: presets.scale[1],
+    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
-      fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    },
-    [presets.Xxl]: {
-      fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+      fontSize: presets.scale[2],
     },
   },
   tiny: {
-    fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+    fontSize: presets.scale[1],
+    padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     [presets.Md]: {
-      fontSize: scale(-1 / 4).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
-    },
-    [presets.Xxl]: {
-      fontSize: scale(-1 / 5).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+      fontSize: presets.scale[2],
     },
   },
   ondark: {
@@ -143,8 +130,9 @@ export const svgStyles = {
 
 // This is an exceptionally bad name
 export const linkStyles = {
-  ...scale(-1 / 6),
-  alignItems: `center`,
+  fontSize: presets.scale[1],
+  lineHeight: presets.lineHeights.solid,
+  padding: `${rhythm(space[3])} 0`,
   "&&": {
     border: 0,
     boxShadow: `none`,
@@ -155,5 +143,22 @@ export const linkStyles = {
   "&&:hover": {
     background: `none`,
     color: colors.gatsby,
+  },
+}
+
+export const formInput = {
+  backgroundColor: `#fff`,
+  border: `1px solid ${colors.ui.bright}`,
+  borderRadius: presets.radii[1],
+  color: colors.brand,
+  fontFamily: options.headerFontFamily.join(`,`),
+  padding: rhythm(space[3]),
+  verticalAlign: `middle`,
+  transition: `all ${presets.animation.speedDefault} ${
+    presets.animation.curveDefault
+  }`,
+  "::placeholder": {
+    color: colors.lilac,
+    opacity: 1,
   },
 }

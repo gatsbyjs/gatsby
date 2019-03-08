@@ -17,8 +17,7 @@ In this guide we'll walk you through creating a complete project capable of quer
 To begin, let's create a Gatsby starter site.
 
 ```bash
-  # Optionally prefixed with `npx` if you don't have the gatsby cli installed.
-  gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
+gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 Navigate inside of the project with `cd gatsby-site`.

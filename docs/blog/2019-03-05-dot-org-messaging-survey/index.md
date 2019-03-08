@@ -114,7 +114,7 @@ Here are some more values that community members listed that we hadn’t listed 
 
 ### Easy & fun
 
-> “Fun”! I really enjoy working with Gatsby. It work they way it should and sometimes even exceeds my expectations.
+> “Fun”! I really enjoy working with Gatsby. It works the way it should and sometimes even exceeds my expectations.
 
 ## Takeaways
 

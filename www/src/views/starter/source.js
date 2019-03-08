@@ -1,7 +1,6 @@
 import React from "react"
-import presets, { colors } from "../../utils/presets"
-import { options, scale } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
+import presets, { colors, space } from "../../utils/presets"
+import { options, rhythm } from "../../utils/typography"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
@@ -12,12 +11,12 @@ const Source = ({ startersYaml, repoUrl }) => (
       display: `flex`,
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: options.headerFontFamily.join(`,`),
-      margin: `0 ${sharedStyles.gutter}`,
+      margin: `0 ${rhythm(space[6])}`,
       [presets.Sm]: {
         borderTop: 0,
       },
       [presets.Lg]: {
-        margin: `0 ${sharedStyles.gutterDesktop}`,
+        margin: `0 ${rhythm(space[8])}`,
       },
     }}
   >
@@ -27,9 +26,6 @@ const Source = ({ startersYaml, repoUrl }) => (
           padding: 20,
           paddingLeft: startersYaml.featured ? false : 0,
           display: `flex`,
-          [presets.Lg]: {
-            ...scale(-1 / 6),
-          },
           alignItems: `center`,
         }}
       >
@@ -46,15 +42,11 @@ const Source = ({ startersYaml, repoUrl }) => (
           href={repoUrl}
           css={{
             "&&": {
-              ...scale(1 / 5),
-              boxShadow: `none`,
               borderBottom: 0,
               color: colors.gatsby,
               cursor: `pointer`,
-              fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `normal`,
               "&:hover": {
-                background: `transparent`,
                 color: colors.lilac,
               },
             },
@@ -74,7 +66,6 @@ const Source = ({ startersYaml, repoUrl }) => (
           flex: 1,
           justifyContent: `flex-end`,
           display: `flex`,
-          ...scale(-1 / 6),
           alignItems: `center`,
         },
       }}
@@ -83,7 +74,6 @@ const Source = ({ startersYaml, repoUrl }) => (
         css={{
           marginRight: 20,
           color: colors.gray.calm,
-          ...scale(1 / 5),
         }}
       >
         Try this starter
@@ -92,15 +82,11 @@ const Source = ({ startersYaml, repoUrl }) => (
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         css={{
           "&&": {
-            ...scale(1 / 5),
-            boxShadow: `none`,
             borderBottom: 0,
             color: colors.gatsby,
             cursor: `pointer`,
-            fontFamily: options.headerFontFamily.join(`,`),
             fontWeight: `normal`,
             "&:hover": {
-              background: `transparent`,
               color: colors.lilac,
             },
           },

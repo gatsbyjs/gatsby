@@ -19,7 +19,7 @@ import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -35,8 +35,8 @@ const Sections = styled(`div`)`
 
 const Section = styled(EcosystemSection)`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
-  margin-bottom: ${rhythm(presets.gutters.default / 2)};
+  border-radius: ${presets.radii[2]}px;
+  margin-bottom: ${rhythm(space[6])};
   padding: ${rhythm(options.blockMarginBottom)};
 
   ${presets.Md} {
@@ -51,7 +51,7 @@ const Section = styled(EcosystemSection)`
 
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
-  font-size: 1.2rem;
+  font-size: ${presets.scale[3]};
   margin-bottom: 0.25rem;
   margin-top: 2rem;
 
@@ -62,7 +62,7 @@ const SubTitle = styled(`h3`)`
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
+  margin: 0 -${rhythm(space[6])};
 
   ${presets.Lg} {
     margin: 0;
@@ -80,11 +80,11 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${rhythm(presets.gutters.default / 2)};
+  margin-right: ${rhythm(space[6])};
 
   ${presets.Md} {
     border-bottom: none;
-    margin: ${rhythm(presets.gutters.default / 2)};
+    margin: ${rhythm(space[6])};
     margin-top: 0;
     margin-left: 0;
     width: 320px;
@@ -99,15 +99,11 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(3 / 4)} + 1.1rem);
+    padding-left: calc(${rhythm(space[6])} + 1.1rem);
     position: relative;
 
-    /* this ovveride the .main-body a style*/
-    box-shadow: none;
-    font-weight: normal;
-
     ${presets.Md} {
-      border-radius: ${presets.radiusLg}px;
+      border-radius: ${presets.radii[2]}px;
     }
 
     ${presets.Lg} {
@@ -119,7 +115,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     :before {
       background: ${props =>
         props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
-      border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+      border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
@@ -134,7 +130,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       color: ${props =>
         props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
       font-family: ${options.headerFontFamily.join(`,`)};
-      font-size: 0.8rem;
+      font-size: ${presets.scale[1]};
       left: 0;
       letter-spacing: 0.05em;
       position: absolute;
