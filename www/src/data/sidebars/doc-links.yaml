@@ -40,7 +40,9 @@
           link: /docs/path-prefix/
         - title: How Gatsby Works with GitHub Pages
           link: /docs/how-gatsby-works-with-github-pages/
-    - title: Custom Configuration
+        - title: Multi-core builds
+          link: /docs/multi-core-builds/
+    - title: Custom configuration
       link: /docs/customization/
       items:
         - title: Babel.js
@@ -213,7 +215,7 @@
               link: /docs/adding-search-with-algolia/
             - title: Adding Search with elasticlunr*
               link: /docs/adding-search-with-elasticlunr/
-            - title: Adding Search with js-search*
+            - title: Adding Search with js-search
               link: /docs/adding-search-with-js-search/
         - title: Adding Analytics
           link: /docs/adding-analytics/

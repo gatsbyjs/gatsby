@@ -1,9 +1,9 @@
 {
-  "name": "cypress-gatsby",
-  "version": "0.1.3",
+  "name": "gatsby-cypress",
+  "version": "0.1.4",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/cypress-gatsby-commands#readme",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress-commands#readme",
   "author": "David Bailey <david.j.b@vivaldi.net>",
   "license": "MIT",
   "bugs": {
@@ -19,6 +19,5 @@
     "cypress": "^3.1.0",
     "gatsby": "^2.0.0-rc.13"
   },
-  "private": true,
   "readme": "README.md"
 }

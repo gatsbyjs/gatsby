@@ -39,7 +39,7 @@ Gatsby ships with a great CLI (command line interface) that contains the
 functionality of scaffolding out a working site, as well as commands to help
 develop the site once created.
 
-`npx gatsby new personal-blog && cd $_`
+`gatsby new personal-blog && cd $_`
 
 This command will create the folder `personal-blog` and then change into that
 directory. A working `gatsby` statically generated application can now be

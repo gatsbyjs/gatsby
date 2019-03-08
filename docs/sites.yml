@@ -4516,6 +4516,16 @@
   built_by: Nick Taylor
   built_by_url: https://www.iamdeveloper.com
   featured: false
+- title: Keziah Moselle Blog
+  url: https://blog.keziahmoselle.fr/
+  main_url: https://blog.keziahmoselle.fr/
+  source_url: https://github.com/KeziahMoselle/blog.keziahmoselle.fr
+  description: >
+    ✍️ A place to share my thoughts.
+  categories:
+    - Blog
+  built_by: Keziah Moselle
+  built_by_url: https://keziahmoselle.fr/
 - title: xfuture's blog
   url: https://www.xfuture-blog.com/
   main_url: https://www.xfuture-blog.com/
@@ -4556,6 +4566,18 @@
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
   featured: false
+- title: Aravind Balla
+  url: https://aravindballa.com
+  main_url: https://aravindballa.com
+  source_url: https://github.com/aravindballa/website2017
+  description: >
+    Personal portfolio of Aravind Balla
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Aravind Balla
+  built_by_url: https://aravindballa.com
 - title: Kaleb McKelvey
   url: https://kalebmckelvey.com
   main_url: https://kalebmckelvey.com
@@ -4568,3 +4590,193 @@
   built_by: Kaleb McKelvey
   built_by_url: https://kalebmckelvey.com
   featured: false
+- title: Michal Czaplinski
+  url: https://czaplinski.io
+  main_url: https://czaplinski.io
+  source_url: https://github.com/michalczaplinski/michalczaplinski.github.io
+  description: >
+    Michal Czaplinski is a full-stack developer 🚀
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Michal Czaplinski mmczaplinski@gmail.com
+  built_by_url: https://czaplinski.io
+  featured: false
+- title: Interactive Investor (ii)
+  url: https://www.ii.co.uk
+  main_url: https://www.ii.co.uk
+  description: >
+    Hybrid (static/dynamic) Gatsby web app for ii's free research, news and analysis, discussion and product marketing site.
+  categories:
+    - Banking
+    - Business
+    - Finance
+    - Technology
+  built_by: Interactive Investor (ii)
+  built_by_url: https://www.ii.co.uk
+  featured: false
+- title: Weingut Goeschl
+  url: https://www.weingut-goeschl.at/
+  main_url: https://www.weingut-goeschl.at/
+  description: >
+    Weingut Goeschl is a family winery located in Gols, Burgenland in Austria (Österreich)
+  categories:
+    - eCommerce
+    - Webshop
+    - Beverage
+    - Business
+  built_by: Peter Kroyer
+  built_by_url: https://www.peterkroyer.at/
+  featured: false
+- title: Josef Aidt
+  url: https://josefaidt.me
+  main_url: https://josefaidt.me
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
+- title: Hash Tech Guru
+  url: https://hashtech.guru
+  main_url: https://hashtech.guru
+  description: >
+    Software Development Training School and Tech Blog
+  categories:
+    - Blog
+    - Education
+  built_by: Htet Wai Yan Soe
+  built_by_url: https://github.com/johnreginald
+- title: AquaGruppen Vattenfilter
+  url: https://aquagruppen.se
+  main_url: https://aquagruppen.se/
+  description: >
+    Water filter and water treatment products in Sweden
+  categories:
+    - Business
+    - Technology
+  built_by: Johan Eliasson
+  built_by_url: https://github.com/elitan
+  featured: false
+- title: How To egghead
+  main_url: https://howtoegghead.com/
+  url: https://howtoegghead.com/
+  source_url: https://github.com/eggheadio/how-to-egghead
+  featured: false
+  built_by: egghead.io
+  built_by_url: https://egghead.io
+  description: >
+    How to become an egghead instructor or reviewer
+  categories:
+    - Documentation
+    - Education
+- title: Sherpalo Ventures
+  main_url: "https://www.sherpalo.com/"
+  url: "https://www.sherpalo.com/"
+  featured: false
+  categories:
+    - Finance
+    - Business
+    - Technology
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
+- title: WrapCode
+  url: https://www.wrapcode.com
+  main_url: https://www.wrapcode.com
+  description: >
+    A full stack blog on Microsoft Azure, JavaScript, DevOps, AI and Bots.
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Rahul P
+  built_by_url: https://twitter.com/_rahulpp
+  featured: false
+- title: Kirankumar Ambati's Portfolio
+  url: https://www.kirankumarambati.me
+  main_url: https://www.kirankumarambati.me
+  description: >
+    Personal website, blog, portfolio of Kirankumar Ambati
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+    - Personal Website
+  built_by: Kirankumar Ambati
+  built_by_url: https://github.com/kirankumarambati
+  featured: false
+- title: Mixkit by Envato
+  url: https://mixkit.co
+  main_url: https://mixkit.co
+  description: >
+    Extraordinary free HD videos
+  categories:
+    - Video
+    - Art
+    - Design
+    - Gallery
+    - Video
+  built_by: Envato
+  built_by_url: https://github.com/envato
+  featured: false
+- title: Rou Hun Fan's portfolio
+  main_url: https://flowen.me
+  url: https://flowen.me
+  source_url: https://github.com/flowen/flowen.me/tree/master/2019/v3
+  description: >
+    Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
+  categories:
+    - Portfolio
+    - Personal website
+  built_by: Rou Hun Fan Developer
+  built_by_url: https://flowen.me
+  featured: false
+- title: chadly.net
+  url: https://www.chadly.net
+  main_url: https://www.chadly.net
+  source_url: https://github.com/chadly/chadly.net
+  description: >
+    Personal tech blog by Chad Lee.
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  built_by: Chad Lee
+  built_by_url: https://github.com/chadly
+  featured: false
+- title: CivicSource
+  url: https://www.civicsource.com
+  main_url: https://www.civicsource.com
+  description: >
+    Online auction site to purchase tax-distressed properties from local taxing authorities.
+  categories:
+    - Auction
+    - Real Estate
+    - Government
+  featured: false
+- title: SpotYou
+  main_url: "https://spotyou.joshglazer.com"
+  url: "https://spotyou.joshglazer.com"
+  source_url: "https://github.com/joshglazer/spotyou"
+  description: >
+    SpotYou allows you to watch your favorite music videos on Youtube based on your Spotify Preferences
+  categories:
+    - Entertainment
+    - Music
+  built_by: Josh Glazer
+  built_by_url: https://linkedin.com/in/joshglazer/
+  featured: false
+- title: A blog with great seo that using gatsby-source-wordpress to fetch posts from backend
+- title: Hesam Kaveh's blog
+  description: >
+    A blog with great seo that using gatsby-source-wordpress to fetch posts from backend
+  main_url: "https://hesamkaveh.com/"
+  url: "https://hesamkaveh.com/"
+  source_url: "https://github.com/hesamkaveh/sansi"
+  featured: false
+  categories:
+    - Blog
+    - WordPress

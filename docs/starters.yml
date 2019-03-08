@@ -39,7 +39,7 @@
     - Web App Manifest
     - SEO
 - url: https://gatsby-tailwind-emotion-starter.netlify.com/
-  repo: https://github.com/muhajirframe/gatsby-tailwind-emotion-starter
+  repo: https://github.com/muhajirdev/gatsby-tailwind-emotion-starter
   description: A Gatsby Starter with Tailwind CSS + Emotion JS
   tags:
     - Styling:Tailwind
@@ -48,7 +48,7 @@
     - Offline support
     - Web App Manifest
 - url: https://gatsby-starter-redux-firebase.netlify.com/
-  repo: https://github.com/muhajirframe/gatsby-starter-redux-firebase
+  repo: https://github.com/muhajirdev/gatsby-starter-redux-firebase
   description: A Gatsby + Redux + Firebase Starter. With Authentication
   tags:
     - Styling:None
@@ -331,14 +331,16 @@
     - React Icons
 - url: https://parmsang.github.io/gatsby-starter-ecommerce/
   repo: https://github.com/parmsang/gatsby-starter-ecommerce
-  description: no description yet
+  description: Easy to use starter for an e-commerce store
   tags:
     - Styling:Semantic
     - Stripe
     - Moltin
+    - e-commerce
+    - PWA
+    - Authentication
   features:
     - Uses the Moltin eCommerce Api
-    - React 16 (gatsby-plugin-react-next)
     - Stripe checkout
     - Semantic-UI
     - Styled components
@@ -1090,7 +1092,7 @@
     - Google Analytics support.
     - Disqus Comments support.
 - url: https://gatsby-starter-firebase.netlify.com/
-  repo: https://github.com/muhajirframe/gatsby-starter-firebase
+  repo: https://github.com/muhajirdev/gatsby-starter-firebase
   description: A Gatsby + Firebase Starter. With Authentication
   tags:
     - Styling:None
@@ -1309,7 +1311,7 @@
     - draw with graph mermaid
     - display charts with chartjs
 - url: https://gatsby-tailwind-styled-components.netlify.com/
-  repo: https://github.com/muhajirframe/gatsby-tailwind-styled-components-starter
+  repo: https://github.com/muhajirdev/gatsby-tailwind-styled-components-starter
   description: A Gatsby Starter with Tailwind CSS + Styled Components
   tags:
     - Styling:Tailwind
@@ -1971,3 +1973,39 @@
   features:
     - styled-components
     - sticky footer
+- url: https://magazine-example.livingdocs.io/
+  repo: https://github.com/livingdocsIO/gatsby-magazine-example
+  description: This magazine-starter helps you start out with Livingdocs as a headless CMS.
+  tags:
+    - Blog
+    - Headless CMS
+    - Livingdocs
+  features:
+    - Minimal and clean white layout.
+    - Dynamic content from Livingdocs.
+    - Built-in component library.
+    - Robust template and theme.
+- url: https://gatsby-starter-intl.tomekskuta.pl
+  repo: https://github.com/tomekskuta/gatsby-starter-intl
+  description: Gatsby v2 i18n starter which makes static pages for every locale and detect your browsers lang. i18n with react-intl.
+  tags:
+    - i18n
+  features:
+    - static pages for every language
+    - detects your browser locale
+    - uses react-intl
+    - based on Gatsby Default Starter
+    - unit tests with Jest
+- url: https://cape.netlify.com/
+  repo: https://github.com/juhi-trivedi/cape
+  description: A Gatsby - Contentful demo with Netlify.
+  tags:
+    - Blog
+    - Netlify Form
+    - Contentful
+    - Styling:Bootstrap
+  features:
+    - Fecthing Dynamic content from Contentful.
+    - Blog post listing with previews (image + summary) for each blog post.
+    - Contact form integration with Netlify.
+    - Grid system inspired by Bootstrap.

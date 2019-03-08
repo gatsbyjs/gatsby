@@ -26,15 +26,15 @@ const MastheadContent = () => (
     <h1
       css={{
         color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 1.5vw)`,
+        fontSize: `calc(12px + 2vh + 3.5vw)`,
         letterSpacing: `-1px`,
         lineHeight: 1.1,
         margin: `0 auto 1.75rem`,
-        maxWidth: `11em`,
+        maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,
       }}
     >
-      Build blazing fast apps and websites with React
+      Fast in every way that matters
     </h1>
     <p
       css={{
@@ -47,10 +47,15 @@ const MastheadContent = () => (
         [presets.Sm]: {
           fontSize: scale(2 / 5).fontSize,
         },
+        [presets.Lg]: {
+          maxWidth: rhythm(28),
+          fontSize: scale(3 / 5).fontSize,
+        },
       }}
     >
-      Gatsby is a free and open source developer framework based on React for
-      building blazing fast websites and apps
+      Gatsby is a free and open source framework based on React that helps
+      developers build blazing fast <strong>websites</strong> and{` `}
+      <strong>apps</strong>
     </p>
     <Button
       large
