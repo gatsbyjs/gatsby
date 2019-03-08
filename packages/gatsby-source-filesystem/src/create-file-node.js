@@ -4,8 +4,8 @@ const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const crypto = require(`crypto`)
 
 exports.createFileNode = async (
   pathToFile,
@@ -27,10 +27,12 @@ exports.createFileNode = async (
   const stats = await fs.stat(slashedFile.absolutePath)
   let internal
   if (stats.isDirectory()) {
-    const contentDigest = createContentDigest({
-      stats: stats,
-      absolutePath: slashedFile.absolutePath,
-    })
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(
+        JSON.stringify({ stats: stats, absolutePath: slashedFile.absolutePath })
+      )
+      .digest(`hex`)
     internal = {
       contentDigest,
       type: `Directory`,
