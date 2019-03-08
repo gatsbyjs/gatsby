@@ -403,7 +403,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
   const fileExtension = options.toFormat ? options.toFormat : file.extension
 
-  const argsDigest = cyrpto
+  const argsDigest = crypto
     .createHash(`md5`)
     .update(JSON.stringify(sortedArgs))
     .digest(`hex`)
