@@ -2,6 +2,7 @@ import { graphql } from "gatsby"
 import React from "react"
 
 import { rhythm, scale, options } from "../utils/typography"
+import presets, { space } from "../utils/presets"
 
 const Param = (param, depth = 0) => {
   // The "plugin" parameter is used internally but not
@@ -46,7 +47,12 @@ const Param = (param, depth = 0) => {
         />
       )}
       {param.properties && (
-        <div css={{ marginBottom: rhythm(1), marginTop: rhythm(1 / 2) }}>
+        <div
+          css={{
+            marginBottom: rhythm(space[5]),
+            marginTop: rhythm(space[3]),
+          }}
+        >
           {param.properties.map(param => Param(param, depth + 1))}
         </div>
       )}
@@ -60,7 +66,7 @@ export default ({ functions }) => (
       <div
         id={node.name}
         key={`reference list ${node.name}`}
-        css={{ marginBottom: rhythm(1) }}
+        css={{ marginBottom: rhythm(space[5]) }}
       >
         {i !== 0 && <hr />}
         <h3>
@@ -87,7 +93,7 @@ export default ({ functions }) => (
                 key={`ret ${JSON.stringify(ret)}`}
                 css={{
                   marginLeft: `1.05rem`,
-                  ...scale(-1 / 5),
+                  fontSize: presets.scale[1],
                   lineHeight: options.baseLineHeight,
                 }}
               >
@@ -115,7 +121,7 @@ export default ({ functions }) => (
 
         {node.examples && node.examples.length > 0 && (
           <div>
-            <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
+            <h4 css={{ marginTop: rhythm(space[5]) }}>Example</h4>
             {` `}
             {node.examples.map((example, i) => (
               <div

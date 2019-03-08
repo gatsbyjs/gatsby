@@ -12,7 +12,6 @@ import EmailCaptureForm from "../components/email-capture-form"
 
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
-import logo from "../monogram.svg"
 
 class BlogPostsIndex extends React.Component {
   render() {
@@ -32,19 +31,7 @@ class BlogPostsIndex extends React.Component {
           <Helmet>
             <title>Blog</title>
           </Helmet>
-          <Container
-            css={{
-              [presets.Md]: {
-                background: `url(${logo})`,
-                paddingBottom: `${rhythm(
-                  options.blockMarginBottom * 4
-                )} !important`,
-                backgroundSize: `30px 30px`,
-                backgroundRepeat: `no-repeat`,
-                backgroundPosition: `bottom center`,
-              },
-            }}
-          >
+          <Container>
             <h1
               css={{
                 marginTop: 0,
@@ -70,12 +57,12 @@ class BlogPostsIndex extends React.Component {
                 css={{
                   marginBottom: rhythm(options.blockMarginBottom),
                   [presets.Md]: {
-                    ...presets.boxShadows.card,
+                    boxShadow: presets.shadows.card,
                     background: `#fff`,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: presets.radii[2],
                     padding: rhythm(options.blockMarginBottom * 2),
-                    paddingLeft: rhythm(options.blockMarginBottom * 3),
-                    paddingRight: rhythm(options.blockMarginBottom * 3),
+                    paddingLeft: rhythm(options.blockMarginBottom * 2),
+                    paddingRight: rhythm(options.blockMarginBottom * 2),
                     marginLeft: rhythm(-options.blockMarginBottom * 2),
                     marginRight: rhythm(-options.blockMarginBottom * 2),
                     transition: `transform ${presets.animation.speedDefault} ${
@@ -87,7 +74,7 @@ class BlogPostsIndex extends React.Component {
                     }`,
                     "&:hover": {
                       transform: `translateY(-4px)`,
-                      ...presets.boxShadows.cardHover,
+                      boxShadow: presets.shadows.cardHover,
                     },
                     "&:active": {
                       boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
