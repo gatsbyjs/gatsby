@@ -93,7 +93,7 @@ const styles = {
     },
   },
   link: {
-    paddingRight: rhythm(space[3]),
+    paddingRight: rhythm(space[4]),
     minHeight: 40,
     paddingTop: 10,
     paddingBottom: 10,
