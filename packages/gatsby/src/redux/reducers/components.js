@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const normalize = require(`normalize-path`)
 const { interpret } = require(`xstate`)
 
@@ -24,7 +23,7 @@ module.exports = (state = new Map(), action) => {
       if (!services.has(action.payload.componentPath)) {
         const machine = componentMachine.withContext({
           componentPath: action.payload.componentPath,
-          query: ``,
+          query: state.get(action.payload.componentPath)?.query || ``,
           pages: [action.payload.path],
           isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
@@ -39,19 +38,6 @@ module.exports = (state = new Map(), action) => {
         services.set(action.payload.componentPath, service)
       } else {
         service = services.get(action.payload.componentPath)
-        // Check if this is a new page — if so, run its query.
-        if (!_.includes(service.state.context.pages, action.payload.path)) {
-          service.send({ type: `NEW_PAGE_CREATED`, path: action.payload.path })
-          // Run query for the new page.
-          const {
-            runQueryForPage,
-          } = require(`../../internal-plugins/query-runner/query-watcher`)
-          // Wait a bit as calling this function immediately triggers
-          // an Action call which Redux squawks about.
-          setTimeout(() => {
-            runQueryForPage(action.payload.path)
-          }, 0)
-        }
       }
 
       state.set(
@@ -69,24 +55,16 @@ module.exports = (state = new Map(), action) => {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
 
-      // Check if we're in bootstrap or not
-      if (service.state.context.isInBootstrap) {
-        // See if the query changed or not.
+      // Check if the query has changed or not.
+      if (service.state.context.query === action.payload.query) {
+        service.send(`QUERY_DID_NOT_CHANGE`)
+      } else {
         service.send({
-          type: `QUERY_EXTRACTED`,
+          type: `QUERY_CHANGED`,
           query: action.payload.query,
         })
-      } else {
-        // Check if the query has changed or not.
-        if (service.state.context.query === action.payload.query) {
-          service.send(`QUERY_DID_NOT_CHANGE`)
-        } else {
-          service.send({
-            type: `QUERY_CHANGED`,
-            query: action.payload.query,
-          })
-        }
       }
+
       state.set(action.payload.componentPath, {
         ...service.state.context,
       })

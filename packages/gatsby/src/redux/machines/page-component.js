@@ -41,7 +41,7 @@ module.exports = Machine(
             target: `extractingQueries`,
             actions: `setBootstrapFinished`,
           },
-          QUERY_EXTRACTED: `runningPageQueries`,
+          QUERY_CHANGED: `runningPageQueries`,
           QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
@@ -91,19 +91,15 @@ module.exports = Machine(
 
         debounceCompile()
       },
-      runPageComponentQueries: context => {
-        // Let page-query-runner.js handle running page component queries
-        // until we're out of bootstrap.
-        if (!context.isInBootstrap) {
-          const {
-            queueQueriesForPageComponent,
-          } = require(`../../internal-plugins/query-runner/query-watcher`)
-          // Wait a bit as calling this function immediately triggers
-          // an Action call which Redux squawks about.
-          setTimeout(() => {
-            queueQueriesForPageComponent(context.componentPath)
-          }, 0)
-        }
+      runPageComponentQueries: (context, event) => {
+        const {
+          queueQueriesForPageComponent,
+        } = require(`../../internal-plugins/query-runner/query-watcher`)
+        // Wait a bit as calling this function immediately triggers
+        // an Action call which Redux squawks about.
+        setTimeout(() => {
+          queueQueriesForPageComponent(context.componentPath)
+        }, 0)
       },
       setQuery: assign({
         query: (ctx, event) => {
@@ -117,6 +113,17 @@ module.exports = Machine(
       setPage: assign({
         pages: (ctx, event) => {
           if (event.path) {
+            const {
+              runQueryForPage,
+            } = require(`../../internal-plugins/query-runner/query-watcher`)
+            // Wait a bit as calling this function immediately triggers
+            // an Action call which Redux squawks about.
+            setTimeout(() => {
+              if (!ctx.isInBootstrap) {
+                runQueryForPage(event.path)
+              }
+            }, 0)
+
             return ctx.pages.concat(event.path)
           } else {
             return ctx.pages
