@@ -1,5 +1,5 @@
 const grayMatter = require(`gray-matter`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
@@ -53,7 +53,10 @@ module.exports = async function onCreateNode(
       markdownNode.fileAbsolutePath = node.absolutePath
     }
 
-    markdownNode.internal.contentDigest = createContentDigest(markdownNode)
+    markdownNode.internal.contentDigest = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(markdownNode))
+      .digest(`hex`)
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
