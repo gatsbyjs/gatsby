@@ -204,6 +204,7 @@
   tags:
     - Styling:Bulma
     - Storybook
+    - Testing
   features:
     - Storybook for developing components in isolation
     - Bulma and Sass support for styling
@@ -336,7 +337,7 @@
     - Styling:Semantic
     - Stripe
     - Moltin
-    - e-commerce
+    - eCommerce
     - PWA
     - Authentication
   features:
@@ -366,6 +367,8 @@
   tags:
     - Styling:CSS-in-JS
     - Blog
+    - Testing
+    - Linting
   features:
     - CSS-in-JS via Emotion.
     - Jest and Enzyme for testing.
@@ -471,6 +474,7 @@
     - Disqus
     - RSS
     - Linting
+    - Testing
     - Styling:PostCSS
     - Styling:SCSS
   features:
@@ -635,6 +639,7 @@
     - Styling:CSS-in-JS
     - PWA
     - Linting
+    - Testing
   features:
     - Full-width photo grid-layout (with gatsby-image)
     - Minimalistic light theme with large images
@@ -785,6 +790,7 @@
   tags:
     - TypeScript
     - Styling:Semantic
+    - Testing
   features:
     - Semantic-ui for styling
     - TypeScript
@@ -1117,7 +1123,7 @@
   repo: https://github.com/cardiv/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
-    - Antd
+    - Ant Design
     - Styling:Less
   features:
     - Fork of Gatsby's default starter
@@ -1326,6 +1332,7 @@
     - MobX
     - TypeScript
     - Linting
+    - Testing
   features:
     - Gatsby v2 + TypeScript
     - MobX with decorators
@@ -1450,7 +1457,6 @@
     - styled-components for CSS-in-JS
     - ESLint with Airbnb's config
     - Prettier integrated into ESLint
-    - Jest for component testing
     - A few example components and pages with stories and simple site structure
 - url: https://devchico.com/gatsby-starter-cv/
   repo: https://github.com/santosfrancisco/gatsby-starter-cv
@@ -1536,6 +1542,7 @@
   tags:
     - TypeScript
     - Linting
+    - Testing
     - Styling:CSS-in-JS
     - MDX
   features:
@@ -1743,6 +1750,7 @@
     - TypeScript
     - Styling:Rebass
     - Styling:CSS-in-JS
+    - Testing
   features:
     - MDX - Markdown + React
     - Netlify CMS (with MDX support)
@@ -1853,6 +1861,7 @@
     - SEO
     - Markdown
     - Styling:CSS-in-JS
+    - Testing
   features:
     - Optimized images with gatsby-image.
     - SEO friendly with react-helmet, gatsby-plugin-sitemap and Google Webmaster Tools!
@@ -1990,6 +1999,7 @@
   description: Gatsby v2 i18n starter which makes static pages for every locale and detect your browsers lang. i18n with react-intl.
   tags:
     - i18n
+    - Testing
   features:
     - static pages for every language
     - detects your browser locale
