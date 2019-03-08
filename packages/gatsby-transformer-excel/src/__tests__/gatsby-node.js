@@ -2,7 +2,6 @@ const Promise = require(`bluebird`)
 const XLSX = require(`xlsx`)
 
 const { onCreateNode } = require(`../gatsby-node`)
-const createContentDigest = require(`../../../gatsby/src/utils/create-content-digest`)
 
 describe(`Process nodes correctly`, () => {
   const node = {
@@ -36,7 +35,6 @@ describe(`Process nodes correctly`, () => {
       loadNodeContent,
       actions,
       createNodeId,
-      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -62,7 +60,6 @@ describe(`Process nodes correctly`, () => {
         loadNodeContent,
         actions,
         createNodeId,
-        createContentDigest,
       },
       { raw: false }
     ).then(() => {
@@ -90,7 +87,6 @@ describe(`Process nodes correctly`, () => {
         loadNodeContent,
         actions,
         createNodeId,
-        createContentDigest,
       },
       { rawOutput: false }
     ).then(() => {

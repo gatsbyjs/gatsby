@@ -1,6 +1,7 @@
 const XLSX = require(`xlsx`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 
 // read files as `binary` from file system
 function _loadNodeContent(fileNode, fallback) {
@@ -10,7 +11,7 @@ function _loadNodeContent(fileNode, fallback) {
 }
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId, createContentDigest },
+  { node, actions, loadNodeContent, createNodeId },
   options = {}
 ) {
   const { createNode, createParentChildLink } = actions
