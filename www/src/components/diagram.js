@@ -56,7 +56,7 @@ const SegmentTitle = ({ children }) => (
       padding: `.35rem .6rem`,
       fontWeight: `normal`,
       letterSpacing: `.5px`,
-      ...scale(-1 / 5),
+      fontSize: presets.scale[1],
       lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
@@ -151,7 +151,7 @@ const ItemTitle = ({ children }) => (
       color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      ...scale(1 / 5),
+      fontSize: presets.scale[2],
     }}
   >
     {children}
@@ -164,7 +164,7 @@ const ItemDescription = ({ children }) => (
       lineHeight: presets.lineHeights.dense,
       display: `block`,
       color: colors.gray.calm,
-      fontSize: scale(-1 / 5).fontSize,
+      fontSize: presets.scale[1],
       fontFamily: options.systemFontFamily.join(`,`),
     }}
   >
@@ -246,7 +246,7 @@ const Diagram = () => (
         className="Diagram"
         css={{
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: rhythm(space[8]),
+          padding: rhythm(space[6]),
           textAlign: `center`,
           flex: `1 1 100%`,
         }}

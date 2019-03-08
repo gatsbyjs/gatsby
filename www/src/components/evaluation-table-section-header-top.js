@@ -23,7 +23,7 @@ const superHeader = () => (
           },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: scale(-3 / 6).fontSize,
+          fontSize: presets.scale[0],
           lineHeight: presets.lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,

@@ -207,7 +207,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: `80%`, marginTop: rhythm(space[5]) }}>
+  <p css={{ fontSize: presets.scale[1], marginTop: rhythm(space[8]) }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

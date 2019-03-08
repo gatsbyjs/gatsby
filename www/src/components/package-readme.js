@@ -80,7 +80,6 @@ const PackageReadMe = props => {
           </Link>
         )}
       </div>
-
       <div
         css={{ position: `relative` }}
         dangerouslySetInnerHTML={{ __html: html }}

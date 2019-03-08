@@ -56,7 +56,7 @@ const Header = styled(`header`)`
 
   h3 {
     color: ${colors.gatsbyDark};
-    font-size: 1rem;
+    font-size: ${presets.scale[2]};
     margin: 0;
   }
 

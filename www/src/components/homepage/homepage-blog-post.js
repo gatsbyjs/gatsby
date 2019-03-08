@@ -53,7 +53,7 @@ const Cover = styled(Img)`
 
 const Header = styled(`h1`)`
   color: ${colors.gatsbyDarker};
-  font-size: 1.25rem;
+  font-size: ${presets.scale[4]};
   font-weight: bold;
   margin: 0;
   padding: ${rhythm(4 / 5)};
@@ -71,7 +71,7 @@ const Meta = styled(`div`)`
   color: ${colors.gray.calm};
   display: flex;
   flex-wrap: wrap;
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   margin-top: 1rem;
   padding: 0 ${rhythm(4 / 5)};
 
@@ -133,7 +133,7 @@ const ReadMore = styled(Link)`
   color: ${colors.gatsby};
   display: flex;
   flex-grow: 1;
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   left: 0;
   padding: ${rhythm(4 / 5)};
   position: absolute;

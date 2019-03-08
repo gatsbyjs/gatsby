@@ -92,11 +92,9 @@ export const buttonStyles = {
     padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
       fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     },
     [presets.Xxl]: {
       fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     },
   },
   tiny: {
@@ -104,11 +102,9 @@ export const buttonStyles = {
     padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     [presets.Md]: {
       fontSize: scale(-1 / 4).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     },
     [presets.Xxl]: {
       fontSize: scale(-1 / 5).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     },
   },
   ondark: {

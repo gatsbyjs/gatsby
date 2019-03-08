@@ -255,14 +255,10 @@ class Search extends Component {
               alignItems: `center`,
               color: colors.gray.calm,
               display: `flex`,
-              fontFamily: typography.options.headerFontFamily.join(`,`),
-              fontSize: scale(1),
               height: searchMetaHeight,
               paddingLeft: rhythm(space[6]),
               paddingRight: rhythm(space[6]),
-              [presets.Md]: {
-                fontSize: scale(-1 / 5).fontSize,
-              },
+              fontSize: presets.scale[1],
             }}
           >
             <Stats
@@ -425,7 +421,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
             display: `flex`,
-            fontSize: rhythm(3 / 6),
+            fontSize: presets.scale[0],
           }}
         >
           {hit.repository &&
@@ -466,7 +462,7 @@ const Result = ({ hit, pathname, query }) => {
       <div
         css={{
           color: selected ? `inherit` : colors.gray.calm,
-          fontSize: scale(-1 / 6).fontSize,
+          fontSize: presets.scale[1],
         }}
       >
         {removeMD(unescape(hit.description))}

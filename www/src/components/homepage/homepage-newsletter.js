@@ -62,7 +62,7 @@ const Ornament = styled(`span`)`
 const Name = styled(`h3`)`
   color: ${colors.lilac};
   font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   font-weight: normal;
   margin: 0;
   text-transform: uppercase;
@@ -70,7 +70,7 @@ const Name = styled(`h3`)`
 
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
-  font-size: 1.25rem;
+  font-size: ${presets.scale[4]};
   line-height: ${presets.lineHeights.dense};
   margin: 0;
   margin-top: 0.2rem;

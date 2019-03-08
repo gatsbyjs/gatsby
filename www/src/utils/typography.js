@@ -109,7 +109,7 @@ const _options = {
         top: `0`,
         right: `20px`,
         padding: `3px 10px`,
-        fontSize: `12px`,
+        fontSize: presets.scale[0],
         textAlign: `right`,
         color: colors.gray.dark,
         fontWeight: `700`,
@@ -212,7 +212,7 @@ const _options = {
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        fontSize: scale(-1 / 5).fontSize,
+        fontSize: presets.scale[1],
         lineHeight: presets.lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(options.blockMarginBottom * 2),

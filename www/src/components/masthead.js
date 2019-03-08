@@ -36,16 +36,15 @@ const MastheadContent = () => (
       css={{
         color: colors.gray.copy,
         fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: scale(1 / 4).fontSize,
+        fontSize: presets.scale[4],
         maxWidth: rhythm(26),
         margin: `0 auto 2rem`,
         WebkitFontSmoothing: `antialiased`,
         [presets.Sm]: {
-          fontSize: scale(2 / 4).fontSize,
+          fontSize: presets.scale[5],
         },
         [presets.Lg]: {
-          maxWidth: rhythm(28),
-          fontSize: scale(3 / 4).fontSize,
+          fontSize: presets.scale[6],
         },
       }}
     >

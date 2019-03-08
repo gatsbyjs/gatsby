@@ -146,7 +146,7 @@ class EvaluationTable extends Component {
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: `90%`,
+                              fontSize: presets.scale[1],
                               lineHeight: presets.lineHeights.solid,
                             }}
                             id={

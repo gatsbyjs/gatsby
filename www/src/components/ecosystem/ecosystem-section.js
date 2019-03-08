@@ -54,7 +54,7 @@ const Title = styled(`h1`)`
   align-items: center;
   color: ${colors.gatsby};
   display: flex;
-  font-size: 1.25rem;
+  font-size: ${presets.scale[4]};
   line-height: ${presets.lineHeights.solid};
   margin: 0;
   margin-bottom: ${rhythm(0.25)};
@@ -73,7 +73,7 @@ const Icon = styled(`span`)`
 
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   font-weight: 300;
   letter-spacing: 0.05em;
   margin: 0;

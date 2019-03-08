@@ -37,14 +37,14 @@ const SingleLineInput = styled(`input`)`
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
   font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 1rem;
+  font-size: ${presets.scale[2]};
   padding: 0.6rem;
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
   font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   margin: calc(1.05rem / 2) 0;
 `
 
@@ -59,7 +59,7 @@ const Submit = styled(`input`)`
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: 1.125rem;
+  font-size: ${presets.scale[3]};
   width: 100%;
   margin-top: 10px;
 
@@ -234,7 +234,7 @@ class EmailCaptureForm extends React.Component {
     )
 
     return (
-      <React.Fragment>
+      <>
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
@@ -279,7 +279,7 @@ class EmailCaptureForm extends React.Component {
             </div>
           </div>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }

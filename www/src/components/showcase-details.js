@@ -405,7 +405,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: 20,
+                          fontSize: presets.scale[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}

@@ -17,6 +17,7 @@ import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import { rhythm } from "../utils/typography"
 
 let windowWidth
 
@@ -66,7 +67,7 @@ class DefaultLayout extends React.Component {
 
     if (isModal && window.innerWidth > 750) {
       return (
-        <React.Fragment>
+        <>
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
@@ -136,7 +137,7 @@ class DefaultLayout extends React.Component {
               {this.props.modalNextLink}
             </div>
           </Modal>
-        </React.Fragment>
+        </>
       )
     }
 
@@ -187,12 +188,12 @@ const styles = {
     overflow: `hidden`,
     position: `absolute`,
     zIndex: 100,
-    fontSize: `0.85rem`,
+    fontSize: presets.scale[1],
     ":focus": {
-      padding: `0.9rem`,
+      padding: rhythm(presets.space[4]),
       position: `fixed`,
-      top: 10,
-      left: 10,
+      top: rhythm(presets.space[6]),
+      left: rhythm(presets.space[6]),
       background: `white`,
       textDecoration: `none`,
       width: `auto`,

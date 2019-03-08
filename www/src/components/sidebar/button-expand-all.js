@@ -9,7 +9,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
   <button
     onClick={onClick}
     css={{
-      fontSize: scale(-9 / 21).fontSize,
+      fontSize: presets.scale[0],
       lineHeight: presets.lineHeights.solid,
       background: `transparent`,
       border: `none`,

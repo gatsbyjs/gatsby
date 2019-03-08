@@ -47,11 +47,10 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: `${colors.ui.whisper}`,
+          background: colors.ui.whisper,
           // borderLeft: i > 0 ? `1px solid ${colors.ui.light}` : `none`,
           // borderRight: i === 5 ? `1px solid ${colors.ui.light}` : `none`,
           fontWeight: 600,
-          fontSize: scale(-1 / 9).fontSize,
           lineHeight: presets.lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,

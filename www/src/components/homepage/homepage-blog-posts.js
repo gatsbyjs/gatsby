@@ -55,7 +55,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: ${presets.scale[4]};
     justify-content: center;
     line-height: ${presets.lineHeights.dense};
     padding: ${rhythm(1.5)};
@@ -157,7 +157,7 @@ class HomepageBlogPosts extends Component {
     const { desktopViewport } = this.state
 
     return (
-      <React.Fragment>
+      <>
         {desktopViewport ? (
           <HomepageBlogPostsRootDesktop>
             {postsInColumns.map((column, colIdx) => (
@@ -211,7 +211,7 @@ class HomepageBlogPosts extends Component {
             </HorizontalScrollerContentAsDiv>
           </HomepageBlogPostsRootMobile>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }

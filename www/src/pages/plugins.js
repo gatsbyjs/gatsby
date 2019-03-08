@@ -37,7 +37,7 @@ class Plugins extends Component {
           />
           <h1
             css={{
-              fontSize: rhythm(space[5]),
+              fontSize: presets.scale[6],
               marginTop: rhythm(1 / 4),
               marginLeft: rhythm(space[5]),
               marginRight: rhythm(space[5]),
@@ -51,7 +51,7 @@ class Plugins extends Component {
               color: colors.gray.calm,
               marginLeft: rhythm(2),
               marginRight: rhythm(2),
-              fontSize: scale(2 / 6).fontSize,
+              fontSize: presets.scale[4],
               fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
             }}

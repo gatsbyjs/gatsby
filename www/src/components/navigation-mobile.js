@@ -10,7 +10,7 @@ import {
 } from "../assets/mobile-nav-icons"
 import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -41,7 +41,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
 )
 
 const MobileNavigation = () => (
-  <React.Fragment>
+  <>
     <span
       css={{
         position: `absolute`,
@@ -65,7 +65,7 @@ const MobileNavigation = () => (
         left: 0,
         right: 0,
         zIndex: 1,
-        borderTop: `1px solid ${colors.ui.border}`,
+        borderTop: `1px solid ${colors.ui.light}`,
         background: `#fff`,
         minHeight: presets.headerHeight,
         fontFamily: options.headerFontFamily.join(`,`),
@@ -81,7 +81,7 @@ const MobileNavigation = () => (
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
     </div>
-  </React.Fragment>
+  </>
 )
 
 export default MobileNavigation
@@ -118,7 +118,7 @@ const styles = {
     default: {
       color: colors.lilac,
       borderRadius: presets.radii[1],
-      fontSize: scale(-1 / 3).fontSize,
+      fontSize: presets.scale[0],
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,
       width: 64,
@@ -140,10 +140,8 @@ const styles = {
       },
     },
     active: {
-      "&&": {
-        color: colors.gatsby,
-        fontWeight: `bold`,
-      },
+      color: colors.gatsby,
+      fontWeight: `bold`,
     },
   },
 }

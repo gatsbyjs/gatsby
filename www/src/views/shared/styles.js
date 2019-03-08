@@ -138,7 +138,7 @@ const styles = {
     },
   },
   meta: {
-    fontSize: scale(-1 / 5).fontSize,
+    fontSize: presets.scale[1],
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -194,7 +194,7 @@ const styles = {
   sidebarHeader: {
     margin: 0,
     [presets.Lg]: {
-      fontSize: scale(1 / 8).fontSize,
+      fontSize: presets.scale[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
       color: colors.gray.calm,
@@ -246,7 +246,7 @@ const styles = {
   contentTitle: {
     color: colors.gatsby,
     margin: 0,
-    fontSize: scale(1 / 5).fontSize,
+    fontSize: presets.scale[3],
     lineHeight: presets.lineHeights.solid,
   },
   resultCount: {

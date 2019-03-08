@@ -1,7 +1,7 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import { colors, space } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 
 const paddingLeft = level =>
@@ -160,7 +160,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      fontSize: `100%`,
+      fontSize: presets.scale[1],
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
       ...(level === 0 && { ...styles.smallCaps }),
