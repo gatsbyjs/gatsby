@@ -42,6 +42,8 @@ Use the following template to ensure required fields are filled:
 
 Check out the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file for examples.
 
+Submit your pull request with title `chore(starters): add my-starter-name-here`. If lint complains about your PR, make sure that the file ends with exactly one newline character (no spaces), and that your text values don't contain special characters like `:`.
+
 ### Need to change details?
 
 If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR. GitHub data (like stars) will be automatically pulled and updated, but your starter description, tags, and feature list are up to you!
