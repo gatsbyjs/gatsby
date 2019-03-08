@@ -40,15 +40,7 @@ const createFSMachine = () =>
   })
 
 exports.sourceNodes = (
-  {
-    actions,
-    getNode,
-    createNodeId,
-    createContentDigest,
-    hasNodeChanged,
-    reporter,
-    emitter,
-  },
+  { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
   pluginOptions
 ) => {
   const { createNode, deleteNode } = actions
@@ -103,7 +95,6 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     const fileNodePromise = createFileNode(
       path,
       createNodeId,
-      createContentDigest,
       pluginOptions
     ).then(fileNode => {
       createNode(fileNode)

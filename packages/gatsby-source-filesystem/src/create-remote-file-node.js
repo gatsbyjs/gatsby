@@ -1,5 +1,6 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
@@ -173,7 +174,6 @@ async function processRemoteNode({
   createNodeId,
   ext,
   name,
-  createContentDigest,
 }) {
   // Ensure our cache directory exists.
   const pluginCacheDir = path.join(

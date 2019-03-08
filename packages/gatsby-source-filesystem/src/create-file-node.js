@@ -4,12 +4,12 @@ const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
+const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
-  createContentDigest,
   pluginOptions = {}
 ) => {
   const slashed = slash(pathToFile)
