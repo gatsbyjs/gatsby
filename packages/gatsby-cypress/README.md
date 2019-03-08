@@ -8,6 +8,12 @@ as follows:
 import "gatsby-cypress/commands"
 ```
 
+You also need to expose a `CYPRESS_SUPPORT` environment variable to entirely eliminate any code relating to Cypress in the normal browser build. You can place it in your test script for example:
+
+```
+"test": "CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test"
+```
+
 Once imported, the following additional commands are available:
 
 - `cy.getTestElement(selector)`: Selects elements where the `data-testid`
