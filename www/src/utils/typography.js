@@ -238,7 +238,7 @@ const _options = {
         borderBottomColor: colors.ui.border,
       },
       ".post-body a": {
-        color: `${colors.lilac} !important`,
+        color: `${colors.lilac}`,
         fontWeight: `normal`,
       },
       ".post-body figure img": {
