@@ -68,11 +68,15 @@ function MemoryStoreWithPriorityBuckets() {
           const oldPriorityTasks = queueMap.get(oldPriority)
           oldPriorityTasks.splice(oldPriorityTasks.indexOf(taskId), 1)
 
-          needToUpdatePriorityKeys |= oldPriority.length === 0
-          needToUpdatePriorityKeys |= addTaskWithPriority(taskId, priority)
+          if (
+            addTaskWithPriority(taskId, priority) ||
+            oldPriority.length === 0
+          ) {
+            needToUpdatePriorityKeys = true
+          }
         }
       } else {
-        needToUpdatePriorityKeys |= addTaskWithPriority(taskId, priority)
+        needToUpdatePriorityKeys = addTaskWithPriority(taskId, priority)
       }
 
       if (needToUpdatePriorityKeys) {
@@ -96,13 +100,13 @@ function MemoryStoreWithPriorityBuckets() {
           tasksToRun[taskId] = tasks.get(taskId)
           tasks.delete(taskId)
           taskIdToPriority.delete(taskId)
-          haveSomeTasks |= true
+          haveSomeTasks = true
         })
 
         remainingTasks -= grabbedTaskIds.length
         if (taskWithSamePriority.length === 0) {
           queueMap.delete(priority)
-          needToUpdatePriorityKeys |= true
+          needToUpdatePriorityKeys = true
         }
         if (remainingTasks <= 0) {
           break
@@ -147,13 +151,13 @@ function MemoryStoreWithPriorityBuckets() {
           tasksToRun[taskId] = tasks.get(taskId)
           tasks.delete(taskId)
           taskIdToPriority.delete(taskId)
-          haveSomeTasks |= true
+          haveSomeTasks = true
         })
 
         remainingTasks -= grabbedTaskIds.length
         if (taskWithSamePriority.length === 0) {
           queueMap.delete(priority)
-          needToUpdatePriorityKeys |= true
+          needToUpdatePriorityKeys = true
         }
         if (remainingTasks <= 0) {
           break
