@@ -36,7 +36,7 @@ Start by creating a new Gatsby site. It may be best (especially if you're new to
 Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
 
 ```shell
-npx gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
 ```
 
@@ -120,7 +120,7 @@ import "./src/styles/global.css"
 3. Start the development server:
 
 ```shell
-npm run develop
+gatsby develop
 ```
 
 If you take a look at your project in the browser, you should see a lavender background applied to the "hello world" starter:
