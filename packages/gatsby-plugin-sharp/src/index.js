@@ -1,5 +1,5 @@
 const sharp = require(`sharp`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
@@ -403,7 +403,10 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
   const fileExtension = options.toFormat ? options.toFormat : file.extension
 
-  const argsDigest = createContentDigest(JSON.stringify(sortedArgs))
+  const argsDigest = cyrpto
+    .createHash(`md5`)
+    .update(JSON.stringify(sortedArgs))
+    .digest(`hex`)
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
@@ -925,7 +928,10 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   const tmpDir = require(`os`).tmpdir()
   const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${
     file.name
-  }-${createContentDigest(JSON.stringify(fileArgs))}.${file.extension}`
+  }-${crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(fileArgs))
+    .digest(`hex`)}.${file.extension}`
 
   await new Promise(resolve =>
     pipeline.toFile(tmpFilePath, (err, info) => {
