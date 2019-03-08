@@ -11,6 +11,10 @@ export function withPrefix(path) {
   return normalizePath(`${__BASE_PATH__}/${path}`)
 }
 
+export function withAssetPrefix(path) {
+  return `${__PATH_PREFIX__}/${path}`
+}
+
 function normalizePath(path) {
   return path.replace(/\/+/g, `/`)
 }

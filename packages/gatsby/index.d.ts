@@ -9,6 +9,7 @@ export {
   push,
   replace,
   withPrefix,
+  withAssetPrefix,
 } from "gatsby-link"
 
 type RenderCallback = (data: any) => React.ReactNode
