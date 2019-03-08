@@ -8,7 +8,7 @@ This page will walk you through a series of GraphQL queries, each designed to de
 
 You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-five/#introducing-graphiql).
 
-For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql).
+For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
 
 ## Basic query
 
