@@ -110,7 +110,6 @@
     "redux": "^4.0.0",
     "request": "^2.85.0",
     "semver": "^5.6.0",
-    "send": "^0.16.2",
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
     "signal-exit": "^3.0.2",
