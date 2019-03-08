@@ -336,7 +336,7 @@
     - Styling:Semantic
     - Stripe
     - Moltin
-    - e-commerce
+    - eCommerce
     - PWA
     - Authentication
   features:
@@ -1117,7 +1117,7 @@
   repo: https://github.com/cardiv/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
-    - Antd
+    - Ant Design
     - Styling:Less
   features:
     - Fork of Gatsby's default starter
