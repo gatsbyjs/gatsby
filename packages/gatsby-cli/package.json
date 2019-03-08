@@ -28,7 +28,7 @@
     "source-map": "^0.5.7",
     "stack-trace": "^0.0.10",
     "update-notifier": "^2.3.0",
-    "yargs": "^11.1.0",
+    "yargs": "^12.0.5",
     "yurnalist": "^1.0.2"
   },
   "devDependencies": {

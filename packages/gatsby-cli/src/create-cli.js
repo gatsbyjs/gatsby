@@ -283,6 +283,7 @@ module.exports = argv => {
   let isLocalSite = isLocalGatsbySite()
 
   cli
+    .scriptName(`gatsby`)
     .usage(`Usage: $0 <command> [options]`)
     .alias(`h`, `help`)
     .alias(`v`, `version`)
