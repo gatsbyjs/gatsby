@@ -1,5 +1,5 @@
 import React from "react"
-import typography, { rhythm, scale } from "../utils/typography"
+import typography, { rhythm } from "../utils/typography"
 import presets, { space } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
