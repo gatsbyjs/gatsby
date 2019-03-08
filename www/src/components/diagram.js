@@ -1,17 +1,17 @@
-import React from "react"
-import { css } from "glamor"
+import React, { Fragment } from "react"
+import { keyframes } from "@emotion/core"
+import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = `255, 255, 255, 0.9`
 const stripeSize = 15
-const stripeAnimation = css.keyframes({
+const stripeAnimation = keyframes({
   "0%": {
     backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
   },
@@ -23,7 +23,7 @@ const stripeBg = {
   backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
 }
-const lineAnimation = css.keyframes({
+const lineAnimation = keyframes({
   to: {
     strokeDashoffset: 10,
   },
@@ -33,7 +33,7 @@ const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
-      maxWidth: rhythm(30),
+      maxWidth: rhythm(32),
       margin: `0 auto`,
       textAlign: `center`,
     }}
@@ -49,15 +49,15 @@ const SegmentTitle = ({ children }) => (
       display: `inline`,
       background: colors.accent,
       color: colors.gray.copy,
-      borderRadius: presets.radius,
+      borderRadius: presets.radii[1],
       margin: `0 auto`,
       position: `relative`,
       bottom: `-.5rem`,
       padding: `.35rem .6rem`,
       fontWeight: `normal`,
       letterSpacing: `.5px`,
-      ...scale(-2 / 5),
-      lineHeight: 1,
+      fontSize: presets.scale[1],
+      lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -87,19 +87,19 @@ const VerticalLine = () => (
 )
 
 const box = {
+  background: `#fff`,
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radiusLg,
-  padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: colors.ui.whisper,
+  borderRadius: presets.radii[2],
+  padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
-  width: `100%`,
-  boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
-  borderRadius: presets.radius,
+  border: `1px solid ${colors.ui.light}`,
+  borderRadius: presets.radii[1],
+  boxShadow: presets.shadows.card,
   transform: `translateZ(0)`,
+  width: `100%`,
 }
 
 const SourceItems = ({ children }) => (
@@ -115,18 +115,18 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
+const boxPadding = { padding: `${rhythm(space[3])} ${rhythm(space[4])}` }
 
 const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
-      padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
+      padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
       display: `flex`,
-      [presets.Mobile]: {
+      [presets.Xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Phablet]: {
+      [presets.Sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -136,7 +136,7 @@ const SourceItem = ({ children }) => (
       css={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: 1.2,
+        lineHeight: presets.lineHeights.dense,
         textAlign: `left`,
       }}
     >
@@ -148,10 +148,10 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: colors.gatsby,
+      color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      ...scale(0),
+      fontSize: presets.scale[2],
     }}
   >
     {children}
@@ -161,27 +161,32 @@ const ItemTitle = ({ children }) => (
 const ItemDescription = ({ children }) => (
   <small
     css={{
-      lineHeight: 1.2,
+      lineHeight: presets.lineHeights.dense,
       display: `block`,
-      color: colors.gatsby,
-      [presets.Hd]: {
-        fontSize: scale(-1 / 5).fontSize,
-      },
+      color: colors.gray.calm,
+      fontSize: presets.scale[1],
+      fontFamily: options.systemFontFamily.join(`,`),
     }}
   >
     {children}
   </small>
 )
 
-const Gatsby = ({ children }) => (
+const ItemDescriptionLink = ({ to, children }) => (
+  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
+    {children}
+  </Link>
+)
+
+const Gatsby = () => (
   <div
     css={{
       ...borderAndBoxShadow,
-      padding: rhythm(1),
+      padding: rhythm(space[5]),
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Desktop]: {
+      [presets.Lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -193,7 +198,7 @@ const Gatsby = ({ children }) => (
         display: `inline-block`,
         height: rhythm(1.75),
         width: rhythm(1.75),
-        [presets.Desktop]: {
+        [presets.Lg]: {
           width: rhythm(2.25),
           height: rhythm(2.25),
         },
@@ -223,105 +228,130 @@ const Gatsby = ({ children }) => (
 )
 
 const Diagram = () => (
-  <section
-    className="Diagram"
-    css={{
-      borderRadius: presets.radiusLg,
-      fontFamily: options.headerFontFamily.join(`,`),
-      padding: vP,
-      marginTop: rhythm(1),
-      textAlign: `center`,
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-      flex: `1 1 100%`,
-      borderTop: `1px solid ${colors.ui.light}`,
-      [presets.Tablet]: {
-        marginTop: 0,
-      },
-    }}
-  >
-    <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
-    <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
-      <FuturaParagraph>
-        Gatsby lets you build blazing fast sites with <em>your data</em>,
-        whatever the source. Liberate your sites from legacy CMSs and fly into
-        the future.
-      </FuturaParagraph>
-    </div>
-
-    <Segment className="Source">
-      <SegmentTitle>Data Sources</SegmentTitle>
-      <SourceItems>
-        <SourceItem>
-          <ItemTitle>CMSs</ItemTitle>
-          <ItemDescription>Contentful, Drupal, WordPress, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <ItemTitle>Markdown</ItemTitle>
-          <ItemDescription>Documentation, Posts, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <ItemTitle>Data</ItemTitle>
-          <ItemDescription>
-            APIs, Databases, YAML, JSON, CSV, etc.
-          </ItemDescription>
-        </SourceItem>
-      </SourceItems>
-    </Segment>
-
-    <Segment className="Build">
-      <VerticalLine />
-      <SegmentTitle>Build</SegmentTitle>
-      <div
+  <StaticQuery
+    query={graphql`
+      query StaticHostsQuery {
+        allStaticHostsYaml {
+          edges {
+            node {
+              title
+              url
+            }
+          }
+        }
+      }
+    `}
+    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+      <section
+        className="Diagram"
         css={{
-          ...box,
-          ...stripeBg,
-          paddingTop: 0,
-          paddingBottom: 0,
+          fontFamily: options.headerFontFamily.join(`,`),
+          padding: rhythm(space[6]),
+          textAlign: `center`,
+          flex: `1 1 100%`,
         }}
       >
-        <VerticalLine />
-        <Gatsby />
-        <VerticalLine />
-        <div
+        <h1
           css={{
-            ...borderAndBoxShadow,
-            ...boxPadding,
-            paddingTop: rhythm(1 / 2),
-            paddingBottom: rhythm(1 / 2),
-            width: `auto`,
-            display: `inline-block`,
+            marginTop: 0,
+            marginBottom: rhythm(space[6]),
+            [presets.Md]: {
+              marginTop: rhythm(space[6]),
+            },
           }}
         >
-          <ItemDescription>
-            HTML &middot; CSS &middot;
-            {` `}
-            <TechWithIcon icon={ReactJSIcon} height="1.1em">
-              React
-            </TechWithIcon>
-          </ItemDescription>
+          How Gatsby works
+        </h1>
+        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+          <FuturaParagraph>
+            Pull data from <em>anywhere</em>
+          </FuturaParagraph>
         </div>
-        <VerticalLine />
-      </div>
-    </Segment>
 
-    <Segment className="Deploy">
-      <VerticalLine />
-      <SegmentTitle>Deploy</SegmentTitle>
-      <div
-        css={{
-          ...box,
-          paddingBottom: rhythm(1),
-        }}
-      >
-        <ItemTitle>Static Web Host</ItemTitle>
-        <ItemDescription>
-          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
-          more
-        </ItemDescription>
-      </div>
-    </Segment>
-  </section>
+        <Segment className="Source">
+          <SegmentTitle>Data Sources</SegmentTitle>
+          <SourceItems>
+            <SourceItem>
+              <ItemTitle>CMSs</ItemTitle>
+              <ItemDescription>
+                Contentful, Drupal, WordPress, etc.
+              </ItemDescription>
+            </SourceItem>
+            <SourceItem>
+              <ItemTitle>Markdown</ItemTitle>
+              <ItemDescription>Documentation, Posts, etc.</ItemDescription>
+            </SourceItem>
+            <SourceItem>
+              <ItemTitle>Data</ItemTitle>
+              <ItemDescription>
+                APIs, Databases, YAML, JSON, CSV, etc.
+              </ItemDescription>
+            </SourceItem>
+          </SourceItems>
+        </Segment>
+
+        <Segment className="Build">
+          <VerticalLine />
+          <SegmentTitle>Build</SegmentTitle>
+          <div
+            css={{
+              ...box,
+              ...stripeBg,
+              paddingTop: 0,
+              paddingBottom: 0,
+            }}
+          >
+            <VerticalLine />
+            <Gatsby />
+            <VerticalLine />
+            <div
+              css={{
+                ...borderAndBoxShadow,
+                ...boxPadding,
+                paddingTop: rhythm(space[3]),
+                paddingBottom: rhythm(space[3]),
+                width: `auto`,
+                display: `inline-block`,
+              }}
+            >
+              <ItemDescription>
+                HTML &middot; CSS &middot;
+                {` `}
+                <TechWithIcon icon={ReactJSIcon} height="1.1em">
+                  React
+                </TechWithIcon>
+              </ItemDescription>
+            </div>
+            <VerticalLine />
+          </div>
+        </Segment>
+
+        <Segment className="Deploy">
+          <VerticalLine />
+          <SegmentTitle>Deploy</SegmentTitle>
+          <div
+            css={{
+              ...box,
+              paddingBottom: rhythm(space[5]),
+            }}
+          >
+            <ItemTitle>Static Web Host</ItemTitle>
+            <ItemDescription>
+              {staticHosts.map(({ node: staticHost }, index) => (
+                <Fragment key={staticHost.url}>
+                  {index > 0 && `, `}
+                  <ItemDescriptionLink to={staticHost.url}>
+                    {staticHost.title}
+                  </ItemDescriptionLink>
+                </Fragment>
+              ))}
+              {` `}& many more
+            </ItemDescription>
+          </div>
+        </Segment>
+      </section>
+    )}
+  />
 )
 
 export default Diagram

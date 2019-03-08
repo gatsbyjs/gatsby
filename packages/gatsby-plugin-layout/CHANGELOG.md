@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.11...gatsby-plugin-layout@1.0.12) (2019-01-31)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+<a name="1.0.11"></a>
+
+## [1.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.10...gatsby-plugin-layout@1.0.11) (2018-12-21)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+<a name="1.0.10"></a>
+
+## [1.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.9...gatsby-plugin-layout@1.0.10) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+<a name="1.0.9"></a>
+
+## [1.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.8...gatsby-plugin-layout@1.0.9) (2018-11-14)
+
+### Bug Fixes
+
+- **docs:** update broken links with working links ([#9912](https://github.com/gatsbyjs/gatsby/issues/9912)) ([e9f2a6f](https://github.com/gatsbyjs/gatsby/commit/e9f2a6f))
+
+<a name="1.0.8"></a>
+
+## [1.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.7...gatsby-plugin-layout@1.0.8) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+<a name="1.0.7"></a>
+
+## [1.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.6...gatsby-plugin-layout@1.0.7) (2018-11-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-layout:** log uncaught errors in old browsers ([#9635](https://github.com/gatsbyjs/gatsby/issues/9635)) ([099d47e](https://github.com/gatsbyjs/gatsby/commit/099d47e))
+
+<a name="1.0.6"></a>
+
+## [1.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.5...gatsby-plugin-layout@1.0.6) (2018-10-30)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+<a name="1.0.5"></a>
+
+## [1.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.4...gatsby-plugin-layout@1.0.5) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+<a name="1.0.4"></a>
+
+## [1.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.3...gatsby-plugin-layout@1.0.4) (2018-10-23)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
 <a name="1.0.3"></a>
 
 ## [1.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.2...gatsby-plugin-layout@1.0.3) (2018-10-01)

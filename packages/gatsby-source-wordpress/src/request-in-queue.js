@@ -47,7 +47,7 @@ module.exports = function requestInQueue(tasks, opts = {}) {
     )
 
     q.on(`task_failed`, (id, err) => {
-      rej(`${id} failed with err: ${err}`)
+      rej(new Error(`${id} failed with err: ${err}`))
       q.destroy()
     })
 

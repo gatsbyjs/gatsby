@@ -6,12 +6,28 @@ const { defaultIcons, doesIconExist } = require(`./common.js`)
 
 sharp.simd(true)
 
+try {
+  // Handle Sharp's concurrency based on the Gatsby CPU count
+  // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+  // See: https://www.gatsbyjs.org/docs/multi-core-builds/
+  const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
+  sharp.concurrency(cpuCoreCount())
+} catch {
+  // if above throws error this probably means that used Gatsby version
+  // doesn't support cpu-core-count utility.
+}
+
 function generateIcons(icons, srcIcon) {
   return Promise.map(icons, icon => {
     const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
     const imgPath = path.join(`public`, icon.src)
 
-    return sharp(srcIcon)
+    // For vector graphics, instruct sharp to use a pixel density
+    // suitable for the resolution we're rasterizing to.
+    // For pixel graphics sources this has no effect.
+    // Sharp accept density from 1 to 2400
+    const density = Math.min(2400, Math.max(1, size))
+    return sharp(srcIcon, { density })
       .resize(size)
       .toFile(imgPath)
       .then(() => {})
@@ -20,12 +36,14 @@ function generateIcons(icons, srcIcon) {
 
 exports.onPostBootstrap = (args, pluginOptions) =>
   new Promise((resolve, reject) => {
-    const { icon } = pluginOptions
-    const manifest = { ...pluginOptions }
+    const { icon, ...manifest } = pluginOptions
 
     // Delete options we won't pass to the manifest.webmanifest.
+
     delete manifest.plugins
-    delete manifest.icon
+    delete manifest.legacy
+    delete manifest.theme_color_in_head
+    delete manifest.crossOrigin
 
     // If icons are not manually defined, use the default icon set.
     if (!manifest.icons) {

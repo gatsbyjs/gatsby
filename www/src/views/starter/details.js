@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -14,9 +14,9 @@ const Details = ({
 }) => (
   <div
     css={{
-      padding: sharedStyles.gutter,
-      [presets.Desktop]: {
-        padding: sharedStyles.gutterDesktop,
+      padding: rhythm(space[6]),
+      [presets.Lg]: {
+        padding: rhythm(space[8]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
         gridRowGap: `20px`,
@@ -80,35 +80,32 @@ const Details = ({
       <div
         css={{
           display: `grid`,
-          gridAutoRows: `50px`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
-          [presets.Desktop]: {
+          [presets.Lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridColumnGap: 20,
+            gridGap: 20,
           },
         }}
       >
         {shownDeps &&
-          shownDeps.map(
-            dep =>
-              /^gatsby-/.test(dep) ? (
-                <div key={dep}>
-                  <Link to={`/packages/${dep}`}>{dep}</Link>
-                </div>
-              ) : (
-                <div
-                  key={dep}
-                  css={{
-                    ...sharedStyles.truncate,
-                    marginBottom: `1rem`,
-                  }}
-                >
-                  <a href={`https://npm.im/${dep}`}>
-                    {`${dep} `}
-                    <FaExtLink />
-                  </a>
-                </div>
-              )
+          shownDeps.map(dep =>
+            /^gatsby-/.test(dep) ? (
+              <div key={dep}>
+                <Link to={`/packages/${dep}`}>{dep}</Link>
+              </div>
+            ) : (
+              <div
+                key={dep}
+                css={{
+                  ...sharedStyles.truncate,
+                }}
+              >
+                <a href={`https://npm.im/${dep}`}>
+                  {`${dep} `}
+                  <FaExtLink />
+                </a>
+              </div>
+            )
           )}
         {showMore && (
           <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
@@ -125,11 +122,11 @@ export default Details
 const styles = {
   showMoreButton: {
     border: 0,
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+    padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       backgroundColor: colors.gatsby,

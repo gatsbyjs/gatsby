@@ -25,7 +25,7 @@ If you’d like to look at the growing number source plugins available to you, s
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-gatsby new wordpress-tutorial-site
+ gatsby new wordpress-tutorial-site
 cd wordpress-tutorial-site
 ```
 
@@ -37,24 +37,25 @@ npm install --save gatsby-source-wordpress
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
-```js{11-30}:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Wordpress Tutorial",
+    title: "Gatsby WordPress Tutorial",
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
      * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
+     * plugins. Here the site sources its data from WordPress.
      */
+    // highlight-start
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-        * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
-        */
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
+         */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
         protocol: `http`,
@@ -63,18 +64,19 @@ module.exports = {
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-        // This feature is untested for sites hosted on Wordpress.com
+        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
+        // This feature is untested for sites hosted on WordPress.com
         useACF: true,
       },
     },
+    // highlight-end
   ],
 }
 ```
 
 ### Creating GraphQL queries that pull data from WordPress
 
-Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blogposts, date they were posted, and blogpost content.
+Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blog posts, date they were posted, and blogpost content.
 
 Run:
 
@@ -102,7 +104,7 @@ query {
 }
 ```
 
-This next query will pull in a sorted list of the blogposts:
+This next query will pull in a sorted list of the blog posts:
 
 ```graphql
 {
@@ -118,7 +120,7 @@ This next query will pull in a sorted list of the blogposts:
 }
 ```
 
-## Rendering the blogposts to `index.js`
+## Rendering the blog posts to `index.js`
 
 Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
@@ -157,9 +159,9 @@ export const pageQuery = graphql`
 `
 ```
 
-Save these changes and look at localhost:8000 to see your new homepage with list of sorted blogposts!
+Save these changes and look at localhost:8000 to see your new homepage with list of sorted blog posts!
 
-> **NOTE:** to future editors: it would be useful to also have examples of how to load blogposts to their own individual pages. And helpful to insert a screenshot of the final result here
+> **NOTE:** to future editors: it would be useful to also have examples of how to load blog posts to their own individual pages. And helpful to insert a screenshot of the final result here
 
 ### Create slugs for each blogpost
 

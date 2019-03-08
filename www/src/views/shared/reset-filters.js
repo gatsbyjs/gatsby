@@ -1,24 +1,23 @@
 import React from "react"
 import MdClear from "react-icons/lib/md/clear"
 
-import { options, scale, rhythm } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { options, rhythm } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
 
 const ResetFilters = ({ onClick }) => (
-  <div css={{ paddingRight: rhythm(3 / 4) }}>
+  <div css={{ paddingRight: rhythm(space[6]) }}>
     <button
       css={{
-        ...scale(-1 / 6),
         alignItems: `center`,
         background: colors.ui.light,
         border: 0,
-        borderRadius: presets.radius,
+        borderRadius: presets.radii[1],
         color: colors.gatsby,
         cursor: `pointer`,
         display: `flex`,
         fontFamily: options.headerFontFamily.join(`,`),
         marginTop: rhythm(options.blockMarginBottom),
-        paddingRight: rhythm(3 / 4),
+        paddingRight: rhythm(space[6]),
         textAlign: `left`,
         "&:hover": {
           background: colors.gatsby,

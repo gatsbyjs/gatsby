@@ -1,7 +1,10 @@
 # gatsby-source-filesystem
 
-Plugin for creating `File` nodes from the file system. The various "transformer"
-plugins transform `File` nodes into various other types of data e.g.
+A Gatsby source plugin for sourcing data into your Gatsby application
+from your local filesystem.
+
+The plugin creates `File` nodes from files. The various "transformer"
+plugins can transform `File` nodes into various other types of data e.g.
 `gatsby-transformer-json` transforms JSON files into JSON data nodes and
 `gatsby-transformer-remark` transforms markdown files into `MarkdownRemark`
 nodes from which you can query an HTML representation of the markdown.
@@ -160,6 +163,9 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file.jpg`,
 
+  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
+  parentNodeId,
+
   // The redux store which is passed to all Node APIs.
   store,
 
@@ -175,6 +181,10 @@ createRemoteFileNode({
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
+
+  // OPTIONAL
+  // Sets the file extension
+  ext: ".jpg",
 })
 ```
 
@@ -201,6 +211,7 @@ exports.downloadMediaFiles = ({
       try {
         fileNode = await createRemoteFileNode({
           url: node.source_url,
+          parentNodeId: node.id,
           store,
           cache,
           createNode,
@@ -222,3 +233,22 @@ exports.downloadMediaFiles = ({
 ```
 
 The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+
+#### Retrieving the remote file name and extension
+
+The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg` and the name as `image`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
+
+```javascript
+createRemoteFileNode({
+  // The source url of the remote file
+  url: `https://example.com/a-file-without-an-extension`,
+  parentNodeId: node.id,
+  store,
+  cache,
+  createNode,
+  createNodeId,
+  // if necessary!
+  ext: ".jpg",
+  name: "image",
+})
+```

@@ -71,7 +71,7 @@ class StickyResponsiveSidebar extends Component {
           role="button"
           aria-label="Show Secondary Navigation"
           aria-controls="SecondaryNavigation"
-          aria-expanded={open ? "true" : "false"}
+          aria-expanded={open ? `true` : `false`}
           tabIndex={0}
         >
           <div css={{ ...styles.sidebarToggleButtonInner }}>
@@ -85,7 +85,8 @@ class StickyResponsiveSidebar extends Component {
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(${5 - iconOffset}px, -5px) rotate(270deg)`,
+                transform: `translate(${5 -
+                  iconOffset}px, -5px) rotate(270deg)`,
                 transition: `transform 0.2s ease`,
               }}
             />
@@ -109,23 +110,23 @@ const styles = {
     transition: `opacity 0.5s ease`,
     width: 320,
     zIndex: 10,
-    [presets.Tablet]: {
+    [presets.Md]: {
       height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(10),
+      width: rhythm(presets.sidebar.width.default),
     },
-    [presets.Desktop]: {
-      width: rhythm(12),
+    [presets.Lg]: {
+      width: rhythm(presets.sidebar.width.large),
     },
   },
   sidebar: {
     height: `100%`,
     transition: `transform 0.5s ease`,
     boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -144,7 +145,7 @@ const styles = {
     visibility: `visible`,
     width: 60,
     zIndex: 20,
-    [presets.Tablet]: { display: `none` },
+    [presets.Md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,

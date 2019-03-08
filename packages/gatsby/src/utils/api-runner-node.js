@@ -1,15 +1,16 @@
 const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+const chalk = require(`chalk`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
-const Cache = require(`./cache`)
+const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
-
-let caches = new Map()
+const { emitter } = require(`../redux`)
+const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -68,15 +69,15 @@ const runAPI = (plugin, api, args) => {
     pluginSpan.setTag(`plugin`, plugin.name)
 
     let pathPrefix = ``
+    const { store, emitter } = require(`../redux`)
     const {
-      store,
-      emitter,
       loadNodeContent,
       getNodes,
       getNode,
+      getNodesByType,
       hasNodeChanged,
       getNodeAndSavePathDependency,
-    } = require(`../redux`)
+    } = require(`../db/nodes`)
     const { boundActionCreators } = require(`../redux/actions`)
 
     const doubleBoundActionCreators = doubleBind(
@@ -94,23 +95,67 @@ const runAPI = (plugin, api, args) => {
 
     const tracing = initAPICallTracing(pluginSpan)
 
-    let cache = caches.get(plugin.name)
-    if (!cache) {
-      cache = new Cache({ name: plugin.name }).init()
-      caches.set(plugin.name, cache)
+    const cache = getCache(plugin.name)
+
+    // Ideally this would be more abstracted and applied to more situations, but right now
+    // this can be potentially breaking so targeting `createPages` API and `createPage` action
+    let actions = doubleBoundActionCreators
+    let apiFinished = false
+    if (api === `createPages`) {
+      let alreadyDisplayed = false
+      const createPageAction = actions.createPage
+      // create new actions object with wrapped createPage action
+      // doubleBoundActionCreators is memoized, so we can't just
+      // reassign createPage field as this would cause this extra logic
+      // to be used in subsequent APIs and we only want to target this `createPages` call.
+      actions = {
+        ...actions,
+        createPage: (...args) => {
+          createPageAction(...args)
+          if (apiFinished && !alreadyDisplayed) {
+            const warning = [
+              reporter.stripIndent(`
+              Action ${chalk.bold(
+                `createPage`
+              )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
+                `createPages`
+              )} in ${chalk.bold(plugin.name)}.
+              Ensure that you return a Promise from ${chalk.bold(
+                `createPages`
+              )} and are awaiting any asynchronous method invocations (like ${chalk.bold(
+                `graphql`
+              )} or http requests).
+              For more info and debugging tips: see ${chalk.bold(
+                `https://gatsby.dev/sync-actions`
+              )}
+            `),
+            ]
+
+            const possiblyCodeFrame = getNonGatsbyCodeFrame()
+            if (possiblyCodeFrame) {
+              warning.push(possiblyCodeFrame)
+            }
+
+            reporter.warn(warning.join(`\n\n`))
+            alreadyDisplayed = true
+          }
+        },
+      }
     }
 
     const apiCallArgs = [
       {
         ...args,
         pathPrefix,
-        boundActionCreators: doubleBoundActionCreators,
-        actions: doubleBoundActionCreators,
+        boundActionCreators: actions,
+        actions,
         loadNodeContent,
         store,
         emitter,
+        getCache,
         getNodes,
         getNode,
+        getNodesByType,
         hasNodeChanged,
         reporter,
         getNodeAndSavePathDependency,
@@ -129,13 +174,17 @@ const runAPI = (plugin, api, args) => {
         const cb = (err, val) => {
           pluginSpan.finish()
           callback(err, val)
+          apiFinished = true
         }
         gatsbyNode[api](...apiCallArgs, cb)
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
       pluginSpan.finish()
-      return Promise.resolve(result)
+      return Promise.resolve(result).then(res => {
+        apiFinished = true
+        return res
+      })
     }
   }
 
@@ -161,9 +210,12 @@ module.exports = async (api, args = {}, pluginSource) =>
     })
 
     // Check that the API is documented.
-    if (!apiList[api]) {
-      reporter.error(`api: "${api}" is not a valid Gatsby api`)
-      process.exit()
+    // "FAKE_API_CALL" is used when code needs to trigger something
+    // to happen once the the API queue is empty. Ideally of course
+    // we'd have an API (returning a promise) for that. But this
+    // works nicely in the meantime.
+    if (!apiList[api] && api !== `FAKE_API_CALL`) {
+      reporter.panic(`api: "${api}" is not a valid Gatsby api`)
     }
 
     const { store } = require(`../redux`)
@@ -212,9 +264,13 @@ module.exports = async (api, args = {}, pluginSource) =>
     } else if (api === `onCreatePage`) {
       id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
     } else {
+      // When tracing is turned on, the `args` object will have a
+      // `parentSpan` field that can be quite large. So we omit it
+      // before calling stringify
+      const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
       id = `${api}|${apiRunInstance.startTime}|${
         apiRunInstance.traceId
-      }|${JSON.stringify(args)}`
+      }|${argsJson}`
     }
     apiRunInstance.id = id
 
@@ -230,64 +286,75 @@ module.exports = async (api, args = {}, pluginSource) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, 1)
     }
 
-    let pluginName = null
+    let stopQueuedApiRuns = false
+    let onAPIRunComplete = null
+    if (api === `onCreatePage`) {
+      const path = args.page.path
+      const actionHandler = action => {
+        if (action.payload.path === path) {
+          stopQueuedApiRuns = true
+        }
+      }
+      emitter.on(`DELETE_PAGE`, actionHandler)
+      onAPIRunComplete = () => {
+        emitter.off(`DELETE_PAGE`, actionHandler)
+      }
+    }
 
     Promise.mapSeries(noSourcePluginPlugins, plugin => {
-      if (plugin.name === `default-site-plugin`) {
-        pluginName = `gatsby-node.js`
-      } else {
-        pluginName = `Plugin ${plugin.name}`
+      if (stopQueuedApiRuns) {
+        return null
       }
-      return Promise.resolve(
-        runAPI(plugin, api, { ...args, parentSpan: apiSpan })
-      )
-    })
-      .catch(err => {
-        if (err) {
-          if (process.env.NODE_ENV === `production`) {
-            return reporter.panic(`${pluginName} returned an error`, err)
-          }
-          return reporter.error(`${pluginName} returned an error`, err)
-        }
+
+      let pluginName =
+        plugin.name === `default-site-plugin`
+          ? `gatsby-node.js`
+          : `Plugin ${plugin.name}`
+
+      return new Promise(resolve => {
+        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
+      }).catch(err => {
+        reporter.panicOnBuild(`${pluginName} returned an error`, err)
         return null
       })
-      .then(results => {
-        // Remove runner instance
-        apisRunningById.delete(apiRunInstance.id)
-        const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
-        apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
+    }).then(results => {
+      if (onAPIRunComplete) {
+        onAPIRunComplete()
+      }
+      // Remove runner instance
+      apisRunningById.delete(apiRunInstance.id)
+      const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
+      apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
-        if (apisRunningById.size === 0) {
-          const { emitter } = require(`../redux`)
-          emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
-        }
+      if (apisRunningById.size === 0) {
+        const { emitter } = require(`../redux`)
+        emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+      }
 
-        // Filter empty results
-        apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+      // Filter empty results
+      apiRunInstance.results = results.filter(result => !_.isEmpty(result))
 
-        // Filter out empty responses and return if the
-        // api caller isn't waiting for cascading actions to finish.
-        if (!args.waitForCascadingActions) {
-          apiSpan.finish()
-          resolve(apiRunInstance.results)
-        }
+      // Filter out empty responses and return if the
+      // api caller isn't waiting for cascading actions to finish.
+      if (!args.waitForCascadingActions) {
+        apiSpan.finish()
+        resolve(apiRunInstance.results)
+      }
 
-        // Check if any of our waiters are done.
-        waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
-          instance => {
-            // If none of its trace IDs are running, it's done.
-            const apisByTraceIdCount = apisRunningByTraceId.get(
-              instance.traceId
-            )
-            if (apisByTraceIdCount === 0) {
-              instance.span.finish()
-              instance.resolve(instance.results)
-              return false
-            } else {
-              return true
-            }
+      // Check if any of our waiters are done.
+      waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+        instance => {
+          // If none of its trace IDs are running, it's done.
+          const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
+          if (apisByTraceIdCount === 0) {
+            instance.span.finish()
+            instance.resolve(instance.results)
+            return false
+          } else {
+            return true
           }
-        )
-        return
-      })
+        }
+      )
+      return
+    })
   })

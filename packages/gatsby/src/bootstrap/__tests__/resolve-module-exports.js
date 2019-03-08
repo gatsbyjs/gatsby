@@ -107,6 +107,14 @@ describe(`Resolve module exports`, () => {
         return createElement(ReplaceComponentRenderer, { ...props, loader })
       }
     `,
+    "/esmodule/export": `
+      exports.__esModule = true;
+      exports.foo = '';
+    `,
+    "/export/named": `const foo = ''; export { foo };`,
+    "/export/named/from": `export { Component } from 'react';`,
+    "/export/named/as": `const foo = ''; export { foo as bar };`,
+    "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
   }
 
   beforeEach(() => {
@@ -164,5 +172,30 @@ describe(`Resolve module exports`, () => {
   it(`Resolves exports from a larger file`, () => {
     const result = resolveModuleExports(`/realistic/export`, resolver)
     expect(result).toEqual([`replaceHistory`, `replaceComponentRenderer`])
+  })
+
+  it(`Ignores exports.__esModule`, () => {
+    const result = resolveModuleExports(`/esmodule/export`, resolver)
+    expect(result).toEqual([`foo`])
+  })
+
+  it(`Resolves a named export`, () => {
+    const result = resolveModuleExports(`/export/named`, resolver)
+    expect(result).toEqual([`foo`])
+  })
+
+  it(`Resolves a named export from`, () => {
+    const result = resolveModuleExports(`/export/named/from`, resolver)
+    expect(result).toEqual([`Component`])
+  })
+
+  it(`Resolves a named export as`, () => {
+    const result = resolveModuleExports(`/export/named/as`, resolver)
+    expect(result).toEqual([`bar`])
+  })
+
+  it(`Resolves multiple named exports`, () => {
+    const result = resolveModuleExports(`/export/named/multiple`, resolver)
+    expect(result).toEqual([`foo`, `bar`, `baz`])
   })
 })

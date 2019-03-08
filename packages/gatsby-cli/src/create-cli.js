@@ -2,6 +2,7 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 
@@ -91,7 +92,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, useYarn }
+      let args = { ...argv, ...siteInfo, report, useYarn }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -227,13 +228,17 @@ function buildLocalCommands(cli, isLocalSite) {
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+            Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
           },
           {
             console: true,
             // Clipboard is not accessible when on a linux tty
-            clipboard: (process.platform === `linux` && !process.env.DISPLAY) ? false : args.clipboard,
+            clipboard:
+              process.platform === `linux` && !process.env.DISPLAY
+                ? false
+                : args.clipboard,
           }
         )
       } catch (err) {
@@ -241,6 +246,12 @@ function buildLocalCommands(cli, isLocalSite) {
         console.log(err)
       }
     },
+  })
+
+  cli.command({
+    command: `clean`,
+    desc: `Wipe the local gatsby environment including built assets and cache`,
+    handler: getCommandHandler(`clean`),
   })
 
   cli.command({
@@ -268,11 +279,12 @@ function isLocalGatsbySite() {
   return inGatsbySite
 }
 
-module.exports = (argv, handlers) => {
+module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
 
   cli
+    .scriptName(`gatsby`)
     .usage(`Usage: $0 <command> [options]`)
     .alias(`h`, `help`)
     .alias(`v`, `version`)
@@ -305,7 +317,17 @@ module.exports = (argv, handlers) => {
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
-    .showHelpOnFail(true)
-    .recommendCommands()
+    .fail((msg, err, yargs) => {
+      const availableCommands = yargs.getCommands().map(commandDescription => {
+        const [command] = commandDescription
+        return command.split(` `)[0]
+      })
+      const arg = argv.slice(2)[0]
+      const suggestion = arg ? didYouMean(arg, availableCommands) : ``
+
+      cli.showHelp()
+      report.log(suggestion)
+      report.log(msg)
+    })
     .parse(argv.slice(2))
 }

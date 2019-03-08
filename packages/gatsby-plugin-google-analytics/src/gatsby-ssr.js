@@ -87,6 +87,16 @@ exports.onRenderBody = (
         typeof pluginOptions.optimizeId !== `undefined`
           ? `ga('require', '${pluginOptions.optimizeId}');`
           : ``
+      }
+      ${
+        typeof pluginOptions.experimentId !== `undefined`
+          ? `ga('set', 'expId', '${pluginOptions.experimentId}');`
+          : ``
+      }
+      ${
+        typeof pluginOptions.variationId !== `undefined`
+          ? `ga('set', 'expVar', '${pluginOptions.variationId}');`
+          : ``
       }}
       `,
         }}

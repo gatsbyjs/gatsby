@@ -4,28 +4,32 @@
   "description": "Gatsby example site using using-gatsby-image",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-image": "^2.0.5",
-    "gatsby-plugin-glamor": "^2.0.5",
-    "gatsby-plugin-netlify": "^2.0.0",
-    "gatsby-plugin-sharp": "^2.0.5",
-    "gatsby-plugin-typography": "^2.2.0",
-    "gatsby-source-filesystem": "^2.0.1",
-    "gatsby-transformer-sharp": "^2.1.1",
-    "glamor": "^2.20.40",
+    "emotion": "^9.2.12",
+    "emotion-server": "^9.2.12",
+    "gatsby": "^2.0.36",
+    "gatsby-image": "^2.0.19",
+    "gatsby-plugin-emotion": "^2.0.6",
+    "gatsby-plugin-netlify": "^2.0.3",
+    "gatsby-plugin-sharp": "^2.0.11",
+    "gatsby-plugin-typography": "^2.2.1",
+    "gatsby-source-filesystem": "^2.0.7",
+    "gatsby-transformer-sharp": "^2.1.7",
+    "gatsby-transformer-yaml": "^2.1.4",
     "numeral": "^2.0.6",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-emotion": "^9.2.12",
+    "react-icons": "^3.2.1",
     "react-typography": "^0.16.13",
     "typeface-oswald": "0.0.54",
     "typeface-pt-sans": "0.0.54",
-    "typography": "^0.16.6",
-    "typography-theme-elk-glen": "^0.16.9"
+    "typography": "^0.16.6"
   },
   "license": "MIT",
   "main": "n/a",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "start": "npm run develop"
   }
 }

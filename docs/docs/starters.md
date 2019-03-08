@@ -4,7 +4,7 @@ title: "Gatsby Starters"
 
 The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
 
-`gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing git history.
+`gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing Git history.
 
 When creating a new site, you can optionally specify a starter to base your new site on e.g.
 
@@ -35,4 +35,4 @@ Community starters are created and maintained by Gatsby community members.
 
 Looking for a starter for a particular use case? Peruse starters that have been submitted to the [Starter Library](/starters/)
 
-Created a starter you'd like to share? Follow [these steps to submit your starter](/docs/submit-to-starter-library/) to the Starter Library.
+Created a starter you'd like to share? Follow [these steps to submit your starter](/contributing/submit-to-starter-library/) to the Starter Library.

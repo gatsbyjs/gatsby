@@ -1,11 +1,11 @@
 import React, { Component } from "react"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { options, rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
@@ -28,6 +28,7 @@ class EvaluationTable extends Component {
               background: colors.ui.bright,
             },
           }}
+          key={`info-icon-${words[words.length - 1]}`}
         >
           {` `}
           {`${words[words.length - 1]} `}
@@ -43,7 +44,7 @@ class EvaluationTable extends Component {
         </span>,
       ]
     }
-    const headers = [`Feature`, `Gatsby`, `Jekyll`, `Wordpress`, `Squarespace`]
+    const headers = [`Feature`, `Gatsby`, `Jekyll`, `WordPress`, `Squarespace`]
     const renderCell = (text, column) => {
       switch (column) {
         case 0: {
@@ -56,10 +57,10 @@ class EvaluationTable extends Component {
                 marginLeft: `auto`,
                 marginRight: `auto`,
                 padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
-                [presets.Mobile]: {
-                  padding: `${rhythm(1 / 2)} 0 ${rhythm(1 / 2)} ${rhythm(
-                    1 / 2
-                  )}`,
+                [presets.Xs]: {
+                  padding: `${rhythm(space[3])} 0 ${rhythm(
+                    presets.space[3]
+                  )} ${rhythm(1 / 2)}`,
                 },
               }}
             >
@@ -114,8 +115,11 @@ class EvaluationTable extends Component {
           {flatten(
             sections.map((section, s) =>
               [
-                <SectionTitle text={sectionHeaders[s]} />,
-                <SectionHeaderTop />,
+                <SectionTitle
+                  text={sectionHeaders[s]}
+                  key={`section-title-${s}`}
+                />,
+                <SectionHeaderTop key={`section-header-${s}`} />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
@@ -123,8 +127,9 @@ class EvaluationTable extends Component {
                       <SectionHeaderBottom
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
+                        key={`section-header-bottom-${i}`}
                       />,
-                      <tr>
+                      <tr key={`first-row-${i}`}>
                         {headers.map((header, j) => (
                           <td
                             key={j}
@@ -141,8 +146,8 @@ class EvaluationTable extends Component {
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: `90%`,
-                              lineHeight: `${rhythm(3 / 4)}`,
+                              fontSize: presets.scale[1],
+                              lineHeight: presets.lineHeights.solid,
                             }}
                             id={
                               j === 0
@@ -165,19 +170,21 @@ class EvaluationTable extends Component {
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
+                        key={`second-row-${i}`}
                       >
                         <td
                           css={{
-                            fontFamily: options.headerFontFamily.join(`,`),
-                            paddingBottom: `calc(${rhythm(1)} - 1px)`,
+                            paddingBottom: `calc(${rhythm(
+                              presets.space[5]
+                            )} - 1px)`,
                             "&&": {
                               paddingRight: `${rhythm(1 / 4)}`,
                               paddingLeft: `${rhythm(1 / 4)}`,
-                              [presets.Mobile]: {
-                                paddingRight: `${rhythm(1 / 2)}`,
-                                paddingLeft: `${rhythm(1 / 2)}`,
+                              [presets.Xs]: {
+                                paddingRight: `${rhythm(space[3])}`,
+                                paddingLeft: `${rhythm(space[3])}`,
                               },
-                              [presets.Phablet]: {
+                              [presets.Sm]: {
                                 paddingRight: `${rhythm(2)}`,
                                 paddingLeft: `${rhythm(2)}`,
                               },

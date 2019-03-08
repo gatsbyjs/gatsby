@@ -5,6 +5,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
@@ -108,7 +109,7 @@ const resolveFixed = (image, options) => {
   fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width.
-  const filteredSizes = fixedSizes.filter(size => size < width)
+  const filteredSizes = fixedSizes.filter(size => size <= width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -197,11 +198,11 @@ const resolveFluid = (image, options) => {
   fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth.
-  const filteredSizes = fluidSizes.filter(size => size < width)
+  const filteredSizes = fluidSizes.filter(size => size <= width)
 
-  // Add the original image to ensure the largest image possible
+  // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
-  filteredSizes.push(width)
+  if (!filteredSizes.includes(parseInt(width))) filteredSizes.push(width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -458,6 +459,22 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
 }
 
 exports.extendNodeType = ({ type, store }) => {
+  if (type.name.match(/contentful.*RichTextNode/)) {
+    return {
+      nodeType: {
+        type: GraphQLString,
+        deprecationReason: `This field is deprecated, please use 'json' instead.`,
+      },
+      json: {
+        type: GraphQLJSON,
+        resolve: (source, fieldArgs) => {
+          const contentJSON = JSON.parse(source.internal.content)
+          return contentJSON
+        },
+      },
+    }
+  }
+
   if (type.name !== `ContentfulAsset`) {
     return {}
   }

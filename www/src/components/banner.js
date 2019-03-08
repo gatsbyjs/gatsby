@@ -1,48 +1,61 @@
 import React from "react"
+import styled from "@emotion/styled"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import presets, { colors } from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
 
-const Banner = ({ children, background }) => {
-  const backgroundColor = background ? background : colors.gatsby
-  const horizontalPadding = rhythm(1 / 2)
+const horizontalPadding = rhythm(space[6])
+const backgroundColor = colors.gatsby
 
-  return (
-    <div
-      className="banner"
-      css={{
-        backgroundColor: backgroundColor,
-        height: presets.bannerHeight,
-        position: `fixed`,
-        width: `100%`,
-        zIndex: 3,
-      }}
-    >
-      <div
-        css={{
-          alignItems: `center`,
-          display: `flex`,
-          height: presets.bannerHeight,
-          overflowX: `auto`,
-          maskImage: `linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`,
-        }}
-      >
-        <div
-          css={{
-            color: colors.ui.bright,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontSize: scale(-1 / 5).fontSize,
-            paddingLeft: horizontalPadding,
-            paddingRight: horizontalPadding,
-            WebkitFontSmoothing: `antialiased`,
-            whiteSpace: `nowrap`,
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
-  )
-}
+const BannerContainer = styled(`div`)`
+  background-color: ${backgroundColor};
+  height: ${presets.bannerHeight};
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+`
+
+const InnerContainer = styled(`div`)`
+  align-items: center;
+  display: flex;
+  height: ${presets.bannerHeight};
+  overflow-x: auto;
+  mask-image: ${`linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`};
+`
+
+const Content = styled(`div`)`
+  color: ${colors.ui.bright};
+  font-family: ${options.headerFontFamily.join(`,`)};
+  padding-left: ${horizontalPadding};
+  padding-right: ${horizontalPadding};
+  -webkit-font-smoothing: antialiased;
+  white-space: nowrap;
+
+  a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+  a:hover {
+    color: #fff;
+    border-bottom-color: #ffffffa0;
+  }
+`
+
+const Banner = () => (
+  <BannerContainer className="banner">
+    <InnerContainer>
+      <Content>
+        <OutboundLink href="https://www.gatsbyjs.com/behind-the-scenes/">
+          Watch now
+        </OutboundLink>
+        {`: “Behind the Scenes: What makes Gatsby Great”.`}
+      </Content>
+    </InnerContainer>
+  </BannerContainer>
+)
 
 export default Banner

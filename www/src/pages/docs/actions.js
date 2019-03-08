@@ -1,10 +1,11 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
-import { rhythm, scale } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -28,7 +29,7 @@ class ActionCreatorsDocs extends React.Component {
             {` `}
             <a href="http://redux.js.org">Redux</a>
             {` `}
-            internally to manage state. When you implement a Gatsby API, you're
+            internally to manage state. When you implement a Gatsby API, you are
             passed a collection of actions (equivalent to boundActionCreators in
             redux) which you can use to manipulate state on your site.
           </p>
@@ -51,8 +52,8 @@ class ActionCreatorsDocs extends React.Component {
               }}
             />
           </div>
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <h2 css={{ marginBottom: rhythm(space[3]) }}>Functions</h2>
+          <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>

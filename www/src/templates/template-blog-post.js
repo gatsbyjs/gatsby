@@ -1,21 +1,28 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
-import presets, { colors } from "../utils/presets"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
+import typography, { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
+import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
+import Pullquote from "../components/shared/pullquote"
+import Chart from "../components/chart"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
-  components: { "hubspot-form": HubspotForm },
+  components: {
+    "hubspot-form": HubspotForm,
+    "date-chart": Chart,
+    pullquote: Pullquote,
+  },
 }).Compiler
 
 class BlogPostTemplate extends React.Component {
@@ -37,21 +44,15 @@ class BlogPostTemplate extends React.Component {
       marginBottom: 0,
       color: colors.gray.calm,
       fontWeight: `normal`,
-      ...scale(0),
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
     }
     const BioLine = ({ children }) => (
       <p
         css={{
-          ...scale(-2 / 5),
+          lineHeight: presets.lineHeights.dense,
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          lineHeight: 1.3,
           margin: 0,
           color: colors.gray.calm,
-          [presets.Mobile]: {
-            ...scale(-1 / 5),
-            lineHeight: 1.3,
-          },
         }}
       >
         {children}
@@ -66,8 +67,8 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <Container className="post" css={{ paddingBottom: `0` }}>
-          <main id={`reach-skip-nav`}>
+        <Container>
+          <DocSearchContent>
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>
@@ -86,12 +87,12 @@ class BlogPostTemplate extends React.Component {
                 }
               />
 
-              <meta name="og:description" content={post.excerpt} />
+              <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
-              <meta name="og:title" content={post.frontmatter.title} />
+              <meta property="og:title" content={post.frontmatter.title} />
               {post.frontmatter.image && (
                 <meta
-                  name="og:image"
+                  property="og:image"
                   content={`https://gatsbyjs.org${
                     post.frontmatter.image.childImageSharp.resize.src
                   }`}
@@ -105,7 +106,7 @@ class BlogPostTemplate extends React.Component {
                   }`}
                 />
               )}
-              <meta name="og:type" content="article" />
+              <meta property="og:type" content="article" />
               <meta
                 name="article:author"
                 content={post.frontmatter.author.id}
@@ -130,9 +131,9 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginTop: rhythm(-1 / 4),
-                marginBottom: rhythm(1),
-                [presets.Tablet]: {
-                  marginTop: rhythm(1 / 2),
+                marginBottom: rhythm(space[5]),
+                [presets.Md]: {
+                  marginTop: rhythm(space[3]),
                   marginBottom: rhythm(2),
                 },
               }}
@@ -142,14 +143,25 @@ class BlogPostTemplate extends React.Component {
                   flex: `0 0 auto`,
                 }}
               >
-                <Link to={post.frontmatter.author.fields.slug}>
+                <Link
+                  to={post.frontmatter.author.fields.slug}
+                  css={{
+                    "&&": {
+                      borderBottom: 0,
+                      boxShadow: `none`,
+                      "&:hover": {
+                        background: `none`,
+                      },
+                    },
+                  }}
+                >
                   <Img
                     fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
                     css={{
                       height: rhythm(2.3),
                       width: rhythm(2.3),
                       margin: 0,
-                      borderRadius: `100%`,
+                      borderRadius: presets.radii[6],
                       display: `inline-block`,
                       verticalAlign: `middle`,
                     }}
@@ -159,22 +171,20 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   flex: `1 1 auto`,
-                  marginLeft: rhythm(1 / 2),
+                  marginLeft: rhythm(space[3]),
                 }}
               >
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      ...scale(0),
-                      fontWeight: 400,
-                      margin: 0,
+                      fontSize: presets.scale[3],
+                      marginBottom: rhythm(space[1]),
                       color: `${colors.gatsby}`,
                     }}
                   >
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.ui.bright}`,
-                        boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
                         transition: `all ${presets.animation.speedFast} ${
                           presets.animation.curveDefault
                         }`,
@@ -196,7 +206,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {post.frontmatter.publishedAt}
+                        {this.props.data.markdownRemark.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -207,7 +217,7 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Desktop]: {
+                [presets.Lg]: {
                   marginBottom: rhythm(5 / 4),
                 },
               }}
@@ -218,7 +228,7 @@ class BlogPostTemplate extends React.Component {
               !(post.frontmatter.showImageInArticle === false) && (
                 <div
                   css={{
-                    marginBottom: rhythm(1),
+                    marginBottom: rhythm(space[5]),
                   }}
                 >
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
@@ -241,18 +251,18 @@ class BlogPostTemplate extends React.Component {
               tags={this.props.data.markdownRemark.frontmatter.tags}
             />
             <EmailCaptureForm />
-          </main>
+          </DocSearchContent>
         </Container>
         <div
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(2),
-            [presets.Tablet]: {
+            [presets.Md]: {
               marginTop: rhythm(2),
-              paddingBottom: rhythm(1),
-              paddingTop: rhythm(1),
+              paddingBottom: rhythm(space[5]),
+              paddingTop: rhythm(space[5]),
             },
-            [presets.Desktop]: {
+            [presets.Lg]: {
               marginTop: rhythm(3),
               paddingBottom: rhythm(2),
               paddingTop: rhythm(2),
@@ -260,12 +270,10 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <div
-              css={{ [presets.Phablet]: { display: `flex`, width: `100%` } }}
-            >
+            <div css={{ [presets.Sm]: { display: `flex`, width: `100%` } }}>
               <div
                 css={{
-                  [presets.Phablet]: {
+                  [presets.Sm]: {
                     width: `50%`,
                   },
                 }}
@@ -275,7 +283,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Tablet]: {
+                        [presets.Md]: {
                           marginLeft: `-1rem`,
                         },
                       }}
@@ -289,8 +297,8 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(1),
-                  [presets.Phablet]: { marginTop: 0, width: `50%` },
+                  marginTop: rhythm(space[5]),
+                  [presets.Sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -298,7 +306,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Tablet]: {
+                        [presets.Md]: {
                           marginRight: `-1rem`,
                         },
                       }}
@@ -327,6 +335,7 @@ export const pageQuery = graphql`
       timeToRead
       fields {
         slug
+        publishedAt
       }
       frontmatter {
         title
@@ -334,7 +343,6 @@ export const pageQuery = graphql`
         date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink
-        publishedAt
         tags
         image {
           childImageSharp {

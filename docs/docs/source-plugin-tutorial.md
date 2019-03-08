@@ -20,6 +20,8 @@ Source plugins convert data from any source into a format that can be processed 
 
 If you can't find a plugin for your data source you can create your own.
 
+_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/) to make queryable data from files._
+
 ## How to create a source plugin
 
 ### Overview
@@ -75,7 +77,7 @@ The bare essentials of a plugin are a directory named after your plugin, which c
 
 Start by creating the directory and changing into it:
 
-```
+```shell
 mkdir gatsby-source-pixabay
 cd gatsby-source-pixabay
 ```
@@ -102,7 +104,7 @@ npm install node-fetch query-string --save
 
 Open your `package.json` file and you'll see `node-fetch` and `query-string` have been added to a `dependencies` section at the end:
 
-```js:title=package.json
+```json:title=package.json
   "dependencies": {
     "node-fetch": "^2.2.0",
     "query-string": "^6.1.0"
@@ -119,7 +121,10 @@ Create a new file called `gatsby-node.js` in your `gatsby-source-pixabay` direct
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -134,20 +139,20 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOpt
 
 What did you do by adding this code? You started by importing the dependencies that you added earlier (along with one built in dependency):
 
-```js
+```js:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 ```
 
-Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. When Gatsby calls `sourceNodes`, it'll pass in some helper functions (`actions`, `createNodeId` and `createContentDigest`) along with any config options that are provided in your project's `gatsby-config.js` file:
+Then you implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes) which Gatsby will run as part of its bootstrap process. Gatsby expects sourceNodes to return either a promise or a callback (3rd parameter). This is important as it tells Gatsby to wait to move on to next stages until your nodes are sourced, ensuring your nodes are created before the schema is generated.
 
-```js
+```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
 ```
 
 You do some initial setup:
 
-```js
+```js:title=gatsby-node.js
 const { createNode } = actions
 
 // Gatsby adds a configOption that's not needed for this plugin, delete it
@@ -156,7 +161,7 @@ delete configOptions.plugins
 
 And finally add a placeholder message:
 
-```js
+```js:title=gatsby-node.js
 // plugin code goes here...
 console.log("Testing my plugin", configOptions)
 ```
@@ -206,13 +211,17 @@ Note that Gatsby is warning that your plugin doesn't do anything yet. Time to fi
 
 Update `gatsby-node.js` in your `plugins/gatsby-source-pixabay/` directory:
 
-```js{10-29}:title=gatsby-node.js
+```js:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
+  // highlight-start
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
@@ -233,13 +242,14 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOpt
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
           console.log("Photo data is:", photo)
+          // highlight-end
         })
       })
   )
 }
 ```
 
-You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `gatsby develop`. This time you should see a series of results like:
+You've added code that fetches photo data from the Pixabay API. For now, your plugin logs that data but doesn't do anything else. Check that you can see the logged photo data by restarting `npm run develop`. This time you should see a series of results like:
 
 ```shell
 success onPreBootstrap — 0.035 s
@@ -265,14 +275,18 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 You're adding a helper function on lines 11 to 27 and processing the data into a node on lines 44 to 47:
 
-```js{11-27,44-47}:title=gatsby-node.js
+```js:title=gatsby-node.js
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  configOptions
+) => {
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
+  // highlight-start
   delete configOptions.plugins
 
   // Helper function that processes a photo to match Gatsby's node structure
@@ -290,6 +304,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOpt
         contentDigest: createContentDigest(photo),
       },
     })
+    // highlight-end
 
     return nodeData
   }
@@ -322,7 +337,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, configOpt
 
 ### Query for results
 
-Your plugin is ready. Restart `gatsby develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
+Your plugin is ready. Restart `npm run develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
 
 ```graphql
 {
@@ -347,7 +362,7 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](https://www.gatsbyjs.org/plugins/) (please do, it's really easy!), please follow the [Plugin Authoring guide](https://www.gatsbyjs.org/docs/plugin-authoring/#publishing-a-plugin-to-the-library).
+> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
 
 ## Summary
 

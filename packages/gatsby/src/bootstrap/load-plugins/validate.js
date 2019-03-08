@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
-
+const semver = require(`semver`)
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
 
@@ -41,11 +42,11 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
     const badExportsMigrationMap = {
       modifyWebpackConfig: {
         replacement: `onCreateWebpackConfig`,
-        migrationLink: `https://gatsby.app/update-webpack-config`,
+        migrationLink: `https://gatsby.dev/update-webpack-config`,
       },
       wrapRootComponent: {
         replacement: `wrapRootElement`,
-        migrationLink: `https://gatsby.app/update-wraprootcomponent`,
+        migrationLink: `https://gatsby.dev/update-wraprootcomponent`,
       },
     }
     const isOldAPI = Object.keys(badExportsMigrationMap).includes(
@@ -89,15 +90,14 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
 
 const handleBadExports = ({ apis, badExports }) => {
   // Output error messages for all bad exports
-  let isBad = false
   _.toPairs(badExports).forEach(badItem => {
     const [exportType, entries] = badItem
     if (entries.length > 0) {
-      isBad = true
-      console.log(getBadExportsMessage(entries, exportType, apis[exportType]))
+      reporter.panicOnBuild(
+        getBadExportsMessage(entries, exportType, apis[exportType])
+      )
     }
   })
-  return isBad
 }
 
 /**
@@ -215,8 +215,22 @@ const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
   return flattenedPlugins
 }
 
+function warnOnIncompatiblePeerDependency(name, packageJSON) {
+  // Note: In the future the peer dependency should be enforced for all plugins.
+  const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
+  if (
+    gatsbyPeerDependency &&
+    !semver.satisfies(gatsbyVersion, gatsbyPeerDependency)
+  ) {
+    reporter.warn(
+      `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`
+    )
+  }
+}
+
 module.exports = {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  warnOnIncompatiblePeerDependency,
 }

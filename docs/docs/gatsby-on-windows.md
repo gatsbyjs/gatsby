@@ -12,7 +12,7 @@ Tools).
 The easy way to setup your build environment on Windows is to install the
 [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools)
 package by running `npm install windows-build-tools -g` on an admin PowerShell
-console. Upon installing this package, it downloads and installs the Visual C++
+console. Upon installing this package, it downloads and installs Visual C++
 Build Tools 2015, provided free of charge by Microsoft. These tools are required
 to compile popular native modules. It will also install Python 2.7, configuring
 your machine and npm appropriately.
@@ -47,17 +47,18 @@ npm config set msvs_version 2015
 npm cache clean -f
 npm install
 ```
-For Visual Studio 2017, download the [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community/) and install the Desktop development with C++ workflow. You can uncheck everything else. 
+
+For Visual Studio 2017, download [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community/) and install the Desktop development with C++ workflow. You can uncheck everything else.
 
 ![Desktop development with C++ workflow](https://i.imgur.com/dPknorD.png)
 
 In case you've already installed Visual Studio 2017, run the Visual Studio Installer.
 
- ![Visual Studio Installer](https://i.imgur.com/H5PVEbu.png) 
- 
- In the products list, select the more dropdown beside Visual Studio 2017 and select Modify option. On the next screen select the Desktop Development with C++ workflow.
+![Visual Studio Installer](https://i.imgur.com/H5PVEbu.png)
 
- ![Visual Studio Installer](https://i.imgur.com/7SFsS99.png)
+In the products list, select the "More" dropdown beside Visual Studio 2017 and select Modify option. On the next screen select the Desktop Development with C++ workflow.
+
+![Visual Studio Installer](https://i.imgur.com/7SFsS99.png)
 
 Then run the commands on Gatsby:
 
@@ -68,6 +69,7 @@ npm config set msvs_version 2017
 npm cache clean -f
 npm install
 ```
+
 You should then be all set.
 
 If that still doesn't work, refer to the
@@ -78,3 +80,13 @@ further instructions and contact the `node-gyp`team on
 ## gatsby-plugin-sharp requires Node x64
 
 Some plugins which depend on native NPM dependencies require the Node x64 build of Node.js. If you're struggling to install gatsby-plugin-sharp, try installing Node x64 and removing `node_modules` and running `npm install`.
+
+## gatsby-plugin-sharp requires libvips
+
+Sharp uses a C library, libvips. If you are having issues while installing Sharp, try removing `C:\Users\[user]\AppData\Roaming\npm-cache\_libvips`.
+
+## Windows Subsystem for Linux
+
+If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
+
+You can also visit [Gatsby on Linux](/docs/gatsby-on-linux/) to learn more.

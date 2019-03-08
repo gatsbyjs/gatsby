@@ -1,7 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { style } from "glamor"
-
 import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
@@ -12,29 +10,38 @@ import {
 } from "../assets/mobile-nav-icons"
 import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 
-const getNavItemStyles = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent
-    ? {
-        ...styles.link.default,
-        ...styles.link.active,
-        ...styles.svg.active,
-      }
-    : {
-        ...styles.link.default,
-        ...styles.svg.default,
-      }
+const getProps = ({ isPartiallyCurrent }) => {
+  return {
+    ...(isPartiallyCurrent
+      ? {
+          "data-active": true,
+        }
+      : {}),
+  }
+}
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
-  <Link to={linkTo} getProps={getNavItemStyles}>
+  <Link
+    css={{
+      ...styles.link.default,
+      ...styles.svg.default,
+      "&[data-active]": {
+        ...styles.link.active,
+        ...styles.svg.active,
+      },
+    }}
+    getProps={getProps}
+    to={linkTo}
+  >
     <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>
 )
 
 const MobileNavigation = () => (
-  <React.Fragment>
+  <>
     <span
       css={{
         position: `absolute`,
@@ -58,12 +65,12 @@ const MobileNavigation = () => (
         left: 0,
         right: 0,
         zIndex: 1,
-        borderTop: `1px solid ${colors.ui.border}`,
-        background: colors.ui.whisper,
-        height: presets.headerHeight,
-        fontFamily: typography.options.headerFontFamily.join(`,`),
+        borderTop: `1px solid ${colors.ui.light}`,
+        background: `#fff`,
+        minHeight: presets.headerHeight,
+        fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Tablet]: {
+        [presets.Md]: {
           display: `none`,
         },
       }}
@@ -74,18 +81,18 @@ const MobileNavigation = () => (
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
     </div>
-  </React.Fragment>
+  </>
 )
 
 export default MobileNavigation
 
-const svgActive = style({
+const svgActive = {
   ...svgStyles.active,
-})
+}
 
 const styles = {
   svg: {
-    default: style({
+    default: {
       "& .svg-stroke": {
         strokeMiterlimit: 10,
         strokeWidth: 1.4173,
@@ -104,22 +111,23 @@ const styles = {
       "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
       "& .svg-fill-wisteria": { fill: `transparent` },
       "&:hover": { ...svgActive },
-    }),
+    },
     active: svgActive,
   },
   link: {
-    default: style({
-      color: colors.lavender,
-      borderRadius: presets.radius,
-      fontSize: scale(-1 / 2).fontSize,
+    default: {
+      color: colors.lilac,
+      borderRadius: presets.radii[1],
+      fontSize: presets.scale[0],
       flexShrink: 0,
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       width: 64,
       padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
         options.blockMarginBottom / 4
       )} 0`,
       textDecoration: `none`,
       textAlign: `center`,
+      WebkitFontSmoothing: `antialiased`,
       "& svg": {
         display: `block`,
         height: 32,
@@ -130,13 +138,10 @@ const styles = {
           }`,
         },
       },
-    }),
-    active: style({
-      "&&": {
-        color: colors.gatsby,
-        fontWeight: `bold`,
-        // WebkitFontSmoothing: `antialiased`,
-      },
-    }),
+    },
+    active: {
+      color: colors.gatsby,
+      fontWeight: `bold`,
+    },
   },
 }

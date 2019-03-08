@@ -35,7 +35,7 @@ The Site Showcase can help you pitch Gatsby to clients and coworkers as the best
 
 ## UX research process
 
-Many of you contributed to the discussion and development of the site showcase. Here are the intial issue and PR if you'd like to go through the discussion that led to this project:
+Many of you contributed to the discussion and development of the site showcase. Here are the initial issue and PR if you'd like to go through the discussion that led to this project:
 
 - [Site Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/4392)
 - [Site Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5524)

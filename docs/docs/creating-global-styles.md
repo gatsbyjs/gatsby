@@ -2,7 +2,7 @@
 title: Creating global styles
 ---
 
-In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/LESS) or a CSS-in-JS solution.
+In nearly every site, there will be some global styles, such as a reset or typography defaults. This guide will walk through how to add global styles to your site, whether you use standard `.css` files (or with preprocessors like Sass/Less) or a CSS-in-JS solution.
 
 ## Table of Contents
 
@@ -19,7 +19,6 @@ The best way to add global styles is with a [shared layout component](/tutorial/
 To create a shared layout with global styles, start by creating a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
 
 ```shell
-# Create the site
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
@@ -47,7 +46,7 @@ div {
 
 In `src/components/layout.js`, include the stylesheet and export a layout component:
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import "./layout.css"
 
@@ -63,7 +62,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `gatsby develop` and you’ll see the global styles applied.
+Run `npm run develop` and you’ll see the global styles applied.
 
 ![Global styles](./images/global-styles.png)
 
@@ -74,10 +73,9 @@ Run `gatsby develop` and you’ll see the global styles applied.
 To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](/packages/gatsby-plugin-emotion/) and its dependencies:
 
 ```shell
-# Create the site
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
-
-npm install --save gatsby-plugin-emotion emotion emotion-server react-emotion
+cd global-styles
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
@@ -92,22 +90,27 @@ Next, add a layout component at `src/components/layout.js`:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
-import styled from "react-emotion"
-import { injectGlobal } from "emotion"
-
-injectGlobal`
-  div {
-    background: red;
-    color: white;
-  }
-`
+import { Global, css } from "@emotion/core"
+import styled from "@emotion/styled"
 
 const Wrapper = styled("div")`
   border: 2px solid green;
   padding: 10px;
 `
 
-export default ({ children }) => <Wrapper>{children}</Wrapper>
+export default ({ children }) => (
+  <Wrapper>
+    <Global
+      styles={css`
+        div {
+          background: red;
+          color: white;
+        }
+      `}
+    />
+    {children}
+  </Wrapper>
+)
 ```
 
 Then, update `src/pages/index.js` to use the layout:
@@ -119,7 +122,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `gatsby build`, and you can see in `public/index.html` that the styles have been inlined globally.
+Run `npm run build`, and you can see in `public/index.html` that the styles have been inlined globally.
 
 ## Add global styles with CSS files and no layout component
 
@@ -131,7 +134,8 @@ First, open a new terminal window and run the following commands to create a new
 
 ```shell
 gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
-gatsby develop
+cd global-style-tutorial
+npm run develop
 ```
 
 Second, create a css file and define any styles you wish. An arbitrary example:
@@ -148,7 +152,7 @@ a {
 
 Then, include the stylesheet in your site's `gatsby-browser.js` file.
 
-> **NOTE:** This solution works when including css as those styles are extracted when building the js but not for css-in-js.
+> **NOTE:** This solution works when including css as those styles are extracted when building the JavaScript but not for css-in-js.
 > Including styles in a layout component or a global-styles.js is your best bet for that.
 
 ```javascript:title=gatsby-browser.js

@@ -8,15 +8,20 @@ const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
+const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
+const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const nodeTracking = require(`../db/node-tracking`)
+require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -50,10 +55,17 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  require(`../redux/plugin-runner`)
+
+  const directory = slash(args.directory)
+
   const program = {
     ...args,
+    browserslist: getBrowserslist(directory),
     // Fix program directory path for windows env.
-    directory: slash(args.directory),
+    directory,
   }
 
   store.dispatch({
@@ -62,13 +74,24 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-config`, {
+  let activity = report.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  const config = await preferDefault(
+  let config = await preferDefault(
     getConfigFile(program.directory, `gatsby-config`)
   )
+
+  // theme gatsby configs can be functions or objects
+  if (config && config.__experimentalThemes) {
+    const themes = await loadThemes(config)
+    config = themes.config
+
+    store.dispatch({
+      type: `SET_RESOLVED_THEMES`,
+      payload: themes.themes,
+    })
+  }
 
   if (config && config.polyfill) {
     report.warn(
@@ -85,7 +108,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity = report.activityTimer(`load plugins`)
   activity.start()
-  const flattenedPlugins = await loadPlugins(config)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
   // onPreInit
@@ -96,22 +119,24 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // Delete html and css files from the public directory as we don't want
+  // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  activity = report.activityTimer(
-    `delete html and css files from previous builds`,
-    {
-      parentSpan: bootstrapSpan,
-    }
-  )
-  activity.start()
-  await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
-  ])
-  activity.end()
+  if (process.env.NODE_ENV === `production`) {
+    activity = report.activityTimer(
+      `delete html and css files from previous builds`,
+      {
+        parentSpan: bootstrapSpan,
+      }
+    )
+    activity.start()
+    await del([
+      `public/*.{html,css}`,
+      `public/**/*.{html,css}`,
+      `!public/static`,
+      `!public/static/**/*.{html,css}`,
+    ])
+    activity.end()
+  }
 
   activity = report.activityTimer(`initialize cache`)
   activity.start()
@@ -152,10 +177,12 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-
+  const cacheDirectory = `${program.directory}/.cache`
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
-      await fs.remove(`${program.directory}/.cache`)
+      // Attempt to empty dir if remove fails,
+      // like when directory is mount point
+      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }
@@ -174,12 +201,38 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
-  await fs.ensureDir(`${program.directory}/.cache`)
+  await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
 
   activity.end()
+
+  if (process.env.GATSBY_DB_NODES === `loki`) {
+    const loki = require(`../db/loki`)
+    // Start the nodes database (in memory loki js with interval disk
+    // saves). If data was saved from a previous build, it will be
+    // loaded here
+    activity = report.activityTimer(`start nodes db`, {
+      parentSpan: bootstrapSpan,
+    })
+    activity.start()
+    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
+    try {
+      await loki.start({
+        saveFile: dbSaveFile,
+      })
+    } catch (e) {
+      report.error(
+        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
+      )
+    }
+    activity.end()
+  }
+
+  // By now, our nodes database has been loaded, so ensure that we
+  // have tracked all inline objects
+  nodeTracking.trackDbNodes()
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
@@ -187,7 +240,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
-  const siteDir = `${program.directory}/.cache`
+  const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, {
@@ -196,12 +249,12 @@ module.exports = async (args: BootstrapArgs) => {
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
       clobber: true,
     })
-    await fs.ensureDirSync(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${cacheDirectory}/json`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${program.directory}/.cache/fragments`)
+    await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -215,10 +268,10 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include the site's gatsby-browser.js if it exists as it's
+    // Always include gatsby-browser.js files if they exists as they're
     // a handy place to include global styles and other global imports.
     try {
-      if (env === `browser` && plugin.name === `default-site-plugin`) {
+      if (env === `browser`) {
         return slash(
           require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
         )
@@ -315,7 +368,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   // Collect resolvable extensions and attach to program.
@@ -378,7 +431,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`)({ parentSpan: activity.span })
+  await require(`../schema`).build({ parentSpan: activity.span })
   activity.end()
 
   require(`../schema/type-conflict-reporter`).printConflicts()
@@ -433,9 +486,13 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
+  let onEndJob
+
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
+      emitter.off(`END_JOB`, onEndJob)
+
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
@@ -476,7 +533,8 @@ module.exports = async (args: BootstrapArgs) => {
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
+      onEndJob = () => checkJobsDone(resolve)
+      emitter.on(`END_JOB`, onEndJob)
     })
   }
 }

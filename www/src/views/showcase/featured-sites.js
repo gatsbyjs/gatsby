@@ -8,35 +8,32 @@ import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import URLQuery from "../../components/url-query"
-import { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-import scrollToAnchor from "../../utils/scroll-to-anchor"
+import { options, rhythm } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 class FeaturedSites extends Component {
-  onClickHandler = (target, updateQuery, filter) =>
-    target.current
-      ? scrollToAnchor(target.current, () => {
-          updateQuery(({ filters }) => {
-            return { filters: [filter] }
-          })
-        })
-      : () => {}
+  setFilterToFeatured = e => {
+    e.preventDefault()
 
-  render = () => {
-    const { featured, showcase } = this.props
+    this.props.setFilters(`Featured`)
+  }
+
+  render() {
+    const { featured, setFilters } = this.props
 
     return (
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
+          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(
+            presets.space[6]
+          )} 0`,
           position: `relative`,
           display: `none`,
-          [presets.Desktop]: {
+          [presets.Lg]: {
             display: `block`,
           },
         }}
@@ -70,8 +67,8 @@ class FeaturedSites extends Component {
           />
           <h1
             css={{
-              ...scale(1 / 5),
-              color: colors.gatsby,
+              fontSize: presets.scale[4],
+              color: colors.gray.dark,
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: 30,
@@ -82,40 +79,29 @@ class FeaturedSites extends Component {
           >
             Featured Sites
           </h1>
-          <URLQuery>
-            {(_, updateQuery) => (
-              <a
-                href="#showcase"
-                {...styles.withTitleHover}
-                css={{
-                  display: `none`,
-                  [presets.Phablet]: {
-                    display: `block`,
-                  },
-                  "&&": {
-                    ...scale(-1 / 6),
-                    boxShadow: `none`,
-                    borderBottom: 0,
-                    color: colors.lilac,
-                    cursor: `pointer`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    fontWeight: `normal`,
-                    "&:hover": {
-                      background: `transparent`,
-                      color: colors.gatsby,
-                    },
-                  },
-                }}
-                onClick={this.onClickHandler(showcase, updateQuery, `Featured`)}
-              >
-                <span className="title">View all</span>
-                &nbsp;
-                <MdArrowForward
-                  style={{ marginLeft: 4, verticalAlign: `sub` }}
-                />
-              </a>
-            )}
-          </URLQuery>
+          <a
+            href="#showcase"
+            css={{
+              ...styles.withTitleHover,
+              display: `none`,
+              fontSize: presets.scale[1],
+              [presets.Sm]: {
+                display: `block`,
+              },
+              "&&": {
+                borderBottom: 0,
+                cursor: `pointer`,
+                "&:hover": {
+                  color: colors.gatsby,
+                },
+              },
+            }}
+            onClick={this.setFilterToFeatured}
+          >
+            <span className="title">View all</span>
+            &nbsp;
+            <MdArrowForward style={{ marginLeft: 4, verticalAlign: `sub` }} />
+          </a>
           <div
             css={{
               display: `flex`,
@@ -125,12 +111,11 @@ class FeaturedSites extends Component {
           >
             <div
               css={{
-                ...scale(-1 / 6),
                 color: colors.gray.calm,
+                fontSize: presets.scale[1],
                 marginRight: 15,
-                fontFamily: options.headerFontFamily.join(`,`),
                 display: `none`,
-                [presets.Tablet]: {
+                [presets.Md]: {
                   display: `block`,
                 },
               }}
@@ -138,7 +123,7 @@ class FeaturedSites extends Component {
               Want to get featured?
             </div>
             <Button
-              to="https://gatsbyjs.org/docs/site-showcase-submissions/"
+              to="https://gatsbyjs.org/contributing/site-showcase-submissions/"
               tag="href"
               target="_blank"
               rel="noopener noreferrer"
@@ -159,22 +144,27 @@ class FeaturedSites extends Component {
               display: `flex`,
               overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${rhythm(3 / 4)}`,
-              padding: `3px ${rhythm(3 / 4)} 0`,
+              margin: `0 -${rhythm(space[6])}`,
+              padding: `3px ${rhythm(space[6])} 0`,
               ...styles.scrollbar,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
-                {...styles.featuredSitesCard}
-                {...styles.withTitleHover}
+                css={{
+                  ...styles.featuredSitesCard,
+                  ...styles.withTitleHover,
+                }}
               >
                 <Link
                   css={{
                     "&&": {
                       borderBottom: `none`,
-                      boxShadow: `none`,
+                      fontSize: presets.scale[3],
+                      fontWeight: `bold`,
+                      color: colors.gray.dark,
+                      fontFamily: options.headerFontFamily.join(`,`),
                       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
                       "&:hover": { ...styles.screenshotHover },
                     },
@@ -198,10 +188,10 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   css={{
-                    ...scale(-1 / 6),
+                    fontSize: presets.scale[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [presets.Desktop]: {
+                    [presets.Lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -217,8 +207,7 @@ class FeaturedSites extends Component {
                   )}
                   <ShowcaseItemCategories
                     categories={node.categories}
-                    onClickHandler={this.onClickHandler}
-                    showcase={showcase}
+                    onCategoryClick={c => setFilters(c)}
                   />
                 </div>
               </div>
@@ -228,84 +217,71 @@ class FeaturedSites extends Component {
                 display: `flex`,
               }}
             >
-              <URLQuery>
-                {(_, updateQuery) => (
-                  <a
-                    href="#showcase"
-                    {...styles.featuredSitesCard}
+              <a
+                href="#showcase"
+                css={{
+                  marginRight: `${rhythm(space[6])} !important`,
+                  backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                  borderRadius: presets.radii[1],
+                  textAlign: `center`,
+                  "&&": {
+                    border: `1px solid ${colors.ui.light}`,
+                    boxShadow: `none`,
+                    transition: `all ${presets.animation.speedDefault} ${
+                      presets.animation.curveDefault
+                    }`,
+                    "&:hover": {
+                      background: `#fff`,
+                      transform: `translateY(-3px)`,
+                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                    },
+                  },
+                  ...styles.featuredSitesCard,
+                }}
+                onClick={this.setFilterToFeatured}
+              >
+                <div
+                  css={{
+                    borderRadius: presets.radii[1],
+                    display: `flex`,
+                    alignItems: `center`,
+                    position: `relative`,
+                    flexBasis: `100%`,
+                  }}
+                >
+                  <span
                     css={{
-                      marginRight: `${rhythm(3 / 4)} !important`,
-                      backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                      borderRadius: presets.radius,
-                      textAlign: `center`,
-                      "&&": {
-                        border: `1px solid ${colors.ui.light}`,
-                        boxShadow: `none`,
-                        transition: `all ${presets.animation.speedDefault} ${
-                          presets.animation.curveDefault
-                        }`,
-                        "&:hover": {
-                          background: `#fff`,
-                          transform: `translateY(-3px)`,
-                          boxShadow: `0 8px 20px ${hex2rgba(
-                            colors.lilac,
-                            0.5
-                          )}`,
-                        },
-                      },
+                      margin: `0 auto`,
+                      color: colors.gatsby,
                     }}
-                    onClick={this.onClickHandler(
-                      showcase,
-                      updateQuery,
-                      `Featured`
-                    )}
                   >
-                    <div
+                    <span
                       css={{
-                        borderRadius: presets.radius,
-                        display: `flex`,
-                        alignItems: `center`,
-                        position: `relative`,
-                        flexBasis: `100%`,
+                        height: 44,
+                        width: `auto`,
+                        display: `block`,
+                        margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
+                        [presets.Md]: {
+                          height: 64,
+                        },
+                        [presets.Xl]: {
+                          height: 72,
+                        },
+
+                        "& svg": {
+                          height: `100%`,
+                          ...svgStyles.active,
+                        },
                       }}
                     >
                       <span
-                        css={{
-                          margin: `0 auto`,
-                          color: colors.gatsby,
-                        }}
-                      >
-                        <span
-                          css={{
-                            height: 44,
-                            width: `auto`,
-                            display: `block`,
-                            margin: `0 auto ${rhythm(
-                              options.blockMarginBottom
-                            )}`,
-                            [presets.Tablet]: {
-                              height: 64,
-                            },
-                            [presets.Hd]: {
-                              height: 72,
-                            },
-
-                            "& svg": {
-                              height: `100%`,
-                              ...svgStyles.active,
-                            },
-                          }}
-                        >
-                          <span
-                            dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
-                          />
-                        </span>
-                        View all Featured Sites
-                      </span>
-                    </div>
-                  </a>
-                )}
-              </URLQuery>
+                        dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
+                      />
+                    </span>
+                    View all Featured Sites
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
           <div
@@ -313,7 +289,7 @@ class FeaturedSites extends Component {
               position: `absolute`,
               top: `0`,
               bottom: rhythm(options.blockMarginBottom),
-              right: `-${rhythm(3 / 4)}`,
+              right: `-${rhythm(space[6])}`,
               width: 60,
               pointerEvents: `none`,
               background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,

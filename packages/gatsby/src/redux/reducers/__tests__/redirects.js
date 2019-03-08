@@ -12,14 +12,12 @@ describe(`redirects`, () => {
 
     let state = reducer(undefined, action)
 
-    expect(state).toEqual(
-      [
-        {
-          fromPath: `/page1`,
-          toPath: `/page1/`,
-        },
-      ]
-    )
+    expect(state).toEqual([
+      {
+        fromPath: `/page1`,
+        toPath: `/page1/`,
+      },
+    ])
   })
 
   it(`lets you redirect to an external url`, () => {
@@ -33,14 +31,12 @@ describe(`redirects`, () => {
 
     let state = reducer(undefined, action)
 
-    expect(state).toEqual(
-      [
-        {
-          fromPath: `/page1`,
-          toPath: `https://example.com`,
-        },
-      ]
-    )
+    expect(state).toEqual([
+      {
+        fromPath: `/page1`,
+        toPath: `https://example.com`,
+      },
+    ])
   })
 
   const protocolArr = [
@@ -50,7 +46,7 @@ describe(`redirects`, () => {
     [`ftp`, `ftp://example.com`],
     [`mailto`, `mailto:example@email.com`],
   ]
-  
+
   protocolArr.forEach(([protocol, toPath], index) => {
     it(`lets you redirect using ${protocol}`, () => {
       const fromPath = `/page${index}`

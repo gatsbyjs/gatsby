@@ -7,10 +7,12 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const truePath = require(`true-case-path`)
 const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
-const { hasNodeChanged, getNode } = require(`./index`)
-const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
+const slash = require(`slash`)
+const { hasNodeChanged, getNode } = require(`../db/nodes`)
+const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
@@ -82,12 +84,13 @@ const pascalCase = _.flow(
   _.camelCase,
   _.upperFirst
 )
-const hasWarnedForPageComponent = new Set()
+const hasWarnedForPageComponentInvalidContext = new Set()
+const hasWarnedForPageComponentInvalidCasing = new Set()
 const fileOkCache = {}
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
+ * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
@@ -137,7 +140,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -177,9 +180,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
         report.panic(error)
       } else {
-        if (!hasWarnedForPageComponent.has(page.component)) {
+        if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
-          hasWarnedForPageComponent.add(page.component)
+          hasWarnedForPageComponentInvalidContext.add(page.component)
         }
       }
     }
@@ -195,6 +198,39 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(``)
       console.log(page)
       noPageOrComponent = true
+    } else if (page.component) {
+      // normalize component path
+      page.component = slash(page.component)
+      // check if path uses correct casing - incorrect casing will
+      // cause issues in query compiler and inconsistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      const trueComponentPath = slash(truePath(page.component))
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
+
+          report.warn(
+            stripIndent`
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+          page.component:     "${page.component}"
+          path in filesystem: "${trueComponentPath}"
+                               ${markers}
+        `
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
+        }
+        page.component = trueComponentPath
+      }
     }
   }
 
@@ -213,12 +249,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (noPageOrComponent) {
-    console.log(``)
-    console.log(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    report.panic(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
-    console.log(``)
-    process.exit(1)
   }
 
   let jsonName
@@ -269,7 +302,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
-      !fileContent.includes(`exports.default`)
+      !fileContent.includes(`exports.default`) &&
+      // this check only applies to js and ts, not mdx
+      /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
       includesDefaultExport = false
     }
@@ -280,33 +315,29 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
-        console.log(``)
-        // TODO actually do die during builds.
-        // process.exit(1)
       }
 
       if (!includesDefaultExport) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `[${fileName}] The page component must export a React component for it to be valid`
         )
-        console.log(``)
       }
-
-      // TODO actually do die during builds.
-      // process.exit(1)
     }
 
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
@@ -319,44 +350,44 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
+actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   let node = _.get(options, `node`)
 
   // Check if using old method signature. Warn about incorrect usage but get
   // node from nodeID anyway.
   if (typeof options === `string`) {
-    console.warn(
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
-    )
-
-    if (args[0] && args[0].name) {
+    let msg =
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
+      `object containing a full node instead: deleteNode({ node }).`
+    if (args && args.name) {
       // `plugin` used to be the third argument
-      console.log(`"deleteNode" was called by ${args[0].name}`)
+      plugin = args
+      msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
+    report.warn(msg)
 
     node = getNode(options)
   }
 
-  let deleteDescendantsActions
-  // It's possible the file node was never created as sometimes tools will
-  // write and then immediately delete temporary files to the file system.
-  if (node) {
-    // Also delete any nodes transformed from this one.
-    const descendantNodes = findChildrenRecursively(node.children)
-    if (descendantNodes.length > 0) {
-      deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode({ node: getNode(n) }, plugin)
-      )
+  const createDeleteAction = node => {
+    return {
+      type: `DELETE_NODE`,
+      plugin,
+      payload: node,
     }
   }
 
-  const deleteAction = {
-    type: `DELETE_NODE`,
-    plugin,
-    payload: node,
-  }
+  const deleteAction = createDeleteAction(node)
 
-  if (deleteDescendantsActions) {
+  // It's possible the file node was never created as sometimes tools will
+  // write and then immediately delete temporary files to the file system.
+  const deleteDescendantsActions =
+    node &&
+    findChildrenRecursively(node.children)
+      .map(getNode)
+      .map(createDeleteAction)
+
+  if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
   } else {
     return deleteAction
@@ -370,35 +401,25 @@ actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  console.log(
-    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
-  )
+  let msg =
+    `The "deleteNodes" action is now deprecated and will be removed in ` +
+    `Gatsby v3. Please use "deleteNode" instead.`
   if (plugin && plugin.name) {
-    console.log(`"deleteNodes" was called by ${plugin.name}`)
+    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
   }
+  report.warn(msg)
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
     nodes.map(n => findChildrenRecursively(getNode(n).children))
   )
-  let deleteDescendantsActions
-  if (descendantNodes.length > 0) {
-    deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode({ node: getNode(n) }, plugin)
-    )
-  }
 
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: nodes,
+    payload: [...nodes, ...descendantNodes],
   }
-
-  if (deleteDescendantsActions) {
-    return [...deleteDescendantsActions, deleteNodesAction]
-  } else {
-    return deleteNodesAction
-  }
+  return deleteNodesAction
 }
 
 const typeOwners = {}
@@ -494,13 +515,12 @@ actions.createNode = (
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    console.log(JSON.stringify(node, null, 4))
-    console.log(
+    report.error(JSON.stringify(node, null, 4))
+    report.panic(
       chalk.bold.red(
         `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
-    process.exit(1)
   }
 
   // Add the plugin name to the internal object.
@@ -587,7 +607,7 @@ actions.createNode = (
     actionOptions.parentSpan.setTag(`nodeType`, node.id)
   }
 
-  let deleteAction
+  let deleteActions
   let updateNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
@@ -601,24 +621,30 @@ actions.createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const descendantNodes = findChildrenRecursively(oldNode.children)
-      if (descendantNodes.length > 0) {
-        deleteAction = descendantNodes.map(n =>
-          actions.deleteNode({ node: getNode(n) })
-        )
+      const createDeleteAction = node => {
+        return {
+          type: `DELETE_NODE`,
+          plugin,
+          ...actionOptions,
+          payload: node,
+        }
       }
+      deleteActions = findChildrenRecursively(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
     }
 
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }
   }
 
-  if (deleteAction) {
-    return [deleteAction, updateNodeAction]
+  if (deleteActions && deleteActions.length) {
+    return [...deleteActions, updateNodeAction]
   } else {
     return updateNodeAction
   }
@@ -891,7 +917,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
  * @example
  * setBabelOptions({
  *   options: {
@@ -1077,16 +1103,20 @@ actions.setPluginStatus = (
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/)).
+ * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/packages/gatsby-plugin-s3/).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
  */
 actions.createRedirect = ({
   fromPath,
@@ -1104,7 +1134,8 @@ actions.createRedirect = ({
   // url.parse will not cover protocol-relative urls so do a separate check for those
   const parsed = url.parse(toPath)
   const isRelativeProtocol = toPath.startsWith(`//`)
-  const toPathPrefix = parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  const toPathPrefix =
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
 
   return {
     type: `CREATE_REDIRECT`,
