@@ -1,8 +1,9 @@
 import React from "react"
-import { withPrefix } from "gatsby"
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import { defaultIcons } from "./common.js"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+  const withPrefix = withAssetPrefix || fallbackWithPrefix
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
@@ -35,7 +36,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`/manifest.webmanifest`)}
+      href={withPrefix(`manifest.webmanifest`)}
       crossOrigin={pluginOptions.crossOrigin}
     />
   )
