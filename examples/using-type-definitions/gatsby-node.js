@@ -1,5 +1,9 @@
+const fs = require(`fs`)
+
 exports.sourceNodes = ({ actions, schema }) => {
   const { createTypes } = actions
+
+  // Type definitions can be provided in SDL
   const typeDefs = `
     type AuthorJson implements Node {
       name: String!
@@ -14,9 +18,12 @@ exports.sourceNodes = ({ actions, schema }) => {
       text: String
       date: Date
       tags: [String]
+      meta: Metadata
     }
   `
   createTypes(typeDefs)
+
+  // Alternatively, you can use type builders to construct types
   createTypes([
     schema.buildObjectType({
       name: `CommentJson`,
@@ -44,6 +51,13 @@ exports.sourceNodes = ({ actions, schema }) => {
       interfaces: [`Node`],
     }),
   ])
+
+  // It is of course also possible to read type definitions from a .gql file,
+  // which will give you proper syntax highlighting
+  const additionalTypeDefs = fs.readFileSync(`type-defs.gql`, {
+    encoding: `utf-8`,
+  })
+  createTypes(additionalTypeDefs)
 }
 
 exports.createResolvers = ({ createResolvers }) => {
@@ -105,8 +119,8 @@ exports.createResolvers = ({ createResolvers }) => {
       },
       comments: {
         type: `[CommentJson!]!`,
-        async resolve(source, args, context, info) {
-          const result = await context.nodeModel.getAllNodes({
+        resolve(source, args, context, info) {
+          const result = context.nodeModel.getAllNodes({
             type: `CommentJson`,
           })
           return result.filter(({ blog }) => blog === source.id)
