@@ -483,20 +483,25 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
 }
 
 const reportParsingError = error => {
-  const report = require(`gatsby-cli/lib/reporter`)
-  const { codeFrameColumns } = require(`@babel/code-frame`)
-
   const { message, source, locations } = error
-  const frame = codeFrameColumns(
-    report.stripIndent(source.body),
-    { start: locations[0] },
-    { linesAbove: 5, linesBelow: 5 }
-  )
-  report.panic(
-    `Encountered an error parsing the provided GraphQL type definitions:\n` +
-      message +
-      `\n\n` +
-      frame +
-      `\n`
-  )
+
+  if (source && locations && locations.length) {
+    const report = require(`gatsby-cli/lib/reporter`)
+    const { codeFrameColumns } = require(`@babel/code-frame`)
+
+    const frame = codeFrameColumns(
+      source.body,
+      { start: locations[0] },
+      { linesAbove: 5, linesBelow: 5 }
+    )
+    report.panic(
+      `Encountered an error parsing the provided GraphQL type definitions:\n` +
+        message +
+        `\n\n` +
+        frame +
+        `\n`
+    )
+  } else {
+    throw error
+  }
 }
