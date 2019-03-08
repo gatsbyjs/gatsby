@@ -2,7 +2,7 @@ const MemoryStoreWithPriorityBuckets = require(`../better-queue-custom-store`)
 const pify = require(`pify`)
 
 // those are tests copied from https://github.com/diamondio/better-queue-store-test/blob/master/tester.js
-// and converted from mocha to jest + used pify to to make it nicer to read than callback chain
+// and converted from mocha to jest + used pify to make it nicer to read than callback chain
 describe(`Custom better-queue memory store`, () => {
   let store
 
