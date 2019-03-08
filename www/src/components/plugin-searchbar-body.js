@@ -18,7 +18,7 @@ import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
 import presets, { space } from "../utils/presets"
-import typography, { rhythm, scale } from "../utils/typography"
+import typography, { rhythm } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"

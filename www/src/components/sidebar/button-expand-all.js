@@ -3,7 +3,7 @@ import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
 import presets, { colors } from "../../utils/presets"
-import { scale, options, rhythm } from "../../utils/typography"
+import { options, rhythm } from "../../utils/typography"
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
   <button

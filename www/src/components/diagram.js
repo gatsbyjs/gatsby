@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { colors, space } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"

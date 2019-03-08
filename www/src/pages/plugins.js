@@ -3,7 +3,7 @@ import Container from "../components/container"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
-import { rhythm, options, scale } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { colors, space } from "../utils/presets"
 
 class Plugins extends Component {

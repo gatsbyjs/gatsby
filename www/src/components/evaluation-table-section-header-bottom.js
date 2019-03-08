@@ -5,7 +5,7 @@ import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
 import presets, { colors, space } from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 
 const subHeaderTitleStyles = {
   height: rhythm(space[6]),

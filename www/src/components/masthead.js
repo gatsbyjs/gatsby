@@ -1,7 +1,7 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { colors, space } from "../utils/presets"
 import Button from "./button"
 
