@@ -14,7 +14,7 @@ function findStubs(pages) {
   let stubs = []
 
   pages.forEach(page => {
-    if (page.link === undefined && page.items !== undefined) {
+    if (page.items !== undefined) {
       // Recurse downwards
       stubs.push(...findStubs(page.items))
     }
@@ -44,11 +44,22 @@ class StubListRoute extends React.Component {
             <h1 id="stublist" css={{ marginTop: 0 }}>
               Stub List
             </h1>
-            <p>Do the thing</p>
+            <p>
+              There are a variety of pages that are currently stubbed out but do
+              not contain any content yet. If you are interested in helping
+              write any of these pages, head to any of them or head over to{` `}
+              <Link to="/contributing/how-to-write-a-stub/">
+                How to Write a Stub
+              </Link>
+              {` `}
+              to learn more.
+            </p>
             <ul>
               {stubs.map(stub => (
                 <li key={stub.title}>
-                  <Link to={stub.link}>{stub.title}</Link>
+                  <Link to={stub.link}>
+                    {stub.title.slice(0, stub.title.length - 1)}
+                  </Link>
                 </li>
               ))}
             </ul>
