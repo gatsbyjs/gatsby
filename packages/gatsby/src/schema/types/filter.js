@@ -72,6 +72,34 @@ const convert = ({
   return convertedITC
 }
 
+const removeEmptyFields = (
+  { schemaComposer, inputTypeComposer },
+  cache = new Set()
+) => {
+  const convert = itc => {
+    if (cache.has(itc)) {
+      return itc
+    }
+    cache.add(itc)
+    const fields = itc.getFields()
+    const nonEmptyFields = {}
+    Object.keys(fields).forEach(fieldName => {
+      const fieldITC = fields[fieldName]
+      if (fieldITC instanceof schemaComposer.InputTypeComposer) {
+        const convertedITC = convert(fieldITC)
+        if (convertedITC.getFieldNames().length) {
+          nonEmptyFields[fieldName] = convertedITC
+        }
+      } else {
+        nonEmptyFields[fieldName] = fieldITC
+      }
+    })
+    itc.setFields(nonEmptyFields)
+    return itc
+  }
+  return convert(inputTypeComposer)
+}
+
 const getFilterInput = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
   const filterInputComposer = schemaComposer.getOrCreateITC(
@@ -88,11 +116,13 @@ const getFilterInput = ({ schemaComposer, typeComposer }) => {
     inputTypeComposer.extendField(`id`, { type: `String` })
   }
 
-  return convert({
+  const filterInputTC = convert({
     schemaComposer,
     inputTypeComposer,
     filterInputComposer,
   })
+
+  return removeEmptyFields({ schemaComposer, inputTypeComposer: filterInputTC })
 }
 
 module.exports = { getFilterInput }
