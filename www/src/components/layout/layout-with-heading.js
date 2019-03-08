@@ -38,7 +38,6 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   overflow: hidden;
   position: absolute;
   z-index: 100;
-  font-size: 0.85rem;
 
   :focus {
     padding: 0.9rem;

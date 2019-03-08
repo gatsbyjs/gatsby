@@ -83,7 +83,7 @@ const SubTitle = styled(`h2`)`
 
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
-  font-size: 0.8125rem;
+  font-size: ${presets.scale[2]};
 `
 
 const Actions = styled(`div`)`

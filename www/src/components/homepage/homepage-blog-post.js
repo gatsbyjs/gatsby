@@ -60,7 +60,7 @@ const Header = styled(`h1`)`
   padding-bottom: 0;
 
   ${presets.Lg} {
-    font-size: ${props => (props.first ? `1.75rem` : `1.5rem`)};
+    font-size: ${props => (props.first ? presets.scale[6] : presets.scale[5])};
     padding: ${rhythm(1.5)};
     padding-bottom: 0;
   }

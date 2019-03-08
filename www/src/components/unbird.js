@@ -52,7 +52,7 @@ const EnvelopeIcon = styled(EnvelopeFaIcon)`
   font-size: ${rhythm(space[5])};
 `
 const CancelIcon = styled(CancelMdIcon)`
-  font-size: ${rhythm(1.2)};
+  font-size: ${presets.scale[3]};
 `
 
 const StatusMessage = styled(`span`)`
@@ -61,7 +61,7 @@ const StatusMessage = styled(`span`)`
   background: ${colors.gray.dark};
   bottom: 60px;
   color: #fff;
-  font-size: 16px;
+  font-size: ${presets.scale[2]};
   padding: 0.4rem 0.8rem;
   text-align: left;
   left: 0;
@@ -93,7 +93,7 @@ const Label = styled(`label`)`
   justify-content: center;
   align-items: center;
   padding: 40px;
-  font-size: 22px;
+  font-size: ${presets.scale[3]};
   float: left;
 `
 
@@ -105,7 +105,7 @@ const Input = styled(`input`)`
   float: left;
   height: 60px;
   width: calc(100% - 60px);
-  font-size: 14px;
+  font-size: ${presets.scale[1]};
   padding: 20px;
   border: none;
   resize: none;

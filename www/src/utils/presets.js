@@ -22,7 +22,7 @@ module.exports = {
   pageHeadingDesktopWidth: `3.5rem`,
   sidebar: {
     width: {
-      default: 10,
+      default: 12,
       large: 12,
     },
   },

@@ -64,7 +64,7 @@ const Header = styled(`header`)`
     align-items: center;
     color: ${colors.lilac};
     display: flex;
-    font-size: 0.8125rem;
+    font-size: ${presets.scale[1]};
     padding-left: 5px;
 
     svg {
@@ -97,7 +97,7 @@ const Thumbnail = styled(`div`)`
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
-  font-size: 0.85rem;
+  font-size: ${presets.scale[1]};
   margin: 0;
 `
 

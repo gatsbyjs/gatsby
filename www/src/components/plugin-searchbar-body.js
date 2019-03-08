@@ -63,7 +63,7 @@ const searchBoxStyles = css`
     border-radius: ${presets.radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
-    font-size: 18px;
+    font-size: ${presets.scale[3]};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
     height: ${searchInputHeight};
     padding: 0;
@@ -191,7 +191,6 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   overflow: hidden;
   position: absolute;
   z-index: 100;
-  font-size: 0.85rem;
 
   :focus {
     padding: 0.9rem;

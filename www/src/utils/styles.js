@@ -63,13 +63,6 @@ export const buttonStyles = {
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
-    [presets.Md]: {
-      ...scale(1 / 5),
-      padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
-    },
-    [presets.Xxl]: {
-      padding: `${rhythm(space[3])} ${rhythm(space[5])}`,
-    },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -77,10 +70,10 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    fontSize: scale(1 / 5).fontSize,
+    fontSize: presets.scale[3],
     padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
-      fontSize: scale(2 / 5).fontSize,
+      fontSize: presets.scale[4],
       padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
     },
     [presets.Xxl]: {
@@ -88,23 +81,17 @@ export const buttonStyles = {
     },
   },
   small: {
-    fontSize: scale(-1 / 3).fontSize,
+    fontSize: presets.scale[1],
     padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
-      fontSize: scale(-1 / 6).fontSize,
-    },
-    [presets.Xxl]: {
-      fontSize: scale(-1 / 6).fontSize,
+      fontSize: presets.scale[2],
     },
   },
   tiny: {
-    fontSize: scale(-1 / 3).fontSize,
+    fontSize: presets.scale[1],
     padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
     [presets.Md]: {
-      fontSize: scale(-1 / 4).fontSize,
-    },
-    [presets.Xxl]: {
-      fontSize: scale(-1 / 5).fontSize,
+      fontSize: presets.scale[2],
     },
   },
   ondark: {

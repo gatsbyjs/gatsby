@@ -12,7 +12,7 @@ const PullquoteRoot = styled(`blockquote`)`
   border-radius: ${presets.radii[2]}px;
   color: ${colors.gatsby};
   font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 1.2rem;
+  font-size: ${presets.scale[3]};
   font-weight: bold;
   padding: 2rem 3rem;
   position: relative;

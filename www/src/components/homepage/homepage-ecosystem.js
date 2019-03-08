@@ -51,7 +51,7 @@ const Section = styled(EcosystemSection)`
 
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
-  font-size: 1.2rem;
+  font-size: ${presets.scale[3]};
   margin-bottom: 0.25rem;
   margin-top: 2rem;
 
@@ -130,7 +130,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       color: ${props =>
         props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
       font-family: ${options.headerFontFamily.join(`,`)};
-      font-size: 0.8rem;
+      font-size: ${presets.scale[1]};
       left: 0;
       letter-spacing: 0.05em;
       position: absolute;

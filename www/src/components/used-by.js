@@ -97,14 +97,11 @@ const UsedBy = () => (
           color: presets.colors.lilac,
           letterSpacing: `0.02em`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          fontSize: scale(-2 / 5).fontSize,
+          fontSize: presets.scale[1],
           marginBottom: 0,
           [presets.Sm]: {
-            fontSize: scale(-2 / 5).fontSize,
+            fontSize: presets.scale[2],
             textAlign: `right`,
-          },
-          [presets.Lg]: {
-            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >

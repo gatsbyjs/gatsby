@@ -49,7 +49,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
     color: ${colors.gray.calm} !important;
-    font-size: 0.9rem !important;
+    font-size: ${presets.scale[1]} !important;
     font-weight: normal !important;
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
   }
@@ -153,7 +153,7 @@ const algoliaStyles = css`
   .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
     margin-top: 0 !important;
-    font-size: 0.9rem !important;
+    font-size: ${presets.scale[1]} !important;
     border-color: ${colors.ui.light} !important;
     color: ${colors.gatsby} !important;
     font-weight: bold !important;
