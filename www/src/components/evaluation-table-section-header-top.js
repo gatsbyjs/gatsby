@@ -1,6 +1,6 @@
 import React from "react"
-import presets, { colors } from "../utils/presets"
-import { scale, rhythm } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
+import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
   `Feature`,
@@ -17,12 +17,14 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(1 / 2)} ${rhythm(1 / 2)} ${rhythm(3 / 8)}`,
+            padding: `${rhythm(space[3])} ${rhythm(presets.space[3])} ${rhythm(
+              3 / 8
+            )}`,
           },
           display: `none`,
           textTransform: `uppercase`,
-          ...scale(-3 / 6),
-          lineHeight: 1,
+          fontSize: presets.scale[0],
+          lineHeight: presets.lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,
           verticalAlign: `bottom`,
@@ -31,21 +33,21 @@ const superHeader = () => (
           // fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
           background: colors.ui.whisper,
-          "&:first-child": {
-            borderTopLeftRadius: presets.radiusLg,
+          "span:first-of-type": {
+            borderTopLeftRadius: presets.radii[2],
             textAlign: `left`,
           },
           "&:last-child": {
-            borderTopRightRadius: presets.radiusLg,
+            borderTopRightRadius: presets.radii[2],
           },
-          [presets.Mobile]: {
+          [presets.Xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [presets.Tablet]: {
+          [presets.Md]: {
             width: 150,
           },
-          [presets.Desktop]: {
+          [presets.Lg]: {
             width: 175,
           },
         }}

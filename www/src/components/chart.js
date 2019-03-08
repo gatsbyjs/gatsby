@@ -1,5 +1,6 @@
 import React from "react"
 import ReactHighcharts from "react-highcharts"
+import presets from "../utils/presets"
 
 const dateToUTC = date => {
   const d = String(date)
@@ -29,7 +30,7 @@ const highchartsOptions = {
   },
   tooltip: {
     backgroundColor: `#FFFFFF`,
-    borderRadius: 2,
+    borderRadius: presets.radii[1],
   },
   credits: {
     enabled: false,

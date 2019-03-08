@@ -110,23 +110,23 @@ const styles = {
     transition: `opacity 0.5s ease`,
     width: 320,
     zIndex: 10,
-    [presets.Tablet]: {
+    [presets.Md]: {
       height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(10),
+      width: rhythm(presets.sidebar.width.default),
     },
-    [presets.Desktop]: {
-      width: rhythm(12),
+    [presets.Lg]: {
+      width: rhythm(presets.sidebar.width.large),
     },
   },
   sidebar: {
     height: `100%`,
     transition: `transform 0.5s ease`,
     boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -145,7 +145,7 @@ const styles = {
     visibility: `visible`,
     width: 60,
     zIndex: 20,
-    [presets.Tablet]: { display: `none` },
+    [presets.Md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,

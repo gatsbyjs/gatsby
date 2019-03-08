@@ -32,7 +32,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 1.  Stop the development server (if it's still running) and run:
 
 ```shell
-npm run build
+gatsby build
 ```
 
 > 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
@@ -40,7 +40,7 @@ npm run build
 2.  View the production site locally. Run:
 
 ```shell
-npm run serve
+gatsby serve
 ```
 
 Once this starts, you can now view your site at `localhost:9000`.

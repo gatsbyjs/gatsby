@@ -40,7 +40,9 @@
           link: /docs/path-prefix/
         - title: How Gatsby Works with GitHub Pages
           link: /docs/how-gatsby-works-with-github-pages/
-    - title: Custom Configuration
+        - title: Multi-core builds
+          link: /docs/multi-core-builds/
+    - title: Custom configuration
       link: /docs/customization/
       items:
         - title: Babel.js
@@ -137,19 +139,19 @@
     - title: Plugins
       link: /docs/plugins/
       items:
-        - title: Plugin Authoring
-          link: /docs/plugin-authoring/
-        - title: Create a Transformer Plugin
-          link: /docs/create-transformer-plugin/
-        - title: Create a Source Plugin
-          link: /docs/create-source-plugin/
+        - title: How Plugins Work
+          link: /docs/how-plugins-work/
+        - title: Creating a Transformer Plugin
+          link: /docs/creating-a-transformer-plugin/
+        - title: Creating a Source Plugin
+          link: /docs/creating-a-source-plugin/
         - title: Source Plugin Tutorial
           link: /docs/source-plugin-tutorial/
     - title: Starters
       link: /docs/starters/
       items:
         - title: Create a Starter*
-          link: /docs/create-a-starter/
+          link: /contributing/create-a-starter/
     - title: Styling Your Site
       link: /docs/styling/
       items:
@@ -209,11 +211,11 @@
         - title: Adding Search
           link: /docs/adding-search/
           items:
-            - title: Adding Search with Algolia*
+            - title: Adding search with Algolia
               link: /docs/adding-search-with-algolia/
             - title: Adding Search with elasticlunr*
               link: /docs/adding-search-with-elasticlunr/
-            - title: Adding Search with js-search*
+            - title: Adding Search with js-search
               link: /docs/adding-search-with-js-search/
         - title: Adding Analytics
           link: /docs/adding-analytics/

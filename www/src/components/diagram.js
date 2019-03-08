@@ -1,12 +1,11 @@
 import React, { Fragment } from "react"
-import { keyframes } from "react-emotion"
+import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
@@ -34,7 +33,7 @@ const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
-      maxWidth: rhythm(30),
+      maxWidth: rhythm(32),
       margin: `0 auto`,
       textAlign: `center`,
     }}
@@ -50,15 +49,15 @@ const SegmentTitle = ({ children }) => (
       display: `inline`,
       background: colors.accent,
       color: colors.gray.copy,
-      borderRadius: presets.radius,
+      borderRadius: presets.radii[1],
       margin: `0 auto`,
       position: `relative`,
       bottom: `-.5rem`,
       padding: `.35rem .6rem`,
       fontWeight: `normal`,
       letterSpacing: `.5px`,
-      ...scale(-2 / 5),
-      lineHeight: 1,
+      fontSize: presets.scale[1],
+      lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -88,19 +87,19 @@ const VerticalLine = () => (
 )
 
 const box = {
+  background: `#fff`,
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radiusLg,
-  padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: colors.ui.whisper,
+  borderRadius: presets.radii[2],
+  padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${colors.ui.light}`,
   background: `#fff`,
-  width: `100%`,
-  boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
-  borderRadius: presets.radius,
+  border: `1px solid ${colors.ui.light}`,
+  borderRadius: presets.radii[1],
+  boxShadow: presets.shadows.card,
   transform: `translateZ(0)`,
+  width: `100%`,
 }
 
 const SourceItems = ({ children }) => (
@@ -116,18 +115,18 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
+const boxPadding = { padding: `${rhythm(space[3])} ${rhythm(space[4])}` }
 
 const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
-      padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
+      padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
       display: `flex`,
-      [presets.Mobile]: {
+      [presets.Xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Phablet]: {
+      [presets.Sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -137,7 +136,7 @@ const SourceItem = ({ children }) => (
       css={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: 1.2,
+        lineHeight: presets.lineHeights.dense,
         textAlign: `left`,
       }}
     >
@@ -149,10 +148,10 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: colors.gatsby,
+      color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      ...scale(0),
+      fontSize: presets.scale[2],
     }}
   >
     {children}
@@ -162,12 +161,11 @@ const ItemTitle = ({ children }) => (
 const ItemDescription = ({ children }) => (
   <small
     css={{
-      lineHeight: 1.2,
+      lineHeight: presets.lineHeights.dense,
       display: `block`,
-      color: colors.gatsby,
-      [presets.Hd]: {
-        fontSize: scale(-1 / 5).fontSize,
-      },
+      color: colors.gray.calm,
+      fontSize: presets.scale[1],
+      fontFamily: options.systemFontFamily.join(`,`),
     }}
   >
     {children}
@@ -180,15 +178,15 @@ const ItemDescriptionLink = ({ to, children }) => (
   </Link>
 )
 
-const Gatsby = ({ children }) => (
+const Gatsby = () => (
   <div
     css={{
       ...borderAndBoxShadow,
-      padding: rhythm(1),
+      padding: rhythm(space[5]),
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Desktop]: {
+      [presets.Lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -200,7 +198,7 @@ const Gatsby = ({ children }) => (
         display: `inline-block`,
         height: rhythm(1.75),
         width: rhythm(1.75),
-        [presets.Desktop]: {
+        [presets.Lg]: {
           width: rhythm(2.25),
           height: rhythm(2.25),
         },
@@ -247,28 +245,26 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          borderRadius: presets.radiusLg,
           fontFamily: options.headerFontFamily.join(`,`),
-          padding: vP,
-          marginTop: rhythm(1),
+          padding: rhythm(space[6]),
           textAlign: `center`,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
           flex: `1 1 100%`,
-          borderTop: `1px solid ${colors.ui.light}`,
-          [presets.Tablet]: {
-            marginTop: 0,
-          },
         }}
       >
-        <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>
+        <h1
+          css={{
+            marginTop: 0,
+            marginBottom: rhythm(space[6]),
+            [presets.Md]: {
+              marginTop: rhythm(space[6]),
+            },
+          }}
+        >
           How Gatsby works
         </h1>
         <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
           <FuturaParagraph>
-            Gatsby lets you build blazing fast sites with <em>your data</em>,
-            whatever the source. Liberate your sites from legacy CMSs and fly
-            into the future.
+            Pull data from <em>anywhere</em>
           </FuturaParagraph>
         </div>
 
@@ -312,8 +308,8 @@ const Diagram = () => (
               css={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
-                paddingTop: rhythm(1 / 2),
-                paddingBottom: rhythm(1 / 2),
+                paddingTop: rhythm(space[3]),
+                paddingBottom: rhythm(space[3]),
                 width: `auto`,
                 display: `inline-block`,
               }}
@@ -336,7 +332,7 @@ const Diagram = () => (
           <div
             css={{
               ...box,
-              paddingBottom: rhythm(1),
+              paddingBottom: rhythm(space[5]),
             }}
           >
             <ItemTitle>Static Web Host</ItemTitle>

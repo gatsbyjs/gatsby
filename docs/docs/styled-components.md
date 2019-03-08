@@ -17,7 +17,7 @@ Video hosted on [egghead.io](https://egghead.io/lessons/gatsby-style-gatsby-site
 First, open a new terminal window and run the following to create a new site:
 
 ```shell
-npx gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 Second, install the necessary dependencies for `styled-components`, including the Gatsby plugin.

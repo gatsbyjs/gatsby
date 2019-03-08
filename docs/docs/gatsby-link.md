@@ -89,27 +89,20 @@ The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
 - Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
-In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to set active styles as follows:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-const PartialNavLink = () => (
-  <Link
-    to="/blog/"
-    {/* highlight-start */}
-    getProps={({ isPartiallyCurrent }) =>
-      isPartiallyCurrent ? { className: "active" } : null
-    }
-    {/* highlight-end */}
-  >
-    Blog
-  </Link>
+const partiallyActive = className => ({ isPartiallyCurrent }) => ({
+  className: className + (isPartiallyCurrent ? ` active` : ``),
+})
+
+const PartiallyActiveLink = ({ className, ...rest }) => (
+  <Link getProps={partiallyActive(className)} {...rest} />
 )
 ```
-
-Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
 
 ### Pass state as props to the linked page
 

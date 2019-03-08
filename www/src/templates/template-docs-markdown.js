@@ -73,7 +73,7 @@ function DocsTemplate({ data, location }) {
   const [urlSegment, itemList] = getDocsData(location)
 
   return (
-    <React.Fragment>
+    <>
       <Helmet>
         <title>{page.frontmatter.title}</title>
         <meta name="description" content={page.excerpt} />
@@ -112,7 +112,7 @@ function DocsTemplate({ data, location }) {
           </Container>
         </DocSearchContent>
       </Layout>
-    </React.Fragment>
+    </>
   )
 }
 
