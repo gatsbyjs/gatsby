@@ -12,6 +12,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   js: `jsx`,
   md: `markup`,
   sh: `bash`,
+  rb: `ruby`,
 }
 
 const getLanguage = file => {
