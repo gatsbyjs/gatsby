@@ -5,11 +5,15 @@ issue: https://github.com/gatsbyjs/gatsby/issues/11810
 
 ## What is the aim of this document?
 
-If you would like to dive into our issues and help, here’s how the Gatsby core team does it. This document should answer any questions you might have along the way. We’ll answer common questions, list guidelines and illustrate a decision tree to help you do first touch maintenance effectively.
+As a Gatsby core team, we've found patterns that help us effectively triage incoming Github issues, providing answers to the community's questions, identify bugs as well as opportunities to contribute to Gatsby core. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
+
+We want to share these patterns with the broader community, so that if you're interesting in helping us triage, you're able to do so more effectively!
+
+This document should answer any questions you might have along the way. We’ll answer common questions, list guidelines and illustrate a decision tree.
 
 ## What is first touch maintenance?
 
-For Gatsby the first line of communication between a user and the team is the issue tracker on GitHub. Typically, several issues are opened in a day.
+For Gatsby the first line of communication between a user and the team is the issue tracker on GitHub. Typically, every day 20-30 issues are opened -- that's one every hour!
 
 These issues could be:
 
@@ -47,10 +51,10 @@ Gatsby is unique among most open source projects because:
 
 ### General Guidelines
 
-- Be empathic. The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
-- Add context. When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
-- Give issue authors time to close their own issues. Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
-- Encourage community contributions. Getting people involved makes a huge impact. It’s often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
+- **Be empathic.** The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
+- **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
+- **Encourage community contributions.** Getting people involved makes a huge impact. It’s often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
+- **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
 
 ### Labelling
 
