@@ -1,5 +1,5 @@
 const MongoClient = require(`mongodb`).MongoClient
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const queryString = require(`query-string`)
 
@@ -86,7 +86,10 @@ function createNodes(
               collectionName
             )}`,
             content: JSON.stringify(item),
-            contentDigest: createContentDigest(item),
+            contentDigest: crypto
+              .createHash(`md5`)
+              .update(JSON.stringify(item))
+              .digest(`hex`),
           },
         }
         const childrenNodes = []
