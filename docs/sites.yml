@@ -1188,12 +1188,6 @@
   categories:
     - Entertainment
     - News
-- title: Cool Hunting
-  main_url: "http://www.coolhunting.com/"
-  url: "http://www.coolhunting.com/"
-  featured: false
-  categories:
-    - Magazine
 - title: Dovetail
   main_url: "https://dovetailapp.com/"
   url: "https://dovetailapp.com/"
