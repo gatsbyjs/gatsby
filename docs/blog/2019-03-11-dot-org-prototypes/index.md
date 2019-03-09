@@ -32,7 +32,7 @@ Two problems became clear as a result:
   - What is the purpose of the homepage?
   - How do we know if we’re succeeding in that purpose?
 
-It is important to the Gatsby community to solve these problems, because tons of new visitors come to the gatsbyjs.org homepage each month. 130,000 in January alone! We want to make sure we’re accurately representing Gatsby’s value there and helping more developers experience Gatsby’s value by clicking the “get started” button.
+It is important to the Gatsby community to solve these problems, because tons of new visitors come to the gatsbyjs.org homepage each month: 130,000 in January alone! We want to make sure we’re accurately representing Gatsby’s value there and helping more developers experience Gatsby’s value by clicking the “get started” button.
 
 The goal:
 
