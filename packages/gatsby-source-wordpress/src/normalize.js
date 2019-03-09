@@ -1,4 +1,4 @@
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
@@ -14,7 +14,11 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
  *
  * @param {any} str
  */
-const digest = str => createContentDigest(str)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 
 /**
  * Validate the GraphQL naming convetions & protect specific fields.
