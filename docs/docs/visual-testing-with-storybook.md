@@ -65,7 +65,7 @@ configure(loadStories, module)
 
 Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
-Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following code in that file (depending on which version of Storybook you're using): 
+Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following code in that file (depending on which version of Storybook you're using):
 
 **For Storybook v5:**
 
