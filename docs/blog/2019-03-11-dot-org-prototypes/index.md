@@ -57,7 +57,7 @@ We gathered a couple engineers, a product manager, and a product designer and as
 
 ### Review design requirements
 
-We briefly reminded ourselves of what the current homepage looks like on mobile, and then review the following information on the requirements for redesigning the homepage:
+We briefly reminded ourselves of what the current homepage looks like on mobile, and then reviewed the following information on the requirements for redesigning the homepage:
 
 - Optimize for the purpose of the homepage: to help as many developers as possible use Gatsby
 - How do we know if we’re succeeding in that purpose? Increase in number of clicks on Get Started button and monthly active users growing
