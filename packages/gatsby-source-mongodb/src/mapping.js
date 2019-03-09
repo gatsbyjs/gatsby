@@ -1,6 +1,6 @@
 const camelCase = require(`lodash.camelcase`)
 const isString = require(`lodash.isstring`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 
 module.exports = function(node, key, text, mediaType, createNode) {
   const str = isString(text) ? text : ` `
@@ -14,7 +14,10 @@ module.exports = function(node, key, text, mediaType, createNode) {
       type: camelCase(`${node.internal.type} ${key} MappingNode`),
       mediaType: mediaType,
       content: str,
-      contentDigest: createContentDigest(str),
+      contentDigest: crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(str))
+        .digest(`hex`),
     },
   }
 
