@@ -1,4 +1,4 @@
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const { resolve, parse } = require(`path`)
 
 const Debug = require(`debug`)
@@ -30,7 +30,10 @@ module.exports = async function generateSqip(options) {
     mode,
   }
 
-  const optionsHash = createContentDigest(JSON.stringify(sqipOptions))
+  const optionsHash = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(sqipOptions))
+    .digest(`hex`)
 
   const cacheKey = `sqip-${name}-${optionsHash}`
   const cachePath = resolve(cacheDir, `${name}-${optionsHash}.svg`)

@@ -1,7 +1,11 @@
-import createContentDigest from "../../gatsby/src/utils/create-content-digest"
+import crypto from "crypto"
 import parseMetadata from "./parse"
 
-const digest = str => createContentDigest(str)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
 const descId = parentId => `${parentId}--ComponentDescription`

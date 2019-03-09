@@ -1,6 +1,6 @@
 const setup = require(`./starter-kit/setup`)
 
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 
 const AWS = require(`aws-sdk`)
 const s3 = new AWS.S3({
@@ -56,7 +56,10 @@ exports.run = async (browser, url, width, height, fullPage) => {
   }
 
   const keyBase = `${url}-(${width},${height})`
-  const digest = createContentDigest(keyBase)
+  const digest = crypto
+    .createHash(`md5`)
+    .update(keyBase)
+    .digest(`hex`)
   const key = `${digest}.png`
 
   const screenshotUrl = `https://s3-${region}.amazonaws.com/${

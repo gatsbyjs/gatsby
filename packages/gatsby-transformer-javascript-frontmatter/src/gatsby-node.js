@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const babylon = require(`@babel/parser`)
 const traverse = require(`@babel/traverse`).default
 
@@ -108,7 +108,10 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
       }
 
       const objStr = JSON.stringify(node)
-      const contentDigest = createContentDigest(objStr)
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(objStr)
+        .digest(`hex`)
 
       const nodeData = {
         id: `${node.id} >>> JavascriptFrontmatter`,

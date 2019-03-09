@@ -1,6 +1,6 @@
 const toml = require(`toml`)
 const _ = require(`lodash`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 
 async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   const { createNode, createParentChildLink } = actions
@@ -19,7 +19,10 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   // 1) More TOML files -> more types
   // 2) Different files with the same name creating conflicts
   const parsedContentStr = JSON.stringify(parsedContent)
-  const contentDigest = createContentDigest(parsedContentStr)
+  const contentDigest = crypto
+    .createHash(`md5`)
+    .update(parsedContentStr)
+    .digest(`hex`)
 
   const newNode = {
     ...parsedContent,
