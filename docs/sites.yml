@@ -4779,3 +4779,14 @@
   categories:
     - Blog
     - WordPress
+- title: Jacob Cofman's Blog
+  description: >
+    Personal blog / portfolio about Jacob Cofman.
+  main_url: "https://jcofman.de/"
+  url: "https://jcofman.de/"
+  source_url: "https://github.com/JCofman/jc-website"
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Personal website
