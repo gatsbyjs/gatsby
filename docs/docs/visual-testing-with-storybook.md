@@ -65,7 +65,9 @@ configure(loadStories, module)
 
 Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
-Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following in that file.
+Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following code in that file (depending on which version of Storybook you're using): 
+
+**For Storybook v5**
 
 ```js:title=.storybook/webpack.config.js
 module.exports = ({ config }) => {
@@ -92,10 +94,7 @@ module.exports = ({ config }) => {
   return config
 }
 ```
-
-> Note: The API for custom webpack configuration has been simplifed in Storybook v5.0 , but it's a breaking [change](https://github.com/storybooks/storybook/blob/next/MIGRATION.md#webpack-config-simplification).
-
-Here is webpack config for Storybook v4:
+**For Storybook v4:**
 
 ```js:title=.storybook/webpack.config.js
 module.exports = (baseConfig, env, defaultConfig) => {
