@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const path = require(`path`)
 const HJSON = require(`hjson`)
 
@@ -8,7 +8,10 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
 
   function transformObject(obj, id, type) {
     const objStr = JSON.stringify(obj)
-    const contentDigest = createContentDigest(objStr)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(objStr)
+      .digest(`hex`)
     const jsonNode = {
       ...obj,
       id,
