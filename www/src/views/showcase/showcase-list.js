@@ -8,12 +8,13 @@ import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { rhythm } from "../../utils/typography"
+import presets, { space } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
 import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
 
-const ShowcaseList = ({ items, count, filters }) => {
+const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
 
   return (
@@ -46,11 +47,14 @@ const ShowcaseList = ({ items, count, filters }) => {
               >
                 <div
                   css={{
-                    paddingRight: rhythm(1),
-                    lineHeight: 1.3,
+                    paddingRight: rhythm(space[5]),
+                    lineHeight: presets.lineHeights.dense,
                   }}
                 >
-                  <ShowcaseItemCategories categories={node.categories} />
+                  <ShowcaseItemCategories
+                    categories={node.categories}
+                    onCategoryClick={onCategoryClick}
+                  />
                 </div>
                 <div css={{ flex: `0 0 auto`, textAlign: `right` }}>
                   {node.source_url && (

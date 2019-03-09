@@ -22,6 +22,7 @@ jest.mock(`sharp`, () => {
       }()
   )
   sharp.simd = jest.fn()
+  sharp.concurrency = jest.fn()
   return sharp
 })
 const fs = require(`fs`)
@@ -57,6 +58,7 @@ describe(`Test plugin manifest options`, () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
 
     const icon = `pretend/this/exists.png`
+    const size = 48
 
     await onPostBootstrap([], {
       name: `GatsbyJS`,
@@ -69,13 +71,13 @@ describe(`Test plugin manifest options`, () => {
       icons: [
         {
           src: `icons/icon-48x48.png`,
-          sizes: `48x48`,
+          sizes: `${size}x${size}`,
           type: `image/png`,
         },
       ],
     })
 
-    expect(sharp).toHaveBeenCalledWith(icon)
+    expect(sharp).toHaveBeenCalledWith(icon, { density: size })
   })
 
   it(`fails on non existing icon`, done => {

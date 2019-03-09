@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import HomepageSection from "./homepage-section"
 import EmailCaptureForm from "../../components/email-capture-form"
@@ -7,24 +7,22 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 const stripedBorderHeight = `8px`
 
 const Container = styled(`div`)`
   border: 1px solid ${colors.ui.light};
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${rhythm(presets.gutters.default)};
-  padding: ${rhythm(presets.gutters.default * 1.2)};
-  padding-bottom: calc(
-    ${rhythm(presets.gutters.default * 1.2)} + ${stripedBorderHeight}
-  );
+  margin-bottom: ${rhythm(space[8])};
+  padding: ${rhythm(space[8] * 1.2)};
+  padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
   position: relative;
 
   :after {
-    border-radius: 0 0 ${presets.radiusLg}px ${presets.radiusLg}px;
+    border-radius: 0 0 ${presets.radii[2]}px ${presets.radii[2]}px;
     background: ${colors.ui.whisper}
       repeating-linear-gradient(
         135deg,
@@ -45,7 +43,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -64,7 +62,7 @@ const Ornament = styled(`span`)`
 const Name = styled(`h3`)`
   color: ${colors.lilac};
   font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   font-weight: normal;
   margin: 0;
   text-transform: uppercase;
@@ -72,8 +70,8 @@ const Name = styled(`h3`)`
 
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
-  font-size: 1.25rem;
-  line-height: 1.3;
+  font-size: ${presets.scale[4]};
+  line-height: ${presets.lineHeights.dense};
   margin: 0;
   margin-top: 0.2rem;
 `
@@ -81,7 +79,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: 1.25rem;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     margin-top: 0;
   }
 `

@@ -34,6 +34,8 @@ See the [library of official and community plugins](/plugins/)
 
 ## Videos
 
+- [Gatsby's official YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
+- [Jason Lengstorf's "Learn stuff with Jason" playlist](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx)
 - [Gatsby Days Bay Area December 2018 - Kyle Mathews & Guest Speakers](https://www.youtube.com/playlist?list=PLCU2qJekvcN1wzgVKymbjbGtZ3VgAWOdj)
 - [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
 - [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
@@ -66,6 +68,10 @@ See the [library of official and community plugins](/plugins/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
 - [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
 - [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
+- [A comprehensive guide to build your personal website using GatsbyJS and Ghost deployed on AWS](https://nishantdania.com/blog/guide-to-setup-ghost-gatsby-website)
+- [Zero to Deploy: A Practical Guide to Static Sites with Gatsby.js](https://scotch.io/tutorials/zero-to-deploy-a-practical-guide-to-static-sites-with-gatsbyjs)
+- [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
+- [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
 
 ## Other resources
 

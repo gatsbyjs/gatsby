@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
 
-import { options, scale, rhythm } from "../../utils/typography"
-import { colors } from "../../utils/presets"
+import { options, rhythm } from "../../utils/typography"
+import presets, { colors } from "../../utils/presets"
 
 import styles from "./styles"
 
@@ -48,7 +48,7 @@ class Collapsible extends Component {
               display: `flex`,
               flexShrink: 0,
               fontWeight: `normal`,
-              fontSize: scale(-2 / 5).fontSize,
+              fontSize: presets.scale[1],
               marginTop: rhythm(options.blockMarginBottom),
               marginRight: rhythm(5 / 4),
               letterSpacing: `.1em`,

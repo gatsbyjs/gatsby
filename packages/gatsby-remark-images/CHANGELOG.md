@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.5...gatsby-remark-images@3.0.6) (2019-03-04)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.4...gatsby-remark-images@3.0.5) (2019-02-22)
+
+### Features
+
+- **gatsby-remark-images:** Add option to use tracedSVG instead of blur up effect ([#9490](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/9490)) ([072bcdd](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/072bcdd))
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.3...gatsby-remark-images@3.0.4) (2019-02-15)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** ensure query string is ignored when detecting images ([#11743](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/11743)) ([37cc21f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/37cc21f))
+
 ## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.2...gatsby-remark-images@3.0.3) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-remark-images

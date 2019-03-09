@@ -1,6 +1,6 @@
 ---
 title: Getting Started with Gatsby and WordPress
-date: "2018-01-22"
+date: 2018-01-22
 author: "Amberley Romo"
 tags: ["getting-started", "wordpress"]
 ---
@@ -112,7 +112,7 @@ _.each(result.data.allWordpressPost.edges, edge => {
 })
 ```
 
-The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/bound-action-creators/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
+The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
 
 ##... Take a step back to "templates"
 
@@ -132,7 +132,7 @@ If you include the "optional GraphQL query" noted above, the result of that quer
 
 ##Onward
 
-While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `gatsby develop`!
+While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `npm run develop`!
 
 ##Sidenotes
 

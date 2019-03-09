@@ -35,4 +35,4 @@ Community starters are created and maintained by Gatsby community members.
 
 Looking for a starter for a particular use case? Peruse starters that have been submitted to the [Starter Library](/starters/)
 
-Created a starter you'd like to share? Follow [these steps to submit your starter](/docs/submit-to-starter-library/) to the Starter Library.
+Created a starter you'd like to share? Follow [these steps to submit your starter](/contributing/submit-to-starter-library/) to the Starter Library.

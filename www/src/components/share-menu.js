@@ -63,7 +63,7 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, theme = `gatsby` } = this.props
+    const { url, title, image, className, theme = `gatsby` } = this.props
     const { open } = this.state
     return (
       <Fragment>
@@ -72,10 +72,11 @@ class ShareMenu extends React.Component {
           css={{
             background: styles[theme].background,
             border: 0,
-            borderRadius: presets.radius,
+            borderRadius: presets.radii[1],
             color: styles[theme].textColor,
             cursor: `pointer`,
           }}
+          className={className}
           ref={this.setShareBtnRef}
         >
           <MdShare />
@@ -172,7 +173,7 @@ const styles = {
       "&&": {
         background: colors.gatsby,
         border: 0,
-        borderRadius: presets.radius,
+        borderRadius: presets.radii[1],
         boxShadow: `none`,
         color: `#fff`,
         display: `flex`,
@@ -190,7 +191,7 @@ const styles = {
       "&&": {
         background: colors.accent,
         border: 0,
-        borderRadius: presets.radius,
+        borderRadius: presets.radii[1],
         boxShadow: `none`,
         color: colors.gatsby,
         display: `flex`,

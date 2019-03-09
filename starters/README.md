@@ -43,11 +43,11 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://gatsby.app/discord">Discord</a>
+  <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites. This repository is our monorepo for managing all the great GatsbyJS starters for the community.
@@ -71,14 +71,11 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 ## 🚀 Get Up and Running in 5 Minutes
 
 ```sh
-# install the Gatsby CLI globally
-npm install -g gatsby-cli
-
 # create a new Gatsby site using the default starter
 gatsby new my-blazing-fast-site
 ```
 
-e.g. `gatsby new blog my-blazing-fast-site` or `gatsby new hello-world my-blazing-fast-site` to use a specific starter!
+e.g. `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-blog` or `gatsby new my-blazing-fast-site https://github.com/gatsbyjs/gatsby-starter-hello-world` to use a specific starter!
 
 This will clone the starter of specified name into the folder `my-blazing-fast-site` and get you up and running in under 5 minutes with Gatsby and a fantastic starter. We can't wait to see what you build!
 
@@ -98,8 +95,8 @@ This repository is a [monorepo][monorepo] managed using [Lerna][lerna]. This mea
 
 We have set-up read-only clones of all of the [starters][starters] in the official gatsbyjs organization. For example, the [`default` starter](starters/default) is available as a read-only clone at [`gatsbyjs/gatsby-starter-default`][gatsby-starter-default]. Please open PRs versus **this** repository rather than the read-only clones. Upon merge any starters that have been modified will be tagged and released.
 
-[code-of-conduct]: https://gatsbyjs.org/docs/code-of-conduct/
-[contributing-guide]: https://gatsbyjs.org/docs/how-to-contribute/
+[code-of-conduct]: https://gatsbyjs.org/contributing/code-of-conduct/
+[contributing-guide]: https://gatsbyjs.org/contributing/how-to-contribute/
 [monorepo]: https://trunkbaseddevelopment.com/monorepos
 [lerna]: https://github.com/lerna/lerna
 [starters]: /starters

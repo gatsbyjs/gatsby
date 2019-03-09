@@ -62,7 +62,7 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
+          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
         err
       )
@@ -144,7 +144,11 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(`public`))
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(require(`./develop-static`)(`public`, { index: false }))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -375,7 +379,7 @@ module.exports = async (program: any) => {
     console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
-      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+      `To create a production build, use ` + `${chalk.cyan(`npm run build`)}`
     )
     console.log()
   }
@@ -385,11 +389,11 @@ module.exports = async (program: any) => {
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://gatsby.app/boundActionCreators`,
+        docsLink: `https://gatsby.dev/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://gatsby.app/pathContext`,
+        docsLink: `https://gatsby.dev/pathContext`,
       },
     }
     const deprecatedLocations = {}
