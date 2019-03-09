@@ -94,6 +94,7 @@ module.exports = ({ config }) => {
   return config
 }
 ```
+
 **For Storybook v4:**
 
 ```js:title=.storybook/webpack.config.js
