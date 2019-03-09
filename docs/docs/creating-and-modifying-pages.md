@@ -39,7 +39,11 @@ your sites development server at `HOST:PORT/___graphql` e.g.
 }
 ```
 
+The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+
 You can also query for any `context` data you or plugins added to pages.
+
+> **NOTE:** There are a few reserved names that _cannot_ be used in `context`. They are: `path`, `matchPath`, `component`, `componentChunkName`, `pluginCreator___NODE`, and `pluginCreatorId`.
 
 ## Creating pages in gatsby-node.js
 
