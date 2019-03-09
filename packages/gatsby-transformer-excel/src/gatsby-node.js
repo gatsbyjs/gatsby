@@ -1,7 +1,7 @@
 const XLSX = require(`xlsx`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 
 // read files as `binary` from file system
 function _loadNodeContent(fileNode, fallback) {
@@ -46,7 +46,10 @@ async function onCreateNode(
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {
         const objStr = JSON.stringify(obj)
-        const contentDigest = createContentDigest(objStr)
+        const contentDigest = crypto
+          .createHash(`md5`)
+          .update(objStr)
+          .digest(`hex`)
 
         return {
           ...obj,
@@ -72,7 +75,10 @@ async function onCreateNode(
 
       const shObj = { name: n, idx: idx }
       const shStr = JSON.stringify(shObj)
-      const contentDigest = createContentDigest(shStr)
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(shStr)
+        .digest(`hex`)
 
       const z = {
         id: createNodeId(`${node.id} [${idx}] >>> ${node.extension}`),
