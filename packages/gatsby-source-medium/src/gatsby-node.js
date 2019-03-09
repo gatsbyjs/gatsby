@@ -1,5 +1,5 @@
 const axios = require(`axios`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 
 const fetch = (username, limit = 100) => {
   const url = `https://medium.com/${username}/latest?format=json&limit=${limit}`
@@ -77,7 +77,10 @@ exports.sourceNodes = async (
     resources.map(resource => {
       convertTimestamps(resource)
 
-      const digest = createContentDigest(resource)
+      const digest = crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(resource))
+        .digest(`hex`)
 
       const links =
         resource.type === `Post`
