@@ -15,7 +15,7 @@ I recently decided to tackle a redo of my blog. I wanted to do something differ
 
 I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs/) installed, run:
 
-`npx gatsby new gatsby-example-site`
+`gatsby new gatsby-example-site`
 
 That gets us a new site directory with a couple (mostly) empty "gatsby"-prefixed files and a src directory with some basic scaffolding. The configuration and lifecycle hooks for Gatsby get put in those "gatsby"-prefixed files, `gatsby-config.js`, `gatsby-node.js` and `gatsby-browser.js`.
 
@@ -112,7 +112,7 @@ _.each(result.data.allWordpressPost.edges, edge => {
 })
 ```
 
-The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/bound-action-creators/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
+The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
 
 ##... Take a step back to "templates"
 

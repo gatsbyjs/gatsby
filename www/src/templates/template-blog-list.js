@@ -12,7 +12,6 @@ import EmailCaptureForm from "../components/email-capture-form"
 
 import presets, { colors } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
-import logo from "../monogram.svg"
 
 class BlogPostsIndex extends React.Component {
   render() {
@@ -23,7 +22,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [presets.Tablet]: {
+            [presets.Md]: {
               background: colors.ui.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -32,23 +31,11 @@ class BlogPostsIndex extends React.Component {
           <Helmet>
             <title>Blog</title>
           </Helmet>
-          <Container
-            css={{
-              [presets.Tablet]: {
-                background: `url(${logo})`,
-                paddingBottom: `${rhythm(
-                  options.blockMarginBottom * 4
-                )} !important`,
-                backgroundSize: `30px 30px`,
-                backgroundRepeat: `no-repeat`,
-                backgroundPosition: `bottom center`,
-              },
-            }}
-          >
+          <Container>
             <h1
               css={{
                 marginTop: 0,
-                [presets.Tablet]: {
+                [presets.Md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -69,13 +56,13 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: rhythm(options.blockMarginBottom),
-                  [presets.Tablet]: {
+                  [presets.Md]: {
+                    boxShadow: presets.shadows.card,
                     background: `#fff`,
-                    borderRadius: presets.radiusLg,
-                    boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                    borderRadius: presets.radii[2],
                     padding: rhythm(options.blockMarginBottom * 2),
-                    paddingLeft: rhythm(options.blockMarginBottom * 3),
-                    paddingRight: rhythm(options.blockMarginBottom * 3),
+                    paddingLeft: rhythm(options.blockMarginBottom * 2),
+                    paddingRight: rhythm(options.blockMarginBottom * 2),
                     marginLeft: rhythm(-options.blockMarginBottom * 2),
                     marginRight: rhythm(-options.blockMarginBottom * 2),
                     transition: `transform ${presets.animation.speedDefault} ${
@@ -87,7 +74,7 @@ class BlogPostsIndex extends React.Component {
                     }`,
                     "&:hover": {
                       transform: `translateY(-4px)`,
-                      boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
+                      boxShadow: presets.shadows.cardHover,
                     },
                     "&:active": {
                       boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
@@ -95,8 +82,6 @@ class BlogPostsIndex extends React.Component {
                       transition: `transform 50ms`,
                     },
                   },
-                  [presets.Desktop]: {},
-                  [presets.Hd]: {},
                 }}
               />
             ))}

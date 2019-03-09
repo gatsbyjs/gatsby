@@ -62,6 +62,17 @@ Promise.promisifyAll(sharp.prototype, { multiArgs: true })
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
+try {
+  // Handle Sharp's concurrency based on the Gatsby CPU count
+  // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+  // See: https://www.gatsbyjs.org/docs/multi-core-builds/
+  const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
+  sharp.concurrency(cpuCoreCount())
+} catch {
+  // if above throws error this probably means that used Gatsby version
+  // doesn't support cpu-core-count utility.
+}
+
 const bar = new ProgressBar(
   `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
   {

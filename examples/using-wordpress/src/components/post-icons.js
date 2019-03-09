@@ -1,22 +1,20 @@
 import { graphql } from "gatsby"
 import React from "react"
-import ClockIcon from "react-icons/lib/fa/clock-o"
-import TagIcon from "react-icons/lib/fa/tag"
-import OpenIcon from "react-icons/lib/fa/folder-open"
+import { FaRegClock, FaTag, FaFolderOpen } from "react-icons/fa"
 
 import { rhythm } from "../utils/typography"
 
 export default ({ node, className = `` }) => (
   <div css={{ marginTop: rhythm(-1 / 2) }} className={className}>
     <span style={{ marginRight: rhythm(1) }}>
-      <ClockIcon size={14} style={{ position: `relative`, bottom: 1 }} />
+      <FaRegClock size={14} style={{ position: `relative`, bottom: 1 }} />
       {` `}
       {node.date}
     </span>
     {node.categories &&
       node.categories.map(category => (
         <span style={{ marginRight: rhythm(1) }} key={category.name}>
-          <OpenIcon size={14} style={{ position: `relative`, bottom: 1 }} />
+          <FaFolderOpen size={14} style={{ position: `relative`, bottom: 1 }} />
           {` `}
           {category.name}
         </span>
@@ -24,7 +22,7 @@ export default ({ node, className = `` }) => (
     {node.tags &&
       node.tags.map(tag => (
         <span key={tag.name}>
-          <TagIcon size={14} style={{ position: `relative`, bottom: 1 }} />
+          <FaTag size={14} style={{ position: `relative`, bottom: 1 }} />
           {` `}
           {tag.name}
         </span>

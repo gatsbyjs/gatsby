@@ -31,4 +31,4 @@ What happened.
 
 ### Environment
 
-Run `npx gatsby info --clipboard` in your project directory and paste the output here.
+Run `gatsby info --clipboard` in your project directory and paste the output here.

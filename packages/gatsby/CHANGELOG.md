@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.26...gatsby@2.1.27) (2019-03-08)
+
+### Bug Fixes
+
+- **gatsby:** Vendor express-static so we can avoid loading html files from public during development ([#12336](https://github.com/gatsbyjs/gatsby/issues/12336)) ([800e023](https://github.com/gatsbyjs/gatsby/commit/800e023)), closes [/github.com/gatsbyjs/gatsby/pull/12243#pullrequestreview-210895624](https://github.com//github.com/gatsbyjs/gatsby/pull/12243/issues/pullrequestreview-210895624)
+
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.25...gatsby@2.1.26) (2019-03-08)
+
+### Bug Fixes
+
+- **gatsby): Revert "chore(gatsby:** Update more dependencies to support graphql@14" ([#12408](https://github.com/gatsbyjs/gatsby/issues/12408)) ([b040b44](https://github.com/gatsbyjs/gatsby/commit/b040b44)), closes [gatsbyjs/gatsby#11512](https://github.com/gatsbyjs/gatsby/issues/11512)
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.24...gatsby@2.1.25) (2019-03-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.23...gatsby@2.1.24) (2019-03-07)
+
+### Features
+
+- **gatsby:** add pnp resolving by passing rootdir in pkg resolving ([#12163](https://github.com/gatsbyjs/gatsby/issues/12163)) ([72e0d6f](https://github.com/gatsbyjs/gatsby/commit/72e0d6f)), closes [#10245](https://github.com/gatsbyjs/gatsby/issues/10245)
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.22...gatsby@2.1.23) (2019-03-05)
+
+### Bug Fixes
+
+- **core:** Only delete html/css files during prod builds ([#12243](https://github.com/gatsbyjs/gatsby/issues/12243)) ([9835f56](https://github.com/gatsbyjs/gatsby/commit/9835f56))
+- **gatsby:** don't delete /404.html during development ([#12297](https://github.com/gatsbyjs/gatsby/issues/12297)) ([23488ea](https://github.com/gatsbyjs/gatsby/commit/23488ea))
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.21...gatsby@2.1.22) (2019-03-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.20...gatsby@2.1.21) (2019-03-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.19...gatsby@2.1.20) (2019-03-04)
+
+### Bug Fixes
+
+- **gatsby:** Call onPostBootstrap only once after bootstrap ([#12262](https://github.com/gatsbyjs/gatsby/issues/12262)) ([8fc999f](https://github.com/gatsbyjs/gatsby/commit/8fc999f))
+
+### Features
+
+- **gatsby:** configure physical cores, logical_cores or fixed number ([#10257](https://github.com/gatsbyjs/gatsby/issues/10257)) ([c51440e](https://github.com/gatsbyjs/gatsby/commit/c51440e))
+
 ## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.18...gatsby@2.1.19) (2019-02-28)
 
 ### Bug Fixes

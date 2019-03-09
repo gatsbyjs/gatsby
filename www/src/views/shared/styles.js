@@ -1,6 +1,5 @@
-import typography, { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-import hex2rgba from "hex2rgba"
+import typography, { options, rhythm } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
 
 const { curveDefault, speedDefault } = presets.animation
 
@@ -12,25 +11,25 @@ const styles = {
     flexShrink: 0,
     width: 320,
     marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(3 / 4),
-    [presets.Hd]: {
+    marginRight: rhythm(space[6]),
+    [presets.Xl]: {
       width: 360,
-      marginRight: rhythm(6 / 4),
+      marginRight: rhythm(space[8]),
     },
-    [presets.VHd]: {
+    [presets.Xxl]: {
       width: 400,
     },
   },
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
-    padding: rhythm(3 / 4),
+    padding: rhythm(space[6]),
     justifyContent: `space-evenly`,
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(3 / 4),
+    margin: rhythm(space[6]),
     minWidth: 259, //shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
@@ -39,12 +38,12 @@ const styles = {
   featuredItem: {
     display: `none`,
     transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
-      borderTopRightRadius: presets.radius,
-      borderBottomLeftRadius: presets.radius,
+      borderTopRightRadius: presets.radii[1],
+      borderBottomLeftRadius: presets.radii[1],
       boxShadow: `none`,
       cursor: `pointer`,
       display: `flex`,
@@ -67,10 +66,9 @@ const styles = {
   withTitleHover: {
     "& .title": {
       transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-      boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
     },
     "&:hover .title": {
-      boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
+      boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
     },
   },
   loadMoreButton: {
@@ -78,7 +76,7 @@ const styles = {
     display: `flex`,
     flexFlow: `row wrap`,
     margin: `0 auto ${rhythm(3)}`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       margin: `0 auto ${rhythm(2 / 2)}`,
     },
   },
@@ -93,7 +91,7 @@ const styles = {
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
     top: `calc(${presets.bannerHeight} - 1px)`,
-    [presets.Desktop]: {
+    [presets.Lg]: {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
@@ -111,8 +109,8 @@ const styles = {
     },
   },
   screenshot: {
-    borderRadius: presets.radius,
-    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
+    borderRadius: presets.radii[1],
+    boxShadow: presets.shadows.card,
     marginBottom: rhythm(options.blockMarginBottom / 2),
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
@@ -123,7 +121,7 @@ const styles = {
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
       transform: `translateY(-3px)`,
-      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+      boxShadow: presets.shadows.cardHover,
     },
   },
   shortcutIcon: {
@@ -140,7 +138,7 @@ const styles = {
     },
   },
   meta: {
-    ...scale(-1 / 4),
+    fontSize: presets.scale[1],
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -150,12 +148,12 @@ const styles = {
     appearance: `none`,
     backgroundColor: `transparent`,
     border: 0,
-    borderRadius: presets.radiusLg,
+    borderRadius: presets.radii[2],
     color: colors.gatsby,
     paddingTop: rhythm(1 / 8),
     paddingRight: rhythm(1 / 4),
     paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(1),
+    paddingLeft: rhythm(space[5]),
     overflow: `hidden`,
     fontFamily: typography.options.headerFontFamily.join(`,`),
     transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
@@ -170,10 +168,7 @@ const styles = {
     },
   },
   filterButton: {
-    ...scale(-2 / 10),
-    [presets.Tablet]: {
-      ...scale(-4 / 10),
-    },
+    fontSize: presets.scale[1],
     margin: 0,
     alignItems: `flex-start`,
     background: `none`,
@@ -181,11 +176,10 @@ const styles = {
     color: colors.gray.text,
     cursor: `pointer`,
     display: `flex`,
-    fontFamily: options.systemFontFamily.join(`,`),
     justifyContent: `space-between`,
     outline: `none`,
     padding: 0,
-    paddingRight: rhythm(1),
+    paddingRight: rhythm(space[5]),
     paddingBottom: rhythm(options.blockMarginBottom / 8),
     paddingTop: rhythm(options.blockMarginBottom / 8),
     width: `100%`,
@@ -194,30 +188,33 @@ const styles = {
       color: colors.gatsby,
     },
   },
+  filterCheckbox: {
+    marginRight: rhythm(space[2]),
+    fontSize: presets.scale[2],
+  },
   filterCount: {
     color: colors.gray.bright,
   },
   sidebarHeader: {
     margin: 0,
-    [presets.Desktop]: {
-      ...scale(1 / 8),
-      // display: `flex`,
+    [presets.Lg]: {
+      fontSize: presets.scale[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
       color: colors.gray.calm,
       fontWeight: `normal`,
       flexShrink: 0,
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       height: presets.headerHeight,
       margin: 0,
-      paddingLeft: rhythm(3 / 4),
-      paddingRight: rhythm(3 / 4),
+      paddingLeft: rhythm(space[6]),
+      paddingRight: rhythm(space[6]),
       paddingTop: rhythm(options.blockMarginBottom),
       paddingBottom: rhythm(options.blockMarginBottom),
     },
   },
   sidebarBody: {
-    paddingLeft: rhythm(3 / 4),
+    paddingLeft: rhythm(space[6]),
     height: `calc(100vh - ((${presets.headerHeight}) + ${
       presets.bannerHeight
     }))`,
@@ -226,8 +223,7 @@ const styles = {
   },
   sidebarContainer: {
     display: `none`,
-    [presets.Desktop]: {
-      // background: colors.ui.whisper,
+    [presets.Lg]: {
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,
@@ -241,29 +237,26 @@ const styles = {
   contentHeader: {
     alignItems: `center`,
     background: `rgba(255,255,255,0.98)`,
-    // background: colors.ui.whisper,
     borderBottom: `1px solid ${colors.ui.light}`,
     display: `flex`,
     flexDirection: `row`,
     flexWrap: `wrap`,
     height: presets.headerHeight,
     justifyContent: `space-between`,
-    paddingLeft: `${rhythm(3 / 4)}`,
-    paddingRight: `${rhythm(3 / 4)}`,
+    paddingLeft: rhythm(space[6]),
+    paddingRight: rhythm(space[6]),
     zIndex: 1,
   },
   contentTitle: {
     color: colors.gatsby,
     margin: 0,
-    ...scale(1 / 5),
-    lineHeight: 1,
+    fontSize: presets.scale[3],
+    lineHeight: presets.lineHeights.solid,
   },
   resultCount: {
     color: colors.lilac,
     fontWeight: `normal`,
   },
-  gutter: rhythm(3 / 4),
-  gutterDesktop: rhythm(6 / 4),
 }
 
 export default styles
