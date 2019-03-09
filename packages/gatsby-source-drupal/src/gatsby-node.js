@@ -1,9 +1,16 @@
 const axios = require(`axios`)
-const createContentDigest = require(`../../gatsby/src/utils/create-content-digest`)
+const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 const { nodeFromData } = require(`./normalize`)
+
+// Get content digest of node.
+const createContentDigest = obj =>
+  crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(obj))
+    .digest(`hex`)
 
 exports.sourceNodes = async (
   { actions, getNode, hasNodeChanged, store, cache, createNodeId },
