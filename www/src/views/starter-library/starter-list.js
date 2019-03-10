@@ -128,7 +128,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: rhythm(1 / 8),
+                      marginBottom: rhythm(space[1]),
                     }}
                   >
                     {description || `No description`}

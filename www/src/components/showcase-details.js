@@ -285,7 +285,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: rhythm(1.5 / 4),
+                  paddingBottom: rhythm(space[2]),
                   [presets.Lg]: {
                     padding: gutterDesktop,
                     paddingBottom: rhythm(space[6]),
@@ -433,24 +433,19 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     <a
                       href={data.sitesYaml.main_url}
                       css={{
+                        backgroundColor: colors.gatsby,
                         border: 0,
                         borderRadius: presets.radii[1],
-                        color: colors.gatsby,
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: options.headerFontFamily.join(`,`),
                         fontWeight: `bold`,
-                        marginRight: rhythm(1.5 / 4),
-                        padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
+                        marginRight: rhythm(space[2]),
+                        padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
-                          backgroundColor: colors.gatsby,
-                          borderBottom: `none`,
-                          boxShadow: `none`,
                           color: `white`,
-                          "&:hover": {
-                            backgroundColor: colors.gatsby,
-                          },
+                          borderBottom: `none`,
                         },
                         [shouldShowVisitButtonOnMobile && presets.Sm]: {
                           display: `block`,

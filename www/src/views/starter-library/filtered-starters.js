@@ -196,9 +196,9 @@ export default class FilteredStarterLibrary extends Component {
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     background: `red`,
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
+                    paddingTop: rhythm(space[1]),
+                    paddingRight: rhythm(space[1]),
+                    paddingBottom: rhythm(space[1]),
                     width: rhythm(5),
                   },
                 }}
@@ -210,7 +210,7 @@ export default class FilteredStarterLibrary extends Component {
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
-                    marginTop: rhythm(1 / 8),
+                    marginTop: rhythm(space[1]),
                     ...styles.searchInput,
                     width: rhythm(6),
                   }}

@@ -178,10 +178,8 @@ class CreatorTemplate extends Component {
                     "& svg": { display: `block` },
                     "&&": {
                       border: 0,
-                      boxShadow: `none`,
                       lineHeight: presets.lineHeights.solid,
                       "&:hover": {
-                        background: `none`,
                         color: colors.gatsby,
                       },
                     },
@@ -234,13 +232,9 @@ class CreatorTemplate extends Component {
                         "&&": {
                           marginRight: rhythm(space[6]),
                           borderBottom: `none`,
-                          boxShadow: `none`,
                           transition: `all ${presets.animation.speedDefault} ${
                             presets.animation.curveDefault
                           }`,
-                          "&:hover": {
-                            background: `none`,
-                          },
                         },
                       }}
                       to={site.node.fields.slug}

@@ -196,14 +196,13 @@ const Gatsby = () => (
       src={logo}
       css={{
         display: `inline-block`,
-        height: rhythm(1.75),
-        width: rhythm(1.75),
-        [presets.Lg]: {
-          width: rhythm(2.25),
-          height: rhythm(2.25),
-        },
+        height: rhythm(space[8]),
         margin: 0,
         verticalAlign: `middle`,
+        width: `auto`,
+        [presets.Lg]: {
+          height: rhythm(space[9]),
+        },
       }}
       alt="Gatsby"
     />

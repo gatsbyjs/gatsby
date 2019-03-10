@@ -23,10 +23,10 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       state={{ isModal: true, ...state }}
       css={{
         ...styles.withTitleHover,
+        lineHeight: presets.lineHeights.dense,
         fontFamily: options.headerFontFamily.join(`,`),
         "&&": {
           borderBottom: `none`,
-          boxShadow: `none`,
           color: colors.gray.dark,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault

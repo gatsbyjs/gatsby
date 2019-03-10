@@ -13,11 +13,11 @@ import { scrollbarStyles } from "../../utils/styles"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
-  margin: ${rhythm(0.1)} -${rhythm(space[6])};
+  margin: 0 -${rhythm(space[6])};
 
   ${presets.Md} {
     border-top: 1px solid ${colors.gray.superLight};
-    margin-top: ${rhythm(0.4)};
+    margin-top: ${rhythm(space[3])};
     margin-bottom: 0;
     overflow-y: scroll;
     overflow-x: hidden;

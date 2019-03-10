@@ -57,7 +57,7 @@ const Title = styled(`h1`)`
   font-size: ${presets.scale[4]};
   line-height: ${presets.lineHeights.solid};
   margin: 0;
-  margin-bottom: ${rhythm(0.25)};
+  margin-bottom: ${rhythm(space[1])};
   min-height: 32px;
 
   span {
@@ -89,10 +89,10 @@ const Description = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${rhythm(1 / 4)};
+  margin-top: -${rhythm(space[1])};
 
   > a {
-    margin: 4px 8px 4px 0;
+    margin: ${rhythm(space[1])} ${rhythm(space[2])} ${rhythm(space[1])} 0;
   }
 `
 

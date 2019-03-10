@@ -32,7 +32,6 @@ class BlogPostTemplate extends React.Component {
     const next = this.props.pageContext.next
     const prevNextLinkStyles = {
       "&&": {
-        boxShadow: `none`,
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
@@ -148,10 +147,6 @@ class BlogPostTemplate extends React.Component {
                   css={{
                     "&&": {
                       borderBottom: 0,
-                      boxShadow: `none`,
-                      "&:hover": {
-                        background: `none`,
-                      },
                     },
                   }}
                 >

@@ -310,7 +310,6 @@ class Search extends Component {
               "&&": {
                 background: `url(${AlgoliaLogo})`,
                 border: `none`,
-                boxShadow: `none`,
                 fontWeight: `normal`,
                 backgroundRepeat: `no-repeat`,
                 backgroundPosition: `50%`,

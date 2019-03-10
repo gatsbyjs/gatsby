@@ -96,13 +96,11 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <a
           css={{
             "&&": {
-              boxShadow: `none`,
               borderBottom: 0,
               color: colors.lilac,
               cursor: `pointer`,
               fontFamily: options.headerFontFamily.join(`,`),
               "&:hover": {
-                background: `transparent`,
                 color: colors.gatsby,
               },
             },
@@ -124,7 +122,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           css={{
             position: `absolute`,
             right: rhythm(space[6]),
-            top: rhythm(0),
+            top: 0,
             left: `auto`,
             zIndex: 1,
             display: `flex`,
@@ -135,21 +133,15 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             css={{
               border: 0,
               borderRadius: presets.radii[1],
-              color: colors.accent,
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
-              marginRight: rhythm(1.5 / 4),
-              padding: `${rhythm(space[1])} ${rhythm(presets.space[4])}`, // @todo same as site showcase but wrong for some reason
-              textDecoration: `none`,
+              marginRight: rhythm(space[2]),
+              padding: `${rhythm(space[1])} ${rhythm(presets.space[4])}`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {
                 backgroundColor: colors.accent,
                 borderBottom: `none`,
-                boxShadow: `none`,
                 color: colors.gatsby,
-                "&:hover": {
-                  backgroundColor: colors.accent,
-                },
               },
             }}
           >

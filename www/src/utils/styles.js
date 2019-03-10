@@ -34,7 +34,6 @@ export const buttonStyles = {
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
-    boxShadow: `none`,
     color: `#fff`,
     cursor: `pointer`,
     display: `inline-flex`,
@@ -45,7 +44,7 @@ export const buttonStyles = {
     textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
+    padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
     backgroundSize: `30px 30px`,
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
@@ -70,26 +69,19 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    fontSize: presets.scale[3],
-    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
-    [presets.Md]: {
-      fontSize: presets.scale[4],
-      padding: `${rhythm(space[3])} ${rhythm(3 / 5)}`,
-    },
-    [presets.Xxl]: {
-      padding: `${rhythm(space[3])} ${rhythm(space[5])}`,
-    },
+    fontSize: presets.scale[4],
+    padding: `${rhythm(space[3])} ${rhythm(space[4])}`,
   },
   small: {
     fontSize: presets.scale[1],
-    padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
+    padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
     [presets.Md]: {
       fontSize: presets.scale[2],
     },
   },
   tiny: {
     fontSize: presets.scale[1],
-    padding: `${rhythm(1 / 5)} ${rhythm(space[2])}`,
+    padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
     [presets.Md]: {
       fontSize: presets.scale[2],
     },
@@ -135,13 +127,11 @@ export const linkStyles = {
   padding: `${rhythm(space[3])} 0`,
   "&&": {
     border: 0,
-    boxShadow: `none`,
     color: colors.gray.calm,
     display: `flex`,
     fontWeight: `normal`,
   },
   "&&:hover": {
-    background: `none`,
     color: colors.gatsby,
   },
 }

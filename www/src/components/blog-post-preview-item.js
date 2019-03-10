@@ -25,12 +25,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
           position: `relative`,
           zIndex: 1,
           "&&": {
-            boxShadow: `none`,
             borderBottom: `0`,
-            fontWeight: `normal`,
-            ":hover": {
-              background: `transparent`,
-            },
           },
         }}
       >
@@ -93,10 +88,6 @@ const BlogPostPreviewItem = ({ post, className }) => (
         zIndex: 0,
         "&&": {
           border: 0,
-          boxShadow: `none`,
-          "&:hover": {
-            background: `none`,
-          },
         },
       }}
     >

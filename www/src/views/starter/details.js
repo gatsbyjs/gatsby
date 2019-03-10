@@ -121,21 +121,17 @@ export default Details
 
 const styles = {
   showMoreButton: {
+    backgroundColor: colors.gatsby,
     border: 0,
     borderRadius: presets.radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
+    padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
-      backgroundColor: colors.gatsby,
       borderBottom: `none`,
-      boxShadow: `none`,
       color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
     },
   },
 }

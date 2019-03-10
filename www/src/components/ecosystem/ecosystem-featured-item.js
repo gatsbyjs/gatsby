@@ -81,13 +81,13 @@ const Digest = styled(`div`)`
   flex-grow: 1;
   font-family: ${options.systemFontFamily.join(`,`)};
   justify-content: space-between;
-  padding: ${rhythm(0.5)} 0 0;
+  padding: ${rhythm(space[3])} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
   height: 64px;
   padding-right: ${rhythm(space[4])};
-  margin-top: ${rhythm(1 / 12)};
+  margin-top: ${rhythm(space[1])};
 
   img {
     border: 1px solid ${colors.gray.superLight};

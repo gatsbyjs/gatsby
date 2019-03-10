@@ -84,7 +84,7 @@ const Actions = styled(`div`)`
   margin: 1rem 0 1.5rem;
 
   > a {
-    margin-right: ${rhythm(0.2)};
+    margin-right: ${rhythm(space[1])};
   }
 
   ${presets.Lg} {

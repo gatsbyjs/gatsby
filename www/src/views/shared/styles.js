@@ -75,10 +75,7 @@ const styles = {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
-    margin: `0 auto ${rhythm(3)}`,
-    [presets.Lg]: {
-      margin: `0 auto ${rhythm(2 / 2)}`,
-    },
+    margin: `0 auto ${rhythm(space[9])}`,
   },
   sticky: {
     position: `sticky`,

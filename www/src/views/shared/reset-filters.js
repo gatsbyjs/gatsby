@@ -26,7 +26,7 @@ const ResetFilters = ({ onClick }) => (
       }}
       onClick={onClick}
     >
-      <MdClear style={{ marginRight: rhythm(1 / 4) }} /> Reset all Filters
+      <MdClear style={{ marginRight: rhythm(space[1]) }} /> Reset all Filters
     </button>
   </div>
 )

@@ -247,7 +247,7 @@ const _options = {
       ".post-body figcaption": {
         color: colors.gray.calm,
         fontSize: `87.5%`,
-        marginTop: rhythm(1 / 4),
+        marginTop: rhythm(space[1]),
         marginBottom: rhythm(space[3]),
       },
       ".main-body a.anchor": {
@@ -255,26 +255,19 @@ const _options = {
         fill: colors.lilac,
         textDecoration: `none`,
         borderBottom: `none`,
-        boxShadow: `none`,
       },
       ".main-body a.anchor:hover": {
         background: `none`,
       },
       ".main-body a.gatsby-resp-image-link": {
-        boxShadow: `none`,
         borderBottom: `transparent`,
         marginTop: rhythm(space[9]),
         marginBottom: rhythm(space[9]),
       },
       ".main-body figure a.gatsby-resp-image-link": {
-        boxShadow: `none`,
         borderBottom: `transparent`,
         marginTop: rhythm(space[9]),
         marginBottom: 0,
-      },
-      ".main-body a.gatsby-resp-image-link:hover": {
-        background: `none`,
-        boxShadow: `none`,
       },
       ".gatsby-highlight, .post .gatsby-resp-image-link": {
         marginLeft: rhythm(-space[6]),

@@ -34,9 +34,9 @@ class EvaluationTable extends Component {
           <img
             src={infoIcon}
             css={{
-              height: rhythm(2 / 5),
-              marginBottom: rhythm(2 / 15),
-              verticalAlign: `text-bottom`,
+              height: rhythm(space[3]),
+              marginBottom: rhythm(space[1]),
+              verticalAlign: `baseline`,
             }}
             alt={`Info Icon`}
           />
@@ -167,15 +167,9 @@ class EvaluationTable extends Component {
                               presets.space[5]
                             )} - 1px)`,
                             "&&": {
-                              paddingRight: `${rhythm(1 / 4)}`,
-                              paddingLeft: `${rhythm(1 / 4)}`,
                               [presets.Xs]: {
                                 paddingRight: `${rhythm(space[3])}`,
                                 paddingLeft: `${rhythm(space[3])}`,
-                              },
-                              [presets.Sm]: {
-                                paddingRight: `${rhythm(space[9])}`,
-                                paddingLeft: `${rhythm(space[9])}`,
                               },
                             },
                           }}
