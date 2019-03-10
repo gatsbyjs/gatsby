@@ -10,8 +10,10 @@
 <h3 align="center">
   ⚛️ 📄 :rocket:
 </h3>
+<h3 align="center">
+  Fast in every way that matters
+</h3>
 <p align="center">
-  <strong>Fast in every way that matters</strong><br>
   Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
 <p align="center">
