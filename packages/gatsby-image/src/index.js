@@ -143,6 +143,7 @@ class Image extends React.Component {
     // default settings for browser without Intersection Observer available
     let isVisible = true
     let imgLoaded = false
+    let imgCached = false
     let IOSupported = false
     let fadeIn = props.fadeIn
 
@@ -176,6 +177,7 @@ class Image extends React.Component {
     this.state = {
       isVisible,
       imgLoaded,
+      imgCached,
       IOSupported,
       fadeIn,
       hasNoScript,
@@ -216,7 +218,15 @@ class Image extends React.Component {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: imageInCache })
+        // imgCached and imgLoaded must update after isVisible,
+        // more details in this comments related commit
+        this.setState(
+          { isVisible: true },
+          () => this.setState({
+              imgLoaded: imageInCache,
+              imgCached: this.imageRef.current.currentSrc.length > 0
+          })
+        )
       })
     }
   }
