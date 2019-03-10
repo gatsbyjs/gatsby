@@ -13,6 +13,7 @@
     "chokidar": "^2.1.2",
     "file-type": "^10.2.0",
     "fs-extra": "^5.0.0",
+    "gatsby": "^2.1.27",
     "got": "^7.1.0",
     "md5-file": "^3.1.1",
     "mime": "^2.2.0",
@@ -36,7 +37,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.15"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem",
   "scripts": {
