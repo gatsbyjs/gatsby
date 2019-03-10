@@ -18,21 +18,6 @@ describe(`babel-preset-gatsby-package`, () => {
       const { presets } = preset(null, { debug: true })
       expect(presets).toMatchSnapshot()
     })
-
-    it(`specifies proper presets for production`, () => {
-      const currentBabelEnv = process.env.BABEL_ENV
-      process.env.BABEL_ENV = `production`
-      let presets
-
-      try {
-        const config = preset(null)
-        presets = config.presets
-      } finally {
-        process.env.BABEL_ENV = currentBabelEnv
-      }
-
-      expect(presets).toMatchSnapshot()
-    })
   })
 
   describe(`in browser mode`, () => {
@@ -50,19 +35,27 @@ describe(`babel-preset-gatsby-package`, () => {
       const { presets } = preset(null, { browser: true, debug: true })
       expect(presets).toMatchSnapshot()
     })
+  })
 
-    it(`specifies proper presets for production`, () => {
-      const currentBabelEnv = process.env.BABEL_ENV
+  describe(`in production mode`, () => {
+    let env
+
+    beforeAll(() => {
+      env = process.env.BABEL_ENV
       process.env.BABEL_ENV = `production`
-      let presets
+    })
 
-      try {
-        const config = preset(null, { browser: true })
-        presets = config.presets
-      } finally {
-        process.env.BABEL_ENV = currentBabelEnv
-      }
+    afterAll(() => {
+      process.env.BABEL_ENV = env
+    })
 
+    it(`specifies proper presets for node mode`, () => {
+      const { presets } = preset(null)
+      expect(presets).toMatchSnapshot()
+    })
+
+    it(`specifies proper presets for browser mode`, () => {
+      const { presets } = preset(null, { browser: true })
       expect(presets).toMatchSnapshot()
     })
   })

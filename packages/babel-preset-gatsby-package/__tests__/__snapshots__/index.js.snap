@@ -58,35 +58,6 @@ Array [
 ]
 `;
 
-exports[`babel-preset-gatsby-package in browser mode specifies proper presets for production 1`] = `
-Array [
-  Array [
-    "@babel/preset-env",
-    Object {
-      "debug": false,
-      "loose": true,
-      "modules": "commonjs",
-      "shippedProposals": true,
-      "targets": Object {
-        "browsers": Array [
-          "last 4 versions",
-          "safari >= 7",
-          "ie >= 9",
-        ],
-      },
-      "useBuiltIns": false,
-    },
-  ],
-  Array [
-    "@babel/preset-react",
-    Object {
-      "development": false,
-    },
-  ],
-  "@babel/preset-flow",
-]
-`;
-
 exports[`babel-preset-gatsby-package in browser mode specifies the proper plugins 1`] = `
 Array [
   "@babel/plugin-proposal-class-properties",
@@ -146,7 +117,45 @@ Array [
 ]
 `;
 
-exports[`babel-preset-gatsby-package in node mode specifies proper presets for production 1`] = `
+exports[`babel-preset-gatsby-package in node mode specifies the proper plugins 1`] = `
+Array [
+  "@babel/plugin-proposal-class-properties",
+  "@babel/plugin-proposal-optional-chaining",
+  "@babel/plugin-transform-runtime",
+  "@babel/plugin-syntax-dynamic-import",
+]
+`;
+
+exports[`babel-preset-gatsby-package in production mode specifies proper presets for browser mode 1`] = `
+Array [
+  Array [
+    "@babel/preset-env",
+    Object {
+      "debug": false,
+      "loose": true,
+      "modules": "commonjs",
+      "shippedProposals": true,
+      "targets": Object {
+        "browsers": Array [
+          "last 4 versions",
+          "safari >= 7",
+          "ie >= 9",
+        ],
+      },
+      "useBuiltIns": false,
+    },
+  ],
+  Array [
+    "@babel/preset-react",
+    Object {
+      "development": false,
+    },
+  ],
+  "@babel/preset-flow",
+]
+`;
+
+exports[`babel-preset-gatsby-package in production mode specifies proper presets for node mode 1`] = `
 Array [
   Array [
     "@babel/preset-env",
@@ -168,14 +177,5 @@ Array [
     },
   ],
   "@babel/preset-flow",
-]
-`;
-
-exports[`babel-preset-gatsby-package in node mode specifies the proper plugins 1`] = `
-Array [
-  "@babel/plugin-proposal-class-properties",
-  "@babel/plugin-proposal-optional-chaining",
-  "@babel/plugin-transform-runtime",
-  "@babel/plugin-syntax-dynamic-import",
 ]
 `;
