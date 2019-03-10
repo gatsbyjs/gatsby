@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
-import { rhythm, scale, options } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
+import { rhythm, options } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
@@ -9,14 +9,13 @@ const Header = ({ stub }) => (
   <div
     className="starter-detail-header"
     css={{
-      fontFamily: options.headerFontFamily.join(`,`),
-      padding: sharedStyles.gutter,
+      padding: rhythm(space[6]),
       paddingBottom: rhythm(options.blockMarginBottom),
       [presets.Sm]: {
         paddingBottom: 0,
       },
       [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
+        padding: rhythm(space[8]),
         paddingBottom: 0,
       },
     }}
@@ -30,15 +29,12 @@ const Header = ({ stub }) => (
         to={`/starters`}
         css={{
           "&&": {
-            ...scale(1 / 5),
+            fontSize: presets.scale[1],
             boxShadow: `none`,
             borderBottom: 0,
             color: colors.gatsby,
-            cursor: `pointer`,
-            fontFamily: options.headerFontFamily.join(`,`),
             fontWeight: `normal`,
             "&:hover": {
-              background: `transparent`,
               color: colors.lilac,
             },
           },

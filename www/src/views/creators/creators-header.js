@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
-import typography, { rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import typography, { rhythm } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -135,44 +135,37 @@ export default CreatorsHeader
 const styles = {
   header: {
     display: `flex`,
-    // flexDirection: `column`,
     flexDirection: `row`,
     alignItems: `center`,
     borderBottom: `1px solid ${colors.ui.light}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
-    // padding: `${rhythm(2 / 4)} ${rhythm(3 / 4)} 0 ${rhythm(3 / 4)}`,
-    padding: `0 ${rhythm(3 / 4)}`,
+    padding: `0 ${rhythm(space[6])}`,
     height: presets.headerHeight,
     fontFamily: typography.options.headerFontFamily.join(`,`),
   },
   creatorsLink: {
     "&&": {
-      ...scale(1 / 3),
-      // display: `none`,
+      fontSize: presets.scale[4],
       color: colors.gatsby,
-      boxShadow: `none`,
       borderBottom: `none`,
-      marginRight: rhythm(1 / 2),
+      marginRight: rhythm(space[3]),
       "&:hover": {
         backgroundColor: `initial`,
-      },
-      [presets.Lg]: {
-        // display: `inline`,
       },
     },
   },
   CreatorsHeaderLink: {
     "&&": {
-      ...scale(-1 / 3),
-      lineHeight: 1,
+      fontSize: presets.scale[2],
+      lineHeight: presets.lineHeights.solid,
       letterSpacing: `0.03em`,
       textTransform: `uppercase`,
       fontWeight: `normal`,
       boxShadow: `none`,
       borderBottom: `none`,
       padding: `${rhythm(typography.options.blockMarginBottom / 4)} .5rem`,
-      marginRight: rhythm(1 / 3),
+      marginRight: rhythm(space[2]),
       borderRadius: 40,
       "&:hover": {
         backgroundColor: colors.gatsby,
@@ -182,8 +175,8 @@ const styles = {
   },
   filter: {
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `40px`,
-    margin: `${rhythm(3 / 4)} ${rhythm(1 / 6)}`,
+    borderRadius: 40,
+    margin: `${rhythm(space[6])} ${rhythm(space[1])}`,
     paddingLeft: rhythm(1 / 4),
     paddingRight: rhythm(1 / 4),
     display: `flex`,
@@ -197,7 +190,7 @@ const styles = {
     width: `1rem`,
     height: `1rem`,
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `40px`,
+    borderRadius: 40,
     marginRight: `${rhythm(1 / 4)}`,
     outline: `none`,
     "&:checked": {

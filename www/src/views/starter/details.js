@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -14,9 +14,9 @@ const Details = ({
 }) => (
   <div
     css={{
-      padding: sharedStyles.gutter,
+      padding: rhythm(space[6]),
       [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
+        padding: rhythm(space[8]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
         gridRowGap: `20px`,
@@ -122,11 +122,11 @@ export default Details
 const styles = {
   showMoreButton: {
     border: 0,
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+    padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       backgroundColor: colors.gatsby,

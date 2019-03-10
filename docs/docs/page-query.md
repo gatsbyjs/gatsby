@@ -6,6 +6,8 @@ Gatsby's `graphql` tag enables page components to retrieve data via GraphQL quer
 
 In this guide, you will learn [how to use the `graphql` tag](/docs/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/page-query#how-does-the-graphql-tag-work).
 
+If you’re curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+
 ## How to use the `graphql` tag in pages
 
 ### Add `description` to `siteMetadata`

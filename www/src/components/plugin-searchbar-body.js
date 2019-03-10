@@ -17,8 +17,8 @@ import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
-import presets from "../utils/presets"
-import typography, { rhythm, scale } from "../utils/typography"
+import presets, { space } from "../utils/presets"
+import typography, { rhythm } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
@@ -32,7 +32,7 @@ const updateAfter = 700
 // A couple constants for CSS
 const searchInputHeight = rhythm(7 / 4)
 const searchMetaHeight = rhythm(8 / 4)
-const searchInputWrapperMargin = rhythm(3 / 4)
+const searchInputWrapperMargin = rhythm(space[6])
 
 /* stylelint-disable */
 const searchBoxStyles = css`
@@ -60,10 +60,10 @@ const searchBoxStyles = css`
     -webkit-appearance: none;
     background: #fff;
     border: 1px solid ${colors.ui.bright};
-    border-radius: ${presets.radiusLg}px;
+    border-radius: ${presets.radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
-    font-size: 18px;
+    font-size: ${presets.scale[3]};
     font-family: ${typography.options.headerFontFamily.join(`,`)};
     height: ${searchInputHeight};
     padding: 0;
@@ -119,7 +119,7 @@ const searchBoxStyles = css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+    border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
   }
   .ais-SearchBox__submit:focus {
     outline: 0;
@@ -158,11 +158,11 @@ const searchBoxStyles = css`
   .ais-InfiniteHits__loadMore {
     background-color: transparent;
     border: 1px solid ${colors.gatsby};
-    border-radius: ${presets.radius}px;
+    border-radius: ${presets.radii[1]}px;
     color: ${colors.gatsby};
     cursor: pointer;
-    width: calc(100% - ${rhythm(6 / 4)});
-    margin: ${rhythm(3 / 4)};
+    width: calc(100% - ${rhythm(space[6] * 2)});
+    margin: ${rhythm(space[6])};
     height: ${rhythm(2)};
     outline: none;
     transition: all ${presets.animation.speedDefault}
@@ -191,7 +191,6 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   overflow: hidden;
   position: absolute;
   z-index: 100;
-  font-size: 0.85rem;
 
   :focus {
     padding: 0.9rem;
@@ -255,14 +254,10 @@ class Search extends Component {
               alignItems: `center`,
               color: colors.gray.calm,
               display: `flex`,
-              fontFamily: typography.options.headerFontFamily.join(`,`),
-              fontSize: scale(1),
               height: searchMetaHeight,
-              paddingLeft: rhythm(3 / 4),
-              paddingRight: rhythm(3 / 4),
-              [presets.Md]: {
-                fontSize: scale(-1 / 4).fontSize,
-              },
+              paddingLeft: rhythm(space[6]),
+              paddingRight: rhythm(space[6]),
+              fontSize: presets.scale[1],
             }}
           >
             <Stats
@@ -305,7 +300,7 @@ class Search extends Component {
             fontSize: 0,
             lineHeight: 0,
             height: 20,
-            marginTop: rhythm(3 / 4),
+            marginTop: rhythm(space[6]),
             display: `none`,
           }}
         >
@@ -355,13 +350,12 @@ const Result = ({ hit, pathname, query }) => {
       to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
-          boxShadow: `none`,
           background: selected ? `#fff` : false,
           borderBottom: 0,
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
-          padding: rhythm(3 / 4),
+          padding: `${rhythm(space[4])} ${rhythm(space[6])}`,
           position: `relative`,
           transition: `all ${presets.animation.speedDefault} ${
             presets.animation.curveDefault
@@ -406,7 +400,6 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: `inherit`,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
-            lineHeight: 1.2,
             display: `flex`,
             alignItems: `center`,
             marginBottom: 0,
@@ -427,8 +420,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
             display: `flex`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
-            fontSize: rhythm(4 / 7),
+            fontSize: presets.scale[0],
           }}
         >
           {hit.repository &&
@@ -449,7 +441,7 @@ const Result = ({ hit, pathname, query }) => {
             )}
           <span
             css={{
-              width: `4.5em`,
+              width: `5em`,
               textAlign: `right`,
             }}
           >
@@ -458,7 +450,7 @@ const Result = ({ hit, pathname, query }) => {
             <span
               css={{
                 color: selected ? colors.lilac : colors.gray.bright,
-                marginLeft: rhythm(1 / 6),
+                marginLeft: rhythm(space[1]),
               }}
             >
               <DownloadArrow />
@@ -469,9 +461,7 @@ const Result = ({ hit, pathname, query }) => {
       <div
         css={{
           color: selected ? `inherit` : colors.gray.calm,
-          fontFamily: typography.options.systemFontFamily.join(`,`),
-          fontSize: scale(-1 / 2).fontSize,
-          lineHeight: 1.5,
+          fontSize: presets.scale[1],
         }}
       >
         {removeMD(unescape(hit.description))}

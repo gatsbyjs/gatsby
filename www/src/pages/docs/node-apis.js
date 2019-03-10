@@ -4,7 +4,8 @@ import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import Functions from "../../components/function-list"
-import { rhythm, scale } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -34,18 +35,20 @@ class NodeAPIDocs extends React.Component {
             calling remote APIs, etc.) you must either return a promise or use
             the callback passed to the 3rd argument. Gatsby needs to know when
             plugins are finished as some APIs, to work correctly, require
-            previous APIs to be complete first. See{` `}
+            previous APIs to be complete first. See
+            {` `}
             <Link to="/docs/debugging-async-lifecycles/">
               Debugging Async Lifecycles
             </Link>
             {` `}
             for more info.
           </p>
-          <pre>
-            <code
-              className="language-javascript"
-              dangerouslySetInnerHTML={{
-                __html: `// Promise API
+          <div className="gatsby-highlight">
+            <pre className="language-javascript">
+              <code
+                className="language-javascript"
+                dangerouslySetInnerHTML={{
+                  __html: `// Promise API
   exports.createPages = () => {
     return new Promise((resolve, reject) => {
       // do async work
@@ -57,22 +60,23 @@ class NodeAPIDocs extends React.Component {
     // do Async work
     cb()
   }`,
-              }}
-            />
-          </pre>
+                }}
+              />
+            </pre>
+          </div>
           <p>
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
-          <p css={{ marginBottom: rhythm(1) }}>
+          <h2 css={{ marginBottom: rhythm(space[3]) }}>Usage</h2>
+          <p css={{ marginBottom: rhythm(space[5]) }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <h2 css={{ marginBottom: rhythm(space[3]) }}>APIs</h2>
+          <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>

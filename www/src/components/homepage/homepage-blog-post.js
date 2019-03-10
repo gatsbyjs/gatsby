@@ -8,21 +8,19 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
   HorizontalScrollerItem.withComponent(`article`)
 )`
   display: flex;
   flex-direction: column;
-  font-family: ${options.systemFontFamily.join(`,`)};
   padding-bottom: ${rhythm(2.5)};
   position: relative;
 
-  .main-body & a {
+  a {
     border: none;
-    box-shadow: none;
     font-family: inherit;
 
     :hover {
@@ -37,7 +35,7 @@ const HomepageBlogPostRoot = styled(
   ${presets.Lg} {
     flex-shrink: 0;
     margin-right: 0;
-    margin-bottom: ${rhythm(presets.gutters.default)};
+    margin-bottom: ${rhythm(space[8])};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
 
@@ -48,22 +46,21 @@ const HomepageBlogPostRoot = styled(
 `
 
 const Cover = styled(Img)`
-  border-radius: ${presets.radiusLg}px ${presets.radiusLg}px 0 0;
+  border-radius: ${presets.radii[2]}px ${presets.radii[2]}px 0 0;
   display: block;
   margin-bottom: -${rhythm(0.5)};
 `
 
 const Header = styled(`h1`)`
   color: ${colors.gatsbyDarker};
-  font-size: 1.25rem;
+  font-size: ${presets.scale[4]};
   font-weight: bold;
-  line-height: 1.2;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
   ${presets.Lg} {
-    font-size: ${props => (props.first ? `1.75rem` : `1.5rem`)};
+    font-size: ${props => (props.first ? presets.scale[6] : presets.scale[5])};
     padding: ${rhythm(1.5)};
     padding-bottom: 0;
   }
@@ -74,7 +71,7 @@ const Meta = styled(`div`)`
   color: ${colors.gray.calm};
   display: flex;
   flex-wrap: wrap;
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   margin-top: 1rem;
   padding: 0 ${rhythm(4 / 5)};
 
@@ -102,7 +99,6 @@ const Author = styled(Link)`
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    box-shadow: inset 0 -2px 0px 0px ${colors.ui.bright};
     margin-left: 0.5rem;
   }
 
@@ -121,8 +117,6 @@ const Author = styled(Link)`
 
 const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
-  font-size: 0.875rem;
-  line-height: 1.5;
   padding: 0 ${rhythm(4 / 5)};
 
   ${presets.Lg} {
@@ -139,7 +133,7 @@ const ReadMore = styled(Link)`
   color: ${colors.gatsby};
   display: flex;
   flex-grow: 1;
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   left: 0;
   padding: ${rhythm(4 / 5)};
   position: absolute;
@@ -159,7 +153,6 @@ const ReadMore = styled(Link)`
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    box-shadow: inset 0 -2px 0px 0px ${colors.ui.bright};
     font-weight: bold;
     margin-right: 0.2rem;
   }

@@ -7,16 +7,16 @@ import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
   background: #fff;
   padding: 0 ${rhythm(options.blockMarginBottom)};
-  margin-bottom: ${rhythm(1 / 2)};
+  margin-bottom: ${rhythm(space[3])};
 
   ${presets.Md} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: ${presets.radiusLg}px;
+    border-radius: ${presets.radii[2]}px;
     display: flex;
     flex-basis: calc(50% - 20px);
     flex-direction: column;
@@ -54,8 +54,8 @@ const Title = styled(`h1`)`
   align-items: center;
   color: ${colors.gatsby};
   display: flex;
-  font-size: 1.25rem;
-  line-height: 1;
+  font-size: ${presets.scale[4]};
+  line-height: ${presets.lineHeights.solid};
   margin: 0;
   margin-bottom: ${rhythm(0.25)};
   min-height: 32px;
@@ -73,18 +73,17 @@ const Icon = styled(`span`)`
 
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   font-weight: 300;
   letter-spacing: 0.05em;
   margin: 0;
-  margin-top: ${rhythm(1)};
+  margin-top: ${rhythm(space[5])};
   text-transform: uppercase;
 `
 
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 0.8125rem;
+  font-size: ${presets.scale[2]};
 `
 
 const Actions = styled(`div`)`
