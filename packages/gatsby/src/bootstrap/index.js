@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
-const createContentDigest = require(`../utils/create-content-digest`)
+const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
@@ -158,7 +158,10 @@ module.exports = async (args: BootstrapArgs) => {
       md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
     ), // ignore as this file isn't required),
   ])
-  const pluginsHash = createContentDigest(pluginVersions.concat(hashes))
+  const pluginsHash = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(pluginVersions.concat(hashes)))
+    .digest(`hex`)
   let state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 

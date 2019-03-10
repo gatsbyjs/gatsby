@@ -62,6 +62,7 @@ exports.sourceNodes = async ({
     }
   }
 }
+
 fragment commentsFragment on HackerNewsItem {
   id
   text
