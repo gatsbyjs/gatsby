@@ -219,6 +219,8 @@
               link: /docs/adding-search-with-elasticlunr/
             - title: Adding Search with js-search
               link: /docs/adding-search-with-js-search/
+        - title: Adding Comments
+          link: /docs/adding-comments/
         - title: Adding Analytics
           link: /docs/adding-analytics/
         - title: Adding Authentication
