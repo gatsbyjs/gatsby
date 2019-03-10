@@ -1,6 +1,6 @@
 import React from "react"
 import { rhythm } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import { colors, space } from "../utils/presets"
 
 const bgDefault = `#edebf0`
 const bgFeatureAvailability = colors.accent
