@@ -1,5 +1,5 @@
 import React from "react"
-import typography, { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets, { space } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
@@ -96,7 +96,7 @@ const UsedBy = () => (
         css={{
           color: presets.colors.lilac,
           letterSpacing: `0.02em`,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
+          fontFamily: options.headerFontFamily.join(`,`),
           fontSize: presets.scale[1],
           marginBottom: 0,
           [presets.Sm]: {

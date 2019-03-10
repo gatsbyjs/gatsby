@@ -37,11 +37,11 @@ const Section = styled(EcosystemSection)`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
   border-radius: ${presets.radii[2]}px;
   margin-bottom: ${rhythm(space[6])};
-  padding: ${rhythm(options.blockMarginBottom)};
+  padding: ${rhythm(space[6])};
 
   ${presets.Md} {
     margin: 0 8px 0px;
-    padding: ${rhythm(options.blockMarginBottom)};
+    padding: ${rhythm(space[6])};
 
     :last-child {
       align-self: stretch;

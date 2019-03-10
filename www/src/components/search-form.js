@@ -15,7 +15,7 @@ import { Global, css } from "@emotion/core"
 const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
-const searchDropdownOffsetTop = rhythm(2)
+const searchDropdownOffsetTop = rhythm(space[9])
 
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
@@ -385,10 +385,9 @@ class SearchForm extends Component {
               border: 0,
               borderRadius: presets.radii[1],
               color: colors.lilac,
-              paddingTop: rhythm(1 / 8),
-              paddingRight: rhythm(1 / 4),
-              paddingBottom: rhythm(1 / 8),
-              paddingLeft: rhythm(5 / 4),
+              padding: rhythm(space[1]),
+              paddingRight: rhythm(space[3]),
+              paddingLeft: rhythm(space[6]),
               overflow: `hidden`,
               width: rhythm(space[5]),
               transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,

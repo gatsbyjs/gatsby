@@ -61,7 +61,7 @@ const Header = styled(`h1`)`
 
   ${presets.Lg} {
     font-size: ${props => (props.first ? presets.scale[6] : presets.scale[5])};
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
     padding-bottom: 0;
   }
 `
@@ -81,7 +81,7 @@ const Meta = styled(`div`)`
 
   ${presets.Lg} {
     margin-top: 1.5rem;
-    padding: 0 ${rhythm(1.5)};
+    padding: 0 ${rhythm(space[7])};
   }
 `
 
@@ -122,7 +122,7 @@ const Excerpt = styled(`p`)`
   ${presets.Lg} {
     margin: 0;
     margin-top: 1.5rem;
-    padding: 0 ${rhythm(1.5)};
+    padding: 0 ${rhythm(space[7])};
   }
 `
 
@@ -158,7 +158,7 @@ const ReadMore = styled(Link)`
   }
 
   ${presets.Lg} {
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
 
     span {
       :hover {

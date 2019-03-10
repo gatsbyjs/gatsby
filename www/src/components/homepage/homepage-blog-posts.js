@@ -58,7 +58,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     font-size: ${presets.scale[4]};
     justify-content: center;
     line-height: ${presets.lineHeights.dense};
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
     width: 100%;
 
     span {

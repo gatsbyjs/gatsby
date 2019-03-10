@@ -262,7 +262,9 @@ const Diagram = () => (
         >
           How Gatsby works
         </h1>
-        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+        <div
+          css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(space[9])}` }}
+        >
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>

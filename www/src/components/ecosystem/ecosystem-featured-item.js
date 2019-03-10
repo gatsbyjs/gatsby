@@ -15,7 +15,7 @@ import presets, { colors, space } from "../../utils/presets"
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${rhythm(options.blockMarginBottom)};
+  margin-right: ${rhythm(space[6])};
 
   ${presets.Md} {
     border-bottom: 1px solid ${colors.gray.superLight};

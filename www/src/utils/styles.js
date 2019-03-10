@@ -74,7 +74,7 @@ export const buttonStyles = {
     padding: `${rhythm(2 / 5)} ${rhythm(space[3])}`,
     [presets.Md]: {
       fontSize: presets.scale[4],
-      padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
+      padding: `${rhythm(space[3])} ${rhythm(3 / 5)}`,
     },
     [presets.Xxl]: {
       padding: `${rhythm(space[3])} ${rhythm(space[5])}`,

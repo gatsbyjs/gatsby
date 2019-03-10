@@ -5,8 +5,8 @@ import Img from "gatsby-image"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import typography, { rhythm, options } from "../utils/typography"
-import presets from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { space } from "../utils/presets"
 
 class ContributorPageTemplate extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class ContributorPageTemplate extends React.Component {
           <div
             css={{
               textAlign: `center`,
-              padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
+              padding: `${rhythm(space[7])} ${rhythm(space[6])}`,
             }}
           >
             <div>
@@ -41,7 +41,7 @@ class ContributorPageTemplate extends React.Component {
               </h1>
               <p
                 css={{
-                  fontFamily: typography.options.headerFontFamily.join(`,`),
+                  fontFamily: options.headerFontFamily.join(`,`),
                   maxWidth: rhythm(18),
                   marginLeft: `auto`,
                   marginRight: `auto`,
@@ -55,11 +55,7 @@ class ContributorPageTemplate extends React.Component {
               </a>
             </div>
           </div>
-          <div
-            css={{
-              padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
-            }}
-          >
+          <div css={{ padding: `${rhythm(space[7])} ${rhythm(space[6])}` }}>
             {allMarkdownRemark.edges.map(({ node }) => {
               if (node.frontmatter.author) {
                 if (node.frontmatter.author.id === contributor.id) {
@@ -67,7 +63,7 @@ class ContributorPageTemplate extends React.Component {
                     <BlogPostPreviewItem
                       post={node}
                       key={node.fields.slug}
-                      css={{ marginBottom: rhythm(2) }}
+                      css={{ marginBottom: rhythm(space[9]) }}
                     />
                   )
                 }

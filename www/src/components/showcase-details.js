@@ -48,7 +48,7 @@ const styles = {
   },
   prevNextPermalinkImage: {
     marginBottom: 0,
-    marginTop: rhythm(options.blockMarginBottom),
+    marginTop: rhythm(space[6]),
   },
   prevNextPermalinkTitle: {
     color: colors.gatsby,

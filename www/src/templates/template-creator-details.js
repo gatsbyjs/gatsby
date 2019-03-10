@@ -138,7 +138,7 @@ class CreatorTemplate extends Component {
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                marginTop: rhythm(options.blockMarginBottom / 2),
+                marginTop: rhythm(space[3]),
               }}
             >
               {isAgencyOrCompany && (

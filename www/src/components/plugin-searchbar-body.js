@@ -18,7 +18,7 @@ import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
 import presets, { space } from "../utils/presets"
-import typography, { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
@@ -64,7 +64,7 @@ const searchBoxStyles = css`
     color: ${colors.gatsby};
     display: inline-block;
     font-size: ${presets.scale[3]};
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    font-family: ${options.headerFontFamily.join(`,`)};
     height: ${searchInputHeight};
     padding: 0;
     padding-right: ${searchInputHeight};
@@ -163,11 +163,11 @@ const searchBoxStyles = css`
     cursor: pointer;
     width: calc(100% - ${rhythm(space[6] * 2)});
     margin: ${rhythm(space[6])};
-    height: ${rhythm(2)};
+    height: ${rhythm(space[9])};
     outline: none;
     transition: all ${presets.animation.speedDefault}
       ${presets.animation.curveDefault};
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    font-family: ${options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover,
   .ais-InfiniteHits__loadMore:focus {
@@ -391,14 +391,14 @@ const Result = ({ hit, pathname, query }) => {
           alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
-          marginBottom: rhythm(typography.options.blockMarginBottom / 2),
+          marginBottom: rhythm(space[3]),
         }}
       >
         <h2
           css={{
             color: selected ? colors.gatsby : false,
             fontSize: `inherit`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
+            fontFamily: options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             display: `flex`,
             alignItems: `center`,

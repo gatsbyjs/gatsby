@@ -195,6 +195,7 @@ export default class FilteredStarterLibrary extends Component {
                     borderRadius: presets.radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
+                    background: `red`,
                     paddingTop: rhythm(1 / 8),
                     paddingRight: rhythm(1 / 5),
                     paddingBottom: rhythm(1 / 8),
@@ -209,26 +210,9 @@ export default class FilteredStarterLibrary extends Component {
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
-                    border: 0,
-                    borderRadius: presets.radii[2],
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
                     marginTop: rhythm(1 / 8),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(space[5]),
+                    ...styles.searchInput,
                     width: rhythm(6),
-                    ":focus": {
-                      outline: `${colors.wisteria} solid thin`,
-                      backgroundColor: colors.ui.light,
-                      borderRadius: presets.radii[2],
-                      transition: `width ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }, background-color ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                    },
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}

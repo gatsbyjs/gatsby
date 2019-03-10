@@ -77,7 +77,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexWrap: `nowrap`,
         flexGrow: 1,
         borderBottom: `1px solid ${colors.ui.light}`,
-        paddingBottom: rhythm(2 / 4),
+        paddingBottom: rhythm(space[3]),
         [presets.Sm]: {
           borderBottom: 0,
         },

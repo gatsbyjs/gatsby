@@ -186,7 +186,6 @@ const styles = {
       display: `flex`,
       flexGrow: 1,
       margin: 0,
-      marginLeft: rhythm(1 / 4),
       listStyle: `none`,
       maskImage: `linear-gradient(to right, transparent, white ${rhythm(
         1 / 8

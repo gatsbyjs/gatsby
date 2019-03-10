@@ -4,8 +4,8 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -294,8 +294,8 @@ const styles = {
   },
   list: {
     margin: 0,
-    paddingTop: rhythm(options.blockMarginBottom),
-    paddingBottom: rhythm(options.blockMarginBottom),
+    paddingTop: rhythm(space[6]),
+    paddingBottom: rhythm(space[6]),
     fontSize: presets.scale[1],
     "& li": {
       margin: 0,

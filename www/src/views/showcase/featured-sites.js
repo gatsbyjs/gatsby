@@ -28,9 +28,7 @@ class FeaturedSites extends Component {
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(
-            presets.space[6]
-          )} 0`,
+          margin: `${rhythm(space[6])} ${rhythm(presets.space[6])} 0`,
           position: `relative`,
           display: `none`,
           [presets.Lg]: {
@@ -54,7 +52,7 @@ class FeaturedSites extends Component {
         />
         <div
           css={{
-            marginBottom: rhythm(options.blockMarginBottom * 2),
+            marginBottom: rhythm(space[9]),
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
@@ -226,7 +224,6 @@ class FeaturedSites extends Component {
                   textAlign: `center`,
                   "&&": {
                     border: `1px solid ${colors.ui.light}`,
-                    boxShadow: `none`,
                     transition: `all ${presets.animation.speedDefault} ${
                       presets.animation.curveDefault
                     }`,
@@ -260,7 +257,7 @@ class FeaturedSites extends Component {
                         height: 44,
                         width: `auto`,
                         display: `block`,
-                        margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
+                        margin: `0 auto ${rhythm(space[6])}`,
                         [presets.Md]: {
                           height: 64,
                         },
@@ -288,7 +285,7 @@ class FeaturedSites extends Component {
             css={{
               position: `absolute`,
               top: `0`,
-              bottom: rhythm(options.blockMarginBottom),
+              bottom: rhythm(space[6]),
               right: `-${rhythm(space[6])}`,
               width: 60,
               pointerEvents: `none`,

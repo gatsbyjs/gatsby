@@ -21,7 +21,7 @@ const HomepageSectionRoot = styled(`section`)`
   }
 
   ${presets.Xxl} {
-    padding: ${rhythm(1.5)} 8%;
+    padding: ${rhythm(space[7])} 8%;
   }
 `
 export const Header = styled(`header`)`

@@ -1,4 +1,4 @@
-import typography, { options, rhythm } from "../../utils/typography"
+import { options, rhythm } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 
 const { curveDefault, speedDefault } = presets.animation
@@ -10,7 +10,7 @@ const styles = {
     flexGrow: 0,
     flexShrink: 0,
     width: 320,
-    marginBottom: rhythm(options.blockMarginBottom * 2),
+    marginBottom: rhythm(space[9]),
     marginRight: rhythm(space[6]),
     [presets.Xl]: {
       width: 360,
@@ -111,7 +111,7 @@ const styles = {
   screenshot: {
     borderRadius: presets.radii[1],
     boxShadow: presets.shadows.card,
-    marginBottom: rhythm(options.blockMarginBottom / 2),
+    marginBottom: rhythm(space[3]),
     transition: `all ${presets.animation.speedDefault} ${
       presets.animation.curveDefault
     }`,
@@ -125,7 +125,7 @@ const styles = {
     },
   },
   shortcutIcon: {
-    paddingLeft: rhythm(1 / 8),
+    paddingLeft: rhythm(space[1]),
     "&&": {
       color: colors.gray.bright,
       fontWeight: `normal`,
@@ -146,16 +146,14 @@ const styles = {
   },
   searchInput: {
     appearance: `none`,
-    backgroundColor: `transparent`,
     border: 0,
     borderRadius: presets.radii[2],
     color: colors.gatsby,
-    paddingTop: rhythm(1 / 8),
-    paddingRight: rhythm(1 / 4),
-    paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(space[5]),
+    padding: rhythm(space[1]),
+    paddingRight: rhythm(space[3]),
+    paddingLeft: rhythm(space[6]),
     overflow: `hidden`,
-    fontFamily: typography.options.headerFontFamily.join(`,`),
+    fontFamily: options.headerFontFamily.join(`,`),
     transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
     width: `6.8rem`,
     "&::placeholder": {
@@ -180,8 +178,8 @@ const styles = {
     outline: `none`,
     padding: 0,
     paddingRight: rhythm(space[5]),
-    paddingBottom: rhythm(options.blockMarginBottom / 8),
-    paddingTop: rhythm(options.blockMarginBottom / 8),
+    paddingBottom: rhythm(space[1]),
+    paddingTop: rhythm(space[1]),
     width: `100%`,
     textAlign: `left`,
     ":hover": {
@@ -209,8 +207,8 @@ const styles = {
       margin: 0,
       paddingLeft: rhythm(space[6]),
       paddingRight: rhythm(space[6]),
-      paddingTop: rhythm(options.blockMarginBottom),
-      paddingBottom: rhythm(options.blockMarginBottom),
+      paddingTop: rhythm(space[6]),
+      paddingBottom: rhythm(space[6]),
     },
   },
   sidebarBody: {

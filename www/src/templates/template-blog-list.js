@@ -10,7 +10,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
 class BlogPostsIndex extends React.Component {
@@ -55,16 +55,16 @@ class BlogPostsIndex extends React.Component {
                 post={node}
                 key={node.fields.slug}
                 css={{
-                  marginBottom: rhythm(options.blockMarginBottom),
+                  marginBottom: rhythm(space[6]),
                   [presets.Md]: {
                     boxShadow: presets.shadows.card,
                     background: `#fff`,
                     borderRadius: presets.radii[2],
-                    padding: rhythm(options.blockMarginBottom * 2),
-                    paddingLeft: rhythm(options.blockMarginBottom * 2),
-                    paddingRight: rhythm(options.blockMarginBottom * 2),
-                    marginLeft: rhythm(-options.blockMarginBottom * 2),
-                    marginRight: rhythm(-options.blockMarginBottom * 2),
+                    padding: rhythm(space[9]),
+                    paddingLeft: rhythm(space[9]),
+                    paddingRight: rhythm(space[9]),
+                    marginLeft: rhythm(-space[9]),
+                    marginRight: rhythm(-space[9]),
                     transition: `transform ${presets.animation.speedDefault} ${
                       presets.animation.curveDefault
                     },  box-shadow ${presets.animation.speedDefault} ${

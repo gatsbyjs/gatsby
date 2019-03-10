@@ -6,12 +6,12 @@ import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
-import { rhythm, options } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
   background: #fff;
-  padding: 0 ${rhythm(options.blockMarginBottom)};
+  padding: 0 ${rhythm(space[6])};
   margin-bottom: ${rhythm(space[3])};
 
   ${presets.Md} {
@@ -23,7 +23,7 @@ const EcosystemSectionRoot = styled(`section`)`
     flex-grow: 0;
     margin: 0 10px 20px;
     max-height: 60vh;
-    padding: ${rhythm(options.blockMarginBottom)};
+    padding: ${rhythm(space[6])};
     padding-bottom: 0;
 
     :last-child {
@@ -37,7 +37,7 @@ const EcosystemSectionRoot = styled(`section`)`
 
     :last-child {
       align-self: flex-start;
-      padding-bottom: ${rhythm(options.blockMarginBottom)};
+      padding-bottom: ${rhythm(space[6])};
     }
   }
 

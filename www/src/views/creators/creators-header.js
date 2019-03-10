@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
-import typography, { rhythm } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
@@ -142,7 +142,7 @@ const styles = {
     zIndex: `2`,
     padding: `0 ${rhythm(space[6])}`,
     height: presets.headerHeight,
-    fontFamily: typography.options.headerFontFamily.join(`,`),
+    fontFamily: options.headerFontFamily.join(`,`),
   },
   creatorsLink: {
     "&&": {
@@ -164,7 +164,7 @@ const styles = {
       fontWeight: `normal`,
       boxShadow: `none`,
       borderBottom: `none`,
-      padding: `${rhythm(typography.options.blockMarginBottom / 4)} .5rem`,
+      padding: `${rhythm(options.blockMarginBottom / 4)} .5rem`,
       marginRight: rhythm(space[2]),
       borderRadius: 40,
       "&:hover": {

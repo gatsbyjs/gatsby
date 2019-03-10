@@ -18,16 +18,15 @@ class EvaluationTable extends Component {
       return [
         words.slice(0, words.length - 1).join(` `),
         <span
-          css={{
-            // WebkitHyphens: `auto`,
-            // MsHyphens: `auto`,
-            // hyphens: `auto`,
-            // wordBreak: `break-all`,
-            // display: `inline-block`,
-            "&:hover": {
-              background: colors.ui.bright,
-            },
-          }}
+          css={
+            {
+              // WebkitHyphens: `auto`,
+              // MsHyphens: `auto`,
+              // hyphens: `auto`,
+              // wordBreak: `break-all`,
+              // display: `inline-block`,
+            }
+          }
           key={`info-icon-${words[words.length - 1]}`}
         >
           {` `}
@@ -56,30 +55,20 @@ class EvaluationTable extends Component {
                 display: `inline-block`,
                 marginLeft: `auto`,
                 marginRight: `auto`,
-                padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
-                [presets.Xs]: {
-                  padding: `${rhythm(space[3])} 0 ${rhythm(
-                    presets.space[3]
-                  )} ${rhythm(1 / 2)}`,
-                },
               }}
             >
-              {/* eslint-disable jsx-a11y/anchor-is-valid */}
-              {/* jsx-a11y really wants us to change this to a button */}
-              {/* eslint-disable-next-line */}
-              <a
+              <button
                 css={{
-                  "&&": {
-                    fontWeight: `normal`,
-                    borderBottom: 0,
-                  },
+                  border: 0,
+                  padding: 0,
+                  textAlign: `left`,
                 }}
                 onClick={e => {
                   e.preventDefault()
                 }}
               >
                 {renderText(text)}
-              </a>
+              </button>
               {/* eslint-enable */}
             </div>
           )
@@ -185,8 +174,8 @@ class EvaluationTable extends Component {
                                 paddingLeft: `${rhythm(space[3])}`,
                               },
                               [presets.Sm]: {
-                                paddingRight: `${rhythm(2)}`,
-                                paddingLeft: `${rhythm(2)}`,
+                                paddingRight: `${rhythm(space[9])}`,
+                                paddingLeft: `${rhythm(space[9])}`,
                               },
                             },
                           }}

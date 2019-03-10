@@ -122,9 +122,8 @@ const styles = {
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,
       width: 64,
-      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
-        options.blockMarginBottom / 4
-      )} 0`,
+      padding: rhythm(options.blockMarginBottom / 4),
+      paddingBottom: 0,
       textDecoration: `none`,
       textAlign: `center`,
       WebkitFontSmoothing: `antialiased`,

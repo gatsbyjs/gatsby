@@ -10,8 +10,8 @@ const MastheadContent = () => (
     className="masthead-content"
     css={{
       margin: `0 ${rhythm(space[8])}`,
-      paddingBottom: rhythm(2),
-      paddingTop: rhythm(2),
+      paddingBottom: rhythm(space[9]),
+      paddingTop: rhythm(space[9]),
       textAlign: `center`,
       [presets.Md]: {
         paddingBottom: rhythm(3),

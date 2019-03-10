@@ -16,7 +16,7 @@ const ResetFilters = ({ onClick }) => (
         cursor: `pointer`,
         display: `flex`,
         fontFamily: options.headerFontFamily.join(`,`),
-        marginTop: rhythm(options.blockMarginBottom),
+        marginTop: rhythm(space[6]),
         paddingRight: rhythm(space[6]),
         textAlign: `left`,
         "&:hover": {

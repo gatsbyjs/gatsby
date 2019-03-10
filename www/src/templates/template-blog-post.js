@@ -7,7 +7,7 @@ import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
 import presets, { colors, space } from "../utils/presets"
-import typography, { rhythm, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -50,7 +50,7 @@ class BlogPostTemplate extends React.Component {
       <p
         css={{
           lineHeight: presets.lineHeights.dense,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
+          fontFamily: options.headerFontFamily.join(`,`),
           margin: 0,
           color: colors.gray.calm,
         }}
@@ -134,7 +134,7 @@ class BlogPostTemplate extends React.Component {
                 marginBottom: rhythm(space[5]),
                 [presets.Md]: {
                   marginTop: rhythm(space[3]),
-                  marginBottom: rhythm(2),
+                  marginBottom: rhythm(space[9]),
                 },
               }}
             >
@@ -256,16 +256,16 @@ class BlogPostTemplate extends React.Component {
         <div
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
-            marginTop: rhythm(2),
+            marginTop: rhythm(space[9]),
             [presets.Md]: {
-              marginTop: rhythm(2),
+              marginTop: rhythm(space[9]),
               paddingBottom: rhythm(space[5]),
               paddingTop: rhythm(space[5]),
             },
             [presets.Lg]: {
               marginTop: rhythm(3),
-              paddingBottom: rhythm(2),
-              paddingTop: rhythm(2),
+              paddingBottom: rhythm(space[9]),
+              paddingTop: rhythm(space[9]),
             },
           }}
         >
