@@ -4,7 +4,7 @@ title: Adding comments
 
 If you're using Gatsby to run a blog and you've started adding some content to it, the next thing to think about is how to increase engagement among your visitors. A great way to do that is to allow them to ask questions and express their views on what you've written. This will make your blog seem much more lively to anyone visiting it.
 
-There are many options out there for adding comment functionality to a site, several of them specfically targeted at static sites. So the hardest part may be to choose which one to go with. While this list is by no means exhaustive, it does serve as a good starting point to illustrate what's available:
+There are many options out there for adding comment functionality, several of them specifically targeted at static sites. While this list is by no means exhaustive, it does serve as a good starting point to illustrate what's available:
 
 - [Disqus](https://disqus.com)
 - [Facebook comments](https://www.npmjs.com/package/react-facebook)
@@ -13,17 +13,15 @@ There are many options out there for adding comment functionality to a site, sev
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
 
-All of the above are excellent options worth checking out. Staticman, for instance, took an interesting approach. Essentially, you set up your own HTML form for writing comments, let it send a POST request on submission to one of their endpoints. From this Staticman will automatically submit a pull request to your site's repo which you can accept or deny. This has the big advantage of keeping everything static (hence the name). All your data is in one place (your repo) as opposed to having to be loaded through JavaScript embeds or iframes on the fly. It will remain there even if Staticman is ever discontinued. With most other services, you depend on an external platform to deliver your comments. Of course, in return you have the increased manual setup of putting together the comment form and hooking it up to Staticman. Depending on your use case, this degree of customizability might be an advantage.
+In this guide, we'll show you how to implement Disqus on your blog as it has a number of great features.
 
-But in this guide, we'll assume you want something fast with as little manual configuration and setup as possible. Disqus has several things going for it in this regard:
-
-- It [seems to be by far the most widely used service](https://www.datanyze.com/market-share/comment-systems/disqus-market-share).
 - It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) is easy.
 - It provides official [React support](https://github.com/disqus/disqus-react).
 - It offers a [generous free tier](https://disqus.com/pricing).
-- It’s easy to comment: Disqus has a large existing user base and the onboarding experience for new users is fast since you can register with your Google, Facebook or Twitter account. You can also easily share your review about the post through those channels.
+- It [seems to be by far the most widely used service](https://www.datanyze.com/market-share/comment-systems/disqus-market-share).
+- It’s easy to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and easily share your review about the post through those channels.
 - Its commenting interface has a distinct but unobtrusive look that many users will instantly recognize and trust.
-- All Disqus components are lazy-loaded, meaning they won't negatively impact the load times of your posts.
+- All Disqus components are lazy-loaded, meaning they won't negatively impact the load time of your posts.
 
 ## Implementing Disqus
 
@@ -38,8 +36,8 @@ Here are the steps for adding Disqus comments to your own blog:
    npm install disqus-react
    ```
 
-3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client side code](https://www.gatsbyjs.org/docs/environment-variables/#client-side-javascript).)
-   ```:envtitle=.env.example
+3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client-side code](https://www.gatsbyjs.org/docs/environment-variables/#client-side-javascript).)
+   ```:env:title=.env.example
    ...
    # enables Disqus comments for blog posts
    GATSBY_DISQUS_NAME=insertValue
@@ -48,13 +46,13 @@ Here are the steps for adding Disqus comments to your own blog:
    ...
    GATSBY_DISQUS_NAME=yourOwnSiteShortname
    ```
-4. In your blog post template (usually `src/templates/post.js`) import the `DiscussionEmbed` React component.
+4. In your blog post template (usually `src/templates/post.js`) import the `DiscussionEmbed` component.
 
    ```js:title=src/templates/post.js
-   import React from 'react'
-   import { graphql } from 'gatsby'
+   import React from "react"
+   import { graphql } from "gatsby"
    // highlight-next-line
-   import { DiscussionEmbed } from 'disqus-react'
+   import { DiscussionEmbed } from "disqus-react"
    ```
 
    Then define your Disqus configuration object
@@ -84,3 +82,7 @@ Here are the steps for adding Disqus comments to your own blog:
 And you're done. You should now see the Disqus comment form appear beneath your blog post [looking like this](https://janosh.io/blog/disqus-comments#disqus_thread). Happy blogging!
 
 [![Disqus comments](images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)
+
+<!-- ## Other options
+
+All of the above listed services are excellent and worth checking out. Staticman, for instance, took an interesting approach. Essentially, you set up your own HTML form for writing comments, let it send a POST request on submission to one of their endpoints. From this Staticman will automatically submit a pull request to your site's repo which you can accept or deny. This has the big advantage of keeping everything static (hence the name). All your data is in one place (your repo) as opposed to having to be loaded through JavaScript embeds or iframes on the fly. It will remain there even if Staticman is ever discontinued. With most other services, you depend on an external platform to deliver your comments. Of course, in return you have the increased manual setup of putting together the comment form and hooking it up to Staticman. Depending on your use case, this degree of customizability might be an advantage. -->

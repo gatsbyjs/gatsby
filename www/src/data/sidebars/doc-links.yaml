@@ -219,8 +219,6 @@
               link: /docs/adding-search-with-elasticlunr/
             - title: Adding Search with js-search
               link: /docs/adding-search-with-js-search/
-        - title: Adding Comments
-          link: /docs/adding-comments/
         - title: Adding Analytics
           link: /docs/adding-analytics/
         - title: Adding Authentication
@@ -235,6 +233,8 @@
           link: /docs/adding-tags-and-categories-to-blog-posts/
         - title: Adding Pagination
           link: /docs/adding-pagination/
+        - title: Adding Comments
+          link: /docs/adding-comments/
         - title: Creating a Sitemap
           link: /docs/creating-a-sitemap/
         - title: Adding an RSS Feed
