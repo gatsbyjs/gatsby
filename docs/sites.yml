@@ -4808,3 +4808,19 @@
   built_by: Patrik Szewczyk
   built_by_url: https://linkedin.com/in/thepatriczek/
   featured: false
+- title: Patrik Arvidsson's portfolio
+  url: https://www.patrikarvidsson.com
+  main_url: https://www.patrikarvidsson.com
+  source_url: https://github.com/patrikarvidsson/patrikarvidsson.com
+  description: >
+    Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
+  categories:
+    - Blog
+    - Design
+    - Portfolio
+    - Web Development
+    - UX/UI
+    - Technology
+  built_by: Patrik Arvidsson
+  built_by_url: https://www.patrikarvidsson.com
+  featured: false
