@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.10...gatsby-plugin-canonical-urls@2.0.11) (2019-03-11)
+
+### Bug Fixes
+
+- **gatsby-plugin-canonical-urls:** fix typo in "How to use" section (http -> https) ([#12366](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/issues/12366)) ([56f7c2c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/commit/56f7c2c))
+
 ## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.9...gatsby-plugin-canonical-urls@2.0.10) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-canonical-urls

@@ -1,7 +1,6 @@
 import React from "react"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import { rhythm } from "../utils/typography"
-import { vP, vPHd, vPVHd } from "../components/gutters"
 
 const Card = ({ children }) => (
   <div
@@ -9,7 +8,7 @@ const Card = ({ children }) => (
       boxSizing: `border-box`,
       display: `flex`,
       transform: `translateZ(0)`,
-      [presets.Tablet]: {
+      [presets.Md]: {
         flex: `0 0 auto`,
         maxWidth: `50%`,
         boxShadow: `0 1px 0 0 ${colors.ui.light}`,
@@ -20,7 +19,7 @@ const Card = ({ children }) => (
           borderLeft: `1px solid ${colors.ui.light}`,
         },
       },
-      [presets.Hd]: {
+      [presets.Xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
         borderLeft: `1px solid ${colors.ui.light}`,
@@ -35,21 +34,11 @@ const Card = ({ children }) => (
   >
     <div
       css={{
-        padding: rhythm(presets.gutters.default / 2),
+        padding: rhythm(space[6]),
         paddingBottom: 0,
         transform: `translateZ(0)`,
-        [presets.Mobile]: {
-          padding: vP,
-          paddingBottom: 0,
-        },
-        [presets.Phablet]: {
-          padding: vP,
-        },
-        [presets.VHd]: {
-          padding: vPHd,
-        },
-        [presets.VVHd]: {
-          padding: vPVHd,
+        [presets.Sm]: {
+          padding: rhythm(space[8]),
         },
       }}
     >

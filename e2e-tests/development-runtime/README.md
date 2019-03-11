@@ -19,7 +19,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     ```sh
     # create a new Gatsby site using the default starter
-    npx gatsby new my-default-starter
+    gatsby new my-default-starter
     ```
 
 1.  **Start developing.**

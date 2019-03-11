@@ -14,7 +14,7 @@ const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     flex-direction: row;
     flex-wrap: wrap;
     height: calc(

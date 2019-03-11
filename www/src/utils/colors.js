@@ -28,7 +28,7 @@ const colors = {
   },
   gray: {
     dark: gray(8, 270),
-    copy: gray(12, 270),
+    copy: gray(16, 270),
     lightCopy: gray(35, 270),
     calm: gray(46, 270),
     bright: gray(64, 270),

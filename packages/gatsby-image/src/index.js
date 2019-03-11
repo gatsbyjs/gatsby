@@ -16,7 +16,7 @@ const convertProps = props => {
   return convertedProps
 }
 
-// Cache if we've seen an image before so we don't both with
+// Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
 const imageCache = {}
 const inImageCache = props => {

@@ -1030,17 +1030,17 @@ _Starters:_ If you'd rather use one of the official starters, install your favou
 `gatsby-starter-default` with v2:
 
 ```
-npx gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
+gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 `gatsby-starter-hello-world` with v2:
 
 ```
-npx gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 `gatsby-starter-blog` with v2:
 
 ```
-npx gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```

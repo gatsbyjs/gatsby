@@ -9,12 +9,11 @@ import presets, { colors } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   color: ${colors.gatsby};
   font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 1.2rem;
+  font-size: ${presets.scale[3]};
   font-weight: bold;
-  line-height: 1.5;
   padding: 2rem 3rem;
   position: relative;
   text-indent: 2rem;
@@ -25,8 +24,8 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: 2.5rem 0;
   }
 
-  ${presets.Desktop} {
-    line-height: 1.7;
+  ${presets.Lg} {
+    line-height: ${presets.lineHeights.loose};
     margin: 2.5rem -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
@@ -55,7 +54,7 @@ const QuotationMark = styled(`span`)`
     fill: ${colors.gatsbyDark};
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -86,7 +85,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${presets.Desktop} {
+    ${presets.Lg} {
       height: 27px;
       width: 27px;
     }

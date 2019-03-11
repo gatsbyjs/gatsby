@@ -177,4 +177,11 @@ describe(`ref forwarding`, () => {
     expect(innerRef).toHaveBeenCalledTimes(1)
     expect(innerRef).toHaveBeenCalledWith(expect.any(HTMLElement))
   })
+
+  it(`handles a RefObject (React >=16.4)`, () => {
+    const ref = React.createRef(null)
+    setup({ linkProps: { ref } })
+
+    expect(ref.current).toEqual(expect.any(HTMLElement))
+  })
 })

@@ -81,7 +81,7 @@ Array [
     test_array = [ \\"] \\", \\" # \\"]      # ]
     test_array2 = [ \\"Test #11 ]proved that\\", \\"Experiment #9 was a success\\" ]
     another_test_string = \\" Same thing, but with a string #\\"
-    harder_test_string = \\" And when \\\\\\"'s are in the string, along with # \\\\\\"\\"
+    harder_test_string = \\" And when /\\"'s are in the string, along with # /\\"\\"
     # Things will get harder
 
         [the.hard.\\"bit#\\"]

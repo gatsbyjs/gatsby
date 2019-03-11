@@ -15,7 +15,7 @@ import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
   margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     border-top: 1px solid ${colors.gray.superLight};
     margin-top: ${rhythm(0.4)};
     margin-bottom: 0;
@@ -36,7 +36,7 @@ const List = styled(HorizontalScrollerContent)`
   padding-left: ${rhythm(options.blockMarginBottom)};
   padding-right: ${rhythm(options.blockMarginBottom)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     flex-direction: column;
     padding: 0;
     width: 100%;
