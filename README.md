@@ -10,9 +10,11 @@
 <h3 align="center">
   ⚛️ 📄 :rocket:
 </h3>
+<h3 align="center">
+  Fast in every way that matters
+</h3>
 <p align="center">
-  <strong>Blazing fast modern site generator for React</strong><br>
-  Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby.
+  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
