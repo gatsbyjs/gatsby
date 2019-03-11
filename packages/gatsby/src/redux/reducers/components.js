@@ -38,6 +38,9 @@ module.exports = (state = new Map(), action) => {
         services.set(action.payload.componentPath, service)
       } else {
         service = services.get(action.payload.componentPath)
+        if (!service.state.context.pages.includes(action.payload.path)) {
+          service.send({ type: `NEW_PAGE_CREATED`, path: action.payload.path })
+        }
       }
 
       state.set(

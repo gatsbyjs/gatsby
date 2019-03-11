@@ -1,22 +1,36 @@
 const { interpret } = require(`xstate`)
 const machine = require(`../page-component`)
 
-describe(`bootstrap`, () => {
-  it(`handles not running queries during bootstrap`, () => {
-    let service = interpret(
-      machine.withContext({
-        componentPath: `/a/path.js`,
-        query: ``,
-        pages: [`/`],
-        isInBootstrap: true,
-      })
-    ).start()
+jest.mock(`../../../internal-plugins/query-runner/query-watcher`)
+const {
+  runQueryForPage,
+} = require(`../../../internal-plugins/query-runner/query-watcher`)
 
+const getService = (args = {}) =>
+  interpret(
+    machine.withContext({
+      componentPath: `/a/path.js`,
+      query: ``,
+      pages: [`/`],
+      isInBootstrap: true,
+      ...args,
+    })
+  ).start()
+
+const sleep = (delay = 50) => new Promise(resolve => setTimeout(resolve, delay))
+
+describe(`bootstrap`, () => {
+  beforeEach(() => {
+    runQueryForPage.mockClear()
+  })
+
+  it(`handles not running queries during bootstrap`, () => {
+    const service = getService()
     // Initial state
     expect(service.state.value).toEqual(`inactiveWhileBootstrapping`)
 
     // Query extracted
-    service.send({ type: `QUERY_EXTRACTED`, query: `yo` })
+    service.send({ type: `QUERY_CHANGED`, query: `yo` })
     expect(service.state.value).toEqual(`runningPageQueries`)
     expect(service.state.context.query).toEqual(`yo`)
 
@@ -31,17 +45,28 @@ describe(`bootstrap`, () => {
   })
 
   it(`won't run queries if the page component has a JS error`, () => {
-    let service = interpret(
-      machine.withContext({
-        componentPath: `/a/path.js`,
-        query: `yo`,
-        pages: [`/`],
-        isInBootstrap: false,
-      })
-    ).start()
+    const service = getService({ isInBootstrap: false })
+
     service.send(`QUERY_EXTRACTION_BABEL_ERROR`)
     expect(service.state.value).toEqual(`queryExtractionBabelError`)
     service.send(`QUERY_CHANGED`)
     expect(service.state.value).toEqual(`queryExtractionBabelError`)
+  })
+
+  it(`won't queue extra query when page if new page is created in bootstrap`, async () => {
+    const service = getService()
+    service.send({ type: `NEW_PAGE_CREATED`, path: `/test` })
+    // there is setTimeout in action handler for `NEW_PAGE_CREATED`
+    await sleep()
+    expect(runQueryForPage).not.toBeCalled()
+  })
+
+  it(`will queue query when page if new page is created after bootstrap`, async () => {
+    const service = getService({ isInBootstrap: false })
+    const path = `/test`
+    service.send({ type: `NEW_PAGE_CREATED`, path })
+    // there is setTimeout in action handler for `NEW_PAGE_CREATED`
+    await sleep()
+    expect(runQueryForPage).toBeCalledWith(path)
   })
 })
