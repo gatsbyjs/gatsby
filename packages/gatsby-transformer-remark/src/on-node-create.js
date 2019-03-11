@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
-  pluginOptions
+  pluginOptions = {}
 ) {
   const { createNode, createParentChildLink } = actions
 
@@ -40,11 +40,23 @@ module.exports = async function onCreateNode(
       },
     }
 
-    markdownNode.frontmatter = {
+    const baseFrontmatter = {
       title: ``, // always include a title
       ...data.data,
     }
 
+    if (_.isUndefined(pluginOptions.frontmatterDefaults)) {
+      pluginOptions.frontmatterDefaults = {}
+    } else if (!_.isObject(pluginOptions.frontmatterDefaults)) {
+      reporter.warn(`frontmatterDefaults must be an object, defaulting to '{}'`)
+      pluginOptions.frontmatterDefaults = {}
+    }
+
+    // Assign any default values from the config
+    markdownNode.frontmatter = _.defaults(
+      baseFrontmatter,
+      pluginOptions.frontmatterDefaults
+    )
     markdownNode.excerpt = data.excerpt
     markdownNode.rawMarkdownBody = data.content
 

@@ -100,6 +100,60 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
     })
   })
 
+  describe(`frontmatter defaults`, () => {
+    const content = `---
+something: something
+---
+
+yadda yadda
+      `
+
+    it(`does nothing on default setting`, async () => {
+      node.content = content
+      const parsed = await onCreateNode({
+        node,
+        actions,
+        createNodeId,
+        loadNodeContent,
+      })
+      expect(parsed.frontmatter.something).toEqual(`something`)
+    })
+
+    it(`doesn't overwrite existing value`, async () => {
+      node.content = content
+      const parsed = await onCreateNode(
+        {
+          node,
+          actions,
+          createNodeId,
+          loadNodeContent,
+        },
+        { frontmatterDefaults: { something: `another-thing` } }
+      )
+      expect(parsed.frontmatter.something).toEqual(`something`)
+    })
+
+    it(`doesn't overwrite existing value`, async () => {
+      node.content = `---
+thing: 1
+---
+
+writing about something ...
+`
+      const parsed = await onCreateNode(
+        {
+          node,
+          actions,
+          createNodeId,
+          loadNodeContent,
+        },
+        { frontmatterDefaults: { something: `another-thing` } }
+      )
+      expect(parsed.frontmatter.something).toEqual(`another-thing`)
+      expect(parsed.frontmatter.thing).toEqual(1)
+    })
+  })
+
   describe(`date formatting`, () => {
     const getContent = date => `---
 date: ${date}

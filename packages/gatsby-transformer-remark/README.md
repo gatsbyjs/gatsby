@@ -22,7 +22,14 @@ plugins: [
       pedantic: true,
       // GitHub Flavored Markdown mode (default: true)
       gfm: true,
-      // Plugins configs
+      // Supply default values for specific frontmatter fields (default: {})
+      frontmatterDefaults: {
+        // Supply default key-value pair for your frontmatters.
+        // The following example would set 'hidden' to false on any
+        // frontmatter that didn't already have a value for 'hidden'
+        hidden: false
+      },
+      // Plugin's configs
       plugins: [],
     },
   },
