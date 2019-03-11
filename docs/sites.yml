@@ -4835,3 +4835,15 @@
     - Blog
     - Portfolio
     - Personal website
+- title: re-geo
+  description: >
+    re-geo is react based geo cities style component.
+  main_url: "https://re-geo.netlify.com/"
+  url: "https://re-geo.netlify.com/"
+  source_url: "https://github.com/sadnessOjisan/re-geo-lp"
+  categories:
+    - Open Source
+    - Joke
+  built_by: sadnessOjisan
+  built_by_url: https://twitter.com/sadnessOjisan
+  featured: false
