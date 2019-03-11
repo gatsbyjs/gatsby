@@ -90,7 +90,9 @@ commands:
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - steps: << parameters.steps >>
-      - run: ./scripts/link-and-run-command.sh "<< parameters.path >>" "<< parameters.command >>"
+      - run:
+          command: ./scripts/link-and-run-command.sh "<< parameters.path >>" "<< parameters.command >>"
+          no_output_timeout: 30m # primarily for build_www
 
 version: 2.1
 
