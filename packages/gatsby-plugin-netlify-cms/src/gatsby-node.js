@@ -32,22 +32,18 @@ function deepMap(obj, fn) {
   return obj
 }
 
-exports.onCreateDevServer = ({ app, store }) => {
-  const { program } = store.getState()
+exports.onCreateDevServer = ({ app, cache }) => {
   app.get(`/admin`, function(req, res) {
-    res.sendFile(
-      path.join(program.directory, `public/admin/index.html`),
-      err => {
-        if (err) {
-          res.status(500).end(err.message)
-        }
+    res.sendFile(cache.publicPath(`admin/index.html`), err => {
+      if (err) {
+        res.status(500).end(err.message)
       }
-    )
+    })
   })
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins, pathPrefix },
+  { store, stage, getConfig, plugins, pathPrefix, cache },
   {
     modulePath,
     publicPath = `admin`,
@@ -71,7 +67,7 @@ exports.onCreateWebpackConfig = (
         ].filter(p => p),
       },
       output: {
-        path: path.join(program.directory, `public`, publicPathClean),
+        path: cache.publicPath(publicPathClean),
       },
       module: {
         /**

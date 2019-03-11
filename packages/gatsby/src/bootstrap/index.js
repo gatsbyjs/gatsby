@@ -12,7 +12,12 @@ const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const { getCachePath } = require(`../utils/cache`)
+const {
+  getCachePath,
+  getPublicPath,
+  publicPath,
+  cachePath
+} = require(`../utils/cache`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -131,10 +136,10 @@ module.exports = async (args: BootstrapArgs) => {
     )
     activity.start()
     await del([
-      `public/*.{html,css}`,
-      `public/**/*.{html,css}`,
-      `!public/static`,
-      `!public/static/**/*.{html,css}`,
+      `${getPublicPath()}/*.{html,css}`,
+      `${getPublicPath()}/**/*.{html,css}`,
+      `!${getPublicPath()}/static`,
+      `!${getPublicPath()}/static/**/*.{html,css}`,
     ])
     activity.end()
   }
@@ -205,7 +210,7 @@ module.exports = async (args: BootstrapArgs) => {
   await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
+  await fs.ensureDir(publicPath(`static`))
 
   activity.end()
 
@@ -218,7 +223,7 @@ module.exports = async (args: BootstrapArgs) => {
       parentSpan: bootstrapSpan,
     })
     activity.start()
-    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
+    const dbSaveFile = cachePath(`loki/loki.db`)
     try {
       await loki.start({
         saveFile: dbSaveFile,
@@ -247,15 +252,15 @@ module.exports = async (args: BootstrapArgs) => {
     await fs.copy(srcDir, siteDir, {
       clobber: true,
     })
-    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
+    await fs.copy(tryRequire, cachePath(`test-require-error.js`), {
       clobber: true,
     })
-    await fs.ensureDirSync(`${cacheDirectory}/json`)
+    await fs.ensureDirSync(cachePath(`json`))
 
     // Ensure cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${cacheDirectory}/fragments`)
+    await fs.emptyDir(cachePath(`fragments`))
   } catch (err) {
     report.panic(`Unable to copy site files to cache`, err)
   }

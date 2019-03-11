@@ -7,7 +7,7 @@ const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
-const { getCachePath } = require(`../utils/cache`)
+const { getCachePath, getPublicPath } = require(`../utils/cache`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
@@ -52,13 +52,13 @@ module.exports = async program => {
   let pathPrefix = config && config.pathPrefix
   pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
 
-  const root = path.join(program.directory, `public`)
+  const root = getPublicPath(program.directory)
   const pages = await getPages(program.directory)
 
   const app = express()
   const router = express.Router()
   router.use(compression())
-  router.use(express.static(`public`))
+  router.use(express.static(root))
   router.use(clientOnlyPathsRouter(pages, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {

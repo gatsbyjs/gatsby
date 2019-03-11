@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
+const { publicPath } = require(`./cache`)
 
 // copied from https://github.com/markdalgleish/static-site-generator-webpack-plugin/blob/master/index.js#L161
 const generatePathToOutput = outputPath => {
@@ -10,7 +11,7 @@ const generatePathToOutput = outputPath => {
     outputFileName = path.join(outputFileName, `index.html`)
   }
 
-  return path.join(process.cwd(), `public`, outputFileName)
+  return publicPath(outputFileName)
 }
 
 export function renderHTML({ htmlComponentRendererPath, paths, envVars }) {

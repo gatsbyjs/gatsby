@@ -1,5 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const { publicPath } = require(`./cache`)
 
 class GatsbyWebpackStatsExtractor {
   constructor(options) {
@@ -31,11 +32,11 @@ class GatsbyWebpackStatsExtractor {
         assetsByChunkName: assets,
       }
       fs.writeFile(
-        path.join(`public`, `chunk-map.json`),
+        publicPath(`chunk-map.json`),
         JSON.stringify(assetsMap),
         () => {
           fs.writeFile(
-            path.join(`public`, `webpack.stats.json`),
+            publicPath(`webpack.stats.json`),
             JSON.stringify(webpackStats),
             done
           )

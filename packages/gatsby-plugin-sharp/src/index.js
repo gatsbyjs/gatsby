@@ -124,6 +124,17 @@ const healOptions = (
   return options
 }
 
+function getPublicPath(cwd) {
+  const { GATSBY_BUILD_DIR } = process.env
+  if (GATSBY_BUILD_DIR) {
+    if (path.isAbsolute(GATSBY_BUILD_DIR)) {
+      return GATSBY_BUILD_DIR
+    }
+    return path.join(cwd || process.cwd(), GATSBY_BUILD_DIR)
+  }
+  return path.join(cwd || process.cwd(), `./public`)
+}
+
 function queueImageResizing({ file, args = {}, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension)
   // Filter out false args, and args not for this extension and put width at
@@ -154,8 +165,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const imgSrc = `/${file.name}.${fileExtension}`
   const dirPath = path.join(
-    process.cwd(),
-    `public`,
+    getPublicPath(),
     `static`,
     file.internal.contentDigest,
     argsDigestShort

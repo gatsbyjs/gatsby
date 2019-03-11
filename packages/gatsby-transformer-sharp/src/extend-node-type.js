@@ -360,12 +360,7 @@ module.exports = ({
         const imageName = `${details.name}-${image.internal.contentDigest}${
           details.ext
         }`
-        const publicPath = path.join(
-          process.cwd(),
-          `public`,
-          `static`,
-          imageName
-        )
+        const publicPath = path.join(cache.publicPath(), `static`, imageName)
 
         if (!fsExtra.existsSync(publicPath)) {
           fsExtra.copy(details.absolutePath, publicPath, err => {

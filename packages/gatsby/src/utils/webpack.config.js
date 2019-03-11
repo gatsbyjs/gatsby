@@ -13,7 +13,7 @@ const { withBasePath } = require(`./path`)
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 const hasLocalEslint = require(`./local-eslint-config-finder`)
-const { getCachePath } = require(`./cache`)
+const { getCachePath, getPublicPath } = require(`./cache`)
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -27,7 +27,6 @@ module.exports = async (
   suppliedStage,
   webpackPort = 1500
 ) => {
-  const directoryPath = withBasePath(directory)
   const cachePath = withBasePath(getCachePath(directory))
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -66,7 +65,7 @@ module.exports = async (
 
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
-    envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+    envObject.PUBLIC_DIR = JSON.stringify(getPublicPath())
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
@@ -122,7 +121,7 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
+          path: getPublicPath(directory),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           library: `lib`,
@@ -136,7 +135,7 @@ module.exports = async (
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
-          path: directoryPath(`public`),
+          path: getPublicPath(directory),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,

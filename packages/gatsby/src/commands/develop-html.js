@@ -5,6 +5,7 @@ const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
 const webpackConfig = require(`../utils/webpack.config`)
 const renderHTMLQueue = require(`../utils/html-renderer-queue`)
+const { publicPath } = require(`../utils/cache`)
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -24,7 +25,7 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+      const outputFile = publicPath(`render-page.js`)
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
         console.log(`here`, webpackErrors[0])

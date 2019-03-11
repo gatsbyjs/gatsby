@@ -17,30 +17,29 @@ exports.createPages = ({ actions }) => {
 }
 
 let s
-const readStats = () => {
+const readStats = cache => {
   if (s) {
     return s
   } else {
     s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+      fs.readFileSync(cache.publicPath(`webpack.stats.json`), `utf-8`)
     )
     return s
   }
 }
 
-const getAssetsForChunks = chunks => {
+const getAssetsForChunks = (cache, chunks) => {
   const files = _.flatten(
-    chunks.map(chunk => readStats().assetsByChunkName[chunk])
+    chunks.map(chunk => readStats(cache).assetsByChunkName[chunk])
   )
   return _.compact(files)
 }
 
 exports.onPostBuild = (args, pluginOptions) => {
-  const { pathPrefix } = args
-  const rootDir = `public`
+  const { pathPrefix, cache } = args
 
   // Get exact asset filenames for app and offline app shell chunks
-  const files = getAssetsForChunks([
+  const files = getAssetsForChunks(cache, [
     `app`,
     `webpack-runtime`,
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
@@ -53,9 +52,9 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const criticalFilePaths = _.uniq(
     _.concat(
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
+      getResourcesFromHTML(cache.publicPath(`404.html`)),
       getResourcesFromHTML(
-        `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
+        cache.publicPath(`offline-plugin-app-shell-fallback/index.html`)
       )
     )
   ).map(omitPrefix)
@@ -67,12 +66,12 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
   manifests.forEach(file => {
-    if (fs.existsSync(`${rootDir}/${file}`)) globPatterns.push(file)
+    if (fs.existsSync(cache.publicPath(`${file}`))) globPatterns.push(file)
   })
 
   const options = {
     importWorkboxFrom: `local`,
-    globDirectory: rootDir,
+    globDirectory: cache.publicCache(),
     globPatterns,
     modifyUrlPrefix: {
       // If `pathPrefix` is configured by user, we should replace
@@ -113,10 +112,10 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
-  const idbKeyvalDest = `public/${idbKeyvalFile}`
+  const idbKeyvalDest = cache.publicPath(`${idbKeyvalFile}`)
   fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
 
-  const swDest = `public/sw.js`
+  const swDest = cache.publicPath(`sw.js`)
   return workboxBuild
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
@@ -126,7 +125,7 @@ exports.onPostBuild = (args, pluginOptions) => {
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%pathPrefix%/g, pathPrefix)
 
-      fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
+      fs.appendFileSync(swDest, `\n` + swAppend)
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )

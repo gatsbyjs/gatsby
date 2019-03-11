@@ -22,12 +22,12 @@ const readPageData = cache => {
 }
 
 let s
-const readStats = () => {
+const readStats = cache => {
   if (s) {
     return s
   } else {
     s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+      fs.readFileSync(cache.publicPath(`webpack.stats.json`, `utf-8`))
     )
     return s
   }
@@ -39,7 +39,7 @@ exports.onRenderBody = (
 ) => {
   if (process.env.NODE_ENV === `production`) {
     const pagesData = readPageData(cache)
-    const stats = readStats()
+    const stats = readStats(cache)
     const matchedPaths = Object.keys(
       guess({ path: pathname, threshold: pluginOptions.minimumThreshold })
     )

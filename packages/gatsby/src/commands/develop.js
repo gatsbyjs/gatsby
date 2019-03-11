@@ -29,6 +29,7 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const { getPublicPath, publicPath } = require(`../utils/cache`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -148,7 +149,9 @@ async function startServer(program) {
   // This can lead to serving stale html files during development.
   //
   // We serve by default an empty index.html that sets up the dev environment.
-  app.use(require(`./develop-static`)(`public`, { index: false }))
+  app.use(
+    require(`./develop-static`)(getPublicPath(directory), { index: false })
+  )
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -190,7 +193,7 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    res.sendFile(directoryPath(`public/index.html`), err => {
+    res.sendFile(publicPath(`index.html`, directory), err => {
       if (err) {
         res.status(500).end()
       }

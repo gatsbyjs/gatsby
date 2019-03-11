@@ -2,7 +2,12 @@ const { GraphQLString } = require(`gatsby/graphql`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
+module.exports = ({
+  type,
+  getNodeAndSavePathDependency,
+  pathPrefix = ``,
+  cache,
+}) => {
   if (type.name !== `File`) {
     return {}
   }
@@ -18,12 +23,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
           details.ext
         }`
 
-        const publicPath = path.join(
-          process.cwd(),
-          `public`,
-          `static`,
-          fileName
-        )
+        const publicPath = path.join(cache.publicPath(), `static`, fileName)
 
         if (!fs.existsSync(publicPath)) {
           fs.copy(details.absolutePath, publicPath, err => {

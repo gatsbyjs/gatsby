@@ -16,6 +16,7 @@ const handlerP = fn => (...args) => {
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
   const defaultCache = `.cache`
+  const defaultBuildDir = `public`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
@@ -148,11 +149,17 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: defaultCache,
           describe: `Set cache location. Defaults to ${defaultCache}`,
+        })
+        .option(`build-dir`, {
+          type: `string`,
+          default: defaultBuildDir,
+          describe: `Set build directory location. Defaults to ${defaultBuildDir}`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         process.env.GATSBY_CACHE = args.cacheDir
+        process.env.GATSBY_BUILD_DIR = args.buildDir
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
@@ -184,11 +191,17 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: defaultCache,
           describe: `Set cache location. Defaults to ${defaultCache}`,
+        })
+        .option(`build-dir`, {
+          type: `string`,
+          default: defaultBuildDir,
+          describe: `Set build directory location. Defaults to ${defaultBuildDir}`,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
         process.env.GATSBY_CACHE = args.cacheDir
+        process.env.GATSBY_BUILD_DIR = args.buildDir
         return cmd(args)
       })
     ),
@@ -224,10 +237,16 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `string`,
           default: defaultCache,
           describe: `Set cache location. Defaults to ${defaultCache}`,
+        })
+        .option(`build-dir`, {
+          type: `string`,
+          default: defaultBuildDir,
+          describe: `Set build directory location. Defaults to ${defaultBuildDir}`,
         }),
 
     handler: getCommandHandler(`serve`, (args, cmd) => {
       process.env.GATSBY_CACHE = args.cacheDir
+      process.env.GATSBY_BUILD_DIR = args.buildDir
       return cmd(args)
     }),
   })

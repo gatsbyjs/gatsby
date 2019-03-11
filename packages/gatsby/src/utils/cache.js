@@ -21,6 +21,21 @@ function cachePath(filePath, cwd) {
   return path.join(getCachePath(cwd), filePath)
 }
 
+function getPublicPath(cwd) {
+  const { GATSBY_BUILD_DIR } = process.env
+  if (GATSBY_BUILD_DIR) {
+    if (path.isAbsolute(GATSBY_BUILD_DIR)) {
+      return GATSBY_BUILD_DIR
+    }
+    return path.join(cwd || process.cwd(), GATSBY_BUILD_DIR)
+  }
+  return path.join(cwd || process.cwd(), `./public`)
+}
+
+function publicPath(filePath, cwd) {
+  return path.join(getPublicPath(cwd), filePath)
+}
+
 class Cache {
   constructor({ name = `db`, store = fsStore } = {}) {
     this.name = name
@@ -36,7 +51,17 @@ class Cache {
   }
 
   rootPath(filePath) {
+    if (!filePath) {
+      return this.rootDirectory
+    }
     return cachePath(filePath)
+  }
+
+  publicPath(filePath) {
+    if (!filePath) {
+      return getPublicPath()
+    }
+    return publicPath(filePath)
   }
 
   init() {
@@ -81,3 +106,5 @@ class Cache {
 module.exports = Cache
 module.exports.getCachePath = getCachePath
 module.exports.cachePath = cachePath
+module.exports.getPublicPath = getPublicPath
+module.exports.publicPath = publicPath

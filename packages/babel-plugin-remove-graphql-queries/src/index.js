@@ -141,8 +141,12 @@ export default function({ types: t }) {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const shortResultPath = `public/static/d/${this.queryHash}.json`
-              const resultPath = nodePath.join(process.cwd(), shortResultPath)
+              const shortResultPath = `static/d/${this.queryHash}.json`
+              const resultPath = nodePath.join(
+                (state.opts || {}).publicPath ||
+                  nodePath.join(process.cwd(), `public`),
+                shortResultPath
+              )
               // Add query
               path2.parent.attributes.push(
                 t.jSXAttribute(
@@ -179,8 +183,12 @@ export default function({ types: t }) {
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
-              const shortResultPath = `public/static/d/${this.queryHash}.json`
-              const resultPath = nodePath.join(process.cwd(), shortResultPath)
+              const shortResultPath = `static/d/${this.queryHash}.json`
+              const resultPath = nodePath.join(
+                (state.opts || {}).publicPath ||
+                  nodePath.join(process.cwd(), `public`),
+                shortResultPath
+              )
 
               // Remove query variable since it is useless now
               if (this.templatePath.parentPath.isVariableDeclarator()) {

@@ -17,10 +17,10 @@ try {
   // doesn't support cpu-core-count utility.
 }
 
-function generateIcons(icons, srcIcon) {
+function generateIcons(cache, icons, srcIcon) {
   return Promise.map(icons, icon => {
     const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-    const imgPath = path.join(`public`, icon.src)
+    const imgPath = cache.publicPath(icon.src)
 
     // For vector graphics, instruct sharp to use a pixel density
     // suitable for the resolution we're rasterizing to.
@@ -34,7 +34,7 @@ function generateIcons(icons, srcIcon) {
   })
 }
 
-exports.onPostBootstrap = (args, pluginOptions) =>
+exports.onPostBootstrap = ({ cache }, pluginOptions) =>
   new Promise((resolve, reject) => {
     const { icon, ...manifest } = pluginOptions
 
@@ -51,7 +51,7 @@ exports.onPostBootstrap = (args, pluginOptions) =>
     }
 
     // Determine destination path for icons.
-    const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
+    const iconPath = cache.publicPath(path.dirname(manifest.icons[0].src))
 
     //create destination directory if it doesn't exist
     if (!fs.existsSync(iconPath)) {
@@ -59,7 +59,7 @@ exports.onPostBootstrap = (args, pluginOptions) =>
     }
 
     fs.writeFileSync(
-      path.join(`public`, `manifest.webmanifest`),
+      cache.publicPath(`manifest.webmanifest`),
       JSON.stringify(manifest)
     )
 
@@ -71,7 +71,7 @@ exports.onPostBootstrap = (args, pluginOptions) =>
           `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
         )
       }
-      generateIcons(manifest.icons, icon).then(() => {
+      generateIcons(cache, manifest.icons, icon).then(() => {
         //images have been generated
         console.log(`done generating icons for manifest`)
         resolve()

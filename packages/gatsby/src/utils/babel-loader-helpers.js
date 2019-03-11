@@ -1,6 +1,5 @@
-const path = require(`path`)
 const _ = require(`lodash`)
-const { getCachePath } = require(`./cache`)
+const { cachePath, getPublicPath } = require(`./cache`)
 
 const loadCachedConfig = () => {
   let pluginBabelConfig = {
@@ -9,7 +8,7 @@ const loadCachedConfig = () => {
     },
   }
   if (process.env.NODE_ENV !== `test`) {
-    pluginBabelConfig = require(path.join(getCachePath(), `./babelState.json`))
+    pluginBabelConfig = require(cachePath(`./babelState.json`))
   }
   return pluginBabelConfig
 }
@@ -27,9 +26,17 @@ const prepareOptions = (babel, resolve = require.resolve) => {
 
   // Required plugins/presets
   const requiredPlugins = [
-    babel.createConfigItem([resolve(`babel-plugin-remove-graphql-queries`)], {
-      type: `plugin`,
-    }),
+    babel.createConfigItem(
+      [
+        resolve(`babel-plugin-remove-graphql-queries`),
+        {
+          publicPath: getPublicPath(),
+        },
+      ],
+      {
+        type: `plugin`,
+      }
+    ),
   ]
   const requiredPresets = []
 

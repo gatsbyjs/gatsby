@@ -9,17 +9,18 @@ const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
+const { publicPath } = require(`gatsby/dist/utils/cache`)
 
 // Speed up looking up pages.
 const pagesObjectMap = new Map()
 pages.forEach(p => pagesObjectMap.set(p.path, p))
 
 const stats = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+  fs.readFileSync(publicPath(`webpack.stats.json`), `utf-8`)
 )
 
 const chunkMapping = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
+  fs.readFileSync(publicPath(`chunk-map.json`), `utf-8`)
 )
 
 // const testRequireError = require("./test-require-error")
@@ -117,9 +118,7 @@ export default (pagePath, callback) => {
     const pathToJsonData = `../public/` + dataPaths[page.jsonName]
     try {
       dataAndContext = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
-        )
+        fs.readFileSync(publicPath(`static/d/${dataPaths[page.jsonName]}.json`))
       )
     } catch (e) {
       console.log(`error`, pathToJsonData, e)
@@ -311,10 +310,7 @@ export default (pagePath, callback) => {
           <style
             data-href={`${__PATH_PREFIX__}/${style.name}`}
             dangerouslySetInnerHTML={{
-              __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
-                `utf-8`
-              ),
+              __html: fs.readFileSync(publicPath(style.name), `utf-8`),
             }}
           />
         )

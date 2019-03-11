@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const chokidar = require(`chokidar`)
 const nodePath = require(`path`)
+const { getPublicPath, publicPath } = require(`./cache`)
 
 /**
  * copyStaticDir
@@ -10,7 +11,7 @@ const nodePath = require(`path`)
 exports.copyStaticDir = () => {
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return Promise.resolve()
-  return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`))
+  return fs.copySync(staticDir, getPublicPath())
 }
 
 /**
@@ -24,10 +25,10 @@ exports.syncStaticDir = () => {
     .watch(staticDir)
     .on(`add`, path => {
       const relativePath = nodePath.relative(staticDir, path)
-      fs.copy(path, `${process.cwd()}/public/${relativePath}`)
+      fs.copy(path, publicPath(relativePath))
     })
     .on(`change`, path => {
       const relativePath = nodePath.relative(staticDir, path)
-      fs.copy(path, `${process.cwd()}/public/${relativePath}`)
+      fs.copy(path, publicPath(relativePath))
     })
 }

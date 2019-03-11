@@ -1,10 +1,7 @@
-import path from "path"
 import sitemap from "sitemap"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
-const publicPath = `./public`
-
-exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
+exports.onPostBuild = async ({ graphql, pathPrefix, cache }, pluginOptions) => {
   const options = { ...pluginOptions }
   delete options.plugins
   delete options.createLinkInHead
@@ -15,7 +12,7 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   }
 
   const map = sitemap.createSitemap(rest)
-  const saved = path.join(publicPath, output)
+  const saved = cache.publicPath(output)
 
   // Paths we're excluding...
   const excludeOptions = exclude.concat(defaultOptions.exclude)

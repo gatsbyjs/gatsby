@@ -1,16 +1,18 @@
 const path = require(`path`)
 const { execSync } = require(`child_process`)
 
-exports.onPostBuild = ({ store }) => {
-  const root = path.join(store.getState().program.directory, `public`)
+exports.onPostBuild = ({ store, cache }) => {
   // TODO make this configurable
   const urlPaths = [`/`]
   const filePaths = urlPaths.reduce(
     (accumulator, currentPath) =>
-      `${accumulator} ${path.join(root, currentPath, `index.html`)}`,
+      `${accumulator} ${path.join(
+        cache.publicPath(currentPath),
+        `index.html`
+      )}`,
     ``
   )
 
-  const command = `node_modules/.bin/subfont -i --no-recursive --inline-css --root file://${root}${filePaths}`
+  const command = `node_modules/.bin/subfont -i --no-recursive --inline-css --root file://${cache.publicPath()}${filePaths}`
   execSync(command)
 }

@@ -5,8 +5,6 @@ import merge from "lodash.merge"
 import mkdirp from "mkdirp"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
-const publicPath = `./public`
-
 // A default function to transform query data into feed entries.
 const serialize = ({ query: { site, allMarkdownRemark } }) =>
   allMarkdownRemark.edges.map(edge => {
@@ -19,7 +17,7 @@ const serialize = ({ query: { site, allMarkdownRemark } }) =>
     }
   })
 
-exports.onPostBuild = async ({ graphql }, pluginOptions) => {
+exports.onPostBuild = async ({ graphql, cache }, pluginOptions) => {
   delete pluginOptions.plugins
 
   /*
@@ -55,7 +53,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
     items.forEach(i => feed.item(i))
 
-    const outputPath = path.join(publicPath, f.output)
+    const outputPath = cache.publicPath(f.output)
     const outputDir = path.dirname(outputPath)
     if (!fs.existsSync(outputDir)) {
       mkdirp.sync(outputDir)

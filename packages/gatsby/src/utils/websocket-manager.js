@@ -3,6 +3,7 @@
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
+const { publicPath } = require(`./cache`)
 
 type QueryResult = {
   id: string,
@@ -17,13 +18,7 @@ type QueryResultsMap = Map<string, QueryResult>
  * @param {string} directory Root directory of current project.
  */
 const readCachedResults = (dataFileName: string, directory: string): object => {
-  const filePath = path.join(
-    directory,
-    `public`,
-    `static`,
-    `d`,
-    `${dataFileName}.json`
-  )
+  const filePath = publicPath(`static/d/${dataFileName}.json`, directory)
   return JSON.parse(fs.readFileSync(filePath, `utf-8`))
 }
 
