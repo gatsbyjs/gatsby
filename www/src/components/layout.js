@@ -17,7 +17,8 @@ import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-import { rhythm } from "../utils/typography"
+
+import { skipLink } from "../utils/styles"
 
 let windowWidth
 
@@ -144,7 +145,7 @@ class DefaultLayout extends React.Component {
     return (
       <>
         <SiteMetadata pathname={this.props.location.pathname} />
-        <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
+        <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
@@ -175,32 +176,6 @@ class DefaultLayout extends React.Component {
       </>
     )
   }
-}
-
-const styles = {
-  skipLink: {
-    border: `0`,
-    clip: `rect(0 0 0 0)`,
-    height: 1,
-    width: 1,
-    margin: -1,
-    padding: 0,
-    overflow: `hidden`,
-    position: `absolute`,
-    zIndex: 100,
-    fontSize: presets.scale[1],
-    ":focus": {
-      padding: rhythm(presets.space[4]),
-      position: `fixed`,
-      top: rhythm(presets.space[6]),
-      left: rhythm(presets.space[6]),
-      background: `white`,
-      textDecoration: `none`,
-      width: `auto`,
-      height: `auto`,
-      clip: `auto`,
-    },
-  },
 }
 
 export default DefaultLayout

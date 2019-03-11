@@ -18,7 +18,7 @@ import unescape from "lodash/unescape"
 
 import presets, { space, colors, transition, radii } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
-import { scrollbarStyles } from "../utils/styles"
+import { scrollbarStyles, skipLink } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
@@ -179,28 +179,7 @@ const searchBoxStyles = css`
 `
 /* stylelint-enable */
 
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-
-  :focus {
-    padding: 0.9rem;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
-  }
-`
+const StyledSkipNavLink = styled(SkipNavLink)({ ...skipLink })
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
