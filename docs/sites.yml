@@ -4859,7 +4859,7 @@
   categories:
     - Portfolio
     - Web Development
-  - title: Data Hackers
+- title: Data Hackers
   url: https://datahackers.com.br/
   main_url: https://datahackers.com.br/
   description: >
@@ -4892,4 +4892,3 @@
   built_by: Kaordica
   built_by_url: https://kaordica.design
   featured: false
-
