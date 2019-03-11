@@ -511,11 +511,6 @@ module.exports = async (args: BootstrapArgs) => {
 }
 
 const finishBootstrap = async bootstrapSpan => {
-  report.log(``)
-  report.info(`bootstrap finished - ${process.uptime()} s`)
-  report.log(``)
-  emitter.emit(`BOOTSTRAP_FINISHED`)
-
   // onPostBootstrap
   const activity = report.activityTimer(`onPostBootstrap`, {
     parentSpan: bootstrapSpan,
@@ -523,6 +518,11 @@ const finishBootstrap = async bootstrapSpan => {
   activity.start()
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
   activity.end()
+
+  report.log(``)
+  report.info(`bootstrap finished - ${process.uptime()} s`)
+  report.log(``)
+  emitter.emit(`BOOTSTRAP_FINISHED`)
 
   bootstrapSpan.finish()
 }
