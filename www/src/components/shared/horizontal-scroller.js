@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 
 import { rhythm } from "../../utils/typography"
-import presets, { space, radii } from "../../utils/presets"
+import presets, { space, radii, colors } from "../../utils/presets"
 
 const BOX_SHADOW_BLUR = `8px`
 
