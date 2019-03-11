@@ -57,7 +57,7 @@ const searchBoxStyles = css`
 
   .ais-SearchBox__input {
     -webkit-appearance: none;
-    background: #fff;
+    background: ${colors.white};
     border: 1px solid ${colors.ui.bright};
     border-radius: ${radii[2]}px;
     color: ${colors.gatsby};
@@ -170,7 +170,7 @@ const searchBoxStyles = css`
   .ais-InfiniteHits__loadMore:hover,
   .ais-InfiniteHits__loadMore:focus {
     background-color: ${colors.gatsby};
-    color: #fff;
+    color: ${colors.white};
   }
 
   .ais-InfiniteHits__loadMore[disabled] {

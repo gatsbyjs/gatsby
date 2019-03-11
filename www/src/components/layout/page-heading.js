@@ -70,7 +70,7 @@ const Icon = styled(`span`)`
     fill: ${colors.lavender};
   }
   .svg-fill-brightest {
-    fill: #fff;
+    fill: ${colors.white};
   }
   .svg-fill-accent {
     fill: ${colors.lavender};
@@ -85,7 +85,7 @@ const Icon = styled(`span`)`
     fill: transparent;
   }
   .svg-fill-gradient-accent-white-bottom: {
-    fill: #fff;
+    fill: ${colors.white};
   }
   .svg-fill-gradient-purple {
     fill: ${colors.lavender};

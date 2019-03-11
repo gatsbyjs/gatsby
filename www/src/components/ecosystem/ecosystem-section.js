@@ -15,7 +15,7 @@ import presets, {
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
-  background: #fff;
+  background: ${colors.white};
   padding: 0 ${rhythm(space[6])};
   margin-bottom: ${rhythm(space[3])};
 

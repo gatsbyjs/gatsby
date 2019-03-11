@@ -18,7 +18,7 @@ const FeedbackToggle = styled(`div`)`
   height: 60px;
   bottom: 64px;
   background-color: ${colors.gatsby};
-  color: #fff;
+  color: ${colors.white};
   border-radius: 100%;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
   position: fixed;
@@ -60,7 +60,7 @@ const StatusMessage = styled(`span`)`
   width: 100%;
   background: ${colors.gray.dark};
   bottom: 60px;
-  color: #fff;
+  color: ${colors.white};
   font-size: ${presets.scale[2]};
   padding: 0.4rem 0.8rem;
   text-align: left;
@@ -88,7 +88,7 @@ const Label = styled(`label`)`
   font-family: ${options.headerFontFamily.join(`,`)};
   font-weight: 600;
   height: 240px;
-  color: #fff;
+  color: ${colors.white};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,7 +119,7 @@ const Send = styled(`button`)`
   height: 60px;
   cursor: pointer;
   border: none;
-  background: #fff;
+  background: ${colors.white};
   padding: 0;
 
   svg {
