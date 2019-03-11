@@ -89,27 +89,20 @@ The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
 - Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
-In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to set active styles as follows:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-const PartialNavLink = () => (
-  <Link
-    to="/blog/"
-    {/* highlight-start */}
-    getProps={({ isPartiallyCurrent }) =>
-      isPartiallyCurrent ? { className: "active" } : null
-    }
-    {/* highlight-end */}
-  >
-    Blog
-  </Link>
+const partiallyActive = className => ({ isPartiallyCurrent }) => ({
+  className: className + (isPartiallyCurrent ? ` active` : ``),
+})
+
+const PartiallyActiveLink = ({ className, ...rest }) => (
+  <Link getProps={partiallyActive(className)} {...rest} />
 )
 ```
-
-Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
 
 ### Pass state as props to the linked page
 
@@ -356,3 +349,19 @@ You can similarly check for file downloads:
 ```
 
 [egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
+
+## Recommendations for programmatic, in-app navigation
+
+Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
+
+```jsx
+import { navigate } from '@reach/router';
+
+...
+
+onClick = () => {
+  navigate('#some-link');
+  // OR
+  navigate('?foo=bar');
+}
+```

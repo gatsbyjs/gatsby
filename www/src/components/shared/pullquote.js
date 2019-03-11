@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
@@ -9,12 +9,11 @@ import presets, { colors } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   color: ${colors.gatsby};
   font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 1.2rem;
+  font-size: ${presets.scale[3]};
   font-weight: bold;
-  line-height: 1.5;
   padding: 2rem 3rem;
   position: relative;
   text-indent: 2rem;
@@ -25,8 +24,8 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: 2.5rem 0;
   }
 
-  ${presets.Desktop} {
-    line-height: 1.7;
+  ${presets.Lg} {
+    line-height: ${presets.lineHeights.loose};
     margin: 2.5rem -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
@@ -55,7 +54,7 @@ const QuotationMark = styled(`span`)`
     fill: ${colors.gatsbyDark};
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -75,7 +74,7 @@ const Star = styled(`span`)`
     width: 100%;
   }
 
-  :nth-child(1) {
+  :nth-of-type(1) {
     height: 20px;
     left: 0;
     top: 1.8rem;
@@ -86,7 +85,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${presets.Desktop} {
+    ${presets.Lg} {
       height: 27px;
       width: 27px;
     }
@@ -107,7 +106,7 @@ const Star = styled(`span`)`
     }
   }
 
-  :nth-child(2) {
+  :nth-of-type(2) {
     left: 5rem;
     height: 14px;
     top: 0;
@@ -133,7 +132,7 @@ const Star = styled(`span`)`
     }
   }
 
-  :nth-child(3) {
+  :nth-of-type(3) {
     bottom: 0;
     height: 12px;
     right: 4rem;

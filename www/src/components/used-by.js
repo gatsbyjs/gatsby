@@ -1,24 +1,23 @@
 import React from "react"
-import typography, { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
-import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
+import typography, { rhythm } from "../utils/typography"
+import presets, { space } from "../utils/presets"
+import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
     css={{
-      marginRight: rhythm(3 / 4),
+      marginRight: rhythm(space[6]),
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
-      [presets.Phablet]: {
+      [presets.Sm]: {
         marginBottom: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
       },
-      [presets.Tablet]: {
+      [presets.Md]: {
         height: `calc(12px + 1vw)`,
       },
     }}
@@ -60,9 +59,9 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: vP,
-      paddingTop: rhythm(1),
-      paddingBottom: rhythm(1),
+      padding: rhythm(space[8]),
+      paddingTop: rhythm(space[5]),
+      paddingBottom: rhythm(space[5]),
       marginBottom: rhythm(3),
       transition: `padding-top ${presets.animation.speedFast} ${
         presets.animation.curveDefault
@@ -70,27 +69,14 @@ const UsedBy = () => (
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
-      [presets.Phablet]: {
+      [presets.Sm]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
-        order: `0`,
       },
-      [presets.Desktop]: {
+      [presets.Lg]: {
         paddingTop: rhythm(5),
-      },
-      [presets.Hd]: {
-        paddingLeft: vPHd,
-        paddingRight: vPHd,
-      },
-      [presets.VHd]: {
-        paddingLeft: vPVHd,
-        paddingRight: vPVHd,
-      },
-      [presets.VVHd]: {
-        paddingLeft: vPVVHd,
-        paddingRight: vPVVHd,
       },
     }}
   >
@@ -101,24 +87,21 @@ const UsedBy = () => (
         flexShrink: `1`,
         alignSelf: `flex-end`,
         transform: `translateZ(0)`,
-        [presets.Phablet]: {
+        [presets.Sm]: {
           flexGrow: `0`,
         },
       }}
     >
       <p
         css={{
-          color: `#fff`,
+          color: presets.colors.lilac,
           letterSpacing: `0.02em`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          fontSize: scale(-2 / 5).fontSize,
+          fontSize: presets.scale[1],
           marginBottom: 0,
-          [presets.Phablet]: {
-            fontSize: scale(-2 / 5).fontSize,
+          [presets.Sm]: {
+            fontSize: presets.scale[2],
             textAlign: `right`,
-          },
-          [presets.Desktop]: {
-            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >
@@ -136,7 +119,6 @@ const UsedBy = () => (
           alt="Fabric"
           href="https://meetfabric.com/careers"
         />
-        <Icon icon={SegmentIcon} alt="Segment" href="https://segment.com" />
         <Icon
           icon={FormidableIcon}
           alt="Formidable"

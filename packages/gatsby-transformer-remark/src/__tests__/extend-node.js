@@ -124,7 +124,7 @@ const bootstrapTest = (
         actions,
         createNodeId,
       },
-      { ...additionalParameters }
+      { ...additionalParameters, ...pluginOptions }
     )
   })
 }
@@ -138,6 +138,7 @@ date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony?`,
     `excerpt
+      excerptAst
       frontmatter {
           title
       }
@@ -145,6 +146,17 @@ Where oh where is my little pony?`,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where oh where is my little pony?`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
     }
   )
 
@@ -155,6 +167,7 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---`,
     `excerpt
+      excerptAst
       frontmatter {
           title
       }
@@ -162,6 +175,13 @@ date: "2017-09-18T23:19:51.246Z"
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(``)
+      expect(node.excerptAst).toMatchObject({
+        children: [],
+        data: {
+          quirksMode: false,
+        },
+        type: `root`,
+      })
     }
   )
 
@@ -178,6 +198,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
       `,
     `excerpt
+      excerptAst
       frontmatter {
           title
       }
@@ -185,8 +206,31 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is my little pony?`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: `\n`,
+          },
+        ],
+        data: {
+          quirksMode: false,
+        },
+        type: `root`,
+      })
     },
-    { additionalParameters: { excerpt_separator: `<!-- end -->` } }
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
   const content = `---
@@ -201,6 +245,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to default value`,
     content,
     `excerpt
+      excerptAst
       frontmatter {
           title
       }
@@ -208,6 +253,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
+      expect(node.excerptAst.children.length).toBe(1)
+      expect(node.excerptAst.children[0].value.length).toBe(139)
     }
   )
 
@@ -215,6 +262,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to provided parameter`,
     content,
     `excerpt(pruneLength: 50)
+      excerptAst(pruneLength: 50)
       frontmatter {
           title
       }
@@ -222,6 +270,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
+      expect(node.excerptAst.children.length).toBe(1)
+      expect(node.excerptAst.children[0].value.length).toBe(46)
     }
   )
 
@@ -229,6 +279,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to provided parameter with truncate`,
     content,
     `excerpt(pruneLength: 50, truncate: true)
+      excerptAst(pruneLength: 50, truncate: true)
       frontmatter {
           title
       }
@@ -236,6 +287,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
+      expect(node.excerptAst.children.length).toBe(1)
+      expect(node.excerptAst.children[0].value.length).toBe(50)
     }
   )
 
@@ -248,6 +301,7 @@ date: "2017-09-18T23:19:51.246Z"
 
 Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
     `excerpt(format: HTML)
+      excerptAst
       frontmatter {
           title
       }
@@ -257,6 +311,76 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       expect(node.excerpt).toMatch(
         `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
       )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where oh `,
+          },
+          {
+            children: [
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `where`,
+                  },
+                ],
+                properties: {},
+                tagName: `em`,
+                type: `element`,
+              },
+            ],
+            properties: {
+              href: `nick.com`,
+            },
+            tagName: `a`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: ` `,
+          },
+          {
+            children: [
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `is`,
+                  },
+                ],
+                properties: {},
+                tagName: `em`,
+                type: `element`,
+              },
+            ],
+            properties: {},
+            tagName: `strong`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: ` `,
+          },
+          {
+            children: [],
+            properties: {
+              alt: `that pony`,
+              src: `pony.png`,
+            },
+            tagName: `img`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: `?`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
     }
   )
 
@@ -269,6 +393,7 @@ date: "2017-09-18T23:19:51.246Z"
 
 Where is my <code>pony</code> named leo?`,
     `excerpt(format: HTML)
+      excerptAst
       frontmatter {
           title
       }
@@ -278,6 +403,32 @@ Where is my <code>pony</code> named leo?`,
       expect(node.excerpt).toMatch(
         `<p>Where is my <code>pony</code> named leo?</p>`
       )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where is my `,
+          },
+          {
+            children: [
+              {
+                type: `text`,
+                value: `pony`,
+              },
+            ],
+            properties: {},
+            tagName: `code`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: ` named leo?`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
@@ -291,6 +442,7 @@ date: "2017-09-18T23:19:51.246Z"
 
 Where oh where is that pony? Is he in the stable or down by the stream?`,
     `excerpt(format: HTML, pruneLength: 50)
+      excerptAst(pruneLength: 50)
       frontmatter {
           title
       }
@@ -300,6 +452,17 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
       expect(node.excerpt).toMatch(
         `<p>Where oh where is that pony? Is he in the stable…</p>`
       )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            type: `text`,
+            value: `Where oh where is that pony? Is he in the stable…`,
+          },
+        ],
+        properties: {},
+        tagName: `p`,
+        type: `element`,
+      })
     }
   )
 
@@ -316,6 +479,7 @@ Where oh where is that *pony*? Is he in the stable or by the stream?
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 `,
     `excerpt(format: HTML, pruneLength: 50)
+    excerptAst(pruneLength: 50)
     frontmatter {
         title
     }
@@ -325,6 +489,44 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
       expect(node.excerpt).toMatch(
         `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>`
       )
+      expect(node.excerptAst).toMatchObject({
+        children: [
+          {
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is that `,
+              },
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `pony`,
+                  },
+                ],
+                properties: {},
+                tagName: `em`,
+                type: `element`,
+              },
+              {
+                type: `text`,
+                value: `? Is he in the stable or by the stream?`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
+          },
+          {
+            type: `text`,
+            value: `\n`,
+          },
+        ],
+        data: {
+          quirksMode: false,
+        },
+        type: `root`,
+      })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )

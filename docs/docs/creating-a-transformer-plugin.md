@@ -1,5 +1,5 @@
 ---
-title: Create a Transformer Plugin
+title: Creating a Transformer Plugin
 ---
 
 There are two types of plugins that work within Gatsby's data system, "source"
@@ -12,8 +12,8 @@ and "transformer" plugins.
 
 The purpose of this doc is to:
 
-1. Define what a Gatsby transformer plugin is, and
-2. Walk through a simplified reimplementation of an existing plugin, to demonstrate how to create a transformer plugin.
+1.  Define what a Gatsby transformer plugin is, and
+2.  Walk through a simplified reimplementation of an existing plugin, to demonstrate how to create a transformer plugin.
 
 ## What do transformer plugins do?
 

@@ -108,7 +108,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity = report.activityTimer(`load plugins`)
   activity.start()
-  const flattenedPlugins = await loadPlugins(config)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
   // onPreInit
@@ -119,22 +119,24 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // Delete html and css files from the public directory as we don't want
+  // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  activity = report.activityTimer(
-    `delete html and css files from previous builds`,
-    {
-      parentSpan: bootstrapSpan,
-    }
-  )
-  activity.start()
-  await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
-  ])
-  activity.end()
+  if (process.env.NODE_ENV === `production`) {
+    activity = report.activityTimer(
+      `delete html and css files from previous builds`,
+      {
+        parentSpan: bootstrapSpan,
+      }
+    )
+    activity.start()
+    await del([
+      `public/*.{html,css}`,
+      `public/**/*.{html,css}`,
+      `!public/static`,
+      `!public/static/**/*.{html,css}`,
+    ])
+    activity.end()
+  }
 
   activity = report.activityTimer(`initialize cache`)
   activity.start()
@@ -484,9 +486,13 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
+  let onEndJob
+
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
+      emitter.off(`END_JOB`, onEndJob)
+
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
@@ -527,7 +533,8 @@ module.exports = async (args: BootstrapArgs) => {
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
+      onEndJob = () => checkJobsDone(resolve)
+      emitter.on(`END_JOB`, onEndJob)
     })
   }
 }

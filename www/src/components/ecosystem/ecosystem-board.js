@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import EcosystemSection from "./ecosystem-section"
 
@@ -14,7 +14,7 @@ const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     flex-direction: row;
     flex-wrap: wrap;
     height: calc(

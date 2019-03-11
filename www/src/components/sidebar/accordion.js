@@ -2,9 +2,11 @@ import React, { Fragment } from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
-import { colors } from "../../utils/presets"
+import { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
-const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
+const paddingLeft = level =>
+  level === 0 ? rhythm((level + 1) * space[6]) : rhythm((level + 1) * space[3])
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -117,7 +119,7 @@ class Accordion extends React.Component {
           css={{
             ...styles.ul,
             display: isExpanded ? `block` : `none`,
-            paddingBottom: level === 0 && isExpanded ? 40 : false,
+            paddingBottom: level === 0 && isExpanded ? rhythm(space[6]) : false,
             "& li": {
               paddingLeft: paddingLeft(level),
             },

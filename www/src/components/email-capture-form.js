@@ -1,18 +1,18 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/form-styles"
+import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
 
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -37,14 +37,14 @@ const SingleLineInput = styled(`input`)`
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
   font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 1rem;
+  font-size: ${presets.scale[2]};
   padding: 0.6rem;
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
   font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 0.875rem;
+  font-size: ${presets.scale[1]};
   margin: calc(1.05rem / 2) 0;
 `
 
@@ -59,7 +59,7 @@ const Submit = styled(`input`)`
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: 1.125rem;
+  font-size: ${presets.scale[3]};
   width: 100%;
   margin-top: 10px;
 
@@ -70,7 +70,7 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${presets.Desktop} {
+  ${presets.Lg} {
     width: auto;
     margin-top: 0;
     margin-left: 0.5rem;
@@ -178,7 +178,7 @@ class Form extends React.Component {
           type="email"
           required
           autoComplete="email"
-          innerRef={input => {
+          ref={input => {
             this.email = input
           }}
           aria-label={isHomepage ? `Email` : ``}
@@ -234,7 +234,7 @@ class EmailCaptureForm extends React.Component {
     )
 
     return (
-      <React.Fragment>
+      <>
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
@@ -248,10 +248,10 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <div
             css={{
-              borderTop: `2px solid ${colors.lilac}`,
+              borderTop: `1px solid ${colors.ui.light}`,
               fontFamily: options.headerFontFamily.join(`,`),
               marginTop: rhythm(3),
-              paddingTop: `${rhythm(1)}`,
+              paddingTop: `${rhythm(space[5])}`,
               ...overrideCSS,
             }}
           >
@@ -260,7 +260,7 @@ class EmailCaptureForm extends React.Component {
               <div
                 css={{
                   backgroundColor: colors.ui.light,
-                  borderRadius: presets.radius,
+                  borderRadius: presets.radii[1],
                   color: colors.gatsby,
                   fontFamily: options.headerFontFamily.join(`,`),
                   padding: `15px`,
@@ -279,7 +279,7 @@ class EmailCaptureForm extends React.Component {
             </div>
           </div>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }

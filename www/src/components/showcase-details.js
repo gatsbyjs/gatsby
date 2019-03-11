@@ -4,8 +4,8 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors } from "../utils/presets"
-import { options, scale, rhythm } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
+import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -17,8 +17,8 @@ import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = rhythm(3 / 4)
-const gutterDesktop = rhythm(6 / 4)
+const gutter = rhythm(space[6])
+const gutterDesktop = rhythm(space[8])
 
 const styles = {
   link: {
@@ -32,16 +32,13 @@ const styles = {
     top: 280,
     width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
-    [presets.Desktop]: {
-      ...scale(-1 / 6),
-    },
   },
   prevNextLinkSiteTitle: {
     color: colors.gatsby,
     fontWeight: `bold`,
   },
   prevNextImage: {
-    borderRadius: presets.radius,
+    borderRadius: presets.radii[1],
     boxShadow: `0 0 38px -8px ${colors.gatsby}`,
   },
   prevNextPermalinkLabel: {
@@ -73,12 +70,12 @@ const styles = {
     marginRight: 4,
     verticalAlign: `sub`,
     position: `absolute`,
-    left: `-${rhythm(3 / 4)}`,
+    left: `-${rhythm(space[6])}`,
     top: `50%`,
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(6 / 4),
+    marginLeft: rhythm(space[8]),
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -287,12 +284,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               </Helmet>
               <div
                 css={{
-                  fontFamily: options.headerFontFamily.join(`,`),
                   padding: gutter,
                   paddingBottom: rhythm(1.5 / 4),
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: rhythm(3 / 4),
+                    paddingBottom: rhythm(space[6]),
                   },
                 }}
               >
@@ -308,9 +304,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   css={{
                     ...styles.link,
                     fontWeight: `bold`,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
-                    },
                   }}
                 >
                   {cleanUrl(data.sitesYaml.main_url)}
@@ -319,9 +312,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <span
                     css={{
                       color: colors.gray.calm,
-                      [presets.Desktop]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <span
@@ -355,7 +345,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   margin: `0 ${gutter}`,
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -369,9 +359,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       fontWeight: `bold`,
                       padding: 20,
                       paddingLeft: 0,
-                      [presets.Desktop]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <img
@@ -392,9 +379,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
                       borderRight: `1px solid ${colors.ui.light}`,
-                      [presets.Desktop]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <a
@@ -405,7 +389,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: 20,
+                          fontSize: presets.scale[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}
@@ -450,13 +434,13 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       href={data.sitesYaml.main_url}
                       css={{
                         border: 0,
-                        borderRadius: presets.radius,
+                        borderRadius: presets.radii[1],
                         color: colors.gatsby,
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: options.headerFontFamily.join(`,`),
                         fontWeight: `bold`,
                         marginRight: rhythm(1.5 / 4),
-                        padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+                        padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
@@ -468,7 +452,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                             backgroundColor: colors.gatsby,
                           },
                         },
-                        [shouldShowVisitButtonOnMobile && presets.Phablet]: {
+                        [shouldShowVisitButtonOnMobile && presets.Sm]: {
                           display: `block`,
                         },
                       }}
@@ -515,7 +499,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [presets.Desktop]: {
+                  [presets.Lg]: {
                     padding: gutterDesktop,
                   },
                 }}

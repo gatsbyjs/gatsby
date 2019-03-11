@@ -25,7 +25,7 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `your_space_id`,
-        // Learn about environment variables: https://gatsby.app/env-vars
+        // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
@@ -43,7 +43,7 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `your_space_id`,
-        // Learn about environment variables: https://gatsby.app/env-vars
+        // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
         host: `preview.contentful.com`,
       },
@@ -249,4 +249,4 @@ After adding the transformer plugin you can use the following query to get the h
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://gatsby.app/env-vars
+[envvars]: https://gatsby.dev/env-vars
