@@ -61,6 +61,19 @@ const generalArgs = {
   sizeByPixelDensity: false,
 }
 
+const resizeWhitelistArgs = [
+  `height`,
+  `width`,
+  `cropFocus`,
+  `toFormat`,
+  `pngCompressionLevel`,
+  `quality`,
+  `jpegProgressive`,
+  `grayscale`,
+  `rotate`,
+  `duotone`,
+]
+
 let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
   pluginOptions = Object.assign({}, pluginOptions, opts)
@@ -126,28 +139,23 @@ const healOptions = (
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension)
-  // Filter out false args, and args not for this extension and put width at
-  // end (for the file path)
-  const pairedArgs = _.toPairs(args)
-  let filteredArgs
-  // Remove non-true arguments
-  filteredArgs = _.filter(pairedArgs, arg => arg[1])
-  // Remove pathPrefix
-  filteredArgs = _.filter(filteredArgs, arg => arg[0] !== `pathPrefix`)
-  filteredArgs = _.filter(filteredArgs, arg => {
-    if (file.extension.match(/^jp*/)) {
-      return !_.includes(arg[0], `png`)
-    } else if (file.extension.match(/^png/)) {
-      return !arg[0].match(/^jp*/)
+  const filtered = _.pickBy(args, (value, key) => {
+    // remove falsy
+    if (!value) return false
+    if (file.extension.match(/^jp*/) && _.includes(key, `png`)) {
+      return false
+    } else if (file.extension.match(/^png/) && key.match(/^jp*/)) {
+      return false
     }
-    return true
+    // after initial processing - get rid of unknown/unneeded fields
+    return resizeWhitelistArgs.includes(key)
   })
-  const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
+
   const fileExtension = options.toFormat ? options.toFormat : file.extension
 
   const argsDigest = crypto
     .createHash(`md5`)
-    .update(JSON.stringify(sortedArgs))
+    .update(JSON.stringify(filtered, Object.keys(filtered).sort()))
     .digest(`hex`)
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
