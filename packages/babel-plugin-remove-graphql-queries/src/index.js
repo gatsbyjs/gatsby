@@ -166,7 +166,7 @@ export default function({ types: t }) {
                         nodePath.parse(filename).dir,
                         resultPath
                       )
-                    : shortResultPath
+                    : `public/${shortResultPath}`
                 )
               )
               path.unshiftContainer(`body`, importDeclaration)
@@ -219,7 +219,7 @@ export default function({ types: t }) {
                         nodePath.parse(filename).dir,
                         resultPath
                       )
-                    : shortResultPath
+                    : `public/${shortResultPath}`
                 )
               )
               path.unshiftContainer(`body`, importDeclaration)

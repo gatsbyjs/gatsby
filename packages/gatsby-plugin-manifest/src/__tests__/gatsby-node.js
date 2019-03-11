@@ -29,6 +29,11 @@ const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
 const { onPostBootstrap } = require(`../gatsby-node`)
+const cache = {
+  publicPath(filePath) {
+    return `public/${filePath}`
+  },
+}
 
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
@@ -41,14 +46,17 @@ describe(`Test plugin manifest options`, () => {
   })
 
   it(`correctly works with default parameters`, async () => {
-    await onPostBootstrap([], {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-    })
+    await onPostBootstrap(
+      { cache },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(contents).toMatchSnapshot()
@@ -60,44 +68,50 @@ describe(`Test plugin manifest options`, () => {
     const icon = `pretend/this/exists.png`
     const size = 48
 
-    await onPostBootstrap([], {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-      icon,
-      icons: [
-        {
-          src: `icons/icon-48x48.png`,
-          sizes: `${size}x${size}`,
-          type: `image/png`,
-        },
-      ],
-    })
+    await onPostBootstrap(
+      { cache },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon,
+        icons: [
+          {
+            src: `icons/icon-48x48.png`,
+            sizes: `${size}x${size}`,
+            type: `image/png`,
+          },
+        ],
+      }
+    )
 
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
   })
 
   it(`fails on non existing icon`, done => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
-    onPostBootstrap([], {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-      icon: `non/existing/path`,
-      icons: [
-        {
-          src: `icons/icon-48x48.png`,
-          sizes: `48x48`,
-          type: `image/png`,
-        },
-      ],
-    }).catch(err => {
+    onPostBootstrap(
+      { cache },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `non/existing/path`,
+        icons: [
+          {
+            src: `icons/icon-48x48.png`,
+            sizes: `48x48`,
+            type: `image/png`,
+          },
+        ],
+      }
+    ).catch(err => {
       expect(err).toMatchSnapshot()
       done()
     })
@@ -125,10 +139,13 @@ describe(`Test plugin manifest options`, () => {
       plugins: [],
       theme_color_in_head: false,
     }
-    await onPostBootstrap([], {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    })
+    await onPostBootstrap(
+      { cache },
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      }
+    )
 
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)

@@ -9,6 +9,12 @@ global.Date = jest.fn(() => DATE_TO_USE)
 global.Date.UTC = _Date.UTC
 global.Date.now = _Date.now
 
+const cache = {
+  publicPath(filePath) {
+    return `public/${filePath}`
+  },
+}
+
 describe(`Test plugin feed`, async () => {
   fs.existsSync = jest.fn()
   fs.existsSync.mockReturnValue(true)
@@ -40,7 +46,7 @@ describe(`Test plugin feed`, async () => {
         },
       },
     })
-    await onPostBuild({ graphql }, {})
+    await onPostBuild({ graphql, cache }, {})
     const [filePath, contents] = internals.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `rss.xml`))
     expect(contents).toMatchSnapshot()
@@ -113,7 +119,7 @@ describe(`Test plugin feed`, async () => {
         },
       ],
     }
-    await onPostBuild({ graphql }, options)
+    await onPostBuild({ graphql, cache }, options)
     const [filePath, contents] = internals.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `rss_new.xml`))
     expect(contents).toMatchSnapshot()

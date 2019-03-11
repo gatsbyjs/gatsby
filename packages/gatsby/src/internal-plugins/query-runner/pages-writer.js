@@ -3,7 +3,7 @@ const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 
 const { store, emitter } = require(`../../redux/`)
-const { getCachePath } = require(`../../utils/cache`)
+const { cachePath } = require(`../../utils/cache`)
 
 import { joinPath } from "../../utils/path"
 
@@ -59,7 +59,7 @@ const writePages = async () => {
     return Promise.resolve()
   }
 
-  const cacheDirectory = getCachePath()
+  const cacheDirectory = cachePath()
 
   lastHash = newHash
 

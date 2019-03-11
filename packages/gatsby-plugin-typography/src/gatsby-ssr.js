@@ -1,8 +1,8 @@
 import React from "react"
 import { TypographyStyle, GoogleFont } from "react-typography"
+import typography from "./.cache/typography"
 
-exports.onRenderBody = ({ setHeadComponents, cache }, pluginOptions) => {
-  const typography = require(cache.rootPath(`typography`))
+exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   if (process.env.BUILD_STAGE === `build-html`) {
     const googleFont = [].concat(
       pluginOptions.omitGoogleFont ? (

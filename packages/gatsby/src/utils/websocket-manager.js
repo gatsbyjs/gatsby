@@ -1,6 +1,5 @@
 // @flow
 
-const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 const { publicPath } = require(`./cache`)

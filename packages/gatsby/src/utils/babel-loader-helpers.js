@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const { cachePath, getPublicPath } = require(`./cache`)
+const { cachePath, publicPath } = require(`./cache`)
 
 const loadCachedConfig = () => {
   let pluginBabelConfig = {
@@ -30,7 +30,7 @@ const prepareOptions = (babel, resolve = require.resolve) => {
       [
         resolve(`babel-plugin-remove-graphql-queries`),
         {
-          publicPath: getPublicPath(),
+          publicPath: publicPath(),
         },
       ],
       {

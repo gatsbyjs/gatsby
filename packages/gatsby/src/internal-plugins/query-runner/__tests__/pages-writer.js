@@ -35,6 +35,12 @@ jest.mock(`../../../redux/`, () => {
   }
 })
 
+jest.mock(`../../../utils/cache`, () => {
+  return {
+    cachePath: () => `my/gatsby/project/.cache`,
+  }
+})
+
 const expectedResult = JSON.stringify({
   pages: [
     { path: `/amet`, matchPath: null },

@@ -8,6 +8,14 @@ jest.mock(`gatsby/package.json`, () => {
   }
 })
 
+jest.mock(`gatsby/dist/utils/cache`, () => {
+  return {
+    publicPath(filePath) {
+      return `${process.cwd()}/public/${filePath}`
+    },
+  }
+})
+
 jest.mock(
   `../sync-requires`,
   () => {

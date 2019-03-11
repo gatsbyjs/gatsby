@@ -7,13 +7,13 @@ const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
-const { getCachePath, getPublicPath } = require(`../utils/cache`)
+const { cachePath, publicPath } = require(`../utils/cache`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
 const getPages = directory =>
   fs
-    .readFile(path.join(getCachePath(directory), `pages.json`))
+    .readFile(path.join(cachePath(``, directory), `pages.json`))
     .then(contents => JSON.parse(contents))
     .catch(() => [])
 
@@ -52,7 +52,7 @@ module.exports = async program => {
   let pathPrefix = config && config.pathPrefix
   pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
 
-  const root = getPublicPath(program.directory)
+  const root = publicPath(``, program.directory)
   const pages = await getPages(program.directory)
 
   const app = express()

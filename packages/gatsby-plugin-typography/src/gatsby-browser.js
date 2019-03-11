@@ -9,12 +9,11 @@ if (process.env.BUILD_STAGE === `develop`) {
   ReactDOMServer = require(`react-dom/server`)
   React = require(`react`)
   GoogleFont = require(`react-typography`).GoogleFont
+  // typography links to the file set in "pathToConfigModule"
+  const typographyConfig = require(`./.cache/typography.js`)
+  typography = typographyConfig.default || typographyConfig
 
   exports.onClientEntry = (a, pluginOptions) => {
-    // typography links to the file set in "pathToConfigModule"
-    const typographyConfig = require(a.cache.rootPath(`typography.js`))
-    typography = typographyConfig.default || typographyConfig
-
     // Inject the CSS Styles
     typography.injectStyles()
 

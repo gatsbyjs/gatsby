@@ -1,11 +1,11 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const { getCachePath, getPublicPath } = require(`../utils/cache`)
+const { cachePath, publicPath } = require(`../utils/cache`)
 
 module.exports = async function clean(args) {
   const { directory, report } = args
 
-  const directories = [getCachePath(directory), getPublicPath(directory)]
+  const directories = [cachePath(``, directory), publicPath(``, directory)]
 
   report.info(`Deleting ${directories.join(`, `)}`)
 

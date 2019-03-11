@@ -1,4 +1,3 @@
-import path from "path"
 import { get, mapValues, isPlainObject, trim } from "lodash"
 import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"

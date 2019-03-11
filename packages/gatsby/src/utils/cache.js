@@ -12,12 +12,15 @@ function getCachePath(cwd) {
     if (path.isAbsolute(GATSBY_CACHE)) {
       return GATSBY_CACHE
     }
-    return path.join(cwd || process.cwd(), GATSBY_CACHE)
+    return path.join(cwd || process.cwd() || `.`, GATSBY_CACHE)
   }
-  return path.join(cwd || process.cwd(), `./.cache`)
+  return path.join(cwd || process.cwd() || `.`, `./.cache`)
 }
 
 function cachePath(filePath, cwd) {
+  if (!filePath) {
+    return getCachePath(cwd)
+  }
   return path.join(getCachePath(cwd), filePath)
 }
 
@@ -33,6 +36,9 @@ function getPublicPath(cwd) {
 }
 
 function publicPath(filePath, cwd) {
+  if (!filePath) {
+    return getPublicPath(cwd)
+  }
   return path.join(getPublicPath(cwd), filePath)
 }
 
@@ -51,16 +57,10 @@ class Cache {
   }
 
   rootPath(filePath) {
-    if (!filePath) {
-      return this.rootDirectory
-    }
     return cachePath(filePath)
   }
 
   publicPath(filePath) {
-    if (!filePath) {
-      return getPublicPath()
-    }
     return publicPath(filePath)
   }
 
@@ -104,7 +104,5 @@ class Cache {
 }
 
 module.exports = Cache
-module.exports.getCachePath = getCachePath
 module.exports.cachePath = cachePath
-module.exports.getPublicPath = getPublicPath
 module.exports.publicPath = publicPath

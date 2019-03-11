@@ -8,12 +8,11 @@ const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 const hasLocalEslint = require(`./local-eslint-config-finder`)
-const { getCachePath, getPublicPath } = require(`./cache`)
+const { cachePath, publicPath } = require(`./cache`)
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -27,8 +26,6 @@ module.exports = async (
   suppliedStage,
   webpackPort = 1500
 ) => {
-  const cachePath = withBasePath(getCachePath(directory))
-
   process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
@@ -65,7 +62,7 @@ module.exports = async (
 
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
-    envObject.PUBLIC_DIR = JSON.stringify(getPublicPath())
+    envObject.PUBLIC_DIR = JSON.stringify(publicPath())
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
@@ -121,7 +118,7 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: getPublicPath(directory),
+          path: publicPath(``, directory),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           library: `lib`,
@@ -135,7 +132,7 @@ module.exports = async (
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
-          path: getPublicPath(directory),
+          path: publicPath(``, directory),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
@@ -154,20 +151,20 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
-            cachePath(`app`),
+            cachePath(`app`, directory),
           ],
         }
       case `develop-html`:
         return {
-          main: cachePath(`develop-static-entry`),
+          main: cachePath(`develop-static-entry`, directory),
         }
       case `build-html`:
         return {
-          main: cachePath(`static-entry`),
+          main: cachePath(`static-entry`, directory),
         }
       case `build-javascript`:
         return {
-          app: cachePath(`production-app`),
+          app: cachePath(`production-app`, directory),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -317,7 +314,7 @@ module.exports = async (
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
       alias: {
-        gatsby$: cachePath(`gatsby-browser-entry.js`),
+        gatsby$: cachePath(`gatsby-browser-entry.js`, directory),
         // Using directories for module resolution is mandatory because
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
@@ -328,8 +325,11 @@ module.exports = async (
         "react-hot-loader": path.dirname(
           require.resolve(`react-hot-loader/package.json`)
         ),
-        "react-lifecycles-compat": cachePath(`react-lifecycles-compat.js`),
-        "create-react-context": cachePath(`create-react-context.js`),
+        "react-lifecycles-compat": cachePath(
+          `react-lifecycles-compat.js`,
+          directory
+        ),
+        "create-react-context": cachePath(`create-react-context.js`, directory),
       },
     }
   }

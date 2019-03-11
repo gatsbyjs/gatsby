@@ -29,7 +29,7 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const { getPublicPath, publicPath } = require(`../utils/cache`)
+const { publicPath } = require(`../utils/cache`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -150,7 +150,7 @@ async function startServer(program) {
   //
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(
-    require(`./develop-static`)(getPublicPath(directory), { index: false })
+    require(`./develop-static`)(publicPath(``, directory), { index: false })
   )
 
   app.use(

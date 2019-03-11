@@ -12,12 +12,7 @@ const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const {
-  getCachePath,
-  getPublicPath,
-  publicPath,
-  cachePath,
-} = require(`../utils/cache`)
+const { publicPath, cachePath } = require(`../utils/cache`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -136,10 +131,10 @@ module.exports = async (args: BootstrapArgs) => {
     )
     activity.start()
     await del([
-      `${getPublicPath()}/*.{html,css}`,
-      `${getPublicPath()}/**/*.{html,css}`,
-      `!${getPublicPath()}/static`,
-      `!${getPublicPath()}/static/**/*.{html,css}`,
+      `${publicPath()}/*.{html,css}`,
+      `${publicPath()}/**/*.{html,css}`,
+      `!${publicPath()}/static`,
+      `!${publicPath()}/static/**/*.{html,css}`,
     ])
     activity.end()
   }
@@ -183,7 +178,7 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-  const cacheDirectory = getCachePath()
+  const cacheDirectory = cachePath()
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       // Attempt to empty dir if remove fails,

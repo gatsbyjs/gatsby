@@ -6,6 +6,7 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const imageSize = require(`probe-image-size`)
+const { publicPath } = require(`gatsby/dist/utils/cache`)
 
 const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
@@ -19,15 +20,11 @@ const validateDestinationDir = dir =>
 const newFileName = linkNode =>
   `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
 
-const newPath = (cache, linkNode, destinationDir) => {
+const newPath = (linkNode, destinationDir) => {
   if (destinationDir) {
-    return path.posix.join(
-      cache.publicPath(),
-      destinationDir,
-      newFileName(linkNode)
-    )
+    return path.posix.join(publicPath(), destinationDir, newFileName(linkNode))
   }
-  return path.posix.join(cache.publicPath(), newFileName(linkNode))
+  return path.posix.join(publicPath(), newFileName(linkNode))
 }
 
 const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
@@ -55,7 +52,7 @@ function toArray(buf) {
 }
 
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, cache },
+  { files, markdownNode, markdownAST, pathPrefix, getNode },
   pluginOptions = {}
 ) => {
   const defaults = {
@@ -86,7 +83,7 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newFilePath = newPath(cache, linkNode, options.destinationDir)
+        const newFilePath = newPath(linkNode, options.destinationDir)
 
         // Prevent uneeded copying
         if (linkPath === newFilePath) return
