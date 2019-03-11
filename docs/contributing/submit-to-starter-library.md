@@ -42,7 +42,9 @@ Use the following template to ensure required fields are filled:
 
 Check out the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file for examples.
 
-Submit your pull request with title `chore(starters): add my-starter-name-here`. If lint complains about your PR, make sure that the file ends with exactly one newline character (no spaces), and that your text values don't contain special characters like `:`.
+We prefer pull requests with the title in the following format:
+```chore(starters): add my-starter-name-here```
+If there are linting issues with your PR, you can fix them by running `npm run format`. 
 
 ### Need to change details?
 
