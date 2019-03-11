@@ -52,7 +52,7 @@ export const buttonStyles = {
       backgroundColor: colors.gatsby,
       backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
       color: colors.white,
-      transition: `${stripeAnimation} 2.8s linear infinite`,
+      animation: `${stripeAnimation} 2.8s linear infinite`,
     },
     ":focus": {
       outline: 0,
