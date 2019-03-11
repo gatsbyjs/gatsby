@@ -4785,7 +4785,7 @@
     - Gallery
   built_by: Cade Scroggins
   built_by_url: https://cadejs.com
-  featured: false    
+  featured: false
 - title: Oliver Gomes Portfolio
   main_url: https://oliver-gomes.github.io/v4/
   url: https://oliver-gomes.github.io/v4/
@@ -4798,4 +4798,3 @@
   built_by: Oliver Gomes
   built_by_url: https://github.com/oliver-gomes
   featured: false
-
