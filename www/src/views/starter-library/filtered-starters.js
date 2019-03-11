@@ -181,7 +181,7 @@ export default class FilteredStarterLibrary extends Component {
                 width: `100%`,
                 [presets.Sm]: {
                   justifyContent: `flex-end`,
-                  marginBottom: `0rem`,
+                  marginBottom: 0,
                   width: `50%`,
                 },
               }}
@@ -195,7 +195,6 @@ export default class FilteredStarterLibrary extends Component {
                     borderRadius: radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
-                    background: `red`,
                     paddingTop: rhythm(space[1]),
                     paddingRight: rhythm(space[1]),
                     paddingBottom: rhythm(space[1]),

@@ -72,7 +72,7 @@ const Meta = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
   font-size: ${presets.scale[1]};
-  margin-top: 1rem;
+  margin-top: ${rhythm(space[4])};
   padding: 0 ${rhythm(4 / 5)};
 
   & > * {
@@ -154,7 +154,7 @@ const ReadMore = styled(Link)`
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
     font-weight: bold;
-    margin-right: 0.2rem;
+    margin-right: ${rhythm(space[1])};
   }
 
   ${presets.Lg} {

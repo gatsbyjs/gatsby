@@ -129,7 +129,6 @@ class BlogPostTemplate extends React.Component {
             <section
               css={{
                 display: `flex`,
-                marginTop: rhythm(-1 / 4),
                 marginBottom: rhythm(space[5]),
                 [presets.Md]: {
                   marginTop: rhythm(space[3]),

@@ -73,11 +73,11 @@ const Title = styled(`h1`)`
   font-size: ${presets.scale[4]};
   line-height: ${presets.lineHeights.dense};
   margin: 0;
-  margin-top: 0.2rem;
+  margin-top: ${rhythm(space[1])};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: 1.25rem;
+  margin-top: ${rhythm(space[5])};
 
   ${presets.Lg} {
     margin-top: 0;

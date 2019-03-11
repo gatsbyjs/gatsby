@@ -68,7 +68,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: 0.2rem;
+      margin-left: ${rhythm(space[1])};
       width: 18px;
     }
   }

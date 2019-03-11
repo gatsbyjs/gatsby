@@ -66,7 +66,7 @@ const Title = styled(`h1`)`
   min-height: 32px;
 
   span {
-    margin: 0 0.3rem 0 -0.1rem;
+    margin: 0 ${rhythm(space[1])} 0 0;
   }
 `
 

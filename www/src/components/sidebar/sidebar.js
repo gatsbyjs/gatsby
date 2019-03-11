@@ -275,8 +275,8 @@ const styles = {
     zIndex: 10,
     borderRight: `1px solid ${colors.ui.light}`,
     "::-webkit-scrollbar": {
-      height: `6px`,
-      width: `6px`,
+      height: rhythm(space[2]),
+      width: rhythm(space[2]),
     },
     "::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,

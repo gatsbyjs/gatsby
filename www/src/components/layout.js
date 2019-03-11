@@ -154,7 +154,7 @@ class DefaultLayout extends React.Component {
             paddingRight: `env(safe-area-inset-right)`,
             paddingTop: presets.bannerHeight,
             // make room for the mobile navigation
-            paddingBottom: `3.5rem`,
+            paddingBottom: presets.headerHeight,
             [presets.Md]: {
               paddingTop: `calc(${presets.bannerHeight} + ${
                 presets.headerHeight

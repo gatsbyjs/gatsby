@@ -81,14 +81,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 ${rhythm(space[6])};
+  margin: ${rhythm(space[4])} 0 ${rhythm(space[6])};
 
   > a {
     margin-right: ${rhythm(space[1])};
   }
 
   ${presets.Lg} {
-    margin: 1rem 0 2.5rem;
+    margin: ${rhythm(space[4])} 0 2.5rem;
   }
 `
 

@@ -9,7 +9,8 @@ import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets from "../../utils/presets"
+import presets, { space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -40,7 +41,7 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   z-index: 100;
 
   :focus {
-    padding: 0.9rem;
+    padding: ${rhythm(space[4])};
     position: fixed;
     top: 10px;
     left: 10px;

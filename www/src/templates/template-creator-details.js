@@ -18,7 +18,7 @@ const MetaTitle = ({ children }) => (
     css={{
       margin: `0`,
       color: colors.gray.calm,
-      marginBottom: rhythm(options.blockMarginBottom / 4),
+      marginBottom: rhythm(space[1]),
       [presets.Xs]: {
         width: 150,
       },
@@ -98,7 +98,7 @@ class CreatorTemplate extends Component {
           <div
             css={{
               margin: rhythm(space[6]),
-              marginBottom: rhythm(options.blockMarginBottom / 4),
+              marginBottom: rhythm(space[1]),
               flexGrow: `1`,
               width: `100%`,
               [breakpoint2Columns]: {

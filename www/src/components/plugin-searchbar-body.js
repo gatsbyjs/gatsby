@@ -127,8 +127,8 @@ const searchBoxStyles = css`
     fill: ${colors.gatsby};
   }
   .ais-SearchBox__submit svg {
-    width: 1rem;
-    height: 1rem;
+    width: ${rhythm(space[4])};
+    height: ${rhythm(space[4])};
     vertical-align: middle;
     fill: ${colors.ui.bright};
   }

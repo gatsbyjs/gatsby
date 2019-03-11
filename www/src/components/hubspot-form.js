@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import HubspotForm from "react-hubspot-form"
-import presets, { colors, radii } from "../utils/presets"
-import { options } from "../utils/typography"
+import presets, { colors, radii, space } from "../utils/presets"
+import { options, rhythm } from "../utils/typography"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
@@ -49,7 +49,10 @@ export default class GatsbyHubspotForm extends Component {
             ":focus": {
               borderColor: colors.gatsby,
               outline: 0,
-              boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+              boxShadow: `0 0 0 ${rhythm(space[1])} ${hex2rgba(
+                colors.lilac,
+                0.25
+              )}`,
             },
           },
           "& .hs-button.primary": {

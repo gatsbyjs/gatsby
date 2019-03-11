@@ -163,7 +163,7 @@ const styles = {
       textTransform: `uppercase`,
       fontWeight: `normal`,
       borderBottom: `none`,
-      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(space[2])}`,
+      padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
       marginRight: rhythm(space[2]),
       borderRadius: 40,
       "&:hover": {
@@ -186,8 +186,8 @@ const styles = {
   },
   input: {
     appearance: `none`,
-    width: `1rem`,
-    height: `1rem`,
+    width: rhythm(space[4]),
+    height: rhythm(space[4]),
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: 40,
     marginRight: `${rhythm(space[2])}`,

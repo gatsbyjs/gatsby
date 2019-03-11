@@ -97,8 +97,8 @@ const styles = {
   scrollbar: {
     WebkitOverflowScrolling: `touch`,
     "&::-webkit-scrollbar": {
-      width: `6px`,
-      height: `6px`,
+      width: rhythm(space[2]),
+      height: rhythm(space[2]),
     },
     "&::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,

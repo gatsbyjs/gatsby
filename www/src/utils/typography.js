@@ -42,7 +42,7 @@ const _options = {
       a: {
         textDecoration: `none`,
       },
-      "h1,h2,h4,h5,h6": {
+      "h1, h2, h3, h4, h5, h6": {
         letterSpacing: presets.letterSpacings.tight,
       },
       h1: { color: `#000` },
@@ -55,9 +55,7 @@ const _options = {
       blockquote: {
         paddingLeft: rhythm(space[6]),
         marginLeft: 0,
-        borderLeft: `${rhythm(options.blockMarginBottom / 4)} solid ${
-          colors.ui.light
-        }`,
+        borderLeft: `${rhythm(space[1])} solid ${colors.ui.light}`,
       },
       hr: {
         backgroundColor: colors.ui.light,
@@ -88,37 +86,37 @@ const _options = {
       ".gatsby-highlight": {
         background: colors.code.bg,
         borderRadius: `${radii[1]}px`,
-        padding: rhythm(space[6]),
         marginBottom: rhythm(space[6]),
         overflow: `auto`,
-        WebkitOverflowScrolling: `touch`,
+        padding: rhythm(space[6]),
         position: `relative`,
+        WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']": {
-        padding: 0,
-        marginTop: 0,
-        marginBottom: 0,
         backgroundColor: `transparent`,
         border: 0,
         float: `left`,
+        padding: 0,
+        marginTop: 0,
+        marginBottom: 0,
         minWidth: `100%`,
         overflow: `initial`,
       },
       ".gatsby-highlight pre[class*='language-']::before": {
-        position: `absolute`,
-        top: `0`,
-        right: `20px`,
-        padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
-        fontSize: presets.scale[0],
-        textAlign: `right`,
+        background: `#ddd`,
+        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
+        fontSize: presets.scale[0],
+        fontFamily: options.monospaceFontFamily.join(`,`),
         fontWeight: `bold`,
         letterSpacing: presets.letterSpacings.tracked,
         lineHeight: presets.lineHeights.solid,
+        padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
+        position: `absolute`,
+        right: `20px`,
+        textAlign: `right`,
         textTransform: `uppercase`,
-        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
-        background: `#ddd`,
-        fontFamily: options.monospaceFontFamily.join(`,`),
+        top: `0`,
       },
       ".gatsby-highlight pre[class='language-javascript']::before": {
         content: `'js'`,
@@ -193,15 +191,15 @@ const _options = {
         marginRight: `${rhythm(-space[6])}`,
         marginLeft: `${rhythm(-space[6])}`,
         paddingRight: rhythm(space[6]),
-        paddingLeft: `${rhythm((options.blockMarginBottom / 5) * 4)}`,
-        borderLeft: `${rhythm((options.blockMarginBottom / 5) * 1)} solid ${
+        paddingLeft: rhythm(space[5]),
+        borderLeft: `${rhythm(space[1])} solid ${
           colors.code.lineHighlightBorder
         }`,
         display: `block`,
       },
       ".gatsby-highlight::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
+        width: rhythm(space[2]),
+        height: rhythm(space[2]),
       },
       ".gatsby-highlight::-webkit-scrollbar-thumb": {
         background: colors.code.scrollbarThumb,
@@ -268,7 +266,7 @@ const _options = {
         marginTop: rhythm(space[9]),
         marginBottom: 0,
       },
-      ".gatsby-highlight, .post .gatsby-resp-image-link": {
+      ".gatsby-highlight, .gatsby-code-title, .post .gatsby-resp-image-link": {
         marginLeft: rhythm(-space[6]),
         marginRight: rhythm(-space[6]),
       },
@@ -282,18 +280,20 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        marginLeft: rhythm(-space[6]),
-        marginRight: rhythm(-space[6]),
-        padding: `${rhythm(space[6])} ${rhythm(
-          options.blockMarginBottom
-        )} ${rhythm(space[3])}`,
+        padding: `${rhythm(space[6])} ${rhythm(space[6])} ${rhythm(space[3])}`,
         fontSize: `74%`,
       },
       "@media (max-width:634px)": {
-        ".gatsby-highlight, .gatsby-resp-image-link": {
+        ".gatsby-highlight, .gatsby-code-title, .gatsby-resp-image-link": {
           borderRadius: 0,
           borderLeft: 0,
           borderRight: 0,
+        },
+      },
+      [`${presets.Md} and (max-width:980px)`]: {
+        ".gatsby-highlight, .gatsby-code-title": {
+          marginLeft: 0,
+          marginRight: 0,
         },
       },
       video: {
@@ -308,26 +308,26 @@ const _options = {
       },
       [presets.Lg]: {
         ".gatsby-highlight, .post .gatsby-resp-image-link, .gatsby-code-title": {
-          marginLeft: rhythm(-options.blockMarginBottom * 1.5),
-          marginRight: rhythm(-options.blockMarginBottom * 1.5),
+          marginLeft: rhythm(-space[7]),
+          marginRight: rhythm(-space[7]),
         },
         ".gatsby-highlight": {
-          padding: rhythm(options.blockMarginBottom * 1.5),
-          marginBottom: rhythm(options.blockMarginBottom * 1.5),
+          padding: rhythm(space[7]),
+          marginBottom: rhythm(space[7]),
         },
         ".gatsby-highlight-code-line": {
-          marginRight: `${rhythm(-options.blockMarginBottom * 1.5)}`,
-          marginLeft: `${rhythm(-options.blockMarginBottom * 1.5)}`,
-          paddingRight: rhythm(options.blockMarginBottom * 1.5),
-          paddingLeft: `${rhythm(((options.blockMarginBottom * 1.5) / 5) * 4)}`,
-          borderLeftWidth: `${rhythm(
-            ((options.blockMarginBottom * 1.5) / 5) * 1
-          )}`,
+          marginRight: rhythm(-space[7]),
+          marginLeft: rhythm(-space[7]),
+          paddingRight: rhythm(space[7]),
+          paddingLeft: rhythm(space[6]),
+          borderLeftWidth: rhythm(space[2]),
         },
         ".gatsby-code-title": {
-          padding: `${rhythm(space[6])} ${rhythm(
-            options.blockMarginBottom * 1.5
-          )} ${rhythm(space[3])}`,
+          marginRight: rhythm(-space[7]),
+          marginLeft: rhythm(-space[7]),
+          padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
+            space[3]
+          )}`,
         },
       },
       [presets.Xxl]: {

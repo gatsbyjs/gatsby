@@ -26,12 +26,13 @@ const H1 = styled(`h1`)`
   width: 100%;
 
   ${presets.Md} {
-    transform: rotate(-90deg) translate(calc(-100% - 2rem), 1rem);
+    transform: rotate(-90deg)
+      translate(calc(-100% - ${rhythm(space[7])}), ${rhythm(space[4])});
     transform-origin: top left;
   }
 
   :after {
-    bottom: 2rem;
+    bottom: ${rhythm(space[7])};
     content: attr(data-title);
     display: none;
     font-size: 12rem;

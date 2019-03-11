@@ -12,8 +12,8 @@ const stripeAnimation = keyframes({
 export const scrollbarStyles = {
   WebkitOverflowScrolling: `touch`,
   "&::-webkit-scrollbar": {
-    width: `6px`,
-    height: `6px`,
+    width: rhythm(space[2]),
+    height: rhythm(space[2]),
   },
   "&::-webkit-scrollbar-thumb": {
     background: colors.ui.bright,
@@ -56,7 +56,7 @@ export const buttonStyles = {
     },
     ":focus": {
       outline: 0,
-      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+      boxShadow: `0 0 0 ${rhythm(space[1])} ${hex2rgba(colors.lilac, 0.25)}`,
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },

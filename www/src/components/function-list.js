@@ -15,7 +15,7 @@ const Param = (param, depth = 0) => {
     <div
       key={`param ${JSON.stringify(param)}`}
       css={{
-        marginLeft: `${depth * 1.05}rem`,
+        marginLeft: `${rhythm(depth * 1)}`,
         ...(depth > 0 && scale((depth === 1 ? -1 : -1.5) / 5)),
         lineHeight: options.baseLineHeight,
       }}
@@ -93,7 +93,7 @@ export default ({ functions }) => (
               <div
                 key={`ret ${JSON.stringify(ret)}`}
                 css={{
-                  marginLeft: `1.05rem`,
+                  marginLeft: rhythm(space[4]),
                   fontSize: presets.scale[1],
                   lineHeight: options.baseLineHeight,
                 }}
@@ -109,7 +109,6 @@ export default ({ functions }) => (
                 </h5>
                 {ret.description && (
                   <div
-                    css={{ marginBottom: rhythm(-1 / 4) }}
                     dangerouslySetInnerHTML={{
                       __html: ret.description.childMarkdownRemark.html,
                     }}

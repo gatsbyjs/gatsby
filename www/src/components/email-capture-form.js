@@ -31,21 +31,21 @@ const SingleLineInput = styled(`input`)`
   :focus {
     border-color: ${colors.gatsby};
     outline: 0;
-    box-shadow: 0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)};
+    box-shadow: 0 0 0 ${rhythm(space[1])} ${hex2rgba(colors.lilac, 0.25)};
   }
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
   font-family: ${options.systemFontFamily.join(`,`)};
   font-size: ${presets.scale[2]};
-  padding: 0.6rem;
+  padding: ${rhythm(space[2])};
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
   font-family: ${options.systemFontFamily.join(`,`)};
   font-size: ${presets.scale[1]};
-  margin: calc(1.05rem / 2) 0;
+  margin: ${rhythm(space[2])} 0;
 `
 
 const SuccesMessage = styled(`div`)`

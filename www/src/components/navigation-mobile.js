@@ -8,7 +8,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, { colors, transition, radii } from "../utils/presets"
+import presets, { colors, transition, radii, space } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import { rhythm, options } from "../utils/typography"
 
@@ -67,7 +67,7 @@ const MobileNavigation = () => (
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.light}`,
         background: colors.white,
-        minHeight: presets.headerHeight,
+        height: presets.headerHeight,
         fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
         [presets.Md]: {
@@ -122,8 +122,7 @@ const styles = {
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,
       width: 64,
-      padding: rhythm(options.blockMarginBottom / 4),
-      paddingBottom: 0,
+      padding: rhythm(space[1]),
       textDecoration: `none`,
       textAlign: `center`,
       WebkitFontSmoothing: `antialiased`,
