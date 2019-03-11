@@ -46,6 +46,7 @@ exports.createFileNode = async (
       type: `File`,
       mediaType: mediaType ? mediaType : `application/octet-stream`,
       description: `File "${path.relative(process.cwd(), slashed)}"`,
+      url: `String`,
     }
   }
 
