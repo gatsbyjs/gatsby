@@ -4,7 +4,7 @@ title: Adding comments
 
 If you're using Gatsby to run a blog and you've started adding some content to it, the next thing to think about is how to increase engagement among your visitors. A great way to do that is to allow them to ask questions and express their views on what you've written. This will make your blog seem much more lively to anyone visiting it.
 
-There are many options out there for adding comment functionality to a site, several of them specfically targeted at static sites. So the hardest part may be to choose which one to go with. With no claims on completeness, here's a list of available services:
+There are many options out there for adding comment functionality to a site, several of them specfically targeted at static sites. So the hardest part may be to choose which one to go with. While this list is by no means exhaustive, it does serve as a good starting point to illustrate what's available:
 
 - [Disqus](https://disqus.com)
 - [Facebook comments](https://www.npmjs.com/package/react-facebook)
@@ -35,7 +35,7 @@ Here are the steps for adding Disqus comments to your own blog:
 2. Install the Disqus React package
 
    ```sh
-   yarn add disqus-react
+   npm install disqus-react
    ```
 
 3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client side code](https://www.gatsbyjs.org/docs/environment-variables/#client-side-javascript).)
@@ -44,17 +44,17 @@ Here are the steps for adding Disqus comments to your own blog:
    # enables Disqus comments for blog posts
    GATSBY_DISQUS_NAME=insertValue
    ```
-   ```:envtitle=.env
+   ```:env:title=.env
    ...
    GATSBY_DISQUS_NAME=yourOwnSiteShortname
    ```
 4. In your blog post template (usually `src/templates/post.js`) import the `DiscussionEmbed` React component.
 
-   ```js{3}:title=src/templates/post.js
+   ```js:title=src/templates/post.js
    import React from 'react'
    import { graphql } from 'gatsby'
+   // highlight-next-line
    import { DiscussionEmbed } from 'disqus-react'
-   ...
    ```
 
    Then define your Disqus configuration object
@@ -68,12 +68,13 @@ Here are the steps for adding Disqus comments to your own blog:
 
    where `identifier` must be a string or number that uniquely identifies the post. It could be the post's slug, title or some ID. Finally, add `DiscussionEmbed` to the JSX of your post template.
 
-   ```jsx{6}:title=src/templates/post.js
+   ```jsx:title=src/templates/post.js
    return (
      <Global>
        ...
        <PageBody>
          ...
+         {/* highlight-next-line */}
          <DiscussionEmbed {...disqusConfig} />
        </PageBody>
      </Global>
