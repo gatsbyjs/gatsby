@@ -40,7 +40,7 @@ Array [
   blue: true
   funny: yup
 }",
-        "dir": "/tmp/foo/",
+        "dir": "<TEMP_DIR>/foo/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
