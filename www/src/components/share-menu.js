@@ -6,7 +6,7 @@ import FaLinkedin from "react-icons/lib/fa/linkedin"
 import FaFacebook from "react-icons/lib/fa/facebook"
 import FaTwitter from "react-icons/lib/fa/twitter"
 
-import presets, { colors, space } from "../utils/presets"
+import { colors, space, radii } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const objectToParams = object =>
@@ -72,7 +72,7 @@ class ShareMenu extends React.Component {
           css={{
             background: styles[theme].background,
             border: 0,
-            borderRadius: presets.radii[1],
+            borderRadius: radii[1],
             color: styles[theme].textColor,
             cursor: `pointer`,
           }}
@@ -173,8 +173,8 @@ const styles = {
       "&&": {
         background: colors.gatsby,
         border: 0,
-        borderRadius: presets.radii[1],
-        color: `#fff`,
+        borderRadius: radii[1],
+        color: colors.white,
         display: `flex`,
         alignItems: `center`,
         justifyContent: `center`,
@@ -190,15 +190,11 @@ const styles = {
       "&&": {
         background: colors.accent,
         border: 0,
-        borderRadius: presets.radii[1],
-        boxShadow: `none`,
+        borderRadius: radii[1],
         color: colors.gatsby,
         display: `flex`,
         alignItems: `center`,
         justifyContent: `center`,
-        "&:hover": {
-          background: colors.accent,
-        },
       },
     },
   },

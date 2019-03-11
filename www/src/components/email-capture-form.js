@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 import SendIcon from "react-icons/lib/md/send"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, radii } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
@@ -73,7 +73,7 @@ const SubmitOnHomepage = styled(`button`)`
   ${presets.Lg} {
     width: auto;
     margin-top: 0;
-    margin-left: 0.5rem;
+    margin-left: ${rhythm(space[2])};
   }
 `
 
@@ -260,7 +260,7 @@ class EmailCaptureForm extends React.Component {
               <div
                 css={{
                   backgroundColor: colors.ui.light,
-                  borderRadius: presets.radii[1],
+                  borderRadius: radii[1],
                   color: colors.gatsby,
                   fontFamily: options.headerFontFamily.join(`,`),
                   padding: `15px`,

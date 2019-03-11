@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii, transition } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
@@ -13,7 +13,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       lineHeight: presets.lineHeights.solid,
       background: `transparent`,
       border: `none`,
-      borderRadius: presets.radii[1],
+      borderRadius: radii[1],
       color: colors.gatsby,
       display: `flex`,
       cursor: `pointer`,
@@ -22,7 +22,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       paddingTop: rhythm(space[2]),
       paddingBottom: rhythm(space[2]),
       textAlign: `left`,
-      transition: `all .2s`,
+      transition: `all ${transition.speed.fast}`,
       "&:hover": {
         background: colors.ui.bright,
       },

@@ -159,11 +159,11 @@ const styles = {
     "&&": {
       fontSize: presets.scale[2],
       lineHeight: presets.lineHeights.solid,
-      letterSpacing: `0.03em`,
+      letterSpacing: presets.letterSpacings.tracked,
       textTransform: `uppercase`,
       fontWeight: `normal`,
       borderBottom: `none`,
-      padding: `${rhythm(options.blockMarginBottom / 4)} .5rem`,
+      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(space[2])}`,
       marginRight: rhythm(space[2]),
       borderRadius: 40,
       "&:hover": {

@@ -1,6 +1,6 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets, { colors, space } from "./presets"
+import presets, { colors, space, transition, radii } from "./presets"
 
 const systemFontFamily = [
   `-apple-system`,
@@ -43,7 +43,7 @@ const _options = {
         textDecoration: `none`,
       },
       "h1,h2,h4,h5,h6": {
-        letterSpacing: `-0.0075em`,
+        letterSpacing: presets.letterSpacings.tight,
       },
       h1: { color: `#000` },
       h2: {
@@ -87,7 +87,7 @@ const _options = {
       // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        borderRadius: `${presets.radii[1]}px`,
+        borderRadius: `${radii[1]}px`,
         padding: rhythm(space[6]),
         marginBottom: rhythm(space[6]),
         overflow: `auto`,
@@ -108,14 +108,15 @@ const _options = {
         position: `absolute`,
         top: `0`,
         right: `20px`,
-        padding: `3px 10px`,
+        padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
         fontSize: presets.scale[0],
         textAlign: `right`,
         color: colors.gray.dark,
-        fontWeight: `700`,
-        letterSpacing: `0.8px`,
+        fontWeight: `bold`,
+        letterSpacing: presets.letterSpacings.tracked,
+        lineHeight: presets.lineHeights.solid,
         textTransform: `uppercase`,
-        borderRadius: `0 0 ${presets.radii[2]}px ${presets.radii[2]}px`,
+        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         background: `#ddd`,
         fontFamily: options.monospaceFontFamily.join(`,`),
       },
@@ -134,19 +135,19 @@ const _options = {
       ".gatsby-highlight pre[class='language-graphql']::before": {
         content: `'GraphQL'`,
         background: `#E10098`,
-        color: `#fff`,
+        color: colors.white,
         fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-html']::before": {
         content: `'html'`,
         background: `#005A9C`,
-        color: `#fff`,
+        color: colors.white,
         fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-css']::before": {
         content: `'css'`,
         background: `#ff9800`,
-        color: `#fff`,
+        color: colors.white,
         fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-shell']::before": {
@@ -175,7 +176,7 @@ const _options = {
       },
       ".gatsby-highlight pre[class='language-text']::before": {
         content: `'text'`,
-        background: `#fff`,
+        background: colors.white,
       },
       ".gatsby-highlight pre[class='language-flow']::before": {
         content: `'flow'`,
@@ -207,7 +208,7 @@ const _options = {
       },
       ".gatsby-highlight::-webkit-scrollbar-track": {
         background: colors.code.border,
-        borderRadius: `0 0 ${presets.radii[2]}px ${presets.radii[2]}px`,
+        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
@@ -228,9 +229,7 @@ const _options = {
       ".main-body a": {
         color: colors.lilac,
         textDecoration: `none`,
-        transition: `all ${presets.animation.speedFast} ${
-          presets.animation.curveDefault
-        }`,
+        transition: `all ${transition.speed.fast} ${transition.curve.default}`,
         borderBottom: `1px solid ${colors.lilac}`,
         fontWeight: `normal`,
       },
@@ -274,7 +273,7 @@ const _options = {
         marginRight: rhythm(-space[6]),
       },
       ".gatsby-resp-image-link": {
-        borderRadius: `${presets.radii[1]}px`,
+        borderRadius: `${radii[1]}px`,
         overflow: `hidden`,
       },
       // gatsby-remark-code-titles styles

@@ -9,7 +9,6 @@ import {
   Toggle,
 } from "react-instantsearch/dom"
 import { navigate as reachNavigate } from "@reach/router"
-import { colors } from "../utils/presets"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
@@ -17,7 +16,7 @@ import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
-import presets, { space } from "../utils/presets"
+import presets, { space, colors, transition, radii } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import { scrollbarStyles } from "../utils/styles"
 import { Global, css } from "@emotion/core"
@@ -60,7 +59,7 @@ const searchBoxStyles = css`
     -webkit-appearance: none;
     background: #fff;
     border: 1px solid ${colors.ui.bright};
-    border-radius: ${presets.radii[2]}px;
+    border-radius: ${radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
     font-size: ${presets.scale[3]};
@@ -70,8 +69,9 @@ const searchBoxStyles = css`
     padding-right: ${searchInputHeight};
     padding-left: ${searchInputHeight};
     margin: 0 ${searchInputWrapperMargin};
-    -webkit-transition: box-shadow 0.4s ease, background 0.4s ease;
-    transition: box-shadow 0.4s ease, background 0.4s ease;
+    transition: box-shadow ${transition.speed.default}
+        ${transition.curve.default},
+      background ${transition.speed.default} ${transition.curve.default};
     vertical-align: middle;
     white-space: normal;
     width: calc(100% - ${rhythm(6 / 4)});
@@ -87,7 +87,6 @@ const searchBoxStyles = css`
   .ais-SearchBox__input:focus {
     border-color: ${colors.lilac};
     box-shadow: 0 0 0 3px ${colors.ui.bright};
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
   .ais-SearchBox__input::-webkit-input-placeholder,
@@ -119,7 +118,7 @@ const searchBoxStyles = css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
+    border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
   }
   .ais-SearchBox__submit:focus {
     outline: 0;
@@ -158,15 +157,14 @@ const searchBoxStyles = css`
   .ais-InfiniteHits__loadMore {
     background-color: transparent;
     border: 1px solid ${colors.gatsby};
-    border-radius: ${presets.radii[1]}px;
+    border-radius: ${radii[1]}px;
     color: ${colors.gatsby};
     cursor: pointer;
     width: calc(100% - ${rhythm(space[6] * 2)});
     margin: ${rhythm(space[6])};
     height: ${rhythm(space[9])};
     outline: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
+    transition: all ${transition.speed.default} ${transition.curve.default};
     font-family: ${options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover,
@@ -349,19 +347,19 @@ const Result = ({ hit, pathname, query }) => {
       to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
-          background: selected ? `#fff` : false,
+          background: selected ? colors.white : false,
           borderBottom: 0,
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
           padding: `${rhythm(space[4])} ${rhythm(space[6])}`,
           position: `relative`,
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
+          transition: `all ${transition.speed.default} ${
+            transition.curve.default
           }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? `#fff` : colors.ui.border,
+            background: selected ? colors.white : colors.ui.border,
           },
           "&:before": {
             background: colors.ui.border,
@@ -403,7 +401,6 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             marginBottom: 0,
             marginTop: 0,
-            letterSpacing: 0,
           }}
         >
           {hit.name}

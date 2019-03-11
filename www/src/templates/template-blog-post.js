@@ -6,7 +6,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, transition, radii } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import DocSearchContent from "../components/docsearch-content"
@@ -156,7 +156,7 @@ class BlogPostTemplate extends React.Component {
                       height: rhythm(2.3),
                       width: rhythm(2.3),
                       margin: 0,
-                      borderRadius: presets.radii[6],
+                      borderRadius: radii[6],
                       display: `inline-block`,
                       verticalAlign: `middle`,
                     }}
@@ -180,8 +180,8 @@ class BlogPostTemplate extends React.Component {
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.ui.bright}`,
-                        transition: `all ${presets.animation.speedFast} ${
-                          presets.animation.curveDefault
+                        transition: `all ${transition.speed.fast} ${
+                          transition.curve.default
                         }`,
                         "&:hover": {
                           background: colors.ui.bright,
@@ -279,7 +279,7 @@ class BlogPostTemplate extends React.Component {
                     <span
                       css={{
                         [presets.Md]: {
-                          marginLeft: `-1rem`,
+                          marginLeft: `-${rhythm(space[4])}`,
                         },
                       }}
                     >
@@ -301,9 +301,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Md]: {
-                          marginRight: `-1rem`,
-                        },
+                        [presets.Md]: { marginRight: `-${rhythm(space[4])}` },
                       }}
                     >
                       {next.frontmatter.title}

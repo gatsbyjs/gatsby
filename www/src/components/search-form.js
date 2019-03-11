@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import { rhythm } from "../utils/typography"
 
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, radii, transition } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import SearchIcon from "./search-icon"
 
@@ -11,8 +11,6 @@ const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false
 
 import { Global, css } from "@emotion/core"
-
-const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
 const searchDropdownOffsetTop = rhythm(space[9])
@@ -383,14 +381,18 @@ class SearchForm extends Component {
               appearance: `none`,
               backgroundColor: `transparent`,
               border: 0,
-              borderRadius: presets.radii[1],
+              borderRadius: radii[1],
               color: colors.lilac,
               padding: rhythm(space[1]),
               paddingRight: rhythm(space[3]),
               paddingLeft: rhythm(space[7]),
               overflow: `hidden`,
               width: rhythm(space[5]),
-              transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              transition: `width ${transition.speed.default} ${
+                transition.curve.default
+              }, background-color ${transition.speed.default} ${
+                transition.curve.default
+              }`,
               ":focus": {
                 backgroundColor: colors.ui.light,
                 color: colors.gatsby,
@@ -398,7 +400,7 @@ class SearchForm extends Component {
                 width: rhythm(5),
               },
               [presets.Lg]: {
-                backgroundColor: `#fff`,
+                backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
                   backgroundColor: colors.ui.light,
@@ -421,10 +423,12 @@ class SearchForm extends Component {
               position: `absolute`,
               left: rhythm(space[2]),
               top: `50%`,
-              width: `1rem`,
-              height: `1rem`,
+              width: rhythm(space[4]),
+              height: rhythm(space[4]),
               pointerEvents: `none`,
-              transition: `fill ${speedDefault} ${curveDefault}`,
+              transition: `fill ${transition.speed.default} ${
+                transition.curve.default
+              }`,
               transform: `translateY(-55%)`,
               [presets.Sm]: {
                 fill: focussed ? colors.gatsby : false,

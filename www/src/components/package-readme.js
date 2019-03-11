@@ -49,7 +49,7 @@ const PackageReadMe = props => {
                 css={{
                   ...linkStyles,
                   color: `#aaa !important`,
-                  marginRight: `1rem`,
+                  marginRight: rhythm(space[6]),
                 }}
               >
                 <img
@@ -71,7 +71,10 @@ const PackageReadMe = props => {
             href={githubUrl}
             aria-labelledby="github-link-label"
           >
-            <GithubIcon focusable="false" style={{ marginRight: `.5rem` }} />
+            <GithubIcon
+              focusable="false"
+              style={{ marginRight: rhythm(space[2]) }}
+            />
             <span id="github-link-label">View plugin on GitHub</span>
           </a>
         </div>

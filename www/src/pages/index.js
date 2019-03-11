@@ -126,7 +126,7 @@ class IndexRoute extends React.Component {
                   secondary
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: `1rem` }}
+                  overrideCSS={{ marginTop: rhythm(space[4]) }}
                 >
                   Get Started
                 </Button>

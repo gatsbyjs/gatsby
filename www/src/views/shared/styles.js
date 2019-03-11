@@ -1,7 +1,5 @@
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
-
-const { curveDefault, speedDefault } = presets.animation
+import presets, { colors, space, radii, transition } from "../../utils/presets"
 
 const styles = {
   featuredSitesCard: {
@@ -37,13 +35,15 @@ const styles = {
   },
   featuredItem: {
     display: `none`,
-    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+    transition: `background ${transition.speed.slow} ${
+      transition.curve.default
+    }, transform ${transition.speed.slow} ${transition.curve.default}`,
     [presets.Lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
-      borderTopRightRadius: presets.radii[1],
-      borderBottomLeftRadius: presets.radii[1],
+      borderTopRightRadius: radii[1],
+      borderBottomLeftRadius: radii[1],
       boxShadow: `none`,
       cursor: `pointer`,
       display: `flex`,
@@ -65,7 +65,9 @@ const styles = {
   },
   withTitleHover: {
     "& .title": {
-      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+      transition: `box-shadow ${transition.speed.slow} ${
+        transition.curve.default
+      }, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
       boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
@@ -106,12 +108,10 @@ const styles = {
     },
   },
   screenshot: {
-    borderRadius: presets.radii[1],
+    borderRadius: radii[1],
     boxShadow: presets.shadows.card,
     marginBottom: rhythm(space[3]),
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
   screenshotHover: {
     background: `transparent`,
@@ -125,11 +125,8 @@ const styles = {
     paddingLeft: rhythm(space[1]),
     "&&": {
       color: colors.gray.bright,
-      fontWeight: `normal`,
       borderBottom: `none`,
-      boxShadow: `none`,
       "&:hover": {
-        background: `none`,
         color: colors.gatsby,
       },
     },
@@ -144,14 +141,18 @@ const styles = {
   searchInput: {
     appearance: `none`,
     border: 0,
-    borderRadius: presets.radii[2],
+    borderRadius: radii[2],
     color: colors.gatsby,
     padding: rhythm(space[1]),
     paddingRight: rhythm(space[3]),
     paddingLeft: rhythm(space[6]),
     overflow: `hidden`,
     fontFamily: options.headerFontFamily.join(`,`),
-    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    transition: `width ${transition.speed.default} ${
+      transition.curve.default
+    }, background-color ${transition.speed.default} ${
+      transition.curve.default
+    }`,
     width: `6.8rem`,
     "&::placeholder": {
       color: colors.lilac,

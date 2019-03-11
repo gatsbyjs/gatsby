@@ -5,7 +5,7 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 
-import presets, { colors } from "../utils/presets"
+import presets, { colors, radii } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -104,8 +104,8 @@ class DefaultLayout extends React.Component {
           >
             <div
               css={{
-                backgroundColor: `#fff`,
-                borderRadius: presets.radii[1],
+                backgroundColor: colors.white,
+                borderRadius: radii[1],
                 boxShadow: `0 0 90px -24px ${colors.gatsby}`,
                 position: `relative`,
               }}
@@ -115,8 +115,8 @@ class DefaultLayout extends React.Component {
                 css={{
                   background: colors.ui.bright,
                   border: 0,
-                  borderBottomLeftRadius: presets.radii[1],
-                  borderTopRightRadius: presets.radii[1],
+                  borderBottomLeftRadius: radii[1],
+                  borderTopRightRadius: radii[1],
                   color: colors.gatsby,
                   cursor: `pointer`,
                   position: `absolute`,
@@ -126,7 +126,7 @@ class DefaultLayout extends React.Component {
                   width: 40,
                   "&:hover": {
                     background: colors.gatsby,
-                    color: `#fff`,
+                    color: colors.white,
                   },
                 }}
               >

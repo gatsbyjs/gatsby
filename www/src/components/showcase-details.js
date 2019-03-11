@@ -4,7 +4,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, radii } from "../utils/presets"
 import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
@@ -38,7 +38,7 @@ const styles = {
     fontWeight: `bold`,
   },
   prevNextImage: {
-    borderRadius: presets.radii[1],
+    borderRadius: radii[1],
     boxShadow: `0 0 38px -8px ${colors.gatsby}`,
   },
   prevNextPermalinkLabel: {
@@ -435,7 +435,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       css={{
                         backgroundColor: colors.gatsby,
                         border: 0,
-                        borderRadius: presets.radii[1],
+                        borderRadius: radii[1],
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: options.headerFontFamily.join(`,`),
                         fontWeight: `bold`,

@@ -10,7 +10,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, transition, radii } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
 class BlogPostsIndex extends React.Component {
@@ -58,28 +58,27 @@ class BlogPostsIndex extends React.Component {
                   marginBottom: rhythm(space[6]),
                   [presets.Md]: {
                     boxShadow: presets.shadows.card,
-                    background: `#fff`,
-                    borderRadius: presets.radii[2],
+                    background: colors.white,
+                    borderRadius: radii[2],
                     padding: rhythm(space[9]),
                     paddingLeft: rhythm(space[9]),
                     paddingRight: rhythm(space[9]),
                     marginLeft: rhythm(-space[9]),
                     marginRight: rhythm(-space[9]),
-                    transition: `transform ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    },  box-shadow ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }, padding ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
+                    transition: `transform ${transition.speed.default} ${
+                      transition.curve.default
+                    },  box-shadow ${transition.speed.default} ${
+                      transition.curve.default
+                    }, padding ${transition.speed.default} ${
+                      transition.curve.default
                     }`,
                     "&:hover": {
                       transform: `translateY(-4px)`,
                       boxShadow: presets.shadows.cardHover,
                     },
                     "&:active": {
-                      boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                      boxShadow: presets.shadows.cardActive,
                       transform: `translateY(0)`,
-                      transition: `transform 50ms`,
                     },
                   },
                 }}

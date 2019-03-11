@@ -23,7 +23,7 @@ export default class MarkdownPageFooter extends React.Component {
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
           >
-            <EditIcon css={{ marginRight: `.5rem` }} />
+            <EditIcon css={{ marginRight: rhythm(space[2]) }} />
             {` `}
             Edit this page on GitHub
           </a>

@@ -4,7 +4,7 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, transition } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
@@ -267,11 +267,11 @@ const styles = {
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
-    background: `#fff`,
+    background: colors.white,
     border: 0,
     display: `block`,
     overflowY: `auto`,
-    transition: `opacity 0.5s ease`,
+    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
     borderRight: `1px solid ${colors.ui.light}`,
     "::-webkit-scrollbar": {

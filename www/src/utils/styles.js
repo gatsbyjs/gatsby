@@ -1,7 +1,7 @@
 import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
-import presets, { colors, space } from "./presets"
+import presets, { colors, space, transition, radii } from "./presets"
 import { rhythm, options } from "./typography"
 
 const stripeAnimation = keyframes({
@@ -30,11 +30,11 @@ export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: presets.radii[1],
+    borderRadius: radii[1],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
-    color: `#fff`,
+    color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
     fontFamily: options.headerFontFamily.join(`,`),
@@ -46,15 +46,13 @@ export const buttonStyles = {
     whiteSpace: `nowrap`,
     padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
     backgroundSize: `30px 30px`,
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
     ":hover, &:focus": {
       backgroundSize: `30px 30px`,
       backgroundColor: colors.gatsby,
       backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-      color: `#fff`,
-      animation: `${stripeAnimation} 2.8s linear infinite`,
+      color: colors.white,
+      transition: `${stripeAnimation} 2.8s linear infinite`,
     },
     ":focus": {
       outline: 0,
@@ -106,7 +104,7 @@ export const svgStyles = {
     "& .svg-fill-gatsby": { fill: colors.gatsby },
     "& .svg-fill-accent": { fill: colors.accent },
     "& .svg-fill-wisteria": { fill: colors.wisteria },
-    "& .svg-fill-brightest": { fill: `#fff` },
+    "& .svg-fill-brightest": { fill: colors.white },
     "& .svg-fill-gradient-accent-white-45deg": {
       fill: `url(#accent-white-45deg)`,
     },
@@ -137,16 +135,14 @@ export const linkStyles = {
 }
 
 export const formInput = {
-  backgroundColor: `#fff`,
+  backgroundColor: colors.white,
   border: `1px solid ${colors.ui.bright}`,
-  borderRadius: presets.radii[1],
+  borderRadius: radii[1],
   color: colors.brand,
   fontFamily: options.headerFontFamily.join(`,`),
   padding: rhythm(space[3]),
   verticalAlign: `middle`,
-  transition: `all ${presets.animation.speedDefault} ${
-    presets.animation.curveDefault
-  }`,
+  transition: `all ${transition.speed.default} ${transition.curve.default}`,
   "::placeholder": {
     color: colors.lilac,
     opacity: 1,

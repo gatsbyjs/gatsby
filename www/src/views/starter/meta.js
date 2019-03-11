@@ -1,5 +1,5 @@
 import React from "react"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
@@ -132,7 +132,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             href={demo}
             css={{
               border: 0,
-              borderRadius: presets.radii[1],
+              borderRadius: radii[1],
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: rhythm(space[2]),

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, radii } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
@@ -74,7 +74,7 @@ const FeedbackForm = styled(`div`)`
   width: 90%;
   background-color: ${colors.gatsby};
   box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radii[2]}px;
+  border-radius: ${radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
   ${presets.Md} {

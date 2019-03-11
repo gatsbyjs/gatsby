@@ -7,7 +7,12 @@ import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
 import { rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  letterSpacings,
+  radii,
+} from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
   background: #fff;
@@ -16,7 +21,7 @@ const EcosystemSectionRoot = styled(`section`)`
 
   ${presets.Md} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: ${presets.radii[2]}px;
+    border-radius: ${radii[2]}px;
     display: flex;
     flex-basis: calc(50% - 20px);
     flex-direction: column;
@@ -74,8 +79,8 @@ const Icon = styled(`span`)`
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
   font-size: ${presets.scale[1]};
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  font-weight: normal;
+  letter-spacing: ${letterSpacings.tracked};
   margin: 0;
   margin-top: ${rhythm(space[5])};
   text-transform: uppercase;

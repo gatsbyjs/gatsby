@@ -10,7 +10,7 @@ import presets, { colors, space } from "../../utils/presets"
 const ICON_SIZE = `32px`
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   padding: ${rhythm(space[5])} ${rhythm(space[6])};
   width: 100%;
@@ -81,7 +81,7 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 1.5rem;
+  margin: 1rem 0 ${rhythm(space[6])};
 
   > a {
     margin-right: ${rhythm(space[1])};

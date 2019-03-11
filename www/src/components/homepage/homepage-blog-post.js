@@ -8,7 +8,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
@@ -46,7 +46,7 @@ const HomepageBlogPostRoot = styled(
 `
 
 const Cover = styled(Img)`
-  border-radius: ${presets.radii[2]}px ${presets.radii[2]}px 0 0;
+  border-radius: ${radii[2]}px ${radii[2]}px 0 0;
   display: block;
   margin-bottom: -${rhythm(space[3])};
 `
@@ -80,7 +80,7 @@ const Meta = styled(`div`)`
   }
 
   ${presets.Lg} {
-    margin-top: 1.5rem;
+    margin-top: ${rhythm(space[6])};
     padding: 0 ${rhythm(space[7])};
   }
 `
@@ -99,7 +99,7 @@ const Author = styled(Link)`
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    margin-left: 0.5rem;
+    margin-left: ${rhythm(space[2])};
   }
 
   a& {
@@ -121,7 +121,7 @@ const Excerpt = styled(`p`)`
 
   ${presets.Lg} {
     margin: 0;
-    margin-top: 1.5rem;
+    margin-top: ${rhythm(space[6])};
     padding: 0 ${rhythm(space[7])};
   }
 `

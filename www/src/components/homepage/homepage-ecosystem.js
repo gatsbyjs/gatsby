@@ -19,7 +19,7 @@ import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -35,7 +35,7 @@ const Sections = styled(`div`)`
 
 const Section = styled(EcosystemSection)`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radii[2]}px;
+  border-radius: ${radii[2]}px;
   margin-bottom: ${rhythm(space[6])};
   padding: ${rhythm(space[6])};
 
@@ -103,7 +103,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     position: relative;
 
     ${presets.Md} {
-      border-radius: ${presets.radii[2]}px;
+      border-radius: ${radii[2]}px;
     }
 
     ${presets.Lg} {
@@ -115,7 +115,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     :before {
       background: ${props =>
         props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
-      border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
+      border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
@@ -132,7 +132,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       font-family: ${options.headerFontFamily.join(`,`)};
       font-size: ${presets.scale[1]};
       left: 0;
-      letter-spacing: 0.05em;
+      letter-spacing: ${presets.letterSpacings.tracked};
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;

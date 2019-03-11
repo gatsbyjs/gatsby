@@ -6,7 +6,7 @@ import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import { rhythm, options } from "../utils/typography"
-import presets, { space } from "../utils/presets"
+import { space, radii } from "../utils/presets"
 
 class ContributorPageTemplate extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class ContributorPageTemplate extends React.Component {
                 css={{
                   height: rhythm(2.3),
                   width: rhythm(2.3),
-                  borderRadius: presets.radii[6],
+                  borderRadius: radii[6],
                   display: `inline-block`,
                   verticalAlign: `middle`,
                 }}

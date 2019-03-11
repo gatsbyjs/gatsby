@@ -9,7 +9,7 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, transition, radii } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -61,7 +61,7 @@ class FeaturedSites extends Component {
           <img
             src={FeaturedSitesIcon}
             alt="icon"
-            css={{ marginBottom: 0, height: `1rem` }}
+            css={{ marginBottom: 0, height: rhythm(space[4]) }}
           />
           <h1
             css={{
@@ -163,7 +163,9 @@ class FeaturedSites extends Component {
                       fontWeight: `bold`,
                       color: colors.gray.dark,
                       fontFamily: options.headerFontFamily.join(`,`),
-                      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+                      transition: `box-shadow ${transition.speed.slow} ${
+                        transition.curve.default
+                      }, transform .3s ${transition.curve.default}`,
                       "&:hover": { ...styles.screenshotHover },
                     },
                   }}
@@ -220,15 +222,15 @@ class FeaturedSites extends Component {
                 css={{
                   marginRight: `${rhythm(space[6])} !important`,
                   backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                  borderRadius: presets.radii[1],
+                  borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
                     border: `1px solid ${colors.ui.light}`,
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
+                    transition: `all ${transition.speed.default} ${
+                      transition.curve.default
                     }`,
                     "&:hover": {
-                      background: `#fff`,
+                      background: colors.white,
                       transform: `translateY(-3px)`,
                       boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
                     },
@@ -239,7 +241,7 @@ class FeaturedSites extends Component {
               >
                 <div
                   css={{
-                    borderRadius: presets.radii[1],
+                    borderRadius: radii[1],
                     display: `flex`,
                     alignItems: `center`,
                     position: `relative`,

@@ -35,13 +35,13 @@ const Content = styled(`div`)`
   white-space: nowrap;
 
   a {
-    color: #fff;
-    border-bottom: 1px solid #fff;
+    color: ${colors.white};
+    border-bottom: 1px solid ${colors.white};
   }
 
   a:hover {
-    color: #fff;
-    border-bottom-color: #ffffffa0;
+    color: ${colors.white};
+    border-bottom-color: ${colors.white}a0;
   }
 `
 

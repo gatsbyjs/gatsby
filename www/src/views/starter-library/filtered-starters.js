@@ -5,7 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -192,7 +192,7 @@ export default class FilteredStarterLibrary extends Component {
                   display: `none`,
                   [presets.Lg]: {
                     border: 0,
-                    borderRadius: presets.radii[2],
+                    borderRadius: radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
                     background: `red`,

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 
 import { rhythm } from "../../utils/typography"
-import presets, { space } from "../../utils/presets"
+import presets, { space, radii } from "../../utils/presets"
 
 const BOX_SHADOW_BLUR = `8px`
 
@@ -19,7 +19,7 @@ export const HorizontalScrollerContent = styled(`ul`)`
 
 export const HorizontalScrollerItem = styled(`li`)`
   background: #fff;
-  border-radius: ${presets.radii[2]}px;
+  border-radius: ${radii[2]}px;
   /* box-shadow: 0 0 ${BOX_SHADOW_BLUR} rgba(0, 0, 0, 0.2); */
   box-shadow: ${presets.shadows.card};
   margin: 0;

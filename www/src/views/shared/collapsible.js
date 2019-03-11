@@ -51,7 +51,7 @@ class Collapsible extends Component {
               fontSize: presets.scale[1],
               marginTop: rhythm(space[6]),
               marginRight: rhythm(5 / 4),
-              letterSpacing: `.1em`,
+              letterSpacing: presets.letterSpacings.tracked,
               textTransform: `uppercase`,
               "&:hover": {
                 color: colors.gatsby,
