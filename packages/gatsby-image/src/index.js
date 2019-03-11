@@ -96,12 +96,11 @@ const noscriptImg = props => {
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
-  const opacity = props.opacity ? props.opacity : `1`
-  const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
   const crossOrigin = props.crossOrigin
     ? `crossorigin="${props.crossOrigin}" `
     : ``
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+
+  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -457,8 +456,6 @@ class Image extends React.Component {
                 __html: noscriptImg({
                   alt,
                   title,
-                  width: image.width,
-                  height: image.height,
                   ...image,
                 }),
               }}
