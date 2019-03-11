@@ -49,7 +49,7 @@ export const defaultOptions = {
         }
       }
   }`,
-  output: `/sitemap.xml`,
+  output: `sitemap.xml`,
   exclude: [
     `/dev-404-page`,
     `/404`,

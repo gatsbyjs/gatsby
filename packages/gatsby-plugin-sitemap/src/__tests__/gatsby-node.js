@@ -6,6 +6,15 @@ const { onPostBuild } = require(`../gatsby-node`)
 const internals = require(`../internals`)
 const pathPrefix = ``
 
+const cache = {
+  publicPath(filePath) {
+    if (!filePath) {
+      return `public`
+    }
+    return `public/${filePath}`
+  },
+}
+
 describe(`Test plugin sitemap`, async () => {
   it(`default settings work properly`, async () => {
     internals.writeFile = jest.fn()
@@ -34,7 +43,7 @@ describe(`Test plugin sitemap`, async () => {
         },
       },
     })
-    await onPostBuild({ graphql, pathPrefix }, {})
+    await onPostBuild({ graphql, pathPrefix, cache }, {})
     const [filePath, contents] = internals.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
     expect(contents).toMatchSnapshot()
@@ -80,7 +89,7 @@ describe(`Test plugin sitemap`, async () => {
               path
             }
           }
-        } 
+        }
     }`
     const options = {
       output: `custom-sitemap.xml`,
@@ -95,7 +104,7 @@ describe(`Test plugin sitemap`, async () => {
       exclude: [`/post/exclude-page`],
       query: customQuery,
     }
-    await onPostBuild({ graphql, pathPrefix }, options)
+    await onPostBuild({ graphql, pathPrefix, cache }, options)
     const [filePath, contents] = internals.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `custom-sitemap.xml`))
     expect(contents).toMatchSnapshot()
@@ -153,15 +162,15 @@ describe(`Test plugin sitemap`, async () => {
       const options = {
         sitemapSize: 1,
       }
-      await onPostBuild({ graphql, pathPrefix }, options)
+      await onPostBuild({ graphql, pathPrefix, cache }, options)
       expect(fs.createWriteStream.mock.calls[0][0]).toEqual(
-        `./public/sitemap-0.xml`
+        `public/sitemap-0.xml`
       )
       expect(fs.createWriteStream.mock.calls[1][0]).toEqual(
-        `./public/sitemap-1.xml`
+        `public/sitemap-1.xml`
       )
       expect(fs.createWriteStream.mock.calls[2][0]).toEqual(
-        `./public/sitemap-index.xml`
+        `public/sitemap-index.xml`
       )
       const [originalFile, newFile] = internals.renameFile.mock.calls[0]
       expect(originalFile).toEqual(path.join(`public`, `sitemap-index.xml`))
@@ -171,7 +180,7 @@ describe(`Test plugin sitemap`, async () => {
       const options = {
         sitemapSize: 100,
       }
-      await onPostBuild({ graphql, pathPrefix }, options)
+      await onPostBuild({ graphql, pathPrefix, cache }, options)
       const [filePath, contents] = internals.writeFile.mock.calls[0]
       expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
       expect(contents).toMatchSnapshot()
