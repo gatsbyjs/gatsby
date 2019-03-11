@@ -29,7 +29,7 @@ npm install --save-dev babel-preset-gatsby
 ```
 
 <!-- prettier-ignore-start -->
-```json5:title=.babelrc
+```json:title=.babelrc
 {
   "presets": [
     [
