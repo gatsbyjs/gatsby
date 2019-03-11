@@ -17,21 +17,21 @@ const PullquoteRoot = styled(`blockquote`)`
   padding: ${rhythm(space[7])} 3rem;
   position: relative;
   text-indent: ${rhythm(space[7])};
-  margin: 2.5rem 0;
+  margin: ${rhythm(space[8])} 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
-    margin: 2.5rem 0;
+    margin: ${rhythm(space[8])} 0;
   }
 
   ${presets.Lg} {
     line-height: ${presets.lineHeights.loose};
-    margin: 2.5rem -3.5rem;
+    margin: ${rhythm(space[8])} -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: 2.5rem -3.5rem;
+      margin: ${rhythm(space[8])} -3.5rem;
     }
   }
 `
@@ -46,7 +46,7 @@ const Citation = styled(`cite`)`
 
 const QuotationMark = styled(`span`)`
   display: flex;
-  left: 2.5rem;
+  left: ${rhythm(space[8])};
   position: absolute;
   top: ${rhythm(space[7])};
 

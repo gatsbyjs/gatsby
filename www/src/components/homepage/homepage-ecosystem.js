@@ -56,7 +56,7 @@ const SubTitle = styled(`h3`)`
   margin-top: ${rhythm(space[7])};
 
   ${presets.Lg} {
-    margin-left: 3rem;
+    margin-left: ${rhythm(space[9])};
     margin-bottom: ${rhythm(space[4])};
   }
 `

@@ -30,7 +30,7 @@ export const Header = styled(`header`)`
   }
 
   ${presets.Lg} {
-    margin-left: 3rem;
+    margin-left: ${rhythm(space[9])};
   }
 `
 
@@ -88,7 +88,7 @@ const Actions = styled(`div`)`
   }
 
   ${presets.Lg} {
-    margin: ${rhythm(space[4])} 0 2.5rem;
+    margin: ${rhythm(space[4])} 0 ${rhythm(space[8])};
   }
 `
 
