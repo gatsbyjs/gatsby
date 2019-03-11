@@ -75,7 +75,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
   ${presets.Lg} {
     background: ${colors.gatsby};
-    color: white;
+    color: ${colors.white};
     flex-shrink: 0;
     height: 160px;
 
@@ -83,7 +83,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     width: 125px;
 
     a {
-      color: white;
+      color: ${colors.white};
       padding: ${rhythm(space[5])};
       justify-content: flex-start;
 

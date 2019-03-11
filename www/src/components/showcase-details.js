@@ -444,7 +444,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
-                          color: `white`,
+                          color: colors.white,
                           borderBottom: `none`,
                         },
                         [shouldShowVisitButtonOnMobile && presets.Sm]: {

@@ -127,7 +127,7 @@ const SplitButton = ({
         ...styles.resetButton,
         marginLeft: `auto`,
         "&:hover": {
-          background: `white`,
+          background: colors.white,
         },
       }}
       onClick={() => onSectionTitleClick(item)}

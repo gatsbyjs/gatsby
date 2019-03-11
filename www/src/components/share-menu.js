@@ -159,7 +159,7 @@ export default ShareMenu
 const styles = {
   gatsby: {
     background: colors.gatsby,
-    textColor: `white`,
+    textColor: colors.white,
   },
   accent: {
     background: colors.accent,

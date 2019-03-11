@@ -19,7 +19,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 //       state={{ filter: `` }}
 //       activeStyle={{
 //         backgroundColor: colors.gatsby,
-//         color: `white`,
+//         color: colors.white,
 //       }}
 //       css={{
 //         ...styles.CreatorsHeaderLink,
@@ -168,7 +168,7 @@ const styles = {
       borderRadius: 40,
       "&:hover": {
         backgroundColor: colors.gatsby,
-        color: `white`,
+        color: colors.white,
       },
     },
   },

@@ -131,7 +131,7 @@ const styles = {
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       borderBottom: `none`,
-      color: `white`,
+      color: colors.white,
     },
   },
 }
