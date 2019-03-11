@@ -4892,3 +4892,15 @@
   built_by: Kaordica
   built_by_url: https://kaordica.design
   featured: false
+- title: We Are Clarks
+  url: "https://www.weareclarks.com"
+  main_url: "https://www.weareclarks.com"
+  source_url: "https://github.com/abeaclark/weareclarks"
+  description: >
+    A family travel blog.
+  categories:
+    - Blog
+    - Travel
+  built_by: Abe Clark
+  built_by_url: https://www.linkedin.com/in/abrahamclark/
+  featured: false
