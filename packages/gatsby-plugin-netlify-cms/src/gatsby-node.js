@@ -39,7 +39,7 @@ exports.onCreateDevServer = ({ app, store }) => {
       path.join(program.directory, `public/admin/index.html`),
       err => {
         if (err) {
-          res.status(500).end()
+          res.status(500).end(err.message)
         }
       }
     )
