@@ -108,7 +108,6 @@ const _options = {
         color: colors.gray.dark,
         fontSize: presets.scale[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
-        fontWeight: `bold`,
         letterSpacing: presets.letterSpacings.tracked,
         lineHeight: presets.lineHeights.solid,
         padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
