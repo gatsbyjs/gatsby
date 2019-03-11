@@ -8,7 +8,6 @@ exports.sourceNodes = (
   pluginOptions
 ) => {
   const { createNode } = actions
-
   let connectionURL = pluginOptions.connectionURL
 
   const dbName = pluginOptions.dbName || `local`
