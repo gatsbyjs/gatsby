@@ -220,11 +220,10 @@ class Image extends React.Component {
 
         // imgCached and imgLoaded must update after isVisible,
         // more details in this comments related commit
-        this.setState(
-          { isVisible: true },
-          () => this.setState({
-              imgLoaded: imageInCache,
-              imgCached: this.imageRef.current.currentSrc.length > 0
+        this.setState({ isVisible: true }, () =>
+          this.setState({
+            imgLoaded: imageInCache,
+            imgCached: this.imageRef.current.currentSrc.length > 0,
           })
         )
       })
@@ -264,7 +263,7 @@ class Image extends React.Component {
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHide = {
-      transitionDelay: `0.5s`
+      transitionDelay: `0.5s`,
     }
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
