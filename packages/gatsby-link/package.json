@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@reach/router": "^1.1.1",
     "@types/reach__router": "^1.0.0",
     "prop-types": "^15.6.1"
   },
@@ -26,6 +25,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
+    "@reach/router": "^1.1.1",
     "gatsby": "^2.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
