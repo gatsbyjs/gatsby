@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.28...gatsby@2.1.29) (2019-03-11)
+
+### Bug Fixes
+
+- **gatsby:** return graphqlRunner from bootstrap ([#12477](https://github.com/gatsbyjs/gatsby/issues/12477)) ([79b7d4e](https://github.com/gatsbyjs/gatsby/commit/79b7d4e))
+
 ## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.27...gatsby@2.1.28) (2019-03-11)
 
 ### Bug Fixes
