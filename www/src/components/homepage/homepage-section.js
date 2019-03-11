@@ -5,19 +5,19 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 
 const ICON_SIZE = `32px`
 
 const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
+  padding: ${rhythm(space[5])} ${rhythm(space[6])};
   width: 100%;
 
   ${presets.Xl} {
     margin: -1px 0;
-    padding: ${rhythm(1)} 5%;
+    padding: ${rhythm(space[5])} 5%;
   }
 
   ${presets.Xxl} {
@@ -38,7 +38,7 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: 1rem;
+  font-size: ${presets.scale[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
@@ -66,13 +66,13 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: 1.75rem;
+  font-size: ${presets.scale[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: 1.125rem;
+  font-size: ${presets.scale[3]};
   font-family: ${options.headerFontFamily.join(`,`)};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};

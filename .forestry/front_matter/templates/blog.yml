@@ -1,7 +1,6 @@
 ---
 label: blog
 hide_body: false
-is_partial: false
 fields:
 - name: title
   label: Title
@@ -34,4 +33,4 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/2019-02-04-Hapticmedia-Case-Study/index.md
+- docs/blog/2019-03-07-sell-gatsby-to-clients/how-to-talk-about-gatsby-to-clients-and-your-team.md

@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import styled from "@emotion/styled"
 
 import Banner from "../banner"
@@ -17,8 +16,6 @@ import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-// Other fonts
-import "typeface-spectral"
 
 const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
@@ -41,7 +38,6 @@ const StyledSkipNavLink = styled(SkipNavLink)`
   overflow: hidden;
   position: absolute;
   z-index: 100;
-  font-size: 0.85rem;
 
   :focus {
     padding: 0.9rem;
@@ -79,15 +75,7 @@ const LayoutWithHeading = props => {
 
       <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-      <Banner>
-        <OutboundLink
-          href="https://www.gatsbyjs.com/behind-the-scenes/"
-          css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
-        >
-          Watch now
-        </OutboundLink>
-        {`: “Behind the Scenes: What makes Gatsby Great”.`}
-      </Banner>
+      <Banner />
 
       <Navigation pathname={props.location.pathname} />
 

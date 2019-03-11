@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress-commands/compare/gatsby-cypress@0.1.4...gatsby-cypress@0.1.5) (2019-03-08)
+
+### Bug Fixes
+
+- **gatsby-cypress:** Run files through babel ([#12400](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress-commands/issues/12400)) ([bf7fe7f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress-commands/commit/bf7fe7f))
+
 ## 0.1.4 (2019-03-04)
 
 **Note:** Version bump only for package gatsby-cypress

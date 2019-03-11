@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 
 class Pagination extends React.Component {
@@ -35,7 +35,7 @@ class Pagination extends React.Component {
         css={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: `${rhythm(1)} 0`,
+          margin: `${rhythm(space[5])} 0`,
           flexDirection: `column`,
           [presets.Md]: {
             flexDirection: `row`,
@@ -49,7 +49,7 @@ class Pagination extends React.Component {
             padding: `0`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            marginBottom: rhythm(1 / 2),
+            marginBottom: rhythm(space[3]),
             [presets.Md]: {
               width: `15rem`,
               marginBottom: 0,

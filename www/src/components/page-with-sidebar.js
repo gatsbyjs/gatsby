@@ -12,14 +12,16 @@ export default props => {
       <Fragment>
         <div
           css={{
-            [presets.Md]: { paddingLeft: rhythm(10) },
+            [presets.Md]: {
+              paddingLeft: rhythm(presets.sidebar.width.default),
+            },
             [`${presets.Md} and (max-width:980px)`]: {
               ".gatsby-highlight": {
                 marginLeft: 0,
                 marginRight: 0,
               },
             },
-            [presets.Lg]: { paddingLeft: rhythm(12) },
+            [presets.Lg]: { paddingLeft: rhythm(presets.sidebar.width.large) },
           }}
         >
           {props.renderContent()}

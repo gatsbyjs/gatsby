@@ -5,7 +5,7 @@ import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import presets, { colors } from "../../utils/presets"
-import { scale, options } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -256,12 +256,12 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.ui.border}`,
+    borderRight: `1px solid ${colors.ui.light}`,
     display: `flex`,
     alignItems: `center`,
     height: presets.sidebarUtilityHeight,
     background: colors.ui.whisper,
-    paddingLeft: 40,
+    paddingLeft: 20,
     paddingRight: 8,
     borderBottom: `1px solid ${colors.ui.border}`,
   },
@@ -273,7 +273,7 @@ const styles = {
     overflowY: `auto`,
     transition: `opacity 0.5s ease`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.ui.border}`,
+    borderRight: `1px solid ${colors.ui.light}`,
     "::-webkit-scrollbar": {
       height: `6px`,
       width: `6px`,
@@ -294,16 +294,9 @@ const styles = {
   },
   list: {
     margin: 0,
-    paddingTop: 20,
-    paddingBottom: 104,
-    fontSize: scale(-2 / 10).fontSize,
-    [presets.Md]: {
-      fontSize: scale(-4 / 10).fontSize,
-      paddingBottom: 20,
-    },
-    "& a": {
-      fontFamily: options.systemFontFamily.join(`,`),
-    },
+    paddingTop: rhythm(options.blockMarginBottom),
+    paddingBottom: rhythm(options.blockMarginBottom),
+    fontSize: presets.scale[1],
     "& li": {
       margin: 0,
       listStyle: `none`,

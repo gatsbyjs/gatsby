@@ -1,12 +1,12 @@
 import React from "react"
-import typography, { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import typography, { rhythm } from "../utils/typography"
+import presets, { space } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
     css={{
-      marginRight: rhythm(3 / 4),
+      marginRight: rhythm(space[6]),
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
@@ -59,9 +59,9 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: rhythm(presets.gutters.default),
-      paddingTop: rhythm(1),
-      paddingBottom: rhythm(1),
+      padding: rhythm(space[8]),
+      paddingTop: rhythm(space[5]),
+      paddingBottom: rhythm(space[5]),
       marginBottom: rhythm(3),
       transition: `padding-top ${presets.animation.speedFast} ${
         presets.animation.curveDefault
@@ -97,14 +97,11 @@ const UsedBy = () => (
           color: presets.colors.lilac,
           letterSpacing: `0.02em`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          fontSize: scale(-2 / 5).fontSize,
+          fontSize: presets.scale[1],
           marginBottom: 0,
           [presets.Sm]: {
-            fontSize: scale(-2 / 5).fontSize,
+            fontSize: presets.scale[2],
             textAlign: `right`,
-          },
-          [presets.Lg]: {
-            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >
