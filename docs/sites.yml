@@ -4786,3 +4786,15 @@
   built_by: Cade Scroggins
   built_by_url: https://cadejs.com
   featured: false
+- title: Oliver Gomes Portfolio
+  main_url: https://oliver-gomes.github.io/v4/
+  url: https://oliver-gomes.github.io/v4/
+  description: >
+    As an artist and a web designer/developer, I wanted to find a way to present these two portfolios in a way that made sense.  I felt with new found power of speed, Gatsby helped keep my creativity intact with amazing response and versatility. I felt my butter smooth transition felt much better in user perspective and super happy with the power of Gatsby.
+  categories:
+    - Portfolio
+    - Web Development
+    - Blog
+  built_by: Oliver Gomes
+  built_by_url: https://github.com/oliver-gomes
+  featured: false
