@@ -16,7 +16,7 @@ const {
   getCachePath,
   getPublicPath,
   publicPath,
-  cachePath
+  cachePath,
 } = require(`../utils/cache`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
