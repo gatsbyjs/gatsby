@@ -84,7 +84,7 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent, ...x }) => {
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
