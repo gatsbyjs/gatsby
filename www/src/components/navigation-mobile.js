@@ -10,7 +10,7 @@ import {
 } from "../assets/mobile-nav-icons"
 import presets, { colors } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -41,7 +41,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
 )
 
 const MobileNavigation = () => (
-  <React.Fragment>
+  <>
     <span
       css={{
         position: `absolute`,
@@ -65,10 +65,10 @@ const MobileNavigation = () => (
         left: 0,
         right: 0,
         zIndex: 1,
-        borderTop: `1px solid ${colors.ui.border}`,
-        background: colors.ui.whisper,
+        borderTop: `1px solid ${colors.ui.light}`,
+        background: `#fff`,
         minHeight: presets.headerHeight,
-        fontFamily: typography.options.headerFontFamily.join(`,`),
+        fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
         [presets.Md]: {
           display: `none`,
@@ -81,7 +81,7 @@ const MobileNavigation = () => (
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
     </div>
-  </React.Fragment>
+  </>
 )
 
 export default MobileNavigation
@@ -116,17 +116,18 @@ const styles = {
   },
   link: {
     default: {
-      color: colors.gatsby,
-      borderRadius: presets.radius,
-      fontSize: scale(-1 / 2).fontSize,
+      color: colors.lilac,
+      borderRadius: presets.radii[1],
+      fontSize: presets.scale[0],
       flexShrink: 0,
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       width: 64,
       padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
         options.blockMarginBottom / 4
       )} 0`,
       textDecoration: `none`,
       textAlign: `center`,
+      WebkitFontSmoothing: `antialiased`,
       "& svg": {
         display: `block`,
         height: 32,
@@ -139,11 +140,8 @@ const styles = {
       },
     },
     active: {
-      "&&": {
-        color: colors.gatsby,
-        fontWeight: `bold`,
-        // WebkitFontSmoothing: `antialiased`,
-      },
+      color: colors.gatsby,
+      fontWeight: `bold`,
     },
   },
 }

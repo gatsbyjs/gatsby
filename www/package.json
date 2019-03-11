@@ -78,7 +78,6 @@
     "remove-markdown": "^0.3.0",
     "slash": "^1.0.0",
     "slugify": "^1.3.0",
-    "typeface-spectral": "^0.0.54",
     "typography": "^1.0.0-alpha.4",
     "typography-plugin-code": "^1.0.0-alpha.0",
     "zipkin": "^0.14.2",

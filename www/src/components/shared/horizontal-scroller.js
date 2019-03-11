@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 
 import { rhythm } from "../../utils/typography"
-import presets from "../../utils/presets"
+import presets, { space } from "../../utils/presets"
 
 const BOX_SHADOW_BLUR = `8px`
 
@@ -13,18 +13,17 @@ export const HorizontalScroller = styled(`div`)`
 export const HorizontalScrollerContent = styled(`ul`)`
   display: inline-flex;
   list-style: none;
-  padding: ${BOX_SHADOW_BLUR} ${rhythm(presets.gutters.default / 2)}
-    calc(${BOX_SHADOW_BLUR} * 1.5);
+  padding: ${BOX_SHADOW_BLUR} ${rhythm(space[6])} calc(${BOX_SHADOW_BLUR} * 1.5);
   margin: 0;
 `
 
 export const HorizontalScrollerItem = styled(`li`)`
   background: #fff;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   /* box-shadow: 0 0 ${BOX_SHADOW_BLUR} rgba(0, 0, 0, 0.2); */
-  box-shadow: ${presets.boxShadows.card.boxShadow};
+  box-shadow: ${presets.shadows.card};
   margin: 0;
-  margin-right: ${rhythm(presets.gutters.default / 2)};
+  margin-right: ${rhythm(space[6])};
   width: 77vw;
 
   :last-child {

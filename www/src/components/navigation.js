@@ -5,13 +5,13 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(1 / 3)
+const navItemHorizontalSpacing = rhythm(space[2])
 
 const iconColor = colors.lilac
 
@@ -142,8 +142,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Lg]: { display: !isHomepage && `flex` },
-              [presets.Xl]: { display: `flex` },
+              [presets.Lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -197,8 +196,8 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(3 / 4),
-    paddingRight: rhythm(3 / 4),
+    paddingLeft: rhythm(space[6]),
+    paddingRight: rhythm(space[6]),
     fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
@@ -206,7 +205,7 @@ const styles = {
     height: `100%`,
   },
   navItem: {
-    ...scale(-1 / 3),
+    fontSize: presets.scale[1],
     borderBottom: `0.125rem solid transparent`,
     color: `inherit`,
     display: `block`,
@@ -240,18 +239,15 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: 28,
+    height: `1.5rem`,
     margin: 0,
-    [presets.Md]: {
-      height: `1.55rem`,
-    },
   },
   logoLink: {
     alignItems: `center`,
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(1 / 2),
+    marginRight: rhythm(space[3]),
     textDecoration: `none`,
   },
 }

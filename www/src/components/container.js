@@ -1,29 +1,23 @@
 import React from "react"
-import presets from "../utils/presets"
 
+import presets from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
-const Container = ({
-  children,
-  className = ``,
-  hasSideBar = true,
-  overrideCSS = {},
-}) => (
+const Container = ({ children, hasSideBar = true, overrideCSS }) => (
   <div
     css={{
-      maxWidth: hasSideBar
-        ? rhythm(presets.maxWidthWithSidebar)
-        : rhythm(presets.maxWidth),
+      maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
       margin: `0 auto`,
-      padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
-      paddingBottom: rhythm(3.5),
+      padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
+        options.blockMarginBottom
+      )}`,
       position: `relative`,
-      [presets.Md]: {
-        paddingBottom: rhythm(1.5),
+      [presets.Lg]: {
+        paddingTop: rhythm(options.blockMarginBottom * 2),
+        paddingBottom: rhythm(options.blockMarginBottom * 2),
       },
       ...overrideCSS,
     }}
-    className={className}
   >
     {children}
   </div>

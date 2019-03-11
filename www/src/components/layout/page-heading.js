@@ -20,13 +20,13 @@ const H1 = styled(`h1`)`
   align-items: center;
   color: ${colors.lilac};
   display: flex;
-  font-size: 1.5rem;
+  font-size: ${presets.scale[5]};
   margin: 0;
   position: relative;
   width: 100%;
 
   ${presets.Md} {
-    transform: rotate(-90deg) translate(calc(-100% - 2rem), 0.7rem);
+    transform: rotate(-90deg) translate(calc(-100% - 2rem), 1rem);
     transform-origin: top left;
   }
 

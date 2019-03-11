@@ -1,7 +1,6 @@
 import React from "react"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
@@ -16,7 +15,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       width: `100%`,
       minWidth: `320px`,
       flexDirection: `column-reverse`,
-      padding: sharedStyles.gutter,
+      padding: rhythm(space[6]),
       paddingTop: 0,
       [presets.Sm]: {
         flexDirection: `row`,
@@ -24,7 +23,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         paddingBottom: 0,
       },
       [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
+        padding: rhythm(space[8]),
         paddingTop: 0,
         paddingBottom: 0,
       },
@@ -32,7 +31,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
   >
     <div
       css={{
-        marginTop: rhythm(3 / 4),
+        marginTop: rhythm(space[6]),
         paddingRight: 15,
         display: `flex`,
         flexWrap: `wrap`,
@@ -72,7 +71,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
 
     <div
       css={{
-        marginTop: rhythm(3 / 4),
+        marginTop: rhythm(space[6]),
         marginRight: 15,
         display: `flex`,
         flexWrap: `nowrap`,
@@ -124,8 +123,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <div
           css={{
             position: `absolute`,
-            right: rhythm(3 / 4),
-            top: rhythm(0 / 8),
+            right: rhythm(space[6]),
+            top: rhythm(0),
             left: `auto`,
             zIndex: 1,
             display: `flex`,
@@ -135,12 +134,12 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             href={demo}
             css={{
               border: 0,
-              borderRadius: presets.radius,
+              borderRadius: presets.radii[1],
               color: colors.accent,
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: rhythm(1.5 / 4),
-              padding: `${rhythm(1 / 6)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
+              padding: `${rhythm(space[1])} ${rhythm(presets.space[4])}`, // @todo same as site showcase but wrong for some reason
               textDecoration: `none`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {

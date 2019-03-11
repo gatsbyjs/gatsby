@@ -6,11 +6,16 @@ const { defaultIcons, doesIconExist } = require(`./common.js`)
 
 sharp.simd(true)
 
-// Handle Sharp's concurrency based on the Gatsby CPU count
-// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-// See: https://www.gatsbyjs.org/docs/multi-core-builds/
-const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
-sharp.concurrency(cpuCoreCount())
+try {
+  // Handle Sharp's concurrency based on the Gatsby CPU count
+  // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+  // See: https://www.gatsbyjs.org/docs/multi-core-builds/
+  const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
+  sharp.concurrency(cpuCoreCount())
+} catch {
+  // if above throws error this probably means that used Gatsby version
+  // doesn't support cpu-core-count utility.
+}
 
 function generateIcons(icons, srcIcon) {
   return Promise.map(icons, icon => {

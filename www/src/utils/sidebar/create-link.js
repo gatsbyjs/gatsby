@@ -1,7 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import presets, { colors } from "../presets"
+import presets, { colors, space } from "../presets"
+import { rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
@@ -55,7 +56,7 @@ const createLink = ({
 
 const bulletOffset = {
   default: {
-    left: -25,
+    left: -28,
     top: `1.15em`,
   },
   desktop: {
@@ -92,7 +93,7 @@ const styles = {
     },
   },
   link: {
-    paddingRight: 40,
+    paddingRight: rhythm(space[4]),
     minHeight: 40,
     paddingTop: 10,
     paddingBottom: 10,
@@ -102,6 +103,7 @@ const styles = {
     "&&": {
       border: 0,
       boxShadow: `none`,
+      color: colors.gray.lightCopy,
       fontWeight: `normal`,
       "&:hover": {
         background: `transparent`,
@@ -121,7 +123,7 @@ const styles = {
       }`,
     },
     "&:before": {
-      borderRadius: `100%`,
+      borderRadius: presets.radii[6],
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
@@ -131,7 +133,7 @@ const styles = {
     },
     "&:after": {
       background: colors.gatsby,
-      borderRadius: 4,
+      borderRadius: presets.radii[2],
       content: `''`,
       left: bulletOffset.default.left + 7,
       opacity: 0,
@@ -146,7 +148,7 @@ const styles = {
     ...bulletOffset.default,
     background: `#fff`,
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `100%`,
+    borderRadius: presets.radii[6],
     display: `block`,
     fontWeight: `normal`,
     height: bulletSize,

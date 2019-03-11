@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
@@ -49,10 +49,10 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${rhythm(1)};
+  font-size: ${rhythm(space[5])};
 `
 const CancelIcon = styled(CancelMdIcon)`
-  font-size: ${rhythm(1.2)};
+  font-size: ${presets.scale[3]};
 `
 
 const StatusMessage = styled(`span`)`
@@ -61,7 +61,7 @@ const StatusMessage = styled(`span`)`
   background: ${colors.gray.dark};
   bottom: 60px;
   color: #fff;
-  font-size: 16px;
+  font-size: ${presets.scale[2]};
   padding: 0.4rem 0.8rem;
   text-align: left;
   left: 0;
@@ -74,7 +74,7 @@ const FeedbackForm = styled(`div`)`
   width: 90%;
   background-color: ${colors.gatsby};
   box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${presets.radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
   ${presets.Md} {
@@ -93,7 +93,7 @@ const Label = styled(`label`)`
   justify-content: center;
   align-items: center;
   padding: 40px;
-  font-size: 22px;
+  font-size: ${presets.scale[3]};
   float: left;
 `
 
@@ -105,7 +105,7 @@ const Input = styled(`input`)`
   float: left;
   height: 60px;
   width: calc(100% - 60px);
-  font-size: 14px;
+  font-size: ${presets.scale[1]};
   padding: 20px;
   border: none;
   resize: none;

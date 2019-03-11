@@ -1,5 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
+jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
   return {
@@ -16,6 +17,8 @@ const {
   queueImageResizing,
   getImageSize,
 } = require(`../`)
+const { scheduleJob } = require(`../scheduler`)
+scheduleJob.mockResolvedValue(Promise.resolve())
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -50,7 +53,7 @@ describe(`gatsby-plugin-sharp`, () => {
       // test name encoding with various characters
       const testName = `spaces and '"@#$%^&,`
 
-      const queueResult = await queueImageResizing({
+      const queueResult = queueImageResizing({
         file: getFileObject(
           path.join(__dirname, `images/144-density.png`),
           testName
@@ -67,6 +70,19 @@ describe(`gatsby-plugin-sharp`, () => {
       // testname should match, the queue result should not
       expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
       expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
+    })
+
+    // re-enable when image processing on demand is implemented
+    it.skip(`should process immediately when asked`, async () => {
+      scheduleJob.mockClear()
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      await result.finishedPromise
+
+      expect(scheduleJob).toMatchSnapshot()
     })
   })
 

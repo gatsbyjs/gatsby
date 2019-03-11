@@ -1,25 +1,21 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${rhythm(presets.gutters.default)}`,
+      margin: `0 ${rhythm(space[8])}`,
       paddingBottom: rhythm(2),
       paddingTop: rhythm(2),
       textAlign: `center`,
       [presets.Md]: {
-        paddingTop: `calc(${presets.headerHeight} + ${
-          presets.bannerHeight
-        } + ${rhythm(1)})`,
-      },
-      [presets.Lg]: {
         paddingBottom: rhythm(3),
+        paddingTop: rhythm(3),
       },
     }}
   >
@@ -28,7 +24,7 @@ const MastheadContent = () => (
         color: colors.gatsby,
         fontSize: `calc(12px + 2vh + 3.5vw)`,
         letterSpacing: `-1px`,
-        lineHeight: 1.1,
+        lineHeight: presets.lineHeights.solid,
         margin: `0 auto 1.75rem`,
         maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,
@@ -40,21 +36,21 @@ const MastheadContent = () => (
       css={{
         color: colors.gray.copy,
         fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: scale(1 / 5).fontSize,
-        maxWidth: rhythm(26),
+        fontSize: presets.scale[4],
+        maxWidth: rhythm(30),
         margin: `0 auto 2rem`,
         WebkitFontSmoothing: `antialiased`,
         [presets.Sm]: {
-          fontSize: scale(2 / 5).fontSize,
+          fontSize: presets.scale[5],
         },
         [presets.Lg]: {
-          maxWidth: rhythm(28),
-          fontSize: scale(3 / 5).fontSize,
+          fontSize: presets.scale[6],
         },
       }}
     >
       Gatsby is a free and open source framework based on React that helps
-      developers build blazing fast <strong>websites</strong> and{` `}
+      developers build blazing fast <strong>websites</strong> and
+      {` `}
       <strong>apps</strong>
     </p>
     <Button

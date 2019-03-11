@@ -12,12 +12,12 @@ import {
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${rhythm(presets.gutters.default / 2)};
+  margin: -6px -${rhythm(space[6])};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -33,7 +33,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${rhythm(presets.gutters.default)};
+  margin-right: ${rhythm(space[8])};
   position: relative;
 
   :last-child {
@@ -55,9 +55,9 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: ${presets.scale[4]};
     justify-content: center;
-    line-height: 1.2;
+    line-height: ${presets.lineHeights.dense};
     padding: ${rhythm(1.5)};
     width: 100%;
 
@@ -79,11 +79,12 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${rhythm(presets.gutters.default)};
+    margin-left: ${rhythm(space[8])};
     width: 125px;
 
     a {
-      padding: ${rhythm(1)};
+      color: white;
+      padding: ${rhythm(space[5])};
       justify-content: flex-start;
 
       &:hover {
@@ -156,7 +157,7 @@ class HomepageBlogPosts extends Component {
     const { desktopViewport } = this.state
 
     return (
-      <React.Fragment>
+      <>
         {desktopViewport ? (
           <HomepageBlogPostsRootDesktop>
             {postsInColumns.map((column, colIdx) => (
@@ -210,7 +211,7 @@ class HomepageBlogPosts extends Component {
             </HorizontalScrollerContentAsDiv>
           </HomepageBlogPostsRootMobile>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }

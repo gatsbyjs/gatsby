@@ -1,5 +1,5 @@
 import React from "react"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const Card = ({ children }) => (
@@ -34,11 +34,11 @@ const Card = ({ children }) => (
   >
     <div
       css={{
-        padding: rhythm(presets.gutters.default / 2),
+        padding: rhythm(space[6]),
         paddingBottom: 0,
         transform: `translateZ(0)`,
-        [presets.Xs]: {
-          padding: rhythm(presets.gutters.default),
+        [presets.Sm]: {
+          padding: rhythm(space[8]),
         },
       }}
     >
