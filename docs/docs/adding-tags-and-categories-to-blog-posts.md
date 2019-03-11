@@ -54,8 +54,7 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
   ) {
     edges {
       node {
-        fields
-        {
+        fields {
           slug
         }
         frontmatter {
@@ -127,7 +126,7 @@ Tags.propTypes = {
             }),
             fields: PropTypes.shape({
               slug: PropTypes.string.isRequired,
-            })
+            }),
           }),
         }).isRequired
       ),
@@ -184,8 +183,7 @@ exports.createPages = ({ actions, graphql }) => {
       ) {
         edges {
           node {
-            fields
-            {
+            fields {
               slug
             }
             frontmatter {
@@ -307,9 +305,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      limit: 2000
-    ) {
+    allMarkdownRemark(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
         totalCount
