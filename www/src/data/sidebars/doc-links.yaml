@@ -112,6 +112,8 @@
     - title: Querying Your Data with GraphQL
       link: /docs/graphql/
       items:
+        - title: Why Gatsby Uses GraphQL
+          link: /docs/why-gatsby-uses-graphql/
         - title: Understanding GraphQL Syntax
           link: /docs/graphql-reference/
         - title: Introducing GraphiQL
