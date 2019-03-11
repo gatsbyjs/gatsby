@@ -4798,3 +4798,13 @@
   built_by: Oliver Gomes
   built_by_url: https://github.com/oliver-gomes
   featured: false
+- title: Patrik Szewczyk
+  url: https://www.szewczyk.cz/
+  main_url: https://www.szewczyk.cz/
+  description: >
+    Patrik Szewczyk – Javascript, Typescript, React, Node.js developer, Redux, Reason
+  categories:
+    - Portfolio
+  built_by: Patrik Szewczyk
+  built_by_url: https://linkedin.com/in/thepatriczek/
+  featured: false
