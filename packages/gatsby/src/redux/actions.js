@@ -17,6 +17,7 @@ const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
+const { getCachePath } = require(`../utils/cache`)
 
 const actions = {}
 
@@ -288,7 +289,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   //
   // Only run validation once during builds.
   if (
-    !internalPage.component.includes(`/.cache/`) &&
+    !internalPage.component.includes(getCachePath()) &&
     (process.env.NODE_ENV === `production` &&
       !fileOkCache[internalPage.component])
   ) {

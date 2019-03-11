@@ -3,6 +3,7 @@ import crypto from "crypto"
 import fs from "fs-extra"
 import { store, emitter } from "../../redux/"
 import { joinPath } from "../../utils/path"
+const { getCachePath } = require(`../../utils/cache`)
 
 let lastHash = null
 
@@ -26,7 +27,7 @@ const writeRedirects = async () => {
   lastHash = newHash
 
   return await fs.writeFile(
-    joinPath(program.directory, `.cache/redirects.json`),
+    joinPath(getCachePath(program.directory), `redirects.json`),
     JSON.stringify(browserRedirects, null, 2)
   )
 }

@@ -41,9 +41,8 @@ module.exports = async args => {
   return {}
 }
 
-async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
-  const program = store.getState().program
-  const cacheDir = resolve(`${program.directory}/.cache/sqip/`)
+async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
+  const cacheDir = resolve(cache.rootPath(`/sqip/`))
 
   await ensureDir(cacheDir)
 
@@ -130,15 +129,14 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ type, cache, store }) {
+async function sqipContentful({ type, cache }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
 
   const cacheImage = require(`gatsby-source-contentful/cache-image`)
 
-  const program = store.getState().program
-  const cacheDir = resolve(`${program.directory}/.cache/sqip/`)
+  const cacheDir = resolve(cache.rootPath(`/sqip/`))
 
   await ensureDir(cacheDir)
 
@@ -217,7 +215,7 @@ async function sqipContentful({ type, cache, store }) {
           background,
         }
 
-        const absolutePath = await cacheImage(store, asset, options)
+        const absolutePath = await cacheImage(cache, asset, options)
 
         return generateSqip({
           cache,

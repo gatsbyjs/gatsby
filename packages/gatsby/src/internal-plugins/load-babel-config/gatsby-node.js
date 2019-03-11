@@ -3,11 +3,9 @@
 const fs = require(`fs-extra`)
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)
-const { withBasePath } = require(`../../utils/path`)
 
-exports.onPreBootstrap = async ({ store }) => {
-  const { directory, browserslist } = store.getState().program
-  const directoryPath = withBasePath(directory)
+exports.onPreBootstrap = async ({ cache, store }) => {
+  const { browserslist } = store.getState().program
 
   await apiRunnerNode(`onCreateBabelConfig`, {
     stage: `develop`,
@@ -31,5 +29,5 @@ exports.onPreBootstrap = async ({ store }) => {
     2
   )
 
-  await fs.writeFile(directoryPath(`.cache/babelState.json`), babelState)
+  await fs.writeFile(cache.rootPath(`babelState.json`), babelState)
 }

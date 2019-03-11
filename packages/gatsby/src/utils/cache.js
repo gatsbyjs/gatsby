@@ -6,6 +6,21 @@ const path = require(`path`)
 const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
 
+function getCachePath(cwd) {
+  const { GATSBY_CACHE } = process.env
+  if (GATSBY_CACHE) {
+    if (path.isAbsolute(GATSBY_CACHE)) {
+      return GATSBY_CACHE
+    }
+    return path.join(cwd || process.cwd(), GATSBY_CACHE)
+  }
+  return path.join(cwd || process.cwd(), `./.cache`)
+}
+
+function cachePath(filePath, cwd) {
+  return path.join(getCachePath(cwd), filePath)
+}
+
 class Cache {
   constructor({ name = `db`, store = fsStore } = {}) {
     this.name = name
@@ -13,7 +28,15 @@ class Cache {
   }
 
   get directory() {
-    return path.join(process.cwd(), `.cache/caches/${this.name}`)
+    return cachePath(`caches/${this.name}`)
+  }
+
+  get rootDirectory() {
+    return getCachePath()
+  }
+
+  rootPath(filePath) {
+    return cachePath(filePath)
   }
 
   init() {
@@ -56,3 +79,5 @@ class Cache {
 }
 
 module.exports = Cache
+module.exports.getCachePath = getCachePath
+module.exports.cachePath = cachePath

@@ -458,7 +458,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store }) => {
+exports.extendNodeType = ({ type, cache }) => {
   if (type.name.match(/contentful.*RichTextNode/)) {
     return {
       nodeType: {
@@ -491,7 +491,7 @@ exports.extendNodeType = ({ type, store }) => {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options)
+    const absolutePath = await cacheImage(cache, image, options)
     const extension = path.extname(absolutePath)
 
     return traceSVG({

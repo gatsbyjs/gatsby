@@ -12,6 +12,7 @@ const Promise = require(`bluebird`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
+const { getCachePath } = require(`../utils/cache`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -165,7 +166,7 @@ module.exports = async (args: BootstrapArgs) => {
   let state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
-  // Check if anything has changed. If it has, delete the site's .cache
+  // Check if anything has changed. If it has, delete the site's cache
   // directory and tell reducers to empty themselves.
   //
   // Also if the hash isn't there, then delete things just in case something
@@ -177,14 +178,14 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-  const cacheDirectory = `${program.directory}/.cache`
+  const cacheDirectory = getCachePath()
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       // Attempt to empty dir if remove fails,
       // like when directory is mount point
       await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
-      report.error(`Failed to remove .cache files.`, e)
+      report.error(`Failed to remove cache files.`, e)
     }
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
@@ -199,7 +200,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: pluginsHash,
   })
 
-  // Now that we know the .cache directory is safe, initialize the cache
+  // Now that we know the cache directory is safe, initialize the cache
   // directory.
   await fs.ensureDir(cacheDirectory)
 
@@ -251,12 +252,12 @@ module.exports = async (args: BootstrapArgs) => {
     })
     await fs.ensureDirSync(`${cacheDirectory}/json`)
 
-    // Ensure .cache/fragments exists and is empty. We want fragments to be
+    // Ensure cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
     await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
-    report.panic(`Unable to copy site files to .cache`, err)
+    report.panic(`Unable to copy site files to cache`, err)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write

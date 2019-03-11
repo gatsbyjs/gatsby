@@ -7,12 +7,13 @@ const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
+const { getCachePath } = require(`../utils/cache`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
 const getPages = directory =>
   fs
-    .readFile(path.join(directory, `.cache`, `pages.json`))
+    .readFile(path.join(getCachePath(directory), `pages.json`))
     .then(contents => JSON.parse(contents))
     .catch(() => [])
 

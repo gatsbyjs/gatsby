@@ -6,6 +6,8 @@ const fs = require(`fs-extra`)
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 
+const { CACHE_NAME } = require(`./constants`)
+
 const conflictFieldPrefix = `contentful`
 
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
@@ -215,12 +217,8 @@ exports.sourceNodes = async (
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
-  const program = store.getState().program
-
-  const CACHE_DIR = path.resolve(
-    `${program.directory}/.cache/contentful/assets/`
-  )
+exports.onPreExtractQueries = async ({ cache, getNodesByType }) => {
+  const CACHE_DIR = path.resolve(cache.rootPath(CACHE_NAME))
   await fs.ensureDir(CACHE_DIR)
 
   if (getNodesByType(`ContentfulAsset`).length == 0) {
@@ -243,6 +241,6 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   // add our fragments to .cache/fragments.
   await fs.copy(
     require.resolve(`gatsby-source-contentful/src/fragments.js`),
-    `${program.directory}/.cache/fragments/contentful-asset-fragments.js`
+    cache.rootPath(`fragments/contentful-asset-fragments.js`)
   )
 }

@@ -85,9 +85,9 @@ function allTypeQuery(typeName) {
 }
 
 // Create template in .cache for the received type
-function createTemplateFile(typeName) {
+function createTemplateFile(cache, typeName) {
   const templateSrc = createPageTemplateJs(typeName)
-  const templateFilename = `./.cache/${typeName}Template.js`
+  const templateFilename = cache.rootPath(`./${typeName}Template.js`)
   fs.writeFileSync(templateFilename, templateSrc)
   return templateFilename
 }
@@ -99,10 +99,10 @@ async function createNode(graphql, typeName) {
 }
 
 // Create page for each type
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, cache }) => {
   for (let i = 0; i < types.length; i++) {
     const typeName = types[i]
-    const templateFilename = createTemplateFile(typeName)
+    const templateFilename = createTemplateFile(cache, typeName)
     const edges = await createNode(graphql, typeName)
     _.forEach(edges, ({ node }) => {
       actions.createPage({

@@ -1,4 +1,4 @@
-// This module is also copied into the .cache directory some modules copied there
+// This module is also copied into the cache directory some modules copied there
 // from cache-dir can also use this module.
 export default (moduleName, err) => {
   const regex = new RegExp(

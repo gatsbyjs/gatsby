@@ -47,7 +47,6 @@ const bar = new ProgressBar(
  * @description Create Remote File Node Payload
  *
  * @param  {String} options.url
- * @param  {Redux} options.store
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
@@ -71,7 +70,6 @@ const createHash = str =>
     .update(str)
     .digest(`hex`)
 
-const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
 
 /**
@@ -180,7 +178,6 @@ const requestRemoteNode = (url, headers, tmpFilename) =>
  */
 async function processRemoteNode({
   url,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -190,11 +187,7 @@ async function processRemoteNode({
   name,
 }) {
   // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
+  const pluginCacheDir = cache.rootPath(FS_PLUGIN_DIR)
   await fs.ensureDir(pluginCacheDir)
 
   // See if there's response headers for this url
@@ -307,7 +300,6 @@ let totalJobs = 0
  */
 module.exports = ({
   url,
-  store,
   cache,
   createNode,
   parentNodeId = null,
@@ -326,9 +318,6 @@ module.exports = ({
   }
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
-  }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
@@ -351,7 +340,6 @@ module.exports = ({
 
   const fileDownloadPromise = pushTask({
     url,
-    store,
     cache,
     createNode,
     parentNodeId,

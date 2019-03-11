@@ -2,16 +2,11 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const chokidar = require(`chokidar`)
 
-exports.createPagesStatefully = async ({ store, actions }, options, done) => {
+exports.createPagesStatefully = async ({ actions, cache }, options, done) => {
   if (process.env.NODE_ENV !== `production`) {
-    const { program } = store.getState()
     const { createPage } = actions
     const source = path.join(__dirname, `./raw_dev-404-page.js`)
-    const destination = path.join(
-      program.directory,
-      `.cache`,
-      `dev-404-page.js`
-    )
+    const destination = cache.rootPath(`dev-404-page.js`)
     const copy = () => fs.copy(source, destination)
     await copy()
     createPage({

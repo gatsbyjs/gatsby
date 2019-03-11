@@ -3,6 +3,7 @@ const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 
 const { store, emitter } = require(`../../redux/`)
+const { getCachePath } = require(`../../utils/cache`)
 
 import { joinPath } from "../../utils/path"
 
@@ -58,6 +59,8 @@ const writePages = async () => {
     return Promise.resolve()
   }
 
+  const cacheDirectory = getCachePath()
+
   lastHash = newHash
 
   // Get list of components, and json files.
@@ -102,13 +105,12 @@ const preferDefault = m => m && m.default || m
 }\n\n`
 
   asyncRequires += `exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "${joinPath(
-    program.directory,
-    `.cache`,
+    cacheDirectory,
     `data.json`
   )}")\n\n`
 
   const writeAndMove = (file, data) => {
-    const destination = joinPath(program.directory, `.cache`, file)
+    const destination = joinPath(cacheDirectory, file)
     const tmp = `${destination}.${Date.now()}`
     return fs
       .writeFile(tmp, data)

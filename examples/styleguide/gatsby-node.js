@@ -1,13 +1,12 @@
 const path = require(`path`)
 const fs = require(`fs`)
-const appRootDir = require(`app-root-dir`).get()
 
 const componentPageTemplate = path.resolve(
   `src/templates/ComponentPage/index.js`
 )
 const tableOfContentsTemplate = path.resolve(`src/templates/TOC/index.js`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = ({ graphql, actions, cache }) => {
   const { createPage } = actions
 
   return new Promise((resolve, reject) => {
@@ -83,10 +82,7 @@ exports.createPages = ({ graphql, actions }) => {
               }, [])
               .join(`\n`) + `\n`
 
-          fs.writeFileSync(
-            path.join(appRootDir, `.cache/components.js`),
-            exportFileContents
-          )
+          fs.writeFileSync(cache.rootPath(`components.js`), exportFileContents)
 
           allComponents.forEach(data => {
             const { filePath } = data

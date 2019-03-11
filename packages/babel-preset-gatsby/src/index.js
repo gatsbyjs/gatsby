@@ -2,14 +2,22 @@ const path = require(`path`)
 
 const resolve = m => require.resolve(m)
 
+const cachePath = filePath => {
+  const { GATSBY_CACHE } = process.env
+  if (GATSBY_CACHE) {
+    if (path.isAbsolute(GATSBY_CACHE)) {
+      return path.join(GATSBY_CACHE, filePath)
+    }
+    return path.join(process.cwd(), GATSBY_CACHE, filePath)
+  }
+  return path.join(process.cwd(), `./.cache`, filePath)
+}
+
 const loadCachedConfig = () => {
   let pluginBabelConfig = {}
   if (process.env.NODE_ENV !== `test`) {
     try {
-      pluginBabelConfig = require(path.join(
-        process.cwd(),
-        `./.cache/babelState.json`
-      ))
+      pluginBabelConfig = require(cachePath(`babelState.json`))
     } catch (err) {
       if (err.message.includes(`Cannot find module`)) {
         // This probably is being used outside of the Gatsby CLI.

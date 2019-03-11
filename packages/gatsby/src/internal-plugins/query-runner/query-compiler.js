@@ -21,6 +21,7 @@ import {
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
 const websocketManager = require(`../../utils/websocket-manager`)
+const { getCachePath } = require(`../../utils/cache`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
@@ -101,7 +102,7 @@ class Runner {
     const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
     let files = [
       path.join(this.base, `src`),
-      path.join(this.base, `.cache`, `fragments`),
+      path.join(getCachePath(this.base), `fragments`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
       .reduce(

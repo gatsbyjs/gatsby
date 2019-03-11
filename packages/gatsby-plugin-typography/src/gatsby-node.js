@@ -2,9 +2,9 @@ const fs = require(`fs`)
 const path = require(`path`)
 const os = require(`os`)
 
-// Write out a typography module to .cache.
+// Write out a typography module to the cache.
 
-exports.onPreBootstrap = ({ store }, pluginOptions) => {
+exports.onPreBootstrap = ({ store, cache }, pluginOptions) => {
   const program = store.getState().program
 
   let module
@@ -23,11 +23,9 @@ const typography = new Typography()
 module.exports = typography`
   }
 
-  const dir = `${__dirname}/.cache`
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir)
+  if (!fs.existsSync(cache.rootDirectory)) {
+    fs.mkdirSync(cache.rootDirectory)
   }
 
-  fs.writeFileSync(`${dir}/typography.js`, module)
+  fs.writeFileSync(`${cache.rootPath(`typography.js`)}`, module)
 }

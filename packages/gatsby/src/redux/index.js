@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
+const { getCachePath } = require(`../utils/cache`)
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -29,7 +30,7 @@ const mapToObject = map => {
 // Read from cache the old node data.
 let initialState = {}
 try {
-  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
+  const file = fs.readFileSync(`${getCachePath()}/redux-state.json`)
   // Apparently the file mocking in node-tracking-test.js
   // can override the file reading replacing the mocked string with
   // an already parsed object.
@@ -89,7 +90,7 @@ function saveState() {
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
   const stringified = stringify(pickedState, null, 2)
-  return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
+  return fs.writeFile(`${getCachePath()}/redux-state.json`, stringified)
 }
 
 exports.saveState = saveState

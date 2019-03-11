@@ -197,7 +197,6 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.downloadMediaFiles = ({
   nodes,
-  store,
   cache,
   createNode,
   createNodeId,
@@ -212,7 +211,6 @@ exports.downloadMediaFiles = ({
         fileNode = await createRemoteFileNode({
           url: node.source_url,
           parentNodeId: node.id,
-          store,
           cache,
           createNode,
           createNodeId,
@@ -243,7 +241,6 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file-without-an-extension`,
   parentNodeId: node.id,
-  store,
   cache,
   createNode,
   createNodeId,

@@ -13,6 +13,7 @@ const { withBasePath } = require(`./path`)
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 const hasLocalEslint = require(`./local-eslint-config-finder`)
+const { getCachePath } = require(`./cache`)
 
 // Four stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -27,6 +28,7 @@ module.exports = async (
   webpackPort = 1500
 ) => {
   const directoryPath = withBasePath(directory)
+  const cachePath = withBasePath(getCachePath(directory))
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
 
@@ -153,20 +155,20 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
-            directoryPath(`.cache/app`),
+            cachePath(`app`),
           ],
         }
       case `develop-html`:
         return {
-          main: directoryPath(`.cache/develop-static-entry`),
+          main: cachePath(`develop-static-entry`),
         }
       case `build-html`:
         return {
-          main: directoryPath(`.cache/static-entry`),
+          main: cachePath(`static-entry`),
         }
       case `build-javascript`:
         return {
-          app: directoryPath(`.cache/production-app`),
+          app: cachePath(`production-app`),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -316,7 +318,7 @@ module.exports = async (
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
       alias: {
-        gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        gatsby$: cachePath(`gatsby-browser-entry.js`),
         // Using directories for module resolution is mandatory because
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
@@ -327,10 +329,8 @@ module.exports = async (
         "react-hot-loader": path.dirname(
           require.resolve(`react-hot-loader/package.json`)
         ),
-        "react-lifecycles-compat": directoryPath(
-          `.cache/react-lifecycles-compat.js`
-        ),
-        "create-react-context": directoryPath(`.cache/create-react-context.js`),
+        "react-lifecycles-compat": cachePath(`react-lifecycles-compat.js`),
+        "create-react-context": cachePath(`create-react-context.js`),
       },
     }
   }

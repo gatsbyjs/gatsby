@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const nodePath = require(`path`)
 const fs = require(`fs`)
 const React = require(`react`)
 
@@ -13,13 +12,11 @@ function urlJoin(...parts) {
 }
 
 let pd = []
-const readPageData = () => {
+const readPageData = cache => {
   if (pd.length > 0) {
     return pd
   } else {
-    pd = JSON.parse(
-      fs.readFileSync(nodePath.join(process.cwd(), `.cache`, `data.json`))
-    )
+    pd = JSON.parse(fs.readFileSync(cache.rootPath(`data.json`)))
     return pd
   }
 }
@@ -37,11 +34,11 @@ const readStats = () => {
 }
 
 exports.onRenderBody = (
-  { setHeadComponents, pathname, pathPrefix },
+  { setHeadComponents, pathname, pathPrefix, cache },
   pluginOptions
 ) => {
   if (process.env.NODE_ENV === `production`) {
-    const pagesData = readPageData()
+    const pagesData = readPageData(cache)
     const stats = readStats()
     const matchedPaths = Object.keys(
       guess({ path: pathname, threshold: pluginOptions.minimumThreshold })

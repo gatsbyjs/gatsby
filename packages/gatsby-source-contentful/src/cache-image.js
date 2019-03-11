@@ -4,9 +4,10 @@ const { resolve, parse } = require(`path`)
 const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
 
-module.exports = async function cacheImage(store, image, options) {
-  const program = store.getState().program
-  const CACHE_DIR = resolve(`${program.directory}/.cache/contentful/assets/`)
+const { CACHE_NAME } = require(`./constants`)
+
+module.exports = async function cacheImage(cache, image, options) {
+  const CACHE_DIR = resolve(cache.rootPath(CACHE_NAME))
   const {
     file: { url, fileName, details },
   } = image

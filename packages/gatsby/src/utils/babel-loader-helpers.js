@@ -1,5 +1,6 @@
 const path = require(`path`)
 const _ = require(`lodash`)
+const { getCachePath } = require(`./cache`)
 
 const loadCachedConfig = () => {
   let pluginBabelConfig = {
@@ -8,10 +9,7 @@ const loadCachedConfig = () => {
     },
   }
   if (process.env.NODE_ENV !== `test`) {
-    pluginBabelConfig = require(path.join(
-      process.cwd(),
-      `./.cache/babelState.json`
-    ))
+    pluginBabelConfig = require(path.join(getCachePath(), `./babelState.json`))
   }
   return pluginBabelConfig
 }
