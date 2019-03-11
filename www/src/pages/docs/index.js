@@ -62,7 +62,7 @@ class IndexRoute extends React.Component {
                   and guides for migration between major versions.
                 </li>
                 <li>
-                  <strong>Conceptual Guide</strong>: Read high level overviews
+                  <strong>Conceptual Guide</strong>: Read high-level overviews
                   of the Gatsby approach.
                 </li>
                 <li>
