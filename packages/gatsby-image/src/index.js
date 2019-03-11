@@ -405,8 +405,8 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 height: image.height,
+                ...(!this.state.imgCached && delayHide),
               }}
             />
           )}
