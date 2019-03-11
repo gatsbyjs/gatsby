@@ -41,6 +41,11 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
+let failures
+exports.setFailures = customFailures => {
+  failures = customFailures
+}
+
 /// Plugin options are loaded onPreInit in gatsby-node
 const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
@@ -76,15 +81,17 @@ const bar = new ProgressBar(
   }
 )
 
-const reportError = (message, err, reporter) => {
+const reportError = (file, message, err, reporter) => {
   if (reporter) {
     reporter.error(message, err)
   } else {
     console.error(message, err)
   }
 
+  failures.add(file)
+
   if (process.env.gatsby_executing_command === `build`) {
-    process.exit(1)
+    // process.exit(1)
   }
 }
 
@@ -150,8 +157,8 @@ const processFile = (file, jobs, cb, reporter) => {
 
     pipeline = pipeline.rotate()
   } catch (err) {
-    reportError(`Failed to process image ${file}`, err, reporter)
-    jobs.forEach(job => job.outsideReject(err))
+    reportError(file, `Failed to process image ${file}`, err, reporter)
+    jobs.forEach(job => job.outsideResolve())
     return
   }
 
@@ -233,8 +240,8 @@ const processFile = (file, jobs, cb, reporter) => {
       )
 
       if (err) {
-        reportError(`Failed to process image ${file}`, err, reporter)
-        job.outsideReject(err)
+        reportError(file, `Failed to process image ${file}`, err, reporter)
+        job.outsideResolve()
       } else {
         job.outsideResolve()
       }
@@ -487,7 +494,12 @@ async function generateBase64({ file, args, reporter }) {
   try {
     pipeline = sharp(file.absolutePath).rotate()
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(
+      file,
+      `Failed to process image ${file.absolutePath}`,
+      err,
+      reporter
+    )
     return null
   }
 
@@ -583,7 +595,12 @@ async function fluid({ file, args = {}, reporter, cache }) {
   try {
     metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(
+      file.absolutePath,
+      `Failed to process image ${file.absolutePath}`,
+      err,
+      reporter
+    )
     return null
   }
 
@@ -882,7 +899,12 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   try {
     pipeline = sharp(file.absolutePath).rotate()
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(
+      file.absolutePath,
+      `Failed to process image ${file.absolutePath}`,
+      err,
+      reporter
+    )
     return null
   }
 
