@@ -4859,3 +4859,36 @@
   categories:
     - Portfolio
     - Web Development
+- title: Data Hackers
+  url: https://datahackers.com.br/
+  main_url: https://datahackers.com.br/
+  description: >
+    Official website for the biggest portuguese-speaking data science community. Makes use of several data sources such as podcasts from Anchor, messages from Slack, newsletters from MailChimp and blog posts from Medium. The unique visual design also had its hurdles and was quite fun to develop!
+  categories:
+    - Blog
+    - Education
+    - Podcast
+    - Technology
+  built_by: Kaordica
+  built_by_url: https://kaordica.design
+  featured: false
+- title: TROMAQ
+  url: https://www.tromaq.com/
+  main_url: https://www.tromaq.com/
+  description: >
+    TROMAQ executes earthmoving services and rents heavy machinery for construction work. Even with the lack of good photography, their new site managed to pass a solid and trustworthy feeling to visitors during testing and they're already seeing the improvement in brand awareness, being the sole player with a modern website in their industry.
+  categories:
+    - Marketing
+  built_by: Kaordica
+  built_by_url: https://kaordica.design
+  featured: false
+- title: Novida Consulting
+  url: https://www.novidaconsultoria.com.br
+  main_url: https://www.novidaconsultoria.com.br
+  description: >
+    Novida’s goal was to position itself as a solid, exclusive and trustworthy brand for families looking for a safe financial future… We created a narrative and visual design that highlight their exclusivity.
+  categories:
+    - Marketing
+  built_by: Kaordica
+  built_by_url: https://kaordica.design
+  featured: false
