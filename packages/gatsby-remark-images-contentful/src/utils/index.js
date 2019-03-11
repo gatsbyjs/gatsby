@@ -57,6 +57,7 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
     )
     .join(`,\n`)
 
+  // TODO think about a better structure to save srcset types instead of adding them to the root
   return {
     base64: base64Img,
     aspectRatio,
