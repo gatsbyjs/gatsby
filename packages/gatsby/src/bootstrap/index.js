@@ -494,7 +494,7 @@ module.exports = async (args: BootstrapArgs) => {
       emitter.off(`END_JOB`, onEndJob)
 
       await finishBootstrap(bootstrapSpan)
-      resolve(graphqlRunner)
+      resolve({ graphqlRunner })
     }
   }, 100)
 
