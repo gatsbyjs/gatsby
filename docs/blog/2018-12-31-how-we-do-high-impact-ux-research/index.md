@@ -143,4 +143,4 @@ Sign up for a 15, 30, or 60 minute interview to tell me your experiences with Ga
 
 ## Know someone who has never used Gatsby before?
 
-If you know someone who might like to get an Amazon gift card for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewfor)
+If you know someone who might like to get an Amazon gift card for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewform)

@@ -21,6 +21,8 @@ const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
+const DEFAULT_PNG_COMPRESSION_SPEED = 4
+
 const {
   ImageFormatType,
   ImageCropFocusType,
@@ -72,7 +74,7 @@ const fixedNodeType = ({
           resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -89,7 +91,7 @@ const fixedNodeType = ({
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -117,6 +119,10 @@ const fixedNodeType = ({
         type: GraphQLBoolean,
         defaultValue: true,
       },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
       grayscale: {
         type: GraphQLBoolean,
         defaultValue: false,
@@ -131,7 +137,6 @@ const fixedNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
         type: ImageFormatType,
@@ -243,6 +248,10 @@ const fluidNodeType = ({
         type: GraphQLBoolean,
         defaultValue: true,
       },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+      },
       duotone: {
         type: DuotoneGradientType,
         defaultValue: false,
@@ -253,7 +262,6 @@ const fluidNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
         type: ImageFormatType,
@@ -403,7 +411,6 @@ module.exports = ({
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
         },
         jpegProgressive: {
           type: GraphQLBoolean,
@@ -412,6 +419,10 @@ module.exports = ({
         pngCompressionLevel: {
           type: GraphQLInt,
           defaultValue: 9,
+        },
+        pngCompressionSpeed: {
+          type: GraphQLInt,
+          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
         },
         grayscale: {
           type: GraphQLBoolean,

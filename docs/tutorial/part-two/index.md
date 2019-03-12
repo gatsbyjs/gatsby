@@ -191,7 +191,7 @@ export default () => (
 )
 ```
 
-Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look like something like this:
+Now, if you visit `http://localhost:8000/about-css-modules/`, your page should look something like this:
 
 ![css-modules-basic](css-modules-basic.png)
 
@@ -254,7 +254,7 @@ The `console.log(styles)` code will log the resulting import so you can see the 
 ![css-modules-console](css-modules-console.png)
 
 If you compare that to your CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to
-`about-css-modules-module---avatar----hYcv`. These are the class names CSS
+`src-pages----about-css-modules-module---avatar---2lRF7`. These are the class names CSS
 Modules generates. They're guaranteed to be unique across your site. And because
 you have to import them to use the classes, there's never any question about
 where some CSS is being used.
@@ -296,7 +296,7 @@ export default () => (
     <User
       username="Bob Smith"
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
     {/* highlight-end */}
   </Container>
@@ -327,7 +327,7 @@ as well as
 
 Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
-[please contribute one!](/docs/how-to-contribute/))
+[please contribute one!](/contributing/how-to-contribute/))
 
 - [Typography.js](/packages/gatsby-plugin-typography/)
 - [Sass](/packages/gatsby-plugin-sass/)

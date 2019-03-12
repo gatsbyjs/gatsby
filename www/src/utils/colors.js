@@ -28,15 +28,17 @@ const colors = {
   },
   gray: {
     dark: gray(8, 270),
-    copy: gray(12, 270),
+    copy: gray(16, 270),
     lightCopy: gray(35, 270),
     calm: gray(46, 270),
     bright: gray(64, 270),
     light: gray(80, 270),
     superLight: gray(96, 270),
   },
+  white: `#ffffff`,
   code: {
-    bg: `#fdfaf6`, // colors.a[0] #fcf6f0
+    bgInline: `#fbf2e9`,
+    bg: `#fdfaf6`,
     border: `#faede5`,
     text: `#866c5b`,
     remove: `#e45c5c`,

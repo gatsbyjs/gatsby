@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, transition } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -79,7 +79,9 @@ class StickyResponsiveSidebar extends Component {
               size={15}
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
-                transition: `transform 0.2s ease`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
             <ChevronSvg
@@ -87,7 +89,9 @@ class StickyResponsiveSidebar extends Component {
               cssProps={{
                 transform: `translate(${5 -
                   iconOffset}px, -5px) rotate(270deg)`,
-                transition: `transform 0.2s ease`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
           </div>
@@ -107,26 +111,28 @@ const styles = {
     height: `100vh`,
     position: `fixed`,
     top: 0,
-    transition: `opacity 0.5s ease`,
+    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [presets.Tablet]: {
+    [presets.Md]: {
       height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(10),
+      width: rhythm(presets.sidebar.width.default),
     },
-    [presets.Desktop]: {
-      width: rhythm(12),
+    [presets.Lg]: {
+      width: rhythm(presets.sidebar.width.large),
     },
   },
   sidebar: {
     height: `100%`,
-    transition: `transform 0.5s ease`,
+    transition: `transform ${transition.speed.slow} ${
+      transition.curve.default
+    }`,
     boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-    [presets.Tablet]: {
+    [presets.Md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -145,11 +151,11 @@ const styles = {
     visibility: `visible`,
     width: 60,
     zIndex: 20,
-    [presets.Tablet]: { display: `none` },
+    [presets.Md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,
-    color: `#fff`,
+    color: colors.white,
     display: `flex`,
     flexDirection: `column`,
     height: 20,

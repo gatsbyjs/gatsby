@@ -1,6 +1,6 @@
 ---
 title: Trying out Gatsby at Work & Co
-date: "2018-04-11"
+date: 2018-04-11
 author: "Sarah Mogin"
 excerpt: Thoughts on setup, workflow, and giving back to Gatsby
 tags: ["contentful", "netlify", "getting-started"]

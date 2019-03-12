@@ -22,25 +22,27 @@ browsers.
 ## How to use a custom .babelrc file
 
 Gatsby ships with a default .babelrc setup that should work for most sites. If you'd like
-to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and overwrite the `target` option.
+to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and overwrite the `targets` option.
 
 ```shell
 npm install --save-dev babel-preset-gatsby
 ```
 
-```json5:title=.babelrc
+<!-- prettier-ignore-start -->
+```json:title=.babelrc
 {
-  presets: [
+  "presets": [
     [
       "babel-preset-gatsby",
       {
-        targets: {
-          browsers: [">0.25%", "not dead"],
-        },
-      },
-    ],
-  ],
+        "targets": {
+          "browsers": [">0.25%", "not dead"]
+        }
+      }
+    ]
+  ]
 }
 ```
+<!-- prettier-ignore-end -->
 
 For more advanced configurations, you can also copy the defaults from [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby) and customize them to suit your needs.

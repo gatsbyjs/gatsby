@@ -30,9 +30,9 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
   // Don't add back the new line character after highlighted lines
   // as they need to be display: block and full-width.
   codeSplits.forEach((split, idx) => {
-    split.highlight
-      ? (finalCode += split.code)
-      : (finalCode += `${split.code}${idx == lastIdx ? `` : `\n`}`)
+    finalCode += split.highlight
+      ? split.code
+      : `${split.code}${idx == lastIdx ? `` : `\n`}`
   })
 
   return finalCode

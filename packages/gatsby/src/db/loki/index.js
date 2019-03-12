@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const loki = require(`@moocar/lokijs`)
+const loki = require(`lokijs`)
 const uuidv4 = require(`uuid/v4`)
 const customComparators = require(`./custom-comparators`)
 
@@ -114,13 +114,13 @@ function saveState() {
     if (db) {
       db.saveDatabase(err => {
         if (err) {
-          console.log(`error saving loki DB`)
-          console.log(err)
           reject(err)
         } else {
           resolve()
         }
       })
+    } else {
+      reject(`No database found.`)
     }
   })
 }

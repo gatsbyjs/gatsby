@@ -21,6 +21,8 @@ the browser when needed by your components.
 
 ## Why is GraphQL so cool?
 
+For a more in-depth look, read [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+
 - Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
 - Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
 - It's the perfect data querying language for the often complex/nested data dependencies of modern applications
@@ -335,6 +337,8 @@ export const query = graphql`
 ```
 
 ## Further reading
+
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
 
 ### Getting started with GraphQL
 

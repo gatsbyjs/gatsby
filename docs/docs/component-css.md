@@ -40,3 +40,9 @@ Also make sure to notice that the `.container` style that you created is referre
 Following the same logic, you have the ability of creating multiple `module.css` files for multiple React components.
 
 You may take a look at a more in-depth [Component CSS tutorial](https://www.gatsbyjs.org/tutorial/part-two/#component-css) if you would like to see an example with explanation of multiple complex React components utilizing multiple `module.css` files and why you may want to use CSS Modules in your next project.
+
+### CSS Modules and BEM
+
+If you're used to writing CSS with the [BEM](http://getbem.com/) methodology, a quick thing to note is that CSS Modules camelizes class names that contain dashes.
+
+For example: `block--modifier` turns into `blockModifier`.
