@@ -10,7 +10,9 @@ module.exports = async ({ page, actions }, pluginOptions) => {
   const { extensions, ...options } = defaultOptions(pluginOptions);
   const ext = path.extname(page.component);
 
-  if (extensions.includes(ext)) {
+  // we test to see if frontmatter is created already because that's what
+  // we're trying to insert and if we don't check we can end up in infinite loops
+  if (extensions.includes(ext) && !page.context.frontmatter) {
     const content = await fs.readFile(page.component, "utf8");
     const code = await mdx(content, options);
 
