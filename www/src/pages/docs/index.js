@@ -35,7 +35,7 @@ class IndexRoute extends React.Component {
                 to dig straight in.
               </li>
               <li>
-                <Link to="/docs/recipes">Recipes</Link>: A happy medium between
+                <Link to="/docs/recipes/">Recipes</Link>: A happy medium between
                 the tutorial and the quick start, find some quick answers for
                 how to accomplish some specific, common tasks with Gatsby.
               </li>
@@ -45,33 +45,38 @@ class IndexRoute extends React.Component {
               </li>
               <ul>
                 <li>
-                  <strong>Guides</strong>: Dive deeper into different topics
-                  around building with Gatsby, like sourcing data, deployment,
-                  and more.
+                  <Link to="/docs/guides/">Guides</Link>: Dive deeper into
+                  different topics around building with Gatsby, like sourcing
+                  data, deployment, and more.
                 </li>
                 <li>
-                  <strong>Ecosystem</strong>: Check out libraries for Gatsby
-                  starters and plugins, as well as external community resources.
+                  <Link to="/ecosystem/">Ecosystem</Link>: Check out libraries
+                  for Gatsby starters and plugins, as well as external community
+                  resources.
                 </li>
                 <li>
-                  <strong>API Reference</strong>: Learn more about Gatsby APIs
-                  and configuration.
+                  <Link to="/docs/api-reference/">API Reference</Link>: Learn
+                  more about Gatsby APIs and configuration.
                 </li>
                 <li>
-                  <strong>Releases &amp; Migration</strong>: Find release notes
-                  and guides for migration between major versions.
+                  <Link to="/docs/releases-and-migration/">
+                    Releases &amp; Migration
+                  </Link>
+                  : Find release notes and guides for migration between major
+                  versions.
                 </li>
                 <li>
-                  <strong>Conceptual Guide</strong>: Read high-level overviews
-                  of the Gatsby approach.
+                  <Link to="/docs/conceptual-guide/">Conceptual Guide</Link>:
+                  Read high-level overviews of the Gatsby approach.
                 </li>
                 <li>
-                  <strong>Behind the Scenes</strong>: Dig into how Gatsby works
-                  under the hood.
+                  <Link to="/docs/behind-the-scenes/">Behind the Scenes</Link>:
+                  Dig into how Gatsby works under the hood.
                 </li>
                 <li>
-                  <strong>Advanced Tutorials</strong>: Learn about topics that
-                  are too large for a doc and warrant a tutorial.
+                  <Link to="/docs/advanced-tutorials/">Advanced Tutorials</Link>
+                  : Learn about topics that are too large for a doc and warrant
+                  a tutorial.
                 </li>
               </ul>
             </ol>
