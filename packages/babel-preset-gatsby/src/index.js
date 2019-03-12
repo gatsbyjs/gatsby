@@ -3,12 +3,12 @@ const path = require(`path`)
 const resolve = m => require.resolve(m)
 
 const cachePath = filePath => {
-  const { GATSBY_CACHE } = process.env
-  if (GATSBY_CACHE) {
-    if (path.isAbsolute(GATSBY_CACHE)) {
-      return path.join(GATSBY_CACHE, filePath)
+  const { GATSBY_CACHE_DIR } = process.env
+  if (GATSBY_CACHE_DIR) {
+    if (path.isAbsolute(GATSBY_CACHE_DIR)) {
+      return path.join(GATSBY_CACHE_DIR, filePath)
     }
-    return path.join(process.cwd(), GATSBY_CACHE, filePath)
+    return path.join(process.cwd(), GATSBY_CACHE_DIR, filePath)
   }
   return path.join(process.cwd(), `./.cache`, filePath)
 }

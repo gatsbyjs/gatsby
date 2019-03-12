@@ -7,12 +7,12 @@ const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
 
 function getCachePath(cwd) {
-  const { GATSBY_CACHE } = process.env
-  if (GATSBY_CACHE) {
-    if (path.isAbsolute(GATSBY_CACHE)) {
-      return GATSBY_CACHE
+  const { GATSBY_CACHE_DIR } = process.env
+  if (GATSBY_CACHE_DIR) {
+    if (path.isAbsolute(GATSBY_CACHE_DIR)) {
+      return GATSBY_CACHE_DIR
     }
-    return path.join(cwd || process.cwd() || `.`, GATSBY_CACHE)
+    return path.join(cwd || process.cwd() || `.`, GATSBY_CACHE_DIR)
   }
   return path.join(cwd || process.cwd() || `.`, `./.cache`)
 }

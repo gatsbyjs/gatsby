@@ -15,7 +15,7 @@ const handlerP = fn => (...args) => {
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
-  const defaultCache = `.cache`
+  const defaultCacheDir = `.cache`
   const defaultBuildDir = `public`
   const directory = path.resolve(`.`)
 
@@ -147,8 +147,8 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`cache-dir`, {
           type: `string`,
-          default: defaultCache,
-          describe: `Set cache location. Defaults to ${defaultCache}`,
+          default: defaultCacheDir,
+          describe: `Set cache location. Defaults to ${defaultCacheDir}`,
         })
         .option(`build-dir`, {
           type: `string`,
@@ -158,7 +158,7 @@ function buildLocalCommands(cli, isLocalSite) {
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
-        process.env.GATSBY_CACHE = args.cacheDir
+        process.env.GATSBY_CACHE_DIR = args.cacheDir
         process.env.GATSBY_BUILD_DIR = args.buildDir
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
@@ -189,8 +189,8 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`cache-dir`, {
           type: `string`,
-          default: defaultCache,
-          describe: `Set cache location. Defaults to ${defaultCache}`,
+          default: defaultCacheDir,
+          describe: `Set cache location. Defaults to ${defaultCacheDir}`,
         })
         .option(`build-dir`, {
           type: `string`,
@@ -200,7 +200,7 @@ function buildLocalCommands(cli, isLocalSite) {
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
-        process.env.GATSBY_CACHE = args.cacheDir
+        process.env.GATSBY_CACHE_DIR = args.cacheDir
         process.env.GATSBY_BUILD_DIR = args.buildDir
         return cmd(args)
       })
@@ -235,8 +235,8 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`cache-dir`, {
           type: `string`,
-          default: defaultCache,
-          describe: `Set cache location. Defaults to ${defaultCache}`,
+          default: defaultCacheDir,
+          describe: `Set cache location. Defaults to ${defaultCacheDir}`,
         })
         .option(`build-dir`, {
           type: `string`,
@@ -245,7 +245,7 @@ function buildLocalCommands(cli, isLocalSite) {
         }),
 
     handler: getCommandHandler(`serve`, (args, cmd) => {
-      process.env.GATSBY_CACHE = args.cacheDir
+      process.env.GATSBY_CACHE_DIR = args.cacheDir
       process.env.GATSBY_BUILD_DIR = args.buildDir
       return cmd(args)
     }),
