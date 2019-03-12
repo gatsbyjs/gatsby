@@ -7,6 +7,7 @@
     - title: Recipes
       link: /docs/recipes/
 - title: Guides
+  link: /docs/guides/
   items:
     - title: Preparing Your Environment
       link: /docs/preparing-your-environment/
@@ -288,6 +289,7 @@
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby/
 - title: API Reference
+  link: /docs/api-reference/
   items:
     - title: Gatsby Link
       link: /docs/gatsby-link/
@@ -306,6 +308,7 @@
     - title: API Philosophy
       link: /docs/api-specification/
 - title: Releases & Migration
+  link: /docs/releases-and-migration/
   items:
     - title: v2 Release Notes
       link: /docs/v2-release-notes/
@@ -316,6 +319,7 @@
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
 - title: Conceptual Guide
+  link: /docs/conceptual-guide/
   items:
     - title: The Gatsby Core Philosophy*
       link: /docs/gatsby-core-philosophy/
@@ -386,6 +390,7 @@
     - title: Terminology
       link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
+  link: /docs/advanced-tutorials/
   items:
     - title: Making a Site with User Authentication
       link: /docs/authentication-tutorial/
