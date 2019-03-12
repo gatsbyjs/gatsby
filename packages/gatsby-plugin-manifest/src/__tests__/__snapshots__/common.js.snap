@@ -1,6 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-
 exports[`gatsby-plugin-manifest defaultIcons includes all icon sizes 1`] = `
 Array [
   Object {

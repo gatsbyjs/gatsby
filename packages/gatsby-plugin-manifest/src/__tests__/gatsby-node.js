@@ -32,6 +32,22 @@ const path = require(`path`)
 const sharp = require(`sharp`)
 const { onPostBootstrap } = require(`../gatsby-node`)
 
+const manifestOptions = {
+  name: `GatsbyJS`,
+  short_name: `GatsbyJS`,
+  start_url: `/`,
+  background_color: `#f7f0eb`,
+  theme_color: `#a2466c`,
+  display: `standalone`,
+  icons: [
+    {
+      src: `icons/icon-48x48.png`,
+      sizes: `48x48`,
+      type: `image/png`,
+    },
+  ],
+}
+
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
@@ -112,21 +128,6 @@ describe(`Test plugin manifest options`, () => {
   })
 
   it(`doesn't write extra properties to manifest`, async () => {
-    const manifestOptions = {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-      icons: [
-        {
-          src: `icons/icon-48x48.png`,
-          sizes: `48x48`,
-          type: `image/png`,
-        },
-      ],
-    }
     const pluginSpecificOptions = {
       icon: undefined,
       legacy: true,
@@ -146,21 +147,6 @@ describe(`Test plugin manifest options`, () => {
   it(`does file name based cache busting`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
 
-    const manifestOptions = {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-      icons: [
-        {
-          src: `icons/icon-48x48.png`,
-          sizes: `48x48`,
-          type: `image/png`,
-        },
-      ],
-    }
     const pluginSpecificOptions = {
       icon: `images/gatsby-logo.png`,
       legacy: true,
@@ -173,27 +159,12 @@ describe(`Test plugin manifest options`, () => {
 
     expect(sharp).toHaveBeenCalledTimes(1)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toMatchSnapshot()
+    expect(content).toEqual(manifestOptions)
   })
 
   it(`does not do cache cache busting`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
 
-    const manifestOptions = {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-      icons: [
-        {
-          src: `icons/icon-48x48.png`,
-          sizes: `48x48`,
-          type: `image/png`,
-        },
-      ],
-    }
     const pluginSpecificOptions = {
       icon: `images/gatsby-logo.png`,
       legacy: true,
