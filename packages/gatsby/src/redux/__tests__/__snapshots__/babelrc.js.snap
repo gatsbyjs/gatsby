@@ -171,6 +171,9 @@ Array [
   Array [
     Array [
       "/path/to/module/babel-preset-gatsby",
+      Object {
+        "cachePath": "<PROJECT_ROOT>/.cache",
+      },
     ],
     Object {
       "type": "preset",

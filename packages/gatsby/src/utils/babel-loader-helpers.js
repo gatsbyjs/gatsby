@@ -61,9 +61,17 @@ const prepareOptions = (babel, resolve = require.resolve) => {
   const fallbackPresets = []
 
   fallbackPresets.push(
-    babel.createConfigItem([resolve(`babel-preset-gatsby`)], {
-      type: `preset`,
-    })
+    babel.createConfigItem(
+      [
+        resolve(`babel-preset-gatsby`),
+        {
+          cachePath: cachePath(),
+        },
+      ],
+      {
+        type: `preset`,
+      }
+    )
   )
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
