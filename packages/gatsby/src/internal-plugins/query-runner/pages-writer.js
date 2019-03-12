@@ -59,6 +59,8 @@ const writePages = async () => {
     return Promise.resolve()
   }
 
+  const cacheDirectory = cachePath()
+
   lastHash = newHash
 
   // Get list of components, and json files.
@@ -102,12 +104,13 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  asyncRequires += `exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "${cachePath(
+  asyncRequires += `exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "${joinPath(
+    cacheDirectory,
     `data.json`
   )}")\n\n`
 
   const writeAndMove = (file, data) => {
-    const destination = cachePath(file)
+    const destination = joinPath(cacheDirectory, file)
     const tmp = `${destination}.${Date.now()}`
     return fs
       .writeFile(tmp, data)
