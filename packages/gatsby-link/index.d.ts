@@ -6,6 +6,8 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   activeStyle?: object
   innerRef?: Function
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  partiallyActive?: boolean
+  replace?: boolean
   to: string
 }
 
