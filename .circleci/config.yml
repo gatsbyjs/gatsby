@@ -203,6 +203,7 @@ jobs:
     executor: node
     environment:
       GATSBY_SCREENSHOT_PLACEHOLDER: true
+      GATSBY_CPU_COUNT: 2
     steps:
       - link_and_run:
           path: www
