@@ -25,7 +25,7 @@ class NodeAPIHelperDocs extends React.Component {
             Gatsby Node API helpers
           </h1>
           <p>
-            The first argument passed to each of
+            The first argument passed to each of{` `}
             <Link to="/docs/node-apis/">Gatsby's Node APIs</Link> is an object
             containing a set of utilities. Utilities shared by all Gatsby's Node
             APIs are documented below. Some APIs provide additional utilities.
@@ -50,36 +50,40 @@ class NodeAPIHelperDocs extends React.Component {
             </li>
           </ul>
           <h2>Examples</h2>
-          <pre>
-            <code
-              className="language-javascript"
-              dangerouslySetInnerHTML={{
-                __html: `
+          <div className="gatsby-highlight">
+            <pre className="language-javascript">
+              <code
+                className="language-javascript"
+                dangerouslySetInnerHTML={{
+                  __html: `
 // in gatsby-node.js
 exports.createPages = (gatsbyNodeHelpers) => {
   const { actions, reporter } = gatsbyNodeHelpers
   // use helpers
 }
-              `,
-              }}
-            />
-          </pre>
+              `.trim(),
+                }}
+              />
+            </pre>
+          </div>
           <p>
             Common convention is to destructure helpers right in argument list:
           </p>
-          <pre>
-            <code
-              className="language-javascript"
-              dangerouslySetInnerHTML={{
-                __html: `
+          <div className="gatsby-highlight">
+            <pre className="language-javascript">
+              <code
+                className="language-javascript"
+                dangerouslySetInnerHTML={{
+                  __html: `
 // in gatsby-node.js
 exports.createPages = ({ actions, reporter }) => {
   // use helpers
 }
-              `,
-              }}
-            />
-          </pre>
+              `.trim(),
+                }}
+              />
+            </pre>
+          </div>
           <h2 css={{ marginBottom: rhythm(1 / 2) }}>Helpers</h2>
           <ul css={{ ...scale(-1 / 5) }}>
             {docs.map((node, i) => (

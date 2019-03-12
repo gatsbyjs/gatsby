@@ -1,4 +1,5 @@
 import React from "react"
+import { css } from "@emotion/core"
 
 import { rhythm } from "../../utils/typography"
 
@@ -25,7 +26,7 @@ export const SubHeader = ({ children, level }) => {
   const Tag = `h${Math.min(4 + level * 2, 6)}`
   return (
     <Tag
-      css={`
+      css={css`
         margin: 0;
         margin-top: ${rhythm(0.35)};
       `}

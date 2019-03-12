@@ -1,5 +1,6 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
+import { css } from "@emotion/core"
 
 import ExamplesBlock from "./examples"
 import ParamsBlock from "./params"
@@ -25,7 +26,7 @@ const Deprecated = ({ definition }) => {
   if (definition.deprecated && definition.deprecated.childMarkdownRemark) {
     return (
       <div
-        css={`
+        css={css`
           p:before {
             color: #e8bd36;
             content: "(deprecated) ";
@@ -46,7 +47,7 @@ const Description = ({ definition }) => {
   if (definition.description) {
     return (
       <div
-        css={`
+        css={css`
           margin-top: 0.5em;
         `}
         dangerouslySetInnerHTML={{

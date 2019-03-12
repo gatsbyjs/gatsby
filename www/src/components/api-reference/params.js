@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { css } from "@emotion/core"
 
 import DocBlock from "./doc-block"
 import { SubHeader } from "./utils"
@@ -7,7 +8,7 @@ import { rhythm } from "../../utils/typography"
 
 const List = ({ elements, level, ignoreParams }) => (
   <ul
-    css={`
+    css={css`
       list-style-type: none;
       margin-top: ${rhythm(0.5)};
       margin-left: ${rhythm(0.75)};
