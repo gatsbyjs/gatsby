@@ -7,7 +7,7 @@ tags:
   - graphql
 ---
 
-Two weeks ago, we talked about [new schema customization API](/blog/2019-03-04-new-schema-customization/). Today we are making this suite of new APIs and enhancements available in `gatsby`@`2.2.0`.
+Two weeks ago, we announced our plans for a [new schema customization API](/blog/2019-03-04-new-schema-customization/). Today we are making this set of new APIs and enhancements available to all in `gatsby`@`2.2.0`.
 
 ```shell
 npm install gatsby --save
