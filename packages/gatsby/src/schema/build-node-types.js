@@ -17,7 +17,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const { getNodes, getNode } = require(`../db/nodes`)
+const { getNodesByType, getTypes, getNode } = require(`../db/nodes`)
 const pageDependencyResolver = require(`./page-dependency-resolver`)
 const { setFileNodeRootType } = require(`./types/type-file`)
 const {
@@ -53,8 +53,8 @@ const defaultNodeFields = {
 function groupChildNodesByType(nodes) {
   return _(nodes)
     .flatMap(node => node.children.map(getNode))
-    .groupBy(
-      node => (node.internal ? _.camelCase(node.internal.type) : undefined)
+    .groupBy(node =>
+      node.internal ? _.camelCase(node.internal.type) : undefined
     )
     .value()
 }
@@ -234,18 +234,11 @@ async function buildProcessedType({ nodes, typeName, processedTypes, span }) {
   }
 }
 
-function groupNodesByType(nodes) {
-  return _.groupBy(
-    nodes.filter(node => node.internal && !node.internal.ignoreType),
-    node => node.internal.type
-  )
-}
-
 async function buildAll({ parentSpan }) {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  const types = groupNodesByType(getNodes())
+  const types = getTypes()
   const processedTypes: TypeMap = {}
 
   clearTypeExampleValues()
@@ -255,7 +248,12 @@ async function buildAll({ parentSpan }) {
 
   // Create node types and node fields for nodes that have a resolve function.
   await Promise.all(
-    _.map(types, async (nodes, typeName) => {
+    _.map(types, async typeName => {
+      const nodes = getNodesByType(typeName).filter(
+        node => node.internal && !node.internal.ignoreType
+      )
+      if (!nodes.length) return
+
       const fieldName = _.camelCase(typeName)
       const processedType = await buildProcessedType({
         nodes,

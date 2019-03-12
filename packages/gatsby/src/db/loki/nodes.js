@@ -146,6 +146,14 @@ function getNodes() {
 }
 
 /**
+ * Returns the unique collection of all node types
+ */
+function getTypes() {
+  const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
+  return nodeTypes.map(nodeType => nodeType.type)
+}
+
+/**
  * Looks up the node by id, records a dependency between the node and
  * the path, and then returns the node
  *
@@ -329,6 +337,7 @@ module.exports = {
   getNodesByType,
   hasNodeChanged,
   getNodeAndSavePathDependency,
+  getTypes,
 
   createNode,
   updateNode,

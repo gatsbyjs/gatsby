@@ -27,7 +27,7 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/docs/how-to-contribute">
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
@@ -43,11 +43,11 @@
   <span> · </span>
   <a href="https://gatsbyjs.org/showcase/">Showcase</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/how-to-contribute/">Contribute</a>
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://discord.gg/0ZcbPKXt5bVoxkfV">Discord</a>
+  <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -91,9 +91,6 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     Get your Gatsby blog set up in a single command:
 
     ```sh
-    # install the Gatsby CLI globally
-    npm install -g gatsby-cli
-
     # create a new Gatsby site using the default starter
     gatsby new my-blazing-fast-site
     ```
@@ -104,7 +101,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     cd my-blazing-fast-site/
-    gatsby develop
+    npm run develop
     ```
 
 3.  **Open the source code and start editing!**
@@ -121,7 +118,7 @@ Full documentation for Gatsby lives [on the website](https://gatsbyjs.org/).
 
 - **To dive straight into code samples head [to our documentation](https://gatsbyjs.org/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
 
-We welcome suggestions for improving our docs. See the [“how to contribute”](https://gatsbyjs.org/docs/how-to-contribute/) documentation for more details.
+We welcome suggestions for improving our docs. See the [“how to contribute”](https://gatsbyjs.org/contributing/how-to-contribute/) documentation for more details.
 
 **Start Learning Gatsby: [Follow the Tutorial](https://gatsbyjs.org/tutorial/) · [Read the Docs](https://gatsbyjs.org/docs/)**
 
@@ -136,15 +133,15 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
-Check out our [contributor onboarding docs](https://gatsbyjs.org/docs/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
+Check out our [contributor onboarding docs](https://gatsbyjs.org/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
 
-[**Read the Contributing Guide**](https://gatsbyjs.org/docs/how-to-contribute/)
+[**Read the Contributing Guide**](https://gatsbyjs.org/contributing/how-to-contribute/)
 
 ### Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://gatsbyjs.org/docs/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://gatsbyjs.org/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
-[**Read the Code of Conduct**](https://gatsbyjs.org/docs/code-of-conduct/)
+[**Read the Code of Conduct**](https://gatsbyjs.org/contributing/code-of-conduct/)
 
 ### A note on how this repository is organized
 

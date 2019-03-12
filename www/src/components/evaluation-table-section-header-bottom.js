@@ -1,17 +1,18 @@
-import presets, { colors } from "../utils/presets"
 import React from "react"
+
 import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import { rhythm, scale, options } from "../utils/typography"
+import presets, { colors, space } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
 
 const subHeaderTitleStyles = {
-  height: rhythm(3 / 4),
+  height: rhythm(space[6]),
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [presets.Mobile]: {
+  [presets.Xs]: {
     height: rhythm(5 / 4),
   },
 }
@@ -46,34 +47,14 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: `${colors.ui.whisper}`,
-          // borderLeft: i > 0 ? `1px solid ${colors.ui.light}` : `none`,
-          // borderRight: i === 5 ? `1px solid ${colors.ui.light}` : `none`,
+          background: colors.ui.whisper,
           fontWeight: 600,
-          ...scale(-1 / 9),
-          lineHeight: 1.3,
+          lineHeight: presets.lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: options.headerFontFamily.join(`,`),
           borderColor: colors.ui.light,
-          "&&": {
-            paddingTop: rhythm(1 / 4),
-            paddingLeft: rhythm(1 / 4),
-            paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
-            paddingBottom: rhythm(1 / 4),
-            "&:last-child": {
-              paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
-            },
-          },
-          [presets.Mobile]: {
-            paddingTop: rhythm(1 / 2),
-            paddingLeft: `${rhythm(1 / 2)} !important`,
-            paddingRight: rhythm(1 / 2),
-            paddingBottom: rhythm(1 / 2),
-            "&:last-child": {
-              paddingRight: rhythm(1 / 2),
-            },
-          },
+          padding: rhythm(space[3]),
         }}
       >
         {header || props.category || `Feature`}

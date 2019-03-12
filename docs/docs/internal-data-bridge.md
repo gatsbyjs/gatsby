@@ -40,7 +40,7 @@ The internal data bridge creates 3 types of nodes that can be introspected.
 
 ### Site
 
-This is a node that contains fields from your site's `gatsby-config.js`, as well as program information such as host and port for `gatsby develop`.
+This is a node that contains fields from your site's `gatsby-config.js`, as well as program information such as host and port for the local development server.
 
 ### SitePlugin
 
