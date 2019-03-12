@@ -1,5 +1,3 @@
-"use strict"
-
 const { actions } = require(`../actions`)
 const { store } = require(`../index`)
 
