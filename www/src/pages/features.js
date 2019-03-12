@@ -161,7 +161,14 @@ const FeaturesHeader = () => (
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
     </p>
-    <h6 id="legend" css={{ textTransform: `uppercase` }}>
+    <h6
+      id="legend"
+      css={{
+        fontWeight: `normal`,
+        textTransform: `uppercase`,
+        letterSpacing: presets.letterSpacings.tracked,
+      }}
+    >
       Legend
     </h6>
     <LegendTable />
