@@ -2,11 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 const PageHeadingContainer = styled(`header`)`
-  padding: ${rhythm(options.blockMarginBottom)};
+  padding: ${rhythm(space[6])};
 
   ${presets.Md} {
     left: 0;
@@ -26,12 +26,13 @@ const H1 = styled(`h1`)`
   width: 100%;
 
   ${presets.Md} {
-    transform: rotate(-90deg) translate(calc(-100% - 2rem), 1rem);
+    transform: rotate(-90deg)
+      translate(calc(-100% - ${rhythm(space[7])}), ${rhythm(space[4])});
     transform-origin: top left;
   }
 
   :after {
-    bottom: 2rem;
+    bottom: ${rhythm(space[7])};
     content: attr(data-title);
     display: none;
     font-size: 12rem;
@@ -70,7 +71,7 @@ const Icon = styled(`span`)`
     fill: ${colors.lavender};
   }
   .svg-fill-brightest {
-    fill: #fff;
+    fill: ${colors.white};
   }
   .svg-fill-accent {
     fill: ${colors.lavender};
@@ -85,7 +86,7 @@ const Icon = styled(`span`)`
     fill: transparent;
   }
   .svg-fill-gradient-accent-white-bottom: {
-    fill: #fff;
+    fill: ${colors.white};
   }
   .svg-fill-gradient-purple {
     fill: ${colors.lavender};

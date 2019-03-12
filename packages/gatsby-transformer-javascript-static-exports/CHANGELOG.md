@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-static-exports/compare/gatsby-transformer-javascript-static-exports@2.1.5...gatsby-transformer-javascript-static-exports@2.1.6) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-static-exports
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-static-exports/compare/gatsby-transformer-javascript-static-exports@2.1.4...gatsby-transformer-javascript-static-exports@2.1.5) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-transformer-javascript-static-exports

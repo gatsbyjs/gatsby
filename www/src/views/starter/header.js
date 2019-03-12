@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import presets, { colors, space } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
@@ -10,7 +10,7 @@ const Header = ({ stub }) => (
     className="starter-detail-header"
     css={{
       padding: rhythm(space[6]),
-      paddingBottom: rhythm(options.blockMarginBottom),
+      paddingBottom: rhythm(space[6]),
       [presets.Sm]: {
         paddingBottom: 0,
       },
@@ -20,17 +20,12 @@ const Header = ({ stub }) => (
       },
     }}
   >
-    <div
-      css={{
-        paddingBottom: rhythm(1 / 4),
-      }}
-    >
+    <div css={{ paddingBottom: rhythm(space[1]) }}>
       <Link
         to={`/starters`}
         css={{
           "&&": {
             fontSize: presets.scale[1],
-            boxShadow: `none`,
             borderBottom: 0,
             color: colors.gatsby,
             fontWeight: `normal`,
@@ -41,7 +36,7 @@ const Header = ({ stub }) => (
           ...sharedStyles.withTitleHover,
         }}
       >
-        <MdArrowBack style={{ marginRight: 4, verticalAlign: `sub` }} />
+        <MdArrowBack style={{ marginRight: rhythm(space[1]) }} />
         &nbsp;
         <span className="title">All Starters</span>
       </Link>

@@ -6,7 +6,7 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, transition } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -186,7 +186,6 @@ const styles = {
       display: `flex`,
       flexGrow: 1,
       margin: 0,
-      marginLeft: rhythm(1 / 4),
       listStyle: `none`,
       maskImage: `linear-gradient(to right, transparent, white ${rhythm(
         1 / 8
@@ -209,16 +208,14 @@ const styles = {
     borderBottom: `0.125rem solid transparent`,
     color: `inherit`,
     display: `block`,
-    letterSpacing: `0.03em`,
+    letterSpacing: presets.letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     textTransform: `uppercase`,
     top: 0,
-    transition: `color ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    transition: `color ${transition.speed.default} ${transition.curve.default}`,
     zIndex: 1,
     "&:hover": {
       color: colors.gatsby,
@@ -239,7 +236,7 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: `1.5rem`,
+    height: rhythm(space[6]),
     margin: 0,
   },
   logoLink: {

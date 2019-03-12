@@ -22,7 +22,6 @@ class Pagination extends React.Component {
 
     const prevNextLinkStyles = {
       "&&": {
-        boxShadow: `none`,
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,

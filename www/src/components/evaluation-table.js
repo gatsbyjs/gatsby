@@ -18,16 +18,15 @@ class EvaluationTable extends Component {
       return [
         words.slice(0, words.length - 1).join(` `),
         <span
-          css={{
-            // WebkitHyphens: `auto`,
-            // MsHyphens: `auto`,
-            // hyphens: `auto`,
-            // wordBreak: `break-all`,
-            // display: `inline-block`,
-            "&:hover": {
-              background: colors.ui.bright,
-            },
-          }}
+          css={
+            {
+              // WebkitHyphens: `auto`,
+              // MsHyphens: `auto`,
+              // hyphens: `auto`,
+              // wordBreak: `break-all`,
+              // display: `inline-block`,
+            }
+          }
           key={`info-icon-${words[words.length - 1]}`}
         >
           {` `}
@@ -35,9 +34,9 @@ class EvaluationTable extends Component {
           <img
             src={infoIcon}
             css={{
-              height: rhythm(2 / 5),
-              marginBottom: rhythm(2 / 15),
-              verticalAlign: `text-bottom`,
+              height: rhythm(space[3]),
+              marginBottom: rhythm(space[1]),
+              verticalAlign: `baseline`,
             }}
             alt={`Info Icon`}
           />
@@ -56,30 +55,20 @@ class EvaluationTable extends Component {
                 display: `inline-block`,
                 marginLeft: `auto`,
                 marginRight: `auto`,
-                padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
-                [presets.Xs]: {
-                  padding: `${rhythm(space[3])} 0 ${rhythm(
-                    presets.space[3]
-                  )} ${rhythm(1 / 2)}`,
-                },
               }}
             >
-              {/* eslint-disable jsx-a11y/anchor-is-valid */}
-              {/* jsx-a11y really wants us to change this to a button */}
-              {/* eslint-disable-next-line */}
-              <a
+              <button
                 css={{
-                  "&&": {
-                    fontWeight: `normal`,
-                    borderBottom: 0,
-                  },
+                  border: 0,
+                  padding: 0,
+                  textAlign: `left`,
                 }}
                 onClick={e => {
                   e.preventDefault()
                 }}
               >
                 {renderText(text)}
-              </a>
+              </button>
               {/* eslint-enable */}
             </div>
           )
@@ -178,15 +167,9 @@ class EvaluationTable extends Component {
                               presets.space[5]
                             )} - 1px)`,
                             "&&": {
-                              paddingRight: `${rhythm(1 / 4)}`,
-                              paddingLeft: `${rhythm(1 / 4)}`,
                               [presets.Xs]: {
                                 paddingRight: `${rhythm(space[3])}`,
                                 paddingLeft: `${rhythm(space[3])}`,
-                              },
-                              [presets.Sm]: {
-                                paddingRight: `${rhythm(2)}`,
-                                paddingLeft: `${rhythm(2)}`,
                               },
                             },
                           }}

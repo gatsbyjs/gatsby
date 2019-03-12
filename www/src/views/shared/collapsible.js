@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
 
-import { options, rhythm } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
 
 import styles from "./styles"
 
@@ -30,7 +30,7 @@ class Collapsible extends Component {
           maxHeight: fixed ? `${fixed}px` : `initial`,
           flexBasis: 0,
           overflowY: `auto`,
-          // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
+          // paddingBottom: collapsed ? 0 : rhythm(space[6]),
         }}
       >
         <div
@@ -50,9 +50,9 @@ class Collapsible extends Component {
               flexShrink: 0,
               fontWeight: `normal`,
               fontSize: presets.scale[1],
-              marginTop: rhythm(options.blockMarginBottom),
+              marginTop: rhythm(space[6]),
               marginRight: rhythm(5 / 4),
-              letterSpacing: `.1em`,
+              letterSpacing: presets.letterSpacings.tracked,
               textTransform: `uppercase`,
               "&:hover": {
                 color: colors.gatsby,

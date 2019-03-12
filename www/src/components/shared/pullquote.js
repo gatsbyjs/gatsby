@@ -4,34 +4,34 @@ import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
-import { options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm, options } from "../../utils/typography"
+import presets, { colors, radii, space } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
-  border-radius: ${presets.radii[2]}px;
+  border-radius: ${radii[2]}px;
   color: ${colors.gatsby};
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: ${presets.scale[3]};
   font-weight: bold;
-  padding: 2rem 3rem;
+  padding: ${rhythm(space[7])} 3rem;
   position: relative;
-  text-indent: 2rem;
-  margin: 2.5rem 0;
+  text-indent: ${rhythm(space[7])};
+  margin: ${rhythm(space[8])} 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
-    margin: 2.5rem 0;
+    margin: ${rhythm(space[8])} 0;
   }
 
   ${presets.Lg} {
     line-height: ${presets.lineHeights.loose};
-    margin: 2.5rem -3.5rem;
+    margin: ${rhythm(space[8])} -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: 2.5rem -3.5rem;
+      margin: ${rhythm(space[8])} -3.5rem;
     }
   }
 `
@@ -40,15 +40,15 @@ const Citation = styled(`cite`)`
   display: block;
   font-style: italic;
   font-weight: normal;
-  margin-top: 1rem;
+  margin-top: ${rhythm(space[4])};
   text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
   display: flex;
-  left: 2.5rem;
+  left: ${rhythm(space[8])};
   position: absolute;
-  top: 2rem;
+  top: ${rhythm(space[7])};
 
   svg {
     fill: ${colors.gatsbyDark};
@@ -93,7 +93,7 @@ const Star = styled(`span`)`
     .variantB & {
       left: auto;
       right: 0;
-      top: 2rem;
+      top: ${rhythm(space[7])};
       transform: translate(50%, 0);
     }
 

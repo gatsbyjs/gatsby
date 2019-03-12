@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.8...gatsby-plugin-typography@2.2.9) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
 ## [2.2.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.7...gatsby-plugin-typography@2.2.8) (2019-03-05)
 
 ### Bug Fixes

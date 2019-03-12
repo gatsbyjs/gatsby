@@ -151,7 +151,7 @@ exports.onCreatePage = ({ page, actions }) => {
   createPage({
     ...page,
     context: {
-      house: Gryffindor,
+      house: `Gryffindor`,
     },
   })
 }

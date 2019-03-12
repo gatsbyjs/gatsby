@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.8...gatsby-remark-images-contentful@2.0.9) (2019-03-11)
+
+### Features
+
+- **gatsby-remark-images-contentful:** enable webp sources ([#11273](https://github.com/gatsbyjs/gatsby/issues/11273)) ([6866e76](https://github.com/gatsbyjs/gatsby/commit/6866e76)), closes [#11268](https://github.com/gatsbyjs/gatsby/issues/11268)
+
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.0.7...gatsby-remark-images-contentful@2.0.8) (2019-02-08)
 
 ### Bug Fixes

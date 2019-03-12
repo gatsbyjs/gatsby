@@ -10,7 +10,7 @@ import presets, { colors, space } from "../../utils/presets"
 const ICON_SIZE = `32px`
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   padding: ${rhythm(space[5])} ${rhythm(space[6])};
   width: 100%;
@@ -21,7 +21,7 @@ const HomepageSectionRoot = styled(`section`)`
   }
 
   ${presets.Xxl} {
-    padding: ${rhythm(1.5)} 8%;
+    padding: ${rhythm(space[7])} 8%;
   }
 `
 export const Header = styled(`header`)`
@@ -30,7 +30,7 @@ export const Header = styled(`header`)`
   }
 
   ${presets.Lg} {
-    margin-left: 3rem;
+    margin-left: ${rhythm(space[9])};
   }
 `
 
@@ -81,14 +81,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 1.5rem;
+  margin: ${rhythm(space[4])} 0 ${rhythm(space[6])};
 
   > a {
-    margin-right: ${rhythm(0.2)};
+    margin-right: ${rhythm(space[1])};
   }
 
   ${presets.Lg} {
-    margin: 1rem 0 2.5rem;
+    margin: ${rhythm(space[4])} 0 ${rhythm(space[8])};
   }
 `
 

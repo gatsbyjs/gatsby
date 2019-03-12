@@ -6,8 +6,8 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
-import presets, { colors, space } from "../utils/presets"
-import typography, { rhythm, options } from "../utils/typography"
+import presets, { colors, space, transition, radii } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -32,7 +32,6 @@ class BlogPostTemplate extends React.Component {
     const next = this.props.pageContext.next
     const prevNextLinkStyles = {
       "&&": {
-        boxShadow: `none`,
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
@@ -50,7 +49,7 @@ class BlogPostTemplate extends React.Component {
       <p
         css={{
           lineHeight: presets.lineHeights.dense,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
+          fontFamily: options.headerFontFamily.join(`,`),
           margin: 0,
           color: colors.gray.calm,
         }}
@@ -130,11 +129,10 @@ class BlogPostTemplate extends React.Component {
             <section
               css={{
                 display: `flex`,
-                marginTop: rhythm(-1 / 4),
                 marginBottom: rhythm(space[5]),
                 [presets.Md]: {
                   marginTop: rhythm(space[3]),
-                  marginBottom: rhythm(2),
+                  marginBottom: rhythm(space[9]),
                 },
               }}
             >
@@ -148,10 +146,6 @@ class BlogPostTemplate extends React.Component {
                   css={{
                     "&&": {
                       borderBottom: 0,
-                      boxShadow: `none`,
-                      "&:hover": {
-                        background: `none`,
-                      },
                     },
                   }}
                 >
@@ -161,7 +155,7 @@ class BlogPostTemplate extends React.Component {
                       height: rhythm(2.3),
                       width: rhythm(2.3),
                       margin: 0,
-                      borderRadius: presets.radii[6],
+                      borderRadius: radii[6],
                       display: `inline-block`,
                       verticalAlign: `middle`,
                     }}
@@ -185,8 +179,8 @@ class BlogPostTemplate extends React.Component {
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.ui.bright}`,
-                        transition: `all ${presets.animation.speedFast} ${
-                          presets.animation.curveDefault
+                        transition: `all ${transition.speed.fast} ${
+                          transition.curve.default
                         }`,
                         "&:hover": {
                           background: colors.ui.bright,
@@ -256,16 +250,16 @@ class BlogPostTemplate extends React.Component {
         <div
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
-            marginTop: rhythm(2),
+            marginTop: rhythm(space[9]),
             [presets.Md]: {
-              marginTop: rhythm(2),
+              marginTop: rhythm(space[9]),
               paddingBottom: rhythm(space[5]),
               paddingTop: rhythm(space[5]),
             },
             [presets.Lg]: {
               marginTop: rhythm(3),
-              paddingBottom: rhythm(2),
-              paddingTop: rhythm(2),
+              paddingBottom: rhythm(space[9]),
+              paddingTop: rhythm(space[9]),
             },
           }}
         >
@@ -284,7 +278,7 @@ class BlogPostTemplate extends React.Component {
                     <span
                       css={{
                         [presets.Md]: {
-                          marginLeft: `-1rem`,
+                          marginLeft: `-${rhythm(space[4])}`,
                         },
                       }}
                     >
@@ -306,9 +300,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Md]: {
-                          marginRight: `-1rem`,
-                        },
+                        [presets.Md]: { marginRight: `-${rhythm(space[4])}` },
                       }}
                     >
                       {next.frontmatter.title}
