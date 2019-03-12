@@ -57,7 +57,7 @@ class NodeAPIHelperDocs extends React.Component {
                 dangerouslySetInnerHTML={{
                   __html: `
 // in gatsby-node.js
-exports.createPages = (gatsbyNodeHelpers) => {
+exports.createPages = gatsbyNodeHelpers => {
   const { actions, reporter } = gatsbyNodeHelpers
   // use helpers
 }
