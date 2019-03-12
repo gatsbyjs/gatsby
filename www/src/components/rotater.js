@@ -78,11 +78,7 @@ class Search extends Component {
         }
       </span>
       <br/>
-      There's a plugin for that.<br/>
-      <span css={{
-        fontSize: presets.scale[2],
-      }}>
-        <span 
+      <span 
           css={{ 
             fontWeight: 700,
             "&:hover": {
@@ -91,13 +87,11 @@ class Search extends Component {
           }} 
           onClick={this.decrementItem.bind(this)}>&lt;&nbsp;
         </span>
-        {
-          pluginName ?
+      &nbsp;&nbsp;&nbsp;There's {pluginName ?
             <Link 
               to={"/packages/"+pluginName}
-            >({pluginName})</Link> :
-            null
-        }
+            >a plugin</Link> :`a plugin`} for that.
+      <span>&nbsp;&nbsp;&nbsp;
         <span 
           css={{ 
             fontWeight: 700,
