@@ -330,6 +330,8 @@ module.exports = async (
           directory
         ),
         "create-react-context": cachePath(`create-react-context.js`, directory),
+        "gatsby-cache-dir": cachePath(``, directory),
+        "gatsby-public-dir": publicPath(``, directory),
       },
     }
   }

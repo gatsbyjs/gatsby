@@ -8,9 +8,19 @@ jest.mock(`gatsby/package.json`, () => {
   }
 })
 
-// we only have one macro which returns the public path
-jest.mock(`babel-plugin-preval/macro`, () => script =>
-  `${process.cwd()}/public`
+jest.mock(
+  `gatsby-public-dir/webpack.stats.json`,
+  () => {
+    return {}
+  },
+  { virtual: true }
+)
+jest.mock(
+  `gatsby-public-dir/chunk-map.json`,
+  () => {
+    return {}
+  },
+  { virtual: true }
 )
 
 jest.mock(

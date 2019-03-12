@@ -25,8 +25,6 @@
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
-    "babel-plugin-macros": "^2.4.2",
-    "babel-plugin-preval": "^3.0.1",
     "babel-plugin-remove-graphql-queries": "^2.6.2",
     "babel-preset-gatsby": "^0.1.9",
     "better-opn": "0.1.4",
