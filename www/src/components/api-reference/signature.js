@@ -9,7 +9,7 @@ import { options, rhythm } from "../../utils/typography"
 
 const Wrapper = styled(`span`)`
   font-family: ${options.headerFontFamily.join(`,`)};
-  font-weight: bold;
+  font-weight: 400;
 
   :before,
   :after {
