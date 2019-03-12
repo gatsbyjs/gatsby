@@ -83,6 +83,10 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      if (argv.noColor) {
+        process.env.FORCE_COLOR = `0`
+      }
+
       report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
@@ -295,6 +299,7 @@ module.exports = argv => {
       global: true,
     })
     .option(`no-color`, {
+      alias: `no-colors`,
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,
