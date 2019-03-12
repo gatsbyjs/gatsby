@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 
-import * as components from "../../../../../.cache/components"
+import * as components from "gatsby-cache-dir/components"
 
 import "./prism-theme.css"
 

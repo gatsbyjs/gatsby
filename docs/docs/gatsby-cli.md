@@ -47,12 +47,14 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 
 #### Options
 
-|     Option      | Description                                     |
-| :-------------: | ----------------------------------------------- |
-| `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to 8000                      |
-| `-o`, `--open`  | Open the site in your (default) browser for you |
-| `-S`, `--https` | Use HTTPS                                       |
+|     Option      | Description                                          |
+| :-------------: | ---------------------------------------------------- |
+| `-H`, `--host`  | Set host. Defaults to localhost                      |
+| `-p`, `--port`  | Set port. Defaults to 8000                           |
+| `-o`, `--open`  | Open the site in your (default) browser for you      |
+| `-S`, `--https` | Use HTTPS                                            |
+|  `--build-dir`  | Set the build directory location. Defaults to public |
+|  `--cache-dir`  | Set the cache directory location. Defaults to .cache |
 
 Follow the [Local HTTPS guide](/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
@@ -70,6 +72,8 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 |       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                 |
 |        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                             |
 | `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See /docs/performance-tracing/ |
+|        `--build-dir`         | Set the build directory location. Defaults to public                                |
+|        `--cache-dir`         | Set the cache directory location. Defaults to .cache                                |
 
 ### `serve`
 
@@ -85,6 +89,8 @@ At the root of a Gatsby site, serve the production build of your site for testin
 |  `-p`, `--port`  | Set port. Defaults to 9000                                                               |
 |  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
 | `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
+|  `--build-dir`   | Set the build directory location. Defaults to public                                     |
+|  `--cache-dir`   | Set the cache directory location. Defaults to .cache                                     |
 
 ### `info`
 

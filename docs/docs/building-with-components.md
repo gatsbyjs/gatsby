@@ -129,7 +129,7 @@ import favicon from "./favicon.png"
 let inlinedStyles = ""
 if (process.env.NODE_ENV === "production") {
   try {
-    inlinedStyles = require("!raw-loader!../public/styles.css")
+    inlinedStyles = require("!raw-loader!gatsby-public-dir/styles.css")
   } catch (e) {
     console.log(e)
   }
