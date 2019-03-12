@@ -8,7 +8,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors, space, radii } from "../../utils/presets"
+import presets, { colors, space, radii, transition } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
@@ -38,9 +38,18 @@ const HomepageBlogPostRoot = styled(
     margin-bottom: ${rhythm(space[8])};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
+    transition: transform ${transition.speed.default}
+        ${transition.curve.default},
+      box-shadow ${transition.speed.default} ${transition.curve.default};
 
     :hover {
-      background: ${colors.ui.whisper};
+      transform: translateY(-4px);
+      box-shadow: ${presets.shadows.cardHover};
+    }
+
+    :active: {
+      box-shadow: ${presets.shadows.cardActive};
+      transform: translateY(0);
     }
   }
 `
