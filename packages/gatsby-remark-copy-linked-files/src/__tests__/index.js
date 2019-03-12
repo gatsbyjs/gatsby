@@ -244,8 +244,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const validDestinationDir = `path/to/dir`
       const expectedNewPath = path.posix.join(
-        process.cwd(),
-        `public`,
+        path.join(process.cwd(), `public`),
         validDestinationDir,
         `/undefined-undefined.gif`
       )
@@ -269,8 +268,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       const pathPrefix = `/blog`
       const validDestinationDir = `path/to/dir`
       const expectedNewPath = path.posix.join(
-        process.cwd(),
-        `public`,
+        path.join(process.cwd(), `public`),
         validDestinationDir,
         `/undefined-undefined.gif`
       )
@@ -298,8 +296,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     it(`copies file to root dir when not supplied'`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const expectedNewPath = path.posix.join(
-        process.cwd(),
-        `public`,
+        path.join(process.cwd(), `public`),
         `/undefined-undefined.gif`
       )
       expect.assertions(3)

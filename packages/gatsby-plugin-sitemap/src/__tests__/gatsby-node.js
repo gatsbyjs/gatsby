@@ -11,7 +11,7 @@ const cache = {
     if (!filePath) {
       return `public`
     }
-    return `public/${filePath}`
+    return path.join(`public`, filePath)
   },
 }
 

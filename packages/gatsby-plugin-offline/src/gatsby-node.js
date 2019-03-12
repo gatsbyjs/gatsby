@@ -71,7 +71,7 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const options = {
     importWorkboxFrom: `local`,
-    globDirectory: cache.publicCache(),
+    globDirectory: cache.publicPath(),
     globPatterns,
     modifyUrlPrefix: {
       // If `pathPrefix` is configured by user, we should replace
