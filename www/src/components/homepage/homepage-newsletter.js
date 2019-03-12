@@ -64,6 +64,7 @@ const Name = styled(`h3`)`
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: ${presets.scale[1]};
   font-weight: normal;
+  letter-spacing: ${presets.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
