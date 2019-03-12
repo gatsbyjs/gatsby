@@ -10,12 +10,12 @@ import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, transition, radii } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${rhythm(options.blockMarginBottom)};
+  margin-right: ${rhythm(space[6])};
 
   ${presets.Md} {
     border-bottom: 1px solid ${colors.gray.superLight};
@@ -27,8 +27,8 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 `
 
 export const BlockLink = styled(Link)`
-  background: #fff;
-  border-radius: ${presets.radii[2]}px;
+  background: ${colors.white};
+  border-radius: ${radii[2]}px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -38,8 +38,7 @@ export const BlockLink = styled(Link)`
   ${presets.Md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
+    transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
   ${presets.Lg} {
@@ -81,13 +80,13 @@ const Digest = styled(`div`)`
   flex-grow: 1;
   font-family: ${options.systemFontFamily.join(`,`)};
   justify-content: space-between;
-  padding: ${rhythm(0.5)} 0 0;
+  padding: ${rhythm(space[3])} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
   height: 64px;
   padding-right: ${rhythm(space[4])};
-  margin-top: ${rhythm(1 / 12)};
+  margin-top: ${rhythm(space[1])};
 
   img {
     border: 1px solid ${colors.gray.superLight};

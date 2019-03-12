@@ -5,7 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -181,7 +181,7 @@ export default class FilteredStarterLibrary extends Component {
                 width: `100%`,
                 [presets.Sm]: {
                   justifyContent: `flex-end`,
-                  marginBottom: `0rem`,
+                  marginBottom: 0,
                   width: `50%`,
                 },
               }}
@@ -192,12 +192,12 @@ export default class FilteredStarterLibrary extends Component {
                   display: `none`,
                   [presets.Lg]: {
                     border: 0,
-                    borderRadius: presets.radii[2],
+                    borderRadius: radii[2],
                     color: colors.gatsby,
                     fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
+                    paddingTop: rhythm(space[1]),
+                    paddingRight: rhythm(space[1]),
+                    paddingBottom: rhythm(space[1]),
                     width: rhythm(5),
                   },
                 }}
@@ -209,26 +209,9 @@ export default class FilteredStarterLibrary extends Component {
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
-                    border: 0,
-                    borderRadius: presets.radii[2],
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    marginTop: rhythm(1 / 8),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(space[5]),
+                    marginTop: rhythm(space[1]),
+                    ...styles.searchInput,
                     width: rhythm(6),
-                    ":focus": {
-                      outline: `${colors.wisteria} solid thin`,
-                      backgroundColor: colors.ui.light,
-                      borderRadius: presets.radii[2],
-                      transition: `width ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }, background-color ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                    },
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}

@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -121,21 +121,17 @@ export default Details
 
 const styles = {
   showMoreButton: {
+    backgroundColor: colors.gatsby,
     border: 0,
-    borderRadius: presets.radii[1],
+    borderRadius: radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
+    padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
-      backgroundColor: colors.gatsby,
       borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
+      color: colors.white,
     },
   },
 }

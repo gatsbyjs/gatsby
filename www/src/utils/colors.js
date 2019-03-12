@@ -35,6 +35,7 @@ const colors = {
     light: gray(80, 270),
     superLight: gray(96, 270),
   },
+  white: `#ffffff`,
   code: {
     bgInline: `#fbf2e9`,
     bg: `#fdfaf6`,

@@ -230,23 +230,46 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
 [using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
 
-## **Beta** [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
+## [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
-Rich text feature is supported in this source plugin, if you want to serialize the field content to html you can add the plugin `@contentful/gatsby-transformer-contentful-richtext`.
+Rich Text feature is supported in this source plugin, you can use the following query to get the json output:
 
-After adding the transformer plugin you can use the following query to get the html output:
-
-```
+```graphql
 {
   allContentfulBlogPost {
-    bodyRichText {
-      childContentfulRichText {
-        html
+    edges {
+      node {
+        bodyRichText {
+          json
+        }
       }
     }
   }
 }
 ```
+
+To define a way Rich Text document is rendered, you can use `@contentful/rich-text-react-renderer` package:
+
+```jsx
+import { BLOCKS, MARKS } from "@contentful/rich-text-types"
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+
+const Bold = ({ children }) => <span className="bold">{children}</span>
+const Text = ({ children }) => <p className="align-center">{children}</p>
+
+const options = {
+  renderMark: {
+    [MARKS.BOLD]: text => <Bold>{text}</Bold>,
+  },
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
+  },
+}
+
+documentToReactComponents(node.bodyRichText.json, options)
+```
+
+Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

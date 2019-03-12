@@ -1,5 +1,5 @@
 import React from "react"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, radii } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
@@ -34,11 +34,11 @@ const superHeader = () => (
           color: colors.gray.calm,
           background: colors.ui.whisper,
           "span:first-of-type": {
-            borderTopLeftRadius: presets.radii[2],
+            borderTopLeftRadius: radii[2],
             textAlign: `left`,
           },
           "&:last-child": {
-            borderTopRightRadius: presets.radii[2],
+            borderTopRightRadius: radii[2],
           },
           [presets.Xs]: {
             display: `table-cell`,

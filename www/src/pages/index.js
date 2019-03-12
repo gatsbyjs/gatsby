@@ -117,12 +117,7 @@ class IndexRoute extends React.Component {
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
-              <div
-                css={{
-                  textAlign: `center`,
-                  padding: `${rhythm(space[5])} 0 ${rhythm(1.5)}`,
-                }}
-              >
+              <div css={{ textAlign: `center` }}>
                 <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
@@ -131,7 +126,7 @@ class IndexRoute extends React.Component {
                   secondary
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: `1rem` }}
+                  overrideCSS={{ marginTop: rhythm(space[4]) }}
                 >
                   Get Started
                 </Button>
