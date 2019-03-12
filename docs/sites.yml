@@ -4904,3 +4904,16 @@
   built_by: Abe Clark
   built_by_url: https://www.linkedin.com/in/abrahamclark/
   featured: false
+- title: Guillaume Briday's Blog
+  main_url: "https://guillaumebriday.fr/"
+  url: "https://guillaumebriday.fr/"
+  source_url: "https://github.com/guillaumebriday/guillaumebriday.fr"
+  description: >
+    My personal blog built with Gatsby and Tailwind CSS.
+  categories:
+    - Blog
+    - Web Development
+    - Technology
+  built_by: Guillaume Briday
+  built_by_url: https://guillaumebriday.fr/
+  featured: false

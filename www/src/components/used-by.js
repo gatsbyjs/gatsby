@@ -1,6 +1,6 @@
 import React from "react"
-import typography, { rhythm } from "../utils/typography"
-import presets, { space } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { space, transition } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
@@ -30,8 +30,8 @@ const Icon = ({ icon, alt, href }) => (
         borderBottom: `0 !important`,
         boxShadow: `none !important`,
         background: `none !important`,
-        transition: `opacity ${presets.animation.speedFast} ${
-          presets.animation.curveDefault
+        transition: `opacity ${transition.speed.fast} ${
+          transition.curve.default
         }`,
         opacity: 0.9,
         ":hover": {
@@ -63,8 +63,8 @@ const UsedBy = () => (
       paddingTop: rhythm(space[5]),
       paddingBottom: rhythm(space[5]),
       marginBottom: rhythm(3),
-      transition: `padding-top ${presets.animation.speedFast} ${
-        presets.animation.curveDefault
+      transition: `padding-top ${transition.speed.fast} ${
+        transition.curve.default
       }`,
       order: `3`,
       flexGrow: `1`,
@@ -95,8 +95,7 @@ const UsedBy = () => (
       <p
         css={{
           color: presets.colors.lilac,
-          letterSpacing: `0.02em`,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
+          fontFamily: options.headerFontFamily.join(`,`),
           fontSize: presets.scale[1],
           marginBottom: 0,
           [presets.Sm]: {
