@@ -305,7 +305,7 @@ export default (pagePath, callback) => {
             data-href={`${__PATH_PREFIX__}/${style.name}`}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
-                require.resolve(`gatsby-public-path/${style.name}`),
+                require.resolve(`gatsby-public-dir/${style.name}`),
                 `utf-8`
               ),
             }}
