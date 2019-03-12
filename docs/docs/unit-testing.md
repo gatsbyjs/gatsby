@@ -38,7 +38,7 @@ module.exports = {
   },
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/fileMock.js`,
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
   },
   testPathIgnorePatterns: [`node_modules`, `.cache`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
@@ -72,11 +72,11 @@ module.exports = require("babel-jest").createTransformer(babelOptions)
   tests. It is good when you have something that you can't or don't want to test.
   You can mock anything, and here you are mocking assets rather than code. For
   stylesheets you need to use the package `identity-obj-proxy`. For all other assets
-  you need to use a manual mock called `fileMock.js`. You need to create this yourself.
+  you need to use a manual mock called `file-mock.js`. You need to create this yourself.
   The convention is to create a directory called `__mocks__` in the root directory
   for this. Note the pair of double underscores in the name.
 
-```js:title=__mocks__/fileMock.js
+```js:title=__mocks__/file-mock.js
 module.exports = "test-file-stub"
 ```
 
@@ -223,7 +223,7 @@ module.exports = {
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-      "<rootDir>/__mocks__/fileMock.js",
+      "<rootDir>/__mocks__/file-mock.js",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testPathIgnorePatterns: ["node_modules", ".cache"],

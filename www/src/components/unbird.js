@@ -1,9 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 import axios from "axios"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space, radii } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
@@ -18,7 +18,7 @@ const FeedbackToggle = styled(`div`)`
   height: 60px;
   bottom: 64px;
   background-color: ${colors.gatsby};
-  color: #fff;
+  color: ${colors.white};
   border-radius: 100%;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
   position: fixed;
@@ -30,7 +30,7 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     bottom: 30px;
     right: 30px;
   }
@@ -49,10 +49,10 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${rhythm(1)};
+  font-size: ${rhythm(space[5])};
 `
 const CancelIcon = styled(CancelMdIcon)`
-  font-size: ${rhythm(1.2)};
+  font-size: ${presets.scale[3]};
 `
 
 const StatusMessage = styled(`span`)`
@@ -60,8 +60,8 @@ const StatusMessage = styled(`span`)`
   width: 100%;
   background: ${colors.gray.dark};
   bottom: 60px;
-  color: #fff;
-  font-size: 16px;
+  color: ${colors.white};
+  font-size: ${presets.scale[2]};
   padding: 0.4rem 0.8rem;
   text-align: left;
   left: 0;
@@ -74,10 +74,10 @@ const FeedbackForm = styled(`div`)`
   width: 90%;
   background-color: ${colors.gatsby};
   box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
-  ${presets.Tablet} {
+  ${presets.Md} {
     width: 350px;
     right: 30px;
     bottom: 100px;
@@ -88,12 +88,12 @@ const Label = styled(`label`)`
   font-family: ${options.headerFontFamily.join(`,`)};
   font-weight: 600;
   height: 240px;
-  color: #fff;
+  color: ${colors.white};
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px;
-  font-size: 22px;
+  font-size: ${presets.scale[3]};
   float: left;
 `
 
@@ -105,7 +105,7 @@ const Input = styled(`input`)`
   float: left;
   height: 60px;
   width: calc(100% - 60px);
-  font-size: 14px;
+  font-size: ${presets.scale[1]};
   padding: 20px;
   border: none;
   resize: none;
@@ -119,7 +119,7 @@ const Send = styled(`button`)`
   height: 60px;
   cursor: pointer;
   border: none;
-  background: #fff;
+  background: ${colors.white};
   padding: 0;
 
   svg {

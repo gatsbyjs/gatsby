@@ -95,7 +95,7 @@ After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` c
 
 ### Running Gatsby with the `inspect` flag
 
-In your project directory instead of running `gatsby develop` run the following command:
+In your project directory instead of running `npm run develop` run the following command:
 
 ```shell
 node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop

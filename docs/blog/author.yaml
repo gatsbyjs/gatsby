@@ -227,3 +227,22 @@
   bio: Product manager solving problems with research and process. Aspiring gardener and baker of delicious treats.
   avatar: avatars/marisa-morby.jpg
   twitter: "@marisamorby"
+- id: Ryan Johnson
+  bio: Content strategist at the U.S. Department of the Interior
+  avatar: avatars/ryan-johnson.jpg
+- id: Daniel Lemay
+  bio: React and GraphQL enthusiast. Meetup organizer. Mentor. Blogs at dslemay.com
+  avatar: avatars/daniel-lemay.jpg
+  twitter: "@dslemay"
+- id: Travis Stanley
+  bio: Techlead for the Webteam @ Fitplan. Adoring partner, father of three, Codemonkey, gamer, and writer. Thats about the gist of it.
+  avatar: avatars/travis_stanley.jpg
+  twitter: "@cpt_silverfox"
+- id: Katie Fujihara
+  bio: Lover of making beautiful UI. Portland tech community organizer.
+  avatar: avatars/katie-fujihara.jpg
+  twitter: "@katieofcode"
+- id: Sidhartha Chatterjee
+  bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
+  avatar: avatars/sidhartha-chatterjee.jpg
+  twitter: "@chatsidhartha"

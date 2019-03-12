@@ -63,7 +63,7 @@ You can now view your website by running
 
 ```bash
 $ cd azure-blog
-$ gatsby develop
+$ npm run develop
 ```
 
 You should now see your blog in the flesh!
