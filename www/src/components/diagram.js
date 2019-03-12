@@ -9,7 +9,7 @@ import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `255, 255, 255, 0.9`
+const stripeColor = `0, 0, 0, 0.025`
 const stripeSize = 15
 const stripeAnimation = keyframes({
   "0%": {
@@ -85,7 +85,6 @@ const VerticalLine = () => (
 )
 
 const box = {
-  background: colors.white,
   border: `1px solid ${colors.ui.light}`,
   borderRadius: radii[2],
   padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
@@ -93,9 +92,9 @@ const box = {
 
 const borderAndBoxShadow = {
   background: colors.white,
-  border: `1px solid ${colors.ui.light}`,
+  border: 0,
   borderRadius: radii[1],
-  boxShadow: presets.shadows.card,
+  boxShadow: presets.shadows.raised,
   transform: `translateZ(0)`,
   width: `100%`,
 }

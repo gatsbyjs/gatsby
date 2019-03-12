@@ -57,7 +57,7 @@ class BlogPostsIndex extends React.Component {
                 css={{
                   marginBottom: rhythm(space[6]),
                   [presets.Md]: {
-                    boxShadow: presets.shadows.card,
+                    boxShadow: presets.shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],
                     padding: rhythm(space[9]),
@@ -74,7 +74,7 @@ class BlogPostsIndex extends React.Component {
                     }`,
                     "&:hover": {
                       transform: `translateY(-4px)`,
-                      boxShadow: presets.shadows.cardHover,
+                      boxShadow: presets.shadows.overlay,
                     },
                     "&:active": {
                       boxShadow: presets.shadows.cardActive,

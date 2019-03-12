@@ -38,9 +38,10 @@ module.exports = {
   },
   radii: [0, 2, 4, 8, 16, 9999, `100%`],
   shadows: {
-    card: `0 3px 10px rgba(25, 17, 34, 0.075)`,
-    cardHover: `0 10px 42px rgba(25, 17, 34, 0.1)`,
-    cardActive: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+    raised: `0px 1px 2px rgba(46, 41, 51, 0.08), 0px 2px 4px rgba(71, 63, 79, 0.08)`,
+    floating: `0px 2px 4px rgba(46, 41, 51, 0.08), 0px 4px 8px rgba(71, 63, 79, 0.16)`,
+    overlay: `0px 4px 8px rgba(46, 41, 51, 0.08), 0px 8px 16px rgba(71, 63, 79, 0.16)`,
+    dialog: `0px 4px 16px rgba(46, 41, 51, 0.08), 0px 8px 24px rgba(71, 63, 79, 0.16)`,
   },
   lineHeights: {
     solid: 1,

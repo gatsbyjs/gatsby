@@ -44,7 +44,7 @@ const HomepageBlogPostRoot = styled(
 
     :hover {
       transform: translateY(-4px);
-      box-shadow: ${presets.shadows.cardHover};
+      box-shadow: ${presets.shadows.overlay};
     }
 
     :active: {

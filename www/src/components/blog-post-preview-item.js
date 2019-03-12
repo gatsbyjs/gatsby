@@ -54,7 +54,6 @@ const BlogPostPreviewItem = ({ post, className }) => (
             css={{
               position: `relative`,
               zIndex: 1,
-              "&&": { color: colors.gatsby },
             }}
           >
             {post.frontmatter.author.id}

@@ -225,14 +225,14 @@ class FeaturedSites extends Component {
                   borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
-                    border: `1px solid ${colors.ui.light}`,
+                    border: 0,
                     transition: `all ${transition.speed.default} ${
                       transition.curve.default
                     }`,
                     "&:hover": {
                       background: colors.white,
                       transform: `translateY(-3px)`,
-                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                      boxShadow: presets.shadows.overlay,
                     },
                   },
                   ...styles.featuredSitesCard,

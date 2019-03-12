@@ -109,7 +109,7 @@ const styles = {
   },
   screenshot: {
     borderRadius: radii[1],
-    boxShadow: presets.shadows.card,
+    boxShadow: presets.shadows.raised,
     marginBottom: rhythm(space[3]),
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
@@ -118,7 +118,7 @@ const styles = {
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
       transform: `translateY(-3px)`,
-      boxShadow: presets.shadows.cardHover,
+      boxShadow: presets.shadows.overlay,
     },
   },
   shortcutIcon: {

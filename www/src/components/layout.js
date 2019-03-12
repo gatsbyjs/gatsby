@@ -106,8 +106,8 @@ class DefaultLayout extends React.Component {
             <div
               css={{
                 backgroundColor: colors.white,
-                borderRadius: radii[1],
-                boxShadow: `0 0 90px -24px ${colors.gatsby}`,
+                borderRadius: radii[2],
+                boxShadow: presets.shadows.dialog,
                 position: `relative`,
               }}
             >
