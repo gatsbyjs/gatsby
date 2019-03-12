@@ -100,10 +100,7 @@ class Runner {
 
   async parseEverything() {
     const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
-    let files = [
-      path.join(this.base, `src`),
-      path.join(cachePath(``, this.base), `fragments`),
-    ]
+    let files = [path.join(this.base, `src`), cachePath(`fragments`, this.base)]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
       .reduce(
         (merged, folderPath) =>

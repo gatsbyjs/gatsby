@@ -33,7 +33,7 @@ const sharp = require(`sharp`)
 const { onPostBootstrap } = require(`../gatsby-node`)
 const cache = {
   publicPath(filePath) {
-    return `public/${filePath}`
+    return path.join(`public`, filePath)
   },
 }
 

@@ -66,7 +66,7 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
   manifests.forEach(file => {
-    if (fs.existsSync(cache.publicPath(`${file}`))) globPatterns.push(file)
+    if (fs.existsSync(cache.publicPath(file))) globPatterns.push(file)
   })
 
   const options = {
@@ -112,7 +112,7 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
-  const idbKeyvalDest = cache.publicPath(`${idbKeyvalFile}`)
+  const idbKeyvalDest = cache.publicPath(idbKeyvalFile)
   fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
 
   const swDest = cache.publicPath(`sw.js`)

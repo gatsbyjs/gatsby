@@ -7,7 +7,7 @@ const loadCachedConfig = cachePath => {
   if (process.env.NODE_ENV !== `test`) {
     try {
       pluginBabelConfig = require(path.join(
-        cachePath || path.join(process.cwd(), `./.cache`),
+        cachePath || path.join(process.cwd(), `.cache`),
         `babelState.json`
       ))
     } catch (err) {

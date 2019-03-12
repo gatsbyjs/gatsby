@@ -6,9 +6,8 @@ exports.onPostBuild = ({ store, cache }) => {
   const urlPaths = [`/`]
   const filePaths = urlPaths.reduce(
     (accumulator, currentPath) =>
-      `${accumulator} ${path.join(
-        cache.publicPath(currentPath),
-        `index.html`
+      `${accumulator} ${cache.publicPath(
+        path.join(currentPath, `index.html`)
       )}`,
     ``
   )

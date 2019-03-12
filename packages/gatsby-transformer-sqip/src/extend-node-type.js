@@ -1,5 +1,3 @@
-const { resolve } = require(`path`)
-
 const {
   DuotoneGradientType,
   ImageCropFocusType,
@@ -22,6 +20,8 @@ const generateSqip = require(`./generate-sqip`)
 const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
 
+const cacheName = `sqip`
+
 module.exports = async args => {
   const {
     type: { name },
@@ -42,7 +42,7 @@ module.exports = async args => {
 }
 
 async function sqipSharp({ type, cache, getNodeAndSavePathDependency }) {
-  const cacheDir = resolve(cache.rootPath(`/sqip/`))
+  const cacheDir = cache.rootPath(cacheName)
 
   await ensureDir(cacheDir)
 
@@ -136,7 +136,7 @@ async function sqipContentful({ type, cache }) {
 
   const cacheImage = require(`gatsby-source-contentful/cache-image`)
 
-  const cacheDir = resolve(cache.rootPath(`/sqip/`))
+  const cacheDir = cache.rootPath(cacheName)
 
   await ensureDir(cacheDir)
 

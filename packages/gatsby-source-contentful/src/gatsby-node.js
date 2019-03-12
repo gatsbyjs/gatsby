@@ -1,4 +1,3 @@
-const path = require(`path`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -218,7 +217,7 @@ exports.sourceNodes = async (
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
 exports.onPreExtractQueries = async ({ cache, getNodesByType }) => {
-  const CACHE_DIR = path.resolve(cache.rootPath(CACHE_NAME))
+  const CACHE_DIR = cache.rootPath(CACHE_NAME)
   await fs.ensureDir(CACHE_DIR)
 
   if (getNodesByType(`ContentfulAsset`).length == 0) {

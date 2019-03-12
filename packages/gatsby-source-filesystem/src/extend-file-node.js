@@ -23,7 +23,7 @@ module.exports = ({
           details.ext
         }`
 
-        const publicPath = path.join(cache.publicPath(), `static`, fileName)
+        const publicPath = cache.publicPath(path.join(`static`, fileName))
 
         if (!fs.existsSync(publicPath)) {
           fs.copy(details.absolutePath, publicPath, err => {

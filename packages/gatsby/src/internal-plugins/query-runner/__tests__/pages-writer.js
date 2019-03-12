@@ -37,7 +37,7 @@ jest.mock(`../../../redux/`, () => {
 
 jest.mock(`../../../utils/cache`, () => {
   return {
-    cachePath: () => `my/gatsby/project/.cache`,
+    cachePath: filePath => `my/gatsby/project/.cache/${filePath}`,
   }
 })
 

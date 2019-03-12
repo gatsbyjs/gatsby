@@ -87,7 +87,7 @@ function allTypeQuery(typeName) {
 // Create template in .cache for the received type
 function createTemplateFile(cache, typeName) {
   const templateSrc = createPageTemplateJs(typeName)
-  const templateFilename = cache.rootPath(`./${typeName}Template.js`)
+  const templateFilename = cache.rootPath(`${typeName}Template.js`)
   fs.writeFileSync(templateFilename, templateSrc)
   return templateFilename
 }

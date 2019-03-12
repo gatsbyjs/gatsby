@@ -1,5 +1,5 @@
 const crypto = require(`crypto`)
-const { resolve, parse } = require(`path`)
+const { join, parse } = require(`path`)
 
 const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
@@ -7,7 +7,7 @@ const { pathExists, createWriteStream } = require(`fs-extra`)
 const { CACHE_NAME } = require(`./constants`)
 
 module.exports = async function cacheImage(cache, image, options) {
-  const CACHE_DIR = resolve(cache.rootPath(CACHE_NAME))
+  const CACHE_DIR = cache.rootPath(CACHE_NAME)
   const {
     file: { url, fileName, details },
   } = image
@@ -44,7 +44,7 @@ module.exports = async function cacheImage(cache, image, options) {
     .digest(`hex`)
 
   const { name, ext } = parse(fileName)
-  const absolutePath = resolve(CACHE_DIR, `${name}-${optionsHash}${ext}`)
+  const absolutePath = join(CACHE_DIR, `${name}-${optionsHash}${ext}`)
 
   const alreadyExists = await pathExists(absolutePath)
 

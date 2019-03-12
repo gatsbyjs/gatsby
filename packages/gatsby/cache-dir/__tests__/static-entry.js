@@ -56,13 +56,6 @@ jest.mock(
   { virtual: true }
 )
 
-const MOCK_FILE_INFO = {
-  [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
-  [`${process.cwd()}/public/chunk-map.json`]: `{}`,
-}
-
-require(`fs`).__setMockFiles(MOCK_FILE_INFO)
-
 // Needs to be imported after __setMockFiles is called, and imports get hoisted.
 const StaticEntry = require(`../static-entry`).default
 

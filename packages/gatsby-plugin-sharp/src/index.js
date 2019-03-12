@@ -135,7 +135,7 @@ function getPublicPath(cwd) {
     }
     return path.join(cwd || process.cwd(), GATSBY_BUILD_DIR)
   }
-  return path.join(cwd || process.cwd(), `./public`)
+  return path.join(cwd || process.cwd(), `public`)
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
