@@ -40,12 +40,13 @@ describe(`GraphQL Input args`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
+
   it(`filters out null example values`, async () => {
     let result = await queryResult(
       [{ id: `1`, internal: { type: `Bar` }, foo: null, bar: `baz` }],
       `
         {
-          allNode(foo: { eq: "bar" }) {
+          allNode(filter: { foo: { eq: "bar" } }) {
             edges { node { bar } }
           }
         }
@@ -53,7 +54,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Unknown argument "foo" on field "allNode"`
+      `Field "foo" is not defined by type filterNode.`
     )
   })
 
@@ -62,7 +63,7 @@ describe(`GraphQL Input args`, () => {
       [{ id: `1`, internal: { type: `Bar` }, foo: {}, bar: `baz` }],
       `
         {
-          allNode(foo: { eq: "bar" }) {
+          allNode(filter: { foo: { eq: "bar" } }) {
             edges { node { bar } }
           }
         }
@@ -70,7 +71,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Unknown argument "foo" on field "allNode"`
+      `Field "foo" is not defined by type filterNode.`
     )
   })
 
@@ -79,7 +80,7 @@ describe(`GraphQL Input args`, () => {
       [{ id: `1`, internal: { type: `Bar` }, foo: [], bar: `baz` }],
       `
         {
-          allNode(foo: { eq: "bar" }) {
+          allNode(filter: { foo: { eq: "bar" } }) {
             edges { node { bar } }
           }
         }
@@ -87,7 +88,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Unknown argument "foo" on field "allNode"`
+      `Field "foo" is not defined by type filterNode.`
     )
   })
 
@@ -103,7 +104,7 @@ describe(`GraphQL Input args`, () => {
       ],
       `
         {
-          allNode(foo: { eq: "bar" }) {
+          allNode(filter: { foo: { eq: "bar" } }) {
             edges { node { bar } }
           }
         }
@@ -111,7 +112,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Unknown argument "foo" on field "allNode"`
+      `Field "foo" is not defined by type filterNode.`
     )
   })
 
@@ -135,7 +136,7 @@ describe(`GraphQL Input args`, () => {
       ],
       `
         {
-          allNode(linked___NODE: { eq: "baz" }) {
+          allNode(filter: { linked___NODE: { eq: "baz" } }) {
             edges { node { linked } }
           }
         }
@@ -144,7 +145,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Unknown argument "linked___NODE" on field "allNode"`
+      `Field "linked___NODE" is not defined by type filterNode.`
     )
   })
 

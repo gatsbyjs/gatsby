@@ -231,7 +231,7 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 ```
 
-The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
+The `siteTitle` and `menuLinks` arguments are de-structured es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
 
 You can now access the header component's props and map the `menuLinks` array into elements that can be rendered in the document:
 

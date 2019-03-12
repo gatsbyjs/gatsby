@@ -9,7 +9,7 @@ Of the many possibilities, plugins can:
 - add external data or content (e.g. your CMS, static files, a REST API) to your Gatsby GraphQL data
 - transform data from other formats (e.g. Markdown, YAML, CSV) to JSON objects
 - add third-party services (e.g. Google Analytics, Instagram) to your site
-- anything you can dream up!
+- do anything you can dream up!
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs. For larger, more complex sites, plugins let you modularize your site customizations into site-specific plugins.
 
@@ -115,4 +115,4 @@ Some examples:
 - Using React components or component libraries you want to include in your UI, such as `Ant Design`, `Material UI`, or the typeahead from your component library.
 - Integrating visualization libraries, such as `Highcharts` or `d3`.
 
-As a general rule, you may use _any_ npm package you might use without Gatsby, with Gatsby. What plugins offer is a prepackaged integration into the core Gatsby API's to save you time and energy, with minimal configuration. In the case of `Styled Components`, you could manually render the `Provider` component near the root of your application, or you could just use `gatsby-plugin-styled-components` which takes care of this step for you in addition to any other difficulties you may run into configuring Styled Components to work with server side rendering.
+As a general rule, you may use _any_ npm package you might use without Gatsby, with Gatsby. What plugins offer is a prepackaged integration into the core Gatsby APIs to save you time and energy, with minimal configuration. In the case of `Styled Components`, you could manually render the `Provider` component near the root of your application, or you could just use `gatsby-plugin-styled-components` which takes care of this step for you in addition to any other difficulties you may run into configuring Styled Components to work with server side rendering.
