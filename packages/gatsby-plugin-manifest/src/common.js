@@ -80,10 +80,7 @@ exports.addDigestToPath = function(path, digest, method) {
   if (method === `name`) {
     const parsedPath = sysPath.parse(path)
 
-    return sysPath.join(
-      parsedPath.dir,
-      `${parsedPath.name}-${digest}${parsedPath.ext}`
-    )
+    return `${parsedPath.dir}/${parsedPath.name}-${digest}${parsedPath.ext}`
   }
 
   if (method === `query`) {
