@@ -41,6 +41,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
+        fontSize: presets.scale[2],
         ...overrideCSS,
       }}
     >
@@ -155,7 +156,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0 }}
+            overrideCSS={{ paddingRight: 0, fontSize: presets.scale[1] }}
           >
             .com
           </SocialNavItem>
