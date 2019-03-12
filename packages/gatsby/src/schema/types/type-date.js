@@ -22,6 +22,8 @@ const ISO_8601_FORMAT = [
   `YYYY-MM-DDTHHmmss`,
   `YYYY-MM-DDTHH:mm:ss.SSS`,
   `YYYY-MM-DDTHHmmss.SSS`,
+  `YYYY-MM-DDTHH:mm:ss.SSSSSSS`,
+  `YYYY-MM-DDTHHmmss.SSSSSSS`,
 
   // Coordinated Universal Time (UTC)
   `YYYY-MM-DDTHHZ`,
@@ -31,6 +33,8 @@ const ISO_8601_FORMAT = [
   `YYYY-MM-DDTHHmmssZ`,
   `YYYY-MM-DDTHH:mm:ss.SSSZ`,
   `YYYY-MM-DDTHHmmss.SSSZ`,
+  `YYYY-MM-DDTHH:mm:ss.SSSSSSZ`,
+  `YYYY-MM-DDTHHmmss.SSSSSSZ`,
 
   `YYYY-[W]WW`,
   `YYYY[W]WW`,
