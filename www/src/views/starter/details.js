@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -14,9 +14,9 @@ const Details = ({
 }) => (
   <div
     css={{
-      padding: sharedStyles.gutter,
-      [presets.Desktop]: {
-        padding: sharedStyles.gutterDesktop,
+      padding: rhythm(space[6]),
+      [presets.Lg]: {
+        padding: rhythm(space[8]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
         gridRowGap: `20px`,
@@ -81,7 +81,7 @@ const Details = ({
         css={{
           display: `grid`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
-          [presets.Desktop]: {
+          [presets.Lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
             gridGap: 20,
           },
@@ -121,21 +121,17 @@ export default Details
 
 const styles = {
   showMoreButton: {
+    backgroundColor: colors.gatsby,
     border: 0,
-    borderRadius: presets.radius,
+    borderRadius: radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
+    padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
-      backgroundColor: colors.gatsby,
       borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
+      color: colors.white,
     },
   },
 }

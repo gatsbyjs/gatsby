@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
+import Bio from '../components/bio'
 import Layout from '../components/layout'
 import InstrumentPage from '../utils/instrument-page'
 
 const IndexPage = ({ pageContext }) => (
   <Layout>
     <h1>Hi people</h1>
+    <Bio />
     <pre data-testid="dom-marker">{pageContext.DOMMarker || `index`}</pre>
     <ul>
       <li>
@@ -37,6 +39,11 @@ const IndexPage = ({ pageContext }) => (
       <li>
         <Link to="/global-style/" data-testid="global-style">
           gatsby-browser.js (global styles)
+        </Link>
+      </li>
+      <li>
+        <Link to="/static-query/" data-testid="static-query">
+          StaticQuery and useStaticQuery
         </Link>
       </li>
     </ul>

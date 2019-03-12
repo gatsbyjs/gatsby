@@ -5,9 +5,9 @@ The main Gatsby site at gatsbyjs.org
 Run locally with:
 
 - `yarn install`
-- `gatsby develop`
+- `npm run develop`
 
-See the full contributing instructions at https://www.gatsbyjs.org/docs/how-to-contribute/.
+See the full contributing instructions at https://www.gatsbyjs.org/contributing/how-to-contribute/.
 
 ## Environment variables
 

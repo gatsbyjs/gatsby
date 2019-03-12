@@ -48,6 +48,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
       href={withPrefix(`/manifest.webmanifest`)}
+      crossOrigin={pluginOptions.crossOrigin}
     />
   )
 

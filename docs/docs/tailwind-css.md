@@ -36,7 +36,7 @@ To configure Tailwind, we'll need to add a Tailwind configuration file. Luckily,
 1.  Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss).
 
 ```shell
-npm install --save gatsby-plugin-postcss`
+npm install --save gatsby-plugin-postcss
 ```
 
 2.  Include the plugin in your `gatsby-config.js` file.
