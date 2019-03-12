@@ -1,6 +1,12 @@
 import path from "path"
 import sitemap from "sitemap"
-import { defaultOptions, runQuery, writeFile } from "./internals"
+import {
+  defaultOptions,
+  runQuery,
+  writeFile,
+  renameFile,
+  withoutTrailingSlash,
+} from "./internals"
 
 const publicPath = `./public`
 
@@ -9,12 +15,11 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   delete options.plugins
   delete options.createLinkInHead
 
-  const { query, serialize, output, exclude, ...rest } = {
+  const { query, serialize, output, exclude, hostname, ...rest } = {
     ...defaultOptions,
     ...options,
   }
 
-  const map = sitemap.createSitemap(rest)
   const saved = path.join(publicPath, output)
 
   // Paths we're excluding...
@@ -26,7 +31,35 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     excludeOptions,
     pathPrefix
   )
-  serialize(queryRecords).forEach(u => map.add(u))
+  const urls = serialize(queryRecords)
 
-  return await writeFile(saved, map.toString())
+  if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
+    const map = sitemap.createSitemap(rest)
+    urls.forEach(u => map.add(u))
+    return writeFile(saved, map.toString())
+  }
+
+  const {
+    site: {
+      siteMetadata: { siteUrl },
+    },
+  } = queryRecords
+  return new Promise(resolve => {
+    // sitemapv-index.xml is default file name. (https://git.io/fhNgG)
+    const indexFilePath = path.join(
+      publicPath,
+      `${rest.sitemapName || `sitemap`}-index.xml`
+    )
+    const sitemapIndexOptions = {
+      ...rest,
+      hostname: hostname || withoutTrailingSlash(siteUrl),
+      targetFolder: publicPath,
+      urls,
+      callback: error => {
+        if (error) throw new Error(error)
+        renameFile(indexFilePath, saved).then(resolve)
+      },
+    }
+    sitemap.createSitemapIndex(sitemapIndexOptions)
+  })
 }

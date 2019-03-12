@@ -1,6 +1,6 @@
 ---
 title: Announcing new Gatsby Company
-date: "2018-05-24"
+date: 2018-05-24
 author: "Kyle Mathews"
 ---
 

@@ -776,7 +776,7 @@ class BlogIndex extends React.Component {
                     </Link>
                   </h3>
                   <small>{node.date}</small>
-                  <p
+                  <div
                     dangerouslySetInnerHTML={{ __html: node.meta_description }}
                   />
                 </div>

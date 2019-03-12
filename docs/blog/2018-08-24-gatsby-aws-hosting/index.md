@@ -1,6 +1,6 @@
 ---
 title: Publishing Your Next Gatsby Site to AWS With AWS Amplify
-date: "2018-09-04"
+date: 2018-09-04
 author: Nader Dabit
 tags: ["gatsby", "serverless", "hosting", "blog", "aws amplify"]
 excerpt: "In this post, we'll walk through how to host & publish your next Gatsby site to AWS"
@@ -20,7 +20,7 @@ Using the Amplify console, you can now easily deploy your application to AWS wit
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
 ```sh
-npm install - global gatsby-cli
+npm install --global gatsby-cli
 ```
 
 Next, we'll create a new Gatsby site:

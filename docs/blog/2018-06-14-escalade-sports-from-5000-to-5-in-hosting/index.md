@@ -1,6 +1,6 @@
 ---
 title: "Escalade Sports: From $5000 to $5/month in Hosting With Gatsby"
-date: "2018-06-21"
+date: 2018-06-21
 author: "Sam Bhagwat"
 ---
 
