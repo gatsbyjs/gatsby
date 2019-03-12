@@ -41,6 +41,13 @@ function createScriptHeaderGenerator(manifest, pathPrefix) {
       return null
     }
 
+    // If it's an array, return a string containing all the files
+    if (_.isArray(chunk)) {
+      return chunk
+        .map(script => linkTemplate(`${pathPrefix}/${script}`))
+        .join(`\n  `)
+    }
+
     // Always add starting slash, as link entries start with slash as relative to deploy root
     return linkTemplate(`${pathPrefix}/${chunk}`)
   }
