@@ -5,7 +5,7 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 
-import presets, { colors } from "../utils/presets"
+import presets, { colors, radii } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -17,7 +17,8 @@ import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-import { rhythm } from "../utils/typography"
+
+import { skipLink } from "../utils/styles"
 
 let windowWidth
 
@@ -104,8 +105,8 @@ class DefaultLayout extends React.Component {
           >
             <div
               css={{
-                backgroundColor: `#fff`,
-                borderRadius: presets.radii[1],
+                backgroundColor: colors.white,
+                borderRadius: radii[1],
                 boxShadow: `0 0 90px -24px ${colors.gatsby}`,
                 position: `relative`,
               }}
@@ -115,8 +116,8 @@ class DefaultLayout extends React.Component {
                 css={{
                   background: colors.ui.bright,
                   border: 0,
-                  borderBottomLeftRadius: presets.radii[1],
-                  borderTopRightRadius: presets.radii[1],
+                  borderBottomLeftRadius: radii[1],
+                  borderTopRightRadius: radii[1],
                   color: colors.gatsby,
                   cursor: `pointer`,
                   position: `absolute`,
@@ -126,7 +127,7 @@ class DefaultLayout extends React.Component {
                   width: 40,
                   "&:hover": {
                     background: colors.gatsby,
-                    color: `#fff`,
+                    color: colors.white,
                   },
                 }}
               >
@@ -144,7 +145,7 @@ class DefaultLayout extends React.Component {
     return (
       <>
         <SiteMetadata pathname={this.props.location.pathname} />
-        <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
+        <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
@@ -154,7 +155,7 @@ class DefaultLayout extends React.Component {
             paddingRight: `env(safe-area-inset-right)`,
             paddingTop: presets.bannerHeight,
             // make room for the mobile navigation
-            paddingBottom: `3.5rem`,
+            paddingBottom: presets.headerHeight,
             [presets.Md]: {
               paddingTop: `calc(${presets.bannerHeight} + ${
                 presets.headerHeight
@@ -175,32 +176,6 @@ class DefaultLayout extends React.Component {
       </>
     )
   }
-}
-
-const styles = {
-  skipLink: {
-    border: `0`,
-    clip: `rect(0 0 0 0)`,
-    height: 1,
-    width: 1,
-    margin: -1,
-    padding: 0,
-    overflow: `hidden`,
-    position: `absolute`,
-    zIndex: 100,
-    fontSize: presets.scale[1],
-    ":focus": {
-      padding: rhythm(presets.space[4]),
-      position: `fixed`,
-      top: rhythm(presets.space[6]),
-      left: rhythm(presets.space[6]),
-      background: `white`,
-      textDecoration: `none`,
-      width: `auto`,
-      height: `auto`,
-      clip: `auto`,
-    },
-  },
 }
 
 export default DefaultLayout

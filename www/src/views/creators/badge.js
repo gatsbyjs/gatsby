@@ -1,14 +1,14 @@
 import React from "react"
 
 import { rhythm } from "../../utils/typography"
-import { colors, space } from "../../utils/presets"
+import { colors, space, letterSpacings } from "../../utils/presets"
 
 const Badge = ({ forHire, children, customCSS }) => (
   <div
     css={[
       styles.badge,
       forHire ? styles.forHire : styles.hiring,
-      { letterSpacing: customCSS ? `0.025em` : null },
+      { letterSpacing: customCSS ? letterSpacings.tracked : null },
       customCSS && forHire ? customCSS : {},
     ]}
   >

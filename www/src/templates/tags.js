@@ -6,6 +6,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
+import { space } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const Tags = ({ pageContext, data, location }) => {
@@ -26,7 +27,10 @@ const Tags = ({ pageContext, data, location }) => {
           <BlogPostPreviewItem
             post={node}
             key={node.fields.slug}
-            css={{ marginBottom: rhythm(2) }}
+            css={{
+              marginTop: rhythm(space[9]),
+              marginBottom: rhythm(space[9]),
+            }}
           />
         ))}
       </Container>

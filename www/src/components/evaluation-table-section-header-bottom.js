@@ -48,32 +48,13 @@ const renderSubHeader = props => (
         css={{
           display: `table-cell`,
           background: colors.ui.whisper,
-          // borderLeft: i > 0 ? `1px solid ${colors.ui.light}` : `none`,
-          // borderRight: i === 5 ? `1px solid ${colors.ui.light}` : `none`,
           fontWeight: 600,
           lineHeight: presets.lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: options.headerFontFamily.join(`,`),
           borderColor: colors.ui.light,
-          "&&": {
-            paddingTop: rhythm(1 / 4),
-            paddingLeft: rhythm(1 / 4),
-            paddingRight: i >= 1 ? rhythm(space[3]) : 0,
-            paddingBottom: rhythm(1 / 4),
-            "&:last-child": {
-              paddingRight: i >= 1 ? rhythm(space[3]) : 0,
-            },
-          },
-          [presets.Xs]: {
-            paddingTop: rhythm(space[3]),
-            paddingLeft: `${rhythm(space[3])} !important`,
-            paddingRight: rhythm(space[3]),
-            paddingBottom: rhythm(space[3]),
-            "&:last-child": {
-              paddingRight: rhythm(space[3]),
-            },
-          },
+          padding: rhythm(space[3]),
         }}
       >
         {header || props.category || `Feature`}

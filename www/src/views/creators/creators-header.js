@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
-import typography, { rhythm } from "../../utils/typography"
+import { rhythm, options } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
@@ -19,7 +19,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 //       state={{ filter: `` }}
 //       activeStyle={{
 //         backgroundColor: colors.gatsby,
-//         color: `white`,
+//         color: colors.white,
 //       }}
 //       css={{
 //         ...styles.CreatorsHeaderLink,
@@ -142,7 +142,7 @@ const styles = {
     zIndex: `2`,
     padding: `0 ${rhythm(space[6])}`,
     height: presets.headerHeight,
-    fontFamily: typography.options.headerFontFamily.join(`,`),
+    fontFamily: options.headerFontFamily.join(`,`),
   },
   creatorsLink: {
     "&&": {
@@ -159,17 +159,16 @@ const styles = {
     "&&": {
       fontSize: presets.scale[2],
       lineHeight: presets.lineHeights.solid,
-      letterSpacing: `0.03em`,
+      letterSpacing: presets.letterSpacings.tracked,
       textTransform: `uppercase`,
       fontWeight: `normal`,
-      boxShadow: `none`,
       borderBottom: `none`,
-      padding: `${rhythm(typography.options.blockMarginBottom / 4)} .5rem`,
+      padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
       marginRight: rhythm(space[2]),
       borderRadius: 40,
       "&:hover": {
         backgroundColor: colors.gatsby,
-        color: `white`,
+        color: colors.white,
       },
     },
   },
@@ -177,8 +176,8 @@ const styles = {
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: 40,
     margin: `${rhythm(space[6])} ${rhythm(space[1])}`,
-    paddingLeft: rhythm(1 / 4),
-    paddingRight: rhythm(1 / 4),
+    paddingLeft: rhythm(space[1]),
+    paddingRight: rhythm(space[3]),
     display: `flex`,
     alignItems: `center`,
     justifyContent: `space-between`,
@@ -187,11 +186,11 @@ const styles = {
   },
   input: {
     appearance: `none`,
-    width: `1rem`,
-    height: `1rem`,
+    width: rhythm(space[4]),
+    height: rhythm(space[4]),
     border: `1px solid ${colors.ui.bright}`,
     borderRadius: 40,
-    marginRight: `${rhythm(1 / 4)}`,
+    marginRight: `${rhythm(space[2])}`,
     outline: `none`,
     "&:checked": {
       backgroundColor: colors.gatsby,

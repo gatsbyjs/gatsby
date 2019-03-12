@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import presets, { colors, space } from "../presets"
+import presets, { colors, space, transition, radii } from "../presets"
 import { rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
@@ -102,7 +102,6 @@ const styles = {
     width: `100%`,
     "&&": {
       border: 0,
-      boxShadow: `none`,
       color: colors.gray.lightCopy,
       fontWeight: `normal`,
       "&:hover": {
@@ -118,12 +117,10 @@ const styles = {
       ...bulletOffset.default,
       height: bulletSize,
       position: `absolute`,
-      transition: `all ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
+      transition: `all ${transition.speed.default} ${transition.curve.default}`,
     },
     "&:before": {
-      borderRadius: presets.radii[6],
+      borderRadius: radii[6],
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
@@ -133,7 +130,7 @@ const styles = {
     },
     "&:after": {
       background: colors.gatsby,
-      borderRadius: presets.radii[2],
+      borderRadius: radii[2],
       content: `''`,
       left: bulletOffset.default.left + 7,
       opacity: 0,
@@ -146,9 +143,9 @@ const styles = {
   },
   subsectionLink: {
     ...bulletOffset.default,
-    background: `#fff`,
+    background: colors.white,
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: presets.radii[6],
+    borderRadius: radii[6],
     display: `block`,
     fontWeight: `normal`,
     height: bulletSize,

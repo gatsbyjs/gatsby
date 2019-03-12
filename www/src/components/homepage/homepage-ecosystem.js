@@ -19,7 +19,7 @@ import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -35,13 +35,13 @@ const Sections = styled(`div`)`
 
 const Section = styled(EcosystemSection)`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radii[2]}px;
+  border-radius: ${radii[2]}px;
   margin-bottom: ${rhythm(space[6])};
-  padding: ${rhythm(options.blockMarginBottom)};
+  padding: ${rhythm(space[6])};
 
   ${presets.Md} {
     margin: 0 8px 0px;
-    padding: ${rhythm(options.blockMarginBottom)};
+    padding: ${rhythm(space[6])};
 
     :last-child {
       align-self: stretch;
@@ -52,12 +52,12 @@ const Section = styled(EcosystemSection)`
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
   font-size: ${presets.scale[3]};
-  margin-bottom: 0.25rem;
-  margin-top: 2rem;
+  margin-bottom: ${rhythm(space[1])};
+  margin-top: ${rhythm(space[7])};
 
   ${presets.Lg} {
-    margin-left: 3rem;
-    margin-bottom: 1rem;
+    margin-left: ${rhythm(space[9])};
+    margin-bottom: ${rhythm(space[4])};
   }
 `
 
@@ -103,7 +103,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     position: relative;
 
     ${presets.Md} {
-      border-radius: ${presets.radii[2]}px;
+      border-radius: ${radii[2]}px;
     }
 
     ${presets.Lg} {
@@ -115,7 +115,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     :before {
       background: ${props =>
         props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
-      border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
+      border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
@@ -132,7 +132,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       font-family: ${options.headerFontFamily.join(`,`)};
       font-size: ${presets.scale[1]};
       left: 0;
-      letter-spacing: 0.05em;
+      letter-spacing: ${presets.letterSpacings.tracked};
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;

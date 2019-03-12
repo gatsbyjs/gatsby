@@ -58,7 +58,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     font-size: ${presets.scale[4]};
     justify-content: center;
     line-height: ${presets.lineHeights.dense};
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
     width: 100%;
 
     span {
@@ -68,14 +68,14 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: 0.2rem;
+      margin-left: ${rhythm(space[1])};
       width: 18px;
     }
   }
 
   ${presets.Lg} {
     background: ${colors.gatsby};
-    color: white;
+    color: ${colors.white};
     flex-shrink: 0;
     height: 160px;
 
@@ -83,7 +83,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     width: 125px;
 
     a {
-      color: white;
+      color: ${colors.white};
       padding: ${rhythm(space[5])};
       justify-content: flex-start;
 

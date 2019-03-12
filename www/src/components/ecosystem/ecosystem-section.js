@@ -6,24 +6,29 @@ import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import presets, {
+  colors,
+  space,
+  letterSpacings,
+  radii,
+} from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
-  background: #fff;
-  padding: 0 ${rhythm(options.blockMarginBottom)};
+  background: ${colors.white};
+  padding: 0 ${rhythm(space[6])};
   margin-bottom: ${rhythm(space[3])};
 
   ${presets.Md} {
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: ${presets.radii[2]}px;
+    border-radius: ${radii[2]}px;
     display: flex;
     flex-basis: calc(50% - 20px);
     flex-direction: column;
     flex-grow: 0;
     margin: 0 10px 20px;
     max-height: 60vh;
-    padding: ${rhythm(options.blockMarginBottom)};
+    padding: ${rhythm(space[6])};
     padding-bottom: 0;
 
     :last-child {
@@ -37,7 +42,7 @@ const EcosystemSectionRoot = styled(`section`)`
 
     :last-child {
       align-self: flex-start;
-      padding-bottom: ${rhythm(options.blockMarginBottom)};
+      padding-bottom: ${rhythm(space[6])};
     }
   }
 
@@ -57,11 +62,11 @@ const Title = styled(`h1`)`
   font-size: ${presets.scale[4]};
   line-height: ${presets.lineHeights.solid};
   margin: 0;
-  margin-bottom: ${rhythm(0.25)};
+  margin-bottom: ${rhythm(space[1])};
   min-height: 32px;
 
   span {
-    margin: 0 0.3rem 0 -0.1rem;
+    margin: 0 ${rhythm(space[1])} 0 0;
   }
 `
 
@@ -74,8 +79,8 @@ const Icon = styled(`span`)`
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
   font-size: ${presets.scale[1]};
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  font-weight: normal;
+  letter-spacing: ${letterSpacings.tracked};
   margin: 0;
   margin-top: ${rhythm(space[5])};
   text-transform: uppercase;
@@ -89,10 +94,10 @@ const Description = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${rhythm(1 / 4)};
+  margin-top: -${rhythm(space[1])};
 
   > a {
-    margin: 4px 8px 4px 0;
+    margin: ${rhythm(space[1])} ${rhythm(space[2])} ${rhythm(space[1])} 0;
   }
 `
 

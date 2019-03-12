@@ -1,6 +1,6 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets, { colors } from "./presets"
+import presets, { colors, space, transition, radii } from "./presets"
 
 const systemFontFamily = [
   `-apple-system`,
@@ -42,22 +42,20 @@ const _options = {
       a: {
         textDecoration: `none`,
       },
-      "h1,h2,h4,h5,h6": {
-        letterSpacing: `-0.0075em`,
+      "h1, h2, h3, h4, h5, h6": {
+        letterSpacing: presets.letterSpacings.tight,
       },
       h1: { color: `#000` },
       h2: {
-        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginTop: rhythm(space[9]),
       },
       h3: {
-        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginTop: rhythm(space[9]),
       },
       blockquote: {
-        paddingLeft: rhythm(options.blockMarginBottom),
+        paddingLeft: rhythm(space[6]),
         marginLeft: 0,
-        borderLeft: `${rhythm(options.blockMarginBottom / 4)} solid ${
-          colors.ui.light
-        }`,
+        borderLeft: `${rhythm(space[1])} solid ${colors.ui.light}`,
       },
       hr: {
         backgroundColor: colors.ui.light,
@@ -87,37 +85,37 @@ const _options = {
       // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        borderRadius: `${presets.radii[1]}px`,
-        padding: rhythm(options.blockMarginBottom),
-        marginBottom: rhythm(options.blockMarginBottom),
+        borderRadius: `${radii[1]}px`,
+        marginBottom: rhythm(space[6]),
         overflow: `auto`,
-        WebkitOverflowScrolling: `touch`,
+        padding: rhythm(space[6]),
         position: `relative`,
+        WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']": {
-        padding: 0,
-        marginTop: 0,
-        marginBottom: 0,
         backgroundColor: `transparent`,
         border: 0,
         float: `left`,
+        padding: 0,
+        marginTop: 0,
+        marginBottom: 0,
         minWidth: `100%`,
         overflow: `initial`,
       },
       ".gatsby-highlight pre[class*='language-']::before": {
-        position: `absolute`,
-        top: `0`,
-        right: `20px`,
-        padding: `3px 10px`,
-        fontSize: presets.scale[0],
-        textAlign: `right`,
-        color: colors.gray.dark,
-        fontWeight: `700`,
-        letterSpacing: `0.8px`,
-        textTransform: `uppercase`,
-        borderRadius: `0 0 ${presets.radii[2]}px ${presets.radii[2]}px`,
         background: `#ddd`,
+        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
+        color: colors.gray.dark,
+        fontSize: presets.scale[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
+        letterSpacing: presets.letterSpacings.tracked,
+        lineHeight: presets.lineHeights.solid,
+        padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
+        position: `absolute`,
+        right: `20px`,
+        textAlign: `right`,
+        textTransform: `uppercase`,
+        top: `0`,
       },
       ".gatsby-highlight pre[class='language-javascript']::before": {
         content: `'js'`,
@@ -134,19 +132,19 @@ const _options = {
       ".gatsby-highlight pre[class='language-graphql']::before": {
         content: `'GraphQL'`,
         background: `#E10098`,
-        color: `#fff`,
+        color: colors.white,
         fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-html']::before": {
         content: `'html'`,
         background: `#005A9C`,
-        color: `#fff`,
+        color: colors.white,
         fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-css']::before": {
         content: `'css'`,
         background: `#ff9800`,
-        color: `#fff`,
+        color: colors.white,
         fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-shell']::before": {
@@ -175,7 +173,7 @@ const _options = {
       },
       ".gatsby-highlight pre[class='language-text']::before": {
         content: `'text'`,
-        background: `#fff`,
+        background: colors.white,
       },
       ".gatsby-highlight pre[class='language-flow']::before": {
         content: `'flow'`,
@@ -189,25 +187,25 @@ const _options = {
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
-        marginRight: `${rhythm(-options.blockMarginBottom)}`,
-        marginLeft: `${rhythm(-options.blockMarginBottom)}`,
-        paddingRight: rhythm(options.blockMarginBottom),
-        paddingLeft: `${rhythm((options.blockMarginBottom / 5) * 4)}`,
-        borderLeft: `${rhythm((options.blockMarginBottom / 5) * 1)} solid ${
+        marginRight: `${rhythm(-space[6])}`,
+        marginLeft: `${rhythm(-space[6])}`,
+        paddingRight: rhythm(space[6]),
+        paddingLeft: rhythm(space[5]),
+        borderLeft: `${rhythm(space[1])} solid ${
           colors.code.lineHighlightBorder
         }`,
         display: `block`,
       },
       ".gatsby-highlight::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
+        width: rhythm(space[2]),
+        height: rhythm(space[2]),
       },
       ".gatsby-highlight::-webkit-scrollbar-thumb": {
         background: colors.code.scrollbarThumb,
       },
       ".gatsby-highlight::-webkit-scrollbar-track": {
         background: colors.code.border,
-        borderRadius: `0 0 ${presets.radii[2]}px ${presets.radii[2]}px`,
+        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
@@ -215,7 +213,7 @@ const _options = {
         fontSize: presets.scale[1],
         lineHeight: presets.lineHeights.dense,
         paddingTop: rhythm(3 / 8),
-        marginBottom: rhythm(options.blockMarginBottom * 2),
+        marginBottom: rhythm(space[9]),
         display: `block`,
         fontStyle: `normal`,
         color: colors.gray.calm,
@@ -228,9 +226,7 @@ const _options = {
       ".main-body a": {
         color: colors.lilac,
         textDecoration: `none`,
-        transition: `all ${presets.animation.speedFast} ${
-          presets.animation.curveDefault
-        }`,
+        transition: `all ${transition.speed.fast} ${transition.curve.default}`,
         borderBottom: `1px solid ${colors.lilac}`,
         fontWeight: `normal`,
       },
@@ -247,41 +243,34 @@ const _options = {
       ".post-body figcaption": {
         color: colors.gray.calm,
         fontSize: `87.5%`,
-        marginTop: rhythm(1 / 4),
-        marginBottom: rhythm(2 / 4),
+        marginTop: rhythm(space[1]),
+        marginBottom: rhythm(space[3]),
       },
       ".main-body a.anchor": {
         color: `inherit`,
         fill: colors.lilac,
         textDecoration: `none`,
         borderBottom: `none`,
-        boxShadow: `none`,
       },
       ".main-body a.anchor:hover": {
         background: `none`,
       },
       ".main-body a.gatsby-resp-image-link": {
-        boxShadow: `none`,
         borderBottom: `transparent`,
-        marginTop: rhythm(options.blockMarginBottom * 2),
-        marginBottom: rhythm(options.blockMarginBottom * 2),
+        marginTop: rhythm(space[9]),
+        marginBottom: rhythm(space[9]),
       },
       ".main-body figure a.gatsby-resp-image-link": {
-        boxShadow: `none`,
         borderBottom: `transparent`,
-        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginTop: rhythm(space[9]),
         marginBottom: 0,
       },
-      ".main-body a.gatsby-resp-image-link:hover": {
-        background: `none`,
-        boxShadow: `none`,
-      },
-      ".gatsby-highlight, .post .gatsby-resp-image-link": {
-        marginLeft: rhythm(-options.blockMarginBottom),
-        marginRight: rhythm(-options.blockMarginBottom),
+      ".gatsby-highlight, .gatsby-code-title, .post .gatsby-resp-image-link": {
+        marginLeft: rhythm(-space[6]),
+        marginRight: rhythm(-space[6]),
       },
       ".gatsby-resp-image-link": {
-        borderRadius: `${presets.radii[1]}px`,
+        borderRadius: `${radii[1]}px`,
         overflow: `hidden`,
       },
       // gatsby-remark-code-titles styles
@@ -290,52 +279,54 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        marginLeft: rhythm(-options.blockMarginBottom),
-        marginRight: rhythm(-options.blockMarginBottom),
-        padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
-          options.blockMarginBottom
-        )} ${rhythm(options.blockMarginBottom / 2)}`,
+        padding: `${rhythm(space[6])} ${rhythm(space[6])} ${rhythm(space[3])}`,
         fontSize: `74%`,
       },
       "@media (max-width:634px)": {
-        ".gatsby-highlight, .gatsby-resp-image-link": {
+        ".gatsby-highlight, .gatsby-code-title, .gatsby-resp-image-link": {
           borderRadius: 0,
           borderLeft: 0,
           borderRight: 0,
         },
       },
+      [`${presets.Md} and (max-width:980px)`]: {
+        ".gatsby-highlight, .gatsby-code-title": {
+          marginLeft: 0,
+          marginRight: 0,
+        },
+      },
       video: {
         width: `100%`,
-        marginBottom: rhythm(options.blockMarginBottom),
+        marginBottom: rhythm(space[6]),
       },
       ".twitter-tweet-rendered": {
-        margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
+        margin: `${rhythm(space[9])} auto !important`,
       },
       ".egghead-video": {
         border: `none`,
       },
       [presets.Lg]: {
         ".gatsby-highlight, .post .gatsby-resp-image-link, .gatsby-code-title": {
-          marginLeft: rhythm(-options.blockMarginBottom * 1.5),
-          marginRight: rhythm(-options.blockMarginBottom * 1.5),
+          marginLeft: rhythm(-space[7]),
+          marginRight: rhythm(-space[7]),
         },
         ".gatsby-highlight": {
-          padding: rhythm(options.blockMarginBottom * 1.5),
-          marginBottom: rhythm(options.blockMarginBottom * 1.5),
+          padding: rhythm(space[7]),
+          marginBottom: rhythm(space[7]),
         },
         ".gatsby-highlight-code-line": {
-          marginRight: `${rhythm(-options.blockMarginBottom * 1.5)}`,
-          marginLeft: `${rhythm(-options.blockMarginBottom * 1.5)}`,
-          paddingRight: rhythm(options.blockMarginBottom * 1.5),
-          paddingLeft: `${rhythm(((options.blockMarginBottom * 1.5) / 5) * 4)}`,
-          borderLeftWidth: `${rhythm(
-            ((options.blockMarginBottom * 1.5) / 5) * 1
-          )}`,
+          marginRight: rhythm(-space[7]),
+          marginLeft: rhythm(-space[7]),
+          paddingRight: rhythm(space[7]),
+          paddingLeft: rhythm(space[6]),
+          borderLeftWidth: rhythm(space[2]),
         },
         ".gatsby-code-title": {
-          padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
-            options.blockMarginBottom * 1.5
-          )} ${rhythm(options.blockMarginBottom / 2)}`,
+          marginRight: rhythm(-space[7]),
+          marginLeft: rhythm(-space[7]),
+          padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
+            space[3]
+          )}`,
         },
       },
       [presets.Xxl]: {
