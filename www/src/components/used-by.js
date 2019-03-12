@@ -27,13 +27,13 @@ const Icon = ({ icon, alt, href }) => (
       target="_blank"
       rel="noopener noreferrer"
       css={{
-        borderBottom: `0 !important`,
-        boxShadow: `none !important`,
-        background: `none !important`,
         transition: `opacity ${transition.speed.fast} ${
           transition.curve.default
         }`,
         opacity: 0.9,
+        "&&": {
+          borderBottom: 0,
+        },
         ":hover": {
           opacity: 1,
         },

@@ -11,7 +11,9 @@ import presets, {
   colors,
   space,
   letterSpacings,
+  lineHeights,
   radii,
+  shadows,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
@@ -20,7 +22,7 @@ const EcosystemSectionRoot = styled(`section`)`
   margin-bottom: ${rhythm(space[3])};
 
   ${presets.Md} {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
     flex-basis: calc(50% - 20px);
@@ -60,7 +62,7 @@ const Title = styled(`h1`)`
   color: ${colors.gatsby};
   display: flex;
   font-size: ${presets.scale[4]};
-  line-height: ${presets.lineHeights.solid};
+  line-height: ${lineHeights.solid};
   margin: 0;
   margin-bottom: ${rhythm(space[1])};
   min-height: 32px;

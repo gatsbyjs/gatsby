@@ -19,7 +19,7 @@ import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, radii } from "../../utils/presets"
+import presets, { colors, space, radii, shadows } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -34,7 +34,7 @@ const Sections = styled(`div`)`
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: ${shadows.raised};
   border-radius: ${radii[2]}px;
   margin-bottom: ${rhythm(space[6])};
   padding: ${rhythm(space[6])};

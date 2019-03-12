@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, { colors, transition } from "../../utils/presets"
+import presets, { colors, transition, shadows } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -131,7 +131,7 @@ const styles = {
     transition: `transform ${transition.speed.slow} ${
       transition.curve.default
     }`,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
+    boxShadow: shadows.dialog,
     [presets.Md]: {
       transform: `none !important`,
       boxShadow: `none`,
@@ -141,7 +141,7 @@ const styles = {
     backgroundColor: colors.gatsby,
     borderRadius: `50%`,
     bottom: 64,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
+    boxShadow: shadows.dialog,
     cursor: `pointer`,
     display: `flex`,
     height: 60,
