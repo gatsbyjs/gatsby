@@ -11,7 +11,7 @@ global.Date.now = _Date.now
 
 const cache = {
   publicPath(filePath) {
-    return `public/${filePath}`
+    return path.join(`public`, filePath)
   },
 }
 
