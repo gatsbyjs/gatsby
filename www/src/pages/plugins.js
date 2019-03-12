@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import Container from "../components/container"
+import Rotater from "../components/rotater"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
@@ -45,6 +46,55 @@ class Plugins extends Component {
           >
             Welcome to the Gatsby Plugin Library!
           </h1>
+          <Rotater
+            items={[
+              {
+                text: `SEO?`,
+                pluginName: `gatsby-plugin-react-helmet`
+              },
+              {
+                text: `responsive images?`,
+                pluginName: `gatsby-image`
+              },
+              {
+                text: `offline support?`,
+                pluginName: `gatsby-plugin-offline`
+              },
+              {
+                text: `Sass support?`,
+                pluginName: `gatsby-plugin-sass`
+              },
+              {
+                text: `a sitemap?`,
+                pluginName: `gatsby-plugin-sitemap`
+              },
+              {
+                text: `an RSS feed?`,
+                pluginName: `gatsby-plugin-feed`
+              },
+              {
+                text: `great typography?`,
+                pluginName: `gatsby-plugin-typography`
+              },
+              {
+                text: `Typescript?`,
+                pluginName: `gatsby-plugin-typescript`
+              },
+              {
+                text: `Google Analytics?`,
+                pluginName: `gatsby-plugin-google-analytics`
+              },            
+              {
+                text: `Wordpress integration?`,
+                pluginName: `gatsby-source-wordpress`
+              }, 
+              {
+                text: `anything?`,
+              },
+            ]}
+            color={colors.lilac}
+          />
+          
           <p
             css={{
               color: colors.gray.calm,
