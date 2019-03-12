@@ -6,15 +6,15 @@ exports[`<Img /> should render fixed size images 1`] = `
     class="fixedImage gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
+    <div
+      style="width: 100px; opacity: 1; height: 100px;"
+      title="Title for the image"
+    />
     <img
       alt=""
       class="placeholder"
       src="string_of_base64"
       style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1; color: red;"
-      title="Title for the image"
-    />
-    <div
-      style="width: 100px; opacity: 1; height: 100px;"
       title="Title for the image"
     />
     <picture>
@@ -49,15 +49,15 @@ exports[`<Img /> should render fluid images 1`] = `
     <div
       style="width: 100%; padding-bottom: 66.66666666666667%;"
     />
+    <div
+      style="position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px;"
+      title="Title for the image"
+    />
     <img
       alt=""
       class="placeholder"
       src="string_of_base64"
       style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1; color: red;"
-      title="Title for the image"
-    />
-    <div
-      style="position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px;"
       title="Title for the image"
     />
     <picture>
