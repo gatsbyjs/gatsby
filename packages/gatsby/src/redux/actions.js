@@ -1134,15 +1134,22 @@ actions.createRedirect = ({
 
   // Parse urls to get their protocols
   // url.parse will not cover protocol-relative urls so do a separate check for those
-  const parsed = url.parse(toPath)
-  const isRelativeProtocol = toPath.startsWith(`//`)
+  const parsedFromPath = url.parse(fromPath)
+  const isFromPathRelativeProtocol = fromPath.startsWith(`//`)
+  const fromPathPrefix =
+    parsedFromPath.protocol != null || isFromPathRelativeProtocol
+      ? ``
+      : pathPrefix
+
+  const parsedToPath = url.parse(toPath)
+  const isToPathRelativeProtocol = toPath.startsWith(`//`)
   const toPathPrefix =
-    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+    parsedToPath.protocol != null || isToPathRelativeProtocol ? `` : pathPrefix
 
   return {
     type: `CREATE_REDIRECT`,
     payload: {
-      fromPath: `${pathPrefix}${fromPath}`,
+      fromPath: `${fromPathPrefix}${fromPath}`,
       isPermanent,
       redirectInBrowser,
       toPath: `${toPathPrefix}${toPath}`,
