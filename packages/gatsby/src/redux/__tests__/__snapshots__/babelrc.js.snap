@@ -170,6 +170,14 @@ Array [
   ],
   Array [
     Array [
+      "/path/to/module/babel-plugin-macro",
+    ],
+    Object {
+      "type": "plugin",
+    },
+  ],
+  Array [
+    Array [
       "/path/to/module/babel-preset-gatsby",
     ],
     Object {

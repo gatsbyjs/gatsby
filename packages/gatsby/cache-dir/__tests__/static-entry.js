@@ -8,13 +8,10 @@ jest.mock(`gatsby/package.json`, () => {
   }
 })
 
-jest.mock(`gatsby/dist/utils/cache`, () => {
-  return {
-    publicPath(filePath) {
-      return `${process.cwd()}/public/${filePath}`
-    },
-  }
-})
+// we only have one macro which returns the public path
+jest.mock(`babel-plugin-preval/macro`, () => script =>
+  `${process.cwd()}/public`
+)
 
 jest.mock(
   `../sync-requires`,
