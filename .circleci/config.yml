@@ -207,7 +207,7 @@ jobs:
     steps:
       - link_and_run:
           path: www
-          command: yarn build
+          command: yarn build --no-uglify
 
 workflows:
   version: 2
