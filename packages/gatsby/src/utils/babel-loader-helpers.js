@@ -37,7 +37,7 @@ const prepareOptions = (babel, resolve = require.resolve) => {
         type: `plugin`,
       }
     ),
-    babel.createConfigItem([resolve(`babel-plugin-macro`)], {
+    babel.createConfigItem([resolve(`babel-plugin-macros`)], {
       type: `plugin`,
     }),
   ]

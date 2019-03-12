@@ -170,7 +170,7 @@ Array [
   ],
   Array [
     Array [
-      "/path/to/module/babel-plugin-macro",
+      "/path/to/module/babel-plugin-macros",
     ],
     Object {
       "type": "plugin",
