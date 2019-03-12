@@ -1176,11 +1176,11 @@ actions.addThirdPartySchema = (
 /**
  * Add type definitions to the GraphQL schema.
  *
- * @param {TypeDefinitions} types Type definitions, where `type TypeDefinitions = string | GraphQLOutputType | string[] | GraphQLOutputType[]`
+ * @param {TypeDefinitions} types Type definitions, where `type TypeDefinitions = string | GraphQLOutputType | string[] | GraphQLOutputType[] | GatsbyGraphQLType`
  *
  * Type definitions can be provided either as
- * [`graphql-js` types](https://graphql.org/graphql-js/), or in
- * [GraphQL schema definition language (SDL)](https://graphql.org/learn/).
+ * [`graphql-js` types](https://graphql.org/graphql-js/), in
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn/) or using Gatsby Type Builders.
  *
  * Things to note:
  * * needs to be called *before* schema generation. It is recommended to use
@@ -1227,6 +1227,35 @@ actions.addThirdPartySchema = (
  *       birthday: Date! # no default resolvers for Date formatting added
  *     }
  *   `
+ *   createTypes(typeDefs)
+ * }
+ *
+ * // using type builder API
+ * exports.sourceNodes = ({ actions, schema }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = [
+ *     schema.buildObjectType({
+ *       name: 'MarkdownRemark',
+ *       fields: {
+ *         frontmatter: 'Frontmatter!'
+ *       },
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'Frontmatter',
+ *       fields: {
+ *         title: {
+ *           type: 'String!',
+ *           resolve(parent) {
+ *             return parent.title || '(Untitled)'
+ *           }
+ *         },
+ *         author: 'AuthorJson!',
+ *         date: 'Date!',
+ *         published: 'Boolean!',
+ *         tags: '[String!]!',
+ *       }
+ *     })
+ *   ]
  *   createTypes(typeDefs)
  * }
  */
