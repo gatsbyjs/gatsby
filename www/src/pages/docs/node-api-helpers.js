@@ -27,29 +27,10 @@ class NodeAPIHelperDocs extends React.Component {
           <p>
             The first argument passed to each of{` `}
             <Link to="/docs/node-apis/">Gatsby's Node APIs</Link> is an object
-            containing a set of utilities. Utilities shared by all Gatsby's Node
-            APIs are documented below. Some APIs provide additional utilities.
-            For example:
+            containing a set of helpers. Helpers shared by all Gatsby's Node
+            APIs are documented in{` `}
+            <a href="#shared-helpers">Shared helpers</a> section.
           </p>
-          <ul>
-            <li>
-              <Link to="/docs/node-apis/#createPages">
-                <code>createPages</code>
-              </Link>
-              {` `}
-              provides <code>graphql</code> function.
-            </li>
-            <li>
-              <Link to="/docs/node-apis/#onCreateWebpackConfig">
-                <code>onCreateWebpackConfig</code>
-              </Link>
-              {` `}
-              provides <code>stage</code>, <code>getConfig</code>,{` `}
-              <code>rules</code>, <code>loaders</code>,{` `}
-              <code>plugins</code> fields.
-            </li>
-          </ul>
-          <h2>Examples</h2>
           <div className="gatsby-highlight">
             <pre className="language-javascript">
               <code
@@ -84,7 +65,16 @@ exports.createPages = ({ actions, reporter }) => {
               />
             </pre>
           </div>
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>Helpers</h2>
+          <h2>Note</h2>
+          <p>
+            Some APIs provide additional helpers. For example{` `}
+            <code>createPages</code> provides <code>graphql</code> function.
+            Check documentation of specific APIs in{` `}
+            <Link to="/docs/node-apis/">Gatsby Node APIs</Link> for details.
+          </p>
+          <h2 id="shared-helpers" css={{ marginBottom: rhythm(1 / 2) }}>
+            Shared helpers
+          </h2>
           <ul css={{ ...scale(-1 / 5) }}>
             {docs.map((node, i) => (
               <li key={`function list ${node.name}`}>
