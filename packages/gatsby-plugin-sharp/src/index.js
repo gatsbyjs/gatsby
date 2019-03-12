@@ -127,18 +127,27 @@ const healOptions = (
   return options
 }
 
-function getPublicPath(cwd) {
-  const { GATSBY_BUILD_DIR } = process.env
-  if (GATSBY_BUILD_DIR) {
-    if (path.isAbsolute(GATSBY_BUILD_DIR)) {
-      return GATSBY_BUILD_DIR
-    }
-    return path.join(cwd || process.cwd(), GATSBY_BUILD_DIR)
+function getPublicPath(cache, file, argsDigestShort) {
+  const filePath = path.join(
+    `static`,
+    file.internal.contentDigest,
+    argsDigestShort
+  )
+
+  // Not all tranformer plugins are going to provide cache
+  if (cache) {
+    return cache.publicPath(filePath)
   }
-  return path.join(cwd || process.cwd(), `public`)
+
+  const { GATSBY_BUILD_DIR } = process.env
+  const buildDir = GATSBY_BUILD_DIR || `public`
+  if (path.isAbsolute(buildDir)) {
+    return path.join(buildDir, filePath)
+  }
+  return path.join(process.cwd(), buildDir, filePath)
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
+function queueImageResizing({ file, args = {}, reporter, cache }) {
   const options = healOptions(pluginOptions, args, file.extension)
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
@@ -167,12 +176,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
   const imgSrc = `/${file.name}.${fileExtension}`
-  const dirPath = path.join(
-    getPublicPath(),
-    `static`,
-    file.internal.contentDigest,
-    argsDigestShort
-  )
+  const dirPath = getPublicPath(cache, file, argsDigestShort)
   const filePath = path.join(dirPath, imgSrc)
   fs.ensureDirSync(dirPath)
 
@@ -467,6 +471,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       file,
       args: arrrgs, // matey
       reporter,
+      cache,
     })
   })
 
@@ -587,6 +592,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
       file,
       args: arrrgs,
       reporter,
+      cache,
     })
   })
 
