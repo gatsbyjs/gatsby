@@ -1,7 +1,5 @@
-import typography, { options, rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
-
-const { curveDefault, speedDefault } = presets.animation
+import { options, rhythm } from "../../utils/typography"
+import presets, { colors, space, radii, transition } from "../../utils/presets"
 
 const styles = {
   featuredSitesCard: {
@@ -10,7 +8,7 @@ const styles = {
     flexGrow: 0,
     flexShrink: 0,
     width: 320,
-    marginBottom: rhythm(options.blockMarginBottom * 2),
+    marginBottom: rhythm(space[9]),
     marginRight: rhythm(space[6]),
     [presets.Xl]: {
       width: 360,
@@ -37,13 +35,15 @@ const styles = {
   },
   featuredItem: {
     display: `none`,
-    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+    transition: `background ${transition.speed.slow} ${
+      transition.curve.default
+    }, transform ${transition.speed.slow} ${transition.curve.default}`,
     [presets.Lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
-      borderTopRightRadius: presets.radii[1],
-      borderBottomLeftRadius: presets.radii[1],
+      borderTopRightRadius: radii[1],
+      borderBottomLeftRadius: radii[1],
       boxShadow: `none`,
       cursor: `pointer`,
       display: `flex`,
@@ -65,7 +65,9 @@ const styles = {
   },
   withTitleHover: {
     "& .title": {
-      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+      transition: `box-shadow ${transition.speed.slow} ${
+        transition.curve.default
+      }, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
       boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
@@ -75,10 +77,7 @@ const styles = {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
-    margin: `0 auto ${rhythm(3)}`,
-    [presets.Lg]: {
-      margin: `0 auto ${rhythm(2 / 2)}`,
-    },
+    margin: `0 auto ${rhythm(space[9])}`,
   },
   sticky: {
     position: `sticky`,
@@ -98,8 +97,8 @@ const styles = {
   scrollbar: {
     WebkitOverflowScrolling: `touch`,
     "&::-webkit-scrollbar": {
-      width: `6px`,
-      height: `6px`,
+      width: rhythm(space[2]),
+      height: rhythm(space[2]),
     },
     "&::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,
@@ -109,12 +108,10 @@ const styles = {
     },
   },
   screenshot: {
-    borderRadius: presets.radii[1],
+    borderRadius: radii[1],
     boxShadow: presets.shadows.card,
-    marginBottom: rhythm(options.blockMarginBottom / 2),
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    marginBottom: rhythm(space[3]),
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
   screenshotHover: {
     background: `transparent`,
@@ -125,14 +122,11 @@ const styles = {
     },
   },
   shortcutIcon: {
-    paddingLeft: rhythm(1 / 8),
+    paddingLeft: rhythm(space[1]),
     "&&": {
       color: colors.gray.bright,
-      fontWeight: `normal`,
       borderBottom: `none`,
-      boxShadow: `none`,
       "&:hover": {
-        background: `none`,
         color: colors.gatsby,
       },
     },
@@ -146,17 +140,19 @@ const styles = {
   },
   searchInput: {
     appearance: `none`,
-    backgroundColor: `transparent`,
     border: 0,
-    borderRadius: presets.radii[2],
+    borderRadius: radii[2],
     color: colors.gatsby,
-    paddingTop: rhythm(1 / 8),
-    paddingRight: rhythm(1 / 4),
-    paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(space[5]),
+    padding: rhythm(space[1]),
+    paddingRight: rhythm(space[3]),
+    paddingLeft: rhythm(space[6]),
     overflow: `hidden`,
-    fontFamily: typography.options.headerFontFamily.join(`,`),
-    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    fontFamily: options.headerFontFamily.join(`,`),
+    transition: `width ${transition.speed.default} ${
+      transition.curve.default
+    }, background-color ${transition.speed.default} ${
+      transition.curve.default
+    }`,
     width: `6.8rem`,
     "&::placeholder": {
       color: colors.lilac,
@@ -180,8 +176,8 @@ const styles = {
     outline: `none`,
     padding: 0,
     paddingRight: rhythm(space[5]),
-    paddingBottom: rhythm(options.blockMarginBottom / 8),
-    paddingTop: rhythm(options.blockMarginBottom / 8),
+    paddingBottom: rhythm(space[1]),
+    paddingTop: rhythm(space[1]),
     width: `100%`,
     textAlign: `left`,
     ":hover": {
@@ -209,8 +205,8 @@ const styles = {
       margin: 0,
       paddingLeft: rhythm(space[6]),
       paddingRight: rhythm(space[6]),
-      paddingTop: rhythm(options.blockMarginBottom),
-      paddingBottom: rhythm(options.blockMarginBottom),
+      paddingTop: rhythm(space[6]),
+      paddingBottom: rhythm(space[6]),
     },
   },
   sidebarBody: {

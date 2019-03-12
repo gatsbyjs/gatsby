@@ -3,13 +3,13 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import { colors, space, radii } from "../utils/presets"
 
 const BlogPostPreviewItem = ({ post, className }) => (
   <article className={className} css={{ position: `relative` }}>
     <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
       <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
-      <p css={{ fontWeight: `normal` }}>
+      <p>
         {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
       </p>
     </Link>
@@ -24,21 +24,14 @@ const BlogPostPreviewItem = ({ post, className }) => (
         css={{
           position: `relative`,
           zIndex: 1,
-          "&&": {
-            boxShadow: `none`,
-            borderBottom: `0`,
-            fontWeight: `normal`,
-            ":hover": {
-              background: `transparent`,
-            },
-          },
+          "&&": { borderBottom: `0` },
         }}
       >
         <Img
           alt=""
           fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
           css={{
-            borderRadius: presets.radii[6],
+            borderRadius: radii[6],
             display: `inline-block`,
             marginRight: rhythm(space[3]),
             marginBottom: 0,
@@ -61,13 +54,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
             css={{
               position: `relative`,
               zIndex: 1,
-              "&&": {
-                color: colors.gatsby,
-                fontWeight: `normal`,
-                ":hover": {
-                  background: colors.ui.bright,
-                },
-              },
+              "&&": { color: colors.gatsby },
             }}
           >
             {post.frontmatter.author.id}
@@ -91,13 +78,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         textIndent: `-100%`,
         whiteSpace: `nowrap`,
         zIndex: 0,
-        "&&": {
-          border: 0,
-          boxShadow: `none`,
-          "&:hover": {
-            background: `none`,
-          },
-        },
+        "&&": { border: 0 },
       }}
     >
       Read more

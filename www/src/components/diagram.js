@@ -3,7 +3,7 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, radii } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -24,9 +24,7 @@ const stripeBg = {
   animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = keyframes({
-  to: {
-    strokeDashoffset: 10,
-  },
+  to: { strokeDashoffset: 10 },
 })
 
 const Segment = ({ className, children }) => (
@@ -49,13 +47,13 @@ const SegmentTitle = ({ children }) => (
       display: `inline`,
       background: colors.accent,
       color: colors.gray.copy,
-      borderRadius: presets.radii[1],
+      borderRadius: radii[1],
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-.5rem`,
-      padding: `.35rem .6rem`,
+      bottom: `-${rhythm(space[2])}`,
+      padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
       fontWeight: `normal`,
-      letterSpacing: `.5px`,
+      letterSpacing: presets.letterSpacings.tracked,
       fontSize: presets.scale[1],
       lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
@@ -87,16 +85,16 @@ const VerticalLine = () => (
 )
 
 const box = {
-  background: `#fff`,
+  background: colors.white,
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radii[2],
+  borderRadius: radii[2],
   padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
 }
 
 const borderAndBoxShadow = {
-  background: `#fff`,
+  background: colors.white,
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radii[1],
+  borderRadius: radii[1],
   boxShadow: presets.shadows.card,
   transform: `translateZ(0)`,
   width: `100%`,
@@ -173,9 +171,7 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
-    {children}
-  </Link>
+  <Link to={to}>{children}</Link>
 )
 
 const Gatsby = () => (
@@ -196,31 +192,26 @@ const Gatsby = () => (
       src={logo}
       css={{
         display: `inline-block`,
-        height: rhythm(1.75),
-        width: rhythm(1.75),
-        [presets.Lg]: {
-          width: rhythm(2.25),
-          height: rhythm(2.25),
-        },
+        height: rhythm(space[8]),
         margin: 0,
         verticalAlign: `middle`,
+        width: `auto`,
+        [presets.Lg]: {
+          height: rhythm(space[9]),
+        },
       }}
       alt="Gatsby"
     />
     <ItemDescription>
       <small
         css={{
-          marginTop: `.25rem`,
+          marginTop: rhythm(space[1]),
           display: `block`,
         }}
       >
         powered by
       </small>
-      <span
-        css={{
-          color: colors.gatsby,
-        }}
-      >
+      <span css={{ color: colors.gatsby }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -262,7 +253,9 @@ const Diagram = () => (
         >
           How Gatsby works
         </h1>
-        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+        <div
+          css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(space[9])}` }}
+        >
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>

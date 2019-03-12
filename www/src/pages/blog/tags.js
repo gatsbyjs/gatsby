@@ -12,8 +12,8 @@ import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import styles from "../../views/shared/styles"
-import { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 let currentLetter = ``
 
@@ -75,8 +75,8 @@ class TagsPage extends React.Component {
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
                 alignItems: `center`,
-                paddingTop: rhythm(options.blockMarginBottom * 2),
-                paddingBottom: rhythm(options.blockMarginBottom),
+                paddingTop: rhythm(space[9]),
+                paddingBottom: rhythm(space[6]),
                 borderBottom: `1px solid ${colors.ui.border}`,
               }}
             >

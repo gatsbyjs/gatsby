@@ -10,6 +10,7 @@ import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
 import presets from "../../utils/presets"
+import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -28,29 +29,9 @@ const Content = styled(`div`)`
   }
 `
 
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-
-  :focus {
-    padding: 0.9rem;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
-  }
-`
+const StyledSkipNavLink = styled(SkipNavLink)({
+  ...skipLink,
+})
 
 const LayoutWithHeading = props => {
   const {

@@ -8,7 +8,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
@@ -46,9 +46,9 @@ const HomepageBlogPostRoot = styled(
 `
 
 const Cover = styled(Img)`
-  border-radius: ${presets.radii[2]}px ${presets.radii[2]}px 0 0;
+  border-radius: ${radii[2]}px ${radii[2]}px 0 0;
   display: block;
-  margin-bottom: -${rhythm(0.5)};
+  margin-bottom: -${rhythm(space[3])};
 `
 
 const Header = styled(`h1`)`
@@ -61,7 +61,7 @@ const Header = styled(`h1`)`
 
   ${presets.Lg} {
     font-size: ${props => (props.first ? presets.scale[6] : presets.scale[5])};
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
     padding-bottom: 0;
   }
 `
@@ -72,7 +72,7 @@ const Meta = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
   font-size: ${presets.scale[1]};
-  margin-top: 1rem;
+  margin-top: ${rhythm(space[4])};
   padding: 0 ${rhythm(4 / 5)};
 
   & > * {
@@ -80,8 +80,8 @@ const Meta = styled(`div`)`
   }
 
   ${presets.Lg} {
-    margin-top: 1.5rem;
-    padding: 0 ${rhythm(1.5)};
+    margin-top: ${rhythm(space[6])};
+    padding: 0 ${rhythm(space[7])};
   }
 `
 
@@ -99,7 +99,7 @@ const Author = styled(Link)`
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    margin-left: 0.5rem;
+    margin-left: ${rhythm(space[2])};
   }
 
   a& {
@@ -121,8 +121,8 @@ const Excerpt = styled(`p`)`
 
   ${presets.Lg} {
     margin: 0;
-    margin-top: 1.5rem;
-    padding: 0 ${rhythm(1.5)};
+    margin-top: ${rhythm(space[6])};
+    padding: 0 ${rhythm(space[7])};
   }
 `
 
@@ -154,11 +154,11 @@ const ReadMore = styled(Link)`
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
     font-weight: bold;
-    margin-right: 0.2rem;
+    margin-right: ${rhythm(space[1])};
   }
 
   ${presets.Lg} {
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
 
     span {
       :hover {

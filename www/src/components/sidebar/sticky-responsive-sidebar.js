@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, { colors } from "../../utils/presets"
+import presets, { colors, transition } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -79,7 +79,9 @@ class StickyResponsiveSidebar extends Component {
               size={15}
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
-                transition: `transform 0.2s ease`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
             <ChevronSvg
@@ -87,7 +89,9 @@ class StickyResponsiveSidebar extends Component {
               cssProps={{
                 transform: `translate(${5 -
                   iconOffset}px, -5px) rotate(270deg)`,
-                transition: `transform 0.2s ease`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
           </div>
@@ -107,7 +111,7 @@ const styles = {
     height: `100vh`,
     position: `fixed`,
     top: 0,
-    transition: `opacity 0.5s ease`,
+    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
     [presets.Md]: {
@@ -124,7 +128,9 @@ const styles = {
   },
   sidebar: {
     height: `100%`,
-    transition: `transform 0.5s ease`,
+    transition: `transform ${transition.speed.slow} ${
+      transition.curve.default
+    }`,
     boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
     [presets.Md]: {
       transform: `none !important`,
@@ -149,7 +155,7 @@ const styles = {
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,
-    color: `#fff`,
+    color: colors.white,
     display: `flex`,
     flexDirection: `column`,
     height: 20,

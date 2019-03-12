@@ -15,12 +15,6 @@ export default props => {
             [presets.Md]: {
               paddingLeft: rhythm(presets.sidebar.width.default),
             },
-            [`${presets.Md} and (max-width:980px)`]: {
-              ".gatsby-highlight": {
-                marginLeft: 0,
-                marginRight: 0,
-              },
-            },
             [presets.Lg]: { paddingLeft: rhythm(presets.sidebar.width.large) },
           }}
         >
