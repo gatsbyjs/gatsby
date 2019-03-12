@@ -19,5 +19,3 @@ Object {
   "theme_color": "#a2466c",
 }
 `;
-
-exports[`Test plugin manifest options fails on non existing icon 1`] = `"icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site."`;

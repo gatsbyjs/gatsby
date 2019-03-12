@@ -81,7 +81,7 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
     }
 
     if (cacheMode !== `none`) {
-      let iconDigest = createContentDigest(fs.readFileSync(icon))
+      const iconDigest = createContentDigest(fs.readFileSync(icon))
 
       manifest.icons.forEach(icon => {
         icon.src = addDigestToPath(icon.src, iconDigest, cacheMode)

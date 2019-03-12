@@ -28,7 +28,9 @@ describe(`gatsby-plugin-manifest`, () => {
   describe(`createContentDigest`, () => {
     it(`returns valid digest`, () => {
       const iconSrc = `thisIsSomethingToHash`
-      expect(createContentDigest(iconSrc)).toMatchSnapshot()
+      expect(createContentDigest(iconSrc)).toBe(
+        `24ac9308d3adace282339005aff676bd1576f061`
+      )
     })
   })
 
@@ -36,19 +38,19 @@ describe(`gatsby-plugin-manifest`, () => {
     it(`returns unmodified path`, () => {
       expect(
         addDigestToPath(`icons/icon-48x48.png`, `thisismydigest`, `none`)
-      ).toMatchSnapshot()
+      ).toBe(`icons/icon-48x48.png`)
     })
 
     it(`returns query modified path`, () => {
       expect(
         addDigestToPath(`icons/icon-48x48.png`, `thisismydigest`, `query`)
-      ).toMatchSnapshot()
+      ).toBe(`icons/icon-48x48.png?v=thisismydigest`)
     })
 
     it(`returns fileName modified path`, () => {
       expect(
         addDigestToPath(`icons/icon-48x48.png`, `thisismydigest`, `name`)
-      ).toMatchSnapshot()
+      ).toBe(`icons/icon-48x48-thisismydigest.png`)
     })
   })
 })

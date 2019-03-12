@@ -1,4 +1,5 @@
-const fs = require(`fs`)
+import fs from "fs"
+import sysPath from "path"
 import crypto from "crypto"
 
 // default icons for generating icons
@@ -54,11 +55,11 @@ exports.doesIconExist = function doesIconExist(srcIcon) {
   try {
     return fs.statSync(srcIcon).isFile()
   } catch (e) {
-    if (e.code === `ENOENT`) {
-      return false
-    } else {
+    if (e.code !== `ENOENT`) {
       throw e
     }
+
+    return false
   }
 }
 
@@ -72,22 +73,22 @@ exports.createContentDigest = function createContentDigest(content) {
 }
 
 /**
- * @param {Array} path The generic path to an icon
- * @param {String} digest The digest of the icon provided in the plugin's options.
+ * @param {string} path The generic path to an icon
+ * @param {string} digest The digest of the icon provided in the plugin's options.
  */
 exports.addDigestToPath = function(path, digest, method) {
-  let newPath = ``
-
   if (method === `name`) {
-    newPath = `${path.substring(
-      0,
-      path.lastIndexOf(`.`)
-    )}-${digest}${path.substring(path.lastIndexOf(`.`))}`
-  } else if (method === `query`) {
-    newPath = `${path}?digest=${digest}}`
-  } else {
-    newPath = path
+    const parsedPath = sysPath.parse(path)
+
+    return sysPath.join(
+      parsedPath.dir,
+      `${parsedPath.name}-${digest}${parsedPath.ext}`
+    )
   }
 
-  return newPath
+  if (method === `query`) {
+    return `${path}?v=${digest}`
+  }
+
+  return path
 }

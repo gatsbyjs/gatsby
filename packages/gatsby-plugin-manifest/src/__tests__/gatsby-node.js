@@ -85,9 +85,10 @@ describe(`Test plugin manifest options`, () => {
     expect(sharp).toHaveBeenCalledTimes(1)
   })
 
-  it(`fails on non existing icon`, async done => {
+  it(`fails on non existing icon`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
-    await onPostBootstrap([], {
+
+    return onPostBootstrap([], {
       name: `GatsbyJS`,
       short_name: `GatsbyJS`,
       start_url: `/`,
@@ -104,8 +105,9 @@ describe(`Test plugin manifest options`, () => {
       ],
     }).catch(err => {
       expect(sharp).toHaveBeenCalledTimes(0)
-      expect(err).toMatchSnapshot()
-      done()
+      expect(err).toBe(
+        `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      )
     })
   })
 
