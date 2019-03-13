@@ -38,6 +38,9 @@
   <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
     <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
   </a>
+  <a href="https://lernajs.io/">
+    <img src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg" alt="Maintained with lerna" />
+  </a>
 </p>
 
 <h3 align="center">
