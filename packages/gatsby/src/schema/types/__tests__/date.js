@@ -1,8 +1,6 @@
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
-
-const { createSchemaComposer } = require(`../../schema-composer`)
-const { GraphQLDate, dateResolver, isDate } = require(`../date`)
+const { isDate } = require(`../date`)
 
 // Timestamps grabbed from https://github.com/moment/moment/blob/2e2a5b35439665d4b0200143d808a7c26d6cd30f/src/test/moment/is_valid.js
 
@@ -13,185 +11,169 @@ describe(`isDate`, () => {
 
   it(`supports valid ISO 8601 datetimes`, async () => {
     const tests = [
-        '1970',
-        '2019',
-        '1970-01',
-        '2019-01',
-        '1970-01-01',
-        '2010-01-01',
-        '2010-01-30',
-        '19700101',
-        '20100101',
-        '20100130',
-        '2010-01-30T23+00:00',
-        '2010-01-30T23:59+00:00',
-        '2010-01-30T23:59:59+00:00',
-        '2010-01-30T23:59:59.999+00:00',
-        '2010-01-30T23:59:59.999-07:00',
-        '2010-01-30T00:00:00.000+07:00',
-        '2010-01-30T23:59:59.999-07',
-        '2010-01-30T00:00:00.000+07',
-        '1970-01-01T00:00:00.000Z',
-        '2012-04-01T00:00:00-05:00',
-        '2012-11-12T00:00:00+01:00',
+      `1970`,
+      `2019`,
+      `1970-01`,
+      `2019-01`,
+      `1970-01-01`,
+      `2010-01-01`,
+      `2010-01-30`,
+      `19700101`,
+      `20100101`,
+      `20100130`,
+      `2010-01-30T23+00:00`,
+      `2010-01-30T23:59+00:00`,
+      `2010-01-30T23:59:59+00:00`,
+      `2010-01-30T23:59:59.999+00:00`,
+      `2010-01-30T23:59:59.999-07:00`,
+      `2010-01-30T00:00:00.000+07:00`,
+      `2010-01-30T23:59:59.999-07`,
+      `2010-01-30T00:00:00.000+07`,
+      `1970-01-01T00:00:00.000Z`,
+      `2012-04-01T00:00:00-05:00`,
+      `2012-11-12T00:00:00+01:00`,
     ]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(true)
+      expect(isDate(tests[i])).toEqual(true)
     }
   })
 
   it(`supports ISO datetimes without T`, async () => {
     const tests = [
-        '2010-01-30 23+00:00',
-        '2010-01-30 23:59+00:00',
-        '2010-01-30 23:59:59+00:00',
-        '2010-01-30 23:59:59.999+00:00',
-        '2010-01-30 23:59:59.999-07:00',
-        '2010-01-30 00:00:00.000+07:00',
-        '2010-01-30 23:59:59.999-07',
-        '2010-01-30 00:00:00.000+07',
-        '1970-01-01 00:00:00.000Z',
-        '2012-04-01 00:00:00-05:00',
-        '2012-11-12 00:00:00+01:00',
+      `2010-01-30 23+00:00`,
+      `2010-01-30 23:59+00:00`,
+      `2010-01-30 23:59:59+00:00`,
+      `2010-01-30 23:59:59.999+00:00`,
+      `2010-01-30 23:59:59.999-07:00`,
+      `2010-01-30 00:00:00.000+07:00`,
+      `2010-01-30 23:59:59.999-07`,
+      `2010-01-30 00:00:00.000+07`,
+      `1970-01-01 00:00:00.000Z`,
+      `2012-04-01 00:00:00-05:00`,
+      `2012-11-12 00:00:00+01:00`,
     ]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(true)
+      expect(isDate(tests[i])).toEqual(true)
     }
   })
 
   it(`supports valid ISO 8601 week dates`, async () => {
-    const tests = [
-        '1970-W31',
-        '2006-W01',
-        '1970W31',
-        '2009-W53-7',
-        '2009W537',
-    ]
+    const tests = [`1970-W31`, `2006-W01`, `1970W31`, `2009-W53-7`, `2009W537`]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(true)
+      expect(isDate(tests[i])).toEqual(true)
     }
   })
 
   it(`supports valid ISO 8601 ordinal dates`, async () => {
-    const tests = [
-        '1970-334',
-        '1970334',
-        '2090-001',
-        '2090001',
-    ]
+    const tests = [`1970-334`, `1970334`, `2090-001`, `2090001`]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(true)
+      expect(isDate(tests[i])).toEqual(true)
     }
   })
 
   it(`supports microsecond precision`, async () => {
-    expect(isDate("2018-08-31T23:25:16.019345+02:00")).toEqual(true)
-    expect(isDate("2018-08-31T23:25:16.019345Z")).toEqual(true)
+    expect(isDate(`2018-08-31T23:25:16.019345+02:00`)).toEqual(true)
+    expect(isDate(`2018-08-31T23:25:16.019345Z`)).toEqual(true)
   })
 
   it(`supports nanosecond precision`, async () => {
-    expect(isDate("2018-08-31T23:25:16.019345123+02:00")).toEqual(true)
-    expect(isDate("2018-08-31T23:25:16.019345123Z")).toEqual(true)
+    expect(isDate(`2018-08-31T23:25:16.019345123+02:00`)).toEqual(true)
+    expect(isDate(`2018-08-31T23:25:16.019345123Z`)).toEqual(true)
   })
 
   it.skip(`does not support precision beyond 9 digits`, async () => {
     // This seems to pass
-    expect(isDate("2018-08-31T23:25:16.01234567899+02:00")).toEqual(false)
+    expect(isDate(`2018-08-31T23:25:16.01234567899+02:00`)).toEqual(false)
   })
-
 
   it(`does not support invalid string iso 8601`, async () => {
     const tests = [
-        '2010-00-00',
-        '2010-01-00',
-        '2010-01-40',
-        '2010-01-01T24:01',  // 24:00:00 is actually valid
-        '2010-01-01T23:60',
-        '2010-01-01T23:59:60',
-        '2010-01-40T23:59:59.9999'
+      `2010-00-00`,
+      `2010-01-00`,
+      `2010-01-40`,
+      `2010-01-01T24:01`, // 24:00:00 is actually valid
+      `2010-01-01T23:60`,
+      `2010-01-01T23:59:60`,
+      `2010-01-40T23:59:59.9999`,
     ]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(false)
+      expect(isDate(tests[i])).toEqual(false)
     }
   })
-
 
   it(`does not support invalid string iso 8601 + timezone`, async () => {
     const tests = [
-        '2010-00-00T+00:00',
-        '2010-01-00T+00:00',
-        '2010-01-40T+00:00',
-        '2010-01-40T24:01+00:00',
-        '2010-01-40T23:60+00:00',
-        '2010-01-40T23:59:60+00:00',
-        '2010-01-40T23:59:59.9999+00:00',
-        '2010-01-40T23:59:59,9999+00:00',
-        '2012-04-01T00:00:00-5:00', // should be -05:00
-        '2012-04-01T00:00:00+1:00', // should be +01:00
+      `2010-00-00T+00:00`,
+      `2010-01-00T+00:00`,
+      `2010-01-40T+00:00`,
+      `2010-01-40T24:01+00:00`,
+      `2010-01-40T23:60+00:00`,
+      `2010-01-40T23:59:60+00:00`,
+      `2010-01-40T23:59:59.9999+00:00`,
+      `2010-01-40T23:59:59,9999+00:00`,
+      `2012-04-01T00:00:00-5:00`, // should be -05:00
+      `2012-04-01T00:00:00+1:00`, // should be +01:00
     ]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(false)
+      expect(isDate(tests[i])).toEqual(false)
     }
   })
 
-
   it(`does not support invalid timestamps`, async () => {
     const tests = [
-        undefined,
-        'undefined',
-        null,
-        'null',
-        [],
-        {},
-        '',
-        ' ',
-        '2012-04-01T00:basketball'
+      undefined,
+      `undefined`,
+      null,
+      `null`,
+      [],
+      {},
+      ``,
+      ` `,
+      `2012-04-01T00:basketball`,
     ]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(false)
+      expect(isDate(tests[i])).toEqual(false)
     }
   })
 
   it.skip(`supports unix timestamps`, async () => {
     // Not sure if in original scope
     const tests = [
-        1371065286,
-        1379066897.0,
-        1379066897.7,
-        1379066897.00,
-        1379066897.07,
-        1379066897.17,
-        1379066897.000,
-        1379066897.007,
-        1379066897.017,
-        1379066897.157,
-        '1371065286',
-        '1379066897.',
-        '1379066897.0',
-        '1379066897.7',
-        '1379066897.00',
-        '1379066897.07',
-        '1379066897.17',
-        '1379066897.000',
-        '1379066897.007',
-        '1379066897.017',
-        '1379066897.157',
+      1371065286,
+      1379066897.0,
+      1379066897.7,
+      1379066897.0,
+      1379066897.07,
+      1379066897.17,
+      1379066897.0,
+      1379066897.007,
+      1379066897.017,
+      1379066897.157,
+      `1371065286`,
+      `1379066897.`,
+      `1379066897.0`,
+      `1379066897.7`,
+      `1379066897.00`,
+      `1379066897.07`,
+      `1379066897.17`,
+      `1379066897.000`,
+      `1379066897.007`,
+      `1379066897.017`,
+      `1379066897.157`,
     ]
     let i
     for (i = 0; i < tests.length; i++) {
-        expect(isDate(tests[i])).toEqual(true)
+      expect(isDate(tests[i])).toEqual(true)
     }
   })
-
 })
-
 
 const nodes = [
   {
@@ -236,21 +218,20 @@ const nodes = [
     invalidDate1: `2010-00-00`,
     invalidDate2: `2010-01-00`,
     invalidDate3: `2010-01-40`,
-    invalidDate4: `2010-01-01T24:01`,  // 24:00:00 is actually valid
+    invalidDate4: `2010-01-01T24:01`, // 24:00:00 is actually valid
     invalidDate5: `2010-01-01T23:60`,
     invalidDate6: `2010-01-01T23:59:60`,
     invalidDate7: `2010-01-40T23:59:59.9999`,
 
     invalidDate8: undefined,
-    invalidDate9: 'undefined',
+    invalidDate9: `undefined`,
     invalidDate10: null,
-    invalidDate11: 'null',
+    invalidDate11: `null`,
     invalidDate12: [],
     invalidDate13: {},
-    invalidDate14: '',
-    invalidDate15: ' ',
-    invalidDate16: '2012-04-01T00:basketball'
-
+    invalidDate14: ``,
+    invalidDate15: ` `,
+    invalidDate16: `2012-04-01T00:basketball`,
   },
 ]
 
@@ -273,7 +254,6 @@ describe(`dateResolver`, () => {
       type Test implements Node ${inferDirective}(noDefaultResolvers: ${noDefaultResolvers}) {
         testDate: Date
         explicitValidDate: Date
-
         invalidHighPrecision: Date
         invalidDate8: Date 
         invalidDate9: Date
@@ -284,7 +264,6 @@ describe(`dateResolver`, () => {
         invalidDate14: Date
         invalidDate15: Date
         invalidDate16: Date
-
       }`,
     ]
     typeDefs.forEach(def =>
@@ -296,7 +275,6 @@ describe(`dateResolver`, () => {
   }
 
   it(`can properly resolve datetimes`, async () => {
-
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
 
@@ -334,9 +312,7 @@ describe(`dateResolver`, () => {
 
     expect(fields.validNanosecond1.resolve).toBeDefined()
     expect(fields.validNanosecond2.resolve).toBeDefined()
-
     // expect(fields.invalidHighPrecision.resolve).toBeDefined()
-
     expect(fields.invalidDate1.resolve).toBeUndefined()
     expect(fields.invalidDate2.resolve).toBeUndefined()
     expect(fields.invalidDate3.resolve).toBeUndefined()
@@ -353,7 +329,6 @@ describe(`dateResolver`, () => {
     expect(fields.invalidDate14.resolve).toBeUndefined()
     expect(fields.invalidDate15.resolve).toBeUndefined()
     expect(fields.invalidDate16.resolve).toBeUndefined()
-
   })
 
   it(`can properly handle basic iso formats`, async () => {
@@ -387,25 +362,22 @@ describe(`dateResolver`, () => {
 
     let i
     for (i = 0; i < validDates.length; i++) {
-        expect(
-          fields[`testDate`].resolve(
-            { date: validDates[i] },
-            { formatString: `MMM DD, YYYY` },
-            {},
-            {
-              fieldName: `date`,
-            }
-          )
-        ).toEqual(`Jan 29, 2018`)
-
+      expect(
+        fields[`testDate`].resolve(
+          { date: validDates[i] },
+          { formatString: `MMM DD, YYYY` },
+          {},
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`Jan 29, 2018`)
     }
-
   })
 
   it(`can properly handle microsecond and nanosecond`, async () => {
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
-
     const validDates = [
       `2018-01-29T23:25:16.019345+02:00`,
       `2018-01-29T23:25:16.019345Z`,
@@ -416,43 +388,37 @@ describe(`dateResolver`, () => {
 
     let i
     for (i = 0; i < validDates.length; i++) {
-        expect(
-          fields[`testDate`].resolve(
-            { date: validDates[i] },
-            { formatString: `MMM DD, YYYY` },
-            {},
-            {
-              fieldName: `date`,
-            }
-          )
-        ).toEqual(`Jan 29, 2018`)
-
+      expect(
+        fields[`testDate`].resolve(
+          { date: validDates[i] },
+          { formatString: `MMM DD, YYYY` },
+          {},
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`Jan 29, 2018`)
     }
-
   })
 
   it.skip(`errors on n second precision`, async () => {
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
-
-    const invalidDates = [
-      `2018-08-31T23:25:16.01234567899993+02:00`,
-    ]
+    const invalidDates = [`2018-08-31T23:25:16.01234567899993+02:00`]
 
     let i
     for (i = 0; i < invalidDates.length; i++) {
-        expect(
-          fields[`testDate`].resolve(
-            { date: invalidDates[i] },
-            { formatString: `MMM DD, YYYY` },
-            {},
-            {
-              fieldName: `date`,
-            }
-          )
-        ).toEqual(`Invalid date`)
+      expect(
+        fields[`testDate`].resolve(
+          { date: invalidDates[i] },
+          { formatString: `MMM DD, YYYY` },
+          {},
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`Invalid date`)
     }
-
   })
 
   it(`errors on invalid datetimes`, async () => {
@@ -472,24 +438,16 @@ describe(`dateResolver`, () => {
 
     let i
     for (i = 0; i < invalidDates.length; i++) {
-        expect(
-          fields[`testDate`].resolve(
-            { date: invalidDates[i] },
-            { formatString: `MMM DD, YYYY` },
-            {},
-            {
-              fieldName: `date`,
-            }
-          )
-        ).toEqual(`Invalid date`)
+      expect(
+        fields[`testDate`].resolve(
+          { date: invalidDates[i] },
+          { formatString: `MMM DD, YYYY` },
+          {},
+          {
+            fieldName: `date`,
+          }
+        )
+      ).toEqual(`Invalid date`)
     }
-
   })
-
 })
-
-
-
-
-
-
