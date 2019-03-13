@@ -31,6 +31,7 @@ module.exports = {
       options: {
         name: `packages`,
         path: `${__dirname}/../packages/`,
+        ignore: [`**/dist/**`],
       },
     },
     {
