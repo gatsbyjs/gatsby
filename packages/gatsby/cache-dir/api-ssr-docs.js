@@ -142,6 +142,7 @@ exports.onPreRenderHTML = true
  * @param {object} $0
  * @param {object} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
+ * @param {Object} pluginOptions
  * @example
  * import React from "react"
  * import Layout from "./src/components/layout"
@@ -163,6 +164,7 @@ exports.wrapPageElement = true
  * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapRootElement)
  * @param {object} $0
  * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @param {Object} pluginOptions
  * @example
  * import React from "react"
  * import { Provider } from "react-redux"

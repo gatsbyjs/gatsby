@@ -1,5 +1,6 @@
 /**
  * Called when the Gatsby browser runtime first starts.
+ * @param {Object} pluginOptions
  * @example
  * exports.onClientEntry = () => {
  *   console.log("We've started!")
@@ -10,6 +11,7 @@ exports.onClientEntry = true
 
 /**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
+ * @param {Object} pluginOptions
  * @example
  * exports.onInitialClientRender = () => {
  *   console.log("ReactDOM.render has executed")
@@ -22,6 +24,7 @@ exports.onInitialClientRender = true
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object|null} $0.prevLocation The previous location object
+ * @param {Object} pluginOptions
  * @example
  * exports.onPreRouteUpdate = ({ location, prevLocation }) => {
  *   console.log("Gatsby started to change location to", location.pathname)
@@ -35,6 +38,7 @@ exports.onPreRouteUpdate = true
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object} $0.action The "action" that caused the route change
+ * @param {Object} pluginOptions
  * @example
  * exports.onRouteUpdateDelayed = () => {
  *   console.log("We can show loading indicator now")
@@ -47,6 +51,7 @@ exports.onRouteUpdateDelayed = true
  * @param {object} $0
  * @param {object} $0.location A location object
  * @param {object|null} $0.prevLocation The previous location object
+ * @param {Object} pluginOptions
  * @example
  * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
@@ -78,6 +83,7 @@ exports.onRouteUpdate = true
  * coordinates to scroll to, a string of the `id` or `name` of an element to
  * scroll to, `false` to not update the scroll position, or `true` for the
  * default behavior.
+ * @param {Object} pluginOptions
  * @example
  * exports.shouldUpdateScroll = ({
  *   routerProps: { location },
@@ -95,6 +101,7 @@ exports.shouldUpdateScroll = true
 
 /**
  * Allow a plugin to register a Service Worker. Should be a function that returns true.
+ * @param {Object} pluginOptions
  * @example
  * exports.registerServiceWorker = () => true
  */
@@ -106,6 +113,7 @@ exports.registerServiceWorker = true
  * @param {object} $0
  * @param {object} $0.props The props of the page.
  * @param {object} $0.loader The gatsby loader.
+ * @param {Object} pluginOptions
  */
 exports.replaceComponentRenderer = true
 
@@ -119,6 +127,7 @@ exports.replaceComponentRenderer = true
  * @param {object} $0
  * @param {object} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
+ * @param {Object} pluginOptions
  * @example
  * import React from "react"
  * import Layout from "./src/components/layout"
@@ -140,6 +149,7 @@ exports.wrapPageElement = true
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
  * @param {object} $0
  * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @param {Object} pluginOptions
  * @example
  * import React from "react"
  * import { Provider } from "react-redux"
@@ -163,6 +173,7 @@ exports.wrapRootElement = true
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources should now be prefetched
  * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {Object} pluginOptions
  */
 exports.onPrefetchPathname = true
 
@@ -172,12 +183,14 @@ exports.onPrefetchPathname = true
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources have now been prefetched
  * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
+ * @param {Object} pluginOptions
  */
 exports.onPostPrefetchPathname = true
 
 /**
  * Plugins can take over prefetching logic. If they do, they should call this
  * to disable the now duplicate core prefetching logic.
+ * @param {Object} pluginOptions
  * @example
  * exports.disableCorePrefetching = () => true
  */
@@ -187,6 +200,7 @@ exports.disableCorePrefetching = true
  * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
  * This method takes no param and should return a function with same signature as ReactDOM.render()
  * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
+ * @param {Object} pluginOptions
  * @example
  * exports.replaceHydrateFunction = () => {
  *   return (element, container, callback) => {
@@ -201,6 +215,7 @@ exports.replaceHydrateFunction = true
  * Inform plugins when a service worker has been installed.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.
+ * @param {Object} pluginOptions
  */
 exports.onServiceWorkerInstalled = true
 
@@ -208,6 +223,7 @@ exports.onServiceWorkerInstalled = true
  * Inform plugins of when a service worker has an update available.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.
+ * @param {Object} pluginOptions
  */
 exports.onServiceWorkerUpdateFound = true
 
@@ -216,6 +232,7 @@ exports.onServiceWorkerUpdateFound = true
  * and the page is ready to reload to apply changes.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.
+ * @param {Object} pluginOptions
  */
 exports.onServiceWorkerUpdateReady = true
 
@@ -223,6 +240,7 @@ exports.onServiceWorkerUpdateReady = true
  * Inform plugins when a service worker has become active.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.
+ * @param {Object} pluginOptions
  */
 exports.onServiceWorkerActive = true
 
@@ -230,5 +248,6 @@ exports.onServiceWorkerActive = true
  * Inform plugins when a service worker is redundant.
  * @param {object} $0
  * @param {object} $0.serviceWorker The service worker instance.
+ * @param {Object} pluginOptions
  */
 exports.onServiceWorkerRedundant = true
