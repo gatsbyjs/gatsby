@@ -88,7 +88,7 @@ export default ({ functions }) => (
         )}
         {node.returns && node.returns.length > 0 && (
           <div>
-            <h4>Return value</h4>
+            <h4 css={{ marginTop: rhythm(space[5]) }}>Return value</h4>
             {node.returns.map(ret => (
               <div
                 key={`ret ${JSON.stringify(ret)}`}
