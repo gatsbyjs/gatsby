@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import Layout from "../components/layout"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, space } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
@@ -101,14 +101,14 @@ class IndexRoute extends React.Component {
         >
           <div
             css={{
-              padding: rhythm(presets.gutters.default / 2),
+              padding: rhythm(space[6]),
               paddingTop: 0,
               width: `100%`,
               borderBottom: `1px solid ${colors.ui.light}`,
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
               [presets.Xl]: {
-                padding: rhythm(presets.gutters.default),
+                padding: rhythm(space[8]),
               },
             }}
           >
@@ -117,12 +117,7 @@ class IndexRoute extends React.Component {
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
-              <div
-                css={{
-                  textAlign: `center`,
-                  padding: `${rhythm(1)} 0 ${rhythm(1.5)}`,
-                }}
-              >
+              <div css={{ textAlign: `center` }}>
                 <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
@@ -131,7 +126,7 @@ class IndexRoute extends React.Component {
                   secondary
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: `1rem` }}
+                  overrideCSS={{ marginTop: rhythm(space[4]) }}
                 >
                   Get Started
                 </Button>

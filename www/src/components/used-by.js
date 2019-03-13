@@ -1,12 +1,12 @@
 import React from "react"
-import typography, { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, { space, transition } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
     css={{
-      marginRight: rhythm(3 / 4),
+      marginRight: rhythm(space[6]),
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
@@ -30,8 +30,8 @@ const Icon = ({ icon, alt, href }) => (
         borderBottom: `0 !important`,
         boxShadow: `none !important`,
         background: `none !important`,
-        transition: `opacity ${presets.animation.speedFast} ${
-          presets.animation.curveDefault
+        transition: `opacity ${transition.speed.fast} ${
+          transition.curve.default
         }`,
         opacity: 0.9,
         ":hover": {
@@ -59,12 +59,12 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: rhythm(presets.gutters.default),
-      paddingTop: rhythm(1),
-      paddingBottom: rhythm(1),
+      padding: rhythm(space[8]),
+      paddingTop: rhythm(space[5]),
+      paddingBottom: rhythm(space[5]),
       marginBottom: rhythm(3),
-      transition: `padding-top ${presets.animation.speedFast} ${
-        presets.animation.curveDefault
+      transition: `padding-top ${transition.speed.fast} ${
+        transition.curve.default
       }`,
       order: `3`,
       flexGrow: `1`,
@@ -95,16 +95,12 @@ const UsedBy = () => (
       <p
         css={{
           color: presets.colors.lilac,
-          letterSpacing: `0.02em`,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
-          fontSize: scale(-2 / 5).fontSize,
+          fontFamily: options.headerFontFamily.join(`,`),
+          fontSize: presets.scale[1],
           marginBottom: 0,
           [presets.Sm]: {
-            fontSize: scale(-2 / 5).fontSize,
+            fontSize: presets.scale[2],
             textAlign: `right`,
-          },
-          [presets.Lg]: {
-            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >
