@@ -19,7 +19,7 @@ import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, radii } from "../../utils/presets"
+import presets, { colors, space, radii, shadows } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -29,18 +29,18 @@ const Sections = styled(`div`)`
 
   ${presets.Md} {
     flex-direction: row;
-    margin: 0 -8px;
+    margin: 0 -${rhythm(space[2])};
   }
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: ${shadows.raised};
   border-radius: ${radii[2]}px;
   margin-bottom: ${rhythm(space[6])};
   padding: ${rhythm(space[6])};
 
   ${presets.Md} {
-    margin: 0 8px 0px;
+    margin: 0 ${rhythm(space[2])} 0;
     padding: ${rhythm(space[6])};
 
     :last-child {
@@ -87,7 +87,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     margin: ${rhythm(space[6])};
     margin-top: 0;
     margin-left: 0;
-    width: 320px;
+    width: 20rem;
   }
 
   ${presets.Lg} {
@@ -99,8 +99,10 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(space[6])} + 1.1rem);
+    padding-left: calc(${rhythm(space[5])} + ${rhythm(space[6])});
     position: relative;
+    border: 0;
+    box-shadow: ${shadows.raised};
 
     ${presets.Md} {
       border-radius: ${radii[2]}px;
@@ -121,7 +123,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       left: 0;
       position: absolute;
       top: 0;
-      width: 1.1rem;
+      width: ${rhythm(space[5])};
     }
 
     :after {

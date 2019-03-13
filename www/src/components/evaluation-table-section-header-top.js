@@ -17,9 +17,7 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(space[3])} ${rhythm(presets.space[3])} ${rhythm(
-              3 / 8
-            )}`,
+            padding: `${rhythm(space[3])} ${rhythm(space[3])} ${rhythm(3 / 8)}`,
           },
           display: `none`,
           textTransform: `uppercase`,
@@ -30,7 +28,6 @@ const superHeader = () => (
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,
           border: 0,
-          // fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
           background: colors.ui.whisper,
           "span:first-of-type": {

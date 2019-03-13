@@ -6,7 +6,7 @@ import { rhythm, options } from "./typography"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `30px 60px` },
+  "100%": { backgroundPosition: `${rhythm(space[7])} ${rhythm(space[11])}` },
 })
 
 export const scrollbarStyles = {
@@ -40,19 +40,19 @@ export const buttonStyles = {
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: presets.lineHeights.solid,
+    lineHeight: presets.lineHeights.dense,
     textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
     padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
-    backgroundSize: `30px 30px`,
+    backgroundSize: `${rhythm(space[7])} ${rhythm(space[7])}`,
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
-    ":hover, &:focus": {
-      backgroundSize: `30px 30px`,
+    ":hover, :focus": {
       backgroundColor: colors.gatsby,
-      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+      backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
       color: colors.white,
       animation: `${stripeAnimation} 2.8s linear infinite`,
+      borderColor: colors.gatsby,
     },
     ":focus": {
       outline: 0,
@@ -162,10 +162,10 @@ export const skipLink = {
   zIndex: 100,
   fontSize: presets.scale[1],
   ":focus": {
-    padding: rhythm(presets.space[4]),
+    padding: rhythm(space[4]),
     position: `fixed`,
-    top: rhythm(presets.space[6]),
-    left: rhythm(presets.space[6]),
+    top: rhythm(space[6]),
+    left: rhythm(space[6]),
     background: colors.white,
     textDecoration: `none`,
     width: `auto`,

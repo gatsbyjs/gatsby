@@ -134,10 +134,10 @@ const Star = styled(`span`)`
 
   :nth-of-type(3) {
     bottom: 0;
-    height: 12px;
+    height: ${rhythm(space[3])};
     right: 4rem;
     transform: translateY(50%);
-    width: 12px;
+    width: ${rhythm(space[3])};
 
     svg {
       fill: ${colors.warning};

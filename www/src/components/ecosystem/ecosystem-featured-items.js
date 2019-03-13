@@ -25,13 +25,6 @@ const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
   }
 `
 
-export const ListBase = styled(`ul`)`
-  display: inline-flex;
-  list-style: none;
-  margin: 0;
-  padding: 0 calc(${rhythm(space[6])} - 5px) 4px;
-`
-
 const List = styled(HorizontalScrollerContent)`
   padding-left: ${rhythm(space[6])};
   padding-right: ${rhythm(space[6])};

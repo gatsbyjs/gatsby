@@ -6,9 +6,17 @@ import Img from "gatsby-image"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
+import Avatar from "../avatar"
+
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors, space, radii } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
@@ -29,7 +37,7 @@ const HomepageBlogPostRoot = styled(
   }
 
   ${presets.Md} {
-    width: 320px;
+    width: 20rem;
   }
 
   ${presets.Lg} {
@@ -38,9 +46,18 @@ const HomepageBlogPostRoot = styled(
     margin-bottom: ${rhythm(space[8])};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
+    transition: transform ${transition.speed.default}
+        ${transition.curve.default},
+      box-shadow ${transition.speed.default} ${transition.curve.default};
 
     :hover {
-      background: ${colors.ui.whisper};
+      transform: translateY(-${rhythm(space[1])});
+      box-shadow: ${shadows.overlay};
+    }
+
+    :active: {
+      box-shadow: ${shadows.cardActive};
+      transform: translateY(0);
     }
   }
 `
@@ -90,16 +107,9 @@ const Author = styled(Link)`
   display: flex;
   z-index: 1;
 
-  img {
-    border-radius: 50%;
-    height: 28px;
-    width: 28px;
-  }
-
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    margin-left: ${rhythm(space[2])};
   }
 
   a& {
@@ -146,8 +156,8 @@ const ReadMore = styled(Link)`
   }
 
   svg {
-    height: 18px;
-    width: 18px;
+    height: ${rhythm(space[4])};
+    width: ${rhythm(space[4])};
   }
 
   span {
@@ -220,7 +230,7 @@ const HomepageBlogPost = ({
 
       <Meta>
         <Author to={authorSlug}>
-          <Img fixed={authorFixed} alt={authorName} />
+          <Avatar image={authorFixed} alt={authorName} />
           <span>{authorName}</span>
         </Author>
         &nbsp;on&nbsp;
@@ -244,44 +254,7 @@ HomepageBlogPost.propTypes = {
 
 export const homepageBlogPostFragment = graphql`
   fragment HomepageBlogPostData on MarkdownRemark {
-    excerpt
-    fields {
-      slug
-    }
-    frontmatter {
-      excerpt
-      title
-      date
-      author {
-        id
-        fields {
-          slug
-        }
-        avatar {
-          childImageSharp {
-            fixed(
-              width: 30
-              height: 30
-              quality: 80
-              traceSVG: {
-                turdSize: 10
-                background: "#f6f2f8"
-                color: "#e0d6eb"
-              }
-            ) {
-              ...GatsbyImageSharpFixed_tracedSVG
-            }
-          }
-        }
-      }
-      cover {
-        childImageSharp {
-          fluid(maxWidth: 700, quality: 80) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-    }
+    ...BlogPostPreview_item
   }
 `
 
