@@ -1102,6 +1102,17 @@ actions.setPluginStatus = (
 }
 
 /**
+ * Check if path is absolute and add pathPrefix in front if it's not
+ */
+const maybeAddPathPrefix = (path, pathPrefix) => {
+  const parsed = url.parse(path)
+  const isRelativeProtocol = path.startsWith(`//`)
+  return `${
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  }${path}`
+}
+
+/**
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
@@ -1132,20 +1143,13 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  // Parse urls to get their protocols
-  // url.parse will not cover protocol-relative urls so do a separate check for those
-  const parsed = url.parse(toPath)
-  const isRelativeProtocol = toPath.startsWith(`//`)
-  const toPathPrefix =
-    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
-
   return {
     type: `CREATE_REDIRECT`,
     payload: {
-      fromPath: `${pathPrefix}${fromPath}`,
+      fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
       redirectInBrowser,
-      toPath: `${toPathPrefix}${toPath}`,
+      toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
     },
   }
