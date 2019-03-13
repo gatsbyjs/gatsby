@@ -4917,3 +4917,16 @@
   built_by: Guillaume Briday
   built_by_url: https://guillaumebriday.fr/
   featured: false
+- title: SEOmonitor
+  main_url: "https://www.seomonitor.com"
+  url: "https://www.seomonitor.com"
+  source_url:
+  description: >
+    SEOmonitor is a suite of SEO tools dedicated to agencies.
+  categories:
+    - Blog
+    - Portfolio
+    - Agency
+  built_by: bejamas
+  built_by_url: https://bejamas.io/
+  featured: false

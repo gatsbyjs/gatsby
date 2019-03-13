@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.32...gatsby-image@2.0.33) (2019-03-12)
+
+### Features
+
+- **gatsby-image:** Placeholder Improvements ([#10944](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10944)) ([44491ef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/44491ef))
+
 ## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.31...gatsby-image@2.0.32) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-image

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/compare/gatsby-plugin-sitemap@2.0.8...gatsby-plugin-sitemap@2.0.9) (2019-03-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** fix typo in comment ([#12512](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/issues/12512)) ([3bc5f4d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/commit/3bc5f4d))
+
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/compare/gatsby-plugin-sitemap@2.0.7...gatsby-plugin-sitemap@2.0.8) (2019-03-12)
 
 ### Features
