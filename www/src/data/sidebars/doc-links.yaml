@@ -297,6 +297,8 @@
       link: /docs/gatsby-config/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
+    - title: Gatsby Node Helpers
+      link: /docs/node-api-helpers/
     - title: Gatsby Browser APIs
       link: /docs/browser-apis/
     - title: Gatsby SSR APIs
