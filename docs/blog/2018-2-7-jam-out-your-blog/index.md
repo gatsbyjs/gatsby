@@ -1,6 +1,6 @@
 ---
 title: JAM Out Your Blog - Gatsby + Prose + Netlify
-date: "2018-02-07"
+date: 2018-02-07
 author: "Vlad Pasculescu"
 tags: ["prose-io", "netlify", "ci", "jamstack"]
 ---

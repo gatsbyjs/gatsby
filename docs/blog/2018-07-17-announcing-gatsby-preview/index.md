@@ -1,6 +1,6 @@
 ---
 title: Announcing Gatsby Preview
-date: "2018-07-17"
+date: 2018-07-17
 author: "Sam Bhagwat"
 tags: ["contentful", "preview", "product"]
 ---

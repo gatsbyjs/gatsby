@@ -18,13 +18,13 @@ exports.components = {
 }
 ```
 
-The entry point to webpack (`production-app.js`) [references ./async-requires.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js#L12). And therefore webpack will analyze it and find the object mapping components to functions that dynamically import page component files. According to dynamic splitting, webpack will then create separate chunks for each of those imported files.
+The entry point to webpack (`production-app.js`) [references ./async-requires.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js#L15). And therefore webpack will analyze it and find the object mapping components to functions that dynamically import page component files. According to dynamic splitting, webpack will then create separate chunks for each of those imported files.
 
 `async-requires` also exports a `data` function that dynamically imports the [data.json](/docs/write-pages/#datajson) file so that it too is code split.
 
 ## Chunk bundle naming
 
-Great! We've told webpack where we want to code split. But how will these be named on disk? Webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L131) as:
+Great! We've told webpack where we want to code split. But how will these be named on disk? Webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L135) as:
 
 ```
 [name]-[contenthash].js
@@ -75,7 +75,7 @@ digraph {
 
 In the above graph, we can see 3 chunk groups: 2 pages and the core Gatsby app. The two pages share a bunch of libraries. Webpack found these common dependencies and created chunks for them. These chunks are id 0 and 1. And you'll see that both page `chunkGroups` depend on them. Each page also depends on its own chunk which represents the page's core code (from its src code in the Gatsby site). These would be id 7 for `component---src-blog-1-js` and 8 for `component---src-blog-2-js`.
 
-We can also see the chunk group for `app`. It turns out that this shares no dependencies with the pages. But it does include the webpack runtime whose name is declared in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L438).
+We can also see the chunk group for `app`. It turns out that this shares no dependencies with the pages. But it does include the webpack runtime whose name is declared in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L390).
 
 Remember that the chunk group name was assigned by the `/* webpackChunkName: .../*` in the previous section.
 
@@ -83,7 +83,7 @@ Remember that the chunk group name was assigned by the `/* webpackChunkName: ...
 
 Webpack can now split our code into different bundles, and we've named them appropriately. But those bundles will still be named with a content hash. E.g for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. Webpack will replace `import()` calls with links to the generated bundle filenames. This works great for our pure JavaScript bundles. But things get complicated when generating our page HTML files.
 
-HTML file generation is covered under the [Page HTML Generation](/docs/html-generation/) docs. In summary, webpack builds `static-entry.js` which produces a `page-renderer.js` bundle. This is a function that accepts a page and renders its HTML. The HTML is enough to drive a site, and enhance SEO, but once the page is loaded, Gatsby also loads the JavaScript bundle so that page rendering occurs clientside from then on. This gives the advantage of fast initial page loads combined with client side rendering for future page clicks.
+HTML file generation is covered under the [Page HTML Generation](/docs/html-generation/) docs. In summary, webpack builds `static-entry.js` which produces a `render-page.js` bundle. This is a function that accepts a page and renders its HTML. The HTML is enough to drive a site, and enhance SEO, but once the page is loaded, Gatsby also loads the JavaScript bundle so that page rendering occurs clientside from then on. This gives the advantage of fast initial page loads combined with client side rendering for future page clicks.
 
 To do this, we need to be able to create `<link>` and `<script>` tags in the HTML the Gatsby runtime chunk, and the page chunk (e.g index). But as mentioned above, only webpack knows the name of the generated filename for each chunk. All Gatsby knows is the `componentChunkName`.
 
@@ -131,7 +131,7 @@ These two files are loaded by [static-entry.js](https://github.com/gatsbyjs/gats
 
 As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby JavaScript runtime and the JavaScript for the page we're generating HTML for. These are added as a `link` tags in the `<head>` (see [link tag preloading](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)), and then referenced at the bottom of the body in `script` tags.
 
-The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L164)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L195) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
+The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L169)). We [lookup assetsByChunkName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L204) by `app` to get its chunk asset files. Then we do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, we create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
 
 ```html
 <link
@@ -154,7 +154,7 @@ Then, at the [end of the body](https://github.com/gatsbyjs/gatsby/blob/master/pa
 />
 ```
 
-If the asset is CSS, we [inject it inline in the head](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L302).
+If the asset is CSS, we [inject it inline in the head](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L311).
 
 ```html
 <style
@@ -169,7 +169,7 @@ As shown above, Gatsby uses "preload" to speed up loading of resources required 
 
 It does this using the `<link rel="prefetch" href="..." />` parameter. When the browser sees this tag, it will start downloading the resource but at an extremely low priority and only when the resources for the current page have finished loading. Check out the [MDN prefetch docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) for more.
 
-Here's how it works. All links on Gatsby sites use the [gatsby-link](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link) plugin which provides a `GatsbyLink` component that uses reach router. The "to" attribute is the page the browser will navigate to if clicked. So once the Link [componentDidMount](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-link/src/index.js#L57) callback is invoked, we enqueue the "to" path into the [production-app loader](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L188) for prefetching.
+Here's how it works. All links on Gatsby sites use the [gatsby-link](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link) plugin which provides a `GatsbyLink` component that uses reach router. The "to" attribute is the page the browser will navigate to if clicked. So once the Link [componentDidMount](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-link/src/index.js#L61) callback is invoked, we enqueue the "to" path into the [production-app loader](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L223) for prefetching.
 
 At this stage, we know the page that we're navigating to, and can retrieve its `componentChunkName` and `jsonName`, but how do we figure out the generated chunkGroup for the component?
 
@@ -193,8 +193,8 @@ At this stage, we know the page that we're navigating to, and can retrieve its `
 */
 ```
 
-Now the loader can create the full component asset path using [chunkMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L51). It then dynamically constructs a `<link rel="prefetch" ... />` tag and adds it to the DOM (in [prefetch.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/prefetch.js)).
+Now the loader can create the full component asset path using [chunkMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L69). It then dynamically constructs a `<link rel="prefetch" ... />` tag and adds it to the DOM (in [prefetch.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/prefetch.js)).
 
 You may notice that prefetching doesn't prefetch the shared chunks (e.g `id0` and `id1`). Why? This is a punt. We're guessing that shared chunks will have been loaded earlier for other pages. And if not, then the main page loading logic will download it. It just won't be prefetched.
 
-One more thing, prefetching can be disabled by implementing the [disableCorePrefetching](/docs/browser-apis/#disableCorePrefetching) browser API and returning true. This value is checked in [loader.enqueue](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L203). An example plugin that implements this is [gatsby-plugin-guess-js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L3).
+One more thing, prefetching can be disabled by implementing the [disableCorePrefetching](/docs/browser-apis/#disableCorePrefetching) browser API and returning true. This value is checked in [loader.enqueue](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L242). An example plugin that implements this is [gatsby-plugin-guess-js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L3).

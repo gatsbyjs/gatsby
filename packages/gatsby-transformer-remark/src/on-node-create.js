@@ -1,32 +1,48 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
+const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
-  pluginOptions
+  {
+    plugins = null,
+    filter = () => true,
+    type = `MarkdownRemark`,
+    ...grayMatterOptions
+  } = {}
 ) {
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
   if (
-    node.internal.mediaType !== `text/markdown` &&
-    node.internal.mediaType !== `text/x-markdown`
+    (node.internal.mediaType !== `text/markdown` &&
+      node.internal.mediaType !== `text/x-markdown`) ||
+    !filter(node)
   ) {
-    return
+    return {}
   }
 
   const content = await loadNodeContent(node)
 
   try {
-    const data = grayMatter(content, pluginOptions)
+    let data = grayMatter(content, grayMatterOptions)
 
-    const markdownNode = {
-      id: createNodeId(`${node.id} >>> MarkdownRemark`),
+    if (data.data) {
+      data.data = _.mapValues(data.data, value => {
+        if (_.isDate(value)) {
+          return value.toJSON()
+        }
+        return value
+      })
+    }
+
+    let markdownNode = {
+      id: createNodeId(`${node.id} >>> ${type}`),
       children: [],
       parent: node.id,
       internal: {
         content: data.content,
-        type: `MarkdownRemark`,
+        type,
       },
     }
 
@@ -50,6 +66,8 @@ module.exports = async function onCreateNode(
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
+
+    return markdownNode
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
@@ -57,5 +75,7 @@ module.exports = async function onCreateNode(
       }:\n
       ${err.message}`
     )
+
+    return {} // eslint
   }
 }

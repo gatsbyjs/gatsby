@@ -4,8 +4,8 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, { colors } from "../../utils/presets"
-import { scale, options } from "../../utils/typography"
+import presets, { colors, space, transition } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -225,7 +225,7 @@ class SidebarBody extends Component {
             height: itemList[0].disableExpandAll
               ? `100%`
               : `calc(100% - ${presets.sidebarUtilityHeight})`,
-            [presets.Tablet]: {
+            [presets.Md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}
@@ -256,27 +256,27 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.ui.border}`,
+    borderRight: `1px solid ${colors.ui.light}`,
     display: `flex`,
     alignItems: `center`,
     height: presets.sidebarUtilityHeight,
     background: colors.ui.whisper,
-    paddingLeft: 40,
+    paddingLeft: 20,
     paddingRight: 8,
     borderBottom: `1px solid ${colors.ui.border}`,
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
-    background: `#fff`,
+    background: colors.white,
     border: 0,
     display: `block`,
     overflowY: `auto`,
-    transition: `opacity 0.5s ease`,
+    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.ui.border}`,
+    borderRight: `1px solid ${colors.ui.light}`,
     "::-webkit-scrollbar": {
-      height: `6px`,
-      width: `6px`,
+      height: rhythm(space[2]),
+      width: rhythm(space[2]),
     },
     "::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,
@@ -294,16 +294,9 @@ const styles = {
   },
   list: {
     margin: 0,
-    paddingTop: 20,
-    paddingBottom: 104,
-    fontSize: scale(-2 / 10).fontSize,
-    [presets.Tablet]: {
-      fontSize: scale(-4 / 10).fontSize,
-      paddingBottom: 20,
-    },
-    "& a": {
-      fontFamily: options.systemFontFamily.join(`,`),
-    },
+    paddingTop: rhythm(space[6]),
+    paddingBottom: rhythm(space[6]),
+    fontSize: presets.scale[1],
     "& li": {
       margin: 0,
       listStyle: `none`,

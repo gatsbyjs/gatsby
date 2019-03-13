@@ -19,7 +19,7 @@ With that in mind, we’re happy to announce Gatsby’s Partner Program. Partner
 
 Step 1: Build a client (or agency) website with Gatsby.
 
-Step 2: Submit your Gatsby client or agency website to the [Site Showcase](/docs/site-showcase-submissions/).
+Step 2: Submit your Gatsby client or agency website to the [Site Showcase](/contributing/site-showcase-submissions/).
 
 Step 3: Fill out the form below to let us know you’re interested in learning more about future developments to Gatsby’s Partner Program.
 

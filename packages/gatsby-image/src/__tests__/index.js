@@ -58,6 +58,7 @@ describe(`<Img />`, () => {
   it(`should have correct src, title and alt attributes`, () => {
     const imageTag = setup().querySelector(`picture img`)
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
+    expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
   })

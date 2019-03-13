@@ -212,7 +212,7 @@ async function getWPCOMAccessToken(_auth) {
  */
 async function getJWToken(_auth, url) {
   let result
-  let authUrl = `${url}/jwt-auth/v1/token`
+  let authUrl = `${url}${_auth.jwt_base_path || `/jwt-auth/v1/token`}`
   try {
     const options = {
       url: authUrl,
