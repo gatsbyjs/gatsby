@@ -7,7 +7,7 @@ import Button from "../button"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors, space } from "../../utils/presets"
 
-const ICON_SIZE = `32px`
+const ICON_SIZE = rhythm(space[7])
 
 const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};

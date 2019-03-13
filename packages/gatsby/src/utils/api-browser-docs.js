@@ -125,7 +125,7 @@ exports.replaceComponentRenderer = true
  *
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageElement)
  * @param {object} $0
- * @param {object} $0.element The "Page" React Element built by Gatsby.
+ * @param {ReactNode} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
  * @param {Object} pluginOptions
  * @example
@@ -148,7 +148,7 @@ exports.wrapPageElement = true
  *
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
  * @param {object} $0
- * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @param {ReactNode} $0.element The "Root" React Element built by Gatsby.
  * @param {Object} pluginOptions
  * @example
  * import React from "react"

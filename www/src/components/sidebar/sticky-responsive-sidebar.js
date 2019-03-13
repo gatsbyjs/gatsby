@@ -3,7 +3,12 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, { colors, transition } from "../../utils/presets"
+import presets, {
+  colors,
+  transition,
+  shadows,
+  space,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -131,7 +136,7 @@ const styles = {
     transition: `transform ${transition.speed.slow} ${
       transition.curve.default
     }`,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
+    boxShadow: shadows.dialog,
     [presets.Md]: {
       transform: `none !important`,
       boxShadow: `none`,
@@ -140,16 +145,16 @@ const styles = {
   sidebarToggleButton: {
     backgroundColor: colors.gatsby,
     borderRadius: `50%`,
-    bottom: 64,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
+    bottom: rhythm(space[11]),
+    boxShadow: shadows.dialog,
     cursor: `pointer`,
     display: `flex`,
-    height: 60,
+    height: rhythm(space[10]),
     justifyContent: `space-around`,
     position: `fixed`,
-    right: 20,
+    right: rhythm(space[6]),
     visibility: `visible`,
-    width: 60,
+    width: rhythm(space[10]),
     zIndex: 20,
     [presets.Md]: { display: `none` },
   },
@@ -158,8 +163,8 @@ const styles = {
     color: colors.white,
     display: `flex`,
     flexDirection: `column`,
-    height: 20,
+    height: rhythm(space[5]),
     visibility: `visible`,
-    width: 20,
+    width: rhythm(space[5]),
   },
 }

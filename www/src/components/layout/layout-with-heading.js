@@ -20,7 +20,7 @@ import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
-  padding-bottom: 3.5rem;
+  padding-bottom: ${presets.scale[10]};
 
   ${presets.Md} {
     margin-left: ${presets.pageHeadingDesktopWidth};

@@ -21,6 +21,7 @@ const H1 = styled(`h1`)`
   color: ${colors.lilac};
   display: flex;
   font-size: ${presets.scale[5]};
+  line-height: ${presets.lineHeights.solid};
   margin: 0;
   position: relative;
   width: 100%;
@@ -32,14 +33,14 @@ const H1 = styled(`h1`)`
   }
 
   :after {
-    bottom: ${rhythm(space[7])};
+    bottom: -${rhythm(space[4])};
     content: attr(data-title);
     display: none;
     font-size: 12rem;
-    opacity: 0.03;
     position: absolute;
-    right: -0.7rem;
+    right: -${rhythm(space[3])};
     z-index: -1;
+    color: ${colors.ui.whisper};
 
     ${presets.Md} {
       display: block;
@@ -48,10 +49,15 @@ const H1 = styled(`h1`)`
 `
 
 const Icon = styled(`span`)`
-  display: block;
-  width: 36px;
-  height: 32px;
-  margin: 0.1rem 0.1rem 0 -0.3rem;
+  display: flex;
+  align-items: center;
+  margin-right: ${rhythm(space[2])};
+
+  svg {
+    width: ${rhythm(space[7])};
+    height: auto;
+    margin: 0;
+  }
 
   .svg-stroke {
     stroke-miterlimit: 10;

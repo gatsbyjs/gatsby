@@ -149,8 +149,8 @@ const searchBoxStyles = css`
   }
   .ais-SearchBox__reset svg {
     fill: ${colors.ui.bright};
-    width: 12px;
-    height: 12px;
+    width: ${rhythm(space[3])};
+    height: ${rhythm(space[3])};
     vertical-align: middle;
   }
 

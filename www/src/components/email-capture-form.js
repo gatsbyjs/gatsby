@@ -54,14 +54,14 @@ const SuccesMessage = styled(`div`)`
 
 const Submit = styled(`input`)`
   ${buttonStyles.default};
-  margin-top: 20px;
+  margin-top: ${rhythm(space[3])};
 `
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
   font-size: ${presets.scale[3]};
   width: 100%;
-  margin-top: 10px;
+  margin-top: ${rhythm(space[3])};
 
   span {
     align-items: center;
@@ -250,8 +250,8 @@ class EmailCaptureForm extends React.Component {
             css={{
               borderTop: `1px solid ${colors.ui.light}`,
               fontFamily: options.headerFontFamily.join(`,`),
-              marginTop: rhythm(3),
-              paddingTop: `${rhythm(space[5])}`,
+              marginTop: rhythm(space[9]),
+              paddingTop: rhythm(space[5]),
               ...overrideCSS,
             }}
           >
@@ -263,7 +263,7 @@ class EmailCaptureForm extends React.Component {
                   borderRadius: radii[1],
                   color: colors.gatsby,
                   fontFamily: options.headerFontFamily.join(`,`),
-                  padding: `15px`,
+                  padding: rhythm(space[4]),
                 }}
               >
                 {this.state.successMessage ? (

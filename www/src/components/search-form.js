@@ -3,8 +3,13 @@ import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import { rhythm } from "../utils/typography"
 
-import presets, { colors, space, radii, transition } from "../utils/presets"
-import hex2rgba from "hex2rgba"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+} from "../utils/presets"
 import SearchIcon from "./search-icon"
 
 const loadJS = () => import(`./docsearch.min.js`)
@@ -22,8 +27,8 @@ const algoliaStyles = css`
     left: ${rhythm(space[3])} !important;
     right: ${rhythm(space[3])} !important;
     min-width: calc(100vw - ${rhythm(space[5])}) !important;
-    max-width: calc(100vw - 2rem) !important;
-    box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
+    max-width: calc(100vw - ${rhythm(space[7])})) !important;
+    box-shadow: ${shadows.dialog} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -100,7 +105,7 @@ const algoliaStyles = css`
     .algolia-docsearch-suggestion--text
     .algolia-docsearch-suggestion--highlight {
     background: transparent !important;
-    box-shadow: inset 0 -2px 0 0 ${colors.gatsby} !important;
+    box-shadow: inset 0 -1px 0 0 ${colors.gatsby} !important;
   }
 
   .algolia-autocomplete
@@ -173,7 +178,7 @@ const algoliaStyles = css`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px dotted ${colors.ui.light} !important;
+    border-top: 1px solid ${colors.ui.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {

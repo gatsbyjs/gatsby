@@ -5,7 +5,8 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 
-import presets, { colors, radii } from "../utils/presets"
+import presets, { colors, radii, space, shadows } from "../utils/presets"
+import { rhythm } from "../utils/typography"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -84,7 +85,7 @@ class DefaultLayout extends React.Component {
                 width: `750px`,
                 background: `none`,
                 border: `none`,
-                padding: `40px 0`,
+                padding: `${rhythm(space[8])} 0`,
                 overflow: `visible`,
               },
               overlay: {
@@ -106,8 +107,8 @@ class DefaultLayout extends React.Component {
             <div
               css={{
                 backgroundColor: colors.white,
-                borderRadius: radii[1],
-                boxShadow: `0 0 90px -24px ${colors.gatsby}`,
+                borderRadius: radii[2],
+                boxShadow: shadows.dialog,
                 position: `relative`,
               }}
             >

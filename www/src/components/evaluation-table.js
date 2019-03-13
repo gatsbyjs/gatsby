@@ -116,9 +116,9 @@ class EvaluationTable extends Component {
                       <SectionHeaderBottom
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
-                        key={`section-header-bottom-${i}`}
+                        key={`section-header-${s}-bottom-${i}`}
                       />,
-                      <tr key={`first-row-${i}`}>
+                      <tr key={`section-${s}-first-row-${i}`}>
                         {headers.map((header, j) => (
                           <td
                             key={j}
@@ -143,7 +143,7 @@ class EvaluationTable extends Component {
                                 ? row.node.Feature.toLowerCase()
                                     .split(` `)
                                     .join(`-`)
-                                : false
+                                : undefined
                             }
                             onClick={() => {
                               this.setState({
@@ -159,13 +159,11 @@ class EvaluationTable extends Component {
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
-                        key={`second-row-${i}`}
+                        key={`section-${s}-second-row-${i}`}
                       >
                         <td
                           css={{
-                            paddingBottom: `calc(${rhythm(
-                              presets.space[5]
-                            )} - 1px)`,
+                            paddingBottom: `calc(${rhythm(space[5])} - 1px)`,
                             "&&": {
                               [presets.Xs]: {
                                 paddingRight: `${rhythm(space[3])}`,
