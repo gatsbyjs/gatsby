@@ -2,7 +2,7 @@ import React from "react"
 import { rhythm } from "../utils/typography"
 import { colors, space } from "../utils/presets"
 
-const bgDefault = `#edebf0`
+const bgDefault = colors.accentLight
 const bgFeatureAvailability = colors.accent
 
 const getBackground = num => {

@@ -60,34 +60,19 @@ const LegendTable = () => {
   ]
 
   const legendText = [
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-1`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
       <h5 style={{ margin: 0 }}>Feature Availability</h5>
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-2`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
       Out of the box
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-3`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
       Plugins available
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-4`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
       Needs customization
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-5`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
       Not possible
     </div>,
   ]
@@ -176,7 +161,14 @@ const FeaturesHeader = () => (
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
     </p>
-    <h6 id="legend" css={{ textTransform: `uppercase` }}>
+    <h6
+      id="legend"
+      css={{
+        fontWeight: `normal`,
+        textTransform: `uppercase`,
+        letterSpacing: presets.letterSpacings.tracked,
+      }}
+    >
       Legend
     </h6>
     <LegendTable />

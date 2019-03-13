@@ -11,7 +11,9 @@ import presets, {
   colors,
   space,
   letterSpacings,
+  lineHeights,
   radii,
+  shadows,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
@@ -20,13 +22,13 @@ const EcosystemSectionRoot = styled(`section`)`
   margin-bottom: ${rhythm(space[3])};
 
   ${presets.Md} {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
-    flex-basis: calc(50% - 20px);
+    flex-basis: calc(50% - ${rhythm(space[5])});
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 10px 20px;
+    margin: 0 ${rhythm(space[2])} ${rhythm(space[6])};
     max-height: 60vh;
     padding: ${rhythm(space[6])};
     padding-bottom: 0;
@@ -37,7 +39,7 @@ const EcosystemSectionRoot = styled(`section`)`
   }
 
   ${presets.Lg} {
-    flex-basis: calc(33.33% - 20px);
+    flex-basis: calc(33.33% - ${rhythm(space[5])});
     max-height: 100%;
 
     :last-child {
@@ -60,10 +62,10 @@ const Title = styled(`h1`)`
   color: ${colors.gatsby};
   display: flex;
   font-size: ${presets.scale[4]};
-  line-height: ${presets.lineHeights.solid};
+  line-height: ${lineHeights.solid};
   margin: 0;
   margin-bottom: ${rhythm(space[1])};
-  min-height: 32px;
+  min-height: ${rhythm(space[7])};
 
   span {
     margin: 0 ${rhythm(space[1])} 0 0;
@@ -72,8 +74,8 @@ const Title = styled(`h1`)`
 
 const Icon = styled(`span`)`
   display: block;
-  height: 32px;
-  width: 32px;
+  height: ${rhythm(space[7])};
+  width: ${rhythm(space[7])};
 `
 
 const SubTitle = styled(`h2`)`
@@ -118,7 +120,7 @@ const EcosystemSection = ({
       </Title>
       <Description>{description}</Description>
       <Actions>
-        {links.map((item, idx) => {
+        {links.map(item => {
           const { to, label, secondary } = item
 
           return (

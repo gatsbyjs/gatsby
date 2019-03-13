@@ -5,16 +5,17 @@ import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+
 import Layout from "../components/layout"
-import presets, { colors, space, transition, radii } from "../utils/presets"
+import presets, { colors, space, transition } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
-import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
+import Avatar from "../components/avatar"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -67,7 +68,17 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Container>
-          <DocSearchContent>
+          {
+            // todo
+            // - settle on `docSearch-content` as selector to identify
+            //   Algolia DocSearch content
+            // - make use of components/docsearch-content in place of <main>
+            //
+            // `post` and `post-body` are only in use as selectors in the
+            // docsearch config for gatsbyjs.org for individual blog posts:
+            // https://github.com/algolia/docsearch-configs/blob/89706210b62e2f384e52ca1b104f92bc0e225fff/configs/gatsbyjs.json#L71-L76
+          }
+          <main id={`reach-skip-nav`} className="post docSearch-content">
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>
@@ -136,38 +147,17 @@ class BlogPostTemplate extends React.Component {
                 },
               }}
             >
-              <div
-                css={{
-                  flex: `0 0 auto`,
-                }}
-              >
+              <div css={{ flex: `0 0 auto` }}>
                 <Link
                   to={post.frontmatter.author.fields.slug}
-                  css={{
-                    "&&": {
-                      borderBottom: 0,
-                    },
-                  }}
+                  css={{ "&&": { borderBottom: 0 } }}
                 >
-                  <Img
-                    fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
-                    css={{
-                      height: rhythm(2.3),
-                      width: rhythm(2.3),
-                      margin: 0,
-                      borderRadius: radii[6],
-                      display: `inline-block`,
-                      verticalAlign: `middle`,
-                    }}
+                  <Avatar
+                    image={post.frontmatter.author.avatar.childImageSharp.fixed}
                   />
                 </Link>
               </div>
-              <div
-                css={{
-                  flex: `1 1 auto`,
-                  marginLeft: rhythm(space[3]),
-                }}
-              >
+              <div css={{ flex: `1 1 auto` }}>
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
@@ -182,9 +172,7 @@ class BlogPostTemplate extends React.Component {
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": {
-                          background: colors.ui.bright,
-                        },
+                        "&:hover": { background: colors.ui.bright },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -211,20 +199,14 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Lg]: {
-                  marginBottom: rhythm(5 / 4),
-                },
+                [presets.Lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
-                <div
-                  css={{
-                    marginBottom: rhythm(space[5]),
-                  }}
-                >
+                <div css={{ marginBottom: rhythm(space[5]) }}>
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                   {post.frontmatter.imageAuthor &&
                     post.frontmatter.imageAuthorLink && (
@@ -245,7 +227,7 @@ class BlogPostTemplate extends React.Component {
               tags={this.props.data.markdownRemark.frontmatter.tags}
             />
             <EmailCaptureForm />
-          </DocSearchContent>
+          </main>
         </Container>
         <div
           css={{
@@ -265,21 +247,13 @@ class BlogPostTemplate extends React.Component {
         >
           <Container>
             <div css={{ [presets.Sm]: { display: `flex`, width: `100%` } }}>
-              <div
-                css={{
-                  [presets.Sm]: {
-                    width: `50%`,
-                  },
-                }}
-              >
+              <div css={{ [presets.Sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Md]: {
-                          marginLeft: `-${rhythm(space[4])}`,
-                        },
+                        [presets.Md]: { marginLeft: `-${rhythm(space[4])}` },
                       }}
                     >
                       <ArrowBackIcon style={{ verticalAlign: `sub` }} />
@@ -357,8 +331,8 @@ export const pageQuery = graphql`
           avatar {
             childImageSharp {
               fixed(
-                width: 63
-                height: 63
+                width: 64
+                height: 64
                 quality: 75
                 traceSVG: {
                   turdSize: 10

@@ -1,6 +1,6 @@
 import React from "react"
 import { rhythm, options } from "../utils/typography"
-import presets, { space, transition } from "../utils/presets"
+import presets, { space, transition, colors } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
@@ -27,13 +27,13 @@ const Icon = ({ icon, alt, href }) => (
       target="_blank"
       rel="noopener noreferrer"
       css={{
-        borderBottom: `0 !important`,
-        boxShadow: `none !important`,
-        background: `none !important`,
         transition: `opacity ${transition.speed.fast} ${
           transition.curve.default
         }`,
         opacity: 0.9,
+        "&&": {
+          borderBottom: 0,
+        },
         ":hover": {
           opacity: 1,
         },
@@ -94,7 +94,7 @@ const UsedBy = () => (
     >
       <p
         css={{
-          color: presets.colors.lilac,
+          color: colors.lilac,
           fontFamily: options.headerFontFamily.join(`,`),
           fontSize: presets.scale[1],
           marginBottom: 0,

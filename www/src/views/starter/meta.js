@@ -136,7 +136,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
               marginRight: rhythm(space[2]),
-              padding: `${rhythm(space[1])} ${rhythm(presets.space[4])}`,
+              padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {
                 backgroundColor: colors.accent,
