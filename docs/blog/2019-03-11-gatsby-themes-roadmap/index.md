@@ -1,6 +1,6 @@
 ---
 title: Gatsby Themes Roadmap
-date: 2018-03-11
+date: 2019-03-11
 author: Chris Biscardi
 excerpt: "Where Gatsby themes are headed in 2019"
 tags: ["themes", "architecture"]
