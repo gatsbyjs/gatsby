@@ -5,8 +5,9 @@ import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+
 import Layout from "../components/layout"
-import presets, { colors, space, transition, radii } from "../utils/presets"
+import presets, { colors, space, transition } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import DocSearchContent from "../components/docsearch-content"
@@ -15,6 +16,7 @@ import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
+import Avatar from "../components/avatar"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -149,25 +151,12 @@ class BlogPostTemplate extends React.Component {
                     },
                   }}
                 >
-                  <Img
-                    fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
-                    css={{
-                      height: rhythm(2.3),
-                      width: rhythm(2.3),
-                      margin: 0,
-                      borderRadius: radii[6],
-                      display: `inline-block`,
-                      verticalAlign: `middle`,
-                    }}
+                  <Avatar
+                    image={post.frontmatter.author.avatar.childImageSharp.fixed}
                   />
                 </Link>
               </div>
-              <div
-                css={{
-                  flex: `1 1 auto`,
-                  marginLeft: rhythm(space[3]),
-                }}
-              >
+              <div css={{ flex: `1 1 auto` }}>
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
@@ -265,21 +254,13 @@ class BlogPostTemplate extends React.Component {
         >
           <Container>
             <div css={{ [presets.Sm]: { display: `flex`, width: `100%` } }}>
-              <div
-                css={{
-                  [presets.Sm]: {
-                    width: `50%`,
-                  },
-                }}
-              >
+              <div css={{ [presets.Sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Md]: {
-                          marginLeft: `-${rhythm(space[4])}`,
-                        },
+                        [presets.Md]: { marginLeft: `-${rhythm(space[4])}` },
                       }}
                     >
                       <ArrowBackIcon style={{ verticalAlign: `sub` }} />
@@ -357,8 +338,8 @@ export const pageQuery = graphql`
           avatar {
             childImageSharp {
               fixed(
-                width: 63
-                height: 63
+                width: 64
+                height: 64
                 quality: 75
                 traceSVG: {
                   turdSize: 10
