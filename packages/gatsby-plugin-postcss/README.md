@@ -60,7 +60,7 @@ If you need to override the default options passed into [`css-loader`](https://g
 // in gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-less`,
+    resolve: `gatsby-plugin-postcss`,
     options: {
       cssLoaderOptions: {
         camelCase: false,
