@@ -161,7 +161,7 @@ export default class FilteredStarterLibrary extends Component {
               paddingTop: `${rhythm(space[6])}`,
               [presets.Sm]: {
                 height: presets.headerHeight,
-                paddingTop: `0px`,
+                paddingTop: 0,
               },
             }}
           >
@@ -221,13 +221,13 @@ export default class FilteredStarterLibrary extends Component {
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
-                    height: `16px`,
+                    height: rhythm(space[4]),
                     left: `5px`,
                     pointerEvents: `none`,
                     position: `absolute`,
                     top: `50%`,
                     transform: `translateY(-50%)`,
-                    width: `16px`,
+                    width: rhythm(space[4]),
                   }}
                 />
               </label>

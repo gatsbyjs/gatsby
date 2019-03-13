@@ -70,13 +70,13 @@ const Header = styled(`header`)`
     color: ${colors.lilac};
     display: flex;
     font-size: ${presets.scale[1]};
-    padding-left: 5px;
+    padding-left: ${rhythm(space[3])};
 
     svg {
       fill: ${colors.gray.light};
-      height: 1.2em;
-      margin-left: 2px;
-      width: 1.2em;
+      height: auto;
+      margin-left: ${rhythm(space[1])};
+      width: ${rhythm(space[4])};
     }
   }
 `
@@ -90,7 +90,7 @@ const Digest = styled(`div`)`
 `
 
 const Thumbnail = styled(`div`)`
-  height: 64px;
+  height: ${rhythm(space[11])};
   padding-right: ${rhythm(space[4])};
   margin-top: ${rhythm(space[1])};
 

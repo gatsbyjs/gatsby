@@ -65,7 +65,7 @@ const Title = styled(`h1`)`
   line-height: ${lineHeights.solid};
   margin: 0;
   margin-bottom: ${rhythm(space[1])};
-  min-height: 32px;
+  min-height: ${rhythm(space[7])};
 
   span {
     margin: 0 ${rhythm(space[1])} 0 0;
@@ -74,8 +74,8 @@ const Title = styled(`h1`)`
 
 const Icon = styled(`span`)`
   display: block;
-  height: 32px;
-  width: 32px;
+  height: ${rhythm(space[7])};
+  width: ${rhythm(space[7])};
 `
 
 const SubTitle = styled(`h2`)`

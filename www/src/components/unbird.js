@@ -14,15 +14,15 @@ const FeedbackComponent = styled(`section`)`
 `
 
 const FeedbackToggle = styled(`div`)`
-  width: 60px;
-  height: 60px;
-  bottom: 64px;
+  width: ${rhythm(space[10])};
+  height: ${rhythm(space[10])};
+  bottom: ${rhythm(space[11])};
   background-color: ${colors.gatsby};
   color: ${colors.white};
   border-radius: 100%;
   box-shadow: ${shadows.dialog};
   position: fixed;
-  right: ${rhythm(space[5])};
+  right: ${rhythm(space[6])};
   z-index: 99999;
   cursor: pointer;
 
@@ -31,8 +31,7 @@ const FeedbackToggle = styled(`div`)`
   }
 
   ${presets.Md} {
-    bottom: 30px;
-    right: 30px;
+    bottom: ${rhythm(space[6])};
   }
 `
 
