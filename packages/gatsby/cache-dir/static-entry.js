@@ -49,6 +49,16 @@ const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
+const sanitizeHeadComponents = components => {
+  if (Array.isArray(components)) {
+    // remove falsy items
+    return components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
+  } else {
+    // we also accept single components, so we need to handle this case as well
+    return components ? [components] : []
+  }
+}
+
 export default (pagePath, callback) => {
   let bodyHtml = ``
   let headComponents = [
@@ -69,7 +79,7 @@ export default (pagePath, callback) => {
   }
 
   const setHeadComponents = components => {
-    headComponents = headComponents.concat(components)
+    headComponents = headComponents.concat(sanitizeHeadComponents(components))
   }
 
   const setHtmlAttributes = attributes => {
@@ -95,7 +105,7 @@ export default (pagePath, callback) => {
   const getHeadComponents = () => headComponents
 
   const replaceHeadComponents = components => {
-    headComponents = components
+    headComponents = sanitizeHeadComponents(components)
   }
 
   const getPreBodyComponents = () => preBodyComponents

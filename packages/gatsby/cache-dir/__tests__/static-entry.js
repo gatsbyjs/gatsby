@@ -61,6 +61,48 @@ const reverseHeadersPlugin = {
   },
 }
 
+const setNullHeaderPlugin = {
+  plugin: {
+    onPreRenderHTML: ({ replaceHeadComponents }) => {
+      replaceHeadComponents(null)
+    },
+  },
+}
+
+const setNullHeadersPlugin = {
+  plugin: {
+    onPreRenderHTML: ({ replaceHeadComponents }) => {
+      replaceHeadComponents([null, null])
+    },
+  },
+}
+
+const setEmptyArrayHeaderPlugin = {
+  plugin: {
+    onPreRenderHTML: ({ replaceHeadComponents }) => {
+      replaceHeadComponents([])
+    },
+  },
+}
+
+const setEmptyArrayHeadersPlugin = {
+  plugin: {
+    onPreRenderHTML: ({ replaceHeadComponents }) => {
+      replaceHeadComponents([[], []])
+    },
+  },
+}
+
+const checkNonEmptyHeadersPlugin = {
+  plugin: {
+    onPreRenderHTML: ({ getHeadComponents }) => {
+      const headComponents = getHeadComponents()
+      expect(headComponents.includes(null)).toBeFalsy()
+      expect(headComponents.find(val => Array.isArray(val) && val.length === 0))
+    },
+  },
+}
+
 const fakeStylesPlugin = {
   plugin: {
     onRenderBody: ({ setHeadComponents }) =>
@@ -140,6 +182,42 @@ describe(`static-entry`, () => {
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
+
+    StaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can filter out null value`, done => {
+    global.plugins = [setNullHeaderPlugin, checkNonEmptyHeadersPlugin]
+
+    StaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can filter out null values`, done => {
+    global.plugins = [setNullHeadersPlugin, checkNonEmptyHeadersPlugin]
+
+    StaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can filter out empty array`, done => {
+    global.plugins = [setEmptyArrayHeaderPlugin, checkNonEmptyHeadersPlugin]
+
+    StaticEntry(`/about/`, (_, html) => {
+      expect(html).toMatchSnapshot()
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML can filter out empty arrays`, done => {
+    global.plugins = [setEmptyArrayHeadersPlugin, checkNonEmptyHeadersPlugin]
 
     StaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
