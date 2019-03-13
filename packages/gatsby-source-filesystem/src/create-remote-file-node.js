@@ -140,14 +140,15 @@ async function pushToQueue(task, cb) {
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
+ * @param  {Object}   httpOpts
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename) =>
+const requestRemoteNode = (url, headers, tmpFilename, httpOpts) =>
   new Promise((resolve, reject) => {
+    const opts = Object.assign({}, { timeout: 30000, retries: 5 }, httpOpts)
     const responseStream = got.stream(url, {
       headers,
-      timeout: 30000,
-      retries: 5,
+      ...opts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
@@ -201,15 +202,15 @@ async function processRemoteNode({
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
   const headers = {}
+  if (cachedHeaders && cachedHeaders.etag) {
+    headers[`If-None-Match`] = cachedHeaders.etag
+  }
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
+  const httpOpts = {}
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-  }
-
-  if (cachedHeaders && cachedHeaders.etag) {
-    headers[`If-None-Match`] = cachedHeaders.etag
+    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
   }
 
   // Create the temp and permanent file names for the url.
@@ -224,7 +225,7 @@ async function processRemoteNode({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename)
+  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
 
   if (response.statusCode == 200) {
     // Save the response headers for future requests.
