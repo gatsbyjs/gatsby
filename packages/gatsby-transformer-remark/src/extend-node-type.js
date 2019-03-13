@@ -15,7 +15,6 @@ const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
-const Promise = require(`bluebird`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -67,6 +66,19 @@ const safeGetCache = ({ getCache, cache }) => id => {
   }
   return getCache(id)
 }
+
+/**
+ * @template T
+ * @param {Array<T>} input
+ * @param {(input: T) => Promise<void>} iterator
+ * @return Promise<void>
+ */
+const eachPromise = (input, iterator) =>
+  input.reduce(
+    (accumulatorPromise, nextValue) =>
+      accumulatorPromise.then(() => void iterator(nextValue)),
+    Promise.resolve()
+  )
 
 const HeadingType = new GraphQLObjectType({
   name: `MarkdownHeading`,
@@ -221,8 +233,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin.mutateSource)) {
           return requiredPlugin.mutateSource(
@@ -289,8 +301,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin)) {
           return requiredPlugin(

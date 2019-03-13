@@ -4,7 +4,6 @@ const {
   GraphQLList,
   GraphQLSchema,
 } = require(`gatsby/graphql`)
-const { Promise } = require(`bluebird`)
 const { onCreateNode, setFieldsOnGraphQLNodeType } = require(`../gatsby-node`)
 const {
   inferObjectStructureFromNodes,
