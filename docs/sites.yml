@@ -4931,10 +4931,10 @@
   built_by_url: https://bejamas.io/
   featured: false
 - title: Headless.page
-  main_url: https://titleofthesite.com
-  url: https://titleofthesite.com/portfolio
+  main_url: https://headless.page/
+  url: https://headless.page/
   description: >
-    {titleofthesite} is a directory of eCommerce sites featuring headless architecture, PWA features and / or the latest JavaScript technology.
+    Headless.page is a directory of eCommerce sites featuring headless architecture, PWA features and / or the latest JavaScript technology.
   categories:
     - Directory
     - eCommerce
