@@ -119,7 +119,7 @@ const ExcerptFormats = new GraphQLEnumType({
   },
 })
 
-const wordCountType = new GraphQLObjectType({
+const WordCountType = new GraphQLObjectType({
   name: `wordCount`,
   fields: {
     paragraphs: {
@@ -631,7 +631,7 @@ module.exports = (
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: wordCountType,
+        type: WordCountType,
         resolve(markdownNode) {
           let counts = {}
 
