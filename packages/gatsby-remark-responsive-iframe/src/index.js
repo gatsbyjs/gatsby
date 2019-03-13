@@ -13,7 +13,7 @@ const isUnitlessNumber = n => {
 const isUnitlessOrPixelNumber = n =>
   n && (isUnitlessNumber(n) || isPixelNumber(n))
 
-const needsSemicolon = s => !/;$/.test(s)
+const needsSemicolon = str => !str.endsWith(';')
 
 // Aspect ratio can only be determined if both width and height are unitless or
 // pixel values. Any other values mean the responsive wrapper is not applied.
