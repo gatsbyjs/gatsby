@@ -130,16 +130,17 @@ jobs:
     executor: node
     <<: *test_template
 
-  integration_tests:
+  integration_tests_long_term_caching:
     executor: node
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - <<: *attach_to_bootstrap
-      - run: yarn test:integration
+      - e2e-test:
+          test_path: integration-tests/long-term-caching
+
+  integration_tests_gatsby_pipeline:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/gatsby-pipeline
 
   e2e_tests_gatsbygram:
     <<: *e2e-executor
@@ -210,8 +211,10 @@ workflows:
           <<: *ignore_docs
           requires:
             - bootstrap
-      - integration_tests:
-          <<: *ignore_docs
+      - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
       - e2e_tests_gatsbygram:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:

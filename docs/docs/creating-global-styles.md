@@ -62,7 +62,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `gatsby develop` and you’ll see the global styles applied.
+Run `npm run develop` and you’ll see the global styles applied.
 
 ![Global styles](./images/global-styles.png)
 
@@ -122,7 +122,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `gatsby build`, and you can see in `public/index.html` that the styles have been inlined globally.
+Run `npm run build`, and you can see in `public/index.html` that the styles have been inlined globally.
 
 ## Add global styles with CSS files and no layout component
 
@@ -135,7 +135,7 @@ First, open a new terminal window and run the following commands to create a new
 ```shell
 gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
 cd global-style-tutorial
-gatsby develop
+npm run develop
 ```
 
 Second, create a css file and define any styles you wish. An arbitrary example:

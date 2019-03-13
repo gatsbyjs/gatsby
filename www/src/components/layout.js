@@ -1,17 +1,16 @@
 import React from "react"
+import { navigate, PageRenderer } from "gatsby"
+import mousetrap from "mousetrap"
 import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import MdClose from "react-icons/lib/md/close"
-import { navigate, PageRenderer } from "gatsby"
-import presets, { colors } from "../utils/presets"
+
+import presets, { colors, radii } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
-
-import mousetrap from "mousetrap"
 
 // Import Futura PT typeface
 import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -19,8 +18,7 @@ import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
-// Other fonts
-import "typeface-spectral"
+import { skipLink } from "../utils/styles"
 
 let windowWidth
 
@@ -57,8 +55,6 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const isHomepage = this.props.location.pathname === `/`
-
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
       this.props.isSidebarDisabled || !this.props.itemList
@@ -72,7 +68,7 @@ class DefaultLayout extends React.Component {
 
     if (isModal && window.innerWidth > 750) {
       return (
-        <React.Fragment>
+        <>
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
@@ -109,8 +105,8 @@ class DefaultLayout extends React.Component {
           >
             <div
               css={{
-                backgroundColor: `#ffffff`,
-                borderRadius: presets.radius,
+                backgroundColor: colors.white,
+                borderRadius: radii[1],
                 boxShadow: `0 0 90px -24px ${colors.gatsby}`,
                 position: `relative`,
               }}
@@ -120,8 +116,8 @@ class DefaultLayout extends React.Component {
                 css={{
                   background: colors.ui.bright,
                   border: 0,
-                  borderBottomLeftRadius: presets.radius,
-                  borderTopRightRadius: presets.radius,
+                  borderBottomLeftRadius: radii[1],
+                  borderTopRightRadius: radii[1],
                   color: colors.gatsby,
                   cursor: `pointer`,
                   position: `absolute`,
@@ -131,7 +127,7 @@ class DefaultLayout extends React.Component {
                   width: 40,
                   "&:hover": {
                     background: colors.gatsby,
-                    color: `#fff`,
+                    color: colors.white,
                   },
                 }}
               >
@@ -142,37 +138,30 @@ class DefaultLayout extends React.Component {
               {this.props.modalNextLink}
             </div>
           </Modal>
-        </React.Fragment>
+        </>
       )
     }
 
     return (
-      <div className={isHomepage ? `is-homepage` : ``}>
+      <>
         <SiteMetadata pathname={this.props.location.pathname} />
-        <SkipNavLink css={styles.skipLink}>Skip to main content</SkipNavLink>
-        <Banner background={isHomepage ? `#402060` : false}>
-          {/* !!! If you change the children of Banner remember to do the same in layout/layout-with-heading.js */}
-          <OutboundLink
-            href="https://www.gatsbyjs.com/behind-the-scenes/"
-            css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
-          >
-            Watch now
-          </OutboundLink>
-          {`: “Behind the Scenes: What makes Gatsby Great”.`}
-        </Banner>
+        <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
+        <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
           css={{
-            paddingTop: presets.bannerHeight,
-            [presets.Tablet]: {
-              margin: `0 auto`,
-              paddingTop: isHomepage
-                ? presets.bannerHeight
-                : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
-            },
             paddingLeft: `env(safe-area-inset-left)`,
             paddingRight: `env(safe-area-inset-right)`,
+            paddingTop: presets.bannerHeight,
+            // make room for the mobile navigation
+            paddingBottom: presets.headerHeight,
+            [presets.Md]: {
+              paddingTop: `calc(${presets.bannerHeight} + ${
+                presets.headerHeight
+              })`,
+              paddingBottom: 0,
+            },
           }}
         >
           <PageWithSidebar
@@ -184,35 +173,9 @@ class DefaultLayout extends React.Component {
           />
         </div>
         <MobileNavigation />
-      </div>
+      </>
     )
   }
-}
-
-const styles = {
-  skipLink: {
-    border: `0`,
-    clip: `rect(0 0 0 0)`,
-    height: 1,
-    width: 1,
-    margin: -1,
-    padding: 0,
-    overflow: `hidden`,
-    position: `absolute`,
-    zIndex: 100,
-    fontSize: `0.85rem`,
-    ":focus": {
-      padding: `0.9rem`,
-      position: `fixed`,
-      top: 10,
-      left: 10,
-      background: `white`,
-      textDecoration: `none`,
-      width: `auto`,
-      height: `auto`,
-      clip: `auto`,
-    },
-  },
 }
 
 export default DefaultLayout
