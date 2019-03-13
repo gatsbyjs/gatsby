@@ -1,12 +1,10 @@
 ---
 title: Gatsby Themes Roadmap
-date: 2018-03-11
+date: 2019-03-11
 author: Chris Biscardi
 excerpt: "Where Gatsby themes are headed in 2019"
 tags: ["themes", "architecture"]
 ---
-
-# Gatsby Themes Roadmap
 
 Gatsby themes have come a long way in the last few months. We've iteratively
 shipped functionality that has enabled people to ship sites quickly on short
@@ -19,7 +17,7 @@ like for where we're going:
 3. Simplifying the Data Model
 4. ?
 
-# Theme Composition
+## Theme Composition
 
 The core theme composition algorithm was the first set of functionality we
 worked on. This piece of the code at its core can be thought of as
@@ -77,7 +75,7 @@ what best practices will end up being and if you're just getting started its a
 good idea to build out a single theme before attempting to build a set of themes
 that work together.
 
-# Component Shadowing
+## Component Shadowing
 
 The next problem we approached can be described as "How do I change the
 navigation component in a theme?".
@@ -106,7 +104,7 @@ To learn more about child themes and component shadowing, [read this themes
 update blog
 post](https://www.gatsbyjs.org/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/).
 
-# Improving Documentation
+## Improving Documentation
 
 After composition and shadowing were released, we focused a bit on fixing any
 bugs that popped up and expanding usage to a wider audience. Some companies have
@@ -121,7 +119,7 @@ on other platforms.
 We've also written and are updating a set of documentation that will be released
 on gatsbyjs.org for anyone that is using or looking to start using themes.
 
-# Simplifying the Data Model
+## Simplifying the Data Model
 
 We shipped composition, child themes, and component shadowing and we're not
 stopping there. Next up on our plate is something you may have seen us tweeting
@@ -151,7 +149,7 @@ We're still experimenting and doing research here so I won't show any code
 today. If you want to participate in the development of the data abstraction, I
 highly encourage you to install `gatsby@schema-customization` and play around.
 
-# The Future
+## The Future
 
 There are a number of directions we can go from here to give a better user
 experience to developing and using themes for experienced Gatsby contributors
