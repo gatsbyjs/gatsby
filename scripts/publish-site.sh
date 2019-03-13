@@ -1,8 +1,7 @@
 #!/bin/sh
-yarn
-#yarn lerna run build --scope=gatsby-transformer-documentationjs
-#npm install -g gatsby-dev-cli
-#gatsby-dev --set-path-to-repo .
+yarn bootstrap
+npm install -g gatsby-dev-cli
+gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
 cd "$1" || exit
@@ -13,7 +12,7 @@ cd "$1" || exit
 yarn
 
 echo "=== Copying built Gatsby to website."
-#gatsby-dev --scan-once --packages gatsby gatsby-transformer-documentationjs
+gatsby-dev --scan-once
 
 # copy file if target dir exists
 FRAGMENTSDIR="node_modules/gatsby-transformer-sharp/src"

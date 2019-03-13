@@ -241,24 +241,24 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
-    // const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-    // const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
-    // const tagTemplate = path.resolve(`src/templates/tags.js`)
-    // const contributorPageTemplate = path.resolve(
-    //   `src/templates/template-contributor-page.js`
-    // )
+    const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
+    const tagTemplate = path.resolve(`src/templates/tags.js`)
+    const contributorPageTemplate = path.resolve(
+      `src/templates/template-contributor-page.js`
+    )
     const localPackageTemplate = path.resolve(
       `src/templates/template-docs-local-packages.js`
     )
-    // const remotePackageTemplate = path.resolve(
-    //   `src/templates/template-docs-remote-packages.js`
-    // )
-    // const showcaseTemplate = path.resolve(
-    //   `src/templates/template-showcase-details.js`
-    // )
-    // const creatorPageTemplate = path.resolve(
-    //   `src/templates/template-creator-details.js`
-    // )
+    const remotePackageTemplate = path.resolve(
+      `src/templates/template-docs-remote-packages.js`
+    )
+    const showcaseTemplate = path.resolve(
+      `src/templates/template-showcase-details.js`
+    )
+    const creatorPageTemplate = path.resolve(
+      `src/templates/template-creator-details.js`
+    )
 
     // Query for markdown nodes to use in creating pages.
     graphql(`
@@ -383,16 +383,16 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       Array.from({
         length: numPages,
       }).forEach((_, i) => {
-        // createPage({
-        //   path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
-        //   component: slash(blogListTemplate),
-        //   context: {
-        //     limit: postsPerPage,
-        //     skip: i * postsPerPage,
-        //     numPages,
-        //     currentPage: i + 1,
-        //   },
-        // })
+        createPage({
+          path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
+          component: slash(blogListTemplate),
+          context: {
+            limit: postsPerPage,
+            skip: i * postsPerPage,
+            numPages,
+            currentPage: i + 1,
+          },
+        })
       })
 
       // Create blog-post pages.
@@ -400,18 +400,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         let next = index === 0 ? null : blogPosts[index - 1].node
         if (next && !_.get(next, `fields.released`)) next = null
 
-        // const prev =
-        //   index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
+        const prev =
+          index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
 
-        // createPage({
-        //   path: `${edge.node.fields.slug}`, // required
-        //   component: slash(blogPostTemplate),
-        //   context: {
-        //     slug: edge.node.fields.slug,
-        //     prev,
-        //     next,
-        //   },
-        // })
+        createPage({
+          path: `${edge.node.fields.slug}`, // required
+          component: slash(blogPostTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+            prev,
+            next,
+          },
+        })
       })
 
       const tagLists = releasedBlogPosts
@@ -419,13 +419,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         .map(post => _.get(post, `node.frontmatter.tags`))
 
       _.uniq(_.flatten(tagLists)).forEach(tag => {
-        // createPage({
-        //   path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
-        //   component: tagTemplate,
-        //   context: {
-        //     tag,
-        //   },
-        // })
+        createPage({
+          path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
+          component: tagTemplate,
+          context: {
+            tag,
+          },
+        })
       })
 
       // Create starter pages.
@@ -438,42 +438,42 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         }
       })
 
-      // const starterTemplate = path.resolve(
-      //   `src/templates/template-starter-page.js`
-      // )
+      const starterTemplate = path.resolve(
+        `src/templates/template-starter-page.js`
+      )
 
       starters.forEach((edge, index) => {
-        // createPage({
-        //   path: `/starters${edge.node.fields.starterShowcase.slug}`,
-        //   component: slash(starterTemplate),
-        //   context: {
-        //     slug: edge.node.fields.starterShowcase.slug,
-        //     stub: edge.node.fields.starterShowcase.stub,
-        //   },
-        // })
+        createPage({
+          path: `/starters${edge.node.fields.starterShowcase.slug}`,
+          component: slash(starterTemplate),
+          context: {
+            slug: edge.node.fields.starterShowcase.slug,
+            stub: edge.node.fields.starterShowcase.stub,
+          },
+        })
       })
 
       // Create contributor pages.
       result.data.allAuthorYaml.edges.forEach(edge => {
-        // createPage({
-        //   path: `${edge.node.fields.slug}`,
-        //   component: slash(contributorPageTemplate),
-        //   context: {
-        //     slug: edge.node.fields.slug,
-        //   },
-        // })
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(contributorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
       })
 
       result.data.allCreatorsYaml.edges.forEach(edge => {
         if (!edge.node.fields) return
         if (!edge.node.fields.slug) return
-        // createPage({
-        //   path: `${edge.node.fields.slug}`,
-        //   component: slash(creatorPageTemplate),
-        //   context: {
-        //     slug: edge.node.fields.slug,
-        //   },
-        // })
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
       })
 
       result.data.allSitesYaml.edges.forEach(edge => {
@@ -487,13 +487,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           )
           return
         }
-        // createPage({
-        //   path: `${edge.node.fields.slug}`,
-        //   component: slash(showcaseTemplate),
-        //   context: {
-        //     slug: edge.node.fields.slug,
-        //   },
-        // })
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(showcaseTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
       })
 
       // Create docs pages.
@@ -518,25 +518,25 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       // Create package readme
       allPackages.forEach(edge => {
         if (_.includes(localPackagesArr, edge.node.title)) {
-          // createPage({
-          //   path: edge.node.slug,
-          //   component: slash(localPackageTemplate),
-          //   context: {
-          //     slug: edge.node.slug,
-          //     id: edge.node.id,
-          //     layout: `plugins`,
-          //   },
-          // })
+          createPage({
+            path: edge.node.slug,
+            component: slash(localPackageTemplate),
+            context: {
+              slug: edge.node.slug,
+              id: edge.node.id,
+              layout: `plugins`,
+            },
+          })
         } else {
-          // createPage({
-          //   path: edge.node.slug,
-          //   component: slash(remotePackageTemplate),
-          //   context: {
-          //     slug: edge.node.slug,
-          //     id: edge.node.id,
-          //     layout: `plugins`,
-          //   },
-          // })
+          createPage({
+            path: edge.node.slug,
+            component: slash(remotePackageTemplate),
+            context: {
+              slug: edge.node.slug,
+              id: edge.node.id,
+              layout: `plugins`,
+            },
+          })
         }
       })
 
