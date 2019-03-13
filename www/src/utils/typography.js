@@ -228,14 +228,9 @@ const _options = {
         textDecoration: `none`,
         transition: `all ${transition.speed.fast} ${transition.curve.default}`,
         borderBottom: `1px solid ${colors.lilac}`,
-        fontWeight: `normal`,
       },
       ".main-body a:hover": {
         borderBottomColor: colors.ui.border,
-      },
-      ".post-body a": {
-        color: `${colors.lilac}`,
-        fontWeight: `normal`,
       },
       ".post-body figure img": {
         marginBottom: 0,
@@ -265,7 +260,7 @@ const _options = {
         marginTop: rhythm(space[9]),
         marginBottom: 0,
       },
-      ".gatsby-highlight, .gatsby-code-title, .post .gatsby-resp-image-link": {
+      ".gatsby-highlight, .gatsby-code-title, .post-body .gatsby-resp-image-link": {
         marginLeft: rhythm(-space[6]),
         marginRight: rhythm(-space[6]),
       },
@@ -306,7 +301,7 @@ const _options = {
         border: `none`,
       },
       [presets.Lg]: {
-        ".gatsby-highlight, .post .gatsby-resp-image-link, .gatsby-code-title": {
+        ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-space[7]),
           marginRight: rhythm(-space[7]),
         },

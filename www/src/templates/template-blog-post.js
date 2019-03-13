@@ -138,18 +138,10 @@ class BlogPostTemplate extends React.Component {
                 },
               }}
             >
-              <div
-                css={{
-                  flex: `0 0 auto`,
-                }}
-              >
+              <div css={{ flex: `0 0 auto` }}>
                 <Link
                   to={post.frontmatter.author.fields.slug}
-                  css={{
-                    "&&": {
-                      borderBottom: 0,
-                    },
-                  }}
+                  css={{ "&&": { borderBottom: 0 } }}
                 >
                   <Avatar
                     image={post.frontmatter.author.avatar.childImageSharp.fixed}
@@ -171,9 +163,7 @@ class BlogPostTemplate extends React.Component {
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": {
-                          background: colors.ui.bright,
-                        },
+                        "&:hover": { background: colors.ui.bright },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -200,20 +190,14 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Lg]: {
-                  marginBottom: rhythm(5 / 4),
-                },
+                [presets.Lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
-                <div
-                  css={{
-                    marginBottom: rhythm(space[5]),
-                  }}
-                >
+                <div css={{ marginBottom: rhythm(space[5]) }}>
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                   {post.frontmatter.imageAuthor &&
                     post.frontmatter.imageAuthorLink && (
