@@ -50,7 +50,7 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  color: ${colors.lemon};
+  // color: ${colors.lemon};
   font-size: ${presets.scale[3]};
   margin-bottom: ${rhythm(space[1])};
   margin-top: ${rhythm(space[7])};
