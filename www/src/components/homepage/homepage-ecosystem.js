@@ -40,7 +40,7 @@ const Section = styled(EcosystemSection)`
   padding: ${rhythm(space[6])};
 
   ${presets.Md} {
-    margin: 0 ${rhythm(space[2])} 0px;
+    margin: 0 ${rhythm(space[2])} 0;
     padding: ${rhythm(space[6])};
 
     :last-child {
@@ -87,7 +87,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     margin: ${rhythm(space[6])};
     margin-top: 0;
     margin-left: 0;
-    width: 320px;
+    width: 20rem;
   }
 
   ${presets.Lg} {

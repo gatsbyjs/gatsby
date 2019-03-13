@@ -40,18 +40,19 @@ export const buttonStyles = {
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: presets.lineHeights.solid,
+    lineHeight: presets.lineHeights.dense,
     textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
     padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
     backgroundSize: `${rhythm(space[7])} ${rhythm(space[7])}`,
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
-    ":hover, &:focus": {
-      backgroundColor: `colors.gatsby`,
-      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+    ":hover, :focus": {
+      backgroundColor: colors.gatsby,
+      backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
       color: colors.white,
       animation: `${stripeAnimation} 2.8s linear infinite`,
+      borderColor: colors.gatsby,
     },
     ":focus": {
       outline: 0,

@@ -25,10 +25,10 @@ const EcosystemSectionRoot = styled(`section`)`
     box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
-    flex-basis: calc(50% - 20px);
+    flex-basis: calc(50% - ${rhythm(space[5])});
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 10px 20px;
+    margin: 0 ${rhythm(space[2])} ${rhythm(space[6])};
     max-height: 60vh;
     padding: ${rhythm(space[6])};
     padding-bottom: 0;
@@ -39,7 +39,7 @@ const EcosystemSectionRoot = styled(`section`)`
   }
 
   ${presets.Lg} {
-    flex-basis: calc(33.33% - 20px);
+    flex-basis: calc(33.33% - ${rhythm(space[5])});
     max-height: 100%;
 
     :last-child {
@@ -120,7 +120,7 @@ const EcosystemSection = ({
       </Title>
       <Description>{description}</Description>
       <Actions>
-        {links.map((item, idx) => {
+        {links.map(item => {
           const { to, label, secondary } = item
 
           return (

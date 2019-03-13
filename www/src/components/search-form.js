@@ -27,7 +27,7 @@ const algoliaStyles = css`
     left: ${rhythm(space[3])} !important;
     right: ${rhythm(space[3])} !important;
     min-width: calc(100vw - ${rhythm(space[5])}) !important;
-    max-width: calc(100vw - 2rem) !important;
+    max-width: calc(100vw - ${rhythm(space[7])})) !important;
     box-shadow: ${shadows.dialog} !important;
   }
 

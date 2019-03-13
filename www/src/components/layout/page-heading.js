@@ -21,6 +21,7 @@ const H1 = styled(`h1`)`
   color: ${colors.lilac};
   display: flex;
   font-size: ${presets.scale[5]};
+  line-height: ${presets.lineHeights.solid};
   margin: 0;
   position: relative;
   width: 100%;
@@ -48,10 +49,15 @@ const H1 = styled(`h1`)`
 `
 
 const Icon = styled(`span`)`
-  display: block;
-  width: 36px;
-  height: 32px;
-  margin: 0.1rem 0.1rem 0 -0.3rem;
+  display: flex;
+  align-items: center;
+  margin-right: ${rhythm(space[2])};
+
+  svg {
+    width: ${rhythm(space[7])};
+    height: auto;
+    margin: 0;
+  }
 
   .svg-stroke {
     stroke-miterlimit: 10;

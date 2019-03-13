@@ -231,7 +231,7 @@ class FeaturedSites extends Component {
                     }`,
                     "&:hover": {
                       background: colors.white,
-                      transform: `translateY(-3px)`,
+                      transform: `translateY(-${rhythm(space[1])})`,
                       boxShadow: presets.shadows.overlay,
                     },
                   },

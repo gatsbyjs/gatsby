@@ -117,7 +117,7 @@ const styles = {
     background: `transparent`,
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
-      transform: `translateY(-3px)`,
+      transform: `translateY(-${rhythm(space[1])})`,
       boxShadow: presets.shadows.overlay,
     },
   },

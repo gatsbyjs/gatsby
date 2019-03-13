@@ -61,7 +61,7 @@ const StatusMessage = styled(`span`)`
   bottom: 60px;
   color: ${colors.white};
   font-size: ${presets.scale[2]};
-  padding: 0.4rem 0.8rem;
+  padding: ${presets.scale[2]} ${presets.scale[4]};
   text-align: left;
   left: 0;
 `

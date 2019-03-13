@@ -104,7 +104,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: `3.5rem` }}>
+            <div css={{ height: rhythm(space[10]) }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -177,7 +177,7 @@ export default class FilteredStarterLibrary extends Component {
               css={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: `.4rem`,
+                marginBottom: rhythm(space[2]),
                 width: `100%`,
                 [presets.Sm]: {
                   justifyContent: `flex-end`,

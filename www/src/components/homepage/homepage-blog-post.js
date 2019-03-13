@@ -31,7 +31,7 @@ const HomepageBlogPostRoot = styled(
   }
 
   ${presets.Md} {
-    width: 320px;
+    width: 20rem;
   }
 
   ${presets.Lg} {
@@ -150,8 +150,8 @@ const ReadMore = styled(Link)`
   }
 
   svg {
-    height: 18px;
-    width: 18px;
+    height: ${rhythm(space[4])};
+    width: ${rhythm(space[4])};
   }
 
   span {
