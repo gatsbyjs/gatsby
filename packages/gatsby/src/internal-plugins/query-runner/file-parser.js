@@ -54,11 +54,17 @@ async function parseToAst(filePath, fileStr) {
         break
       } catch (error) {
         report.error(error)
+        boundActionCreators.queryExtractionGraphQLError({
+          componentPath: filePath,
+        })
         continue
       }
     }
     if (ast === undefined) {
       report.error(`Failed to parse preprocessed file ${filePath}`)
+      boundActionCreators.queryExtractionGraphQLError({
+        componentPath: filePath,
+      })
     }
   } else {
     try {
@@ -294,6 +300,9 @@ export default class FileParser {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
       report.error(`There was a problem reading the file: ${file}`, err)
+      boundActionCreators.queryExtractionGraphQLError({
+        componentPath: file,
+      })
       return null
     }
 
@@ -319,6 +328,9 @@ export default class FileParser {
         `There was a problem parsing the GraphQL query in file: ${file}`,
         err
       )
+      boundActionCreators.queryExtractionGraphQLError({
+        componentPath: file,
+      })
       return null
     }
   }

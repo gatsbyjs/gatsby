@@ -145,6 +145,9 @@ class Runner {
 
       if (errors && errors.length) {
         this.reportError(graphqlValidationError(errors, filePath))
+        boundActionCreators.queryExtractionGraphQLError({
+          componentPath: filePath,
+        })
         return compiledNodes
       }
 
@@ -205,6 +208,9 @@ class Runner {
             otherNode && nameDefMap.get(otherNode.name)
           )
         )
+        boundActionCreators.queryExtractionGraphQLError({
+          componentPath: filePath,
+        })
         return
       }
 
