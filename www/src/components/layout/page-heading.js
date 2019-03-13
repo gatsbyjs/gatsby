@@ -33,14 +33,14 @@ const H1 = styled(`h1`)`
   }
 
   :after {
-    bottom: ${rhythm(space[7])};
+    bottom: -${rhythm(space[4])};
     content: attr(data-title);
     display: none;
     font-size: 12rem;
-    opacity: 0.03;
     position: absolute;
-    right: -0.7rem;
+    right: -${rhythm(space[3])};
     z-index: -1;
+    color: ${colors.ui.whisper};
 
     ${presets.Md} {
       display: block;

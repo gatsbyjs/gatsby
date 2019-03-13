@@ -1,5 +1,11 @@
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, radii, transition } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+} from "../../utils/presets"
 
 const styles = {
   featuredSitesCard: {
@@ -109,7 +115,7 @@ const styles = {
   },
   screenshot: {
     borderRadius: radii[1],
-    boxShadow: presets.shadows.raised,
+    boxShadow: shadows.raised,
     marginBottom: rhythm(space[3]),
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
@@ -118,7 +124,7 @@ const styles = {
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
       transform: `translateY(-${rhythm(space[1])})`,
-      boxShadow: presets.shadows.overlay,
+      boxShadow: shadows.overlay,
     },
   },
   shortcutIcon: {

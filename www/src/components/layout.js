@@ -5,7 +5,7 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 
-import presets, { colors, radii, space } from "../utils/presets"
+import presets, { colors, radii, space, shadows } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
@@ -108,7 +108,7 @@ class DefaultLayout extends React.Component {
               css={{
                 backgroundColor: colors.white,
                 borderRadius: radii[2],
-                boxShadow: presets.shadows.dialog,
+                boxShadow: shadows.dialog,
                 position: `relative`,
               }}
             >

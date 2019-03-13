@@ -163,9 +163,7 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
-                            paddingBottom: `calc(${rhythm(
-                              presets.space[5]
-                            )} - 1px)`,
+                            paddingBottom: `calc(${rhythm(space[5])} - 1px)`,
                             "&&": {
                               [presets.Xs]: {
                                 paddingRight: `${rhythm(space[3])}`,

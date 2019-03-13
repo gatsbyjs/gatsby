@@ -3,7 +3,7 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, radii } from "../utils/presets"
+import presets, { colors, space, radii, shadows } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -94,7 +94,7 @@ const borderAndBoxShadow = {
   background: colors.white,
   border: 0,
   borderRadius: radii[1],
-  boxShadow: presets.shadows.raised,
+  boxShadow: shadows.raised,
   transform: `translateZ(0)`,
   width: `100%`,
 }

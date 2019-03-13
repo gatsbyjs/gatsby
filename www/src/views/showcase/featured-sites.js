@@ -9,7 +9,13 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, transition, radii } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+} from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -28,7 +34,7 @@ class FeaturedSites extends Component {
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(space[6])} ${rhythm(presets.space[6])} 0`,
+          margin: `${rhythm(space[6])} ${rhythm(space[6])} 0`,
           position: `relative`,
           display: `none`,
           [presets.Lg]: {
@@ -232,7 +238,7 @@ class FeaturedSites extends Component {
                     "&:hover": {
                       background: colors.white,
                       transform: `translateY(-${rhythm(space[1])})`,
-                      boxShadow: presets.shadows.overlay,
+                      boxShadow: shadows.overlay,
                     },
                   },
                   ...styles.featuredSitesCard,

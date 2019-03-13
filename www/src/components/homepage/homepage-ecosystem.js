@@ -99,8 +99,10 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(space[6])} + 1.1rem);
+    padding-left: calc(${rhythm(space[5])} + ${rhythm(space[6])});
     position: relative;
+    border: 0;
+    box-shadow: ${shadows.raised};
 
     ${presets.Md} {
       border-radius: ${radii[2]}px;
@@ -121,7 +123,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       left: 0;
       position: absolute;
       top: 0;
-      width: 1.1rem;
+      width: ${rhythm(space[5])};
     }
 
     :after {
@@ -154,7 +156,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
         tracking: `Plugins - Explore the Gatsby Ecosystem`,
       },
     ]}
-    inverseStyle={true}
+    // inverseStyle={true}
   >
     <Sections>
       <Section

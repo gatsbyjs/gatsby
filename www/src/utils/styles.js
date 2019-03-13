@@ -162,10 +162,10 @@ export const skipLink = {
   zIndex: 100,
   fontSize: presets.scale[1],
   ":focus": {
-    padding: rhythm(presets.space[4]),
+    padding: rhythm(space[4]),
     position: `fixed`,
-    top: rhythm(presets.space[6]),
-    left: rhythm(presets.space[6]),
+    top: rhythm(space[6]),
+    left: rhythm(space[6]),
     background: colors.white,
     textDecoration: `none`,
     width: `auto`,

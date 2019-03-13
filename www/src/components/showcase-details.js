@@ -4,7 +4,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors, space, radii } from "../utils/presets"
+import presets, { colors, space, radii, shadows } from "../utils/presets"
 import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
@@ -39,7 +39,7 @@ const styles = {
   },
   prevNextImage: {
     borderRadius: radii[1],
-    boxShadow: presets.shadows.overlay,
+    boxShadow: shadows.overlay,
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,

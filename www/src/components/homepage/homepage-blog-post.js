@@ -10,7 +10,13 @@ import Avatar from "../avatar"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors, space, radii, transition } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
@@ -46,11 +52,11 @@ const HomepageBlogPostRoot = styled(
 
     :hover {
       transform: translateY(-${rhythm(space[1])});
-      box-shadow: ${presets.shadows.overlay};
+      box-shadow: ${shadows.overlay};
     }
 
     :active: {
-      box-shadow: ${presets.shadows.cardActive};
+      box-shadow: ${shadows.cardActive};
       transform: translateY(0);
     }
   }
