@@ -4,7 +4,7 @@ const {
   GraphQLList,
   GraphQLSchema,
 } = require(`gatsby/graphql`)
-const { onCreateNode } = require(`../gatsby-node`)
+const { onCreateNode, setFieldsOnGraphQLNodeType } = require(`../gatsby-node`)
 const {
   inferObjectStructureFromNodes,
 } = require(`../../../gatsby/src/schema/infer-graphql-type`)
@@ -14,7 +14,7 @@ const extendNodeType = require(`../extend-node-type`)
 async function queryResult(
   nodes,
   fragment,
-  { types = [] } = {},
+  { typeName = `MarkdownRemark`, types = [] } = {},
   { additionalParameters = {}, pluginOptions = {} }
 ) {
   const inferredFields = inferObjectStructureFromNodes({
@@ -51,7 +51,7 @@ async function queryResult(
             name: `LISTNODE`,
             type: new GraphQLList(
               new GraphQLObjectType({
-                name: `MarkdownRemark`,
+                name: typeName,
                 fields: markdownRemarkFields,
               })
             ),
@@ -834,4 +834,48 @@ describe(`Headings are generated correctly from schema`, () => {
       ])
     }
   )
+})
+
+describe(`Adding fields to the GraphQL schema`, () => {
+  it(`only adds fields when the GraphQL type matches the provided type`, async () => {
+    const getNode = jest.fn()
+    const getNodesByType = jest.fn()
+
+    expect(
+      setFieldsOnGraphQLNodeType({
+        type: { name: `MarkdownRemark` },
+        getNode,
+        getNodesByType,
+      })
+    ).toBeInstanceOf(Promise)
+
+    expect(
+      setFieldsOnGraphQLNodeType(
+        { type: { name: `MarkdownRemark` }, getNode, getNodesByType },
+        { type: `MarkdownRemark` }
+      )
+    ).toBeInstanceOf(Promise)
+
+    expect(
+      setFieldsOnGraphQLNodeType(
+        { type: { name: `MarkdownRemark` }, getNode, getNodesByType },
+        { type: `GatsbyTestType` }
+      )
+    ).toEqual({})
+
+    expect(
+      setFieldsOnGraphQLNodeType(
+        { type: { name: `GatsbyTestType` }, getNode, getNodesByType },
+        { type: `GatsbyTestType` }
+      )
+    ).toBeInstanceOf(Promise)
+
+    expect(
+      setFieldsOnGraphQLNodeType({
+        type: { name: `GatsbyTestType` },
+        getNode,
+        getNodesByType,
+      })
+    ).toEqual({})
+  })
 })

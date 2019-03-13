@@ -65,11 +65,11 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                         |
-| :--------------------------: | ----------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                 |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                             |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See /docs/performance-tracing/ |
+|            Option            | Description                                                                                                |
+| :--------------------------: | ---------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    |
+| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
 
 ### `serve`
 
