@@ -6,6 +6,8 @@ import Img from "gatsby-image"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
+import Avatar from "../avatar"
+
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
 import presets, { colors, space, radii, transition } from "../../utils/presets"
@@ -43,7 +45,7 @@ const HomepageBlogPostRoot = styled(
       box-shadow ${transition.speed.default} ${transition.curve.default};
 
     :hover {
-      transform: translateY(-4px);
+      transform: translateY(-${rhythm(space[1])});
       box-shadow: ${presets.shadows.overlay};
     }
 
@@ -99,16 +101,9 @@ const Author = styled(Link)`
   display: flex;
   z-index: 1;
 
-  img {
-    border-radius: 50%;
-    height: 28px;
-    width: 28px;
-  }
-
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
-    margin-left: ${rhythm(space[2])};
   }
 
   a& {
@@ -229,7 +224,7 @@ const HomepageBlogPost = ({
 
       <Meta>
         <Author to={authorSlug}>
-          <Img fixed={authorFixed} alt={authorName} />
+          <Avatar image={authorFixed} alt={authorName} />
           <span>{authorName}</span>
         </Author>
         &nbsp;on&nbsp;
@@ -253,44 +248,7 @@ HomepageBlogPost.propTypes = {
 
 export const homepageBlogPostFragment = graphql`
   fragment HomepageBlogPostData on MarkdownRemark {
-    excerpt
-    fields {
-      slug
-    }
-    frontmatter {
-      excerpt
-      title
-      date
-      author {
-        id
-        fields {
-          slug
-        }
-        avatar {
-          childImageSharp {
-            fixed(
-              width: 30
-              height: 30
-              quality: 80
-              traceSVG: {
-                turdSize: 10
-                background: "#f6f2f8"
-                color: "#e0d6eb"
-              }
-            ) {
-              ...GatsbyImageSharpFixed_tracedSVG
-            }
-          }
-        }
-      }
-      cover {
-        childImageSharp {
-          fluid(maxWidth: 700, quality: 80) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-    }
+    ...BlogPostPreview_item
   }
 `
 

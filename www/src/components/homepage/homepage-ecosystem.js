@@ -29,7 +29,7 @@ const Sections = styled(`div`)`
 
   ${presets.Md} {
     flex-direction: row;
-    margin: 0 -8px;
+    margin: 0 -${rhythm(space[2])};
   }
 `
 
@@ -40,7 +40,7 @@ const Section = styled(EcosystemSection)`
   padding: ${rhythm(space[6])};
 
   ${presets.Md} {
-    margin: 0 8px 0px;
+    margin: 0 ${rhythm(space[2])} 0px;
     padding: ${rhythm(space[6])};
 
     :last-child {

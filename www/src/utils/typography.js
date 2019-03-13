@@ -112,7 +112,7 @@ const _options = {
         lineHeight: presets.lineHeights.solid,
         padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
         position: `absolute`,
-        right: `20px`,
+        right: rhythm(space[6]),
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,
@@ -327,6 +327,9 @@ const _options = {
           padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
             space[3]
           )}`,
+        },
+        ".gatsby-highlight pre[class*='language-']::before": {
+          right: rhythm(space[7]),
         },
       },
       [presets.Xxl]: {

@@ -73,7 +73,7 @@ class BlogPostsIndex extends React.Component {
                       transition.curve.default
                     }`,
                     "&:hover": {
-                      transform: `translateY(-4px)`,
+                      transform: `translateY(-${rhythm(space[1])})`,
                       boxShadow: presets.shadows.overlay,
                     },
                     "&:active": {

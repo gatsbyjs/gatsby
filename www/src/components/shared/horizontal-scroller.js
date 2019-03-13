@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 import { rhythm } from "../../utils/typography"
 import presets, { space, radii, colors } from "../../utils/presets"
 
-const BOX_SHADOW_BLUR = `8px`
+const BOX_SHADOW_BLUR = rhythm(space[2])
 
 export const HorizontalScroller = styled(`div`)`
   overflow-x: scroll;

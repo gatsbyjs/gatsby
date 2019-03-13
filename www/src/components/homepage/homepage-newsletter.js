@@ -9,7 +9,7 @@ import { NewsletterFormOrnament } from "../../assets/ornaments"
 import { rhythm, options } from "../../utils/typography"
 import presets, { colors, space, radii } from "../../utils/presets"
 
-const stripedBorderHeight = `8px`
+const stripedBorderHeight = rhythm(space[2])
 
 const Container = styled(`div`)`
   border: 1px solid ${colors.ui.light};
@@ -54,9 +54,9 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -4px;
+  left: -${rhythm(space[1])};
   position: absolute;
-  top: -8px;
+  top: -${rhythm(space[2])};
 `
 
 const Name = styled(`h3`)`

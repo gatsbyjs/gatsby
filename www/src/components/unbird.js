@@ -22,7 +22,7 @@ const FeedbackToggle = styled(`div`)`
   border-radius: 100%;
   box-shadow: ${shadows.dialog};
   position: fixed;
-  right: 20px;
+  right: ${rhythm(space[5])};
   z-index: 99999;
   cursor: pointer;
 
@@ -49,7 +49,7 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${rhythm(space[5])};
+  font-size: ${presets.scale[4]};
 `
 const CancelIcon = styled(CancelMdIcon)`
   font-size: ${presets.scale[3]};
@@ -92,7 +92,7 @@ const Label = styled(`label`)`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: ${rhythm(space[8])};
   font-size: ${presets.scale[3]};
   float: left;
 `
@@ -106,7 +106,7 @@ const Input = styled(`input`)`
   height: 60px;
   width: calc(100% - 60px);
   font-size: ${presets.scale[1]};
-  padding: 20px;
+  padding: ${rhythm(space[5])};
   border: none;
   resize: none;
   border-right: 1px solid #ddd;
