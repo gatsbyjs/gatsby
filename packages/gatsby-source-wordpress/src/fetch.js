@@ -5,7 +5,7 @@ const minimatch = require(`minimatch`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 const requestInQueue = require(`./request-in-queue`)
-const URL = require("url").URL
+const URL = require(`url`).URL
 /**
  * Check auth object to see if we should fetch JWT access token
  */
