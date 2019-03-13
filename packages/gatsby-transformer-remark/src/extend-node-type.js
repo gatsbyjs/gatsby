@@ -16,7 +16,6 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const mdastToString = require(`mdast-util-to-string`)
-const Promise = require(`bluebird`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -70,6 +69,72 @@ const safeGetCache = ({ getCache, cache }) => id => {
 }
 
 /**
+ * @template T
+ * @param {Array<T>} input
+ * @param {(input: T) => Promise<void>} iterator
+ * @return Promise<void>
+ */
+const eachPromise = (input, iterator) =>
+  input.reduce(
+    (accumulatorPromise, nextValue) =>
+      accumulatorPromise.then(() => void iterator(nextValue)),
+    Promise.resolve()
+  )
+
+const HeadingType = new GraphQLObjectType({
+  name: `MarkdownHeading`,
+  fields: {
+    value: {
+      type: GraphQLString,
+      resolve(heading) {
+        return heading.value
+      },
+    },
+    depth: {
+      type: GraphQLInt,
+      resolve(heading) {
+        return heading.depth
+      },
+    },
+  },
+})
+
+const HeadingLevels = new GraphQLEnumType({
+  name: `HeadingLevels`,
+  values: {
+    h1: { value: 1 },
+    h2: { value: 2 },
+    h3: { value: 3 },
+    h4: { value: 4 },
+    h5: { value: 5 },
+    h6: { value: 6 },
+  },
+})
+
+const ExcerptFormats = new GraphQLEnumType({
+  name: `ExcerptFormats`,
+  values: {
+    PLAIN: { value: `plain` },
+    HTML: { value: `html` },
+  },
+})
+
+const WordCountType = new GraphQLObjectType({
+  name: `wordCount`,
+  fields: {
+    paragraphs: {
+      type: GraphQLInt,
+    },
+    sentences: {
+      type: GraphQLInt,
+    },
+    words: {
+      type: GraphQLInt,
+    },
+  },
+})
+
+/**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
  *
@@ -88,29 +153,31 @@ module.exports = (
     reporter,
     ...rest
   },
-  pluginOptions
+  {
+    type: typeName = `MarkdownRemark`,
+    plugins = [],
+    blocks,
+    commonmark = true,
+    footnotes = true,
+    gfm = true,
+    pedantic = true,
+    tableOfContents = {
+      heading: null,
+      maxDepth: 6,
+    },
+    ...grayMatterOptions
+  } = {}
 ) => {
-  if (type.name !== `MarkdownRemark`) {
+  if (type.name !== typeName) {
     return {}
   }
-  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  pluginsCacheStr = plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const {
-      blocks,
-      commonmark = true,
-      footnotes = true,
-      gfm = true,
-      pedantic = true,
-      tableOfContents = {
-        heading: null,
-        maxDepth: 6,
-      },
-    } = pluginOptions
     const tocOptions = tableOfContents
     const remarkOptions = {
       commonmark,
@@ -123,7 +190,7 @@ module.exports = (
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (let plugin of pluginOptions.plugins) {
+    for (let plugin of plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (let parserPlugin of requiredPlugin.setParserPlugins(
@@ -167,8 +234,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin.mutateSource)) {
           return requiredPlugin.mutateSource(
@@ -235,8 +302,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin)) {
           return requiredPlugin(
@@ -448,44 +515,6 @@ module.exports = (
       return text
     }
 
-    const HeadingType = new GraphQLObjectType({
-      name: `MarkdownHeading`,
-      fields: {
-        value: {
-          type: GraphQLString,
-          resolve(heading) {
-            return heading.value
-          },
-        },
-        depth: {
-          type: GraphQLInt,
-          resolve(heading) {
-            return heading.depth
-          },
-        },
-      },
-    })
-
-    const HeadingLevels = new GraphQLEnumType({
-      name: `HeadingLevels`,
-      values: {
-        h1: { value: 1 },
-        h2: { value: 2 },
-        h3: { value: 3 },
-        h4: { value: 4 },
-        h5: { value: 5 },
-        h6: { value: 6 },
-      },
-    })
-
-    const ExcerptFormats = new GraphQLEnumType({
-      name: `ExcerptFormats`,
-      values: {
-        PLAIN: { value: `plain` },
-        HTML: { value: `html` },
-      },
-    })
-
     return resolve({
       html: {
         type: GraphQLString,
@@ -523,7 +552,7 @@ module.exports = (
             format,
             pruneLength,
             truncate,
-            excerptSeparator: pluginOptions.excerpt_separator,
+            excerptSeparator: grayMatterOptions.excerpt_separator,
           })
         },
       },
@@ -543,7 +572,7 @@ module.exports = (
           return getExcerptAst(markdownNode, {
             pruneLength,
             truncate,
-            excerptSeparator: pluginOptions.excerpt_separator,
+            excerptSeparator: grayMatterOptions.excerpt_separator,
           }).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)
             return hastReparseRaw(strippedAst)
@@ -602,20 +631,7 @@ module.exports = (
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCount`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt,
-            },
-            sentences: {
-              type: GraphQLInt,
-            },
-            words: {
-              type: GraphQLInt,
-            },
-          },
-        }),
+        type: WordCountType,
         resolve(markdownNode) {
           let counts = {}
 

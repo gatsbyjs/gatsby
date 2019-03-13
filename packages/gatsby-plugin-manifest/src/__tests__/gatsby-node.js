@@ -2,6 +2,7 @@ jest.mock(`fs`, () => {
   return {
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
+    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
     statSync: jest.fn(),
   }
 })
@@ -25,14 +26,32 @@ jest.mock(`sharp`, () => {
   sharp.concurrency = jest.fn()
   return sharp
 })
+
 const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
 const { onPostBootstrap } = require(`../gatsby-node`)
 
+const manifestOptions = {
+  name: `GatsbyJS`,
+  short_name: `GatsbyJS`,
+  start_url: `/`,
+  background_color: `#f7f0eb`,
+  theme_color: `#a2466c`,
+  display: `standalone`,
+  icons: [
+    {
+      src: `icons/icon-48x48.png`,
+      sizes: `48x48`,
+      type: `image/png`,
+    },
+  ],
+}
+
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
+    sharp.mockClear()
   })
 
   // the require of gatsby-node performs the invoking
@@ -51,6 +70,7 @@ describe(`Test plugin manifest options`, () => {
     })
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
+    expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
   })
 
@@ -78,11 +98,13 @@ describe(`Test plugin manifest options`, () => {
     })
 
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
+    expect(sharp).toHaveBeenCalledTimes(1)
   })
 
-  it(`fails on non existing icon`, done => {
+  it(`fails on non existing icon`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
-    onPostBootstrap([], {
+
+    return onPostBootstrap([], {
       name: `GatsbyJS`,
       short_name: `GatsbyJS`,
       start_url: `/`,
@@ -98,38 +120,62 @@ describe(`Test plugin manifest options`, () => {
         },
       ],
     }).catch(err => {
-      expect(err).toMatchSnapshot()
-      done()
+      expect(sharp).toHaveBeenCalledTimes(0)
+      expect(err).toBe(
+        `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      )
     })
   })
 
   it(`doesn't write extra properties to manifest`, async () => {
-    const manifestOptions = {
-      name: `GatsbyJS`,
-      short_name: `GatsbyJS`,
-      start_url: `/`,
-      background_color: `#f7f0eb`,
-      theme_color: `#a2466c`,
-      display: `standalone`,
-      icons: [
-        {
-          src: `icons/icon-48x48.png`,
-          sizes: `48x48`,
-          type: `image/png`,
-        },
-      ],
-    }
     const pluginSpecificOptions = {
       icon: undefined,
       legacy: true,
       plugins: [],
       theme_color_in_head: false,
+      cache_busting_mode: `name`,
+    }
+    await onPostBootstrap([], {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+    expect(sharp).toHaveBeenCalledTimes(0)
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(content).toEqual(manifestOptions)
+  })
+
+  it(`does file name based cache busting`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      legacy: true,
+      cache_busting_mode: `name`,
     }
     await onPostBootstrap([], {
       ...manifestOptions,
       ...pluginSpecificOptions,
     })
 
+    expect(sharp).toHaveBeenCalledTimes(1)
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(content).toEqual(manifestOptions)
+  })
+
+  it(`does not do cache cache busting`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      legacy: true,
+      cache_busting_mode: `none`,
+    }
+    await onPostBootstrap([], {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    expect(sharp).toHaveBeenCalledTimes(1)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
   })

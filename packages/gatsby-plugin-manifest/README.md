@@ -35,7 +35,8 @@ There are three modes in which icon generation can function: automatic, hybrid, 
 
 In the automatic mode, you are responsible for defining the entire web app manifest except for the icons portion. You only provide a high resolution source icon. The icons themselves and the needed config will be generated at build time. See the example `gatsby-config.js` below:
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -110,7 +111,8 @@ The automatic mode is the easiest option for most people.
 
 However, if you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -149,7 +151,8 @@ The hybrid option allows the most flexibility while still not requiring you to c
 
 In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the static directory. Only icons you provide will be available. There is no automatic resizing done for you. See the example `gatsby-config.js` below:
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -189,7 +192,8 @@ module.exports = {
 
 iOS 11.3 added support for service workers but not the complete webmanifest spec. Therefore iOS won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -213,7 +217,8 @@ module.exports = {
 
 By default `gatsby-plugin-manifest` inserts `<meta content={theme_color} name="theme-color" />` tag to html output. This can be problematic if you want to programatically control that tag - for example when implementing light/dark themes in your project. You can set `theme_color_in_head` plugin option to `false` to opt-out of this behavior.
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -237,7 +242,8 @@ module.exports = {
 
 Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behaviour.
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -250,8 +256,42 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
         include_favicon: false, // This will exclude favicon link tag
+      },
+    },
+  ],
+}
+```
+
+## Disabling or changing "[Cache Busting](https://www.keycdn.com/support/what-is-cache-busting)" Mode
+
+Cache Busting allows your updated icon to be quickly/easily visible to your sites visitors. HTTP caches could otherwise keep an old Icon around for days and weeks. Cache busting is only done in 'automatic' and 'hybrid' modes.
+
+Cache busting works by calculating a unique "digest" or "hash" of the provided icon and modifying links and file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
+
+**Options:**
+
+- **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`
+
+- **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting)
+
+- **\`none\`** - Disables cache busting. File names and links remain unmodified.
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        cache_busting_mode: `none`, // `none`, `name` or `query`
       },
     },
   ],
@@ -268,7 +308,8 @@ You can find more information about `crossorigin` on MDN.
 
 [https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes)
 
-```javascript:title=gatsby-config.js
+```js
+// in gatsby-config.js
 module.exports = {
   plugins: [
     {
