@@ -10,7 +10,6 @@ import Layout from "../components/layout"
 import presets, { colors, space, transition } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
-import DocSearchContent from "../components/docsearch-content"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
@@ -69,7 +68,17 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Container>
-          <DocSearchContent>
+          {
+            // todo
+            // - settle on `docSearch-content` as selector to identify
+            //   Algolia DocSearch content
+            // - make use of components/docsearch-content in place of <main>
+            //
+            // `post` and `post-body` are only in use as selectors in the
+            // docsearch config for gatsbyjs.org for individual blog posts:
+            // https://github.com/algolia/docsearch-configs/blob/89706210b62e2f384e52ca1b104f92bc0e225fff/configs/gatsbyjs.json#L71-L76
+          }
+          <main id={`reach-skip-nav`} className="post docSearch-content">
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>
@@ -218,7 +227,7 @@ class BlogPostTemplate extends React.Component {
               tags={this.props.data.markdownRemark.frontmatter.tags}
             />
             <EmailCaptureForm />
-          </DocSearchContent>
+          </main>
         </Container>
         <div
           css={{
