@@ -5,6 +5,7 @@ import presets, {
   radii,
   transition,
   shadows,
+  breakpoints,
 } from "../../utils/presets"
 
 const styles = {
@@ -16,11 +17,11 @@ const styles = {
     width: 320,
     marginBottom: rhythm(space[9]),
     marginRight: rhythm(space[6]),
-    [presets.Xl]: {
+    [breakpoints.Xl]: {
       width: 360,
       marginRight: rhythm(space[8]),
     },
-    [presets.Xxl]: {
+    [breakpoints.Xxl]: {
       width: 400,
     },
   },
@@ -44,7 +45,7 @@ const styles = {
     transition: `background ${transition.speed.slow} ${
       transition.curve.default
     }, transform ${transition.speed.slow} ${transition.curve.default}`,
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
@@ -96,7 +97,7 @@ const styles = {
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
     top: `calc(${presets.bannerHeight} - 1px)`,
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
@@ -199,7 +200,7 @@ const styles = {
   },
   sidebarHeader: {
     margin: 0,
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       fontSize: presets.scale[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
@@ -225,7 +226,7 @@ const styles = {
   },
   sidebarContainer: {
     display: `none`,
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,

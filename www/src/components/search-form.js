@@ -9,6 +9,7 @@ import presets, {
   radii,
   transition,
   shadows,
+  breakpoints,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
 
@@ -188,7 +189,7 @@ const algoliaStyles = css`
     margin-right: ${rhythm(space[3])} !important;
   }
 
-  ${presets.Sm} {
+  ${breakpoints.Sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -237,7 +238,7 @@ const algoliaStyles = css`
     }
   }
 
-  ${presets.Md} {
+  ${breakpoints.Md} {
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -260,7 +261,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${presets.lg} {
+  @media ${breakpoints.lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -404,7 +405,7 @@ class SearchForm extends Component {
                 outline: 0,
                 width: rhythm(5),
               },
-              [presets.Lg]: {
+              [breakpoints.Lg]: {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
@@ -435,7 +436,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               transform: `translateY(-55%)`,
-              [presets.Sm]: {
+              [breakpoints.Sm]: {
                 fill: focussed ? colors.gatsby : false,
               },
             }}

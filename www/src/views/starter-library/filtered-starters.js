@@ -5,7 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, radii } from "../../utils/presets"
+import presets, { colors, space, radii, breakpoints } from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -159,7 +159,7 @@ export default class FilteredStarterLibrary extends Component {
             cssOverrides={{
               height: `6rem`,
               paddingTop: `${rhythm(space[6])}`,
-              [presets.Sm]: {
+              [breakpoints.Sm]: {
                 height: presets.headerHeight,
                 paddingTop: 0,
               },
@@ -179,7 +179,7 @@ export default class FilteredStarterLibrary extends Component {
                 justifyContent: `space-between`,
                 marginBottom: rhythm(space[2]),
                 width: `100%`,
-                [presets.Sm]: {
+                [breakpoints.Sm]: {
                   justifyContent: `flex-end`,
                   marginBottom: 0,
                   width: `50%`,
@@ -190,7 +190,7 @@ export default class FilteredStarterLibrary extends Component {
               <label
                 css={{
                   display: `none`,
-                  [presets.Lg]: {
+                  [breakpoints.Lg]: {
                     border: 0,
                     borderRadius: radii[2],
                     color: colors.gatsby,

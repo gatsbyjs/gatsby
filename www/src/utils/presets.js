@@ -2,19 +2,20 @@ const colors = require(`./colors`).default
 
 module.exports = {
   colors,
-  // breakpoints
-  xs: `(min-width: 400px)`,
-  Xs: `@media (min-width: 400px)`,
-  sm: `(min-width: 550px)`,
-  Sm: `@media (min-width: 550px)`,
-  md: `(min-width: 750px)`,
-  Md: `@media (min-width: 750px)`,
-  lg: `(min-width: 1000px)`,
-  Lg: `@media (min-width: 1000px)`,
-  xl: `(min-width: 1200px)`,
-  Xl: `@media (min-width: 1200px)`,
-  xxl: `(min-width: 1600px)`,
-  Xxl: `@media (min-width: 1600px)`,
+  breakpoints: {
+    xs: `(min-width: 400px)`,
+    Xs: `@media (min-width: 400px)`,
+    sm: `(min-width: 550px)`,
+    Sm: `@media (min-width: 550px)`,
+    md: `(min-width: 750px)`,
+    Md: `@media (min-width: 750px)`,
+    lg: `(min-width: 1000px)`,
+    Lg: `@media (min-width: 1000px)`,
+    xl: `(min-width: 1200px)`,
+    Xl: `@media (min-width: 1200px)`,
+    xxl: `(min-width: 1600px)`,
+    Xxl: `@media (min-width: 1600px)`,
+  },
   // layout
   headerHeight: `3.75rem`,
   bannerHeight: `2.5rem`,

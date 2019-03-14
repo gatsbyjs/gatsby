@@ -9,7 +9,7 @@ import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets from "../../utils/presets"
+import presets, { breakpoints } from "../../utils/presets"
 import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
@@ -22,7 +22,7 @@ const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   padding-bottom: ${presets.scale[10]};
 
-  ${presets.Md} {
+  ${breakpoints.Md} {
     margin-left: ${presets.pageHeadingDesktopWidth};
     padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
     padding-bottom: 0;

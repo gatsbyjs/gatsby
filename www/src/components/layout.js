@@ -5,7 +5,13 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 
-import presets, { colors, radii, space, shadows } from "../utils/presets"
+import presets, {
+  colors,
+  radii,
+  space,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import { rhythm } from "../utils/typography"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
@@ -157,7 +163,7 @@ class DefaultLayout extends React.Component {
             paddingTop: presets.bannerHeight,
             // make room for the mobile navigation
             paddingBottom: presets.headerHeight,
-            [presets.Md]: {
+            [breakpoints.Md]: {
               paddingTop: `calc(${presets.bannerHeight} + ${
                 presets.headerHeight
               })`,

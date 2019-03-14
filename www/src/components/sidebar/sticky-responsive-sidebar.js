@@ -8,6 +8,7 @@ import presets, {
   transition,
   shadows,
   space,
+  breakpoints,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
@@ -119,7 +120,7 @@ const styles = {
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [presets.Md]: {
+    [breakpoints.Md]: {
       height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
@@ -127,7 +128,7 @@ const styles = {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
       width: rhythm(presets.sidebar.width.default),
     },
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       width: rhythm(presets.sidebar.width.large),
     },
   },
@@ -137,7 +138,7 @@ const styles = {
       transition.curve.default
     }`,
     boxShadow: shadows.dialog,
-    [presets.Md]: {
+    [breakpoints.Md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -156,7 +157,7 @@ const styles = {
     visibility: `visible`,
     width: rhythm(space[10]),
     zIndex: 20,
-    [presets.Md]: { display: `none` },
+    [breakpoints.Md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,

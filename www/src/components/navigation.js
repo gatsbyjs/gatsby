@@ -6,7 +6,12 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, transition } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+} from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -83,7 +88,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [presets.Md]: {
+        [breakpoints.Md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
@@ -143,7 +148,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Lg]: { display: `flex` },
+              [breakpoints.Lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -175,14 +180,14 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [presets.Md]: {
+    [breakpoints.Md]: {
       alignSelf: `flex-end`,
       display: `flex`,
     },
   },
   ulContainer: {
     display: `none`,
-    [presets.Md]: {
+    [breakpoints.Md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,

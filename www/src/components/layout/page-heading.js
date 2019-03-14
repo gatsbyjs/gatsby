@@ -2,13 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, breakpoints } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const PageHeadingContainer = styled(`header`)`
   padding: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.Md} {
     left: 0;
     position: fixed;
     padding: 0;
@@ -26,7 +26,7 @@ const H1 = styled(`h1`)`
   position: relative;
   width: 100%;
 
-  ${presets.Md} {
+  ${breakpoints.Md} {
     transform: rotate(-90deg)
       translate(calc(-100% - ${rhythm(space[7])}), ${rhythm(space[4])});
     transform-origin: top left;
@@ -42,7 +42,7 @@ const H1 = styled(`h1`)`
     z-index: -1;
     color: ${colors.ui.whisper};
 
-    ${presets.Md} {
+    ${breakpoints.Md} {
       display: block;
     }
   }

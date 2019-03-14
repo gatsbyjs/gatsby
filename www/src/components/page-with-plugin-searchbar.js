@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import presets, { colors, breakpoints } from "../utils/presets"
 import { scrollbarStyles } from "../utils/styles"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
@@ -38,23 +38,23 @@ const styles = {
     zIndex: 1,
     top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     ...scrollbarStyles,
-    [presets.Md]: {
+    [breakpoints.Md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
       background: colors.ui.whisper,
       borderRight: `1px solid ${colors.ui.light}`,
     },
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [presets.Md]: {
+    [breakpoints.Md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [presets.Lg]: {
+    [breakpoints.Lg]: {
       paddingLeft: widthLarge,
     },
   },

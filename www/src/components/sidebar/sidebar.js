@@ -4,7 +4,12 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, { colors, space, transition } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
@@ -225,7 +230,7 @@ class SidebarBody extends Component {
             height: itemList[0].disableExpandAll
               ? `100%`
               : `calc(100% - ${presets.sidebarUtilityHeight})`,
-            [presets.Md]: {
+            [breakpoints.Md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}

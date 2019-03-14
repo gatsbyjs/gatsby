@@ -2,7 +2,7 @@ import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, breakpoints } from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
@@ -13,7 +13,7 @@ const MastheadContent = () => (
       paddingBottom: rhythm(space[9]),
       paddingTop: rhythm(space[9]),
       textAlign: `center`,
-      [presets.Md]: {
+      [breakpoints.Md]: {
         paddingBottom: rhythm(3),
         paddingTop: rhythm(3),
       },
@@ -40,10 +40,10 @@ const MastheadContent = () => (
         maxWidth: rhythm(30),
         margin: `0 auto ${rhythm(space[7])}`,
         WebkitFontSmoothing: `antialiased`,
-        [presets.Sm]: {
+        [breakpoints.Sm]: {
           fontSize: presets.scale[5],
         },
-        [presets.Lg]: {
+        [breakpoints.Lg]: {
           fontSize: presets.scale[6],
         },
       }}

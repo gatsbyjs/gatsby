@@ -1,5 +1,5 @@
 import React from "react"
-import presets, { colors, space, radii } from "../../utils/presets"
+import { colors, space, radii, breakpoints } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
@@ -17,12 +17,12 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       flexDirection: `column-reverse`,
       padding: rhythm(space[6]),
       paddingTop: 0,
-      [presets.Sm]: {
+      [breakpoints.Sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
         paddingBottom: 0,
       },
-      [presets.Lg]: {
+      [breakpoints.Lg]: {
         padding: rhythm(space[8]),
         paddingTop: 0,
         paddingBottom: 0,
@@ -37,7 +37,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexWrap: `wrap`,
         justifyContent: `space-between`,
         flexShrink: 0,
-        [presets.Sm]: {
+        [breakpoints.Sm]: {
           justifyContent: `flex-start`,
         },
       }}
@@ -78,7 +78,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexGrow: 1,
         borderBottom: `1px solid ${colors.ui.light}`,
         paddingBottom: rhythm(space[3]),
-        [presets.Sm]: {
+        [breakpoints.Sm]: {
           borderBottom: 0,
         },
       }}
