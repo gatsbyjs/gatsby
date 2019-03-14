@@ -1,6 +1,6 @@
 import React from "react"
 
-import presets, { space } from "../utils/presets"
+import { space, breakpoints } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const Container = ({ children, hasSideBar = true, overrideCSS }) => (
@@ -10,7 +10,7 @@ const Container = ({ children, hasSideBar = true, overrideCSS }) => (
       margin: `0 auto`,
       padding: rhythm(space[6]),
       position: `relative`,
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         paddingTop: rhythm(space[9]),
         paddingBottom: rhythm(space[9]),
       },

@@ -9,6 +9,8 @@ import presets, {
   radii,
   transition,
   shadows,
+  breakpoints,
+  dimensions,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
 
@@ -23,7 +25,9 @@ const searchDropdownOffsetTop = rhythm(space[9])
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
+    top: calc(${searchDropdownOffsetTop} + ${
+  dimensions.bannerHeight
+}) !important;
     left: ${rhythm(space[3])} !important;
     right: ${rhythm(space[3])} !important;
     min-width: calc(100vw - ${rhythm(space[5])}) !important;
@@ -85,7 +89,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     max-height: calc(
-      100vh - ${presets.headerHeight} - ${presets.bannerHeight}
+      100vh - ${dimensions.headerHeight} - ${dimensions.bannerHeight}
     ) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
@@ -188,7 +192,7 @@ const algoliaStyles = css`
     margin-right: ${rhythm(space[3])} !important;
   }
 
-  ${presets.Sm} {
+  ${breakpoints.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -237,7 +241,7 @@ const algoliaStyles = css`
     }
   }
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -260,7 +264,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${presets.lg} {
+  @media ${breakpoints.Lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -404,7 +408,7 @@ class SearchForm extends Component {
                 outline: 0,
                 width: rhythm(5),
               },
-              [presets.Lg]: {
+              [breakpoints.lg]: {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
@@ -435,7 +439,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               transform: `translateY(-55%)`,
-              [presets.Sm]: {
+              [breakpoints.sm]: {
                 fill: focussed ? colors.gatsby : false,
               },
             }}

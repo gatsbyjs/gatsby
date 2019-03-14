@@ -4,7 +4,13 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, { colors, space, transition } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
@@ -224,8 +230,8 @@ class SidebarBody extends Component {
             ...styles.sidebarScrollContainer,
             height: itemList[0].disableExpandAll
               ? `100%`
-              : `calc(100% - ${presets.sidebarUtilityHeight})`,
-            [presets.Md]: {
+              : `calc(100% - ${dimensions.sidebarUtilityHeight})`,
+            [breakpoints.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}
@@ -259,7 +265,7 @@ const styles = {
     borderRight: `1px solid ${colors.ui.light}`,
     display: `flex`,
     alignItems: `center`,
-    height: presets.sidebarUtilityHeight,
+    height: dimensions.sidebarUtilityHeight,
     background: colors.ui.whisper,
     paddingLeft: 20,
     paddingRight: 8,
@@ -290,7 +296,7 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: colors.ui.whisper,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
+    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
   },
   list: {
     margin: 0,

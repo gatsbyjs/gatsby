@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, breakpoints } from "../../utils/presets"
 
 const ICON_SIZE = rhythm(space[7])
 
@@ -15,21 +15,21 @@ const HomepageSectionRoot = styled(`section`)`
   padding: ${rhythm(space[5])} ${rhythm(space[6])};
   width: 100%;
 
-  ${presets.Xl} {
+  ${breakpoints.xl} {
     margin: -1px 0;
     padding: ${rhythm(space[5])} 5%;
   }
 
-  ${presets.Xxl} {
+  ${breakpoints.xxl} {
     padding: ${rhythm(space[7])} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${presets.Md} {
+  ${breakpoints.md} {
     max-width: 30rem;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin-left: ${rhythm(space[9])};
   }
 `
@@ -44,7 +44,7 @@ export const Name = styled(`h3`)`
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -52,7 +52,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -87,7 +87,7 @@ const Actions = styled(`div`)`
     margin-right: ${rhythm(space[1])};
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin: ${rhythm(space[4])} 0 ${rhythm(space[8])};
   }
 `

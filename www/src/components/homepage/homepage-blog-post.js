@@ -16,6 +16,7 @@ import presets, {
   radii,
   transition,
   shadows,
+  breakpoints,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
@@ -36,11 +37,11 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     width: 20rem;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-shrink: 0;
     margin-right: 0;
     margin-bottom: ${rhythm(space[8])};
@@ -76,7 +77,7 @@ const Header = styled(`h1`)`
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     font-size: ${props => (props.first ? presets.scale[6] : presets.scale[5])};
     padding: ${rhythm(space[7])};
     padding-bottom: 0;
@@ -96,7 +97,7 @@ const Meta = styled(`div`)`
     flex-shrink: 0;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin-top: ${rhythm(space[6])};
     padding: 0 ${rhythm(space[7])};
   }
@@ -116,7 +117,7 @@ const Author = styled(Link)`
     font-weight: normal;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     :hover {
       span {
         background: ${colors.ui.bright};
@@ -129,7 +130,7 @@ const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
   padding: 0 ${rhythm(4 / 5)};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin: 0;
     margin-top: ${rhythm(space[6])};
     padding: 0 ${rhythm(space[7])};
@@ -167,7 +168,7 @@ const ReadMore = styled(Link)`
     margin-right: ${rhythm(space[1])};
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     padding: ${rhythm(space[7])};
 
     span {

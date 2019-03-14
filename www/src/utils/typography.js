@@ -1,6 +1,12 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets, { colors, space, transition, radii } from "./presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  breakpoints,
+} from "./presets"
 
 const systemFontFamily = [
   `-apple-system`,
@@ -284,7 +290,7 @@ const _options = {
           borderRight: 0,
         },
       },
-      [`${presets.Md} and (max-width:980px)`]: {
+      [`${breakpoints.md} and (max-width:980px)`]: {
         ".gatsby-highlight, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
@@ -300,7 +306,7 @@ const _options = {
       ".egghead-video": {
         border: `none`,
       },
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-space[7]),
           marginRight: rhythm(-space[7]),
@@ -327,7 +333,7 @@ const _options = {
           right: rhythm(space[7]),
         },
       },
-      [presets.Xxl]: {
+      [breakpoints.xxl]: {
         html: {
           fontSize: `${(18 / 16) * 100}%`,
         },

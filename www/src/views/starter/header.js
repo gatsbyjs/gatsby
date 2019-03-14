@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, breakpoints } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
@@ -11,10 +11,10 @@ const Header = ({ stub }) => (
     css={{
       padding: rhythm(space[6]),
       paddingBottom: rhythm(space[6]),
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         paddingBottom: 0,
       },
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         padding: rhythm(space[8]),
         paddingBottom: 0,
       },

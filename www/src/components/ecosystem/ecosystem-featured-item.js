@@ -16,6 +16,7 @@ import presets, {
   transition,
   radii,
   shadows,
+  breakpoints,
 } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
@@ -23,7 +24,7 @@ const MAX_DESCRIPTION_LENGTH = 100
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
   margin-right: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     border-bottom: 1px solid ${colors.gray.superLight};
     box-shadow: none;
     margin: 0;
@@ -41,13 +42,13 @@ export const BlockLink = styled(Link)`
   height: 100%;
   padding: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     border-radius: 0;
     box-shadow: none;
     transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     :hover {
       background: ${colors.ui.whisper};
     }

@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import presets, { colors, space, transition, radii } from "../presets"
+import { colors, space, transition, radii, breakpoints } from "../presets"
 import { rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
@@ -124,7 +124,7 @@ const styles = {
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
-      [presets.Md]: {
+      [breakpoints.md]: {
         ...bulletOffset.desktop,
       },
     },
@@ -136,7 +136,7 @@ const styles = {
       opacity: 0,
       transform: `translateX(-200px)`,
       width: 1,
-      [presets.Md]: {
+      [breakpoints.md]: {
         ...bulletOffset.desktop,
       },
     },
@@ -152,7 +152,7 @@ const styles = {
     position: `absolute`,
     width: bulletSize,
     zIndex: -1,
-    [presets.Md]: {
+    [breakpoints.md]: {
       ...bulletOffset.desktop,
     },
   },
