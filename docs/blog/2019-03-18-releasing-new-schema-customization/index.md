@@ -36,7 +36,7 @@ exports.sourceNodes = ({ actions }) => {
 }
 ```
 
-After adding this to your gatsby-node, `AuthorJson` type will always have fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to still enjoy the benefits of Gatsby schema inference.
+After adding this to your [gatsby-node](https://www.gatsbyjs.org/docs/gatsby-project-structure/#files) file, `AuthorJson` type will always have fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to enjoy the default benefits of Gatsby schema inference.
 
 ## `createResolvers`
 
