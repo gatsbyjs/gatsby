@@ -8,14 +8,14 @@ const Card = ({ children }) => (
       boxSizing: `border-box`,
       display: `flex`,
       transform: `translateZ(0)`,
-      [breakpoints.Md]: {
+      [breakpoints.md]: {
         flex: `0 0 auto`,
         maxWidth: `50%`,
         boxShadow: `0 1px 0 0 ${colors.ui.light}`,
         "&:nth-of-type(5), &:nth-of-type(6)": { boxShadow: `none` },
         "&:nth-of-type(2n)": { borderLeft: `1px solid ${colors.ui.light}` },
       },
-      [breakpoints.Xl]: {
+      [breakpoints.xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
         borderLeft: `1px solid ${colors.ui.light}`,
@@ -29,7 +29,7 @@ const Card = ({ children }) => (
         padding: rhythm(space[6]),
         paddingBottom: 0,
         transform: `translateZ(0)`,
-        [breakpoints.Sm]: { padding: rhythm(space[8]) },
+        [breakpoints.sm]: { padding: rhythm(space[8]) },
       }}
     >
       {children}

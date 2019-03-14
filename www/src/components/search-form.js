@@ -189,7 +189,7 @@ const algoliaStyles = css`
     margin-right: ${rhythm(space[3])} !important;
   }
 
-  ${breakpoints.Sm} {
+  ${breakpoints.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -238,7 +238,7 @@ const algoliaStyles = css`
     }
   }
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -261,7 +261,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${breakpoints.lg} {
+  @media ${breakpoints.Lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -405,7 +405,7 @@ class SearchForm extends Component {
                 outline: 0,
                 width: rhythm(5),
               },
-              [breakpoints.Lg]: {
+              [breakpoints.lg]: {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
@@ -436,7 +436,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               transform: `translateY(-55%)`,
-              [breakpoints.Sm]: {
+              [breakpoints.sm]: {
                 fill: focussed ? colors.gatsby : false,
               },
             }}

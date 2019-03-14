@@ -73,7 +73,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     background: ${colors.gatsby};
     color: ${colors.white};
     flex-shrink: 0;
@@ -94,7 +94,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${breakpoints.Xl} {
+  ${breakpoints.xl} {
     width: 160px;
   }
 `
@@ -124,7 +124,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(breakpoints.lg)
+    this.desktopMediaQuery = window.matchMedia(breakpoints.Lg)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }

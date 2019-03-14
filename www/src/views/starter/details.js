@@ -15,7 +15,7 @@ const Details = ({
   <div
     css={{
       padding: rhythm(space[6]),
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         padding: rhythm(space[8]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
@@ -49,7 +49,7 @@ const Details = ({
         css={{
           display: `grid`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
-          [breakpoints.Lg]: {
+          [breakpoints.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
             gridGap: rhythm(space[5]),
           },

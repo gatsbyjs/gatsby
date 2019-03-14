@@ -8,7 +8,7 @@ import { rhythm } from "../../utils/typography"
 const PageHeadingContainer = styled(`header`)`
   padding: ${rhythm(space[6])};
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     left: 0;
     position: fixed;
     padding: 0;
@@ -26,7 +26,7 @@ const H1 = styled(`h1`)`
   position: relative;
   width: 100%;
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     transform: rotate(-90deg)
       translate(calc(-100% - ${rhythm(space[7])}), ${rhythm(space[4])});
     transform-origin: top left;
@@ -42,7 +42,7 @@ const H1 = styled(`h1`)`
     z-index: -1;
     color: ${colors.ui.whisper};
 
-    ${breakpoints.Md} {
+    ${breakpoints.md} {
       display: block;
     }
   }

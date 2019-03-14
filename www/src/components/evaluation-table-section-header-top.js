@@ -37,14 +37,14 @@ const superHeader = () => (
           "&:last-child": {
             borderTopRightRadius: radii[2],
           },
-          [breakpoints.Xs]: {
+          [breakpoints.xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [breakpoints.Md]: {
+          [breakpoints.md]: {
             width: 150,
           },
-          [breakpoints.Lg]: {
+          [breakpoints.lg]: {
             width: 175,
           },
         }}

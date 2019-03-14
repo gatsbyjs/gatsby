@@ -12,7 +12,7 @@ const subHeaderTitleStyles = {
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [breakpoints.Xs]: {
+  [breakpoints.xs]: {
     height: rhythm(5 / 4),
   },
 }

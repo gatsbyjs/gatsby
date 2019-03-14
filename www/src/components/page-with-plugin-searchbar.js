@@ -38,23 +38,23 @@ const styles = {
     zIndex: 1,
     top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     ...scrollbarStyles,
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
       background: colors.ui.whisper,
       borderRight: `1px solid ${colors.ui.light}`,
     },
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       paddingLeft: widthLarge,
     },
   },

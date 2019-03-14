@@ -17,12 +17,12 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       flexDirection: `column-reverse`,
       padding: rhythm(space[6]),
       paddingTop: 0,
-      [breakpoints.Sm]: {
+      [breakpoints.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
         paddingBottom: 0,
       },
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         padding: rhythm(space[8]),
         paddingTop: 0,
         paddingBottom: 0,
@@ -37,7 +37,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexWrap: `wrap`,
         justifyContent: `space-between`,
         flexShrink: 0,
-        [breakpoints.Sm]: {
+        [breakpoints.sm]: {
           justifyContent: `flex-start`,
         },
       }}
@@ -78,7 +78,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexGrow: 1,
         borderBottom: `1px solid ${colors.ui.light}`,
         paddingBottom: rhythm(space[3]),
-        [breakpoints.Sm]: {
+        [breakpoints.sm]: {
           borderBottom: 0,
         },
       }}

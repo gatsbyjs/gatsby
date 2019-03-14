@@ -230,7 +230,7 @@ class SidebarBody extends Component {
             height: itemList[0].disableExpandAll
               ? `100%`
               : `calc(100% - ${presets.sidebarUtilityHeight})`,
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}

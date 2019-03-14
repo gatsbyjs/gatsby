@@ -36,7 +36,7 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [breakpoints.Sm]: {
+    [breakpoints.sm]: {
       borderBottom: 0,
     },
   }
@@ -88,7 +88,7 @@ const LegendTable = () => {
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
           display: `none`,
-          [breakpoints.Sm]: {
+          [breakpoints.sm]: {
             display: `table`,
           },
         }}
@@ -102,7 +102,7 @@ const LegendTable = () => {
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
-          [breakpoints.Sm]: {
+          [breakpoints.sm]: {
             display: `none`,
           },
         }}

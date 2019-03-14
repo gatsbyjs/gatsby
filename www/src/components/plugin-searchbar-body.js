@@ -194,7 +194,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [breakpoints.Md]: {
+          [breakpoints.md]: {
             paddingBottom: 0,
           },
         }}
@@ -257,7 +257,7 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [breakpoints.Md]: {
+              [breakpoints.md]: {
                 height: `calc(100vh - ${presets.headerHeight} - ${
                   presets.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,

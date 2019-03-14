@@ -29,7 +29,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               background: colors.ui.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -42,7 +42,7 @@ class BlogPostsIndex extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.Md]: {
+                [breakpoints.md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -63,7 +63,7 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: rhythm(space[6]),
-                  [breakpoints.Md]: {
+                  [breakpoints.md]: {
                     boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],

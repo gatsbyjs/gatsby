@@ -13,7 +13,7 @@ const MastheadContent = () => (
       paddingBottom: rhythm(space[9]),
       paddingTop: rhythm(space[9]),
       textAlign: `center`,
-      [breakpoints.Md]: {
+      [breakpoints.md]: {
         paddingBottom: rhythm(3),
         paddingTop: rhythm(3),
       },
@@ -40,10 +40,10 @@ const MastheadContent = () => (
         maxWidth: rhythm(30),
         margin: `0 auto ${rhythm(space[7])}`,
         WebkitFontSmoothing: `antialiased`,
-        [breakpoints.Sm]: {
+        [breakpoints.sm]: {
           fontSize: presets.scale[5],
         },
-        [breakpoints.Lg]: {
+        [breakpoints.lg]: {
           fontSize: presets.scale[6],
         },
       }}

@@ -70,7 +70,7 @@ const MobileNavigation = () => (
         height: presets.headerHeight,
         fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [breakpoints.Md]: {
+        [breakpoints.md]: {
           display: `none`,
         },
       }}

@@ -146,7 +146,7 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginBottom: rhythm(space[5]),
-                [breakpoints.Md]: {
+                [breakpoints.md]: {
                   marginTop: rhythm(space[3]),
                   marginBottom: rhythm(space[9]),
                 },
@@ -204,7 +204,7 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.Lg]: { marginBottom: rhythm(5 / 4) },
+                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
@@ -238,12 +238,12 @@ class BlogPostTemplate extends React.Component {
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(space[9]),
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               marginTop: rhythm(space[9]),
               paddingBottom: rhythm(space[5]),
               paddingTop: rhythm(space[5]),
             },
-            [breakpoints.Lg]: {
+            [breakpoints.lg]: {
               marginTop: rhythm(3),
               paddingBottom: rhythm(space[9]),
               paddingTop: rhythm(space[9]),
@@ -251,14 +251,14 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <div css={{ [breakpoints.Sm]: { display: `flex`, width: `100%` } }}>
-              <div css={{ [breakpoints.Sm]: { width: `50%` } }}>
+            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
+              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [breakpoints.Md]: {
+                        [breakpoints.md]: {
                           marginLeft: `-${rhythm(space[4])}`,
                         },
                       }}
@@ -273,7 +273,7 @@ class BlogPostTemplate extends React.Component {
                 css={{
                   textAlign: `right`,
                   marginTop: rhythm(space[5]),
-                  [breakpoints.Sm]: { marginTop: 0, width: `50%` },
+                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -281,7 +281,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [breakpoints.Md]: {
+                        [breakpoints.md]: {
                           marginRight: `-${rhythm(space[4])}`,
                         },
                       }}

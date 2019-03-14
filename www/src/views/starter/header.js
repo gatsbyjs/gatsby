@@ -11,10 +11,10 @@ const Header = ({ stub }) => (
     css={{
       padding: rhythm(space[6]),
       paddingBottom: rhythm(space[6]),
-      [breakpoints.Sm]: {
+      [breakpoints.sm]: {
         paddingBottom: 0,
       },
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         padding: rhythm(space[8]),
         paddingBottom: 0,
       },

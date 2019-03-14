@@ -12,7 +12,7 @@ import { buttonStyles } from "../utils/styles"
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -70,7 +70,7 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     width: auto;
     margin-top: 0;
     margin-left: ${rhythm(space[2])};

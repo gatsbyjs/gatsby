@@ -91,7 +91,7 @@ class StarterTemplate extends React.Component {
               css={{
                 display: `flex`,
                 flexDirection: `column-reverse`,
-                [breakpoints.Sm]: {
+                [breakpoints.sm]: {
                   flexDirection: `column`,
                 },
               }}

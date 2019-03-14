@@ -43,7 +43,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -80,7 +80,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: ${rhythm(space[5])};
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     margin-top: 0;
   }
 `

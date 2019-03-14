@@ -17,7 +17,7 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
-const breakpoint2Columns = breakpoints.Md
+const breakpoint2Columns = breakpoints.md
 
 const MetaTitle = ({ children }) => (
   <p
@@ -25,7 +25,7 @@ const MetaTitle = ({ children }) => (
       margin: `0`,
       color: colors.gray.calm,
       marginBottom: rhythm(space[1]),
-      [breakpoints.Xs]: {
+      [breakpoints.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
@@ -55,7 +55,7 @@ const MetaSection = ({ children, background, last, first }) => (
         marginLeft: 0,
         marginRight: 0,
       },
-      [breakpoints.Sm]: {
+      [breakpoints.sm]: {
         display: `flex`,
       },
     }}
@@ -111,7 +111,7 @@ class CreatorTemplate extends Component {
                 width: `auto`,
                 maxWidth: 480,
               },
-              [breakpoints.Lg]: {
+              [breakpoints.lg]: {
                 maxWidth: 560,
               },
             }}
@@ -127,7 +127,7 @@ class CreatorTemplate extends Component {
               margin: rhythm(space[6]),
               flex: `1`,
               width: `100%`,
-              [breakpoints.Lg]: {
+              [breakpoints.lg]: {
                 width: `auto`,
                 maxWidth: 640,
               },

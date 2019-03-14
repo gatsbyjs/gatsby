@@ -12,10 +12,10 @@ export default props => {
       <Fragment>
         <div
           css={{
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               paddingLeft: rhythm(presets.sidebar.width.default),
             },
-            [breakpoints.Lg]: {
+            [breakpoints.lg]: {
               paddingLeft: rhythm(presets.sidebar.width.large),
             },
           }}

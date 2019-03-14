@@ -10,7 +10,7 @@ const Container = ({ children, hasSideBar = true, overrideCSS }) => (
       margin: `0 auto`,
       padding: rhythm(space[6]),
       position: `relative`,
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         paddingTop: rhythm(space[9]),
         paddingBottom: rhythm(space[9]),
       },

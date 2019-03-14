@@ -15,7 +15,7 @@ const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     flex-direction: row;
     flex-wrap: wrap;
     height: calc(

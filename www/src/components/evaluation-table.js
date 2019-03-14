@@ -165,7 +165,7 @@ class EvaluationTable extends Component {
                           css={{
                             paddingBottom: `calc(${rhythm(space[5])} - 1px)`,
                             "&&": {
-                              [breakpoints.Xs]: {
+                              [breakpoints.xs]: {
                                 paddingRight: `${rhythm(space[3])}`,
                                 paddingLeft: `${rhythm(space[3])}`,
                               },

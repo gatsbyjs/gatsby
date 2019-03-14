@@ -163,7 +163,7 @@ class DefaultLayout extends React.Component {
             paddingTop: presets.bannerHeight,
             // make room for the mobile navigation
             paddingBottom: presets.headerHeight,
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               paddingTop: `calc(${presets.bannerHeight} + ${
                 presets.headerHeight
               })`,

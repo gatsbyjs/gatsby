@@ -126,10 +126,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
       display: `flex`,
-      [breakpoints.Xs]: {
+      [breakpoints.xs]: {
         flex: `1 1 50%`,
       },
-      [breakpoints.Sm]: {
+      [breakpoints.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -187,7 +187,7 @@ const Gatsby = () => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -201,7 +201,7 @@ const Gatsby = () => (
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
-        [breakpoints.Lg]: {
+        [breakpoints.lg]: {
           height: rhythm(space[9]),
         },
       }}
@@ -251,7 +251,7 @@ const Diagram = () => (
           css={{
             marginTop: 0,
             marginBottom: rhythm(space[6]),
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               marginTop: rhythm(space[6]),
             },
           }}

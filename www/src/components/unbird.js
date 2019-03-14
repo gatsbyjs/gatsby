@@ -36,7 +36,7 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     bottom: ${rhythm(space[6])};
   }
 `
@@ -82,7 +82,7 @@ const FeedbackForm = styled(`div`)`
   border-radius: ${radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     width: 350px;
     right: 30px;
     bottom: 100px;

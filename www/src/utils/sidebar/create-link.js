@@ -124,7 +124,7 @@ const styles = {
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
-      [breakpoints.Md]: {
+      [breakpoints.md]: {
         ...bulletOffset.desktop,
       },
     },
@@ -136,7 +136,7 @@ const styles = {
       opacity: 0,
       transform: `translateX(-200px)`,
       width: 1,
-      [breakpoints.Md]: {
+      [breakpoints.md]: {
         ...bulletOffset.desktop,
       },
     },
@@ -152,7 +152,7 @@ const styles = {
     position: `absolute`,
     width: bulletSize,
     zIndex: -1,
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       ...bulletOffset.desktop,
     },
   },

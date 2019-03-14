@@ -159,7 +159,7 @@ export default class FilteredStarterLibrary extends Component {
             cssOverrides={{
               height: `6rem`,
               paddingTop: `${rhythm(space[6])}`,
-              [breakpoints.Sm]: {
+              [breakpoints.sm]: {
                 height: presets.headerHeight,
                 paddingTop: 0,
               },
@@ -179,7 +179,7 @@ export default class FilteredStarterLibrary extends Component {
                 justifyContent: `space-between`,
                 marginBottom: rhythm(space[2]),
                 width: `100%`,
-                [breakpoints.Sm]: {
+                [breakpoints.sm]: {
                   justifyContent: `flex-end`,
                   marginBottom: 0,
                   width: `50%`,
@@ -190,7 +190,7 @@ export default class FilteredStarterLibrary extends Component {
               <label
                 css={{
                   display: `none`,
-                  [breakpoints.Lg]: {
+                  [breakpoints.lg]: {
                     border: 0,
                     borderRadius: radii[2],
                     color: colors.gatsby,

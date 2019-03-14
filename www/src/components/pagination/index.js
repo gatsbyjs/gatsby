@@ -36,7 +36,7 @@ class Pagination extends React.Component {
           justifyContent: `space-between`,
           margin: `${rhythm(space[5])} 0`,
           flexDirection: `column`,
-          [breakpoints.Md]: {
+          [breakpoints.md]: {
             flexDirection: `row`,
           },
         }}
@@ -49,7 +49,7 @@ class Pagination extends React.Component {
             justifyContent: `space-between`,
             alignItems: `center`,
             marginBottom: rhythm(space[3]),
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               width: `15rem`,
               marginBottom: 0,
             },

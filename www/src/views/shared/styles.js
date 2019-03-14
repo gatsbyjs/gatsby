@@ -17,11 +17,11 @@ const styles = {
     width: 320,
     marginBottom: rhythm(space[9]),
     marginRight: rhythm(space[6]),
-    [breakpoints.Xl]: {
+    [breakpoints.xl]: {
       width: 360,
       marginRight: rhythm(space[8]),
     },
-    [breakpoints.Xxl]: {
+    [breakpoints.xxl]: {
       width: 400,
     },
   },
@@ -45,7 +45,7 @@ const styles = {
     transition: `background ${transition.speed.slow} ${
       transition.curve.default
     }, transform ${transition.speed.slow} ${transition.curve.default}`,
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
@@ -97,7 +97,7 @@ const styles = {
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
     top: `calc(${presets.bannerHeight} - 1px)`,
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
     },
   },
@@ -200,7 +200,7 @@ const styles = {
   },
   sidebarHeader: {
     margin: 0,
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       fontSize: presets.scale[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
@@ -226,7 +226,7 @@ const styles = {
   },
   sidebarContainer: {
     display: `none`,
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,

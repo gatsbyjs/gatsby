@@ -111,7 +111,7 @@ class CreatorsView extends Component {
           css={{
             padding: rhythm(space[6]),
             paddingBottom: `10vh`,
-            [breakpoints.Md]: {
+            [breakpoints.md]: {
               paddingBottom: rhythm(space[6]),
             },
           }}
@@ -121,7 +121,7 @@ class CreatorsView extends Component {
               display: `flex`,
               flexWrap: `wrap`,
               justifyContent: `center`,
-              [breakpoints.Lg]: {
+              [breakpoints.lg]: {
                 justifyContent: `flex-start`,
               },
             }}

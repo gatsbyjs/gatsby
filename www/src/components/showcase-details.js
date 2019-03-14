@@ -270,7 +270,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 css={{
                   padding: gutter,
                   paddingBottom: rhythm(space[2]),
-                  [breakpoints.Lg]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                     paddingBottom: rhythm(space[6]),
                   },
@@ -319,7 +319,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   margin: `0 ${gutter}`,
-                  [breakpoints.Lg]: {
+                  [breakpoints.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -421,7 +421,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                           color: colors.white,
                           borderBottom: `none`,
                         },
-                        [shouldShowVisitButtonOnMobile && breakpoints.Sm]: {
+                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
                           display: `block`,
                         },
                       }}
@@ -464,7 +464,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [breakpoints.Lg]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                   },
                 }}

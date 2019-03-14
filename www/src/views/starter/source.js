@@ -12,10 +12,10 @@ const Source = ({ startersYaml, repoUrl }) => (
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: options.headerFontFamily.join(`,`),
       margin: `0 ${rhythm(space[6])}`,
-      [breakpoints.Sm]: {
+      [breakpoints.sm]: {
         borderTop: 0,
       },
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         margin: `0 ${rhythm(space[8])}`,
       },
     }}
@@ -60,7 +60,7 @@ const Source = ({ startersYaml, repoUrl }) => (
     <div
       css={{
         display: `none`,
-        [breakpoints.Lg]: {
+        [breakpoints.lg]: {
           padding: 20,
           paddingLeft: 0,
           flex: 1,

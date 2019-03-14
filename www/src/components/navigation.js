@@ -88,7 +88,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [breakpoints.Md]: {
+        [breakpoints.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
@@ -148,7 +148,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [breakpoints.Lg]: { display: `flex` },
+              [breakpoints.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -180,14 +180,14 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
     },
   },
   ulContainer: {
     display: `none`,
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,

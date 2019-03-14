@@ -24,7 +24,7 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: ${rhythm(space[8])} 0;
   }
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     line-height: ${presets.lineHeights.loose};
     margin: ${rhythm(space[8])} -3.5rem;
     padding: 2.8rem 3.5rem;
@@ -54,7 +54,7 @@ const QuotationMark = styled(`span`)`
     fill: ${colors.gatsbyDark};
   }
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -85,7 +85,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${breakpoints.Lg} {
+    ${breakpoints.lg} {
       height: 27px;
       width: 27px;
     }

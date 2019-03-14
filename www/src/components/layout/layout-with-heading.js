@@ -22,7 +22,7 @@ const Content = styled(`div`)`
   padding-top: ${presets.bannerHeight};
   padding-bottom: ${presets.scale[10]};
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     margin-left: ${presets.pageHeadingDesktopWidth};
     padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
     padding-bottom: 0;

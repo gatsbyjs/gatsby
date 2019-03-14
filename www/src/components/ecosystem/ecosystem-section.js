@@ -22,7 +22,7 @@ const EcosystemSectionRoot = styled(`section`)`
   padding: 0 ${rhythm(space[6])};
   margin-bottom: ${rhythm(space[3])};
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
@@ -39,7 +39,7 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${breakpoints.Lg} {
+  ${breakpoints.lg} {
     flex-basis: calc(33.33% - ${rhythm(space[5])});
     max-height: 100%;
 

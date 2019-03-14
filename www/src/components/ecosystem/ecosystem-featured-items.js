@@ -15,7 +15,7 @@ import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
   margin: 0 -${rhythm(space[6])};
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     border-top: 1px solid ${colors.gray.superLight};
     margin-top: ${rhythm(space[3])};
     margin-bottom: 0;
@@ -29,7 +29,7 @@ const List = styled(HorizontalScrollerContent)`
   padding-left: ${rhythm(space[6])};
   padding-right: ${rhythm(space[6])};
 
-  ${breakpoints.Md} {
+  ${breakpoints.md} {
     flex-direction: column;
     padding: 0;
     width: 100%;

@@ -38,7 +38,7 @@ class FeaturedSites extends Component {
           margin: `${rhythm(space[6])} ${rhythm(space[6])} 0`,
           position: `relative`,
           display: `none`,
-          [breakpoints.Lg]: {
+          [breakpoints.lg]: {
             display: `block`,
           },
         }}
@@ -90,7 +90,7 @@ class FeaturedSites extends Component {
               ...styles.withTitleHover,
               display: `none`,
               fontSize: presets.scale[1],
-              [breakpoints.Sm]: {
+              [breakpoints.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -120,7 +120,7 @@ class FeaturedSites extends Component {
                 fontSize: presets.scale[1],
                 marginRight: 15,
                 display: `none`,
-                [breakpoints.Md]: {
+                [breakpoints.md]: {
                   display: `block`,
                 },
               }}
@@ -198,7 +198,7 @@ class FeaturedSites extends Component {
                     fontSize: presets.scale[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [breakpoints.Lg]: {
+                    [breakpoints.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -267,10 +267,10 @@ class FeaturedSites extends Component {
                         width: `auto`,
                         display: `block`,
                         margin: `0 auto ${rhythm(space[6])}`,
-                        [breakpoints.Md]: {
+                        [breakpoints.md]: {
                           height: 64,
                         },
-                        [breakpoints.Xl]: {
+                        [breakpoints.xl]: {
                           height: 72,
                         },
 

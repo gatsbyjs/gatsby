@@ -290,7 +290,7 @@ const _options = {
           borderRight: 0,
         },
       },
-      [`${breakpoints.Md} and (max-width:980px)`]: {
+      [`${breakpoints.md} and (max-width:980px)`]: {
         ".gatsby-highlight, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
@@ -306,7 +306,7 @@ const _options = {
       ".egghead-video": {
         border: `none`,
       },
-      [breakpoints.Lg]: {
+      [breakpoints.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-space[7]),
           marginRight: rhythm(-space[7]),
@@ -333,7 +333,7 @@ const _options = {
           right: rhythm(space[7]),
         },
       },
-      [breakpoints.Xxl]: {
+      [breakpoints.xxl]: {
         html: {
           fontSize: `${(18 / 16) * 100}%`,
         },

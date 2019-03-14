@@ -120,7 +120,7 @@ const styles = {
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
@@ -128,7 +128,7 @@ const styles = {
       top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
       width: rhythm(presets.sidebar.width.default),
     },
-    [breakpoints.Lg]: {
+    [breakpoints.lg]: {
       width: rhythm(presets.sidebar.width.large),
     },
   },
@@ -138,7 +138,7 @@ const styles = {
       transition.curve.default
     }`,
     boxShadow: shadows.dialog,
-    [breakpoints.Md]: {
+    [breakpoints.md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -157,7 +157,7 @@ const styles = {
     visibility: `visible`,
     width: rhythm(space[10]),
     zIndex: 20,
-    [breakpoints.Md]: { display: `none` },
+    [breakpoints.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,
