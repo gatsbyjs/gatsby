@@ -22,6 +22,7 @@ import presets, {
   transition,
   radii,
   breakpoints,
+  dimensions,
 } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import { scrollbarStyles, skipLink } from "../utils/styles"
@@ -258,8 +259,8 @@ class Search extends Component {
           <div
             css={{
               [breakpoints.md]: {
-                height: `calc(100vh - ${presets.headerHeight} - ${
-                  presets.bannerHeight
+                height: `calc(100vh - ${dimensions.headerHeight} - ${
+                  dimensions.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
                 ...scrollbarStyles,

@@ -11,6 +11,7 @@ import presets, {
   space,
   transition,
   breakpoints,
+  dimensions,
 } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
@@ -59,10 +60,10 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: presets.headerHeight,
+        height: dimensions.headerHeight,
         left: 0,
         right: 0,
-        top: presets.bannerHeight,
+        top: dimensions.bannerHeight,
         zIndex: 2,
         "&:after": {
           content: `''`,
@@ -216,7 +217,7 @@ const styles = {
     display: `block`,
     letterSpacing: presets.letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     textTransform: `uppercase`,

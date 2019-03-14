@@ -5,7 +5,13 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, radii, breakpoints } from "../../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -160,7 +166,7 @@ export default class FilteredStarterLibrary extends Component {
               height: `6rem`,
               paddingTop: `${rhythm(space[6])}`,
               [breakpoints.sm]: {
-                height: presets.headerHeight,
+                height: dimensions.headerHeight,
                 paddingTop: 0,
               },
             }}

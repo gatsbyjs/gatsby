@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, dimensions } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -141,7 +141,7 @@ const styles = {
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${rhythm(space[6])}`,
-    height: presets.headerHeight,
+    height: dimensions.headerHeight,
     fontFamily: options.headerFontFamily.join(`,`),
   },
   creatorsLink: {

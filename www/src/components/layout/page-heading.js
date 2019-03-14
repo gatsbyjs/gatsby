@@ -2,7 +2,12 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import presets, { colors, space, breakpoints } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
 const PageHeadingContainer = styled(`header`)`
@@ -12,7 +17,7 @@ const PageHeadingContainer = styled(`header`)`
     left: 0;
     position: fixed;
     padding: 0;
-    top: ${`calc(${presets.bannerHeight} + ${presets.headerHeight})`};
+    top: ${`calc(${dimensions.bannerHeight} + ${dimensions.headerHeight})`};
   }
 `
 

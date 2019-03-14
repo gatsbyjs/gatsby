@@ -6,6 +6,7 @@ import presets, {
   transition,
   shadows,
   breakpoints,
+  dimensions,
 } from "../../utils/presets"
 
 const styles = {
@@ -96,9 +97,11 @@ const styles = {
     // is removed, the problem goes away. I tried removing elements in the
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
-    top: `calc(${presets.bannerHeight} - 1px)`,
+    top: `calc(${dimensions.bannerHeight} - 1px)`,
     [breakpoints.lg]: {
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+      top: `calc(${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
+      } - 1px)`,
     },
   },
   scrollbar: {
@@ -208,7 +211,7 @@ const styles = {
       fontWeight: `normal`,
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,
-      height: presets.headerHeight,
+      height: dimensions.headerHeight,
       margin: 0,
       paddingLeft: rhythm(space[6]),
       paddingRight: rhythm(space[6]),
@@ -218,8 +221,8 @@ const styles = {
   },
   sidebarBody: {
     paddingLeft: rhythm(space[6]),
-    height: `calc(100vh - ((${presets.headerHeight}) + ${
-      presets.bannerHeight
+    height: `calc(100vh - ((${dimensions.headerHeight}) + ${
+      dimensions.bannerHeight
     }))`,
     display: `flex`,
     flexDirection: `column`,
@@ -232,8 +235,8 @@ const styles = {
       minWidth: `15rem`,
       paddingTop: 0,
       borderRight: `1px solid ${colors.ui.light}`,
-      height: `calc(100vh - (${presets.headerHeight} + ${
-        presets.bannerHeight
+      height: `calc(100vh - (${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
       }))`,
     },
   },
@@ -244,7 +247,7 @@ const styles = {
     display: `flex`,
     flexDirection: `row`,
     flexWrap: `wrap`,
-    height: presets.headerHeight,
+    height: dimensions.headerHeight,
     justifyContent: `space-between`,
     paddingLeft: rhythm(space[6]),
     paddingRight: rhythm(space[6]),

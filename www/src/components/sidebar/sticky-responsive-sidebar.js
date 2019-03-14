@@ -3,12 +3,13 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, {
+import {
   colors,
   transition,
   shadows,
   space,
   breakpoints,
+  dimensions,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
@@ -121,15 +122,17 @@ const styles = {
     width: 320,
     zIndex: 10,
     [breakpoints.md]: {
-      height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
+      height: `calc(100vh - ${dimensions.headerHeight} - ${
+        dimensions.bannerHeight
+      })`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(presets.sidebar.width.default),
+      top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
+      width: rhythm(dimensions.sidebarWidth.default),
     },
     [breakpoints.lg]: {
-      width: rhythm(presets.sidebar.width.large),
+      width: rhythm(dimensions.sidebarWidth.large),
     },
   },
   sidebar: {
