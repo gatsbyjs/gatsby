@@ -49,7 +49,7 @@ const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
-const sanitizeHeadComponents = components => {
+const sanitizeComponents = components => {
   if (Array.isArray(components)) {
     // remove falsy items
     return components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
@@ -79,7 +79,7 @@ export default (pagePath, callback) => {
   }
 
   const setHeadComponents = components => {
-    headComponents = headComponents.concat(sanitizeHeadComponents(components))
+    headComponents = headComponents.concat(sanitizeComponents(components))
   }
 
   const setHtmlAttributes = attributes => {
@@ -91,11 +91,13 @@ export default (pagePath, callback) => {
   }
 
   const setPreBodyComponents = components => {
-    preBodyComponents = preBodyComponents.concat(components)
+    preBodyComponents = preBodyComponents.concat(sanitizeComponents(components))
   }
 
   const setPostBodyComponents = components => {
-    postBodyComponents = postBodyComponents.concat(components)
+    postBodyComponents = postBodyComponents.concat(
+      sanitizeComponents(components)
+    )
   }
 
   const setBodyProps = props => {
@@ -105,19 +107,19 @@ export default (pagePath, callback) => {
   const getHeadComponents = () => headComponents
 
   const replaceHeadComponents = components => {
-    headComponents = sanitizeHeadComponents(components)
+    headComponents = sanitizeComponents(components)
   }
 
   const getPreBodyComponents = () => preBodyComponents
 
   const replacePreBodyComponents = components => {
-    preBodyComponents = components
+    preBodyComponents = sanitizeComponents(components)
   }
 
   const getPostBodyComponents = () => postBodyComponents
 
   const replacePostBodyComponents = components => {
-    postBodyComponents = components
+    postBodyComponents = sanitizeComponents(components)
   }
 
   const page = getPage(pagePath)

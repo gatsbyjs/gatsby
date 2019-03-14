@@ -17,7 +17,9 @@ jest.mock(
       },
     }
   },
-  { virtual: true }
+  {
+    virtual: true,
+  }
 )
 
 jest.mock(
@@ -38,7 +40,9 @@ jest.mock(
       ],
     }
   },
-  { virtual: true }
+  {
+    virtual: true,
+  }
 )
 
 const MOCK_FILE_INFO = {
@@ -61,44 +65,37 @@ const reverseHeadersPlugin = {
   },
 }
 
-const setNullHeaderPlugin = {
-  plugin: {
-    onPreRenderHTML: ({ replaceHeadComponents }) => {
-      replaceHeadComponents(null)
+const injectValuePlugin = (hookName, methodName, value) => {
+  return {
+    plugin: {
+      [hookName]: staticEntry => {
+        const method = staticEntry[methodName]
+        method(value)
+      },
     },
-  },
+  }
 }
 
-const setNullHeadersPlugin = {
-  plugin: {
-    onPreRenderHTML: ({ replaceHeadComponents }) => {
-      replaceHeadComponents([null, null])
-    },
-  },
-}
-
-const setEmptyArrayHeaderPlugin = {
-  plugin: {
-    onPreRenderHTML: ({ replaceHeadComponents }) => {
-      replaceHeadComponents([])
-    },
-  },
-}
-
-const setEmptyArrayHeadersPlugin = {
-  plugin: {
-    onPreRenderHTML: ({ replaceHeadComponents }) => {
-      replaceHeadComponents([[], []])
-    },
-  },
+const checkSanitized = components => {
+  expect(components.includes(null)).toBeFalsy()
+  expect(
+    components.find(val => Array.isArray(val) && val.length === 0)
+  ).toBeFalsy()
 }
 
 const checkNonEmptyHeadersPlugin = {
   plugin: {
-    onPreRenderHTML: ({ getHeadComponents }) => {
+    onPreRenderHTML: ({
+      getHeadComponents,
+      getPreBodyComponents,
+      getPostBodyComponents,
+    }) => {
       const headComponents = getHeadComponents()
-      expect(headComponents.includes(null)).toBeFalsy()
-      expect(headComponents.find(val => Array.isArray(val) && val.length === 0))
+      const preBodyComponents = getPreBodyComponents()
+      const postBodyComponents = getPostBodyComponents()
+      checkSanitized(headComponents)
+      checkSanitized(preBodyComponents)
+      checkSanitized(postBodyComponents)
     },
   },
 }
@@ -107,9 +104,9 @@ const fakeStylesPlugin = {
   plugin: {
     onRenderBody: ({ setHeadComponents }) =>
       setHeadComponents([
-        <style key="style1">.style1 {}</style>,
-        <style key="style2">.style2 {}</style>,
-        <style key="style3">.style3 {}</style>,
+        <style key="style1"> .style1 {} </style>,
+        <style key="style2"> .style2 {} </style>,
+        <style key="style3"> .style3 {} </style>,
       ]),
   },
 }
@@ -131,9 +128,9 @@ const fakeComponentsPluginFactory = type => {
     plugin: {
       onRenderBody: props => {
         props[`set${type}BodyComponents`]([
-          <div key="div1">div1</div>,
-          <div key="div2">div2</div>,
-          <div key="div3">div3</div>,
+          <div key="div1"> div1 </div>,
+          <div key="div2"> div2 </div>,
+          <div key="div3"> div3 </div>,
         ])
       },
     },
@@ -175,6 +172,59 @@ describe(`develop-static-entry`, () => {
   })
 })
 
+describe(`static-entry sanity checks`, () => {
+  beforeEach(() => {
+    global.__PATH_PREFIX__ = ``
+  })
+
+  const methodsToCheck = [
+    `replaceHeadComponents`,
+    `replacePreBodyComponents`,
+    `replacePostBodyComponents`,
+  ]
+
+  methodsToCheck.forEach(methodName => {
+    test(`${methodName} can filter out null value`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, null)
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+
+    test(`${methodName} can filter out null values`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [
+        null,
+        null,
+      ])
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+
+    test(`${methodName} can filter out empty array`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [])
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+
+    test(`${methodName} can filter out empty arrays`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [[], []])
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+  })
+})
+
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
@@ -182,42 +232,6 @@ describe(`static-entry`, () => {
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
-
-    StaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
-  })
-
-  test(`onPreRenderHTML can filter out null value`, done => {
-    global.plugins = [setNullHeaderPlugin, checkNonEmptyHeadersPlugin]
-
-    StaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
-  })
-
-  test(`onPreRenderHTML can filter out null values`, done => {
-    global.plugins = [setNullHeadersPlugin, checkNonEmptyHeadersPlugin]
-
-    StaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
-  })
-
-  test(`onPreRenderHTML can filter out empty array`, done => {
-    global.plugins = [setEmptyArrayHeaderPlugin, checkNonEmptyHeadersPlugin]
-
-    StaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
-  })
-
-  test(`onPreRenderHTML can filter out empty arrays`, done => {
-    global.plugins = [setEmptyArrayHeadersPlugin, checkNonEmptyHeadersPlugin]
 
     StaticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
