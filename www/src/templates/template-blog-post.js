@@ -7,7 +7,12 @@ import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 
 import Layout from "../components/layout"
-import presets, { colors, space, transition } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+} from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -141,7 +146,7 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginBottom: rhythm(space[5]),
-                [presets.Md]: {
+                [breakpoints.md]: {
                   marginTop: rhythm(space[3]),
                   marginBottom: rhythm(space[9]),
                 },
@@ -199,7 +204,7 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Lg]: { marginBottom: rhythm(5 / 4) },
+                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
@@ -233,12 +238,12 @@ class BlogPostTemplate extends React.Component {
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(space[9]),
-            [presets.Md]: {
+            [breakpoints.md]: {
               marginTop: rhythm(space[9]),
               paddingBottom: rhythm(space[5]),
               paddingTop: rhythm(space[5]),
             },
-            [presets.Lg]: {
+            [breakpoints.lg]: {
               marginTop: rhythm(3),
               paddingBottom: rhythm(space[9]),
               paddingTop: rhythm(space[9]),
@@ -246,14 +251,16 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <div css={{ [presets.Sm]: { display: `flex`, width: `100%` } }}>
-              <div css={{ [presets.Sm]: { width: `50%` } }}>
+            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
+              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Md]: { marginLeft: `-${rhythm(space[4])}` },
+                        [breakpoints.md]: {
+                          marginLeft: `-${rhythm(space[4])}`,
+                        },
                       }}
                     >
                       <ArrowBackIcon style={{ verticalAlign: `sub` }} />
@@ -266,7 +273,7 @@ class BlogPostTemplate extends React.Component {
                 css={{
                   textAlign: `right`,
                   marginTop: rhythm(space[5]),
-                  [presets.Sm]: { marginTop: 0, width: `50%` },
+                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -274,7 +281,9 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Md]: { marginRight: `-${rhythm(space[4])}` },
+                        [breakpoints.md]: {
+                          marginRight: `-${rhythm(space[4])}`,
+                        },
                       }}
                     >
                       {next.frontmatter.title}

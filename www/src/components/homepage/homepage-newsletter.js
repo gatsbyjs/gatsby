@@ -7,7 +7,7 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, radii } from "../../utils/presets"
+import presets, { colors, space, radii, breakpoints } from "../../utils/presets"
 
 const stripedBorderHeight = rhythm(space[2])
 
@@ -43,7 +43,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -80,7 +80,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: ${rhythm(space[5])};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin-top: 0;
   }
 `

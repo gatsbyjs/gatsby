@@ -19,7 +19,13 @@ import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, radii, shadows } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -27,7 +33,7 @@ const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     flex-direction: row;
     margin: 0 -${rhythm(space[2])};
   }
@@ -39,7 +45,7 @@ const Section = styled(EcosystemSection)`
   margin-bottom: ${rhythm(space[6])};
   padding: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     margin: 0 ${rhythm(space[2])} 0;
     padding: ${rhythm(space[6])};
 
@@ -55,7 +61,7 @@ const SubTitle = styled(`h3`)`
   margin-bottom: ${rhythm(space[1])};
   margin-top: ${rhythm(space[7])};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin-left: ${rhythm(space[9])};
     margin-bottom: ${rhythm(space[4])};
   }
@@ -64,14 +70,14 @@ const SubTitle = styled(`h3`)`
 const FeaturedItems = styled(HorizontalScroller)`
   margin: 0 -${rhythm(space[6])};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin: 0;
     overflow-x: visible;
   }
 `
 
 const FeaturedItemsList = styled(HorizontalScrollerContent)`
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -82,7 +88,7 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 const FeaturedItem = styled(EcosystemFeaturedItem)`
   margin-right: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     border-bottom: none;
     margin: ${rhythm(space[6])};
     margin-top: 0;
@@ -90,7 +96,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     width: 20rem;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-basis: 28%;
 
     :nth-of-type(4) {
@@ -104,11 +110,11 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     border: 0;
     box-shadow: ${shadows.raised};
 
-    ${presets.Md} {
+    ${breakpoints.md} {
       border-radius: ${radii[2]}px;
     }
 
-    ${presets.Lg} {
+    ${breakpoints.lg} {
       :hover {
         background: ${colors.ui.whisper};
       }

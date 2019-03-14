@@ -2,26 +2,27 @@ const colors = require(`./colors`).default
 
 module.exports = {
   colors,
-  // breakpoints
-  xs: `(min-width: 400px)`,
-  Xs: `@media (min-width: 400px)`,
-  sm: `(min-width: 550px)`,
-  Sm: `@media (min-width: 550px)`,
-  md: `(min-width: 750px)`,
-  Md: `@media (min-width: 750px)`,
-  lg: `(min-width: 1000px)`,
-  Lg: `@media (min-width: 1000px)`,
-  xl: `(min-width: 1200px)`,
-  Xl: `@media (min-width: 1200px)`,
-  xxl: `(min-width: 1600px)`,
-  Xxl: `@media (min-width: 1600px)`,
+  breakpoints: {
+    Xs: `(min-width: 400px)`,
+    xs: `@media (min-width: 400px)`,
+    Sm: `(min-width: 550px)`,
+    sm: `@media (min-width: 550px)`,
+    Md: `(min-width: 750px)`,
+    md: `@media (min-width: 750px)`,
+    Lg: `(min-width: 1000px)`,
+    lg: `@media (min-width: 1000px)`,
+    Xl: `(min-width: 1200px)`,
+    xl: `@media (min-width: 1200px)`,
+    Xxl: `(min-width: 1600px)`,
+    xxl: `@media (min-width: 1600px)`,
+  },
   // layout
-  headerHeight: `3.75rem`,
-  bannerHeight: `2.5rem`,
-  sidebarUtilityHeight: `2.5rem`,
-  pageHeadingDesktopWidth: `3.5rem`,
-  sidebar: {
-    width: {
+  dimensions: {
+    headerHeight: `3.75rem`,
+    bannerHeight: `2.5rem`,
+    sidebarUtilityHeight: `2.5rem`,
+    pageHeadingDesktopWidth: `3.5rem`,
+    sidebarWidth: {
       default: 12,
       large: 12,
     },

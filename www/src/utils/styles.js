@@ -1,7 +1,13 @@
 import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
-import presets, { colors, space, transition, radii } from "./presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  breakpoints,
+} from "./presets"
 import { rhythm, options } from "./typography"
 
 const stripeAnimation = keyframes({
@@ -73,14 +79,14 @@ export const buttonStyles = {
   small: {
     fontSize: presets.scale[1],
     padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
-    [presets.Md]: {
+    [breakpoints.md]: {
       fontSize: presets.scale[2],
     },
   },
   tiny: {
     fontSize: presets.scale[1],
     padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
-    [presets.Md]: {
+    [breakpoints.md]: {
       fontSize: presets.scale[2],
     },
   },

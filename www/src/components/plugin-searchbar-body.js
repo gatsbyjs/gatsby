@@ -16,7 +16,14 @@ import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
-import presets, { space, colors, transition, radii } from "../utils/presets"
+import presets, {
+  space,
+  colors,
+  transition,
+  radii,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 import { scrollbarStyles, skipLink } from "../utils/styles"
 import { Global, css } from "@emotion/core"
@@ -188,7 +195,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [presets.Md]: {
+          [breakpoints.md]: {
             paddingBottom: 0,
           },
         }}
@@ -251,9 +258,9 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [presets.Md]: {
-                height: `calc(100vh - ${presets.headerHeight} - ${
-                  presets.bannerHeight
+              [breakpoints.md]: {
+                height: `calc(100vh - ${dimensions.headerHeight} - ${
+                  dimensions.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
                 ...scrollbarStyles,

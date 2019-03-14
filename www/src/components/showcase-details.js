@@ -4,7 +4,13 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors, space, radii, shadows } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
@@ -264,7 +270,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 css={{
                   padding: gutter,
                   paddingBottom: rhythm(space[2]),
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                     paddingBottom: rhythm(space[6]),
                   },
@@ -313,7 +319,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   margin: `0 ${gutter}`,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -415,7 +421,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                           color: colors.white,
                           borderBottom: `none`,
                         },
-                        [shouldShowVisitButtonOnMobile && presets.Sm]: {
+                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
                           display: `block`,
                         },
                       }}
@@ -458,7 +464,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                   },
                 }}
