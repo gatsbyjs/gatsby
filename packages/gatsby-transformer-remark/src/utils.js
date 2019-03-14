@@ -7,6 +7,6 @@
 exports.eachPromise = (input, iterator) =>
   input.reduce(
     (accumulatorPromise, nextValue) =>
-      accumulatorPromise.then(() => void iterator(nextValue)),
+      accumulatorPromise.then(() => iterator(nextValue)),
     Promise.resolve()
   )
