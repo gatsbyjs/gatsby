@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, breakpoints } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
@@ -165,7 +165,7 @@ class EvaluationTable extends Component {
                           css={{
                             paddingBottom: `calc(${rhythm(space[5])} - 1px)`,
                             "&&": {
-                              [presets.Xs]: {
+                              [breakpoints.xs]: {
                                 paddingRight: `${rhythm(space[3])}`,
                                 paddingLeft: `${rhythm(space[3])}`,
                               },

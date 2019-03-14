@@ -1,6 +1,11 @@
 import React from "react"
 import { rhythm, options } from "../utils/typography"
-import presets, { space, transition, colors } from "../utils/presets"
+import presets, {
+  space,
+  transition,
+  colors,
+  breakpoints,
+} from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
@@ -10,14 +15,14 @@ const Icon = ({ icon, alt, href }) => (
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         marginBottom: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
       },
-      [presets.Md]: {
+      [breakpoints.md]: {
         height: `calc(12px + 1vw)`,
       },
     }}
@@ -69,13 +74,13 @@ const UsedBy = () => (
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
       },
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         paddingTop: rhythm(5),
       },
     }}
@@ -87,7 +92,7 @@ const UsedBy = () => (
         flexShrink: `1`,
         alignSelf: `flex-end`,
         transform: `translateZ(0)`,
-        [presets.Sm]: {
+        [breakpoints.sm]: {
           flexGrow: `0`,
         },
       }}
@@ -98,7 +103,7 @@ const UsedBy = () => (
           fontFamily: options.headerFontFamily.join(`,`),
           fontSize: presets.scale[1],
           marginBottom: 0,
-          [presets.Sm]: {
+          [breakpoints.sm]: {
             fontSize: presets.scale[2],
             textAlign: `right`,
           },

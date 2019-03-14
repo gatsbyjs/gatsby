@@ -10,12 +10,13 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 
-import presets, {
+import {
   colors,
   space,
   transition,
   radii,
   shadows,
+  breakpoints,
 } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
@@ -28,7 +29,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [presets.Md]: {
+            [breakpoints.md]: {
               background: colors.ui.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -41,7 +42,7 @@ class BlogPostsIndex extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Md]: {
+                [breakpoints.md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -62,7 +63,7 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: rhythm(space[6]),
-                  [presets.Md]: {
+                  [breakpoints.md]: {
                     boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],

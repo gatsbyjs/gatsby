@@ -14,6 +14,7 @@ import presets, {
   lineHeights,
   radii,
   shadows,
+  breakpoints,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
@@ -21,7 +22,7 @@ const EcosystemSectionRoot = styled(`section`)`
   padding: 0 ${rhythm(space[6])};
   margin-bottom: ${rhythm(space[3])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
@@ -38,7 +39,7 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-basis: calc(33.33% - ${rhythm(space[5])});
     max-height: 100%;
 

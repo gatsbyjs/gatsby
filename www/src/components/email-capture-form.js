@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 import SendIcon from "react-icons/lib/md/send"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, radii } from "../utils/presets"
+import presets, { colors, space, radii, breakpoints } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
@@ -12,7 +12,7 @@ import { buttonStyles } from "../utils/styles"
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -70,7 +70,7 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     width: auto;
     margin-top: 0;
     margin-left: ${rhythm(space[2])};

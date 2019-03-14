@@ -12,7 +12,7 @@ import {
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, breakpoints } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -73,7 +73,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     background: ${colors.gatsby};
     color: ${colors.white};
     flex-shrink: 0;
@@ -94,7 +94,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${presets.Xl} {
+  ${breakpoints.xl} {
     width: 160px;
   }
 `
@@ -124,7 +124,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(presets.lg)
+    this.desktopMediaQuery = window.matchMedia(breakpoints.Lg)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }

@@ -15,6 +15,7 @@ import presets, {
   transition,
   radii,
   shadows,
+  breakpoints,
 } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
@@ -37,7 +38,7 @@ class FeaturedSites extends Component {
           margin: `${rhythm(space[6])} ${rhythm(space[6])} 0`,
           position: `relative`,
           display: `none`,
-          [presets.Lg]: {
+          [breakpoints.lg]: {
             display: `block`,
           },
         }}
@@ -89,7 +90,7 @@ class FeaturedSites extends Component {
               ...styles.withTitleHover,
               display: `none`,
               fontSize: presets.scale[1],
-              [presets.Sm]: {
+              [breakpoints.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -119,7 +120,7 @@ class FeaturedSites extends Component {
                 fontSize: presets.scale[1],
                 marginRight: 15,
                 display: `none`,
-                [presets.Md]: {
+                [breakpoints.md]: {
                   display: `block`,
                 },
               }}
@@ -197,7 +198,7 @@ class FeaturedSites extends Component {
                     fontSize: presets.scale[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [presets.Lg]: {
+                    [breakpoints.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -266,10 +267,10 @@ class FeaturedSites extends Component {
                         width: `auto`,
                         display: `block`,
                         margin: `0 auto ${rhythm(space[6])}`,
-                        [presets.Md]: {
+                        [breakpoints.md]: {
                           height: 64,
                         },
-                        [presets.Xl]: {
+                        [breakpoints.xl]: {
                           height: 72,
                         },
 

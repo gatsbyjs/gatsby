@@ -8,7 +8,14 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, { colors, transition, radii, space } from "../utils/presets"
+import presets, {
+  colors,
+  transition,
+  radii,
+  space,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import { rhythm, options } from "../utils/typography"
 
@@ -67,10 +74,10 @@ const MobileNavigation = () => (
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.light}`,
         background: colors.white,
-        height: presets.headerHeight,
+        height: dimensions.headerHeight,
         fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Md]: {
+        [breakpoints.md]: {
           display: `none`,
         },
       }}

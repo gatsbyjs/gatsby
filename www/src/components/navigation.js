@@ -6,7 +6,13 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, transition } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -54,10 +60,10 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: presets.headerHeight,
+        height: dimensions.headerHeight,
         left: 0,
         right: 0,
-        top: presets.bannerHeight,
+        top: dimensions.bannerHeight,
         zIndex: 2,
         "&:after": {
           content: `''`,
@@ -83,7 +89,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [presets.Md]: {
+        [breakpoints.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
@@ -143,7 +149,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Lg]: { display: `flex` },
+              [breakpoints.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -175,14 +181,14 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [presets.Md]: {
+    [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
     },
   },
   ulContainer: {
     display: `none`,
-    [presets.Md]: {
+    [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
@@ -211,7 +217,7 @@ const styles = {
     display: `block`,
     letterSpacing: presets.letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     textTransform: `uppercase`,

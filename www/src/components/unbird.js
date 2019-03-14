@@ -3,7 +3,13 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, radii, shadows } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
@@ -30,7 +36,7 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     bottom: ${rhythm(space[6])};
   }
 `
@@ -76,7 +82,7 @@ const FeedbackForm = styled(`div`)`
   border-radius: ${radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     width: 350px;
     right: 30px;
     bottom: 100px;
