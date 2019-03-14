@@ -114,13 +114,13 @@ function saveState() {
     if (db) {
       db.saveDatabase(err => {
         if (err) {
-          console.log(`error saving loki DB`)
-          console.log(err)
           reject(err)
         } else {
           resolve()
         }
       })
+    } else {
+      reject(`No database found.`)
     }
   })
 }

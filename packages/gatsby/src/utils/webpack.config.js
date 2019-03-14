@@ -37,9 +37,10 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
+    const env =
+      process.env.GATSBY_ACTIVE_ENV ||
+      process.env.NODE_ENV ||
+      `${defaultNodeEnv}`
     const envFile = path.join(process.cwd(), `./.env.${env}`)
     let parsed = {}
     try {
@@ -398,7 +399,8 @@ module.exports = async (
           // See https://github.com/gatsbyjs/gatsby/issues/11072
           styles: {
             name: `styles`,
-            test: /\.css$/,
+            // This should cover all our types of CSS.
+            test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
           },

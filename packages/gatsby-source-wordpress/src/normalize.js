@@ -2,6 +2,7 @@ const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { URL } = require(`url`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -500,6 +501,7 @@ exports.downloadMediaFiles = async ({
               cache,
               createNode,
               createNodeId,
+              parentNodeId: e.id,
               auth: _auth,
             })
 
@@ -617,3 +619,16 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     })
   })
 }
+
+exports.createUrlPathsFromLinks = entities =>
+  entities.map(e => {
+    if (e.link && !e.path) {
+      try {
+        const link = new URL(e.link)
+        e.path = link.pathname
+      } catch (error) {
+        e.path = e.link
+      }
+    }
+    return e
+  })

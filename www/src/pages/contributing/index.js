@@ -55,7 +55,7 @@ class IndexRoute extends React.Component {
               <li>
                 <Link to="/contributing/rfc-process">RFC process</Link>: Learn
                 how the Gatsby.js team manages bigger changes, by way of a
-                "Request-for-comment" process on GitHub
+                “Request-for-comment” process on GitHub
               </li>
             </ul>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />

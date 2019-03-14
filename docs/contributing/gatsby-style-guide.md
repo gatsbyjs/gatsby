@@ -114,7 +114,7 @@ it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
 Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
-[Gatsby Discord](https://gatsby.app/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+[Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 
@@ -181,9 +181,9 @@ File:
 or
 
 Folder:
-`querying-data-with-graphl`
-`querying-data-with-graphl/index.md`
-`querying-data-with-graphl/graphql-image.png`
+`querying-data-with-graphql`
+`querying-data-with-graphql/index.md`
+`querying-data-with-graphql/graphql-image.png`
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
@@ -395,6 +395,13 @@ item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Ital
 painter, sculptor, and architect. It makes things clearer.
 
 [Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
+
+### Prefer US English
+
+For words that have multiple spellings, prefer the US English word over British or Canadian English. For example:
+
+- `color` over `colour`
+- `behavior` over `behaviour`
 
 ### Use apps that help you edit
 

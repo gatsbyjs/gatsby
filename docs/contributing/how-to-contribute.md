@@ -10,7 +10,7 @@ If you are worried or don't know where to start, be sure to check out our [where
 
 ## Pair programming
 
-Gatsby.js offers free [pair programming sessions](/contributing/pair-programming/) to the community, if there's something you'd like to work on together. Get in touch with us if you have if you have a question about contributing or an idea for something to pair on!
+Gatsby.js offers free [pair programming sessions](/contributing/pair-programming/) to the community, if there's something you'd like to work on together. Get in touch with us if you have a question about contributing or an idea for something to pair on!
 
 ## Docs in this section
 
