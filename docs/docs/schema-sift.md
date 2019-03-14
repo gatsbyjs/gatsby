@@ -76,7 +76,7 @@ So, the above query would become:
 
 ### 2. Drop leaves (e.g `{eq: 4}`) from args
 
-To assist in step 3, we create a version of the siftified args called `fieldsToSift` that has all leaves of the args tree replaced with boolean `true`. This is handled by the [extractFieldsToSift](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/run-sift.js#L84) function. `fieldsToSift` would look like this after the function is applied:
+To assist in step 3, we create a version of the siftified args called `fieldsToSift` that has all leaves of the args tree replaced with boolean `true`. This is handled by the [extractFieldsToSift](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L65) function. `fieldsToSift` would look like this after the function is applied:
 
 ```javascript
 {
