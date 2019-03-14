@@ -13,9 +13,6 @@ As we begin to formalize and standardize the methodologies for building Gatsby T
   - [Page queries](#page-queries)
   - [Static queries](#static-queries)
 - [Site metadata](#site-metadata)
-- [Design tokens](#design-tokens)
-- [Templates vs components](#templates-vs-components)
-- [Frontmatter placeholder](#frontmatter-placeholder)
 
 ## Initializing required directories
 
@@ -129,10 +126,53 @@ export default Layout
 
 ## Site metadata
 
-## Design tokens
+For commonly customized things, such as site title and social media handles, you
+can have the user set site metadata in their `gatsby-config.js`. Then, throughout
+your theme you can create a StaticQuery to access it:
 
-## Templates vs components
+```js:title=src/hooks/use-site-metadata.js
+import { graphql, useStaticQuery } from "gatsby"
 
-## Frontmatter placeholder
+export default () => {
+  const data = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          title
+          social {
+            twitter
+            github
+            instagram
+          }
+        }
+      }
+    }
+  `)
 
-**Note**: This is only needed temporarily. In the future themes will be able to set frontmatter schema.
+  return data.site.siteMetadata
+}
+```
+
+Then use it in components like the a header:
+
+```js:title=src/components/header.js
+import React from "react"
+import { Link } from "gatsby"
+
+import useSiteMetadata from "../hooks/use-site-metadata"
+
+export default () => {
+  const { title, social } = useSiteMetadata()
+
+  return (
+    <header>
+      <Link to="/">{title}</Link>
+      <nav>
+        <a href={`https://twitter.com/${social.twitter}`}>Twitter</a>
+        <a href={`https://github.com/${social.github}`}>GitHub</a>
+        <a href={`https://instagram.com/${social.instagram}`}>Instagram</a>
+      </nav>
+    </header>
+  )
+}
+```

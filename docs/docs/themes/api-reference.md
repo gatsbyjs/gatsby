@@ -79,7 +79,17 @@ export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
 
 ## Theme composition
 
-TODO
+A theme can declare another theme as a parent theme. This means that a theme can declare another theme in its
+own `gatsby-config.js`. So if you'd like to use `gatsby-theme-blog` to build off of you can and install the theme
+and then configure it:
+
+```js:title=gatsby-config.js
+module.exports = {
+  __experimentalThemes: [
+    'gatsby-theme-blog
+  ]
+}
+```
 
 ## Add theme transpilation
 

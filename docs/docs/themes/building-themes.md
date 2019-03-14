@@ -4,8 +4,6 @@ title: Building Themes
 
 > ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
 
-**Note**: This page is currently a WIP, see the [blog post guide]() for a full guide on building a theme.
-
 ## Initialize a theme
 
 ```sh
@@ -79,8 +77,10 @@ module.exports = {
 
 ## Add theme transpilation
 
-Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
-This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
+**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
+
+Since your theme will be installed as a dependency it will end up in `node_modules` which Gatsby
+doesn't transpile by default. This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
 
 You will need to install the package:
 
@@ -131,11 +131,9 @@ module.exports = {
 
 ### Add some seed content
 
-## **Principles**
+In your starter you can add seed content so when the site is first run there
+is something to display. This often means some examples posts or project
+content.
 
-- separating templates (with queries) and components
-- accessing theme options
-- base themes for data handling
-- stylistic themes
-- child theming
-- documenting themes (potentially via automated tooling)
+When a user installs your starter all they will see is the content since the
+theme internals are hidden away as a library!
