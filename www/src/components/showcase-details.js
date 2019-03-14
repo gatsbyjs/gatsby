@@ -4,7 +4,13 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors, space } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
@@ -38,8 +44,8 @@ const styles = {
     fontWeight: `bold`,
   },
   prevNextImage: {
-    borderRadius: presets.radii[1],
-    boxShadow: `0 0 38px -8px ${colors.gatsby}`,
+    borderRadius: radii[1],
+    boxShadow: shadows.overlay,
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
@@ -48,7 +54,7 @@ const styles = {
   },
   prevNextPermalinkImage: {
     marginBottom: 0,
-    marginTop: rhythm(options.blockMarginBottom),
+    marginTop: rhythm(space[6]),
   },
   prevNextPermalinkTitle: {
     color: colors.gatsby,
@@ -156,11 +162,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 transform: `translateX(750px)`,
               }}
             >
-              <div
-                css={{
-                  margin: `25px`,
-                }}
-              >
+              <div css={{ margin: `25px` }}>
                 <Img
                   key={nextSite.id}
                   css={{
@@ -178,20 +180,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   alt=""
                 />
               </div>
-              <div
-                css={{
-                  ...styles.prevNextLink,
-                }}
-              >
+              <div css={styles.prevNextLink}>
                 <MdArrowUpward />
                 <div> Next Site in Showcase </div>
-                <div
-                  css={{
-                    ...styles.prevNextLinkSiteTitle,
-                  }}
-                >
-                  {nextSite.title}
-                </div>
+                <div css={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
               </div>
             </Link>
           }
@@ -209,11 +201,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 transform: `translateX(-100%)`,
               }}
             >
-              <div
-                css={{
-                  margin: `25px`,
-                }}
-              >
+              <div css={{ margin: `25px` }}>
                 <Img
                   key={previousSite.id}
                   css={{
@@ -240,11 +228,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               >
                 <MdArrowUpward />
                 <div> Previous Site in Showcase </div>
-                <div
-                  css={{
-                    ...styles.prevNextLinkSiteTitle,
-                  }}
-                >
+                <div css={styles.prevNextLinkSiteTitle}>
                   {previousSite.title}
                 </div>
               </div>
@@ -285,20 +269,14 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: rhythm(1.5 / 4),
-                  [presets.Lg]: {
+                  paddingBottom: rhythm(space[2]),
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                     paddingBottom: rhythm(space[6]),
                   },
                 }}
               >
-                <h1
-                  css={{
-                    margin: 0,
-                  }}
-                >
-                  {data.sitesYaml.title}
-                </h1>
+                <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
                 <a
                   href={data.sitesYaml.main_url}
                   css={{
@@ -309,11 +287,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span
-                    css={{
-                      color: colors.gray.calm,
-                    }}
-                  >
+                  <span css={{ color: colors.gray.calm }}>
                     <span
                       css={{
                         paddingRight: 8,
@@ -345,7 +319,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   margin: `0 ${gutter}`,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -433,26 +407,21 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     <a
                       href={data.sitesYaml.main_url}
                       css={{
+                        backgroundColor: colors.gatsby,
                         border: 0,
-                        borderRadius: presets.radii[1],
-                        color: colors.gatsby,
+                        borderRadius: radii[1],
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: options.headerFontFamily.join(`,`),
                         fontWeight: `bold`,
-                        marginRight: rhythm(1.5 / 4),
-                        padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
+                        marginRight: rhythm(space[2]),
+                        padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
-                          backgroundColor: colors.gatsby,
+                          color: colors.white,
                           borderBottom: `none`,
-                          boxShadow: `none`,
-                          color: `white`,
-                          "&:hover": {
-                            backgroundColor: colors.gatsby,
-                          },
                         },
-                        [shouldShowVisitButtonOnMobile && presets.Sm]: {
+                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
                           display: `block`,
                         },
                       }}
@@ -477,11 +446,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   </div>
                 </div>
               </div>
-              <div
-                css={{
-                  borderTop: `1px solid ${colors.ui.light}`,
-                }}
-              >
+              <div css={{ borderTop: `1px solid ${colors.ui.light}` }}>
                 <Img
                   key={data.sitesYaml.id}
                   fluid={
@@ -499,7 +464,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                   },
                 }}

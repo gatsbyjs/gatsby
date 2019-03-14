@@ -9,7 +9,6 @@ import {
   Toggle,
 } from "react-instantsearch/dom"
 import { navigate as reachNavigate } from "@reach/router"
-import { colors } from "../utils/presets"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
@@ -17,9 +16,16 @@ import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
-import presets, { space } from "../utils/presets"
-import typography, { rhythm } from "../utils/typography"
-import { scrollbarStyles } from "../utils/styles"
+import presets, {
+  space,
+  colors,
+  transition,
+  radii,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import { scrollbarStyles, skipLink } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
@@ -58,20 +64,21 @@ const searchBoxStyles = css`
 
   .ais-SearchBox__input {
     -webkit-appearance: none;
-    background: #fff;
+    background: ${colors.white};
     border: 1px solid ${colors.ui.bright};
-    border-radius: ${presets.radii[2]}px;
+    border-radius: ${radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
     font-size: ${presets.scale[3]};
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    font-family: ${options.headerFontFamily.join(`,`)};
     height: ${searchInputHeight};
     padding: 0;
     padding-right: ${searchInputHeight};
     padding-left: ${searchInputHeight};
     margin: 0 ${searchInputWrapperMargin};
-    -webkit-transition: box-shadow 0.4s ease, background 0.4s ease;
-    transition: box-shadow 0.4s ease, background 0.4s ease;
+    transition: box-shadow ${transition.speed.default}
+        ${transition.curve.default},
+      background ${transition.speed.default} ${transition.curve.default};
     vertical-align: middle;
     white-space: normal;
     width: calc(100% - ${rhythm(6 / 4)});
@@ -87,7 +94,6 @@ const searchBoxStyles = css`
   .ais-SearchBox__input:focus {
     border-color: ${colors.lilac};
     box-shadow: 0 0 0 3px ${colors.ui.bright};
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
   .ais-SearchBox__input::-webkit-input-placeholder,
@@ -119,7 +125,7 @@ const searchBoxStyles = css`
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${presets.radii[2]}px 0 0 ${presets.radii[2]}px;
+    border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
   }
   .ais-SearchBox__submit:focus {
     outline: 0;
@@ -128,8 +134,8 @@ const searchBoxStyles = css`
     fill: ${colors.gatsby};
   }
   .ais-SearchBox__submit svg {
-    width: 1rem;
-    height: 1rem;
+    width: ${rhythm(space[4])};
+    height: ${rhythm(space[4])};
     vertical-align: middle;
     fill: ${colors.ui.bright};
   }
@@ -150,29 +156,28 @@ const searchBoxStyles = css`
   }
   .ais-SearchBox__reset svg {
     fill: ${colors.ui.bright};
-    width: 12px;
-    height: 12px;
+    width: ${rhythm(space[3])};
+    height: ${rhythm(space[3])};
     vertical-align: middle;
   }
 
   .ais-InfiniteHits__loadMore {
     background-color: transparent;
     border: 1px solid ${colors.gatsby};
-    border-radius: ${presets.radii[1]}px;
+    border-radius: ${radii[1]}px;
     color: ${colors.gatsby};
     cursor: pointer;
     width: calc(100% - ${rhythm(space[6] * 2)});
     margin: ${rhythm(space[6])};
-    height: ${rhythm(2)};
+    height: ${rhythm(space[9])};
     outline: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    transition: all ${transition.speed.default} ${transition.curve.default};
+    font-family: ${options.headerFontFamily.join(`,`)};
   }
   .ais-InfiniteHits__loadMore:hover,
   .ais-InfiniteHits__loadMore:focus {
     background-color: ${colors.gatsby};
-    color: #fff;
+    color: ${colors.white};
   }
 
   .ais-InfiniteHits__loadMore[disabled] {
@@ -181,28 +186,7 @@ const searchBoxStyles = css`
 `
 /* stylelint-enable */
 
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-
-  :focus {
-    padding: 0.9rem;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
-  }
-`
+const StyledSkipNavLink = styled(SkipNavLink)({ ...skipLink })
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
@@ -211,7 +195,7 @@ class Search extends Component {
       <div
         css={{
           paddingBottom: rhythm(2.5),
-          [presets.Md]: {
+          [breakpoints.md]: {
             paddingBottom: 0,
           },
         }}
@@ -274,9 +258,9 @@ class Search extends Component {
         <div>
           <div
             css={{
-              [presets.Md]: {
-                height: `calc(100vh - ${presets.headerHeight} - ${
-                  presets.bannerHeight
+              [breakpoints.md]: {
+                height: `calc(100vh - ${dimensions.headerHeight} - ${
+                  dimensions.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
                 ...scrollbarStyles,
@@ -310,7 +294,6 @@ class Search extends Component {
               "&&": {
                 background: `url(${AlgoliaLogo})`,
                 border: `none`,
-                boxShadow: `none`,
                 fontWeight: `normal`,
                 backgroundRepeat: `no-repeat`,
                 backgroundPosition: `50%`,
@@ -350,19 +333,19 @@ const Result = ({ hit, pathname, query }) => {
       to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
-          background: selected ? `#fff` : false,
+          background: selected ? colors.white : false,
           borderBottom: 0,
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
           padding: `${rhythm(space[4])} ${rhythm(space[6])}`,
           position: `relative`,
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
+          transition: `all ${transition.speed.default} ${
+            transition.curve.default
           }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? `#fff` : colors.ui.border,
+            background: selected ? colors.white : colors.ui.border,
           },
           "&:before": {
             background: colors.ui.border,
@@ -391,20 +374,19 @@ const Result = ({ hit, pathname, query }) => {
           alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
-          marginBottom: rhythm(typography.options.blockMarginBottom / 2),
+          marginBottom: rhythm(space[3]),
         }}
       >
         <h2
           css={{
             color: selected ? colors.gatsby : false,
             fontSize: `inherit`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
+            fontFamily: options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
             display: `flex`,
             alignItems: `center`,
             marginBottom: 0,
             marginTop: 0,
-            letterSpacing: 0,
           }}
         >
           {hit.name}

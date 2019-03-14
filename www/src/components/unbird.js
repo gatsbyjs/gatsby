@@ -3,7 +3,13 @@ import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "@emotion/styled"
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
@@ -14,15 +20,15 @@ const FeedbackComponent = styled(`section`)`
 `
 
 const FeedbackToggle = styled(`div`)`
-  width: 60px;
-  height: 60px;
-  bottom: 64px;
+  width: ${rhythm(space[10])};
+  height: ${rhythm(space[10])};
+  bottom: ${rhythm(space[11])};
   background-color: ${colors.gatsby};
-  color: #fff;
+  color: ${colors.white};
   border-radius: 100%;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
+  box-shadow: ${shadows.dialog};
   position: fixed;
-  right: 20px;
+  right: ${rhythm(space[6])};
   z-index: 99999;
   cursor: pointer;
 
@@ -30,9 +36,8 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${presets.Md} {
-    bottom: 30px;
-    right: 30px;
+  ${breakpoints.md} {
+    bottom: ${rhythm(space[6])};
   }
 `
 
@@ -49,7 +54,7 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${rhythm(space[5])};
+  font-size: ${presets.scale[4]};
 `
 const CancelIcon = styled(CancelMdIcon)`
   font-size: ${presets.scale[3]};
@@ -60,9 +65,9 @@ const StatusMessage = styled(`span`)`
   width: 100%;
   background: ${colors.gray.dark};
   bottom: 60px;
-  color: #fff;
+  color: ${colors.white};
   font-size: ${presets.scale[2]};
-  padding: 0.4rem 0.8rem;
+  padding: ${presets.scale[2]} ${presets.scale[4]};
   text-align: left;
   left: 0;
 `
@@ -73,11 +78,11 @@ const FeedbackForm = styled(`div`)`
   bottom: 134px;
   width: 90%;
   background-color: ${colors.gatsby};
-  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radii[2]}px;
+  box-shadow: ${shadows.dialog};
+  border-radius: ${radii[2]}px;
   font-family: ${options.systemFontFamily.join(`,`)};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     width: 350px;
     right: 30px;
     bottom: 100px;
@@ -88,11 +93,11 @@ const Label = styled(`label`)`
   font-family: ${options.headerFontFamily.join(`,`)};
   font-weight: 600;
   height: 240px;
-  color: #fff;
+  color: ${colors.white};
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: ${rhythm(space[8])};
   font-size: ${presets.scale[3]};
   float: left;
 `
@@ -106,7 +111,7 @@ const Input = styled(`input`)`
   height: 60px;
   width: calc(100% - 60px);
   font-size: ${presets.scale[1]};
-  padding: 20px;
+  padding: ${rhythm(space[5])};
   border: none;
   resize: none;
   border-right: 1px solid #ddd;
@@ -119,7 +124,7 @@ const Send = styled(`button`)`
   height: 60px;
   cursor: pointer;
   border: none;
-  background: #fff;
+  background: ${colors.white};
   padding: 0;
 
   svg {

@@ -2,24 +2,30 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm, scale } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
-import presets, { colors, space } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  breakpoints,
+} from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
-const breakpoint2Columns = presets.Md
+const breakpoint2Columns = breakpoints.md
 
 const MetaTitle = ({ children }) => (
   <p
     css={{
       margin: `0`,
       color: colors.gray.calm,
-      marginBottom: rhythm(options.blockMarginBottom / 4),
-      [presets.Xs]: {
+      marginBottom: rhythm(space[1]),
+      [breakpoints.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
@@ -49,7 +55,7 @@ const MetaSection = ({ children, background, last, first }) => (
         marginLeft: 0,
         marginRight: 0,
       },
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         display: `flex`,
       },
     }}
@@ -98,21 +104,21 @@ class CreatorTemplate extends Component {
           <div
             css={{
               margin: rhythm(space[6]),
-              marginBottom: rhythm(options.blockMarginBottom / 4),
+              marginBottom: rhythm(space[1]),
               flexGrow: `1`,
               width: `100%`,
               [breakpoint2Columns]: {
                 width: `auto`,
                 maxWidth: 480,
               },
-              [presets.Lg]: {
+              [breakpoints.lg]: {
                 maxWidth: 560,
               },
             }}
           >
             <Img
               alt={`${creator.name}`}
-              css={{ borderRadius: presets.radii[1] }}
+              css={{ borderRadius: radii[1] }}
               fluid={creator.image.childImageSharp.fluid}
             />
           </div>
@@ -121,7 +127,7 @@ class CreatorTemplate extends Component {
               margin: rhythm(space[6]),
               flex: `1`,
               width: `100%`,
-              [presets.Lg]: {
+              [breakpoints.lg]: {
                 width: `auto`,
                 maxWidth: 640,
               },
@@ -138,14 +144,14 @@ class CreatorTemplate extends Component {
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                marginTop: rhythm(options.blockMarginBottom / 2),
+                marginTop: rhythm(space[3]),
               }}
             >
               {isAgencyOrCompany && (
                 <span
                   css={{
                     color: colors.gray.calm,
-                    marginRight: `.5rem`,
+                    marginRight: rhythm(space[2]),
                   }}
                 >
                   {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
@@ -157,14 +163,14 @@ class CreatorTemplate extends Component {
                   css={{
                     alignSelf: `flex-start`,
                     fontSize: presets.scale[1],
-                    marginRight: `.5rem`,
+                    marginRight: rhythm(space[2]),
                   }}
                 >
                   <Badge
                     forHire={creator.for_hire}
                     customCSS={{
                       background: colors.success,
-                      color: `#fff`,
+                      color: colors.white,
                     }}
                   >
                     {creator.for_hire ? `Open for work` : `Hiring`}
@@ -178,10 +184,8 @@ class CreatorTemplate extends Component {
                     "& svg": { display: `block` },
                     "&&": {
                       border: 0,
-                      boxShadow: `none`,
                       lineHeight: presets.lineHeights.solid,
                       "&:hover": {
-                        background: `none`,
                         color: colors.gatsby,
                       },
                     },
@@ -234,13 +238,9 @@ class CreatorTemplate extends Component {
                         "&&": {
                           marginRight: rhythm(space[6]),
                           borderBottom: `none`,
-                          boxShadow: `none`,
-                          transition: `all ${presets.animation.speedDefault} ${
-                            presets.animation.curveDefault
+                          transition: `all ${transition.speed.default} ${
+                            transition.curve.default
                           }`,
-                          "&:hover": {
-                            background: `none`,
-                          },
                         },
                       }}
                       to={site.node.fields.slug}

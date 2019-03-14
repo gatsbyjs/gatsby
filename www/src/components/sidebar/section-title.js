@@ -1,7 +1,7 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, transition } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 
 const paddingLeft = level =>
@@ -31,7 +31,9 @@ const Chevron = ({ isExpanded }) => (
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotateX(180deg)` : `rotateX(0deg)`,
-        transition: `transform 0.2s ease`,
+        transition: `transform ${transition.speed.fast} ${
+          transition.curve.default
+        }`,
       }}
     />
   </span>
@@ -125,7 +127,7 @@ const SplitButton = ({
         ...styles.resetButton,
         marginLeft: `auto`,
         "&:hover": {
-          background: `white`,
+          background: colors.white,
         },
       }}
       onClick={() => onSectionTitleClick(item)}
@@ -199,7 +201,7 @@ const styles = {
   },
   smallCaps: {
     fontFamily: options.headerFontFamily.join(`,`),
-    letterSpacing: `.075em`,
+    letterSpacing: presets.letterSpacings.tracked,
     textTransform: `uppercase`,
   },
 }

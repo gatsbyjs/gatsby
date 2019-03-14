@@ -31,6 +31,7 @@ module.exports = {
       options: {
         name: `packages`,
         path: `${__dirname}/../packages/`,
+        ignore: [`**/dist/**`],
       },
     },
     {
@@ -71,7 +72,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
-              wrapperStyle: `margin-bottom: 1.05rem`,
+              wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
           `gatsby-remark-autolink-headers`,

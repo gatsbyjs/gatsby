@@ -2,7 +2,7 @@ import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, breakpoints } from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
@@ -10,10 +10,10 @@ const MastheadContent = () => (
     className="masthead-content"
     css={{
       margin: `0 ${rhythm(space[8])}`,
-      paddingBottom: rhythm(2),
-      paddingTop: rhythm(2),
+      paddingBottom: rhythm(space[9]),
+      paddingTop: rhythm(space[9]),
       textAlign: `center`,
-      [presets.Md]: {
+      [breakpoints.md]: {
         paddingBottom: rhythm(3),
         paddingTop: rhythm(3),
       },
@@ -23,9 +23,9 @@ const MastheadContent = () => (
       css={{
         color: colors.gatsby,
         fontSize: `calc(12px + 2vh + 3.5vw)`,
-        letterSpacing: `-1px`,
+        letterSpacing: presets.letterSpacings.tight,
         lineHeight: presets.lineHeights.solid,
-        margin: `0 auto 1.75rem`,
+        margin: `0 auto ${rhythm(space[7])}`,
         maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,
       }}
@@ -38,12 +38,12 @@ const MastheadContent = () => (
         fontFamily: options.headerFontFamily.join(`,`),
         fontSize: presets.scale[4],
         maxWidth: rhythm(30),
-        margin: `0 auto 2rem`,
+        margin: `0 auto ${rhythm(space[7])}`,
         WebkitFontSmoothing: `antialiased`,
-        [presets.Sm]: {
+        [breakpoints.sm]: {
           fontSize: presets.scale[5],
         },
-        [presets.Lg]: {
+        [breakpoints.lg]: {
           fontSize: presets.scale[6],
         },
       }}

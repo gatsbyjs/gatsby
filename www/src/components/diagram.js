@@ -3,13 +3,19 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `255, 255, 255, 0.9`
+const stripeColor = `0, 0, 0, 0.025`
 const stripeSize = 15
 const stripeAnimation = keyframes({
   "0%": {
@@ -24,9 +30,7 @@ const stripeBg = {
   animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = keyframes({
-  to: {
-    strokeDashoffset: 10,
-  },
+  to: { strokeDashoffset: 10 },
 })
 
 const Segment = ({ className, children }) => (
@@ -49,13 +53,13 @@ const SegmentTitle = ({ children }) => (
       display: `inline`,
       background: colors.accent,
       color: colors.gray.copy,
-      borderRadius: presets.radii[1],
+      borderRadius: radii[1],
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-.5rem`,
-      padding: `.35rem .6rem`,
+      bottom: `-${rhythm(space[2])}`,
+      padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
       fontWeight: `normal`,
-      letterSpacing: `.5px`,
+      letterSpacing: presets.letterSpacings.tracked,
       fontSize: presets.scale[1],
       lineHeight: presets.lineHeights.solid,
       textTransform: `uppercase`,
@@ -87,17 +91,16 @@ const VerticalLine = () => (
 )
 
 const box = {
-  background: `#fff`,
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radii[2],
+  borderRadius: radii[2],
   padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
 }
 
 const borderAndBoxShadow = {
-  background: `#fff`,
-  border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radii[1],
-  boxShadow: presets.shadows.card,
+  background: colors.white,
+  border: 0,
+  borderRadius: radii[1],
+  boxShadow: shadows.raised,
   transform: `translateZ(0)`,
   width: `100%`,
 }
@@ -123,10 +126,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
       display: `flex`,
-      [presets.Xs]: {
+      [breakpoints.xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -173,9 +176,7 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
-    {children}
-  </Link>
+  <Link to={to}>{children}</Link>
 )
 
 const Gatsby = () => (
@@ -186,7 +187,7 @@ const Gatsby = () => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -196,31 +197,26 @@ const Gatsby = () => (
       src={logo}
       css={{
         display: `inline-block`,
-        height: rhythm(1.75),
-        width: rhythm(1.75),
-        [presets.Lg]: {
-          width: rhythm(2.25),
-          height: rhythm(2.25),
-        },
+        height: rhythm(space[8]),
         margin: 0,
         verticalAlign: `middle`,
+        width: `auto`,
+        [breakpoints.lg]: {
+          height: rhythm(space[9]),
+        },
       }}
       alt="Gatsby"
     />
     <ItemDescription>
       <small
         css={{
-          marginTop: `.25rem`,
+          marginTop: rhythm(space[1]),
           display: `block`,
         }}
       >
         powered by
       </small>
-      <span
-        css={{
-          color: colors.gatsby,
-        }}
-      >
+      <span css={{ color: colors.gatsby }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -255,14 +251,16 @@ const Diagram = () => (
           css={{
             marginTop: 0,
             marginBottom: rhythm(space[6]),
-            [presets.Md]: {
+            [breakpoints.md]: {
               marginTop: rhythm(space[6]),
             },
           }}
         >
           How Gatsby works
         </h1>
-        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+        <div
+          css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(space[9])}` }}
+        >
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>

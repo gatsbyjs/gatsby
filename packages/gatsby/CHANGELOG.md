@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.32...gatsby@2.1.33) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** allow environment variables to be replaced per environment ([#10565](https://github.com/gatsbyjs/gatsby/issues/10565)) ([828eaf8](https://github.com/gatsbyjs/gatsby/commit/828eaf8))
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.31...gatsby@2.1.32) (2019-03-13)
+
+### Features
+
+- **redirects:** handle absolute from paths when path prefix is used ([#12509](https://github.com/gatsbyjs/gatsby/issues/12509)) ([c6583d4](https://github.com/gatsbyjs/gatsby/commit/c6583d4)), closes [#12497](https://github.com/gatsbyjs/gatsby/issues/12497)
+
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.30...gatsby@2.1.31) (2019-03-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.29...gatsby@2.1.30) (2019-03-11)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.28...gatsby@2.1.29) (2019-03-11)
 
 ### Bug Fixes

@@ -12,7 +12,7 @@ import {
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, breakpoints } from "../../utils/presets"
 import { rhythm, options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -58,7 +58,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     font-size: ${presets.scale[4]};
     justify-content: center;
     line-height: ${presets.lineHeights.dense};
-    padding: ${rhythm(1.5)};
+    padding: ${rhythm(space[7])};
     width: 100%;
 
     span {
@@ -68,14 +68,14 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: 0.2rem;
+      margin-left: ${rhythm(space[1])};
       width: 18px;
     }
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     background: ${colors.gatsby};
-    color: white;
+    color: ${colors.white};
     flex-shrink: 0;
     height: 160px;
 
@@ -83,7 +83,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     width: 125px;
 
     a {
-      color: white;
+      color: ${colors.white};
       padding: ${rhythm(space[5])};
       justify-content: flex-start;
 
@@ -94,7 +94,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${presets.Xl} {
+  ${breakpoints.xl} {
     width: 160px;
   }
 `
@@ -124,7 +124,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(presets.lg)
+    this.desktopMediaQuery = window.matchMedia(breakpoints.Lg)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
