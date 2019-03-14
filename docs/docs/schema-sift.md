@@ -55,7 +55,7 @@ This file converts GraphQL Arguments into sift queries and applies them to the c
 
 ### 1. Convert query args to sift args
 
-Sift expects all field names to be prepended by a `$`. The [siftify-args](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/run-sift.js#L58) function takes care of this. It descends the args tree, performing the following transformations for each field key/value scenario.
+Sift expects all field names to be prepended by a `$`. The [siftifyArgs](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L39) function takes care of this. It descends the args tree, performing the following transformations for each field key/value scenario.
 
 - field key is`elemMatch`? Change to `$elemMatch`. Recurse on value object
 - field value is regex? Apply regex cleaning
