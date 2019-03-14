@@ -62,7 +62,7 @@ createResolvers({
 
 While `createTypes` accepts `graphql-js` types along with SDL string, we've also added an option to use `graphql-js` types so that users could create types with resolvers. However, `graphql-js` is pretty verbose and it's hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic API, that combines brevity of SDL with flexibility of `graphql-js`.
 
-We can this API _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis/).
+We refer to this API as the _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis/).
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions, schema }) => {
