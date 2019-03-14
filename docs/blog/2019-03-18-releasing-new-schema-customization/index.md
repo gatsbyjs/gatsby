@@ -110,7 +110,7 @@ Specifically, before this refactor Gatsby type names weren't stable. They could 
 }
 ```
 
-Another change relates to inference. Before ordering of the Nodes in your data source could affect which type Gatsby inferred. Now, we always consider all possible types, thus you might experience type conflicts for conflicting data sources. It can be solved by either fixing the data or defining a type using new schema customization APIs that we've exposed.
+Another change relates to inference. Previously, ordering of the Nodes in your data source could affect which type Gatsby inferred. Now, we always consider all possible types, thus you might experience type conflicts for conflicting data sources. They can be solved by either fixing the data or defining a type using new schema customization APIs that we've exposed.
 
 # Wrap-up
 
