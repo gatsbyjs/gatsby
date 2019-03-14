@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.33...gatsby@2.1.34) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** properly support --no-color for pretty-error ([#12531](https://github.com/gatsbyjs/gatsby/issues/12531)) ([e493538](https://github.com/gatsbyjs/gatsby/commit/e493538))
+
 ## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.32...gatsby@2.1.33) (2019-03-14)
 
 ### Bug Fixes
