@@ -84,6 +84,8 @@ function buildLocalCommands(cli, isLocalSite) {
     return argv => {
       report.setVerbose(!!argv.verbose)
       if (argv.noColor) {
+        // disables colors in chalk
+        // see: https://www.npmjs.com/package/chalk#chalksupportscolor
         process.env.FORCE_COLOR = `0`
       }
 
