@@ -29,6 +29,7 @@ const {
   cloneTreeUntil,
   findLastTextNode,
 } = require(`./hast-processing`)
+const { eachPromise } = require(`./utils`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -67,19 +68,6 @@ const safeGetCache = ({ getCache, cache }) => id => {
   }
   return getCache(id)
 }
-
-/**
- * @template T
- * @param {Array<T>} input
- * @param {(input: T) => Promise<void>} iterator
- * @return Promise<void>
- */
-const eachPromise = (input, iterator) =>
-  input.reduce(
-    (accumulatorPromise, nextValue) =>
-      accumulatorPromise.then(() => void iterator(nextValue)),
-    Promise.resolve()
-  )
 
 const HeadingType = new GraphQLObjectType({
   name: `MarkdownHeading`,
