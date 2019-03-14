@@ -85,9 +85,7 @@ and then configure it:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: [
-    'gatsby-theme-blog
-  ]
+  __experimentalThemes: ["gatsby-theme-blog"],
 }
 ```
 
