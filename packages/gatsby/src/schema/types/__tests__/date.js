@@ -58,8 +58,6 @@ describe(`isDate`, () => {
     expect(isDate(dateString)).toBeTruthy()
   })
 
-
-
   it.each([`1970-W31`, `2006-W01`, `1970W31`, `2009-W53-7`, `2009W537`])(
     `should return true for ISO 8601 week dates: %s`,
     dateString => {
