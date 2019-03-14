@@ -8,7 +8,13 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, { colors, transition, radii, space } from "../utils/presets"
+import presets, {
+  colors,
+  transition,
+  radii,
+  space,
+  breakpoints,
+} from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 import { rhythm, options } from "../utils/typography"
 
