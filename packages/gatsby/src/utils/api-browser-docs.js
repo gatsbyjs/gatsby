@@ -11,6 +11,7 @@ exports.onClientEntry = true
 
 /**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
+ * @param undefined _
  * @param {Object} pluginOptions
  * @example
  * exports.onInitialClientRender = () => {
@@ -101,6 +102,7 @@ exports.shouldUpdateScroll = true
 
 /**
  * Allow a plugin to register a Service Worker. Should be a function that returns true.
+ * @param undefined _
  * @param {Object} pluginOptions
  * @example
  * exports.registerServiceWorker = () => true
@@ -190,6 +192,7 @@ exports.onPostPrefetchPathname = true
 /**
  * Plugins can take over prefetching logic. If they do, they should call this
  * to disable the now duplicate core prefetching logic.
+ * @param undefined _
  * @param {Object} pluginOptions
  * @example
  * exports.disableCorePrefetching = () => true
@@ -200,6 +203,7 @@ exports.disableCorePrefetching = true
  * Allow a plugin to replace the ReactDOM.render function call by a custom renderer.
  * This method takes no param and should return a function with same signature as ReactDOM.render()
  * Note it's very important to call the callback after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
+ * @param undefined _
  * @param {Object} pluginOptions
  * @example
  * exports.replaceHydrateFunction = () => {
