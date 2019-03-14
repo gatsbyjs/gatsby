@@ -150,6 +150,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
+            `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -391,6 +392,19 @@ module.exports = async (
       },
       splitChunks: {
         name: false,
+        cacheGroups: {
+          // Only create one CSS file to avoid
+          // problems with code-split CSS loading in different orders
+          // causing inconsistent/non-determanistic styling
+          // See https://github.com/gatsbyjs/gatsby/issues/11072
+          styles: {
+            name: `styles`,
+            // This should cover all our types of CSS.
+            test: /\.(css|scss|sass|less|styl)$/,
+            chunks: `all`,
+            enforce: true,
+          },
+        },
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?

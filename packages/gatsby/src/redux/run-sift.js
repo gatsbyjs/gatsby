@@ -5,8 +5,8 @@ const prepareRegex = require(`../utils/prepare-regex`)
 const Promise = require(`bluebird`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { getNode, getNodesByType } = require(`../db/nodes`)
+const { store } = require(`.`)
 
-const resolvedNodesCache = new Map()
 const enhancedNodeCache = new Map()
 const enhancedNodePromiseCache = new Map()
 const enhancedNodeCacheId = ({ node, args }) =>
@@ -169,6 +169,7 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
 }
 
 function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
+  const { resolvedNodesCache } = store.getState()
   const nodesCacheKey = JSON.stringify({
     // typeName + count being the same is a pretty good
     // indication that the nodes are the same.
@@ -177,10 +178,7 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
     nodesLength: nodes.length,
     ...fieldsToSift,
   })
-  if (
-    process.env.NODE_ENV === `production` &&
-    resolvedNodesCache.has(nodesCacheKey)
-  ) {
+  if (resolvedNodesCache.has(nodesCacheKey)) {
     return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
   } else {
     return Promise.all(
@@ -208,7 +206,13 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
         return enhancedNodeGenerationPromise
       })
     ).then(resolvedNodes => {
-      resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
+      store.dispatch({
+        type: `SET_RESOLVED_NODES`,
+        payload: {
+          key: nodesCacheKey,
+          nodes: resolvedNodes,
+        },
+      })
       return resolvedNodes
     })
   }
@@ -275,14 +279,11 @@ function handleMany(siftArgs, nodes, sort) {
  */
 module.exports = (args: Object) => {
   const { queryArgs, gqlType, firstOnly = false } = args
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
 
   // If nodes weren't provided, then load them from the DB
   const nodes = args.nodes || getNodesByType(gqlType.name)
 
-  const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
+  const { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
@@ -308,7 +309,7 @@ module.exports = (args: Object) => {
     if (firstOnly) {
       return handleFirst(siftArgs, resolvedNodes)
     } else {
-      return handleMany(siftArgs, resolvedNodes, clonedArgs.sort)
+      return handleMany(siftArgs, resolvedNodes, queryArgs.sort)
     }
   })
 }

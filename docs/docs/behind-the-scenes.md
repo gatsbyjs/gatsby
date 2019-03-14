@@ -8,7 +8,7 @@ If you're looking for information on how to _use_ Gatsby to write your own site,
 
 These docs aren't supposed to be definitive, or tell you everything there is to know. But as you're exploring the Gatsby codebase, you might find yourself wondering what a concept means, or which part of the codebase implements a particular idea. These docs aim to answer those kinds of questions.
 
-A few more things. These docs are mostly focused on `gatsby build`. Operations specific to `gatsby develop` are mostly ignored. Though this may change in the future. Also, they mostly focus on the happy path, rather than getting bogged down in details of error handling.
+A few more things. These docs are mostly focused on the build lifecycle (`gatsby build`). Operations specific to the develop lifecycle (`gatsby develop`) are mostly ignored. Though this may change in the future. Also, they mostly focus on the happy path, rather than getting bogged down in details of error handling.
 
 The graph below shows roughly how all the sub systems of Gatsby fit together and the input/output artifacts at different parts of the build. To find out how different parts work, click on the nodes in the graph, or use the menu on the left.
 

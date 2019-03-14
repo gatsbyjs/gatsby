@@ -16,6 +16,11 @@ emitter.on(`CREATE_NODE`, action => {
 emitter.on(`DELETE_NODE`, action => {
   if (action.payload.internal.type !== `SitePage`) {
     pagesDirty = true
+    // Make a fake API call to trigger `API_RUNNING_QUEUE_EMPTY` being called.
+    // We don't want to call runCreatePages here as there might be work in
+    // progress. So this is a safe way to make sure runCreatePages gets called
+    // at a safe time.
+    apiRunnerNode(`FAKE_API_CALL`)
   }
 })
 
@@ -45,7 +50,7 @@ const runCreatePages = async () => {
     })
     .map(p => p.id)
 
-  const timestamp = new Date().toJSON()
+  const timestamp = Date.now()
 
   await apiRunnerNode(`createPages`, {
     graphql,
@@ -57,7 +62,8 @@ const runCreatePages = async () => {
   Array.from(store.getState().pages.values()).forEach(page => {
     if (
       !_.includes(statefulPlugins, page.pluginCreatorId) &&
-      page.updatedAt < timestamp
+      page.updatedAt < timestamp &&
+      page.path !== `/404.html`
     ) {
       deleteComponentsDependencies([page.path])
       deletePage(page)

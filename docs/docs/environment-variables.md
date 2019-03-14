@@ -4,7 +4,7 @@ title: "Environment Variables"
 
 ## Environments and Environment Variables
 
-You can provide environment variables to your site to customise its behaviour in different environments.
+You can provide environment variables to your site to customise its behavior in different environments.
 
 Note that we need to distinguish in this discussion between variables which have been defined in
 special places in order to be used in different deployment environments, and true OS-level
@@ -61,7 +61,7 @@ calling Gatsby on the command line.
 In Linux terminals this can be done with:
 
 ```shell
-MY_ENV_VAR=foo gatsby develop
+MY_ENV_VAR=foo npm run develop
 ```
 
 In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only)
@@ -131,7 +131,7 @@ module.exports = {
 - `NODE_ENV`
 - `PUBLIC_DIR`
 
-Gatsby also allows you to specify another environment variable when running the local development server (e.g. `gatsby develop`):
+Gatsby also allows you to specify another environment variable when running the local development server (e.g. `npm run develop`):
 
 - `ENABLE_GATSBY_REFRESH_ENDPOINT`
 

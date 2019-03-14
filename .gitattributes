@@ -10,6 +10,11 @@
 *.mp4 binary
 *.mp3 binary
 *.ttf binary
+*.otf binary
 *.eot binary
 *.woff binary
+*.woff2 binary
 *.pdf binary
+*.tar.gz binary
+*.zip binary
+*.7z binary

@@ -22,13 +22,13 @@ Let's do a deep dive into how this feature was actually implemented step by step
 
 First of all, you have to initialize a Gatsby project and start it in develop mode.
 
-1. npx gatsby new gatsby-dark-mode
+1. gatsby new gatsby-dark-mode
 1. cd gatsby-dark-mode
 1. npm start
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 
-```jsx:title=src/contex/ThemeContext.js
+```jsx:title=src/context/ThemeContext.js
 import React from "react"
 
 const defaultState = {
@@ -89,7 +89,7 @@ export { ThemeProvider }
 
 Create the `ThemeProvider` component which wraps its children with `ThemeContext.Provider`. This component is exported as a named export from the file.
 
-The `toggleDark` function gets the current `state.dark` value and switches the value to the opposite. It then stores the new value in `localStorage` before setting it back to state using the `setState` function, so that it persists over page refreshes. The dark value from `state` and the `togglDark` function are passed to the Provider.
+The `toggleDark` function gets the current `state.dark` value and switches the value to the opposite. It then stores the new value in `localStorage` before setting it back to state using the `setState` function, so that it persists over page refreshes. The dark value from `state` and the `toggleDark` function are passed to the Provider.
 
 ## Modifying the Gatsby Browser file
 

@@ -9,7 +9,7 @@
     "prettier/flowtype",
     "prettier/react"
   ],
-  "plugins": ["flowtype", "prettier", "react"],
+  "plugins": ["flowtype", "prettier", "react", "filenames"],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -41,6 +41,7 @@
       }
     ],
     "consistent-return": ["error"],
+    "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
     "no-console": "off",
     "no-inner-declarations": "off",
     "prettier/prettier": "error",
