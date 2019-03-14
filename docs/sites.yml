@@ -4929,3 +4929,16 @@
   built_by: bejamas
   built_by_url: https://bejamas.io/
   featured: false
+- title: Jean Regisser's Portfolio
+  main_url: "https://jeanregisser.com/"
+  url: "https://jeanregisser.com/"
+  source_url: "https://github.com/jeanregisser/jeanregisser.com"
+  featured: false
+  description: >
+    Portfolio of software engineer Jean Regisser.
+  categories:
+    - Portfolio
+    - Mobile Development
+    - React Native
+  built_by: Jean Regisser
+  built_by_url: "https://jeanregisser.com/"
