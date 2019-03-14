@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "friendly-errors-webpack-plugin": "^1.7.0",
+    "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
     "html-webpack-exclude-assets-plugin": "^0.0.7",
     "html-webpack-plugin": "^3.2.0",
     "lodash": "^4.17.10",
