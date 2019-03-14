@@ -4942,3 +4942,15 @@
     - React Native
   built_by: Jean Regisser
   built_by_url: "https://jeanregisser.com/"
+- title: Axcept - Visual Screenshot Testing
+  url: https://axcept.io
+  main_url: https://axcept.io
+  description: >
+    Visual Testing for everyone
+  categories:
+    - Documentation
+    - Testing
+    - Web Development
+  built_by: d:code:it
+  built_by_url: https://dcodeit.com
+  featured: false
