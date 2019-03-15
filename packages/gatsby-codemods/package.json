@@ -31,6 +31,5 @@
     "babel-preset-gatsby-package": "^0.1.4",
     "cross-env": "^5.0.5",
     "jscodeshift": "^0.5.1"
-  },
-  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
+  }
 }
