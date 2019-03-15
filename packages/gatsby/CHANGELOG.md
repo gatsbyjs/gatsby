@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.34...gatsby@2.1.35) (2019-03-15)
+
+### Features
+
+- **gatsby:** set up webpack config for eventual PnP support ([#12315](https://github.com/gatsbyjs/gatsby/issues/12315)) ([ad6319b](https://github.com/gatsbyjs/gatsby/commit/ad6319b)), closes [/github.com/arcanis/pnp-webpack-plugin/blob/master/index.js#L110-L138](https://github.com//github.com/arcanis/pnp-webpack-plugin/blob/master/index.js/issues/L110-L138) [#10245](https://github.com/gatsbyjs/gatsby/issues/10245) [#12163](https://github.com/gatsbyjs/gatsby/issues/12163)
+
 ## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.33...gatsby@2.1.34) (2019-03-14)
 
 ### Bug Fixes
