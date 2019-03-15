@@ -4,14 +4,14 @@ import { css } from "@emotion/core"
 
 import DocBlock from "./doc-block"
 import { SubHeader } from "./utils"
-import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 
 const List = ({ elements, level, ignoreParams }) => (
   <ul
     css={css`
       list-style-type: none;
-      margin-top: ${rhythm(0.5)};
-      margin-left: ${rhythm(0.75)};
+      margin-top: ${space[3]};
+      margin-left: ${space[4]};
       margin-bottom: 0;
     `}
   >

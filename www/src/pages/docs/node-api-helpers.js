@@ -4,7 +4,7 @@ import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import APIReference from "../../components/api-reference"
-import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -72,7 +72,7 @@ exports.createPages = ({ actions, reporter }) => {
             Check documentation of specific APIs in{` `}
             <Link to="/docs/node-apis/">Gatsby Node APIs</Link> for details.
           </p>
-          <h2 id="shared-helpers" css={{ marginBottom: rhythm(1 / 2) }}>
+          <h2 id="shared-helpers" css={{ marginBottom: space[3] }}>
             Shared helpers
           </h2>
           <ul>
