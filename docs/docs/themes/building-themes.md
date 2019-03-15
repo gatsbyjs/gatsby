@@ -4,7 +4,7 @@ title: Building Themes
 
 > ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
 
-## Gatsby theme starter
+## Gatsby Theme Starter
 
 There's a Gatsby Theme Start which you can use to get up and running quickly:
 
@@ -18,7 +18,7 @@ use to develop your theme.
 If you'd like to walk through setting up a theme project from scratch each step is
 detailed below.
 
-## Initialize a theme
+## Initialize a Theme
 
 For the purposes of this tutorial we will be using the name `gatsby-theme-developer`.
 You will likely want to replaced `developer` with your own theme name.
@@ -31,7 +31,7 @@ npm init -y
 npm i -D gatsby react react-dom
 ```
 
-## Add dependencies
+## Add Dependencies
 
 Then, you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies. This
 will warn users that install your theme if they're missing those dependencies since they're
@@ -101,7 +101,7 @@ module.exports = {
 }
 ```
 
-## Add theme transpilation
+## Add Theme Transpilation
 
 **Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
 
@@ -143,7 +143,7 @@ In order to allow others to install your theme you will need to publish it to np
 
 From the root of your `gatsby-theme-developer` you can run `npm publish`.
 
-## Create your starter
+## Create Your Starter
 
 ```sh
 cd ..
@@ -161,7 +161,7 @@ module.exports = {
 }
 ```
 
-### Add some seed content
+### Add Some Seed Content
 
 In your starter you can add seed content so when the site is first run there
 is something to display. This often means some examples posts or project

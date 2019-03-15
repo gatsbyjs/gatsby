@@ -6,7 +6,7 @@ title: Themes Conventions
 
 As we begin to formalize and standardize the methodologies for building Gatsby Themes, we're documenting them all here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.
 
-## Table of contents
+## Table of Contents
 
 - [Initializing required directories](#initializing-required-directories)
 - [Separating queries and presentational components](#separating-queries-and-presentational-components)
@@ -14,7 +14,7 @@ As we begin to formalize and standardize the methodologies for building Gatsby T
   - [Static queries](#static-queries)
 - [Site metadata](#site-metadata)
 
-## Initializing required directories
+## Initializing Required Directories
 
 If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
 
@@ -37,11 +37,11 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 }
 ```
 
-## Separating queries and presentational components
+## Separating Queries and Presentational Components
 
 As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
 
-### Page queries
+### Page Queries
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
@@ -80,7 +80,7 @@ export const query = graphql`
 `
 ```
 
-### Static queries
+### Static Queries
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
@@ -124,7 +124,7 @@ const Layout = ({ children }) => {
 export default Layout
 ```
 
-## Site metadata
+## Site Metadata
 
 For commonly customized things, such as site title and social media handles, you
 can have the user set site metadata in their `gatsby-config.js`. Then, throughout
