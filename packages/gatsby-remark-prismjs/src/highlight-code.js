@@ -15,12 +15,13 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
       if (language === `none`) {
         return code // Don't escape if set to none.
       } else {
-        if (!unsupportedLanguages.has(language)) {
+        const lang = language.toLowerCase()
+        if (!unsupportedLanguages.has(lang)) {
           console.warn(
-            `unable to find prism language '${language}' for highlighting.`,
+            `unable to find prism language '${lang}' for highlighting.`,
             `applying generic code block`
           )
-          unsupportedLanguages.add(language)
+          unsupportedLanguages.add(lang)
         }
         return _.escape(code)
       }
