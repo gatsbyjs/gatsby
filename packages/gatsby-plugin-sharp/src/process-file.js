@@ -214,13 +214,13 @@ const compressWebP = (pipeline, outputPath, options) =>
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
 
-exports.createArgsDigest = (fileExtension, args) => {
+exports.createArgsDigest = args => {
   const filtered = _.pickBy(args, (value, key) => {
     // remove falsy
     if (!value) return false
-    if (fileExtension.match(/^jp*/) && _.includes(key, `png`)) {
+    if (args.toFormat.match(/^jp*/) && _.includes(key, `png`)) {
       return false
-    } else if (fileExtension.match(/^png/) && key.match(/^jp*/)) {
+    } else if (args.toFormat.match(/^png/) && key.match(/^jp*/)) {
       return false
     }
     // after initial processing - get rid of unknown/unneeded fields

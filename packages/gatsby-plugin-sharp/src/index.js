@@ -127,10 +127,12 @@ const healOptions = (
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension)
-  const fileExtension = options.toFormat ? options.toFormat : file.extension
+  if (!options.toFormat) {
+    options.toFormat = file.extension
+  }
 
-  const argsDigestShort = createArgsDigest(fileExtension, args)
-  const imgSrc = `/${file.name}.${fileExtension}`
+  const argsDigestShort = createArgsDigest(options)
+  const imgSrc = `/${file.name}.${options.toFormat}`
   const dirPath = path.join(
     process.cwd(),
     `public`,
@@ -168,7 +170,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
