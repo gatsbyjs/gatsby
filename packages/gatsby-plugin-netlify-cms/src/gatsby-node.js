@@ -4,7 +4,8 @@ import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import FriendlyErrorsPlugin from "friendly-errors-webpack-plugin"
+// TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
+import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
 
 /**
  * Deep mapping function for plain objects and arrays. Allows any value,
