@@ -1,4 +1,5 @@
 const Promise = require(`bluebird`)
+const os = require(`os`)
 const HJSON = require(`hjson`)
 
 const { onCreateNode } = require(`../gatsby-node`)
@@ -48,7 +49,7 @@ describe(`Process HJSON nodes correctly`, () => {
   it(`correctly creates a node from HJSON which is a single object`, async () => {
     const data = { id: `foo`, blue: true, funny: `yup` }
     node.content = HJSON.stringify(data)
-    node.dir = `/tmp/foo/`
+    node.dir = `${os.tmpdir()}/foo/`
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()

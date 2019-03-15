@@ -4,7 +4,7 @@ title: Adding page metadata
 
 If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "SEO" category. Let's address how you can improve that score.
 
-Adding metadata to pages (such as a title or description) are key in helping search engines like Google understand your content, and decide when to surface it in search results.
+Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content, and decide when to surface it in search results.
 
 [React Helmet](https://github.com/nfl/react-helmet) is a package that provides a React component interface for you to manage your [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head).
 

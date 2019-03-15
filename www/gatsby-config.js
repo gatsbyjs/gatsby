@@ -31,6 +31,7 @@ module.exports = {
       options: {
         name: `packages`,
         path: `${__dirname}/../packages/`,
+        ignore: [`**/dist/**`],
       },
     },
     {
@@ -59,6 +60,7 @@ module.exports = {
       options: {
         plugins: [
           `gatsby-remark-graphviz`,
+          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -70,7 +72,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
-              wrapperStyle: `margin-bottom: 1.05rem`,
+              wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
           `gatsby-remark-autolink-headers`,
@@ -114,6 +116,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-93349937-5`,
+        anonymize: true,
       },
     },
     {

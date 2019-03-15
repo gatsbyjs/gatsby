@@ -3,7 +3,7 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -37,9 +37,10 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
+    const env =
+      process.env.GATSBY_ACTIVE_ENV ||
+      process.env.NODE_ENV ||
+      `${defaultNodeEnv}`
     const envFile = path.join(process.cwd(), `./.env.${env}`)
     let parsed = {}
     try {
@@ -66,6 +67,7 @@ module.exports = async (
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
+    envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
@@ -107,11 +109,7 @@ module.exports = async (
           // Add /* filename */ comments to generated require()s in the output.
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
-          publicPath:
-            process.env.GATSBY_WEBPACK_PUBLICPATH ||
-            `${program.ssl ? `https` : `http`}://${
-              program.host
-            }:${webpackPort}/`,
+          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
@@ -152,6 +150,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
+            `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -205,53 +204,7 @@ module.exports = async (
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
-          {
-            apply: function(compiler) {
-              compiler.hooks.done.tapAsync(
-                `gatsby-webpack-stats-extractor`,
-                (stats, done) => {
-                  let assets = {}
-                  let assetsMap = {}
-                  for (let chunkGroup of stats.compilation.chunkGroups) {
-                    if (chunkGroup.name) {
-                      let files = []
-                      for (let chunk of chunkGroup.chunks) {
-                        files.push(...chunk.files)
-                      }
-                      assets[chunkGroup.name] = files.filter(
-                        f => f.slice(-4) !== `.map`
-                      )
-                      assetsMap[chunkGroup.name] = files
-                        .filter(
-                          f =>
-                            f.slice(-4) !== `.map` &&
-                            f.slice(0, chunkGroup.name.length) ===
-                              chunkGroup.name
-                        )
-                        .map(filename => `/${filename}`)
-                    }
-                  }
-
-                  const webpackStats = {
-                    ...stats.toJson({ all: false, chunkGroups: true }),
-                    assetsByChunkName: assets,
-                  }
-
-                  fs.writeFile(
-                    path.join(`public`, `chunk-map.json`),
-                    JSON.stringify(assetsMap),
-                    () => {
-                      fs.writeFile(
-                        path.join(`public`, `webpack.stats.json`),
-                        JSON.stringify(webpackStats),
-                        done
-                      )
-                    }
-                  )
-                }
-              )
-            },
-          },
+          plugins.extractStats(),
         ])
         break
       }
@@ -439,6 +392,19 @@ module.exports = async (
       },
       splitChunks: {
         name: false,
+        cacheGroups: {
+          // Only create one CSS file to avoid
+          // problems with code-split CSS loading in different orders
+          // causing inconsistent/non-determanistic styling
+          // See https://github.com/gatsbyjs/gatsby/issues/11072
+          styles: {
+            name: `styles`,
+            // This should cover all our types of CSS.
+            test: /\.(css|scss|sass|less|styl)$/,
+            chunks: `all`,
+            enforce: true,
+          },
+        },
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?

@@ -15,7 +15,7 @@ const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
-const Promise = require(`bluebird`)
+const mdastToString = require(`mdast-util-to-string`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -29,6 +29,7 @@ const {
   cloneTreeUntil,
   findLastTextNode,
 } = require(`./hast-processing`)
+const { eachPromise } = require(`./utils`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -49,10 +50,12 @@ const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const tableOfContentsCacheKey = node =>
+const tableOfContentsCacheKey = (node, appliedTocOptions) =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  }-${pluginsCacheStr}-${JSON.stringify(
+    appliedTocOptions
+  )}-${pathPrefixCacheStr}`
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
@@ -65,6 +68,59 @@ const safeGetCache = ({ getCache, cache }) => id => {
   }
   return getCache(id)
 }
+
+const HeadingType = new GraphQLObjectType({
+  name: `MarkdownHeading`,
+  fields: {
+    value: {
+      type: GraphQLString,
+      resolve(heading) {
+        return heading.value
+      },
+    },
+    depth: {
+      type: GraphQLInt,
+      resolve(heading) {
+        return heading.depth
+      },
+    },
+  },
+})
+
+const HeadingLevels = new GraphQLEnumType({
+  name: `HeadingLevels`,
+  values: {
+    h1: { value: 1 },
+    h2: { value: 2 },
+    h3: { value: 3 },
+    h4: { value: 4 },
+    h5: { value: 5 },
+    h6: { value: 6 },
+  },
+})
+
+const ExcerptFormats = new GraphQLEnumType({
+  name: `ExcerptFormats`,
+  values: {
+    PLAIN: { value: `plain` },
+    HTML: { value: `html` },
+  },
+})
+
+const WordCountType = new GraphQLObjectType({
+  name: `wordCount`,
+  fields: {
+    paragraphs: {
+      type: GraphQLInt,
+    },
+    sentences: {
+      type: GraphQLInt,
+    },
+    words: {
+      type: GraphQLInt,
+    },
+  },
+})
 
 /**
  * Map that keeps track of generation of AST to not generate it multiple
@@ -85,29 +141,36 @@ module.exports = (
     reporter,
     ...rest
   },
-  pluginOptions
+  {
+    type: typeName = `MarkdownRemark`,
+    plugins = [],
+    blocks,
+    commonmark = true,
+    footnotes = true,
+    gfm = true,
+    pedantic = true,
+    tableOfContents = {
+      heading: null,
+      maxDepth: 6,
+    },
+    ...grayMatterOptions
+  } = {}
 ) => {
-  if (type.name !== `MarkdownRemark`) {
+  if (type.name !== typeName) {
     return {}
   }
-  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  pluginsCacheStr = plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const {
-      commonmark = true,
-      footnotes = true,
-      pedantic = true,
-      gfm = true,
-      blocks,
-    } = pluginOptions
+    const tocOptions = tableOfContents
     const remarkOptions = {
-      gfm,
       commonmark,
       footnotes,
+      gfm,
       pedantic,
     }
     if (_.isArray(blocks)) {
@@ -115,7 +178,7 @@ module.exports = (
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (let plugin of pluginOptions.plugins) {
+    for (let plugin of plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (let parserPlugin of requiredPlugin.setParserPlugins(
@@ -142,8 +205,8 @@ module.exports = (
       } else {
         const ASTGenerationPromise = getMarkdownAST(markdownNode)
         ASTGenerationPromise.then(markdownAST => {
-          cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
+          return cache.set(cacheKey, markdownAST)
         }).catch(err => {
           ASTPromiseMap.delete(cacheKey)
           return err
@@ -159,8 +222,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin.mutateSource)) {
           return requiredPlugin.mutateSource(
@@ -227,8 +290,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin)) {
           return requiredPlugin(
@@ -261,7 +324,7 @@ module.exports = (
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
           return {
-            value: _.first(select(heading, `text`).map(text => text.value)),
+            value: mdastToString(heading),
             depth: heading.depth,
           }
         })
@@ -271,27 +334,37 @@ module.exports = (
       }
     }
 
-    async function getTableOfContents(markdownNode, pathToSlugField) {
-      const cachedToc = await cache.get(tableOfContentsCacheKey(markdownNode))
+    async function getTableOfContents(markdownNode, gqlTocOptions) {
+      // fetch defaults
+      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      // get cached toc
+      const cachedToc = await cache.get(
+        tableOfContentsCacheKey(markdownNode, appliedTocOptions)
+      )
       if (cachedToc) {
         return cachedToc
       } else {
         const ast = await getAST(markdownNode)
-        const tocAst = mdastToToc(ast)
+        const tocAst = mdastToToc(ast, appliedTocOptions)
 
         let toc
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              if (_.get(markdownNode, pathToSlugField) === undefined) {
+              if (
+                _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
+                undefined
+              ) {
                 console.warn(
-                  `Skipping TableOfContents. Field '${pathToSlugField}' missing from markdown node`
+                  `Skipping TableOfContents. Field '${
+                    appliedTocOptions.pathToSlugField
+                  }' missing from markdown node`
                 )
                 return null
               }
               node.url = [
                 pathPrefix,
-                _.get(markdownNode, pathToSlugField),
+                _.get(markdownNode, appliedTocOptions.pathToSlugField),
                 node.url,
               ]
                 .join(`/`)
@@ -309,7 +382,7 @@ module.exports = (
         } else {
           toc = ``
         }
-        cache.set(tableOfContentsCacheKey(markdownNode), toc)
+        cache.set(tableOfContentsCacheKey(markdownNode, appliedTocOptions), toc)
         return toc
       }
     }
@@ -345,43 +418,90 @@ module.exports = (
       }
     }
 
-    const HeadingType = new GraphQLObjectType({
-      name: `MarkdownHeading`,
-      fields: {
-        value: {
-          type: GraphQLString,
-          resolve(heading) {
-            return heading.value
-          },
-        },
-        depth: {
-          type: GraphQLInt,
-          resolve(heading) {
-            return heading.depth
-          },
-        },
-      },
-    })
+    async function getExcerptAst(
+      markdownNode,
+      { pruneLength, truncate, excerptSeparator }
+    ) {
+      const fullAST = await getHTMLAst(markdownNode)
+      if (excerptSeparator) {
+        return cloneTreeUntil(
+          fullAST,
+          ({ nextNode }) =>
+            nextNode.type === `raw` && nextNode.value === excerptSeparator
+        )
+      }
+      if (!fullAST.children.length) {
+        return fullAST
+      }
 
-    const HeadingLevels = new GraphQLEnumType({
-      name: `HeadingLevels`,
-      values: {
-        h1: { value: 1 },
-        h2: { value: 2 },
-        h3: { value: 3 },
-        h4: { value: 4 },
-        h5: { value: 5 },
-        h6: { value: 6 },
-      },
-    })
+      const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
+        const totalExcerptSoFar = getConcatenatedValue(root)
+        return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
+      })
+      const unprunedExcerpt = getConcatenatedValue(excerptAST)
+      if (
+        !unprunedExcerpt ||
+        (pruneLength && unprunedExcerpt.length < pruneLength)
+      ) {
+        return excerptAST
+      }
 
-    const ExcerptFormats = new GraphQLEnumType({
-      name: `ExcerptFormats`,
-      values: {
-        PLAIN: { value: `plain` },
-        HTML: { value: `html` },
-      },
-    })
+      const lastTextNode = findLastTextNode(excerptAST)
+      const amountToPruneLastNode =
+        pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+      if (!truncate) {
+        lastTextNode.value = prune(
+          lastTextNode.value,
+          amountToPruneLastNode,
+          `…`
+        )
+      } else {
+        lastTextNode.value = _.truncate(lastTextNode.value, {
+          length: pruneLength,
+          omission: `…`,
+        })
+      }
+      return excerptAST
+    }
+
+    async function getExcerpt(
+      markdownNode,
+      { format, pruneLength, truncate, excerptSeparator }
+    ) {
+      if (format === `html`) {
+        const excerptAST = await getExcerptAst(markdownNode, {
+          pruneLength,
+          truncate,
+          excerptSeparator,
+        })
+        const html = hastToHTML(excerptAST, {
+          allowDangerousHTML: true,
+        })
+        return html
+      }
+
+      if (markdownNode.excerpt) {
+        return markdownNode.excerpt
+      }
+
+      const text = await getAST(markdownNode).then(ast => {
+        const excerptNodes = []
+        visit(ast, node => {
+          if (node.type === `text` || node.type === `inlineCode`) {
+            excerptNodes.push(node.value)
+          }
+          return
+        })
+        if (!truncate) {
+          return prune(excerptNodes.join(` `), pruneLength, `…`)
+        }
+        return _.truncate(excerptNodes.join(` `), {
+          length: pruneLength,
+          omission: `…`,
+        })
+      })
+      return text
+    }
 
     return resolve({
       html: {
@@ -415,77 +535,35 @@ module.exports = (
             defaultValue: `plain`,
           },
         },
-        async resolve(markdownNode, { format, pruneLength, truncate }) {
-          if (format === `html`) {
-            if (pluginOptions.excerpt_separator) {
-              const fullAST = await getHTMLAst(markdownNode)
-              const excerptAST = cloneTreeUntil(
-                fullAST,
-                ({ nextNode }) =>
-                  nextNode.type === `raw` &&
-                  nextNode.value === pluginOptions.excerpt_separator
-              )
-              return hastToHTML(excerptAST, {
-                allowDangerousHTML: true,
-              })
-            }
-            const fullAST = await getHTMLAst(markdownNode)
-            if (!fullAST.children.length) {
-              return ``
-            }
-
-            const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
-              const totalExcerptSoFar = getConcatenatedValue(root)
-              return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
-            })
-            const unprunedExcerpt = getConcatenatedValue(excerptAST)
-            if (!unprunedExcerpt) {
-              return ``
-            }
-
-            if (pruneLength && unprunedExcerpt.length < pruneLength) {
-              return hastToHTML(excerptAST, {
-                allowDangerousHTML: true,
-              })
-            }
-
-            const lastTextNode = findLastTextNode(excerptAST)
-            const amountToPruneLastNode =
-              pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
-            if (!truncate) {
-              lastTextNode.value = prune(
-                lastTextNode.value,
-                amountToPruneLastNode,
-                `…`
-              )
-            } else {
-              lastTextNode.value = _.truncate(lastTextNode.value, {
-                length: pruneLength,
-                omission: `…`,
-              })
-            }
-            return hastToHTML(excerptAST, {
-              allowDangerousHTML: true,
-            })
-          }
-          if (markdownNode.excerpt) {
-            return Promise.resolve(markdownNode.excerpt)
-          }
-          return getAST(markdownNode).then(ast => {
-            const excerptNodes = []
-            visit(ast, node => {
-              if (node.type === `text` || node.type === `inlineCode`) {
-                excerptNodes.push(node.value)
-              }
-              return
-            })
-            if (!truncate) {
-              return prune(excerptNodes.join(` `), pruneLength, `…`)
-            }
-            return _.truncate(excerptNodes.join(` `), {
-              length: pruneLength,
-              omission: `…`,
-            })
+        resolve(markdownNode, { format, pruneLength, truncate }) {
+          return getExcerpt(markdownNode, {
+            format,
+            pruneLength,
+            truncate,
+            excerptSeparator: grayMatterOptions.excerpt_separator,
+          })
+        },
+      },
+      excerptAst: {
+        type: GraphQLJSON,
+        args: {
+          pruneLength: {
+            type: GraphQLInt,
+            defaultValue: 140,
+          },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
+        },
+        resolve(markdownNode, { pruneLength, truncate }) {
+          return getExcerptAst(markdownNode, {
+            pruneLength,
+            truncate,
+            excerptSeparator: grayMatterOptions.excerpt_separator,
+          }).then(ast => {
+            const strippedAst = stripPosition(_.clone(ast), true)
+            return hastReparseRaw(strippedAst)
           })
         },
       },
@@ -528,27 +606,20 @@ module.exports = (
             type: GraphQLString,
             defaultValue: `fields.slug`,
           },
+          maxDepth: {
+            type: GraphQLInt,
+          },
+          heading: {
+            type: GraphQLString,
+          },
         },
-        resolve(markdownNode, { pathToSlugField }) {
-          return getTableOfContents(markdownNode, pathToSlugField)
+        resolve(markdownNode, args) {
+          return getTableOfContents(markdownNode, args)
         },
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCount`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt,
-            },
-            sentences: {
-              type: GraphQLInt,
-            },
-            words: {
-              type: GraphQLInt,
-            },
-          },
-        }),
+        type: WordCountType,
         resolve(markdownNode) {
           let counts = {}
 

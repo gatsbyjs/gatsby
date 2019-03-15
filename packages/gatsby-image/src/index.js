@@ -16,7 +16,7 @@ const convertProps = props => {
   return convertedProps
 }
 
-// Cache if we've seen an image before so we don't both with
+// Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
 const imageCache = {}
 const inImageCache = props => {
@@ -80,25 +80,26 @@ const noscriptImg = props => {
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
   const srcSetWebp = props.srcSetWebp
-    ? `<source type='image/webp' srcSet="${props.srcSetWebp}" ${sizes}/>`
+    ? `<source type='image/webp' srcset="${props.srcSetWebp}" ${sizes}/>`
     : ``
-  const srcSet = props.srcSet
-    ? `<source srcSet="${props.srcSet}" ${sizes}/>`
-    : ``
+  const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
-  return `<picture>${srcSetWebp}${srcSet}<img ${width}${height}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
-  const { style, onLoad, onError, ...otherProps } = props
+  const { sizes, srcSet, src, style, onLoad, onError, ...otherProps } = props
 
   return (
     <img
+      sizes={sizes}
+      srcSet={srcSet}
+      src={src}
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
@@ -189,14 +190,15 @@ class Image extends React.Component {
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
+        const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
           typeof this.props.onStartLoad === `function`
         ) {
-          this.props.onStartLoad({ wasCached: inImageCache(this.props) })
+          this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: false })
+        this.setState({ isVisible: true, imgLoaded: imageInCache })
       })
     }
   }
@@ -208,7 +210,10 @@ class Image extends React.Component {
     if (this.state.seenBefore) {
       this.setState({ fadeIn: false })
     }
-    this.props.onLoad && this.props.onLoad()
+
+    if (this.props.onLoad) {
+      this.props.onLoad()
+    }
   }
 
   render() {
@@ -224,15 +229,17 @@ class Image extends React.Component {
       fixed,
       backgroundColor,
       Tag,
+      itemProp,
     } = convertProps(this.props)
 
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
+    const initialDelay = `0.25s`
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transition: `opacity 0.5s`,
-      transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
+      transitionDelay: this.state.imgLoaded ? `0.5s` : initialDelay,
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -272,16 +279,6 @@ class Image extends React.Component {
             }}
           />
 
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
@@ -292,11 +289,21 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: `0.35s`,
+                transitionDelay: initialDelay,
                 right: 0,
                 left: 0,
               }}
             />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
@@ -310,16 +317,17 @@ class Image extends React.Component {
                 />
               )}
 
-              <source srcSet={image.srcSet} sizes={image.sizes} />
-
               <Img
                 alt={alt}
                 title={title}
+                sizes={image.sizes}
                 src={image.src}
+                srcSet={image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                itemProp={itemProp}
               />
             </picture>
           )}
@@ -358,16 +366,6 @@ class Image extends React.Component {
           ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
@@ -376,10 +374,20 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: `0.25s`,
+                transitionDelay: initialDelay,
                 height: image.height,
               }}
             />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Once the image is visible, start downloading the image */}
@@ -393,18 +401,19 @@ class Image extends React.Component {
                 />
               )}
 
-              <source srcSet={image.srcSet} sizes={image.sizes} />
-
               <Img
                 alt={alt}
                 title={title}
                 width={image.width}
                 height={image.height}
+                sizes={image.sizes}
                 src={image.src}
+                srcSet={image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                itemProp={itemProp}
               />
             </picture>
           )}
@@ -479,6 +488,7 @@ Image.propTypes = {
   onError: PropTypes.func,
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
+  itemProp: PropTypes.string,
 }
 
 export default Image

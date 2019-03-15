@@ -165,7 +165,6 @@ exports.sourceNodes = async (
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
-  Object.keys(foreignReferenceMap)
   existingNodes
     .filter(n => _.includes(newOrUpdatedEntries, n.id))
     .forEach(n => {

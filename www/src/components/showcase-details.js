@@ -4,21 +4,27 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors } from "../utils/presets"
-import { options, scale, rhythm } from "../utils/typography"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
+import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
-import MdLaunch from "react-icons/lib/md/launch"
+import MdLink from "react-icons/lib/md/link"
 import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = rhythm(3 / 4)
-const gutterDesktop = rhythm(6 / 4)
+const gutter = rhythm(space[6])
+const gutterDesktop = rhythm(space[8])
 
 const styles = {
   link: {
@@ -32,17 +38,14 @@ const styles = {
     top: 280,
     width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
-    [presets.Desktop]: {
-      ...scale(-1 / 6),
-    },
   },
   prevNextLinkSiteTitle: {
     color: colors.gatsby,
     fontWeight: `bold`,
   },
   prevNextImage: {
-    borderRadius: presets.radius,
-    boxShadow: `0 0 38px -8px ${colors.gatsby}`,
+    borderRadius: radii[1],
+    boxShadow: shadows.overlay,
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
@@ -51,7 +54,7 @@ const styles = {
   },
   prevNextPermalinkImage: {
     marginBottom: 0,
-    marginTop: rhythm(options.blockMarginBottom),
+    marginTop: rhythm(space[6]),
   },
   prevNextPermalinkTitle: {
     color: colors.gatsby,
@@ -73,12 +76,12 @@ const styles = {
     marginRight: 4,
     verticalAlign: `sub`,
     position: `absolute`,
-    left: `-${rhythm(3 / 4)}`,
+    left: `-${rhythm(space[6])}`,
     top: `50%`,
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(6 / 4),
+    marginLeft: rhythm(space[8]),
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -103,7 +106,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
     query={graphql`
       query {
         allSitesYaml(
-          filter: { featured: { eq: true }, main_url: { ne: null } }
+          filter: {
+            featured: { eq: true }
+            main_url: { ne: null }
+            fields: { hasScreenshot: { eq: true } }
+          }
         ) {
           edges {
             node {
@@ -131,6 +138,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
       const allSitesYaml = staticData.allSitesYaml
       const nextSite = parent.getNext(allSitesYaml)
       const previousSite = parent.getPrevious(allSitesYaml)
+      const shouldShowVisitButtonOnMobile = !!data.sitesYaml.source_url
+      const { filters } = parent.props.location.state || {}
 
       return (
         <Layout
@@ -144,6 +153,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               to={nextSite.fields.slug}
               state={{
                 isModal: true,
+                filters,
               }}
               css={{
                 display: `block`,
@@ -152,11 +162,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 transform: `translateX(750px)`,
               }}
             >
-              <div
-                css={{
-                  margin: `25px`,
-                }}
-              >
+              <div css={{ margin: `25px` }}>
                 <Img
                   key={nextSite.id}
                   css={{
@@ -174,20 +180,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   alt=""
                 />
               </div>
-              <div
-                css={{
-                  ...styles.prevNextLink,
-                }}
-              >
+              <div css={styles.prevNextLink}>
                 <MdArrowUpward />
                 <div> Next Site in Showcase </div>
-                <div
-                  css={{
-                    ...styles.prevNextLinkSiteTitle,
-                  }}
-                >
-                  {nextSite.title}
-                </div>
+                <div css={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
               </div>
             </Link>
           }
@@ -196,6 +192,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               to={previousSite.fields.slug}
               state={{
                 isModal: true,
+                filters,
               }}
               css={{
                 display: `block`,
@@ -204,11 +201,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 transform: `translateX(-100%)`,
               }}
             >
-              <div
-                css={{
-                  margin: `25px`,
-                }}
-              >
+              <div css={{ margin: `25px` }}>
                 <Img
                   key={previousSite.id}
                   css={{
@@ -235,11 +228,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               >
                 <MdArrowUpward />
                 <div> Previous Site in Showcase </div>
-                <div
-                  css={{
-                    ...styles.prevNextLinkSiteTitle,
-                  }}
-                >
+                <div css={styles.prevNextLinkSiteTitle}>
                   {previousSite.title}
                 </div>
               </div>
@@ -279,43 +268,26 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               </Helmet>
               <div
                 css={{
-                  fontFamily: options.headerFontFamily.join(`,`),
                   padding: gutter,
-                  paddingBottom: rhythm(1.5 / 4),
-                  [presets.Desktop]: {
+                  paddingBottom: rhythm(space[2]),
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: rhythm(3 / 4),
+                    paddingBottom: rhythm(space[6]),
                   },
                 }}
               >
-                <h1
-                  css={{
-                    margin: 0,
-                  }}
-                >
-                  {data.sitesYaml.title}
-                </h1>
+                <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
                 <a
                   href={data.sitesYaml.main_url}
                   css={{
                     ...styles.link,
                     fontWeight: `bold`,
-                    [presets.Desktop]: {
-                      ...scale(-1 / 6),
-                    },
                   }}
                 >
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span
-                    css={{
-                      color: colors.gray.calm,
-                      [presets.Desktop]: {
-                        ...scale(-1 / 6),
-                      },
-                    }}
-                  >
+                  <span css={{ color: colors.gray.calm }}>
                     <span
                       css={{
                         paddingRight: 8,
@@ -347,7 +319,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: options.headerFontFamily.join(`,`),
                   margin: `0 ${gutter}`,
-                  [presets.Desktop]: {
+                  [breakpoints.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -361,9 +333,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       fontWeight: `bold`,
                       padding: 20,
                       paddingLeft: 0,
-                      [presets.Desktop]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <img
@@ -384,9 +353,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
                       borderRight: `1px solid ${colors.ui.light}`,
-                      [presets.Desktop]: {
-                        ...scale(-1 / 6),
-                      },
                     }}
                   >
                     <a
@@ -397,7 +363,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: 20,
+                          fontSize: presets.scale[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}
@@ -425,63 +391,62 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     <a href={data.sitesYaml.source_url}> Case Study </a>
                   </div>
                 )}
-              </div>
-              <div
-                css={{
-                  borderTop: `1px solid ${colors.ui.light}`,
-                  position: `relative`,
-                }}
-              >
                 <div
                   css={{
-                    position: `absolute`,
-                    right: rhythm(3 / 4),
-                    top: rhythm(-15 / 8),
-                    left: `auto`,
-                    zIndex: 1,
-                    display: `flex`,
+                    alignSelf: `center`,
+                    marginLeft: `auto`,
                   }}
                 >
-                  <a
-                    href={data.sitesYaml.main_url}
+                  <div
                     css={{
-                      border: 0,
-                      borderRadius: presets.radius,
-                      color: colors.gatsby,
-                      fontFamily: options.headerFontFamily.join(`,`),
-                      fontWeight: `bold`,
-                      marginRight: rhythm(1.5 / 4),
-                      padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-                      textDecoration: `none`,
-                      WebkitFontSmoothing: `antialiased`,
-                      "&&": {
-                        backgroundColor: colors.gatsby,
-                        borderBottom: `none`,
-                        boxShadow: `none`,
-                        color: `white`,
-                        "&:hover": {
-                          backgroundColor: colors.gatsby,
-                        },
-                      },
+                      position: `relative`,
+                      zIndex: 1,
+                      display: `flex`,
                     }}
                   >
-                    <MdLaunch
-                      style={{
-                        verticalAlign: `sub`,
+                    <a
+                      href={data.sitesYaml.main_url}
+                      css={{
+                        backgroundColor: colors.gatsby,
+                        border: 0,
+                        borderRadius: radii[1],
+                        display: shouldShowVisitButtonOnMobile ? `none` : null,
+                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontWeight: `bold`,
+                        marginRight: rhythm(space[2]),
+                        padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+                        textDecoration: `none`,
+                        WebkitFontSmoothing: `antialiased`,
+                        "&&": {
+                          color: colors.white,
+                          borderBottom: `none`,
+                        },
+                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
+                          display: `block`,
+                        },
                       }}
+                    >
+                      <MdLink
+                        style={{
+                          verticalAlign: `sub`,
+                        }}
+                      />
+                      Visit site
+                      {` `}
+                    </a>
+                    <ShareMenu
+                      css={{ display: `flex`, minWidth: 32, minHeight: 32 }}
+                      url={data.sitesYaml.main_url}
+                      title={data.sitesYaml.title}
+                      image={`https://www.gatsbyjs.org${
+                        data.sitesYaml.childScreenshot.screenshotFile
+                          .childImageSharp.resize.src
+                      }`}
                     />
-                    Visit site
-                    {` `}
-                  </a>
-                  <ShareMenu
-                    url={data.sitesYaml.main_url}
-                    title={data.sitesYaml.title}
-                    image={`https://www.gatsbyjs.org${
-                      data.sitesYaml.childScreenshot.screenshotFile
-                        .childImageSharp.resize.src
-                    }`}
-                  />
+                  </div>
                 </div>
+              </div>
+              <div css={{ borderTop: `1px solid ${colors.ui.light}` }}>
                 <Img
                   key={data.sitesYaml.id}
                   fluid={
@@ -499,7 +464,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [presets.Desktop]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                   },
                 }}

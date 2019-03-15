@@ -4,41 +4,45 @@ const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
-  pluginOptions
+  {
+    plugins = null,
+    filter = () => true,
+    type = `MarkdownRemark`,
+    ...grayMatterOptions
+  } = {}
 ) {
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
   if (
-    node.internal.mediaType !== `text/markdown` &&
-    node.internal.mediaType !== `text/x-markdown`
+    (node.internal.mediaType !== `text/markdown` &&
+      node.internal.mediaType !== `text/x-markdown`) ||
+    !filter(node)
   ) {
-    return
+    return {}
   }
 
   const content = await loadNodeContent(node)
 
   try {
-    let data = grayMatter(content, pluginOptions)
-    // Convert date objects to string. Otherwise there's type mismatches
-    // during inference as some dates are strings and others date objects.
+    let data = grayMatter(content, grayMatterOptions)
+
     if (data.data) {
-      data.data = _.mapValues(data.data, v => {
-        if (_.isDate(v)) {
-          return v.toJSON()
-        } else {
-          return v
+      data.data = _.mapValues(data.data, value => {
+        if (_.isDate(value)) {
+          return value.toJSON()
         }
+        return value
       })
     }
 
-    const markdownNode = {
-      id: createNodeId(`${node.id} >>> MarkdownRemark`),
+    let markdownNode = {
+      id: createNodeId(`${node.id} >>> ${type}`),
       children: [],
       parent: node.id,
       internal: {
         content: data.content,
-        type: `MarkdownRemark`,
+        type,
       },
     }
 
@@ -62,6 +66,8 @@ module.exports = async function onCreateNode(
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
+
+    return markdownNode
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
@@ -69,5 +75,7 @@ module.exports = async function onCreateNode(
       }:\n
       ${err.message}`
     )
+
+    return {} // eslint
   }
 }
