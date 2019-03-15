@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.8...gatsby-remark-images@3.0.9) (2019-03-12)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** override all default styling with wrapperStyle ([#12200](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/12200)) ([27e4a6a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/27e4a6a)), closes [gatsbyjs#12199](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/12199)
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.7...gatsby-remark-images@3.0.8) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.6...gatsby-remark-images@3.0.7) (2019-03-11)
+
+### Features
+
+- **gatsby-remark-images:** set wrapperStyle as a function to enable dynamic css ([#12060](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/12060)) ([d83f212](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/d83f212))
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.5...gatsby-remark-images@3.0.6) (2019-03-04)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.4...gatsby-remark-images@3.0.5) (2019-02-22)
 
 ### Features

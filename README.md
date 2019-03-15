@@ -10,9 +10,11 @@
 <h3 align="center">
   ⚛️ 📄 :rocket:
 </h3>
+<h3 align="center">
+  Fast in every way that matters
+</h3>
 <p align="center">
-  <strong>Blazing fast modern site generator for React</strong><br>
-  Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby.
+  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -53,7 +55,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://gatsby.app/discord">Discord</a>
+  <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -99,7 +101,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     # create a new Gatsby site using the default starter
-    npx gatsby new my-blazing-fast-site
+    gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**

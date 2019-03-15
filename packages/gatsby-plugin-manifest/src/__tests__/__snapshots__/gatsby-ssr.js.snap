@@ -11,42 +11,42 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=null"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=null"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=null"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=null"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=null"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=null"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=null"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=null"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -56,7 +56,7 @@ Array [
 exports[`gatsby-plugin-manifest Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -68,42 +68,42 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -121,42 +121,42 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=null"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=null"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=null"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=null"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=null"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=null"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=null"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=null"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -171,95 +171,42 @@ Array [
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=null"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=null"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=null"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=null"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=null"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=null"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=null"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
-    rel="apple-touch-icon"
-    sizes="512x512"
-  />,
-]
-`;
-
-exports[`gatsby-plugin-manifest Adds link favicon if "include_favicon" option is not provided 1`] = `
-Array [
-  <link
-    href="/icons/icon-48x48.png"
-    rel="shortcut icon"
-  />,
-  <link
-    href="/manifest.webmanifest"
-    rel="manifest"
-  />,
-  <link
-    href="/icons/icon-48x48.png"
-    rel="apple-touch-icon"
-    sizes="48x48"
-  />,
-  <link
-    href="/icons/icon-72x72.png"
-    rel="apple-touch-icon"
-    sizes="72x72"
-  />,
-  <link
-    href="/icons/icon-96x96.png"
-    rel="apple-touch-icon"
-    sizes="96x96"
-  />,
-  <link
-    href="/icons/icon-144x144.png"
-    rel="apple-touch-icon"
-    sizes="144x144"
-  />,
-  <link
-    href="/icons/icon-192x192.png"
-    rel="apple-touch-icon"
-    sizes="192x192"
-  />,
-  <link
-    href="/icons/icon-256x256.png"
-    rel="apple-touch-icon"
-    sizes="256x256"
-  />,
-  <link
-    href="/icons/icon-384x384.png"
-    rel="apple-touch-icon"
-    sizes="384x384"
-  />,
-  <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=null"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -269,7 +216,7 @@ Array [
 exports[`gatsby-plugin-manifest Adds link favicon tag if "include_favicon" is set to true 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -277,42 +224,42 @@ Array [
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -322,7 +269,7 @@ Array [
 exports[`gatsby-plugin-manifest Creates legacy apple touch links Using default set of icons 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -334,42 +281,42 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -379,7 +326,7 @@ Array [
 exports[`gatsby-plugin-manifest Creates legacy apple touch links Using user specified list of icons 1`] = `
 Array [
   <link
-    href="/favicons/android-chrome-48x48.png"
+    href="/favicons/android-chrome-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -391,12 +338,65 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/favicons/android-chrome-48x48.png"
+    href="/favicons/android-chrome-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/favicons/android-chrome-512x512.png"
+    href="/favicons/android-chrome-512x512.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
+    rel="apple-touch-icon"
+    sizes="512x512"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest Does file name cache busting if "cache_busting_mode" option is set to name 1`] = `
+Array [
+  <link
+    href="/icons/icon-48x48-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <link
+    href="/icons/icon-48x48-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/icons/icon-72x72-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="72x72"
+  />,
+  <link
+    href="/icons/icon-96x96-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="96x96"
+  />,
+  <link
+    href="/icons/icon-144x144-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="144x144"
+  />,
+  <link
+    href="/icons/icon-192x192-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="192x192"
+  />,
+  <link
+    href="/icons/icon-256x256-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="256x256"
+  />,
+  <link
+    href="/icons/icon-384x384-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
+    rel="apple-touch-icon"
+    sizes="384x384"
+  />,
+  <link
+    href="/icons/icon-512x512-c3ac975253f3e5b8e06581fbe3334df1b6f7adba.png"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -410,52 +410,52 @@ Array [
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=null"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=null"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=null"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=null"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=null"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=null"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=null"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=null"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
 ]
 `;
 
-exports[`gatsby-plugin-manifest Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string 1`] = `
+exports[`gatsby-plugin-manifest Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string, Adds link favicon if "include_favicon" option is not provided 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -463,42 +463,42 @@ Array [
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -512,42 +512,42 @@ Array [
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png"
+    href="/icons/icon-72x72.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png"
+    href="/icons/icon-96x96.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png"
+    href="/icons/icon-144x144.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png"
+    href="/icons/icon-192x192.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png"
+    href="/icons/icon-256x256.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png"
+    href="/icons/icon-384x384.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png"
+    href="/icons/icon-512x512.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -557,7 +557,7 @@ Array [
 exports[`gatsby-plugin-manifest Does not create legacy apple touch links If "legacy" options is false and using default set of icons 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/icons/icon-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -574,7 +574,7 @@ Array [
 exports[`gatsby-plugin-manifest Does not create legacy apple touch links If "legacy" options is false and using user specified list of icons 1`] = `
 Array [
   <link
-    href="/favicons/android-chrome-48x48.png"
+    href="/favicons/android-chrome-48x48.png?v=c3ac975253f3e5b8e06581fbe3334df1b6f7adba"
     rel="shortcut icon"
   />,
   <link
@@ -584,6 +584,59 @@ Array [
   <meta
     content="#000000"
     name="theme-color"
+  />,
+]
+`;
+
+exports[`gatsby-plugin-manifest doesn't add cache busting if "cache_busting_mode" option is set to none 1`] = `
+Array [
+  <link
+    href="/icons/icon-48x48.png"
+    rel="shortcut icon"
+  />,
+  <link
+    href="/manifest.webmanifest"
+    rel="manifest"
+  />,
+  <link
+    href="/icons/icon-48x48.png"
+    rel="apple-touch-icon"
+    sizes="48x48"
+  />,
+  <link
+    href="/icons/icon-72x72.png"
+    rel="apple-touch-icon"
+    sizes="72x72"
+  />,
+  <link
+    href="/icons/icon-96x96.png"
+    rel="apple-touch-icon"
+    sizes="96x96"
+  />,
+  <link
+    href="/icons/icon-144x144.png"
+    rel="apple-touch-icon"
+    sizes="144x144"
+  />,
+  <link
+    href="/icons/icon-192x192.png"
+    rel="apple-touch-icon"
+    sizes="192x192"
+  />,
+  <link
+    href="/icons/icon-256x256.png"
+    rel="apple-touch-icon"
+    sizes="256x256"
+  />,
+  <link
+    href="/icons/icon-384x384.png"
+    rel="apple-touch-icon"
+    sizes="384x384"
+  />,
+  <link
+    href="/icons/icon-512x512.png"
+    rel="apple-touch-icon"
+    sizes="512x512"
   />,
 ]
 `;

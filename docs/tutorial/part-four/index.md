@@ -88,7 +88,7 @@ Create another new site for this part of the tutorial. You're going to build a M
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
 
 ```shell
-npx gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-four
 ```
 
@@ -199,7 +199,7 @@ module.exports = {
 }
 ```
 
-Add the above files and then run `npm run develop`, per usual, and you should see the following:
+Add the above files and then run `gatsby develop`, per usual, and you should see the following:
 
 ![start](start.png)
 
