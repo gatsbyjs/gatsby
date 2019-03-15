@@ -130,12 +130,15 @@ module.exports = async (args: BootstrapArgs) => {
       }
     )
     activity.start()
-    await del([
-      `${publicPath()}/*.{html,css}`,
-      `${publicPath()}/**/*.{html,css}`,
-      `!${publicPath()}/static`,
-      `!${publicPath()}/static/**/*.{html,css}`,
-    ])
+    await del(
+      [
+        `${publicPath()}/*.{html,css}`,
+        `${publicPath()}/**/*.{html,css}`,
+        `!${publicPath()}/static`,
+        `!${publicPath()}/static/**/*.{html,css}`,
+      ],
+      { force: true }
+    )
     activity.end()
   }
 
