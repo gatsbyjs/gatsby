@@ -4,7 +4,24 @@ title: Building Themes
 
 > ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
 
+## Gatsby theme starter
+
+There's a Gatsby Theme Start which you can use to get up and running quickly:
+
+```sh
+npx gatsby new https://github.com/ChristopherBiscardi/gatsby-starter-theme
+```
+
+This starter will set you up with a yarn workspace and example site which you can
+use to develop your theme.
+
+If you'd like to walk through setting up a theme project from scratch each step is
+detailed below.
+
 ## Initialize a theme
+
+For the purposes of this tutorial we will be using the name `gatsby-theme-developer`.
+You will likely want to replaced `developer` with your own theme name.
 
 ```sh
 mkdir gatsby-theme-developer
@@ -16,7 +33,10 @@ npm i -D gatsby react react-dom
 
 ## Add dependencies
 
-Then you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies.
+Then, you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies. This
+will warn users that install your theme if they're missing those dependencies since they're
+required. The `peerDependencies` approach also allows users to determine what versions
+of Gatsby and React that they'd like to use.
 
 ```json
 {
@@ -40,6 +60,12 @@ Then you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies
     "react-dom": "^16.8.2"
   }
 }
+```
+
+Next, create an `index.js` entrypoint that serves as a noop:
+
+```js:title=index.js
+// noop
 ```
 
 Then create a `src/pages/index.js`:
@@ -110,6 +136,12 @@ module.exports = {
   ],
 }
 ```
+
+## Publish to NPM
+
+In order to allow others to install your theme you will need to publish it to npm. If you haven't published to npm before, learn how [here](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+
+From the root of your `gatsby-theme-developer` you can run `npm publish`.
 
 ## Create your starter
 

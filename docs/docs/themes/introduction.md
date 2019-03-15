@@ -14,10 +14,8 @@ However, as the community and ecosystem grows, we’ve found them to be lacking 
 - Introduce all code into your code base directly
 
 Gatsby Themes solve these issues and drastically improve the end user experience.
-Not only have we built out a rich library of base themes for common functionality to build off of, we’ve introduced a collection of beautiful themes that you can install and get started with right away.
-This includes blogs, landing pages, and even online stores.
-
 It's also important to note that starters will still be usable with themes, the key difference is that starters now have the ability to ship the code as a theme library.
+This means an install of a starter will consist of demo content and a compact `gatsby-config`.
 
 ### Related
 

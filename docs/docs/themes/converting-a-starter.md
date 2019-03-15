@@ -10,7 +10,7 @@ To start converting your starter to a library, get started by updating your `pac
 
 Specify `gatsby`, `react`, and `react-dom` as `devDependencies` . It's preferable to add them as `peerDependencies` as well. This is needed so that end users can determine which versions they want and npm/yarn will be able to resolve them properly.
 
-In addition to updating your dependencies you will need to declare a `main` that points to `gatsby-config.js`. This is needed so that when Gatsby attempts to resolve the theme it is pointed to the correct file by Node.
+In addition to updating your dependencies you will need to create an `index.js` file in the root of your project. This is needed so that when Gatsby attempts to resolve the theme it can do so since Node automatically looks for `index.js`.
 
 ## Handling path resolution
 
