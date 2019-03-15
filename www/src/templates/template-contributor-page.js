@@ -5,8 +5,8 @@ import Img from "gatsby-image"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import { rhythm, options } from "../utils/typography"
-import { space, radii } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import { space, radii, fonts } from "../utils/presets"
 
 class ContributorPageTemplate extends React.Component {
   render() {
@@ -41,7 +41,7 @@ class ContributorPageTemplate extends React.Component {
               </h1>
               <p
                 css={{
-                  fontFamily: options.headerFontFamily.join(`,`),
+                  fontFamily: fonts.header,
                   maxWidth: rhythm(18),
                   marginLeft: `auto`,
                   marginRight: `auto`,

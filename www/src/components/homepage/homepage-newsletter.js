@@ -6,7 +6,7 @@ import EmailCaptureForm from "../../components/email-capture-form"
 
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
-import { rhythm, options } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import {
   colors,
   space,
@@ -15,6 +15,7 @@ import {
   scale,
   letterSpacings,
   lineHeights,
+  fonts,
 } from "../../utils/presets"
 
 const stripedBorderHeight = space[2]
@@ -69,7 +70,7 @@ const Ornament = styled(`span`)`
 
 const Name = styled(`h3`)`
   color: ${colors.lilac};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   font-size: ${scale[1]};
   font-weight: normal;
   letter-spacing: ${letterSpacings.tracked};

@@ -9,7 +9,6 @@ import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
-import { options } from "../../utils/typography"
 import {
   colors,
   space,
@@ -18,6 +17,7 @@ import {
   shadows,
   breakpoints,
   scale,
+  fonts,
 } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
@@ -86,7 +86,7 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
   justify-content: space-between;
   padding: ${space[3]} 0 0;
 `

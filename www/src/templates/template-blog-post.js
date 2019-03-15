@@ -14,8 +14,9 @@ import {
   breakpoints,
   lineHeights,
   scale,
+  fonts,
 } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -41,7 +42,7 @@ class BlogPostTemplate extends React.Component {
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         fontWeight: `bold`,
         color: colors.gatsby,
       },
@@ -57,7 +58,7 @@ class BlogPostTemplate extends React.Component {
       <p
         css={{
           lineHeight: lineHeights.dense,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           margin: 0,
           color: colors.gray.calm,
         }}

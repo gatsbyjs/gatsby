@@ -4,8 +4,14 @@ import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import { colors, space, breakpoints, lineHeights } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import {
+  colors,
+  space,
+  breakpoints,
+  lineHeights,
+  fonts,
+} from "../utils/presets"
+import { rhythm } from "../utils/typography"
 
 const subHeaderTitleStyles = {
   height: space[6],
@@ -52,7 +58,7 @@ const renderSubHeader = props => (
           lineHeight: lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           borderColor: colors.ui.light,
           padding: space[3],
         }}

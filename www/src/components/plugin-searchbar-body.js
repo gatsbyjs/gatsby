@@ -24,8 +24,9 @@ import {
   radii,
   breakpoints,
   dimensions,
+  fonts,
 } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import { scrollbarStyles, skipLink } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
@@ -71,7 +72,7 @@ const searchBoxStyles = css`
     color: ${colors.gatsby};
     display: inline-block;
     font-size: ${scale[3]};
-    font-family: ${options.headerFontFamily.join(`,`)};
+    font-family: ${fonts.header};
     height: ${searchInputHeight};
     padding: 0;
     padding-right: ${searchInputHeight};
@@ -173,7 +174,7 @@ const searchBoxStyles = css`
     height: ${space[9]};
     outline: none;
     transition: all ${transition.speed.default} ${transition.curve.default};
-    font-family: ${options.headerFontFamily.join(`,`)};
+    font-family: ${fonts.header};
   }
   .ais-InfiniteHits__loadMore:hover,
   .ais-InfiniteHits__loadMore:focus {
@@ -382,7 +383,7 @@ const Result = ({ hit, pathname, query }) => {
           css={{
             color: selected ? colors.gatsby : false,
             fontSize: `inherit`,
-            fontFamily: options.headerFontFamily.join(`,`),
+            fontFamily: fonts.header,
             fontWeight: `bold`,
             display: `flex`,
             alignItems: `center`,

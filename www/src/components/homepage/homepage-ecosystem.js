@@ -18,7 +18,6 @@ import {
 import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
-import { options } from "../../utils/typography"
 import {
   colors,
   space,
@@ -27,6 +26,7 @@ import {
   breakpoints,
   scale,
   letterSpacings,
+  fonts,
 } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
@@ -139,7 +139,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       content: "${props => props.item.type}";
       color: ${props =>
         props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
-      font-family: ${options.headerFontFamily.join(`,`)};
+      font-family: ${fonts.header};
       font-size: ${scale[1]};
       left: 0;
       letter-spacing: ${letterSpacings.tracked};

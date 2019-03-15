@@ -3,8 +3,7 @@ import { navigate } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
-import { colors, space, breakpoints } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import { colors, space, breakpoints, fonts } from "../../utils/presets"
 
 class Pagination extends React.Component {
   changePage = e => {
@@ -23,7 +22,7 @@ class Pagination extends React.Component {
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         fontWeight: `bold`,
         color: colors.gatsby,
       },
@@ -69,7 +68,7 @@ class Pagination extends React.Component {
             display: `flex`,
             alignItems: `center`,
             justifyContent: `flex-end`,
-            fontFamily: options.headerFontFamily.join(`,`),
+            fontFamily: fonts.header,
           }}
         >
           <span>Showing page &nbsp;</span>

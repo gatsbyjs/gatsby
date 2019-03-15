@@ -3,8 +3,14 @@ import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import { options } from "../utils/typography"
-import { colors, space, radii, breakpoints, scale } from "../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  scale,
+  fonts,
+} from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
@@ -36,20 +42,20 @@ const SingleLineInput = styled(`input`)`
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
   font-size: ${scale[2]};
   padding: ${space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
   font-size: ${scale[1]};
   margin: ${space[2]} 0;
 `
 
 const SuccesMessage = styled(`div`)`
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
 `
 
 const Submit = styled(`input`)`
@@ -249,7 +255,7 @@ class EmailCaptureForm extends React.Component {
           <div
             css={{
               borderTop: `1px solid ${colors.ui.light}`,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               marginTop: space[9],
               paddingTop: space[5],
               ...overrideCSS,
@@ -262,7 +268,7 @@ class EmailCaptureForm extends React.Component {
                   backgroundColor: colors.ui.light,
                   borderRadius: radii[1],
                   color: colors.gatsby,
-                  fontFamily: options.headerFontFamily.join(`,`),
+                  fontFamily: fonts.header,
                   padding: space[4],
                 }}
               >

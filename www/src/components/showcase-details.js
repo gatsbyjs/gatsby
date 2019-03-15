@@ -11,8 +11,8 @@ import {
   radii,
   shadows,
   breakpoints,
+  fonts,
 } from "../utils/presets"
-import { options } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -34,7 +34,7 @@ const styles = {
   },
   prevNextLink: {
     color: colors.lilac,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     position: `absolute`,
     top: 280,
     width: 300,
@@ -50,7 +50,7 @@ const styles = {
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `normal`,
   },
   prevNextPermalinkImage: {
@@ -318,7 +318,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 css={{
                   display: `flex`,
                   borderTop: `1px solid ${colors.ui.light}`,
-                  fontFamily: options.headerFontFamily.join(`,`),
+                  fontFamily: fonts.header,
                   margin: `0 ${gutter}`,
                   [breakpoints.lg]: {
                     margin: `0 ${gutterDesktop}`,
@@ -412,7 +412,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         border: 0,
                         borderRadius: radii[1],
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
-                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontFamily: fonts.header,
                         fontWeight: `bold`,
                         marginRight: space[2],
                         padding: `${space[1]} ${space[4]}`,
@@ -474,7 +474,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <div
                   css={{
                     display: `flex`,
-                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontFamily: fonts.header,
                   }}
                 >
                   <div

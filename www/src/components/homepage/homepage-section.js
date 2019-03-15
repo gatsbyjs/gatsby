@@ -4,8 +4,8 @@ import styled from "@emotion/styled"
 
 import Button from "../button"
 
-import { rhythm, options } from "../../utils/typography"
-import { colors, space, breakpoints, scale } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import { colors, space, breakpoints, scale, fonts } from "../../utils/presets"
 
 const ICON_SIZE = space[7]
 
@@ -73,7 +73,7 @@ export const Title = styled(`h1`)`
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
   font-size: ${scale[3]};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `

@@ -8,6 +8,7 @@ import shadows from "./shadows"
 import space from "./space"
 import transition from "./transition"
 import scale from "./scale"
+import fonts from "./fonts"
 
 export {
   breakpoints,
@@ -20,4 +21,5 @@ export {
   space,
   transition,
   scale,
+  fonts,
 }

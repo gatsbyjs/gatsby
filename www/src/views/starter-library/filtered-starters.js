@@ -4,13 +4,14 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, rhythm } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import {
   colors,
   space,
   radii,
   breakpoints,
   dimensions,
+  fonts,
 } from "../../utils/presets"
 
 import styles from "../shared/styles"
@@ -200,7 +201,7 @@ export default class FilteredStarterLibrary extends Component {
                     border: 0,
                     borderRadius: radii[2],
                     color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontFamily: fonts.header,
                     paddingTop: space[1],
                     paddingRight: space[1],
                     paddingBottom: space[1],

@@ -9,8 +9,8 @@ import {
   breakpoints,
   scale,
   lineHeights,
+  fonts,
 } from "./presets"
-import { options } from "./typography"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -45,7 +45,7 @@ export const buttonStyles = {
     color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `bold`,
     flexShrink: 0,
     lineHeight: lineHeights.dense,
@@ -147,7 +147,7 @@ export const formInput = {
   border: `1px solid ${colors.ui.bright}`,
   borderRadius: radii[1],
   color: colors.brand,
-  fontFamily: options.headerFontFamily.join(`,`),
+  fontFamily: fonts.header,
   padding: space[3],
   verticalAlign: `middle`,
   transition: `all ${transition.speed.default} ${transition.curve.default}`,

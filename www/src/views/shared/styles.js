@@ -1,4 +1,3 @@
-import { options } from "../../utils/typography"
 import {
   colors,
   space,
@@ -9,6 +8,7 @@ import {
   dimensions,
   scale,
   lineHeights,
+  fonts,
 } from "../../utils/presets"
 
 const styles = {
@@ -159,7 +159,7 @@ const styles = {
     paddingRight: space[3],
     paddingLeft: space[6],
     overflow: `hidden`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     transition: `width ${transition.speed.default} ${
       transition.curve.default
     }, background-color ${transition.speed.default} ${

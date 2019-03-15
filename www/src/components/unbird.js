@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "@emotion/styled"
-import { options } from "../utils/typography"
 import {
   colors,
   space,
@@ -10,6 +9,7 @@ import {
   shadows,
   breakpoints,
   scale,
+  fonts,
 } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
@@ -81,7 +81,7 @@ const FeedbackForm = styled(`div`)`
   background-color: ${colors.gatsby};
   box-shadow: ${shadows.dialog};
   border-radius: ${radii[2]}px;
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
 
   ${breakpoints.md} {
     width: 350px;
@@ -91,7 +91,7 @@ const FeedbackForm = styled(`div`)`
 `
 
 const Label = styled(`label`)`
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   font-weight: 600;
   height: 240px;
   color: ${colors.white};

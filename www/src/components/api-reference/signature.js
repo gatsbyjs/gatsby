@@ -5,11 +5,10 @@ import { css } from "@emotion/core"
 import { graphql } from "gatsby"
 
 import { SubHeader } from "./utils"
-import { options } from "../../utils/typography"
-import { space } from "../../utils/presets"
+import { space, fonts } from "../../utils/presets"
 
 const Wrapper = styled(`span`)`
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   font-weight: 400;
 
   :before,

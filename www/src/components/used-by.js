@@ -1,6 +1,13 @@
 import React from "react"
-import { rhythm, options } from "../utils/typography"
-import { space, scale, transition, colors, breakpoints } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import {
+  space,
+  scale,
+  transition,
+  colors,
+  breakpoints,
+  fonts,
+} from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
@@ -95,7 +102,7 @@ const UsedBy = () => (
       <p
         css={{
           color: colors.lilac,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           fontSize: scale[1],
           marginBottom: 0,
           [breakpoints.sm]: {

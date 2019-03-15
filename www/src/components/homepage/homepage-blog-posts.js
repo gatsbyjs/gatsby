@@ -18,8 +18,8 @@ import {
   breakpoints,
   scale,
   lineHeights,
+  fonts,
 } from "../../utils/presets"
-import { options } from "../../utils/typography"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
@@ -51,7 +51,7 @@ const PostsColumn = styled(`div`)`
 
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   overflow: hidden;
   width: auto;
 

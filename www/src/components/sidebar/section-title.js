@@ -1,8 +1,13 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import { colors, transition, scale, letterSpacings } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import {
+  colors,
+  transition,
+  scale,
+  letterSpacings,
+  fonts,
+} from "../../utils/presets"
 import indention from "../../utils/sidebar/indention"
 
 const Chevron = ({ isExpanded }) => (
@@ -198,7 +203,7 @@ const styles = {
     left: 24,
   },
   smallCaps: {
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     letterSpacing: letterSpacings.tracked,
     textTransform: `uppercase`,
   },

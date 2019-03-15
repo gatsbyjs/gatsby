@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
-import { options } from "../../utils/typography"
 import {
   colors,
   space,
@@ -8,6 +7,7 @@ import {
   scale,
   lineHeights,
   letterSpacings,
+  fonts,
 } from "../../utils/presets"
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
@@ -149,7 +149,7 @@ const styles = {
     zIndex: `2`,
     padding: `0 ${space[6]}`,
     height: dimensions.headerHeight,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
   },
   creatorsLink: {
     "&&": {

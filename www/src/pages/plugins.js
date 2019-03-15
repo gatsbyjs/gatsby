@@ -3,8 +3,8 @@ import Container from "../components/container"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
-import { rhythm, options } from "../utils/typography"
-import { colors, space, dimensions, scale } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import { colors, space, dimensions, scale, fonts } from "../utils/presets"
 
 class Plugins extends Component {
   render() {
@@ -51,7 +51,7 @@ class Plugins extends Component {
               marginLeft: space[9],
               marginRight: space[9],
               fontSize: scale[4],
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               textAlign: `center`,
             }}
           >

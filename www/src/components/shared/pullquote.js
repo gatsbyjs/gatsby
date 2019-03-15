@@ -4,7 +4,6 @@ import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
-import { options } from "../../utils/typography"
 import {
   colors,
   radii,
@@ -12,13 +11,14 @@ import {
   breakpoints,
   scale,
   lineHeights,
+  fonts,
 } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
   border-radius: ${radii[2]}px;
   color: ${colors.gatsby};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   font-size: ${scale[3]};
   font-weight: bold;
   padding: ${space[7]} 3rem;

@@ -3,8 +3,13 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import styles from "./styles"
-import { colors, transition, space, lineHeights } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import {
+  colors,
+  transition,
+  space,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
   let screenshot = false
@@ -24,7 +29,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       css={{
         ...styles.withTitleHover,
         lineHeight: lineHeights.dense,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         "&&": {
           borderBottom: `none`,
           color: colors.gray.dark,

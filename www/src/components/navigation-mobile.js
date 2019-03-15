@@ -17,9 +17,9 @@ import {
   dimensions,
   scale,
   lineHeights,
+  fonts,
 } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import { options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -77,7 +77,7 @@ const MobileNavigation = () => (
         borderTop: `1px solid ${colors.ui.light}`,
         background: colors.white,
         height: dimensions.headerHeight,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
         [breakpoints.md]: {
           display: `none`,

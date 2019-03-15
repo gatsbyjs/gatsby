@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
@@ -12,6 +12,7 @@ import {
   letterSpacings,
   lineHeights,
   scale,
+  fonts,
 } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
@@ -171,7 +172,7 @@ const ItemDescription = ({ children }) => (
       display: `block`,
       color: colors.gray.calm,
       fontSize: scale[1],
-      fontFamily: options.systemFontFamily.join(`,`),
+      fontFamily: fonts.system,
     }}
   >
     {children}
@@ -244,7 +245,7 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           padding: space[6],
           textAlign: `center`,
           flex: `1 1 100%`,

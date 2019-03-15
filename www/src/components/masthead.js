@@ -1,7 +1,7 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
@@ -9,6 +9,7 @@ import {
   scale,
   lineHeights,
   letterSpacings,
+  fonts,
 } from "../utils/presets"
 import Button from "./button"
 
@@ -42,7 +43,7 @@ const MastheadContent = () => (
     <p
       css={{
         color: colors.gray.copy,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         fontSize: scale[4],
         maxWidth: rhythm(30),
         margin: `0 auto ${space[7]}`,

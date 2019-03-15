@@ -5,7 +5,7 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
@@ -14,6 +14,7 @@ import {
   breakpoints,
   dimensions,
   letterSpacings,
+  fonts,
 } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
@@ -206,7 +207,7 @@ const styles = {
     margin: `0 auto`,
     paddingLeft: space[6],
     paddingRight: space[6],
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     display: `flex`,
     alignItems: `center`,
     width: `100%`,

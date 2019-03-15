@@ -8,7 +8,6 @@ import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import { options } from "../../utils/typography"
 import {
   colors,
   space,
@@ -17,6 +16,7 @@ import {
   shadows,
   breakpoints,
   scale,
+  fonts,
 } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
@@ -75,7 +75,7 @@ class FeaturedSites extends Component {
             css={{
               fontSize: scale[4],
               color: colors.gray.dark,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               fontWeight: `bold`,
               marginRight: 30,
               marginLeft: 4,
@@ -170,7 +170,7 @@ class FeaturedSites extends Component {
                       fontSize: scale[3],
                       fontWeight: `bold`,
                       color: colors.gray.dark,
-                      fontFamily: options.headerFontFamily.join(`,`),
+                      fontFamily: fonts.header,
                       transition: `box-shadow ${transition.speed.slow} ${
                         transition.curve.default
                       }, transform .3s ${transition.curve.default}`,
@@ -207,7 +207,7 @@ class FeaturedSites extends Component {
                   {node.built_by && (
                     <div
                       css={{
-                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontFamily: fonts.header,
                       }}
                     >
                       Built by {node.built_by}

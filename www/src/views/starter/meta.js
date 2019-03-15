@@ -1,6 +1,5 @@
 import React from "react"
-import { colors, space, radii, breakpoints } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import { colors, space, radii, breakpoints, fonts } from "../../utils/presets"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
@@ -8,7 +7,7 @@ import MdStar from "react-icons/lib/md/star"
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
     css={{
-      fontFamily: options.headerFontFamily.join(`,`),
+      fontFamily: fonts.header,
       color: colors.gray.dark,
       display: `flex`,
       flexWrap: `wrap`,
@@ -59,7 +58,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <span
           css={{
             color: colors.gray.calm,
-            fontFamily: options.headerFontFamily.join(`,`),
+            fontFamily: fonts.header,
             paddingRight: 8,
           }}
         >
@@ -99,7 +98,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               borderBottom: 0,
               color: colors.lilac,
               cursor: `pointer`,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               "&:hover": {
                 color: colors.gatsby,
               },
@@ -133,7 +132,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             css={{
               border: 0,
               borderRadius: radii[1],
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               fontWeight: `bold`,
               marginRight: space[2],
               padding: `${space[1]} ${space[4]}`,

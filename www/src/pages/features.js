@@ -7,13 +7,13 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
-import { options } from "../utils/typography"
 import {
   colors,
   space,
   breakpoints,
   scale,
   letterSpacings,
+  fonts,
 } from "../utils/presets"
 
 const legendBorderColor = colors.ui.light
@@ -92,7 +92,7 @@ const LegendTable = () => {
         css={{
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           display: `none`,
           [breakpoints.sm]: {
             display: `table`,
@@ -107,7 +107,7 @@ const LegendTable = () => {
           display: `table`,
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           [breakpoints.sm]: {
             display: `none`,
           },

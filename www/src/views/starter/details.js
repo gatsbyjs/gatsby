@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { colors, space, radii, breakpoints } from "../../utils/presets"
+import { colors, space, radii, breakpoints, fonts } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -85,7 +85,7 @@ export default Details
 const styles = {
   headline: {
     color: colors.gray.calm,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     paddingRight: space[5],
   },
   showMoreButton: {
@@ -93,7 +93,7 @@ const styles = {
     border: 0,
     borderRadius: radii[1],
     cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `bold`,
     padding: `${space[1]} ${space[4]}`,
     WebkitFontSmoothing: `antialiased`,

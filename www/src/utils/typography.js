@@ -9,44 +9,20 @@ import {
   breakpoints,
   lineHeights,
   letterSpacings,
+  fonts,
 } from "./tokens"
 
-const systemFontFamily = [
-  `-apple-system`,
-  `BlinkMacSystemFont`,
-  `Segoe UI`,
-  `Roboto`,
-  `Helvetica Neue`,
-  `Arial`,
-  `Noto Sans`,
-  `sans-serif`,
-  `Apple Color Emoji`,
-  `Segoe UI Emoji`,
-  `Segoe UI Symbol`,
-  `Noto Color Emoji`,
-]
-const headerFontFamily = [`Futura PT`, ...systemFontFamily]
-const monospaceFontFamily = [
-  `SFMono-Regular`,
-  `Menlo`,
-  `Monaco`,
-  `Consolas`,
-  `Liberation Mono`,
-  `Courier New`,
-  `monospace`,
-]
-
 const _options = {
-  bodyFontFamily: systemFontFamily,
-  headerFontFamily,
-  monospaceFontFamily,
-  systemFontFamily,
+  bodyFontFamily: fonts.system,
+  headerFontFamily: fonts.header,
+  monospaceFontFamily: fonts.monospace.join(`,`),
+  systemFontFamily: fonts.system,
   baseLineHeight: lineHeights.default,
   headerLineHeight: lineHeights.dense,
   headerColor: colors.gray.dark,
   bodyColor: colors.gray.copy,
   plugins: [new CodePlugin()],
-  overrideStyles: ({ rhythm, scale }, options) => {
+  overrideStyles: ({ rhythm }) => {
     return {
       a: {
         textDecoration: `none`,
@@ -84,7 +60,7 @@ const _options = {
         paddingBottom: `0.2em`,
       },
       "tt, code, kbd, .gatsby-code-title": {
-        fontFamily: options.monospaceFontFamily.join(`,`),
+        fontFamily: fonts.monospace.join(`,`),
         fontSize: `90%`,
         // Disable ligatures as they look funny as code.
         fontVariant: `none`,
@@ -116,7 +92,7 @@ const _options = {
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
         fontSize: scaleTokens[0],
-        fontFamily: options.monospaceFontFamily.join(`,`),
+        fontFamily: fonts.monospace.join(`,`),
         letterSpacing: letterSpacings.tracked,
         lineHeight: lineHeights.solid,
         padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
