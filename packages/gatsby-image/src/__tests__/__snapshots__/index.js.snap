@@ -24,6 +24,7 @@ exports[`<Img /> should render fixed size images 1`] = `
       />
       <img
         alt="Alt text for the image"
+        crossorigin="anonymous"
         height="100"
         itemprop="item-prop-for-the-image"
         src="test_image.jpg"
@@ -68,6 +69,7 @@ exports[`<Img /> should render fluid images 1`] = `
       />
       <img
         alt="Alt text for the image"
+        crossorigin="anonymous"
         itemprop="item-prop-for-the-image"
         sizes="(max-width: 600px) 100vw, 600px"
         src="test_image.jpg"
