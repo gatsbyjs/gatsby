@@ -18,7 +18,7 @@ const convertProps = props => {
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
-const imageCache = new Set()
+const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
@@ -26,7 +26,7 @@ const inImageCache = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  return imageCache.has(src)
+  return imageCache[src] || false
 }
 
 const activateCacheForImage = props => {
@@ -36,11 +36,11 @@ const activateCacheForImage = props => {
     ? convertedProps.fluid.src
     : convertedProps.fixed.src
 
-  imageCache.add(src)
+  imageCache[src] = true
 }
 
 let io
-const listeners = new Map()
+const listeners = new WeakMap()
 
 function getIO() {
   if (
@@ -134,10 +134,6 @@ Img.propTypes = {
 }
 
 class Image extends React.Component {
-  imageRef = React.createRef()
-
-  wrapperRef = React.createRef()
-
   constructor(props) {
     super(props)
 
@@ -182,21 +178,33 @@ class Image extends React.Component {
       hasNoScript,
       seenBefore,
     }
+
+    this.imageRef = React.createRef()
+    this.handleImageLoaded = this.handleImageLoaded.bind(this)
+    this.handleRef = this.handleRef.bind(this)
   }
 
   componentDidMount() {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
-    const img = this.imageRef.current
-    const wrapper = this.wrapperRef.current
-
-    if (this.props.critical && img && img.complete) {
-      this.handleImageLoaded()
+    if (this.props.critical) {
+      const img = this.imageRef.current
+      if (img && img.complete) {
+        this.handleImageLoaded()
+      }
     }
+  }
 
-    if (this.state.IOSupported && wrapper) {
-      this.cleanUpListeners = listenToIntersections(wrapper, () => {
+  componentWillUnmount() {
+    if (this.cleanUpListeners) {
+      this.cleanUpListeners()
+    }
+  }
+
+  handleRef(ref) {
+    if (this.state.IOSupported && ref) {
+      this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
@@ -210,13 +218,7 @@ class Image extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    if (this.cleanUpListeners) {
-      this.cleanUpListeners()
-    }
-  }
-
-  handleImageLoaded = () => {
+  handleImageLoaded() {
     activateCacheForImage(this.props)
 
     this.setState({ imgLoaded: true })
@@ -281,7 +283,7 @@ class Image extends React.Component {
             overflow: `hidden`,
             ...style,
           }}
-          ref={this.wrapperRef}
+          ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
           {/* Preserve the aspect ratio. */}
@@ -376,7 +378,7 @@ class Image extends React.Component {
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
           style={divStyle}
-          ref={this.wrapperRef}
+          ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
           {/* Show a solid background color. */}
