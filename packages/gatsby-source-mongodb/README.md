@@ -47,7 +47,8 @@ module.exports = {
 - **auth**: the authentication data to login a Mongodb collection, with sub
   properties user and password. ex. auth: { user: `admin`, password: `12345` }
 - **extraParams**: useful to set additional parameters for the connection, like authSource, ssl or replicaSet
-  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }
+  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }. These are the types of options that can be appended as query parameters to the connection URI: https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options
+- **clientOptions**: for setting options on the creation of a `new MongoClient`. By default, to handle the various connection URI's necessary for newer versions of MongoDB Atlas, for instance, we pass { `useNewUrlParser`: `true` }. You can override the default by passing either an empty object literal or filled with other valid connection options These are the subset of connection options that have to be passed as part of an object to the creation of a new `MongoClient` instance: http://mongodb.github.io/node-mongodb-native/3.1/reference/connecting/connection-settings/
 
 ### Mapping mediatype feature
 
