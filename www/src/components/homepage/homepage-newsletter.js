@@ -25,7 +25,7 @@ const Container = styled(`div`)`
   display: flex;
   flex-direction: column;
   margin-bottom: ${space[8]};
-  padding: ${rhythm(space[8] * 1.2)};
+  padding: calc(${space[8]} * 1.2);
   padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
   position: relative;
 

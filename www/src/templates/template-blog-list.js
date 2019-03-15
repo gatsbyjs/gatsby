@@ -70,8 +70,8 @@ class BlogPostsIndex extends React.Component {
                     padding: space[9],
                     paddingLeft: space[9],
                     paddingRight: space[9],
-                    marginLeft: rhythm(-space[9]),
-                    marginRight: rhythm(-space[9]),
+                    marginLeft: `-${space[9]}`,
+                    marginRight: `-${space[9]}`,
                     transition: `transform ${transition.speed.default} ${
                       transition.curve.default
                     },  box-shadow ${transition.speed.default} ${
