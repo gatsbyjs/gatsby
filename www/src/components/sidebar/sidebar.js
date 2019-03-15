@@ -4,14 +4,14 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, {
+import {
   colors,
   space,
+  scale,
   transition,
   breakpoints,
   dimensions,
 } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -281,8 +281,8 @@ const styles = {
     zIndex: 10,
     borderRight: `1px solid ${colors.ui.light}`,
     "::-webkit-scrollbar": {
-      height: rhythm(space[2]),
-      width: rhythm(space[2]),
+      height: space[2],
+      width: space[2],
     },
     "::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,
@@ -300,9 +300,9 @@ const styles = {
   },
   list: {
     margin: 0,
-    paddingTop: rhythm(space[6]),
-    paddingBottom: rhythm(space[6]),
-    fontSize: presets.scale[1],
+    paddingTop: space[6],
+    paddingBottom: space[6],
+    fontSize: scale[1],
     "& li": {
       margin: 0,
       listStyle: `none`,

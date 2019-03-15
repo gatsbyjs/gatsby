@@ -62,14 +62,14 @@ class BlogPostsIndex extends React.Component {
                 post={node}
                 key={node.fields.slug}
                 css={{
-                  marginBottom: rhythm(space[6]),
+                  marginBottom: space[6],
                   [breakpoints.md]: {
                     boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],
-                    padding: rhythm(space[9]),
-                    paddingLeft: rhythm(space[9]),
-                    paddingRight: rhythm(space[9]),
+                    padding: space[9],
+                    paddingLeft: space[9],
+                    paddingRight: space[9],
                     marginLeft: rhythm(-space[9]),
                     marginRight: rhythm(-space[9]),
                     transition: `transform ${transition.speed.default} ${
@@ -80,7 +80,7 @@ class BlogPostsIndex extends React.Component {
                       transition.curve.default
                     }`,
                     "&:hover": {
-                      transform: `translateY(-${rhythm(space[1])})`,
+                      transform: `translateY(-${space[1]})`,
                       boxShadow: shadows.overlay,
                     },
                     "&:active": {

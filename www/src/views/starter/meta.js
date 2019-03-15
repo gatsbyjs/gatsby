@@ -1,6 +1,6 @@
 import React from "react"
 import { colors, space, radii, breakpoints } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { options } from "../../utils/typography"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
@@ -15,7 +15,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       width: `100%`,
       minWidth: `320px`,
       flexDirection: `column-reverse`,
-      padding: rhythm(space[6]),
+      padding: space[6],
       paddingTop: 0,
       [breakpoints.sm]: {
         flexDirection: `row`,
@@ -23,7 +23,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         paddingBottom: 0,
       },
       [breakpoints.lg]: {
-        padding: rhythm(space[8]),
+        padding: space[8],
         paddingTop: 0,
         paddingBottom: 0,
       },
@@ -31,7 +31,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
   >
     <div
       css={{
-        marginTop: rhythm(space[6]),
+        marginTop: space[6],
         paddingRight: 15,
         display: `flex`,
         flexWrap: `wrap`,
@@ -71,13 +71,13 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
 
     <div
       css={{
-        marginTop: rhythm(space[6]),
+        marginTop: space[6],
         marginRight: 15,
         display: `flex`,
         flexWrap: `nowrap`,
         flexGrow: 1,
         borderBottom: `1px solid ${colors.ui.light}`,
-        paddingBottom: rhythm(space[3]),
+        paddingBottom: space[3],
         [breakpoints.sm]: {
           borderBottom: 0,
         },
@@ -121,7 +121,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <div
           css={{
             position: `absolute`,
-            right: rhythm(space[6]),
+            right: space[6],
             top: 0,
             left: `auto`,
             zIndex: 1,
@@ -135,8 +135,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               borderRadius: radii[1],
               fontFamily: options.headerFontFamily.join(`,`),
               fontWeight: `bold`,
-              marginRight: rhythm(space[2]),
-              padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+              marginRight: space[2],
+              padding: `${space[1]} ${space[4]}`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {
                 backgroundColor: colors.accent,

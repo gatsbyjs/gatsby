@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import APIReference from "../../components/api-reference"
-import { rhythm } from "../../utils/typography"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -25,14 +24,14 @@ class SSRAPIs extends React.Component {
           <h1 id="gatsby-server-rendering-apis" css={{ marginTop: 0 }}>
             Gatsby Server Rendering APIs
           </h1>
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Usage</h2>
-          <p css={{ marginBottom: rhythm(space[5]) }}>
+          <h2 css={{ marginBottom: space[3] }}>Usage</h2>
+          <p css={{ marginBottom: space[5] }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-ssr.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>APIs</h2>
+          <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>

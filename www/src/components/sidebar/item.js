@@ -2,7 +2,6 @@ import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
 import createLink from "../../utils/sidebar/create-link"
-import { rhythm } from "../../utils/typography"
 import { space } from "../../utils/presets"
 
 const isItemActive = (activeItemParents, item) => {
@@ -57,7 +56,7 @@ class Item extends React.PureComponent {
           <li
             css={{
               ...this.props.styles,
-              paddingLeft: level === 0 ? rhythm(space[6]) : false,
+              paddingLeft: level === 0 ? space[6] : false,
             }}
           >
             {createLink({

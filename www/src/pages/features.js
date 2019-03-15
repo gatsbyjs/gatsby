@@ -7,8 +7,14 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
-import { options, rhythm } from "../utils/typography"
-import presets, { colors, space, breakpoints } from "../utils/presets"
+import { options } from "../utils/typography"
+import {
+  colors,
+  space,
+  breakpoints,
+  scale,
+  letterSpacings,
+} from "../utils/presets"
 
 const legendBorderColor = colors.ui.light
 
@@ -166,7 +172,7 @@ const FeaturesHeader = () => (
       css={{
         fontWeight: `normal`,
         textTransform: `uppercase`,
-        letterSpacing: presets.letterSpacings.tracked,
+        letterSpacing: letterSpacings.tracked,
       }}
     >
       Legend
@@ -199,7 +205,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: presets.scale[1], marginTop: rhythm(space[8]) }}>
+  <p css={{ fontSize: scale[1], marginTop: space[8] }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

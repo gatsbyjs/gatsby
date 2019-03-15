@@ -4,14 +4,15 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, {
+import {
   colors,
   space,
+  scale,
   radii,
   shadows,
   breakpoints,
 } from "../utils/presets"
-import { options, rhythm } from "../utils/typography"
+import { options } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -23,8 +24,8 @@ import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = rhythm(space[6])
-const gutterDesktop = rhythm(space[8])
+const gutter = space[6]
+const gutterDesktop = space[8]
 
 const styles = {
   link: {
@@ -54,7 +55,7 @@ const styles = {
   },
   prevNextPermalinkImage: {
     marginBottom: 0,
-    marginTop: rhythm(space[6]),
+    marginTop: space[6],
   },
   prevNextPermalinkTitle: {
     color: colors.gatsby,
@@ -76,12 +77,12 @@ const styles = {
     marginRight: 4,
     verticalAlign: `sub`,
     position: `absolute`,
-    left: `-${rhythm(space[6])}`,
+    left: `-${space[6]}`,
     top: `50%`,
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(space[8]),
+    marginLeft: space[8],
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -269,10 +270,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: rhythm(space[2]),
+                  paddingBottom: space[2],
                   [breakpoints.lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: rhythm(space[6]),
+                    paddingBottom: space[6],
                   },
                 }}
               >
@@ -363,7 +364,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: presets.scale[4],
+                          fontSize: scale[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}
@@ -413,8 +414,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: options.headerFontFamily.join(`,`),
                         fontWeight: `bold`,
-                        marginRight: rhythm(space[2]),
-                        padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+                        marginRight: space[2],
+                        padding: `${space[1]} ${space[4]}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {

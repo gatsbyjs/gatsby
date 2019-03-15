@@ -6,18 +6,20 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import { rhythm, options } from "../utils/typography"
-import presets, {
+import {
   colors,
   space,
+  scale,
   transition,
   breakpoints,
   dimensions,
+  letterSpacings,
 } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(space[2])
+const navItemHorizontalSpacing = space[2]
 
 const iconColor = colors.lilac
 
@@ -47,7 +49,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
-        fontSize: presets.scale[2],
+        fontSize: scale[2],
         ...overrideCSS,
       }}
     >
@@ -162,7 +164,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: presets.scale[1] }}
+            overrideCSS={{ paddingRight: 0, fontSize: scale[1] }}
           >
             .com
           </SocialNavItem>
@@ -202,8 +204,8 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(space[6]),
-    paddingRight: rhythm(space[6]),
+    paddingLeft: space[6],
+    paddingRight: space[6],
     fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
@@ -211,11 +213,11 @@ const styles = {
     height: `100%`,
   },
   navItem: {
-    fontSize: presets.scale[1],
+    fontSize: scale[1],
     borderBottom: `0.125rem solid transparent`,
     color: `inherit`,
     display: `block`,
-    letterSpacing: presets.letterSpacings.tracked,
+    letterSpacing: letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
@@ -243,7 +245,7 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: rhythm(space[6]),
+    height: space[6],
     margin: 0,
   },
   logoLink: {
@@ -251,7 +253,7 @@ const styles = {
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(space[3]),
+    marginRight: space[3],
     textDecoration: `none`,
   },
 }

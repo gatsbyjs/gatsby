@@ -4,7 +4,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
 import { colors, space, breakpoints } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
+import { options } from "../../utils/typography"
 
 class Pagination extends React.Component {
   changePage = e => {
@@ -34,7 +34,7 @@ class Pagination extends React.Component {
         css={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: `${rhythm(space[5])} 0`,
+          margin: `${space[5]} 0`,
           flexDirection: `column`,
           [breakpoints.md]: {
             flexDirection: `row`,
@@ -48,7 +48,7 @@ class Pagination extends React.Component {
             padding: `0`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            marginBottom: rhythm(space[3]),
+            marginBottom: space[3],
             [breakpoints.md]: {
               width: `15rem`,
               marginBottom: 0,

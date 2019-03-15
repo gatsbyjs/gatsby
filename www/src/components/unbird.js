@@ -2,13 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import axios from "axios"
 import styled from "@emotion/styled"
-import { rhythm, options } from "../utils/typography"
-import presets, {
+import { options } from "../utils/typography"
+import {
   colors,
   space,
   radii,
   shadows,
   breakpoints,
+  scale,
 } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
@@ -20,15 +21,15 @@ const FeedbackComponent = styled(`section`)`
 `
 
 const FeedbackToggle = styled(`div`)`
-  width: ${rhythm(space[10])};
-  height: ${rhythm(space[10])};
-  bottom: ${rhythm(space[11])};
+  width: ${space[0]};
+  height: ${space[0]};
+  bottom: ${space[1]};
   background-color: ${colors.gatsby};
   color: ${colors.white};
   border-radius: 100%;
   box-shadow: ${shadows.dialog};
   position: fixed;
-  right: ${rhythm(space[6])};
+  right: ${space[6]};
   z-index: 99999;
   cursor: pointer;
 
@@ -37,7 +38,7 @@ const FeedbackToggle = styled(`div`)`
   }
 
   ${breakpoints.md} {
-    bottom: ${rhythm(space[6])};
+    bottom: ${space[6]};
   }
 `
 
@@ -54,10 +55,10 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${presets.scale[4]};
+  font-size: ${scale[4]};
 `
 const CancelIcon = styled(CancelMdIcon)`
-  font-size: ${presets.scale[3]};
+  font-size: ${scale[3]};
 `
 
 const StatusMessage = styled(`span`)`
@@ -66,8 +67,8 @@ const StatusMessage = styled(`span`)`
   background: ${colors.gray.dark};
   bottom: 60px;
   color: ${colors.white};
-  font-size: ${presets.scale[2]};
-  padding: ${presets.scale[2]} ${presets.scale[4]};
+  font-size: ${scale[2]};
+  padding: ${scale[2]} ${scale[4]};
   text-align: left;
   left: 0;
 `
@@ -97,8 +98,8 @@ const Label = styled(`label`)`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${rhythm(space[8])};
-  font-size: ${presets.scale[3]};
+  padding: ${space[8]};
+  font-size: ${scale[3]};
   float: left;
 `
 
@@ -110,8 +111,8 @@ const Input = styled(`input`)`
   float: left;
   height: 60px;
   width: calc(100% - 60px);
-  font-size: ${presets.scale[1]};
-  padding: ${rhythm(space[5])};
+  font-size: ${scale[1]};
+  padding: ${space[5]};
   border: none;
   resize: none;
   border-right: 1px solid #ddd;

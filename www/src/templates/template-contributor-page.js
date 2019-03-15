@@ -18,7 +18,7 @@ class ContributorPageTemplate extends React.Component {
           <div
             css={{
               textAlign: `center`,
-              padding: `${rhythm(space[7])} ${rhythm(space[6])}`,
+              padding: `${space[7]} ${space[6]}`,
             }}
           >
             <div>
@@ -55,7 +55,7 @@ class ContributorPageTemplate extends React.Component {
               </a>
             </div>
           </div>
-          <div css={{ padding: `${rhythm(space[7])} ${rhythm(space[6])}` }}>
+          <div css={{ padding: `${space[7]} ${space[6]}` }}>
             {allMarkdownRemark.edges.map(({ node }) => {
               if (node.frontmatter.author) {
                 if (node.frontmatter.author.id === contributor.id) {
@@ -63,7 +63,7 @@ class ContributorPageTemplate extends React.Component {
                     <BlogPostPreviewItem
                       post={node}
                       key={node.fields.slug}
-                      css={{ marginBottom: rhythm(space[9]) }}
+                      css={{ marginBottom: space[9] }}
                     />
                   )
                 }

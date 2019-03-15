@@ -4,7 +4,7 @@ import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import APIReference from "../../components/api-reference"
-import { rhythm, scale } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -75,7 +75,7 @@ exports.createPages = ({ actions, reporter }) => {
           <h2 id="shared-helpers" css={{ marginBottom: rhythm(1 / 2) }}>
             Shared helpers
           </h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <ul>
             {docs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>

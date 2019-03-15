@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 
 import { colors, space, transition, radii, breakpoints } from "../presets"
-import { rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
@@ -93,7 +92,7 @@ const styles = {
     },
   },
   link: {
-    paddingRight: rhythm(space[4]),
+    paddingRight: space[4],
     minHeight: 40,
     paddingTop: 10,
     paddingBottom: 10,

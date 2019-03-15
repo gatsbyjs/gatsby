@@ -1,12 +1,15 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets, {
-  colors,
+import {
   space,
+  scale as scaleTokens,
+  colors,
   transition,
   radii,
   breakpoints,
-} from "./presets"
+  lineHeights,
+  letterSpacings,
+} from "./tokens"
 
 const systemFontFamily = [
   `-apple-system`,
@@ -38,8 +41,8 @@ const _options = {
   headerFontFamily,
   monospaceFontFamily,
   systemFontFamily,
-  baseLineHeight: presets.lineHeights.default,
-  headerLineHeight: presets.lineHeights.dense,
+  baseLineHeight: lineHeights.default,
+  headerLineHeight: lineHeights.dense,
   headerColor: colors.gray.dark,
   bodyColor: colors.gray.copy,
   plugins: [new CodePlugin()],
@@ -49,7 +52,7 @@ const _options = {
         textDecoration: `none`,
       },
       "h1, h2, h3, h4, h5, h6": {
-        letterSpacing: presets.letterSpacings.tight,
+        letterSpacing: letterSpacings.tight,
       },
       h1: { color: `#000` },
       h2: {
@@ -112,10 +115,10 @@ const _options = {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
-        fontSize: presets.scale[0],
+        fontSize: scaleTokens[0],
         fontFamily: options.monospaceFontFamily.join(`,`),
-        letterSpacing: presets.letterSpacings.tracked,
-        lineHeight: presets.lineHeights.solid,
+        letterSpacing: letterSpacings.tracked,
+        lineHeight: lineHeights.solid,
         padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
         position: `absolute`,
         right: rhythm(space[6]),
@@ -216,8 +219,8 @@ const _options = {
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        fontSize: presets.scale[1],
-        lineHeight: presets.lineHeights.dense,
+        fontSize: scaleTokens[1],
+        lineHeight: lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(space[9]),
         display: `block`,
@@ -326,7 +329,7 @@ const _options = {
           marginRight: rhythm(-space[7]),
           marginLeft: rhythm(-space[7]),
           padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            space[3]
+            rhythm(space[3])
           )}`,
         },
         ".gatsby-highlight pre[class*='language-']::before": {

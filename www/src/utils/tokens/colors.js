@@ -1,6 +1,6 @@
 import gray from "gray-percentage"
 
-const colors = {
+export default {
   // original palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
   gatsby: `#663399`, // was #744c9e
@@ -55,5 +55,3 @@ const colors = {
     lineHighlightBorder: `#f1beb6`,
   },
 }
-
-export default colors

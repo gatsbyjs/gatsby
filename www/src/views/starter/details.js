@@ -14,12 +14,12 @@ const Details = ({
 }) => (
   <div
     css={{
-      padding: rhythm(space[6]),
+      padding: space[6],
       [breakpoints.lg]: {
-        padding: rhythm(space[8]),
+        padding: space[8],
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
-        gridRowGap: rhythm(space[5]),
+        gridRowGap: space[5],
       },
     }}
   >
@@ -51,7 +51,7 @@ const Details = ({
           marginBottom: rhythm(options.blockMarginBottom * 5),
           [breakpoints.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridGap: rhythm(space[5]),
+            gridGap: space[5],
           },
         }}
       >
@@ -86,7 +86,7 @@ const styles = {
   headline: {
     color: colors.gray.calm,
     fontFamily: options.headerFontFamily.join(`,`),
-    paddingRight: rhythm(space[5]),
+    paddingRight: space[5],
   },
   showMoreButton: {
     backgroundColor: colors.gatsby,
@@ -95,7 +95,7 @@ const styles = {
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+    padding: `${space[1]} ${space[4]}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       borderBottom: `none`,

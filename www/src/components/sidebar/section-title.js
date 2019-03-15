@@ -1,11 +1,9 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import presets, { colors, space, transition } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
-
-const paddingLeft = level =>
-  level === 0 ? rhythm((level + 1) * space[6]) : rhythm((level + 1) * space[3])
+import { colors, transition, scale, letterSpacings } from "../../utils/presets"
+import { options } from "../../utils/typography"
+import indention from "../../utils/sidebar/indention"
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -142,7 +140,7 @@ const Title = ({ title, level, isActive, isExpanded }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      paddingLeft: paddingLeft(level),
+      paddingLeft: indention(level),
       minHeight: 40,
     }}
   >
@@ -162,7 +160,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      fontSize: presets.scale[1],
+      fontSize: scale[1],
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
       ...(level === 0 && { ...styles.smallCaps }),
@@ -201,7 +199,7 @@ const styles = {
   },
   smallCaps: {
     fontFamily: options.headerFontFamily.join(`,`),
-    letterSpacing: presets.letterSpacings.tracked,
+    letterSpacing: letterSpacings.tracked,
     textTransform: `uppercase`,
   },
 }

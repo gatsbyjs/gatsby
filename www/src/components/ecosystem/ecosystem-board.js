@@ -5,7 +5,6 @@ import styled from "@emotion/styled"
 import EcosystemSection from "./ecosystem-section"
 
 import { space, breakpoints, dimensions } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -21,7 +20,7 @@ const EcosystemBoardRoot = styled(`div`)`
     height: calc(
       100vh - (${dimensions.bannerHeight} + ${dimensions.headerHeight} + 1px)
     );
-    padding: ${rhythm(space[7])} ${rhythm(space[4])} ${rhythm(space[4])};
+    padding: ${space[7]} ${space[4]} ${space[4]};
   }
 `
 

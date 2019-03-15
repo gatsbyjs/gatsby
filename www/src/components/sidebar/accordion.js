@@ -3,10 +3,7 @@ import React, { Fragment } from "react"
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
 import { colors, space } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
-
-const paddingLeft = level =>
-  level === 0 ? rhythm((level + 1) * space[6]) : rhythm((level + 1) * space[3])
+import indention from "../../utils/sidebar/indention"
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -119,9 +116,9 @@ class Accordion extends React.Component {
           css={{
             ...styles.ul,
             display: isExpanded ? `block` : `none`,
-            paddingBottom: level === 0 && isExpanded ? rhythm(space[6]) : false,
+            paddingBottom: level === 0 && isExpanded ? space[6] : false,
             "& li": {
-              paddingLeft: paddingLeft(level),
+              paddingLeft: indention(level),
             },
           }}
         >
@@ -166,11 +163,11 @@ const styles = {
   ulStepsUI: {
     "&:after": {
       background: colors.ui.bright,
-      bottom: rhythm(space[6]),
+      bottom: space[6],
       content: `''`,
       left: 0,
       position: `absolute`,
-      top: rhythm(space[6]),
+      top: space[6],
       width: 1,
     },
     "&:before": {
