@@ -14,7 +14,7 @@ With theme-based starters, you will see that you're initially presented with a l
 
 For example, a theme-based starter for a blog might do the following:
 
-## 1. Install the theme and configure it
+## 1. Install the Theme and Configure It
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
 }
 ```
 
-## 2. Scaffold out an example post
+## 2. Scaffold Out an Example Post
 
 ```md:title=src/posts/hello-world.md
 ---
@@ -40,12 +40,12 @@ path: /hello-world
 I'm an example post!
 ```
 
-## 3. Scaffold out the home page
+## 3. Scaffold Out the Home Page
 
 ```md:title=src/pages/index.md
 # Home page!
 ```
 
-## Updating a theme
+## Updating a Theme
 
 In order to update the theme to pull in the latest updates you can update the `gatsby-theme-blog` version in your `package.json` and reinstall your dependencies.

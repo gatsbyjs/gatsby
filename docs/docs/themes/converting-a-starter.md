@@ -4,7 +4,7 @@ title: Converting a Starter to a Theme
 
 Gatsby themes are designed to be easy to create from an existing starter. Here we will walk you through the main steps of converting your theme to a starter.
 
-## Prepare your `package.json`
+## Prepare Your `package.json`
 
 To start converting your starter to a library, get started by updating your `package.json` to use the `gatsby-theme-*` naming convention. If your starter is `gatsby-starter-awesome-blog` you can update the name key to `gatsby-theme-awesome-blog` (and double check that it's available on [npm](https://npmjs.com).
 
@@ -12,7 +12,7 @@ Specify `gatsby`, `react`, and `react-dom` as `devDependencies` . It's preferabl
 
 In addition to updating your dependencies you will need to create an `index.js` file in the root of your project. This is needed so that when Gatsby attempts to resolve the theme it can do so since Node automatically looks for `index.js`.
 
-## Handling path resolution
+## Handling Path Resolution
 
 One of the key difference between themes and starters is that a theme is no longer executed where the Gatsby CLI is being run since it's now a dependency. This often results in errors sourcing content and finding templates since they will look in the end user's directory.
 
@@ -58,7 +58,7 @@ const createPosts = (createPage, createRedirect, edges) => {
 
 There may be other locations where you will need to update the path resolution like your `gatsby-config.js` as well.
 
-## Sourcing pages
+## Sourcing Pages
 
 If your theme provides pages for things like the blog post index and a homepage, you will need to source them.
 Gatsby will only look in the relative `src/pages` directory when `gatsby develop` is run.
@@ -79,7 +79,7 @@ Then, tell the plugin to look in your theme's `src/pages` directory.
 },
 ```
 
-## Transpiling your theme with webpack
+## Transpiling Your Theme With Webpack
 
 **Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
 
@@ -110,7 +110,7 @@ module.exports = {
 }
 ```
 
-## Publishing to npm
+## Publishing to NPM
 
 In order to allow others to install your theme you will need to publish it to npm. If you haven't published to npm before, learn how [here](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
 
