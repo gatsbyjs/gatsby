@@ -1,7 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import presets, { colors } from "../presets"
+import { colors, space, transition, radii, breakpoints } from "../presets"
+import { rhythm } from "../typography"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
@@ -55,7 +56,7 @@ const createLink = ({
 
 const bulletOffset = {
   default: {
-    left: -25,
+    left: -28,
     top: `1.15em`,
   },
   desktop: {
@@ -92,7 +93,7 @@ const styles = {
     },
   },
   link: {
-    paddingRight: 40,
+    paddingRight: rhythm(space[4]),
     minHeight: 40,
     paddingTop: 10,
     paddingBottom: 10,
@@ -101,7 +102,7 @@ const styles = {
     width: `100%`,
     "&&": {
       border: 0,
-      boxShadow: `none`,
+      color: colors.gray.lightCopy,
       fontWeight: `normal`,
       "&:hover": {
         background: `transparent`,
@@ -116,44 +117,42 @@ const styles = {
       ...bulletOffset.default,
       height: bulletSize,
       position: `absolute`,
-      transition: `all ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
+      transition: `all ${transition.speed.default} ${transition.curve.default}`,
     },
     "&:before": {
-      borderRadius: `100%`,
+      borderRadius: radii[6],
       content: `''`,
       transform: `scale(0.1)`,
       width: bulletSize,
-      [presets.Tablet]: {
+      [breakpoints.md]: {
         ...bulletOffset.desktop,
       },
     },
     "&:after": {
       background: colors.gatsby,
-      borderRadius: 4,
+      borderRadius: radii[2],
       content: `''`,
       left: bulletOffset.default.left + 7,
       opacity: 0,
       transform: `translateX(-200px)`,
       width: 1,
-      [presets.Tablet]: {
+      [breakpoints.md]: {
         ...bulletOffset.desktop,
       },
     },
   },
   subsectionLink: {
     ...bulletOffset.default,
-    background: `#fff`,
+    background: colors.white,
     border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `100%`,
+    borderRadius: radii[6],
     display: `block`,
     fontWeight: `normal`,
     height: bulletSize,
     position: `absolute`,
     width: bulletSize,
     zIndex: -1,
-    [presets.Tablet]: {
+    [breakpoints.md]: {
       ...bulletOffset.desktop,
     },
   },

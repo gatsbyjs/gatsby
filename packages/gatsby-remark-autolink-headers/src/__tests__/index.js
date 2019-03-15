@@ -146,4 +146,40 @@ describe(`gatsby-remark-autolink-headers`, () => {
       expect(node).toMatchSnapshot()
     })
   })
+
+  it(`keeps accents by default`, () => {
+    const markdownAST = remark.parse(`
+# Héading One
+
+## Héading Two
+
+### Héading Three
+    `)
+    const removeAccents = false
+
+    const transformed = plugin({ markdownAST }, { removeAccents })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
+      expect(node.data.id).toEqual(expect.stringMatching(/^héading/))
+    })
+  })
+
+  it(`remove accents if removeAccents is passed`, () => {
+    const markdownAST = remark.parse(`
+# Héading One
+
+## Héading Two
+
+### Héading Three
+    `)
+    const removeAccents = true
+
+    const transformed = plugin({ markdownAST }, { removeAccents })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
+      expect(node.data.id).toEqual(expect.stringMatching(/^heading/))
+    })
+  })
 })

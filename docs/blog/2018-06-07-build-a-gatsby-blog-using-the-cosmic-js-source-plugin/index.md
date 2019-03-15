@@ -39,7 +39,7 @@ npm install --global gatsby-cli
 Create a new site based on the Gatsby Cosmic JS starter:
 
 ```bash
-npx gatsby new gatsby-blog-cosmicjs
+gatsby new gatsby-blog-cosmicjs
 ```
 
 Enter in your project's folder:

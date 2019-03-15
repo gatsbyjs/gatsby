@@ -1,6 +1,9 @@
 import React from "react"
 import { withPrefix } from "gatsby"
-import { defaultIcons } from "./common.js"
+import { defaultIcons, createContentDigest, addDigestToPath } from "./common.js"
+import fs from "fs"
+
+let iconDigest = null
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
@@ -10,9 +13,18 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const legacy =
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 
-  // The user has an option to opt out of the favicon link tag being inserted into the head.
+  const cacheBusting =
+    typeof pluginOptions.cache_busting_mode !== `undefined`
+      ? pluginOptions.cache_busting_mode
+      : `query`
+
+  // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
     let favicon = icons && icons.length ? icons[0].src : null
+
+    if (cacheBusting !== `none`) {
+      iconDigest = createContentDigest(fs.readFileSync(pluginOptions.icon))
+    }
 
     const insertFaviconLinkTag =
       typeof pluginOptions.include_favicon !== `undefined`
@@ -24,7 +36,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         <link
           key={`gatsby-plugin-manifest-icon-link`}
           rel="shortcut icon"
-          href={withPrefix(favicon)}
+          href={withPrefix(addDigestToPath(favicon, iconDigest, cacheBusting))}
         />
       )
     }
@@ -42,11 +54,10 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
-    let insertMetaTag = Object.keys(pluginOptions).includes(
-      `theme_color_in_head`
-    )
-      ? pluginOptions.theme_color_in_head
-      : true
+    let insertMetaTag =
+      typeof pluginOptions.theme_color_in_head !== `undefined`
+        ? pluginOptions.theme_color_in_head
+        : true
 
     if (insertMetaTag) {
       headComponents.push(
@@ -65,7 +76,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
         rel="apple-touch-icon"
         sizes={icon.sizes}
-        href={withPrefix(`${icon.src}`)}
+        href={withPrefix(addDigestToPath(icon.src, iconDigest, cacheBusting))}
       />
     ))
 

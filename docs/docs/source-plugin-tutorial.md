@@ -53,7 +53,7 @@ Your plugin will have the following behavior:
 Create a new Gatsby project and change directories into the new project you just created.
 
 ```shell
-npx gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
+gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
 cd source-tutorial-site
 ```
 

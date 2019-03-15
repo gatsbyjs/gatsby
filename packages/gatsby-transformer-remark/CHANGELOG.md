@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.3...gatsby-transformer-remark@2.3.4) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** wait for async subplugins ([#12578](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12578)) ([af87e96](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/af87e96))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.2...gatsby-transformer-remark@2.3.3) (2019-03-13)
+
+### Features
+
+- **gatsby-transformer-remark:** Allow for multiple different remark sources ([#7512](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/7512)) ([95155e0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/95155e0))
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.1...gatsby-transformer-remark@2.3.2) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.0...gatsby-transformer-remark@2.3.1) (2019-03-05)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Fix unreturned Promise warning ([#12303](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12303)) ([6f8f2c3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/6f8f2c3))
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.6...gatsby-transformer-remark@2.3.0) (2019-02-25)
+
+### Features
+
+- **gatsby-transformer-remark:** add excerptAst to be exported as a GraphQL field ([#11237](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11237)) ([e59d4ca](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/e59d4ca))
+
 ## [2.2.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.2.5...gatsby-transformer-remark@2.2.6) (2019-02-22)
 
 ### Bug Fixes

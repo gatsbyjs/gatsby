@@ -16,7 +16,6 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const mdastToString = require(`mdast-util-to-string`)
-const Promise = require(`bluebird`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -30,6 +29,7 @@ const {
   cloneTreeUntil,
   findLastTextNode,
 } = require(`./hast-processing`)
+const { eachPromise } = require(`./utils`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -69,6 +69,59 @@ const safeGetCache = ({ getCache, cache }) => id => {
   return getCache(id)
 }
 
+const HeadingType = new GraphQLObjectType({
+  name: `MarkdownHeading`,
+  fields: {
+    value: {
+      type: GraphQLString,
+      resolve(heading) {
+        return heading.value
+      },
+    },
+    depth: {
+      type: GraphQLInt,
+      resolve(heading) {
+        return heading.depth
+      },
+    },
+  },
+})
+
+const HeadingLevels = new GraphQLEnumType({
+  name: `HeadingLevels`,
+  values: {
+    h1: { value: 1 },
+    h2: { value: 2 },
+    h3: { value: 3 },
+    h4: { value: 4 },
+    h5: { value: 5 },
+    h6: { value: 6 },
+  },
+})
+
+const ExcerptFormats = new GraphQLEnumType({
+  name: `ExcerptFormats`,
+  values: {
+    PLAIN: { value: `plain` },
+    HTML: { value: `html` },
+  },
+})
+
+const WordCountType = new GraphQLObjectType({
+  name: `wordCount`,
+  fields: {
+    paragraphs: {
+      type: GraphQLInt,
+    },
+    sentences: {
+      type: GraphQLInt,
+    },
+    words: {
+      type: GraphQLInt,
+    },
+  },
+})
+
 /**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
@@ -88,29 +141,31 @@ module.exports = (
     reporter,
     ...rest
   },
-  pluginOptions
+  {
+    type: typeName = `MarkdownRemark`,
+    plugins = [],
+    blocks,
+    commonmark = true,
+    footnotes = true,
+    gfm = true,
+    pedantic = true,
+    tableOfContents = {
+      heading: null,
+      maxDepth: 6,
+    },
+    ...grayMatterOptions
+  } = {}
 ) => {
-  if (type.name !== `MarkdownRemark`) {
+  if (type.name !== typeName) {
     return {}
   }
-  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  pluginsCacheStr = plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = pathPrefix || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const {
-      blocks,
-      commonmark = true,
-      footnotes = true,
-      gfm = true,
-      pedantic = true,
-      tableOfContents = {
-        heading: null,
-        maxDepth: 6,
-      },
-    } = pluginOptions
     const tocOptions = tableOfContents
     const remarkOptions = {
       commonmark,
@@ -123,7 +178,7 @@ module.exports = (
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (let plugin of pluginOptions.plugins) {
+    for (let plugin of plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (let parserPlugin of requiredPlugin.setParserPlugins(
@@ -150,8 +205,8 @@ module.exports = (
       } else {
         const ASTGenerationPromise = getMarkdownAST(markdownNode)
         ASTGenerationPromise.then(markdownAST => {
-          cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
+          return cache.set(cacheKey, markdownAST)
         }).catch(err => {
           ASTPromiseMap.delete(cacheKey)
           return err
@@ -167,8 +222,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin.mutateSource)) {
           return requiredPlugin.mutateSource(
@@ -235,8 +290,8 @@ module.exports = (
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+
+      await eachPromise(plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin)) {
           return requiredPlugin(
@@ -363,43 +418,90 @@ module.exports = (
       }
     }
 
-    const HeadingType = new GraphQLObjectType({
-      name: `MarkdownHeading`,
-      fields: {
-        value: {
-          type: GraphQLString,
-          resolve(heading) {
-            return heading.value
-          },
-        },
-        depth: {
-          type: GraphQLInt,
-          resolve(heading) {
-            return heading.depth
-          },
-        },
-      },
-    })
+    async function getExcerptAst(
+      markdownNode,
+      { pruneLength, truncate, excerptSeparator }
+    ) {
+      const fullAST = await getHTMLAst(markdownNode)
+      if (excerptSeparator) {
+        return cloneTreeUntil(
+          fullAST,
+          ({ nextNode }) =>
+            nextNode.type === `raw` && nextNode.value === excerptSeparator
+        )
+      }
+      if (!fullAST.children.length) {
+        return fullAST
+      }
 
-    const HeadingLevels = new GraphQLEnumType({
-      name: `HeadingLevels`,
-      values: {
-        h1: { value: 1 },
-        h2: { value: 2 },
-        h3: { value: 3 },
-        h4: { value: 4 },
-        h5: { value: 5 },
-        h6: { value: 6 },
-      },
-    })
+      const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
+        const totalExcerptSoFar = getConcatenatedValue(root)
+        return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
+      })
+      const unprunedExcerpt = getConcatenatedValue(excerptAST)
+      if (
+        !unprunedExcerpt ||
+        (pruneLength && unprunedExcerpt.length < pruneLength)
+      ) {
+        return excerptAST
+      }
 
-    const ExcerptFormats = new GraphQLEnumType({
-      name: `ExcerptFormats`,
-      values: {
-        PLAIN: { value: `plain` },
-        HTML: { value: `html` },
-      },
-    })
+      const lastTextNode = findLastTextNode(excerptAST)
+      const amountToPruneLastNode =
+        pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+      if (!truncate) {
+        lastTextNode.value = prune(
+          lastTextNode.value,
+          amountToPruneLastNode,
+          `…`
+        )
+      } else {
+        lastTextNode.value = _.truncate(lastTextNode.value, {
+          length: pruneLength,
+          omission: `…`,
+        })
+      }
+      return excerptAST
+    }
+
+    async function getExcerpt(
+      markdownNode,
+      { format, pruneLength, truncate, excerptSeparator }
+    ) {
+      if (format === `html`) {
+        const excerptAST = await getExcerptAst(markdownNode, {
+          pruneLength,
+          truncate,
+          excerptSeparator,
+        })
+        const html = hastToHTML(excerptAST, {
+          allowDangerousHTML: true,
+        })
+        return html
+      }
+
+      if (markdownNode.excerpt) {
+        return markdownNode.excerpt
+      }
+
+      const text = await getAST(markdownNode).then(ast => {
+        const excerptNodes = []
+        visit(ast, node => {
+          if (node.type === `text` || node.type === `inlineCode`) {
+            excerptNodes.push(node.value)
+          }
+          return
+        })
+        if (!truncate) {
+          return prune(excerptNodes.join(` `), pruneLength, `…`)
+        }
+        return _.truncate(excerptNodes.join(` `), {
+          length: pruneLength,
+          omission: `…`,
+        })
+      })
+      return text
+    }
 
     return resolve({
       html: {
@@ -433,77 +535,35 @@ module.exports = (
             defaultValue: `plain`,
           },
         },
-        async resolve(markdownNode, { format, pruneLength, truncate }) {
-          if (format === `html`) {
-            if (pluginOptions.excerpt_separator) {
-              const fullAST = await getHTMLAst(markdownNode)
-              const excerptAST = cloneTreeUntil(
-                fullAST,
-                ({ nextNode }) =>
-                  nextNode.type === `raw` &&
-                  nextNode.value === pluginOptions.excerpt_separator
-              )
-              return hastToHTML(excerptAST, {
-                allowDangerousHTML: true,
-              })
-            }
-            const fullAST = await getHTMLAst(markdownNode)
-            if (!fullAST.children.length) {
-              return ``
-            }
-
-            const excerptAST = cloneTreeUntil(fullAST, ({ root }) => {
-              const totalExcerptSoFar = getConcatenatedValue(root)
-              return totalExcerptSoFar && totalExcerptSoFar.length > pruneLength
-            })
-            const unprunedExcerpt = getConcatenatedValue(excerptAST)
-            if (!unprunedExcerpt) {
-              return ``
-            }
-
-            if (pruneLength && unprunedExcerpt.length < pruneLength) {
-              return hastToHTML(excerptAST, {
-                allowDangerousHTML: true,
-              })
-            }
-
-            const lastTextNode = findLastTextNode(excerptAST)
-            const amountToPruneLastNode =
-              pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
-            if (!truncate) {
-              lastTextNode.value = prune(
-                lastTextNode.value,
-                amountToPruneLastNode,
-                `…`
-              )
-            } else {
-              lastTextNode.value = _.truncate(lastTextNode.value, {
-                length: pruneLength,
-                omission: `…`,
-              })
-            }
-            return hastToHTML(excerptAST, {
-              allowDangerousHTML: true,
-            })
-          }
-          if (markdownNode.excerpt) {
-            return Promise.resolve(markdownNode.excerpt)
-          }
-          return getAST(markdownNode).then(ast => {
-            const excerptNodes = []
-            visit(ast, node => {
-              if (node.type === `text` || node.type === `inlineCode`) {
-                excerptNodes.push(node.value)
-              }
-              return
-            })
-            if (!truncate) {
-              return prune(excerptNodes.join(` `), pruneLength, `…`)
-            }
-            return _.truncate(excerptNodes.join(` `), {
-              length: pruneLength,
-              omission: `…`,
-            })
+        resolve(markdownNode, { format, pruneLength, truncate }) {
+          return getExcerpt(markdownNode, {
+            format,
+            pruneLength,
+            truncate,
+            excerptSeparator: grayMatterOptions.excerpt_separator,
+          })
+        },
+      },
+      excerptAst: {
+        type: GraphQLJSON,
+        args: {
+          pruneLength: {
+            type: GraphQLInt,
+            defaultValue: 140,
+          },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
+        },
+        resolve(markdownNode, { pruneLength, truncate }) {
+          return getExcerptAst(markdownNode, {
+            pruneLength,
+            truncate,
+            excerptSeparator: grayMatterOptions.excerpt_separator,
+          }).then(ast => {
+            const strippedAst = stripPosition(_.clone(ast), true)
+            return hastReparseRaw(strippedAst)
           })
         },
       },
@@ -559,20 +619,7 @@ module.exports = (
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCount`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt,
-            },
-            sentences: {
-              type: GraphQLInt,
-            },
-            words: {
-              type: GraphQLInt,
-            },
-          },
-        }),
+        type: WordCountType,
         resolve(markdownNode) {
           let counts = {}
 
