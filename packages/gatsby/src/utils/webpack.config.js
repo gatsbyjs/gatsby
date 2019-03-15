@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -333,6 +334,14 @@ module.exports = async (
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
+      plugins: [
+        // Those two folders are special and contain gatsby-generated files
+        // whose dependencies should be resolved through the `gatsby` package
+        PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
+        PnpWebpackPlugin.bind(directoryPath(`public`), module),
+        // Transparently resolve packages via PnP when needed; noop otherwise
+        PnpWebpackPlugin,
+      ],
     }
   }
 
@@ -351,6 +360,9 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
+      // Bare loaders should always be loaded via the user dependencies (loaders
+      // configured via third-party like gatsby use require.resolve)
+      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 
