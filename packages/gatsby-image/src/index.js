@@ -18,7 +18,7 @@ const convertProps = props => {
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
-const imageCache = {}
+const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
@@ -40,7 +40,7 @@ const activateCacheForImage = props => {
 }
 
 let io
-const listeners = []
+const listeners = new WeakMap()
 
 function getIO() {
   if (
@@ -51,15 +51,15 @@ function getIO() {
     io = new window.IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          listeners.forEach(l => {
-            if (l[0] === entry.target) {
-              // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-              if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                io.unobserve(l[0])
-                l[1]()
-              }
+          if (listeners.has(entry.target)) {
+            const cb = listeners.get(entry.target)
+            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+              io.unobserve(entry.target)
+              listeners.delete(entry.target)
+              cb()
             }
-          })
+          }
         })
       },
       { rootMargin: `200px` }
@@ -70,8 +70,17 @@ function getIO() {
 }
 
 const listenToIntersections = (el, cb) => {
-  getIO().observe(el)
-  listeners.push([el, cb])
+  const observer = getIO()
+
+  if (observer) {
+    observer.observe(el)
+    listeners.set(el, cb)
+  }
+
+  return () => {
+    observer.unobserve(el)
+    listeners.delete(el)
+  }
 }
 
 const noscriptImg = props => {
@@ -159,7 +168,7 @@ class Image extends React.Component {
       IOSupported = false
     }
 
-    const hasNoScript = !(this.props.critical && !this.props.fadeIn)
+    const hasNoScript = !(props.critical && !props.fadeIn)
 
     this.state = {
       isVisible,
@@ -187,9 +196,15 @@ class Image extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.cleanUpListeners) {
+      this.cleanUpListeners()
+    }
+  }
+
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
-      listenToIntersections(ref, () => {
+      this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
