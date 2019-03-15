@@ -5,13 +5,19 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(1 / 3)
+const navItemHorizontalSpacing = rhythm(space[2])
 
 const iconColor = colors.lilac
 
@@ -41,6 +47,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
+        fontSize: presets.scale[2],
         ...overrideCSS,
       }}
     >
@@ -53,10 +60,10 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: presets.headerHeight,
+        height: dimensions.headerHeight,
         left: 0,
         right: 0,
-        top: presets.bannerHeight,
+        top: dimensions.bannerHeight,
         zIndex: 2,
         "&:after": {
           content: `''`,
@@ -82,7 +89,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [presets.Md]: {
+        [breakpoints.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
@@ -142,8 +149,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Lg]: { display: !isHomepage && `flex` },
-              [presets.Xl]: { display: `flex` },
+              [breakpoints.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -156,7 +162,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0 }}
+            overrideCSS={{ paddingRight: 0, fontSize: presets.scale[1] }}
           >
             .com
           </SocialNavItem>
@@ -175,19 +181,18 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [presets.Md]: {
+    [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
     },
   },
   ulContainer: {
     display: `none`,
-    [presets.Md]: {
+    [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
       margin: 0,
-      marginLeft: rhythm(1 / 4),
       listStyle: `none`,
       maskImage: `linear-gradient(to right, transparent, white ${rhythm(
         1 / 8
@@ -197,8 +202,8 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(3 / 4),
-    paddingRight: rhythm(3 / 4),
+    paddingLeft: rhythm(space[6]),
+    paddingRight: rhythm(space[6]),
     fontFamily: options.headerFontFamily.join(`,`),
     display: `flex`,
     alignItems: `center`,
@@ -206,20 +211,18 @@ const styles = {
     height: `100%`,
   },
   navItem: {
-    ...scale(-1 / 3),
+    fontSize: presets.scale[1],
     borderBottom: `0.125rem solid transparent`,
     color: `inherit`,
     display: `block`,
-    letterSpacing: `0.03em`,
+    letterSpacing: presets.letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     textTransform: `uppercase`,
     top: 0,
-    transition: `color ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    transition: `color ${transition.speed.default} ${transition.curve.default}`,
     zIndex: 1,
     "&:hover": {
       color: colors.gatsby,
@@ -240,18 +243,15 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: 28,
+    height: rhythm(space[6]),
     margin: 0,
-    [presets.Md]: {
-      height: `1.55rem`,
-    },
   },
   logoLink: {
     alignItems: `center`,
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(1 / 2),
+    marginRight: rhythm(space[3]),
     textDecoration: `none`,
   },
 }

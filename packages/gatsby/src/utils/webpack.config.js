@@ -3,7 +3,7 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -38,9 +38,10 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
+    const env =
+      process.env.GATSBY_ACTIVE_ENV ||
+      process.env.NODE_ENV ||
+      `${defaultNodeEnv}`
     const envFile = path.join(process.cwd(), `./.env.${env}`)
     let parsed = {}
     try {

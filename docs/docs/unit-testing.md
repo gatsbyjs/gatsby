@@ -139,6 +139,7 @@ module.exports = {
     })
   ),
   StaticQuery: jest.fn(),
+  useStaticQuery: jest.fn(),
 }
 ```
 
