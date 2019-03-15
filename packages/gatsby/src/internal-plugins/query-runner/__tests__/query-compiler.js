@@ -65,22 +65,13 @@ describe(`Runner`, () => {
 })
 
 describe(`resolveThemes`, () => {
-  it(`returns empty array if zero themes detected`, () => {
-    ;[
-      [],
-      [
-        {
-          name: `gatsby-plugin-whatever`,
-          resolve: path.join(base, `gatsby-plugin-whatever`),
-        },
-      ],
-      undefined,
-    ].forEach(testRun => {
+  it(`returns empty array if zero themes appear in store`, () => {
+    ;[[], undefined].forEach(testRun => {
       expect(resolveThemes(testRun)).toEqual([])
     })
   })
 
-  it(`returns plugins matching gatsby-theme prefix`, () => {
+  it(`returns themes in the store`, () => {
     const theme = `gatsby-theme-example`
     expect(
       resolveThemes([
