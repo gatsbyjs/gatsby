@@ -37,6 +37,5 @@
     "lodash": "^4.17.4",
     "p-iteration": "^1.1.7",
     "prettyjson": "^1.2.1"
-  },
-  "gitHead": "afc22bfad9e23be36b73d469f7abbb8eb5fb1e18"
+  }
 }
