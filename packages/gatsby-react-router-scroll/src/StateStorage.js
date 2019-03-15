@@ -9,7 +9,7 @@ export default class SessionStorage {
       const value = window.sessionStorage.getItem(stateKey)
       return JSON.parse(value)
     } catch (e) {
-      if (process.env.NODE_ENV === `production`) {
+      if (process.env.NODE_ENV !== `production`) {
         console.warn(
           `[gatsby-react-router-scroll] Unable to access sessionStorage; sessionStorage is not available.`
         )
@@ -41,7 +41,7 @@ export default class SessionStorage {
         window[GATSBY_ROUTER_SCROLL_STATE][stateKey] = JSON.parse(storedValue)
       }
 
-      if (process.env.NODE_ENV === `production`) {
+      if (process.env.NODE_ENV !== `production`) {
         console.warn(
           `[gatsby-react-router-scroll] Unable to save state in sessionStorage; sessionStorage is not available.`
         )
