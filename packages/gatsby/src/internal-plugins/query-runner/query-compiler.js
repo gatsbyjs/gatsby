@@ -248,9 +248,11 @@ export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
   const { program, schema, themes } = store.getState()
 
-  const resolvedThemes = themes ? resolveThemes(themes) : []
-
-  const runner = new Runner(program.directory, resolvedThemes, schema)
+  const runner = new Runner(
+    program.directory,
+    resolveThemes(themes.themes),
+    schema
+  )
 
   const queries = await runner.compileAll()
 
