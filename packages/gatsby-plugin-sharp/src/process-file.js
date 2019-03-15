@@ -26,6 +26,11 @@ try {
   // doesn't support cpu-core-count utility.
 }
 
+/**
+ * List of arguments used by `processFile` function.
+ * This is used to generate args hash using only
+ * arguments that affect output of that function.
+ */
 const argsWhitelist = [
   `height`,
   `width`,
