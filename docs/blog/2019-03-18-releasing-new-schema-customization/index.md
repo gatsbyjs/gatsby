@@ -9,9 +9,13 @@ tags:
 
 Two weeks ago, we announced our plans for a [new schema customization API](/blog/2019-03-04-new-schema-customization/). Today we are making this set of new APIs and enhancements available to all in `gatsby`@`2.2.0`.
 
+First, install the latest and greatest version of `gatsby`, like so:
+
 ```shell
 npm install gatsby --save
 ```
+
+Next, continue reading below to see if any of the great, new features we've enabled scratch a particular itch. We feel very confident you're going to love these new features 💜
 
 # Recap of schema customization
 
@@ -21,7 +25,7 @@ There are two new APIs, `createTypes` and `createResolvers`.
 
 ## `createTypes`
 
-`createTypes` can be used to define or fix your Node types GraphQL representation.
+`createTypes` can be used to define, fix, or extend a Node's GraphQL type representation. Think of it like an escape hatch to politely inform Gatsby of your data's shape and give the automatically inferred shape super powers.
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions }) => {
@@ -36,7 +40,7 @@ exports.sourceNodes = ({ actions }) => {
 }
 ```
 
-After adding this to your gatsby-node, `AuthorJson` type will always have fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to still enjoy the benefits of Gatsby schema inference.
+After adding this to your gatsby-node, `AuthorJson` type will always have the fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to still enjoy the benefits of Gatsby schema inference.
 
 ## `createResolvers`
 
@@ -60,7 +64,7 @@ createResolvers({
 
 ## The Type Builder API
 
-While `createTypes` accepts `graphql-js` types along with SDL string, we've also added an option to use `graphql-js` types so that user could create types with resolvers. However, `graphql-js` is pretty verbose and it's hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic API, that combines brevity of SDL with flexibility of `graphql-js`.
+While `createTypes` accepts `graphql-js` types along with the [Schema Definition Language (SDL)](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) string, we've also added an option to use `graphql-js` types so that user could create types with resolvers. However, `graphql-js` is pretty verbose and it's hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic API, that combines brevity of SDL with flexibility of `graphql-js`.
 
 We can this API _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis/).
 
