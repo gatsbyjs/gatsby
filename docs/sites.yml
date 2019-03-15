@@ -4954,3 +4954,15 @@
   built_by: d:code:it
   built_by_url: https://dcodeit.com
   featured: false
+- title: Chase Ohlson
+  url: https://chaseohlson.com
+  main_url: https://chaseohlson.com
+  description: >
+    Portfolio of frontend engineer & web developer Chase Ohlson.
+  categories:
+    - Portfolio
+    - React
+    - Web Development
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+  featured: false
