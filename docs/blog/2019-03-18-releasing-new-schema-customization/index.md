@@ -40,7 +40,7 @@ exports.sourceNodes = ({ actions }) => {
 }
 ```
 
-After adding this to your gatsby-node, `AuthorJson` type will always have the fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to still enjoy the benefits of Gatsby schema inference.
+After adding this to your [gatsby-node](/docs/gatsby-project-structure/#files) file, the `AuthorJson` type will always have fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to enjoy the default benefits of Gatsby schema inference.
 
 ## `createResolvers`
 
@@ -64,9 +64,9 @@ createResolvers({
 
 ## The Type Builder API
 
-While `createTypes` accepts `graphql-js` types along with the [Schema Definition Language (SDL)](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) string, we've also added an option to use `graphql-js` types so that user could create types with resolvers. However, `graphql-js` is pretty verbose and it's hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic API, that combines brevity of SDL with flexibility of `graphql-js`.
+While `createTypes` accepts `graphql-js` types along with a [Schema Definition Language (SDL)](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) string, we've also added an option to use `graphql-js` types so that users could create types with resolvers. However, `graphql-js` is somewhat verbose and it can be hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic AP that combines brevity of SDL with flexibility of `graphql-js`.
 
-We can this API _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis/).
+We refer to this API as the _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis/).
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions, schema }) => {
@@ -103,9 +103,9 @@ exports.sourceNodes = ({ actions, schema }) => {
 
 # Potential for Breaking Changes
 
-We have tried to avoid any breaking changes in this refactor of the underlying GraphQL layer, testing it in notable Gatsby sites and ensuring all tests were passing. However, there are areas where we needed to introduce more stable naming, and in these instances it _could_ be possible that a breaking change was introduced if you were using this undocumented API.
+We have tried to avoid any breaking changes in this refactor of the underlying GraphQL layer, testing it in notable Gatsby sites and ensuring all tests were passing. However, there are areas where we needed to introduce more stable naming, and in these instances it _could_ be possible that a breaking change was introduced if you were relying on this undocumented API.
 
-Specifically, before this refactor Gatsby type names weren't stable. They could have names like `frontmatter_2` because of some quirks in our schema generation. Now the types names are **stable** and **defined**. For a `Node`, it's always Pascal Camel Cased name of the `Node` type (for example, `AllMarkdownRemark`). For an inline object, it's the name of the node plus the name of the field, again Pascal Camel Cased. So `frontmatter_2` would be available as `MarkdownRemarkFrontmatter` now. If you've had fragments referring to some types by their old names, you may need to change it to new names, e.g.:
+Specifically, before this refactor Gatsby type names weren't stable. They could have names like `frontmatter_2` because of some quirks in our schema generation. Now the types names are **stable** and **defined**. For a `Node`, it's always a Pascal Camel Cased name of the `Node` type (for example, `AllMarkdownRemark`). For an inline object, it's the name of the node plus the name of the field, again Pascal Camel Cased. So `frontmatter_2` would be available as `MarkdownRemarkFrontmatter` now. If you've had fragments referring to some types by their old names, you may need to change it to new names, e.g.:
 
 ```diff
 - fragment someFragment on frontmatter_2 {
@@ -114,7 +114,7 @@ Specifically, before this refactor Gatsby type names weren't stable. They could 
 }
 ```
 
-Another change relates to inference. Before ordering of the Nodes in your data source could affect which type Gatsby inferred. Now, we always consider all possible types, thus you might experience type conflicts for conflicting data sources. It can be solved by either fixing the data or defining a type using new schema customization APIs that we've exposed.
+Another change relates to inference. Previously, ordering of the Nodes in your data source could affect which type Gatsby inferred. Now, we always consider all possible types, thus you might experience type conflicts for conflicting data sources. They can be solved by either fixing the data or defining a type using new schema customization APIs that we've exposed.
 
 # Wrap-up
 
