@@ -27,7 +27,7 @@ The Design+Code team chose Gatsby for its out-of-the-box support for page routin
 
 AND, not to be overlooked, they wanted to be on the leading-side of offering Gatsby-build training.
 
-“Our philosophy is to always be able to teach what we create, so having an easy-to-understand framework (like Gatsby) to work with was perfect for us to be able to teach designers and beginners.”
+> “Our philosophy is to always be able to teach what we create, so having an easy-to-understand framework (like Gatsby) to work with was perfect for us to be able to teach designers and beginners.”
 
 ### **Moving to a Subscription Model**
 
@@ -41,4 +41,4 @@ The launch was a success and landed Design+Code at #1 on [Product Hunt](https://
 
 Gatsby ignited their SEO with Lighthouse scores of SEO at 100, Best Practices at 93, and Performance at 97 out of 100. The site is far out-performing its predecessor and has become the content-driven, sales machine they planned for.
 
-Try out Gatsby to see how we can do the same for you. [Get started here](https://www.gatsbyjs.org/ "Gatsby get started").
+Try out Gatsby to see how it can do the same for you. [Get started here](https://www.gatsbyjs.org/ "Gatsby get started").
