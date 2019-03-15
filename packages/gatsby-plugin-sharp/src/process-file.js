@@ -44,6 +44,30 @@ const argsWhitelist = [
   `duotone`,
 ]
 
+/**
+ * @typedef {Object} TransformArgs
+ * @property {number} height
+ * @property {number} width
+ * @property {number} cropFocus
+ * @property {string} toFormat
+ * @property {number} pngCompressionLevel
+ * @property {number} quality
+ * @property {boolean} jpegProgressive
+ * @property {boolean} grayscale
+ * @property {number} rotate
+ * @property {object} duotone
+ */
+
+/**+
+ * @typedef {Object} Transform
+ * @property {string} outputPath
+ * @property {TransformArgs} args
+ */
+
+/**
+ * @param {String} file
+ * @param {Transform[]} transforms
+ */
 exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
