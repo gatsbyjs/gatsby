@@ -25,7 +25,7 @@ There are two new APIs, `createTypes` and `createResolvers`.
 
 ## `createTypes`
 
-`createTypes` can be used to define, fix, or extend a Node's GraphQL type representation. Think of it like an escape hatch to politely inform Gatsby of your data's shape and give the automatically inferred shape super powers.
+`createTypes` can be used to define, fix, or extend a Node's GraphQL type representation. Think of it like an escape hatch to politely inform Gatsby of your data's shape.
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions }) => {
