@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.27...gatsby-plugin-sharp@2.0.28) (2019-03-12)
+
+### Features
+
+- **gatsby-image:** Placeholder Improvements ([#10944](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/10944)) ([44491ef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/44491ef))
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.26...gatsby-plugin-sharp@2.0.27) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.25...gatsby-plugin-sharp@2.0.26) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.24...gatsby-plugin-sharp@2.0.25) (2019-03-05)
+
+### Bug Fixes
+
+- don't crash if cpu-core-count is not available ([#12332](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12332)) ([412217d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/412217d))
+
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.23...gatsby-plugin-sharp@2.0.24) (2019-03-04)
+
+### Features
+
+- **gatsby:** configure physical cores, logical_cores or fixed number ([#10257](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/10257)) ([c51440e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/c51440e))
+
+## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.22...gatsby-plugin-sharp@2.0.23) (2019-02-28)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.21...gatsby-plugin-sharp@2.0.22) (2019-02-22)
+
+### Features
+
+- **gatsby-plugin-sharp:** Add tracedSVG option in fluid and fixed processors ([#11981](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/11981)) ([8aaaa85](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/8aaaa85)), closes [#11912](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/11912)
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.20...gatsby-plugin-sharp@2.0.21) (2019-02-19)
+
+### Features
+
+- **gatsby-plugin-sharp:** add defaultQuality option ([8af9826](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/8af9826))
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.19...gatsby-plugin-sharp@2.0.20) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.18...gatsby-plugin-sharp@2.0.19) (2019-01-29)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+<a name="2.0.18"></a>
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.17...gatsby-plugin-sharp@2.0.18) (2019-01-23)
+
+### Features
+
+- **gatsby-plugin-sharp:** Add support for pngquant speed option ([#9563](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9563)) ([b789689](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/b789689))
+
+<a name="2.0.17"></a>
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.16...gatsby-plugin-sharp@2.0.17) (2018-12-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** url encode file names ([#10650](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/10650)) ([4685bcb](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/4685bcb))
+
+<a name="2.0.16"></a>
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.15...gatsby-plugin-sharp@2.0.16) (2018-12-21)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+<a name="2.0.15"></a>
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.14...gatsby-plugin-sharp@2.0.15) (2018-12-07)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+<a name="2.0.14"></a>
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.13...gatsby-plugin-sharp@2.0.14) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+<a name="2.0.13"></a>
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.12...gatsby-plugin-sharp@2.0.13) (2018-11-21)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** use actions provided, don't assume Gatsby module location. ([#9986](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9986)) ([54f6a85](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/54f6a85)), closes [#9984](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9984)
+
 <a name="2.0.12"></a>
 
 ## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.11...gatsby-plugin-sharp@2.0.12) (2018-11-06)

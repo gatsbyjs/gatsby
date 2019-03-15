@@ -65,7 +65,7 @@ In Part 3, [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-modern-
 
 In Part 4, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial), we’ll discuss the ROI of site speed, explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.
 
-In our conclusion, [Creating Compelling Experiences](/blog/2018-10-18-creating-compelling-experiences), we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing a "content mesh" that makes all the other choices easy. We’ll also explore how one clear option -- Gatsby -- emerges as the most feature-complete of any content mesh alternatives.
+In our conclusion, [Creating Compelling Experiences](/blog/2018-10-18-creating-compelling-content-experiences), we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing a "content mesh" that makes all the other choices easy. We’ll also explore how one clear option -- Gatsby -- emerges as the most feature-complete of any content mesh alternatives.
 
 ## The Modern Website Landscape
 

@@ -92,7 +92,7 @@ _.each(result.data.allWordpressPost.edges, edge => {
 })
 ```
 
-The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/bound-action-creators/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
+The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
 
 ## Wrapping Up
 
@@ -104,5 +104,5 @@ created to support this guide.
 ## Other resources
 
 - [Blog post on which this guide is based on](https://www.gatsbyjs.org/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
-- [Video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
+- [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
 - [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)

@@ -44,6 +44,10 @@ export default () => (
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
 
+### useStaticQuery
+
+There's also a hooks version of StaticQuery called `useStaticQuery`. Check out its documentation [here!](/docs/use-static-query/)
+
 ### Typechecking
 
 With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
@@ -91,3 +95,4 @@ StaticQuery can do most of the things that page query can, including fragments. 
 
 - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
 - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+- StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`

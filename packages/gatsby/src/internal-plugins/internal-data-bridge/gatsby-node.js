@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const moment = require(`moment`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
@@ -42,7 +41,7 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ actions, store }) => {
+exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   const { createNode } = actions
   const state = store.getState()
   const { program } = state
@@ -54,14 +53,11 @@ exports.sourceNodes = ({ actions, store }) => {
   createNode({
     ...page,
     id: createPageId(page.path),
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       type: `SitePage`,
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(page))
-        .digest(`hex`),
+      contentDigest: createContentDigest(page),
     },
   })
 
@@ -72,13 +68,10 @@ exports.sourceNodes = ({ actions, store }) => {
       packageJson: transformPackageJson(
         require(`${plugin.resolve}/package.json`)
       ),
-      parent: `SOURCE`,
+      parent: null,
       children: [],
       internal: {
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(plugin))
-          .digest(`hex`),
+        contentDigest: createContentDigest(plugin),
         type: `SitePlugin`,
       },
     })
@@ -105,13 +98,10 @@ exports.sourceNodes = ({ actions, store }) => {
     createNode({
       ...node,
       id: `Site`,
-      parent: `SOURCE`,
+      parent: null,
       children: [],
       internal: {
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(node))
-          .digest(`hex`),
+        contentDigest: createContentDigest(node),
         type: `Site`,
       },
     })
@@ -139,7 +129,7 @@ exports.sourceNodes = ({ actions, store }) => {
   })
 }
 
-exports.onCreatePage = ({ page, actions }) => {
+exports.onCreatePage = ({ createContentDigest, page, actions }) => {
   const { createNode } = actions
   // eslint-disable-next-line
   const { updatedAt, ...pageWithoutUpdated } = page
@@ -148,14 +138,11 @@ exports.onCreatePage = ({ page, actions }) => {
   createNode({
     ...pageWithoutUpdated,
     id: createPageId(page.path),
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       type: `SitePage`,
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(pageWithoutUpdated))
-        .digest(`hex`),
+      contentDigest: createContentDigest(pageWithoutUpdated),
       description:
         page.pluginCreatorId === `Plugin default-site-plugin`
           ? `Your site's "gatsby-node.js"`

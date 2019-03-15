@@ -36,6 +36,7 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
       onError={onError}
+      itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
     />
@@ -58,6 +59,7 @@ describe(`<Img />`, () => {
   it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
     const imageTag = setup().querySelector(`picture img`)
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
+    expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
     expect(imageTag.getAttribute(`crossOrigin`)).toEqual(`anonymous`)
@@ -69,8 +71,9 @@ describe(`<Img />`, () => {
     expect(placeholderImageTag.getAttribute(`title`)).toEqual(
       `Title for the image`
     )
+    // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1; color: red;`
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })

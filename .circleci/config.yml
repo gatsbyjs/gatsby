@@ -40,6 +40,13 @@ aliases:
         ignore:
           - master
 
+  ignore_docs: &ignore_docs
+    filters:
+      branches:
+        ignore:
+          - /docs.+/
+          - /blog.+/
+
   test_template: &test_template
     steps:
       - checkout
@@ -49,9 +56,15 @@ aliases:
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
       - run: yarn jest -w 1
+      - run: GATSBY_DB_NODES=loki yarn jest -w 1
 
   e2e-test-workflow: &e2e-test-workflow
-    <<: *ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+          - /blog.+/
     requires:
       - bootstrap
 
@@ -63,6 +76,9 @@ commands:
         default: "packages/*|.circleci/*"
       test_path:
         type: string
+      test_command:
+        type: string
+        default: "" # if unset, e2e-test.sh specifies the command
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
@@ -70,7 +86,7 @@ commands:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>"
+      - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
 
@@ -114,16 +130,17 @@ jobs:
     executor: node
     <<: *test_template
 
-  integration_tests:
+  integration_tests_long_term_caching:
     executor: node
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|integration-tests/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - <<: *attach_to_bootstrap
-      - run: yarn test:integration
+      - e2e-test:
+          test_path: integration-tests/long-term-caching
+
+  integration_tests_gatsby_pipeline:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/gatsby-pipeline
 
   e2e_tests_gatsbygram:
     <<: *e2e-executor
@@ -143,11 +160,38 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
 
-  e2e_tests_runtime:
+  e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+
+  e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
+          test_command: yarn test && yarn test:offline
+
+  starters_validate:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/clone-and-validate.sh starters
+
+  starters_publish:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: yarn markdown
+      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "admin@gatsbyjs.com"
+      - run: sh ./scripts/clone-and-validate.sh starters true
 
 workflows:
   version: 2
@@ -156,20 +200,35 @@ workflows:
       - bootstrap
       - lint
       - unit_tests_node6:
+          <<: *ignore_docs
           requires:
             - bootstrap
       - unit_tests_node8:
+          <<: *ignore_docs
           requires:
             - bootstrap
       - unit_tests_node10:
+          <<: *ignore_docs
           requires:
             - bootstrap
-      - integration_tests
+      - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
       - e2e_tests_gatsbygram:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
-      - e2e_tests_runtime:
+      - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          filters:
+            branches:
+              only:
+                - master

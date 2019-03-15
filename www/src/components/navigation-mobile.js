@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css } from "react-emotion"
 import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
@@ -9,35 +8,47 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, { colors } from "../utils/presets"
+import presets, {
+  colors,
+  transition,
+  radii,
+  space,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 
-const getNavItemStyles = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent
-    ? {
-        className: css({
-          ...styles.link.default,
-          ...styles.link.active,
-          ...styles.svg.active,
-        }),
-      }
-    : {
-        className: css({
-          ...styles.link.default,
-          ...styles.svg.default,
-        }),
-      }
+const getProps = ({ isPartiallyCurrent }) => {
+  return {
+    ...(isPartiallyCurrent
+      ? {
+          "data-active": true,
+        }
+      : {}),
+  }
+}
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
-  <Link to={linkTo} getProps={getNavItemStyles}>
+  <Link
+    css={{
+      ...styles.link.default,
+      ...styles.svg.default,
+      "&[data-active]": {
+        ...styles.link.active,
+        ...styles.svg.active,
+      },
+    }}
+    getProps={getProps}
+    to={linkTo}
+  >
     <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>
 )
 
 const MobileNavigation = () => (
-  <React.Fragment>
+  <>
     <span
       css={{
         position: `absolute`,
@@ -61,12 +72,12 @@ const MobileNavigation = () => (
         left: 0,
         right: 0,
         zIndex: 1,
-        borderTop: `1px solid ${colors.ui.border}`,
-        background: colors.ui.whisper,
-        minHeight: presets.headerHeight,
-        fontFamily: typography.options.headerFontFamily.join(`,`),
+        borderTop: `1px solid ${colors.ui.light}`,
+        background: colors.white,
+        height: dimensions.headerHeight,
+        fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Tablet]: {
+        [breakpoints.md]: {
           display: `none`,
         },
       }}
@@ -77,7 +88,7 @@ const MobileNavigation = () => (
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
     </div>
-  </React.Fragment>
+  </>
 )
 
 export default MobileNavigation
@@ -97,12 +108,12 @@ const styles = {
       "& .svg-stroke-lilac": { stroke: colors.lavender },
       "& .svg-fill-lilac": { fill: colors.lavender },
       "& .svg-fill-gatsby": { fill: colors.lavender },
-      "& .svg-fill-brightest": { fill: `#fff` },
+      "& .svg-fill-brightest": { fill: colors.white },
       "& .svg-fill-accent": { fill: colors.lavender },
       "& .svg-stroke-gatsby": { stroke: colors.lavender },
       "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
       "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
+      "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
       "& .svg-fill-gradient-purple": { fill: colors.lavender },
       "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
       "& .svg-fill-wisteria": { fill: `transparent` },
@@ -112,34 +123,30 @@ const styles = {
   },
   link: {
     default: {
-      color: colors.lavender,
-      borderRadius: presets.radius,
-      fontSize: scale(-1 / 2).fontSize,
+      color: colors.lilac,
+      borderRadius: radii[1],
+      fontSize: presets.scale[0],
       flexShrink: 0,
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
       width: 64,
-      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
-        options.blockMarginBottom / 4
-      )} 0`,
+      padding: rhythm(space[1]),
       textDecoration: `none`,
       textAlign: `center`,
+      WebkitFontSmoothing: `antialiased`,
       "& svg": {
         display: `block`,
         height: 32,
         margin: `0 auto`,
         "& path, & line, & polygon": {
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
+          transition: `all ${transition.speed.default} ${
+            transition.curve.default
           }`,
         },
       },
     },
     active: {
-      "&&": {
-        color: colors.gatsby,
-        fontWeight: `bold`,
-        // WebkitFontSmoothing: `antialiased`,
-      },
+      color: colors.gatsby,
+      fontWeight: `bold`,
     },
   },
 }

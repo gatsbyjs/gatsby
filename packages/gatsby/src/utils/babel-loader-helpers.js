@@ -2,7 +2,11 @@ const path = require(`path`)
 const _ = require(`lodash`)
 
 const loadCachedConfig = () => {
-  let pluginBabelConfig = { test: { plugins: [], presets: [] } }
+  let pluginBabelConfig = {
+    stages: {
+      test: { plugins: [], presets: [] },
+    },
+  }
   if (process.env.NODE_ENV !== `test`) {
     pluginBabelConfig = require(path.join(
       process.cwd(),
@@ -15,7 +19,7 @@ const loadCachedConfig = () => {
 const getCustomOptions = () => {
   const pluginBabelConfig = loadCachedConfig()
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
-  return pluginBabelConfig[stage].options
+  return pluginBabelConfig.stages[stage].options
 }
 
 const prepareOptions = (babel, resolve = require.resolve) => {
@@ -59,14 +63,14 @@ const prepareOptions = (babel, resolve = require.resolve) => {
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
   const reduxPresets = []
-  pluginBabelConfig[stage].plugins.forEach(plugin => {
+  pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
     reduxPlugins.push(
       babel.createConfigItem([resolve(plugin.name), plugin.options], {
         type: `plugin`,
       })
     )
   })
-  pluginBabelConfig[stage].presets.forEach(preset => {
+  pluginBabelConfig.stages[stage].presets.forEach(preset => {
     reduxPresets.push(
       babel.createConfigItem([resolve(preset.name), preset.options], {
         type: `preset`,

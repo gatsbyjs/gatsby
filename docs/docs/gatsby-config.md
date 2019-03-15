@@ -22,7 +22,7 @@ Options available to set within `gatsby-config.js` include:
 
 When you want to reuse common pieces of data across the site (for example, your site title), you can store that data in `siteMetadata`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsby`,
@@ -40,7 +40,7 @@ See a fuller description and sample usage in [Gatsby.js Tutorial Part Four](/tut
 
 Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options (see the docs for individual plugins).
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -61,7 +61,7 @@ See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to s
 
 It's common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
@@ -76,7 +76,7 @@ Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsb
 
 If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   polyfill: false,
 }
@@ -99,9 +99,7 @@ author: Kyle Mathews
 A treatise on the efficacy of bezoar for treating agricultural pesticide poisoning.
 ```
 
-author.yaml
-
-```yaml
+```yaml:title=author.yaml
 - id: Kyle Mathews
   bio: Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
   twitter: "@kylemathews"
@@ -143,8 +141,7 @@ query($slug: String!) {
 Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files
 `experience.json` and `tech.json` as follows:
 
-```json
-// experience.json
+```json:title=experience.json
 [
   {
     "id": "companyA",
@@ -166,8 +163,7 @@ Mapping can also be used to map an array of ids to any other collection of data.
 ]
 ```
 
-```json
-// tech.json
+```json:title=tech.json
 [
   {
     "id": "REACT",
@@ -186,7 +182,7 @@ Mapping can also be used to map an array of ids to any other collection of data.
 
 And then add the following rule to your `gatsby-config.js`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [...],
   mapping: {
@@ -235,7 +231,7 @@ Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at brico
 
 And then add the following rule to your `gatsby-config.js`:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [...],
   mapping: {
@@ -250,7 +246,7 @@ Similarly to YAML and JSON files, mapping between Markdown files can also be use
 
 Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server. For example:
 
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
   proxy: {
     prefix: "/api",

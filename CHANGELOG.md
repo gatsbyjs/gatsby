@@ -535,7 +535,7 @@ API changes:
 - The default layout component should be at `layouts/index.js` not
   `layouts/default.js`
   https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300537162
-- `this.props.children` in layout components is now a _function_
+- `this.props.children` in layout components is now a function
   https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300
 - Change the default port for serve-build to 9000
 - Change the path to GraphiQL to `/___graphql`

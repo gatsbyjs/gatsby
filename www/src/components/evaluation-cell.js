@@ -1,8 +1,8 @@
 import React from "react"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { colors, space } from "../utils/presets"
 
-const bgDefault = `#edebf0`
+const bgDefault = colors.accentLight
 const bgFeatureAvailability = colors.accent
 
 const getBackground = num => {
@@ -24,14 +24,10 @@ const getBackground = num => {
 }
 
 const basicStyling = {
-  height: rhythm(3 / 4),
-  width: rhythm(3 / 4),
+  height: rhythm(space[5]),
+  width: rhythm(space[5]),
   borderRadius: `50%`,
   margin: `0 auto`,
-  [presets.Mobile]: {
-    height: rhythm(0.875),
-    width: rhythm(0.875),
-  },
 }
 
 const EvaluationCell = ({ num, style }) => (

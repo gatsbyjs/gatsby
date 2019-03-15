@@ -10,7 +10,7 @@ Gatsby ships with Prettier, which is a simple, opinionated code _formatter_. [ES
 
 Here we will explore an ESLint configuration that acts like Prettier by adhering to [Standard.js](https://standardjs.com) rules. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following commands to remove Prettier and install ESLint.
 
-```bash
+```shell
 # Remove the Prettier package
 npm rm prettier
 
@@ -18,12 +18,12 @@ npm rm prettier
 npm install --save-dev eslint babel-eslint \
   eslint-config-standard eslint-plugin-node \
   eslint-plugin-standard eslint-plugin-react \
-  eslint-plugin-import eslint-plugin-promise \
+  eslint-plugin-import eslint-plugin-promise
 ```
 
 Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js` using the commands below.
 
-```bash
+```shell
 # Remove the Prettier config file
 rm .prettierrc
 

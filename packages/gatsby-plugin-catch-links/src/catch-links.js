@@ -119,6 +119,9 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   // in React. Creating a new anchor element to ensure host value is present
   const destination = document.createElement(`a`)
   destination.href = clickedAnchor.href
+  if (clickedAnchor.href instanceof SVGAnimatedString) {
+    destination.href = clickedAnchor.href.animVal
+  }
 
   // In IE, the default port is included in the anchor host but excluded from
   // the location host.  This affects the ability to directly compare

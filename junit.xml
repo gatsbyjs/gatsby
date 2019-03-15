@@ -1,0 +1,1844 @@
+<testsuites name="jest tests" tests="806" failures="0" time="179.593">
+  <testsuite name="GraphQL type inferance" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:17" time="21.891" tests="33">
+    <testcase classname="GraphQL type inferance filters out null example values" name="GraphQL type inferance filters out null example values" time="0.094">
+    </testcase>
+    <testcase classname="GraphQL type inferance doesn&apos;t throw errors at ints longer than 32-bit" name="GraphQL type inferance doesn&apos;t throw errors at ints longer than 32-bit" time="0.018">
+    </testcase>
+    <testcase classname="GraphQL type inferance prefers float when multiple number types" name="GraphQL type inferance prefers float when multiple number types" time="0.005">
+    </testcase>
+    <testcase classname="GraphQL type inferance filters out empty objects" name="GraphQL type inferance filters out empty objects" time="0.004">
+    </testcase>
+    <testcase classname="GraphQL type inferance filters out empty arrays" name="GraphQL type inferance filters out empty arrays" time="0.003">
+    </testcase>
+    <testcase classname="GraphQL type inferance filters out sparse arrays" name="GraphQL type inferance filters out sparse arrays" time="0.005">
+    </testcase>
+    <testcase classname="GraphQL type inferance Removes specific root fields" name="GraphQL type inferance Removes specific root fields" time="0.011">
+    </testcase>
+    <testcase classname="GraphQL type inferance infers number types" name="GraphQL type inferance infers number types" time="0.009">
+    </testcase>
+    <testcase classname="GraphQL type inferance Handle invalid graphql field names" name="GraphQL type inferance Handle invalid graphql field names" time="0.085">
+    </testcase>
+    <testcase classname="GraphQL type inferance Handles dates Handles integer with valid date format" name="GraphQL type inferance Handles dates Handles integer with valid date format" time="0.004">
+    </testcase>
+    <testcase classname="GraphQL type inferance Handles dates Infers from Date objects" name="GraphQL type inferance Handles dates Infers from Date objects" time="0.007">
+    </testcase>
+    <testcase classname="GraphQL type inferance Handles dates Infers from array of Date objects" name="GraphQL type inferance Handles dates Infers from array of Date objects" time="0.085">
+    </testcase>
+    <testcase classname="GraphQL type inferance Handles dates Infers from date strings" name="GraphQL type inferance Handles dates Infers from date strings" time="0.015">
+    </testcase>
+    <testcase classname="GraphQL type inferance Handles dates Infers from arrays of date strings" name="GraphQL type inferance Handles dates Infers from arrays of date strings" time="0.015">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference from config mappings Links to single node by id" name="GraphQL type inferance Linked inference from config mappings Links to single node by id" time="0.007">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference from config mappings Links to array of nodes by id" name="GraphQL type inferance Linked inference from config mappings Links to array of nodes by id" time="0.006">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference from config mappings Links to single node by custom field" name="GraphQL type inferance Linked inference from config mappings Links to single node by custom field" time="0.006">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference from config mappings Links to array of nodes by custom field" name="GraphQL type inferance Linked inference from config mappings Links to array of nodes by custom field" time="0.008">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference from file URIs Links to file node" name="GraphQL type inferance Linked inference from file URIs Links to file node" time="0.011">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference from file URIs Links to array of file nodes" name="GraphQL type inferance Linked inference from file URIs Links to array of file nodes" time="0.009">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Links nodes" name="GraphQL type inferance Linked inference by __NODE convention Links nodes" time="0.01">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Links an array of nodes" name="GraphQL type inferance Linked inference by __NODE convention Links an array of nodes" time="0.009">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Errors clearly when missing nodes" name="GraphQL type inferance Linked inference by __NODE convention Errors clearly when missing nodes" time="0.005">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Errors clearly when missing types" name="GraphQL type inferance Linked inference by __NODE convention Errors clearly when missing types" time="0.003">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Creates union types" name="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Creates union types" time="0.012">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses same union type for same child node types and key" name="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses same union type for same child node types and key" time="0.005">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses a different type for the same child node types with a different key" name="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses a different type for the same child node types with a different key" time="0.006">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses a different type for different child node types with the same key" name="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses a different type for different child node types with the same key" time="0.009">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Creates a new type after schema updates clear union types" name="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Creates a new type after schema updates clear union types" time="0.004">
+    </testcase>
+    <testcase classname="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses a reliable naming convention" name="GraphQL type inferance Linked inference by __NODE convention Creation of union types when array field is linking to multiple types Uses a reliable naming convention" time="0.004">
+    </testcase>
+    <testcase classname="GraphQL type inferance Infers graphql type from array of nodes" name="GraphQL type inferance Infers graphql type from array of nodes" time="0.104">
+    </testcase>
+    <testcase classname="GraphQL type inferance type conflicts catches conflicts and removes field" name="GraphQL type inferance type conflicts catches conflicts and removes field" time="0.006">
+    </testcase>
+    <testcase classname="GraphQL type inferance type conflicts does not warn about provided types" name="GraphQL type inferance type conflicts does not warn about provided types" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process markdown content correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:17" time="23.696" tests="4">
+    <testcase classname="Process markdown content correctly Process generated markdown node correctly Correctly creates a new MarkdownRemark node" name="Process markdown content correctly Process generated markdown node correctly Correctly creates a new MarkdownRemark node" time="0.033">
+    </testcase>
+    <testcase classname="Process markdown content correctly Process generated markdown node correctly Correctly parses a graymatter excerpt" name="Process markdown content correctly Process generated markdown node correctly Correctly parses a graymatter excerpt" time="0.005">
+    </testcase>
+    <testcase classname="Process markdown content correctly process graphql correctly Correctly queries an excerpt for a node with an excerpt separator" name="Process markdown content correctly process graphql correctly Correctly queries an excerpt for a node with an excerpt separator" time="0.068">
+    </testcase>
+    <testcase classname="Process markdown content correctly process graphql correctly Correctly queries an excerpt for a node without an excerpt separator" name="Process markdown content correctly process graphql correctly Correctly queries an excerpt for a node without an excerpt separator" time="0.035">
+    </testcase>
+  </testsuite>
+  <testsuite name="Gatsby data tree utils" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:39" time="2.093" tests="17">
+    <testcase classname="Gatsby data tree utils builds field examples from an array of nodes" name="Gatsby data tree utils builds field examples from an array of nodes" time="0.01">
+    </testcase>
+    <testcase classname="Gatsby data tree utils skips null fields" name="Gatsby data tree utils skips null fields" time="0.002">
+    </testcase>
+    <testcase classname="Gatsby data tree utils should not mutate the nodes" name="Gatsby data tree utils should not mutate the nodes" time="0.003">
+    </testcase>
+    <testcase classname="Gatsby data tree utils skips empty or sparse arrays" name="Gatsby data tree utils skips empty or sparse arrays" time="0.002">
+    </testcase>
+    <testcase classname="Gatsby data tree utils skips ignoredFields at the top level" name="Gatsby data tree utils skips ignoredFields at the top level" time="0.003">
+    </testcase>
+    <testcase classname="Gatsby data tree utils build enum values for fields from array on nodes" name="Gatsby data tree utils build enum values for fields from array on nodes" time="0.005">
+    </testcase>
+    <testcase classname="Gatsby data tree utils turns polymorphic fields null" name="Gatsby data tree utils turns polymorphic fields null" time="0.002">
+    </testcase>
+    <testcase classname="Gatsby data tree utils handles polymorphic arrays" name="Gatsby data tree utils handles polymorphic arrays" time="0.001">
+    </testcase>
+    <testcase classname="Gatsby data tree utils doesn&apos;t confuse empty fields for polymorhpic ones" name="Gatsby data tree utils doesn&apos;t confuse empty fields for polymorhpic ones" time="0.003">
+    </testcase>
+    <testcase classname="Gatsby data tree utils skips unsupported types" name="Gatsby data tree utils skips unsupported types" time="0.001">
+    </testcase>
+    <testcase classname="Gatsby data tree utils prefers float when multiple number types" name="Gatsby data tree utils prefers float when multiple number types" time="0.012">
+    </testcase>
+    <testcase classname="Gatsby data tree utils handles mix of date strings and date objects" name="Gatsby data tree utils handles mix of date strings and date objects" time="0.015">
+    </testcase>
+    <testcase classname="Gatsby data tree utils handles arrays with mix of date strings and date objects" name="Gatsby data tree utils handles arrays with mix of date strings and date objects" time="0.031">
+    </testcase>
+    <testcase classname="Type conflicts Doesn&apos;t report conflicts if there are none" name="Type conflicts Doesn&apos;t report conflicts if there are none" time="0.001">
+    </testcase>
+    <testcase classname="Type conflicts Report type conflicts and its origin" name="Type conflicts Report type conflicts and its origin" time="0.004">
+    </testcase>
+    <testcase classname="Type conflicts Report conflict when array has mixed types and its origin" name="Type conflicts Report conflict when array has mixed types and its origin" time="0.003">
+    </testcase>
+    <testcase classname="Type conflicts Doesn&apos;t report ignored fields" name="Type conflicts Doesn&apos;t report ignored fields" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-embed-snippet" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:41" time="3.526" tests="26">
+    <testcase classname="gatsby-remark-embed-snippet should error if missing required config options" name="gatsby-remark-embed-snippet should error if missing required config options" time="0.013">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet should error if the specified directory does not exist" name="gatsby-remark-embed-snippet should error if the specified directory does not exist" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet should error if an invalid file path is specified" name="gatsby-remark-embed-snippet should error if an invalid file path is specified" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet should not modify non-embed inlineCode nodes" name="gatsby-remark-embed-snippet should not modify non-embed inlineCode nodes" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet should convert embed inlineCode nodes to Prism code blocks" name="gatsby-remark-embed-snippet should convert embed inlineCode nodes to Prism code blocks" time="0.279">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet should error if an invalid range expression is specified" name="gatsby-remark-embed-snippet should error if an invalid range expression is specified" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet CSS files should extract the correct Prism language" name="gatsby-remark-embed-snippet CSS files should extract the correct Prism language" time="0.011">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet CSS files should support highlight-line and highlight-next-line markers" name="gatsby-remark-embed-snippet CSS files should support highlight-line and highlight-next-line markers" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet CSS files should support highlight-range markers" name="gatsby-remark-embed-snippet CSS files should support highlight-range markers" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet HTML files should extract the correct Prism language" name="gatsby-remark-embed-snippet HTML files should extract the correct Prism language" time="0.015">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet HTML files should support highlight-line and highlight-next-line markers" name="gatsby-remark-embed-snippet HTML files should support highlight-line and highlight-next-line markers" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet HTML files should support highlight-range markers" name="gatsby-remark-embed-snippet HTML files should support highlight-range markers" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet JavaScript files should extract the correct Prism language" name="gatsby-remark-embed-snippet JavaScript files should extract the correct Prism language" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet JavaScript files should support highlight-line and highlight-next-line markers" name="gatsby-remark-embed-snippet JavaScript files should support highlight-line and highlight-next-line markers" time="0.007">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet JavaScript files should support highlight-range markers" name="gatsby-remark-embed-snippet JavaScript files should support highlight-range markers" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet JavaScript files should support JSX line highlight comments" name="gatsby-remark-embed-snippet JavaScript files should support JSX line highlight comments" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet JavaScript files should support highlighting a range via JSX comments" name="gatsby-remark-embed-snippet JavaScript files should support highlighting a range via JSX comments" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet JavaScript files should support multiple highlight directives within a single file" name="gatsby-remark-embed-snippet JavaScript files should support multiple highlight directives within a single file" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet Markdown files should extract the correct Prism language" name="gatsby-remark-embed-snippet Markdown files should extract the correct Prism language" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet shell scripts should extract the correct Prism language" name="gatsby-remark-embed-snippet shell scripts should extract the correct Prism language" time="0.048">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet shell scripts should support highlight-line and highlight-next-line markers" name="gatsby-remark-embed-snippet shell scripts should support highlight-line and highlight-next-line markers" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet shell scripts should support highlight-range markers" name="gatsby-remark-embed-snippet shell scripts should support highlight-range markers" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet YAML files should extract the correct Prism language" name="gatsby-remark-embed-snippet YAML files should extract the correct Prism language" time="0.043">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet YAML files should support highlight-line and highlight-next-line markers" name="gatsby-remark-embed-snippet YAML files should support highlight-line and highlight-next-line markers" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet YAML files should support highlight-range markers" name="gatsby-remark-embed-snippet YAML files should support highlight-range markers" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-embed-snippet unknown file extensions should set the correct default Prism language" name="gatsby-remark-embed-snippet unknown file extensions should set the correct default Prism language" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="catchLinks" errors="0" failures="0" skipped="8" timestamp="2018-11-27T15:49:42" time="3.927" tests="34">
+    <testcase classname="catchLinks creates a click event" name="catchLinks creates a click event" time="0.004">
+    </testcase>
+    <testcase classname="catchLinks uses an instance of the handler returned by routeThroughBrowserOrApp" name="catchLinks uses an instance of the handler returned by routeThroughBrowserOrApp" time="0">
+    </testcase>
+    <testcase classname="the click event checks if the user might be forcing navigation" name="the click event checks if the user might be forcing navigation" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event checks if we clicked on an anchor" name="the click event checks if we clicked on an anchor" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event checks if the document author might be forcing navigation" name="the click event checks if the document author might be forcing navigation" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event checks if the destination/origin URLs have matching origins" name="the click event checks if the destination/origin URLs have matching origins" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event checks if the destination/origin URLs have matching top level paths" name="the click event checks if the destination/origin URLs have matching top level paths" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event checks if the destination URL wants to scroll the page with a hash anchor" name="the click event checks if the destination URL wants to scroll the page with a hash anchor" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event handles pathPrefix if necessary" name="the click event handles pathPrefix if necessary" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="the click event routes the destination href through gatsby" name="the click event routes the destination href through gatsby" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;auxiliary&quot; button" name="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;auxiliary&quot; button" time="0.001">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;secondary&quot; button" name="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;secondary&quot; button" time="0">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;fourth&quot; button" name="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;fourth&quot; button" time="0.001">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;fifth&quot; button" name="a user may be forcing navigation if the &quot;main&quot; button was not clicked &quot;fifth&quot; button" time="0">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the user is holding down a modifier key alt key" name="a user may be forcing navigation if the user is holding down a modifier key alt key" time="0">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the user is holding down a modifier key control key" name="a user may be forcing navigation if the user is holding down a modifier key control key" time="0.001">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the user is holding down a modifier key meta key" name="a user may be forcing navigation if the user is holding down a modifier key meta key" time="0.001">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the user is holding down a modifier key shift key" name="a user may be forcing navigation if the user is holding down a modifier key shift key" time="0">
+    </testcase>
+    <testcase classname="a user may be forcing navigation if the default behavior was prevented elsewhere" name="a user may be forcing navigation if the default behavior was prevented elsewhere" time="0.001">
+    </testcase>
+    <testcase classname="the clicked element must be an anchor tag" name="the clicked element must be an anchor tag" time="0.004">
+    </testcase>
+    <testcase classname="the clicked element could be inside of an anchor" name="the clicked element could be inside of an anchor" time="0.002">
+    </testcase>
+    <testcase classname="the author might be forcing navigation if the clicked anchor is a download link" name="the author might be forcing navigation if the clicked anchor is a download link" time="0.002">
+    </testcase>
+    <testcase classname="the author might be forcing navigation if the clicked anchor does not target _self target=_blank" name="the author might be forcing navigation if the clicked anchor does not target _self target=_blank" time="0.001">
+    </testcase>
+    <testcase classname="the author might be forcing navigation if the clicked anchor does not target _self target=_parent" name="the author might be forcing navigation if the clicked anchor does not target _self target=_parent" time="0.001">
+    </testcase>
+    <testcase classname="the author might be forcing navigation if the clicked anchor does not target _self target=_top" name="the author might be forcing navigation if the clicked anchor does not target _self target=_top" time="0.001">
+    </testcase>
+    <testcase classname="anchor target attribute looks like _self if is not set" name="anchor target attribute looks like _self if is not set" time="0.001">
+    </testcase>
+    <testcase classname="anchor target attribute looks like _self if is set to _self" name="anchor target attribute looks like _self if is set to _self" time="0.001">
+    </testcase>
+    <testcase classname="anchor target attribute looks like _self if is set to _parent, but window = window.parent" name="anchor target attribute looks like _self if is set to _parent, but window = window.parent" time="0.002">
+    </testcase>
+    <testcase classname="anchor target attribute looks like _self if is set to _top, but window = window.top" name="anchor target attribute looks like _self if is set to _top, but window = window.top" time="0.001">
+    </testcase>
+    <testcase classname="navigation is routed through gatsby if the destination href shares the same origin and top path" name="navigation is routed through gatsby if the destination href shares the same origin and top path" time="0.014">
+    </testcase>
+    <testcase classname="navigation is routed through gatsby if the destination href is not a hash anchor for the current page" name="navigation is routed through gatsby if the destination href is not a hash anchor for the current page" time="0.007">
+    </testcase>
+    <testcase classname="navigation is routed through gatsby if the destination href has a URL &quot;search&quot; portion" name="navigation is routed through gatsby if the destination href has a URL &quot;search&quot; portion" time="0.016">
+    </testcase>
+    <testcase classname="pathPrefix is handled if catched link to /blog/article navigates to /blog/article on sites with pathPrefix &apos;/blog&apos;" name="pathPrefix is handled if catched link to /blog/article navigates to /blog/article on sites with pathPrefix &apos;/blog&apos;" time="0.011">
+    </testcase>
+    <testcase classname="pathPrefix is handled if catched link to /blog/article navigates to /blog/article on sites without pathPrefix" name="pathPrefix is handled if catched link to /blog/article navigates to /blog/article on sites without pathPrefix" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="Create and update nodes" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:45" time="1.952" tests="13">
+    <testcase classname="Create and update nodes allows creating nodes" name="Create and update nodes allows creating nodes" time="0.015">
+    </testcase>
+    <testcase classname="Create and update nodes allows updating nodes" name="Create and update nodes allows updating nodes" time="0.004">
+    </testcase>
+    <testcase classname="Create and update nodes deletes previously transformed children nodes when the parent node is updated" name="Create and update nodes deletes previously transformed children nodes when the parent node is updated" time="0.002">
+    </testcase>
+    <testcase classname="Create and update nodes deletes previously transformed children nodes when the parent node is deleted" name="Create and update nodes deletes previously transformed children nodes when the parent node is deleted" time="0.002">
+    </testcase>
+    <testcase classname="Create and update nodes deletes previously transformed children nodes when parent nodes are deleted" name="Create and update nodes deletes previously transformed children nodes when parent nodes are deleted" time="0.004">
+    </testcase>
+    <testcase classname="Create and update nodes allows deleting nodes" name="Create and update nodes allows deleting nodes" time="0.002">
+    </testcase>
+    <testcase classname="Create and update nodes warns when using old deleteNode signature " name="Create and update nodes warns when using old deleteNode signature " time="0.153">
+    </testcase>
+    <testcase classname="Create and update nodes nodes that are added are also &quot;touched&quot;" name="Create and update nodes nodes that are added are also &quot;touched&quot;" time="0.001">
+    </testcase>
+    <testcase classname="Create and update nodes allows adding fields to nodes" name="Create and update nodes allows adding fields to nodes" time="0.002">
+    </testcase>
+    <testcase classname="Create and update nodes throws error if a field is updated by a plugin not its owner" name="Create and update nodes throws error if a field is updated by a plugin not its owner" time="0.002">
+    </testcase>
+    <testcase classname="Create and update nodes throws error if a node is created by a plugin not its owner" name="Create and update nodes throws error if a node is created by a plugin not its owner" time="0.001">
+    </testcase>
+    <testcase classname="Create and update nodes throws error if a node sets a value on &quot;fields&quot;" name="Create and update nodes throws error if a node sets a value on &quot;fields&quot;" time="0.002">
+    </testcase>
+    <testcase classname="Create and update nodes does not crash when delete node is called on undefined" name="Create and update nodes does not crash when delete node is called on undefined" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="GraphQL Input args from fields, test-only" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:46" time="1.687" tests="8">
+    <testcase classname="GraphQL Input args from fields, test-only handles all known scalars" name="GraphQL Input args from fields, test-only handles all known scalars" time="0.014">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only recursively converts object types" name="GraphQL Input args from fields, test-only recursively converts object types" time="0.003">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only handles lists within lists" name="GraphQL Input args from fields, test-only handles lists within lists" time="0.002">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only protects against infinite recursion on circular definitions" name="GraphQL Input args from fields, test-only protects against infinite recursion on circular definitions" time="0.006">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only recovers from unknown output types" name="GraphQL Input args from fields, test-only recovers from unknown output types" time="0.008">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only includes the filters of list elements" name="GraphQL Input args from fields, test-only includes the filters of list elements" time="0.002">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only strips away NonNull" name="GraphQL Input args from fields, test-only strips away NonNull" time="0.001">
+    </testcase>
+    <testcase classname="GraphQL Input args from fields, test-only extracts the fields you can sort on" name="GraphQL Input args from fields, test-only extracts the fields you can sort on" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="GraphQL Input args" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:17" time="31.796" tests="34">
+    <testcase classname="GraphQL Input args filters out null example values" name="GraphQL Input args filters out null example values" time="0.061">
+    </testcase>
+    <testcase classname="GraphQL Input args filters out empty objects" name="GraphQL Input args filters out empty objects" time="0.01">
+    </testcase>
+    <testcase classname="GraphQL Input args filters out empty arrays" name="GraphQL Input args filters out empty arrays" time="0.009">
+    </testcase>
+    <testcase classname="GraphQL Input args filters out sparse arrays" name="GraphQL Input args filters out sparse arrays" time="0.009">
+    </testcase>
+    <testcase classname="GraphQL Input args uses correct keys for linked fields" name="GraphQL Input args uses correct keys for linked fields" time="0.012">
+    </testcase>
+    <testcase classname="GraphQL Input args Replaces unsupported values in keys" name="GraphQL Input args Replaces unsupported values in keys" time="0.002">
+    </testcase>
+    <testcase classname="GraphQL Input args Removes specific root fields" name="GraphQL Input args Removes specific root fields" time="0.002">
+    </testcase>
+    <testcase classname="GraphQL Input args infers number types" name="GraphQL Input args infers number types" time="0.003">
+    </testcase>
+    <testcase classname="GraphQL Input args handles eq operator" name="GraphQL Input args handles eq operator" time="0.675">
+    </testcase>
+    <testcase classname="GraphQL Input args handles eq operator with false value" name="GraphQL Input args handles eq operator with false value" time="0.067">
+    </testcase>
+    <testcase classname="GraphQL Input args handles eq operator with 0" name="GraphQL Input args handles eq operator with 0" time="0.066">
+    </testcase>
+    <testcase classname="GraphQL Input args handles ne operator" name="GraphQL Input args handles ne operator" time="0.184">
+    </testcase>
+    <testcase classname="GraphQL Input args handles lt operator" name="GraphQL Input args handles lt operator" time="0.074">
+    </testcase>
+    <testcase classname="GraphQL Input args handles lte operator" name="GraphQL Input args handles lte operator" time="0.079">
+    </testcase>
+    <testcase classname="GraphQL Input args handles gt operator" name="GraphQL Input args handles gt operator" time="0.08">
+    </testcase>
+    <testcase classname="GraphQL Input args handles gte operator" name="GraphQL Input args handles gte operator" time="0.059">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the regex operator" name="GraphQL Input args handles the regex operator" time="0.064">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the in operator for scalars" name="GraphQL Input args handles the in operator for scalars" time="0.075">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the in operator for array" name="GraphQL Input args handles the in operator for array" time="0.085">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the elemMatch operator for array of objects" name="GraphQL Input args handles the elemMatch operator for array of objects" time="0.077">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the nin operator for array" name="GraphQL Input args handles the nin operator for array" time="0.06">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the nin operator for scalars" name="GraphQL Input args handles the nin operator for scalars" time="0.076">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the glob operator" name="GraphQL Input args handles the glob operator" time="0.104">
+    </testcase>
+    <testcase classname="GraphQL Input args filters date fields" name="GraphQL Input args filters date fields" time="0.046">
+    </testcase>
+    <testcase classname="GraphQL Input args sorts results" name="GraphQL Input args sorts results" time="0.055">
+    </testcase>
+    <testcase classname="GraphQL Input args returns list of distinct values in a field" name="GraphQL Input args returns list of distinct values in a field" time="0.064">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the group connection field" name="GraphQL Input args handles the group connection field" time="0.067">
+    </testcase>
+    <testcase classname="GraphQL Input args handles the nested group connection field" name="GraphQL Input args handles the nested group connection field" time="0.089">
+    </testcase>
+    <testcase classname="GraphQL Input args can query object arrays" name="GraphQL Input args can query object arrays" time="0.083">
+    </testcase>
+    <testcase classname="filtering on linked nodes filters on linked nodes via id" name="filtering on linked nodes filters on linked nodes via id" time="0.024">
+    </testcase>
+    <testcase classname="filtering on linked nodes returns all matching linked nodes" name="filtering on linked nodes returns all matching linked nodes" time="0.006">
+    </testcase>
+    <testcase classname="filtering on linked nodes handles elemMatch operator" name="filtering on linked nodes handles elemMatch operator" time="0.023">
+    </testcase>
+    <testcase classname="filtering on linked nodes doesn&apos;t mutate node object" name="filtering on linked nodes doesn&apos;t mutate node object" time="0.017">
+    </testcase>
+    <testcase classname="filtering on linked nodes skips fields with missing nodes" name="filtering on linked nodes skips fields with missing nodes" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Excerpt is generated correctly from schema" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:47" time="3.413" tests="12">
+    <testcase classname="Excerpt is generated correctly from schema correctly loads an excerpt" name="Excerpt is generated correctly from schema correctly loads an excerpt" time="0.258">
+    </testcase>
+    <testcase classname="Excerpt is generated correctly from schema correctly loads a default excerpt" name="Excerpt is generated correctly from schema correctly loads a default excerpt" time="0.023">
+    </testcase>
+    <testcase classname="Excerpt is generated correctly from schema correctly uses excerpt separator" name="Excerpt is generated correctly from schema correctly uses excerpt separator" time="0.025">
+    </testcase>
+    <testcase classname="Excerpt is generated correctly from schema correctly prunes length to default value" name="Excerpt is generated correctly from schema correctly prunes length to default value" time="0.033">
+    </testcase>
+    <testcase classname="Excerpt is generated correctly from schema correctly prunes length to provided parameter" name="Excerpt is generated correctly from schema correctly prunes length to provided parameter" time="0.018">
+    </testcase>
+    <testcase classname="Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate" name="Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate" time="0.018">
+    </testcase>
+    <testcase classname="Wordcount and timeToRead are generated correctly from schema correctly uses wordCount parameters" name="Wordcount and timeToRead are generated correctly from schema correctly uses wordCount parameters" time="0.037">
+    </testcase>
+    <testcase classname="Wordcount and timeToRead are generated correctly from schema correctly uses a default value for wordCount" name="Wordcount and timeToRead are generated correctly from schema correctly uses a default value for wordCount" time="0.016">
+    </testcase>
+    <testcase classname="Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead" name="Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead" time="0.022">
+    </testcase>
+    <testcase classname="Table of contents is generated correctly from schema returns null on non existing table of contents field" name="Table of contents is generated correctly from schema returns null on non existing table of contents field" time="0.036">
+    </testcase>
+    <testcase classname="Table of contents is generated correctly from schema correctly generates table of contents" name="Table of contents is generated correctly from schema correctly generates table of contents" time="0.029">
+    </testcase>
+    <testcase classname="Links are correctly prefixed correctly prefixes links" name="Links are correctly prefixed correctly prefixes links" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="collatePluginAPIs" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:50" time="2.146" tests="8">
+    <testcase classname="collatePluginAPIs Identifies APIs used by a site&apos;s plugins" name="collatePluginAPIs Identifies APIs used by a site&apos;s plugins" time="0.005">
+    </testcase>
+    <testcase classname="collatePluginAPIs Identifies incorrect APIs used by a site&apos;s plugins" name="collatePluginAPIs Identifies incorrect APIs used by a site&apos;s plugins" time="0.003">
+    </testcase>
+    <testcase classname="handleBadExports Does nothing when there are no bad exports" name="handleBadExports Does nothing when there are no bad exports" time="0.001">
+    </testcase>
+    <testcase classname="handleBadExports Calls reporter.panicOnBuild when bad exports are detected" name="handleBadExports Calls reporter.panicOnBuild when bad exports are detected" time="0.428">
+    </testcase>
+    <testcase classname="handleMultipleReplaceRenderers Does nothing when replaceRenderers is implemented once" name="handleMultipleReplaceRenderers Does nothing when replaceRenderers is implemented once" time="0.002">
+    </testcase>
+    <testcase classname="handleMultipleReplaceRenderers Sets skipSSR when replaceRenderers is implemented more than once" name="handleMultipleReplaceRenderers Sets skipSSR when replaceRenderers is implemented more than once" time="0.116">
+    </testcase>
+    <testcase classname="warnOnIncompatiblePeerDependency Does not warn when no peer dependency" name="warnOnIncompatiblePeerDependency Does not warn when no peer dependency" time="0.002">
+    </testcase>
+    <testcase classname="warnOnIncompatiblePeerDependency Warns on incompatible gatsby peer dependency" name="warnOnIncompatiblePeerDependency Warns on incompatible gatsby peer dependency" time="0.013">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process JSON nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:52" time="1.157" tests="6">
+    <testcase classname="Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects" name="Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects" time="0.013">
+    </testcase>
+    <testcase classname="Process JSON nodes correctly correctly creates a node from JSON which is a single object" name="Process JSON nodes correctly correctly creates a node from JSON which is a single object" time="0.004">
+    </testcase>
+    <testcase classname="Process JSON nodes correctly correctly sets node type for array of objects" name="Process JSON nodes correctly correctly sets node type for array of objects" time="0.001">
+    </testcase>
+    <testcase classname="Process JSON nodes correctly correctly sets node type for single object" name="Process JSON nodes correctly correctly sets node type for single object" time="0.002">
+    </testcase>
+    <testcase classname="Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects and doesn&apos;t come from fs" name="Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects and doesn&apos;t come from fs" time="0.008">
+    </testcase>
+    <testcase classname="Process JSON nodes correctly correctly creates a node from JSON which is a single object and doesn&apos;t come from fs" name="Process JSON nodes correctly correctly creates a node from JSON which is a single object and doesn&apos;t come from fs" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-copy-linked-files" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:47" time="7.447" tests="20">
+    <testcase classname="gatsby-remark-copy-linked-files images can copy .svg" name="gatsby-remark-copy-linked-files images can copy .svg" time="0.032">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files images can copy .gif" name="gatsby-remark-copy-linked-files images can copy .gif" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files images ignores images with .png" name="gatsby-remark-copy-linked-files images ignores images with .png" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files images ignores images with .jpg" name="gatsby-remark-copy-linked-files images ignores images with .jpg" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files images ignores images with .jpeg" name="gatsby-remark-copy-linked-files images ignores images with .jpeg" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy reference-style images" name="gatsby-remark-copy-linked-files can copy reference-style images" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy file links" name="gatsby-remark-copy-linked-files can copy file links" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy HTML file links" name="gatsby-remark-copy-linked-files can copy HTML file links" time="0.05">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy HTML images" name="gatsby-remark-copy-linked-files can copy HTML images" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy HTML multiple images" name="gatsby-remark-copy-linked-files can copy HTML multiple images" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy HTML multiple images when some are in ignore extensions" name="gatsby-remark-copy-linked-files can copy HTML multiple images when some are in ignore extensions" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy HTML videos" name="gatsby-remark-copy-linked-files can copy HTML videos" time="0.007">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files can copy HTML videos when some siblings are in ignore extensions" name="gatsby-remark-copy-linked-files can copy HTML videos when some siblings are in ignore extensions" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files leaves HTML nodes alone" name="gatsby-remark-copy-linked-files leaves HTML nodes alone" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files leaves absolute file paths alone" name="gatsby-remark-copy-linked-files leaves absolute file paths alone" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files options.destinationDir throws an error if the destination directory is not within &apos;public&apos;" name="gatsby-remark-copy-linked-files options.destinationDir throws an error if the destination directory is not within &apos;public&apos;" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files options.destinationDir copies file to destinationDir when supplied" name="gatsby-remark-copy-linked-files options.destinationDir copies file to destinationDir when supplied" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files options.destinationDir copies file to destinationDir when supplied (with pathPrefix)" name="gatsby-remark-copy-linked-files options.destinationDir copies file to destinationDir when supplied (with pathPrefix)" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files options.destinationDir copies file to root dir when not supplied&apos;" name="gatsby-remark-copy-linked-files options.destinationDir copies file to root dir when not supplied&apos;" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-copy-linked-files options.ignoreFileExtensions optionally copies PNG, JPG/JPEG, BPM and TIFF files" name="gatsby-remark-copy-linked-files options.ignoreFileExtensions optionally copies PNG, JPG/JPEG, BPM and TIFF files" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Resolve module exports" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:54" time="3.835" tests="10">
+    <testcase classname="Resolve module exports Returns empty array for file paths that don&apos;t exist" name="Resolve module exports Returns empty array for file paths that don&apos;t exist" time="0.005">
+    </testcase>
+    <testcase classname="Resolve module exports Returns empty array for directory paths that don&apos;t exist" name="Resolve module exports Returns empty array for directory paths that don&apos;t exist" time="0.002">
+    </testcase>
+    <testcase classname="Resolve module exports Show meaningful error message for invalid JavaScript" name="Resolve module exports Show meaningful error message for invalid JavaScript" time="0.07">
+    </testcase>
+    <testcase classname="Resolve module exports Resolves an export" name="Resolve module exports Resolves an export" time="0.019">
+    </testcase>
+    <testcase classname="Resolve module exports Resolves multiple exports" name="Resolve module exports Resolves multiple exports" time="0.008">
+    </testcase>
+    <testcase classname="Resolve module exports Resolves an export from an ES6 file" name="Resolve module exports Resolves an export from an ES6 file" time="0.007">
+    </testcase>
+    <testcase classname="Resolve module exports Resolves an exported const" name="Resolve module exports Resolves an exported const" time="0.004">
+    </testcase>
+    <testcase classname="Resolve module exports Resolves module.exports" name="Resolve module exports Resolves module.exports" time="0.002">
+    </testcase>
+    <testcase classname="Resolve module exports Resolves exports from a larger file" name="Resolve module exports Resolves exports from a larger file" time="0.056">
+    </testcase>
+    <testcase classname="Resolve module exports Ignores exports.__esModule" name="Resolve module exports Ignores exports.__esModule" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="build-node-types" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:55" time="4.5" tests="11">
+    <testcase classname="build-node-types should build types" name="build-node-types should build types" time="0.028">
+    </testcase>
+    <testcase classname="build-node-types should result in a valid queryable schema" name="build-node-types should result in a valid queryable schema" time="0.074">
+    </testcase>
+    <testcase classname="build-node-types should link children automatically" name="build-node-types should link children automatically" time="0.16">
+    </testcase>
+    <testcase classname="build-node-types should create typed children fields" name="build-node-types should create typed children fields" time="0.04">
+    </testcase>
+    <testcase classname="build-node-types should create typed child field for singular children" name="build-node-types should create typed child field for singular children" time="0.021">
+    </testcase>
+    <testcase classname="build-node-types should handle plugin fields" name="build-node-types should handle plugin fields" time="0.052">
+    </testcase>
+    <testcase classname="build-node-types should create root query type page dependency" name="build-node-types should create root query type page dependency" time="0.023">
+    </testcase>
+    <testcase classname="build-node-types should create children page dependency" name="build-node-types should create children page dependency" time="0.032">
+    </testcase>
+    <testcase classname="build-node-types should create parent page dependency" name="build-node-types should create parent page dependency" time="0.017">
+    </testcase>
+    <testcase classname="build-node-types should create childX page dependency" name="build-node-types should create childX page dependency" time="0.022">
+    </testcase>
+    <testcase classname="build-node-types should create childrenX page dependency" name="build-node-types should create childrenX page dependency" time="0.024">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-code-repls" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:58" time="2.117" tests="39">
+    <testcase classname="gatsby-remark-code-repls Babel remark transform generates a link for the specified example file" name="gatsby-remark-code-repls Babel remark transform generates a link for the specified example file" time="0.01">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform generates a link with the specified target" name="gatsby-remark-code-repls Babel remark transform generates a link with the specified target" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform generates a link for files in nested directories" name="gatsby-remark-code-repls Babel remark transform generates a link for files in nested directories" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform generates a link with the specified default text" name="gatsby-remark-code-repls Babel remark transform generates a link with the specified default text" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform generates a link with the specified inline text even if default text is specified" name="gatsby-remark-code-repls Babel remark transform generates a link with the specified inline text even if default text is specified" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform verifies example files relative to the specified directory" name="gatsby-remark-code-repls Babel remark transform verifies example files relative to the specified directory" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform errors if you do not provide a directory parameter" name="gatsby-remark-code-repls Babel remark transform errors if you do not provide a directory parameter" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform errors if you provide an invalid directory parameter" name="gatsby-remark-code-repls Babel remark transform errors if you provide an invalid directory parameter" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Babel remark transform errors if you provide multiple files in non-codesandbox examples" name="gatsby-remark-code-repls Babel remark transform errors if you provide multiple files in non-codesandbox examples" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform generates a link for the specified example file" name="gatsby-remark-code-repls Codepen remark transform generates a link for the specified example file" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform generates a link with the specified target" name="gatsby-remark-code-repls Codepen remark transform generates a link with the specified target" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform generates a link for files in nested directories" name="gatsby-remark-code-repls Codepen remark transform generates a link for files in nested directories" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform generates a link with the specified default text" name="gatsby-remark-code-repls Codepen remark transform generates a link with the specified default text" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform generates a link with the specified inline text even if default text is specified" name="gatsby-remark-code-repls Codepen remark transform generates a link with the specified inline text even if default text is specified" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform verifies example files relative to the specified directory" name="gatsby-remark-code-repls Codepen remark transform verifies example files relative to the specified directory" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform errors if you do not provide a directory parameter" name="gatsby-remark-code-repls Codepen remark transform errors if you do not provide a directory parameter" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform errors if you provide an invalid directory parameter" name="gatsby-remark-code-repls Codepen remark transform errors if you provide an invalid directory parameter" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Codepen remark transform errors if you provide multiple files in non-codesandbox examples" name="gatsby-remark-code-repls Codepen remark transform errors if you provide multiple files in non-codesandbox examples" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform generates a link for the specified example file" name="gatsby-remark-code-repls CodeSandbox remark transform generates a link for the specified example file" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified target" name="gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified target" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform generates a link for files in nested directories" name="gatsby-remark-code-repls CodeSandbox remark transform generates a link for files in nested directories" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified default text" name="gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified default text" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified inline text even if default text is specified" name="gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified inline text even if default text is specified" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform verifies example files relative to the specified directory" name="gatsby-remark-code-repls CodeSandbox remark transform verifies example files relative to the specified directory" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform errors if you do not provide a directory parameter" name="gatsby-remark-code-repls CodeSandbox remark transform errors if you do not provide a directory parameter" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform errors if you provide an invalid directory parameter" name="gatsby-remark-code-repls CodeSandbox remark transform errors if you provide an invalid directory parameter" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform errors if you provide multiple files in non-codesandbox examples" name="gatsby-remark-code-repls CodeSandbox remark transform errors if you provide multiple files in non-codesandbox examples" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform supports custom html config option for index html" name="gatsby-remark-code-repls CodeSandbox remark transform supports custom html config option for index html" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform supports custom dependencies config option for NPM module dependencies" name="gatsby-remark-code-repls CodeSandbox remark transform supports custom dependencies config option for NPM module dependencies" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls CodeSandbox remark transform supports importing multiple files" name="gatsby-remark-code-repls CodeSandbox remark transform supports importing multiple files" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform generates a link for the specified example file" name="gatsby-remark-code-repls Ramda remark transform generates a link for the specified example file" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform generates a link with the specified target" name="gatsby-remark-code-repls Ramda remark transform generates a link with the specified target" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform generates a link for files in nested directories" name="gatsby-remark-code-repls Ramda remark transform generates a link for files in nested directories" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform generates a link with the specified default text" name="gatsby-remark-code-repls Ramda remark transform generates a link with the specified default text" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform generates a link with the specified inline text even if default text is specified" name="gatsby-remark-code-repls Ramda remark transform generates a link with the specified inline text even if default text is specified" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform verifies example files relative to the specified directory" name="gatsby-remark-code-repls Ramda remark transform verifies example files relative to the specified directory" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform errors if you do not provide a directory parameter" name="gatsby-remark-code-repls Ramda remark transform errors if you do not provide a directory parameter" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform errors if you provide an invalid directory parameter" name="gatsby-remark-code-repls Ramda remark transform errors if you provide an invalid directory parameter" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls Ramda remark transform errors if you provide multiple files in non-codesandbox examples" name="gatsby-remark-code-repls Ramda remark transform errors if you provide multiple files in non-codesandbox examples" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-code-repls" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:00" time="1.179" tests="13">
+    <testcase classname="gatsby-remark-code-repls gatsby-node should iterate over all JavaScript files in the examples directory" name="gatsby-remark-code-repls gatsby-node should iterate over all JavaScript files in the examples directory" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should ignore non JavaScript files in the examples directory" name="gatsby-remark-code-repls gatsby-node should ignore non JavaScript files in the examples directory" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should error if provided an invalid examples directory" name="gatsby-remark-code-repls gatsby-node should error if provided an invalid examples directory" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should warn about an empty examples directory" name="gatsby-remark-code-repls gatsby-node should warn about an empty examples directory" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should create redirect pages for the code in each example file" name="gatsby-remark-code-repls gatsby-node should create redirect pages for the code in each example file" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should use a default redirect template" name="gatsby-remark-code-repls gatsby-node should use a default redirect template" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should use a specified redirect template override" name="gatsby-remark-code-repls gatsby-node should use a specified redirect template override" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should error if an invalid redirect template is specified" name="gatsby-remark-code-repls gatsby-node should error if an invalid redirect template is specified" time="0">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should not load any external packages by default" name="gatsby-remark-code-repls gatsby-node should not load any external packages by default" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should load custom externals if specified" name="gatsby-remark-code-repls gatsby-node should load custom externals if specified" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should inject the required prop-types for the Codepen prefill API" name="gatsby-remark-code-repls gatsby-node should inject the required prop-types for the Codepen prefill API" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should render default HTML for index page if no override specified" name="gatsby-remark-code-repls gatsby-node should render default HTML for index page if no override specified" time="0">
+    </testcase>
+    <testcase classname="gatsby-remark-code-repls gatsby-node should support custom, user-defined HTML for index page" name="gatsby-remark-code-repls gatsby-node should support custom, user-defined HTML for index page" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process contentful data" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:00" time="1.616" tests="14">
+    <testcase classname="Process contentful data builds entry list" name="Process contentful data builds entry list" time="0.026">
+    </testcase>
+    <testcase classname="Process contentful data builds list of resolvable data" name="Process contentful data builds list of resolvable data" time="0.002">
+    </testcase>
+    <testcase classname="Process contentful data builds foreignReferenceMap" name="Process contentful data builds foreignReferenceMap" time="0.002">
+    </testcase>
+    <testcase classname="Process contentful data creates nodes for each entry" name="Process contentful data creates nodes for each entry" time="0.028">
+    </testcase>
+    <testcase classname="Process contentful data creates nodes for each asset" name="Process contentful data creates nodes for each asset" time="0.012">
+    </testcase>
+    <testcase classname="Fix contentful IDs leaves ids that start with a string the same" name="Fix contentful IDs leaves ids that start with a string the same" time="0.001">
+    </testcase>
+    <testcase classname="Fix contentful IDs left pads ids that start with a number of a &quot;c&quot;" name="Fix contentful IDs left pads ids that start with a number of a &quot;c&quot;" time="0">
+    </testcase>
+    <testcase classname="Gets field value based on current locale Gets the specified locale" name="Gets field value based on current locale Gets the specified locale" time="0.001">
+    </testcase>
+    <testcase classname="Gets field value based on current locale Gets the specified locale if the field is falsey" name="Gets field value based on current locale Gets the specified locale if the field is falsey" time="0.001">
+    </testcase>
+    <testcase classname="Gets field value based on current locale falls back to the locale&apos;s fallback locale if passed a locale that doesn&apos;t have a localized field" name="Gets field value based on current locale falls back to the locale&apos;s fallback locale if passed a locale that doesn&apos;t have a localized field" time="0">
+    </testcase>
+    <testcase classname="Gets field value based on current locale returns null if passed a locale that doesn&apos;t have a field on a localized field" name="Gets field value based on current locale returns null if passed a locale that doesn&apos;t have a field on a localized field" time="0.001">
+    </testcase>
+    <testcase classname="Gets field value based on current locale returns null if passed a locale that doesn&apos;t have a field nor a fallbackCode" name="Gets field value based on current locale returns null if passed a locale that doesn&apos;t have a field nor a fallbackCode" time="0">
+    </testcase>
+    <testcase classname="Make IDs It doesn&apos;t postfix the id if its the default locale" name="Make IDs It doesn&apos;t postfix the id if its the default locale" time="0.001">
+    </testcase>
+    <testcase classname="Make IDs It does postfix the id if its not the default locale" name="Make IDs It does postfix the id if its not the default locale" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Add pages" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:01" time="2.045" tests="11">
+    <testcase classname="Add pages allows you to add pages" name="Add pages allows you to add pages" time="0.009">
+    </testcase>
+    <testcase classname="Add pages Fails if path is missing" name="Add pages Fails if path is missing" time="0.001">
+    </testcase>
+    <testcase classname="Add pages Fails if component path is missing" name="Add pages Fails if component path is missing" time="0.002">
+    </testcase>
+    <testcase classname="Add pages Fails if the component path isn&apos;t absolute" name="Add pages Fails if the component path isn&apos;t absolute" time="0.001">
+    </testcase>
+    <testcase classname="Add pages Fails if use a reserved field in the context object" name="Add pages Fails if use a reserved field in the context object" time="0.002">
+    </testcase>
+    <testcase classname="Add pages adds an initial forward slash if the user doesn&apos;t" name="Add pages adds an initial forward slash if the user doesn&apos;t" time="0.001">
+    </testcase>
+    <testcase classname="Add pages allows you to add pages with context" name="Add pages allows you to add pages with context" time="0.002">
+    </testcase>
+    <testcase classname="Add pages allows you to add pages with matchPath" name="Add pages allows you to add pages with matchPath" time="0.002">
+    </testcase>
+    <testcase classname="Add pages allows you to add multiple pages" name="Add pages allows you to add multiple pages" time="0.001">
+    </testcase>
+    <testcase classname="Add pages allows you to update existing pages (based on path)" name="Add pages allows you to update existing pages (based on path)" time="0.002">
+    </testcase>
+    <testcase classname="Add pages allows you to delete paths" name="Add pages allows you to delete paths" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:01" time="2.799" tests="10">
+    <testcase classname=" it returns empty array when 0 images" name=" it returns empty array when 0 images" time="0.007">
+    </testcase>
+    <testcase classname=" it leaves non-relative images alone" name=" it leaves non-relative images alone" time="0.004">
+    </testcase>
+    <testcase classname=" it transforms images in markdown" name=" it transforms images in markdown" time="0.008">
+    </testcase>
+    <testcase classname=" it transforms multiple images in markdown" name=" it transforms multiple images in markdown" time="0.004">
+    </testcase>
+    <testcase classname=" it transforms HTML img tags" name=" it transforms HTML img tags" time="0.016">
+    </testcase>
+    <testcase classname=" it leaves non-relative HTML img tags alone" name=" it leaves non-relative HTML img tags alone" time="0.005">
+    </testcase>
+    <testcase classname=" it leaves images that are already linked alone" name=" it leaves images that are already linked alone" time="0.003">
+    </testcase>
+    <testcase classname=" it leaves linked HTML img tags alone" name=" it leaves linked HTML img tags alone" time="0.005">
+    </testcase>
+    <testcase classname=" it leaves single-line linked HTML img tags alone" name=" it leaves single-line linked HTML img tags alone" time="0.008">
+    </testcase>
+    <testcase classname=" it handles goofy nesting properly" name=" it handles goofy nesting properly" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="connectionFromArray()" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:04" time="1.347" tests="7">
+    <testcase classname="connectionFromArray() basic slicing returns all elements without filters" name="connectionFromArray() basic slicing returns all elements without filters" time="0.006">
+    </testcase>
+    <testcase classname="connectionFromArray() basic slicing respects a smaller first" name="connectionFromArray() basic slicing respects a smaller first" time="0.001">
+    </testcase>
+    <testcase classname="connectionFromArray() basic slicing respects an overly large first" name="connectionFromArray() basic slicing respects an overly large first" time="0.001">
+    </testcase>
+    <testcase classname="connectionFromArray() pagination respects limit and skip" name="connectionFromArray() pagination respects limit and skip" time="0.001">
+    </testcase>
+    <testcase classname="connectionFromArray() pagination respects limit and skip with large skip" name="connectionFromArray() pagination respects limit and skip with large skip" time="0">
+    </testcase>
+    <testcase classname="connectionFromPromisedArray() returns all elements without filters" name="connectionFromPromisedArray() returns all elements without filters" time="0.001">
+    </testcase>
+    <testcase classname="connectionFromPromisedArray() respects a smaller first" name="connectionFromPromisedArray() respects a smaller first" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:04" time="3.646" tests="13">
+    <testcase classname=" Transforms queries in &lt;StaticQuery&gt;" name=" Transforms queries in &lt;StaticQuery&gt;" time="1.314">
+    </testcase>
+    <testcase classname=" Transforms queries defined in own variable in &lt;StaticQuery&gt;" name=" Transforms queries defined in own variable in &lt;StaticQuery&gt;" time="0.027">
+    </testcase>
+    <testcase classname=" Transforms queries in page components" name=" Transforms queries in page components" time="0.007">
+    </testcase>
+    <testcase classname=" allows the global tag" name=" allows the global tag" time="0.005">
+    </testcase>
+    <testcase classname=" distinguishes between the right tags" name=" distinguishes between the right tags" time="0.008">
+    </testcase>
+    <testcase classname=" handles import aliasing" name=" handles import aliasing" time="0.004">
+    </testcase>
+    <testcase classname=" handles require" name=" handles require" time="0.011">
+    </testcase>
+    <testcase classname=" handles require namespace" name=" handles require namespace" time="0.008">
+    </testcase>
+    <testcase classname=" handles require alias" name=" handles require alias" time="0.007">
+    </testcase>
+    <testcase classname=" Leaves other graphql tags alone" name=" Leaves other graphql tags alone" time="0.008">
+    </testcase>
+    <testcase classname=" Removes all gatsby queries" name=" Removes all gatsby queries" time="0.007">
+    </testcase>
+    <testcase classname=" Handles closing StaticQuery tag" name=" Handles closing StaticQuery tag" time="0.012">
+    </testcase>
+    <testcase classname=" Doesn&apos;t add data import for non static queries" name=" Doesn&apos;t add data import for non static queries" time="0.024">
+    </testcase>
+  </testsuite>
+  <testsuite name="build-node-connections" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:05" time="3.366" tests="6">
+    <testcase classname="build-node-connections should build connections" name="build-node-connections should build connections" time="0.038">
+    </testcase>
+    <testcase classname="build-node-connections should result in a valid queryable schema" name="build-node-connections should result in a valid queryable schema" time="0.059">
+    </testcase>
+    <testcase classname="build-node-connections should link children automatically" name="build-node-connections should link children automatically" time="0.022">
+    </testcase>
+    <testcase classname="build-node-connections should create typed children fields" name="build-node-connections should create typed children fields" time="0.026">
+    </testcase>
+    <testcase classname="build-node-connections should create typed child field for singular children" name="build-node-connections should create typed child field for singular children" time="0.027">
+    </testcase>
+    <testcase classname="build-node-connections should create page dependency" name="build-node-connections should create page dependency" time="0.019">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-sharp" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:49:49" time="19.651" tests="19">
+    <testcase classname="gatsby-plugin-sharp queueImageResizing should round height when auto-calculated" name="gatsby-plugin-sharp queueImageResizing should round height when auto-calculated" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc." name="gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc." time="0.702">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid adds pathPrefix if defined" name="gatsby-plugin-sharp fluid adds pathPrefix if defined" time="0.009">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid keeps original file name" name="gatsby-plugin-sharp fluid keeps original file name" time="0.009">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid accounts for pixel density" name="gatsby-plugin-sharp fluid accounts for pixel density" time="0.149">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid can optionally ignore pixel density" name="gatsby-plugin-sharp fluid can optionally ignore pixel density" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid does not change the arguments object it is given" name="gatsby-plugin-sharp fluid does not change the arguments object it is given" time="0.007">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is given" name="gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is given" time="0.016">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid should throw if maxWidth is less than 1" name="gatsby-plugin-sharp fluid should throw if maxWidth is less than 1" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid accepts srcSet breakpoints" name="gatsby-plugin-sharp fluid accepts srcSet breakpoints" time="0.011">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid should throw on srcSet breakpoints less than 1" name="gatsby-plugin-sharp fluid should throw on srcSet breakpoints less than 1" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints" name="gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints" time="0.012">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid reject any breakpoints larger than the original width" name="gatsby-plugin-sharp fluid reject any breakpoints larger than the original width" time="0.012">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fluid prevents duplicate breakpoints" name="gatsby-plugin-sharp fluid prevents duplicate breakpoints" time="0.009">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fixed does not warn when the requested width is equal to the image width" name="gatsby-plugin-sharp fixed does not warn when the requested width is equal to the image width" time="0.013">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fixed warns when the requested width is greater than the image width" name="gatsby-plugin-sharp fixed warns when the requested width is greater than the image width" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp fixed correctly infers the width when only the height is given" name="gatsby-plugin-sharp fixed correctly infers the width when only the height is given" time="0.02">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp base64 converts image to base64" name="gatsby-plugin-sharp base64 converts image to base64" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-plugin-sharp image quirks handles padding bytes correctly" name="gatsby-plugin-sharp image quirks handles padding bytes correctly" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="highlighting a line range" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:07" time="1.574" tests="18">
+    <testcase classname="highlighting a line range highlight-line strips directive" name="highlighting a line range highlight-line strips directive" time="0.005">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-line highlights line" name="highlighting a line range highlight-line highlights line" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-next-line strips directive" name="highlighting a line range highlight-next-line strips directive" time="0">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-next-line highlights correct line" name="highlighting a line range highlight-next-line highlights correct line" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-start / highlight-end strips directives" name="highlighting a line range highlight-start / highlight-end strips directives" time="0.002">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-start / highlight-end highlights correct lines" name="highlighting a line range highlight-start / highlight-end highlights correct lines" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-start / highlight-end highlights without end directive" name="highlighting a line range highlight-start / highlight-end highlights without end directive" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-range strips directives" name="highlighting a line range highlight-range strips directives" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-range highlights correct lines" name="highlighting a line range highlight-range highlights correct lines" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-range does not highlight and warns if range is invalid" name="highlighting a line range highlight-range does not highlight and warns if range is invalid" time="0.002">
+    </testcase>
+    <testcase classname="highlighting a line range highlight-range highlights until end of code block if ranges goes farther" name="highlighting a line range highlight-range highlights until end of code block if ranges goes farther" time="0.002">
+    </testcase>
+    <testcase classname="highlighting a line range jsx comment removes directive" name="highlighting a line range jsx comment removes directive" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range jsx comment highlights comment line" name="highlighting a line range jsx comment highlights comment line" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range jsx comment highlights comment line after Prism highlighting" name="highlighting a line range jsx comment highlights comment line after Prism highlighting" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range yaml strips directive" name="highlighting a line range yaml strips directive" time="0.001">
+    </testcase>
+    <testcase classname="highlighting a line range yaml highlights yaml" name="highlighting a line range yaml highlights yaml" time="0.002">
+    </testcase>
+    <testcase classname="highlighting a line range kitchen sink strips directives" name="highlighting a line range kitchen sink strips directives" time="0.003">
+    </testcase>
+    <testcase classname="highlighting a line range kitchen sink highlights multiple directives" name="highlighting a line range kitchen sink highlights multiple directives" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="parses numeric ranges from the languages markdown code directive" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:09" time="1.152" tests="12">
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses numeric ranges from the languages variable" name="parses numeric ranges from the languages markdown code directive parses numeric ranges from the languages variable" time="0.005">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive ignores negative numbers" name="parses numeric ranges from the languages markdown code directive ignores negative numbers" time="0.001">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive parses the right line number start index from the languages variable" name="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive parses the right line number start index from the languages variable" time="0.002">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive parses the right line number start index without a specified language" name="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive parses the right line number start index without a specified language" time="0.001">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive ignores non-true or non-number values" name="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive ignores non-true or non-number values" time="0.001">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive casts decimals line number start into the nearest lower integer" name="parses numeric ranges from the languages markdown code directive parses line numbering options from the languages markdown code directive casts decimals line number start into the nearest lower integer" time="0">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options one line highlighted" name="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options one line highlighted" time="0">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options multiple lines highlighted" name="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options multiple lines highlighted" time="0">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options numberLines: true" name="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options numberLines: true" time="0">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options reverse ordering" name="parses numeric ranges from the languages markdown code directive parses both line numbering and line highlighting options reverse ordering" time="0.001">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive handles bad inputs" name="parses numeric ranges from the languages markdown code directive handles bad inputs" time="0.001">
+    </testcase>
+    <testcase classname="parses numeric ranges from the languages markdown code directive parses languages without ranges" name="parses numeric ranges from the languages markdown code directive parses languages without ranges" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Babelrc actions/reducer" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:08" time="1.835" tests="10">
+    <testcase classname="Babelrc actions/reducer allows adding a new plugin" name="Babelrc actions/reducer allows adding a new plugin" time="0.007">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows updating the options of an existing plugin" name="Babelrc actions/reducer allows updating the options of an existing plugin" time="0.002">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows adding a new preset" name="Babelrc actions/reducer allows adding a new preset" time="0.003">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows updating the options of an existing preset" name="Babelrc actions/reducer allows updating the options of an existing preset" time="0.002">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows specifying the stage for the plugin" name="Babelrc actions/reducer allows specifying the stage for the plugin" time="0.001">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows specifying the stage for the preset" name="Babelrc actions/reducer allows specifying the stage for the preset" time="0.002">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer sets default presets/plugins if there&apos;s no userland babelrc" name="Babelrc actions/reducer sets default presets/plugins if there&apos;s no userland babelrc" time="0.002">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows setting options" name="Babelrc actions/reducer allows setting options" time="0.002">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows setting options on a particular stage" name="Babelrc actions/reducer allows setting options on a particular stage" time="0.001">
+    </testcase>
+    <testcase classname="Babelrc actions/reducer allows merging config items" name="Babelrc actions/reducer allows merging config items" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:09" time="3.204" tests="7">
+    <testcase classname=" it returns empty array when 0 images" name=" it returns empty array when 0 images" time="0.061">
+    </testcase>
+    <testcase classname=" it leaves relative images alone" name=" it leaves relative images alone" time="0.173">
+    </testcase>
+    <testcase classname=" it leaves non-contentful images alone" name=" it leaves non-contentful images alone" time="0.003">
+    </testcase>
+    <testcase classname=" it transforms images in markdown" name=" it transforms images in markdown" time="0.006">
+    </testcase>
+    <testcase classname=" it transforms multiple images in markdown" name=" it transforms multiple images in markdown" time="0.004">
+    </testcase>
+    <testcase classname=" it transforms HTML img tags" name=" it transforms HTML img tags" time="0.023">
+    </testcase>
+    <testcase classname=" it leaves relative HTML img tags alone" name=" it leaves relative HTML img tags alone" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="File parser" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:10" time="2.729" tests="1">
+    <testcase classname="File parser extracts query AST correctly from files" name="File parser extracts query AST correctly from files" time="0.124">
+    </testcase>
+  </testsuite>
+  <testsuite name="develop-static-entry" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:10" time="2.847" tests="6">
+    <testcase classname="develop-static-entry onPreRenderHTML can be used to replace headComponents" name="develop-static-entry onPreRenderHTML can be used to replace headComponents" time="0.015">
+    </testcase>
+    <testcase classname="develop-static-entry onPreRenderHTML can be used to replace postBodyComponents" name="develop-static-entry onPreRenderHTML can be used to replace postBodyComponents" time="0.005">
+    </testcase>
+    <testcase classname="develop-static-entry onPreRenderHTML can be used to replace preBodyComponents" name="develop-static-entry onPreRenderHTML can be used to replace preBodyComponents" time="0.002">
+    </testcase>
+    <testcase classname="static-entry onPreRenderHTML can be used to replace headComponents" name="static-entry onPreRenderHTML can be used to replace headComponents" time="0.016">
+    </testcase>
+    <testcase classname="static-entry onPreRenderHTML can be used to replace postBodyComponents" name="static-entry onPreRenderHTML can be used to replace postBodyComponents" time="0.007">
+    </testcase>
+    <testcase classname="static-entry onPreRenderHTML can be used to replace preBodyComponents" name="static-entry onPreRenderHTML can be used to replace preBodyComponents" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="add page data dependency" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:13" time="0.857" tests="5">
+    <testcase classname="add page data dependency lets you add a node dependency" name="add page data dependency lets you add a node dependency" time="0.002">
+    </testcase>
+    <testcase classname="add page data dependency lets you add a node dependency to multiple paths" name="add page data dependency lets you add a node dependency to multiple paths" time="0.001">
+    </testcase>
+    <testcase classname="add page data dependency lets you add a connection dependency" name="add page data dependency lets you add a connection dependency" time="0">
+    </testcase>
+    <testcase classname="add page data dependency removes duplicate paths" name="add page data dependency removes duplicate paths" time="0.001">
+    </testcase>
+    <testcase classname="add page data dependency lets you add both a node and connection in one action" name="add page data dependency lets you add both a node and connection in one action" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:13" time="1.201" tests="4">
+    <testcase classname=" Specifies proper presets and plugins in Node mode" name=" Specifies proper presets and plugins in Node mode" time="0.029">
+    </testcase>
+    <testcase classname=" Specifies proper presets and plugins in debug Node mode" name=" Specifies proper presets and plugins in debug Node mode" time="0.002">
+    </testcase>
+    <testcase classname=" Specifies proper presets and plugins in browser mode" name=" Specifies proper presets and plugins in browser mode" time="0.003">
+    </testcase>
+    <testcase classname=" Specifies proper presets and plugins in debug browser mode" name=" Specifies proper presets and plugins in debug browser mode" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="JavaScript page creator" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:12" time="3.456" tests="9">
+    <testcase classname="JavaScript page creator includes the correct file types" name="JavaScript page creator includes the correct file types" time="0.037">
+    </testcase>
+    <testcase classname="JavaScript page creator filters out files that start with underscores" name="JavaScript page creator filters out files that start with underscores" time="0.002">
+    </testcase>
+    <testcase classname="JavaScript page creator filters out files that start with dot" name="JavaScript page creator filters out files that start with dot" time="0.001">
+    </testcase>
+    <testcase classname="JavaScript page creator filters out json and yaml files" name="JavaScript page creator filters out json and yaml files" time="0.001">
+    </testcase>
+    <testcase classname="JavaScript page creator filters out files that start with template-*" name="JavaScript page creator filters out files that start with template-*" time="0.003">
+    </testcase>
+    <testcase classname="JavaScript page creator filters out files that have TypeScript declaration extensions" name="JavaScript page creator filters out files that have TypeScript declaration extensions" time="0.001">
+    </testcase>
+    <testcase classname="JavaScript page creator filters out test files" name="JavaScript page creator filters out test files" time="0.003">
+    </testcase>
+    <testcase classname="JavaScript page creator create-path should create unix paths" name="JavaScript page creator create-path should create unix paths" time="0.004">
+    </testcase>
+    <testcase classname="JavaScript page creator create-path should deal with windows paths" name="JavaScript page creator create-path should deal with windows paths" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Track root nodes" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:14" time="2.005" tests="6">
+    <testcase classname="Track root nodes Tracks nodes read from redux state cache Tracks inline objects" name="Track root nodes Tracks nodes read from redux state cache Tracks inline objects" time="0.003">
+    </testcase>
+    <testcase classname="Track root nodes Tracks nodes read from redux state cache Tracks inline arrays" name="Track root nodes Tracks nodes read from redux state cache Tracks inline arrays" time="0.001">
+    </testcase>
+    <testcase classname="Track root nodes Tracks nodes read from redux state cache Doesn&apos;t track copied objects" name="Track root nodes Tracks nodes read from redux state cache Doesn&apos;t track copied objects" time="0">
+    </testcase>
+    <testcase classname="Track root nodes Tracks nodes created using createNode action Tracks inline objects" name="Track root nodes Tracks nodes created using createNode action Tracks inline objects" time="0.001">
+    </testcase>
+    <testcase classname="Track root nodes Tracks nodes returned by running sift Tracks objects when running query without filter" name="Track root nodes Tracks nodes returned by running sift Tracks objects when running query without filter" time="0.202">
+    </testcase>
+    <testcase classname="Track root nodes Tracks nodes returned by running sift Tracks objects when running query with filter" name="Track root nodes Tracks nodes returned by running sift Tracks objects when running query with filter" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="contentful extend node type" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:14" time="4.201" tests="14">
+    <testcase classname="contentful extend node type createUrl allows you to create URls" name="contentful extend node type createUrl allows you to create URls" time="0.003">
+    </testcase>
+    <testcase classname="contentful extend node type createUrl ignores options it doesn&apos;t understand" name="contentful extend node type createUrl ignores options it doesn&apos;t understand" time="0.002">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFixed generates responsive resolution data for images" name="contentful extend node type resolveFixed generates responsive resolution data for images" time="0.003">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFixed generates responsive resolution data for images using all options" name="contentful extend node type resolveFixed generates responsive resolution data for images using all options" time="0.002">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFixed If the height isn&apos;t specified it should be set keeping with the aspect ratio of the original image" name="contentful extend node type resolveFixed If the height isn&apos;t specified it should be set keeping with the aspect ratio of the original image" time="0.001">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFixed if width and height are set that&apos;s what is returned" name="contentful extend node type resolveFixed if width and height are set that&apos;s what is returned" time="0.001">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFixed Always outputs ints" name="contentful extend node type resolveFixed Always outputs ints" time="0.001">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFixed handles null" name="contentful extend node type resolveFixed handles null" time="0.001">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFluid generates responsive size data for images" name="contentful extend node type resolveFluid generates responsive size data for images" time="0.003">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFluid generates fluid sizes data for images using all options" name="contentful extend node type resolveFluid generates fluid sizes data for images using all options" time="0.002">
+    </testcase>
+    <testcase classname="contentful extend node type resolveFluid handles null" name="contentful extend node type resolveFluid handles null" time="0">
+    </testcase>
+    <testcase classname="contentful extend node type resolveResize generates resized images" name="contentful extend node type resolveResize generates resized images" time="0.002">
+    </testcase>
+    <testcase classname="contentful extend node type resolveResize generates resized images using all options" name="contentful extend node type resolveResize generates resized images using all options" time="0.001">
+    </testcase>
+    <testcase classname="contentful extend node type resolveResize handles null" name="contentful extend node type resolveResize handles null" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;Link /&gt;" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:16" time="2.88" tests="11">
+    <testcase classname="&lt;Link /&gt; matches basic snapshot" name="&lt;Link /&gt; matches basic snapshot" time="0.058">
+    </testcase>
+    <testcase classname="&lt;Link /&gt; matches active snapshot" name="&lt;Link /&gt; matches active snapshot" time="0.007">
+    </testcase>
+    <testcase classname="&lt;Link /&gt; does not fail to initialize without --prefix-paths" name="&lt;Link /&gt; does not fail to initialize without --prefix-paths" time="0.002">
+    </testcase>
+    <testcase classname="&lt;Link /&gt; the location to link to accepts to as a string" name="&lt;Link /&gt; the location to link to accepts to as a string" time="0.005">
+    </testcase>
+    <testcase classname="&lt;Link /&gt; the location to link to includes the pathPrefix" name="&lt;Link /&gt; the location to link to includes the pathPrefix" time="0.004">
+    </testcase>
+    <testcase classname="&lt;Link /&gt; push is called with correct args" name="&lt;Link /&gt; push is called with correct args" time="0.026">
+    </testcase>
+    <testcase classname="&lt;Link /&gt; replace is called with correct args" name="&lt;Link /&gt; replace is called with correct args" time="0.009">
+    </testcase>
+    <testcase classname="withPrefix works with default prefix default prefix does not return &quot;//&quot;" name="withPrefix works with default prefix default prefix does not return &quot;//&quot;" time="0">
+    </testcase>
+    <testcase classname="withPrefix works with default prefix respects path prefix" name="withPrefix works with default prefix respects path prefix" time="0">
+    </testcase>
+    <testcase classname="navigate navigates to correct path" name="navigate navigates to correct path" time="0.001">
+    </testcase>
+    <testcase classname="navigate respects pathPrefix" name="navigate respects pathPrefix" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-source-drupal" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:18" time="1.94" tests="7">
+    <testcase classname="gatsby-source-drupal Generates nodes" name="gatsby-source-drupal Generates nodes" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-source-drupal Nodes contain attributes data" name="gatsby-source-drupal Nodes contain attributes data" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-source-drupal Preserves attributes.id" name="gatsby-source-drupal Preserves attributes.id" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-source-drupal Handles 1:1 relationship" name="gatsby-source-drupal Handles 1:1 relationship" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-source-drupal Handles 1:N relationship" name="gatsby-source-drupal Handles 1:N relationship" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-source-drupal Creates back references" name="gatsby-source-drupal Creates back references" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-source-drupal Download files" name="gatsby-source-drupal Download files" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-autolink-headers" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:20" time="1.571" tests="9">
+    <testcase classname="gatsby-remark-autolink-headers adds id to a markdown header" name="gatsby-remark-autolink-headers adds id to a markdown header" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds ids to each markdown header" name="gatsby-remark-autolink-headers adds ids to each markdown header" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds id to a markdown header with custom svg icon" name="gatsby-remark-autolink-headers adds id to a markdown header with custom svg icon" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds ids to each markdown header with custom svg icon" name="gatsby-remark-autolink-headers adds ids to each markdown header with custom svg icon" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds id to a markdown header with custom class" name="gatsby-remark-autolink-headers adds id to a markdown header with custom class" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds ids to each markdown header with custom class" name="gatsby-remark-autolink-headers adds ids to each markdown header with custom class" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds id to a markdown header with no icon" name="gatsby-remark-autolink-headers adds id to a markdown header with no icon" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers adds ids to each markdown header with no icon" name="gatsby-remark-autolink-headers adds ids to each markdown header with no icon" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-remark-autolink-headers maintain case of markdown header for id" name="gatsby-remark-autolink-headers maintain case of markdown header for id" time="0.01">
+    </testcase>
+  </testsuite>
+  <testsuite name="watching" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:22" time="1.542" tests="9">
+    <testcase classname="watching watches files" name="watching watches files" time="0.005">
+    </testcase>
+    <testcase classname="watching registers on handlers" name="watching registers on handlers" time="0.002">
+    </testcase>
+    <testcase classname="watching copying files does not copy files on non-watch event" name="watching copying files does not copy files on non-watch event" time="0.001">
+    </testcase>
+    <testcase classname="watching copying files copies files on watch event" name="watching copying files copies files on watch event" time="0.002">
+    </testcase>
+    <testcase classname="watching copying files copies cache-dir files" name="watching copying files copies cache-dir files" time="0.001">
+    </testcase>
+    <testcase classname="watching copying files filters non-existant files/directories" name="watching copying files filters non-existant files/directories" time="0.001">
+    </testcase>
+    <testcase classname="watching copying files filters duplicate directories" name="watching copying files filters duplicate directories" time="0.001">
+    </testcase>
+    <testcase classname="watching exiting does not exit if scanOnce is not defined" name="watching exiting does not exit if scanOnce is not defined" time="0">
+    </testcase>
+    <testcase classname="watching exiting exits if scanOnce is defined" name="watching exiting exits if scanOnce is defined" time="0.011">
+    </testcase>
+  </testsuite>
+  <testsuite name="transformer-react-doc-gen: onCreateNode" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:16" time="9.602" tests="9">
+    <testcase classname="transformer-react-doc-gen: onCreateNode should only process javascript and jsx nodes" name="transformer-react-doc-gen: onCreateNode should only process javascript and jsx nodes" time="0.004">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should extract all components in a file" name="transformer-react-doc-gen: onCreateNode should extract all components in a file" time="0.246">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should give all components a name" name="transformer-react-doc-gen: onCreateNode should give all components a name" time="0.077">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should infer a name" name="transformer-react-doc-gen: onCreateNode should infer a name" time="0.006">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should extract all propTypes" name="transformer-react-doc-gen: onCreateNode should extract all propTypes" time="0.076">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should delicately remove doclets" name="transformer-react-doc-gen: onCreateNode should delicately remove doclets" time="0.049">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should extract create description nodes with markdown types" name="transformer-react-doc-gen: onCreateNode should extract create description nodes with markdown types" time="0.043">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should allow specifying handlers" name="transformer-react-doc-gen: onCreateNode should allow specifying handlers" time="0.05">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode flowTypes should add flow type info" name="transformer-react-doc-gen: onCreateNode flowTypes should add flow type info" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="highlight code and lines with PrismJS" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:24" time="2.527" tests="8">
+    <testcase classname="highlight code and lines with PrismJS for language cpp" name="highlight code and lines with PrismJS for language cpp" time="1.046">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS for language jsx" name="highlight code and lines with PrismJS for language jsx" time="0.111">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS with language-text escapes &amp;, &lt;, &quot; elements #4597" name="highlight code and lines with PrismJS with language-text escapes &amp;, &lt;, &quot; elements #4597" time="0.024">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS with language-none does not escape its contents" name="highlight code and lines with PrismJS with language-none does not escape its contents" time="0.023">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS with non-highlight-lines does not add trailing newlines" name="highlight code and lines with PrismJS with non-highlight-lines does not add trailing newlines" time="0.033">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS with non-highlight-lines a trailing newline is preserved" name="highlight code and lines with PrismJS with non-highlight-lines a trailing newline is preserved" time="0.02">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS with non-highlight-lines does not add trailing newlines" name="highlight code and lines with PrismJS with non-highlight-lines does not add trailing newlines" time="0.023">
+    </testcase>
+    <testcase classname="highlight code and lines with PrismJS with non-highlight-lines a trailing newline is preserved" name="highlight code and lines with PrismJS with non-highlight-lines a trailing newline is preserved" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process WordPress data" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:19" time="7.573" tests="18">
+    <testcase classname="Process WordPress data Creates entities from object collections of entities" name="Process WordPress data Creates entities from object collections of entities" time="0.001">
+    </testcase>
+    <testcase classname="Process WordPress data Standardizes ids &amp; cleans keys" name="Process WordPress data Standardizes ids &amp; cleans keys" time="0.032">
+    </testcase>
+    <testcase classname="Process WordPress data Converts to use only GMT dates" name="Process WordPress data Converts to use only GMT dates" time="0.018">
+    </testcase>
+    <testcase classname="Process WordPress data Lifts all &quot;rendered&quot; fields to top-level" name="Process WordPress data Lifts all &quot;rendered&quot; fields to top-level" time="0.018">
+    </testcase>
+    <testcase classname="Process WordPress data excludes unknown entities" name="Process WordPress data excludes unknown entities" time="0.001">
+    </testcase>
+    <testcase classname="Process WordPress data creates Gatsby IDs for each entity" name="Process WordPress data creates Gatsby IDs for each entity" time="0.014">
+    </testcase>
+    <testcase classname="Process WordPress data Creates map of types" name="Process WordPress data Creates map of types" time="0.003">
+    </testcase>
+    <testcase classname="Process WordPress data Creates links between authors and user entities" name="Process WordPress data Creates links between authors and user entities" time="0.014">
+    </testcase>
+    <testcase classname="Process WordPress data Creates links between posts and tags/categories" name="Process WordPress data Creates links between posts and tags/categories" time="0.016">
+    </testcase>
+    <testcase classname="Process WordPress data Creates links between tags/categories and taxonomies" name="Process WordPress data Creates links between tags/categories and taxonomies" time="0.013">
+    </testcase>
+    <testcase classname="Process WordPress data Creates links from entities to media nodes" name="Process WordPress data Creates links from entities to media nodes" time="0.009">
+    </testcase>
+    <testcase classname="Process WordPress data Removes the acf key when acf is not an object" name="Process WordPress data Removes the acf key when acf is not an object" time="0.001">
+    </testcase>
+    <testcase classname="Process WordPress data Creates links between entities and polylang translations entities" name="Process WordPress data Creates links between entities and polylang translations entities" time="0.015">
+    </testcase>
+    <testcase classname="Process WordPress data creates nodes for each entry" name="Process WordPress data creates nodes for each entry" time="0.014">
+    </testcase>
+    <testcase classname="getValidKey It passes a key through untouched that passes" name="getValidKey It passes a key through untouched that passes" time="0.001">
+    </testcase>
+    <testcase classname="getValidKey It prefixes keys that start with numbers" name="getValidKey It prefixes keys that start with numbers" time="0">
+    </testcase>
+    <testcase classname="getValidKey It prefixes keys that conflict with default Gatsby fields" name="getValidKey It prefixes keys that conflict with default Gatsby fields" time="0.001">
+    </testcase>
+    <testcase classname="getValidKey It replaces invalid characters" name="getValidKey It replaces invalid characters" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test plugin feed" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:25" time="2.881" tests="2">
+    <testcase classname="Test plugin feed default settings work properly" name="Test plugin feed default settings work properly" time="0.125">
+    </testcase>
+    <testcase classname="Test plugin feed custom query runs" name="Test plugin feed custom query runs" time="0.017">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:27" time="3.361" tests="3">
+    <testcase classname="Process nodes correctly correctly creates nodes from JSON which is an array of objects" name="Process nodes correctly correctly creates nodes from JSON which is an array of objects" time="0.02">
+    </testcase>
+    <testcase classname="Process nodes correctly should correctly create nodes from JSON with raw option false" name="Process nodes correctly should correctly create nodes from JSON with raw option false" time="0.259">
+    </testcase>
+    <testcase classname="Process nodes correctly should correctly create nodes from JSON with legacy rawOutput option false" name="Process nodes correctly should correctly create nodes from JSON with legacy rawOutput option false" time="0.01">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:29" time="1.693" tests="3">
+    <testcase classname=" Specifies proper presets and plugins for test stage" name=" Specifies proper presets and plugins for test stage" time="0.132">
+    </testcase>
+    <testcase classname=" Specifies proper presets and plugins for build-html stage" name=" Specifies proper presets and plugins for build-html stage" time="0.002">
+    </testcase>
+    <testcase classname=" Allows to configure browser targets" name=" Allows to configure browser targets" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-responsive-iframe" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:26" time="4.153" tests="12">
+    <testcase classname="gatsby-remark-responsive-iframe transforms an iframe with unitless width and height" name="gatsby-remark-responsive-iframe transforms an iframe with unitless width and height" time="0.054">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe transforms an object with unitless width and height" name="gatsby-remark-responsive-iframe transforms an object with unitless width and height" time="0.015">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe transforms an iframe with pixel width and height" name="gatsby-remark-responsive-iframe transforms an iframe with pixel width and height" time="0.007">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe transforms an object with pixel width and height" name="gatsby-remark-responsive-iframe transforms an object with pixel width and height" time="0.012">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;100%&apos; &apos;100&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;100%&apos; &apos;100&apos;" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;100%&apos; &apos;100&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;100%&apos; &apos;100&apos;" time="0.04">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;100&apos; &apos;100%&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;100&apos; &apos;100%&apos;" time="0.006">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;100&apos; &apos;100%&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;100&apos; &apos;100%&apos;" time="0.035">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;invalid&apos; &apos;100&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;invalid&apos; &apos;100&apos;" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;invalid&apos; &apos;100&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;invalid&apos; &apos;100&apos;" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;100&apos; &apos;invalid&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an iframe with dimensions: &apos;100&apos; &apos;invalid&apos;" time="0.009">
+    </testcase>
+    <testcase classname="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;100&apos; &apos;invalid&apos;" name="gatsby-remark-responsive-iframe doesn&apos;t transform an object with dimensions: &apos;100&apos; &apos;invalid&apos;" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="Merge gatsby config" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:30" time="1.395" tests="5">
+    <testcase classname="Merge gatsby config Merging empty config is an identity operation" name="Merge gatsby config Merging empty config is an identity operation" time="0.008">
+    </testcase>
+    <testcase classname="Merge gatsby config Merging plugins concatenates them" name="Merge gatsby config Merging plugins concatenates them" time="0.002">
+    </testcase>
+    <testcase classname="Merge gatsby config Merging plugins uniqs them, keeping the first occurrence" name="Merge gatsby config Merging plugins uniqs them, keeping the first occurrence" time="0.001">
+    </testcase>
+    <testcase classname="Merge gatsby config Merging siteMetadata is recursive" name="Merge gatsby config Merging siteMetadata is recursive" time="0.002">
+    </testcase>
+    <testcase classname="Merge gatsby config Merging proxy is overriden" name="Merge gatsby config Merging proxy is overriden" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;Img /&gt;" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:30" time="2.154" tests="5">
+    <testcase classname="&lt;Img /&gt; should render fixed size images" name="&lt;Img /&gt; should render fixed size images" time="0.02">
+    </testcase>
+    <testcase classname="&lt;Img /&gt; should render fluid images" name="&lt;Img /&gt; should render fluid images" time="0.015">
+    </testcase>
+    <testcase classname="&lt;Img /&gt; should have correct src, title and alt attributes" name="&lt;Img /&gt; should have correct src, title and alt attributes" time="0.014">
+    </testcase>
+    <testcase classname="&lt;Img /&gt; should have correct placeholder src, title, style and class attributes" name="&lt;Img /&gt; should have correct placeholder src, title, style and class attributes" time="0.016">
+    </testcase>
+    <testcase classname="&lt;Img /&gt; should call onLoad and onError image events" name="&lt;Img /&gt; should call onLoad and onError image events" time="0.019">
+    </testcase>
+  </testsuite>
+  <testsuite name="remark prism plugin" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:30" time="2.237" tests="9">
+    <testcase classname="remark prism plugin generates a &lt;pre&gt; tag with class=&quot;language-*&quot; prefix by default" name="remark prism plugin generates a &lt;pre&gt; tag with class=&quot;language-*&quot; prefix by default" time="0.006">
+    </testcase>
+    <testcase classname="remark prism plugin generates a &lt;pre&gt; tag with a custom class prefix if configured" name="remark prism plugin generates a &lt;pre&gt; tag with a custom class prefix if configured" time="0.002">
+    </testcase>
+    <testcase classname="remark prism plugin generates a &lt;pre&gt; tag with aliases applied" name="remark prism plugin generates a &lt;pre&gt; tag with aliases applied" time="0.001">
+    </testcase>
+    <testcase classname="remark prism plugin generates an inline &lt;code&gt; tag with class=&quot;language-*&quot; prefix by default" name="remark prism plugin generates an inline &lt;code&gt; tag with class=&quot;language-*&quot; prefix by default" time="0.004">
+    </testcase>
+    <testcase classname="remark prism plugin generates an inline &lt;code&gt; tag with a custom class prefix if configured" name="remark prism plugin generates an inline &lt;code&gt; tag with a custom class prefix if configured" time="0.002">
+    </testcase>
+    <testcase classname="remark prism plugin generates an inline &lt;code&gt; tag that handles language specifiers" name="remark prism plugin generates an inline &lt;code&gt; tag that handles language specifiers" time="0.016">
+    </testcase>
+    <testcase classname="remark prism plugin generates an inline &lt;code&gt; tag with aliases applied" name="remark prism plugin generates an inline &lt;code&gt; tag with aliases applied" time="0.003">
+    </testcase>
+    <testcase classname="remark prism plugin does not handle inline code if noInlineHighlight: true" name="remark prism plugin does not handle inline code if noInlineHighlight: true" time="0.003">
+    </testcase>
+    <testcase classname="remark prism plugin numberLines adds line-number markup when necessary" name="remark prism plugin numberLines adds line-number markup when necessary" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="connectionDefinition()" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:32" time="1.611" tests="1">
+    <testcase classname="connectionDefinition() includes connection and edge fields" name="connectionDefinition() includes connection and edge fields" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="Adds &lt;Link&gt; for feed to head" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:32" time="1.808" tests="4">
+    <testcase classname="Adds &lt;Link&gt; for feed to head creates Link if feeds does exist" name="Adds &lt;Link&gt; for feed to head creates Link if feeds does exist" time="0.006">
+    </testcase>
+    <testcase classname="Adds &lt;Link&gt; for feed to head creates multiple Link if feeds are several" name="Adds &lt;Link&gt; for feed to head creates multiple Link if feeds are several" time="0.001">
+    </testcase>
+    <testcase classname="Adds &lt;Link&gt; for feed to head creates Link href with path prefix when __PATH_PREFIX__ sets" name="Adds &lt;Link&gt; for feed to head creates Link href with path prefix when __PATH_PREFIX__ sets" time="0.002">
+    </testcase>
+    <testcase classname="Adds &lt;Link&gt; for feed to head creates Link with a title if it does exist" name="Adds &lt;Link&gt; for feed to head creates Link with a title if it does exist" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Pages writer" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:33" time="1.503" tests="2">
+    <testcase classname="Pages writer writes pages with the good order #1" name="Pages writer writes pages with the good order #1" time="0.005">
+    </testcase>
+    <testcase classname="Pages writer writes pages with the good order #2" name="Pages writer writes pages with the good order #2" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="cache" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:34" time="0.899" tests="8">
+    <testcase classname="cache it can be instantiated" name="cache it can be instantiated" time="0.003">
+    </testcase>
+    <testcase classname="cache it can swap out cache store" name="cache it can swap out cache store" time="0.003">
+    </testcase>
+    <testcase classname="cache it does not set up cache on instantiation" name="cache it does not set up cache on instantiation" time="0.001">
+    </testcase>
+    <testcase classname="cache uses MAX_SAFE_INTEGER as TTL" name="cache uses MAX_SAFE_INTEGER as TTL" time="0.002">
+    </testcase>
+    <testcase classname="cache init it contains an init method" name="cache init it contains an init method" time="0">
+    </testcase>
+    <testcase classname="cache init it calls ensureDirSync" name="cache init it calls ensureDirSync" time="0.001">
+    </testcase>
+    <testcase classname="cache init it returns cache instance with get/set methods" name="cache init it returns cache instance with get/set methods" time="0.001">
+    </testcase>
+    <testcase classname="cache get/set both are promises" name="cache get/set both are promises" time="0.011">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process  nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:33" time="2.744" tests="2">
+    <testcase classname="Process  nodes correctly correctly creates nodes from JSON which is an array of objects" name="Process  nodes correctly correctly creates nodes from JSON which is an array of objects" time="0.219">
+    </testcase>
+    <testcase classname="Process  nodes correctly correctly handles the options object that is passed to it" name="Process  nodes correctly correctly handles the options object that is passed to it" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-transformer-sqip" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:35" time="3.555" tests="2">
+    <testcase classname="gatsby-transformer-sqip generateSqip not cached" name="gatsby-transformer-sqip generateSqip not cached" time="0.01">
+    </testcase>
+    <testcase classname="gatsby-transformer-sqip generateSqip cached" name="gatsby-transformer-sqip generateSqip cached" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process YAML nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:35" time="3.91" tests="2">
+    <testcase classname="Process YAML nodes correctly correctly creates nodes from JSON which is an array of objects" name="Process YAML nodes correctly correctly creates nodes from JSON which is an array of objects" time="0.014">
+    </testcase>
+    <testcase classname="Process YAML nodes correctly correctly creates a node from JSON which is a single object" name="Process YAML nodes correctly correctly creates a node from JSON which is a single object" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test plugin manifest options" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:36" time="3.601" tests="3">
+    <testcase classname="Test plugin manifest options correctly works with default parameters" name="Test plugin manifest options correctly works with default parameters" time="0.013">
+    </testcase>
+    <testcase classname="Test plugin manifest options fails on non existing icon" name="Test plugin manifest options fails on non existing icon" time="0.027">
+    </testcase>
+    <testcase classname="Test plugin manifest options doesn&apos;t write extra properties to manifest" name="Test plugin manifest options doesn&apos;t write extra properties to manifest" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process XML nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:39" time="2.11" tests="1">
+    <testcase classname="Process XML nodes correctly correctly creates nodes from XML" name="Process XML nodes correctly correctly creates nodes from XML" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process HJSON nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:39" time="2.907" tests="2">
+    <testcase classname="Process HJSON nodes correctly correctly creates nodes from HJSON which is an array of objects" name="Process HJSON nodes correctly correctly creates nodes from HJSON which is an array of objects" time="0.016">
+    </testcase>
+    <testcase classname="Process HJSON nodes correctly correctly creates a node from HJSON which is a single object" name="Process HJSON nodes correctly correctly creates a node from HJSON which is a single object" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-manifest" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:39" time="3.143" tests="5">
+    <testcase classname="gatsby-plugin-manifest Adds &quot;shortcut icon&quot; and &quot;manifest&quot; links and &quot;theme_color&quot; meta tag to head" name="gatsby-plugin-manifest Adds &quot;shortcut icon&quot; and &quot;manifest&quot; links and &quot;theme_color&quot; meta tag to head" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-plugin-manifest Does not add a &quot;theme_color&quot; meta tag to head if &quot;theme_color&quot; option is not provided or is an empty string" name="gatsby-plugin-manifest Does not add a &quot;theme_color&quot; meta tag to head if &quot;theme_color&quot; option is not provided or is an empty string" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-manifest Creates legacy apple touch links if opted in Using default set of icons" name="gatsby-plugin-manifest Creates legacy apple touch links if opted in Using default set of icons" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-manifest Creates legacy apple touch links if opted in Using user specified list of icons" name="gatsby-plugin-manifest Creates legacy apple touch links if opted in Using user specified list of icons" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-manifest Creates href attributes using pathPrefix" name="gatsby-plugin-manifest Creates href attributes using pathPrefix" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-postcss" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:42" time="1.552" tests="8">
+    <testcase classname="gatsby-plugin-postcss Stage: develop / No options" name="gatsby-plugin-postcss Stage: develop / No options" time="0.008">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: develop / PostCss options" name="gatsby-plugin-postcss Stage: develop / PostCss options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: build-javascript / No options" name="gatsby-plugin-postcss Stage: build-javascript / No options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: build-javascript / PostCss options" name="gatsby-plugin-postcss Stage: build-javascript / PostCss options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: develop-html / No options" name="gatsby-plugin-postcss Stage: develop-html / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: develop-html / PostCss options" name="gatsby-plugin-postcss Stage: develop-html / PostCss options" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: build-html / No options" name="gatsby-plugin-postcss Stage: build-html / No options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-postcss Stage: build-html / PostCss options" name="gatsby-plugin-postcss Stage: build-html / PostCss options" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="find-page" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:41" time="2.236" tests="6">
+    <testcase classname="find-page can find a page" name="find-page can find a page" time="0.004">
+    </testcase>
+    <testcase classname="find-page can find a page with space in its path" name="find-page can find a page with space in its path" time="0.001">
+    </testcase>
+    <testcase classname="find-page can find a client only path" name="find-page can find a client only path" time="0.005">
+    </testcase>
+    <testcase classname="find-page can find links with hashes" name="find-page can find links with hashes" time="0.001">
+    </testcase>
+    <testcase classname="find-page can find links with search query" name="find-page can find links with search query" time="0.002">
+    </testcase>
+    <testcase classname="find-page handles finding prefixed links" name="find-page handles finding prefixed links" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process TOML nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:42" time="1.681" tests="1">
+    <testcase classname="Process TOML nodes correctly Correctly creates nodes from TOML test file" name="Process TOML nodes correctly Correctly creates nodes from TOML test file" time="0.038">
+    </testcase>
+  </testsuite>
+  <testsuite name="run-sift" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:44" time="1.106" tests="2">
+    <testcase classname="run-sift filters by just id correctly eq operator" name="run-sift filters by just id correctly eq operator" time="0.006">
+    </testcase>
+    <testcase classname="run-sift filters by just id correctly non-eq operator" name="run-sift filters by just id correctly non-eq operator" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="config reducer" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:44" time="0.947" tests="7">
+    <testcase classname="config reducer let&apos;s you add a config" name="config reducer let&apos;s you add a config" time="0.012">
+    </testcase>
+    <testcase classname="config reducer handles empty configs" name="config reducer handles empty configs" time="0.002">
+    </testcase>
+    <testcase classname="config reducer Validates configs with unsupported options" name="config reducer Validates configs with unsupported options" time="0.019">
+    </testcase>
+    <testcase classname="config reducer It corrects pathPrefixes without a forward slash at beginning" name="config reducer It corrects pathPrefixes without a forward slash at beginning" time="0.002">
+    </testcase>
+    <testcase classname="config reducer It removes trailing forward slash" name="config reducer It removes trailing forward slash" time="0.001">
+    </testcase>
+    <testcase classname="config reducer It removes pathPrefixes that are a single forward slash" name="config reducer It removes pathPrefixes that are a single forward slash" time="0">
+    </testcase>
+    <testcase classname="config reducer It sets the pathPrefix to an empty string if it&apos;s not set" name="config reducer It sets the pathPrefix to an empty string if it&apos;s not set" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="paths" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:45" time="0.918" tests="3">
+    <testcase classname="paths joinPath replaces &apos;\&apos; with &apos;\\&apos; on Windows." name="paths joinPath replaces &apos;\&apos; with &apos;\\&apos; on Windows." time="0.004">
+    </testcase>
+    <testcase classname="paths withBasePath returns a function." name="paths withBasePath returns a function." time="0.001">
+    </testcase>
+    <testcase classname="paths withBasePath behaves like joinPath() on Windows, but prepends a basePath" name="paths withBasePath behaves like joinPath() on Windows, but prepends a basePath" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="createErrorFromString" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:45" time="1.979" tests="1">
+    <testcase classname="createErrorFromString converts a string to an Error object" name="createErrorFromString converts a string to an Error object" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="errorOverlayHandler" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:46" time="1.608" tests="4">
+    <testcase classname="errorOverlayHandler clearError() should clear specific error type" name="errorOverlayHandler clearError() should clear specific error type" time="0.006">
+    </testcase>
+    <testcase classname="errorOverlayHandler clearError() should call ErrorOverlay to dismiss build errors" name="errorOverlayHandler clearError() should call ErrorOverlay to dismiss build errors" time="0">
+    </testcase>
+    <testcase classname="errorOverlayHandler reportErrorOverlay() should not add error if it&apos;s empty and not call ErrorOverlay" name="errorOverlayHandler reportErrorOverlay() should not add error if it&apos;s empty and not call ErrorOverlay" time="0.001">
+    </testcase>
+    <testcase classname="errorOverlayHandler reportErrorOverlay() should add error if it has a truthy value and call ErrorOverlay" name="errorOverlayHandler reportErrorOverlay() should add error if it has a truthy value and call ErrorOverlay" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process Lever data" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:48" time="1.32" tests="9">
+    <testcase classname="Process Lever data Creates entities from object collections of entities" name="Process Lever data Creates entities from object collections of entities" time="0.001">
+    </testcase>
+    <testcase classname="Process Lever data Standardizes ids &amp; cleans keys" name="Process Lever data Standardizes ids &amp; cleans keys" time="0.014">
+    </testcase>
+    <testcase classname="Process Lever data Converts to use only GMT dates" name="Process Lever data Converts to use only GMT dates" time="0.009">
+    </testcase>
+    <testcase classname="Process Lever data creates Gatsby IDs for each entity" name="Process Lever data creates Gatsby IDs for each entity" time="0.009">
+    </testcase>
+    <testcase classname="Process Lever data creates nodes for each entry" name="Process Lever data creates nodes for each entry" time="0.018">
+    </testcase>
+    <testcase classname="getValidKey It passes a key through untouched that passes" name="getValidKey It passes a key through untouched that passes" time="0.001">
+    </testcase>
+    <testcase classname="getValidKey It prefixes keys that start with numbers" name="getValidKey It prefixes keys that start with numbers" time="0.001">
+    </testcase>
+    <testcase classname="getValidKey It prefixes keys that conflict with default Gatsby fields" name="getValidKey It prefixes keys that conflict with default Gatsby fields" time="0.001">
+    </testcase>
+    <testcase classname="getValidKey It replaces invalid characters" name="getValidKey It replaces invalid characters" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Job actions/reducer" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:47" time="1.592" tests="6">
+    <testcase classname="Job actions/reducer allows creating jobs" name="Job actions/reducer allows creating jobs" time="0.003">
+    </testcase>
+    <testcase classname="Job actions/reducer allows completing jobs" name="Job actions/reducer allows completing jobs" time="0.004">
+    </testcase>
+    <testcase classname="Job actions/reducer allows updating jobs" name="Job actions/reducer allows updating jobs" time="0.002">
+    </testcase>
+    <testcase classname="Job actions/reducer Allows you to set other info on the job" name="Job actions/reducer Allows you to set other info on the job" time="0.001">
+    </testcase>
+    <testcase classname="Job actions/reducer throws an error if an ID isn&apos;t provided" name="Job actions/reducer throws an error if an ID isn&apos;t provided" time="0.002">
+    </testcase>
+    <testcase classname="Job actions/reducer throws an error if endJob is called for a job that&apos;s already ended" name="Job actions/reducer throws an error if endJob is called for a job that&apos;s already ended" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="redirects" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:49" time="0.828" tests="7">
+    <testcase classname="redirects lets you redirect to an internal url" name="redirects lets you redirect to an internal url" time="0.003">
+    </testcase>
+    <testcase classname="redirects lets you redirect to an external url" name="redirects lets you redirect to an external url" time="0.001">
+    </testcase>
+    <testcase classname="redirects lets you redirect using https" name="redirects lets you redirect using https" time="0.001">
+    </testcase>
+    <testcase classname="redirects lets you redirect using http" name="redirects lets you redirect using http" time="0">
+    </testcase>
+    <testcase classname="redirects lets you redirect using //" name="redirects lets you redirect using //" time="0.001">
+    </testcase>
+    <testcase classname="redirects lets you redirect using ftp" name="redirects lets you redirect using ftp" time="0.001">
+    </testcase>
+    <testcase classname="redirects lets you redirect using mailto" name="redirects lets you redirect using mailto" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="load prism language" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:49" time="0.83" tests="3">
+    <testcase classname="load prism language throw if language not support" name="load prism language throw if language not support" time="0.007">
+    </testcase>
+    <testcase classname="load prism language load supported language" name="load prism language load supported language" time="0.013">
+    </testcase>
+    <testcase classname="load prism language also load the required language" name="load prism language also load the required language" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="transformer-react-doc-gen: Doclets" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:50" time="1.293" tests="4">
+    <testcase classname="transformer-react-doc-gen: Doclets should apply @required" name="transformer-react-doc-gen: Doclets should apply @required" time="0.006">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: Doclets should apply @required" name="transformer-react-doc-gen: Doclets should apply @required" time="0.002">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: Doclets should handle inline enum types" name="transformer-react-doc-gen: Doclets should handle inline enum types" time="0.002">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: Doclets should create a union type for none-literals" name="transformer-react-doc-gen: Doclets should create a union type for none-literals" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-less" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:50" time="1.513" tests="20">
+    <testcase classname="gatsby-plugin-less Stage: develop / No options" name="gatsby-plugin-less Stage: develop / No options" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop / Less options #1" name="gatsby-plugin-less Stage: develop / Less options #1" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop / Less options #2" name="gatsby-plugin-less Stage: develop / Less options #2" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop / PostCss plugins" name="gatsby-plugin-less Stage: develop / PostCss plugins" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop / css-loader options" name="gatsby-plugin-less Stage: develop / css-loader options" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-javascript / No options" name="gatsby-plugin-less Stage: build-javascript / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-javascript / Less options #1" name="gatsby-plugin-less Stage: build-javascript / Less options #1" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-javascript / Less options #2" name="gatsby-plugin-less Stage: build-javascript / Less options #2" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-javascript / PostCss plugins" name="gatsby-plugin-less Stage: build-javascript / PostCss plugins" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-javascript / css-loader options" name="gatsby-plugin-less Stage: build-javascript / css-loader options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop-html / No options" name="gatsby-plugin-less Stage: develop-html / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop-html / Less options #1" name="gatsby-plugin-less Stage: develop-html / Less options #1" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop-html / Less options #2" name="gatsby-plugin-less Stage: develop-html / Less options #2" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop-html / PostCss plugins" name="gatsby-plugin-less Stage: develop-html / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: develop-html / css-loader options" name="gatsby-plugin-less Stage: develop-html / css-loader options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-html / No options" name="gatsby-plugin-less Stage: build-html / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-html / Less options #1" name="gatsby-plugin-less Stage: build-html / Less options #1" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-html / Less options #2" name="gatsby-plugin-less Stage: build-html / Less options #2" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-html / PostCss plugins" name="gatsby-plugin-less Stage: build-html / PostCss plugins" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-less Stage: build-html / css-loader options" name="gatsby-plugin-less Stage: build-html / css-loader options" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-stylus" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:51" time="1.178" tests="16">
+    <testcase classname="gatsby-plugin-stylus Stage: develop / No options" name="gatsby-plugin-stylus Stage: develop / No options" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop / Stylus options #1" name="gatsby-plugin-stylus Stage: develop / Stylus options #1" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop / Stylus options #2" name="gatsby-plugin-stylus Stage: develop / Stylus options #2" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop / PostCss plugins" name="gatsby-plugin-stylus Stage: develop / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-javascript / No options" name="gatsby-plugin-stylus Stage: build-javascript / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-javascript / Stylus options #1" name="gatsby-plugin-stylus Stage: build-javascript / Stylus options #1" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-javascript / Stylus options #2" name="gatsby-plugin-stylus Stage: build-javascript / Stylus options #2" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-javascript / PostCss plugins" name="gatsby-plugin-stylus Stage: build-javascript / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop-html / No options" name="gatsby-plugin-stylus Stage: develop-html / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop-html / Stylus options #1" name="gatsby-plugin-stylus Stage: develop-html / Stylus options #1" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop-html / Stylus options #2" name="gatsby-plugin-stylus Stage: develop-html / Stylus options #2" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: develop-html / PostCss plugins" name="gatsby-plugin-stylus Stage: develop-html / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-html / No options" name="gatsby-plugin-stylus Stage: build-html / No options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-html / Stylus options #1" name="gatsby-plugin-stylus Stage: build-html / Stylus options #1" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-html / Stylus options #2" name="gatsby-plugin-stylus Stage: build-html / Stylus options #2" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-stylus Stage: build-html / PostCss plugins" name="gatsby-plugin-stylus Stage: build-html / PostCss plugins" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="create-remote-file-node" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:51" time="2.26" tests="4">
+    <testcase classname="create-remote-file-node throws on invalid inputs: createNode" name="create-remote-file-node throws on invalid inputs: createNode" time="0.003">
+    </testcase>
+    <testcase classname="create-remote-file-node throws on invalid inputs: createNodeId" name="create-remote-file-node throws on invalid inputs: createNodeId" time="0.001">
+    </testcase>
+    <testcase classname="create-remote-file-node throws on invalid inputs: cache" name="create-remote-file-node throws on invalid inputs: cache" time="0.001">
+    </testcase>
+    <testcase classname="create-remote-file-node throws on invalid inputs: store" name="create-remote-file-node throws on invalid inputs: store" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-coffeescript" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:53" time="1.463" tests="4">
+    <testcase classname="gatsby-plugin-coffeescript contains coffee script extensions" name="gatsby-plugin-coffeescript contains coffee script extensions" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-plugin-coffeescript modifies webpack config with cofeescript extensions" name="gatsby-plugin-coffeescript modifies webpack config with cofeescript extensions" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-coffeescript pre processing returns null if non-coffeescript file" name="gatsby-plugin-coffeescript pre processing returns null if non-coffeescript file" time="0">
+    </testcase>
+    <testcase classname="gatsby-plugin-coffeescript pre processing transforms .coffee files" name="gatsby-plugin-coffeescript pre processing transforms .coffee files" time="0.031">
+    </testcase>
+  </testsuite>
+  <testsuite name="Status actions/reducer" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:54" time="1.351" tests="4">
+    <testcase classname="Status actions/reducer allows setting plugin status" name="Status actions/reducer allows setting plugin status" time="0.005">
+    </testcase>
+    <testcase classname="Status actions/reducer allows updating status" name="Status actions/reducer allows updating status" time="0.002">
+    </testcase>
+    <testcase classname="Status actions/reducer throws an error if status isn&apos;t an object" name="Status actions/reducer throws an error if status isn&apos;t an object" time="0.001">
+    </testcase>
+    <testcase classname="Status actions/reducer throws an error if the plugin name isn&apos;t set" name="Status actions/reducer throws an error if the plugin name isn&apos;t set" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-sass" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:54" time="1.144" tests="16">
+    <testcase classname="gatsby-plugin-sass Stage: develop / No options" name="gatsby-plugin-sass Stage: develop / No options" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop / Sass options" name="gatsby-plugin-sass Stage: develop / Sass options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop / PostCss plugins" name="gatsby-plugin-sass Stage: develop / PostCss plugins" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop / css-loader options" name="gatsby-plugin-sass Stage: develop / css-loader options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-javascript / No options" name="gatsby-plugin-sass Stage: build-javascript / No options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-javascript / Sass options" name="gatsby-plugin-sass Stage: build-javascript / Sass options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-javascript / PostCss plugins" name="gatsby-plugin-sass Stage: build-javascript / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-javascript / css-loader options" name="gatsby-plugin-sass Stage: build-javascript / css-loader options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop-html / No options" name="gatsby-plugin-sass Stage: develop-html / No options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop-html / Sass options" name="gatsby-plugin-sass Stage: develop-html / Sass options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop-html / PostCss plugins" name="gatsby-plugin-sass Stage: develop-html / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: develop-html / css-loader options" name="gatsby-plugin-sass Stage: develop-html / css-loader options" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-html / No options" name="gatsby-plugin-sass Stage: build-html / No options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-html / Sass options" name="gatsby-plugin-sass Stage: build-html / Sass options" time="0.002">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-html / PostCss plugins" name="gatsby-plugin-sass Stage: build-html / PostCss plugins" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-sass Stage: build-html / css-loader options" name="gatsby-plugin-sass Stage: build-html / css-loader options" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="requestInQueue" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:55" time="1.339" tests="3">
+    <testcase classname="requestInQueue runs all requests in queue" name="requestInQueue runs all requests in queue" time="0.016">
+    </testcase>
+    <testcase classname="requestInQueue returns the values in the same order they were requested" name="requestInQueue returns the values in the same order they were requested" time="0.008">
+    </testcase>
+    <testcase classname="requestInQueue stops any requests when one throws an error" name="requestInQueue stops any requests when one throws an error" time="0.01">
+    </testcase>
+  </testsuite>
+  <testsuite name="remark katex plugin" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:55" time="1.646" tests="3">
+    <testcase classname="remark katex plugin renders inlineMath node properly" name="remark katex plugin renders inlineMath node properly" time="0.02">
+    </testcase>
+    <testcase classname="remark katex plugin renders double $ inlineMath node properly" name="remark katex plugin renders double $ inlineMath node properly" time="0.004">
+    </testcase>
+    <testcase classname="remark katex plugin renders math node properly" name="remark katex plugin renders math node properly" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="test-require-error" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:56" time="1.588" tests="4">
+    <testcase classname="test-require-error detects require errors" name="test-require-error detects require errors" time="0.003">
+    </testcase>
+    <testcase classname="test-require-error detects require errors when using windows path" name="test-require-error detects require errors when using windows path" time="0.003">
+    </testcase>
+    <testcase classname="test-require-error Only returns true on not found errors for actual module not &quot;not found&quot; errors of requires inside the module" name="test-require-error Only returns true on not found errors for actual module not &quot;not found&quot; errors of requires inside the module" time="0.317">
+    </testcase>
+    <testcase classname="test-require-error ignores other errors" name="test-require-error ignores other errors" time="0.431">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-smartypants" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:58" time="2.095" tests="2">
+    <testcase classname="gatsby-remark-smartypants applies smartypants to text nodes" name="gatsby-remark-smartypants applies smartypants to text nodes" time="0.017">
+    </testcase>
+    <testcase classname="gatsby-remark-smartypants leaves other nodes alone" name="gatsby-remark-smartypants leaves other nodes alone" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="Load plugins" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:57" time="3.325" tests="2">
+    <testcase classname="Load plugins Load plugins for a site" name="Load plugins Load plugins for a site" time="0.215">
+    </testcase>
+    <testcase classname="Load plugins Loads plugins defined with an object but without an option key" name="Load plugins Loads plugins defined with an object but without an option key" time="0.171">
+    </testcase>
+  </testsuite>
+  <testsuite name="Adds canonical link to head correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:00" time="1.297" tests="2">
+    <testcase classname="Adds canonical link to head correctly creates a canonical link if siteUrl is set" name="Adds canonical link to head correctly creates a canonical link if siteUrl is set" time="0.006">
+    </testcase>
+    <testcase classname="Adds canonical link to head correctly does not create a canonical link if siteUrl is not set" name="Adds canonical link to head correctly does not create a canonical link if siteUrl is not set" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-remark-custom-blocks" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:02" time="1.468" tests="2">
+    <testcase classname="gatsby-remark-custom-blocks errors if missing required plugin options" name="gatsby-remark-custom-blocks errors if missing required plugin options" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-remark-custom-blocks creates nodes of blocks given in options" name="gatsby-remark-custom-blocks creates nodes of blocks given in options" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="is32BitInteger" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:03" time="0.875" tests="1">
+    <testcase classname="is32BitInteger works with all kind of values" name="is32BitInteger works with all kind of values" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="transformer-react-doc-gen: onCreateNode" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:43" time="24.302" tests="3">
+    <testcase classname="transformer-react-doc-gen: onCreateNode should extract out a description, params, and examples" name="transformer-react-doc-gen: onCreateNode should extract out a description, params, and examples" time="0.532">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should only process javascript File nodes" name="transformer-react-doc-gen: onCreateNode should only process javascript File nodes" time="0.023">
+    </testcase>
+    <testcase classname="transformer-react-doc-gen: onCreateNode should extract create description nodes with markdown types" name="transformer-react-doc-gen: onCreateNode should extract create description nodes with markdown types" time="0.023">
+    </testcase>
+  </testsuite>
+  <testsuite name="create remote file node" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:07" time="0.909" tests="1">
+    <testcase classname="create remote file node can correctly retrieve files extensions" name="create remote file node can correctly retrieve files extensions" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="browserslist" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:08" time="1.189" tests="2">
+    <testcase classname="browserslist prefers returned browserslist results" name="browserslist prefers returned browserslist results" time="0.004">
+    </testcase>
+    <testcase classname="browserslist falls back to defaults" name="browserslist falls back to defaults" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:04" time="6.146" tests="1">
+    <testcase classname=" Builds cache-dir with minimal config" name=" Builds cache-dir with minimal config" time="5.215">
+    </testcase>
+  </testsuite>
+  <testsuite name="createKey" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:10" time="0.775" tests="3">
+    <testcase classname="createKey leaves valid strings as is" name="createKey leaves valid strings as is" time="0.009">
+    </testcase>
+    <testcase classname="createKey replaces invalid characters" name="createKey replaces invalid characters" time="0.003">
+    </testcase>
+    <testcase classname="createKey does not generate same key for different input" name="createKey does not generate same key for different input" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-manifest" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:10" time="0.86" tests="3">
+    <testcase classname="gatsby-plugin-manifest defaultIcons includes all icon sizes" name="gatsby-plugin-manifest defaultIcons includes all icon sizes" time="0.005">
+    </testcase>
+    <testcase classname="gatsby-plugin-manifest doesIconExist returns true if image exists on filesystem" name="gatsby-plugin-manifest doesIconExist returns true if image exists on filesystem" time="0.001">
+    </testcase>
+    <testcase classname="gatsby-plugin-manifest doesIconExist returns false if image does not exist on filesystem" name="gatsby-plugin-manifest doesIconExist returns false if image does not exist on filesystem" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="returns the line numbers container" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:11" time="0.863" tests="2">
+    <testcase classname="returns the line numbers container should return the &lt;span&gt; container with the right classes" name="returns the line numbers container should return the &lt;span&gt; container with the right classes" time="0.002">
+    </testcase>
+    <testcase classname="returns the line numbers container should return return as many &lt;span&gt;&lt;/span&gt; children as there are code lines" name="returns the line numbers container should return return as many &lt;span&gt;&lt;/span&gt; children as there are code lines" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="strip-prefix" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:11" time="0.78" tests="5">
+    <testcase classname="strip-prefix strips a prefix" name="strip-prefix strips a prefix" time="0.003">
+    </testcase>
+    <testcase classname="strip-prefix strips first instance only" name="strip-prefix strips first instance only" time="0.001">
+    </testcase>
+    <testcase classname="strip-prefix ignores prefix appearing elsewhere in the string" name="strip-prefix ignores prefix appearing elsewhere in the string" time="0.001">
+    </testcase>
+    <testcase classname="strip-prefix ignores a non-existent prefix" name="strip-prefix ignores a non-existent prefix" time="0">
+    </testcase>
+    <testcase classname="strip-prefix returns input str if no prefix is provided" name="strip-prefix returns input str if no prefix is provided" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-remove-trailing-slashes" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:12" time="1.267" tests="2">
+    <testcase classname="gatsby-plugin-remove-trailing-slashes correctly keeps index /" name="gatsby-plugin-remove-trailing-slashes correctly keeps index /" time="0.003">
+    </testcase>
+    <testcase classname="gatsby-plugin-remove-trailing-slashes correctly removes slash and recreated page" name="gatsby-plugin-remove-trailing-slashes correctly removes slash and recreated page" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-source-filesystem" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:13" time="1.939" tests="2">
+    <testcase classname="gatsby-source-filesystem can load the content of a file" name="gatsby-source-filesystem can load the content of a file" time="0.004">
+    </testcase>
+    <testcase classname="gatsby-source-filesystem rejects if file not found" name="gatsby-source-filesystem rejects if file not found" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Create content digest" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:15" time="0.658" tests="2">
+    <testcase classname="Create content digest returns the content digest when the input is a string" name="Create content digest returns the content digest when the input is a string" time="0.008">
+    </testcase>
+    <testcase classname="Create content digest returns the content digest when the input is a non string" name="Create content digest returns the content digest when the input is a non string" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Text formatting " errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:15" time="0.937" tests="2">
+    <testcase classname="Text formatting  indent string correctly" name="Text formatting  indent string correctly" time="0.002">
+    </testcase>
+    <testcase classname="Text formatting  format error details correctly" name="Text formatting  format error details correctly" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Process image nodes correctly" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:01" time="16.443" tests="1">
+    <testcase classname="Process image nodes correctly correctly creates an ImageSharp node from a file image node" name="Process image nodes correctly correctly creates an ImageSharp node from a file image node" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="create-file-node" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:16" time="0.801" tests="1">
+    <testcase classname="create-file-node creates a file node" name="create-file-node creates a file node" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test hashing function" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:17" time="1.053" tests="2">
+    <testcase classname="Test hashing function default parameters" name="Test hashing function default parameters" time="0.003">
+    </testcase>
+    <testcase classname="Test hashing function guards against collisions" name="Test hashing function guards against collisions" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="gatsby-plugin-catch-links" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:17" time="1.251" tests="1">
+    <testcase classname="gatsby-plugin-catch-links calls catchLinks in gatsby-browser&apos;s onClientEntry API" name="gatsby-plugin-catch-links calls catchLinks in gatsby-browser&apos;s onClientEntry API" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Normalize baseUrl" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:18" time="0.976" tests="2">
+    <testcase classname="Normalize baseUrl Removes trailing slashes" name="Normalize baseUrl Removes trailing slashes" time="0.007">
+    </testcase>
+    <testcase classname="Normalize baseUrl Removes the protocol" name="Normalize baseUrl Removes the protocol" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Prepare regex for Sift.js" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:19" time="0.544" tests="3">
+    <testcase classname="Prepare regex for Sift.js handles simple regex" name="Prepare regex for Sift.js handles simple regex" time="0.005">
+    </testcase>
+    <testcase classname="Prepare regex for Sift.js handles flags regex" name="Prepare regex for Sift.js handles flags regex" time="0.001">
+    </testcase>
+    <testcase classname="Prepare regex for Sift.js handles slashes" name="Prepare regex for Sift.js handles slashes" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="codemods" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:19" time="2.722" tests="6">
+    <testcase classname="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/import-default&quot; data" name="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/import-default&quot; data" time="1.867">
+    </testcase>
+    <testcase classname="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/import-named-exports&quot; data" name="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/import-named-exports&quot; data" time="0.016">
+    </testcase>
+    <testcase classname="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/import-namespace&quot; data" name="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/import-namespace&quot; data" time="0.008">
+    </testcase>
+    <testcase classname="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/no-import-esm&quot; data" name="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/no-import-esm&quot; data" time="0.011">
+    </testcase>
+    <testcase classname="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/require-destructure&quot; data" name="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/require-destructure&quot; data" time="0.015">
+    </testcase>
+    <testcase classname="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/require-namespace&quot; data" name="codemods global-graphql-calls transforms correctly using &quot;global-graphql-calls/require-namespace&quot; data" time="0.009">
+    </testcase>
+  </testsuite>
+  <testsuite name="codemods" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:20" time="1.503" tests="6">
+    <testcase classname="codemods import-link transforms correctly using &quot;import-link/import-default&quot; data" name="codemods import-link transforms correctly using &quot;import-link/import-default&quot; data" time="0.806">
+    </testcase>
+    <testcase classname="codemods import-link transforms correctly using &quot;import-link/import-named-exports&quot; data" name="codemods import-link transforms correctly using &quot;import-link/import-named-exports&quot; data" time="0.036">
+    </testcase>
+    <testcase classname="codemods import-link transforms correctly using &quot;import-link/import-namespace&quot; data" name="codemods import-link transforms correctly using &quot;import-link/import-namespace&quot; data" time="0.03">
+    </testcase>
+    <testcase classname="codemods import-link transforms correctly using &quot;import-link/require-destructure&quot; data" name="codemods import-link transforms correctly using &quot;import-link/require-destructure&quot; data" time="0.024">
+    </testcase>
+    <testcase classname="codemods import-link transforms correctly using &quot;import-link/require-namespace&quot; data" name="codemods import-link transforms correctly using &quot;import-link/require-namespace&quot; data" time="0.024">
+    </testcase>
+    <testcase classname="codemods import-link transforms correctly using &quot;import-link/import-named-multiple&quot; data" name="codemods import-link transforms correctly using &quot;import-link/import-named-multiple&quot; data" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="page-dependency-resolver" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:21" time="1.448" tests="1">
+    <testcase classname="page-dependency-resolver should handle nulls in results" name="page-dependency-resolver should handle nulls in results" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="codemods" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:22" time="0.928" tests="2">
+    <testcase classname="codemods rename-bound-action-creators transforms correctly using &quot;rename-bound-action-creators/create-page&quot; data" name="codemods rename-bound-action-creators transforms correctly using &quot;rename-bound-action-creators/create-page&quot; data" time="0.38">
+    </testcase>
+    <testcase classname="codemods rename-bound-action-creators transforms correctly using &quot;rename-bound-action-creators/no-destructure&quot; data" name="codemods rename-bound-action-creators transforms correctly using &quot;rename-bound-action-creators/no-destructure&quot; data" time="0.025">
+    </testcase>
+  </testsuite>
+  <testsuite name="codemods" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:23" time="1.45" tests="4">
+    <testcase classname="codemods navigate-calls transforms correctly using &quot;navigate-calls/basic-esm&quot; data" name="codemods navigate-calls transforms correctly using &quot;navigate-calls/basic-esm&quot; data" time="0.6">
+    </testcase>
+    <testcase classname="codemods navigate-calls transforms correctly using &quot;navigate-calls/existing-esm-import&quot; data" name="codemods navigate-calls transforms correctly using &quot;navigate-calls/existing-esm-import&quot; data" time="0.031">
+    </testcase>
+    <testcase classname="codemods navigate-calls transforms correctly using &quot;navigate-calls/basic-commonjs&quot; data" name="codemods navigate-calls transforms correctly using &quot;navigate-calls/basic-commonjs&quot; data" time="0.027">
+    </testcase>
+    <testcase classname="codemods navigate-calls transforms correctly using &quot;navigate-calls/pass-through&quot; data" name="codemods navigate-calls transforms correctly using &quot;navigate-calls/pass-through&quot; data" time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:23" time="1.741" tests="1">
+    <testcase classname=" it extracts resources correctly" name=" it extracts resources correctly" time="0.112">
+    </testcase>
+  </testsuite>
+  <testsuite name="webpack utils" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:51:12" time="42.643" tests="2">
+    <testcase classname="webpack utils mjs adds .mjs rule" name="webpack utils mjs adds .mjs rule" time="0.006">
+    </testcase>
+    <testcase classname="webpack utils mjs returns correct rule" name="webpack utils mjs returns correct rule" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>

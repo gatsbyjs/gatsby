@@ -1,3 +1,5 @@
+/constants.js
+/gatsby-browser.js
 /index.js
 /__tests__/*
 tests

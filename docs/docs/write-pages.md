@@ -71,7 +71,7 @@ e.g
 ]
 ```
 
-`pages.json` is generated for `gatsby develop` purposes only. In `gatsby build`, we use [data.json](/docs/write-pages/#datajson) (below) which includes the pages info plus more.
+`pages.json` is generated for `gatsby develop` purposes only. In `npm run build`, we use [data.json](/docs/write-pages/#datajson) (below) which includes the pages info plus more.
 
 ### sync-requires.js
 

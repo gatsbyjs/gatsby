@@ -16,12 +16,19 @@ www/public
 **/.cache
 
 # ignore built packages
-packages/*/*.js
-packages/gatsby/cache-dir/commonjs
-packages/gatsby/dist
+packages/**/*.js
+!packages/gatsby/cache-dir/**/*.js
+!packages/*/src/**/*.js
+packages/gatsby/cache-dir/commonjs/**/*.js
 
 # fixtures
 **/__testfixtures__/**
 **/__tests__/fixtures/**
 
 infrastructure
+
+# coverage
+coverage
+
+# forestry files
+.forestry/**/*

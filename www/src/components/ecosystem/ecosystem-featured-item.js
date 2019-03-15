@@ -1,43 +1,54 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
+
+import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+  breakpoints,
+} from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
-const EcosystemFeaturedItemRoot = styled(`li`)`
-  flex-basis: ${props => `calc(100% / ${props.numberOfItems})`};
-  float: left;
-  margin: 0 2px 0 0;
-  padding: 5px;
+const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
+  margin-right: ${rhythm(space[6])};
 
-  ${presets.Tablet} {
-    padding: 0;
+  ${breakpoints.md} {
     border-bottom: 1px solid ${colors.gray.superLight};
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
   }
 `
 
-const BlockLink = styled(Link)`
-  border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+export const BlockLink = styled(Link)`
+  background: ${colors.white};
+  border-radius: ${radii[2]}px;
+  box-shadow: ${shadows.raised};
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(3 / 4)};
+  padding: ${rhythm(space[6])};
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
+    transition: all ${transition.speed.default} ${transition.curve.default};
+  }
 
+  ${breakpoints.lg} {
     :hover {
       background: ${colors.ui.whisper};
     }
@@ -45,26 +56,28 @@ const BlockLink = styled(Link)`
 `
 
 const Header = styled(`header`)`
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
+
   h3 {
     color: ${colors.gatsbyDark};
-    font-size: 1rem;
+    font-size: ${presets.scale[2]};
     margin: 0;
   }
 
   span {
+    align-items: center;
     color: ${colors.lilac};
     display: flex;
-    align-items: center;
-    font-size: 0.8125rem;
-    font-family: ${options.systemFontFamily.join(`,`)};
+    font-size: ${presets.scale[1]};
+    padding-left: ${rhythm(space[3])};
 
     svg {
       fill: ${colors.gray.light};
-      height: 1.2em;
-      margin-left: 2px;
-      width: 1.2em;
+      height: auto;
+      margin-left: ${rhythm(space[1])};
+      width: ${rhythm(space[4])};
     }
   }
 `
@@ -72,16 +85,15 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  justify-content: space-between;
-  height: 100%;
   font-family: ${options.systemFontFamily.join(`,`)};
-  padding: ${rhythm(0.5)} 0 0;
+  justify-content: space-between;
+  padding: ${rhythm(space[3])} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  padding-right: ${rhythm(2 / 3)};
-  margin-top: ${rhythm(1 / 12)};
-  height: 64px;
+  height: ${rhythm(space[11])};
+  padding-right: ${rhythm(space[4])};
+  margin-top: ${rhythm(space[1])};
 
   img {
     border: 1px solid ${colors.gray.superLight};
@@ -91,11 +103,11 @@ const Thumbnail = styled(`div`)`
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
-  font-size: 0.85rem;
+  font-size: ${presets.scale[1]};
   margin: 0;
 `
 
-const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
+const EcosystemFeaturedItem = ({ item, className }) => {
   const {
     slug,
     name,
@@ -114,7 +126,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
   }
 
   return (
-    <EcosystemFeaturedItemRoot numberOfItems={numberOfItems}>
+    <EcosystemFeaturedItemRoot className={className}>
       <BlockLink to={slug}>
         <Header>
           <h3>{name}</h3>
@@ -145,7 +157,7 @@ const EcosystemFeaturedItem = ({ item, numberOfItems }) => {
 
 EcosystemFeaturedItem.propTypes = {
   item: PropTypes.object.isRequired,
-  numberOfItems: PropTypes.number.isRequired,
+  className: PropTypes.string,
 }
 
 export default EcosystemFeaturedItem

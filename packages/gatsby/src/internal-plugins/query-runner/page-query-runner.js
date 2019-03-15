@@ -15,6 +15,7 @@ const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
 
 let queuedDirtyActions = []
+
 let active = false
 let running = false
 
@@ -65,6 +66,12 @@ emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.payload })
 })
 
+emitter.on(`CREATE_PAGE`, action => {
+  if (action.contextModified) {
+    exports.queueQueryForPathname(action.payload.path)
+  }
+})
+
 const runQueuedActions = async () => {
   if (active && !running) {
     try {
@@ -86,6 +93,15 @@ exports.runQueuedActions = runQueuedActions
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
 let seenIdsWithoutDataDependencies = []
+
+// Remove pages from seenIdsWithoutDataDependencies when they're deleted
+// so their query will be run again if they're created again.
+emitter.on(`DELETE_PAGE`, action => {
+  seenIdsWithoutDataDependencies = seenIdsWithoutDataDependencies.filter(
+    p => p !== action.payload.path
+  )
+})
+
 const findIdsWithoutDataDependencies = () => {
   const state = store.getState()
   const allTrackedIds = _.uniq(
@@ -162,9 +178,11 @@ const runQueriesForPathnames = pathnames => {
   }
 
   return new Promise(resolve => {
-    queue.on(`drain`, () => {
+    const onDrain = () => {
+      queue.removeListener(`drain`, onDrain)
       resolve()
-    })
+    }
+    queue.on(`drain`, onDrain)
   })
 }
 

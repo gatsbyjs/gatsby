@@ -5,7 +5,7 @@ title: Adding Markdown Pages
 Gatsby can use markdown files to create pages in your site.
 You add plugins to read and understand folders with markdown files and from them create pages automatically.
 
-Here's the steps Gatsby follows for making this happen.
+Here are the steps Gatsby follows for making this happen.
 
 1.  Read files into Gatsby from the filesystem
 2.  Transform markdown to HTML and frontmatter to data
@@ -173,4 +173,4 @@ Check out tutorials listed on the [Awesome Gatsby](/docs/awesome-gatsby/#gatsby-
 
 ## Gatsby markdown starters
 
-There are a number of [Gatsby starters](/docs/gatsby-starters/) that come preconfigured to work with markdown.
+There are a number of [Gatsby starters](/starters?c=Markdown) that come preconfigured to work with markdown.
