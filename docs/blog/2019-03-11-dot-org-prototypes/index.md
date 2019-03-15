@@ -128,7 +128,7 @@ We made two changes to fix the initial problems uncovered by usability testing. 
 ![Screenshot of gatsbyjs.org homepage on a mobile device](mobile-prototype-2019-03-01.png)
 [Move diagram above card and change explanatory text](https://github.com/gatsbyjs/gatsby/pull/12236)
 
-Then we refined those changes by modifying by changing the headline and subheadline.
+Then we refined those changes by modifying the headline and subheadline.
 
 ![Screenshot of gatsbyjs.org homepage on desktop](desktop-prototype-2019-03-04.png)
 [Change .org headline/subheadline + make them larger](https://github.com/gatsbyjs/gatsby/pull/12298)
