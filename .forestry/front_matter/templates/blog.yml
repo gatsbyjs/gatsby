@@ -33,4 +33,4 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/2019-03-15-design-code-blog-post/gatsby-fuels-content-and-sales-in-design+code-rebuild.md
+- docs/blog/2019-03-15-design-code-blog-post/index.md
