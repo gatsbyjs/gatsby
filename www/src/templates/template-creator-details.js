@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
-import { rhythm, scale } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
@@ -12,6 +12,7 @@ import {
   transition,
   radii,
   breakpoints,
+  scale,
   lineHeights,
 } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -44,9 +45,9 @@ const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
       background: background ? background : colors.ui.whisper,
-      // marginLeft: rhythm(-scale[1]),
-      // marginRight: rhythm(-scale[1]),
-      // padding: rhythm(scale[1]),
+      marginLeft: `-${space[5]}`,
+      marginRight: `-${space[5]}`,
+      padding: space[5],
       borderTop: first ? `1px solid ${colors.ui.light}` : null,
       borderBottom: last ? null : `1px solid ${colors.ui.light}`,
       [breakpoint2Columns]: {
