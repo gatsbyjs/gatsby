@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.36...gatsby@2.1.37) (2019-03-16)
+
+### Bug Fixes
+
+- **gatsby:** extract queries from themes not starting with "gatsby-theme-\*" name ([#12604](https://github.com/gatsbyjs/gatsby/issues/12604)) ([b9808f2](https://github.com/gatsbyjs/gatsby/commit/b9808f2))
+
 ## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.35...gatsby@2.1.36) (2019-03-16)
 
 **Note:** Version bump only for package gatsby
