@@ -4,18 +4,21 @@
 // use require() with backtick strings so use the es6 syntax
 import "@babel/polyfill"
 
+const isCI = require(`is-ci`)
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
 
 global.Promise = require(`bluebird`)
 
+if (!icCI) {
+  const pkg = require(`../package.json`)
+  const updateNotifier = require(`update-notifier`)
+  // Check if update is available
+  updateNotifier({ pkg }).notify()
+}
+
 const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])
-
-const pkg = require(`../package.json`)
-const updateNotifier = require(`update-notifier`)
-// Check if update is available
-updateNotifier({ pkg }).notify()
 
 if (verDigit < 6) {
   report.panic(
