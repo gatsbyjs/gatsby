@@ -30,7 +30,9 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
     })
 
     // remove trailing slash of siteUrl
-    r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(r.data.site.siteMetadata.siteUrl)
+    r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
+      r.data.site.siteMetadata.siteUrl
+    )
 
     return r.data
   })
