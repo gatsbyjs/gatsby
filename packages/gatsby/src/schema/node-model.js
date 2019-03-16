@@ -11,22 +11,41 @@ const invariant = require(`invariant`)
 type IDOrNode = string | { id: string }
 type TypeOrTypeName = string | GraphQLOutputType
 
-interface ConnectionArgs {
+/**
+ * Optional page dependency information.
+ *
+ * @typedef {Object} PageDependencies
+ * @property {string} path The path of the page that depends on the retrieved nodes' data
+ * @property {string} [connectionType] Mark this dependency as a connection
+ */
+interface PageDependencies {
   path: string;
   connectionType?: string;
+}
+
+interface QueryArguments {
+  type: TypeOrTypeName;
+  query: { filter: Object, sort?: Object, skip?: number, limit?: number };
+  firstOnly?: boolean;
 }
 
 export interface NodeModel {
   getNodeById(
     { id: IDOrNode, type?: TypeOrTypeName },
-    ConnectionArgs
+    pageDependencies?: PageDependencies
   ): any | null;
   getNodesByIds(
     { ids: Array<IDOrNode>, type?: TypeOrTypeName },
-    ConnectionArgs
+    pageDependencies?: PageDependencies
   ): Array<any>;
-  getAllNodes({ type?: TypeOrTypeName }, ConnectionArgs): Array<any>;
-  runQuery(args: any): Promise<any>;
+  getAllNodes(
+    { type?: TypeOrTypeName },
+    pageDependencies?: PageDependencies
+  ): Array<any>;
+  runQuery(
+    args: QueryArguments,
+    pageDependencies?: PageDependencies
+  ): Promise<any>;
   getTypes(): Array<string>;
 }
 
@@ -37,14 +56,6 @@ class LocalNodeModel {
     this.createPageDependency = createPageDependency
     this.path = path
   }
-
-  /**
-   * Optional page dependency information.
-   *
-   * @typedef {Object} PageDependencies
-   * @property {string} path
-   * @property {string} [connectionType]
-   */
 
   /**
    * Get a node from the store by ID and optional type.
@@ -83,7 +94,7 @@ class LocalNodeModel {
    * @param {Object} args
    * @param {string[]} args.ids IDs of the requested nodes
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
-   * @param {PageDependencies} [pageDependencies]   *
+   * @param {PageDependencies} [pageDependencies]
    * @returns {Node[]}
    */
   getNodesByIds(args, pageDependencies) {
@@ -113,7 +124,7 @@ class LocalNodeModel {
    *
    * @param {Object} args
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
-   * @param {PageDependencies} [pageDependencies]   *
+   * @param {PageDependencies} [pageDependencies]
    * @returns {Node[]}
    */
   getAllNodes(args, pageDependencies) {
@@ -142,10 +153,10 @@ class LocalNodeModel {
    * Get nodes of a type matching the specified query.
    *
    * @param {Object} args
-   * @param {Object} args.query Query arguments
+   * @param {Object} args.query Query arguments (`filter`, `sort`, `limit`, `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {boolean} [args.firstOnly] If true, return only first match
-   * @param {PageDependencies} [pageDependencies]   *
+   * @param {PageDependencies} [pageDependencies]
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
@@ -206,12 +217,12 @@ class LocalNodeModel {
    * Get the root ancestor node for an object's parent node, or its first
    * ancestor matching a specified condition.
    *
-   * @param {Object} obj The object you want to retrieve an ancestor node for
+   * @param {(Object|Array)} obj An object belonging to a Node, or a Node object
    * @param {Function} [predicate] Optional condition to match
    * @returns {(Node|null)}
    */
-  findRootNodeAncestor(...args) {
-    return this.nodeStore.findRootNodeAncestor(...args)
+  findRootNodeAncestor(obj, predicate) {
+    return this.nodeStore.findRootNodeAncestor(obj, predicate)
   }
 }
 

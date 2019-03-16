@@ -250,7 +250,7 @@ exports.setFieldsOnGraphQLNodeType = true
  *         resolve: (source, args, context, info) => {
  *           const posts = context.nodeModel.getAllNodes({ type: `BlogPost` })
  *           const recentPosts = posts.filter(
- *             post => post.publishedAt > Date.UTC(2018, 0 , 1)
+ *             post => post.publishedAt > Date.UTC(2018, 0, 1)
  *           )
  *           return recentPosts
  *         }
