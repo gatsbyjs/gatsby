@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-twitter",
   "description": "Loads the Twitter JavaScript for embedding tweets.",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
