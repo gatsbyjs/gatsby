@@ -77,7 +77,7 @@ describe(`resolveThemes`, () => {
       resolveThemes([
         {
           name: theme,
-          resolve: path.join(base, `gatsby-theme-example`),
+          themeDir: path.join(base, `gatsby-theme-example`),
         },
       ])
     ).toEqual([expect.stringContaining(theme)])
@@ -90,7 +90,7 @@ describe(`resolveThemes`, () => {
       resolveThemes([
         {
           name: theme,
-          resolve: path.join(base, theme),
+          themeDir: path.join(base, theme),
         },
       ])
     ).toEqual([expect.stringContaining(theme.split(`/`).join(path.sep))])
