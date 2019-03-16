@@ -10,7 +10,7 @@ const report = require(`./reporter`)
 
 global.Promise = require(`bluebird`)
 
-if (!icCI) {
+if (!isCI) {
   const pkg = require(`../package.json`)
   const updateNotifier = require(`update-notifier`)
   // Check if update is available
