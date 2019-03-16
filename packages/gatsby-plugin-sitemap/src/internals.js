@@ -29,6 +29,9 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
       return page
     })
 
+    // remove trailing slash of siteUrl
+    r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(r.data.site.siteMetadata.siteUrl)
+
     return r.data
   })
 
