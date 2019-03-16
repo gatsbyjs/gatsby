@@ -5,7 +5,13 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, radii } from "../../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -104,7 +110,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: `3.5rem` }}>
+            <div css={{ height: rhythm(space[10]) }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -159,9 +165,9 @@ export default class FilteredStarterLibrary extends Component {
             cssOverrides={{
               height: `6rem`,
               paddingTop: `${rhythm(space[6])}`,
-              [presets.Sm]: {
-                height: presets.headerHeight,
-                paddingTop: `0px`,
+              [breakpoints.sm]: {
+                height: dimensions.headerHeight,
+                paddingTop: 0,
               },
             }}
           >
@@ -177,9 +183,9 @@ export default class FilteredStarterLibrary extends Component {
               css={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: `.4rem`,
+                marginBottom: rhythm(space[2]),
                 width: `100%`,
-                [presets.Sm]: {
+                [breakpoints.sm]: {
                   justifyContent: `flex-end`,
                   marginBottom: 0,
                   width: `50%`,
@@ -190,7 +196,7 @@ export default class FilteredStarterLibrary extends Component {
               <label
                 css={{
                   display: `none`,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     border: 0,
                     borderRadius: radii[2],
                     color: colors.gatsby,
@@ -221,13 +227,13 @@ export default class FilteredStarterLibrary extends Component {
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
-                    height: `16px`,
+                    height: rhythm(space[4]),
                     left: `5px`,
                     pointerEvents: `none`,
                     position: `absolute`,
                     top: `50%`,
                     transform: `translateY(-50%)`,
-                    width: `16px`,
+                    width: rhythm(space[4]),
                   }}
                 />
               </label>

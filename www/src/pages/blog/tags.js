@@ -1,13 +1,9 @@
 import React from "react"
+import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
-import { graphql } from "gatsby"
-
-// Utilities
+import { graphql, Link } from "gatsby"
 import kebabCase from "lodash/kebabCase"
 
-// Components
-import { Helmet } from "react-helmet"
-import { Link } from "gatsby"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
@@ -86,9 +82,7 @@ class TagsPage extends React.Component {
               <div>
                 <label css={{ position: `relative` }}>
                   <input
-                    css={{
-                      ...styles.searchInput,
-                    }}
+                    css={styles.searchInput}
                     id="tagsFilter"
                     name="filterQuery"
                     type="search"
@@ -102,10 +96,10 @@ class TagsPage extends React.Component {
                     overrideCSS={{
                       fill: colors.lilac,
                       position: `absolute`,
-                      left: `5px`,
+                      left: rhythm(space[1]),
                       top: `50%`,
-                      width: `16px`,
-                      height: `16px`,
+                      width: rhythm(space[4]),
+                      height: rhythm(space[4]),
                       pointerEvents: `none`,
                       transform: `translateY(-50%)`,
                     }}
@@ -130,8 +124,8 @@ class TagsPage extends React.Component {
                     <li
                       key={tag.fieldValue}
                       css={{
-                        padding: `10px 5px`,
-                        margin: `15px`,
+                        padding: `${rhythm(space[3])} ${rhythm(space[1])}`,
+                        margin: rhythm(space[4]),
                         listStyleType: `none`,
                       }}
                     >

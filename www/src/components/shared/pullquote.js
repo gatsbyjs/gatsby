@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, radii, space } from "../../utils/presets"
+import presets, { colors, radii, space, breakpoints } from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
@@ -24,7 +24,7 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: ${rhythm(space[8])} 0;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     line-height: ${presets.lineHeights.loose};
     margin: ${rhythm(space[8])} -3.5rem;
     padding: 2.8rem 3.5rem;
@@ -54,7 +54,7 @@ const QuotationMark = styled(`span`)`
     fill: ${colors.gatsbyDark};
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -85,7 +85,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${presets.Lg} {
+    ${breakpoints.lg} {
       height: 27px;
       width: 27px;
     }
@@ -134,10 +134,10 @@ const Star = styled(`span`)`
 
   :nth-of-type(3) {
     bottom: 0;
-    height: 12px;
+    height: ${rhythm(space[3])};
     right: 4rem;
     transform: translateY(50%);
-    width: 12px;
+    width: ${rhythm(space[3])};
 
     svg {
       fill: ${colors.warning};

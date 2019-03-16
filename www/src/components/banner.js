@@ -2,7 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import presets, { colors, space } from "../utils/presets"
+import { colors, space, dimensions } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
 const horizontalPadding = rhythm(space[6])
@@ -10,7 +10,7 @@ const backgroundColor = colors.gatsby
 
 const BannerContainer = styled(`div`)`
   background-color: ${backgroundColor};
-  height: ${presets.bannerHeight};
+  height: ${dimensions.bannerHeight};
   position: fixed;
   width: 100%;
   z-index: 3;
@@ -21,7 +21,7 @@ const BannerContainer = styled(`div`)`
 const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
-  height: ${presets.bannerHeight};
+  height: ${dimensions.bannerHeight};
   overflow-x: auto;
   mask-image: ${`linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`};
 `

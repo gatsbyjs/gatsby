@@ -3,13 +3,19 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, radii } from "../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `255, 255, 255, 0.9`
+const stripeColor = `0, 0, 0, 0.025`
 const stripeSize = 15
 const stripeAnimation = keyframes({
   "0%": {
@@ -85,7 +91,6 @@ const VerticalLine = () => (
 )
 
 const box = {
-  background: colors.white,
   border: `1px solid ${colors.ui.light}`,
   borderRadius: radii[2],
   padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
@@ -93,9 +98,9 @@ const box = {
 
 const borderAndBoxShadow = {
   background: colors.white,
-  border: `1px solid ${colors.ui.light}`,
+  border: 0,
   borderRadius: radii[1],
-  boxShadow: presets.shadows.card,
+  boxShadow: shadows.raised,
   transform: `translateZ(0)`,
   width: `100%`,
 }
@@ -121,10 +126,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
       display: `flex`,
-      [presets.Xs]: {
+      [breakpoints.xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -182,7 +187,7 @@ const Gatsby = () => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -196,7 +201,7 @@ const Gatsby = () => (
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
-        [presets.Lg]: {
+        [breakpoints.lg]: {
           height: rhythm(space[9]),
         },
       }}
@@ -246,7 +251,7 @@ const Diagram = () => (
           css={{
             marginTop: 0,
             marginBottom: rhythm(space[6]),
-            [presets.Md]: {
+            [breakpoints.md]: {
               marginTop: rhythm(space[6]),
             },
           }}

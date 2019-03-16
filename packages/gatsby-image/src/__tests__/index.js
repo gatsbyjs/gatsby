@@ -31,6 +31,7 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       style={{ display: `inline` }}
       title={`Title for the image`}
       alt={`Alt text for the image`}
+      crossOrigin={`anonymous`}
       {...fluid && { fluid: fluidShapeMock }}
       {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
@@ -55,12 +56,13 @@ describe(`<Img />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have correct src, title and alt attributes`, () => {
+  it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
     const imageTag = setup().querySelector(`picture img`)
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
     expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
+    expect(imageTag.getAttribute(`crossOrigin`)).toEqual(`anonymous`)
   })
 
   it(`should have correct placeholder src, title, style and class attributes`, () => {

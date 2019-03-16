@@ -4,7 +4,7 @@ import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import presets, { colors, space } from "../utils/presets"
+import presets, { colors, space, breakpoints } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
 const subHeaderTitleStyles = {
@@ -12,7 +12,7 @@ const subHeaderTitleStyles = {
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [presets.Xs]: {
+  [breakpoints.xs]: {
     height: rhythm(5 / 4),
   },
 }
