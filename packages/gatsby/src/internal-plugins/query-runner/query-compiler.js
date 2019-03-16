@@ -63,8 +63,8 @@ let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
 const resolveThemes = (themes = []) =>
-  themes.reduce((merged, plugin) => {
-    merged.push(plugin.resolve)
+  themes.reduce((merged, theme) => {
+    merged.push(theme.themeDir)
     return merged
   }, [])
 
