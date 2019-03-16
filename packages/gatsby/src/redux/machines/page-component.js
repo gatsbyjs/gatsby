@@ -27,18 +27,18 @@ module.exports = Machine(
       inactive: {
         on: {
           // Transient transition
-          // Will transition to either 'inactiveWhileBootstrapping' or 'extractingQueries'
+          // Will transition to either 'inactiveWhileBootstrapping' or idle
           // immediately upon entering 'inactive' state if the condition is met.
           "": [
             { target: `inactiveWhileBootstrapping`, cond: `isBootstrapping` },
-            { target: `extractingQueries`, cond: `isNotBootstrapping` },
+            { target: `idle`, cond: `isNotBootstrapping` },
           ],
         },
       },
       inactiveWhileBootstrapping: {
         on: {
           BOOTSTRAP_FINISHED: {
-            target: `extractingQueries`,
+            target: `idle`,
             actions: `setBootstrapFinished`,
           },
           QUERY_CHANGED: `runningPageQueries`,
@@ -46,23 +46,16 @@ module.exports = Machine(
           QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
-      extractingQueries: {
-        onEntry: [`extractQueries`],
-        on: {
-          QUERY_CHANGED: `runningPageQueries`,
-          QUERY_DID_NOT_CHANGE: `idle`,
-          QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
-          QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
-        },
-      },
       queryExtractionGraphQLError: {
         on: {
-          PAGE_COMPONENT_CHANGED: `extractingQueries`,
+          QUERY_DID_NOT_CHANGE: `idle`,
+          QUERY_CHANGED: `runningPageQueries`,
         },
       },
       queryExtractionBabelError: {
         on: {
-          PAGE_COMPONENT_CHANGED: `extractingQueries`,
+          QUERY_DID_NOT_CHANGE: `idle`,
+          QUERY_CHANGED: `runningPageQueries`,
         },
       },
       runningPageQueries: {
@@ -73,7 +66,9 @@ module.exports = Machine(
       },
       idle: {
         on: {
-          PAGE_COMPONENT_CHANGED: `extractingQueries`,
+          QUERY_CHANGED: `runningPageQueries`,
+          QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
+          QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
     },
@@ -84,13 +79,6 @@ module.exports = Machine(
       isNotBootstrapping: context => !context.isInBootstrap,
     },
     actions: {
-      extractQueries: () => {
-        const {
-          debounceCompile,
-        } = require(`../../internal-plugins/query-runner/query-watcher`)
-
-        debounceCompile()
-      },
       runPageComponentQueries: (context, event) => {
         const {
           queueQueriesForPageComponent,

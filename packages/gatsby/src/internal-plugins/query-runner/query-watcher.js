@@ -261,8 +261,7 @@ const watch = rootDir => {
   watcher = chokidar
     .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
     .on(`change`, path => {
-      // Broadcast that the page component has changed.
-      boundActionCreators.pageComponentChanged(path)
+      debounceCompile()
     })
   filesToWatch.forEach(filePath => watcher.add(filePath))
 }
