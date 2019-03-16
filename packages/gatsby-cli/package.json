@@ -21,6 +21,7 @@
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^4.0.1",
     "hosted-git-info": "^2.6.0",
+    "is-ci": "^2.0.0",
     "lodash": "^4.17.10",
     "meant": "^1.0.1",
     "opentracing": "^0.14.3",
