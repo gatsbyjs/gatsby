@@ -65,6 +65,8 @@ async function parseToAst(filePath, fileStr) {
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: filePath,
       })
+
+      return null
     }
   } else {
     try {
@@ -80,8 +82,14 @@ async function parseToAst(filePath, fileStr) {
           `This may indicate a syntax error in the code, or it may be a file type ` +
           `that Gatsby does not know how to parse.`
       )
+
+      return null
     }
   }
+
+  boundActionCreators.queryExtractedBabelSuccess({
+    componentPath: filePath,
+  })
 
   return ast
 }

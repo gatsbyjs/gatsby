@@ -1228,6 +1228,29 @@ actions.queryExtractionGraphQLError = (
 
 /**
  *
+ * Report that babel was able to extract the graphql query.
+ * Indicates that the file is free of JS errors.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @private
+ */
+actions.queryExtractedBabelSuccess = (
+  { componentPath },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
+    plugin,
+    traceId,
+    payload: { componentPath },
+  }
+}
+
+/**
+ *
  * Report that the Relay Compilier found a babel error when attempting to extract a query
  *
  * @param {Object} $0

@@ -54,8 +54,7 @@ module.exports = Machine(
       },
       queryExtractionBabelError: {
         on: {
-          QUERY_DID_NOT_CHANGE: `idle`,
-          QUERY_CHANGED: `runningPageQueries`,
+          QUERY_EXTRACTION_BABEL_SUCCESS: `idle`,
         },
       },
       runningPageQueries: {

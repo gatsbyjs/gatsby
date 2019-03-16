@@ -58,6 +58,11 @@ module.exports = (state = new Map(), action) => {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
 
+      if (service.state.value === `queryExtractionBabelError`) {
+        // Do nothing until the babel error is fixed.
+        return state
+      }
+
       // Check if the query has changed or not.
       if (service.state.context.query === action.payload.query) {
         service.send(`QUERY_DID_NOT_CHANGE`)
@@ -73,7 +78,7 @@ module.exports = (state = new Map(), action) => {
       })
       return state
     }
-    case `PAGE_COMPONENT_CHANGED`:
+    case `QUERY_EXTRACTION_BABEL_SUCCESS`:
     case `QUERY_EXTRACTION_BABEL_ERROR`:
     case `QUERY_EXTRACTION_GRAPHQL_ERROR`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
