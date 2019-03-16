@@ -2056,3 +2056,11 @@
     - Uses styled-components + styled-system
     - SEO with Sitemap, Schema.org JSONLD, Tags
     - Responsive images with gatsby-image
+- url: https://www.reisebuero-bergfelde.de
+  repo: https://github.com/rwieruch/reisebuero-bergfelde.de
+  description: A tiny website for small local businesses which want to leave their footprint online with their essential information.
+  tags:
+    - Portfolio
+  features:
+    - One Page Website
+    - Small/Local Businesses
