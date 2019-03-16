@@ -6,6 +6,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { scheduleJob } = require(`./scheduler`)
+const { createArgsDigest } = require(`./process-file`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -60,19 +61,6 @@ const generalArgs = {
   toFormat: ``,
   sizeByPixelDensity: false,
 }
-
-const resizeWhitelistArgs = [
-  `height`,
-  `width`,
-  `cropFocus`,
-  `toFormat`,
-  `pngCompressionLevel`,
-  `quality`,
-  `jpegProgressive`,
-  `grayscale`,
-  `rotate`,
-  `duotone`,
-]
 
 let pluginOptions = Object.assign({}, pluginDefaults)
 exports.setPluginOptions = opts => {
@@ -139,28 +127,12 @@ const healOptions = (
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension)
-  const filtered = _.pickBy(args, (value, key) => {
-    // remove falsy
-    if (!value) return false
-    if (file.extension.match(/^jp*/) && _.includes(key, `png`)) {
-      return false
-    } else if (file.extension.match(/^png/) && key.match(/^jp*/)) {
-      return false
-    }
-    // after initial processing - get rid of unknown/unneeded fields
-    return resizeWhitelistArgs.includes(key)
-  })
+  if (!options.toFormat) {
+    options.toFormat = file.extension
+  }
 
-  const fileExtension = options.toFormat ? options.toFormat : file.extension
-
-  const argsDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(filtered, Object.keys(filtered).sort()))
-    .digest(`hex`)
-
-  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
-
-  const imgSrc = `/${file.name}.${fileExtension}`
+  const argsDigestShort = createArgsDigest(options)
+  const imgSrc = `/${file.name}.${options.toFormat}`
   const dirPath = path.join(
     process.cwd(),
     `public`,
@@ -198,7 +170,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
