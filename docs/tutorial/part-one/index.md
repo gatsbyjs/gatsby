@@ -290,7 +290,7 @@ You'll often want to link between pages -- Let's look at routing in a Gatsby sit
 
 ### ✋ Using the `<Link />` component
 
-1.  Open the index page component (`src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
+1.  Open the index page component (`src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component above the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
