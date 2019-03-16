@@ -31,7 +31,7 @@ const embedClasses = [
   `.twitter-tweet`,
   `.twitter-timeline`,
   `.twitter-follow-button`,
-  `.twitter-share-button`
+  `.twitter-share-button`,
 ].join(`,`)
 
 exports.onRouteUpdate = () => {
