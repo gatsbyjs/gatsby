@@ -89,7 +89,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [breakpoints.md]: {
+        [breakpoints.lg]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.ui.whisper : false,
         },
@@ -119,6 +119,7 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/docs/">Docs</NavItem>
             <NavItem linkTo="/tutorial/">Tutorial</NavItem>
             <NavItem linkTo="/plugins/">Plugins</NavItem>
+            <NavItem linkTo="/starters/">Starters</NavItem>
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
@@ -181,14 +182,14 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [breakpoints.lg]: {
       alignSelf: `flex-end`,
       display: `flex`,
     },
   },
   ulContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [breakpoints.lg]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,

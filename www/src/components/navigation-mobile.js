@@ -6,6 +6,7 @@ import {
   DocsIcon,
   TutorialIcon,
   PluginsIcon,
+  StartersIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
 import presets, {
@@ -77,7 +78,7 @@ const MobileNavigation = () => (
         height: dimensions.headerHeight,
         fontFamily: options.headerFontFamily.join(`,`),
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [breakpoints.md]: {
+        [breakpoints.lg]: {
           display: `none`,
         },
       }}
@@ -85,6 +86,7 @@ const MobileNavigation = () => (
       <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
       <MobileNavItem linkTo="/tutorial/" label="Tutorial" icon={TutorialIcon} />
       <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
+      <MobileNavItem linkTo="/starters/" label="Starters" icon={StartersIcon} />
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
     </div>
