@@ -2056,3 +2056,13 @@
     - Uses styled-components + styled-system
     - SEO with Sitemap, Schema.org JSONLD, Tags
     - Responsive images with gatsby-image
+- url: https://amazing-jones-e61bda.netlify.com/
+  repo: https://github.com/WebCu/gatsby-material-kit-react
+  description: Adaptation of Material Kit React to Gatsby
+  tags:
+    - Material Kit React
+    - Material UI
+  features:
+    - 60 Handcrafted Components
+    - 4 Customized Plugins
+    - 3 Example Pages
