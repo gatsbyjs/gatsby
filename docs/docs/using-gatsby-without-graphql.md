@@ -104,4 +104,5 @@ If you're building a small site, one efficient way to build it is to pull in uns
 
 ## Further reading
 
-Amberley Romo's guide to [using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/)
+- Amberley Romo's guide to [using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/)
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)

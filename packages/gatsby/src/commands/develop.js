@@ -148,7 +148,7 @@ async function startServer(program) {
   // This can lead to serving stale html files during development.
   //
   // We serve by default an empty index.html that sets up the dev environment.
-  app.use(express.static(`public`, { index: false }))
+  app.use(require(`./develop-static`)(`public`, { index: false }))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
