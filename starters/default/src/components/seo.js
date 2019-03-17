@@ -29,8 +29,8 @@ function SEO({ lang, meta, title, description, author, keywords, image, url }) {
   )
 
   const metaTitle = title || site.siteMetadata.title
-  const metaAuthor = author || site.siteMetadata.author
   const metaDescription = description || site.siteMetadata.description
+  const metaAuthor = author || site.siteMetadata.author
   const metaKeywords = keywords || site.siteMetadata.keywords
   const metaImage = image || site.siteMetadata.image
   const metaUrl = url || site.siteMetadata.url
