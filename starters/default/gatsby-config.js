@@ -3,6 +3,9 @@ module.exports = {
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
+    keywords: [`gatsby`, `application`, `react`],
+    image: `https://www.dropbox.com/s/bhwnfkuwewq03sl/gatsby-share.png?raw=1`,
+    url: `https://gatsby-starter-default-demo.netlify.com/`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
