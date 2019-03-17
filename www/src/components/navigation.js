@@ -162,6 +162,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
+            aria-label="gatsbyjs.com"
             overrideCSS={{ paddingRight: 0, fontSize: presets.scale[1] }}
           >
             .com
