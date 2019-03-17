@@ -1,0 +1,58 @@
+- path: "/page1"
+  content:
+    - item: one item
+    - item: two items
+    - item: three items
+  links:
+    - to: "/page2"
+    - to: "/page5"
+- path: "/page2"
+  content:
+    - item:
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+        in culpa qui officia deserunt mollit anim id est laborum.
+  links:
+    - to: "/page1"
+- path: "/page3"
+  content:
+    - item: Cupcake ipsum dolor sit amet tootsie roll sesame snaps chupa chups.
+        Sugar plum chupa chups topping I love carrot cake I love marshmallow dessert.
+        Toffee gingerbread pie apple pie jelly beans pastry cookie.
+        Lemon drops wafer I love pastry halvah dragée pudding cake.
+        Cake halvah cookie jelly beans topping pudding cheesecake donut.
+        Cake croissant marshmallow.
+        Sesame snaps apple pie I love I love cake danish powder.
+        Lollipop sweet caramels.
+        Tiramisu danish marshmallow candy canes.
+        Powder cupcake cotton candy bonbon chocolate bar marshmallow gummies cheesecake marzipan.
+        Gummies soufflé candy. Candy canes muffin chocolate brownie pudding.
+  links: []
+- path: "/page4"
+  content:
+    - item:
+        Lorem ipsum dolor amet mustache knausgaard +1, blue bottle waistcoat tbh
+        semiotics artisan synth stumptown gastropub cornhole celiac swag. Brunch raclette
+        vexillologist post-ironic glossier ennui XOXO mlkshk godard pour-over blog tumblr
+        humblebrag. Blue bottle put a bird on it twee prism biodiesel brooklyn. Blue
+        bottle ennui tbh succulents.
+  links:
+    - to: "/page5"
+    - to: "/page1"
+- path: "/page5"
+  content:
+    - item: St. agur blue cheese queso cheesecake.
+        Cheesecake the big cheese monterey jack cheesecake monterey jack paneer halloumi rubber cheese.
+        Cheese triangles cheese strings cheese slices cheesy feet taleggio cottage cheese when the cheese comes out everybody's happy gouda.
+        Feta cauliflower cheese babybel cheese on toast monterey jack.
+    - item:
+        Bacon ipsum dolor amet short ribs brisket venison rump drumstick pig sausage
+        prosciutto chicken spare ribs salami picanha doner. Kevin capicola sausage,
+        buffalo bresaola venison turkey shoulder picanha ham pork tri-tip meatball meatloaf
+        ribeye. Doner spare ribs andouille bacon sausage. Ground round jerky brisket
+        pastrami shank.
+  links:
+    - to: "/page1"
