@@ -13,13 +13,12 @@ import {
   transition,
   breakpoints,
   dimensions,
-  letterSpacings,
   fonts,
 } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
-const navItemTopOffset = `0.6rem`
+const navItemTopOffset = `0.4rem`
 const navItemHorizontalSpacing = space[2]
 
 const iconColor = colors.lilac
@@ -165,7 +164,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: scale[1] }}
+            overrideCSS={{ paddingRight: 0, fontSize: scale[2] }}
           >
             .com
           </SocialNavItem>
@@ -214,16 +213,14 @@ const styles = {
     height: `100%`,
   },
   navItem: {
-    fontSize: scale[1],
+    fontSize: scale[3],
     borderBottom: `0.125rem solid transparent`,
-    color: `inherit`,
+    color: colors.gray.calm,
     display: `block`,
-    letterSpacing: letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
-    textTransform: `uppercase`,
     top: 0,
     transition: `color ${transition.speed.default} ${transition.curve.default}`,
     zIndex: 1,
