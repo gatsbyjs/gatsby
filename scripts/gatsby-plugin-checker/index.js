@@ -64,6 +64,60 @@ const filterNotNotified = (packages, plugins) => {
   return packages.filter(pkg => notified.indexOf(pkg.name) < 0)
 }
 
+const removePackagesWithoutRepository = packages =>
+  packages.filter(p => hasRepository(p))
+
+const hasRepository = packageToCheck => {
+  if (packageToCheck.links.repository) {
+    return true
+  }
+  return false
+}
+
+const removePackagesWithBadRepoLinks = async packages => {
+  let packagesWithValidRepoLinks = []
+  for (let i = 0; i < packages.length; i++) {
+    const hasValidRepo = await hasValidRepository(packages[i])
+    if (hasValidRepo) packagesWithValidRepoLinks.push(packages[i])
+  }
+  return packagesWithValidRepoLinks
+}
+
+const hasValidRepository = async packageToSearch => {
+  const response = got(packageToSearch.links.repository)
+  if (response.statusCode == 404) return false
+  return true
+}
+
+const removeBadNameFormats = packages => packages.filter(p => hasGoodName(p))
+
+const hasGoodName = pkg => {
+  const name = pkg.name
+
+  if (name.indexOf(`/`) !== -1) {
+    const nameWithoutScope = name.split(`/`, 2)[1]
+    if (startsWithAllowedPrefix(nameWithoutScope)) return true
+  } else {
+    if (startsWithAllowedPrefix(name)) return true
+  }
+  return false
+}
+
+const startsWithAllowedPrefix = name => {
+  let isGoodName = false
+  keywords.forEach(keyword => {
+    if (name.indexOf(keyword) === 0) isGoodName = true
+  })
+  return isGoodName
+}
+
+const removePackagesWithoutReadme = packages =>
+  packages.filter(p => hasReadMe(p))
+
+const hasReadMe = pkg => {
+  if (pkg.links.homepage || pkg.readme) return true
+  return false
+}
 const updatePlugins = (updates, plugins) => {
   let res = plugins.map(p => Object.assign({}, p))
   updates.forEach(u => {
@@ -84,11 +138,16 @@ const main = () => {
         .then(transformResults)
         .then(packages => filterNotBlacklisted(packages, plugins))
         .then(packages => filterNotNotified(packages, plugins))
+        .then(packages => removePackagesWithoutRepository(packages))
+        .then(packages => removePackagesWithBadRepoLinks(packages))
+        .then(packages => removeBadNameFormats(packages))
+        .then(packages => removePackagesWithoutReadme(packages))
         .then(packages =>
           packages.map(p => {
             // TODO: notify / comment on github
             console.info(`Notify package "${p.name}"`)
             // return update status
+            // will turn notified to true once notifications are created
             return { name: p.name, blacklist: false, notified: false }
           })
         )
