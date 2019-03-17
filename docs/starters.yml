@@ -2056,3 +2056,11 @@
     - Uses styled-components + styled-system
     - SEO with Sitemap, Schema.org JSONLD, Tags
     - Responsive images with gatsby-image
+- url: https://simple-react-context-api-starter.netlify.com/
+  repo: https://github.com/praveen2896/simple-context-api-gatsby
+  description: the default starter with React context-api
+  tags:
+    - React Context-api
+  features:
+    - using React context-api on the basis of default starter
+	  - it also features a counter example    
