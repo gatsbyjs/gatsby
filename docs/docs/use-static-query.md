@@ -45,7 +45,8 @@ export default () => {
 }
 ```
 
-### Advanced Example
+### Composing custom `useStaticQuery` hooks
+``
 
 The potential of `useStaticQuery` is to make easier reuse queries across your code.
 
