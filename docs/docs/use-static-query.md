@@ -45,7 +45,63 @@ export default () => {
 }
 ```
 
+### Advanced Example
+
+The potential of `useStaticQuery` is to make easier reuse queries across your code.
+
+One of the most used queries is to retrieve your site metadata.
+
+You can create a `useSiteMetadata` for that purpose:
+
+```jsx:title=src/components/hook/site-meta.js
+import { useStaticQuery, graphql } from 'gatsby'
+
+export const useSiteMetadata = () => {
+  const { site } = useStaticQuery(
+    graphql`
+      query SiteMetaData {
+        site {
+          siteMetadata {
+            siteUrl
+            headline
+            description
+            image
+            video
+            twitter
+            name
+            logo
+          }
+        }
+      }
+    `
+  )
+  return site.siteMetadata
+}
+```
+
+To use it, instead of require the hook directly, you need to declare a `index.js` for load and export all the all the `useStaticQuery`'s:
+
+
+```jsx:title=src/components/hook/index.js
+export * from './site-meta'
+```
+
+That's necessary because you can't have more than one `useStaticQuery` per file; However, you can export all and import into an index file.
+
+Then just require the properly hook in your code:
+
+```jsx:jsx:title=src/pages/index.js
+import { useSiteMetadata } from 'components/hook'
+
+export default () => {
+  const { title, siteUrl } = useSiteMetadata()
+  return (
+    <h1>welcome to {title}</h1>
+  )
+}
+```
+
 ## Known Limitations
 
-- `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
-- Because of how queries currently work in Gatsby, we support only a single instance of `useStaticQuery` in a file
+- `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages.
+- Because of how queries currently work in Gatsby, we support only a single instance of `useStaticQuery` in a file.
