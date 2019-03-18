@@ -8,7 +8,7 @@ Gatsby is distributed as a [monorepo][monorepo] using [lerna](). Several other l
 
 This means that our CHANGELOG.md files are distributed along with the package in the `packages` directory.
 
-For example, the package `gatsby` has a CHANGELOG.md in [`packages/gatsby/CHANGELOG.md`](./packages/gatsby/CHANGELOG.md). If you'd like to check out others, check out the `packages` directory in the root of the repo.
+For example, the package `gatsby` has a CHANGELOG.md in [`packages/gatsby/CHANGELOG.md`](./packages/gatsby/CHANGELOG.md). If you'd like to check out others, check out the [`packages`](./packages) directory in the root of the repo.
 
 [monorepo]: https://en.wikipedia.org/wiki/Monorepo
 [lerna]: https://github.com/lerna/lerna
