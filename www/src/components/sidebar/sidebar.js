@@ -280,19 +280,6 @@ const styles = {
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
     borderRight: `1px solid ${colors.ui.light}`,
-    "::-webkit-scrollbar": {
-      height: space[2],
-      width: space[2],
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: colors.lilac,
-    },
-    "::-webkit-scrollbar-track": {
-      background: colors.ui.light,
-    },
   },
   sidebarScrollContainerTablet: {
     backgroundColor: colors.ui.whisper,

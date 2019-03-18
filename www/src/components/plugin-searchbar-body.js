@@ -27,7 +27,7 @@ import {
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
-import { scrollbarStyles, skipLink } from "../utils/styles"
+import { skipLink } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
@@ -265,7 +265,6 @@ class Search extends Component {
                   dimensions.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
-                ...scrollbarStyles,
               },
             }}
           >
