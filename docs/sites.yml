@@ -4888,6 +4888,20 @@
   built_by: Ouracademy
   built_by_url: https://github.com/ouracademy
   featured: false
+- title: Tenon.io
+  main_url: https://tenon.io
+  url: https://tenon.io
+  description: >
+    Tenon.io is an accessibility tooling, services and consulting company.
+  categories:
+    - API
+    - Accessibility
+    - Business
+    - Consulting
+    - Technology
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
 - title: Projectival
   url: https://www.projectival.de/
   main_url: https://www.projectival.de/
