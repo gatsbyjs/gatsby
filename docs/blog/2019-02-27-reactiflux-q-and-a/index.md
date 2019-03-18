@@ -7,7 +7,7 @@ tags:
   - q&a
 ---
 
-Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
+Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the original post (https://www.reactiflux.com/transcripts/gatsby-team/). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
 
 Date of interview: December 13 2018
 

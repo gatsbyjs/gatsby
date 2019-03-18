@@ -7,13 +7,13 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, { colors, space, radii, breakpoints } from "../../utils/presets"
 
-const stripedBorderHeight = `8px`
+const stripedBorderHeight = rhythm(space[2])
 
 const Container = styled(`div`)`
   border: 1px solid ${colors.ui.light};
-  border-radius: ${presets.radii[2]}px;
+  border-radius: ${radii[2]}px;
   display: flex;
   flex-direction: column;
   margin-bottom: ${rhythm(space[8])};
@@ -22,7 +22,7 @@ const Container = styled(`div`)`
   position: relative;
 
   :after {
-    border-radius: 0 0 ${presets.radii[2]}px ${presets.radii[2]}px;
+    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
     background: ${colors.ui.whisper}
       repeating-linear-gradient(
         135deg,
@@ -43,7 +43,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -54,9 +54,9 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -4px;
+  left: -${rhythm(space[1])};
   position: absolute;
-  top: -8px;
+  top: -${rhythm(space[2])};
 `
 
 const Name = styled(`h3`)`
@@ -64,6 +64,7 @@ const Name = styled(`h3`)`
   font-family: ${options.headerFontFamily.join(`,`)};
   font-size: ${presets.scale[1]};
   font-weight: normal;
+  letter-spacing: ${presets.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
@@ -73,13 +74,13 @@ const Title = styled(`h1`)`
   font-size: ${presets.scale[4]};
   line-height: ${presets.lineHeights.dense};
   margin: 0;
-  margin-top: 0.2rem;
+  margin-top: ${rhythm(space[1])};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: 1.25rem;
+  margin-top: ${rhythm(space[5])};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin-top: 0;
   }
 `

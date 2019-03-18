@@ -1,8 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
 import Layout from "../components/layout"
-import presets, { colors, space } from "../utils/presets"
+import { colors, space, breakpoints } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
@@ -107,7 +109,7 @@ class IndexRoute extends React.Component {
               borderBottom: `1px solid ${colors.ui.light}`,
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
-              [presets.Xl]: {
+              [breakpoints.xl]: {
                 padding: rhythm(space[8]),
               },
             }}
@@ -117,21 +119,18 @@ class IndexRoute extends React.Component {
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
-              <div
-                css={{
-                  textAlign: `center`,
-                  padding: `${rhythm(space[5])} 0 ${rhythm(1.5)}`,
-                }}
-              >
+              <div css={{ textAlign: `center` }}>
                 <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>
                 <Button
                   secondary
+                  large
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: `1rem` }}
+                  overrideCSS={{ marginTop: rhythm(space[4]) }}
+                  icon={<ArrowForwardIcon />}
                 >
                   Get Started
                 </Button>

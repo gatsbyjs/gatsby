@@ -15,12 +15,8 @@ import Container from "../components/container"
 
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
 
-// I’m doing some gymnastics here that I can only hope you’ll forgive me for.
-// Find the guides in the sidebar YAML.
-const guides = docsHierarchy.find(group => group.title === `Guides`).items
-
-// Search through guides tree, which may be 2, 3 or more levels deep
-const childItemsBySlug = (guides, slug) => {
+// Search through tree, which may be 2, 3 or more levels deep
+const childItemsBySlug = (docsHierarchy, slug) => {
   let result
 
   const iter = a => {
@@ -31,7 +27,7 @@ const childItemsBySlug = (guides, slug) => {
     return Array.isArray(a.items) && a.items.some(iter)
   }
 
-  guides.some(iter)
+  docsHierarchy.some(iter)
   return result && result.items
 }
 
@@ -40,14 +36,15 @@ const getPageHTML = page => {
     return page.html
   }
 
-  const guidesForPage = childItemsBySlug(guides, page.fields.slug) || []
-  const guideList = guidesForPage
-    .map(guide => `<li><a href="${guide.link}">${guide.title}</a></li>`)
+  const subitemsForPage =
+    childItemsBySlug(docsHierarchy, page.fields.slug) || []
+  const subitemList = subitemsForPage
+    .map(subitem => `<li><a href="${subitem.link}">${subitem.title}</a></li>`)
     .join(``)
-  const toc = guideList
+  const toc = subitemList
     ? `
-    <h2>Guides in this section:</h2>
-    <ul>${guideList}</ul>
+    <h2>In this section:</h2>
+    <ul>${subitemList}</ul>
   `
     : ``
 

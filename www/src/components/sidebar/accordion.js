@@ -166,11 +166,11 @@ const styles = {
   ulStepsUI: {
     "&:after": {
       background: colors.ui.bright,
-      bottom: `1.5rem`,
+      bottom: rhythm(space[6]),
       content: `''`,
       left: 0,
       position: `absolute`,
-      top: `1.5rem`,
+      top: rhythm(space[6]),
       width: 1,
     },
     "&:before": {

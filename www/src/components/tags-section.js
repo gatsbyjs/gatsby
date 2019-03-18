@@ -35,7 +35,7 @@ const TagsSection = ({ tags }) => {
           flexGrow: 1,
           fontStyle: `normal`,
           marginBottom: rhythm(space[5]),
-          marginRight: rhythm(2),
+          marginRight: rhythm(space[9]),
           marginTop: rhythm(3),
         }}
       >
@@ -43,7 +43,7 @@ const TagsSection = ({ tags }) => {
       </em>
       <Button
         css={{ flexShrink: 0 }}
-        tiny
+        small
         key="blog-post-view-all-tags-button"
         to="/blog/tags"
       >

@@ -10,14 +10,21 @@ import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
 import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+  breakpoints,
+} from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${rhythm(options.blockMarginBottom)};
+  margin-right: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     border-bottom: 1px solid ${colors.gray.superLight};
     box-shadow: none;
     margin: 0;
@@ -27,22 +34,21 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 `
 
 export const BlockLink = styled(Link)`
-  background: #fff;
-  border-radius: ${presets.radii[2]}px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  background: ${colors.white};
+  border-radius: ${radii[2]}px;
+  box-shadow: ${shadows.raised};
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: ${rhythm(space[6])};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
+    transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     :hover {
       background: ${colors.ui.whisper};
     }
@@ -65,13 +71,13 @@ const Header = styled(`header`)`
     color: ${colors.lilac};
     display: flex;
     font-size: ${presets.scale[1]};
-    padding-left: 5px;
+    padding-left: ${rhythm(space[3])};
 
     svg {
       fill: ${colors.gray.light};
-      height: 1.2em;
-      margin-left: 2px;
-      width: 1.2em;
+      height: auto;
+      margin-left: ${rhythm(space[1])};
+      width: ${rhythm(space[4])};
     }
   }
 `
@@ -81,13 +87,13 @@ const Digest = styled(`div`)`
   flex-grow: 1;
   font-family: ${options.systemFontFamily.join(`,`)};
   justify-content: space-between;
-  padding: ${rhythm(0.5)} 0 0;
+  padding: ${rhythm(space[3])} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  height: 64px;
+  height: ${rhythm(space[11])};
   padding-right: ${rhythm(space[4])};
-  margin-top: ${rhythm(1 / 12)};
+  margin-top: ${rhythm(space[1])};
 
   img {
     border: 1px solid ${colors.gray.superLight};

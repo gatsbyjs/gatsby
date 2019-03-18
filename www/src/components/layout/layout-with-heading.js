@@ -9,7 +9,8 @@ import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets from "../../utils/presets"
+import presets, { breakpoints, dimensions } from "../../utils/presets"
+import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -18,39 +19,19 @@ import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 const Content = styled(`div`)`
-  padding-top: ${presets.bannerHeight};
-  padding-bottom: 3.5rem;
+  padding-top: ${dimensions.bannerHeight};
+  padding-bottom: ${presets.scale[10]};
 
-  ${presets.Md} {
-    margin-left: ${presets.pageHeadingDesktopWidth};
-    padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
+  ${breakpoints.md} {
+    margin-left: ${dimensions.pageHeadingDesktopWidth};
+    padding-top: calc(${dimensions.bannerHeight} + ${dimensions.headerHeight});
     padding-bottom: 0;
   }
 `
 
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-
-  :focus {
-    padding: 0.9rem;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
-  }
-`
+const StyledSkipNavLink = styled(SkipNavLink)({
+  ...skipLink,
+})
 
 const LayoutWithHeading = props => {
   const {

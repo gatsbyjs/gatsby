@@ -60,6 +60,8 @@ If you want to make changes, improvements, or add new functionality to the websi
 - Run `yarn` to install all of the website's dependencies.
 - Run `npm run develop` to preview the site at `http://localhost:8000/`.
 
+> Note: If you are experiencing issues on a Linux machine, run `sudo apt install libvips-dev`, to install a native dependency. You can also reference [Gatsby guide on Linux](/docs/gatsby-on-linux/) for other Linux-specific requirements.
+
 Now you can make and preview your changes before raising a pull request!
 
 For full repo setup instructions, visit the [code contributions](/contributing/code-contributions/) page.

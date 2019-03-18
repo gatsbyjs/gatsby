@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import presets, { colors, space } from "../../utils/presets"
+import { colors, space, radii, breakpoints } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -15,45 +15,21 @@ const Details = ({
   <div
     css={{
       padding: rhythm(space[6]),
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         padding: rhythm(space[8]),
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
-        gridRowGap: `20px`,
+        gridRowGap: rhythm(space[5]),
       },
     }}
   >
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Tags
-    </div>
+    <div css={styles.headline}>Tags</div>
     <div>{startersYaml.tags.join(`, `)}</div>
 
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Description
-    </div>
+    <div css={styles.headline}>Description</div>
     <div>{startersYaml.description}</div>
 
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Features
-    </div>
+    <div css={styles.headline}>Features</div>
     <div>
       {startersYaml.features ? (
         <ul css={{ marginTop: 0 }}>
@@ -66,24 +42,16 @@ const Details = ({
       )}
     </div>
 
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Dependencies
-    </div>
+    <div css={styles.headline}>Dependencies</div>
 
     <div>
       <div
         css={{
           display: `grid`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
-          [presets.Lg]: {
+          [breakpoints.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridGap: 20,
+            gridGap: rhythm(space[5]),
           },
         }}
       >
@@ -94,12 +62,7 @@ const Details = ({
                 <Link to={`/packages/${dep}`}>{dep}</Link>
               </div>
             ) : (
-              <div
-                key={dep}
-                css={{
-                  ...sharedStyles.truncate,
-                }}
-              >
+              <div key={dep} css={{ ...sharedStyles.truncate }}>
                 <a href={`https://npm.im/${dep}`}>
                   {`${dep} `}
                   <FaExtLink />
@@ -120,22 +83,23 @@ const Details = ({
 export default Details
 
 const styles = {
+  headline: {
+    color: colors.gray.calm,
+    fontFamily: options.headerFontFamily.join(`,`),
+    paddingRight: rhythm(space[5]),
+  },
   showMoreButton: {
+    backgroundColor: colors.gatsby,
     border: 0,
-    borderRadius: presets.radii[1],
+    borderRadius: radii[1],
     cursor: `pointer`,
     fontFamily: options.headerFontFamily.join(`,`),
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(space[4])}`,
+    padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
-      backgroundColor: colors.gatsby,
       borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
+      color: colors.white,
     },
   },
 }

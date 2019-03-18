@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import presets from "../utils/presets"
+import { breakpoints, dimensions } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 export default props => {
@@ -12,16 +12,12 @@ export default props => {
       <Fragment>
         <div
           css={{
-            [presets.Md]: {
-              paddingLeft: rhythm(presets.sidebar.width.default),
+            [breakpoints.md]: {
+              paddingLeft: rhythm(dimensions.sidebarWidth.default),
             },
-            [`${presets.Md} and (max-width:980px)`]: {
-              ".gatsby-highlight": {
-                marginLeft: 0,
-                marginRight: 0,
-              },
+            [breakpoints.lg]: {
+              paddingLeft: rhythm(dimensions.sidebarWidth.large),
             },
-            [presets.Lg]: { paddingLeft: rhythm(presets.sidebar.width.large) },
           }}
         >
           {props.renderContent()}
