@@ -39,12 +39,6 @@ const getExampleObject = ({
     const entries = nodes
       .map(node => {
         const value = node[key]
-
-        // Treat empty strings not as String type,
-        // but ignore them for type inference.
-        // TODO: Possibly revisit in Gatsby v3.
-        if (value === ``) return undefined
-
         const type = getType(value)
         return type && { value, type, parent: node }
       })
@@ -67,7 +61,12 @@ const getExampleObject = ({
       if (
         // Maybe have a warning here too
         isMixOfDatesAndStrings(
-          entriesByType.map(entry => entry.type),
+          entriesByType
+            // Treat empty strings not as String type,
+            // but ignore them for type inference.
+            // TODO: Possibly revisit in Gatsby v3.
+            .filter(entry => entry.value !== ``)
+            .map(entry => entry.type),
           arrayWrappers
         )
       ) {
