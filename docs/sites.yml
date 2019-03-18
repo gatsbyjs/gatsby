@@ -4986,3 +4986,14 @@
   categories:
     - Marketing
     - Chaos Engineering
+- title: Headless.page
+  main_url: https://headless.page/
+  url: https://headless.page/
+  description: >
+    Headless.page is a directory of eCommerce sites featuring headless architecture, PWA features and / or the latest JavaScript technology.
+  categories:
+    - Directory
+    - eCommerce
+  built_by: Pilon
+  built_by_url: https://pilon.io/
+  featured: false
