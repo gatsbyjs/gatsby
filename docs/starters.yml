@@ -2056,3 +2056,12 @@
     - Uses styled-components + styled-system
     - SEO with Sitemap, Schema.org JSONLD, Tags
     - Responsive images with gatsby-image
+- url: https://relaxed-bhaskara-5abd0a.netlify.com/
+  repo: https://github.com/LekovicMilos/gatsby-starter-portfolio
+  description: Gatsby portfolio starter for creating quick portfolio
+  tags:
+    - Portfolio
+    - Showcase
+  features:
+    - Showcase of portfolio items 
+    - About me page
