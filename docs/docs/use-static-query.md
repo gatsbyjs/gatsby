@@ -77,14 +77,6 @@ export const useSiteMetadata = () => {
 }
 ```
 
-To use it, instead of require the hook directly, you need to declare a `index.js` for load and export all the all the `useStaticQuery`'s:
-
-```jsx:title=src/components/hook/index.js
-export * from "./site-meta"
-```
-
-That's necessary because you can't have more than one `useStaticQuery` per file; However, you can export all and import into an index file.
-
 Then just require the properly hook in your code:
 
 ```jsx:jsx:title=src/pages/index.js
