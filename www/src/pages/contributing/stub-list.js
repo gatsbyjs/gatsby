@@ -30,9 +30,7 @@ function findStubs(pages) {
 
 class StubListRoute extends React.Component {
   render() {
-    let allPages = [...itemListContributing, ...itemListDocs]
-
-    let stubs = findStubs(allPages)
+    const stubs = findStubs([...itemListContributing, ...itemListDocs])
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
@@ -54,7 +52,7 @@ class StubListRoute extends React.Component {
               {` `}
               to learn more.
             </p>
-            <ul>
+            <ul data-testid="list-of-stubs">
               {stubs.map(stub => (
                 <li key={stub.title}>
                   <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>

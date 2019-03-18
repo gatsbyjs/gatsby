@@ -1,28 +1,26 @@
 import React from "react"
 import { Helmet } from "react-helmet"
-import { graphql, StaticQuery } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
-const SiteMetadata = ({ pathname }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteMetadata {
-        site {
-          siteMetadata {
-            siteUrl
-            title
-            twitter
-          }
-        }
+const SiteMetadata = ({ pathname }) => {
+  const { data: { site: {
+    siteMetadata: { siteUrl, title, twitter },
+  } }} = useStaticQuery(graphql`
+  query SiteMetadata {
+    site {
+      siteMetadata {
+        siteUrl
+        title
+        twitter
       }
-    `}
-    render={({
-      site: {
-        siteMetadata: { siteUrl, title, twitter },
-      },
-    }) => (
-      <Helmet defaultTitle={title} titleTemplate={`%s | ${title}`}>
+    }
+  }
+  `)
+
+  return (
+    <Helmet defaultTitle={title} titleTemplate={`%s | ${title}`}>
         <html lang="en" />
         <link rel="canonical" href={`${siteUrl}${pathname}`} />
         <meta name="docsearch:version" content="2.0" />
@@ -42,8 +40,7 @@ const SiteMetadata = ({ pathname }) => (
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content={twitter} />
       </Helmet>
-    )}
-  />
-)
+  )
+}
 
 export default SiteMetadata
