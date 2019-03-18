@@ -2066,3 +2066,12 @@
     - 60 Handcrafted Components
     - 4 Customized Plugins
     - 3 Example Pages
+- url: https://relaxed-bhaskara-5abd0a.netlify.com/
+  repo: https://github.com/LekovicMilos/gatsby-starter-portfolio
+  description: Gatsby portfolio starter for creating quick portfolio
+  tags:
+    - Portfolio
+    - Showcase
+  features:
+    - Showcase of portfolio items
+    - About me page
