@@ -21,10 +21,9 @@ export default {
   skyLight: `#dcfffd`,
   skyDark: `#0a75c2`,
   ui: {
-    border: `#ede7f3`,
-    bright: `#e0d6eb`,
-    light: `#f5f3f7`,
-    whisper: `#fbfafc`,
+    bright: `#F1DEFA`,
+    light: `#F6EDFA`,
+    whisper: `#FCFAFF`,
   },
   gray: {
     dark: gray(8, 270),
@@ -34,6 +33,8 @@ export default {
     bright: gray(64, 270),
     light: gray(80, 270),
     superLight: gray(96, 270),
+    whisper: gray(98, 270),
+    border: gray(93, 270),
   },
   white: `#ffffff`,
   code: {

@@ -3,7 +3,7 @@ import React, { Fragment } from "react"
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
 import { colors, space } from "../../utils/presets"
-import indention from "../../utils/sidebar/indention"
+import presets from "../../utils/sidebar/presets"
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -93,8 +93,12 @@ class Accordion extends React.Component {
       <li
         css={{
           background:
-            isExpanded && isActive && level > 0 ? colors.ui.light : false,
+            isExpanded && isActive && level > 0
+              ? presets.activeSectionBackground
+              : false,
           position: `relative`,
+          // marginTop:
+          //   level === 0 && isExpanded ? `${space[4]} !important` : false,
         }}
       >
         <ItemWithSubitems
@@ -117,9 +121,12 @@ class Accordion extends React.Component {
             ...styles.ul,
             display: isExpanded ? `block` : `none`,
             paddingBottom: level === 0 && isExpanded ? space[6] : false,
-            "& li": {
-              paddingLeft: indention(level),
-            },
+            borderBottom:
+              level === 0 && isExpanded
+                ? `1px solid ${colors.gray.border}`
+                : false,
+            marginBottom:
+              level === 0 && isExpanded ? `${space[6]} !important` : false,
           }}
         >
           {item.items.map(subitem => (
@@ -156,28 +163,16 @@ const styles = {
     listStyle: `none`,
     margin: 0,
     position: `relative`,
-    "& li": {
-      marginBottom: 0,
-    },
   },
   ulStepsUI: {
     "&:after": {
       background: colors.ui.bright,
-      bottom: space[6],
-      content: `''`,
-      left: 0,
-      position: `absolute`,
-      top: space[6],
-      width: 1,
-    },
-    "&:before": {
-      borderLeft: `1px dashed ${colors.ui.bright}`,
       bottom: 0,
       content: `''`,
-      height: `100%`,
-      left: 0,
+      left: 27,
       position: `absolute`,
-      width: 0,
+      top: 0,
+      width: 1,
     },
   },
 }

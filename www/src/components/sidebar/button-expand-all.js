@@ -20,7 +20,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       background: `transparent`,
       border: `none`,
       borderRadius: radii[1],
-      color: colors.gatsby,
+      color: colors.gray.lightCopy,
       display: `flex`,
       cursor: `pointer`,
       alignItems: `center`,

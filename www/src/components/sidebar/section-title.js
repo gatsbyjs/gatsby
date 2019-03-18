@@ -9,6 +9,7 @@ import {
   fonts,
 } from "../../utils/presets"
 import indention from "../../utils/sidebar/indention"
+import presets from "../../utils/sidebar/presets"
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -17,20 +18,24 @@ const Chevron = ({ isExpanded }) => (
       display: `flex`,
       flexShrink: 0,
       marginLeft: `auto`,
-      minHeight: 40,
-      position: `relative`,
-      width: 40,
+      height: `100%`,
+      width: `100%`,
+      minHeight: presets.itemMinHeight,
+      minWidth: presets.itemMinHeight,
       "&:before": {
         ...styles.ulHorizontalDivider,
         bottom: 0,
         left: `0 !important`,
         top: `auto`,
       },
+      "&:hover": {
+        background: presets.activeSectionBackground,
+      },
     }}
   >
     <ChevronSvg
       cssProps={{
-        color: isExpanded ? colors.lilac : colors.ui.bright,
+        color: isExpanded ? colors.gray.light : colors.gray.light,
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotateX(180deg)` : `rotateX(0deg)`,
@@ -71,7 +76,18 @@ const TitleButton = ({
   >
     <SectionTitle isExpanded={isExpanded} isActive={isActive} level={level}>
       {title}
-      <Chevron isExpanded={isExpanded} />
+      <span
+        css={{
+          position: `absolute`,
+          top: 0,
+          bottom: 0,
+          right: 0,
+          minHeight: presets.itemMinHeight,
+          width: presets.itemMinHeight,
+        }}
+      >
+        <Chevron isExpanded={isExpanded} />
+      </span>
     </SectionTitle>
   </button>
 )
@@ -92,7 +108,6 @@ const SplitButton = ({
     css={{
       alignItems: `flex-end`,
       display: `flex`,
-      paddingLeft: level === 0 ? 24 : 0,
       position: `relative`,
       width: `100%`,
     }}
@@ -100,7 +115,8 @@ const SplitButton = ({
     <span
       css={{
         flexGrow: 1,
-        borderRight: `1px solid ${colors.ui.border}`,
+        // borderRight: `1px solid ${presets.itemBorderColor}`,
+        // paddingRight: presets.itemMinHeight,
       }}
     >
       {createLink({
@@ -110,6 +126,8 @@ const SplitButton = ({
         item,
         location,
         onLinkClick,
+        level,
+        indention: indention(level),
         customCSS:
           level === 0
             ? {
@@ -122,16 +140,19 @@ const SplitButton = ({
             : false,
       })}
     </span>
-    {/* @todo this should cover 100% of the item's height */}
     <button
       aria-controls={uid}
       aria-expanded={isExpanded}
       css={{
         ...styles.resetButton,
         marginLeft: `auto`,
-        "&:hover": {
-          background: colors.white,
-        },
+        position: `absolute`,
+        top: 0,
+        bottom: 0,
+        right: 0,
+        minHeight: presets.itemMinHeight,
+        width: presets.itemMinHeight,
+        zIndex: 1,
       }}
       onClick={() => onSectionTitleClick(item)}
     >
@@ -194,7 +215,7 @@ const styles = {
     width: `100%`,
   },
   ulHorizontalDivider: {
-    background: colors.ui.border,
+    background: presets.itemBorderColor,
     top: 0,
     content: `''`,
     height: 1,

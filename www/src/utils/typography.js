@@ -215,7 +215,7 @@ const _options = {
         borderBottom: `1px solid ${colors.lilac}`,
       },
       ".main-body a:hover": {
-        borderBottomColor: colors.ui.border,
+        borderBottomColor: colors.ui.bright,
       },
       ".post-body figure img": {
         marginBottom: 0,

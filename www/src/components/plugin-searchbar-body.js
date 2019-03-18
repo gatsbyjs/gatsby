@@ -334,22 +334,22 @@ const Result = ({ hit, pathname, query }) => {
       to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
-          background: selected ? colors.white : false,
+          background: selected ? colors.ui.whisper : false,
           borderBottom: 0,
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
-          padding: `${space[4]} ${space[6]}`,
+          padding: `${space[5]} ${space[6]}`,
           position: `relative`,
           transition: `all ${transition.speed.default} ${
             transition.curve.default
           }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? colors.white : colors.ui.border,
+            background: selected ? colors.ui.whisper : colors.white,
           },
           "&:before": {
-            background: colors.ui.border,
+            background: colors.gray.border,
             bottom: 0,
             content: `''`,
             height: 1,

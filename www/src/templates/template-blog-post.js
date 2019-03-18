@@ -242,12 +242,10 @@ class BlogPostTemplate extends React.Component {
             borderTop: `1px solid ${colors.ui.light}`,
             marginTop: space[9],
             [breakpoints.md]: {
-              marginTop: space[9],
               paddingBottom: space[5],
               paddingTop: space[5],
             },
             [breakpoints.lg]: {
-              marginTop: rhythm(3),
               paddingBottom: space[9],
               paddingTop: space[9],
             },

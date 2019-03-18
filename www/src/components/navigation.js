@@ -67,17 +67,6 @@ const Navigation = ({ pathname }) => {
         right: 0,
         top: dimensions.bannerHeight,
         zIndex: 2,
-        "&:after": {
-          content: `''`,
-          position: `absolute`,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          width: `100%`,
-          height: 1,
-          zIndex: -1,
-          background: isHomepage ? `transparent` : colors.ui.light,
-        },
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
@@ -93,13 +82,27 @@ const Navigation = ({ pathname }) => {
         // },
         [breakpoints.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
-          backgroundColor: isBlog ? colors.ui.whisper : false,
+          backgroundColor: isBlog ? colors.gray.whisper : false,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
       }}
     >
-      <div css={{ ...styles.containerInner }}>
+      <div
+        css={{
+          ...styles.containerInner,
+          "&:after": {
+            content: `''`,
+            position: `absolute`,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 1,
+            zIndex: -1,
+            background: isHomepage ? `transparent` : colors.gray.border,
+          },
+        }}
+      >
         <Link
           to="/"
           css={styles.logoLink}
@@ -186,6 +189,9 @@ const styles = {
     [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
+      marginLeft: space[6],
+      // marginLeft: isHomepage ? false : `auto`,
+      // marginRight: `auto`,
     },
   },
   ulContainer: {
@@ -211,10 +217,11 @@ const styles = {
     alignItems: `center`,
     width: `100%`,
     height: `100%`,
+    position: `relative`,
   },
   navItem: {
     fontSize: scale[3],
-    borderBottom: `0.125rem solid transparent`,
+    borderBottom: `2px solid transparent`,
     color: colors.gray.calm,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,

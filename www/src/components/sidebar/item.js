@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
 import createLink from "../../utils/sidebar/create-link"
-import { space } from "../../utils/presets"
+import indention from "../../utils/sidebar/indention"
 
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {
@@ -53,18 +53,15 @@ class Item extends React.PureComponent {
             onSectionTitleClick={onSectionTitleClick}
           />
         ) : (
-          <li
-            css={{
-              ...this.props.styles,
-              paddingLeft: level === 0 ? space[6] : false,
-            }}
-          >
+          <li css={this.props.styles}>
             {createLink({
               isActive: item.link === activeItemLink.link,
               item,
               location,
               onLinkClick,
               stepsUI: ui === `steps`,
+              level: level,
+              indention: indention(level),
             })}
           </li>
         )}

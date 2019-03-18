@@ -40,8 +40,8 @@ const styles = {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
-      background: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
+      background: colors.white,
+      borderRight: `1px solid ${colors.gray.border}`,
     },
     [breakpoints.lg]: {
       width: widthLarge,

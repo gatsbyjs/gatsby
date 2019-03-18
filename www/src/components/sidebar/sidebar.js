@@ -12,6 +12,7 @@ import {
   breakpoints,
   dimensions,
 } from "../../utils/presets"
+import presets from "../../utils/sidebar/presets"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -262,33 +263,32 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.ui.light}`,
+    borderRight: `1px solid ${colors.gray.border}`,
     display: `flex`,
     alignItems: `center`,
     height: dimensions.sidebarUtilityHeight,
-    background: colors.ui.whisper,
-    paddingLeft: 20,
+    background: presets.backgroundDefault,
+    paddingLeft: space[4],
     paddingRight: 8,
-    borderBottom: `1px solid ${colors.ui.border}`,
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
-    background: colors.white,
+    background: presets.backgroundDefault,
     border: 0,
     display: `block`,
     overflowY: `auto`,
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.ui.light}`,
+    borderRight: `1px solid ${colors.gray.border}`,
   },
   sidebarScrollContainerTablet: {
-    backgroundColor: colors.ui.whisper,
+    backgroundColor: presets.backgroundTablet,
     top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
   },
   list: {
     margin: 0,
-    paddingTop: space[6],
-    paddingBottom: space[6],
+    paddingTop: space[4],
+    paddingBottom: space[4],
     fontSize: scale[1],
     "& li": {
       margin: 0,

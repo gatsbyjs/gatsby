@@ -30,7 +30,7 @@ class BlogPostsIndex extends React.Component {
           id={`reach-skip-nav`}
           css={{
             [breakpoints.md]: {
-              background: colors.ui.whisper,
+              background: colors.gray.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
           }}
