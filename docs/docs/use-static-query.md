@@ -54,7 +54,7 @@ One of the most used queries is to retrieve your site metadata.
 You can create a `useSiteMetadata` for that purpose:
 
 ```jsx:title=src/components/hook/site-meta.js
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql } from "gatsby"
 
 export const useSiteMetadata = () => {
   const { site } = useStaticQuery(
@@ -81,9 +81,8 @@ export const useSiteMetadata = () => {
 
 To use it, instead of require the hook directly, you need to declare a `index.js` for load and export all the all the `useStaticQuery`'s:
 
-
 ```jsx:title=src/components/hook/index.js
-export * from './site-meta'
+export * from "./site-meta"
 ```
 
 That's necessary because you can't have more than one `useStaticQuery` per file; However, you can export all and import into an index file.
@@ -91,13 +90,11 @@ That's necessary because you can't have more than one `useStaticQuery` per file;
 Then just require the properly hook in your code:
 
 ```jsx:jsx:title=src/pages/index.js
-import { useSiteMetadata } from 'components/hook'
+import { useSiteMetadata } from "components/hook"
 
 export default () => {
   const { title, siteUrl } = useSiteMetadata()
-  return (
-    <h1>welcome to {title}</h1>
-  )
+  return <h1>welcome to {title}</h1>
 }
 ```
 
