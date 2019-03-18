@@ -1173,14 +1173,16 @@ actions.addThirdPartySchema = (
   }
 }
 
+import type GatsbyGraphQLType from "../schema/types/type-builders"
 /**
  * Add type definitions to the GraphQL schema.
  *
- * @param {TypeDefinitions} types Type definitions, where `type TypeDefinitions = string | GraphQLOutputType | string[] | GraphQLOutputType[] | GatsbyGraphQLType`
+ * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
  *
  * Type definitions can be provided either as
  * [`graphql-js` types](https://graphql.org/graphql-js/), in
- * [GraphQL schema definition language (SDL)](https://graphql.org/learn/) or using Gatsby Type Builders.
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn/)
+ * or using Gatsby Type Builders available on the `schema` API argument.
  *
  * Things to note:
  * * needs to be called *before* schema generation. It is recommended to use
@@ -1193,7 +1195,7 @@ actions.addThirdPartySchema = (
  *   with inferred field types, and default field resolvers for `Date` (which
  *   adds formatting options) and `File` (which resolves the field value as
  *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer` and `dontInfer` directives, and their
+ *   customised with `@infer` and `@dontInfer` directives, and their
  *   `noDefaultResolvers` argument.
  *
  * @example
@@ -1230,7 +1232,7 @@ actions.addThirdPartySchema = (
  *   createTypes(typeDefs)
  * }
  *
- * // using type builder API
+ * // using Gatsby Type Builder API
  * exports.sourceNodes = ({ actions, schema }) => {
  *   const { createTypes } = actions
  *   const typeDefs = [
@@ -1260,7 +1262,11 @@ actions.addThirdPartySchema = (
  * }
  */
 actions.createTypes = (
-  types: string | GraphQLOutputType | Array<string | GraphQLOutputType>,
+  types:
+    | string
+    | GraphQLOutputType
+    | GatsbyGraphQLType
+    | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
   plugin: Plugin,
   traceId?: string
 ) => {
