@@ -17,8 +17,6 @@ npm install gatsby --save
 
 Next, continue reading below to see if any of the great, new features we've enabled scratch a particular itch. We feel very confident they will 💜
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Wow, this is huge, and could potentially solve most of the issues users are currently experiencing integrating any CMS with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>! Great work guys, can&#39;t wait to do some tests with our source plugin! 🏆 <a href="https://t.co/REcehYiU8V">https://t.co/REcehYiU8V</a></p>&mdash; DatoCMS (@datocms) <a href="https://twitter.com/datocms/status/1103896814351048704?ref_src=twsrc%5Etfw">March 8, 2019</a></blockquote>
-
 # Recap of schema customization
 
 Before this change, the Gatsby GraphQL schema was generated automatically from the data that the user added to Gatsby. While very convenient and easy to start, changes to the data could cause changes to the schema, which could cause breakage in unrelated locations. Those bugs were confusing and hard to debug. To alleviate this problem, we've added a schema customization API that lets you customize, fix, and enhance types in your Gatsby GraphQL schema.
@@ -122,7 +120,9 @@ Another change relates to inference. Previously, ordering of the Nodes in your d
 
 As next steps, we will work on adding more convenient tooling to "freeze" your schema type definitions, so that you can quickly start using this feature. We will also be working on improving API docs for this.
 
-We strongly believe that these new APIs are the foundation of an evolutionary leap of the Gatsby GraphQL API. These changes make the GraphQL API more stable, more robust, and more easily customizable. They will enable further customization and use cases, like [theming](/blog/2018-11-11-introducing-gatsby-themes/) and more still that we haven't even envisioned yet. We truly can't wait to see the great things you build and how you use these new APIs and improvements powered by Gatsby and its improved GraphQL layer.
+We strongly believe that these new APIs are the foundation of an evolutionary leap of the Gatsby GraphQL API. These changes make the GraphQL API more stable, more robust, and more easily customizable. They will enable further customization and use cases, like [theming](/blog/2018-11-11-introducing-gatsby-themes/) and more still that we haven't even envisioned yet. We truly can't wait to see the great things you build and how you use these new APIs and improvements powered by Gatsby and its improved GraphQL layer. We got some very enthusiastic feedback about this feature and we are happy to have it released.
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Wow, this is huge, and could potentially solve most of the issues users are currently experiencing integrating any CMS with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>! Great work guys, can&#39;t wait to do some tests with our source plugin! 🏆 <a href="https://t.co/REcehYiU8V">https://t.co/REcehYiU8V</a></p>&mdash; DatoCMS (@datocms) <a href="https://twitter.com/datocms/status/1103896814351048704?ref_src=twsrc%5Etfw">March 8, 2019</a></blockquote>
 
 ## Additional Resources
 
