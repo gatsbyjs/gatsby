@@ -300,7 +300,12 @@ class SearchForm extends Component {
     const a = document.createElement(`a`)
     a.href = e._args[0].url
     this.searchInput.blur()
-    navigate(`${a.pathname}${a.hash}`)
+    // Compare hash and slug and remove hash if both are same
+    const paths = a.pathname.split(`/`).filter(el => el !== ``)
+    const slug = paths[paths.length - 1]
+    const path =
+      `#${slug}` === a.hash ? `${a.pathname}` : `${a.pathname}${a.hash}`
+    navigate(path)
   }
   init() {
     if (this.algoliaInitialized) {
