@@ -92,7 +92,7 @@ That's necessary because you can't have more than one `useStaticQuery` per file;
 Then just require the properly hook in your code:
 
 ```jsx:jsx:title=src/pages/index.js
-import { useSiteMetadata } from "components/hook"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 
 export default () => {
   const { title, siteUrl } = useSiteMetadata()
