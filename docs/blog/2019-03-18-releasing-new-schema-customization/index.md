@@ -107,7 +107,7 @@ exports.sourceNodes = ({ actions, schema }) => {
 
 We have tried to avoid any breaking changes in this refactor of the underlying GraphQL layer, testing it in notable Gatsby sites and ensuring all tests were passing. However, there are areas where we needed to introduce more stable naming, and in these instances it _could_ be possible that a breaking change was introduced if you were relying on this undocumented API.
 
-Specifically, before this refactor Gatsby type names weren't stable. They could have names like `frontmatter_2` because of some quirks in our schema generation. Now the types names are **stable** and **defined**. For a `Node`, it's always a Pascal Camel Cased name of the `Node` type (for example, `AllMarkdownRemark`). For an inline object, it's the name of the node plus the name of the field, again Pascal Camel Cased. So `frontmatter_2` would be available as `MarkdownRemarkFrontmatter` now. If you've had fragments referring to some types by their old names, you may need to change it to new names, e.g.:
+Specifically, before this refactor Gatsby type names weren't stable. They could have names like `frontmatter_2` because of some quirks in our schema generation. Now the types names are **stable** and **defined**. For a `Node`, it's always a Pascal Camel Cased name of the `Node` type (for example, `MarkdownRemark`). For an inline object, it's the name of the node plus the name of the field, again Pascal Camel Cased. So `frontmatter_2` would be available as `MarkdownRemarkFrontmatter` now. If you've had fragments referring to some types by their old names, you may need to change it to new names, e.g.:
 
 ```diff
 - fragment someFragment on frontmatter_2 {
