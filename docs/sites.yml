@@ -218,13 +218,6 @@
   categories:
     - Gallery
     - Cinema
-- title: Slite
-  main_url: "https://slite.com/"
-  url: "https://slite.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: GraphCMS
   main_url: "https://graphcms.com/"
   url: "https://graphcms.com/"
@@ -276,13 +269,6 @@
   categories:
     - Marketing
     - Technology
-- title: Etcetera Design
-  main_url: "https://etcetera.design/"
-  url: "https://etcetera.design/"
-  source_url: "https://github.com/etceteradesign/website"
-  featured: false
-  categories:
-    - Portfolio
 - title: Hack Club
   main_url: "https://hackclub.com/"
   url: "https://hackclub.com/"
@@ -429,13 +415,6 @@
   categories:
     - Education
     - Library
-- title: GRANDstack
-  main_url: "http://grandstack.io/"
-  url: "http://grandstack.io/"
-  featured: false
-  categories:
-    - Open Source
-    - Web Development
 - title: Théâtres Parisiens
   main_url: "http://theatres-parisiens.fr/"
   url: "http://theatres-parisiens.fr/"
@@ -503,13 +482,6 @@
   categories:
     - Blog
     - Web Development
-- title: FloydHub's Blog
-  main_url: "https://blog.floydhub.com/"
-  url: "https://blog.floydhub.com/"
-  featured: false
-  categories:
-    - Technology
-    - Blog
 - title: iContract Blog
   main_url: "https://blog.icontract.co.uk/"
   url: "http://blog.icontract.co.uk/"
@@ -655,14 +627,6 @@
     - Web Development
   built_by: Fabian Schultz
   built_by_url: "https://fabianschultz.com/"
-- title: Formidable
-  main_url: "https://formidable.com/"
-  url: "https://formidable.com/"
-  featured: false
-  categories:
-    - Web Development
-    - Agency
-    - Open Source
 - title: CalState House Manager
   description: >
     Home service membership that offers proactive and on-demand maintenance for
@@ -884,13 +848,6 @@
     - Blog
     - Portfolio
     - Web Development
-- title: Segment's Blog
-  main_url: "https://segment.com/blog/"
-  url: "https://segment.com/blog/"
-  featured: false
-  categories:
-    - Web Development
-    - Blog
 - title: Several Levels
   main_url: "https://severallevels.io/"
   url: "https://severallevels.io/"
@@ -1124,22 +1081,6 @@
   categories:
     - Marketing
     - Education
-- title: pi-top
-  main_url: "http://www.pi-top.com/"
-  url: "http://www.pi-top.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Web Development
-    - Technology
-    - eCommerce
-- title: Troops
-  main_url: "http://www.troops.ai/"
-  url: "http://www.troops.ai/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: ClearBrain
   main_url: "https://clearbrain.com/"
   url: "https://clearbrain.com/"
@@ -1195,14 +1136,6 @@
   categories:
     - Marketing
     - Technology
-- title: GraphQL College
-  main_url: "https://www.graphql.college/"
-  url: "https://www.graphql.college/"
-  source_url: "https://github.com/GraphQLCollege/graphql-college"
-  featured: false
-  categories:
-    - Web Development
-    - Education
 - title: F1 Vision
   main_url: "https://www.f1vision.com/"
   url: "https://www.f1vision.com/"
@@ -1721,14 +1654,6 @@
   categories:
     - Data
   featured: false
-- title: Trintellix
-  description: |
-    It may help make a difference for your depression (MDD).
-  main_url: "https://us.trintellix.com/"
-  url: "https://us.trintellix.com/"
-  categories:
-    - Health & Wellness
-  featured: false
 - title: The Telegraph Premium
   description: |
     Exclusive stories from award-winning journalists
@@ -1886,14 +1811,6 @@
     - Portfolio
     - Fashion
   featured: false
-- title: Lifestone Church
-  main_url: "https://www.lifestonechurch.net/"
-  url: "https://www.lifestonechurch.net/"
-  source_url: "https://github.com/lifestonechurch/lifestonechurch.net"
-  featured: false
-  categories:
-    - Marketing
-    - Nonprofit
 - title: Artem Sapegin
   description: >
     Little homepage of Artem Sapegin, a frontend developer, passionate
@@ -2126,17 +2043,6 @@
   categories:
     - Technology
     - Design
-  featured: false
-- title: Traffic Design Biennale 2018
-  main_url: "https://trafficdesign.pl"
-  url: "http://trafficdesign.pl/pl/ficzery/2018-biennale/"
-  description: |
-    Mini site for 2018 edition of Traffic Design’s Biennale
-  categories:
-    - Nonprofit
-    - Gallery
-  built_by: Piotr Fedorczyk
-  built_by_url: "https://piotrf.pl"
   featured: false
 - title: Insights
   main_url: "https://justaskusers.com/"
@@ -2727,18 +2633,6 @@
   built_by: IBM
   built_by_url: https://www.ibm.com/
   featured: false
-- title: Retirement Community
-  main_url: https://retirementcommunity.fastcompany.com/
-  url: https://retirementcommunity.fastcompany.com/
-  description: >
-    Bye Bye Funny Business, Pete Holmes and Jamie Lee enter retirement
-  categories:
-    - Entertainment
-    - Retirement
-    - Education
-  built_by: FastCompany
-  built_by_url: https://www.fastcompany.com/
-  featured: false
 - title: McDonald's Design System
   main_url: https://design.mcdonalds.com/
   url: https://design.mcdonalds.com/
@@ -3016,14 +2910,6 @@
     - Web Development
   built_by: Wide Eye
   built_by_url: https://wideeye.co/about-us/
-  featured: false
-- title: Guster
-  description: >
-    American alternative rock band from Boston, Massachusetts.
-  url: http://guster.com/
-  main_url: http://guster.com/
-  categories:
-    - Music
   featured: false
 - title: CodeSandbox
   description: >
@@ -3787,14 +3673,6 @@
   description: Graphene is a collaboratively funded project.Graphene-Python is a library for building GraphQL APIs in Python easily.
   categories:
     - Library
-    - API
-    - Documentation
-  featured: false
-- title: klarna
-  url: https://developers.klarna.com/en/gb/kco-v3
-  main_url: https://developers.klarna.com/en/gb/kco-v3
-  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
-  categories:
     - API
     - Documentation
   featured: false
