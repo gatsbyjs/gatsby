@@ -39,6 +39,12 @@ const getExampleObject = ({
     const entries = nodes
       .map(node => {
         const value = node[key]
+
+        // Treat empty strings not as String type,
+        // but ignore them for type inference.
+        // TODO: Possibly revisit in Gatsby v3.
+        if (value === ``) return undefined
+
         const type = getType(value)
         return type && { value, type, parent: node }
       })
