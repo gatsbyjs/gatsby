@@ -33,4 +33,5 @@ fields:
   hidden: false
   default: ''
 pages:
+- docs/blog/2019-03-18-jamstack-marketers-blog-post/what-the-jamstack-means-for-marketing.md
 - docs/blog/2019-03-15-design-code-blog-post/index.md
