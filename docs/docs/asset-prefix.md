@@ -89,11 +89,7 @@ When using a custom asset prefix with `gatsby-plugin-offline`, your assets can s
    Access-Control-Allow-Credentials: true
    ```
 
-   Note that the origin needs to be specific, rather than using `*` to allow all origins. This is because Gatsby makes requests to fetch resources with `withCredentials` set to `true`, which disallows using `*` to match all origins. For local testing, use the following:
-
-   ```
-   Access-Control-Allow-Origin: http://localhost:9000
-   ```
+   Note that the origin needs to be specific, rather than using `*` to allow all origins. This is because Gatsby makes requests to fetch resources with `withCredentials` set to `true`, which disallows using `*` to match all origins. This is also why the second header is required. For local testing, use `http://localhost:9000` as the origin.
 
 2. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the Webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
 
