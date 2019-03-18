@@ -1,21 +1,11 @@
 const inquirer = require(`inquirer`)
 const report = require(`gatsby-cli/lib/reporter`)
 const execa = require(`execa`)
-const apiRunner = require(`../utils/api-runner-node`)
+const shouldUseYarn = require(`../gatsby-cli/src`).shouldUseYarn
 
 const spawn = cmd => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args)
-}
-
-// Returns true if yarn exists, false otherwise
-const shouldUseYarn = () => {
-  try {
-    execa.sync(`yarnpkg`, `--version`, { stdio: `ignore` })
-    return true
-  } catch (e) {
-    return false
-  }
 }
 
 const makeList = array => {
@@ -77,7 +67,7 @@ const getVerbs = verb => {
   }
 }
 
-const addRemove = async (action, plugins) => {
+const addRemovePlugin = async (action, plugins) => {
   let questions = new Array()
 
   plugins.forEach((plugin, index, plugins) => {
@@ -140,39 +130,22 @@ const addRemove = async (action, plugins) => {
   }
 }
 
-const configurePlugins = async plugins => {
-  report.info(`running api`)
-  plugins.forEach(plugin => {
-    apiRunner(
-      `onConfigurePlugin`,
-      {
-        inquirer: inquirer,
-        existingConfig: {
-          config: `my config here`,
-        },
-      },
-      plugin
-    )
-  })
-}
-
 module.exports = async program => {
   let action = getVerbs(program.action)
   let plugins = program.plugins
 
   switch (action.present) {
     case `add`:
-      // await addRemove(action, plugins)
-      await configurePlugins(plugins)
+      await addRemovePlugin(action, plugins)
       break
     case `remove`:
-      // await addRemove(action, plugins)
+      await addRemovePlugin(action, plugins)
       break
     case `config`:
-      report.info(`Code Config Command Here: ${plugins}`)
+      report.info(`The future is not yet...but with your PR it could be soon!`)
       break
     case `search`:
-      report.info(`Code Search Command Here: ${plugins}`)
+      report.info(`The future is not yet...but with your PR it could be soon!`)
       break
   }
 }
