@@ -21,9 +21,9 @@ const FeedbackComponent = styled(`section`)`
 `
 
 const FeedbackToggle = styled(`div`)`
-  width: ${space[0]};
-  height: ${space[0]};
-  bottom: ${space[1]};
+  width: ${space[10]};
+  height: ${space[10]};
+  bottom: ${space[11]};
   background-color: ${colors.gatsby};
   color: ${colors.white};
   border-radius: 100%;

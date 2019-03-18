@@ -92,7 +92,7 @@ const Digest = styled(`div`)`
 `
 
 const Thumbnail = styled(`div`)`
-  height: ${space[1]};
+  height: ${space[11]};
   padding-right: ${space[4]};
   margin-top: ${space[1]};
 

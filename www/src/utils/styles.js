@@ -14,7 +14,7 @@ import {
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `${space[7]} ${space[1]}` },
+  "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
 export const scrollbarStyles = {
