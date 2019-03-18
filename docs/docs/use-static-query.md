@@ -77,7 +77,7 @@ export const useSiteMetadata = () => {
 }
 ```
 
-Then just require the properly hook in your code:
+Then just import our newly created hook, like so:
 
 ```jsx:jsx:title=src/pages/index.js
 import { useSiteMetadata } from "../hooks/use-site-metadata"
