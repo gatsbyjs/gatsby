@@ -4902,3 +4902,19 @@
   built_by: Tenon.io
   built_by_url: https://tenon.io
   featured: false
+- title: Projectival
+  url: https://www.projectival.de/
+  main_url: https://www.projectival.de/
+  description: >
+    Freelancer Online Marketing & Web Development in Cologne, Germany
+  categories:
+    - Freelance
+    - Marketing
+    - Web Development
+    - Blog
+    - Consulting
+    - SEO
+    - Business
+  built_by: Sascha Klapetz
+  built_by_url: https://www.projectival.de/
+  featured: false
