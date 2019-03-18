@@ -48,7 +48,6 @@ export default () => {
 ### Composing custom `useStaticQuery` hooks
 ``
 
-The potential of `useStaticQuery` is to make easier reuse queries across your code.
 
 One of the most used queries is to retrieve your site metadata.
 
