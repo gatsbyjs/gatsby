@@ -79,7 +79,7 @@ const getExampleObject = ({
         if (allNonEmptyStringsAreDates) {
           value = `1978-09-26`
         } else {
-          value = `string`
+          value = `String`
         }
       } else {
         typeConflictReporter.addConflict(selector, entriesByType)
