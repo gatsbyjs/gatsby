@@ -6,14 +6,14 @@ jest.mock(`../../../utils/sidebar/item-list`, () => {
         items: [
           {
             title: `Why Contribute to Gatsby?`,
-            link: `/contributing/why-contribute-to-gatsby/`
+            link: `/contributing/why-contribute-to-gatsby/`,
           },
           {
             title: `Gatsby's Governance Model*`,
-            link: `/contributing/gatsby-governance-model/`
-          }
-        ]
-      }
+            link: `/contributing/gatsby-governance-model/`,
+          },
+        ],
+      },
     ],
     itemListDocs: [
       {
@@ -21,10 +21,10 @@ jest.mock(`../../../utils/sidebar/item-list`, () => {
         items: [
           {
             title: `Introduction`,
-            link: `/docs/`
-          }
-        ]
-      }
+            link: `/docs/`,
+          },
+        ],
+      },
     ],
   }
 })
@@ -33,11 +33,11 @@ jest.mock(`react-modal`, () => {
   modal.setAppElement = jest.fn()
   return modal
 })
-import React from 'react'
-import { useStaticQuery } from 'gatsby'
-import { render } from 'react-testing-library'
+import React from "react"
+import { useStaticQuery } from "gatsby"
+import { render } from "react-testing-library"
 
-import StubList from '../stub-list'
+import StubList from "../stub-list"
 
 let location
 beforeEach(() => {
@@ -45,13 +45,13 @@ beforeEach(() => {
     data: {
       site: {
         siteMetadata: {
-          title: `GatsbyJS`
-        }
-      }
-    }
+          title: `GatsbyJS`,
+        },
+      },
+    },
   })
   location = {
-    pathname: `/contributing/stub-list`
+    pathname: `/contributing/stub-list`,
   }
 })
 
@@ -66,14 +66,14 @@ describe(`StubList`, () => {
   it(`shows a call to action to edit stubs`, () => {
     const { getByText } = render(<StubList location={location} />)
 
-    expect(getByText('How to Write a Stub')).toBeVisible()
+    expect(getByText(`How to Write a Stub`)).toBeVisible()
   })
 
   describe(`stubs`, () => {
     let stubs
     beforeEach(() => {
       const { getByTestId } = render(<StubList location={location} />)
-      stubs = getByTestId(`list-of-stubs`).querySelectorAll('li')
+      stubs = getByTestId(`list-of-stubs`).querySelectorAll(`li`)
     })
 
     it(`renders stubs`, () => {
@@ -81,15 +81,15 @@ describe(`StubList`, () => {
     })
 
     it(`renders links to stubs`, () => {
-      ;Array.from(stubs).forEach(stub => {
+      Array.from(stubs).forEach(stub => {
         const anchor = stub.firstChild
-        expect(anchor.nodeName).toBe('A')
-        expect(anchor.getAttribute('href')).toMatch(/^\//)
+        expect(anchor.nodeName).toBe(`A`)
+        expect(anchor.getAttribute(`href`)).toMatch(/^\//)
       })
     })
 
     it(`removes the asterisks`, () => {
-      ;Array.from(stubs).forEach(stub => {
+      Array.from(stubs).forEach(stub => {
         expect(stub.textContent).not.toContain(`*`)
       })
     })
