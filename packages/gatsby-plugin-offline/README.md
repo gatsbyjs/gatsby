@@ -100,7 +100,3 @@ curl https://www.yourdomain.tld
 ```
 
 Alternatively you can have a look at the `/public/index.html` file in your project folder.
-
-### `assetPrefix`
-
-The [asset-prefix](https://gatsbyjs.app/docs/asset-prefix) feature _cannot_ be used in conjunction with this plugin. Service workers must exist on the same domain, and so therefore they cannot be hosted via a CDN or any other asset prefix.
