@@ -69,12 +69,9 @@ const getExampleObject = ({
           const values = Array.isArray(entry.value)
             ? _.flatMap(entry.value)
             : [entry.value]
-          if (
-            values.every(value => value === `` || getType(value) === `date`)
-          ) {
-            return true
-          }
-          return false
+          return values.every(
+            value => value === `` || getType(value) === `date`
+          )
         })
         if (allNonEmptyStringsAreDates) {
           value = `1978-09-26`
