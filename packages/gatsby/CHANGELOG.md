@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.37...gatsby@2.1.38) (2019-03-18)
+
+### Features
+
+- let shadowed components import parents ([#12586](https://github.com/gatsbyjs/gatsby/issues/12586)) ([368c9e0](https://github.com/gatsbyjs/gatsby/commit/368c9e0))
+
 ## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.36...gatsby@2.1.37) (2019-03-16)
 
 ### Bug Fixes
