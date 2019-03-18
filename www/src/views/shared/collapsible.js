@@ -5,8 +5,6 @@ import FaAngleUp from "react-icons/lib/fa/angle-up"
 import { rhythm } from "../../utils/typography"
 import { colors, space, scale, letterSpacings } from "../../utils/presets"
 
-import styles from "./styles"
-
 class Collapsible extends Component {
   state = {
     collapsed: false,
@@ -68,7 +66,6 @@ class Collapsible extends Component {
           </h4>
           <div
             css={{
-              ...styles.scrollbar,
               display: collapsed ? `none` : `block`,
               overflowY: `auto`,
             }}

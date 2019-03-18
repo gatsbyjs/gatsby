@@ -152,7 +152,7 @@ class FeaturedSites extends Component {
               flexShrink: 0,
               margin: `0 -${space[6]}`,
               padding: `3px ${space[6]} 0`,
-              ...styles.scrollbar,
+              borderBottom: `1px solid ${colors.gray.border}`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
