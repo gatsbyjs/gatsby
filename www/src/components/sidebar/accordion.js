@@ -11,7 +11,6 @@ const ItemWithSubitems = ({
   isExpanded,
   isParentOfActiveItem,
   item,
-  level,
   location,
   onLinkClick,
   onSectionTitleClick,
@@ -29,7 +28,6 @@ const ItemWithSubitems = ({
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
@@ -41,9 +39,7 @@ const ItemWithSubitems = ({
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           onSectionTitleClick={onSectionTitleClick}
-          title={item.title}
           uid={uid}
         />
       )}
@@ -80,11 +76,11 @@ class Accordion extends React.Component {
       isActive,
       isParentOfActiveItem,
       item,
-      level,
       location,
       onLinkClick,
       onSectionTitleClick,
       openSectionHash,
+      isSingle,
     } = this.props
     const uid = `item_` + this.state.uid
     const isExpanded = openSectionHash[item.title] || item.disableAccordions
@@ -93,7 +89,7 @@ class Accordion extends React.Component {
       <li
         css={{
           background:
-            isExpanded && isActive && level > 0
+            isExpanded && isActive && item.level > 0
               ? presets.activeSectionBackground
               : false,
           position: `relative`,
@@ -109,7 +105,6 @@ class Accordion extends React.Component {
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
@@ -120,13 +115,16 @@ class Accordion extends React.Component {
           css={{
             ...styles.ul,
             display: isExpanded ? `block` : `none`,
-            paddingBottom: level === 0 && isExpanded ? space[6] : false,
+            paddingBottom:
+              item.level === 0 && isExpanded && !isSingle ? space[6] : false,
             borderBottom:
-              level === 0 && isExpanded
+              item.level === 0 && isExpanded && !isSingle
                 ? `1px solid ${colors.gray.border}`
                 : false,
             marginBottom:
-              level === 0 && isExpanded ? `${space[6]} !important` : false,
+              item.level === 0 && isExpanded && !isSingle
+                ? `${space[6]} !important`
+                : false,
           }}
         >
           {item.items.map(subitem => (
@@ -136,7 +134,6 @@ class Accordion extends React.Component {
               createLink={createLink}
               item={subitem}
               key={subitem.title}
-              level={level + 1}
               location={location}
               onLinkClick={onLinkClick}
               isExpanded={isExpanded}

@@ -52,7 +52,6 @@ const TitleButton = ({
   isActive,
   isExpanded,
   item,
-  level,
   onSectionTitleClick,
   title,
   uid,
@@ -63,20 +62,20 @@ const TitleButton = ({
     css={{
       ...styles.resetButton,
       ...styles.button,
-      paddingLeft: level === 0 ? space[6] : 0,
+      paddingLeft: item.level === 0 ? space[6] : 0,
       paddingRight: `0 !important`,
       minHeight: 40,
       "&:before": {
         ...styles.ulHorizontalDivider,
         bottom: 0,
-        left: level === 0 ? space[6] : 0,
+        left: item.level === 0 ? space[6] : 0,
         top: `auto`,
       },
     }}
     onClick={() => onSectionTitleClick(item)}
   >
-    <SectionTitle isExpanded={isExpanded} isActive={isActive} level={level}>
-      {title}
+    <SectionTitle isExpanded={isExpanded} isActive={isActive} item={item}>
+      {item.title}
       <span
         css={{
           position: `absolute`,
@@ -99,7 +98,6 @@ const SplitButton = ({
   isExpanded,
   isParentOfActiveItem,
   item,
-  level,
   location,
   onLinkClick,
   onSectionTitleClick,
@@ -126,10 +124,10 @@ const SplitButton = ({
         item,
         location,
         onLinkClick,
-        level,
-        indention: indention(level),
+        level: item.level,
+        indention: indention(item.level),
         customCSS: {
-          ...(level === 0 && {
+          ...(item.level === 0 && {
             "&&": {
               ...styles.smallCaps,
               color: isExpanded ? colors.gatsby : false,
@@ -161,12 +159,12 @@ const SplitButton = ({
   </span>
 )
 
-const Title = ({ title, level, isActive, isExpanded }) => (
+const Title = ({ item, isActive, isExpanded }) => (
   <div
     css={{
       alignItems: `center`,
       display: `flex`,
-      paddingLeft: indention(level),
+      paddingLeft: indention(item.level),
       minHeight: 40,
     }}
   >
@@ -174,14 +172,14 @@ const Title = ({ title, level, isActive, isExpanded }) => (
       disabled
       isActive={isActive}
       isExpanded={isExpanded}
-      level={level}
+      item={item}
     >
-      {title}
+      {item.title}
     </SectionTitle>
   </div>
 )
 
-const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
+const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
   <h3
     css={{
       alignItems: `center`,
@@ -189,7 +187,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
       fontSize: scale[1],
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
-      ...(level === 0 && { ...styles.smallCaps }),
+      ...(item.level === 0 && { ...styles.smallCaps }),
       color: isExpanded ? colors.gatsby : false,
       "&:hover": {
         color: disabled ? false : colors.gatsby,
