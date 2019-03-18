@@ -1,6 +1,6 @@
 ---
 title: Gatsby 2.2.0 Released - new schema customization API
-date: 2019-03-018
+date: 2019-03-18
 author: Mikhail Novikov
 tags: ["schema", "graphql"]
 ---
