@@ -55,7 +55,7 @@ Let's show an example of how to create a re-usable hook with `useStaticQuery`.
 
 You can create a `useSiteMetadata` for that purpose:
 
-```jsx:title=src/components/hook/site-meta.js
+```jsx:title=src/hooks/use-site-metadata.js
 import { useStaticQuery, graphql } from "gatsby"
 
 export const useSiteMetadata = () => {
