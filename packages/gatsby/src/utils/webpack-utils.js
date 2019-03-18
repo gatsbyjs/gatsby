@@ -5,7 +5,7 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
-const os = require(`os`)
+const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 
@@ -445,7 +445,7 @@ module.exports = async ({
   plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
     new TerserPlugin({
       cache: true,
-      parallel: !os.release().includes(`Microsoft`),
+      parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {
