@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.9...gatsby-plugin-typography@2.2.10) (2019-03-13)
+
+### Bug Fixes
+
+- **gatsby-pugin-typography:** headerComponents is now tolerant to null values ([#12551](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/12551)) ([a02ef30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/commit/a02ef30)), closes [#12549](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/12549)
+
 ## [2.2.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.8...gatsby-plugin-typography@2.2.9) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-typography

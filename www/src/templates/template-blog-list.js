@@ -10,7 +10,14 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 
-import presets, { colors, space, transition, radii } from "../utils/presets"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+  breakpoints,
+} from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
 class BlogPostsIndex extends React.Component {
@@ -22,7 +29,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [presets.Md]: {
+            [breakpoints.md]: {
               background: colors.ui.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -35,7 +42,7 @@ class BlogPostsIndex extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Md]: {
+                [breakpoints.md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -56,8 +63,8 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: rhythm(space[6]),
-                  [presets.Md]: {
-                    boxShadow: presets.shadows.card,
+                  [breakpoints.md]: {
+                    boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],
                     padding: rhythm(space[9]),
@@ -73,11 +80,11 @@ class BlogPostsIndex extends React.Component {
                       transition.curve.default
                     }`,
                     "&:hover": {
-                      transform: `translateY(-4px)`,
-                      boxShadow: presets.shadows.cardHover,
+                      transform: `translateY(-${rhythm(space[1])})`,
+                      boxShadow: shadows.overlay,
                     },
                     "&:active": {
-                      boxShadow: presets.shadows.cardActive,
+                      boxShadow: shadows.cardActive,
                       transform: `translateY(0)`,
                     },
                   },

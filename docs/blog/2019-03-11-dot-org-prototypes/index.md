@@ -7,7 +7,7 @@ tags: ["ux", "design"]
 
 Our current [gatsbyjs.org](/) homepage is getting a bit long in the tooth -- our incredible designer @fk built it out a year and a half ago, but a lot's changed and we're getting ready to update it.
 
-We sent out a [messaging survey](blog/2019-03-05-dot-org-messaging-survey/) a few weeks ago to hear how the community was thinking about Gatsby. We put together some [lo-fi prototypes](https://www.figma.com/proto/UH2Qb3IeF8Hvg6csIW3mcqFc/Gatsbyjs.org-mobile-homepage-prototype?node-id=22%3A329&viewport=-227%2C349%2C0.39312&scaling=scale-down).
+We sent out a [messaging survey](/blog/2019-03-05-dot-org-messaging-survey/) a few weeks ago to hear how the community was thinking about Gatsby. We put together some [lo-fi prototypes](https://www.figma.com/proto/UH2Qb3IeF8Hvg6csIW3mcqFc/Gatsbyjs.org-mobile-homepage-prototype?node-id=22%3A329&viewport=-227%2C349%2C0.39312&scaling=scale-down).
 
 Now, it was time to move to the next phase: user testing.
 
@@ -128,7 +128,7 @@ We made two changes to fix the initial problems uncovered by usability testing. 
 ![Screenshot of gatsbyjs.org homepage on a mobile device](mobile-prototype-2019-03-01.png)
 [Move diagram above card and change explanatory text](https://github.com/gatsbyjs/gatsby/pull/12236)
 
-Then we refined those changes by modifying by changing the headline and subheadline.
+Then we refined those changes by modifying the headline and subheadline.
 
 ![Screenshot of gatsbyjs.org homepage on desktop](desktop-prototype-2019-03-04.png)
 [Change .org headline/subheadline + make them larger](https://github.com/gatsbyjs/gatsby/pull/12298)

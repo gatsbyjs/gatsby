@@ -20,7 +20,7 @@ const Tags = ({ pageContext, data, location }) => {
     <Layout location={location}>
       <Container>
         <h1>{tagHeader}</h1>
-        <Button tiny key="blog-post-view-all-tags-button" to="/blog/tags">
+        <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
           View All Tags <TagsIcon />
         </Button>
         {edges.map(({ node }) => (

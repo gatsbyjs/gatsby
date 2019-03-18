@@ -46,6 +46,7 @@ After adding this to your [gatsby-node](/docs/gatsby-project-structure/#files) f
 
 `createResolvers` allows doing additional customization after all schema processing has been finished. Thus it can be used to add fields to any types, including root types like `Query` and types from third party schemas.
 
+
 ```js:title=gatsby-node.js
 createResolvers({
   Query: {

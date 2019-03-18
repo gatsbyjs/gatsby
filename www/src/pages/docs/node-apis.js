@@ -3,7 +3,7 @@ import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
-import Functions from "../../components/function-list"
+import APIReference from "../../components/api-reference"
 import { rhythm } from "../../utils/typography"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
@@ -86,7 +86,7 @@ class NodeAPIDocs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <Functions functions={funcs} />
+          <APIReference docs={funcs} />
         </Container>
       </Layout>
     )
@@ -100,7 +100,7 @@ export const pageQuery = graphql`
     file(relativePath: { regex: "/src.*api-node-docs.js/" }) {
       childrenDocumentationJs {
         name
-        ...FunctionList
+        ...DocumentationFragment
       }
     }
   }

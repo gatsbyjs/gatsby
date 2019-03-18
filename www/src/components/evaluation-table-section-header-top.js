@@ -1,5 +1,5 @@
 import React from "react"
-import presets, { colors, space, radii } from "../utils/presets"
+import presets, { colors, space, radii, breakpoints } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
@@ -17,9 +17,7 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(space[3])} ${rhythm(presets.space[3])} ${rhythm(
-              3 / 8
-            )}`,
+            padding: `${rhythm(space[3])} ${rhythm(space[3])} ${rhythm(3 / 8)}`,
           },
           display: `none`,
           textTransform: `uppercase`,
@@ -30,7 +28,6 @@ const superHeader = () => (
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,
           border: 0,
-          // fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
           background: colors.ui.whisper,
           "span:first-of-type": {
@@ -40,14 +37,14 @@ const superHeader = () => (
           "&:last-child": {
             borderTopRightRadius: radii[2],
           },
-          [presets.Xs]: {
+          [breakpoints.xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [presets.Md]: {
+          [breakpoints.md]: {
             width: 150,
           },
-          [presets.Lg]: {
+          [breakpoints.lg]: {
             width: 175,
           },
         }}

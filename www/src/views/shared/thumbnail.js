@@ -3,8 +3,8 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import styles from "./styles"
-import presets, { colors, transition } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import presets, { colors, transition, space } from "../../utils/presets"
+import { options, rhythm } from "../../utils/typography"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
   let screenshot = false
@@ -33,7 +33,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
           }`,
           "&:hover": { ...styles.screenshotHover },
           "&:hover ~ .meta > .featured-site": {
-            transform: `translateY(-3px)`,
+            transform: `translateY(-${rhythm(space[1])})`,
           },
         },
       }}

@@ -4920,7 +4920,6 @@
 - title: SEOmonitor
   main_url: "https://www.seomonitor.com"
   url: "https://www.seomonitor.com"
-  source_url:
   description: >
     SEOmonitor is a suite of SEO tools dedicated to agencies.
   categories:
@@ -4929,4 +4928,41 @@
     - Agency
   built_by: bejamas
   built_by_url: https://bejamas.io/
+  featured: false
+- title: Jean Regisser's Portfolio
+  main_url: "https://jeanregisser.com/"
+  url: "https://jeanregisser.com/"
+  source_url: "https://github.com/jeanregisser/jeanregisser.com"
+  featured: false
+  description: >
+    Portfolio of software engineer Jean Regisser.
+  categories:
+    - Portfolio
+    - Mobile Development
+    - React Native
+  built_by: Jean Regisser
+  built_by_url: "https://jeanregisser.com/"
+- title: Axcept - Visual Screenshot Testing
+  url: https://axcept.io
+  main_url: https://axcept.io
+  description: >
+    Visual Testing for everyone
+  categories:
+    - Documentation
+    - Testing
+    - Web Development
+  built_by: d:code:it
+  built_by_url: https://dcodeit.com
+  featured: false
+- title: Chase Ohlson
+  url: https://chaseohlson.com
+  main_url: https://chaseohlson.com
+  description: >
+    Portfolio of frontend engineer & web developer Chase Ohlson.
+  categories:
+    - Portfolio
+    - React
+    - Web Development
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
   featured: false

@@ -1,5 +1,13 @@
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, radii, transition } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 
 const styles = {
   featuredSitesCard: {
@@ -10,11 +18,11 @@ const styles = {
     width: 320,
     marginBottom: rhythm(space[9]),
     marginRight: rhythm(space[6]),
-    [presets.Xl]: {
+    [breakpoints.xl]: {
       width: 360,
       marginRight: rhythm(space[8]),
     },
-    [presets.Xxl]: {
+    [breakpoints.xxl]: {
       width: 400,
     },
   },
@@ -38,7 +46,7 @@ const styles = {
     transition: `background ${transition.speed.slow} ${
       transition.curve.default
     }, transform ${transition.speed.slow} ${transition.curve.default}`,
-    [presets.Lg]: {
+    [breakpoints.lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
@@ -89,9 +97,11 @@ const styles = {
     // is removed, the problem goes away. I tried removing elements in the
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
-    top: `calc(${presets.bannerHeight} - 1px)`,
-    [presets.Lg]: {
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${dimensions.bannerHeight} - 1px)`,
+    [breakpoints.lg]: {
+      top: `calc(${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
+      } - 1px)`,
     },
   },
   scrollbar: {
@@ -109,7 +119,7 @@ const styles = {
   },
   screenshot: {
     borderRadius: radii[1],
-    boxShadow: presets.shadows.card,
+    boxShadow: shadows.raised,
     marginBottom: rhythm(space[3]),
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
@@ -117,8 +127,8 @@ const styles = {
     background: `transparent`,
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
-      transform: `translateY(-3px)`,
-      boxShadow: presets.shadows.cardHover,
+      transform: `translateY(-${rhythm(space[1])})`,
+      boxShadow: shadows.overlay,
     },
   },
   shortcutIcon: {
@@ -193,7 +203,7 @@ const styles = {
   },
   sidebarHeader: {
     margin: 0,
-    [presets.Lg]: {
+    [breakpoints.lg]: {
       fontSize: presets.scale[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
@@ -201,7 +211,7 @@ const styles = {
       fontWeight: `normal`,
       flexShrink: 0,
       lineHeight: presets.lineHeights.solid,
-      height: presets.headerHeight,
+      height: dimensions.headerHeight,
       margin: 0,
       paddingLeft: rhythm(space[6]),
       paddingRight: rhythm(space[6]),
@@ -211,22 +221,22 @@ const styles = {
   },
   sidebarBody: {
     paddingLeft: rhythm(space[6]),
-    height: `calc(100vh - ((${presets.headerHeight}) + ${
-      presets.bannerHeight
+    height: `calc(100vh - ((${dimensions.headerHeight}) + ${
+      dimensions.bannerHeight
     }))`,
     display: `flex`,
     flexDirection: `column`,
   },
   sidebarContainer: {
     display: `none`,
-    [presets.Lg]: {
+    [breakpoints.lg]: {
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,
       paddingTop: 0,
       borderRight: `1px solid ${colors.ui.light}`,
-      height: `calc(100vh - (${presets.headerHeight} + ${
-        presets.bannerHeight
+      height: `calc(100vh - (${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
       }))`,
     },
   },
@@ -237,7 +247,7 @@ const styles = {
     display: `flex`,
     flexDirection: `row`,
     flexWrap: `wrap`,
-    height: presets.headerHeight,
+    height: dimensions.headerHeight,
     justifyContent: `space-between`,
     paddingLeft: rhythm(space[6]),
     paddingRight: rhythm(space[6]),
