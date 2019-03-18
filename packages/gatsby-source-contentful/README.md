@@ -52,6 +52,70 @@ module.exports = {
 }
 ```
 
+### Download assets for static distribution
+
+Downloads and caches Contentful Assets to the local filesystem. Useful for reduced data usage in development or projects where you want the assets copied locally with builds for deploying without links to Contentful's CDN.
+
+Enable this feature with the `downloadLocal: true` option.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        // Learn about environment variables: https://gatsby.app/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        downloadLocal: true,
+      },
+    },
+  ],
+}
+```
+
+Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
+
+```GraphQL
+graphql`
+  query MyQuery {
+    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # You could also query an asset directly via
+    # `allContentfulAsset { edges{ node { } } }`
+    # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+    contentfulMyContentType {
+      myContentfulAssetField {
+        # Direct URL to Contentful CDN for this asset
+        file { url }
+
+        # Query for a fluid image resource on this `ContentfulAsset` node
+        fluid(maxWidth: 500){
+          ...GatsbyContentfulFluid_withWebp
+        }
+
+        # Query for locally stored file(eg An image) - `File` node
+        localFile {
+          # Where the asset is downloaded into cache, don't use this
+          absolutePath
+          # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
+          publicURL
+          # Use `gatsby-image` to create fluid image resource
+          childImageSharp {
+            fluid(maxWidth: 500) {
+              ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
+
+For any troubleshooting related to this feature, first try clearing your `./cache/` directory. `gatsby-source-contentful` will acquire fresh data, and all `ContentfulAsset`s will be downloaded and cached again.
+
 ### Offline
 
 If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFLINE=true` to tell the plugin to fallback to the cached data, if there is any.
@@ -230,23 +294,46 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
 [using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
 
-## **Beta** [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
+## [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
-Rich text feature is supported in this source plugin, if you want to serialize the field content to html you can add the plugin `@contentful/gatsby-transformer-contentful-richtext`.
+Rich Text feature is supported in this source plugin, you can use the following query to get the json output:
 
-After adding the transformer plugin you can use the following query to get the html output:
-
-```
+```graphql
 {
   allContentfulBlogPost {
-    bodyRichText {
-      childContentfulRichText {
-        html
+    edges {
+      node {
+        bodyRichText {
+          json
+        }
       }
     }
   }
 }
 ```
+
+To define a way Rich Text document is rendered, you can use `@contentful/rich-text-react-renderer` package:
+
+```jsx
+import { BLOCKS, MARKS } from "@contentful/rich-text-types"
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+
+const Bold = ({ children }) => <span className="bold">{children}</span>
+const Text = ({ children }) => <p className="align-center">{children}</p>
+
+const options = {
+  renderMark: {
+    [MARKS.BOLD]: text => <Bold>{text}</Bold>,
+  },
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
+  },
+}
+
+documentToReactComponents(node.bodyRichText.json, options)
+```
+
+Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

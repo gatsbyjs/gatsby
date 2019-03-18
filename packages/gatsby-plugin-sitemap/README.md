@@ -63,3 +63,28 @@ plugins: [
   }
 ]
 ```
+
+## Sitemap Index
+
+We also support generating `sitemap index`.
+
+- [Split up your large sitemaps](https://support.google.com/webmasters/answer/75712?hl=en)
+- [Using Sitemap index files (to group multiple sitemap files)](https://www.sitemaps.org/protocol.html#index)
+
+```javascript
+// In your gatsby-config.js
+siteMetadata: {
+  siteUrl: `https://www.example.com`,
+},
+plugins: [
+  {
+    resolve: `gatsby-plugin-sitemap`,
+    options: {
+      sitemapSize: 5000
+    }
+  }
+]
+```
+
+Above is the minimal configuration to split large sitemap.
+When number of URL in sitemap is more than 5000 plugin will create sitemap (e.g. `sitemap-0.xml`, `sitemap-1.xml`) and index (e.g. `sitemap.xml`) files.

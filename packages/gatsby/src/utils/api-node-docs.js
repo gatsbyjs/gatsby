@@ -1,7 +1,7 @@
 /**
  * Lets plugins implementing support for other compile-to-js add to the list
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
- * @returns {Array} array of extensions
+ * @returns {Array<string>} array of extensions
  */
 exports.resolvableExtensions = true
 

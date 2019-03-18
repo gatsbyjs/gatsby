@@ -3,8 +3,15 @@ import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import { rhythm } from "../utils/typography"
 
-import presets, { colors } from "../utils/presets"
-import hex2rgba from "hex2rgba"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+  breakpoints,
+  dimensions,
+} from "../utils/presets"
 import SearchIcon from "./search-icon"
 
 const loadJS = () => import(`./docsearch.min.js`)
@@ -12,25 +19,20 @@ let loadedJs = false
 
 import { Global, css } from "@emotion/core"
 
-const { curveDefault, speedDefault } = presets.animation
-
 // Override default search result styles (docsearch.css)
-const searchDropdownOffsetTop = rhythm(2)
-const homepageSearchDropdownOffsetTop = rhythm(4.5)
+const searchDropdownOffsetTop = rhythm(space[9])
 
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: calc(${searchDropdownOffsetTop} + ${presets.bannerHeight}) !important;
-    left: ${rhythm(0.5)} !important;
-    right: ${rhythm(0.5)} !important;
-    min-width: calc(100vw - ${rhythm(1)}) !important;
-    max-width: calc(100vw - 2rem) !important;
-    box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
-  }
-
-  .is-homepage .algolia-autocomplete .ds-dropdown-menu {
-    top: ${homepageSearchDropdownOffsetTop} !important;
+    top: calc(${searchDropdownOffsetTop} + ${
+  dimensions.bannerHeight
+}) !important;
+    left: ${rhythm(space[3])} !important;
+    right: ${rhythm(space[3])} !important;
+    min-width: calc(100vw - ${rhythm(space[5])}) !important;
+    max-width: calc(100vw - ${rhythm(space[7])})) !important;
+    box-shadow: ${shadows.dialog} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -40,8 +42,8 @@ const algoliaStyles = css`
   .searchWrap
     .algolia-autocomplete.algolia-autocomplete-left
     .ds-dropdown-menu {
-    left: ${rhythm(0.5)} !important;
-    right: ${rhythm(0.5)} !important;
+    left: ${rhythm(space[3])} !important;
+    right: ${rhythm(space[3])} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu .ds-suggestions {
@@ -54,9 +56,9 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
     color: ${colors.gray.calm} !important;
-    font-size: 0.9rem !important;
+    font-size: ${presets.scale[1]} !important;
     font-weight: normal !important;
-    padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
+    padding: ${rhythm(space[1])} ${rhythm(space[3])} !important;
   }
 
   .algolia-autocomplete
@@ -74,7 +76,7 @@ const algoliaStyles = css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--content {
-    padding: ${rhythm(0.5)} !important;
+    padding: ${rhythm(space[3])} !important;
     width: 100% !important;
     max-width: 100% !important;
   }
@@ -87,17 +89,10 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     max-height: calc(
-      100vh - ${presets.headerHeight} - ${presets.bannerHeight}
+      100vh - ${dimensions.headerHeight} - ${dimensions.bannerHeight}
     ) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
-  }
-
-  .is-homepage .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
-    max-height: calc(
-      100vh - ${homepageSearchDropdownOffsetTop} - ${presets.headerHeight} -
-        ${presets.bannerHeight}
-    ) !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
@@ -114,7 +109,7 @@ const algoliaStyles = css`
     .algolia-docsearch-suggestion--text
     .algolia-docsearch-suggestion--highlight {
     background: transparent !important;
-    box-shadow: inset 0 -2px 0 0 ${colors.gatsby} !important;
+    box-shadow: inset 0 -1px 0 0 ${colors.gatsby} !important;
   }
 
   .algolia-autocomplete
@@ -137,7 +132,7 @@ const algoliaStyles = css`
     max-width: 100% !important;
     width: 100% !important;
     font-weight: normal !important;
-    padding: ${rhythm(0.75)} ${rhythm(0.5)} !important;
+    padding: ${rhythm(space[4])} ${rhythm(space[3])} !important;
   }
 
   .algolia-autocomplete
@@ -163,9 +158,9 @@ const algoliaStyles = css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
-    padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
+    padding: ${rhythm(space[1])} ${rhythm(space[3])} !important;
     margin-top: 0 !important;
-    font-size: 0.9rem !important;
+    font-size: ${presets.scale[1]} !important;
     border-color: ${colors.ui.light} !important;
     color: ${colors.gatsby} !important;
     font-weight: bold !important;
@@ -187,17 +182,17 @@ const algoliaStyles = css`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px dotted ${colors.ui.light} !important;
+    border-top: 1px solid ${colors.ui.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
     width: 110px !important;
     height: 100% !important;
     margin-left: auto !important;
-    margin-right: ${rhythm(0.5)} !important;
+    margin-right: ${rhythm(space[3])} !important;
   }
 
-  ${presets.Sm} {
+  ${breakpoints.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -209,19 +204,19 @@ const algoliaStyles = css`
       width: 30% !important;
       text-align: right !important;
       opacity: 1 !important;
-      padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
+      padding: ${rhythm(space[3])} ${rhythm(space[4])} !important;
     }
 
     /* stylelint-disable */
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
-      padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
+      padding: ${rhythm(space[3])} ${rhythm(space[4])} !important;
     }
     /* stylelint-enable */
 
     .algolia-autocomplete .algolia-docsearch-suggestion--content {
       width: 70% !important;
       max-width: 70% !important;
-      padding: ${rhythm(0.5)} ${rhythm(0.75)} !important;
+      padding: ${rhythm(space[3])} ${rhythm(space[4])} !important;
     }
 
     .algolia-autocomplete .algolia-docsearch-suggestion--content:before,
@@ -246,22 +241,12 @@ const algoliaStyles = css`
     }
   }
 
-  ${presets.Md} {
-    .algolia-autocomplete .ds-dropdown-menu,
-    .is-homepage .algolia-autocomplete .ds-dropdown-menu {
+  ${breakpoints.md} {
+    .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
       max-width: 600px !important;
       min-width: 500px !important;
-    }
-
-    .is-homepage
-      .algolia-autocomplete
-      .ds-dropdown-menu
-      [class^="ds-dataset-"] {
-      max-height: calc(
-        100vh - ${homepageSearchDropdownOffsetTop} - ${presets.bannerHeight}
-      ) !important;
     }
 
     /* .searchWrap to beat docsearch.css' !important */
@@ -279,7 +264,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${presets.lg} {
+  @media ${breakpoints.Lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -376,7 +361,7 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
-    const { iconColor, isHomepage, offsetVertical } = this.props
+    const { offsetVertical } = this.props
     return (
       <form
         css={{
@@ -384,7 +369,7 @@ class SearchForm extends Component {
           flex: `0 0 auto`,
           flexDirection: `row`,
           alignItems: `center`,
-          marginLeft: rhythm(1 / 2),
+          marginLeft: rhythm(space[3]),
           marginBottom: 0,
           marginTop: offsetVertical ? offsetVertical : false,
         }}
@@ -405,32 +390,30 @@ class SearchForm extends Component {
               appearance: `none`,
               backgroundColor: `transparent`,
               border: 0,
-              borderRadius: presets.radius,
+              borderRadius: radii[1],
               color: colors.lilac,
-              paddingTop: rhythm(1 / 8),
-              paddingRight: rhythm(1 / 4),
-              paddingBottom: rhythm(1 / 8),
-              paddingLeft: rhythm(5 / 4),
+              padding: rhythm(space[1]),
+              paddingRight: rhythm(space[3]),
+              paddingLeft: rhythm(space[7]),
               overflow: `hidden`,
-              width: rhythm(1),
-              transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              width: rhythm(space[5]),
+              transition: `width ${transition.speed.default} ${
+                transition.curve.default
+              }, background-color ${transition.speed.default} ${
+                transition.curve.default
+              }`,
               ":focus": {
                 backgroundColor: colors.ui.light,
                 color: colors.gatsby,
                 outline: 0,
                 width: rhythm(5),
               },
-              [presets.Lg]: {
-                backgroundColor: !isHomepage && `#fff`,
-                width: !isHomepage && rhythm(3.75),
+              [breakpoints.lg]: {
+                backgroundColor: colors.white,
+                width: rhythm(3.75),
                 ":focus": {
                   backgroundColor: colors.ui.light,
                 },
-              },
-              [presets.Xl]: {
-                backgroundColor: isHomepage && colors.lilac,
-                color: isHomepage && colors.ui.light,
-                width: isHomepage && rhythm(3.75),
               },
             }}
             type="search"
@@ -447,15 +430,17 @@ class SearchForm extends Component {
             overrideCSS={{
               fill: focussed ? colors.gatsby : colors.lilac,
               position: `absolute`,
-              left: rhythm(1 / 4),
+              left: rhythm(space[2]),
               top: `50%`,
-              width: `1rem`,
-              height: `1rem`,
+              width: rhythm(space[4]),
+              height: rhythm(space[4]),
               pointerEvents: `none`,
-              transition: `fill ${speedDefault} ${curveDefault}`,
+              transition: `fill ${transition.speed.default} ${
+                transition.curve.default
+              }`,
               transform: `translateY(-55%)`,
-              [presets.Sm]: {
-                fill: focussed ? colors.gatsby : isHomepage ? iconColor : false,
+              [breakpoints.sm]: {
+                fill: focussed ? colors.gatsby : false,
               },
             }}
           />
@@ -465,7 +450,6 @@ class SearchForm extends Component {
   }
 }
 SearchForm.propTypes = {
-  isHomepage: PropTypes.bool,
   iconColor: PropTypes.string,
   offsetVertical: PropTypes.string,
 }
