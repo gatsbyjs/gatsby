@@ -17,6 +17,8 @@ npm install gatsby --save
 
 Next, continue reading below to see if any of the great, new features we've enabled scratch a particular itch. We feel very confident they will 💜
 
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Wow, this is huge, and could potentially solve most of the issues users are currently experiencing integrating any CMS with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>! Great work guys, can&#39;t wait to do some tests with our source plugin! 🏆 <a href="https://t.co/REcehYiU8V">https://t.co/REcehYiU8V</a></p>&mdash; DatoCMS (@datocms) <a href="https://twitter.com/datocms/status/1103896814351048704?ref_src=twsrc%5Etfw">March 8, 2019</a></blockquote>
+
 # Recap of schema customization
 
 Before this change, the Gatsby GraphQL schema was generated automatically from the data that the user added to Gatsby. While very convenient and easy to start, changes to the data could cause changes to the schema, which could cause breakage in unrelated locations. Those bugs were confusing and hard to debug. To alleviate this problem, we've added a schema customization API that lets you customize, fix, and enhance types in your Gatsby GraphQL schema.
