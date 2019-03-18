@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.38...gatsby-source-contentful@2.0.39) (2019-03-15)
+
+### Features
+
+- **gatsby-source-contentful:** Support storing assets locally ([#10682](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/10682)) ([6d7bd76](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/6d7bd76))
+
+## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.37...gatsby-source-contentful@2.0.38) (2019-03-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.36...gatsby-source-contentful@2.0.37) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.35...gatsby-source-contentful@2.0.36) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.34...gatsby-source-contentful@2.0.35) (2019-03-05)
 
 **Note:** Version bump only for package gatsby-source-contentful

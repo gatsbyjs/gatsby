@@ -4,7 +4,8 @@ import styled from "@emotion/styled"
 
 import EcosystemSection from "./ecosystem-section"
 
-import presets from "../../utils/presets"
+import { space, breakpoints, dimensions } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -14,13 +15,13 @@ const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     flex-direction: row;
     flex-wrap: wrap;
     height: calc(
-      100vh - (${presets.bannerHeight} + ${presets.headerHeight} + 1px)
+      100vh - (${dimensions.bannerHeight} + ${dimensions.headerHeight} + 1px)
     );
-    padding: 2rem 1rem 1rem;
+    padding: ${rhythm(space[7])} ${rhythm(space[4])} ${rhythm(space[4])};
   }
 `
 
