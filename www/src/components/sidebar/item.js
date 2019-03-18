@@ -22,7 +22,6 @@ class Item extends React.PureComponent {
       isActive,
       openSectionHash,
       item,
-      level,
       location,
       onLinkClick,
       onSectionTitleClick,
