@@ -4997,3 +4997,16 @@
   built_by: Pilon
   built_by_url: https://pilon.io/
   featured: false
+- title: Ouracademy
+  main_url: https://our-academy.org/
+  url: https://our-academy.org/
+  source_url: "https://github.com/ouracademy/website"
+  description: >
+    Ouracademy is an organization that promoves the education in software development throught blog posts & videos smiley.
+  categories:
+    - Open Source
+    - Blog
+    - Education
+  built_by: Ouracademy
+  built_by_url: https://github.com/ouracademy
+  featured: false
