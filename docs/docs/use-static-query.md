@@ -49,7 +49,9 @@ export default () => {
 ``
 
 
-One of the most used queries is to retrieve your site metadata.
+One of the most compelling features of hooks is the ability to compose and re-use these blocks of functionality. `useStaticQuery` is a hook. Therefore, using `useStaticQuery` allows us to compose and re-use blocks of reusable functionality. Perfect!
+
+Let's show an example of how to create a re-usable hook with `useStaticQuery`.
 
 You can create a `useSiteMetadata` for that purpose:
 
