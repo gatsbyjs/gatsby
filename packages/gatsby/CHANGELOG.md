@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.36...gatsby@2.1.37) (2019-03-16)
+
+### Bug Fixes
+
+- **gatsby:** extract queries from themes not starting with "gatsby-theme-\*" name ([#12604](https://github.com/gatsbyjs/gatsby/issues/12604)) ([b9808f2](https://github.com/gatsbyjs/gatsby/commit/b9808f2))
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.35...gatsby@2.1.36) (2019-03-16)
+
+**Note:** Version bump only for package gatsby
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.34...gatsby@2.1.35) (2019-03-15)
+
+### Features
+
+- **gatsby:** set up webpack config for eventual PnP support ([#12315](https://github.com/gatsbyjs/gatsby/issues/12315)) ([ad6319b](https://github.com/gatsbyjs/gatsby/commit/ad6319b)), closes [/github.com/arcanis/pnp-webpack-plugin/blob/master/index.js#L110-L138](https://github.com//github.com/arcanis/pnp-webpack-plugin/blob/master/index.js/issues/L110-L138) [#10245](https://github.com/gatsbyjs/gatsby/issues/10245) [#12163](https://github.com/gatsbyjs/gatsby/issues/12163)
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.33...gatsby@2.1.34) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** properly support --no-color for pretty-error ([#12531](https://github.com/gatsbyjs/gatsby/issues/12531)) ([e493538](https://github.com/gatsbyjs/gatsby/commit/e493538))
+
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.32...gatsby@2.1.33) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** allow environment variables to be replaced per environment ([#10565](https://github.com/gatsbyjs/gatsby/issues/10565)) ([828eaf8](https://github.com/gatsbyjs/gatsby/commit/828eaf8))
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.31...gatsby@2.1.32) (2019-03-13)
+
+### Features
+
+- **redirects:** handle absolute from paths when path prefix is used ([#12509](https://github.com/gatsbyjs/gatsby/issues/12509)) ([c6583d4](https://github.com/gatsbyjs/gatsby/commit/c6583d4)), closes [#12497](https://github.com/gatsbyjs/gatsby/issues/12497)
+
 ## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.30...gatsby@2.1.31) (2019-03-12)
 
 **Note:** Version bump only for package gatsby

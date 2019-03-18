@@ -1,6 +1,12 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets, { colors, space, transition, radii } from "./presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  breakpoints,
+} from "./presets"
 
 const systemFontFamily = [
   `-apple-system`,
@@ -112,7 +118,7 @@ const _options = {
         lineHeight: presets.lineHeights.solid,
         padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
         position: `absolute`,
-        right: `20px`,
+        right: rhythm(space[6]),
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,
@@ -228,14 +234,9 @@ const _options = {
         textDecoration: `none`,
         transition: `all ${transition.speed.fast} ${transition.curve.default}`,
         borderBottom: `1px solid ${colors.lilac}`,
-        fontWeight: `normal`,
       },
       ".main-body a:hover": {
         borderBottomColor: colors.ui.border,
-      },
-      ".post-body a": {
-        color: `${colors.lilac}`,
-        fontWeight: `normal`,
       },
       ".post-body figure img": {
         marginBottom: 0,
@@ -265,7 +266,7 @@ const _options = {
         marginTop: rhythm(space[9]),
         marginBottom: 0,
       },
-      ".gatsby-highlight, .gatsby-code-title, .post .gatsby-resp-image-link": {
+      ".gatsby-highlight, .gatsby-code-title, .post-body .gatsby-resp-image-link": {
         marginLeft: rhythm(-space[6]),
         marginRight: rhythm(-space[6]),
       },
@@ -289,7 +290,7 @@ const _options = {
           borderRight: 0,
         },
       },
-      [`${presets.Md} and (max-width:980px)`]: {
+      [`${breakpoints.md} and (max-width:980px)`]: {
         ".gatsby-highlight, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
@@ -305,8 +306,8 @@ const _options = {
       ".egghead-video": {
         border: `none`,
       },
-      [presets.Lg]: {
-        ".gatsby-highlight, .post .gatsby-resp-image-link, .gatsby-code-title": {
+      [breakpoints.lg]: {
+        ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-space[7]),
           marginRight: rhythm(-space[7]),
         },
@@ -328,8 +329,11 @@ const _options = {
             space[3]
           )}`,
         },
+        ".gatsby-highlight pre[class*='language-']::before": {
+          right: rhythm(space[7]),
+        },
       },
-      [presets.Xxl]: {
+      [breakpoints.xxl]: {
         html: {
           fontSize: `${(18 / 16) * 100}%`,
         },

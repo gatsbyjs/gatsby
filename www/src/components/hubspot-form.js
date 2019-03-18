@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import HubspotForm from "react-hubspot-form"
-import presets, { colors, radii, space } from "../utils/presets"
-import { options, rhythm } from "../utils/typography"
 import hex2rgba from "hex2rgba"
+
+import presets, { colors, radii, space } from "../utils/presets"
+import { rhythm } from "../utils/typography"
 import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
 
@@ -20,8 +21,7 @@ export default class GatsbyHubspotForm extends Component {
           backgroundColor: colors.ui.light,
           borderRadius: radii[1],
           color: colors.gatsby,
-          fontFamily: options.headerFontFamily.join(`,`),
-          padding: `15px`,
+          padding: rhythm(space[4]),
           "& form": {
             margin: 0,
           },
@@ -30,7 +30,7 @@ export default class GatsbyHubspotForm extends Component {
             width: `100%`,
           },
           "& .hs-form-field": {
-            paddingBottom: `20px`,
+            paddingBottom: rhythm(space[5]),
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,

@@ -9,7 +9,14 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
 import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space, transition, radii } from "../../utils/presets"
+import presets, {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+  breakpoints,
+} from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -28,10 +35,10 @@ class FeaturedSites extends Component {
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(space[6])} ${rhythm(presets.space[6])} 0`,
+          margin: `${rhythm(space[6])} ${rhythm(space[6])} 0`,
           position: `relative`,
           display: `none`,
-          [presets.Lg]: {
+          [breakpoints.lg]: {
             display: `block`,
           },
         }}
@@ -83,7 +90,7 @@ class FeaturedSites extends Component {
               ...styles.withTitleHover,
               display: `none`,
               fontSize: presets.scale[1],
-              [presets.Sm]: {
+              [breakpoints.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -113,7 +120,7 @@ class FeaturedSites extends Component {
                 fontSize: presets.scale[1],
                 marginRight: 15,
                 display: `none`,
-                [presets.Md]: {
+                [breakpoints.md]: {
                   display: `block`,
                 },
               }}
@@ -191,7 +198,7 @@ class FeaturedSites extends Component {
                     fontSize: presets.scale[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [presets.Lg]: {
+                    [breakpoints.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -225,14 +232,14 @@ class FeaturedSites extends Component {
                   borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
-                    border: `1px solid ${colors.ui.light}`,
+                    border: 0,
                     transition: `all ${transition.speed.default} ${
                       transition.curve.default
                     }`,
                     "&:hover": {
                       background: colors.white,
-                      transform: `translateY(-3px)`,
-                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                      transform: `translateY(-${rhythm(space[1])})`,
+                      boxShadow: shadows.overlay,
                     },
                   },
                   ...styles.featuredSitesCard,
@@ -260,10 +267,10 @@ class FeaturedSites extends Component {
                         width: `auto`,
                         display: `block`,
                         margin: `0 auto ${rhythm(space[6])}`,
-                        [presets.Md]: {
+                        [breakpoints.md]: {
                           height: 64,
                         },
-                        [presets.Xl]: {
+                        [breakpoints.xl]: {
                           height: 72,
                         },
 

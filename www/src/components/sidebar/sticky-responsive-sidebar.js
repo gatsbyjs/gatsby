@@ -3,7 +3,14 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, { colors, transition } from "../../utils/presets"
+import {
+  colors,
+  transition,
+  shadows,
+  space,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -114,16 +121,18 @@ const styles = {
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [presets.Md]: {
-      height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
+    [breakpoints.md]: {
+      height: `calc(100vh - ${dimensions.headerHeight} - ${
+        dimensions.bannerHeight
+      })`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(presets.sidebar.width.default),
+      top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
+      width: rhythm(dimensions.sidebarWidth.default),
     },
-    [presets.Lg]: {
-      width: rhythm(presets.sidebar.width.large),
+    [breakpoints.lg]: {
+      width: rhythm(dimensions.sidebarWidth.large),
     },
   },
   sidebar: {
@@ -131,8 +140,8 @@ const styles = {
     transition: `transform ${transition.speed.slow} ${
       transition.curve.default
     }`,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-    [presets.Md]: {
+    boxShadow: shadows.dialog,
+    [breakpoints.md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -140,26 +149,26 @@ const styles = {
   sidebarToggleButton: {
     backgroundColor: colors.gatsby,
     borderRadius: `50%`,
-    bottom: 64,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
+    bottom: rhythm(space[11]),
+    boxShadow: shadows.dialog,
     cursor: `pointer`,
     display: `flex`,
-    height: 60,
+    height: rhythm(space[10]),
     justifyContent: `space-around`,
     position: `fixed`,
-    right: 20,
+    right: rhythm(space[6]),
     visibility: `visible`,
-    width: 60,
+    width: rhythm(space[10]),
     zIndex: 20,
-    [presets.Md]: { display: `none` },
+    [breakpoints.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,
     color: colors.white,
     display: `flex`,
     flexDirection: `column`,
-    height: 20,
+    height: rhythm(space[5]),
     visibility: `visible`,
-    width: 20,
+    width: rhythm(space[5]),
   },
 }
