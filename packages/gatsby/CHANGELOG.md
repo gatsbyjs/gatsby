@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.39...gatsby@2.2.0) (2019-03-19)
+
+### Features
+
+- **gatsby:** allow schema customization ([#11480](https://github.com/gatsbyjs/gatsby/issues/11480)) ([07e69be](https://github.com/gatsbyjs/gatsby/commit/07e69be))
+
 ## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.38...gatsby@2.1.39) (2019-03-19)
 
 ### Bug Fixes
