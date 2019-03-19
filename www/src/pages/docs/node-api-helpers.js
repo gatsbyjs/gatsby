@@ -26,9 +26,10 @@ class NodeAPIHelperDocs extends React.Component {
           </h1>
           <p>
             The first argument passed to each of{` `}
-            <Link to="/docs/node-apis/">Gatsby's Node APIs</Link> is an object
-            containing a set of helpers. Helpers shared by all Gatsby's Node
-            APIs are documented in{` `}
+            <Link to="/docs/node-apis/">{`Gatsby's Node APIs`}</Link>
+            {` is an
+            object containing a set of helpers. Helpers shared by all Gatsby's
+            Node APIs are documented in `}
             <a href="#shared-helpers">Shared helpers</a> section.
           </p>
           <div className="gatsby-highlight">

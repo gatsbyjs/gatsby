@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.5...gatsby-transformer-remark@2.3.6) (2019-03-19)
+
+### Features
+
+- **gatsby:** allow schema customization ([#11480](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11480)) ([07e69be](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/07e69be))
+
 ## [2.3.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.4...gatsby-transformer-remark@2.3.5) (2019-03-18)
 
 ### Bug Fixes
