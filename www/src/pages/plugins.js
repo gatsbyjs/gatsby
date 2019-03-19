@@ -29,8 +29,8 @@ class Plugins extends Component {
             src={logo}
             css={{
               display: `inline-block`,
-              height: rhythm(4),
-              width: rhythm(4),
+              height: rhythm(3),
+              width: rhythm(3),
               marginLeft: `auto`,
               marginRight: `auto`,
             }}
@@ -41,6 +41,7 @@ class Plugins extends Component {
               fontSize: presets.scale[6],
               marginLeft: rhythm(space[5]),
               marginRight: rhythm(space[5]),
+              marginBottom: 0,
               textAlign: `center`,
             }}
           >
@@ -97,10 +98,10 @@ class Plugins extends Component {
 
           <p
             css={{
-              color: colors.gray.calm,
+              color: colors.gray.lightCopy,
               marginLeft: rhythm(space[9]),
               marginRight: rhythm(space[9]),
-              fontSize: presets.scale[4],
+              fontSize: presets.scale[3],
               fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
             }}
