@@ -4932,3 +4932,18 @@
   built_by: Herman Starikov
   built_by_url: https://github.com/Hermanya
   featured: false
+- title: Hetzner Online Community
+  main_url: https://community.hetzner.com
+  url: https://community.hetzner.com
+  description: >
+    Hetzner Online Community provides a free collection of high-quality tutorials, which are based on free and open source software, on a variety of topics such as development, system administration, and other web technology.
+  categories:
+    - Web Development
+    - Technology
+    - Programming
+    - Open Source
+    - Community
+    - Tutorials
+  built_by: Hetzner Online GmbH
+  built_by_url: https://www.hetzner.com/
+  featured: false
