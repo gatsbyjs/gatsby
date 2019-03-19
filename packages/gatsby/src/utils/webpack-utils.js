@@ -445,6 +445,8 @@ module.exports = async ({
   plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
     new TerserPlugin({
       cache: true,
+      // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
+      // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
       parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
