@@ -206,7 +206,7 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should support includeMatchingCSS = "true" when matching file exists`, () => {
-      recursiveReaddir.mockReturnValue([`file.js`, `file.css`])
+      readdir.mockReturnValue([`file.js`, `file.css`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -232,7 +232,7 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should support includeMatchingCSS = "false" when matching file exists`, () => {
-      recursiveReaddir.mockReturnValue([`file.js`, `file.css`])
+      readdir.mockReturnValue([`file.js`, `file.css`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -258,7 +258,7 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should support includeMatchingCSS = "true" when matching file doesn't exist`, () => {
-      recursiveReaddir.mockReturnValue([`file.js`])
+      readdir.mockReturnValue([`file.js`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -282,7 +282,7 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should support includeMatchingCSS = "false" when matching file doesn't exist`, () => {
-      recursiveReaddir.mockReturnValue([`file.js`])
+      readdir.mockReturnValue([`file.js`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
