@@ -3,6 +3,8 @@ import Slider from "./Slider"
 import { rhythm, options } from "../utils/typography"
 import presets, { colors, space } from "../utils/presets"
 import Link from "gatsby-link"
+import MdNavigateBefore from "react-icons/lib/md/navigate-before"
+import MdNavigateNext from "react-icons/lib/md/navigate-next"
 
 class Search extends Component {
   constructor(props, context) {
@@ -86,7 +88,7 @@ class Search extends Component {
             }}
             onClick={this.decrementItem.bind(this)}
           >
-            &lt;&nbsp;
+            <MdNavigateBefore />
           </span>
           &nbsp;&nbsp;&nbsp;There's{` `}
           {pluginName ? (
@@ -107,7 +109,7 @@ class Search extends Component {
               }}
               onClick={this.incrementItemAndClearInterval.bind(this)}
             >
-              &nbsp;&gt;
+              <MdNavigateNext />
             </span>
           </span>
         </p>
