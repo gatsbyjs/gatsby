@@ -6,7 +6,7 @@ Gatsby themes are designed to be easy to create from an existing starter. Here w
 
 ## Prepare Your `package.json`
 
-To start converting your starter to a library, get started by updating your `package.json` to use the `gatsby-theme-*` naming convention. If your starter is `gatsby-starter-awesome-blog` you can update the name key to `gatsby-theme-awesome-blog` (and double check that it's available on [npm](https://npmjs.com).
+To start converting your starter to a library, get started by updating your `package.json` to use the `gatsby-theme-*` naming convention. If your starter is `gatsby-starter-awesome-blog` you can update the name key to `gatsby-theme-awesome-blog` (and double check that it's available on [npm](https://npmjs.com)).
 
 Specify `gatsby`, `react`, and `react-dom` as `devDependencies` . It's preferable to add them as `peerDependencies` as well. This is needed so that end users can determine which versions they want and npm/yarn will be able to resolve them properly.
 
