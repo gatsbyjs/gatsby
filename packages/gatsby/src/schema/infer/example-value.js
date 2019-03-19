@@ -59,13 +59,25 @@ const getExampleObject = ({
 
     if (entriesByType.length > 1 || type.includes(`,`)) {
       if (
-        // Maybe have a warning here too
         isMixOfDatesAndStrings(
           entriesByType.map(entry => entry.type),
           arrayWrappers
         )
       ) {
-        value = `String`
+        // TODO: Possibly revisit this in Gatsby v3.
+        const allNonEmptyStringsAreDates = entries.every(entry => {
+          const values = Array.isArray(entry.value)
+            ? _.flatMap(entry.value)
+            : [entry.value]
+          return values.every(
+            value => value === `` || getType(value) === `date`
+          )
+        })
+        if (allNonEmptyStringsAreDates) {
+          value = `1978-09-26`
+        } else {
+          value = `String`
+        }
       } else {
         typeConflictReporter.addConflict(selector, entriesByType)
         return acc
