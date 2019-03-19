@@ -47,7 +47,7 @@
   <span> · </span>
   Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
   <span> & </span>
-  <a href="https://gatsby.app/discord">Discord</a>
+  <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites.
@@ -92,7 +92,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     ```sh
     # create a new Gatsby site using the default starter
-    npx gatsby new my-blazing-fast-site
+    gatsby new my-blazing-fast-site
     ```
 
 2.  **Start the site in `develop` mode.**

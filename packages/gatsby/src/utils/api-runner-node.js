@@ -126,7 +126,7 @@ const runAPI = (plugin, api, args) => {
                 `graphql`
               )} or http requests).
               For more info and debugging tips: see ${chalk.bold(
-                `https://gatsby.app/sync-actions`
+                `https://gatsby.dev/sync-actions`
               )}
             `),
             ]

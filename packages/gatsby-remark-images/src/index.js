@@ -235,14 +235,19 @@ module.exports = (
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
+    const wrapperStyle =
+      typeof options.wrapperStyle === `function`
+        ? options.wrapperStyle(fluidResult)
+        : options.wrapperStyle
+
     // Construct new image node w/ aspect ratio placeholder
     const showCaptions = options.showCaptions && node.title
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
-    style="position: relative; display: block; ${
-      showCaptions ? `` : options.wrapperStyle
-    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+      showCaptions ? `` : wrapperStyle
+    } max-width: ${presentationWidth}px;"
   >
     <span
       class="${imageBackgroundClass}"
@@ -270,7 +275,7 @@ module.exports = (
     // Wrap in figure and use title as caption
     if (showCaptions) {
       rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
+  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
     <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
   </figure>

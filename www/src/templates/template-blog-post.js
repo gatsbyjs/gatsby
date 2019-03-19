@@ -5,15 +5,22 @@ import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+
 import Layout from "../components/layout"
-import presets, { colors } from "../utils/presets"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import presets, {
+  colors,
+  space,
+  transition,
+  breakpoints,
+} from "../utils/presets"
+import { rhythm, options } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
+import Avatar from "../components/avatar"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -31,7 +38,6 @@ class BlogPostTemplate extends React.Component {
     const next = this.props.pageContext.next
     const prevNextLinkStyles = {
       "&&": {
-        boxShadow: `none`,
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
@@ -43,21 +49,15 @@ class BlogPostTemplate extends React.Component {
       marginBottom: 0,
       color: colors.gray.calm,
       fontWeight: `normal`,
-      ...scale(0),
-      lineHeight: 1,
+      lineHeight: presets.lineHeights.solid,
     }
     const BioLine = ({ children }) => (
       <p
         css={{
-          ...scale(-2 / 5),
-          fontFamily: typography.options.headerFontFamily.join(`,`),
-          lineHeight: 1.3,
+          lineHeight: presets.lineHeights.dense,
+          fontFamily: options.headerFontFamily.join(`,`),
           margin: 0,
           color: colors.gray.calm,
-          [presets.Mobile]: {
-            ...scale(-1 / 5),
-            lineHeight: 1.3,
-          },
         }}
       >
         {children}
@@ -72,8 +72,18 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <Container className="post" css={{ paddingBottom: `0` }}>
-          <main id={`reach-skip-nav`}>
+        <Container>
+          {
+            // todo
+            // - settle on `docSearch-content` as selector to identify
+            //   Algolia DocSearch content
+            // - make use of components/docsearch-content in place of <main>
+            //
+            // `post` and `post-body` are only in use as selectors in the
+            // docsearch config for gatsbyjs.org for individual blog posts:
+            // https://github.com/algolia/docsearch-configs/blob/89706210b62e2f384e52ca1b104f92bc0e225fff/configs/gatsbyjs.json#L71-L76
+          }
+          <main id={`reach-skip-nav`} className="post docSearch-content">
             {/* Add long list of social meta tags */}
             <Helmet>
               <title>{post.frontmatter.title}</title>
@@ -135,69 +145,39 @@ class BlogPostTemplate extends React.Component {
             <section
               css={{
                 display: `flex`,
-                marginTop: rhythm(-1 / 4),
-                marginBottom: rhythm(1),
-                [presets.Tablet]: {
-                  marginTop: rhythm(1 / 2),
-                  marginBottom: rhythm(2),
+                marginBottom: rhythm(space[5]),
+                [breakpoints.md]: {
+                  marginTop: rhythm(space[3]),
+                  marginBottom: rhythm(space[9]),
                 },
               }}
             >
-              <div
-                css={{
-                  flex: `0 0 auto`,
-                }}
-              >
+              <div css={{ flex: `0 0 auto` }}>
                 <Link
                   to={post.frontmatter.author.fields.slug}
-                  css={{
-                    "&&": {
-                      borderBottom: 0,
-                      boxShadow: `none`,
-                      "&:hover": {
-                        background: `none`,
-                      },
-                    },
-                  }}
+                  css={{ "&&": { borderBottom: 0 } }}
                 >
-                  <Img
-                    fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
-                    css={{
-                      height: rhythm(2.3),
-                      width: rhythm(2.3),
-                      margin: 0,
-                      borderRadius: `100%`,
-                      display: `inline-block`,
-                      verticalAlign: `middle`,
-                    }}
+                  <Avatar
+                    image={post.frontmatter.author.avatar.childImageSharp.fixed}
                   />
                 </Link>
               </div>
-              <div
-                css={{
-                  flex: `1 1 auto`,
-                  marginLeft: rhythm(1 / 2),
-                }}
-              >
+              <div css={{ flex: `1 1 auto` }}>
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      ...scale(0),
-                      fontWeight: 400,
-                      margin: 0,
+                      fontSize: presets.scale[3],
+                      marginBottom: rhythm(space[1]),
                       color: `${colors.gatsby}`,
                     }}
                   >
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.ui.bright}`,
-                        boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
-                        transition: `all ${presets.animation.speedFast} ${
-                          presets.animation.curveDefault
+                        transition: `all ${transition.speed.fast} ${
+                          transition.curve.default
                         }`,
-                        "&:hover": {
-                          background: colors.ui.bright,
-                        },
+                        "&:hover": { background: colors.ui.bright },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -224,20 +204,14 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Desktop]: {
-                  marginBottom: rhythm(5 / 4),
-                },
+                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
-                <div
-                  css={{
-                    marginBottom: rhythm(1),
-                  }}
-                >
+                <div css={{ marginBottom: rhythm(space[5]) }}>
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                   {post.frontmatter.imageAuthor &&
                     post.frontmatter.imageAuthorLink && (
@@ -263,37 +237,29 @@ class BlogPostTemplate extends React.Component {
         <div
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
-            marginTop: rhythm(2),
-            [presets.Tablet]: {
-              marginTop: rhythm(2),
-              paddingBottom: rhythm(1),
-              paddingTop: rhythm(1),
+            marginTop: rhythm(space[9]),
+            [breakpoints.md]: {
+              marginTop: rhythm(space[9]),
+              paddingBottom: rhythm(space[5]),
+              paddingTop: rhythm(space[5]),
             },
-            [presets.Desktop]: {
+            [breakpoints.lg]: {
               marginTop: rhythm(3),
-              paddingBottom: rhythm(2),
-              paddingTop: rhythm(2),
+              paddingBottom: rhythm(space[9]),
+              paddingTop: rhythm(space[9]),
             },
           }}
         >
           <Container>
-            <div
-              css={{ [presets.Phablet]: { display: `flex`, width: `100%` } }}
-            >
-              <div
-                css={{
-                  [presets.Phablet]: {
-                    width: `50%`,
-                  },
-                }}
-              >
+            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
+              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Tablet]: {
-                          marginLeft: `-1rem`,
+                        [breakpoints.md]: {
+                          marginLeft: `-${rhythm(space[4])}`,
                         },
                       }}
                     >
@@ -306,8 +272,8 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(1),
-                  [presets.Phablet]: { marginTop: 0, width: `50%` },
+                  marginTop: rhythm(space[5]),
+                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -315,8 +281,8 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Tablet]: {
-                          marginRight: `-1rem`,
+                        [breakpoints.md]: {
+                          marginRight: `-${rhythm(space[4])}`,
                         },
                       }}
                     >
@@ -374,8 +340,8 @@ export const pageQuery = graphql`
           avatar {
             childImageSharp {
               fixed(
-                width: 63
-                height: 63
+                width: 64
+                height: 64
                 quality: 75
                 traceSVG: {
                   turdSize: 10

@@ -1,5 +1,7 @@
 - title: Contributing
   items:
+    - title: Introduction
+      link: /contributing/
     - title: Community
       link: /contributing/community/
       items:
@@ -24,6 +26,8 @@
       items:
         - title: How to File an Issue
           link: /contributing/how-to-file-an-issue/
+        - title: How to Make a Reproducible Test Case
+          link: /contributing/how-to-make-a-reproducible-test-case/
         - title: How to Label an Issue
           link: /contributing/how-to-label-an-issue/
         - title: Triaging GitHub Issues
@@ -35,6 +39,8 @@
               link: /contributing/docs-templates/
             - title: How to Write a Stub
               link: /contributing/how-to-write-a-stub/
+            - title: Stub List
+              link: /contributing/stub-list/
         - title: Blog & Website Contributions
           link: /contributing/blog-and-website-contributions/
         - title: Code Contributions
