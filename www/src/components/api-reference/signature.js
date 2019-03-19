@@ -209,6 +209,14 @@ export const fragment = graphql`
       elements {
         name
         type
+        expression {
+          type
+          name
+        }
+        applications {
+          type
+          name
+        }
       }
       expression {
         type
@@ -217,6 +225,14 @@ export const fragment = graphql`
       applications {
         type
         name
+        expression {
+          type
+          name
+        }
+        applications {
+          type
+          name
+        }
       }
     }
   }
