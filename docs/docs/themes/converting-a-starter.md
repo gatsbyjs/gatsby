@@ -70,11 +70,11 @@ npm install --save gatsby-plugin-page-creator
 
 Then, tell the plugin to look in your theme's `src/pages` directory.
 
-```js
+```js:title=gatsby-config.js
 {
   resolve: `gatsby-plugin-page-creator`,
   options: {
-    path: path.join(__dirname, 'src', 'pages'),
+    path: path.join(__dirname, `src`, `pages`),
   },
 },
 ```
