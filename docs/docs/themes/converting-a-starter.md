@@ -14,7 +14,7 @@ In addition to updating your dependencies you will need to create an `index.js` 
 
 ## Handling Path Resolution
 
-One of the key difference between themes and starters is that a theme is no longer executed where the Gatsby CLI is being run since it's now a dependency. This often results in errors sourcing content and finding templates since they will look in the end user's directory.
+One of the key differences between themes and starters is that a theme is no longer executed where the Gatsby CLI is being run since it's now a dependency. This often results in errors sourcing content and finding templates since they will look in the end user's directory.
 
 In order to fix this, consider the following code that works as a starter:
 
