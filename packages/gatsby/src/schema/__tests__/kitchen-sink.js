@@ -4,6 +4,9 @@ const { SchemaComposer } = require(`graphql-compose`)
 const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { build } = require(`../index`)
+const fs = require(`fs-extra`)
+const path = require(`path`)
+const slash = require(`slash`)
 const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -28,7 +31,14 @@ describe(`Kichen sink schema test`, () => {
       }
     })
 
-    const nodes = require(`./fixtures/kitchen-sink.json`)
+    const nodes = JSON.parse(
+      fs
+        .readFileSync(
+          path.join(__dirname, `./fixtures/kitchen-sink.json`),
+          `utf-8`
+        )
+        .replace(/<PROJECT_ROOT>/g, slash(process.cwd()))
+    )
 
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
