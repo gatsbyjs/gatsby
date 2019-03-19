@@ -1,26 +1,13 @@
-const {
-  graphql,
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
+const { graphql } = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
-const {
-  inferObjectStructureFromNodes,
-} = require(`../../../gatsby/src/schema/infer-graphql-type`)
 const extendNodeType = require(`../extend-node-type`)
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
   nodes,
   fragment,
-  { types = [] } = {},
   { additionalParameters = {}, pluginOptions = {} }
 ) {
-  const inferredFields = inferObjectStructureFromNodes({
-    nodes,
-    types: [...types],
-  })
   const extendNodeTypeFields = await extendNodeType(
     {
       type: { name: `MarkdownRemark` },
@@ -37,32 +24,30 @@ async function queryResult(
     }
   )
 
-  const markdownRemarkFields = {
-    ...inferredFields,
-    ...extendNodeTypeFields,
-  }
+  const {
+    createSchemaComposer,
+  } = require(`../../../gatsby/src/schema/schema-composer`)
 
-  const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: () => {
-        return {
-          listNode: {
-            name: `LISTNODE`,
-            type: new GraphQLList(
-              new GraphQLObjectType({
-                name: `MarkdownRemark`,
-                fields: markdownRemarkFields,
-              })
-            ),
-            resolve() {
-              return nodes
-            },
-          },
-        }
-      },
-    }),
+  const {
+    addInferredFields,
+  } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
+  const {
+    getExampleValue,
+  } = require(`../../../gatsby/src/schema/infer/example-value`)
+
+  const typeName = `MarkdownRemark`
+  const sc = createSchemaComposer()
+  const tc = sc.createTC(typeName)
+  addInferredFields({
+    schemaComposer: sc,
+    typeComposer: tc,
+    exampleValue: getExampleValue({ nodes, typeName }),
   })
+  tc.addFields(extendNodeTypeFields)
+  sc.Query.addFields({
+    listNode: { type: [tc], resolve: () => nodes },
+  })
+  const schema = sc.buildSchema()
 
   const result = await graphql(
     schema,
@@ -97,14 +82,10 @@ const bootstrapTest = (
   it(label, async done => {
     node.content = content
     const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        query,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        },
-        { additionalParameters, pluginOptions }
-      ).then(result => {
+      queryResult([markdownNode], query, {
+        additionalParameters,
+        pluginOptions,
+      }).then(result => {
         try {
           test(result.data.listNode[0])
           done()
