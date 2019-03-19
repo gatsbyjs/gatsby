@@ -48,7 +48,6 @@ Users can override any functionality or styling a theme introduces using compone
 - [Getting Started](/docs/themes/getting-started)
 - [Converting a Starter](/docs/themes/converting-a-starter)
 - [Building Themes](/docs/themes/building-themes)
-- [Customizing a Theme](/docs/themes/customizing-a-theme)
 - [Conventions](/docs/themes/conventions)
 - [Theme Composition](/docs/themes/theme-composition)
 - [API Reference](/docs/themes/api-reference)

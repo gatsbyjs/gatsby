@@ -99,7 +99,7 @@ This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
 You will need to install the package:
 
 ```sh
-yarn add gatsby-plugin-compile-es6-packages
+npm install --save gatsby-plugin-compile-es6-packages
 ```
 
 And then add it to your plugins list:

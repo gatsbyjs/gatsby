@@ -108,39 +108,11 @@ module.exports = {
 
 ## Add Theme Transpilation
 
-**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
+You will need to set up your theme to be automatically transpiled by Gatsby. This
+doesn't happen by default because your theme will end up in an end user's `node_modules`
+directory.
 
-Since your theme will be installed as a dependency it will end up in `node_modules` which Gatsby
-doesn't transpile by default. This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
-
-You will need to install the package:
-
-```sh
-npm install --save gatsby-plugin-compile-es6-packages
-```
-
-And then add it to your plugins list:
-
-```js:title=gatsby-config.js
-const path = require("path")
-
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-plugin-page-creator",
-      options: {
-        path: path.join(__dirname, "src", "pages"),
-      },
-    },
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        modules: ["gatsby-theme-developer"],
-      },
-    },
-  ],
-}
-```
+[See how to set up theme transpilation](/docs/themes/api-reference#add-theme-transpilation)
 
 ## Publish to NPM
 
