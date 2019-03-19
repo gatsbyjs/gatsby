@@ -335,7 +335,7 @@ Object {
         ],
         typeConflictReporter,
       })
-      expect(example.date).toMatchInlineSnapshot(`2017-12-01T14:59:45.600Z`)
+      expect(example.date).toMatchInlineSnapshot(`"1978-09-26"`)
 
       example = getExampleValue({
         nodes: [
@@ -345,7 +345,7 @@ Object {
         ],
         typeConflictReporter,
       })
-      expect(example.date).toMatchInlineSnapshot(`"2017-01-12T18:13:38.326Z"`)
+      expect(example.date).toMatchInlineSnapshot(`"1978-09-26"`)
 
       example = getExampleValue({
         nodes: [
@@ -355,7 +355,7 @@ Object {
         ],
         typeConflictReporter,
       })
-      expect(example.date).toMatchInlineSnapshot(`"2017-01-12T18:13:38.326Z"`)
+      expect(example.date).toMatchInlineSnapshot(`"1978-09-26"`)
     })
 
     it(`infers mixed date objects and non-date strings as string`, () => {
@@ -401,7 +401,7 @@ Object {
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-  2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
 
@@ -415,7 +415,7 @@ Array [
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
 
@@ -429,7 +429,7 @@ Array [
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
     })
@@ -481,7 +481,7 @@ Array [
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-  2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
 
@@ -499,7 +499,7 @@ Array [
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
 
@@ -517,7 +517,7 @@ Array [
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
     })
@@ -569,7 +569,7 @@ Array [
       })
       expect(example.dates).toMatchInlineSnapshot(`
 Array [
-  2017-12-01T14:59:45.600Z,
+  "1978-09-26",
 ]
 `)
     })
