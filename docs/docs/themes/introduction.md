@@ -8,7 +8,7 @@ install away.
 
 Before the advent of themes, starters were the primary path for scaffolding a project with Gatsby.
 This approach worked well for a long time.
-However, as the community and ecosystem grows, we’ve found them to be lacking in a few ways:
+However, as the community and ecosystem has grown, we’ve found starters to be lacking in a few ways:
 
 - Can't be composed
 - Difficult, if not impossible, to upgrade
