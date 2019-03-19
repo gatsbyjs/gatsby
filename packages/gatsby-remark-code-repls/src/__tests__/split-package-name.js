@@ -1,4 +1,4 @@
-const { splitPackageName } = require(`../splitPackageName`)
+const { splitPackageName } = require(`../split-package-name`)
 
 describe(`gatsby-remark-code-repls`, () => {
   describe(`splitPackageName`, () => {
