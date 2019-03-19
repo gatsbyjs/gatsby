@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.38...gatsby@2.1.39) (2019-03-19)
+
+### Bug Fixes
+
+- **gatsby:** filter null values in headComponents, preBodyComponents and postBodyComponents ([#12555](https://github.com/gatsbyjs/gatsby/issues/12555)) ([f7dbc8b](https://github.com/gatsbyjs/gatsby/commit/f7dbc8b))
+- **gatsby:** workaround webpack terser plugin hanging on WSL ([#12636](https://github.com/gatsbyjs/gatsby/issues/12636)) ([8f71f50](https://github.com/gatsbyjs/gatsby/commit/8f71f50)), closes [#6540](https://github.com/gatsbyjs/gatsby/issues/6540) [#7013](https://github.com/gatsbyjs/gatsby/issues/7013)
+
 ## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.37...gatsby@2.1.38) (2019-03-18)
 
 ### Features
