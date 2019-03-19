@@ -130,13 +130,19 @@ Where oh where is my little pony?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where oh where is my little pony?`,
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is my little pony?`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
           },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     }
   )
@@ -158,9 +164,7 @@ date: "2017-09-18T23:19:51.246Z"
       expect(node.excerpt).toMatch(``)
       expect(node.excerptAst).toMatchObject({
         children: [],
-        data: {
-          quirksMode: false,
-        },
+        data: { quirksMode: false },
         type: `root`,
       })
     }
@@ -205,9 +209,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
             value: `\n`,
           },
         ],
-        data: {
-          quirksMode: false,
-        },
+        data: { quirksMode: false },
         type: `root`,
       })
     },
@@ -235,7 +237,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
       expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].value.length).toBe(139)
+      expect(node.excerptAst.children[0].children.length).toBe(1)
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(139)
     }
   )
 
@@ -252,7 +255,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
       expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].value.length).toBe(46)
+      expect(node.excerptAst.children[0].children.length).toBe(1)
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(46)
     }
   )
 
@@ -269,7 +273,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
       expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].value.length).toBe(50)
+      expect(node.excerptAst.children[0].children.length).toBe(1)
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(50)
     }
   )
 
@@ -295,72 +300,78 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where oh `,
-          },
-          {
             children: [
+              {
+                type: `text`,
+                value: `Where oh `,
+              },
               {
                 children: [
                   {
-                    type: `text`,
-                    value: `where`,
+                    children: [
+                      {
+                        type: `text`,
+                        value: `where`,
+                      },
+                    ],
+                    properties: {},
+                    tagName: `em`,
+                    type: `element`,
                   },
                 ],
-                properties: {},
-                tagName: `em`,
+                properties: {
+                  href: `nick.com`,
+                },
+                tagName: `a`,
                 type: `element`,
               },
-            ],
-            properties: {
-              href: `nick.com`,
-            },
-            tagName: `a`,
-            type: `element`,
-          },
-          {
-            type: `text`,
-            value: ` `,
-          },
-          {
-            children: [
+              {
+                type: `text`,
+                value: ` `,
+              },
               {
                 children: [
                   {
-                    type: `text`,
-                    value: `is`,
+                    children: [
+                      {
+                        type: `text`,
+                        value: `is`,
+                      },
+                    ],
+                    properties: {},
+                    tagName: `em`,
+                    type: `element`,
                   },
                 ],
                 properties: {},
-                tagName: `em`,
+                tagName: `strong`,
                 type: `element`,
+              },
+              {
+                type: `text`,
+                value: ` `,
+              },
+              {
+                children: [],
+                properties: {
+                  alt: `that pony`,
+                  src: `pony.png`,
+                },
+                tagName: `img`,
+                type: `element`,
+              },
+              {
+                type: `text`,
+                value: `?`,
               },
             ],
             properties: {},
-            tagName: `strong`,
+            tagName: `p`,
             type: `element`,
-          },
-          {
-            type: `text`,
-            value: ` `,
-          },
-          {
-            children: [],
-            properties: {
-              alt: `that pony`,
-              src: `pony.png`,
-            },
-            tagName: `img`,
-            type: `element`,
-          },
-          {
-            type: `text`,
-            value: `?`,
           },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     }
   )
@@ -387,28 +398,34 @@ Where is my <code>pony</code> named leo?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where is my `,
-          },
-          {
             children: [
               {
                 type: `text`,
-                value: `pony`,
+                value: `Where is my `,
+              },
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `pony`,
+                  },
+                ],
+                properties: {},
+                tagName: `code`,
+                type: `element`,
+              },
+              {
+                type: `text`,
+                value: ` named leo?`,
               },
             ],
             properties: {},
-            tagName: `code`,
+            tagName: `p`,
             type: `element`,
           },
-          {
-            type: `text`,
-            value: ` named leo?`,
-          },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -436,13 +453,19 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where oh where is that pony? Is he in the stable…`,
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is that pony? Is he in the stable…`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
           },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     }
   )
@@ -503,9 +526,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
             value: `\n`,
           },
         ],
-        data: {
-          quirksMode: false,
-        },
+        data: { quirksMode: false },
         type: `root`,
       })
     },
