@@ -31,13 +31,17 @@ jest.mock(
           [`about.json`]: `/400/about`,
         },
       ],
-      pages: [
-        {
-          path: `/about/`,
-          componentChunkName: `page-component---src-pages-test-js`,
-          jsonName: `about.json`,
+      pages: {
+        c: {
+          about: {
+            v: {
+              path: `/about/`,
+              componentChunkName: `page-component---src-pages-test-js`,
+              jsonName: `about.json`,
+            },
+          },
         },
-      ],
+      },
     }
   },
   {

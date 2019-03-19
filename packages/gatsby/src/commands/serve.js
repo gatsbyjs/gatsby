@@ -8,7 +8,7 @@ const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
-const { match: reachMatch } = require(`@reach/router/lib/utils`)
+const { matchPathFactory } = require(`../../cache-dir/path-matcher`)
 
 const telemetry = require(`gatsby-telemetry`)
 
@@ -16,16 +16,19 @@ const getPages = directory =>
   fs
     .readFile(path.join(directory, `.cache`, `pages.json`))
     .then(contents => JSON.parse(contents))
-    .catch(() => [])
+    .catch(() => {
+      return {
+        v: undefined,
+        c: {},
+      }
+    })
 
 const clientOnlyPathsRouter = (pages, options) => {
-  const clientOnlyRoutes = pages.filter(page => page.matchPath)
+  const matchPath = matchPathFactory(pages)
   return (req, res, next) => {
     const { url } = req
     if (req.accepts(`html`)) {
-      const route = clientOnlyRoutes.find(
-        clientRoute => reachMatch(clientRoute.matchPath, url) !== null
-      )
+      const route = matchPath(url)
       if (route && route.path) {
         return res.sendFile(
           path.join(route.path, `index.html`),
@@ -64,10 +67,16 @@ module.exports = async program => {
 
   router.use(compression())
   router.use(express.static(`public`))
-  router.use(clientOnlyPathsRouter(pages, { root }))
+  router.use(
+    clientOnlyPathsRouter(pages, {
+      root,
+    })
+  )
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
-      return res.status(404).sendFile(`404.html`, { root })
+      return res.status(404).sendFile(`404.html`, {
+        root,
+      })
     }
     return next()
   })

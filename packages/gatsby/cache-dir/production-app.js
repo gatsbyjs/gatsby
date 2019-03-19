@@ -15,12 +15,13 @@ import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import EnsureResources from "./ensure-resources"
+import { createPathsFromArray } from "./path-matcher"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
 
-loader.addPagesArray([window.page])
+loader.addPagesArray(createPathsFromArray([window.page]))
 loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)

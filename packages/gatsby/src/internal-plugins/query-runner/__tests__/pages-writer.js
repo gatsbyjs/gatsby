@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const { writePages, resetLastHash } = require(`../pages-writer`)
 const { joinPath } = require(`../../../utils/path`)
 
@@ -35,24 +34,42 @@ jest.mock(`../../../redux/`, () => {
   }
 })
 
-const expectedResult = JSON.stringify({
-  pages: [
-    { path: `/amet`, matchPath: null },
-    { path: `/ipsum`, matchPath: null },
-    { path: `/lorem`, matchPath: null },
-    { path: `/dolor`, matchPath: `/foo` },
-    { path: `/sit`, matchPath: `/bar` },
-  ],
+const expectedResult = {
+  pages: {
+    c: {
+      amet: {
+        v: { path: `/amet`, matchPath: null },
+      },
+      ipsum: {
+        v: { path: `/ipsum`, matchPath: null },
+      },
+      lorem: {
+        v: { path: `/lorem`, matchPath: null },
+      },
+      dolor: {
+        v: { path: `/dolor`, matchPath: `/foo` },
+      },
+      sit: {
+        v: { path: `/sit`, matchPath: `/bar` },
+      },
+      foo: {
+        v: { path: `/dolor`, matchPath: `/foo` },
+      },
+      bar: {
+        v: { path: `/sit`, matchPath: `/bar` },
+      },
+    },
+  },
   dataPaths: {
     bar: `b/a/r`,
     baz: `b/a/z`,
     foo: `f/o/o`,
   },
-})
+}
 
 const now = Date.now()
 
-describe(`Pages writer`, () => {
+fdescribe(`Pages writer`, () => {
   beforeEach(() => {
     // Mock current date
     global.Date.now = () => now
@@ -62,43 +79,24 @@ describe(`Pages writer`, () => {
     resetLastHash()
   })
 
-  it(`writes pages with the good order #1`, async () => {
+  it(`writes pages to disk`, async () => {
     const spy = jest.spyOn(mockFsExtra, `writeFile`)
 
     await writePages()
 
-    expect(spy).toBeCalledWith(
-      joinPath(`my`, `gatsby`, `project`, `.cache`, `data.json.${now}`),
-      expectedResult
+    const path = joinPath(
+      `my`,
+      `gatsby`,
+      `project`,
+      `.cache`,
+      `data.json.${now}`
     )
-  })
 
-  it(`writes pages with the good order #2`, async () => {
-    const spy = jest.spyOn(mockFsExtra, `writeFile`)
-
-    // Reorder data in state
-    mockState = {
-      ...mockState,
-      jsonDataPaths: {
-        bar: jsonDataPathsFixture.bar,
-        foo: jsonDataPathsFixture.foo,
-        baz: jsonDataPathsFixture.baz,
-      },
-      pages: {
-        values: () =>
-          _(pagesFixture)
-            .chunk(2)
-            .reverse()
-            .flatten()
-            .value(),
-      },
-    }
-
-    await writePages()
-
-    expect(spy).toBeCalledWith(
-      joinPath(`my`, `gatsby`, `project`, `.cache`, `data.json.${now}`),
-      expectedResult
-    )
+    // Since multiple calls to writeFile occur at the same time,
+    // search through all the function calls to find the one
+    // that has the right path
+    const call = spy.mock.calls.find(call => call[0] === path)
+    expect(call).toBeTruthy()
+    expect(JSON.parse(call[1])).toEqual(expectedResult)
   })
 })

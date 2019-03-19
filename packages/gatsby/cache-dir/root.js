@@ -1,7 +1,6 @@
 import React, { createElement } from "react"
 import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -9,12 +8,13 @@ import {
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
-import pages from "./pages.json"
+import pageData from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"
+import { matchPathFactory, createArrayFromAllPaths } from "./path-matcher"
 
 if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   const overlayErrorID = `webpack`
@@ -34,6 +34,8 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 }
 
 navigationInit()
+
+const pages = createArrayFromAllPaths(pageData)
 
 class RouteHandler extends React.Component {
   render() {
@@ -63,7 +65,7 @@ class RouteHandler extends React.Component {
         </EnsureResources>
       )
     } else {
-      const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
+      const dev404Page = matchPathFactory(pageData)(`/dev-404-page`)
       const Dev404Page = syncRequires.components[dev404Page.componentChunkName]
 
       if (!loader.getPage(`/404.html`)) {

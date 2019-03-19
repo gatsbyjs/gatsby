@@ -9,10 +9,7 @@ const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { dataPaths, pages } = require(`./data.json`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
-
-// Speed up looking up pages.
-const pagesObjectMap = new Map()
-pages.forEach(p => pagesObjectMap.set(p.path, p))
+const { matchPathFactory } = require(`./path-matcher`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
@@ -45,7 +42,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-const getPage = path => pagesObjectMap.get(path)
+const getPage = matchPathFactory(pages)
 
 const createElement = React.createElement
 

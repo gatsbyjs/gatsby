@@ -4,6 +4,8 @@ const crypto = require(`crypto`)
 
 const { store, emitter } = require(`../../redux/`)
 
+const { createPathsFromArray } = require(`../../../cache-dir/path-matcher`)
+
 import { joinPath } from "../../utils/path"
 
 let lastHash = null
@@ -12,42 +14,30 @@ let lastHash = null
 const writePages = async () => {
   bootstrapFinished = true
   let { program, jsonDataPaths, pages } = store.getState()
-  pages = [...pages.values()]
 
   const pagesComponentDependencies = {}
 
-  // Write out pages.json
-  let pagesData = []
-  pages.forEach(({ path, matchPath, componentChunkName, jsonName }) => {
-    const pageComponentsChunkNames = {
-      componentChunkName,
-    }
+  pages = Array.from(pages.values())
 
-    if (program._[0] === `develop`) {
-      pagesComponentDependencies[path] = pageComponentsChunkNames
-    }
+  const pagesData = createPathsFromArray(
+    pages.map(({ path, matchPath, componentChunkName, jsonName }) => {
+      const pageComponentsChunkNames = {
+        componentChunkName,
+      }
 
-    pagesData.push({
-      ...pageComponentsChunkNames,
-      jsonName,
-      path,
-      matchPath,
+      if (program._[0] === `develop`) {
+        pagesComponentDependencies[path] = pageComponentsChunkNames
+      }
+
+      return {
+        ...pageComponentsChunkNames,
+        jsonName,
+        path,
+        matchPath,
+      }
     })
-  })
+  )
 
-  pagesData = _(pagesData)
-    // Ensure pages keep the same sorting through builds.
-    // Pages without matchPath come first, then pages with matchPath,
-    // where more specific patterns come before less specific patterns.
-    // This ensures explicit routes will match before general.
-    // Specificity is inferred from number of path segments.
-    .sortBy(
-      p =>
-        `${p.matchPath ? 9999 - p.matchPath.split(`/`).length : `0000`}${
-          p.path
-        }`
-    )
-    .value()
   const newHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pagesComponentDependencies))

@@ -1,10 +1,11 @@
 const pageFinderFactory = require(`../find-page`).default
+const { createPathsFromArray } = require(`../path-matcher`)
 
 let findPage
 
 describe(`find-page`, () => {
   beforeEach(() => {
-    const newPages = [
+    const newPages = createPathsFromArray([
       {
         path: `/about/`,
         componentChunkName: `page-component---src-pages-test-js`,
@@ -26,7 +27,7 @@ describe(`find-page`, () => {
         componentChunkName: `page-component---src-pages-app-js`,
         jsonName: `app.json`,
       },
-    ]
+    ])
     findPage = pageFinderFactory(newPages)
   })
 
@@ -54,13 +55,13 @@ describe(`find-page`, () => {
   })
 
   it(`handles finding prefixed links`, () => {
-    const newPages = [
+    const newPages = createPathsFromArray([
       {
         path: `/about/`,
         componentChunkName: `page-component---src-pages-test-js`,
         jsonName: `about.json`,
       },
-    ]
+    ])
     const findPage2 = pageFinderFactory(newPages, `/my-test-prefix`)
     expect(findPage2(`/my-test-prefix/about/`).path).toBe(`/about/`)
   })
