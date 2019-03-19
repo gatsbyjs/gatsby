@@ -102,7 +102,9 @@ in the same way you would for a `.js` page. The queried data is passed
 as a prop, and can be accessed inside any JSX block when writing in
 MDX:
 
-```mdx
+<!-- This is invalid JSX; prettier has a bug with this code snippet -->
+
+```jsx
 import { graphql } from "gatsby"
 
 # My Awesome Page
