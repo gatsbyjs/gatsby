@@ -26,7 +26,7 @@ If you're new to Gatsby you can get started by following along with the guides f
 ## Configuration
 
 Similarly to plugins, you can access options that are passed to your theme.
-You can use this to allow make filesystem sourcing configurable, accepting different nav menu items, or change branding colors from the default.
+You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default.
 
 ```js:title=gatsby-config.js
 module.exports = {
