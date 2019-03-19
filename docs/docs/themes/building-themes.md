@@ -33,7 +33,7 @@ npm i -D gatsby react react-dom
 
 ## Add Dependencies
 
-Then, you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies. This
+Then, you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies in your theme's `package.json` file. This
 will warn users that install your theme if they're missing those dependencies since they're
 required. The `peerDependencies` approach also allows users to determine what versions
 of Gatsby and React that they'd like to use.
