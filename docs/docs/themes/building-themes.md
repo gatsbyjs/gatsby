@@ -21,7 +21,7 @@ detailed below.
 ## Initialize a Theme
 
 For the purposes of this tutorial we will be using the name `gatsby-theme-developer`.
-You will likely want to replaced `developer` with your own theme name.
+You will likely want to replace `developer` with your own theme name.
 
 ```sh
 mkdir gatsby-theme-developer
