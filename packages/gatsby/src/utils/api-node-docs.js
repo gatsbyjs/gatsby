@@ -195,6 +195,74 @@ exports.onCreatePage = true
 exports.setFieldsOnGraphQLNodeType = true
 
 /**
+ * Add custom field resolvers to the GraphQL schema.
+ *
+ * Allows adding new fields to types by providing field configs, or adding resolver
+ * functions to existing fields.
+ *
+ * Things to note:
+ * * Overriding field types is disallowed, instead use the `createTypes`
+ *   action. In case of types added from third-party schemas, where this is not
+ *   possible, overriding field types is allowed.
+ * * New fields will not be available on `filter` and `sort` input types. Extend
+ *   types defined with `createTypes` if you need this.
+ * * In field configs, types can be referenced as strings.
+ * * When extending a field with an existing field resolver, the original
+ *   resolver function is available from `info.originalResolver`.
+ * * The `createResolvers` API is called as the last step in schema generation.
+ *   Thus, an intermediate schema is made available on the `schema` property.
+ *   In resolver functions themselves, it is recommended to access the final
+ *   built schema from `info.schema`.
+ * * Gatsby's data layer, including all internal query capabilities, is
+ *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
+ *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
+ *   while more advanced queries can be composed with `runQuery`. Note that
+ *   `runQuery` will call field resolvers before querying, so e.g. foreign-key
+ *   fields will be expanded to full nodes. The other methods on `nodeModel`
+ *   don't do this.
+ * * It is possible to add fields to the root `Query` type.
+ * * When using the first resolver argument (`source` in the example below,
+ *   often also called `parent` or `root`), take care of the fact that field
+ *   resolvers can be called more than once in a query, e.g. when the field is
+ *   present both in the input filter and in the selection set. This means that
+ *   foreign-key fields on `source` can be either resolved or not-resolved.
+ *
+ * For fuller examples, see [`using-type-definitions`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions).
+ *
+ * @param {object} $0
+ * @param {GraphQLSchema} $0.schema Current GraphQL schema
+ * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs
+ * @param {object} $1
+ * @param {object} $1.resolvers Resolvers from plugin options in `gatsby-config.js`.
+ * @example
+ * exports.createResolvers = ({ createResolvers }) => {
+ *   const resolvers = {
+ *     Author: {
+ *       fullName: {
+ *         resolve: (source, args, context, info) => {
+ *           return source.firstName + source.lastName
+ *         }
+ *       },
+ *     },
+ *     Query: {
+ *       allRecentPosts: {
+ *         type: [`BlogPost`]
+ *         resolve: (source, args, context, info) => {
+ *           const posts = context.nodeModel.getAllNodes({ type: `BlogPost` })
+ *           const recentPosts = posts.filter(
+ *             post => post.publishedAt > Date.UTC(2018, 0, 1)
+ *           )
+ *           return recentPosts
+ *         }
+ *       }
+ *     }
+ *   }
+ *   createResolvers(resolvers)
+ * }
+ */
+exports.createResolvers = true
+
+/**
  * Ask compile-to-js plugins to process source to JavaScript so the query
  * runner can extract out GraphQL queries for running.
  */
