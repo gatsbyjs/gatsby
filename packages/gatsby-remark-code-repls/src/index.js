@@ -17,6 +17,8 @@ const {
   PROTOCOL_RAMDA,
 } = require(`./constants`)
 
+const { splitPackageName } = require(`./splitPackageName`)
+
 // Matches compression used in Babel and CodeSandbox REPLs
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
 const compress = string =>
@@ -134,9 +136,7 @@ module.exports = (
             "package.json": {
               content: {
                 dependencies: dependencies.reduce((map, dependency) => {
-                  const [, name, , version] = /^(@?.+?)(@(.+))?$/.exec(
-                    dependency
-                  )
+                  const [name, version] = splitPackageName(dependency)
                   map[name] = version || `latest`
                   return map
                 }, {}),
