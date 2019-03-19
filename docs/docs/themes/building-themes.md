@@ -88,7 +88,7 @@ export default () => <h1>Hello from gatsby-theme-developer</h1>
 You'll need to install two packages and create a `gatsby-config.js` that sources `pages`:
 
 ```sh
-npm i --save gatsby-plugin-page-creator gatsby-plugin-compile-es6-packages
+npm i --save gatsby-plugin-page-creator
 ```
 
 ```js:title=gatsby-config.js
