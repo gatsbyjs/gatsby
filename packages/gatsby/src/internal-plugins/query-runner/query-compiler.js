@@ -4,16 +4,16 @@ const normalize = require(`normalize-path`)
 import glob from "glob"
 
 import { validate } from "graphql"
-import { IRTransforms } from "relay-compiler"
-import RelayParser from "relay-compiler/lib/RelayParser"
-import ASTConvert from "relay-compiler/lib/ASTConvert"
-import GraphQLCompilerContext from "relay-compiler/lib/GraphQLCompilerContext"
-import filterContextForNode from "relay-compiler/lib/filterContextForNode"
+import { IRTransforms } from "@gatsbyjs/relay-compiler"
+import RelayParser from "@gatsbyjs/relay-compiler/lib/RelayParser"
+import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
+import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
+import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
 
 import { store } from "../../redux"
 import FileParser from "./file-parser"
-import GraphQLIRPrinter from "relay-compiler/lib/GraphQLIRPrinter"
+import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import {
   graphqlError,
   graphqlValidationError,
@@ -28,7 +28,6 @@ const { printTransforms } = IRTransforms
 
 const {
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -51,7 +50,6 @@ type Queries = Map<string, RootQuery>
 
 const validationRules = [
   ValuesOfCorrectTypeRule,
-  VariablesDefaultValueAllowedRule,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
@@ -64,11 +62,9 @@ const validationRules = [
 let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
-const resolveThemes = (plugins = []) =>
-  plugins.reduce((merged, plugin) => {
-    if (plugin.name.includes(`gatsby-theme-`)) {
-      merged.push(plugin.resolve)
-    }
+const resolveThemes = (themes = []) =>
+  themes.reduce((merged, theme) => {
+    merged.push(theme.themeDir)
     return merged
   }, [])
 
@@ -208,6 +204,7 @@ class Runner {
         text,
         originalText: nameDefMap.get(name).text,
         path: filePath,
+        isHook: nameDefMap.get(name).isHook,
         isStaticQuery: nameDefMap.get(name).isStaticQuery,
         hash: nameDefMap.get(name).hash,
       }
@@ -219,6 +216,18 @@ class Runner {
             `${path.relative(store.getState().program.directory, filePath)}`
           )
       }
+
+      if (
+        query.isHook &&
+        process.env.NODE_ENV === `production` &&
+        typeof require(`react`).useContext !== `function`
+      ) {
+        report.panicOnBuild(
+          `You're likely using a version of React that doesn't support Hooks\n` +
+            `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+        )
+      }
+
       compiledNodes.set(filePath, query)
     })
 
@@ -237,9 +246,13 @@ export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, plugins } = store.getState()
+  const { program, schema, themes } = store.getState()
 
-  const runner = new Runner(program.directory, resolveThemes(plugins), schema)
+  const runner = new Runner(
+    program.directory,
+    resolveThemes(themes.themes),
+    schema
+  )
 
   const queries = await runner.compileAll()
 

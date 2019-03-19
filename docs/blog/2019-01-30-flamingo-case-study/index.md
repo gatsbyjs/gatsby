@@ -1,7 +1,5 @@
 ---
-title:
-  "Flamingo by Harry’s chooses Gatsby for critical ecommerce launch, 5X faster
-  page loads"
+title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads"
 date: 2019-01-30
 author: Linda Watkins
 tags:
@@ -11,7 +9,7 @@ image: "./images/flamingo.png"
 showImageInArticle: true
 ---
 
-Since [Harry's](https://www.harrys.com/en/us) launch in 2013, it has lit up the ecommerce market for men's care products. The next logical step was taking that idea to another market – shaving products for women – with the launch of [Flamingo](https://www.shopflamingo.com/). The site went live in October 2018 with thousands of users visiting the new website and hundreds of thousands of page views in the first week. The launch triggered the need for an optimized website with performance built-in, which was delivered seamlessly by Gatsby. It also carried a surprising internal reward – Harry’s and Flamingo developers are re-engaged about learning, charging into the future of modern website development and performance on the edge.
+Since [Harry's](https://www.harrys.com/en/us) launch in 2013, it has lit up the ecommerce market for men's care products. After years of research, the team put their expertise and technology towards a new brand, [Flamingo](https://www.shopflamingo.com/), that makes body care and hair removal products designed specifically for women. The Flamingo site went live in October 2018 with thousands of users visiting the new website and hundreds of thousands of page views in the first week. The launch triggered the need for an optimized website with performance built-in, which was delivered seamlessly by Gatsby. It also carried a surprising internal reward – Harry’s and Flamingo developers are re-engaged about learning, charging into the future of modern website development and performance on the edge.
 
 Here’s some of our conversation with Tim Brown, Senior Software Engineer and Johnny Lin, Engineering Manager at Harry’s.
 
@@ -47,7 +45,7 @@ The duo also praised the ease of getting up to speed on Gatsby, which gave them 
 
 ## No server. No problem.
 
-The Flamingo launch was big. They had a lot of marketing investment and press coverage lined up to support it. But the first day of the launch, there was not a worry about the site going down.
+The Flamingo launch was big, and they had a lot of press coverage lined up to support it. They had a lot of marketing investment and press coverage lined up to support it. But the first day of the launch, there was not a worry about the site going down.
 
 <pullquote>We didn’t have to manage a server – all the traffic was going to the CDN so there was less surface area for things to go wrong.</pullquote>
 

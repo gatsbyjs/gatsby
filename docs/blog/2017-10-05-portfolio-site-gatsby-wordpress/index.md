@@ -1,6 +1,6 @@
 ---
 title: "Rebuilding my portfolio website with the great GatsbyJS and WordPress"
-date: "2017-10-05"
+date: 2017-10-05
 image: "gatsby-article-cover-image.jpg"
 author: "David James"
 excerpt: "Recreating my WordPress portfolio site using GatsbyJS, React and the WordPress REST API"

@@ -1,4 +1,9 @@
-// const { shallow } = require(`enzyme`)
+jest.mock(`fs`, () => {
+  return {
+    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
+  }
+})
+
 const { onRenderBody } = require(`../gatsby-ssr`)
 
 let headComponents
@@ -12,6 +17,11 @@ describe(`gatsby-plugin-manifest`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     headComponents = []
+  })
+
+  it(`Adds a crossorigin attribute to manifest link tag if provided`, () => {
+    onRenderBody(ssrArgs, { crossOrigin: `use-credentials` })
+    expect(headComponents).toMatchSnapshot()
   })
 
   it(`Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided`, () => {
@@ -36,12 +46,35 @@ describe(`gatsby-plugin-manifest`, () => {
   })
 
   it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
-    onRenderBody(ssrArgs, { icon: true, theme_color: `#000000` })
+    onRenderBody(ssrArgs, {
+      icon: true,
+      theme_color: `#000000`,
+    })
     expect(headComponents).toMatchSnapshot()
   })
 
-  it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string`, () => {
+  it(`Adds link favicon tag if "include_favicon" is set to true`, () => {
+    onRenderBody(ssrArgs, { icon: true, include_favicon: true })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string, Adds link favicon if "include_favicon" option is not provided`, () => {
     onRenderBody(ssrArgs, { icon: true })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does not add a link favicon if "include_favicon" option is set to false`, () => {
+    onRenderBody(ssrArgs, { icon: true, include_favicon: false })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`doesn't add cache busting if "cache_busting_mode" option is set to none`, () => {
+    onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `none` })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does file name cache busting if "cache_busting_mode" option is set to name`, () => {
+    onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `name` })
     expect(headComponents).toMatchSnapshot()
   })
 

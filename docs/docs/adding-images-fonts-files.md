@@ -126,7 +126,7 @@ If you put a file into the `static` folder, it will **not** be processed by
 Webpack. Instead, it will be copied into the public folder untouched. E.g. if you
 add a file named `sun.jpg` to the static folder, it'll be copied to
 `public/sun.jpg`. To reference assets in the `static` folder, you'll need to
-[import a helper function from `gatsby` named `withPrefix`](/docs/gatsby-link/#prefixed-paths-helper).
+[import a helper function from `gatsby` named `withPrefix`](/docs/gatsby-link/#add-the-path-prefix-to-paths-using-withprefix).
 You will need to make sure
 [you set `pathPrefix` in your gatsby-config.js for this to work](/docs/path-prefix/).
 
@@ -151,7 +151,7 @@ Keep in mind the downsides of this approach:
 
 ### When to Use the `static` Folder
 
-Normally we recommend importing [stylesheets](#adding-a-stylesheet),
+Normally we recommend importing stylesheets,
 [images, and fonts](#adding-images-fonts-files) from JavaScript. The `static`
 folder is useful as a workaround for a number of less common cases:
 

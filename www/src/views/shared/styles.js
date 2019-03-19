@@ -1,8 +1,13 @@
-import typography, { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-import hex2rgba from "hex2rgba"
-
-const { curveDefault, speedDefault } = presets.animation
+import { options, rhythm } from "../../utils/typography"
+import presets, {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 
 const styles = {
   featuredSitesCard: {
@@ -11,26 +16,26 @@ const styles = {
     flexGrow: 0,
     flexShrink: 0,
     width: 320,
-    marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(3 / 4),
-    [presets.Hd]: {
+    marginBottom: rhythm(space[9]),
+    marginRight: rhythm(space[6]),
+    [breakpoints.xl]: {
       width: 360,
-      marginRight: rhythm(6 / 4),
+      marginRight: rhythm(space[8]),
     },
-    [presets.VHd]: {
+    [breakpoints.xxl]: {
       width: 400,
     },
   },
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
-    padding: rhythm(3 / 4),
+    padding: rhythm(space[6]),
     justifyContent: `space-evenly`,
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(3 / 4),
+    margin: rhythm(space[6]),
     minWidth: 259, //shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
@@ -38,13 +43,15 @@ const styles = {
   },
   featuredItem: {
     display: `none`,
-    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-    [presets.Desktop]: {
+    transition: `background ${transition.speed.slow} ${
+      transition.curve.default
+    }, transform ${transition.speed.slow} ${transition.curve.default}`,
+    [breakpoints.lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
-      borderTopRightRadius: presets.radius,
-      borderBottomLeftRadius: presets.radius,
+      borderTopRightRadius: radii[1],
+      borderBottomLeftRadius: radii[1],
       boxShadow: `none`,
       cursor: `pointer`,
       display: `flex`,
@@ -66,21 +73,19 @@ const styles = {
   },
   withTitleHover: {
     "& .title": {
-      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-      boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
+      transition: `box-shadow ${transition.speed.slow} ${
+        transition.curve.default
+      }, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
-      boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
+      boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
     },
   },
   loadMoreButton: {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
-    margin: `0 auto ${rhythm(3)}`,
-    [presets.Desktop]: {
-      margin: `0 auto ${rhythm(2 / 2)}`,
-    },
+    margin: `0 auto ${rhythm(space[9])}`,
   },
   sticky: {
     position: `sticky`,
@@ -92,16 +97,18 @@ const styles = {
     // is removed, the problem goes away. I tried removing elements in the
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
-    top: `calc(${presets.bannerHeight} - 1px)`,
-    [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${dimensions.bannerHeight} - 1px)`,
+    [breakpoints.lg]: {
+      top: `calc(${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
+      } - 1px)`,
     },
   },
   scrollbar: {
     WebkitOverflowScrolling: `touch`,
     "&::-webkit-scrollbar": {
-      width: `6px`,
-      height: `6px`,
+      width: rhythm(space[2]),
+      height: rhythm(space[2]),
     },
     "&::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,
@@ -111,36 +118,31 @@ const styles = {
     },
   },
   screenshot: {
-    borderRadius: presets.radius,
-    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-    marginBottom: rhythm(options.blockMarginBottom / 2),
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    borderRadius: radii[1],
+    boxShadow: shadows.raised,
+    marginBottom: rhythm(space[3]),
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
   screenshotHover: {
     background: `transparent`,
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
-      transform: `translateY(-3px)`,
-      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+      transform: `translateY(-${rhythm(space[1])})`,
+      boxShadow: shadows.overlay,
     },
   },
   shortcutIcon: {
-    paddingLeft: rhythm(1 / 8),
+    paddingLeft: rhythm(space[1]),
     "&&": {
       color: colors.gray.bright,
-      fontWeight: `normal`,
       borderBottom: `none`,
-      boxShadow: `none`,
       "&:hover": {
-        background: `none`,
         color: colors.gatsby,
       },
     },
   },
   meta: {
-    ...scale(-1 / 4),
+    fontSize: presets.scale[1],
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -148,17 +150,19 @@ const styles = {
   },
   searchInput: {
     appearance: `none`,
-    backgroundColor: `transparent`,
     border: 0,
-    borderRadius: presets.radiusLg,
+    borderRadius: radii[2],
     color: colors.gatsby,
-    paddingTop: rhythm(1 / 8),
-    paddingRight: rhythm(1 / 4),
-    paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(1),
+    padding: rhythm(space[1]),
+    paddingRight: rhythm(space[3]),
+    paddingLeft: rhythm(space[6]),
     overflow: `hidden`,
-    fontFamily: typography.options.headerFontFamily.join(`,`),
-    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    fontFamily: options.headerFontFamily.join(`,`),
+    transition: `width ${transition.speed.default} ${
+      transition.curve.default
+    }, background-color ${transition.speed.default} ${
+      transition.curve.default
+    }`,
     width: `6.8rem`,
     "&::placeholder": {
       color: colors.lilac,
@@ -170,10 +174,7 @@ const styles = {
     },
   },
   filterButton: {
-    ...scale(-2 / 10),
-    [presets.Tablet]: {
-      ...scale(-4 / 10),
-    },
+    fontSize: presets.scale[1],
     margin: 0,
     alignItems: `flex-start`,
     background: `none`,
@@ -181,89 +182,87 @@ const styles = {
     color: colors.gray.text,
     cursor: `pointer`,
     display: `flex`,
-    fontFamily: options.systemFontFamily.join(`,`),
     justifyContent: `space-between`,
     outline: `none`,
     padding: 0,
-    paddingRight: rhythm(1),
-    paddingBottom: rhythm(options.blockMarginBottom / 8),
-    paddingTop: rhythm(options.blockMarginBottom / 8),
+    paddingRight: rhythm(space[5]),
+    paddingBottom: rhythm(space[1]),
+    paddingTop: rhythm(space[1]),
     width: `100%`,
     textAlign: `left`,
     ":hover": {
       color: colors.gatsby,
     },
   },
+  filterCheckbox: {
+    marginRight: rhythm(space[2]),
+    fontSize: presets.scale[2],
+  },
   filterCount: {
     color: colors.gray.bright,
   },
   sidebarHeader: {
     margin: 0,
-    [presets.Desktop]: {
-      ...scale(1 / 8),
-      // display: `flex`,
+    [breakpoints.lg]: {
+      fontSize: presets.scale[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
       color: colors.gray.calm,
       fontWeight: `normal`,
       flexShrink: 0,
-      lineHeight: 1,
-      height: presets.headerHeight,
+      lineHeight: presets.lineHeights.solid,
+      height: dimensions.headerHeight,
       margin: 0,
-      paddingLeft: rhythm(3 / 4),
-      paddingRight: rhythm(3 / 4),
-      paddingTop: rhythm(options.blockMarginBottom),
-      paddingBottom: rhythm(options.blockMarginBottom),
+      paddingLeft: rhythm(space[6]),
+      paddingRight: rhythm(space[6]),
+      paddingTop: rhythm(space[6]),
+      paddingBottom: rhythm(space[6]),
     },
   },
   sidebarBody: {
-    paddingLeft: rhythm(3 / 4),
-    height: `calc(100vh - ((${presets.headerHeight}) + ${
-      presets.bannerHeight
+    paddingLeft: rhythm(space[6]),
+    height: `calc(100vh - ((${dimensions.headerHeight}) + ${
+      dimensions.bannerHeight
     }))`,
     display: `flex`,
     flexDirection: `column`,
   },
   sidebarContainer: {
     display: `none`,
-    [presets.Desktop]: {
-      // background: colors.ui.whisper,
+    [breakpoints.lg]: {
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,
       paddingTop: 0,
       borderRight: `1px solid ${colors.ui.light}`,
-      height: `calc(100vh - (${presets.headerHeight} + ${
-        presets.bannerHeight
+      height: `calc(100vh - (${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
       }))`,
     },
   },
   contentHeader: {
     alignItems: `center`,
     background: `rgba(255,255,255,0.98)`,
-    // background: colors.ui.whisper,
     borderBottom: `1px solid ${colors.ui.light}`,
     display: `flex`,
     flexDirection: `row`,
     flexWrap: `wrap`,
-    height: presets.headerHeight,
+    height: dimensions.headerHeight,
     justifyContent: `space-between`,
-    paddingLeft: `${rhythm(3 / 4)}`,
-    paddingRight: `${rhythm(3 / 4)}`,
+    paddingLeft: rhythm(space[6]),
+    paddingRight: rhythm(space[6]),
     zIndex: 1,
   },
   contentTitle: {
     color: colors.gatsby,
     margin: 0,
-    ...scale(1 / 5),
-    lineHeight: 1,
+    fontSize: presets.scale[3],
+    lineHeight: presets.lineHeights.solid,
   },
   resultCount: {
     color: colors.lilac,
     fontWeight: `normal`,
   },
-  gutter: rhythm(3 / 4),
-  gutterDesktop: rhythm(6 / 4),
 }
 
 export default styles

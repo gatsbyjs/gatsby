@@ -34,7 +34,7 @@ async function createGraphQLNode(ent, type, createNode, store, cache) {
       type: type,
     },
   }
-  node = recursiveAddFields(ent, node, createNode)
+  node = recursiveAddFields(ent, node)
   node.internal.content = JSON.stringify(node)
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)

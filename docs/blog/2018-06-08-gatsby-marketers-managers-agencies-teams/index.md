@@ -1,6 +1,6 @@
 ---
 title: Gatsby for Marketers, Managers, Agencies and Teams
-date: "2018-06-08"
+date: 2018-06-08
 author: "Linda Watkins"
 ---
 

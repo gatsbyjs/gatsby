@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { colors, breakpoints, dimensions } from "../utils/presets"
 import { scrollbarStyles } from "../utils/styles"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
@@ -10,7 +10,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
       css={{
         ...styles.sidebar,
         // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
-        display: `${!isPluginsIndex && `none`}`,
+        display: !isPluginsIndex ? `none` : false,
       }}
     >
       <PluginSearchBar location={location} />
@@ -20,7 +20,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
       css={{
         ...styles.content,
         // mobile: hide README on gatsbyjs.org/plugins index page
-        display: `${isPluginsIndex && `none`}`,
+        display: isPluginsIndex ? `none` : false,
       }}
     >
       {children}
@@ -33,28 +33,28 @@ const widthLarge = rhythm(16)
 
 const styles = {
   sidebar: {
-    height: `calc(100vh - ${presets.headerHeight})`,
-    width: `100vw`,
+    height: `calc(100vh - ${dimensions.headerHeight})`,
+    width: `100%`,
     zIndex: 1,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight} - 1px)`,
     ...scrollbarStyles,
-    [presets.Tablet]: {
+    [breakpoints.md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
       background: colors.ui.whisper,
       borderRight: `1px solid ${colors.ui.light}`,
     },
-    [presets.Desktop]: {
+    [breakpoints.lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [presets.Tablet]: {
+    [breakpoints.md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [presets.Desktop]: {
+    [breakpoints.lg]: {
       paddingLeft: widthLarge,
     },
   },

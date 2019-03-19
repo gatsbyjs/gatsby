@@ -1,9 +1,13 @@
 import React from "react"
-import PropTypes from "prop-types"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
+import TagsIcon from "react-icons/lib/ti/tags"
 
+import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
+import { space } from "../utils/presets"
+import { rhythm } from "../utils/typography"
 
 const Tags = ({ pageContext, data, location }) => {
   const { tag } = pageContext
@@ -16,43 +20,22 @@ const Tags = ({ pageContext, data, location }) => {
     <Layout location={location}>
       <Container>
         <h1>{tagHeader}</h1>
-        <ul>
-          {edges.map(({ node }) => {
-            const {
-              frontmatter: { title },
-              fields: { slug },
-            } = node
-            return (
-              <li key={slug}>
-                <Link to={slug}>{title}</Link>
-              </li>
-            )
-          })}
-        </ul>
-        <Link to="/blog/tags">All tags</Link>
+        <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
+          View All Tags <TagsIcon />
+        </Button>
+        {edges.map(({ node }) => (
+          <BlogPostPreviewItem
+            post={node}
+            key={node.fields.slug}
+            css={{
+              marginTop: rhythm(space[9]),
+              marginBottom: rhythm(space[9]),
+            }}
+          />
+        ))}
       </Container>
     </Layout>
   )
-}
-
-Tags.propTypes = {
-  pageContext: PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-  }),
-  data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      totalCount: PropTypes.number.isRequired,
-      edges: PropTypes.arrayOf(
-        PropTypes.shape({
-          node: PropTypes.shape({
-            frontmatter: PropTypes.shape({
-              title: PropTypes.string.isRequired,
-            }),
-          }),
-        }).isRequired
-      ),
-    }),
-  }),
 }
 
 export default Tags
@@ -71,12 +54,7 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
-          fields {
-            slug
-          }
-          frontmatter {
-            title
-          }
+          ...BlogPostPreview_item
         }
       }
     }

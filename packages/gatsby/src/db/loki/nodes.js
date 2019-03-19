@@ -141,8 +141,8 @@ function getNodesByType(typeName) {
  * `getNodesByType` should be used instead. Or at least where possible
  */
 function getNodes() {
-  const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
-  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType.type))
+  const nodeTypes = getTypes()
+  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType))
 }
 
 /**
@@ -335,9 +335,9 @@ module.exports = {
   getNodes,
   getNode,
   getNodesByType,
+  getTypes,
   hasNodeChanged,
   getNodeAndSavePathDependency,
-  getTypes,
 
   createNode,
   updateNode,

@@ -22,9 +22,9 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
 ### Folders
 
-- **`/.cache`** _Automatically generated._ This folder is an internal cache created automatically by Gatsby. The files inside this folder are not meant for modification. Should be .gitignore-d.
+- **`/.cache`** _Automatically generated._ This folder is an internal cache created automatically by Gatsby. The files inside this folder are not meant for modification. Should be added to the `.gitignore` file if not added already.
 
-- **`/public`** _Automatically generated._ The output of `gatsby build` process will be exposed inside this folder. Should be .gitignore-d.
+- **`/public`** _Automatically generated._ The output of the build process will be exposed inside this folder. Should be added to the `.gitignore` file if not added already.
 
 - **`/plugins`** This folder hosts any project-specific ("local") plugins that aren't published as an `npm` package. Check out the [plugin docs](/docs/plugins/) for more detail.
 
