@@ -2,7 +2,7 @@
 title: Customizing a Theme
 ---
 
-If you've installed a theme there are a few different ways to customize them.
+If you've installed a theme there are a few different ways to customize it.
 
 ## Adding Options
 
