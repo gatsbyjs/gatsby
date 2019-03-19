@@ -7,6 +7,7 @@ const LZString = require(`lz-string`)
 const { join } = require(`path`)
 const map = require(`unist-util-map`)
 const normalizePath = require(`normalize-path`)
+const npa = require(`npm-package-arg`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
@@ -16,8 +17,6 @@ const {
   PROTOCOL_CODE_SANDBOX,
   PROTOCOL_RAMDA,
 } = require(`./constants`)
-
-const { splitPackageName } = require(`./split-package-name`)
 
 // Matches compression used in Babel and CodeSandbox REPLs
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
@@ -136,8 +135,8 @@ module.exports = (
             "package.json": {
               content: {
                 dependencies: dependencies.reduce((map, dependency) => {
-                  const [name, version] = splitPackageName(dependency)
-                  map[name] = version || `latest`
+                  const { name, fetchSpec } = npa(dependency)
+                  map[name] = fetchSpec
                   return map
                 }, {}),
                 main: filesPaths[0].url,
