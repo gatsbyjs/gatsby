@@ -5,6 +5,15 @@ import presets, { colors, space } from "../utils/presets"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
+import { srOnly } from "../utils/styles"
+
+const controlButtonStyles = {
+  WebkitAppearance: `none`,
+  fontWeight: 700,
+  border: 0,
+  background: `transparent`,
+  "&:hover": { cursor: `pointer` },
+}
 
 class Search extends Component {
   constructor(props, context) {
@@ -79,18 +88,14 @@ class Search extends Component {
             )}
           </span>
           <br />
-          <span
-            css={{
-              fontWeight: 700,
-              "&:hover": {
-                cursor: `pointer`,
-              },
-            }}
+          <button
+            css={controlButtonStyles}
             onClick={this.decrementItem.bind(this)}
           >
-            <MdNavigateBefore />
-          </span>
-          &nbsp;&nbsp;&nbsp;There's{` `}
+            <MdNavigateBefore aria-hidden="true" />
+            <span css={srOnly}>Previous</span>
+          </button>
+          &nbsp;&nbsp;&nbsp;There’s{` `}
           {pluginName ? (
             <Link to={`/packages/` + pluginName}>a plugin</Link>
           ) : (
@@ -100,17 +105,13 @@ class Search extends Component {
           for that.
           <span>
             &nbsp;&nbsp;&nbsp;
-            <span
-              css={{
-                fontWeight: 700,
-                "&:hover": {
-                  cursor: `pointer`,
-                },
-              }}
+            <button
+              css={controlButtonStyles}
               onClick={this.incrementItemAndClearInterval.bind(this)}
             >
-              <MdNavigateNext />
-            </span>
+              <MdNavigateNext aria-hidden="true" />
+              <span css={srOnly}>Next</span>
+            </button>
           </span>
         </p>
       </>

@@ -9,6 +9,17 @@ const stripeAnimation = keyframes({
   "100%": { backgroundPosition: `30px 60px` },
 })
 
+export const srOnly = {
+  position: `absolute`,
+  width: 1,
+  height: 1,
+  padding: 0,
+  overflow: `hidden`,
+  clip: `rect(0,0,0,0)`,
+  whiteSpace: `nowrap`,
+  border: 0,
+}
+
 export const scrollbarStyles = {
   WebkitOverflowScrolling: `touch`,
   "&::-webkit-scrollbar": {
