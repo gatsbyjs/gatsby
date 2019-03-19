@@ -1124,7 +1124,7 @@
     - Styled with styled-components using CSS Grid
     - React Helmet for SEO
 - url: https://stoic-swirles-4bd808.netlify.com/
-  repo: https://github.com/cardiv/gatsby-starter-antd
+  repo: https://github.com/crstnio/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
     - Ant Design
