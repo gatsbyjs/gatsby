@@ -13,7 +13,7 @@ Add a `deploy` script to `package.json`
 ```json:title=package.json
 {
   "scripts": {
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    "deploy": "gatsby build --prefix-paths && touch public/.nojekyll && gh-pages -d public --dotfiles"
   }
 }
 ```
@@ -38,7 +38,7 @@ Create a repository named like `username.github.io`.
     {
         "scripts": {
             ...
-            "deploy": "gatsby build && gh-pages -d public -b master",
+            "deploy": "gatsby build && touch public/.nojekyll && gh-pages -d public -b master --dotfiles",
         }
     }
 ```
