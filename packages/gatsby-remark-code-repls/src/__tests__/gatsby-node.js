@@ -205,8 +205,8 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(html).toBe(`<span id="foo"></span>`)
     })
 
-    it(`should support includeMatchingCSS = "true" when matching file exists`, () => {
-      readdir.mockReturnValue([`file.js`, `file.css`])
+    it(`should support includeMatchingCSS = "true" when matching file exists`, async () => {
+      readdir.mockResolvedValue([`file.js`, `file.css`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -219,7 +219,7 @@ describe(`gatsby-remark-code-repls`, () => {
         return null
       })
 
-      createPages(createPagesParams, {
+      await createPages(createPagesParams, {
         includeMatchingCSS: true,
       })
 
@@ -231,8 +231,8 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(css).toBe(`html { color: red; }`)
     })
 
-    it(`should support includeMatchingCSS = "false" when matching file exists`, () => {
-      readdir.mockReturnValue([`file.js`, `file.css`])
+    it(`should support includeMatchingCSS = "false" when matching file exists`, async () => {
+      readdir.mockResolvedValue([`file.js`, `file.css`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -245,7 +245,7 @@ describe(`gatsby-remark-code-repls`, () => {
         return null
       })
 
-      createPages(createPagesParams, {
+      await createPages(createPagesParams, {
         includeMatchingCSS: false,
       })
 
@@ -257,8 +257,8 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(css).toBe(undefined)
     })
 
-    it(`should support includeMatchingCSS = "true" when matching file doesn't exist`, () => {
-      readdir.mockReturnValue([`file.js`])
+    it(`should support includeMatchingCSS = "true" when matching file doesn't exist`, async () => {
+      readdir.mockResolvedValue([`file.js`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -269,7 +269,7 @@ describe(`gatsby-remark-code-repls`, () => {
         return null
       })
 
-      createPages(createPagesParams, {
+      await createPages(createPagesParams, {
         includeMatchingCSS: true,
       })
 
@@ -281,8 +281,8 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(css).toBe(undefined)
     })
 
-    it(`should support includeMatchingCSS = "false" when matching file doesn't exist`, () => {
-      readdir.mockReturnValue([`file.js`])
+    it(`should support includeMatchingCSS = "false" when matching file doesn't exist`, async () => {
+      readdir.mockResolvedValue([`file.js`])
       fs.readFileSync.mockReset()
       fs.readFileSync.mockImplementation((path, options) => {
         if (path === `file.js`) {
@@ -293,7 +293,7 @@ describe(`gatsby-remark-code-repls`, () => {
         return null
       })
 
-      createPages(createPagesParams, {
+      await createPages(createPagesParams, {
         includeMatchingCSS: false,
       })
 
