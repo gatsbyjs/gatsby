@@ -58,7 +58,7 @@ module.exports = themeOptions => {
 }
 ```
 
-Then, in your theme's `gatsby-node.js` you can access them as the second argument:
+Then, in your theme's `gatsby-node.js` you can access them as the second argument to `createPages`:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }, themeOptions) => {
