@@ -62,7 +62,7 @@ of Gatsby and React that they'd like to use.
 }
 ```
 
-Next, create an `index.js` entrypoint that serves as a noop:
+Next, create an `index.js` entrypoint that serves as a noop (an empty function):
 
 ```js:title=index.js
 // noop
