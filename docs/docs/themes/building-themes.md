@@ -13,7 +13,9 @@ npx gatsby new https://github.com/ChristopherBiscardi/gatsby-starter-theme
 ```
 
 This starter will set you up with a yarn workspace and example site which you can
-use to develop your theme.
+use to develop your theme. Yarn is required in this project since npm doesn't offer
+workspace functionality. If you haven't set up yarn you can follow along with the
+[yarn setup guide](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
 If you'd like to walk through setting up a theme project from scratch each step is
 detailed below.
