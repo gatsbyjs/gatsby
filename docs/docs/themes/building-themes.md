@@ -6,7 +6,7 @@ title: Building Themes
 
 ## Gatsby Theme Starter
 
-There's a Gatsby Theme Start which you can use to get up and running quickly:
+There's a Gatsby Theme Starter which you can use to get up and running quickly:
 
 ```sh
 npx gatsby new https://github.com/ChristopherBiscardi/gatsby-starter-theme
