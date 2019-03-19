@@ -144,7 +144,7 @@ const isMixOfDatesAndStrings = (types, arrayWrappers) => {
         return false
       }
     }
-    type.split(`,`).forEach(t => acc.add(t))
+    type.split(`,`).forEach(t => acc.add(t.replace(/[[]]/g, ``)))
     return true
   })
   return acc.size === 2 && acc.has(`date`) && acc.has(`string`)
