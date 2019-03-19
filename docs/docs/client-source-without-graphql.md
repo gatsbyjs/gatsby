@@ -1,16 +1,16 @@
 ---
 
-## title: " Client-side sourcing with JSON or YAML"
+## title: "Client-side sourcing with JSON or YAML"
 
-# Table of Contents
+## Table of Contents
 
-- [Introduction](#Beforehand)
+- [Introduction](#Introduction)
 - [Setup](#Setup)
 - [YAML example](#YAML-example)
 - [JSON example](#JSON-example)
 - [Joining the pieces](#Joining-the-pieces)
 
-# Beforehand
+## Introduction
 
 As you come across Gatsby and start discovering the extent of it's possibilities, sometimes you might wonder about the basic things.
 
@@ -59,7 +59,7 @@ Starting from YAML, if you want to see how to do it using JSON, jump to the [nex
 
 ### Adding the YAML content
 
-Create a folder called `content` and inside, add a file called `client-data.yml` with the following content inside:
+Create a folder called `content` and inside, add a file called `client-data.yaml` with the following content inside:
 
 ```yml
 title: YAML used in the client with React and Gatsby
@@ -80,7 +80,7 @@ content:
   - item: 111111
 ```
 
-### Creating the page
+### Importing YAML into the page component
 
 Now that you have something you want to show, the only thing missing is to create a page that will consume the data.
 
@@ -134,7 +134,7 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
 }
 ```
 
-### Creating the page
+### Importing JSON into the page component
 
 Now that you have something that needs to be shown, all that's missing is a page to show it.
 

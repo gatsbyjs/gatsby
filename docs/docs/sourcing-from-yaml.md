@@ -4,7 +4,7 @@ title: "YAML as a source for building a site"
 
 # Table of Contents
 
-- [Introduction](#Beforehand)
+- [Introduction](#Introduction)
 - [Setup](#Setup)
 - [Adding Content](#Adding-some-content)
 - [Gatsby Config](#Gatsby-configuration)
@@ -12,7 +12,7 @@ title: "YAML as a source for building a site"
 - [Joining the pieces](#Joining-the-pieces)
 - [Sourcing from JSON](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/)
 
-# Beforehand
+## Introduction
 
 As you're presented with Gatsby, you'll see that you have at your disposal a myriad of ways to pull data into your website, ranging from the most used ones like [Contentful](https://www.contentful.com/), or [WordPress](https://wordpress.com/), [Drupal](https://www.drupal.org/), to the most edgier ones like [ButterCMS](https://buttercms.com/) or [GraphCMS](https://graphcms.com/).
 
@@ -141,26 +141,19 @@ Start by creating a `gatsby-node.js` with the following contents:
 
 ```javascript
 const fs = require("fs")
-const yaml = require("js-yaml") // the yaml parser to be used being imported .
+const yaml = require("js-yaml")
 exports.createPages = ({ actions }) => {
   const { createPage } = actions
-  return new Promise(resolve => {
-    //yaml file loaded here
-    const ymlDoc = yaml.safeLoad(
-      fs.readFileSync("./content/index.yaml", "utf-8")
-    )
-    //
-    ymlDoc.forEach(element => {
-      createPage({
-        path: element.path,
-        component: require.resolve("./src/templates/basicTemplate.js"),
-        context: {
-          pageContent: element.content,
-          links: element.links,
-        },
-      })
+  const ymlDoc = yaml.safeLoad(fs.readFileSync("./content/index.yaml", "utf-8"))
+  ymlDoc.forEach(element => {
+    createPage({
+      path: element.path,
+      component: require.resolve("./src/templates/basicTemplate.js"),
+      context: {
+        pageContent: element.content,
+        links: element.links,
+      },
     })
-    resolve()
   })
 }
 ```
@@ -170,7 +163,7 @@ Breaking down the code into smaller parts:
 1. The `js-yaml` package installed earlier is imported.
 2. The `index.yaml` file is loaded and the content parsed.
 3. Through the use of Gatsby's `createPage()` api, the parsed file will be used to create some pages programmatically.
-4. Using the `pageContext` property, some additional data will be provided to each page.
+4. Using the `context` property, will allow every piece of data you add there, to be accessible in the page as a special prop named `pageContext` allowing it to be consumed. You can read more about it [here](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
 
 ## Review of the steps so far
 
