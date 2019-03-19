@@ -36,10 +36,17 @@ const writePages = async () => {
   })
 
   pagesData = _(pagesData)
-    // Ensure pages keep the same sorting through builds
-    // and sort pages with matchPath to end so explicit routes
-    // will match before general.
-    .sortBy(p => `${p.matchPath ? 1 : 0}${p.path}`)
+    // Ensure pages keep the same sorting through builds.
+    // Pages without matchPath come first, then pages with matchPath,
+    // where more specific patterns come before less specific patterns.
+    // This ensures explicit routes will match before general.
+    // Specificity is inferred from number of path segments.
+    .sortBy(
+      p =>
+        `${p.matchPath ? 9999 - p.matchPath.split(`/`).length : `0000`}${
+          p.path
+        }`
+    )
     .value()
   const newHash = crypto
     .createHash(`md5`)
@@ -65,15 +72,17 @@ const writePages = async () => {
   components = _.uniqBy(components, c => c.componentChunkName)
 
   // Create file with sync requires of components/json files.
-  let syncRequires = `// prefer default export if available
+  let syncRequires = `const { hot } = require("react-hot-loader/root")
+
+// prefer default export if available
 const preferDefault = m => m && m.default || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
+        `  "${c.componentChunkName}": hot(preferDefault(require("${joinPath(
           c.component
-        )}"))`
+        )}")))`
     )
     .join(`,\n`)}
 }\n\n`
@@ -92,7 +101,7 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  asyncRequires += `exports.data = () => import("${joinPath(
+  asyncRequires += `exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "${joinPath(
     program.directory,
     `.cache`,
     `data.json`

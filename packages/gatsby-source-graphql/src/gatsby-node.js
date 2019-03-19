@@ -41,7 +41,7 @@ exports.sourceNodes = async (
   )
   invariant(
     (url && url.length > 0) || createLink,
-    `gatsby-source-graphql requiers either option \`url\` or \`createLink\` callback`
+    `gatsby-source-graphql requires either option \`url\` or \`createLink\` callback`
   )
 
   let link

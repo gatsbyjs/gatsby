@@ -5,6 +5,7 @@ const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
+const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -32,7 +33,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
+  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store, cache },
   options
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -165,7 +166,6 @@ exports.sourceNodes = async (
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
-  Object.keys(foreignReferenceMap)
   existingNodes
     .filter(n => _.includes(newOrUpdatedEntries, n.id))
     .forEach(n => {
@@ -210,13 +210,23 @@ exports.sourceNodes = async (
     })
   })
 
+  if (options.downloadLocal) {
+    await downloadContentfulAssets({
+      actions,
+      createNodeId,
+      store,
+      cache,
+      getNodes,
+    })
+  }
+
   return
 }
 
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({ store, getNodes }) => {
+exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   const program = store.getState().program
 
   const CACHE_DIR = path.resolve(
@@ -224,9 +234,7 @@ exports.onPreExtractQueries = async ({ store, getNodes }) => {
   )
   await fs.ensureDir(CACHE_DIR)
 
-  const nodes = getNodes()
-
-  if (!nodes.some(n => n.internal.type === `ContentfulAsset`)) {
+  if (getNodesByType(`ContentfulAsset`).length == 0) {
     return
   }
 

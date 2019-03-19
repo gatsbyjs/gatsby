@@ -9,10 +9,10 @@ it(`Specifies proper presets and plugins for test stage`, () => {
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
         loose: true,
-        modules: false,
+        modules: `commonjs`,
         useBuiltIns: `usage`,
         targets: {
-          browsers: undefined,
+          node: `current`,
         },
       },
     ],
@@ -101,8 +101,9 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
 })
 
 it(`Allows to configure browser targets`, () => {
+  const targets = `last 1 version`
   const { presets } = preset(null, {
-    targets: { browsers: [`last 1 version`] },
+    targets,
   })
 
   expect(presets[0]).toEqual([
@@ -111,9 +112,7 @@ it(`Allows to configure browser targets`, () => {
       loose: true,
       modules: false,
       useBuiltIns: `usage`,
-      targets: {
-        browsers: [`last 1 version`],
-      },
+      targets,
     },
   ])
 })

@@ -1,11 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 32">
-	<line class="svg-stroke svg-stroke-lilac" x1="24.1" y1="10.7" x2="28.3" y2="10.7"/>
-	<line class="svg-stroke svg-stroke-lilac" x1="21.2" y1="13.5" x2="26.9" y2="13.5"/>
-	<line class="svg-stroke svg-stroke-lilac" x1="19.8" y1="14.9" x2="19.7" y2="9.2"/>
-	<line class="svg-stroke svg-stroke-lilac" x1="17" y1="17.8" x2="16.9" y2="12"/>
-	<path class="svg-fill-gradient-accent-white-45deg" d="M27.6,12.8L18.4,22c-1.6,1.6-5.7,0-5.7,0l0,0c0,0-1.6-4.1,0-5.7l9.2-9.2c1.6-1.6,4.1-1.6,5.7,0l0,0
-		C29.2,8.7,29.2,11.3,27.6,12.8z"/>
-	<line class="svg-stroke svg-stroke-lilac" x1="27.6" y1="7.2" x2="13.1" y2="21.7"/>
-	<polygon class="svg-fill-gatsby" points="10.4,25.4 8,25.8 12.9,20.8 14,21.8"/>
-	<path fill="none" class="svg-stroke svg-stroke-gatsby" d="M27.6,12.8L18.4,22h-5.7l0,0v-5.7l9.2-9.2c1.6-1.6,4.1-1.6,5.7,0l0,0C29.2,8.7,29.2,11.3,27.6,12.8z"/>
+  <path class="svg-stroke svg-stroke-lilac" d="M24.1 10.7h4.2m-7.1 2.8h5.7m-7.1 1.4l-.1-5.7M17 17.8l-.1-5.8"/>
+  <path class="svg-fill-gradient-accent-white-45deg" d="M27.6 12.8L18.4 22c-1.6 1.6-5.7 0-5.7 0s-1.6-4.1 0-5.7l9.2-9.2c1.6-1.6 4.1-1.6 5.7 0 1.6 1.6 1.6 4.2 0 5.7z"/>
+  <path class="svg-stroke svg-stroke-lilac" d="M27.6 7.2L13.1 21.7"/>
+  <path class="svg-fill-gatsby" d="M10.4 25.4l-2.4.4 4.9-5 1.1 1z"/>
+  <path fill="none" class="svg-stroke svg-stroke-gatsby" d="M27.6 12.8L18.4 22h-5.7v-5.7l9.2-9.2c1.6-1.6 4.1-1.6 5.7 0 1.6 1.6 1.6 4.2 0 5.7z"/>
 </svg>

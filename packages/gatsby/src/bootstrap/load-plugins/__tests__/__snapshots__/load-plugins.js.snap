@@ -4,7 +4,7 @@ exports[`Load plugins Load plugins for a site 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin dev-404-page",
+    "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "name": "dev-404-page",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -18,7 +18,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin load-babel-config",
+    "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onPreBootstrap",
@@ -32,7 +32,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin internal-data-bridge",
+    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
@@ -47,7 +47,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin prod-404",
+    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "name": "prod-404",
     "nodeAPIs": Array [
       "onCreatePage",
@@ -61,7 +61,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin query-runner",
+    "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
@@ -75,7 +75,21 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin default-site-plugin",
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
+    "nodeAPIs": Array [
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -87,7 +101,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin gatsby-plugin-page-creator",
+    "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -108,7 +122,7 @@ exports[`Load plugins Loads plugins defined with an object but without an option
 Array [
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin dev-404-page",
+    "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "name": "dev-404-page",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -122,7 +136,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin load-babel-config",
+    "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onPreBootstrap",
@@ -136,7 +150,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin internal-data-bridge",
+    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
@@ -151,7 +165,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin prod-404",
+    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "name": "prod-404",
     "nodeAPIs": Array [
       "onCreatePage",
@@ -165,7 +179,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin query-runner",
+    "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
     "name": "query-runner",
     "nodeAPIs": Array [
       "onCreatePage",
@@ -179,6 +193,21 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
+    "nodeAPIs": Array [
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "c731052f-1e62-5905-9fb3-edc9057be8f1",
     "name": "TEST",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -190,7 +219,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin default-site-plugin",
+    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -202,7 +231,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "Plugin gatsby-plugin-page-creator",
+    "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",

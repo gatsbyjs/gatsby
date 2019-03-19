@@ -9,7 +9,7 @@ describe(`Test hashing function`, () => {
     const hash = getHashFn({})(`my input`)
     try {
       getHashFn({ cache: new Set([hash]) })(`my input`)
-    } catch(err) {
+    } catch (err) {
       expect(err).toMatchSnapshot()
     }
   })

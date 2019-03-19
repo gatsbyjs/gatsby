@@ -9,9 +9,9 @@ For more information on how to customize the Babel configuration of your Gatsby 
 - [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env)
 - [`@babel/preset-react`](https://babeljs.io/docs/en/babel-preset-react)
 - [`@babel/plugin-proposal-class-properties`](https://babeljs.io/docs/en/babel-plugin-proposal-class-properties)
-- [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros)
-- [`@babel/plugin-proposal-optional-chaining`](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining)
+- [`@babel/plugin-syntax-dynamic-import`](https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import)
 - [`@babel/plugin-transform-runtime`](https://babeljs.io/docs/en/babel-plugin-transform-runtime#docsNav)
+- [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros)
 
 ## Usage
 

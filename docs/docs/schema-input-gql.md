@@ -54,7 +54,7 @@ If the key is a foreign key reference (ends in `___NODE`), then we find the fiel
 
 ### Inferring input filters from plugin fields
 
-Plugins themselves have the opportunity to create custom fields that apply to ALL nodes of a particular type, as opposed to having to expicitly add the field on every node creation. An example would be `markdownRemark` which adds a `wordcount` field to each node automatically. This section deals with the generation of input filters so that we can query by these fields as well. E.g:
+Plugins themselves have the opportunity to create custom fields that apply to ALL nodes of a particular type, as opposed to having to explicitly add the field on every node creation. An example would be `markdownRemark` which adds a `wordcount` field to each node automatically. This section deals with the generation of input filters so that we can query by these fields as well. E.g:
 
 ```graphql
 {
@@ -64,7 +64,7 @@ Plugins themselves have the opportunity to create custom fields that apply to AL
 }
 ```
 
-Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for thew new fields. The result would look something like:
+Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for the new fields. The result would look something like:
 
 ```javascript
 { //GraphQLInputObjectType

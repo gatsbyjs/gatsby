@@ -93,7 +93,7 @@ plus there is a
 [tutorial](/tutorial/part-four/#data-in-gatsby), which
 gives examples. In sum, I created a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](/docs/bound-action-creators/).
+[`boundActionCreators`](/docs/actions/).
 
 This might sound way more complicated than what it is:
 
@@ -432,7 +432,7 @@ that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const AdminPage = () => (
   <div className="admin">

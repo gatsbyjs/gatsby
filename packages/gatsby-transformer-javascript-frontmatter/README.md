@@ -18,11 +18,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`
-      }
+        path: `${__dirname}/src/pages/`,
+      },
     },
-    'gatsby-transformer-javascript-frontmatter'
-  ]
+    "gatsby-transformer-javascript-frontmatter",
+  ],
 }
 ```
 
@@ -31,7 +31,7 @@ module.exports = {
 This plugin uses [@babel/parser](https://www.npmjs.com/package/@babel/parser) and [@babel/traverse](https://www.npmjs.com/package/@babel/traverse) to
 statically read the frontmatter exports.
 
-In a `.js` file, export a frontmatter object to set your metadata variables, like so:
+In a `.js` (or `.jsx` / `.ts` / `.tsx`) file, export a frontmatter object to set your metadata variables, like so:
 
 ```javascript
 import React from "react"

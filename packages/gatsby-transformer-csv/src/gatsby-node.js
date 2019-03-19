@@ -30,7 +30,6 @@ async function onCreateNode(
 
   if (_.isArray(parsedContent)) {
     const csvArray = parsedContent.map((obj, i) => {
-
       return {
         ...obj,
         id: obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> CSV`),

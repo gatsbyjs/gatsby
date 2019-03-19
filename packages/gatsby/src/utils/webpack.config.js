@@ -3,7 +3,8 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -37,9 +38,10 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
+    const env =
+      process.env.GATSBY_ACTIVE_ENV ||
+      process.env.NODE_ENV ||
+      `${defaultNodeEnv}`
     const envFile = path.join(process.cwd(), `./.env.${env}`)
     let parsed = {}
     try {
@@ -66,15 +68,24 @@ module.exports = async (
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
+    envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
-    return Object.assign(envObject, gatsbyVarObject)
+    const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
+
+    return Object.keys(mergedEnvVars).reduce(
+      (acc, key) => {
+        acc[`process.env.${key}`] = mergedEnvVars[key]
+        return acc
+      },
+      {
+        "process.env": JSON.stringify({}),
+      }
+    )
   }
 
   function getHmrPath() {
-    let hmrBasePath = `${program.ssl ? `https` : `http`}://${
-      program.host
-    }:${webpackPort}/`
-
+    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
+    let hmrBasePath = `/`
     const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
@@ -99,11 +110,7 @@ module.exports = async (
           // Add /* filename */ comments to generated require()s in the output.
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
-          publicPath:
-            process.env.GATSBY_WEBPACK_PUBLICPATH ||
-            `${program.ssl ? `https` : `http`}://${
-              program.host
-            }:${webpackPort}/`,
+          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
@@ -144,7 +151,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
-            require.resolve(`react-hot-loader/patch`),
+            `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -175,7 +182,7 @@ module.exports = async (
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        "process.env": processEnv(stage, `development`),
+        ...processEnv(stage, `development`),
         __PATH_PREFIX__: JSON.stringify(
           program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
@@ -198,53 +205,7 @@ module.exports = async (
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
-          {
-            apply: function(compiler) {
-              compiler.hooks.done.tapAsync(
-                `gatsby-webpack-stats-extractor`,
-                (stats, done) => {
-                  let assets = {}
-                  let assetsMap = {}
-                  for (let chunkGroup of stats.compilation.chunkGroups) {
-                    if (chunkGroup.name) {
-                      let files = []
-                      for (let chunk of chunkGroup.chunks) {
-                        files.push(...chunk.files)
-                      }
-                      assets[chunkGroup.name] = files.filter(
-                        f => f.slice(-4) !== `.map`
-                      )
-                      assetsMap[chunkGroup.name] = files
-                        .filter(
-                          f =>
-                            f.slice(-4) !== `.map` &&
-                            f.slice(0, chunkGroup.name.length) ===
-                              chunkGroup.name
-                        )
-                        .map(filename => `/${filename}`)
-                    }
-                  }
-
-                  const webpackStats = {
-                    ...stats.toJson({ all: false, chunkGroups: true }),
-                    assetsByChunkName: assets,
-                  }
-
-                  fs.writeFile(
-                    path.join(`public`, `chunk-map.json`),
-                    JSON.stringify(assetsMap),
-                    () => {
-                      fs.writeFile(
-                        path.join(`public`, `webpack.stats.json`),
-                        JSON.stringify(webpackStats),
-                        done
-                      )
-                    }
-                  )
-                }
-              )
-            },
-          },
+          plugins.extractStats(),
         ])
         break
       }
@@ -256,7 +217,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `eval`
+        return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -356,11 +317,6 @@ module.exports = async (
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
-      // Default to using the site's node_modules directory to look for
-      // modules. But also make it possible to install modules within the src
-      // directory if you need to install a specific version of a module for a
-      // part of your site.
-      modules: [directoryPath(path.join(`node_modules`)), `node_modules`],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
         // Using directories for module resolution is mandatory because
@@ -378,6 +334,14 @@ module.exports = async (
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
+      plugins: [
+        // Those two folders are special and contain gatsby-generated files
+        // whose dependencies should be resolved through the `gatsby` package
+        PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
+        PnpWebpackPlugin.bind(directoryPath(`public`), module),
+        // Transparently resolve packages via PnP when needed; noop otherwise
+        PnpWebpackPlugin,
+      ],
     }
   }
 
@@ -396,6 +360,9 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
+      // Bare loaders should always be loaded via the user dependencies (loaders
+      // configured via third-party like gatsby use require.resolve)
+      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 
@@ -437,6 +404,19 @@ module.exports = async (
       },
       splitChunks: {
         name: false,
+        cacheGroups: {
+          // Only create one CSS file to avoid
+          // problems with code-split CSS loading in different orders
+          // causing inconsistent/non-determanistic styling
+          // See https://github.com/gatsbyjs/gatsby/issues/11072
+          styles: {
+            name: `styles`,
+            // This should cover all our types of CSS.
+            test: /\.(css|scss|sass|less|styl)$/,
+            chunks: `all`,
+            enforce: true,
+          },
+        },
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?

@@ -15,7 +15,7 @@ Here's an overview of how it all relates:
 ```dot
 digraph {
   compound = true;
-  
+
   subgraph cluster_other {
     style = invis;
     extractQueries [ label = "query-watcher.js", shape = box ];
@@ -23,16 +23,16 @@ digraph {
     components [ label = "components\l (redux)", shape = cylinder ];
     createNode [ label = "CREATE_NODE action", shape = box ];
   }
-  
+
   subgraph cluster_pageQueryRunner {
     label = "page-query-runner.js"
-    
+
     dirtyActions [ label = "dirtyActions", shape = cylinder ];
-    extractedQueryQ [ label = "queueQueryForPathname()", shape = box ]; 
+    extractedQueryQ [ label = "queueQueryForPathname()", shape = box ];
     findIdsWithoutDD [ label = "findIdsWithoutDataDependencies()", shape = box ];
     findDirtyActions [ label = "findDirtyActions()", shape = box ];
     queryJobs [ label = "runQueriesForPathnames()", shape = box ];
-    
+
     extractedQueryQ -> queryJobs;
     findIdsWithoutDD -> queryJobs;
     dirtyActions -> findDirtyActions [ weight = 100 ];
@@ -43,15 +43,15 @@ digraph {
     label = "query-queue.js";
     queryQ [ label = "better-queue", shape = box ];
   }
-  
+
   subgraph cluster_queryRunner {
     label = "query-runner.js"
     graphqlJs [ label = "graphqlJs(schema, query, context, ...)" ];
     result [ label = "Query Result" ];
-  
+
     graphqlJs -> result;
   }
-  
+
   diskResult [ label = "/public/static/d/${dataPath}", shape = cylinder ];
   jsonDataPaths [ label = "jsonDataPaths\l(redux)", shape = cylinder ];
 
@@ -71,7 +71,7 @@ digraph {
 
 #### Figuring out which queries need to be executed
 
-The first thing this query does is figure out what queries even need to be run. You would think this would simply be a matter of running the Queries that were enqueued in [Extract Queries](/docs/query-extraction/), but matters are complicated by support for `gatsby develop`. Below is the logic for figuring out which queries need to be executed (code is in [runQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L36)).
+The first thing this query does is figure out what queries even need to be run. You would think this would simply be a matter of running the Queries that were enqueued in [Extract Queries](/docs/query-extraction/), but matters are complicated by support for `develop`. Below is the logic for figuring out which queries need to be executed (code is in [runQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L36)).
 
 ##### Already queued queries
 
@@ -79,15 +79,15 @@ All queries queued after being extracted (from `query-watcher.js`).
 
 ##### Queries without node dependencies
 
-All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is *not* contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89).
+All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is _not_ contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L96).
 
 ##### Pages that depend on dirty nodes
 
-In `gatsby develop` mode, every time a node is created, or is updated (e.g via editing a markdown file), we add that node to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When we execute our queries, we can lookup all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, we mark all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
+In `develop` mode, every time a node is created, or is updated (e.g via editing a markdown file), we add that node to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When we execute our queries, we can lookup all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, we mark all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
 
 #### Queue Queries for Execution
 
-We now have the list of all pages that need to be executed (linked to their Query information). Let's queue them for execution (for realz this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L21) kicks off this step. For each page or static query, we create a Query Job that looks something like:
+We now have the list of all pages that need to be executed (linked to their Query information). Let's queue them for execution (for realz this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L127) kicks off this step. For each page or static query, we create a Query Job that looks something like:
 
 ```javascript
 {
@@ -132,4 +132,3 @@ As queries are consumed from the queue and executed, their results are saved to 
 For static queries, instead of using the page's jsonName, we just use a hash of the query.
 
 Now we need to store the association of the page -> the query result in redux so we can recall it later. This is accomplished via the [json-data-paths](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/json-data-paths.js) reducer which we invoke by creating a `SET_JSON_DATA_PATH` action with the page's jsonName and the saved dataPath.
-

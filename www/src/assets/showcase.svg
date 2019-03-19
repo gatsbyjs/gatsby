@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 32">
-  <polygon class="svg-stroke svg-stroke-gatsby svg-fill-gradient-accent-white-45deg" points="18.9,20.7 16.6,25.7 14.3,20.7 9.3,18.4 14.3,16.1 16.6,11 18.9,16.1 24,18.4"/>
-  <polygon class="svg-fill-lilac" points="26.3,13.1 25.4,15 24.5,13.1 22.6,12.2 24.5,11.4 25.4,9.5 26.3,11.4 28.2,12.2"/>
-  <polygon class="svg-fill-accent" points="21,7.4 20.3,9 19.6,7.4 18,6.7 19.6,6 20.3,4.5 21,6 22.5,6.7"/>
+  <path class="svg-stroke svg-stroke-gatsby svg-fill-gradient-accent-white-45deg" d="M18.9 20.7l-2.3 5-2.3-5-5-2.3 5-2.3 2.3-5.1 2.3 5.1 5.1 2.3z"/>
+  <path class="svg-fill-lilac" d="M26.3 13.1l-.9 1.9-.9-1.9-1.9-.9 1.9-.8.9-1.9.9 1.9 1.9.8z"/>
+  <path class="svg-fill-accent" d="M21 7.4L20.3 9l-.7-1.6-1.6-.7 1.6-.7.7-1.5L21 6l1.5.7z"/>
 </svg>

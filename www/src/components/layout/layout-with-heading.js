@@ -1,91 +1,73 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import styled, { css } from "react-emotion"
+import styled from "@emotion/styled"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets, { colors } from "../../utils/presets"
+import presets, { breakpoints, dimensions } from "../../utils/presets"
+import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-// Other fonts
-import "typeface-spectral"
 
-const Content = styled("div")`
-  padding-top: ${presets.bannerHeight};
-  height: 200vh;
-`
+const Content = styled(`div`)`
+  padding-top: ${dimensions.bannerHeight};
+  padding-bottom: ${presets.scale[10]};
 
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-  font-size: 0.85rem;
-
-  :focus {
-    padding: 0.9rem;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
+  ${breakpoints.md} {
+    margin-left: ${dimensions.pageHeadingDesktopWidth};
+    padding-top: calc(${dimensions.bannerHeight} + ${dimensions.headerHeight});
+    padding-bottom: 0;
   }
 `
 
-class LayoutWithHeading extends React.Component {
-  render() {
-    const {
-      children,
-      location: { pathname },
-      pageTitle = "",
-      pageIcon,
-    } = this.props
+const StyledSkipNavLink = styled(SkipNavLink)({
+  ...skipLink,
+})
 
-    const isHomepage = pathname === `/`
+const LayoutWithHeading = props => {
+  const {
+    children,
+    location: { pathname },
+    pageTitle = ``,
+    pageIcon,
+  } = props
 
-    return (
-      <div className={` ${isHomepage ? `isHomepage` : ``}`}>
-        <Helmet>
-          <title>{pageTitle ? `${pageTitle} | GatsbyJS` : "GatsbyJS"}</title>
-          <meta name="twitter:site" content="@gatsbyjs" />
-          <meta name="og:type" content="website" />
-          <meta name="og:site_name" content="GatsbyJS" />
-          <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
-          <html lang="en" />
-        </Helmet>
+  const isHomepage = pathname === `/`
 
-        <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
+  return (
+    <div className={` ${isHomepage ? `isHomepage` : ``}`}>
+      <Helmet>
+        <title>{pageTitle ? `${pageTitle} | GatsbyJS` : `GatsbyJS`}</title>
+        <meta name="twitter:site" content="@gatsbyjs" />
+        <meta name="og:type" content="website" />
+        <meta name="og:site_name" content="GatsbyJS" />
+        <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
+        <html lang="en" />
+      </Helmet>
 
-        <Banner />
+      <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-        <Navigation pathname={this.props.location.pathname} />
+      <Banner />
 
-        <Content>
-          {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
-          {children}
-        </Content>
+      <Navigation pathname={props.location.pathname} />
 
-        <MobileNavigation />
-      </div>
-    )
-  }
+      <Content>
+        {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
+        {children}
+      </Content>
+
+      <MobileNavigation />
+    </div>
+  )
 }
 
 LayoutWithHeading.propTypes = {

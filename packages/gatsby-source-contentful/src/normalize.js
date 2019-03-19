@@ -173,7 +173,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNode, createNodeId) {
+function prepareTextNode(node, key, text, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -193,9 +193,9 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
-function prepareStructuredTextNode(node, key, content, createNode, createNodeId) {
-  const str = JSON.stringify(content)
-  const structuredTextNode = {
+function prepareRichTextNode(node, key, content, createNodeId) {
+  const str = stringify(content)
+  const richTextNode = {
     ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,
@@ -209,9 +209,9 @@ function prepareStructuredTextNode(node, key, content, createNode, createNodeId)
     },
   }
 
-  node.children = node.children.concat([structuredTextNode.id])
+  node.children = node.children.concat([richTextNode.id])
 
-  return structuredTextNode
+  return richTextNode
 }
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
@@ -297,6 +297,7 @@ exports.createContentTypeNodes = ({
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
@@ -371,8 +372,6 @@ exports.createContentTypeNodes = ({
         if (entryItemFieldKey.split(`___`).length > 1) {
           return
         }
-
-        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey]
       })
 
       // Replace text fields with text nodes so we can process their markdown
@@ -395,7 +394,6 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode,
             createNodeId
           )
 
@@ -405,10 +403,9 @@ exports.createContentTypeNodes = ({
           delete entryItemFields[entryItemFieldKey]
         } else if (
           fieldType === `RichText` &&
-          process.env.GATSBY_CONTENTFUL_RICH_TEXT === `enabled` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
-          const richTextNode = prepareStructuredTextNode(
+          const richTextNode = prepareRichTextNode(
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],

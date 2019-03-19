@@ -24,22 +24,18 @@ You typically only need to configure this once.`
   )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
-  .describe(`C`, `Copy all contents in packages/ instead of just gatsby packages`)
+  .describe(
+    `C`,
+    `Copy all contents in packages/ instead of just gatsby packages`
+  )
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
-  .alias(`h`, `help`)
-  .argv
+  .alias(`h`, `help`).argv
 
 const conf = new Configstore(pkg.name)
 
 const fs = require(`fs-extra`)
-const havePackageJsonFile = fs.existsSync(`package.json`)
-
-if (!havePackageJsonFile) {
-  console.error(`Current folder must have a package.json file!`)
-  process.exit()
-}
 
 let pathToRepo = argv.setPathToRepo
 
@@ -48,6 +44,13 @@ if (pathToRepo) {
     pathToRepo = path.join(os.homedir(), pathToRepo.split(`~`).pop())
   }
   conf.set(`gatsby-location`, path.resolve(pathToRepo))
+  process.exit()
+}
+
+const havePackageJsonFile = fs.existsSync(`package.json`)
+
+if (!havePackageJsonFile) {
+  console.error(`Current folder must have a package.json file!`)
   process.exit()
 }
 
@@ -73,8 +76,12 @@ let packages = Object.keys(
 if (argv.copyAll) {
   packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 } else {
-  const { dependencies } = JSON.parse(fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`)))
-  packages = packages.concat(Object.keys(dependencies)).filter(p => p.startsWith(`gatsby`))
+  const { dependencies } = JSON.parse(
+    fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`))
+  )
+  packages = packages
+    .concat(Object.keys(dependencies))
+    .filter(p => p.startsWith(`gatsby`))
 }
 
 if (!argv.packages && _.isEmpty(packages)) {

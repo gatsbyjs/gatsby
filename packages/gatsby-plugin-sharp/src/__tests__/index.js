@@ -1,10 +1,14 @@
 const path = require(`path`)
+const fs = require(`fs-extra`)
+jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
   return {
     push: jest.fn(),
   }
 })
+
+fs.ensureDirSync = jest.fn()
 
 const {
   base64,
@@ -13,6 +17,8 @@ const {
   queueImageResizing,
   getImageSize,
 } = require(`../`)
+const { scheduleJob } = require(`../scheduler`)
+scheduleJob.mockResolvedValue(Promise.resolve())
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -24,7 +30,7 @@ describe(`gatsby-plugin-sharp`, () => {
   const file = getFileObject(absolutePath)
 
   // used to find all breakpoints in a srcSet string
-  const findAllBreakpoints = (srcSet) => {
+  const findAllBreakpoints = srcSet => {
     // RegEx to find all occurrences of 'Xw', where 'X' can be any int
     const regEx = /[0-9]+w/g
     return srcSet.match(regEx)
@@ -41,6 +47,42 @@ describe(`gatsby-plugin-sharp`, () => {
       // Width should be: w = (3 * 136) / 281 = 1.451957295
       // We expect value to be rounded to 1
       expect(result.height).toBe(1)
+    })
+
+    it(`file name works with spaces & special characters`, async () => {
+      // test name encoding with various characters
+      const testName = `spaces and '"@#$%^&,`
+
+      const queueResult = queueImageResizing({
+        file: getFileObject(
+          path.join(__dirname, `images/144-density.png`),
+          testName
+        ),
+        args: { width: 3 },
+      })
+
+      const queueResultName = path.parse(queueResult.src).name
+
+      // decoding to check for outputting same name
+      expect(decodeURIComponent(queueResultName)).toBe(testName)
+
+      // regex for special characters above and spaces
+      // testname should match, the queue result should not
+      expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
+      expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
+    })
+
+    // re-enable when image processing on demand is implemented
+    it.skip(`should process immediately when asked`, async () => {
+      scheduleJob.mockClear()
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      await result.finishedPromise
+
+      expect(scheduleJob).toMatchSnapshot()
     })
   })
 
@@ -69,8 +111,8 @@ describe(`gatsby-plugin-sharp`, () => {
         file,
       })
 
-      expect(result.src.indexOf(file.name)).toBe(8)
-      expect(result.srcSet.indexOf(file.name)).toBe(8)
+      expect(path.parse(result.src).name).toBe(file.name)
+      expect(path.parse(result.srcSet).name).toBe(file.name)
     })
 
     it(`accounts for pixel density`, async () => {
@@ -126,12 +168,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`accepts srcSet breakpoints`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        70,
-        150,
-        250,
-      ]
+      const srcSetBreakpoints = [50, 70, 150, 250]
       const args = { srcSetBreakpoints }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -140,8 +177,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       // width of the image tested
       const originalWidth = 281
-      const expected = srcSetBreakpoints
-        .map((size) => `${size}w`)
+      const expected = srcSetBreakpoints.map(size => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
@@ -151,10 +187,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`should throw on srcSet breakpoints less than 1`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        0,
-      ]
+      const srcSetBreakpoints = [50, 0]
       const args = { srcSetBreakpoints }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -165,11 +198,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`ensure maxWidth is in srcSet breakpoints`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        70,
-        150,
-      ]
+      const srcSetBreakpoints = [50, 70, 150]
       const maxWidth = 200
       const args = {
         maxWidth,
@@ -205,8 +234,8 @@ describe(`gatsby-plugin-sharp`, () => {
       const originalWidth = 281
       const expected = srcSetBreakpoints
         // filter out the widths that are larger than the source image width
-        .filter((size) => size < originalWidth)
-        .map((size) => `${size}w`)
+        .filter(size => size < originalWidth)
+        .map(size => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
@@ -218,15 +247,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`prevents duplicate breakpoints`, async () => {
-      const srcSetBreakpoints = [
-        50,
-        50,
-        100,
-        100,
-        100,
-        250,
-        250,
-      ]
+      const srcSetBreakpoints = [50, 50, 100, 100, 100, 250, 250]
       const maxWidth = 100
       const args = {
         maxWidth,
@@ -238,12 +259,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       const originalWidth = 281
-      const expected = [
-        `50w`,
-        `100w`,
-        `250w`,
-        `${originalWidth}w`,
-      ]
+      const expected = [`50w`, `100w`, `250w`, `${originalWidth}w`]
 
       const actual = findAllBreakpoints(result.srcSet)
       expect(actual).toEqual(expect.arrayContaining(expected))
@@ -319,12 +335,60 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result).toMatchSnapshot()
     })
   })
+
+  describe(`tracedSVG`, () => {
+    it(`doesn't always run`, async () => {
+      const args = {
+        maxWidth: 100,
+        width: 100,
+        tracedSVG: { color: `#FF0000` },
+      }
+
+      let result = await fixed({
+        file,
+        args,
+      })
+
+      expect(result.tracedSVG).toBeUndefined()
+
+      result = await fluid({
+        file,
+        args,
+      })
+
+      expect(result.tracedSVG).toBeUndefined()
+    })
+
+    it(`runs on demand`, async () => {
+      const args = {
+        maxWidth: 100,
+        width: 100,
+        generateTracedSVG: true,
+        tracedSVG: { color: `#FF0000` },
+        base64: false,
+      }
+
+      let result = await fixed({
+        file,
+        args,
+      })
+
+      expect(result).toMatchSnapshot()
+
+      result = await fluid({
+        file,
+        args,
+      })
+
+      expect(result).toMatchSnapshot()
+    })
+  })
 })
 
-function getFileObject(absolutePath) {
+function getFileObject(absolutePath, name = `test`) {
   return {
     id: `${absolutePath} absPath of file`,
-    name: `test`,
+    name: name,
     absolutePath,
     extension: `png`,
     internal: {
