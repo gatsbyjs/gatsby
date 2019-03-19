@@ -33,5 +33,6 @@ fields:
   hidden: false
   default: ''
 pages:
+- docs/blog/2019-03-20-interview-with-david-eads/interview-with-david-eads.md
 - docs/blog/2019-03-15-design-code-blog-post/index.md
 - docs/blog/2019-03-18-jamstack-marketers-blog-post/index.md
