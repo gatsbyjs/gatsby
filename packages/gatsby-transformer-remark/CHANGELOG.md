@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.6...gatsby-transformer-remark@2.3.7) (2019-03-19)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** always include the root node of AST ([#12647](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12647)) ([f480a35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/f480a35)), closes [#11237](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/11237)
+
 ## [2.3.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.5...gatsby-transformer-remark@2.3.6) (2019-03-19)
 
 ### Features
