@@ -50,51 +50,51 @@ class Plugins extends Component {
             items={[
               {
                 text: `SEO?`,
-                pluginName: `gatsby-plugin-react-helmet`
+                pluginName: `gatsby-plugin-react-helmet`,
               },
               {
                 text: `responsive images?`,
-                pluginName: `gatsby-image`
+                pluginName: `gatsby-image`,
               },
               {
                 text: `offline support?`,
-                pluginName: `gatsby-plugin-offline`
+                pluginName: `gatsby-plugin-offline`,
               },
               {
                 text: `Sass support?`,
-                pluginName: `gatsby-plugin-sass`
+                pluginName: `gatsby-plugin-sass`,
               },
               {
                 text: `a sitemap?`,
-                pluginName: `gatsby-plugin-sitemap`
+                pluginName: `gatsby-plugin-sitemap`,
               },
               {
                 text: `an RSS feed?`,
-                pluginName: `gatsby-plugin-feed`
+                pluginName: `gatsby-plugin-feed`,
               },
               {
                 text: `great typography?`,
-                pluginName: `gatsby-plugin-typography`
+                pluginName: `gatsby-plugin-typography`,
               },
               {
                 text: `Typescript?`,
-                pluginName: `gatsby-plugin-typescript`
+                pluginName: `gatsby-plugin-typescript`,
               },
               {
                 text: `Google Analytics?`,
-                pluginName: `gatsby-plugin-google-analytics`
-              },            
+                pluginName: `gatsby-plugin-google-analytics`,
+              },
               {
                 text: `Wordpress integration?`,
-                pluginName: `gatsby-source-wordpress`
-              }, 
+                pluginName: `gatsby-source-wordpress`,
+              },
               {
                 text: `anything?`,
               },
             ]}
             color={colors.lilac}
           />
-          
+
           <p
             css={{
               color: colors.gray.calm,
