@@ -3,8 +3,8 @@ import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
-import { options, rhythm } from "../../utils/typography"
-import { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import presets, { colors, space } from "../../utils/presets"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -51,7 +51,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
     return (
       <div
         css={{
-          fontFamily: options.headerFontFamily.join(`,`),
           ...styles.showcaseList,
         }}
       >
@@ -96,7 +95,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         <img
                           src={V2Icon}
                           alt="Gatsby v2"
-                          css={{ marginBottom: 0, marginRight: rhythm(2 / 8) }}
+                          css={{
+                            marginBottom: 0,
+                            marginRight: rhythm(space[2]),
+                          }}
                         />
                       )}
                       <div css={{ display: `inline-block` }}>
@@ -112,7 +114,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   </div>
                   <div>
                     <Link to={`/starters${slug}`}>
-                      <h5 css={{ margin: 0 }}>
+                      <h5 css={{ margin: 0, fontSize: presets.scale[2] }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
@@ -126,7 +128,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: rhythm(1 / 8),
+                      marginBottom: rhythm(space[1]),
                     }}
                   >
                     {description || `No description`}

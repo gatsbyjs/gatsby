@@ -67,7 +67,7 @@ module.exports = async function build(program: BuildArgs) {
             : ``
         }
 
-        See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
+        See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
       `,
       err
     )

@@ -42,6 +42,6 @@ module.exports = {
   redirects: require(`./redirects`),
   babelrc: require(`./babelrc`),
   jsonDataPaths: require(`./json-data-paths`),
-  thirdPartySchemas: require(`./third-party-schemas`),
+  schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
 }

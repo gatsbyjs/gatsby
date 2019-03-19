@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const { getNode, getNodes } = require(`./nodes`)
 
 /**
  * Map containing links between inline objects or arrays
@@ -50,6 +49,8 @@ exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
  * or first node that meet predicate conditions if predicate is specified
  */
 const findRootNodeAncestor = (obj, predicate = null) => {
+  const { getNode } = require(`./nodes`)
+
   // Find the root node.
   let rootNode = obj
   let whileCount = 0
@@ -79,6 +80,7 @@ const findRootNodeAncestor = (obj, predicate = null) => {
 }
 
 function trackDbNodes() {
+  const { getNodes } = require(`./nodes`)
   _.each(getNodes(), node => {
     trackInlineObjectsInRootNode(node)
   })

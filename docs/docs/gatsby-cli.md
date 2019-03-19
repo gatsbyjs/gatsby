@@ -28,15 +28,13 @@ Now we have the `develop` script available to be used which will use our package
 
 ## How to use
 
-By using [npx](https://www.npmjs.com/package/npx) you can utilize the Gatsby command line tool without installing it globally. This lets you scaffold a project with just one command!
+The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
-For example you can run `npx gatsby new your-site-name` to generate a new Gatsby site.
-
-Run `npx gatsby --help` for full help.
+Run `gatsby --help` for full help.
 
 ### `new`
 
-`npx gatsby new gatsby-site`
+`gatsby new gatsby-site`
 
 See the [Gatsby starters docs](/docs/starters/)
 for a comprehensive list of starters to get started with Gatsby.
@@ -67,11 +65,11 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                         |
-| :--------------------------: | ----------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                 |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                             |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See /docs/performance-tracing/ |
+|            Option            | Description                                                                                                |
+| :--------------------------: | ---------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    |
+| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
 
 ### `serve`
 
@@ -84,7 +82,7 @@ At the root of a Gatsby site, serve the production build of your site for testin
 |      Option      | Description                                                                              |
 | :--------------: | ---------------------------------------------------------------------------------------- |
 |  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
-|  `-p`, `--port`  | Set port. Defaults to 8000                                                               |
+|  `-p`, `--port`  | Set port. Defaults to 9000                                                               |
 |  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
 | `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
 
@@ -92,7 +90,7 @@ At the root of a Gatsby site, serve the production build of your site for testin
 
 At the root of a Gatsby site, get helpful environment information which will be required when reporting a bug:
 
-`npx gatsby info`
+`gatsby info`
 
 #### Options
 

@@ -35,6 +35,21 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       // get the location of the component relative to src/
       const [, component] = request.path.split(path.join(theme, `src`))
 
+      const issuerExtension = path.extname(request.context.issuer)
+
+      if (
+        request.context.issuer
+          .slice(0, -issuerExtension.length)
+          .endsWith(component)
+      ) {
+        return resolver.doResolve(
+          `describedRelative`,
+          request,
+          null,
+          {},
+          callback
+        )
+      }
       const builtComponentPath = this.resolveComponentPath({
         matchingTheme: theme,
         themes: this.themes,

@@ -1,6 +1,7 @@
 const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
+const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
 
 exports.sourceNodes = (
@@ -128,10 +129,6 @@ function createNodes(
       resolve()
     })
   })
-}
-
-function sanitizeName(s) {
-  return s.replace(/[^_a-zA-Z0-9]/, ``).replace(/\b\w/g, l => l.toUpperCase())
 }
 
 function getConnectionExtraParams(extraParams) {

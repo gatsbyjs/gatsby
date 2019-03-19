@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link, graphql } from "gatsby"
-import ClockIcon from "react-icons/lib/fa/clock-o"
+import { FaRegClock } from "react-icons/fa"
 
 import Layout from "../layouts"
 import PostIcons from "../components/post-icons"
@@ -22,7 +22,7 @@ class Home extends Component {
               </Link>
               <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
               <span>
-                <ClockIcon
+                <FaRegClock
                   size={14}
                   css={{ position: `relative`, bottom: 1 }}
                 />

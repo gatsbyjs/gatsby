@@ -4,7 +4,6 @@ const {
 } = require(`../../redux/actions`)
 const { getNode } = require(`../../db/nodes`)
 const { findRootNodeAncestor, trackDbNodes } = require(`../node-tracking`)
-const nodeTypes = require(`../../schema/build-node-types`)
 const { run: runQuery } = require(`../nodes-query`)
 require(`./fixtures/ensure-loki`)()
 
@@ -18,7 +17,7 @@ function makeNode() {
     },
     inlineArray: [1, 2, 3],
     internal: {
-      type: `TestNode`,
+      type: `Test`,
       contentDigest: `digest1`,
       owner: `test`,
     },
@@ -43,7 +42,7 @@ describe(`track root nodes`, () => {
         },
         inlineArray: [1, 2, 3],
         internal: {
-          type: `TestNode`,
+          type: `Test`,
           contentDigest: `digest2`,
         },
       },
@@ -89,7 +88,21 @@ describe(`track root nodes`, () => {
     let type
 
     beforeAll(async () => {
-      type = (await nodeTypes.buildAll({})).testNode.nodeObjectType
+      const { createSchemaComposer } = require(`../../schema/schema-composer`)
+      const {
+        addInferredFields,
+      } = require(`../../schema/infer/add-inferred-fields`)
+      const { getExampleValue } = require(`../../schema/infer/example-value`)
+
+      const sc = createSchemaComposer()
+      const typeName = `Test`
+      const tc = sc.createTC(typeName)
+      addInferredFields({
+        schemaComposer: sc,
+        typeComposer: tc,
+        exampleValue: getExampleValue({ nodes: [makeNode()], typeName }),
+      })
+      type = tc.getType()
     })
 
     it(`Tracks objects when running query without filter`, async () => {
