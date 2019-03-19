@@ -45,3 +45,26 @@ plugins: [
   },
 ]
 ```
+
+### Use and Options with `gatsby-mdx`
+
+The configuration is slightly different when you use it with `gatsby-mdx`. Here is an example like above with the same `oldschool` options, but notice that you write `gatsbyRemarkPlugins` in place of `plugins` and you have to use the longer resolve form even if you don't have any options.
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: "gatsby-mdx",
+    options: {
+      gatsbyRemarkPlugins: [
+        {
+          resolve: `gatsby-remark-smartypants`,
+          options: {
+            dashes: `oldschool`
+          }
+        }
+      ]
+    }
+  },
+]
+```
