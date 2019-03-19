@@ -2,12 +2,10 @@
 title: Getting Started
 ---
 
-# TODO: Create a starter using themes
-
 Scaffolding out a project that uses themes requires you to use a starter that's implemented with theming.
 
 ```sh
-npx gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ```
 
 With theme-based starters, you will see that you're initially presented with a lighter weight `gatsby-config.js`. The goal with most themes is to allow you to get up and running with something like a blog in seconds. Now you can focus on writing and gradually introduce changes and customizations only if you want to.
