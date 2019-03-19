@@ -111,7 +111,7 @@ doesn't transpile by default. This is something you can achieve with `gatsby-plu
 You will need to install the package:
 
 ```sh
-yarn add gatsby-plugin-compile-es6-packages
+npm install --save gatsby-plugin-compile-es6-packages
 ```
 
 And then add it to your plugins list:
@@ -169,3 +169,10 @@ content.
 
 When a user installs your starter all they will see is the content since the
 theme internals are hidden away as a library!
+
+### Make it accessible by default
+
+To ensure your themes are usable by the widest range of people, we highly encourage including
+accessible styles and defaults like color contrast, keyboard functionality, and assistive
+technology support. For more information, visit our [accessibility page](/docs/making-your-site-accessible/)
+and resources like the [A11y Project](https://a11yproject.com) and [WebAIM](https://webaim.org).
