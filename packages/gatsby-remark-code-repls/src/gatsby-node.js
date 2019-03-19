@@ -53,30 +53,30 @@ exports.createPages = async (
           .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
         const code = fs.readFileSync(file, `utf8`)
 
-      let css
-      if (includeMatchingCSS === true) {
-        try {
-          css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
-        } catch (err) {
-          // If the file doesn't exist, we gracefully ignore the error
-          if (err.code !== `ENOENT`) {
-            throw err
+        let css
+        if (includeMatchingCSS === true) {
+          try {
+            css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
+          } catch (err) {
+            // If the file doesn't exist, we gracefully ignore the error
+            if (err.code !== `ENOENT`) {
+              throw err
+            }
           }
         }
-      }
 
-      // Codepen configuration.
-      // https://blog.codepen.io/documentation/api/prefill/
-      const action = `https://codepen.io/pen/define`
-      const payload = JSON.stringify({
-        editors: `0010`,
-        html,
-        js: code,
-        js_external: externals.join(`;`),
-        js_pre_processor: `babel`,
-        layout: `left`,
-        css,
-      })
+        // Codepen configuration.
+        // https://blog.codepen.io/documentation/api/prefill/
+        const action = `https://codepen.io/pen/define`
+        const payload = JSON.stringify({
+          editors: `0010`,
+          html,
+          js: code,
+          js_external: externals.join(`;`),
+          js_pre_processor: `babel`,
+          layout: `left`,
+          css,
+        })
 
         createPage({
           path: slug,
