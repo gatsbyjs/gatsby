@@ -115,7 +115,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header title={title} />
-      {children}
+      <main>{children}</main>
       <Footer {...social} />
     </>
   )
