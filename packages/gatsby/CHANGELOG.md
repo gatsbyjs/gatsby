@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.1...gatsby@2.2.2) (2019-03-19)
+
+### Bug Fixes
+
+- **develop:** query runner queue - use priority buckets for tasks instead of sorting ([#12365](https://github.com/gatsbyjs/gatsby/issues/12365)) ([653d771](https://github.com/gatsbyjs/gatsby/commit/653d771)), closes [#12343](https://github.com/gatsbyjs/gatsby/issues/12343)
+
 ## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.0...gatsby@2.2.1) (2019-03-19)
 
 ### Bug Fixes
