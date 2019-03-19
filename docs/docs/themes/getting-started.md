@@ -48,4 +48,5 @@ I'm an example post!
 
 ## Updating a Theme
 
-In order to update the theme to pull in the latest updates you can update the `gatsby-theme-blog` version in your `package.json` and reinstall your dependencies.
+In order to update the theme to pull in the latest updates you can update the `gatsby-theme-blog` version in your `package.json`.
+You can do this by running the install again: `npm install --save gatsby-theme-NAME`.
