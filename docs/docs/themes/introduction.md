@@ -14,7 +14,7 @@ However, as the community and ecosystem has grown, we’ve found starters to be 
 - Difficult, if not impossible, to upgrade
 - Introduce all code into your code base directly
 
-Gatsby Themes solve these issues and drastically improve the end user experience.
+Gatsby Themes solve these issues and drastically improve the end user experience by providing good defaults and easily extendable Gatsby site implementations.
 It's also important to note that starters will still be usable with themes, the key difference is that starters now have the ability to ship the code as a theme library.
 This means an install of a starter will consist of demo content and a compact `gatsby-config`.
 
