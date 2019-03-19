@@ -15,10 +15,8 @@ const Posts = ({ pathContext, ...props }) => (
 export default Posts
 
 export const pageQuery = graphql`
-  query PostList($limit: Int, $skip: Int) {
+  query {
     allMdx(
-      limit: $limit
-      skip: $skip
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { draft: { ne: true }, archived: { ne: true } } }
     ) {

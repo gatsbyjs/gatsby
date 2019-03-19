@@ -3,7 +3,6 @@ const path = require(`path`)
 module.exports = ({ defaultLayouts = {} } = {}) => {
   const themeLayouts = {
     posts: require.resolve(`./src/templates/post`),
-    default: require.resolve(`./src/components/layout`),
   }
 
   return {

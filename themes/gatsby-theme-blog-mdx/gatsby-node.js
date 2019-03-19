@@ -13,7 +13,7 @@ const debug = Debug(`gatsby-theme-blog-mdx`)
 exports.createPages = async ({ graphql, actions }, pluginOptions) => {
   const { createPage, createRedirect } = actions
 
-  const { postsPath = `/blog`, postsPerPage = 9999 } = pluginOptions
+  const { postsPath = `/blog` } = pluginOptions
 
   const result = await graphql(`
     {
@@ -93,37 +93,13 @@ exports.createPages = async ({ graphql, actions }, pluginOptions) => {
     })
   })
 
-  // Create post list pages
-  const posts = mdxPages.edges
-  const numPages = Math.ceil(posts.length / postsPerPage)
-  Array.from({ length: numPages }).forEach((_, i) => {
-    const limit = postsPerPage
-    const skip = i * postsPerPage
-    const currentPage = i + 1
-
-    const isFirst = currentPage === 1
-    const isLast = currentPage === numPages
-
-    const nextPage = isLast ? null : `${postsPath}/${currentPage + 1}`
-    const prevPage = isFirst
-      ? null
-      : `${postsPath}/${currentPage - 1 === 1 ? `` : currentPage - 1}`
-
-    createPage({
-      path: isFirst ? postsPath : `${postsPath}/${currentPage}`,
-      component: Posts,
-      context: {
-        limit,
-        skip,
-        currentPage,
-        isFirst,
-        isLast,
-        nextPage,
-        prevPage,
-      },
-    })
+  // Create post list page
+  createPage({
+    path: postsPath,
+    component: Posts,
   })
 
+  // Create tag list pages
   tags.forEach(tag => {
     const path = `/tags/${kebab(tag)}`
 
