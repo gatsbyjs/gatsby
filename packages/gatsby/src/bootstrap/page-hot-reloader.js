@@ -61,7 +61,7 @@ const runCreatePages = async () => {
   // Delete pages that weren't updated when running createPages.
   Array.from(store.getState().pages.values()).forEach(page => {
     if (
-      !_.includes(statefulPlugins, page.pluginCreatorId) &&
+      !page.isCreatedByStatefulCreatePages &&
       page.updatedAt < timestamp &&
       page.path !== `/404.html`
     ) {

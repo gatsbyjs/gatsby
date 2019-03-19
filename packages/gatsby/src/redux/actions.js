@@ -273,6 +273,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
+    isCreatedByStatefulCreatePages:
+      actionOptions.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
