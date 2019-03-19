@@ -4602,7 +4602,7 @@
     Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
   categories:
     - Portfolio
-    - Personal website
+    - Personal Website
   built_by: Rou Hun Fan Developer
   built_by_url: https://flowen.me
   featured: false
@@ -4712,7 +4712,7 @@
   categories:
     - Blog
     - Portfolio
-    - Personal website
+    - Personal Website
 - title: re-geo
   description: >
     re-geo is react based geo cities style component.
@@ -4917,4 +4917,18 @@
     - Business
   built_by: Sascha Klapetz
   built_by_url: https://www.projectival.de/
+  featured: false
+- title: Herman Starikov
+  url: https://hermanya.github.io
+  main_url: https://hermanya.github.io
+  source_url: https://github.com/Hermanya/hermanya.github.io
+  description: >
+    (optional)
+  categories:
+    - Developer
+    - Personal Website
+    - GitHub
+    - Portfolio
+  built_by: Herman Starikov
+  built_by_url: https://github.com/Hermanya
   featured: false
