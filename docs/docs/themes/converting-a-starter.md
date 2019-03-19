@@ -45,8 +45,7 @@ const createPosts = (createPage, createRedirect, edges) => {
 
     createPage({
       path: pagePath,
-      // highlight-next-line
-      component: require.resolve(`./src/templates/post.js`),
+      component: require.resolve(`./src/templates/post.js`), // highlight-line
       context: {
         id: node.id,
         prev,
