@@ -14,7 +14,7 @@ title: Themes API Reference
 
 ## Core Gatsby APIs
 
-Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs.
+Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
 
 - [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
 - [Actions](https://www.gatsbyjs.org/docs/actions/)
