@@ -1,10 +1,11 @@
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import { colors } from "../../utils/presets"
-import { options } from "../../utils/typography"
+import presets, { colors, space, transition } from "../../utils/presets"
+import { options, rhythm } from "../../utils/typography"
 
-const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
+const paddingLeft = level =>
+  level === 0 ? rhythm((level + 1) * space[6]) : rhythm((level + 1) * space[3])
 
 const Chevron = ({ isExpanded }) => (
   <span
@@ -30,7 +31,9 @@ const Chevron = ({ isExpanded }) => (
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotateX(180deg)` : `rotateX(0deg)`,
-        transition: `transform 0.2s ease`,
+        transition: `transform ${transition.speed.fast} ${
+          transition.curve.default
+        }`,
       }}
     />
   </span>
@@ -51,13 +54,13 @@ const TitleButton = ({
     css={{
       ...styles.resetButton,
       ...styles.button,
-      paddingLeft: level === 0 ? 40 : 0,
+      paddingLeft: level === 0 ? 24 : 0,
       paddingRight: `0 !important`,
       minHeight: 40,
       "&:before": {
         ...styles.ulHorizontalDivider,
         bottom: 0,
-        left: level === 0 ? 40 : 0,
+        left: level === 0 ? 24 : 0,
         top: `auto`,
       },
     }}
@@ -86,7 +89,7 @@ const SplitButton = ({
     css={{
       alignItems: `flex-end`,
       display: `flex`,
-      paddingLeft: level === 0 ? 40 : 0,
+      paddingLeft: level === 0 ? 24 : 0,
       position: `relative`,
       width: `100%`,
     }}
@@ -124,7 +127,7 @@ const SplitButton = ({
         ...styles.resetButton,
         marginLeft: `auto`,
         "&:hover": {
-          background: `white`,
+          background: colors.white,
         },
       }}
       onClick={() => onSectionTitleClick(item)}
@@ -159,8 +162,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, level }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      fontFamily: options.systemFontFamily.join(`,`),
-      fontSize: `100%`,
+      fontSize: presets.scale[1],
       fontWeight: isActive ? `bold` : `normal`,
       margin: 0,
       ...(level === 0 && { ...styles.smallCaps }),
@@ -195,11 +197,11 @@ const styles = {
     height: 1,
     position: `absolute`,
     right: 0,
-    left: 40,
+    left: 24,
   },
   smallCaps: {
     fontFamily: options.headerFontFamily.join(`,`),
-    letterSpacing: `.075em`,
+    letterSpacing: presets.letterSpacings.tracked,
     textTransform: `uppercase`,
   },
 }

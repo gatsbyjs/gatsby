@@ -1,6 +1,4 @@
-const { GraphQLObjectType } = require(`graphql`)
 const nodesQuery = require(`../../db/nodes-query`)
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 const { store } = require(`../../redux`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -137,13 +135,19 @@ const makeNodes = () => [
 ]
 
 function makeGqlType(nodes) {
-  return new GraphQLObjectType({
-    name: `Test`,
-    fields: inferObjectStructureFromNodes({
-      nodes,
-      types: [{ name: `Test` }],
-    }),
+  const { createSchemaComposer } = require(`../../schema/schema-composer`)
+  const { addInferredFields } = require(`../infer/add-inferred-fields`)
+  const { getExampleValue } = require(`../infer/example-value`)
+
+  const sc = createSchemaComposer()
+  const typeName = `Test`
+  const tc = sc.createTC(typeName)
+  addInferredFields({
+    schemaComposer: sc,
+    typeComposer: tc,
+    exampleValue: getExampleValue({ nodes, typeName }),
   })
+  return tc.getType()
 }
 
 function resetDb(nodes) {
@@ -157,10 +161,8 @@ async function runQuery(queryArgs) {
   const nodes = makeNodes()
   resetDb(nodes)
   const gqlType = makeGqlType(nodes)
-  const context = {}
   const args = {
     gqlType,
-    context,
     firstOnly: false,
     queryArgs,
   }
@@ -453,7 +455,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`],
+        fields: [`frontmatter.blue`],
         order: [`desc`],
       },
     })
@@ -496,7 +498,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`, `id`],
+        fields: [`frontmatter.blue`, `id`],
         order: [`desc`], // `id` field will be sorted asc
       },
     })
@@ -511,7 +513,7 @@ describe(`collection fields`, () => {
     let result = await runQuery({
       limit: 10,
       sort: {
-        fields: [`frontmatter___blue`, `id`],
+        fields: [`frontmatter.blue`, `id`],
         order: [`desc`, `desc`], // `id` field will be sorted desc
       },
     })

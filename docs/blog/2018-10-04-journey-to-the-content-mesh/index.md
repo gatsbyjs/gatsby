@@ -32,6 +32,8 @@ This is the first post in a series, Journey to the Content Mesh, intended to exp
 
 The previous generation of enterprise CMS offered an often-generic content editing experience glued to out-of-date development and deployment environments. The emerging strategy for content management selects best-of-breed solutions, tailored to specific use-cases like e-commerce or blogging; it provides a modern framework for rapid iteration and it generates lightning fast websites out of the box.
 
+The content mesh empowers developers while preserving content creators’ workflows. It gives you access to best-of-breed services _without_ the pain of manual integration.
+
 ## Three Areas of Rapid Innovation
 
 Change is being spurred by the confluence of three revolutions in how we create and consume content:
@@ -54,6 +56,8 @@ These technological changes have made modern web technology both _essential_ for
 Each change primarily affects a different stakeholder --- marketing, development/IT, and the end-user, respectively.
 
 The key challenge is that without a content mesh, integrating these systems together is a lot of work. Forrester titled one of their [report sections](https://www.tangomodem.com/wp-content/uploads/2017/09/the-rise-of-the-headless-cms.pdf): "Warning: Headless Content Management Is For Do-It-Yourself Shops." But _with_ a content mesh, all of these systems can be brought together in a unified, low-cost, low-defect whole.
+
+In other words, the content mesh makes developers, content creators, and users _all_ happy.
 
 ## Integrating Modern Technologies Without the DIY Work
 
