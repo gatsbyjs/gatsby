@@ -86,11 +86,11 @@ class Rotater extends Component {
     return (
       <div
         css={{
-          border: `1px solid ${colors.ui.light}`,
-          background: colors.ui.whisper,
+          borderTop: `1px solid ${colors.ui.light}`,
+          borderBottom: `1px solid ${colors.ui.light}`,
           borderRadius: radii[2],
-          padding: `${rhythm(space[6])} ${rhythm(space[9])}`,
-          margin: rhythm(space[6]),
+          padding: `${rhythm(space[4])} ${rhythm(space[9])}`,
+          margin: `${rhythm(space[6])} 0`,
           position: `relative`,
         }}
       >

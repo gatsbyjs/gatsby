@@ -99,10 +99,7 @@ class Plugins extends Component {
           <p
             css={{
               color: colors.gray.lightCopy,
-              marginLeft: rhythm(space[9]),
-              marginRight: rhythm(space[9]),
-              fontSize: presets.scale[3],
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontSize: presets.scale[2],
               textAlign: `center`,
             }}
           >
