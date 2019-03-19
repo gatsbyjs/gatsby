@@ -36,7 +36,7 @@ Start by creating a new Gatsby site. It may be best (especially if you're new to
 Open a new terminal window, create a new "hello world" gatsby site, and start the development server:
 
 ```shell
-npx gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-two
 ```
 
@@ -327,7 +327,7 @@ as well as
 
 Gatsby supports almost every possible styling option (if there isn't a plugin
 yet for your favorite CSS option,
-[please contribute one!](/docs/how-to-contribute/))
+[please contribute one!](/contributing/how-to-contribute/))
 
 - [Typography.js](/packages/gatsby-plugin-typography/)
 - [Sass](/packages/gatsby-plugin-sass/)

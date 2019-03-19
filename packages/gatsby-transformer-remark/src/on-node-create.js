@@ -1,5 +1,6 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
+const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
@@ -12,15 +13,24 @@ module.exports = async function onCreateNode(
     node.internal.mediaType !== `text/markdown` &&
     node.internal.mediaType !== `text/x-markdown`
   ) {
-    return
+    return {}
   }
 
   const content = await loadNodeContent(node)
 
   try {
-    const data = grayMatter(content, pluginOptions)
+    let data = grayMatter(content, pluginOptions)
 
-    const markdownNode = {
+    if (data.data) {
+      data.data = _.mapValues(data.data, value => {
+        if (_.isDate(value)) {
+          return value.toJSON()
+        }
+        return value
+      })
+    }
+
+    let markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),
       children: [],
       parent: node.id,
@@ -50,6 +60,8 @@ module.exports = async function onCreateNode(
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
+
+    return markdownNode
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
@@ -57,5 +69,7 @@ module.exports = async function onCreateNode(
       }:\n
       ${err.message}`
     )
+
+    return {} // eslint
   }
 }

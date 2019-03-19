@@ -1,19 +1,15 @@
 import React from "react"
+import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
-import { graphql } from "gatsby"
-
-// Utilities
+import { graphql, Link } from "gatsby"
 import kebabCase from "lodash/kebabCase"
 
-// Components
-import { Helmet } from "react-helmet"
-import { Link } from "gatsby"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import styles from "../../views/shared/styles"
-import { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 let currentLetter = ``
 
@@ -75,8 +71,8 @@ class TagsPage extends React.Component {
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
                 alignItems: `center`,
-                paddingTop: rhythm(options.blockMarginBottom * 2),
-                paddingBottom: rhythm(options.blockMarginBottom),
+                paddingTop: rhythm(space[9]),
+                paddingBottom: rhythm(space[6]),
                 borderBottom: `1px solid ${colors.ui.border}`,
               }}
             >
@@ -86,9 +82,7 @@ class TagsPage extends React.Component {
               <div>
                 <label css={{ position: `relative` }}>
                   <input
-                    css={{
-                      ...styles.searchInput,
-                    }}
+                    css={styles.searchInput}
                     id="tagsFilter"
                     name="filterQuery"
                     type="search"
@@ -102,10 +96,10 @@ class TagsPage extends React.Component {
                     overrideCSS={{
                       fill: colors.lilac,
                       position: `absolute`,
-                      left: `5px`,
+                      left: rhythm(space[1]),
                       top: `50%`,
-                      width: `16px`,
-                      height: `16px`,
+                      width: rhythm(space[4]),
+                      height: rhythm(space[4]),
                       pointerEvents: `none`,
                       transform: `translateY(-50%)`,
                     }}
@@ -130,8 +124,8 @@ class TagsPage extends React.Component {
                     <li
                       key={tag.fieldValue}
                       css={{
-                        padding: `10px 5px`,
-                        margin: `15px`,
+                        padding: `${rhythm(space[3])} ${rhythm(space[1])}`,
+                        margin: rhythm(space[4]),
                         listStyleType: `none`,
                       }}
                     >
@@ -144,7 +138,7 @@ class TagsPage extends React.Component {
                   if (currentLetter !== firstLetter) {
                     currentLetter = firstLetter
                     return (
-                      <React.Fragment>
+                      <React.Fragment key={`letterheader-${currentLetter}`}>
                         <h4 css={{ width: `100%`, flexBasis: `100%` }}>
                           {currentLetter.toUpperCase()}
                         </h4>
@@ -175,7 +169,10 @@ export const pageQuery = graphql`
   query {
     allMarkdownRemark(
       limit: 2000
-      filter: { fileAbsolutePath: { regex: "/docs.blog/" } }
+      filter: {
+        fields: { released: { eq: true } }
+        fileAbsolutePath: { regex: "/docs.blog/" }
+      }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

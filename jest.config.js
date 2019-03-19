@@ -32,6 +32,7 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
+  snapshotSerializers: [`jest-serializer-path`],
   collectCoverage: useCoverage,
   coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
   coverageThreshold: {

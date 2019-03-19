@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.5...gatsby-react-router-scroll@2.0.6) (2019-03-16)
+
+### Bug Fixes
+
+- **gatsby-react-router-scroll:** hide sessionStorage warnings in production ([#12593](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/issues/12593)) ([365be0a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/commit/365be0a)), closes [#12577](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/issues/12577)
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.4...gatsby-react-router-scroll@2.0.5) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.3...gatsby-react-router-scroll@2.0.4) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
