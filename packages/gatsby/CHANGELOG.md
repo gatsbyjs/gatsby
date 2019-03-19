@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.0...gatsby@2.2.1) (2019-03-19)
+
+### Bug Fixes
+
+- **gatsby:** Fix third-party schemas with self-referential queries failing ([#12668](https://github.com/gatsbyjs/gatsby/issues/12668)) ([a1953e0](https://github.com/gatsbyjs/gatsby/commit/a1953e0))
+
 # [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.1.39...gatsby@2.2.0) (2019-03-19)
 
 ### Features
