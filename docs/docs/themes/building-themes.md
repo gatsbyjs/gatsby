@@ -23,6 +23,9 @@ detailed below.
 For the purposes of this tutorial we will be using the name `gatsby-theme-developer`.
 You will likely want to replace `developer` with your own theme name.
 
+To get started, create a directory for your project, initialize npm and install the
+required dependencies.
+
 ```sh
 mkdir gatsby-theme-developer
 cd gatsby-theme-developer
