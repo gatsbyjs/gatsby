@@ -1,6 +1,6 @@
 ---
 title: New Schema Customization API - Available in Gatsby 2.2.0
-date: 2019-03-18
+date: 2019-03-19
 author: Mikhail Novikov
 tags:
   - schema
