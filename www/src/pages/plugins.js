@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Container from "../components/container"
-import Rotater from "../components/rotater"
+import Rotator from "../components/rotator"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
@@ -47,7 +47,7 @@ class Plugins extends Component {
           >
             Welcome to the Gatsby Plugin Library!
           </h1>
-          <Rotater
+          <Rotator
             items={[
               {
                 text: `SEO?`,

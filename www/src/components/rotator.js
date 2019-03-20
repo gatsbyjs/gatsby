@@ -29,7 +29,7 @@ const controlButtonStyles = {
   "&:active": { background: colors.ui.light },
 }
 
-class Rotater extends Component {
+class Rotator extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = { item: 0, size: {} }
@@ -175,4 +175,4 @@ class Rotater extends Component {
   }
 }
 
-export default Rotater
+export default Rotator
