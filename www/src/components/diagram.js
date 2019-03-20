@@ -180,7 +180,16 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link to={to}>{children}</Link>
+  <Link
+    css={{
+      "&&": {
+        color: colors.gatsbyDark,
+      },
+    }}
+    to={to}
+  >
+    {children}
+  </Link>
 )
 
 const Gatsby = () => (

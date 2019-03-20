@@ -9,6 +9,12 @@ const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
+const {
+  buildObjectType,
+  buildUnionType,
+  buildInterfaceType,
+  buildInputObjectType,
+} = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 
@@ -163,6 +169,12 @@ const runAPI = (plugin, api, args) => {
         createNodeId: namespacedCreateNodeId,
         createContentDigest,
         tracing,
+        schema: {
+          buildObjectType,
+          buildUnionType,
+          buildInterfaceType,
+          buildInputObjectType,
+        },
       },
       plugin.pluginOptions,
     ]

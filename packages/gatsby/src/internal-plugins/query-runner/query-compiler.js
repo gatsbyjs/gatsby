@@ -62,11 +62,9 @@ const validationRules = [
 let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
-const resolveThemes = (plugins = []) =>
-  plugins.reduce((merged, plugin) => {
-    if (plugin.name.includes(`gatsby-theme-`)) {
-      merged.push(plugin.resolve)
-    }
+const resolveThemes = (themes = []) =>
+  themes.reduce((merged, theme) => {
+    merged.push(theme.themeDir)
     return merged
   }, [])
 
@@ -248,9 +246,13 @@ export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, plugins } = store.getState()
+  const { program, schema, themes } = store.getState()
 
-  const runner = new Runner(program.directory, resolveThemes(plugins), schema)
+  const runner = new Runner(
+    program.directory,
+    resolveThemes(themes.themes),
+    schema
+  )
 
   const queries = await runner.compileAll()
 
