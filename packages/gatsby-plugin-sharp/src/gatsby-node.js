@@ -1,6 +1,55 @@
-exports.onPreInit = ({ actions, reporter }, pluginOptions) => {
-  const { setBoundActionCreators, setPluginOptions } = require(`./index`)
+const {
+  setBoundActionCreators,
+  setPluginOptions,
+  // queue: jobQueue,
+  // reportError,
+} = require(`./index`)
+// const { scheduleJob } = require(`./scheduler`)
+// let normalizedOptions = {}
 
+// const getQueueFromCache = store => {
+//   const pluginStatus = store.getState().status.plugins[`gatsby-plugin-sharp`]
+
+//   if (!pluginStatus || !pluginStatus.queue) {
+//     return new Map()
+//   }
+
+//   return new Map(pluginStatus.queue)
+// }
+
+// const saveQueueToCache = async (store, setPluginStatus, queue) => {
+//   const cachedQueue = getQueueFromCache(store)
+
+//   // merge both queues
+//   for (const [key, job] of cachedQueue) {
+//     if (!queue.has(key)) {
+//       queue.set(key, job)
+//     }
+//   }
+
+//   // JSON.stringify doesn't work on an Map so we need to convert it to an array
+//   setPluginStatus({ queue: Array.from(queue) })
+// }
+
+// const processQueue = (store, boundActionCreators, options) => {
+//   const cachedQueue = getQueueFromCache(store)
+
+//   const promises = []
+//   for (const [, job] of cachedQueue) {
+//     promises.push(scheduleJob(job, boundActionCreators, options))
+//   }
+
+//   return promises
+// }
+
+// const cleanupQueueAfterProcess = (imageJobs, setPluginStatus, reporter) =>
+//   Promise.all(imageJobs)
+//     .then(() => setPluginStatus({ queue: [] }))
+//     .catch(({ err, message }) => {
+//       reportError(message || err.message, err, reporter)
+//     })
+
+exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
   // normalizedOptions = setPluginOptions(pluginOptions)
