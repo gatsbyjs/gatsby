@@ -86,8 +86,8 @@ class Rotater extends Component {
     return (
       <div
         css={{
-          borderTop: `1px solid ${colors.gray.border}`,
-          borderBottom: `1px solid ${colors.gray.border}`,
+          border: `1px solid ${colors.gray.superLight}`,
+          background: colors.gray.whisper,
           borderRadius: radii[2],
           padding: `${space[4]} ${space[9]}`,
           margin: `${space[6]} 0`,
