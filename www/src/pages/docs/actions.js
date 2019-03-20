@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import APIReference from "../../components/api-reference"
-import { rhythm } from "../../utils/typography"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -52,7 +51,7 @@ class ActionCreatorsDocs extends React.Component {
               }}
             />
           </div>
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Functions</h2>
+          <h2 css={{ marginBottom: space[3] }}>Functions</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
