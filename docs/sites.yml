@@ -4974,3 +4974,18 @@
     - Community
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
+- title: Render Documentation
+  main_url: https://render.com/docs
+  url: https://render.com/docs
+  description: >
+    Render is the easiest place to host your sites and apps. We use Gatsby for everything on https://render.com, including our documentation. The site is deployed on Render as well! We also have a guide to deploying Gatsby apps on Render: https://render.com/docs/deploy-gatsby.
+  categories:
+    - Web Development
+    - Programming
+    - Documentation
+    - Deployment
+    - Hosting
+    - Technology
+  built_by: Render Developers
+  built_by_url: https://render.com
+  featured: false
