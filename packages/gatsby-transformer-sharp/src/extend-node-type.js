@@ -115,6 +115,9 @@ const fixedNodeType = ({
       height: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -139,6 +142,10 @@ const fixedNodeType = ({
         type: GraphQLInt,
       },
       toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
       },
@@ -240,6 +247,9 @@ const fluidNodeType = ({
       maxHeight: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       grayscale: {
         type: GraphQLBoolean,
         defaultValue: false,
@@ -264,6 +274,10 @@ const fluidNodeType = ({
         type: GraphQLInt,
       },
       toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
       },

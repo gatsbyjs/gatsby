@@ -1102,6 +1102,17 @@ actions.setPluginStatus = (
 }
 
 /**
+ * Check if path is absolute and add pathPrefix in front if it's not
+ */
+const maybeAddPathPrefix = (path, pathPrefix) => {
+  const parsed = url.parse(path)
+  const isRelativeProtocol = path.startsWith(`//`)
+  return `${
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  }${path}`
+}
+
+/**
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
@@ -1132,20 +1143,13 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  // Parse urls to get their protocols
-  // url.parse will not cover protocol-relative urls so do a separate check for those
-  const parsed = url.parse(toPath)
-  const isRelativeProtocol = toPath.startsWith(`//`)
-  const toPathPrefix =
-    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
-
   return {
     type: `CREATE_REDIRECT`,
     payload: {
-      fromPath: `${pathPrefix}${fromPath}`,
+      fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
       redirectInBrowser,
-      toPath: `${toPathPrefix}${toPath}`,
+      toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
     },
   }
@@ -1172,6 +1176,111 @@ actions.addThirdPartySchema = (
     plugin,
     traceId,
     payload: schema,
+  }
+}
+
+import type GatsbyGraphQLType from "../schema/types/type-builders"
+/**
+ * Add type definitions to the GraphQL schema.
+ *
+ * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
+ *
+ * Type definitions can be provided either as
+ * [`graphql-js` types](https://graphql.org/graphql-js/), in
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn/)
+ * or using Gatsby Type Builders available on the `schema` API argument.
+ *
+ * Things to note:
+ * * needs to be called *before* schema generation. It is recommended to use
+ *   `createTypes` in the `sourceNodes` API.
+ * * type definitions targeting node types, i.e. `MarkdownRemark` and others
+ *   added in `sourceNodes` or `onCreateNode` APIs, need to implement the
+ *   `Node` interface. Interface fields will be added automatically, but it
+ *   is mandatory to label those types with `implements Node`.
+ * * by default, explicit type definitions from `createTypes` will be merged
+ *   with inferred field types, and default field resolvers for `Date` (which
+ *   adds formatting options) and `File` (which resolves the field value as
+ *   a `relativePath` foreign-key field) are added. This behavior can be
+ *   customised with `@infer` and `@dontInfer` directives, and their
+ *   `noDefaultResolvers` argument.
+ *
+ * @example
+ * exports.sourceNodes = ({ actions }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = `
+ *     """
+ *     Markdown Node
+ *     """
+ *     type MarkdownRemark implements Node {
+ *       frontmatter: Frontmatter!
+ *     }
+ *
+ *     """
+ *     Markdown Frontmatter
+ *     """
+ *     type Frontmatter {
+ *       title: String!
+ *       author: AuthorJson!
+ *       date: Date!
+ *       published: Boolean!
+ *       tags: [String!]!
+ *     }
+ *
+ *     """
+ *     Author information
+ *     """
+ *     # Does not include automatically inferred fields
+ *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *       name: String!
+ *       birthday: Date! # no default resolvers for Date formatting added
+ *     }
+ *   `
+ *   createTypes(typeDefs)
+ * }
+ *
+ * // using Gatsby Type Builder API
+ * exports.sourceNodes = ({ actions, schema }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = [
+ *     schema.buildObjectType({
+ *       name: 'MarkdownRemark',
+ *       fields: {
+ *         frontmatter: 'Frontmatter!'
+ *       },
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'Frontmatter',
+ *       fields: {
+ *         title: {
+ *           type: 'String!',
+ *           resolve(parent) {
+ *             return parent.title || '(Untitled)'
+ *           }
+ *         },
+ *         author: 'AuthorJson!',
+ *         date: 'Date!',
+ *         published: 'Boolean!',
+ *         tags: '[String!]!',
+ *       }
+ *     })
+ *   ]
+ *   createTypes(typeDefs)
+ * }
+ */
+actions.createTypes = (
+  types:
+    | string
+    | GraphQLOutputType
+    | GatsbyGraphQLType
+    | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `CREATE_TYPES`,
+    plugin,
+    traceId,
+    payload: types,
   }
 }
 

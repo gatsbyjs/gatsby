@@ -1,12 +1,20 @@
 import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
-import presets, { colors, space, transition, radii } from "./presets"
-import { rhythm, options } from "./typography"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  breakpoints,
+  scale,
+  lineHeights,
+  fonts,
+} from "./presets"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `30px 60px` },
+  "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
 export const srOnly = {
@@ -23,8 +31,8 @@ export const srOnly = {
 export const scrollbarStyles = {
   WebkitOverflowScrolling: `touch`,
   "&::-webkit-scrollbar": {
-    width: rhythm(space[2]),
-    height: rhythm(space[2]),
+    width: space[2],
+    height: space[2],
   },
   "&::-webkit-scrollbar-thumb": {
     background: colors.ui.bright,
@@ -48,26 +56,26 @@ export const buttonStyles = {
     color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: presets.lineHeights.solid,
+    lineHeight: lineHeights.dense,
     textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
-    backgroundSize: `30px 30px`,
+    padding: `${space[2]} ${space[3]}`,
+    backgroundSize: `${space[7]} ${space[7]}`,
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
-    ":hover, &:focus": {
-      backgroundSize: `30px 30px`,
+    ":hover, :focus": {
       backgroundColor: colors.gatsby,
-      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+      backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
       color: colors.white,
       animation: `${stripeAnimation} 2.8s linear infinite`,
+      borderColor: colors.gatsby,
     },
     ":focus": {
       outline: 0,
-      boxShadow: `0 0 0 ${rhythm(space[1])} ${hex2rgba(colors.lilac, 0.25)}`,
+      boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
@@ -78,21 +86,21 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    fontSize: presets.scale[4],
-    padding: `${rhythm(space[3])} ${rhythm(space[4])}`,
+    fontSize: scale[4],
+    padding: `${space[3]} ${space[4]}`,
   },
   small: {
-    fontSize: presets.scale[1],
-    padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
-    [presets.Md]: {
-      fontSize: presets.scale[2],
+    fontSize: scale[1],
+    padding: `${space[2]} ${space[3]}`,
+    [breakpoints.md]: {
+      fontSize: scale[2],
     },
   },
   tiny: {
-    fontSize: presets.scale[1],
-    padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
-    [presets.Md]: {
-      fontSize: presets.scale[2],
+    fontSize: scale[1],
+    padding: `${space[1]} ${space[2]}`,
+    [breakpoints.md]: {
+      fontSize: scale[2],
     },
   },
   ondark: {
@@ -131,9 +139,9 @@ export const svgStyles = {
 
 // This is an exceptionally bad name
 export const linkStyles = {
-  fontSize: presets.scale[1],
-  lineHeight: presets.lineHeights.solid,
-  padding: `${rhythm(space[3])} 0`,
+  fontSize: scale[1],
+  lineHeight: lineHeights.solid,
+  padding: `${space[3]} 0`,
   "&&": {
     border: 0,
     color: colors.gray.calm,
@@ -150,8 +158,8 @@ export const formInput = {
   border: `1px solid ${colors.ui.bright}`,
   borderRadius: radii[1],
   color: colors.brand,
-  fontFamily: options.headerFontFamily.join(`,`),
-  padding: rhythm(space[3]),
+  fontFamily: fonts.header,
+  padding: space[3],
   verticalAlign: `middle`,
   transition: `all ${transition.speed.default} ${transition.curve.default}`,
   "::placeholder": {
@@ -171,12 +179,12 @@ export const skipLink = {
   overflow: `hidden`,
   position: `absolute`,
   zIndex: 100,
-  fontSize: presets.scale[1],
+  fontSize: scale[1],
   ":focus": {
-    padding: rhythm(presets.space[4]),
+    padding: space[4],
     position: `fixed`,
-    top: rhythm(presets.space[6]),
-    left: rhythm(presets.space[6]),
+    top: space[6],
+    left: space[6],
     background: colors.white,
     textDecoration: `none`,
     width: `auto`,

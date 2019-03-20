@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.15...gatsby-link@2.0.16) (2019-03-12)
+
+### Features
+
+- **gatsby-link:** adds support for partiallyActive=true to Link ([#12495](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12495)) ([e0db681](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/e0db681))
+
 ## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.14...gatsby-link@2.0.15) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-link

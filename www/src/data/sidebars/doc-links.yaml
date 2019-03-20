@@ -7,6 +7,7 @@
     - title: Recipes
       link: /docs/recipes/
 - title: Guides
+  link: /docs/guides/
   items:
     - title: Preparing Your Environment
       link: /docs/preparing-your-environment/
@@ -177,7 +178,20 @@
           link: /docs/post-css/
         - title: TailwindCSS
           link: /docs/tailwind-css/
-    - title: Adding Testing
+    - title: MDX
+      link: /docs/mdx/
+      items:
+        - title: Getting started
+          link: /docs/mdx/getting-started/
+        - title: Writing pages
+          link: /docs/mdx/writing-pages/
+        - title: Customizing components
+          link: /docs/mdx/customizing-components/
+        - title: Programmatically creating pages
+          link: /docs/mdx/programmatically-creating-pages/
+        - title: Using plugins
+          link: /docs/mdx/plugins/
+    - title: Adding testing
       link: /docs/testing/
       items:
         - title: Unit Testing
@@ -288,6 +302,7 @@
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby/
 - title: API Reference
+  link: /docs/api-reference/
   items:
     - title: Gatsby Link
       link: /docs/gatsby-link/
@@ -295,17 +310,22 @@
       link: /docs/gatsby-config/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
+    - title: Gatsby Node Helpers
+      link: /docs/node-api-helpers/
     - title: Gatsby Browser APIs
       link: /docs/browser-apis/
     - title: Gatsby SSR APIs
       link: /docs/ssr-apis/
     - title: Actions
       link: /docs/actions/
+    - title: Node Model
+      link: /docs/node-model/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Philosophy
       link: /docs/api-specification/
 - title: Releases & Migration
+  link: /docs/releases-and-migration/
   items:
     - title: v2 Release Notes
       link: /docs/v2-release-notes/
@@ -316,6 +336,7 @@
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
 - title: Conceptual Guide
+  link: /docs/conceptual-guide/
   items:
     - title: The Gatsby Core Philosophy*
       link: /docs/gatsby-core-philosophy/
@@ -386,6 +407,7 @@
     - title: Terminology
       link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
+  link: /docs/advanced-tutorials/
   items:
     - title: Making a Site with User Authentication
       link: /docs/authentication-tutorial/

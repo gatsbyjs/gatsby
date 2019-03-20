@@ -7,7 +7,6 @@ import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
 import { space } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 
 const Tags = ({ pageContext, data, location }) => {
   const { tag } = pageContext
@@ -20,7 +19,7 @@ const Tags = ({ pageContext, data, location }) => {
     <Layout location={location}>
       <Container>
         <h1>{tagHeader}</h1>
-        <Button tiny key="blog-post-view-all-tags-button" to="/blog/tags">
+        <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
           View All Tags <TagsIcon />
         </Button>
         {edges.map(({ node }) => (
@@ -28,8 +27,8 @@ const Tags = ({ pageContext, data, location }) => {
             post={node}
             key={node.fields.slug}
             css={{
-              marginTop: rhythm(space[9]),
-              marginBottom: rhythm(space[9]),
+              marginTop: space[9],
+              marginBottom: space[9],
             }}
           />
         ))}

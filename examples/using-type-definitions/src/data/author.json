@@ -1,0 +1,16 @@
+[
+  {
+    "id": "author-1",
+    "name": "Novikov",
+    "firstName": "Mikhail",
+    "email": "m@example.com",
+    "picture": "../images/gatsby-astronaut.png"
+  },
+  {
+    "id": "author-2",
+    "name": "Probst",
+    "firstName": "Stefan",
+    "email": "s@example.com",
+    "picture": "../images/gatsby-astronaut.png"
+  }
+]

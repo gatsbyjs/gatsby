@@ -23,6 +23,7 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
@@ -105,9 +106,14 @@ async function startServer(program) {
   }
   app.use(
     `/___graphql`,
-    graphqlHTTP({
-      schema: store.getState().schema,
-      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+    graphqlHTTP(() => {
+      const schema = store.getState().schema
+      return {
+        schema,
+        graphiql:
+          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        context: withResolverContext({}, schema),
+      }
     })
   )
 
