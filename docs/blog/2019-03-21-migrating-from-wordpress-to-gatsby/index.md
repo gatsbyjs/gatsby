@@ -1,9 +1,12 @@
 ---
 title: Migrating From WordPress to Gatsby
-date: 2019-03-19
+date: 2019-03-21
 author: Tania Rascia
 excerpt: "The beginning of a beautiful new era: an overview of the steps I took to migrate my blog from WordPress to Gatsby."
-tags: ["wordpress", "migration", "blog", "gatsby"]
+tags:
+  - wordpress
+  - migration
+  - blog
 canonicalLink: https://www.taniarascia.com/migrating-from-wordpress-to-gatsby/
 ---
 
@@ -11,9 +14,9 @@ On September 24th, 2015, I wrote my [first article](https://www.taniarascia.com/
 
 I've had quite a bit of experience with WordPress. Once I learned how to create a WordPress blog, I wrote [Developing a WordPress Theme from Scratch](https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/), a post that has had millions of hits, hundreds of comments, made me plenty of friends, and launched my blogging career. I also worked as a WordPress developer for two years. For the past four years, the blog had been running on WordPress. It was as fast, as custom, and as free of plugins as I could possibly make it, but WordPress is cumbersome, and there's only so fast and pleasant to use you can make it.
 
-After 10 days of obsessively working non-stop, I've finally migrated my site over to a [Gatsby](/)! You may notice the site is a little faster now:
+After 10 days of obsessively working non-stop, I've finally migrated my site over to [Gatsby](/)! You may notice the site is a little faster now:
 
-![](./speed.png)
+![Lighthouse Performance Score](./images/speed.png)
 
 In [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), the blog would hover around a 60-70 speed score. After converting to Gatsby, the score is 99 for mobile and 100 for desktop, passing 22 audits.
 
@@ -32,7 +35,7 @@ Since I primarily write JavaScript these days, I wanted an SSG that runs on Node
 - **Pre-fetch resources** - Gatsby detects what links are available on a given page and loads that data into the cache
 - **Bundling and minification** - code is minified, bundled, and served
 - **Server-side rendered, at build time** - Gatsby builds optimized static assets, which can be hosted anywhere!
-- **Articles are saved in beautiful markdown**
+- **Articles are saved in beautiful Markdown**
 - Every time I push to the repo, the site gets automatically deployed (thanks to Netlify)
 
 Very little boilerplate code was necessary to get started with Gatsby. I just forked the [Gatsby Advanced Starter](https://github.com/vagr9k/gatsby-advanced-starter/), a very simple, minimalist, completely UI-free foundation after my own heart, and started working with it.
@@ -46,12 +49,12 @@ I've been putting off migrating to a static site for months and months, because 
 If you've been thinking about moving your blog from WordPress to a static site but have been putting it off due to fear of how long it will take and how much work it will be, I highly recommend giving it a shot. I'll give you the basics of what I did in case you also want to make the switch.
 
 - First, I downloaded the XML from WordPress in the **Tools -> Export** section.
-- I used the [ExitWP](https://github.com/thomasf/exitwp) tool to convert the XML to markdown. This did about 50% of the work of converting the posts.
-- I converted tables to markdown with the [HTML to Markdown Table Converter](https://jmalarcon.github.io/markdowntables/).
+- I used the [ExitWP](https://github.com/thomasf/exitwp) tool to convert the XML to Markdown. This did about 50% of the work of converting the posts.
+- I converted tables to Markdown with the [HTML to Markdown Table Converter](https://jmalarcon.github.io/markdowntables/).
 - I manually indented all code blocks, converted all four-indent spaced code blocks to GitHub style fenced codeblocks, and fixed all the broken lists.
-- I used Prettier on all the markdown files to try to make them consistent. Here is a little snippet I used to run Prettier on all the posts:
+- I used Prettier on all the Markdown files to try to make them consistent. Here is a little snippet I used to run Prettier on all the posts:
 
-```bash
+```shell
 npm i -g prettier # install prettier globally
 cd content/posts  # move to the directory that contains all your posts
 prettier
