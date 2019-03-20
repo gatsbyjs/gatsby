@@ -72,21 +72,19 @@ exports.createPages = ({ graphql, actions }) => {
     const postTemplate = path.resolve(`./src/templates/post.js`)
     resolve(
       graphql(`
-                {
-                    allGhostPost(
-                        sort: {order: ASC, fields: published_at},
-                        filter: {
-                            slug: {ne: "data-schema"}
-                        }
-                    ) {
-                        edges {
-                            node {
-                                slug
-                            }
-                        }
-                    }
-                }`
-      ).then((result) => {
+        {
+          allGhostPost(
+            sort: { order: ASC, fields: published_at }
+            filter: { slug: { ne: "data-schema" } }
+          ) {
+            edges {
+              node {
+                slug
+              }
+            }
+          }
+        }
+      `).then(result => {
         if (result.errors) {
           return reject(result.errors)
         }
@@ -98,14 +96,12 @@ exports.createPages = ({ graphql, actions }) => {
         const items = result.data.allGhostPost.edges
 
         _.forEach(items, ({ node }) => {
-
           node.url = `/${node.slug}/`
 
           createPage({
             path: node.url,
             component: path.resolve(postTemplate),
             context: {
-
               slug: node.slug,
             },
           })
@@ -117,8 +113,6 @@ exports.createPages = ({ graphql, actions }) => {
 
   return Promise.all([createPosts])
 }
-
-
 ```
 
 &nbsp;
