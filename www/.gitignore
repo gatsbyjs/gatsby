@@ -34,3 +34,4 @@ src/cache
 
 # Env variables
 .env*
+.cache2
