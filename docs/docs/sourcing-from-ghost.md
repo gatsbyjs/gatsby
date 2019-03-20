@@ -75,7 +75,6 @@ exports.createPages = ({ graphql, actions }) => {
         {
           allGhostPost(
             sort: { order: ASC, fields: published_at }
-            filter: { slug: { ne: "data-schema" } }
           ) {
             edges {
               node {
