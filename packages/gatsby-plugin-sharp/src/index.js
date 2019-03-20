@@ -10,9 +10,10 @@ try {
       - Consult "sharp" installation page at http://sharp.pixelplumbing.com/en/stable/install/
       
       If neither of the above work, please open an issue in https://github.com/gatsbyjs/gatsby/issues
-    `,
-    error
+    `
   )
+  console.log()
+  console.error(error)
   process.exit(1)
 }
 
