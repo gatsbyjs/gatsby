@@ -15,6 +15,8 @@ After 10 days of obsessively working non-stop, I've finally migrated my site ove
 
 ![](./speed.png)
 
+In [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), the blog would hover around a 60-70 speed score. After converting to Gatsby, the score is 99 for mobile and 100 for desktop, passing 22 audits.
+
 ## Why Gatsby?
 
 There are [a lot of static site generators](https://www.staticgen.com/) to choose from. [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/), [Next](https://nextjs.org/), and [Hexo](https://hexo.io/) are some of the big ones, and I've heard of and looked into some interesting up-and-coming SSGs like [Eleventy](https://www.11ty.io/) as well. At first, I thought I'd just want something that outputs straight HTML, and that a heavy JavaScript app couldn't possibly be better than simple HTML and CSS.
@@ -29,7 +31,7 @@ Since I primarily write JavaScript these days, I wanted an SSG that runs on Node
 - **Image optimization** - all the images are automatically stripped of metadata, optimized, resized, lazy-loaded, and compressed
 - **Pre-fetch resources** - Gatsby detects what links are available on a given page and loads that data into the cache
 - **Bundling and minification** - code is minified, bundled, and served
-- **No server side rendering**
+- **Server-side rendered, at build time** - Gatsby builds optimized static assets, which can be hosted anywhere!
 - **Articles are saved in beautiful markdown**
 - Every time I push to the repo, the site gets automatically deployed (thanks to Netlify)
 
@@ -44,8 +46,8 @@ I've been putting off migrating to a static site for months and months, because 
 If you've been thinking about moving your blog from WordPress to a static site but have been putting it off due to fear of how long it will take and how much work it will be, I highly recommend giving it a shot. I'll give you the basics of what I did in case you also want to make the switch.
 
 - First, I downloaded the XML from WordPress in the **Tools -> Export** section.
-- I used the [ExitWP](https://github.com/thomasf/exitwp) tool to convert the XML to Markdown. This did about 50% of the work of converting the posts.
-- I converted tables to markdwon with the [HTML to Markdown Table Converter](https://jmalarcon.github.io/markdowntables/).
+- I used the [ExitWP](https://github.com/thomasf/exitwp) tool to convert the XML to markdown. This did about 50% of the work of converting the posts.
+- I converted tables to markdown with the [HTML to Markdown Table Converter](https://jmalarcon.github.io/markdowntables/).
 - I manually indented all code blocks, converted all four-indent spaced code blocks to GitHub style fenced codeblocks, and fixed all the broken lists.
 - I used Prettier on all the markdown files to try to make them consistent. Here is a little snippet I used to run Prettier on all the posts:
 
@@ -77,6 +79,6 @@ From there it was just a matter of building out all the pages, learning enough G
 
 It took a bit of work, but the [taniarascia.com](https://www.taniarascia.com) blog is now built with React, Node.js and Gatsby, and hosted on Netlify. I feel great that all of my posts are now safely saved in version control and markdown. It's a relief for me to know that they're no longer an HTML mess inside of a MySQL database, but markdown files which are easy to read, write, edit, share, and backup.
 
-There is a good amount of prerequisite knowlegde required to set up a Gatsby site - HTML, CSS, JavaScript, ES6, Node.js development environment, React, and GraphQL are the major ones. If you're a complete beginner to all of these technologies, setting up a Gatsby blog might be a bit of a challenge. However, the [Gatsby Getting Started Tutorial](/tutorial/) is a complete step-by-step guide that covers most of these topics, and is a great choice for an intermediate developer.
+There is a good amount of prerequisite knowledge required to set up a Gatsby site - HTML, CSS, JavaScript, ES6, Node.js development environment, React, and GraphQL are the major ones. If you're a complete beginner to all of these technologies, setting up a Gatsby blog might be a bit of a challenge. However, the [Gatsby Getting Started Tutorial](/tutorial/) is a complete step-by-step guide that covers most of these topics, and is a great choice for an intermediate developer.
 
 Good luck, and happy coding!
