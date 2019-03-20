@@ -5,19 +5,21 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import { rhythm, options } from "../utils/typography"
-import presets, {
+import { rhythm } from "../utils/typography"
+import {
   colors,
   space,
+  scale,
   transition,
   breakpoints,
   dimensions,
+  fonts,
 } from "../utils/presets"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
-const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(space[2])
+const navItemTopOffset = `0.4rem`
+const navItemHorizontalSpacing = space[2]
 
 const iconColor = colors.lilac
 
@@ -47,7 +49,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
-        fontSize: presets.scale[2],
+        fontSize: scale[2],
         ...overrideCSS,
       }}
     >
@@ -65,17 +67,6 @@ const Navigation = ({ pathname }) => {
         right: 0,
         top: dimensions.bannerHeight,
         zIndex: 2,
-        "&:after": {
-          content: `''`,
-          position: `absolute`,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          width: `100%`,
-          height: 1,
-          zIndex: -1,
-          background: isHomepage ? `transparent` : colors.ui.light,
-        },
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
@@ -91,13 +82,27 @@ const Navigation = ({ pathname }) => {
         // },
         [breakpoints.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
-          backgroundColor: isBlog ? colors.ui.whisper : false,
+          backgroundColor: isBlog ? colors.gray.whisper : false,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
       }}
     >
-      <div css={{ ...styles.containerInner }}>
+      <div
+        css={{
+          ...styles.containerInner,
+          "&:after": {
+            content: `''`,
+            position: `absolute`,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 1,
+            zIndex: -1,
+            background: isHomepage ? `transparent` : colors.gray.border,
+          },
+        }}
+      >
         <Link
           to="/"
           css={styles.logoLink}
@@ -162,7 +167,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: presets.scale[1] }}
+            overrideCSS={{ paddingRight: 0, fontSize: scale[2] }}
           >
             .com
           </SocialNavItem>
@@ -184,6 +189,9 @@ const styles = {
     [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
+      marginLeft: space[6],
+      // marginLeft: isHomepage ? false : `auto`,
+      // marginRight: `auto`,
     },
   },
   ulContainer: {
@@ -202,25 +210,24 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(space[6]),
-    paddingRight: rhythm(space[6]),
-    fontFamily: options.headerFontFamily.join(`,`),
+    paddingLeft: space[6],
+    paddingRight: space[6],
+    fontFamily: fonts.header,
     display: `flex`,
     alignItems: `center`,
     width: `100%`,
     height: `100%`,
+    position: `relative`,
   },
   navItem: {
-    fontSize: presets.scale[1],
-    borderBottom: `0.125rem solid transparent`,
-    color: `inherit`,
+    fontSize: scale[3],
+    borderBottom: `2px solid transparent`,
+    color: colors.gray.calm,
     display: `block`,
-    letterSpacing: presets.letterSpacings.tracked,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
-    textTransform: `uppercase`,
     top: 0,
     transition: `color ${transition.speed.default} ${transition.curve.default}`,
     zIndex: 1,
@@ -243,7 +250,7 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: rhythm(space[6]),
+    height: space[6],
     margin: 0,
   },
   logoLink: {
@@ -251,7 +258,7 @@ const styles = {
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(space[3]),
+    marginRight: space[3],
     textDecoration: `none`,
   },
 }

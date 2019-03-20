@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import { rhythm } from "../utils/typography"
 import { colors, space } from "../utils/presets"
 
 import Layout from "../components/layout"
@@ -36,8 +35,8 @@ class NewsLetter extends Component {
             signupMessage="Sign up for the Gatsby Newsletter"
             confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
             overrideCSS={{
-              marginTop: rhythm(space[5]),
-              paddingTop: rhythm(space[3]),
+              marginTop: space[5],
+              paddingTop: space[3],
               borderTop: `2px solid ${colors.lilac}`,
             }}
           />
