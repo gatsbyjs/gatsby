@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.2...gatsby@2.2.3) (2019-03-20)
+
+### Features
+
+- **gatsby:** add support for microsecond and alternative iso datetime formats ([#12533](https://github.com/gatsbyjs/gatsby/issues/12533)) ([dfe93ee](https://github.com/gatsbyjs/gatsby/commit/dfe93ee))
+
 ## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.1...gatsby@2.2.2) (2019-03-19)
 
 ### Bug Fixes
