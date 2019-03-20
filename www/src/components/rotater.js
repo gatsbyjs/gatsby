@@ -97,8 +97,6 @@ class Rotater extends Component {
         <p
           css={{
             color: colors.gray.copy,
-            marginLeft: space[9],
-            marginRight: space[9],
             fontSize: scale[4],
             fontFamily: options.headerFontFamily.join(`,`),
             textAlign: `center`,
