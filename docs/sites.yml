@@ -4964,3 +4964,13 @@
   built_by: Torsten Uhlmann
   built_by_url: https://www.agynamix.de/
   featured: false
+- title: syracuse.io
+  url: https://syracuse.io
+  main_url: https://syracuse.io
+  source_url: https://github.com/syracuseio/syracuseio/
+  description: >
+    Landing page for Syracuse NY Software Development Meetup Groups
+  categories:
+    - Community
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
