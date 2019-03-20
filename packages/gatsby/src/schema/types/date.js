@@ -21,6 +21,23 @@ const ISO_8601_FORMAT = [
   `YYYY-MM-DDTHHmmss`,
   `YYYY-MM-DDTHH:mm:ss.SSS`,
   `YYYY-MM-DDTHHmmss.SSS`,
+  `YYYY-MM-DDTHH:mm:ss.SSSSSS`,
+  `YYYY-MM-DDTHHmmss.SSSSSS`,
+  // `YYYY-MM-DDTHH:mm:ss.SSSSSSSSS`,
+  // `YYYY-MM-DDTHHmmss.SSSSSSSSS`,
+
+  // Local Time (Omit T)
+  `YYYY-MM-DD HH`,
+  `YYYY-MM-DD HH:mm`,
+  `YYYY-MM-DD HHmm`,
+  `YYYY-MM-DD HH:mm:ss`,
+  `YYYY-MM-DD HHmmss`,
+  `YYYY-MM-DD HH:mm:ss.SSS`,
+  `YYYY-MM-DD HHmmss.SSS`,
+  `YYYY-MM-DD HH:mm:ss.SSSSSS`,
+  `YYYY-MM-DD HHmmss.SSSSSS`,
+  // `YYYY-MM-DD HH:mm:ss.SSSSSSSSS`,
+  // `YYYY-MM-DD HHmmss.SSSSSSSSS`,
 
   // Coordinated Universal Time (UTC)
   `YYYY-MM-DDTHHZ`,
@@ -30,6 +47,34 @@ const ISO_8601_FORMAT = [
   `YYYY-MM-DDTHHmmssZ`,
   `YYYY-MM-DDTHH:mm:ss.SSSZ`,
   `YYYY-MM-DDTHHmmss.SSSZ`,
+  `YYYY-MM-DDTHH:mm:ss.SSSSSSZ`,
+  `YYYY-MM-DDTHHmmss.SSSSSSZ`,
+  // `YYYY-MM-DDTHH:mm:ss.SSSSSSSSSZ`,
+  // `YYYY-MM-DDTHHmmss.SSSSSSSSSZ`,
+
+  // Coordinated Universal Time (UTC) (Omit T)
+  `YYYY-MM-DD HHZ`,
+  `YYYY-MM-DD HH:mmZ`,
+  `YYYY-MM-DD HHmmZ`,
+  `YYYY-MM-DD HH:mm:ssZ`,
+  `YYYY-MM-DD HHmmssZ`,
+  `YYYY-MM-DD HH:mm:ss.SSSZ`,
+  `YYYY-MM-DD HHmmss.SSSZ`,
+  `YYYY-MM-DD HH:mm:ss.SSSSSSZ`,
+  `YYYY-MM-DD HHmmss.SSSSSSZ`,
+  // `YYYY-MM-DD HH:mm:ss.SSSSSSSSSZ`,
+  // `YYYY-MM-DD HHmmss.SSSSSSSSSZ`,
+
+  // Coordinated Universal Time (UTC) (Omit T, Extra Space before Z)
+  `YYYY-MM-DD HH Z`,
+  `YYYY-MM-DD HH:mm Z`,
+  `YYYY-MM-DD HHmm Z`,
+  `YYYY-MM-DD HH:mm:ss Z`,
+  `YYYY-MM-DD HHmmss Z`,
+  `YYYY-MM-DD HH:mm:ss.SSS Z`,
+  `YYYY-MM-DD HHmmss.SSS Z`,
+  `YYYY-MM-DD HH:mm:ss.SSSSSS Z`,
+  `YYYY-MM-DD HHmmss.SSSSSS Z`,
 
   `YYYY-[W]WW`,
   `YYYY[W]WW`,
