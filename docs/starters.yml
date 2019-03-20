@@ -1663,16 +1663,23 @@
     - Material UI
     - styled-components
     - Github markdown css support
-- url: https://ueno.co/
+- url: https://create-ueno-app.netlify.com
   repo: https://github.com/ueno-llc/ueno-gatsby-starter
-  description: Ueno's starter template for Gatsby
+  description: Opinionated Gatsby starter by Ueno.
   tags:
     - TypeScript
+    - Styling:SCSS
+    - Linting
+    - Transitions
   features:
     - GraphQL hybrid
     - SEO friendly
     - GSAP ready
-    - Nice devtools
+    - Nice Devtools
+    - GsapTools
+    - Ueno plugins
+    - SVG to React component
+    - Ueno's TSlint
     - Decorators
 - url: https://gatsby-sseon-starter.netlify.com/
   repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
