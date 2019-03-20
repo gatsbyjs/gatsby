@@ -122,7 +122,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
       depsChanged: false,
       jobs: new Set(),
       // we need to know if package is direct dependency of the project to figure out if we need to
-      // only publish it to local registry or install it as wll
+      // only publish it to local registry or install it as well
       isDirectDep: packages.includes(p),
     }
     return state
