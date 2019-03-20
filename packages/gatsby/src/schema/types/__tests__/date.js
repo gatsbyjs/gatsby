@@ -1,6 +1,7 @@
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
 const { isDate } = require(`../date`)
+require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 // Timestamps grabbed from https://github.com/moment/moment/blob/2e2a5b35439665d4b0200143d808a7c26d6cd30f/src/test/moment/is_valid.js
 
@@ -231,7 +232,7 @@ describe(`dateResolver`, () => {
         testDate: Date
         explicitValidDate: Date
         invalidHighPrecision: Date
-        invalidDate8: Date 
+        invalidDate8: Date
         invalidDate9: Date
         invalidDate10: Date
         invalidDate11: Date
