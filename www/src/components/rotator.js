@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Slider from "./Slider"
+import Slider from "./slider"
 import { options } from "../utils/typography"
 import { scale, colors, space, radii } from "../utils/presets"
 import Link from "gatsby-link"
@@ -30,63 +30,83 @@ const controlButtonStyles = {
 }
 
 class Rotator extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = { item: 0, size: {} }
+  state = {
+    item: 0,
+    size: {},
+  }
+  sliderContainer = React.createRef()
+  intervalId = null
+
+  _clearInterval() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId)
+      this.intervalId = null
+    }
   }
 
-  decrementItem() {
-    clearInterval(this.state.intervalId)
+  decrementItem = () => {
+    this._clearInterval()
     this.setState({
-      intervalId: -1,
       item:
         (this.state.item + this.props.items.length - 1) %
         this.props.items.length,
     })
   }
 
-  incrementItemAndClearInterval() {
-    clearInterval(this.state.intervalId)
+  incrementItemAndClearInterval = () => {
+    this._clearInterval()
     this.incrementItem()
-    this.setState({
-      intervalId: -1,
-    })
   }
 
-  incrementItem() {
-    this.setState({
-      item: (this.state.item + 1) % this.props.items.length,
+  incrementItem = () => {
+    this.setState(state => {
+      return {
+        item: (state.item + 1) % this.props.items.length,
+      }
     })
   }
 
   componentDidMount() {
-    const intervalId = setInterval(() => this.incrementItem(), 5000)
-    this.setState({ intervalId, size: this.getDimensions() })
+    if (this.shouldAnimate()) {
+      requestAnimationFrame(() => {
+        this.intervalId = setInterval(this.incrementItem, 5000)
+        this.setState({ size: this.getDimensions() })
+      })
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalId)
+    clearInterval(this.intervalId)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.item !== this.state.item) {
-      this.setState({ size: this.getDimensions() })
+    if (this.shouldAnimate() && prevState.item !== this.state.item) {
+      requestAnimationFrame(() => {
+        this.setState({ size: this.getDimensions() })
+      })
     }
   }
 
   getDimensions() {
-    if (this.wordBox == null) {
+    if (this.sliderContainer.current === null) {
       return {
         width: `auto`,
         height: `auto`,
       }
     }
 
-    return this.wordBox.getBoundingClientRect()
+    return this.sliderContainer.current.getBoundingClientRect()
+  }
+
+  shouldAnimate() {
+    const mediaQuery = window.matchMedia(`(prefers-reduced-motion)`)
+    return !mediaQuery || !mediaQuery.matches
   }
 
   render() {
     const { text, pluginName } = this.props.items[this.state.item]
+
+    const enableSlider = this.shouldAnimate() && this.intervalId
 
     return (
       <div
@@ -122,11 +142,9 @@ class Rotator extends Component {
                 whiteSpace: `nowrap`,
                 display: `inline-block`,
               }}
-              ref={n => {
-                this.wordBox = n
-              }}
+              ref={this.sliderContainer}
             >
-              {this.state.intervalId == -1 ? (
+              {!enableSlider ? (
                 <>{text}</>
               ) : (
                 <Slider
@@ -156,16 +174,13 @@ class Rotator extends Component {
           {` `}
           for that.
         </p>
-        <button
-          css={{ ...controlButtonStyles }}
-          onClick={this.decrementItem.bind(this)}
-        >
+        <button css={{ ...controlButtonStyles }} onClick={this.decrementItem}>
           <MdNavigateBefore aria-hidden="true" />
           <span css={srOnly}>Previous</span>
         </button>
         <button
           css={{ ...controlButtonStyles, left: `auto`, right: 0 }}
-          onClick={this.incrementItemAndClearInterval.bind(this)}
+          onClick={this.incrementItemAndClearInterval}
         >
           <MdNavigateNext aria-hidden="true" />
           <span css={srOnly}>Next</span>
