@@ -1375,3 +1375,19 @@
     - Mobile-friendly design
     - Styling done with Sass
     - Gatsby version 2
+- url: https://gatsby-typescript-scss-docker-starter.netlify.com/
+  repo: https://github.com/OFranke/gatsby-typescript-scss-docker
+  description: Gatsby starter TypeScript, SCSS, Docker
+  tags:
+    - TypeScript
+    - Styling:SCSS
+    - Linting
+    - Prettier
+    - Commit Hooks
+    - Docker
+  features:
+    - Format & Commit Safe by ESLint, StyleLint and Prettier with Lint-Staged (Husky), optimized for VS Code (check `.vscode/settings.json`)
+    - Typings for scss files are automatically generated, you can import you styles like `import * as styles from './styles.module.scss'` and then use it like `<div className={styles.textWrapper}>`
+    - Responsiveness from the beginning through easy breakpoint configuration
+    - Enforce the DRY principle, no hardcoded and repeated `margin`, `font-size`, `color`, `box-shadow`, `border-radius` ... properties anymore
+    - Docker ready - you can run gatsby dev mode on your machine environment or with docker-compose
