@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.16...gatsby-transformer-sharp@2.1.17) (2019-03-12)
+
+### Features
+
+- **gatsby-image:** Placeholder Improvements ([#10944](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/10944)) ([44491ef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/44491ef))
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.15...gatsby-transformer-sharp@2.1.16) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.14...gatsby-transformer-sharp@2.1.15) (2019-02-28)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.13...gatsby-transformer-sharp@2.1.14) (2019-02-19)
+
+### Features
+
+- **gatsby-plugin-sharp:** add defaultQuality option ([8af9826](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/8af9826))
+
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.12...gatsby-transformer-sharp@2.1.13) (2019-01-29)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

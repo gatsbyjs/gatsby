@@ -1,6 +1,10 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
+    author: {
+      name: `Kyle Mathews`,
+      bio: `lives and works in San Francisco building useful things`,
+    },
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
