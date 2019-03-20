@@ -5,7 +5,7 @@ import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
-import { colors, space, dimensions } from "../utils/presets"
+import { colors, space, dimensions, scale } from "../utils/presets"
 
 class Plugins extends Component {
   render() {
@@ -38,9 +38,9 @@ class Plugins extends Component {
           />
           <h1
             css={{
-              fontSize: presets.scale[6],
-              marginLeft: rhythm(space[5]),
-              marginRight: rhythm(space[5]),
+              fontSize: scale[6],
+              marginLeft: space[5],
+              marginRight: space[5],
               marginBottom: 0,
               textAlign: `center`,
             }}
@@ -99,7 +99,7 @@ class Plugins extends Component {
           <p
             css={{
               color: colors.gray.lightCopy,
-              fontSize: presets.scale[2],
+              fontSize: scale[2],
               textAlign: `center`,
             }}
           >
