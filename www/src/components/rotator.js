@@ -105,7 +105,6 @@ class Rotator extends Component {
 
   render() {
     const { text, pluginName } = this.props.items[this.state.item]
-
     const enableSlider = this.shouldAnimate() && this.intervalId
 
     return (
@@ -142,16 +141,14 @@ class Rotator extends Component {
                 whiteSpace: `nowrap`,
                 display: `inline-block`,
               }}
+              id="headline-slider"
               ref={this.sliderContainer}
+              aria-live={this.intervalId ? `off` : `polite`}
             >
               {!enableSlider ? (
                 <>{text}</>
               ) : (
-                <Slider
-                  items={[text]}
-                  color={`#000`}
-                  getSize={size => this.setState({ size })}
-                />
+                <Slider items={[text]} color={`#000`} />
               )}
             </span>
           </span>
@@ -174,13 +171,18 @@ class Rotator extends Component {
           {` `}
           for that.
         </p>
-        <button css={{ ...controlButtonStyles }} onClick={this.decrementItem}>
+        <button
+          css={{ ...controlButtonStyles }}
+          onClick={this.decrementItem}
+          aria-controls="headline-slider"
+        >
           <MdNavigateBefore aria-hidden="true" />
           <span css={srOnly}>Previous</span>
         </button>
         <button
           css={{ ...controlButtonStyles, left: `auto`, right: 0 }}
           onClick={this.incrementItemAndClearInterval}
+          aria-controls="headline-slider"
         >
           <MdNavigateNext aria-hidden="true" />
           <span css={srOnly}>Next</span>
