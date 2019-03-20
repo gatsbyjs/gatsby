@@ -47,6 +47,17 @@ module.exports = async function genMDX({
   cache,
   pathPrefix
 }) {
+  const pathPrefixCacheStr = pathPrefix || ``;
+  const payloadCacheKey = node =>
+    `gatsby-mdx-entire-payload-${
+      node.internal.contentDigest
+    }-${pathPrefixCacheStr}`;
+
+  const cachedPayload = await cache.get(payloadCacheKey(node));
+  if (cachedPayload) {
+    return cachedPayload;
+  }
+
   let results = {
     mdast: undefined,
     hast: undefined,
@@ -141,6 +152,6 @@ module.exports = async function genMDX({
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
    * ); */
-
+  cache.set(payloadCacheKey(node), results);
   return results;
 };
