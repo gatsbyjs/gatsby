@@ -21,7 +21,12 @@ const controlButtonStyles = {
   fontSize: scale[5],
   width: space[8],
   textAlign: `center`,
-  "&:hover": { cursor: `pointer`, color: colors.gatsby },
+  "&:hover": {
+    cursor: `pointer`,
+    color: colors.gatsby,
+    background: colors.ui.whisper,
+  },
+  "&:active": { background: colors.ui.light },
 }
 
 class Rotater extends Component {
