@@ -1,6 +1,5 @@
 import React from "react"
 import { colors, space, breakpoints } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 
 const Card = ({ children }) => (
   <div
@@ -26,10 +25,10 @@ const Card = ({ children }) => (
   >
     <div
       css={{
-        padding: rhythm(space[6]),
+        padding: space[6],
         paddingBottom: 0,
         transform: `translateZ(0)`,
-        [breakpoints.sm]: { padding: rhythm(space[8]) },
+        [breakpoints.sm]: { padding: space[8] },
       }}
     >
       {children}

@@ -148,7 +148,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -178,7 +178,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {

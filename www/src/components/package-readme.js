@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
-import { rhythm } from "../utils/typography"
 import { space } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
@@ -31,7 +30,7 @@ const PackageReadMe = props => {
           display: `flex`,
           flexWrap: `wrap`,
           justifyContent: `space-between`,
-          paddingBottom: rhythm(space[9]),
+          paddingBottom: space[9],
           "&&:hover": {
             color: `inherit`,
           },
@@ -49,7 +48,7 @@ const PackageReadMe = props => {
                 css={{
                   ...linkStyles,
                   color: `#aaa !important`,
-                  marginRight: rhythm(space[6]),
+                  marginRight: space[6],
                 }}
               >
                 <img
@@ -71,10 +70,7 @@ const PackageReadMe = props => {
             href={githubUrl}
             aria-labelledby="github-link-label"
           >
-            <GithubIcon
-              focusable="false"
-              style={{ marginRight: rhythm(space[2]) }}
-            />
+            <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
             <span id="github-link-label">View plugin on GitHub</span>
           </a>
         </div>
