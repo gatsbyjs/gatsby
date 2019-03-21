@@ -265,7 +265,7 @@ function buildLocalCommands(cli, isLocalSite) {
         choices: [`add`, `remove`, `config`, `search`],
       }).positional(`plugin`, {
         type: `string`,
-        describe: `Package to add, remove, configure, or search.`,
+        describe: `Package(s) to add, remove, configure, or search.`,
       }),
     handler: getCommandHandler(`plugin`),
   })
