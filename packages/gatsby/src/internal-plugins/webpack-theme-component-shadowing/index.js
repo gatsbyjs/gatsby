@@ -35,20 +35,32 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       // get the location of the component relative to src/
       const [, component] = request.path.split(path.join(theme, `src`))
 
-      const issuerExtension = path.extname(request.context.issuer)
+      /**
+       * if someone adds
+       * ```
+       * modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+       * ```
+       * to the webpack config, `issuer` is `null`, so we skip this check.
+       * note that it's probably a bad idea in general to set `modules`
+       * like this in a theme, but we also shouldn't artificially break
+       * people that do.
+       */
+      if (request.context.issuer) {
+        const issuerExtension = path.extname(request.context.issuer)
 
-      if (
-        request.context.issuer
-          .slice(0, -issuerExtension.length)
-          .endsWith(component)
-      ) {
-        return resolver.doResolve(
-          `describedRelative`,
-          request,
-          null,
-          {},
-          callback
-        )
+        if (
+          request.context.issuer
+            .slice(0, -issuerExtension.length)
+            .endsWith(component)
+        ) {
+          return resolver.doResolve(
+            `describedRelative`,
+            request,
+            null,
+            {},
+            callback
+          )
+        }
       }
       const builtComponentPath = this.resolveComponentPath({
         matchingTheme: theme,
