@@ -37,7 +37,7 @@ async function queryResult(
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
-  const tc = sc.createTC(typeName)
+  const tc = sc.createObjectTC(typeName)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,

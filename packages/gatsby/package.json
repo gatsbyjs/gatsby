@@ -70,7 +70,7 @@
     "gatsby-react-router-scroll": "^2.0.6",
     "glob": "^7.1.1",
     "graphql": "^14.1.1",
-    "graphql-compose": "^5.11.0",
+    "graphql-compose": "^6.0.3",
     "graphql-playground-middleware-express": "^1.7.10",
     "graphql-relay": "^0.6.0",
     "graphql-tools": "^3.0.4",

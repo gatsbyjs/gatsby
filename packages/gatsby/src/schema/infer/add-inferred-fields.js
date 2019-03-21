@@ -5,6 +5,7 @@ const {
   GraphQLObjectType,
   GraphQLList,
 } = require(`graphql`)
+const { ObjectTypeComposer } = require(`graphql-compose`)
 const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -136,7 +137,7 @@ const addInferredFieldsImpl = ({
         }
       }
     } else if (addNewFields) {
-      if (namedInferredType instanceof schemaComposer.TypeComposer) {
+      if (namedInferredType instanceof ObjectTypeComposer) {
         schemaComposer.add(namedInferredType)
       }
       typeComposer.setField(key, fieldConfig)
@@ -292,7 +293,7 @@ const getFieldConfigFromFieldNameConvention = ({
     const typeName = linkedTypes.sort().join(``) + `Union`
     type = schemaComposer.getOrCreateUTC(typeName, utc => {
       const types = linkedTypes.map(typeName =>
-        schemaComposer.getOrCreateTC(typeName)
+        schemaComposer.getOrCreateOTC(typeName)
       )
       utc.setTypes(types)
       utc.setResolveType(node => node.internal.type)
@@ -358,8 +359,9 @@ const getSimpleFieldConfig = ({
             originalFieldTypeComposer.getTypeName()
           )
         } else {
-          fieldTypeComposer = schemaComposer.TypeComposer.createTemp(
-            createTypeName(selector)
+          fieldTypeComposer = ObjectTypeComposer.createTemp(
+            createTypeName(selector),
+            schemaComposer
           )
         }
 
