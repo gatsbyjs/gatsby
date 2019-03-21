@@ -258,25 +258,27 @@ class Image extends React.Component {
       itemProp,
     } = convertProps(this.props)
 
+    const shouldDisplay = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+
+    const imageStyle = {
+      opacity: shouldDisplay ? 1 : 0,
+      transition: shouldFadeIn ? `opacity 0.5s` : `none`,
+      ...imgStyle,
+    }
+
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHide = {
       transitionDelay: `0.5s`,
     }
+
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
-      ...(!this.state.imgCached && delayHide),
+      ...(shouldFadeIn && delayHide),
       ...imgStyle,
       ...placeholderStyle,
-    }
-
-    const shouldDisplay = this.state.imgLoaded || this.state.fadeIn === false
-    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
-    const imageStyle = {
-      opacity: shouldDisplay ? 1 : 0,
-      transition: shouldFadeIn ? `opacity 0.5s` : `none`,
-      ...imgStyle,
     }
 
     const placeholderImageProps = {
@@ -320,7 +322,7 @@ class Image extends React.Component {
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 right: 0,
                 left: 0,
-                ...(!this.state.imgCached && delayHide),
+                ...(shouldFadeIn && delayHide),
               }}
             />
           )}
@@ -405,7 +407,7 @@ class Image extends React.Component {
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 height: image.height,
-                ...(!this.state.imgCached && delayHide),
+                ...(shouldFadeIn && delayHide),
               }}
             />
           )}
