@@ -9,8 +9,9 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import { withPrefix } from "gatsby"
 
-function SEO({ lang, meta, title, description, author, keywords, image, url }) {
+function SEO({ lang, meta, title, description, author, keywords, url, image }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -20,8 +21,8 @@ function SEO({ lang, meta, title, description, author, keywords, image, url }) {
             description
             author
             keywords
-            image
             url
+            image
           }
         }
       }
@@ -32,8 +33,14 @@ function SEO({ lang, meta, title, description, author, keywords, image, url }) {
   const metaDescription = description || site.siteMetadata.description
   const metaAuthor = author || site.siteMetadata.author
   const metaKeywords = keywords || site.siteMetadata.keywords
-  const metaImage = image || site.siteMetadata.image
-  const metaUrl = url || site.siteMetadata.url
+  const metaUrl = url || site.siteMetadata
+
+  // Getting gatsby-share.png from public folder as fallback for metaImage
+  const gatsbyShareImage =
+    typeof window !== "undefined" &&
+    `${window.location.origin}${withPrefix("/img/gatsby-share.png")}`
+
+  const metaImage = image || gatsbyShareImage
 
   return (
     <Helmet
