@@ -117,7 +117,7 @@ async function onCreateNode({ node, loadNodeContent }) {
     return
   }
 
-  const fileContent = await loadNodeContent(node)
+  const content = await loadNodeContent(node)
   const parsedContent = jsYaml.load(content)
 }
 
