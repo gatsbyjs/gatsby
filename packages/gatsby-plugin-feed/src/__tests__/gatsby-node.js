@@ -119,4 +119,26 @@ describe(`Test plugin feed`, async () => {
     expect(contents).toMatchSnapshot()
     expect(graphql).toBeCalledWith(customQuery)
   })
+
+  it(`no entries found for filter`, async () => {
+    internals.writeFile = jest.fn()
+    internals.writeFile.mockResolvedValue(true)
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: {
+        site: {
+          siteMetadata: {
+            title: `a sample title`,
+            description: `a description`,
+            siteUrl: `http://dummy.url/`,
+          },
+        },
+        allMarkdownRemark: null,
+      },
+    })
+    await onPostBuild({ graphql }, {})
+    const [filePath, contents] = internals.writeFile.mock.calls[0]
+    expect(filePath).toEqual(path.join(`public`, `rss.xml`))
+    expect(contents).toMatchSnapshot()
+  })
 })

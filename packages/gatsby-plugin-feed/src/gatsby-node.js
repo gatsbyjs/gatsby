@@ -8,8 +8,9 @@ import { defaultOptions, runQuery, writeFile } from "./internals"
 const publicPath = `./public`
 
 // A default function to transform query data into feed entries.
-const serialize = ({ query: { site, allMarkdownRemark } }) =>
-  allMarkdownRemark.edges.map(edge => {
+const serialize = ({ query: { site, allMarkdownRemark } }) => {
+  if (!allMarkdownRemark || !allMarkdownRemark.edges) return []
+  return allMarkdownRemark.edges.map(edge => {
     return {
       ...edge.node.frontmatter,
       description: edge.node.excerpt,
@@ -18,6 +19,7 @@ const serialize = ({ query: { site, allMarkdownRemark } }) =>
       custom_elements: [{ "content:encoded": edge.node.html }],
     }
   })
+}
 
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   delete pluginOptions.plugins
@@ -51,7 +53,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
     const feed = new RSS(setup(locals))
     const serializer =
       f.serialize && typeof f.serialize === `function` ? f.serialize : serialize
-    const items = serializer(locals)
+    const items = serializer(locals) || []
 
     items.forEach(i => feed.item(i))
 
