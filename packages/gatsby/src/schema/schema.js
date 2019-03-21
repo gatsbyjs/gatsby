@@ -313,6 +313,7 @@ const addThirdPartySchemas = ({
           }
         })
         schemaComposer.add(typeComposer)
+        schemaComposer.addSchemaMustHaveType(typeComposer)
       }
     })
   })
