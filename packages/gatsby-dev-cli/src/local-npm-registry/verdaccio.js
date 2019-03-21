@@ -2,12 +2,13 @@ const startVerdaccio = require(`verdaccio`).default
 const path = require(`path`)
 const npmLogin = require(`npm-cli-login`)
 const fs = require(`fs-extra`)
+const _ = require(`lodash`)
 const { promisifiedSpawn, getMonorepoPackageJsonPath } = require(`./utils`)
 
 let VerdaccioInitPromise = null
 
 const verdaccioConfig = {
-  storage: path.join(__dirname, `..`, `verdaccio`, `storage`),
+  storage: path.join(__dirname, `..`, `..`, `verdaccio`, `storage`),
   port: 4873, // default
   web: {
     enable: true,
@@ -19,7 +20,7 @@ const verdaccioConfig = {
       max_users: 1000,
     },
   },
-  // logs: [{ type: `stdout`, format: `pretty-timestamped`, level: `warn` }],
+  logs: [{ type: `stdout`, format: `pretty-timestamped`, level: `warn` }],
   packages: {
     "**": {
       access: `$all`,
@@ -165,7 +166,28 @@ exports.publishPackagesLocallyAndInstall = async ({
     })
   }
 
-  // TO-DO install packages locally
-  // need to install intersection of `packagesToPublish` and `packages`
-  // (packages filtered out will be deps of packages to install)
+  const packagesToInstall = _.intersection(packagesToPublish, packages).map(
+    packageName => `${packageName}@gatsby-dev`
+  )
+  const installCmd = [
+    `yarn`,
+    [`add`, ...packagesToInstall, `--registry=${registryUrl}`],
+    {
+      cwd: process.cwd(),
+    },
+  ]
+
+  console.log(
+    `Installing packages from local registry:\n${packagesToInstall
+      .map(packageAndVersion => ` - ${packageAndVersion}`)
+      .join(`\n`)}`
+  )
+
+  try {
+    await promisifiedSpawn(installCmd)
+
+    console.log(`Installation complete`)
+  } catch {
+    console.error(`Installation failed`)
+  }
 }

@@ -52,8 +52,22 @@ const checkDepsChanges = ({ newPath, packageName, root, isInitialScan }) => {
     )
 
     let needPublishing = false
+    let isPublishing = false
     const depChangeLog = _.uniq(Object.keys({ ...diff, ...diff2 }))
       .reduce((acc, key) => {
+        if (monorepoPKGjson.dependencies[key] === `gatsby-dev `) {
+          // if we are in middle of publishing to local repository - ignore
+          isPublishing = true
+          return acc
+        }
+
+        if (localPKGjson.dependencies[key] === `gatsby-dev`) {
+          // monorepo packages will restore version, but after installation
+          // in local site - it will use `gatsby-dev` dist tag - we need
+          // to ignore changes that
+          return acc
+        }
+
         if (
           localPKGjson.dependencies[key] &&
           monorepoPKGjson.dependencies[key]
@@ -75,13 +89,17 @@ const checkDepsChanges = ({ newPath, packageName, root, isInitialScan }) => {
       }, [])
       .join(`\n`)
 
-    console.log(`Dependencies of '${packageName}' changed:\n${depChangeLog}\n`)
-    if (isInitialScan) {
+    if (!isPublishing && depChangeLog.length > 0) {
       console.log(
-        `Will ${!needPublishing ? `not ` : ``} publish to local npm registry.`
+        `Dependencies of '${packageName}' changed:\n${depChangeLog}\n`
       )
+      if (isInitialScan) {
+        console.log(
+          `Will ${!needPublishing ? `not ` : ``} publish to local npm registry.`
+        )
+      }
+      return needPublishing
     }
-    return needPublishing
   }
   return false
 }

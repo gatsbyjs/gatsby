@@ -5,10 +5,8 @@ const path = require(`path`)
 
 const {
   publishPackagesLocallyAndInstall,
-  registryUrl,
-  startVerdaccio,
 } = require(`./local-npm-registry/verdaccio`)
-// const { promisifiedSpawn } = require(`./local-npm-registry/utils`)
+
 const { checkDepsChanges } = require(`./local-npm-registry/check-deps-changes`)
 const {
   getDependantPackages,
@@ -141,8 +139,15 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
 
         if (relativePackageFile === `package.json`) {
           // Compare dependencies with local version
-          if (checkDepsChanges({ newPath, packageName, root, isInitialScan })) {
-            //
+
+          if (
+            checkDepsChanges({
+              newPath,
+              packageName,
+              root,
+              isInitialScan,
+            })
+          ) {
             if (isInitialScan) {
               // handle dependency change only in initial scan - this is for sure doable to
               // handle this in watching mode correctly - but for the sake of shipping
@@ -163,14 +168,16 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
                 // as we can do single publish then
                 packagesToPublish.add(packageToPublish)
               })
-
-              return
             } else {
               console.warn(
                 `Installation of depenencies after initial scan is not implemented`
               )
             }
           }
+
+          // don't ever copy package.json as this will mess up any future dependency
+          // changes checks
+          return
         }
 
         if (packagesToPublish.has(packageName)) {
