@@ -16,16 +16,18 @@ import GatsbyIcon from "../monogram.svg"
 import debounce from "lodash/debounce"
 import unescape from "lodash/unescape"
 
-import presets, {
+import {
   space,
   colors,
+  scale,
   transition,
   radii,
   breakpoints,
   dimensions,
+  fonts,
 } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
-import { scrollbarStyles, skipLink } from "../utils/styles"
+import { rhythm } from "../utils/typography"
+import { skipLink } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
@@ -38,7 +40,7 @@ const updateAfter = 700
 // A couple constants for CSS
 const searchInputHeight = rhythm(7 / 4)
 const searchMetaHeight = rhythm(8 / 4)
-const searchInputWrapperMargin = rhythm(space[6])
+const searchInputWrapperMargin = space[6]
 
 /* stylelint-disable */
 const searchBoxStyles = css`
@@ -69,8 +71,8 @@ const searchBoxStyles = css`
     border-radius: ${radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
-    font-size: ${presets.scale[3]};
-    font-family: ${options.headerFontFamily.join(`,`)};
+    font-size: ${scale[3]};
+    font-family: ${fonts.header};
     height: ${searchInputHeight};
     padding: 0;
     padding-right: ${searchInputHeight};
@@ -134,8 +136,8 @@ const searchBoxStyles = css`
     fill: ${colors.gatsby};
   }
   .ais-SearchBox__submit svg {
-    width: ${rhythm(space[4])};
-    height: ${rhythm(space[4])};
+    width: ${space[4]};
+    height: ${space[4]};
     vertical-align: middle;
     fill: ${colors.ui.bright};
   }
@@ -156,8 +158,8 @@ const searchBoxStyles = css`
   }
   .ais-SearchBox__reset svg {
     fill: ${colors.ui.bright};
-    width: ${rhythm(space[3])};
-    height: ${rhythm(space[3])};
+    width: ${space[3]};
+    height: ${space[3]};
     vertical-align: middle;
   }
 
@@ -168,11 +170,11 @@ const searchBoxStyles = css`
     color: ${colors.gatsby};
     cursor: pointer;
     width: calc(100% - ${rhythm(space[6] * 2)});
-    margin: ${rhythm(space[6])};
-    height: ${rhythm(space[9])};
+    margin: ${space[6]};
+    height: ${space[9]};
     outline: none;
     transition: all ${transition.speed.default} ${transition.curve.default};
-    font-family: ${options.headerFontFamily.join(`,`)};
+    font-family: ${fonts.header};
   }
   .ais-InfiniteHits__loadMore:hover,
   .ais-InfiniteHits__loadMore:focus {
@@ -239,9 +241,9 @@ class Search extends Component {
               color: colors.gray.calm,
               display: `flex`,
               height: searchMetaHeight,
-              paddingLeft: rhythm(space[6]),
-              paddingRight: rhythm(space[6]),
-              fontSize: presets.scale[1],
+              paddingLeft: space[6],
+              paddingRight: space[6],
+              fontSize: scale[1],
             }}
           >
             <Stats
@@ -263,7 +265,6 @@ class Search extends Component {
                   dimensions.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
-                ...scrollbarStyles,
               },
             }}
           >
@@ -284,7 +285,7 @@ class Search extends Component {
             fontSize: 0,
             lineHeight: 0,
             height: 20,
-            marginTop: rhythm(space[6]),
+            marginTop: space[6],
             display: `none`,
           }}
         >
@@ -333,22 +334,22 @@ const Result = ({ hit, pathname, query }) => {
       to={`/packages/${hit.name}/?=${query}`}
       css={{
         "&&": {
-          background: selected ? colors.white : false,
+          background: selected ? colors.ui.whisper : false,
           borderBottom: 0,
           color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
-          padding: `${rhythm(space[4])} ${rhythm(space[6])}`,
+          padding: `${space[5]} ${space[6]}`,
           position: `relative`,
           transition: `all ${transition.speed.default} ${
             transition.curve.default
           }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? colors.white : colors.ui.border,
+            background: selected ? colors.ui.whisper : colors.white,
           },
           "&:before": {
-            background: colors.ui.border,
+            background: colors.gray.border,
             bottom: 0,
             content: `''`,
             height: 1,
@@ -374,14 +375,14 @@ const Result = ({ hit, pathname, query }) => {
           alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
-          marginBottom: rhythm(space[3]),
+          marginBottom: space[3],
         }}
       >
         <h2
           css={{
             color: selected ? colors.gatsby : false,
             fontSize: `inherit`,
-            fontFamily: options.headerFontFamily.join(`,`),
+            fontFamily: fonts.header,
             fontWeight: `bold`,
             display: `flex`,
             alignItems: `center`,
@@ -402,7 +403,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
             display: `flex`,
-            fontSize: presets.scale[0],
+            fontSize: scale[0],
           }}
         >
           {hit.repository &&
@@ -432,7 +433,7 @@ const Result = ({ hit, pathname, query }) => {
             <span
               css={{
                 color: selected ? colors.lilac : colors.gray.bright,
-                marginLeft: rhythm(space[1]),
+                marginLeft: space[1],
               }}
             >
               <DownloadArrow />
@@ -443,7 +444,7 @@ const Result = ({ hit, pathname, query }) => {
       <div
         css={{
           color: selected ? `inherit` : colors.gray.calm,
-          fontSize: presets.scale[1],
+          fontSize: scale[1],
         }}
       >
         {removeMD(unescape(hit.description))}

@@ -2,16 +2,17 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import presets, {
+import {
   colors,
   space,
   breakpoints,
   dimensions,
+  lineHeights,
+  scale,
 } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
 
 const PageHeadingContainer = styled(`header`)`
-  padding: ${rhythm(space[6])};
+  padding: ${space[6]};
 
   ${breakpoints.md} {
     left: 0;
@@ -25,25 +26,24 @@ const H1 = styled(`h1`)`
   align-items: center;
   color: ${colors.lilac};
   display: flex;
-  font-size: ${presets.scale[5]};
-  line-height: ${presets.lineHeights.solid};
+  font-size: ${scale[5]};
+  line-height: ${lineHeights.solid};
   margin: 0;
   position: relative;
   width: 100%;
 
   ${breakpoints.md} {
-    transform: rotate(-90deg)
-      translate(calc(-100% - ${rhythm(space[7])}), ${rhythm(space[4])});
+    transform: rotate(-90deg) translate(calc(-100% - ${space[7]}), ${space[4]});
     transform-origin: top left;
   }
 
   :after {
-    bottom: -${rhythm(space[4])};
+    bottom: -${space[4]};
     content: attr(data-title);
     display: none;
     font-size: 12rem;
     position: absolute;
-    right: -${rhythm(space[3])};
+    right: -${space[3]};
     z-index: -1;
     color: ${colors.ui.whisper};
 
@@ -56,10 +56,10 @@ const H1 = styled(`h1`)`
 const Icon = styled(`span`)`
   display: flex;
   align-items: center;
-  margin-right: ${rhythm(space[2])};
+  margin-right: ${space[2]};
 
   svg {
-    width: ${rhythm(space[7])};
+    width: ${space[7]};
     height: auto;
     margin: 0;
   }

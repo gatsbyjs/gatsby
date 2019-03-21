@@ -5,7 +5,6 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
 import { colors, space, breakpoints } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -103,14 +102,14 @@ class IndexRoute extends React.Component {
         >
           <div
             css={{
-              padding: rhythm(space[6]),
+              padding: space[6],
               paddingTop: 0,
               width: `100%`,
               borderBottom: `1px solid ${colors.ui.light}`,
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
               [breakpoints.xl]: {
-                padding: rhythm(space[8]),
+                padding: space[8],
               },
             }}
           >
@@ -129,7 +128,7 @@ class IndexRoute extends React.Component {
                   large
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: rhythm(space[4]) }}
+                  overrideCSS={{ marginTop: space[4] }}
                   icon={<ArrowForwardIcon />}
                 >
                   Get Started

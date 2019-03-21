@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.33...gatsby-image@2.0.34) (2019-03-15)
+
+### Bug Fixes
+
+- **gatsby-image:** fix memory leak and use more appropriate data structures for cache and listeners ([#10278](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10278)) ([9298fa3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/9298fa3))
+
+### Features
+
+- **gatsby-image:** Whitelist `crossorigin` prop for pass through to `img` tag ([#9758](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/9758)) ([7684b4f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/7684b4f))
+
 ## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.32...gatsby-image@2.0.33) (2019-03-12)
 
 ### Features

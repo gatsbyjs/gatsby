@@ -315,6 +315,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
 | `title`                | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
+| `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
 | `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |
 | `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                  |

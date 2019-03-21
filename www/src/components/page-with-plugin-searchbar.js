@@ -2,7 +2,6 @@ import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
 import { colors, breakpoints, dimensions } from "../utils/presets"
-import { scrollbarStyles } from "../utils/styles"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
@@ -37,13 +36,12 @@ const styles = {
     width: `100%`,
     zIndex: 1,
     top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight} - 1px)`,
-    ...scrollbarStyles,
     [breakpoints.md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
-      background: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
+      background: colors.white,
+      borderRight: `1px solid ${colors.gray.border}`,
     },
     [breakpoints.lg]: {
       width: widthLarge,

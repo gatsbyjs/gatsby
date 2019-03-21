@@ -1124,7 +1124,7 @@
     - Styled with styled-components using CSS Grid
     - React Helmet for SEO
 - url: https://stoic-swirles-4bd808.netlify.com/
-  repo: https://github.com/cardiv/gatsby-starter-antd
+  repo: https://github.com/crstnio/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
     - Ant Design
@@ -1663,16 +1663,23 @@
     - Material UI
     - styled-components
     - Github markdown css support
-- url: https://ueno.co/
+- url: https://create-ueno-app.netlify.com
   repo: https://github.com/ueno-llc/ueno-gatsby-starter
-  description: Ueno's starter template for Gatsby
+  description: Opinionated Gatsby starter by Ueno.
   tags:
     - TypeScript
+    - Styling:SCSS
+    - Linting
+    - Transitions
   features:
     - GraphQL hybrid
     - SEO friendly
     - GSAP ready
-    - Nice devtools
+    - Nice Devtools
+    - GsapTools
+    - Ueno plugins
+    - SVG to React component
+    - Ueno's TSlint
     - Decorators
 - url: https://gatsby-sseon-starter.netlify.com/
   repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
@@ -2056,3 +2063,22 @@
     - Uses styled-components + styled-system
     - SEO with Sitemap, Schema.org JSONLD, Tags
     - Responsive images with gatsby-image
+- url: https://amazing-jones-e61bda.netlify.com/
+  repo: https://github.com/WebCu/gatsby-material-kit-react
+  description: Adaptation of Material Kit React to Gatsby
+  tags:
+    - Material Kit React
+    - Material UI
+  features:
+    - 60 Handcrafted Components
+    - 4 Customized Plugins
+    - 3 Example Pages
+- url: https://relaxed-bhaskara-5abd0a.netlify.com/
+  repo: https://github.com/LekovicMilos/gatsby-starter-portfolio
+  description: Gatsby portfolio starter for creating quick portfolio
+  tags:
+    - Portfolio
+    - Showcase
+  features:
+    - Showcase of portfolio items
+    - About me page
