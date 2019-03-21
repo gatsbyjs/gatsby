@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const report = require(`gatsby-cli/lib/reporter`)
 const redux = require(`../redux`)
 const { emitter } = redux
 
@@ -10,10 +11,18 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
 }
 
 // calls `saveState()` on all DBs
-function saveState() {
-  for (const db of dbs) {
-    db.saveState()
+let saveInProgress = false
+async function saveState() {
+  if (saveInProgress) return
+  saveInProgress = true
+
+  try {
+    await Promise.all(dbs.map(db => db.saveState()))
+  } catch (err) {
+    report.warn(`Error persisting state: ${(err && err.message) || err}`)
   }
+
+  saveInProgress = false
 }
 const saveStateDebounced = _.debounce(saveState, 1000)
 

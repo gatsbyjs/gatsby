@@ -1,6 +1,6 @@
 const Redux = require(`redux`)
 const _ = require(`lodash`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const v8 = require(`v8`)
 const stringify = require(`json-stringify-safe`)
@@ -58,6 +58,17 @@ const file = `${process.cwd()}/.cache/redux.state`
 let initialState = {}
 try {
   initialState = readFileSync(file)
+  if (initialState.nodes) {
+    // re-create nodesByType
+    initialState.nodesByType = new Map()
+    initialState.nodes.forEach(node => {
+      const { type } = node.internal
+      if (!initialState.nodesByType.has(type)) {
+        initialState.nodesByType.set(type, new Map())
+      }
+      initialState.nodesByType.get(type).set(node.id, node)
+    })
+  }
 } catch (e) {
   // ignore errors.
 }

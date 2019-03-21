@@ -23,7 +23,6 @@ steps:
     condition: succeededOrFailed()
     inputs:
       testResultsFiles: "**junit*.xml"
-      testRunTitle: TestRun ${{ parameters.name }} $(node_version)
 
   - task: PublishCodeCoverageResults@1
     displayName: "Publish code coverage results"

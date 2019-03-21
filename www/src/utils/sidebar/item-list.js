@@ -1,4 +1,5 @@
 import docsSidebar from "../../data/sidebars/doc-links.yaml"
+import contributingSidebar from "../../data/sidebars/contributing-links.yaml"
 import featuresSidebar from "../../data/sidebars/features-links.yaml"
 import tutorialSidebar from "../../data/sidebars/tutorial-links.yaml"
 
@@ -10,16 +11,19 @@ const createHash = link => {
 
 const extenditemList = itemList => {
   itemList.forEach(section => {
+    section.level = 0
     if (section.items) extendItem(section.items, section.title)
   })
   return itemList
 }
 
-const extendItem = (items, parentTitle) => {
-  items.forEach(item => {
+const extendItem = (items, parentTitle, level) => {
+  items.forEach((item, index) => {
     item.hash = createHash(item.link)
     item.parentTitle = parentTitle
-    if (item.items) extendItem(item.items, item.title)
+    item.level = level || 1
+
+    if (item.items) extendItem(item.items, item.title, item.level + 1)
   })
 }
 
@@ -37,7 +41,16 @@ const itemListFeatures = extenditemList(featuresSidebar).map(item => {
 })
 
 const itemListTutorial = extenditemList(tutorialSidebar).map(item => {
-  return { ...item, key: `tutorial` }
+  return { ...item, key: `tutorial`, disableAccordions: true }
 })
 
-export { itemListDocs, itemListFeatures, itemListTutorial }
+const itemListContributing = extenditemList(contributingSidebar).map(item => {
+  return { ...item, key: `contributing`, disableAccordions: true }
+})
+
+export {
+  itemListDocs,
+  itemListFeatures,
+  itemListTutorial,
+  itemListContributing,
+}

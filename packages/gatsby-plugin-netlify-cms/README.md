@@ -178,7 +178,6 @@ plugins: [
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
       modulePath: `path/to/custom/script.js`, // default: undefined
-      stylesPath: `path/to/styles.sass`, // default: undefined
       enableIdentityWidget: true,
       publicPath: `admin`,
       htmlTitle: `Content Manager`,

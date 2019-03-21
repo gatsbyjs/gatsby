@@ -150,12 +150,19 @@ const updateStateAndRunQueries = isFirstRun => {
 
     if (queriesWillNotRun) {
       report.log(report.stripIndent`
-        Exported queries are only executed for Page components. Instead of an exported
-        query, either co-locate a GraphQL fragment and compose that fragment into the
-        query (or other fragment) of the top-level page that renders this component, or
-        use a <StaticQuery> in this component. For more info on fragments and
-        composition, see http://graphql.org/learn/queries/#fragments and for more
-        information on <StaticQuery>, see https://gatsbyjs.org/docs/static-query
+
+        Exported queries are only executed for Page components. It's possible you're
+        trying to create pages in your gatsby-node.js and that's failing for some
+        reason.
+
+        If the failing component(s) is a regular component and not intended to be a page
+        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
+        instead of exporting a page query.
+
+        If you're more experienced with GraphQL, you can also export GraphQL
+        fragments from components and compose the fragments in the Page component
+        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+
       `)
     }
     runQueuedQueries()
