@@ -243,7 +243,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
           page.component = trueComponentPath
         }
-        pageComponentCache.set(originalPageComponet, page.component)
+        pageComponentCache.set(originalPageComponent, page.component)
       }
     }
   }
