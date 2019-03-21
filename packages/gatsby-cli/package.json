@@ -26,7 +26,7 @@
     "opentracing": "^0.14.3",
     "pretty-error": "^2.1.1",
     "resolve-cwd": "^2.0.0",
-    "got": "^7.1.0",
+    "source-map": "^0.5.7",
     "stack-trace": "^0.0.10",
     "update-notifier": "^2.3.0",
     "yargs": "^12.0.5",
