@@ -299,20 +299,25 @@ const addThirdPartySchemas = ({
       if (
         type !== schemaQueryType &&
         !isSpecifiedScalarType(type) &&
-        !isIntrospectionType(type) &&
-        type instanceof GraphQLObjectType
+        !isIntrospectionType(type)
       ) {
         type.isThirdPartyType = true
-        const typeComposer = ObjectTypeComposer.createTemp(type)
-        typeComposer.getFieldNames().forEach(fieldName => {
-          const fieldType = typeComposer.getFieldType(fieldName)
-          if (getNamedType(fieldType) === schemaQueryType) {
-            typeComposer.extendField(fieldName, {
-              type: `Query`,
-            })
-          }
-        })
-        schemaComposer.add(typeComposer)
+        if (type instanceof GraphQLObjectType) {
+          const typeComposer = ObjectTypeComposer.createTemp(type)
+
+          typeComposer.getFieldNames().forEach(fieldName => {
+            const fieldType = typeComposer.getFieldType(fieldName)
+            if (getNamedType(fieldType) === schemaQueryType) {
+              typeComposer.extendField(fieldName, {
+                type: `Query`,
+              })
+            }
+          })
+          schemaComposer.addAsComposer(typeComposer)
+          schemaComposer.addSchemaMustHaveType(typeComposer)
+        } else {
+          schemaComposer.addAsComposer(type)
+        }
       }
     })
   })
