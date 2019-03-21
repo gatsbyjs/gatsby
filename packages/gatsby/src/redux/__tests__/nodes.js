@@ -1,4 +1,3 @@
-const Redux = require(`redux`)
 const { actions } = require(`../actions`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
@@ -6,19 +5,15 @@ const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 jest.mock(`../../db/nodes`)
 jest.mock(`../nodes`)
 
-const store = Redux.createStore(
-  Redux.combineReducers({ nodeReducer, nodeTouchedReducer }),
-  {}
-)
+const dispatch = jest.fn()
+
 describe(`Create and update nodes`, () => {
   beforeEach(() => {
-    store.dispatch({
-      type: `DELETE_CACHE`,
-    })
+    dispatch.mockClear()
   })
 
   it(`allows creating nodes`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -32,13 +27,14 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     expect(action).toMatchSnapshot()
     expect(nodeReducer(undefined, action)).toMatchSnapshot()
   })
 
   it(`allows updating nodes`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -61,8 +57,10 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
-    const updateAction = actions.createNode(
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
+
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -82,7 +80,9 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const updateAction = dispatch.mock.calls[1][0]
+
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
     expect(state.get(`hi`).pickle).toEqual(false)
@@ -91,7 +91,7 @@ describe(`Create and update nodes`, () => {
   })
 
   it(`nodes that are added are also "touched"`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -105,13 +105,15 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
+
     let state = nodeTouchedReducer(undefined, action)
     expect(state[`hi`]).toBe(true)
   })
 
   it(`allows adding fields to nodes`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -125,7 +127,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
@@ -138,12 +141,13 @@ describe(`Create and update nodes`, () => {
         name: `test`,
       }
     )
+
     state = nodeReducer(state, addFieldAction)
     expect(state).toMatchSnapshot()
   })
 
   it(`throws error if a field is updated by a plugin not its owner`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -157,7 +161,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
@@ -202,7 +207,7 @@ describe(`Create and update nodes`, () => {
       {
         name: `pluginA`,
       }
-    )
+    )(dispatch)
 
     function callActionCreator() {
       actions.createNode(
@@ -219,7 +224,7 @@ describe(`Create and update nodes`, () => {
         {
           name: `pluginB`,
         }
-      )
+      )(dispatch)
     }
 
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
@@ -244,7 +249,7 @@ describe(`Create and update nodes`, () => {
         {
           name: `pluginA`,
         }
-      )
+      )(dispatch)
     }
 
     expect(callActionCreator).toThrowErrorMatchingSnapshot()

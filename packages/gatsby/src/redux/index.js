@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
+const thunk = require(`redux-thunk`).default
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -60,16 +61,17 @@ try {
   // ignore errors.
 }
 
-const store = Redux.createStore(
-  Redux.combineReducers({ ...reducers }),
-  initialState,
-  Redux.applyMiddleware(function multi({ dispatch }) {
-    return next => action =>
-      Array.isArray(action)
-        ? action.filter(Boolean).map(dispatch)
-        : next(action)
-  })
-)
+const multi = ({ dispatch }) => next => action =>
+  Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
+
+const configureStore = initialState =>
+  Redux.createStore(
+    Redux.combineReducers({ ...reducers }),
+    initialState,
+    Redux.applyMiddleware(thunk, multi)
+  )
+
+const store = configureStore(initialState)
 
 // Persist state.
 function saveState() {
@@ -92,15 +94,16 @@ function saveState() {
   return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
 }
 
-exports.saveState = saveState
-
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
 
-/** Event emitter */
-exports.emitter = emitter
-
-/** Redux store */
-exports.store = store
+module.exports = {
+  /** Event emitter */
+  emitter,
+  /** Redux store */
+  store,
+  configureStore,
+  saveState,
+}
