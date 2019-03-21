@@ -22,7 +22,6 @@ function SEO({ lang, meta, title, description, author, keywords, url, image }) {
             author
             keywords
             url
-            image
           }
         }
       }
