@@ -23,7 +23,7 @@ const { GraphQLJSON } = require(`graphql-compose`)
 
 const getInferredFields = fields => {
   const schemaComposer = createSchemaComposer()
-  const tc = schemaComposer.createTC({ name: `Test`, fields })
+  const tc = schemaComposer.createObjectTC({ name: `Test`, fields })
   return getFilterInput({ schemaComposer, typeComposer: tc })
     .getType()
     .getFields()
@@ -432,7 +432,7 @@ describe(`GraphQL Input args from fields`, () => {
     }
 
     const schemaComposer = createSchemaComposer()
-    const tc = schemaComposer.createTC({ name: `Test`, fields })
+    const tc = schemaComposer.createObjectTC({ name: `Test`, fields })
     const sort = getSortInput({
       schemaComposer,
       typeComposer: tc,

@@ -54,7 +54,7 @@ const addInferredTypes = ({
     let typeComposer
     let inferConfig
     if (schemaComposer.has(typeName)) {
-      typeComposer = schemaComposer.getTC(typeName)
+      typeComposer = schemaComposer.getOTC(typeName)
       inferConfig = getInferConfig(typeComposer)
       if (inferConfig.infer) {
         if (!typeComposer.hasInterface(`Node`)) {
@@ -62,7 +62,7 @@ const addInferredTypes = ({
         }
       }
     } else {
-      typeComposer = schemaComposer.createTC(typeName)
+      typeComposer = schemaComposer.createObjectTC(typeName)
       addNodeInterface({ schemaComposer, typeComposer })
     }
   })
@@ -73,7 +73,7 @@ const addInferredTypes = ({
       schemaComposer,
       nodeStore,
       typeConflictReporter,
-      typeComposer: schemaComposer.getTC(typeName),
+      typeComposer: schemaComposer.getOTC(typeName),
       typeMapping,
       parentSpan,
     })

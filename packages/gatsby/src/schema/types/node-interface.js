@@ -2,7 +2,7 @@ const getOrCreateNodeInterface = schemaComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // `fieldOwners` is an object
   // Should we drop ignoreType?
-  const internalTC = schemaComposer.getOrCreateTC(`Internal`, tc => {
+  const internalTC = schemaComposer.getOrCreateOTC(`Internal`, tc => {
     tc.addFields({
       content: `String`,
       contentDigest: `String!`,

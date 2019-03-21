@@ -146,7 +146,7 @@ describe(`Get example value for type inference`, () => {
     const { getFieldsEnum } = require(`../../types/sort`)
 
     const sc = createSchemaComposer()
-    const tc = sc.createTC(`Fields`)
+    const tc = sc.createObjectTC(`Fields`)
     addInferredFields({
       schemaComposer: sc,
       typeComposer: tc,
