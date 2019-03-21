@@ -2,6 +2,7 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
+const { getValueAt } = require(`./utils/get-value-at`)
 
 const findMany = typeName => ({ args, context, info }) =>
   context.nodeModel.runQuery(
@@ -32,7 +33,7 @@ const distinct = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const values = edges.reduce((acc, { node }) => {
-    const value = getValueAtSelector(node, field)
+    const value = getValueAt(node, field)
     return value != null
       ? acc.concat(value instanceof Date ? value.toISOString() : value)
       : acc
@@ -44,7 +45,7 @@ const group = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const groupedResults = edges.reduce((acc, { node }) => {
-    const value = getValueAtSelector(node, field)
+    const value = getValueAt(node, field)
     const values = Array.isArray(value) ? value : [value]
     values
       .filter(value => value != null)
@@ -90,19 +91,6 @@ const paginate = (results = [], { skip = 0, limit }) => {
       hasNextPage,
     },
   }
-}
-
-const getValueAtSelector = (obj, selector) => {
-  const selectors = Array.isArray(selector) ? selector : selector.split(`.`)
-  return selectors.reduce((acc, key) => {
-    if (acc && typeof acc === `object`) {
-      if (Array.isArray(acc)) {
-        return acc.map(a => a[key]).filter(a => a !== undefined)
-      }
-      return acc[key]
-    }
-    return undefined
-  }, obj)
 }
 
 const link = ({ by, from }) => async (source, args, context, info) => {
