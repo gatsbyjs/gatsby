@@ -7,13 +7,7 @@
       "allowBranch": "master",
       "bump": "patch",
       "conventionalCommits": true,
-      "message": "chore(release): Publish",
-      "ignoreChanges": [
-        "CHANGELOG.md",
-        "**/__tests__/**",
-        "**/__mocks__/**",
-        "**/__testfixtures__/**"
-      ]
+      "message": "chore(release): Publish"
     }
   },
   "loglevel": "success",
@@ -21,5 +15,11 @@
   "version": "independent",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "ignoreChanges": [
+    "CHANGELOG.md",
+    "**/__tests__/**",
+    "**/__mocks__/**",
+    "**/__testfixtures__/**"
+  ]
 }
