@@ -247,7 +247,7 @@ describe(`GraphQL type inference`, () => {
       },
     ]
     const schemaComposer = createSchemaComposer()
-    const typeComposer = schemaComposer.createTC(`Test`)
+    const typeComposer = schemaComposer.createObjectTC(`Test`)
     addInferredFields({
       schemaComposer,
       typeComposer,
