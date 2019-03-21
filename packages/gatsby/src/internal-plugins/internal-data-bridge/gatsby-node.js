@@ -61,7 +61,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     },
   })
 
-  flattenedPlugins.forEach(plugin => {
+  flattenedPlugins.forEach(({ pluginOptions, ...plugin }) => {
     plugin.pluginFilepath = plugin.resolve
     createNode({
       ...plugin,
