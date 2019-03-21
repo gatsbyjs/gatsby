@@ -23,3 +23,11 @@ appveyor.yml                                    @gatsbyjs/core
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
+
+# Themes 
+
+/docs/docs/themes/                              @gatsbyjs/themes
+/themes/                                        @gatsbyjs/themes
+/packages/gatsby/src/bootstrap/load-themes      @gatsbyjs/themes
+/packages/gatsby/src/bootstrap/index.js         @gatsbyjs/themes
+/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/   @gatsbyjs/themes
