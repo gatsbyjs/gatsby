@@ -208,7 +208,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       if (pageComponentCache.has(page.component)) {
         page.component = pageComponentCache.get(page.component)
       } else {
-        const originalPageComponet = page.component
+        const originalPageComponent = page.component
 
         // normalize component path
         page.component = slash(page.component)
