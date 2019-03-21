@@ -1,7 +1,7 @@
-const inquirer = require(`inquirer`)
-const report = require(`gatsby-cli/lib/reporter`)
+const enquirer = require(`enquirer`)
+const report = require(`packages/gatsby-cli/lib/reporter`)
 const execa = require(`execa`)
-const shouldUseYarn = require(`../gatsby-cli/src`).shouldUseYarn
+const shouldUseYarn = require(`packages/gatsby-cli/src`).shouldUseYarn
 
 const spawn = cmd => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -88,7 +88,7 @@ const addRemovePlugin = async (action, plugins) => {
     })
   })
 
-  let answers = await inquirer.prompt(questions)
+  let answers = await enquirer.prompt(questions)
 
   let confirmedPlugins = new Array()
 
