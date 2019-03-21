@@ -96,12 +96,68 @@ const GraphQLDate = new GraphQLScalarType({
   },
 })
 
-// Check if this is a date.
-// All the allowed ISO 8601 date-time formats used.
+const momentFormattingTokens = /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
+const momentFormattingRegexes = {
+  YYYY: `\\d{4}`,
+  MM: `\\d{2}`,
+  DD: `\\d{2}`,
+  HH: `\\d{2}`,
+  mm: `\\d{2}`,
+  ss: `\\d{2}`,
+  SSS: `\\d{3}`,
+  SSSSSS: `\\d{6}`,
+  "[W]": `W`,
+  ".": `\\.`,
+}
+const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format =>
+  // convert ISO string to a map of momentTokens ([YYYY, MM, DD])
+  [...format.match(momentFormattingTokens)]
+    .map(token =>
+      // see if the token (YYYY or ss) is found, else we just return the value
+      momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token
+    )
+    .join(``)
+).join(`|`)
+
+// calculate all lengths of the formats, if a string is longer or smaller it can't be valid
+const ISO_8601_FORMAT_LENGTHS = [
+  ...new Set(ISO_8601_FORMAT.map(str => str.length)),
+]
+// lets imagine these formats: YYYY-MM-DDTHH & YYYY-MM-DD HHmmss.SSSSSS Z
+// this regex looks like (/^(\d{4}-\d{2}-\d{2}T\d{2}|\d{4}-\d{2}-\d{2} \d{2}\d{2}\d{2}.\d{6} Z)$)
+const quickDateValidateRegex = new RegExp(`^(${ISO_8601_FORMAT_AS_REGEX})$`)
+
+const looksLikeDateStartRegex = /^\d{4}/
+// this regex makes sure the last characters are looking like a string and not a guid
+const looksLikeDateEndRegex = /((\d|-|T|W| |:)\d{2}|[:-]\d|\d:\dZ|\d{2}Z| Z)$/
+
+/**
+ * isDate does 5 quickchecks & fallsback to momentjs to check if it's a valid date
+ * 1) is it a number?
+ * 2) does the length of the value comply with any of our formats
+ * 3) does the str starts with 4 digites (YYYY)
+ * 4) does the str ends with something that looks like a date
+ * 5) Small regex to see if it matches any of the formats
+ * 6) check momentjs
+ *
+ * @param {string|number} value
+ * @return {boolean}
+ */
 function isDate(value) {
   // quick check if value does not look like a date
-  if (typeof value === `number` || !/^\d{4}/.test(value)) {
+  if (
+    typeof value === `number` ||
+    !ISO_8601_FORMAT_LENGTHS.includes(value.length) ||
+    !looksLikeDateStartRegex.test(value) ||
+    !looksLikeDateEndRegex.test(value)
+  ) {
     return false
+  }
+
+  // If it looks like a date we parse the date with a regex to see if we can handle it.
+  // momentjs just does regex validation itself if you don't do any operations on it.
+  if (quickDateValidateRegex.test(value)) {
+    return true
   }
 
   const momentDate = moment.utc(value, ISO_8601_FORMAT, true)
