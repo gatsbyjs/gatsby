@@ -9,20 +9,21 @@ import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, {
+import {
   colors,
   space,
   transition,
   radii,
   shadows,
   breakpoints,
+  scale,
+  fonts,
 } from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${rhythm(space[6])};
+  margin-right: ${space[6]};
 
   ${breakpoints.md} {
     border-bottom: 1px solid ${colors.gray.superLight};
@@ -40,7 +41,7 @@ export const BlockLink = styled(Link)`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(space[6])};
+  padding: ${space[6]};
 
   ${breakpoints.md} {
     border-radius: 0;
@@ -62,7 +63,7 @@ const Header = styled(`header`)`
 
   h3 {
     color: ${colors.gatsbyDark};
-    font-size: ${presets.scale[2]};
+    font-size: ${scale[2]};
     margin: 0;
   }
 
@@ -70,14 +71,14 @@ const Header = styled(`header`)`
     align-items: center;
     color: ${colors.lilac};
     display: flex;
-    font-size: ${presets.scale[1]};
-    padding-left: ${rhythm(space[3])};
+    font-size: ${scale[1]};
+    padding-left: ${space[3]};
 
     svg {
       fill: ${colors.gray.light};
       height: auto;
-      margin-left: ${rhythm(space[1])};
-      width: ${rhythm(space[4])};
+      margin-left: ${space[1]};
+      width: ${space[4]};
     }
   }
 `
@@ -85,15 +86,15 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
   justify-content: space-between;
-  padding: ${rhythm(space[3])} 0 0;
+  padding: ${space[3]} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  height: ${rhythm(space[11])};
-  padding-right: ${rhythm(space[4])};
-  margin-top: ${rhythm(space[1])};
+  height: ${space[11]};
+  padding-right: ${space[4]};
+  margin-top: ${space[1]};
 
   img {
     border: 1px solid ${colors.gray.superLight};
@@ -103,7 +104,7 @@ const Thumbnail = styled(`div`)`
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
-  font-size: ${presets.scale[1]};
+  font-size: ${scale[1]};
   margin: 0;
 `
 

@@ -1,9 +1,9 @@
-const _ = require(`lodash`)
 const path = require(`path`)
 const slash = require(`slash`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
+const { getValueAt } = require(`../utils/get-value-at`)
 
 const isFile = (nodeStore, field, relativePath) => {
   const filePath = getFilePath(nodeStore, field, relativePath)
@@ -19,7 +19,7 @@ module.exports = {
 }
 
 const getFirstValueAt = (node, selector) => {
-  let value = _.get(node, selector)
+  let value = getValueAt(node, selector)
   while (Array.isArray(value)) {
     value = value[0]
   }

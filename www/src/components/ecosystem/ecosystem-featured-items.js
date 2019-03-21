@@ -8,16 +8,15 @@ import {
 } from "../shared/horizontal-scroller"
 
 import { colors, space, breakpoints } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
 import { scrollbarStyles } from "../../utils/styles"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(space[6])};
+  margin: 0 -${space[6]};
 
   ${breakpoints.md} {
     border-top: 1px solid ${colors.gray.superLight};
-    margin-top: ${rhythm(space[3])};
+    margin-top: ${space[3]};
     margin-bottom: 0;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -26,8 +25,8 @@ const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
 `
 
 const List = styled(HorizontalScrollerContent)`
-  padding-left: ${rhythm(space[6])};
-  padding-right: ${rhythm(space[6])};
+  padding-left: ${space[6]};
+  padding-right: ${space[6]};
 
   ${breakpoints.md} {
     flex-direction: column;

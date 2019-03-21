@@ -4,34 +4,41 @@ import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors, radii, space, breakpoints } from "../../utils/presets"
+import {
+  colors,
+  radii,
+  space,
+  breakpoints,
+  scale,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
   border-radius: ${radii[2]}px;
   color: ${colors.gatsby};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: ${presets.scale[3]};
+  font-family: ${fonts.header};
+  font-size: ${scale[3]};
   font-weight: bold;
-  padding: ${rhythm(space[7])} 3rem;
+  padding: ${space[7]} 3rem;
   position: relative;
-  text-indent: ${rhythm(space[7])};
-  margin: ${rhythm(space[8])} 0;
+  text-indent: ${space[7]};
+  margin: ${space[8]} 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
-    margin: ${rhythm(space[8])} 0;
+    margin: ${space[8]} 0;
   }
 
   ${breakpoints.lg} {
-    line-height: ${presets.lineHeights.loose};
-    margin: ${rhythm(space[8])} -3.5rem;
+    line-height: ${lineHeights.loose};
+    margin: ${space[8]} -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: ${rhythm(space[8])} -3.5rem;
+      margin: ${space[8]} -3.5rem;
     }
   }
 `
@@ -40,15 +47,15 @@ const Citation = styled(`cite`)`
   display: block;
   font-style: italic;
   font-weight: normal;
-  margin-top: ${rhythm(space[4])};
+  margin-top: ${space[4]};
   text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
   display: flex;
-  left: ${rhythm(space[8])};
+  left: ${space[8]};
   position: absolute;
-  top: ${rhythm(space[7])};
+  top: ${space[7]};
 
   svg {
     fill: ${colors.gatsbyDark};
@@ -93,7 +100,7 @@ const Star = styled(`span`)`
     .variantB & {
       left: auto;
       right: 0;
-      top: ${rhythm(space[7])};
+      top: ${space[7]};
       transform: translate(50%, 0);
     }
 
@@ -134,10 +141,10 @@ const Star = styled(`span`)`
 
   :nth-of-type(3) {
     bottom: 0;
-    height: ${rhythm(space[3])};
+    height: ${space[3]};
     right: 4rem;
     transform: translateY(50%);
-    width: ${rhythm(space[3])};
+    width: ${space[3]};
 
     svg {
       fill: ${colors.warning};

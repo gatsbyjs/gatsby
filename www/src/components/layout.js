@@ -13,7 +13,6 @@ import {
   breakpoints,
   dimensions,
 } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -92,7 +91,7 @@ class DefaultLayout extends React.Component {
                 width: `750px`,
                 background: `none`,
                 border: `none`,
-                padding: `${rhythm(space[8])} 0`,
+                padding: `${space[8]} 0`,
                 overflow: `visible`,
               },
               overlay: {
