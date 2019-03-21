@@ -1,6 +1,6 @@
 ---
 title: Add Authentication to Your Gatsby Apps With Auth0 (Livestream)
-date: 2019-03-22
+date: 2019-03-21
 author: Jason Lengstorf
 excerpt: >
   A common challenge while building apps is setting up authentication. In this video, Jason Lengstorf and Ado Kukic build a Gatsby app using Auth0 to create a login-protected dashboard.
