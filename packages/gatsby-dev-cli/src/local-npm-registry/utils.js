@@ -1,4 +1,5 @@
 const child_process = require(`child_process`)
+const path = require(`path`)
 
 exports.promisifiedSpawn = ([cmd, args = [], spawnArgs = {}]) =>
   new Promise((resolve, reject) => {
@@ -20,3 +21,6 @@ exports.promisifiedSpawn = ([cmd, args = [], spawnArgs = {}]) =>
       }
     })
   })
+
+exports.getMonorepoPackageJsonPath = ({ packageName, root }) =>
+  path.join(root, `packages`, packageName, `package.json`)

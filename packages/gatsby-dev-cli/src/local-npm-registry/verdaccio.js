@@ -2,7 +2,7 @@ const startVerdaccio = require(`verdaccio`).default
 const path = require(`path`)
 const npmLogin = require(`npm-cli-login`)
 const fs = require(`fs-extra`)
-const { promisifiedSpawn } = require(`./utils`)
+const { promisifiedSpawn, getMonorepoPackageJsonPath } = require(`./utils`)
 
 let VerdaccioInitPromise = null
 
@@ -91,54 +91,81 @@ const startServer = () => {
 
 exports.startVerdaccio = startServer
 
-exports.publishPackageLocally = async ({
-  pathToPackage,
+const publishPackage = async ({
   packageName,
-  version,
+  packagesToPublish,
+  root,
+  versionPostFix,
 }) => {
-  // <ake sure verdaccio is running
-  await startServer()
+  // we need to check if package depend on any other package to will be published and
+  // adjust version selector to point to dev version of package so local registry is used
+  // for dependencies.
 
-  // npm unpublish
-  // because version doesn't change when developing locally verdaccio wouldn't
-  // let republish package with same version - so as quick workaround we
-  // unpublish package.
-  // Ideally we could check if we need to unpublish: i.e. compare deps of
-  // published package to deps of package in monorepo.
-  // Also for CI we could make special case to skip this, because then
-  // there is no way to edit source files and we can use fast path.
-  const unpublishCmd = [
-    `npm`,
-    [`unpublish`, `${packageName}@${version}`, `--registry=${registryUrl}`],
-  ]
+  const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
+    packageName,
+    root,
+  })
+  const monorepoPKGjsonString = fs.readFileSync(monoRepoPackageJsonPath)
+  const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
 
-  console.log(
-    `Trying to unpublish ${packageName}@${version} to local registry, in case it was published before`
-  )
-  try {
-    await promisifiedSpawn(unpublishCmd)
-    console.log(`Unpublished ${packageName}@${version} from local registry`)
-  } catch {
-    console.log(
-      `Didn't unpublish ${packageName}@${version} - probably package wasn't published before`
-    )
-  }
+  monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
+  packagesToPublish.forEach(packageThatWillBePublished => {
+    if (monorepoPKGjson.dependencies[packageThatWillBePublished]) {
+      // change to "gatsby-dev" dist tag
+      monorepoPKGjson.dependencies[packageThatWillBePublished] = `gatsby-dev`
+    }
+  })
+
+  // change version and dependency versions
+  fs.outputJSONSync(monoRepoPackageJsonPath, monorepoPKGjson)
+
+  const pathToPackage = path.dirname(monoRepoPackageJsonPath)
 
   // npm publish
   const publishCmd = [
     `npm`,
-    [`publish`, `--registry=${registryUrl}`],
+    [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`],
     {
       cwd: pathToPackage,
     },
   ]
 
-  console.log(`Publishing ${packageName}@${version} to local registry`)
+  console.log(
+    `Publishing ${packageName}@${monorepoPKGjson.version} to local registry`
+  )
   try {
     await promisifiedSpawn(publishCmd)
 
-    console.log(`Published ${packageName}@${version} to local registry`)
+    console.log(
+      `Published ${packageName}@${monorepoPKGjson.version} to local registry`
+    )
   } catch {
-    console.error(`Failed to publish ${packageName}@${version}`)
+    console.error(`Failed to publish ${packageName}@${monorepoPKGjson.version}`)
   }
+
+  // restore original package.json
+  fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
+}
+
+exports.publishPackagesLocallyAndInstall = async ({
+  packagesToPublish,
+  packages,
+  root,
+}) => {
+  await startServer()
+
+  const versionPostFix = Date.now()
+
+  for (let packageName of packagesToPublish) {
+    await publishPackage({
+      packageName,
+      packagesToPublish,
+      root,
+      versionPostFix,
+    })
+  }
+
+  // TO-DO install packages locally
+  // need to install intersection of `packagesToPublish` and `packages`
+  // (packages filtered out will be deps of packages to install)
 }
