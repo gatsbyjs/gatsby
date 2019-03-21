@@ -125,8 +125,8 @@ SEO.propTypes = {
   description: PropTypes.string,
   author: PropTypes.string,
   keywords: PropTypes.arrayOf(PropTypes.string),
-  image: PropTypes.string,
   url: PropTypes.string,
+  image: PropTypes.string,
 }
 
 export default SEO
