@@ -73,7 +73,7 @@ describe(`<Img />`, () => {
     )
     // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition: opacity 0.5s; transition-delay: 0.25s; color: red;`
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })
