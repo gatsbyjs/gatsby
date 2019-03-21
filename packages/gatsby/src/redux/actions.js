@@ -86,7 +86,7 @@ const pascalCase = _.flow(
 )
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
-const pageComponentCache = new Map()
+const pageComponentCache = {}
 const fileOkCache = {}
 
 /**
@@ -205,8 +205,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // check if we've processed this component path
       // before, before running the expensive "truePath"
       // operation
-      if (pageComponentCache.has(page.component)) {
-        page.component = pageComponentCache.get(page.component)
+      if (pageComponentCache[page.component]) {
+        page.component = pageComponentCache[page.component]
       } else {
         const originalPageComponent = page.component
 
@@ -243,7 +243,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
           page.component = trueComponentPath
         }
-        pageComponentCache.set(originalPageComponent, page.component)
+        pageComponentCache[originalPageComponent] = page.component
       }
     }
   }
