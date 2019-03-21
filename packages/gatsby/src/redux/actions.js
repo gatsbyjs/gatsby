@@ -463,8 +463,9 @@ const typeOwners = {}
  * gatsby-transformer-remark. This `content` field holds the raw content
  * (so for the markdown case, the markdown string).
  *
- * Data that's already structured should be part of the node and not added
- * here. You should not stringify the node content here.
+ * Data that's already structured should be added to the top-level of the node
+ * object and _not_ added here. You should not `JSON.stringify` your node's
+ * data here.
  *
  * If the content is very large and can be lazy-loaded, e.g. a file on disk,
  * you can define a `loadNodeContent` function for this node and the node
