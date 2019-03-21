@@ -31,6 +31,7 @@ const controlButtonStyles = {
 
 class Rotator extends Component {
   state = {
+    shouldAnimate: false,
     item: 0,
     size: {},
   }
@@ -67,10 +68,11 @@ class Rotator extends Component {
   }
 
   componentDidMount() {
-    if (this.shouldAnimate()) {
+    const shouldAnimate = this.shouldAnimate()
+    if (shouldAnimate) {
       requestAnimationFrame(() => {
         this.intervalId = setInterval(this.incrementItem, 5000)
-        this.setState({ size: this.getDimensions() })
+        this.setState({ shouldAnimate, size: this.getDimensions() })
       })
     }
   }
@@ -80,7 +82,7 @@ class Rotator extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.shouldAnimate() && prevState.item !== this.state.item) {
+    if (prevState.shouldAnimate && prevState.item !== this.state.item) {
       requestAnimationFrame(() => {
         this.setState({ size: this.getDimensions() })
       })
@@ -104,8 +106,9 @@ class Rotator extends Component {
   }
 
   render() {
+    const { shouldAnimate } = this.state
     const { text, pluginName } = this.props.items[this.state.item]
-    const enableSlider = this.shouldAnimate() && this.intervalId
+    const enableSlider = shouldAnimate && this.intervalId
 
     return (
       <div
