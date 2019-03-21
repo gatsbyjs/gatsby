@@ -8,7 +8,12 @@
       "bump": "patch",
       "conventionalCommits": true,
       "message": "chore(release): Publish",
-      "ignoreChanges": ["CHANGELOG.md", "**/__tests__/**", "**/__mocks__/**"]
+      "ignoreChanges": [
+        "CHANGELOG.md",
+        "**/__tests__/**",
+        "**/__mocks__/**",
+        "**/__testfixtures__/**"
+      ]
     }
   },
   "loglevel": "success",
