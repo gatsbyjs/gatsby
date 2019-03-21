@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.3...gatsby@2.2.4) (2019-03-21)
+
+### Bug Fixes
+
+- **gatsby:** keep track of pages created by stateful createPages after edits ([#12671](https://github.com/gatsbyjs/gatsby/issues/12671)) ([62f0d10](https://github.com/gatsbyjs/gatsby/commit/62f0d10)), closes [#12143](https://github.com/gatsbyjs/gatsby/issues/12143)
+- **gatsby:** quick check if string looks like a date ([#12700](https://github.com/gatsbyjs/gatsby/issues/12700)) ([22a2689](https://github.com/gatsbyjs/gatsby/commit/22a2689)), closes [#12692](https://github.com/gatsbyjs/gatsby/issues/12692)
+
+### Features
+
+- **gatsby:** Add stack trace to error reporting in GraphiQL ([#12690](https://github.com/gatsbyjs/gatsby/issues/12690)) ([efa7d1a](https://github.com/gatsbyjs/gatsby/commit/efa7d1a))
+
 ## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.2...gatsby@2.2.3) (2019-03-20)
 
 ### Features
