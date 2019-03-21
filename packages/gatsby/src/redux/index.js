@@ -43,16 +43,15 @@ const jsonParse = buffer => {
 }
 
 const useV8 = Boolean(v8.serialize)
-const [serialize, deserialize] = useV8
-  ? [v8.serialize, v8.deserialize]
-  : [jsonStringify, jsonParse]
+const [serialize, deserialize, file] = useV8
+  ? [v8.serialize, v8.deserialize, `${process.cwd()}/.cache/redux.state`]
+  : [jsonStringify, jsonParse, `${process.cwd()}/.cache/redux-state.json`]
 
 const readFileSync = file => deserialize(fs.readFileSync(file))
 
-const writeFileSync = (file, contents) =>
+const writeFileSync = (file, contents) => {
   fs.writeFileSync(file, serialize(contents))
-
-const file = `${process.cwd()}/.cache/redux.state`
+}
 
 // Read old node data from cache.
 let initialState = {}
