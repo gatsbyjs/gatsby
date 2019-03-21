@@ -540,6 +540,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         }
       })
 
+      // redirecting cypress-gatsby => gatsby-cypress
+      createRedirect({
+        fromPath: `/packages/cypress-gatsby/`,
+        toPath: `/packages/gatsby-cypress/`,
+        isPermanent: true,
+      })
+
       // Read featured starters and plugins for Ecosystem
       ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 

@@ -1,23 +1,30 @@
 import React from "react"
-import typography, { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import {
+  space,
+  scale,
+  transition,
+  colors,
+  breakpoints,
+  fonts,
+} from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
     css={{
-      marginRight: rhythm(3 / 4),
+      marginRight: space[6],
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         marginBottom: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
       },
-      [presets.Md]: {
+      [breakpoints.md]: {
         height: `calc(12px + 1vw)`,
       },
     }}
@@ -27,13 +34,13 @@ const Icon = ({ icon, alt, href }) => (
       target="_blank"
       rel="noopener noreferrer"
       css={{
-        borderBottom: `0 !important`,
-        boxShadow: `none !important`,
-        background: `none !important`,
-        transition: `opacity ${presets.animation.speedFast} ${
-          presets.animation.curveDefault
+        transition: `opacity ${transition.speed.fast} ${
+          transition.curve.default
         }`,
         opacity: 0.9,
+        "&&": {
+          borderBottom: 0,
+        },
         ":hover": {
           opacity: 1,
         },
@@ -59,23 +66,23 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: rhythm(presets.gutters.default),
-      paddingTop: rhythm(1),
-      paddingBottom: rhythm(1),
+      padding: space[8],
+      paddingTop: space[5],
+      paddingBottom: space[5],
       marginBottom: rhythm(3),
-      transition: `padding-top ${presets.animation.speedFast} ${
-        presets.animation.curveDefault
+      transition: `padding-top ${transition.speed.fast} ${
+        transition.curve.default
       }`,
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
       },
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         paddingTop: rhythm(5),
       },
     }}
@@ -87,24 +94,20 @@ const UsedBy = () => (
         flexShrink: `1`,
         alignSelf: `flex-end`,
         transform: `translateZ(0)`,
-        [presets.Sm]: {
+        [breakpoints.sm]: {
           flexGrow: `0`,
         },
       }}
     >
       <p
         css={{
-          color: presets.colors.lilac,
-          letterSpacing: `0.02em`,
-          fontFamily: typography.options.headerFontFamily.join(`,`),
-          fontSize: scale(-2 / 5).fontSize,
+          color: colors.lilac,
+          fontFamily: fonts.header,
+          fontSize: scale[1],
           marginBottom: 0,
-          [presets.Sm]: {
-            fontSize: scale(-2 / 5).fontSize,
+          [breakpoints.sm]: {
+            fontSize: scale[2],
             textAlign: `right`,
-          },
-          [presets.Lg]: {
-            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >

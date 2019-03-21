@@ -15,7 +15,7 @@ What this section will cover:
 
 You will be using `gatsby-config.js` to store the data for your links. `gatsby-config.js` is a file used for configuring Gatsby, located in the root path of every Gatsby project. A plain old JavaScript object is exported from this file; this object contains the `siteMetadata` object which you can query through graphql when generating your static pages.
 
-This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `npx gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default`.
+This guide will use the Gatsby starter project `gatsby-starter-default`, which can be downloaded through the Gatsby command line interface tool using the command `gatsby new [project-name] https://github.com/gatsbyjs/gatsby-starter-default`.
 
 ### Creating the link data
 

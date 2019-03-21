@@ -23,15 +23,15 @@ We can now use the `develop` script tied to our app's version of Gatsby, rather 
 
 ## How to use
 
-Rather than installing the Gatsby CLI tool locally you can run it using [npx](https://www.npmjs.com/package/npx)
+The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
-To see the commands available to run `npx gatsby --help`.
+Run `gatsby --help` for full help.
 
 ## Commands
 
 ### `new`
 
-`npx gatsby new gatsby-site`
+`gatsby new gatsby-site`
 
 See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/)
 for more.
@@ -59,11 +59,11 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 
 #### Options
 
-|            Option            | Description                                                                                                 | Default |
-| :--------------------------: | ----------------------------------------------------------------------------------------------------------- | :-----: |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                         | `false` |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                     | `false` |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
+|            Option            | Description                                                                                                | Default |
+| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :-----: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    | `false` |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
 
 ### `serve`
 
@@ -89,7 +89,7 @@ At the root of a Gatsby app run `gatsby clean` to wipe out the cache (`.cache` f
 
 ### `info`
 
-At the root of a Gatsby site run `npx gatsby info` to get helpful environment information which will be required when reporting a bug.
+At the root of a Gatsby site run `gatsby info` to get helpful environment information which will be required when reporting a bug.
 
 #### Options
 

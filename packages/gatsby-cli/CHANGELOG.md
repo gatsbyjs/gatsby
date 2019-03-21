@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.16...gatsby-cli@2.4.17) (2019-03-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.4.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.15...gatsby-cli@2.4.16) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** properly support --no-color for pretty-error ([#12531](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12531)) ([e493538](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/e493538))
+
+## [2.4.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.14...gatsby-cli@2.4.15) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.4.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.13...gatsby-cli@2.4.14) (2019-03-08)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fixed incorrect scriptname in gatsby-cli ([#12186](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12186)) ([3b116f6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/3b116f6))
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.12...gatsby-cli@2.4.13) (2019-03-05)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.4.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.11...gatsby-cli@2.4.12) (2019-02-28)
 
 **Note:** Version bump only for package gatsby-cli

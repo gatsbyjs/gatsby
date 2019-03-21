@@ -1,19 +1,27 @@
 import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
-import presets, { colors } from "./presets"
-import { rhythm, scale, options } from "./typography"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  breakpoints,
+  scale,
+  lineHeights,
+  fonts,
+} from "./presets"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `30px 60px` },
+  "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
 export const scrollbarStyles = {
   WebkitOverflowScrolling: `touch`,
   "&::-webkit-scrollbar": {
-    width: `6px`,
-    height: `6px`,
+    width: space[2],
+    height: space[2],
   },
   "&::-webkit-scrollbar-thumb": {
     background: colors.ui.bright,
@@ -30,43 +38,36 @@ export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: presets.radius,
+    borderRadius: radii[1],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
-    boxShadow: `none`,
-    color: `#fff`,
+    color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: 1,
+    lineHeight: lineHeights.dense,
+    textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    backgroundSize: `30px 30px`,
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
-    ":hover, &:focus": {
-      backgroundSize: `30px 30px`,
+    padding: `${space[2]} ${space[3]}`,
+    backgroundSize: `${space[7]} ${space[7]}`,
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
+    ":hover, :focus": {
       backgroundColor: colors.gatsby,
-      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-      color: `#fff`,
+      backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+      color: colors.white,
       animation: `${stripeAnimation} 2.8s linear infinite`,
+      borderColor: colors.gatsby,
     },
     ":focus": {
       outline: 0,
-      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+      boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
-    [presets.Md]: {
-      ...scale(1 / 5),
-      padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
-    },
-    [presets.Xxl]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -74,37 +75,21 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    // borderRadius: presets.radiusLg,
-    fontSize: scale(1 / 5).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    [presets.Md]: {
-      fontSize: scale(2 / 5).fontSize,
-      padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
-    },
-    [presets.Xxl]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
+    fontSize: scale[4],
+    padding: `${space[3]} ${space[4]}`,
   },
   small: {
-    fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    [presets.Md]: {
-      fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    },
-    [presets.Xxl]: {
-      fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+    fontSize: scale[1],
+    padding: `${space[2]} ${space[3]}`,
+    [breakpoints.md]: {
+      fontSize: scale[2],
     },
   },
   tiny: {
-    fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
-    [presets.Md]: {
-      fontSize: scale(-1 / 4).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
-    },
-    [presets.Xxl]: {
-      fontSize: scale(-1 / 5).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+    fontSize: scale[1],
+    padding: `${space[1]} ${space[2]}`,
+    [breakpoints.md]: {
+      fontSize: scale[2],
     },
   },
   ondark: {
@@ -127,7 +112,7 @@ export const svgStyles = {
     "& .svg-fill-gatsby": { fill: colors.gatsby },
     "& .svg-fill-accent": { fill: colors.accent },
     "& .svg-fill-wisteria": { fill: colors.wisteria },
-    "& .svg-fill-brightest": { fill: `#fff` },
+    "& .svg-fill-brightest": { fill: colors.white },
     "& .svg-fill-gradient-accent-white-45deg": {
       fill: `url(#accent-white-45deg)`,
     },
@@ -143,17 +128,56 @@ export const svgStyles = {
 
 // This is an exceptionally bad name
 export const linkStyles = {
-  ...scale(-1 / 6),
+  fontSize: scale[1],
+  lineHeight: lineHeights.solid,
+  padding: `${space[3]} 0`,
   "&&": {
-    alignItems: `center`,
     border: 0,
-    boxShadow: `none`,
     color: colors.gray.calm,
     display: `flex`,
     fontWeight: `normal`,
-    "&:hover": {
-      background: `none`,
-      color: colors.gatsby,
-    },
+  },
+  "&&:hover": {
+    color: colors.gatsby,
+  },
+}
+
+export const formInput = {
+  backgroundColor: colors.white,
+  border: `1px solid ${colors.ui.bright}`,
+  borderRadius: radii[1],
+  color: colors.brand,
+  fontFamily: fonts.header,
+  padding: space[3],
+  verticalAlign: `middle`,
+  transition: `all ${transition.speed.default} ${transition.curve.default}`,
+  "::placeholder": {
+    color: colors.lilac,
+    opacity: 1,
+  },
+}
+
+export const skipLink = {
+  border: 0,
+  color: colors.gatsby,
+  clip: `rect(0 0 0 0)`,
+  height: 1,
+  width: 1,
+  margin: -1,
+  padding: 0,
+  overflow: `hidden`,
+  position: `absolute`,
+  zIndex: 100,
+  fontSize: scale[1],
+  ":focus": {
+    padding: space[4],
+    position: `fixed`,
+    top: space[6],
+    left: space[6],
+    background: colors.white,
+    textDecoration: `none`,
+    width: `auto`,
+    height: `auto`,
+    clip: `auto`,
   },
 }

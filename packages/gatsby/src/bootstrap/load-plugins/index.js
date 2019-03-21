@@ -37,9 +37,9 @@ const flattenPlugins = plugins => {
   return flattened
 }
 
-module.exports = async (config = {}) => {
+module.exports = async (config = {}, rootDir = null) => {
   // Collate internal plugins, site config plugins, site default plugins
-  const plugins = loadPlugins(config)
+  const plugins = loadPlugins(config, rootDir)
 
   // Create a flattened array of the plugins
   let flattenedPlugins = flattenPlugins(plugins)

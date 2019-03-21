@@ -1,8 +1,7 @@
 import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import { scrollbarStyles } from "../utils/styles"
+import { colors, breakpoints, dimensions } from "../utils/presets"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
@@ -33,28 +32,27 @@ const widthLarge = rhythm(16)
 
 const styles = {
   sidebar: {
-    height: `calc(100vh - ${presets.headerHeight})`,
+    height: `calc(100vh - ${dimensions.headerHeight})`,
     width: `100%`,
     zIndex: 1,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-    ...scrollbarStyles,
-    [presets.Md]: {
+    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight} - 1px)`,
+    [breakpoints.md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
-      background: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
+      background: colors.white,
+      borderRight: `1px solid ${colors.gray.border}`,
     },
-    [presets.Lg]: {
+    [breakpoints.lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [presets.Md]: {
+    [breakpoints.md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [presets.Lg]: {
+    [breakpoints.lg]: {
       paddingLeft: widthLarge,
     },
   },

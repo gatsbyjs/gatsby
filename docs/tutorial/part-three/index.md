@@ -34,7 +34,7 @@ For an initial introduction to using plugins, we'll install and implement the Ga
 As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
-npx gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd tutorial-part-three
 ```
 
@@ -69,9 +69,7 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 
 > Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
 
-3. Add `typography.js` configuration file
-
-Typography.js needs a configuration file. Add it now.
+3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils`, and copy the following into the file:
 
 ```javascript:title=src/utils/typography.js
 import Typography from "typography"
@@ -86,7 +84,7 @@ export default typography
 4. Start the development server.
 
 ```shell
-npm run develop
+gatsby develop
 ```
 
 Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:

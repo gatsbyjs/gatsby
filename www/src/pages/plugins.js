@@ -3,18 +3,18 @@ import Container from "../components/container"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import { colors, space, dimensions, scale, fonts } from "../utils/presets"
 
 class Plugins extends Component {
   render() {
     return (
       <Container
-        css={{
+        overrideCSS={{
           alignItems: `center`,
           display: `flex`,
-          minHeight: `calc(100vh - (${presets.headerHeight} + ${
-            presets.bannerHeight
+          minHeight: `calc(100vh - (${dimensions.headerHeight} + ${
+            dimensions.bannerHeight
           }))`,
         }}
       >
@@ -28,8 +28,8 @@ class Plugins extends Component {
             src={logo}
             css={{
               display: `inline-block`,
-              height: rhythm(5.2),
-              width: rhythm(5.2),
+              height: rhythm(4),
+              width: rhythm(4),
               marginLeft: `auto`,
               marginRight: `auto`,
             }}
@@ -37,10 +37,9 @@ class Plugins extends Component {
           />
           <h1
             css={{
-              fontSize: rhythm(1),
-              marginTop: rhythm(1 / 4),
-              marginLeft: rhythm(1),
-              marginRight: rhythm(1),
+              fontSize: scale[6],
+              marginLeft: space[5],
+              marginRight: space[5],
               textAlign: `center`,
             }}
           >
@@ -49,10 +48,10 @@ class Plugins extends Component {
           <p
             css={{
               color: colors.gray.calm,
-              marginLeft: rhythm(3),
-              marginRight: rhythm(3),
-              fontSize: rhythm(3 / 4),
-              fontFamily: options.headerFontFamily.join(`,`),
+              marginLeft: space[9],
+              marginRight: space[9],
+              fontSize: scale[4],
+              fontFamily: fonts.header,
               textAlign: `center`,
             }}
           >

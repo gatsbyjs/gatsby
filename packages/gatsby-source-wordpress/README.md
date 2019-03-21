@@ -755,6 +755,7 @@ exports.createPages = async ({ graphql, actions }) => {
             slug
             status
             template
+            slug
           }
         }
       }
@@ -766,6 +767,7 @@ exports.createPages = async ({ graphql, actions }) => {
             status
             template
             format
+            slug
           }
         }
       }

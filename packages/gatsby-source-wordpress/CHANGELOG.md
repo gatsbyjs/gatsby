@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.48](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.47...gatsby-source-wordpress@3.0.48) (2019-03-19)
+
+### Features
+
+- **gatsby-source-wordpress:** use unique multi-site node id's ([#12683](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/12683)) ([925a655](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/925a655))
+
+## [3.0.47](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.46...gatsby-source-wordpress@3.0.47) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.45...gatsby-source-wordpress@3.0.46) (2019-03-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.45](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.44...gatsby-source-wordpress@3.0.45) (2019-03-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.44](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.43...gatsby-source-wordpress@3.0.44) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.43](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.42...gatsby-source-wordpress@3.0.43) (2019-03-05)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.42](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.41...gatsby-source-wordpress@3.0.42) (2019-03-04)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Sync sample w/docs ([#11868](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11868)) ([337d98e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/337d98e)), closes [#11739](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11739)
+
 ## [3.0.41](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.40...gatsby-source-wordpress@3.0.41) (2019-02-28)
 
 ### Features

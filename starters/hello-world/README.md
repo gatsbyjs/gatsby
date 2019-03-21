@@ -21,7 +21,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     ```sh
     # create a new Gatsby site using the hello-world starter
-    npx gatsby new my-hello-world-starter https://github.com/gatsbyjs/gatsby-starter-hello-world
+    gatsby new my-hello-world-starter https://github.com/gatsbyjs/gatsby-starter-hello-world
     ```
 
 1.  **Start developing.**
