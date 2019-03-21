@@ -5,7 +5,7 @@ title: Adding Components to Content with MDX
 When writing long-form content in Markdown you might want to embed components.
 This is often achieved by either writing content in JSX or using plugins that
 use custom syntax. The first approach isn't optimal because JSX isn't the best
-format for content and can make it less accessible to members of a team. Custom
+format for content and can make it less approachable to members of a team. Custom
 syntax and plugins are often too inflexible and don't promote composition. If
 you're finding yourself wanting to add components to your content you can use
 `gastby-mdx` which is a Gatsby plugin to integrate MDX into your project.
