@@ -134,6 +134,7 @@ export default class FilteredStarterLibrary extends Component {
               setFilters={setFiltersVersion}
             />
             <LHSFilter
+              fixed={150}
               heading="Categories"
               data={Array.from(
                 count(starters.map(({ node: starter }) => starter.tags))
@@ -143,6 +144,7 @@ export default class FilteredStarterLibrary extends Component {
               sortRecent={urlState.sort === `recent`}
             />
             <LHSFilter
+              fixed={150}
               heading="Gatsby Dependencies"
               data={Array.from(
                 count(
