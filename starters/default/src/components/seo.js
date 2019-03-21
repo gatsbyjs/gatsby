@@ -8,8 +8,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
-import { withPrefix } from "gatsby"
+import { useStaticQuery, graphql, withPrefix } from "gatsby"
 
 function SEO({ lang, meta, title, description, author, keywords, url, image }) {
   const { site } = useStaticQuery(
