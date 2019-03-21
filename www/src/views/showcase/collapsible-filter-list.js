@@ -14,7 +14,7 @@ const CollapsibleFilterList = ({
   setFilters,
   heading,
 }) => (
-  <Collapsible heading={heading}>
+  <Collapsible heading={heading} fixed={300}>
     {categoryKeys.map(c => (
       <button
         key={c}
