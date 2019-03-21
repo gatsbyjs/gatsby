@@ -37,8 +37,8 @@ function SEO({ lang, meta, title, description, author, keywords, url, image }) {
 
   // Getting gatsby-share.png from public folder as fallback for metaImage
   const gatsbyShareImage =
-    typeof window !== "undefined" &&
-    `${window.location.origin}${withPrefix("/img/gatsby-share.png")}`
+    typeof window !== `undefined` &&
+    `${window.location.origin}${withPrefix(`/img/gatsby-share.png`)}`
 
   const metaImage = image || gatsbyShareImage
 
