@@ -167,6 +167,16 @@ Object {
                 ],
               },
             ],
+            "anObjectArrayWithNull": Array [
+              Object {
+                "anotherObjectArray": Array [
+                  Object {
+                    "baz": "quz",
+                  },
+                ],
+              },
+              null,
+            ],
             "date": "1012",
             "deepObject": Object {
               "deepObject": Object {
@@ -215,6 +225,16 @@ Object {
                   },
                 ],
               },
+            ],
+            "anObjectArrayWithNull": Array [
+              Object {
+                "anotherObjectArray": Array [
+                  Object {
+                    "baz": "quz",
+                  },
+                ],
+              },
+              null,
             ],
             "date": "1984",
             "deepObject": null,
