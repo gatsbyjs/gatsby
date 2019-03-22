@@ -127,15 +127,14 @@ The “Install Gatsby” button label did not work in the usability tests. Nearl
 
 We made two changes to fix the initial problems uncovered by usability testing. The "How it Works" diagram was moved up so some is visible above the fold, since that diagram was easier to quickly understand than the text that now is below the diagram. Also, the subheading under "How it Works" is changed to make it clear that Gatsby is open source and free, and make it clear that it's a tool for developers.
 
+We moved the diagram above the card and changed explanatory text. [See the PR here](https://github.com/gatsbyjs/gatsby/pull/12236).
+
 ![Screenshot of gatsbyjs.org homepage on a mobile device](mobile-prototype-2019-03-01.png)
 
-[We moved the diagram above the card and changed explanatory text](https://github.com/gatsbyjs/gatsby/pull/12236)
-
-Then we refined those changes by modifying the headline and subheadline.
+Then we refined those changes by modifying the headline and subheadline. [See the PR here](https://github.com/gatsbyjs/gatsby/pull/12298).
 
 ![Screenshot of gatsbyjs.org homepage on desktop](desktop-prototype-2019-03-04.png)
 
-[We changed the .org headline/subheadline + made them larger](https://github.com/gatsbyjs/gatsby/pull/12298)
 
 We are also working on getting [this RFC](https://github.com/gatsbyjs/rfcs/pull/32) merged to work more on the homepage. We hope you comment on it!
 
