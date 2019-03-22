@@ -9,6 +9,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const { formatError } = require(`graphql`)
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
@@ -104,6 +105,7 @@ async function startServer(program) {
       () => {}
     )
   }
+
   app.use(
     `/___graphql`,
     graphqlHTTP(() => {
@@ -113,6 +115,12 @@ async function startServer(program) {
         graphiql:
           process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
         context: withResolverContext({}, schema),
+        formatError(err) {
+          return {
+            ...formatError(err),
+            stack: err.stack ? err.stack.split(`\n`) : [],
+          }
+        },
       }
     })
   )

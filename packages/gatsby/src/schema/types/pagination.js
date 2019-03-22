@@ -2,7 +2,7 @@ const { getFieldsEnum } = require(`./sort`)
 const { distinct, group } = require(`../resolvers`)
 
 const getPageInfo = ({ schemaComposer }) =>
-  schemaComposer.getOrCreateTC(`PageInfo`, tc => {
+  schemaComposer.getOrCreateOTC(`PageInfo`, tc => {
     tc.addFields({
       hasNextPage: `Boolean!`,
       // currentPage: `Int!`,
@@ -15,7 +15,7 @@ const getPageInfo = ({ schemaComposer }) =>
 
 const getEdge = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName() + `Edge`
-  return schemaComposer.getOrCreateTC(typeName, tc => {
+  return schemaComposer.getOrCreateOTC(typeName, tc => {
     tc.addFields({
       next: typeComposer,
       node: typeComposer.getTypeNonNull(),
@@ -30,7 +30,7 @@ const createPagination = ({
   fields,
   typeName,
 }) => {
-  const paginationTypeComposer = schemaComposer.getOrCreateTC(typeName, tc => {
+  const paginationTypeComposer = schemaComposer.getOrCreateOTC(typeName, tc => {
     tc.addFields({
       totalCount: `Int!`,
       edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],

@@ -99,8 +99,13 @@ const GraphQLDate = new GraphQLScalarType({
 // Check if this is a date.
 // All the allowed ISO 8601 date-time formats used.
 function isDate(value) {
+  // quick check if value does not look like a date
+  if (typeof value === `number` || !/^\d{4}/.test(value)) {
+    return false
+  }
+
   const momentDate = moment.utc(value, ISO_8601_FORMAT, true)
-  return momentDate.isValid() && typeof value !== `number`
+  return momentDate.isValid()
 }
 
 const formatDate = ({
