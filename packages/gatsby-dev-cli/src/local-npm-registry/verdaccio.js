@@ -112,8 +112,15 @@ const publishPackage = async ({
 
   // npm publish
   const publishCmd = [
-    `npm`,
-    [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`],
+    `yarn`,
+    [
+      `publish`,
+      `--tag`,
+      `gatsby-dev`,
+      `--registry=${registryUrl}`,
+      `--new-version`,
+      monorepoPKGjson.version,
+    ],
     {
       cwd: pathToPackage,
     },
