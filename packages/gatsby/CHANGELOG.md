@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.6...gatsby@2.2.7) (2019-03-22)
+
+### Bug Fixes
+
+- **gatsby:** make sure interface implementations in third-party schema ([#12721](https://github.com/gatsbyjs/gatsby/issues/12721)) ([423c953](https://github.com/gatsbyjs/gatsby/commit/423c953))
+
 ## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.5...gatsby@2.2.6) (2019-03-21)
 
 **Note:** Version bump only for package gatsby
