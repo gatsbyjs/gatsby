@@ -141,7 +141,7 @@ Does this sound like something that ✨joy? Oh--let's talk about the deploy proc
 
 Releasing a one-line fix to our SSR application requires deploying an entirely new version of our application. This means spinning down existing versions of our service, spinning up new versions of our service, and handling and remediating any errors that may arise.
 
-The benefits of _both_ approaches are the same. Improved performance (which has other, related benefits) by short-circuiting the process of _eventually_ producing HTML by directly producing HTML. However--deploying and hosting static content is objectively **easier**, **cheaper**, and **more reliable** than deploying a server for rendering applications.
+The benefits of _both_ approaches are the same. Improved performance (which has other, important related benefits) by short-circuiting the process of _eventually_ producing HTML by directly producing HTML. However--deploying and hosting static content is objectively **easier**, **cheaper**, and **more reliable** than deploying a server for rendering applications.
 
 Let's continue.
 
