@@ -142,7 +142,7 @@ module.exports = {
       ref,
       replace,
       to,
-      ...rest,
+      ...rest
     }) =>
       React.createElement("a", {
         ...rest,
