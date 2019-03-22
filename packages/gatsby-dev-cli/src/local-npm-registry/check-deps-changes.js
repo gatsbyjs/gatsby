@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const { getMonorepoPackageJsonPath } = require(`./utils`)
+const request = require(`request`)
 
 function difference(object, base) {
   function changes(object, base) {
@@ -16,7 +17,7 @@ function difference(object, base) {
   return changes(object, base)
 }
 
-const checkDepsChanges = ({
+const checkDepsChanges = async ({
   newPath,
   packageName,
   root,
@@ -43,13 +44,37 @@ const checkDepsChanges = ({
     // there is no local package - so we still need to install deps
     // this is nice because devs won't need to do initial package installation - we can handle this.
     if (isInitialScan) {
-      console.log(
-        `'${packageName}' doesn't seem to be installed. Will install it`
-      )
-      return true
+      // if package is not installed, we will do http GET request to
+      // unkpg to check if dependency in package published in public
+      // npm repository are different
+
+      // this allow us to not publish to local repository
+      // and save some time/work
+
+      try {
+        localPKGjson = await new Promise((resolve, reject) => {
+          request(`https://unpkg.com/${packageName}/package.json`, function(
+            error,
+            response,
+            body
+          ) {
+            if (response && response.statusCode === 200) {
+              resolve(JSON.parse(body))
+              return
+            }
+
+            reject(error)
+          })
+        })
+      } catch {
+        console.log(
+          `'${packageName}' doesn't seem to be installed. Will publish it`
+        )
+        return true
+      }
     } else {
       console.log(
-        `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to install it`
+        `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to publish it`
       )
       return false
     }

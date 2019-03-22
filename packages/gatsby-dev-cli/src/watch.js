@@ -111,6 +111,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
   const packagesToPublish = new Set()
   let isInitialScan = true
   let ignoredPackageJSON = new Map()
+  const waitFor = new Set()
 
   const ignorePackageJSONChanges = (packageName, contentArray) => {
     ignoredPackageJSON.set(packageName, contentArray)
@@ -124,7 +125,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     .watch(watchers, {
       ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
     })
-    .on(`all`, (event, filePath) => {
+    .on(`all`, async (event, filePath) => {
       const watchEvents = [`change`, `add`]
       if (_.includes(watchEvents, event)) {
         const [packageName] = filePath
@@ -149,16 +150,29 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
         if (relativePackageFile === `package.json`) {
           // Compare dependencies with local version
 
-          if (
-            checkDepsChanges({
-              newPath,
-              packageName,
-              root,
-              isInitialScan,
-              ignoredPackageJSON,
-            })
-          ) {
+          const didDepsChangedPromise = checkDepsChanges({
+            newPath,
+            packageName,
+            root,
+            isInitialScan,
+            ignoredPackageJSON,
+          })
+
+          if (isInitialScan) {
+            // normally checkDepsChanges would be sync,
+            // but because it also can do async GET request
+            // to unpkg if local package is not installed
+            // keep track of it to make sure all of it
+            // finish before installing
+
+            waitFor.add(didDepsChangedPromise)
+          }
+
+          const didDepsChanged = await didDepsChangedPromise
+
+          if (didDepsChanged) {
             if (isInitialScan) {
+              waitFor.delete(didDepsChangedPromise)
               // handle dependency change only in initial scan - this is for sure doable to
               // handle this in watching mode correctly - but for the sake of shipping
               // this I limit more work/time consuming edge cases.
@@ -207,6 +221,10 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
       }
     })
     .on(`ready`, async () => {
+      // wait for all async work needed to be done
+      // before publishing / installing
+      await Promise.all(Array.from(waitFor))
+
       if (isInitialScan && packagesToPublish.size > 0) {
         const publishAndInstallPromise = publishPackagesLocallyAndInstall({
           packagesToPublish: Array.from(packagesToPublish),
