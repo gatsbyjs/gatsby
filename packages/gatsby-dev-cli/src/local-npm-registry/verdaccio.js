@@ -162,7 +162,7 @@ exports.publishPackagesLocallyAndInstall = async ({
   )
   const installCmd = [
     `yarn`,
-    [`add`, ...packagesToInstall, `--registry=${registryUrl}`],
+    [`add`, ...packagesToInstall, `--registry=${registryUrl}`, `--exact`],
     {
       cwd: process.cwd(),
     },
