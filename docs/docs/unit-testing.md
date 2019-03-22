@@ -132,9 +132,7 @@ const gatsby = jest.requireActual("gatsby")
 module.exports = {
   ...gatsby,
   graphql: jest.fn(),
-  Link: jest
-    .fn()
-    .mockImplementation(
+  Link: jest.fn().mockImplementation(
       // these props are invalid for an `a` tag
       ({
         activeClassName,
