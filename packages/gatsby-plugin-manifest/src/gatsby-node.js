@@ -75,14 +75,14 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
 
     let sharpIcon = sharp(icon)
 
-    sharpIcon.metadata().then(metadata => {
-      if (metadata.width !== metadata.height) {
-        reporter.warn(
-          `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square.\n` +
-            `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
-        )
-      }
-    })
+    let metadata = await sharpIcon.metadata()
+
+    if (metadata.width !== metadata.height) {
+      reporter.warn(
+        `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square.\n` +
+          `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
+      )
+    }
 
     //add cache busting
     const cacheMode =
