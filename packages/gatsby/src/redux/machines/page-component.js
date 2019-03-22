@@ -22,6 +22,8 @@ module.exports = Machine(
       NEW_PAGE_CREATED: {
         actions: `setPage`,
       },
+      QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
+      QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
     },
     states: {
       inactive: {
@@ -42,8 +44,6 @@ module.exports = Machine(
             actions: `setBootstrapFinished`,
           },
           QUERY_CHANGED: `runningPageQueries`,
-          QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
-          QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
       queryExtractionGraphQLError: {
@@ -66,8 +66,6 @@ module.exports = Machine(
       idle: {
         on: {
           QUERY_CHANGED: `runningPageQueries`,
-          QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
-          QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
         },
       },
     },
