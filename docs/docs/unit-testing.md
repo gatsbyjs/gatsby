@@ -136,6 +136,7 @@ module.exports = {
     .fn()
     .mockImplementation(
       ({
+        // these props are invalid for an `a` tag
         activeClassName,
         activeStyle,
         getProps,
