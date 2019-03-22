@@ -49,7 +49,9 @@ describe(`sanitize errors`, () => {
     expect(e).toBeDefined()
     expect(e.message).toEqual(errormessage)
     expect(e.stack).toBeDefined()
-    const localPathRegex = new RegExp(process.cwd())
+    const localPathRegex = new RegExp(
+      process.cwd().replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
+    )
     expect(localPathRegex.test(e.stack)).toBeTruthy()
     const tags = { error: [e] }
 
