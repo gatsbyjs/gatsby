@@ -27,8 +27,8 @@ class StarterTemplate extends React.Component {
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
     const allDeps = [
-      ...gatsbyDependencies.map(([name, ver]) => name),
-      ...miscDependencies.map(([name, ver]) => name),
+      ...gatsbyDependencies.map(([name]) => name),
+      ...miscDependencies.map(([name]) => name),
     ]
     const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
     const showMore =

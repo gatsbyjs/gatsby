@@ -37,6 +37,7 @@ module.exports = {
 
 ## Plugin options
 
+- **connectionString**: if you need to use a connection string compatable with later versions of MongoDB, or for connections to MongoDB Atlas, you can enter the entire string, minus the `dbName` and `extraParams.` Use the In this case, the authentication information should already be embedded in the string ex. `mongodb+srv://<USERNAME>:<PASSWORD>@<SERVERNANE>-fsokc.mongodb.net`. Pass `dbName` and `extraParams` as options per below.
 - **dbName**: indicates the database name that you want to use
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
@@ -46,7 +47,8 @@ module.exports = {
 - **auth**: the authentication data to login a Mongodb collection, with sub
   properties user and password. ex. auth: { user: `admin`, password: `12345` }
 - **extraParams**: useful to set additional parameters for the connection, like authSource, ssl or replicaSet
-  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }
+  (needed for connecting to MongoDB Atlas db as a service), ex: extraParams: { replicaSet: `test-shard-0`, ssl: `true`, authSource: `admin` }. These are the types of options that can be appended as query parameters to the connection URI: https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options
+- **clientOptions**: for setting options on the creation of a `new MongoClient`. By default, to handle the various connection URI's necessary for newer versions of MongoDB Atlas, for instance, we pass { `useNewUrlParser`: `true` }. You can override the default by passing either an empty object literal or filled with other valid connection options These are the subset of connection options that have to be passed as part of an object to the creation of a new `MongoClient` instance: http://mongodb.github.io/node-mongodb-native/3.1/reference/connecting/connection-settings/
 
 ### Mapping mediatype feature
 
