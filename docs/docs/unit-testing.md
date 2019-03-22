@@ -135,8 +135,8 @@ module.exports = {
   Link: jest
     .fn()
     .mockImplementation(
+      // these props are invalid for an `a` tag
       ({
-        // these props are invalid for an `a` tag
         activeClassName,
         activeStyle,
         getProps,
