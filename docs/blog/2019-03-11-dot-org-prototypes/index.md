@@ -12,7 +12,9 @@ We sent out a [messaging survey](/blog/2019-03-05-dot-org-messaging-survey/) a f
 After creating the prototypes, it was time to find people to test those prototypes, a process that's called usability testing.
 
 ## Stats on usability testers
+
 We found some testers through [userinterviews.com](https://www.userinterviews.com/), and here are the important facts about them:
+
 - 6 testers
 - All of them know React
 - 5 of them had never heard of Gatsby before
@@ -134,7 +136,6 @@ We moved the diagram above the card and changed explanatory text. [See the PR he
 Then we refined those changes by modifying the headline and subheadline. [See the PR here](https://github.com/gatsbyjs/gatsby/pull/12298).
 
 ![Screenshot of gatsbyjs.org homepage on desktop](desktop-prototype-2019-03-04.png)
-
 
 We are also working on getting [this RFC](https://github.com/gatsbyjs/rfcs/pull/32) merged to work more on the homepage. We hope you comment on it!
 
