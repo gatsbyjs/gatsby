@@ -8,7 +8,7 @@ GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
 
 # setting up child integration test link to gatsby packages
 cd $SRC_PATH &&
-yarn &&
+#yarn &&
 #gatsby-dev --set-path-to-repo $GATSBY_PATH &&
 #gatsby-dev --scan-once --copy-all --quiet && # copies _all_ files in gatsby/packages
 node ../../packages/gatsby-dev-cli/dist/index.js --set-path-to-repo $GATSBY_PATH &&
