@@ -260,10 +260,11 @@ class Image extends React.Component {
 
     const shouldDisplay = this.state.imgLoaded || this.state.fadeIn === false
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+    const durationFadeIn = `0.5s`
 
     const imageStyle = {
       opacity: shouldDisplay ? 1 : 0,
-      transition: shouldFadeIn ? `opacity 0.5s` : `none`,
+      transition: shouldFadeIn ? `opacity ${durationFadeIn}` : `none`,
       ...imgStyle,
     }
 
@@ -271,7 +272,7 @@ class Image extends React.Component {
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHide = {
-      transitionDelay: `0.5s`,
+      transitionDelay: durationFadeIn,
     }
 
     const imagePlaceholderStyle = {
