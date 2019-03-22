@@ -1,4 +1,5 @@
 const MongoClient = require(`mongodb`).MongoClient
+const ObjectID = require(`mongodb`).ObjectID
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
@@ -76,11 +77,16 @@ function createNodes(
         reject(err)
       }
 
-      documents.forEach(item => {
-        var id = item._id.toString()
+      documents.forEach(doc => {
+        const item = { ...doc } // lets keep doc immutable
+        const id = item._id.toHexString()
         delete item._id
 
-        var node = {
+        for (let key in item) {
+          item[key] = stringifyObjectIds(item[key])
+        }
+
+        const node = {
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
@@ -143,4 +149,22 @@ function getConnectionExtraParams(extraParams) {
   }
 
   return connectionSuffix ? `?` + connectionSuffix : ``
+}
+
+function stringifyObjectIds(val) {
+  if (val instanceof ObjectID) {
+    return val.toHexString()
+  } else if (typeof val === `object`) {
+    if (Array.isArray(val)) {
+      return val.map(el => stringifyObjectIds(el))
+    } else {
+      const keys = Object.keys(val)
+      return keys.reduce((obj, key) => {
+        obj[key] = stringifyObjectIds(val[key])
+        return obj
+      }, {})
+    }
+  } else {
+    return val
+  }
 }
