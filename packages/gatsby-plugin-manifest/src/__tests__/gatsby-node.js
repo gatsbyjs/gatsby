@@ -29,6 +29,7 @@ jest.mock(`sharp`, () => {
         }
       }()
   )
+
   sharp.simd = jest.fn()
   sharp.concurrency = jest.fn()
 
