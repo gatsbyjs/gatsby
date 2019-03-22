@@ -97,6 +97,7 @@ const publishPackage = async ({
   packagesToPublish,
   root,
   versionPostFix,
+  ignorePackageJSONChanges,
 }) => {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
@@ -117,8 +118,15 @@ const publishPackage = async ({
     }
   })
 
+  const temporaryMonorepoPKGjsonString = JSON.stringify(monorepoPKGjson)
+
+  const unignorePackageJSONChanges = ignorePackageJSONChanges(packageName, [
+    monorepoPKGjsonString,
+    temporaryMonorepoPKGjsonString,
+  ])
+
   // change version and dependency versions
-  fs.outputJSONSync(monoRepoPackageJsonPath, monorepoPKGjson)
+  fs.outputFileSync(monoRepoPackageJsonPath, temporaryMonorepoPKGjsonString)
 
   const pathToPackage = path.dirname(monoRepoPackageJsonPath)
 
@@ -146,12 +154,14 @@ const publishPackage = async ({
 
   // restore original package.json
   fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
+  unignorePackageJSONChanges()
 }
 
 exports.publishPackagesLocallyAndInstall = async ({
   packagesToPublish,
   packages,
   root,
+  ignorePackageJSONChanges,
 }) => {
   await startServer()
 
@@ -163,6 +173,7 @@ exports.publishPackagesLocallyAndInstall = async ({
       packagesToPublish,
       root,
       versionPostFix,
+      ignorePackageJSONChanges,
     })
   }
 

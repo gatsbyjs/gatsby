@@ -110,6 +110,15 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
+  let ignoredPackageJSON = new Map()
+
+  const ignorePackageJSONChanges = (packageName, contentArray) => {
+    ignoredPackageJSON.set(packageName, contentArray)
+
+    return () => {
+      ignoredPackageJSON.delete(ignoredPackageJSON)
+    }
+  }
 
   chokidar
     .watch(watchers, {
@@ -146,6 +155,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
               packageName,
               root,
               isInitialScan,
+              ignoredPackageJSON,
             })
           ) {
             if (isInitialScan) {
@@ -168,10 +178,6 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
                 // as we can do single publish then
                 packagesToPublish.add(packageToPublish)
               })
-            } else {
-              console.warn(
-                `Installation of depenencies after initial scan is not implemented`
-              )
             }
           }
 
@@ -206,6 +212,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
           packagesToPublish: Array.from(packagesToPublish),
           root,
           packages,
+          ignorePackageJSONChanges,
         })
         packagesToPublish.clear()
         allCopies.push(publishAndInstallPromise)

@@ -16,12 +16,25 @@ function difference(object, base) {
   return changes(object, base)
 }
 
-const checkDepsChanges = ({ newPath, packageName, root, isInitialScan }) => {
+const checkDepsChanges = ({
+  newPath,
+  packageName,
+  root,
+  isInitialScan,
+  ignoredPackageJSON,
+}) => {
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
     root,
   })
   const monorepoPKGjson = JSON.parse(fs.readFileSync(monoRepoPackageJsonPath))
+  if (ignoredPackageJSON.has(packageName)) {
+    if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjson)) {
+      // we are in middle of publishing and content of package.json is one set during publish process,
+      // so we need to not cause false positives
+      return false
+    }
+  }
 
   let localPKGjson
   try {
@@ -96,6 +109,10 @@ const checkDepsChanges = ({ newPath, packageName, root, isInitialScan }) => {
       if (isInitialScan) {
         console.log(
           `Will ${!needPublishing ? `not ` : ``} publish to local npm registry.`
+        )
+      } else {
+        console.warn(
+          `Installation of depenencies after initial scan is not implemented`
         )
       }
       return needPublishing
