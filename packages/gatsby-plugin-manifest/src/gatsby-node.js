@@ -1,13 +1,12 @@
-const fs = require(`fs`)
-const path = require(`path`)
-const Promise = require(`bluebird`)
-const sharp = require(`sharp`)
-const {
+import fs from "fs"
+import path from "path"
+import sharp from "sharp"
+import {
   defaultIcons,
   doesIconExist,
   addDigestToPath,
   createContentDigest,
-} = require(`./common.js`)
+} from "./common"
 
 sharp.simd(true)
 
@@ -23,24 +22,29 @@ try {
 }
 
 function generateIcons(icons, srcIcon) {
-  return Promise.map(icons, icon => {
-    const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-    const imgPath = path.join(`public`, icon.src)
+  return Promise.all(
+    icons.map(async icon => {
+      const size = parseInt(
+        icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`))
+      )
+      const imgPath = path.join(`public`, icon.src)
 
-    // For vector graphics, instruct sharp to use a pixel density
-    // suitable for the resolution we're rasterizing to.
-    // For pixel graphics sources this has no effect.
-    // Sharp accept density from 1 to 2400
-    const density = Math.min(2400, Math.max(1, size))
-    return sharp(srcIcon, { density })
-      .resize({
-        width: size,
-        height: size,
-        fit: `contain`,
-        background: { r: 255, g: 255, b: 255, alpha: 0 },
-      })
-      .toFile(imgPath)
-  })
+      // For vector graphics, instruct sharp to use a pixel density
+      // suitable for the resolution we're rasterizing to.
+      // For pixel graphics sources this has no effect.
+      // Sharp accept density from 1 to 2400
+      const density = Math.min(2400, Math.max(1, size))
+
+      return sharp(srcIcon, { density })
+        .resize({
+          width: size,
+          height: size,
+          fit: `contain`,
+          background: { r: 255, g: 255, b: 255, alpha: 0 },
+        })
+        .toFile(imgPath)
+    })
+  )
 }
 
 exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
