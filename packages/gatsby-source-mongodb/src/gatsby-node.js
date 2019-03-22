@@ -1,9 +1,9 @@
 const MongoClient = require(`mongodb`).MongoClient
-const ObjectID = require(`mongodb`).ObjectID
 const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
+const stringifyObjectIds = require('./stringifyObjectIds')
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
@@ -149,22 +149,4 @@ function getConnectionExtraParams(extraParams) {
   }
 
   return connectionSuffix ? `?` + connectionSuffix : ``
-}
-
-function stringifyObjectIds(val) {
-  if (val instanceof ObjectID) {
-    return val.toHexString()
-  } else if (typeof val === `object`) {
-    if (Array.isArray(val)) {
-      return val.map(el => stringifyObjectIds(el))
-    } else {
-      const keys = Object.keys(val)
-      return keys.reduce((obj, key) => {
-        obj[key] = stringifyObjectIds(val[key])
-        return obj
-      }, {})
-    }
-  } else {
-    return val
-  }
 }
