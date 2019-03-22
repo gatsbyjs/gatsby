@@ -28,9 +28,13 @@ const checkDepsChanges = async ({
     packageName,
     root,
   })
-  const monorepoPKGjson = JSON.parse(fs.readFileSync(monoRepoPackageJsonPath))
+  const monorepoPKGjsonString = fs.readFileSync(
+    monoRepoPackageJsonPath,
+    `utf-8`
+  )
+  const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
   if (ignoredPackageJSON.has(packageName)) {
-    if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjson)) {
+    if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjsonString)) {
       // we are in middle of publishing and content of package.json is one set during publish process,
       // so we need to not cause false positives
       return false

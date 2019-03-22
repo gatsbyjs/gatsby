@@ -107,7 +107,10 @@ const publishPackage = async ({
     packageName,
     root,
   })
-  const monorepoPKGjsonString = fs.readFileSync(monoRepoPackageJsonPath)
+  const monorepoPKGjsonString = fs.readFileSync(
+    monoRepoPackageJsonPath,
+    `utf-8`
+  )
   const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
 
   monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
