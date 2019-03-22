@@ -663,10 +663,11 @@ actions.createNode = (...args) => dispatch => {
     action => action.type === `CREATE_NODE`
   )
   if (createNodeAction) {
-    const { payload: node, traceId } = createNodeAction
+    const { payload: node, traceId, parentSpan } = createNodeAction
     return apiRunnerNode(`onCreateNode`, {
       node,
       traceId,
+      parentSpan,
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
     })
   }
