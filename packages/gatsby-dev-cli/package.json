@@ -17,7 +17,6 @@
     "is-absolute": "^0.2.6",
     "lodash": "^4.17.10",
     "request": "2.88.0",
-    "npm-cli-login": "^0.1.1",
     "verdaccio": "^3.11.1",
     "yargs": "^8.0.2"
   },

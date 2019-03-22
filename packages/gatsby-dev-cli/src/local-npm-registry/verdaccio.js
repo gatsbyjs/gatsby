@@ -1,6 +1,5 @@
 const startVerdaccio = require(`verdaccio`).default
 const path = require(`path`)
-const npmLogin = require(`npm-cli-login`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const { promisifiedSpawn, getMonorepoPackageJsonPath } = require(`./utils`)
@@ -14,17 +13,11 @@ const verdaccioConfig = {
     enable: true,
     title: `gatsby-dev`,
   },
-  auth: {
-    htpasswd: {
-      file: path.join(__dirname, `.htpasswd`),
-      max_users: 1000,
-    },
-  },
   logs: [{ type: `stdout`, format: `pretty-timestamped`, level: `warn` }],
   packages: {
     "**": {
       access: `$all`,
-      publish: `gatsby-dev`, // we create dummy gatsby-dev username
+      publish: `$all`,
       proxy: `npmjs`,
     },
   },
@@ -62,26 +55,7 @@ const startServer = () => {
         webServer.listen(addr.port || addr.path, addr.host, () => {
           console.log(`Started local verdaccio server`)
 
-          // Login with dummy gatsby-dev user - see  ./verdaccio/.htpasswd .
-          // This is needed to be able to actually publish packages
-          // to local registry.
-          console.log(`Logging in with dummy user`)
-
-          npmLogin(
-            `gatsby-dev`,
-            `gatsby-dev`,
-            `gatsby-dev@gatsbyjs.org`,
-            registryUrl
-          )
-
-          // This is silly - `npm-cli-login` doesn't return promise or callback
-          // so let's just wait reasaonable amount before resolving
-          // There is open pull request to add returning promise:
-          // https://github.com/postmanlabs/npm-cli-login/pull/19
-          setTimeout(() => {
-            console.log(`Hopefully logged in already`)
-            resolve()
-          }, 1500)
+          resolve()
         })
       }
     )
