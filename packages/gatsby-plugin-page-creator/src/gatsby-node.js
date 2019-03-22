@@ -49,16 +49,16 @@ exports.createPagesStatefully = async (
     )
   }
 
-  const pagesDirectory = slash(systemPath.posix.join(pagesPath))
-  const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
+  const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
+  const pagesGlob = `**/*.{${exts}}`
 
   // Get initial list of files.
-  let files = await glob(pagesGlob)
+  let files = await glob(pagesGlob, { cwd: pagesPath })
   files.forEach(file => _createPage(file, pagesDirectory, createPage, ignore))
 
   // Listen for new component pages to be added or removed.
   chokidar
-    .watch(pagesGlob)
+    .watch(pagesGlob, { cwd: pagesPath })
     .on(`add`, path => {
       path = slash(path)
       if (!_.includes(files, path)) {
@@ -70,10 +70,11 @@ exports.createPagesStatefully = async (
       path = slash(path)
       // Delete the page for the now deleted component.
       store.getState().pages.forEach(page => {
-        if (page.component === path) {
+        const componentPath = systemPath.join(pagesDirectory, path)
+        if (page.component === componentPath) {
           deletePage({
-            path: createPath(pagesDirectory, path),
-            component: path,
+            path: createPath(path),
+            component: componentPath,
           })
         }
       })
@@ -84,19 +85,20 @@ exports.createPagesStatefully = async (
 const _createPage = (filePath, pagesDirectory, createPage, ignore) => {
   // Filter out special components that shouldn't be made into
   // pages.
-  if (!validatePath(systemPath.posix.relative(pagesDirectory, filePath))) {
+  if (!validatePath(filePath)) {
     return
   }
 
   // Filter out anything matching the given ignore patterns and options
-  if (ignorePath(systemPath.posix.relative(pagesDirectory, filePath), ignore)) {
+  if (ignorePath(filePath, ignore)) {
     return
   }
 
   // Create page object
+  const createdPath = createPath(filePath)
   const page = {
-    path: createPath(pagesDirectory, filePath),
-    component: filePath,
+    path: createdPath,
+    component: systemPath.join(pagesDirectory, filePath),
   }
 
   // Add page
