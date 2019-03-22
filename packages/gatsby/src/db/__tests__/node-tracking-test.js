@@ -96,7 +96,7 @@ describe(`track root nodes`, () => {
 
       const sc = createSchemaComposer()
       const typeName = `Test`
-      const tc = sc.createTC(typeName)
+      const tc = sc.createObjectTC(typeName)
       addInferredFields({
         schemaComposer: sc,
         typeComposer: tc,

@@ -1,16 +1,15 @@
 {
   "name": "gatsby-plugin-feed",
   "description": "Creates an RSS feed for your Gatsby site.",
-  "version": "2.0.15",
+  "version": "2.1.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "fs-extra": "^7.0.1",
     "lodash.merge": "^4.6.0",
-    "mkdirp": "^0.5.1",
-    "pify": "^3.0.0",
     "rss": "^1.2.2"
   },
   "devDependencies": {
