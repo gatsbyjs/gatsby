@@ -13,7 +13,7 @@ tags:
 
 Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
 
-As such--this post focuses on just a single element of what makes Gatsby so great: performance. To prime the discussion, let's consider this post on the `webdev` subreddit on Reddit.
+As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider this post on the `webdev` subreddit on Reddit.
 
 <pullquote citation="reddit/r/webdev">
 Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
@@ -360,13 +360,13 @@ The feature seamlessly falls back to default behavior if `IntersectionObserver` 
 
 **Mobile**
 
-Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile.
+Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being avalable.
 
 **Data-constrained devices**
 
 One of the most appealing things about using a framework like Gatsby is that we can bake-in micro-optimizations and make these available in incremental updates to all of _our_ users making the performance optimizations available to all of _your_ users. In particular, later versions of Chrome support an API that grants network information like type of connection (e.g. `slow-2g`, `2g`, etc.), whether the browser has a `saveData` hint enabled, and more. With the help of [@addyosmani](https://twitter.com/addyosmani) we've baked this into our preloading logic. On devices with these hints or on slow connections, we disable the preloading to save data! It looks a little something like:
 
-```jsx
+```js
 // Skip prefetching if we know user is on slow or constrained connection
 if (`connection` in navigator) {
   if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
@@ -378,7 +378,85 @@ if (`connection` in navigator) {
 }
 ```
 
+See the [code implementing this functionality here](https://github.com/gatsbyjs/gatsby/blob/be023447eb0f5bd4612a447098fc85c7afdf0cdf/packages/gatsby/cache-dir/loader.js#L227-L235).
+
 ### `srcset` powering Responsive Images
+
+Whew. It's been quite a ride. Finally, I'd like to discuss one of my favorite Gatsby components, specifically [`gatsby-image`](/packages/gatsby-image/). This component _also_ registers an `IntersectionObserver`, and uses it in an interesting, performance-focused manner. Let's get to it.
+
+#### `gatsby-image`
+
+There are far, far, far too many otherwise decently performing websites that load a gargantuan 5Mb image request as a hero image. But--thankfully, this isn't you! You use `gatsby-image` and you get all of the following:
+
+- Responsive, optimized images using a `srcset`
+  - A [`picture`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) element with a `source srcset` is used
+  - This means that using several media queries, you load the smallest image that matches your device (e.g. mobile devices get smaller images, desktop devices get larger images, etc.)
+  - We even generate 2x and 3x DPi images for beautiful images, regardless of the screen quality!
+- A base64 blurred image loaded by default
+  - This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
+  - Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)
+- An `IntersectionObserver` that swaps the base image for the larger image, when the image is in the viewport
+  - See [the code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
+
+And one of the best wins of all--Gatsby's pluggable ecosystem and GraphQL data layer are both used to produce and pass the optimized images directly to this component. It looks something like:
+
+```jsx:title=src/components/hero.js
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
+import Image from "gatsby-image"
+
+export default function AnActuallyGoodAndResponsiveHeroImage() {
+  const data = useStaticQuery(graphql`
+    file(relativePath: { eq: "some-hero-image.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1200) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  `)
+
+  return <Image fluid={data.file.childImageSharp.fluid} />
+}
+```
+
+Our static build process will create an optimized, responsive hero image as static HTML that looks something like:
+
+```html
+<div class="gatsby-image-wrapper" style="position:fixed;overflow:hidden">
+  <!-- div to avoid loading jump -->
+  <div style="width:100%;padding-bottom:152.45833333333334%"></div>
+  <img src="data:image/jpeg;base64,base64-optimized-image-here" style="background-color: rgb(251, 250, 252); position: absolute; top: 0px; bottom: 0px; opacity: 0; transition-delay: 0.35s; right: 0px; left: 0px;"></div>
+  <!-- This picture element is added upon entry into the viewport with an IntersectionObserver -->
+  <!-- highlight-start -->
+  <picture>
+    <source srcset="/static/aa813/your-great-image.jpg 200w,
+      /static/d7872/your-great-image.jpg 400w,
+      /static/3be68/your-great-image.jpg 800w,
+      /static/55558/your-great-image.jpg 1200w,
+      /static/ca53f/your-great-image.jpg 1600w,
+      /static/2e134/your-great-image.jpg 2400w" sizes="(max-width: 800px) 100vw, 800px">
+    <img alt="" src="/static/3be68/your-great-image.jpg" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 1; transition: opacity 0.5s ease 0s;">
+  </picture>
+  <!-- highlight-end -->
+  <!-- JavaScript disabled? No problem. -->
+  <noscript>
+    <picture>
+      <source srcSet="/static/aa813/your-great-image.jpg 200w,
+        /static/d7872/your-great-image.jpg 400w,
+        /static/3be68/your-great-image.jpg 800w,
+        /static/55558/your-great-image.jpg 1200w,
+        /static/ca53f/your-great-image.jpg 1600w,
+        /static/2e134/your-great-image.jpg 2400w" sizes="(max-width: 800px) 100vw, 800px" />
+      <img src="/static/3be68/your-great-image.jpg" alt=""style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/>
+    </picture>
+  </noscript>
+</div>
+```
+
+For a demo of all you can do with `gatsby-image`, check out the example [Using Gatsby Image](https://using-gatsby-image.gatsbyjs.org).
+
+The power and appeal of Gatsby is that we internalize all of these great APIs and performance techniques and patterns. Enabling these (and improving with incremental releases of Gatsby!) allow you to focus on what matters: delivering compelling and engaging user experiences backed by your friendly, fast, and powerful web compiler: Gatsby.
 
 ## Techniques for measuring performance
 
