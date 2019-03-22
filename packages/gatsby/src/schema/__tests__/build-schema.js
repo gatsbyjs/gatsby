@@ -558,6 +558,8 @@ describe(`Build schema`, () => {
         type Query {
           foo: ThirdPartyFoo
           foos: [ThirdPartyFoo]
+          query: Query
+          relay: [Query!]!
         }
       `)
       createCreateResolversMock({
@@ -573,6 +575,8 @@ describe(`Build schema`, () => {
       const fields = type.getFields()
       expect(fields[`foo`].type.toString()).toEqual(`ThirdPartyFoo`)
       expect(fields[`foos`].type.toString()).toEqual(`[ThirdPartyFoo]`)
+      expect(fields[`query`].type.toString()).toEqual(`Query`)
+      expect(fields[`relay`].type.toString()).toEqual(`[Query!]!`)
     })
 
     it(`adds third-party types to schema`, async () => {

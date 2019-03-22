@@ -62,7 +62,7 @@ In a static website, data can be consumed from multiple different sources, for e
 
 To make consuming data simpler, Gatsby implements a data layer powered by GraphQL. Very exciting stuff!
 
-To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/create-source-plugin/) if necessary.
+To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/source-plugin-tutorial/) if necessary.
 
 In our case, we are using [Cosmic JS](https://cosmicjs.com). We need a source plugin to connect data from Cosmic JS to our Gatsby site. Good news: there's already a [source plugin for Cosmic JS](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
 

@@ -28,6 +28,7 @@ const makeNodes = () => [
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       { anotherObjectArray: [{ bar: 10 }] },
     ],
+    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
     deepObject: {
       level: 1,
       deepObject: {
@@ -63,6 +64,7 @@ const makeNodes = () => [
     anArray: [1, 2, 5, 4],
     aNestedArray: [[1, 2, 3, 4]],
     anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
+    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
     "with space": 3,
     "with-hyphen": 4,
     123: 24,
@@ -247,7 +249,7 @@ describe(`GraphQL type inference`, () => {
       },
     ]
     const schemaComposer = createSchemaComposer()
-    const typeComposer = schemaComposer.createTC(`Test`)
+    const typeComposer = schemaComposer.createObjectTC(`Test`)
     addInferredFields({
       schemaComposer,
       typeComposer,
@@ -987,6 +989,11 @@ describe(`GraphQL type inference`, () => {
             baz
           }
         },
+        anObjectArrayWithNull {
+          anotherObjectArray {
+            baz
+          }
+        }
         deepObject {
           level
           deepObject {

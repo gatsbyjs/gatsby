@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.7...gatsby@2.2.8) (2019-03-22)
+
+### Bug Fixes
+
+- **gatsby:** tolerate null object values ([#12756](https://github.com/gatsbyjs/gatsby/issues/12756)) ([7e51263](https://github.com/gatsbyjs/gatsby/commit/7e51263))
+- **gatsby-source-filesystem:** pin chokidar@2.1.2 to fix unix issues ([#12759](https://github.com/gatsbyjs/gatsby/issues/12759)) ([0ea1505](https://github.com/gatsbyjs/gatsby/commit/0ea1505))
+
+## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.6...gatsby@2.2.7) (2019-03-22)
+
+### Bug Fixes
+
+- **gatsby:** make sure interface implementations in third-party schema ([#12721](https://github.com/gatsbyjs/gatsby/issues/12721)) ([423c953](https://github.com/gatsbyjs/gatsby/commit/423c953))
+
+## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.5...gatsby@2.2.6) (2019-03-21)
+
+**Note:** Version bump only for package gatsby
+
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.4...gatsby@2.2.5) (2019-03-21)
+
+**Note:** Version bump only for package gatsby
+
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.3...gatsby@2.2.4) (2019-03-21)
+
+### Bug Fixes
+
+- **gatsby:** keep track of pages created by stateful createPages after edits ([#12671](https://github.com/gatsbyjs/gatsby/issues/12671)) ([62f0d10](https://github.com/gatsbyjs/gatsby/commit/62f0d10)), closes [#12143](https://github.com/gatsbyjs/gatsby/issues/12143)
+- **gatsby:** quick check if string looks like a date ([#12700](https://github.com/gatsbyjs/gatsby/issues/12700)) ([22a2689](https://github.com/gatsbyjs/gatsby/commit/22a2689)), closes [#12692](https://github.com/gatsbyjs/gatsby/issues/12692)
+
+### Features
+
+- **gatsby:** Add stack trace to error reporting in GraphiQL ([#12690](https://github.com/gatsbyjs/gatsby/issues/12690)) ([efa7d1a](https://github.com/gatsbyjs/gatsby/commit/efa7d1a))
+
 ## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.2...gatsby@2.2.3) (2019-03-20)
 
 ### Features

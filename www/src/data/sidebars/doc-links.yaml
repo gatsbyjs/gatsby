@@ -178,7 +178,7 @@
           link: /docs/post-css/
         - title: TailwindCSS
           link: /docs/tailwind-css/
-    - title: MDX
+    - title: Adding Components to Content with MDX
       link: /docs/mdx/
       items:
         - title: Getting started
