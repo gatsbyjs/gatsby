@@ -662,16 +662,18 @@ actions.createNode = (...args) => dispatch => {
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action => action.type === `CREATE_NODE`
   )
-  if (createNodeAction) {
-    const { payload: node, traceId, parentSpan } = createNodeAction
-    return apiRunnerNode(`onCreateNode`, {
-      node,
-      traceId,
-      parentSpan,
-      traceTags: { nodeId: node.id, nodeType: node.internal.type },
-    })
+
+  if (!createNodeAction) {
+    return undefined
   }
-  return undefined
+
+  const { payload: node, traceId, parentSpan } = createNodeAction
+  return apiRunnerNode(`onCreateNode`, {
+    node,
+    traceId,
+    parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  })
 }
 
 /**
