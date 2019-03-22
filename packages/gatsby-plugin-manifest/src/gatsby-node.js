@@ -78,9 +78,8 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
     sharpIcon.metadata().then(metadata => {
       if (metadata.width !== metadata.height) {
         reporter.warn(
-          `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square. \n` +
-            `The icons we generate will be square and for the best results we recommend you provide a square icon. \n` +
-            `We'll do our best with what you provide :)`
+          `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square.\n` +
+            `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
         )
       }
     })
