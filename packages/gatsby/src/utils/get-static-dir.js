@@ -1,13 +1,30 @@
 const fs = require(`fs-extra`)
 const chokidar = require(`chokidar`)
 const nodePath = require(`path`)
+const { store } = require(`.../redux`)
 
 /**
- * copyStaticDir
+ * copyStaticDirs
  * --
  * Copy files from the static directory to the public directory
  */
-exports.copyStaticDir = () => {
+exports.copyStaticDirs = () => {
+  // access the store to get themes
+  const state = store.getState()
+  // create an array of existing theme static folders
+  const themeStaticFolders = state.themes.themes.reduce((hasStatic, theme) => {
+    const staticPath = nodePath.resolve(theme.resolve, `static`)
+    if (fs.existsSync(staticPath)) {
+      hasStatic.push(staticPath)
+    }
+    return hasStatic
+  }, [])
+  // copy existing static folders into the public directory
+  if (themeStaticFolders.length) {
+    themeStaticFolders.map(folder =>
+      fs.copySync(folder, nodePath.join(process.cwd(), `public`))
+    )
+  }
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return Promise.resolve()
   return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`))
