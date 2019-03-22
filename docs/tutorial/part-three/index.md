@@ -69,9 +69,7 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 
 > Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
 
-3. Add `typography.js` configuration file
-
-Typography.js needs a configuration file. Add it now.
+3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils`, and copy the following into the file:
 
 ```javascript:title=src/utils/typography.js
 import Typography from "typography"

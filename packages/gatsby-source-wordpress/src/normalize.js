@@ -179,12 +179,14 @@ exports.excludeUnknownEntities = entities =>
 // Create node ID from known entities
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
 // we create the node ID based upon type if the wordpress_id doesn't exist
-exports.createGatsbyIds = (createNodeId, entities) =>
+exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
   entities.map(e => {
     if (e.wordpress_id) {
-      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+      e.id = createNodeId(
+        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`
+      )
     } else {
-      e.id = createNodeId(e.__type)
+      e.id = createNodeId(`${e.__type}-${_siteURL}`)
     }
     return e
   })

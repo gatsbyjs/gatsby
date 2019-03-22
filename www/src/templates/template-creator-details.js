@@ -2,16 +2,18 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
-import { rhythm, scale } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
-import presets, {
+import {
   colors,
   space,
   transition,
   radii,
   breakpoints,
+  scale,
+  lineHeights,
 } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
@@ -24,7 +26,7 @@ const MetaTitle = ({ children }) => (
     css={{
       margin: `0`,
       color: colors.gray.calm,
-      marginBottom: rhythm(space[1]),
+      marginBottom: space[1],
       [breakpoints.xs]: {
         width: 150,
       },
@@ -43,9 +45,9 @@ const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
       background: background ? background : colors.ui.whisper,
-      marginLeft: rhythm(-scale[1]),
-      marginRight: rhythm(-scale[1]),
-      padding: rhythm(scale[1]),
+      marginLeft: `-${space[5]}`,
+      marginRight: `-${space[5]}`,
+      padding: space[5],
       borderTop: first ? `1px solid ${colors.ui.light}` : null,
       borderBottom: last ? null : `1px solid ${colors.ui.light}`,
       [breakpoint2Columns]: {
@@ -87,7 +89,7 @@ class CreatorTemplate extends Component {
         <main
           role="main"
           css={{
-            padding: rhythm(space[6]),
+            padding: space[6],
             paddingBottom: `10vh`,
             display: `flex`,
             flexDirection: `column`,
@@ -95,7 +97,7 @@ class CreatorTemplate extends Component {
             justifyContent: `center`,
             width: `100%`,
             [breakpoint2Columns]: {
-              paddingBottom: rhythm(space[6]),
+              paddingBottom: space[6],
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
@@ -103,8 +105,8 @@ class CreatorTemplate extends Component {
         >
           <div
             css={{
-              margin: rhythm(space[6]),
-              marginBottom: rhythm(space[1]),
+              margin: space[6],
+              marginBottom: space[1],
               flexGrow: `1`,
               width: `100%`,
               [breakpoint2Columns]: {
@@ -124,7 +126,7 @@ class CreatorTemplate extends Component {
           </div>
           <div
             css={{
-              margin: rhythm(space[6]),
+              margin: space[6],
               flex: `1`,
               width: `100%`,
               [breakpoints.lg]: {
@@ -144,14 +146,14 @@ class CreatorTemplate extends Component {
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                marginTop: rhythm(space[3]),
+                marginTop: space[3],
               }}
             >
               {isAgencyOrCompany && (
                 <span
                   css={{
                     color: colors.gray.calm,
-                    marginRight: rhythm(space[2]),
+                    marginRight: space[2],
                   }}
                 >
                   {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
@@ -162,8 +164,8 @@ class CreatorTemplate extends Component {
                 <div
                   css={{
                     alignSelf: `flex-start`,
-                    fontSize: presets.scale[1],
-                    marginRight: rhythm(space[2]),
+                    fontSize: scale[1],
+                    marginRight: space[2],
                   }}
                 >
                   <Badge
@@ -184,7 +186,7 @@ class CreatorTemplate extends Component {
                     "& svg": { display: `block` },
                     "&&": {
                       border: 0,
-                      lineHeight: presets.lineHeights.solid,
+                      lineHeight: lineHeights.solid,
                       "&:hover": {
                         color: colors.gatsby,
                       },
@@ -236,7 +238,7 @@ class CreatorTemplate extends Component {
                       key={site.node.title}
                       css={{
                         "&&": {
-                          marginRight: rhythm(space[6]),
+                          marginRight: space[6],
                           borderBottom: `none`,
                           transition: `all ${transition.speed.default} ${
                             transition.curve.default

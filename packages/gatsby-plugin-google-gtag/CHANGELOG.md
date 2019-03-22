@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.15...gatsby-plugin-google-gtag@1.0.16) (2019-03-16)
+
+### Features
+
+- **gatsby-plugin-google-gtag:** add TS types for OutboundLink ([#12606](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/12606)) ([bc72163](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/commit/bc72163)), closes [/github.com/gatsbyjs/gatsby/blob/3834b2bce5edc60cd5386561498ca29f028c1d30/packages/gatsby-plugin-google-analytics/src/index.js#L10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/issues/L10)
+
 ## [1.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag/compare/gatsby-plugin-google-gtag@1.0.14...gatsby-plugin-google-gtag@1.0.15) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-google-gtag

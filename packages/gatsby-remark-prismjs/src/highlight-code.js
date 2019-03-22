@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 
 const loadPrismLanguage = require(`./load-prism-language`)
 const handleDirectives = require(`./directives`)
+const unsupportedLanguages = new Set()
 
 module.exports = (language, code, lineNumbersHighlight = []) => {
   // (Try to) load languages on demand.
@@ -14,6 +15,14 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
       if (language === `none`) {
         return code // Don't escape if set to none.
       } else {
+        const lang = language.toLowerCase()
+        if (!unsupportedLanguages.has(lang)) {
+          console.warn(
+            `unable to find prism language '${lang}' for highlighting.`,
+            `applying generic code block`
+          )
+          unsupportedLanguages.add(lang)
+        }
         return _.escape(code)
       }
     }
