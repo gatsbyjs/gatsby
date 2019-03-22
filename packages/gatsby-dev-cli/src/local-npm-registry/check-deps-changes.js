@@ -139,9 +139,7 @@ const checkDepsChanges = async ({
       .join(`\n`)
 
     if (!isPublishing && depChangeLog.length > 0) {
-      console.log(
-        `Dependencies of '${packageName}' changed:\n${depChangeLog}\n`
-      )
+      console.log(`Dependencies of '${packageName}' changed:\n${depChangeLog}`)
       if (isInitialScan) {
         console.log(
           `Will ${!needPublishing ? `not ` : ``} publish to local npm registry.`
