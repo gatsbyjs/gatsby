@@ -12,12 +12,18 @@ import {
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 
-import presets, { colors, space, breakpoints } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import {
+  colors,
+  space,
+  breakpoints,
+  scale,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${rhythm(space[6])};
+  margin: -6px -${space[6]};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -33,7 +39,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${rhythm(space[8])};
+  margin-right: ${space[8]};
   position: relative;
 
   :last-child {
@@ -45,7 +51,7 @@ const PostsColumn = styled(`div`)`
 
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   overflow: hidden;
   width: auto;
 
@@ -55,10 +61,10 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${presets.scale[4]};
+    font-size: ${scale[4]};
     justify-content: center;
-    line-height: ${presets.lineHeights.dense};
-    padding: ${rhythm(space[7])};
+    line-height: ${lineHeights.dense};
+    padding: ${space[7]};
     width: 100%;
 
     span {
@@ -68,7 +74,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: ${rhythm(space[1])};
+      margin-left: ${space[1]};
       width: 18px;
     }
   }
@@ -79,12 +85,12 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${rhythm(space[8])};
+    margin-left: ${space[8]};
     width: 125px;
 
     a {
       color: ${colors.white};
-      padding: ${rhythm(space[5])};
+      padding: ${space[5]};
       justify-content: flex-start;
 
       &:hover {

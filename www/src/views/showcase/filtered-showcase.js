@@ -8,7 +8,6 @@ import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
 import { colors, space } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
 import {
   ContentHeader,
   ContentTitle,
@@ -131,8 +130,8 @@ class FilteredShowcase extends Component {
                     position: `absolute`,
                     left: `5px`,
                     top: `50%`,
-                    width: rhythm(space[4]),
-                    height: rhythm(space[4]),
+                    width: space[4],
+                    height: space[4],
                     pointerEvents: `none`,
                     transform: `translateY(-50%)`,
                   }}

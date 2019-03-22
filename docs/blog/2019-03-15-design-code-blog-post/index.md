@@ -18,7 +18,7 @@ Design+Code started in 2015 when Meng To began with a digital book on designing 
 
 [Thomas Wang](https://twitter.com/thomaswangio "Thomas Wang on Twitter"), UI Developer at Design+Code, shared some of the important details of the rebuild, as well as the benefits their Gatsby-fueled site has provided their new offerings.
 
-<pullquote citation="Thomas Wang>
+<pullquote citation="Thomas Wang">
 We needed a new CMS to handle the amount of content we were creating and a more full website, transitioning from a digital book to an online learning platform. We also wanted to begin using more modern tooling and frameworks so that we could teach them in the future
 </pullquote>
 

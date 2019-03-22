@@ -7,6 +7,7 @@ const websocketManager = require(`../../utils/websocket-manager`)
 
 const path = require(`path`)
 const { store } = require(`../../redux`)
+const withResolverContext = require(`../../schema/context`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
@@ -28,7 +29,13 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
-    graphqlFunction(schema, query, context, context, context)
+    graphqlFunction(
+      schema,
+      query,
+      context,
+      withResolverContext(context, schema),
+      context
+    )
 
   // Run query
   let result
