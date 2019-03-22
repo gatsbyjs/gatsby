@@ -83,5 +83,7 @@ module.exports = async function build(program: BuildArgs) {
 
   buildSpan.finish()
 
+  report.cat()
+
   await stopTracer()
 }
