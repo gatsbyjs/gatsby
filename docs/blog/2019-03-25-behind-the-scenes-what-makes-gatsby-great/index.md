@@ -76,9 +76,8 @@ This produces optimized, pre-rendered HTML for _every_ page in your application.
 
 ```html:title=public/index.html
 <div id="___gatsby">
-  <header><h1>Your header</h1></header>
   <main>
-    <p>Some content!</p>
+    <h1>Hello World</h1>
   </main>
 </div>
 ```
