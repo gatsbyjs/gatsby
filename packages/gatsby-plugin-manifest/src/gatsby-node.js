@@ -85,7 +85,6 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
       }
     })
 
-
     //add cache busting
     const cacheMode =
       typeof pluginOptions.cache_busting_mode !== `undefined`
