@@ -1,4 +1,20 @@
-**/*.js.snap text eol=lf
-**/__testfixtures__/** text eol=lf
-**/__tests__/fixtures/** text eol=lf
-**/*.md text eol=lf
+* text=auto eol=lf
+
+# These files are binary and should be left untouched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.tar.gz binary
+*.zip binary
+*.7z binary

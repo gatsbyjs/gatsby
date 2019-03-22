@@ -1,6 +1,6 @@
 ---
 title: Announcing support for natively querying 3rd-party GraphQL APIs with Gatsby
-date: "2018-09-25"
+date: 2018-09-25
 author: "Mikhail Novikov"
 tags: ["graphql", "plugin", "source"]
 ---

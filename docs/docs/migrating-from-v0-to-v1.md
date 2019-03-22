@@ -297,7 +297,7 @@ but in the meantime, check out http://graphql.org/ and play around on Gatsby's
 built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
 development server.
 
-At this point you should have working markdown pages when you run `gatsby develop`! Now start gradually adding back what you had in your wrapper component
+At this point you should have working markdown pages when you run `npm run develop`! Now start gradually adding back what you had in your wrapper component
 adding HTML elements, styles, and extending the GraphQL query as needed.
 
 Repeat this process for other wrapper components you were using.

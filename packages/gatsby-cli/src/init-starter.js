@@ -8,9 +8,9 @@ const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
 
-const spawn = (cmd: string) => {
+const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
-  return execa(file, args, { stdio: `inherit` })
+  return execa(file, args, { stdio: `inherit`, ...options })
 }
 
 // Checks the existence of yarn package
@@ -25,6 +25,38 @@ const shouldUseYarn = () => {
   } catch (e) {
     return false
   }
+}
+
+// Initialize newly cloned directory as a git repo
+const gitInit = async rootPath => {
+  report.info(`Initialising git in ${rootPath}`)
+
+  return await spawn(`git init`, { cwd: rootPath })
+}
+
+// Create a .gitignore file if it is missing in the new directory
+const maybeCreateGitIgnore = async rootPath => {
+  if (existsSync(sysPath.join(rootPath, `.gitignore`))) {
+    return
+  }
+
+  report.info(`Creating minimal .gitignore in ${rootPath}`)
+  await fs.writeFile(
+    sysPath.join(rootPath, `.gitignore`),
+    `.cache\nnode_modules\npublic\n`
+  )
+}
+
+// Create an initial git commit in the new directory
+const createInitialGitCommit = async (rootPath, starterUrl) => {
+  report.info(`Create initial git commit in ${rootPath}`)
+
+  await spawn(`git add -A`, { cwd: rootPath })
+  // use execSync instead of spawn to handle git clients using
+  // pgp signatures (with password)
+  execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
+    cwd: rootPath,
+  })
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
@@ -98,6 +130,9 @@ const clone = async (hostInfo: any, rootPath: string) => {
   await fs.remove(sysPath.join(rootPath, `.git`))
 
   await install(rootPath)
+  await gitInit(rootPath)
+  await maybeCreateGitIgnore(rootPath)
+  await createInitialGitCommit(rootPath, url)
 }
 
 type InitOptions = {

@@ -46,7 +46,7 @@ The sequence of the **main** bootstrap Node API lifecycles are:
 - (schema update happens here)
 - **extract queries from components** where the [queryCompiler](https://github.com/gatsbyjs/gatsby/blob/6de0e4408e14e599d4ec73948eb4153dc3cde849/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js#L189) replaces page GraphQL queries and `StaticQueries`
 - The [queries are run](https://github.com/gatsbyjs/gatsby/blob/6de0e4408e14e599d4ec73948eb4153dc3cde849/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L120), and the [pages are written out](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js)
-- [onPostBoostrap](https://www.gatsbyjs.org/docs/node-apis/#onPostBootstrap) is called (but it is not often used)
+- [onPostBootstrap](https://www.gatsbyjs.org/docs/node-apis/#onPostBootstrap) is called (but it is not often used)
 
 ## Build sequence
 
