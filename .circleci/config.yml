@@ -50,6 +50,7 @@ aliases:
   test_template: &test_template
     steps:
       - checkout
+      - run: node -v
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
