@@ -9,6 +9,13 @@ function matchesSnapshot(query) {
   expect(code).toMatchSnapshot()
 }
 
+
+it(`on node 8+`, () => {
+  expect(
+    parseInt(process.version.match(/(\d+)\./)[0].slice(0, -1)) >= 8
+  ).toBeTruthy()
+})
+
 it.todo(
   `Works correctly with the kitchen sink`
   // , () => {
