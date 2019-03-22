@@ -256,17 +256,23 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
-    command: `plugin <action> <plugins..>`,
+    command: `plugin <action> <plugins..> [options]`,
     desc: `Manage Gatsby plugins.`,
     builder: _ =>
       _.positional(`action`, {
         type: `string`,
         describe: `Action to be taken for provided plugin.`,
         choices: [`add`, `remove`, `config`, `search`],
-      }).positional(`plugin`, {
-        type: `string`,
-        describe: `Package(s) to add, remove, configure, or search.`,
-      }),
+      })
+        .positional(`plugin`, {
+          type: `string`,
+          describe: `Package(s) to add, remove, configure, or search.`,
+        })
+        .option(`dry-run`, {
+          default: false,
+          type: `boolean`,
+          describe: `Don't actually write any changes to disk or run npm/yarn.`,
+        }),
     handler: getCommandHandler(`plugin`),
   })
 

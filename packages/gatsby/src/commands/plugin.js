@@ -1,11 +1,20 @@
 const enquirer = require(`enquirer`)
-const report = require(`packages/gatsby-cli/lib/reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 const execa = require(`execa`)
-const shouldUseYarn = require(`packages/gatsby-cli/src`).shouldUseYarn
 
 const spawn = cmd => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args)
+}
+
+// Returns true if yarn exists, false otherwise
+const shouldUseYarn = () => {
+  try {
+    execa.sync(`yarnpkg`, `--version`, { stdio: `ignore` })
+    return true
+  } catch (e) {
+    return false
+  }
 }
 
 const makeList = array => {
@@ -67,8 +76,14 @@ const getVerbs = verb => {
   }
 }
 
-const addRemovePlugin = async (action, plugins) => {
+const addRemovePlugin = async (action, plugins, dryRun) => {
   let questions = new Array()
+
+  if (dryRun) {
+    report.warn(
+      `Dry Run: The workflow will be unchanged, but nothing will be done in the end.`
+    )
+  }
 
   plugins.forEach((plugin, index, plugins) => {
     if (!plugin.startsWith(`gatsby-`)) {
@@ -83,8 +98,7 @@ const addRemovePlugin = async (action, plugins) => {
         action.present
       } it ${
         action.preposition
-      } 'gatsby-config.js' and 'package.json'.\n Are you sure you want to do this?`,
-      default: action.present === `add` ? true : false,
+      } ' package.json'.\n Are you sure you want to do this?`,
     })
   })
 
@@ -104,11 +118,20 @@ const addRemovePlugin = async (action, plugins) => {
     try {
       spinner.tick(`${action.participle} plugin(s): ${confirmedPlugins}`)
 
-      await spawn(
-        `${shouldUseYarn() ? `yarn` : `npm`} ${action.present} ${pluginString}`
-      )
+      if (dryRun) {
+        report.warn(
+          `Dry Run: Usually I'd be installing stuff right now, but this is a dry run!`
+        )
+      } else {
+        await spawn(
+          `${shouldUseYarn() ? `yarn` : `npm`} ${
+            action.present
+          } ${pluginString}`
+        )
 
-      report.success(`Successfully ${action.past}: ${pluginString}`)
+        report.success(`Successfully ${action.past}: ${pluginString}`)
+      }
+
       spinner.end()
 
       if (action.present === `add`) {
@@ -133,13 +156,12 @@ const addRemovePlugin = async (action, plugins) => {
 module.exports = async program => {
   let action = getVerbs(program.action)
   let plugins = program.plugins
+  let dry = program.dryRun
 
   switch (action.present) {
     case `add`:
-      await addRemovePlugin(action, plugins)
-      break
     case `remove`:
-      await addRemovePlugin(action, plugins)
+      await addRemovePlugin(action, plugins, dry)
       break
     case `config`:
       report.info(`The future is not yet...but with your PR it could be soon!`)
