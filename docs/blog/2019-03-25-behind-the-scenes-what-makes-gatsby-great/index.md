@@ -1,8 +1,8 @@
 ---
 title: "Behind the Scenes: What makes Gatsby Great"
-date: 2019-03-22
+date: 2019-03-25
 author: Dustin Schau
-excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicriously fast experience that your users expect."
+excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicriously fast experience that your users will love."
 tags:
   - performance
   - apis
@@ -335,7 +335,7 @@ If you've ever browsed a Gatsby application, you've probably noticed that links 
 
 _Curious what an `IntersectionObserver` can do? Check out the following example. Emoji are used when an element is entering/leaving the viewport._
 
-<iframe src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+<iframe src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14" title="Intersection Observer Example" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 #### `gatsby-link` and `link rel="prefetch"`
 
@@ -456,17 +456,38 @@ Our static build process will create an optimized, responsive hero image as stat
 
 For a demo of all you can do with `gatsby-image`, check out the example [Using Gatsby Image](https://using-gatsby-image.gatsbyjs.org).
 
-The power and appeal of Gatsby is that we internalize all of these great APIs and performance techniques and patterns. Enabling these (and improving with incremental releases of Gatsby!) allow you to focus on what matters: delivering compelling and engaging user experiences backed by your friendly, fast, and powerful web compiler: Gatsby.
+The power and appeal of Gatsby is that we internalize all of these great APIs, performance techniques, and patterns. Enabling these (and improving with incremental releases of Gatsby!) allow you to focus on what matters: delivering compelling and engaging user experiences backed by your friendly, fast, and powerful web compiler: Gatsby.
+
+It's been quite a ride 😅 By this point, we've covered the foundational techniques Gatsby uses to deliver a performance optimized application for your end users. However--to assert something is fast, you need to measure it. You need analytics, tools, and checks to assert that not only is your app fast but also just as important that it _remains_ fast.
 
 ## Techniques for measuring performance
 
-<!-- TODO: Lighthouse -->
-<!-- TODO: Webpagetest -->
+With any application, even one with a rock-solid performance basis like Gatsby, the advice I'd give is to trust, but validate. It's _unlikely_ you'll introduce a significant performance regression with a new feature and pull request, but even the best of foundations can be torn down. "I think I'll load _six_ fonts each in weights 100-900" he said and "Oh, and I think two feedback libraries _and_ a few analytics libraries are really going to drive conversion and put us over the edge," said someone, assuredly, at some point.
 
-<!-- TODO: CircleCI + Lighthouse -->
+### Lighthouse
+
+The quickest and easiest recommendation for measuring performance is to first and foremost use the tools available to you. Chrome has an excellent tool built-in, [Lighthouse](https://github.com/GoogleChrome/lighthouse) accessible via the "Audits" tab in Developer Tools (and fun fact--Gatsby's very own [Ward Peeters](https://github.com/wardpeet) is a core contributor!).
+
+Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` and then `Run audit`. You'll be greated with a result like:
+
+![Lighthouse Example](./images/lighthouse.png)
+
+Lighthouse will provide scores from 0 - 100 for a variety of meaningful categories, including p :erformance, accessibility, and more. Actionable feedback is provided if the score is less than 100, so you can feel empowered to make improvements and maximize those 💯s!
+
+Lighthouse is a great _first_ step to asserting whether or not your application is actually fast. If you are scoring near 100s (if you're using Gatsby--you probably are!) you can feel assured with a reasonable degree of confidence that your application is actually fast. However--Lighthouse can sometimes vary between runs and results can sometimes vary depending on which machine is used to run the test. To gain a greater degree of _certainty_ that your application is fast I recommend another, complementary tool: Webpagetest.
+
+### Webpagetest
+
+[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU constrained. You can use a slower network to ensure that you get a accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
+
+I liken the analogy between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
+
+Both are valuable--and both have their place!
+
+<!-- TODO: finish this out and add links to CI integration -->
 
 ## Wrap-up
 
-## Resources
+Gatsby is **great** because we provide a solid foundation, smart defaults, and use modern web APIs, each of which are pillars on which to build incredibly performant web applications. In detailing each of these foundational areas, I hope it's been made apparent the value that Gatsby has for not only developer experience but also in the very real benefit performance has on user experience. Use Gatsby. You'll thank us and your users will thank you.
 
-- [Rendering on the Web - Google Developers](https://developers.google.com/web/updates/2019/02/rendering-on-the-web)
+We can't wait to see what you'll build 💜
