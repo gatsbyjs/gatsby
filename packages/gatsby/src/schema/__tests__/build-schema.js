@@ -444,6 +444,38 @@ describe(`Build schema`, () => {
       expect(fields[`name`].type).toEqual(GraphQLString)
     })
 
+    it(`allows setting field type nullability on field`, async () => {
+      createTypes(`
+        type Post implements Node {
+          tags: [String!]!
+          categories: [String]
+        }
+      `)
+      createCreateResolversMock({
+        Post: {
+          tags: {
+            type: `[String]`,
+            resolve() {
+              return [`All good`]
+            },
+          },
+          categories: {
+            type: `[String!]!`,
+            resolve() {
+              return [`Even better`]
+            },
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`Post`)
+      const fields = type.getFields()
+      expect(fields[`tags`].type.toString()).toBe(`[String]`)
+      expect(fields[`tags`].resolve).toBeDefined()
+      expect(fields[`categories`].type.toString()).toBe(`[String!]!`)
+      expect(fields[`categories`].resolve).toBeDefined()
+    })
+
     it(`allows overriding field type on field on third-party type`, async () => {
       addThirdPartySchema(`
         type ThirdPartyFoo {
