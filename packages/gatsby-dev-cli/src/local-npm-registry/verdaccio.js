@@ -112,7 +112,10 @@ const publishPackage = async ({
 
   monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
   packagesToPublish.forEach(packageThatWillBePublished => {
-    if (monorepoPKGjson.dependencies[packageThatWillBePublished]) {
+    if (
+      monorepoPKGjson.dependencies &&
+      monorepoPKGjson.dependencies[packageThatWillBePublished]
+    ) {
       // change to "gatsby-dev" dist tag
       monorepoPKGjson.dependencies[packageThatWillBePublished] = `gatsby-dev`
     }
