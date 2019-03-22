@@ -175,7 +175,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
           { label: `Browse Plugins`, to: `/plugins/` },
           {
             label: `Creating Plugins`,
-            to: `/docs/source-plugin-tutorial/`,
+            to: `/docs/how-plugins-work/`,
             secondary: true,
           },
           { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },

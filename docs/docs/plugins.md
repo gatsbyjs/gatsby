@@ -19,7 +19,7 @@ Gatsby has a large and growing ecosystem of official and community plugins. To b
 
 ## Learn more about plugins
 
-For documentation with further detail on what comprises a Gatsby plugin (file structure, etc), see the [plugin authoring page](/docs/source-plugin-tutorial/).
+For documentation with further detail on what comprises a Gatsby plugin (file structure, etc), see the [plugin authoring page](/docs/how-plugins-work/).
 
 ## Build and publish a plugin
 

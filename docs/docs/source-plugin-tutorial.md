@@ -381,7 +381,7 @@ Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugi
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 
-Check out Gatsby's docs on [plugin authoring](/docs/source-plugin-tutorial/) and [creating a source plugin](/docs/create-source-plugin).
+Check out Gatsby's docs on [plugin authoring](/docs/how-plugins-work/) and [creating a source plugin](/docs/source-plugin-tutorial/).
 
 ### A note on JavaScript versions
 
