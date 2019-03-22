@@ -148,10 +148,12 @@ const buildThirdPartySchema = () => {
 
     interface ThirdPartyInterface {
       text: String
+      relay: Query
     }
 
     type ThirdPartyStuff3 implements ThirdPartyInterface {
       text: String
+      relay: Query
     }
 
     union ThirdPartyUnion2 = ThirdPartyStuff | ThirdPartyStuff2
@@ -160,6 +162,8 @@ const buildThirdPartySchema = () => {
       thirdPartyStuff: ThirdPartyStuff
       thirdPartyUnion: ThirdPartyUnion
       thirdPartyInterface: ThirdPartyInterface
+      relay: Query
+      relay2: [Query]!
     }
   `)
   schemaComposer
