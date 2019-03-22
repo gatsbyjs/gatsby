@@ -11,9 +11,9 @@ tags:
 
 ## What we’ve been up to
 
-Back in July we were excited to send out our [alpha version of Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/). The team has been working hard getting your feedback and incorporating it into Gatsby Preview beta.
+Back in July we sent out our [alpha version of Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/). The team has been working hard getting your feedback and incorporating it into Gatsby Preview beta.
 
-We’re excited to let you know that this week, Gatsby Preview beta will be officially opening!
+We’re excited to let you know that this week, the Gatsby Preview beta will be officially open!
 
 _In beta, we’ll be supporting Gatsby sites that are set up with Contentful._
 
@@ -25,7 +25,7 @@ With Gatsby Preview beta, you can connect your GitHub repositories and Contentfu
 
 ## What’s new with Gatsby Preview beta
 
-For the beta version of Gatsby Preview, we focused on adding a UI over the existing functionality, made the initial set-up less manual, and added ways for your team to get involved. In beta, we’ll only be supporting Gatsby sites managed through the Contentful CMS with support for other CMS’s coming soon.
+For the beta version of Gatsby Preview, we focused on adding a UI over the existing functionality, made the initial set-up less manual, and added ways for your team to get involved. In beta, we’ll only be supporting Gatsby sites managed through the Contentful CMS with support for other CMS platforms coming soon.
 
 ### Easier set up
 
@@ -47,7 +47,7 @@ We know it’s particularly frustrating if something fails to build but there’
 
 See how you can troubleshoot and add or remove contributors:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kN5vrRVD_6Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" title="Video: Gatsby Preview Settings Options" src="https://www.youtube.com/embed/kN5vrRVD_6Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## How to sign up
 
@@ -59,4 +59,4 @@ The initial invites for the closed beta have just gone out! We’ll be talking d
 
 Curious to see Gatsby Preview in action? Watch our short demo to see how it works:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RrQi6W_8SVQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" title="Video: Gatsby Preview and Contentful demo" src="https://www.youtube.com/embed/RrQi6W_8SVQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
