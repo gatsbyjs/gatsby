@@ -17,9 +17,12 @@ const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${space[8]}`,
+      boxSizing: `border-box`,
+      margin: `0 auto`,
       paddingBottom: space[9],
       paddingTop: space[9],
+      paddingLeft: space[8],
+      paddingRight: space[8],
       textAlign: `center`,
       [breakpoints.md]: {
         paddingBottom: rhythm(3),

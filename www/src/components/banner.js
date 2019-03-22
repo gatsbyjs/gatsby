@@ -7,7 +7,7 @@ import { colors, space, dimensions, fonts } from "../utils/presets"
 const horizontalPadding = space[6]
 const backgroundColor = colors.gatsby
 
-const BannerContainer = styled(`div`)`
+const BannerContainer = styled(`aside`)`
   background-color: ${backgroundColor};
   height: ${dimensions.bannerHeight};
   position: fixed;
