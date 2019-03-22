@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const chokidar = require(`chokidar`)
 const nodePath = require(`path`)
-const { store } = require(`.../redux`)
+const { store } = require(`../redux`)
 
 /**
  * copyStaticDirs
