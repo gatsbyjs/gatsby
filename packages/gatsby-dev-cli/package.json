@@ -35,9 +35,9 @@
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir dist --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "babel -w src --out-dir dist"
+    "watch": "babel -w src --out-dir dist --ignore **/__tests__"
   }
 }
