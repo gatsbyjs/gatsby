@@ -53,6 +53,10 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
 
+  let activity = reporter.activityTimer(`Build manifest and related icons`)
+
+  activity.start()
+
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
     manifest.icons = defaultIcons
@@ -119,4 +123,6 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
     path.join(`public`, `manifest.webmanifest`),
     JSON.stringify(manifest)
   )
+
+  activity.end()
 }
