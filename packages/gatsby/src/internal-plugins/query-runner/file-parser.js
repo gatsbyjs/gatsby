@@ -87,10 +87,6 @@ async function parseToAst(filePath, fileStr) {
     }
   }
 
-  boundActionCreators.queryExtractedBabelSuccess({
-    componentPath: filePath,
-  })
-
   return ast
 }
 
@@ -324,6 +320,15 @@ export default class FileParser {
     try {
       let astDefinitions =
         cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
+
+      // If any AST definitions were extracted, report success.
+      // This can mean there is none or there was a babel error when
+      // we tried to extract the graphql AST.
+      if (astDefinitions.length > 0) {
+        boundActionCreators.queryExtractedBabelSuccess({
+          componentPath: file,
+        })
+      }
 
       return astDefinitions.length
         ? {
