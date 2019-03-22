@@ -87,11 +87,11 @@ Your React components are traced, rendered, and static HTML is produced via serv
 
 ### Why server-side render?
 
-First: let's consider the scenario in which we are not server-side rendering, e.g. a traditional React application produced by something like [create-react-app](https://github.com/facebook/create-react-app). This application once deployed **requires** JavaScript to parse, render, and eventually produce HTML to the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model). This _eventuality_ means that your users are waiting for JavaScript to be parsed and evaluated before your application is usable by the end user. It also--of course--_requires_ JavaScript to be enabled in your users browser.
+First: let's consider the scenario in which we are not server-side rendering, e.g. a traditional React application produced by something like [create-react-app](https://github.com/facebook/create-react-app). This application once deployed **requires** JavaScript to parse, render, and eventually produce HTML to the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model). This _eventuality_ means that your users are waiting for JavaScript to be parsed and evaluated before your application is usable. It also--of course--_requires_ JavaScript.
 
 Short circuiting this process and turning this _eventuality_ into a certainty is the key win of server-side rendering. This process produces static HTML that does not require JavaScript to run. Your application will load much more quickly and will be interactive more quickly. You will improve [Search Engine Optimization](https://developer.mozilla.org/en-US/docs/Glossary/SEO) because search engines can more quickly, reliably, and accurately parse your content and `meta` tags.
 
-Your user's time isn't wasted to _eventually_ render your application, we render your application at _build time_ (as much as possible!) to maximize performance and deliver the ⚡ fast experience your users expect. Why force the work and time on your user when we can short-circuit this process and render the application _for them_ at build time?
+Your user's time isn't wasted to _eventually_ render your application. We render your application at _build time_ (as much as possible!) to maximize performance and deliver the ⚡ fast experience your users expect. Why force the work and time on your user when we can short-circuit this process and render the application _for them_ at build time?
 
 This is the central idea of server-side rendering. Gatsby uses server-side APIs to render your application at **build time** so your users get a usable application much more quickly, even when JavaScript is disabled. Nifty. You're probably jumping ahead of me at this point. Why perform this process at build-time--this is what Gatsby does--when we could perform this work at _request_ time with traditional server-side rendering approaches?
 
@@ -100,7 +100,7 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I’m watching <a href="https://twitter.com/SchauDustin?ref_src=twsrc%5Etfw">@SchauDustin</a> talk about how <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> handles things like static rendering  and all the complex scaling problems using it eliminates.<br><br>He‘s effectively gone full <a href="https://twitter.com/MarieKondo?ref_src=twsrc%5Etfw">@MarieKondo</a> on building apps: “Does horizontally scaling servers spark joy? Why are you still doing it?” <a href="https://t.co/uRFXWLsLvZ">pic.twitter.com/uRFXWLsLvZ</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1090659696233463808?ref_src=twsrc%5Etfw">January 30, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What does a typical initial, set-up entail for deploying static content (which Gatsby produces)? It looks something like:
+To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
 
 - Creating a [Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossary/CDN) to route your content _as close as possible_ to where your users are requesting it
   - This is often called "on the edge" and Gatsby can and should be deployed on the edge--[it reduces latency and improves page-load times](https://www.cloudflare.com/learning/cdn/glossary/edge-server/)
@@ -118,13 +118,13 @@ gatsby build
 
 and then copying the result of `gatsby build` (the `public` folder) to your static content host of choice.
 
-That's it. What if your site goes viral and receives hundreds of thousands of request? You get charged in **terrabytes** of data with most CDNs, and that cost is quite literally [pennies](https://aws.amazon.com/cloudfront/pricing/). Deploying a new version of your app? Fire off a deploy and your users will have the new version deployed when the build process completes.
+That's it. What if your site goes viral and receives hundreds of thousands of requests? You get charged in **terrabytes** of data with most CDNs, and that cost is quite literally [pennies](https://aws.amazon.com/cloudfront/pricing/). Deploying a new version of your app? Fire off a deploy and your users will have the new version available the instant the build process completes.
 
 Let's contrast this approach with setting up and deploying a purely server-side rendered application.
 
 #### Deploying a server-side rendered application
 
-First: perform the **same** steps in setting up a static content host, excluding the step for configuring a bucket/location for hosting static content. Oh, and we're done yet. Strap in.
+First: perform the **same** steps in setting up a static content host, excluding the step for configuring a bucket/location for hosting static content. Oh and we're not done yet, sweet summer child.
 
 Next:
 
@@ -142,11 +142,13 @@ Releasing a one-line fix to our SSR application requires deploying an entirely n
 
 The benefits of _both_ approaches are the same. Improved performance (which has other, related benefits) by short-circuiting the process of _eventually_ producing HTML by directly producing HTML. However--deploying and hosting static content is objectively **easier**, **cheaper**, and **more reliable** than deploying a server for rendering applications.
 
-Whew - that was a fun one. Let's continue.
+Let's continue.
 
 ## Route-based code splitting
 
-Gatsby--like other tools--uses the filesystem as a convention for mapping to routes (note: we also expose a programattic APIFor instance, given the following directory structure:
+Gatsby--like other tools--uses the filesystem as a convention for mapping to routes for instance, given the following directory structure:
+
+_also note we expose a [programatic API](/docs/node-apis/#createPages) for dynamic route creation_
 
 ```
 ├── src/
@@ -156,7 +158,7 @@ Gatsby--like other tools--uses the filesystem as a convention for mapping to rou
     └── index.js
 ```
 
-The _routes_ (e.g. the URL he user enters or navigates to in the website) `/about`, `/contact`, and `/` will be available in the resulting application. Let's take a look at one of these routes.
+The _routes_ (e.g. the URL the user enters or navigates to in the website) `/about`, `/contact`, and `/` will be available in the resulting application. Let's take a look at one of these routes.
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
@@ -193,9 +195,9 @@ export default function Contact() {
 }
 ```
 
-Pretty vanilla looking component! We are rendering a `form` with some validation and functionality provided by the excellent libraries [`yup`](https://www.npmjs.com/package/yup) and [`Formik`](https://github.com/jaredpalmer/formik). The likelihood that these libraries are used in _all_ routes in our application is unlikely--yet this is traditionally the approach that many take with bundling their client-side JS libraries. This means that even if a particular route (e.g. `/about`) is _not using_ certain libraries that they will likely be included in a monolithic JavaScript bundle containing all dependencies. However--Gatsby, your friendly _web app compiler_, is a little smarter!
+Pretty vanilla looking component! We are rendering a `form` with some validation and functionality provided by the excellent libraries [`yup`](https://www.npmjs.com/package/yup) and [`Formik`](https://github.com/jaredpalmer/formik). The likelihood that these libraries are used in _all_ routes in our application is unlikely--yet this is traditionally the approach that many take with bundling their client-side JS libraries. This means that even if a particular route (e.g. `/about`) is _not using_ certain libraries that they will still likely be included in a monolithic JavaScript bundle containing all dependencies. However--Gatsby, your friendly _web app compiler_, is a little smarter!
 
-We use code-splitting (enabled via our internalized dependency [Webpack](https://webpackjs.org)), and particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes), and route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
+We use code-splitting (enabled via our internalized dependency [Webpack](https://webpackjs.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
 
 ```title=public/
 ├── 404
