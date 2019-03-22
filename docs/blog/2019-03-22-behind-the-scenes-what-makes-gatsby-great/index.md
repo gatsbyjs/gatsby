@@ -331,7 +331,52 @@ Let's get to it.
 
 ### `IntersectionObserver`
 
-### `link rel="prefetch"`
+If you've ever browsed a Gatsby application, you've probably noticed that links to internal routes feel like they load _instantly_. This in-app navigation is powered, in part, by an `IntersectionObserver`.
+
+_Curious what an `IntersectionObserver` can do? Check out the following example. Emoji are used when an element is entering/leaving the viewport._
+
+<iframe src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+#### `gatsby-link` and `link rel="prefetch"`
+
+The `Link` component exported by `gatsby` ships with an `IntersectionObserver`. The behavior is two-fold:
+
+1. An `IntersectionObserver` is registered for all links
+   - This will register an **idle** `prefetch` for a request for that link's resources
+   - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L25-L41)
+1. On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
+   - This will use an `onMouseEnter` prop to make the resources available via our internal loader
+   - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L131-L135)
+
+These two techniques, used together, create an experience that makes navigating around a Gatsby application feel seamless and incredibly fast. Gatsby's use of modern APIs (particularly `IntersectionObserver`) optimistically, idly prefetch resources. Then, when we have a reasonable assurance that the user is _likely_ to need the resource(s) (on a mouse enter), we make a **strong** request for the actual resources. More often than not--the `prefetch` has _already_ made the resources available, in the background 🤯
+
+_Fun fact: there's work to make this even smarter, powered by [Google Analytics and GuessJS](/packages/gatsby-plugin-guess-js/). This will idly prefetch pages likely to be navigated by the user based on the current route. We're actually [testing it](https://github.com/gatsbyjs/gatsby/pull/12351) on gatsbyjs.org **right now**._
+
+But, but... you exclaim! What about progressive enhancement? What about mobile? What about devices that are data constrained? You better believe we've got 'em all handled.
+
+**Progressive Enhancement**
+
+The feature seamlessly falls back to default behavior if `IntersectionObserver` is not detected. In browsers that support it ([most!](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Browser_compatibility)) we'll send the idle `prefetch`. In browsers that don't, we'll only use the hover interaction. As browsers continue to implement more of these modern APIs, you can rest assured that your Gatsby application will be using the best and most useful, in a way that degrades seamlessly for your end users.
+
+**Mobile**
+
+Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile.
+
+**Data-constrained devices**
+
+One of the most appealing things about using a framework like Gatsby is that we can bake-in micro-optimizations and make these available in incremental updates to all of _our_ users making the performance optimizations available to all of _your_ users. In particular, later versions of Chrome support an API that grants network information like type of connection (e.g. `slow-2g`, `2g`, etc.), whether the browser has a `saveData` hint enabled, and more. With the help of [@addyosmani](https://twitter.com/addyosmani) we've baked this into our preloading logic. On devices with these hints or on slow connections, we disable the preloading to save data! It looks a little something like:
+
+```jsx
+// Skip prefetching if we know user is on slow or constrained connection
+if (`connection` in navigator) {
+  if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
+    return false
+  }
+  if (navigator.connection.saveData) {
+    return false
+  }
+}
+```
 
 ### `srcset` powering Responsive Images
 
