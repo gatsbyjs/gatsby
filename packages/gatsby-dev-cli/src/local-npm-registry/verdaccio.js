@@ -16,7 +16,7 @@ const verdaccioConfig = {
   },
   auth: {
     htpasswd: {
-      file: `./.htpasswd`,
+      file: path.join(__dirname, `.htpasswd`),
       max_users: 1000,
     },
   },
