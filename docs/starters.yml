@@ -204,6 +204,7 @@
   tags:
     - Styling:Bulma
     - Storybook
+    - Testing
   features:
     - Storybook for developing components in isolation
     - Bulma and Sass support for styling
@@ -336,7 +337,7 @@
     - Styling:Semantic
     - Stripe
     - Moltin
-    - e-commerce
+    - eCommerce
     - PWA
     - Authentication
   features:
@@ -366,6 +367,8 @@
   tags:
     - Styling:CSS-in-JS
     - Blog
+    - Testing
+    - Linting
   features:
     - CSS-in-JS via Emotion.
     - Jest and Enzyme for testing.
@@ -471,6 +474,7 @@
     - Disqus
     - RSS
     - Linting
+    - Testing
     - Styling:PostCSS
     - Styling:SCSS
   features:
@@ -616,11 +620,13 @@
     - MDX
     - Styling:CSS-in-JS
     - Linting
+    - Testing
   features:
     - Focus on big images (with gatsby-image)
     - Dark Theme with HeroPatterns Header
     - CSS Grid and styled-components
     - Page transitions
+    - Cypress for End-to-End testing
     - react-spring animations
     - One-Page layout with sub-pages for projects
     - Create your projects in MDX (automatic import of images)
@@ -635,6 +641,7 @@
     - Styling:CSS-in-JS
     - PWA
     - Linting
+    - Testing
   features:
     - Full-width photo grid-layout (with gatsby-image)
     - Minimalistic light theme with large images
@@ -785,6 +792,7 @@
   tags:
     - TypeScript
     - Styling:Semantic
+    - Testing
   features:
     - Semantic-ui for styling
     - TypeScript
@@ -1049,10 +1057,12 @@
     - Linting
     - Blog
     - PWA
+    - Testing
   features:
     - Prismic as Headless CMS
     - Uses multiple features of Prismic - Slices, Labels, Relationship fields, Custom Types
     - Emotion for Styling
+    - Cypress for End-to-End testing
     - Prism.js highlighting
     - Responsive images with gatsby-image
     - Extensive SEO
@@ -1114,10 +1124,10 @@
     - Styled with styled-components using CSS Grid
     - React Helmet for SEO
 - url: https://stoic-swirles-4bd808.netlify.com/
-  repo: https://github.com/cardiv/gatsby-starter-antd
+  repo: https://github.com/crstnio/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
-    - Antd
+    - Ant Design
     - Styling:Less
   features:
     - Fork of Gatsby's default starter
@@ -1326,6 +1336,7 @@
     - MobX
     - TypeScript
     - Linting
+    - Testing
   features:
     - Gatsby v2 + TypeScript
     - MobX with decorators
@@ -1450,7 +1461,6 @@
     - styled-components for CSS-in-JS
     - ESLint with Airbnb's config
     - Prettier integrated into ESLint
-    - Jest for component testing
     - A few example components and pages with stories and simple site structure
 - url: https://devchico.com/gatsby-starter-cv/
   repo: https://github.com/santosfrancisco/gatsby-starter-cv
@@ -1536,6 +1546,7 @@
   tags:
     - TypeScript
     - Linting
+    - Testing
     - Styling:CSS-in-JS
     - MDX
   features:
@@ -1652,16 +1663,23 @@
     - Material UI
     - styled-components
     - Github markdown css support
-- url: https://ueno.co/
+- url: https://create-ueno-app.netlify.com
   repo: https://github.com/ueno-llc/ueno-gatsby-starter
-  description: Ueno's starter template for Gatsby
+  description: Opinionated Gatsby starter by Ueno.
   tags:
     - TypeScript
+    - Styling:SCSS
+    - Linting
+    - Transitions
   features:
     - GraphQL hybrid
     - SEO friendly
     - GSAP ready
-    - Nice devtools
+    - Nice Devtools
+    - GsapTools
+    - Ueno plugins
+    - SVG to React component
+    - Ueno's TSlint
     - Decorators
 - url: https://gatsby-sseon-starter.netlify.com/
   repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
@@ -1743,6 +1761,7 @@
     - TypeScript
     - Styling:Rebass
     - Styling:CSS-in-JS
+    - Testing
   features:
     - MDX - Markdown + React
     - Netlify CMS (with MDX support)
@@ -1853,6 +1872,7 @@
     - SEO
     - Markdown
     - Styling:CSS-in-JS
+    - Testing
   features:
     - Optimized images with gatsby-image.
     - SEO friendly with react-helmet, gatsby-plugin-sitemap and Google Webmaster Tools!
@@ -1990,6 +2010,7 @@
   description: Gatsby v2 i18n starter which makes static pages for every locale and detect your browsers lang. i18n with react-intl.
   tags:
     - i18n
+    - Testing
   features:
     - static pages for every language
     - detects your browser locale
@@ -2009,3 +2030,55 @@
     - Blog post listing with previews (image + summary) for each blog post.
     - Contact form integration with Netlify.
     - Grid system inspired by Bootstrap.
+- url: https://gatsby-starter-infinite-scroll.baobab.fi/
+  repo: https://github.com/baobabKoodaa/gatsby-starter-infinite-scroll
+  description: Infinite Scroll and Pagination with 10k photos
+  tags:
+    - Infinite Scroll
+    - Pagination
+    - Styling:CSS-in-JS
+  features:
+    - Infinite Scroll (default mode)
+    - Pagination (fallback for users without JS)
+    - Toggle between these modes in demo
+    - Efficient implementation (only fetch the data that's needed, ship initial items with the page instead of fetch, etc.)
+- url: https://jodie.lekoarts.de/
+  repo: https://github.com/LekoArts/gatsby-starter-portfolio-jodie
+  description: Image-heavy photography portfolio with colorful accents & great typography
+  tags:
+    - Portfolio
+    - PWA
+    - Transitions
+    - Styling:CSS-in-JS
+    - Linting
+    - Testing
+    - TypeScript
+  features:
+    - Configurable with theming, CSS Grid & a yaml file for navigation
+    - Create your projects by editing a yaml file and putting images into a folder
+    - Shows your Instagram posts
+    - TypeScript
+    - Cypress for End-to-End testing
+    - react-spring for animations & transitions
+    - Uses styled-components + styled-system
+    - SEO with Sitemap, Schema.org JSONLD, Tags
+    - Responsive images with gatsby-image
+- url: https://amazing-jones-e61bda.netlify.com/
+  repo: https://github.com/WebCu/gatsby-material-kit-react
+  description: Adaptation of Material Kit React to Gatsby
+  tags:
+    - Material Kit React
+    - Material UI
+  features:
+    - 60 Handcrafted Components
+    - 4 Customized Plugins
+    - 3 Example Pages
+- url: https://relaxed-bhaskara-5abd0a.netlify.com/
+  repo: https://github.com/LekovicMilos/gatsby-starter-portfolio
+  description: Gatsby portfolio starter for creating quick portfolio
+  tags:
+    - Portfolio
+    - Showcase
+  features:
+    - Showcase of portfolio items
+    - About me page
