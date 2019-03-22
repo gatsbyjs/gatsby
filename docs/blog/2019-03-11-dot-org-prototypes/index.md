@@ -1,17 +1,19 @@
 ---
-title: "How We Tested Prototypes For the New gatsbyjs.org Homepage"
+title: "How we tested prototypes for the new gatsbyjs.org homepage"
 date: 2019-03-11
 author: Shannon Soper
 tags: ["ux", "design"]
 ---
 
-Our current [gatsbyjs.org](/) homepage is getting a bit long in the tooth -- our incredible designer @fk built it out a year and a half ago, but a lot's changed and we're getting ready to update it.
+Our current [gatsbyjs.org](/) homepage is getting a bit long in the tooth -- our incredible designer @fk built it out a year and a half ago, but a lot has changed and we're getting ready to update it.
 
-We sent out a [messaging survey](/blog/2019-03-05-dot-org-messaging-survey/) a few weeks ago to hear how the community was thinking about Gatsby. We put together some [lo-fi prototypes](https://www.figma.com/proto/UH2Qb3IeF8Hvg6csIW3mcqFc/Gatsbyjs.org-mobile-homepage-prototype?node-id=22%3A329&viewport=-227%2C349%2C0.39312&scaling=scale-down).
+We sent out a [messaging survey](/blog/2019-03-05-dot-org-messaging-survey/) a few weeks ago to hear how the community was thinking about Gatsby. Based on the results of that survey, we put together some [lo-fi prototypes of the homepage](https://www.figma.com/proto/UH2Qb3IeF8Hvg6csIW3mcqFc/Gatsbyjs.org-mobile-homepage-prototype?node-id=22%3A329&viewport=-227%2C349%2C0.39312&scaling=scale-down).
 
-Now, it was time to move to the next phase: user testing.
+After creating the prototypes, it was time to find people to test those prototypes, a process that's called usability testing.
 
 ## Stats on usability testers
+
+We found some testers through [userinterviews.com](https://www.userinterviews.com/), and here are the important facts about them:
 
 - 6 testers
 - All of them know React
@@ -25,14 +27,16 @@ Back in November, we watched 8 people who had never heard of Gatsby before as th
 
 Two problems became clear as a result:
 
-- The first impression people have about Gatsby from above-the-fold and just below the fold on homepage is not accurate. Sources of more accurate understanding: Github READme file, diagram on homepage
-- We had not written down these key facts about the .org site and therefore sometimes struggled to stay aligned:
+- The first impression people have about Gatsby from above-the-fold and just below the fold on homepage is not accurate. Sources of more accurate understanding were the Github READme file and the diagram on homepage
+- We had not written down the following key facts about the .org site and therefore sometimes struggled to stay aligned in our answers to these questions:
   - Who is the audience for .org?
   - What are our value propositions for that audience?
   - What is the purpose of the homepage?
   - How do we know if we’re succeeding in that purpose?
 
-It is important to the Gatsby community to solve these problems, because tons of new visitors come to the gatsbyjs.org homepage each month: 130,000 in January alone! We want to make sure we’re accurately representing Gatsby’s value there and helping more developers experience Gatsby’s value by clicking the “get started” button.
+It is important to the Gatsby community to solve these problems, because tons of new visitors come to the gatsbyjs.org homepage each month: 130,000 in January alone! We want to make sure we’re accurately representing Gatsby’s value and helping more developers experience that value by clicking the “get started” button.
+
+## The goal of usability testing
 
 The goal:
 
@@ -46,7 +50,7 @@ Measuring that goal:
 
 ### Prototype workshop
 
-We held a workshop that went like this.
+We held a workshop that involved organizing a group of people. Each person had a role, and we planned the timing of the workshop down to the minute.
 
 ### Roles:
 
@@ -92,12 +96,12 @@ The homepage should be ordered by explaining the following:
 
 We left the prototype workshop with a few concerns that could be validated through testing:
 
-- Logos of companies could turn off developers b/c it’s cliche and sometimes meaningless or they could provide social proof that world-class engineers use Gatsby. We’ll test this. Possibility is to combine the logos with case studies so they aren’t in the classic “logos floating on white space” design that most startups use.
-- Debate over how to help developers know that Gatsby also has some upcoming commercial offerings. What do we call the commercial offerings so they make sense to first time visitors?
+- Logos of companies could turn off developers because some consider logos to be cliche and therefore meaningless. Alternatively, the logos could provide social proof that world-class engineers use Gatsby. One possibility is to combine the logos with case studies so they aren’t in the classic “logos floating on white space” design that most startups use.
+- We debated how to help developers know that Gatsby also has some upcoming commercial offerings. What do we call the commercial offerings so they make sense to first time visitors?
 
 ### Settled concerns:
 
-"Install Gatsby" is an more specific call to action, so better than “Get Started” probably.
+"Install Gatsby" is a more specific call to action, so it is likely better than “Get Started”.
 
 > Spoiler alert! The button label “Install Gatsby” did not work in the usability tests. Nearly everyone thought that when they clicked on it, they would be taken to their phone’s app store.
 
@@ -125,13 +129,13 @@ The “Install Gatsby” button label did not work in the usability tests. Nearl
 
 We made two changes to fix the initial problems uncovered by usability testing. The "How it Works" diagram was moved up so some is visible above the fold, since that diagram was easier to quickly understand than the text that now is below the diagram. Also, the subheading under "How it Works" is changed to make it clear that Gatsby is open source and free, and make it clear that it's a tool for developers.
 
-![Screenshot of gatsbyjs.org homepage on a mobile device](mobile-prototype-2019-03-01.png)
-[Move diagram above card and change explanatory text](https://github.com/gatsbyjs/gatsby/pull/12236)
+We moved the diagram above the card and changed explanatory text. [See the PR here](https://github.com/gatsbyjs/gatsby/pull/12236).
 
-Then we refined those changes by modifying the headline and subheadline.
+![Screenshot of gatsbyjs.org homepage on a mobile device](mobile-prototype-2019-03-01.png)
+
+Then we refined those changes by modifying the headline and subheadline. [See the PR here](https://github.com/gatsbyjs/gatsby/pull/12298).
 
 ![Screenshot of gatsbyjs.org homepage on desktop](desktop-prototype-2019-03-04.png)
-[Change .org headline/subheadline + make them larger](https://github.com/gatsbyjs/gatsby/pull/12298)
 
 We are also working on getting [this RFC](https://github.com/gatsbyjs/rfcs/pull/32) merged to work more on the homepage. We hope you comment on it!
 
