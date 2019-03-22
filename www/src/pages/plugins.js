@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import Container from "../components/container"
+import Rotator from "../components/rotator"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
-import { colors, space, dimensions, scale, fonts } from "../utils/presets"
+import { colors, space, dimensions, scale } from "../utils/presets"
 
 class Plugins extends Component {
   render() {
@@ -28,8 +29,8 @@ class Plugins extends Component {
             src={logo}
             css={{
               display: `inline-block`,
-              height: rhythm(4),
-              width: rhythm(4),
+              height: rhythm(3),
+              width: rhythm(3),
               marginLeft: `auto`,
               marginRight: `auto`,
             }}
@@ -40,18 +41,65 @@ class Plugins extends Component {
               fontSize: scale[6],
               marginLeft: space[5],
               marginRight: space[5],
+              marginBottom: 0,
               textAlign: `center`,
             }}
           >
             Welcome to the Gatsby Plugin Library!
           </h1>
+          <Rotator
+            items={[
+              {
+                text: `SEO?`,
+                pluginName: `gatsby-plugin-react-helmet`,
+              },
+              {
+                text: `responsive images?`,
+                pluginName: `gatsby-image`,
+              },
+              {
+                text: `offline support?`,
+                pluginName: `gatsby-plugin-offline`,
+              },
+              {
+                text: `Sass support?`,
+                pluginName: `gatsby-plugin-sass`,
+              },
+              {
+                text: `a sitemap?`,
+                pluginName: `gatsby-plugin-sitemap`,
+              },
+              {
+                text: `an RSS feed?`,
+                pluginName: `gatsby-plugin-feed`,
+              },
+              {
+                text: `great typography?`,
+                pluginName: `gatsby-plugin-typography`,
+              },
+              {
+                text: `Typescript?`,
+                pluginName: `gatsby-plugin-typescript`,
+              },
+              {
+                text: `Google Analytics?`,
+                pluginName: `gatsby-plugin-google-analytics`,
+              },
+              {
+                text: `Wordpress integration?`,
+                pluginName: `gatsby-source-wordpress`,
+              },
+              {
+                text: `anything?`,
+              },
+            ]}
+            color={colors.lilac}
+          />
+
           <p
             css={{
-              color: colors.gray.calm,
-              marginLeft: space[9],
-              marginRight: space[9],
-              fontSize: scale[4],
-              fontFamily: fonts.header,
+              color: colors.gray.lightCopy,
+              fontSize: scale[2],
               textAlign: `center`,
             }}
           >

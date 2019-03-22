@@ -6,6 +6,7 @@ const {
   GraphQLList,
   isSpecifiedScalarType,
 } = require(`graphql`)
+const { InputTypeComposer } = require(`graphql-compose`)
 const { GraphQLJSON } = require(`graphql-compose`)
 const { GraphQLDate } = require(`./date`)
 
@@ -24,11 +25,12 @@ const convert = ({
   } else if (schemaComposer.has(inputTypeName)) {
     return schemaComposer.getITC(inputTypeName)
   } else {
-    convertedITC = new schemaComposer.InputTypeComposer(
+    convertedITC = new InputTypeComposer(
       new GraphQLInputObjectType({
         name: inputTypeName,
         fields: {},
-      })
+      }),
+      schemaComposer
     )
   }
 
@@ -41,7 +43,7 @@ const convert = ({
     const type = getNamedType(fieldConfig.type)
 
     if (type instanceof GraphQLInputObjectType) {
-      const itc = new schemaComposer.InputTypeComposer(type)
+      const itc = new InputTypeComposer(type, schemaComposer)
 
       const operatorsInputTC = convert({
         schemaComposer,
@@ -85,7 +87,7 @@ const removeEmptyFields = (
     const nonEmptyFields = {}
     Object.keys(fields).forEach(fieldName => {
       const fieldITC = fields[fieldName]
-      if (fieldITC instanceof schemaComposer.InputTypeComposer) {
+      if (fieldITC instanceof InputTypeComposer) {
         const convertedITC = convert(fieldITC)
         if (convertedITC.getFieldNames().length) {
           nonEmptyFields[fieldName] = convertedITC
