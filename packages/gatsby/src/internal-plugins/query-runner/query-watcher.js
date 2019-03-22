@@ -263,6 +263,7 @@ const watch = rootDir => {
     .on(`change`, path => {
       debounceCompile()
     })
+
   filesToWatch.forEach(filePath => watcher.add(filePath))
 }
 
