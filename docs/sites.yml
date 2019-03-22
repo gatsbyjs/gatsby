@@ -4989,3 +4989,15 @@
   built_by: Render Developers
   built_by_url: https://render.com
   featured: false
+- title: prima
+  url: https://www.prima.co
+  main_url: https://www.prima.co
+  description: >
+    Discover industry-defining wellness content and trusted organic hemp CBD products safely supporting wellness, stress, mood, skin health, and balance.
+  categories:
+    - Blog
+    - eCommerce
+    - Education
+  built_by: The Couch
+  built_by_url: https://thecouch.nyc
+  featured: false
