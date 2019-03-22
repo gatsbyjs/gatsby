@@ -66,21 +66,17 @@ const startServer = () => {
 
 exports.startVerdaccio = startServer
 
-const publishPackage = async ({
+const adjustPackageJson = ({
+  monoRepoPackageJsonPath,
   packageName,
-  packagesToPublish,
-  root,
   versionPostFix,
+  packagesToPublish,
   ignorePackageJSONChanges,
 }) => {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
   // for dependencies.
 
-  const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
-    packageName,
-    root,
-  })
   const monorepoPKGjsonString = fs.readFileSync(
     monoRepoPackageJsonPath,
     `utf-8`
@@ -108,40 +104,74 @@ const publishPackage = async ({
   // change version and dependency versions
   fs.outputFileSync(monoRepoPackageJsonPath, temporaryMonorepoPKGjsonString)
 
+  return {
+    newPackageVersion: monorepoPKGjson.version,
+    unadjustPackageJson: () => {
+      // restore original package.json
+      fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
+      unignorePackageJSONChanges()
+    },
+  }
+}
+
+const createTemporaryNPMRC = ({ pathToPackage }) => {
+  const NPMRCPath = path.join(pathToPackage, `.npmrc`)
+  fs.outputFileSync(NPMRCPath, `${registryUrl}/:_authToken="gatsby-dev"`)
+
+  return () => {
+    fs.removeSync(NPMRCPath)
+  }
+}
+
+const publishPackage = async ({
+  packageName,
+  packagesToPublish,
+  root,
+  versionPostFix,
+  ignorePackageJSONChanges,
+}) => {
+  const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
+    packageName,
+    root,
+  })
+
+  const { unadjustPackageJson, newPackageVersion } = adjustPackageJson({
+    monoRepoPackageJsonPath,
+    packageName,
+    root,
+    versionPostFix,
+    packagesToPublish,
+    ignorePackageJSONChanges,
+  })
+
   const pathToPackage = path.dirname(monoRepoPackageJsonPath)
+
+  const uncreateTemporaryNPMRC = createTemporaryNPMRC({ pathToPackage })
 
   // npm publish
   const publishCmd = [
-    `yarn`,
-    [
-      `publish`,
-      `--tag`,
-      `gatsby-dev`,
-      `--registry=${registryUrl}`,
-      `--new-version`,
-      monorepoPKGjson.version,
-    ],
+    `npm`,
+    [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`],
     {
       cwd: pathToPackage,
     },
   ]
 
   console.log(
-    `Publishing ${packageName}@${monorepoPKGjson.version} to local registry`
+    `Publishing ${packageName}@${newPackageVersion} to local registry`
   )
   try {
     await promisifiedSpawn(publishCmd)
 
     console.log(
-      `Published ${packageName}@${monorepoPKGjson.version} to local registry`
+      `Published ${packageName}@${newPackageVersion} to local registry`
     )
   } catch {
-    console.error(`Failed to publish ${packageName}@${monorepoPKGjson.version}`)
+    console.error(`Failed to publish ${packageName}@${newPackageVersion}`)
   }
 
-  // restore original package.json
-  fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
-  unignorePackageJSONChanges()
+  uncreateTemporaryNPMRC()
+  unadjustPackageJson()
 }
 
 exports.publishPackagesLocallyAndInstall = async ({
