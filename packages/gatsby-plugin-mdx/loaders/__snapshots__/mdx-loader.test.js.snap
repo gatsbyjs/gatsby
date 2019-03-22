@@ -6,6 +6,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 const layoutProps = {};
 export default class MDXContent extends React.Component {
   constructor(props) {
@@ -15,15 +17,13 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag name="wrapper" components={components}>
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <h1>{\`Some title\`}</h1>
+        <p>{\`a bit of a paragraph\`}</p>
+        <p>{\`some content\`}</p>
+      </div>
     );
   }
 }
@@ -38,6 +38,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 const layoutProps = {};
 export default class MDXContent extends React.Component {
   constructor(props) {
@@ -47,15 +49,13 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag name="wrapper" components={components}>
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <h1>{\`Some title\`}</h1>
+        <p>{\`a bit of a paragraph\`}</p>
+        <p>{\`some content\`}</p>
+      </div>
     );
   }
 }
@@ -74,6 +74,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 const layoutProps = {};
 export default class MDXContent extends React.Component {
   constructor(props) {
@@ -84,20 +86,15 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag
-        name="wrapper"
-        Layout={this.layout}
-        layoutProps={Object.assign({}, layoutProps, props)}
-        components={components}
-      >
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <Layout {...layoutProps} {...props}>
+          <h1>{\`Some title\`}</h1>
+          <p>{\`a bit of a paragraph\`}</p>
+          <p>{\`some content\`}</p>
+        </Layout>
+      </div>
     );
   }
 }
@@ -116,6 +113,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 export const meta = {
   author: "chris"
 };
@@ -131,20 +130,15 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag
-        name="wrapper"
-        Layout={this.layout}
-        layoutProps={Object.assign({}, layoutProps, props)}
-        components={components}
-      >
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <Layout {...layoutProps} {...props}>
+          <h1>{\`Some title\`}</h1>
+          <p>{\`a bit of a paragraph\`}</p>
+          <p>{\`some content\`}</p>
+        </Layout>
+      </div>
     );
   }
 }
@@ -163,6 +157,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 export const meta = {
   author: "chris"
 };
@@ -177,15 +173,13 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag name="wrapper" components={components}>
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <h1>{\`Some title\`}</h1>
+        <p>{\`a bit of a paragraph\`}</p>
+        <p>{\`some content\`}</p>
+      </div>
     );
   }
 }
@@ -204,6 +198,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 const layoutProps = {};
 export default class MDXContent extends React.Component {
   constructor(props) {
@@ -214,20 +210,15 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag
-        name="wrapper"
-        Layout={this.layout}
-        layoutProps={Object.assign({}, layoutProps, props)}
-        components={components}
-      >
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <Layout {...layoutProps} {...props}>
+          <h1>{\`Some title\`}</h1>
+          <p>{\`a bit of a paragraph\`}</p>
+          <p>{\`some content\`}</p>
+        </Layout>
+      </div>
     );
   }
 }
@@ -242,6 +233,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 export const meta = {
   author: "chris"
 };
@@ -257,20 +250,15 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag
-        name="wrapper"
-        Layout={this.layout}
-        layoutProps={Object.assign({}, layoutProps, props)}
-        components={components}
-      >
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <Layout {...layoutProps} {...props}>
+          <h1>{\`Some title\`}</h1>
+          <p>{\`a bit of a paragraph\`}</p>
+          <p>{\`some content\`}</p>
+        </Layout>
+      </div>
     );
   }
 }
@@ -285,6 +273,8 @@ import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
+/* @jsx mdx */
+
 export const meta = {
   author: "chris"
 };
@@ -299,15 +289,13 @@ export default class MDXContent extends React.Component {
 
   render() {
     const { components, ...props } = this.props;
+    const Layout = this.layout;
     return (
-      <MDXTag name="wrapper" components={components}>
-        <MDXTag name="h1" components={components}>{\`Some title\`}</MDXTag>
-        <MDXTag
-          name="p"
-          components={components}
-        >{\`a bit of a paragraph\`}</MDXTag>
-        <MDXTag name="p" components={components}>{\`some content\`}</MDXTag>
-      </MDXTag>
+      <div name="wrapper" components={components}>
+        <h1>{\`Some title\`}</h1>
+        <p>{\`a bit of a paragraph\`}</p>
+        <p>{\`some content\`}</p>
+      </div>
     );
   }
 }
