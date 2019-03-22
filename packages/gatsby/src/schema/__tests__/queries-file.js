@@ -2,6 +2,7 @@ const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
+const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = [
@@ -75,9 +76,13 @@ describe(`Query fields of type File`, () => {
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    )
+    nodes.forEach(node => {
+      // FIXME: We should be testing with action creators, not dispatching actions directly.
+      // Because we're not we have to manually ensure that node objects are being tracked,
+      // which is otherwise taken care of in the action creator.
+      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      trackInlineObjectsInRootNode(node)
+    })
 
     await build({})
     schema = store.getState().schema
