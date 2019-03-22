@@ -40,12 +40,19 @@ const checkDepsChanges = ({
   try {
     localPKGjson = JSON.parse(fs.readFileSync(newPath))
   } catch {
-    // caught if there is no local package - so we still need to install deps
+    // there is no local package - so we still need to install deps
     // this is nice because devs won't need to do initial package installation - we can handle this.
-    console.log(
-      `'${packageName}' doesn't seem to be installed. Will install it`
-    )
-    return true
+    if (isInitialScan) {
+      console.log(
+        `'${packageName}' doesn't seem to be installed. Will install it`
+      )
+      return true
+    } else {
+      console.log(
+        `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to install it`
+      )
+      return false
+    }
   }
 
   const areDepsEqual = _.isEqual(
