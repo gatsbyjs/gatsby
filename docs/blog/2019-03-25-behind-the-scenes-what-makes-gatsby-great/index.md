@@ -123,7 +123,9 @@ Let's contrast this approach with setting up and deploying a purely server-side 
 
 #### Deploying a server-side rendered application
 
-First: perform the **same** steps in setting up a static content host, excluding the step for configuring a bucket/location for hosting static content. Oh and we're not done yet, sweet summer child.
+First: perform the **same** steps in setting up a static content host, excluding the step for configuring a bucket/location for hosting static content. Oh and we're not done yet, sweet, sweet summer child.
+
+![Sweet, Sweet Summer Child](https://media1.tenor.com/images/0ae8734d4f4184e8ac3d9f6032d0047f/tenor.gif?itemid=5580217)
 
 Next:
 
