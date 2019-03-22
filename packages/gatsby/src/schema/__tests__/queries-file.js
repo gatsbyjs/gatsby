@@ -4,6 +4,11 @@ const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
+const path = require(`path`)
+const slash = require(`slash`)
+
+const basePath = slash(__dirname)
+const filePath = p => slash(path.join(basePath, p))
 
 const nodes = [
   {
@@ -15,8 +20,8 @@ const nodes = [
       contentDigest: `file1`,
     },
     name: `1.png`,
-    dir: `/home/me/`,
-    absolutePath: `/home/me/1.png`,
+    dir: basePath,
+    absolutePath: filePath(`1.png`),
   },
   {
     id: `file2`,
@@ -27,8 +32,8 @@ const nodes = [
       contentDigest: `file2`,
     },
     name: `2.png`,
-    dir: `/home/me/`,
-    absolutePath: `/home/me/2.png`,
+    dir: basePath,
+    absolutePath: filePath(`2.png`),
   },
   {
     id: `file3`,
@@ -39,8 +44,8 @@ const nodes = [
       contentDigest: `file3`,
     },
     name: `test.txt`,
-    dir: `/home/me/`,
-    absolutePath: `/home/me/test.txt`,
+    dir: basePath,
+    absolutePath: filePath(`test.txt`),
   },
   {
     id: `test1`,
