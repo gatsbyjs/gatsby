@@ -3,7 +3,9 @@ const getValueAt = (obj, selector) => {
   return selectors.reduce((acc, key) => {
     if (acc && typeof acc === `object`) {
       if (Array.isArray(acc)) {
-        return acc.map(a => a[key]).filter(a => a !== undefined)
+        return acc
+          .map(a => (a && typeof a === `object` ? a[key] : undefined))
+          .filter(a => a !== undefined)
       }
       return acc[key]
     }

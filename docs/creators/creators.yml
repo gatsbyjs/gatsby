@@ -257,3 +257,11 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: 3merge
+  type: agency
+  image: images/3merge.png
+  description: "We are a JavaScript development agency that builds native and progressive web applications."
+  location: Canada
+  website: "https://3merge.ca/"
+  for_hire: true
+  portfolio: true

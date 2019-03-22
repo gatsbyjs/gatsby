@@ -72,7 +72,16 @@ Object {
         },
       ],
     },
+    "thirdPartyInterface": Object {
+      "text": "Hello third-party schema!",
+    },
     "thirdPartyStuff": Object {
+      "child": Object {
+        "text": "Hello from children!",
+      },
+      "text": "Hello third-party schema!",
+    },
+    "thirdPartyUnion": Object {
       "text": "Hello third-party schema!",
     },
   },

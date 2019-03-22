@@ -22,11 +22,12 @@ module.exports = {
 }
 
 const getExampleObject = ({
-  nodes,
+  nodes: rawNodes,
   prefix,
   typeConflictReporter,
   ignoreFields = [],
 }) => {
+  const nodes = rawNodes.filter(node => node != null)
   const allKeys = nodes.reduce(
     (acc, node) =>
       Object.keys(node).forEach(
