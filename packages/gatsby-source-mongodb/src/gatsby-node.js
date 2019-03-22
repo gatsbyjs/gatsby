@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
-const stringifyObjectIds = require('./stringifyObjectIds')
+const stringifyObjectIds = require(`./stringifyObjectIds`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
