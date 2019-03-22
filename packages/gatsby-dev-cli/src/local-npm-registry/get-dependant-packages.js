@@ -1,3 +1,7 @@
+/**
+ * Recursively get set of packages that depend on given package.
+ * Set also includes passed package.
+ */
 const getDependantPackages = ({
   packageName,
   depTree,

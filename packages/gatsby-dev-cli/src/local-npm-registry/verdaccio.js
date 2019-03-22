@@ -66,6 +66,13 @@ const startServer = () => {
 
 exports.startVerdaccio = startServer
 
+/**
+ * Edit package.json to:
+ *  - adjust version to temporary one
+ *  - change version selectors for dependencies that
+ *    will be published, to make sure that yarn
+ *    install them in local site
+ */
 const adjustPackageJson = ({
   monoRepoPackageJsonPath,
   packageName,
@@ -114,6 +121,12 @@ const adjustPackageJson = ({
   }
 }
 
+/**
+ * Anonymous publishing require dummy .npmrc
+ * See https://github.com/verdaccio/verdaccio/issues/212#issuecomment-308578500
+ * This is `npm publish` (as in linked comment) and `yarn publish` requirement.
+ * This is not verdaccio restriction.
+ */
 const createTemporaryNPMRC = ({ pathToPackage }) => {
   const NPMRCPath = path.join(pathToPackage, `.npmrc`)
   fs.outputFileSync(NPMRCPath, `${registryUrl}/:_authToken="gatsby-dev"`)
