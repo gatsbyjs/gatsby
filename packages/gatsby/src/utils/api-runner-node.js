@@ -40,6 +40,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
           } else if (args.length === 2) {
             return boundActionCreator(args[0], args[1], actionOptions)
           }
+          return undefined
         }
       }
     }
