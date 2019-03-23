@@ -20,7 +20,7 @@ $ npm install --save gatsby-plugin-manifest
 
 ## How to use
 
-### Add plugin and manifest settings (Required)
+### Add plugin and manifest settings - **Required**
 
 ```js
 // in gatsby-config.js
@@ -47,7 +47,7 @@ the created `manifest.webmanifest`.
 
 For more information on configuring your web app [see here](https://developers.google.com/web/fundamentals/web-app-manifest/).
 
-### Configure icons and their generations (Required)
+### Configure icons and their generations - **Required**
 
 There are three modes in which icon generation can function: automatic, hybrid, and manual(disabled). These modes can affect other configurations defaults.
 
@@ -82,6 +82,232 @@ Add the following line to the plugin options
 ```js
   icon: `src/images/icon.png`, // This path is relative to the root of the site.
 ```
+
+Automatic mode is the easiest option for most people.
+
+#### Hybrid mode configuration
+
+Add the following line to the plugin options
+
+```js
+  icon: `src/images/icon.png`, // This path is relative to the root of the site.
+  icons: [
+    {
+      src: `/favicons/android-chrome-192x192.png`,
+      sizes: `192x192`,
+      type: `image/png`,
+    },
+    {
+      src: `/favicons/android-chrome-512x512.png`,
+      sizes: `512x512`,
+      type: `image/png`,
+    },
+  ], // Add or remove icon sizes as desired
+```
+
+If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you include a high resolution icon from which to generate smaller icons. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
+
+The hybrid option allows the most flexibility while still not requiring you to create all icon sizes manually.
+
+#### Manual mode configuration
+
+Add the following line to the plugin options
+
+```js
+icons: [
+  {
+    src: `/favicons/android-chrome-192x192.png`,
+    sizes: `192x192`,
+    type: `image/png`,
+  },
+  {
+    src: `/favicons/android-chrome-512x512.png`,
+    sizes: `512x512`,
+    type: `image/png`,
+  },
+], // Add or remove icon sizes as desired
+```
+
+In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
+
+### Feature configuration - **Optional**
+
+#### Iterative icon options
+
+The `icon_options` object may be used to iteratively configure the [default icon array](#automatic-mode-configuration). Any options included in this object will be merged with each item of the `icons` array. This may be used in Automatic and Hybrid modes.
+
+`icon_options` may be used as follows:
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        icon_options: {
+          // For all the options available, please see:
+          // https://developer.mozilla.org/en-US/docs/Web/Manifest
+          // https://w3c.github.io/manifest/#purpose-member
+          purpose: `maskable`,
+        },
+      },
+    },
+  ],
+}
+```
+
+#### Disable legacy icons
+
+iOS 11.3 added support for the web app manifest spec. Previous iOS versions won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        legacy: false, // this will not add apple-touch-icon links to <head>
+      },
+    },
+  ],
+}
+```
+
+#### Disable favicon
+
+Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        include_favicon: false, // This will exclude favicon link tag
+      },
+    },
+  ],
+}
+```
+
+#### Disable or configure "[cache busting](https://www.keycdn.com/support/what-is-cache-busting)"
+
+Cache Busting allows your updated icon to be quickly/easily visible to your sites visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only done in 'automatic' and 'hybrid' modes.
+
+Cache busting works by calculating a unique "digest" of the provided icon and modifying links or file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
+
+**Options:**
+
+- **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`
+
+- **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting)
+
+- **\`none\`** - Disables cache busting. File names and links remain unmodified.
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        cache_busting_mode: `none`, // `query`(default), `name`, or `none`
+      },
+    },
+  ],
+}
+```
+
+#### Remove `theme-color` meta tag
+
+By default a `<meta content={theme_color} name="theme-color" />` tag is inserted into the html output. This can be problematic if you want to programmatically control that tag (e.g. when implementing light/dark themes in your project). You can set `theme_color_in_head` plugin option to `false` to opt-out of this behavior.
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
+      },
+    },
+  ],
+}
+```
+
+#### Enable CORS using `crossorigin` attribute
+
+Add a `crossorigin` attribute to the manifest `<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />` link tag.
+
+You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to `'anonymous'`.
+
+You can find more information about `crossorigin` on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes).
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        crossOrigin: `use-credentials`, // `use-credentials` or `anonymous`
+      },
+    },
+  ],
+}
+```
+
+## Appendices
+
+Additional information that may be interesting or valuable.
+
+### Default icon config
 
 When in automatic mode the following json array is injected into the manifest configuration you provide and the icons are generated from it.
 
@@ -130,231 +356,15 @@ When in automatic mode the following json array is injected into the manifest co
 ]
 ```
 
-Automatic mode is the easiest option for most people.
+### Legacy icon support coverage
 
-#### Hybrid mode configuration
+Currently this feature only covers older versions of [iOS Safari](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html).
 
-Add the following line to the plugin options
+Internet Explorer is the only other major browser that doesn't support the web app manifest, and it's market share is so small no one has contributed support.
 
-```js
-  icon: `src/images/icon.png`, // This path is relative to the root of the site.
-  icons: [
-    {
-      src: `/favicons/android-chrome-192x192.png`,
-      sizes: `192x192`,
-      type: `image/png`,
-    },
-    {
-      src: `/favicons/android-chrome-512x512.png`,
-      sizes: `512x512`,
-      type: `image/png`,
-    },
-  ], // Add or remove icon sizes as desired
-```
-
-If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you should include a high resolution icon to generate smaller icons from. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
-
-The hybrid option allows the most flexibility while still not requiring you to create all icon sizes manually.
-
-#### Manual mode configuration
-
-Add the following line to the plugin options
-
-```js
-icons: [
-  {
-    src: `/favicons/android-chrome-192x192.png`,
-    sizes: `192x192`,
-    type: `image/png`,
-  },
-  {
-    src: `/favicons/android-chrome-512x512.png`,
-    sizes: `512x512`,
-    type: `image/png`,
-  },
-], // Add or remove icon sizes as desired
-```
-
-In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
-
-### Feature configuration (Optional)
-
-#### Iterative icon options
-
-The `icon_options` object may be used to iteratively configure the [default icon array](#automatic-mode-configuration). Any options included in this object will be merged with each item of the `icons` array. This may be used in Automatic and Hybrid modes.
-
-`icon_options` may be used as follows:
-
-```js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        icon_options: {
-          // For all the options available, please see:
-          // https://developer.mozilla.org/en-US/docs/Web/Manifest
-          // https://w3c.github.io/manifest/#purpose-member
-          purpose: `maskable`,
-        },
-      },
-    },
-  ],
-}
-```
-
-### Disable Legacy Icons
-
-iOS 11.3 added support for the web app manifest spec. Previous iOS versions won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
-
-```js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `src/images/icon.png`,
-        legacy: false, // this will not add apple-touch-icon links to <head>
-      },
-    },
-  ],
-}
-```
-
-### Disable Favicon
-
-Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
-
-```js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        include_favicon: false, // This will exclude favicon link tag
-      },
-    },
-  ],
-}
-```
-
-## Disabling or changing "[Cache Busting](https://www.keycdn.com/support/what-is-cache-busting)"
-
-Cache Busting allows your updated icon to be quickly/easily visible to your sites visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only done in 'automatic' and 'hybrid' modes.
-
-Cache busting works by calculating a unique "digest" of the provided icon and modifying links or file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
-
-**Options:**
-
-- **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`
-
-- **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting)
-
-- **\`none\`** - Disables cache busting. File names and links remain unmodified.
-
-```js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `src/images/icon.png`,
-        cache_busting_mode: `none`, // `query`(default), `name`, or `none`
-      },
-    },
-  ],
-}
-```
-
-### Removing `theme-color` meta tag
-
-By default a `<meta content={theme_color} name="theme-color" />` tag is inserted into the html output. This can be problematic if you want to programmatically control that tag (e.g. when implementing light/dark themes in your project). You can set `theme_color_in_head` plugin option to `false` to opt-out of this behavior.
-
-```js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `src/images/icon.png`,
-        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
-      },
-    },
-  ],
-}
-```
-
-## Enable CORS using `crossorigin` attribute
-
-Add a `crossorigin` attribute to the manifest `<link rel="manifest" crossorigin="use-credentials" href="/manifest.webmanifest" />` link tag.
-
-You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to `'anonymous'`.
-
-You can find more information about `crossorigin` on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes).
-
-```js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `src/images/icon.png`,
-        crossOrigin: `use-credentials`, // `use-credentials` or `anonymous`
-      },
-    },
-  ],
-}
-```
-
-## Additional Resources
+### Additional resources
 
 This article from the Chrome DevRel team is a good intro to the web app
 manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla Docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
-
-[^1]: Currently this is only for older versions of [iOS Safari](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html). IE is the only other browser that doesn't support the web app manifest, and it's market share is so small no one has contributed support.
+For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
