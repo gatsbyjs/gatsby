@@ -1,5 +1,5 @@
 const enquirer = require(`enquirer`)
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const execa = require(`execa`)
 
 const spawn = cmd => {
@@ -35,52 +35,44 @@ const makeList = array => {
           list += item
         }
       })
-  }
 
-  return list
+      return list
+  }
 }
 
-const getVerbs = verb => {
-  switch (verb) {
-    case `add`:
-      return {
-        present: `add`,
-        alt: `install`,
-        past: `added`,
-        participle: `adding`,
-        preposition: `to`,
-      }
-    case `config`:
-      return {
-        present: `config`,
-        past: `configured`,
-        participle: `configuring`,
-      }
-    case `remove`:
-      return {
-        present: `remove`,
-        alt: `uninstall`,
-        past: `removed`,
-        participle: `removing`,
-        preposition: `from`,
-      }
-    case `search`:
-      return {
-        present: `search`,
-        past: `searched`,
-        participle: `searching`,
-        preposition: `for`,
-      }
-    default:
-      throw new Error(`Unknown Verb`)
-  }
+const verbs = {
+  add: {
+    present: `add`,
+    alt: `install`,
+    past: `added`,
+    participle: `adding`,
+    preposition: `to`,
+  },
+  config: {
+    present: `config`,
+    past: `configured`,
+    participle: `configuring`,
+  },
+  remove: {
+    present: `remove`,
+    alt: `uninstall`,
+    past: `removed`,
+    participle: `removing`,
+    preposition: `from`,
+  },
+  search: {
+    present: `search`,
+    past: `searched`,
+    participle: `searching`,
+    preposition: `for`,
+  },
 }
 
 const addRemovePlugin = async (action, plugins, dryRun) => {
   let questions = new Array()
 
   if (dryRun) {
-    report.warn(
+    reporter.info(
       `Dry Run: The workflow will be unchanged, but nothing will be done in the end.`
     )
   }
@@ -98,7 +90,7 @@ const addRemovePlugin = async (action, plugins, dryRun) => {
         action.present
       } it ${
         action.preposition
-      } ' package.json'.\n Are you sure you want to do this?`,
+      } 'package.json'.\n Are you sure you want to do this?`,
     })
   })
 
@@ -113,13 +105,13 @@ const addRemovePlugin = async (action, plugins, dryRun) => {
   let pluginString = makeList(confirmedPlugins)
 
   if (confirmedPlugins.length > 0) {
-    let spinner = report.activity()
+    let spinner = reporter.activity()
 
     try {
       spinner.tick(`${action.participle} plugin(s): ${confirmedPlugins}`)
 
       if (dryRun) {
-        report.warn(
+        reporter.info(
           `Dry Run: Usually I'd be installing stuff right now, but this is a dry run!`
         )
       } else {
@@ -128,33 +120,32 @@ const addRemovePlugin = async (action, plugins, dryRun) => {
             action.present
           } ${pluginString}`
         )
-
-        report.success(`Successfully ${action.past}: ${pluginString}`)
       }
+      reporter.success(`Successfully ${action.past}: ${pluginString}`)
 
       spinner.end()
 
       if (action.present === `add`) {
         confirmedPlugins.forEach(plugin => {
-          report.info(
+          reporter.info(
             `For more info on using ${plugin} see: https://www.gatsbyjs.org/packages/${plugin}/`
           )
         })
       }
     } catch (error) {
       spinner.end()
-      report.error(
+      reporter.error(
         `Error ${action.participle} plugin(s): ${pluginString}`,
         error.stdout
       )
     }
   } else {
-    report.info(`No plugins to ${action.present}`)
+    reporter.info(`No plugins to ${action.present}`)
   }
 }
 
 module.exports = async program => {
-  let action = getVerbs(program.action)
+  let action = verbs[program.action]
   let plugins = program.plugins
   let dry = program.dryRun
 
@@ -164,10 +155,14 @@ module.exports = async program => {
       await addRemovePlugin(action, plugins, dry)
       break
     case `config`:
-      report.info(`The future is not yet...but with your PR it could be soon!`)
+      reporter.info(
+        `The future is not yet...but with your PR it could be soon!`
+      )
       break
     case `search`:
-      report.info(`The future is not yet...but with your PR it could be soon!`)
+      reporter.info(
+        `The future is not yet...but with your PR it could be soon!`
+      )
       break
   }
 }
