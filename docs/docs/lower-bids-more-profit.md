@@ -2,7 +2,7 @@
 title: Lower Bids, More Profit
 ---
 
-Many agencies use a different pricing model for bidding Gatsby websites that enables them to make more money and expand their business. 
+Many agencies use a different pricing model for bidding Gatsby websites that enables them to make more money and expand their business.
 
 After identifying projects that are a good fit for Gatsby, they will bid _significantly under_ a typical bid for a project of that time. Because Gatsby enables the team to work faster, they've still able to make standard profits on the project while growing their business and creating happy clients.
 

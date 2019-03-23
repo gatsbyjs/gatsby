@@ -11,7 +11,7 @@ Some of the benefits such agencies list include:
 - consistent fast development
 - no time ever spent on performance optimization
 - ability to build projects across CMS-es
-- a more cohesive team. 
+- a more cohesive team.
 
 One example of this is [Narative.co](https://www.narative.co/), based in Montreal. Narative [wrote a blog post](https://www.gatsbyjs.org/blog/2018-06-18-why-narative-loves-gatsby/) laying out some of these benefits:
 
