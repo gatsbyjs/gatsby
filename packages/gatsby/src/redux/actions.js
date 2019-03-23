@@ -65,6 +65,12 @@ type ActionOptions = {
   followsSpan: ?Object,
 }
 
+type LogItem = {
+  message: String,
+  type: String,
+  id: ?number,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -1296,6 +1302,20 @@ actions.createTypes = (
     plugin,
     traceId,
     payload: types,
+  }
+}
+
+/**
+ * Add a message to log queue
+ *
+ * @param {LogItem} $0
+ */
+actions.log = (logItem: LogItem, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `LOG_MESSAGE`,
+    plugin,
+    traceId,
+    payload: { ...logItem },
   }
 }
 

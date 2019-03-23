@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
+// const report = require(`gatsby-cli/lib/reporter`)
+const report = require(`./create-reporter`)
 
 const apiRunner = require(`./api-runner-node`)
 const { store } = require(`../redux`)
