@@ -30,6 +30,10 @@ const verdaccioConfig = {
 }
 
 const registryUrl = `http://localhost:${verdaccioConfig.port}`
+const NPMRCContent = `${registryUrl.replace(
+  /https?/g,
+  ``
+)}/:_authToken="gatsby-dev"`
 
 exports.registryUrl = registryUrl
 
@@ -129,7 +133,7 @@ const adjustPackageJson = ({
  */
 const createTemporaryNPMRC = ({ pathToPackage }) => {
   const NPMRCPath = path.join(pathToPackage, `.npmrc`)
-  fs.outputFileSync(NPMRCPath, `${registryUrl}/:_authToken="gatsby-dev"`)
+  fs.outputFileSync(NPMRCPath, NPMRCContent)
 
   return () => {
     // fs.removeSync(NPMRCPath)
