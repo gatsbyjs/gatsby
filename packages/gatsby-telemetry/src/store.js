@@ -58,7 +58,7 @@ module.exports = class Store {
     }
     const contents = readFileSync(newPath, `utf8`)
 
-    // There is still a chance process dies while sending data and some events is lost
+    // There is still a chance process dies while sending data and some events are lost
     // This will be ok for now, however
     unlinkSync(newPath)
     let success = false

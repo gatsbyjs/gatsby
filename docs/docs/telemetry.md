@@ -17,7 +17,7 @@ Users may always opt-out from the telemetry with `gatsby telemetry --disable` or
 Since much of Gatsby’s function revolves around community plugins and starters, we want to collect information on usage
 and reliability so that we can ensure a high-quality ecosystem.
 
-This raises a question. How will we use this telemetry data to improve the ecosystem? Some examples are helpful:
+This raises a question: how will we use this telemetry data to improve the ecosystem? Some examples are helpful:
 
 - We will be able to understand which plugins are typically used together. This will enable us to surface this information in our public plugin library and build more relevant starters and tutorials based on this data.
 - We will be able to surface popularity of different starters in the starter showcase.

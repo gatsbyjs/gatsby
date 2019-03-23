@@ -111,8 +111,8 @@ module.exports = class AnalyticsTracker {
     if (telemetry === undefined || telemetry === null) {
       console.log(
         `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
-          `If you'd like to opt-out, you can use \`gatsby analytics --disable\`\n` +
-          `To learn more, checkout http://gatsby.dev/analytics`
+          `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
+          `To learn more, checkout http://gatsby.dev/telemetry`
       )
       telemetry = true
       this.store.updateConfig({ telemetry })
