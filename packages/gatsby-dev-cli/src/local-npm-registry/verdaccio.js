@@ -31,7 +31,7 @@ const verdaccioConfig = {
 
 const registryUrl = `http://localhost:${verdaccioConfig.port}`
 const NPMRCContent = `${registryUrl.replace(
-  /https?/g,
+  /https?:/g,
   ``
 )}/:_authToken="gatsby-dev"`
 
