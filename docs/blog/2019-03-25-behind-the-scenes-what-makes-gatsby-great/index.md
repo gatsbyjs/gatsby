@@ -475,7 +475,7 @@ Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` an
 
 ![Lighthouse Example](./images/lighthouse.png)
 
-Lighthouse will provide scores from 0 - 100 for a variety of meaningful categories, including p :erformance, accessibility, and more. Actionable feedback is provided if the score is less than 100, so you can feel empowered to make improvements and maximize those 💯s!
+Lighthouse will provide scores from 0 - 100 for a variety of meaningful categories, including performance, accessibility, and more. Actionable feedback is provided if the score is less than 100, so you can feel empowered to make improvements and maximize those 💯s!
 
 Lighthouse is a great _first_ step to asserting whether or not your application is actually fast. If you are scoring near 100s (if you're using Gatsby--you probably are!) you can feel assured with a reasonable degree of confidence that your application is actually fast. However--Lighthouse can sometimes vary between runs and results can sometimes vary depending on which machine is used to run the test. To gain a greater degree of _certainty_ that your application is fast I recommend another, complementary tool: Webpagetest.
 
