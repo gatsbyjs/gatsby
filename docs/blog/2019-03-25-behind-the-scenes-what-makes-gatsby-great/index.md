@@ -237,7 +237,7 @@ Consider the output of [`webpack-bundle-analyzer`](https://github.com/webpack-co
 
 ![Webpack Bundle Analyzer](./images/bundle-analyzer.png)
 
-### `component-{route-name}-{unique-hash}.js`
+### `component---{route-name}-{unique-hash}.js
 
 `component---src-pages-contact-js-34c976efa1482a119a50.js` contains metadata that defines the necessary resources for a specific route. We'll come back to this--promise!
 
