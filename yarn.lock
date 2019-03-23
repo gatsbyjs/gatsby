@@ -5572,6 +5572,7 @@ compare-versions@^3.2.1:
 compass-vertical-rhythm@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/compass-vertical-rhythm/-/compass-vertical-rhythm-1.4.5.tgz#4baa8d7068fda164d3675d706775d7547e8750f5"
+  integrity sha512-bJo3IYX7xmmZCDYjrT2XolaiNjGZ4E2JvUGxpdU0ecbH4ZLK786wvc8aHKVrGrKct9JlkmJbUi8YLrQWvOc+uA==
   dependencies:
     convert-css-length "^1.0.1"
     object-assign "^4.1.0"
@@ -5671,6 +5672,7 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
 console-polyfill@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/console-polyfill/-/console-polyfill-0.1.2.tgz#96cfed51caf78189f699572e6f18271dc37c0e30"
+  integrity sha1-ls/tUcr3gYn2mVcubxgnHcN8DjA=
 
 console-stream@^0.1.1:
   version "0.1.1"
@@ -5813,6 +5815,7 @@ conventional-recommended-bump@^4.0.4:
 convert-css-length@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/convert-css-length/-/convert-css-length-1.0.2.tgz#32f38a8ac55d78372ff43562532564366c871ccc"
+  integrity sha512-ecV7j3hXyXN1X2XfJBzhMR0o1Obv0v3nHmn0UiS3ACENrzbxE/EknkiunS/fCwQva0U62X1GChi8GaPh4oTlLg==
   dependencies:
     console-polyfill "^0.1.2"
     parse-unit "^1.0.1"
@@ -9311,6 +9314,7 @@ gray-matter@^4.0.0:
 gray-percentage@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/gray-percentage/-/gray-percentage-2.0.0.tgz#b72a274d1b1379104a0050b63b207dc53fe56f99"
+  integrity sha1-tyonTRsTeRBKAFC2OyB9xT/lb5k=
 
 growly@^1.3.0:
   version "1.3.0"
@@ -12225,6 +12229,7 @@ lodash.iserror@^3.1.1:
 lodash.isnumber@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz#3ce76810c5928d03352301ac287317f11c0b1ffc"
+  integrity sha1-POdoEMWSjQM1IwGsKHMX8RwLH/w=
 
 lodash.isplainobject@^4.0.6:
   version "4.0.6"
@@ -13027,6 +13032,7 @@ modify-values@^1.0.0:
 modularscale@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/modularscale/-/modularscale-1.0.2.tgz#4a8f13af32a5e5214fc6e2cfc529064abfd7d877"
+  integrity sha1-So8TrzKl5SFPxuLPxSkGSr/X2Hc=
   dependencies:
     lodash.isnumber "^3.0.0"
 
@@ -14243,6 +14249,7 @@ parse-path@^4.0.0:
 parse-unit@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parse-unit/-/parse-unit-1.0.1.tgz#7e1bb6d5bef3874c28e392526a2541170291eecf"
+  integrity sha1-fhu21b7zh0wo45JSaiVBFwKR7s8=
 
 parse-url@^1.3.0:
   version "1.3.11"
@@ -15458,8 +15465,9 @@ react-testing-library@^5.0.0:
     dom-testing-library "^3.9.0"
 
 react-typography@^0.16.18:
-  version "0.16.18"
-  resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-0.16.18.tgz#89341b63d615f1dfcf5e471797df5acce5bde1f3"
+  version "0.16.19"
+  resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-0.16.19.tgz#5736b47961dcf6b9605b6fa38d41980db2588e28"
+  integrity sha512-kV2qLEsdm0x9P4YXQEDVc88tDb4Vg0h/vdVZGgbqaRn8ERvNzV76JHUeOby3vvcUYU5MPd5Kz5DPH9Bhp4I/iw==
 
 react@^16.4.1:
   version "16.5.1"
@@ -18274,13 +18282,15 @@ typescript@~2.6.0:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
-typography-normalize@^0.16.18:
-  version "0.16.18"
-  resolved "https://registry.yarnpkg.com/typography-normalize/-/typography-normalize-0.16.18.tgz#19e8db32c6881d3745b7d67dc63ee6f6cfb681d1"
+typography-normalize@^0.16.19:
+  version "0.16.19"
+  resolved "https://registry.yarnpkg.com/typography-normalize/-/typography-normalize-0.16.19.tgz#58e0cf12466870c5b27006daa051fe7307780660"
+  integrity sha512-vtnSv/uGBZVbd4e/ZhZB9HKBgKKlWQUXw74+ADIHHxzKp27CEf8PSR8TX1zF2qSyQ9/qMdqLwXYz8yRQFq9JLQ==
 
 typography@^0.16.18:
-  version "0.16.18"
-  resolved "https://registry.yarnpkg.com/typography/-/typography-0.16.18.tgz#bdd2dc7297682339e8ded5fcb6783b9ae3c71b76"
+  version "0.16.19"
+  resolved "https://registry.yarnpkg.com/typography/-/typography-0.16.19.tgz#092bf30a5a47495c955b54f40d3b55a7a9f28e8a"
+  integrity sha512-zfsyjPPB1RaK8TzU3REta6EGDZa++YQ6g/CWw7hy/8xQK1qyzFWisMIw5J+Yg1KyiVgcchmxlgMcMA6JAJ9oew==
   dependencies:
     compass-vertical-rhythm "^1.4.5"
     decamelize "^1.2.0"
@@ -18288,7 +18298,7 @@ typography@^0.16.18:
     lodash "^4.13.1"
     modularscale "^1.0.2"
     object-assign "^4.1.0"
-    typography-normalize "^0.16.18"
+    typography-normalize "^0.16.19"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"
