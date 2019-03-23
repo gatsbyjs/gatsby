@@ -49,6 +49,7 @@ module.exports = function preset(_, options = {}) {
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
+          corejs: 2,
         },
       ],
       [
