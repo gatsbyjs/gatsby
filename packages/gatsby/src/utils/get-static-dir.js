@@ -10,27 +10,20 @@ const { store } = require(`../redux`)
  */
 exports.copyStaticDirs = () => {
   // access the store to get themes
-  const state = store.getState()
-  // ensure there are themes
-  if (state.themes && state.themes.themes) {
-    // create an array of existing theme static folders
-    const themeStaticFolders = state.themes.themes.reduce(
-      (hasStatic, theme) => {
-        const staticPath = nodePath.resolve(theme.themeDir, `static`)
-        if (fs.existsSync(staticPath)) {
-          hasStatic.push(staticPath)
-        }
-        return hasStatic
-      },
-      []
-    )
-    // copy existing static folders into the public directory
-    if (themeStaticFolders.length) {
-      themeStaticFolders.map(folder =>
+  const { themes } = store.getState() // ensure there are themes
+
+  if (themes && themes.themes) {
+    themes.themes
+      // create an array of potential theme static folders
+      .map(theme => nodePath.resolve(theme.themeDir, `static`))
+      // filter out the static folders that don't exist
+      .filter(themeStaticPath => fs.existsSync(themeStaticPath))
+      // copy the files for each folder into the user's build
+      .map(folder =>
         fs.copySync(folder, nodePath.join(process.cwd(), `public`))
       )
-    }
   }
+
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return Promise.resolve()
   return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`))
