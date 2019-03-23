@@ -3386,13 +3386,6 @@ async@^2.0.1, async@^2.1.2, async@^2.1.4, async@^2.6.1:
   dependencies:
     lodash "^4.17.10"
 
-async@^2.5.0:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.2.tgz#18330ea7e6e313887f5d2f2a904bac6fe4dd5381"
-  integrity sha512-H1qVYh1MYhEEFLsP97cVKqCGo7KfCyTt6uEWqsTBr9SO84oK9Uwbyd/yCW+6rKJLHksBNUVWZDAjfS+Ccx0Bbg==
-  dependencies:
-    lodash "^4.17.11"
-
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -4664,7 +4657,7 @@ buffer-alloc-unsafe@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/buffer-alloc-unsafe/-/buffer-alloc-unsafe-1.1.0.tgz#bd7dc26ae2972d0eda253be061dba992349c19f0"
 
-buffer-alloc@^1.1.0:
+buffer-alloc@^1.1.0, buffer-alloc@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/buffer-alloc/-/buffer-alloc-1.2.0.tgz#890dd90d923a873e08e10e5fd51a57e5b7cce0ec"
   dependencies:
@@ -5263,6 +5256,11 @@ cli-cursor@^2.0.0, cli-cursor@^2.1.0:
   integrity sha1-s12sN2R5+sw+lHR9QdDQ9SOP/LU=
   dependencies:
     restore-cursor "^2.0.0"
+
+cli-spinners@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.0.0.tgz#4b078756fc17a8f72043fdc9f1f14bf4fa87e2df"
+  integrity sha512-yiEBmhaKPPeBj7wWm4GEdtPZK940p9pl3EANIrnJ3JnvWyrPjcFcsEq6qRUuQ7fzB0+Y82ld3p6B34xo95foWw==
 
 cli-table3@^0.5.1:
   version "0.5.1"
@@ -9093,7 +9091,7 @@ globby@^7.1.1:
     pify "^3.0.0"
     slash "^1.0.0"
 
-globby@^8.0.1:
+globby@^8.0.0, globby@^8.0.1:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/globby/-/globby-8.0.2.tgz#5697619ccd95c5275dbb2d6faa42087c1a941d8d"
   integrity sha512-yTzMmKygLp8RUpG1Ymu2VXPSJQZjNAZPD4ywgYEaG7e4tBJeUQBO8OpXrf1RCNcEs5alsoJYPAMiIHP0cmeC7w==
@@ -9389,16 +9387,6 @@ handlebars@^4.0.11:
     source-map "^0.4.4"
   optionalDependencies:
     uglify-js "^2.6"
-
-handlebars@^4.0.5:
-  version "4.0.12"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.0.12.tgz#2c15c8a96d46da5e266700518ba8cb8d919d5bc5"
-  dependencies:
-    async "^2.5.0"
-    optimist "^0.6.1"
-    source-map "^0.6.1"
-  optionalDependencies:
-    uglify-js "^3.1.4"
 
 handlebars@^4.1.0:
   version "4.1.1"
@@ -10121,7 +10109,7 @@ inline-style-prefixer@^4.0.0:
     bowser "^1.7.3"
     css-in-js-utils "^2.0.0"
 
-inquirer@3.3.0, inquirer@^3.3.0:
+inquirer@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-3.3.0.tgz#9dd2f2ad765dcab1ff0443b491442a20ba227dc9"
   dependencies:
@@ -10140,7 +10128,7 @@ inquirer@3.3.0, inquirer@^3.3.0:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-inquirer@^6.1.0, inquirer@^6.2.0, inquirer@^6.2.2:
+inquirer@^6.0.0, inquirer@^6.1.0, inquirer@^6.2.0, inquirer@^6.2.2:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.2.2.tgz#46941176f65c9eb20804627149b743a218f25406"
   integrity sha512-Z2rREiXA6cHRR9KBOarR3WuLlFzlIfAEIiB45ll5SSadMg7WqOh1MKEjjndfuH5ewXdixWCxqnVfGOQzPeiztA==
@@ -10166,9 +10154,10 @@ internal-ip@^3.0.1:
     default-gateway "^2.6.0"
     ipaddr.js "^1.5.2"
 
-interpret@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
+interpret@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
+  integrity sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
 
 into-stream@^3.1.0:
   version "3.1.0"
@@ -10735,6 +10724,13 @@ isarray@2.0.1:
 isarray@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.4.tgz#38e7bcbb0f3ba1b7933c86ba1894ddfc3781bbb7"
+
+isbinaryfile@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-3.0.3.tgz#5d6def3edebf6e8ca8cae9c30183a804b5f8be80"
+  integrity sha512-8cJBL5tTd2OS0dM4jz07wQd5g0dCCqIhUxPIGtZfa5L6hWlvV5MHTITy/DBAsF+Oe2LS1X3krBUhNwaGUWpWxw==
+  dependencies:
+    buffer-alloc "^1.2.0"
 
 isemail@3.x.x:
   version "3.1.3"
@@ -11916,9 +11912,10 @@ libnpmpublish@^1.1.1:
     semver "^5.5.1"
     ssri "^6.0.1"
 
-liftoff@^2.2.0:
+liftoff@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/liftoff/-/liftoff-2.5.0.tgz#2009291bb31cea861bbf10a7c15a28caf75c31ec"
+  integrity sha1-IAkpG7Mc6oYbvxCnwVooyvdcMew=
   dependencies:
     extend "^3.0.0"
     findup-sync "^2.0.0"
@@ -13356,21 +13353,22 @@ node-notifier@^5.2.1:
     shellwords "^0.1.1"
     which "^1.3.0"
 
-node-plop@=0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.9.0.tgz#d24796c9b5f37441308cfb3184f574dca0355aa6"
+node-plop@~0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.18.0.tgz#b44647898ee9e387d46e691f13a01fac53bf49fe"
+  integrity sha512-in7Cg3wJ/1a1NFvCoqxEuEDZDs3op8A7PghGgwmujsS93o9dZWk0HpZ8wGg4pKw2JB2KBo8xwUMOtEwBUr0sIA==
   dependencies:
     change-case "^3.0.1"
     co "^4.6.0"
-    colors "^1.1.2"
     core-js "^2.4.1"
     del "^3.0.0"
-    globby "^6.1.0"
-    handlebars "^4.0.5"
-    inquirer "^3.3.0"
+    globby "^8.0.0"
+    handlebars "^4.1.0"
+    inquirer "^6.0.0"
+    isbinaryfile "^3.0.2"
     lodash.get "^4.4.2"
     mkdirp "^0.5.1"
-    pify "^3.0.0"
+    pify "^4.0.0"
     resolve "^1.2.0"
 
 node-pre-gyp@^0.10.0:
@@ -13835,6 +13833,18 @@ optionator@^0.8.1, optionator@^0.8.2:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
     wordwrap "~1.0.0"
+
+ora@^3.0.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ora/-/ora-3.2.0.tgz#67e98a7e11f7f0ac95deaaaf11bb04de3d09e481"
+  integrity sha512-XHMZA5WieCbtg+tu0uPF8CjvwQdNzKCX6BVh3N6GFsEXH40mTk5dsw/ya1lBTUGJslcEFJFQ8cBhOgkkZXQtMA==
+  dependencies:
+    chalk "^2.4.2"
+    cli-cursor "^2.1.0"
+    cli-spinners "^2.0.0"
+    log-symbols "^2.2.0"
+    strip-ansi "^5.0.0"
+    wcwidth "^1.0.1"
 
 ordered-read-streams@^1.0.0:
   version "1.0.1"
@@ -14527,15 +14537,17 @@ please-upgrade-node@^3.0.2, please-upgrade-node@^3.1.1:
   dependencies:
     semver-compare "^1.0.0"
 
-plop@^1.8.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/plop/-/plop-1.9.1.tgz#fa795c072fde8c5e059ab0c23e0a1b426ab6fed6"
+plop@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/plop/-/plop-2.3.0.tgz#e9b3ccf9d8fdbce077ee7377b75fcc5f511df562"
+  integrity sha512-CfTMYmfeCwlipzVcDWI6edxRwdZx47d8BRL3VSv5g+BB8JcLXaSzATkU0flG/aIVl4cxe1Y0rGkrtPjpDm7ySQ==
   dependencies:
     chalk "^1.1.3"
-    interpret "^1.0.0"
-    liftoff "^2.2.0"
+    interpret "^1.2.0"
+    liftoff "^2.5.0"
     minimist "^1.2.0"
-    node-plop "=0.9.0"
+    node-plop "~0.18.0"
+    ora "^3.0.0"
     v8flags "^2.0.10"
 
 pluralize@^7.0.0:
@@ -19029,7 +19041,7 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-wcwidth@^1.0.0:
+wcwidth@^1.0.0, wcwidth@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/wcwidth/-/wcwidth-1.0.1.tgz#f0b0dcf915bc5ff1528afadb2c0e17b532da2fe8"
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
