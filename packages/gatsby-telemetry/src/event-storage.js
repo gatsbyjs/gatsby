@@ -58,7 +58,7 @@ module.exports = class EventStorage {
     return this.store.getConfig()
   }
 
-  updateConfig(conf) {
-    return this.store.updateConfig(conf)
+  updateConfig(...conf) {
+    return this.store.updateConfig(...conf)
   }
 }

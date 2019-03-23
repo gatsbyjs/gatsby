@@ -22,8 +22,8 @@ module.exports = class Store {
     return this.config.all
   }
 
-  updateConfig(fields) {
-    this.config.set(fields)
+  updateConfig(...fields) {
+    this.config.set(...fields)
   }
 
   appendToBuffer(event) {

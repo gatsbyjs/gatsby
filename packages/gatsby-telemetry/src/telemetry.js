@@ -93,10 +93,10 @@ module.exports = class AnalyticsTracker {
     if (this.machineId) {
       return this.machineId
     }
-    let machineId = this.store.getConfig(`machineId`)
+    let machineId = this.store.getConfig(`telemetry.machineId`)
     if (!machineId) {
       machineId = uuid()
-      this.store.updateConfig({ machineId })
+      this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
     return machineId
@@ -107,18 +107,18 @@ module.exports = class AnalyticsTracker {
     if (this.trackingEnabled !== undefined) {
       return this.trackingEnabled
     }
-    let telemetry = this.store.getConfig(`telemetry`)
-    if (telemetry === undefined || telemetry === null) {
+    let enabled = this.store.getConfig(`telemetry.enabled`)
+    if (enabled === undefined || enabled === null) {
       console.log(
         `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
           `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
           `To learn more, checkout http://gatsby.dev/telemetry`
       )
-      telemetry = true
-      this.store.updateConfig({ telemetry })
+      enabled = true
+      this.store.updateConfig(`telemetry.enabled`, enabled)
     }
-    this.trackingEnabled = telemetry
-    return telemetry
+    this.trackingEnabled = enabled
+    return enabled
   }
 
   getRepoId() {
@@ -182,9 +182,9 @@ module.exports = class AnalyticsTracker {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
 
-  setAnalyticsEnabled(enabled) {
+  setTelemetryEnabled(enabled) {
     this.trackingEnabled = enabled
-    this.store.updateConfig({ telemetry: enabled })
+    this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
   async sendEvents() {
