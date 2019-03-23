@@ -2082,3 +2082,18 @@
   features:
     - Showcase of portfolio items
     - About me page
+- url: https://gatsby-starter-julia.netlify.com/
+  repo: https://github.com/niklasmtj/gatsby-starter-julia
+  description: A minimal blog starter template built with Gatsby
+  tags:
+    - Markdown
+    - Blog
+  features:
+    - Landingpage
+    - Blogoverview
+    - Markdown sourcing
+    - Estimated reading time
+    - Styled component with @emotion
+    - Netlify deployment friendly
+    - Nunito font as npm module
+    - Site meta tags with React Helmet
