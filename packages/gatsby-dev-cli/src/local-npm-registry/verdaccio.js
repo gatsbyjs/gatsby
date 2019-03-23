@@ -119,7 +119,7 @@ const adjustPackageJson = ({
     newPackageVersion: monorepoPKGjson.version,
     unadjustPackageJson: () => {
       // restore original package.json
-      // fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
+      fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
       unignorePackageJSONChanges()
     },
   }
@@ -136,7 +136,7 @@ const createTemporaryNPMRC = ({ pathToPackage }) => {
   fs.outputFileSync(NPMRCPath, NPMRCContent)
 
   return () => {
-    // fs.removeSync(NPMRCPath)
+    fs.removeSync(NPMRCPath)
   }
 }
 
