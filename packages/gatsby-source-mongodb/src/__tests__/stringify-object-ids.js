@@ -1,8 +1,21 @@
-const stringifyObjectIds = require(`../stringifyObjectIds`)
+const stringifyObjectIds = require(`../stringify-object-ids`)
 const ObjectID = require(`mongodb`).ObjectID
 
 test(`it is a function`, () => {
   expect(stringifyObjectIds).toEqual(expect.any(Function))
+})
+
+test(`ObjectIDs are instances of mongodb.ObjectID and not strings`, () => {
+  const objectId = new ObjectID(`5c6d85cff2bc0b7a5da61124`)
+  expect(objectId instanceof ObjectID).toBeTruthy()
+  expect(typeof objectId == `string`).toBeFalsy()
+})
+
+test(`ObjectIDs are not Equal to Strings with the same value`, () => {
+  const objectId = new ObjectID(`5c6d85cff2bc0b7a5da61124`)
+  const str = `5c6d85cff2bc0b7a5da61124`
+  expect(objectId).not.toEqual(str)
+  expect(objectId)
 })
 
 test(`it returns stringified object id when passed one`, () => {
@@ -18,9 +31,12 @@ test(`when passed an array of ObjectIDs it returns an array of strings`, () => {
     obj2 = new ObjectID(str2),
     obj3 = new ObjectID(str3),
     arr = [obj1, obj2, obj3],
-    res = [str1, str2, str3]
+    res = [str1, str2, str3],
+    stringifiedArr = stringifyObjectIds(arr)
 
-  expect(JSON.stringify(stringifyObjectIds(arr))).toEqual(JSON.stringify(res))
+  expect(stringifiedArr[0]).toEqual(res[0])
+  expect(stringifiedArr[1]).toEqual(res[1])
+  expect(stringifiedArr[2]).toEqual(res[2])
 })
 
 test(`when passed an array of object literals with ObjectIDs it returns an array of object literals with strings`, () => {
@@ -57,9 +73,12 @@ test(`when passed an array of object literals with ObjectIDs it returns an array
         key: `three`,
         id: str3,
       },
-    ]
+    ],
+    stringifiedObj = stringifyObjectIds(obj)
 
-  expect(JSON.stringify(stringifyObjectIds(obj))).toEqual(JSON.stringify(res))
+  expect(stringifiedObj[0].id).toEqual(res[0].id)
+  expect(stringifiedObj[1].id).toEqual(res[1].id)
+  expect(stringifiedObj[2].id).toEqual(res[2].id)
 })
 
 test(`when passed a deeply nested, complex object literal, it returns all stringified ObjectIds`, () => {
@@ -130,9 +149,20 @@ test(`when passed a deeply nested, complex object literal, it returns all string
           },
         },
       },
-    }
+    },
+    stringifiedNested = stringifyObjectIds(complexNested)
 
-  expect(JSON.stringify(stringifyObjectIds(complexNested))).toEqual(
-    JSON.stringify(res)
+  expect(stringifiedNested.id).toEqual(res.id)
+  expect(stringifiedNested.connections[0].id).toEqual(res.connections[0].id)
+  expect(stringifiedNested.connections[1].ids[0]).toEqual(
+    res.connections[1].ids[0]
   )
+  expect(stringifiedNested.connections[1].ids[1]).toEqual(
+    res.connections[1].ids[1]
+  )
+  expect(stringifiedNested.name.last.maiden.id).toEqual(res.name.last.maiden.id)
+  expect(stringifiedNested.name.last.current.id).toEqual(
+    res.name.last.current.id
+  )
+  expect(stringifiedNested.name.last.former.id).toEqual(res.name.last.former.id)
 })

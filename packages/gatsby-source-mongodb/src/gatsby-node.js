@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
-const stringifyObjectIds = require(`./stringifyObjectIds`)
+const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged },
@@ -82,8 +82,11 @@ function createNodes(
         const id = item._id.toHexString()
         delete item._id
 
-        for (let key in item) {
-          item[key] = stringifyObjectIds(item[key])
+        // only call recursive function to preserve relations represented by objectids if pluginoption set.
+        if (pluginOptions.preserveObjectIds) {
+          for (let key in item) {
+            item[key] = stringifyObjectIds(item[key])
+          }
         }
 
         const node = {
