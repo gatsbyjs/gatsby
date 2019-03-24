@@ -32,6 +32,7 @@ const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
+const queryRunner = require(`../internal-plugins/query-runner`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -74,6 +75,8 @@ async function startServer(program) {
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  queryRunner.startDaemon()
 
   await createIndexHtml()
 

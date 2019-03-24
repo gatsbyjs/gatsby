@@ -7,7 +7,6 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
-const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
@@ -30,13 +29,10 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
+const queryRunner = require(`../internal-plugins/query-runner`)
 const {
   extractQueries,
 } = require(`../internal-plugins/query-runner/query-watcher`)
-const {
-  runInitialQueries,
-} = require(`../internal-plugins/query-runner/page-query-runner`)
-const queryQueue = require(`../internal-plugins/query-runner/query-queue`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 const {
   writeRedirects,
@@ -459,25 +455,30 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  // Run queries
-  activity = report.activityTimer(`run graphql queries`, {
+  state = store.getState()
+  const queryIds = queryRunner.calcBootstrapDirtyQueryIds(state)
+  const { staticQueryIds, pageQueryIds } = queryRunner.categorizeQueryIds(
+    queryIds
+  )
+
+  activity = report.activityTimer(`run static queries`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  const startQueries = process.hrtime()
-  queryQueue.on(`task_finish`, () => {
-    const stats = queryQueue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
+  await queryRunner.processQueries(
+    staticQueryIds.map(id => queryRunner.makeStaticQueryJob(state, id)),
+    { activity }
+  )
+  activity.end()
+
+  activity = report.activityTimer(`run page queries`, {
+    parentSpan: bootstrapSpan,
   })
-  // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
-  emitter.emit(`START_QUERY_QUEUE`)
-  // END HACKY
-  runInitialQueries(activity)
-  await new Promise(resolve => queryQueue.on(`drain`, resolve))
+  activity.start()
+  await queryRunner.processQueries(
+    pageQueryIds.map(id => queryRunner.makePageQueryJob(state, id)),
+    { activity }
+  )
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
