@@ -27,6 +27,7 @@ const getExampleObject = ({
   typeConflictReporter,
   ignoreFields = [],
 }) => {
+  debugger
   const nodes = rawNodes.filter(node => node != null)
   const allKeys = nodes.reduce(
     (acc, node) =>
@@ -94,14 +95,13 @@ const getExampleObject = ({
     ) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
-        if (!arrayWrappers) return acc.concat(value)
 
         let arrays = arrayWrappers - 1
         while (arrays > 0) {
           value = value.find(v => v != null)
           arrays--
         }
-        return acc.concat(value.filter(v => v != null))
+        return acc.concat(value)
       }, [])
       const exampleObject = getExampleObject({
         nodes: objects,
