@@ -27,7 +27,6 @@ const getExampleObject = ({
   typeConflictReporter,
   ignoreFields = [],
 }) => {
-  debugger
   const nodes = rawNodes.filter(node => node != null)
   const allKeys = nodes.reduce(
     (acc, node) =>

@@ -232,7 +232,7 @@ describe(`GraphQL type inference`, () => {
     const nodes = [
       { sparse: [null, true], internal: { type: `Test` }, id: `1` },
       { sparse: [null], internal: { type: `Test` }, id: `2` },
-      { sparse: null, internal: { type: `Test` }, id: `2` },
+      { sparse: null, internal: { type: `Test` }, id: `3` },
     ]
     const result = await getQueryResult(
       nodes,
@@ -248,7 +248,7 @@ describe(`GraphQL type inference`, () => {
     const nodes = [
       { sparse: [null, { foo: true }], internal: { type: `Test` }, id: `1` },
       { sparse: [null], internal: { type: `Test` }, id: `2` },
-      { sparse: null, internal: { type: `Test` }, id: `2` },
+      { sparse: null, internal: { type: `Test` }, id: `3` },
     ]
     const result = await getQueryResult(
       nodes,
