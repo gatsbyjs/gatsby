@@ -63,7 +63,8 @@ const findIdsWithoutDataDependencies = state => {
 
 const popNodeQueries = ({ state }) => {
   const actions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  const uniqDirties = _.uniq(
+
+const uniqDirties = _.uniq(
     actions.reduce((dirtyIds, action) => {
       const node = action.payload
 
