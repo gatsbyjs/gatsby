@@ -2082,3 +2082,11 @@
   features:
     - Showcase of portfolio items
     - About me page
+- url: https://gatsby-mongodb-starter.netlify.com/
+  repo: https://github.com/charlzzdev/gatsby-mongodb-starter
+  description: Gatsby starter with MongoDB
+  tags:
+    - MongoDB
+    - Barebones
+  features:
+    - Ability to fetch data from a MongoDB database
