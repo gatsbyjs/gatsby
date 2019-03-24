@@ -2082,3 +2082,20 @@
   features:
     - Showcase of portfolio items
     - About me page
+- url: https://festive-villani-316b3c.netlify.com/
+  repo: https://github.com/erikdstock/gatsby-starter-ts-mdx
+  description: Gatsby, Typescript, Netlify-cms and MDX, step-by-step
+  tags:
+    - Typescript
+    - Rebass
+    - styled-system
+    - tutorial
+    - netlify-cms
+    - markdown
+    - MDX
+  features:
+    - Repo includes pull requests with full setup for major steps
+    - Typescript for happier js development
+    - Simple Content management with Netlify-CMS
+    - Easy layout with rebass
+    - MDX, the future of markdown.
