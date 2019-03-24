@@ -2,14 +2,13 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
+const { makeTypeName, makeTextNodeType } = require(`./types`)
 
 const digest = str =>
   crypto
     .createHash(`md5`)
     .update(str)
     .digest(`hex`)
-const typePrefix = `Contentful`
-const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
@@ -119,7 +118,7 @@ exports.buildForeignReferenceMap = ({
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
-    const contentTypeItemId = contentTypeItem.name.toLowerCase()
+    const contentTypeItemId = _.camelCase(contentTypeItem.name)
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
@@ -181,7 +180,7 @@ function prepareTextNode(node, key, text, createNodeId) {
     children: [],
     [key]: str,
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} TextNode`),
+      type: makeTextNodeType(node.internal.type, key),
       mediaType: `text/markdown`,
       content: str,
       contentDigest: digest(str),
@@ -193,45 +192,45 @@ function prepareTextNode(node, key, text, createNodeId) {
   return textNode
 }
 
-function prepareRichTextNode(node, key, content, createNodeId) {
-  const str = stringify(content)
-  const richTextNode = {
-    ...content,
-    id: createNodeId(`${node.id}${key}RichTextNode`),
-    parent: node.id,
-    children: [],
-    [key]: str,
-    internal: {
-      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
-      mediaType: `text/richtext`,
-      content: str,
-      contentDigest: digest(str),
-    },
-  }
+// function prepareRichTextNode(node, key, content, createNodeId) {
+//   const str = stringify(content)
+//   const richTextNode = {
+//     ...content,
+//     id: createNodeId(`${node.id}${key}RichTextNode`),
+//     parent: node.id,
+//     children: [],
+//     [key]: str,
+//     internal: {
+//       type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
+//       mediaType: `text/richtext`,
+//       content: str,
+//       contentDigest: digest(str),
+//     },
+//   }
 
-  node.children = node.children.concat([richTextNode.id])
+//   node.children = node.children.concat([richTextNode.id])
 
-  return richTextNode
-}
-function prepareJSONNode(node, key, content, createNodeId, i = ``) {
-  const str = JSON.stringify(content)
-  const JSONNode = {
-    ...(_.isPlainObject(content) ? { ...content } : { content: content }),
-    id: createNodeId(`${node.id}${key}${i}JSONNode`),
-    parent: node.id,
-    children: [],
-    internal: {
-      type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
-      mediaType: `application/json`,
-      content: str,
-      contentDigest: digest(str),
-    },
-  }
+//   return richTextNode
+// }
+// function prepareJSONNode(node, key, content, createNodeId, i = ``) {
+//   const str = JSON.stringify(content)
+//   const JSONNode = {
+//     ...(_.isPlainObject(content) ? { ...content } : { content: content }),
+//     id: createNodeId(`${node.id}${key}${i}JSONNode`),
+//     parent: node.id,
+//     children: [],
+//     internal: {
+//       type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
+//       mediaType: `application/json`,
+//       content: str,
+//       contentDigest: digest(str),
+//     },
+//   }
 
-  node.children = node.children.concat([JSONNode.id])
+//   node.children = node.children.concat([JSONNode.id])
 
-  return JSONNode
-}
+//   return JSONNode
+// }
 
 exports.createContentTypeNodes = ({
   contentTypeItem,
@@ -241,7 +240,7 @@ exports.createContentTypeNodes = ({
   createNode,
   createNodeId,
   resolvable,
-  foreignReferenceMap,
+  // foreignReferenceMap,
   defaultLocale,
   locales,
 }) => {
@@ -336,22 +335,23 @@ exports.createContentTypeNodes = ({
         }
       })
 
-      // Add reverse linkages if there are any for this node
-      const foreignReferences = foreignReferenceMap[entryItem.sys.id]
-      if (foreignReferences) {
-        foreignReferences.forEach(foreignReference => {
-          const existingReference = entryItemFields[foreignReference.name]
-          if (existingReference) {
-            entryItemFields[foreignReference.name].push(
-              mId(foreignReference.id)
-            )
-          } else {
-            // If there is one foreign reference, there can be many.
-            // Best to be safe and put it in an array to start with.
-            entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
-          }
-        })
-      }
+      // // Add reverse linkages if there are any for this node
+      // const foreignReferences = foreignReferenceMap[entryItem.sys.id]
+      // // debugger
+      // if (foreignReferences) {
+      //   foreignReferences.forEach(foreignReference => {
+      //     const existingReference = entryItemFields[foreignReference.name]
+      //     if (existingReference) {
+      //       entryItemFields[foreignReference.name].push(
+      //         mId(foreignReference.id)
+      //       )
+      //     } else {
+      //       // If there is one foreign reference, there can be many.
+      //       // Best to be safe and put it in an array to start with.
+      //       entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
+      //     }
+      //   })
+      // }
 
       let entryNode = {
         id: mId(entryItem.sys.id),
@@ -401,57 +401,59 @@ exports.createContentTypeNodes = ({
           entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
 
           delete entryItemFields[entryItemFieldKey]
-        } else if (
-          fieldType === `RichText` &&
-          _.isPlainObject(entryItemFields[entryItemFieldKey])
-        ) {
-          const richTextNode = prepareRichTextNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
-
-          childrenNodes.push(richTextNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
-
-          delete entryItemFields[entryItemFieldKey]
-        } else if (
-          fieldType === `Object` &&
-          _.isPlainObject(entryItemFields[entryItemFieldKey])
-        ) {
-          const jsonNode = prepareJSONNode(
-            entryNode,
-            entryItemFieldKey,
-            entryItemFields[entryItemFieldKey],
-            createNodeId
-          )
-
-          childrenNodes.push(jsonNode)
-          entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
-
-          delete entryItemFields[entryItemFieldKey]
-        } else if (
-          fieldType === `Object` &&
-          _.isArray(entryItemFields[entryItemFieldKey])
-        ) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = []
-
-          entryItemFields[entryItemFieldKey].forEach((obj, i) => {
-            const jsonNode = prepareJSONNode(
-              entryNode,
-              entryItemFieldKey,
-              obj,
-              createNodeId,
-              i
-            )
-
-            childrenNodes.push(jsonNode)
-            entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNode.id)
-          })
-
-          delete entryItemFields[entryItemFieldKey]
         }
+        // else if (
+        //   fieldType === `RichText` &&
+        //   _.isPlainObject(entryItemFields[entryItemFieldKey])
+        // ) {
+        //   const richTextNode = prepareRichTextNode(
+        //     entryNode,
+        //     entryItemFieldKey,
+        //     entryItemFields[entryItemFieldKey],
+        //     createNodeId
+        //   )
+
+        //   childrenNodes.push(richTextNode)
+        //   entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
+
+        //   delete entryItemFields[entryItemFieldKey]
+        // }
+        // else if (
+        //   fieldType === `Object` &&
+        //   _.isPlainObject(entryItemFields[entryItemFieldKey])
+        // ) {
+        //   const jsonNode = prepareJSONNode(
+        //     entryNode,
+        //     entryItemFieldKey,
+        //     entryItemFields[entryItemFieldKey],
+        //     createNodeId
+        //   )
+
+        //   childrenNodes.push(jsonNode)
+        //   entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
+
+        //   delete entryItemFields[entryItemFieldKey]
+        // } else if (
+        //   fieldType === `Object` &&
+        //   _.isArray(entryItemFields[entryItemFieldKey])
+        // ) {
+        //   entryItemFields[`${entryItemFieldKey}___NODE`] = []
+
+        //   entryItemFields[entryItemFieldKey].forEach((obj, i) => {
+        //     const jsonNode = prepareJSONNode(
+        //       entryNode,
+        //       entryItemFieldKey,
+        //       obj,
+        //       createNodeId,
+        //       i
+        //     )
+
+        //     childrenNodes.push(jsonNode)
+        //     entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNode.id)
+        //   })
+
+        //   delete entryItemFields[entryItemFieldKey]
+        // }
       })
 
       entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }

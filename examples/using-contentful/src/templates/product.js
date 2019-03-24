@@ -83,8 +83,14 @@ export const pageQuery = graphql`
         }
       }
       brand {
-        companyName {
-          companyName
+        # seems like limitation (or bug) of Contentful API
+        # we don't have access in introspection to figure
+        # out what types can be referenced
+        # so union is created with all content types
+        ... on ContentfulBrand {
+          companyName {
+            companyName
+          }
         }
       }
       categories {

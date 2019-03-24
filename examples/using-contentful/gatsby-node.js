@@ -2,6 +2,17 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const slash = require(`slash`)
 
+exports.sourceNodes = ({ actions }) => {
+  // This is needed if there aren't any MarkdownRemark nodes.
+  // Once gatsby-transformer-remark has type definitions,
+  // we can remove it
+  actions.createTypes(`
+    type MarkdownRemark implements Node {
+      html: String
+    }
+  `)
+}
+
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
@@ -51,7 +62,7 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
     })
-    .then(() => {
+    .then(() =>
       graphql(
         `
           {
@@ -90,5 +101,5 @@ exports.createPages = ({ graphql, actions }) => {
           })
         })
       })
-    })
+    )
 }
