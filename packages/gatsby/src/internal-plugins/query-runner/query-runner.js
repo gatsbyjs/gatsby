@@ -24,8 +24,13 @@ type QueryJob = {
   isPage: Boolean,
 }
 
+type Args = {
+  queryJob: QueryJob,
+  component: Any,
+}
+
 // Run query
-module.exports = async (queryJob: QueryJob, component: Any) => {
+module.exports = async ({ queryJob, component }: Args) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
