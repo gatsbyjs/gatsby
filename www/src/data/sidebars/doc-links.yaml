@@ -447,8 +447,6 @@
         - title: As a Freelancer
           link: /docs/gatsby-for-freelancers/
           items:
-            - title: Pitching to Clients
-              items: /docs/pitching-to-clients/
         - title: Inside an Agency
           link: /docs/gatsby-for-agencies/
           items:

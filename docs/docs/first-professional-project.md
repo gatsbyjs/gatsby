@@ -13,7 +13,7 @@ Why is that?
 
 https://twitter.com/Netlify/status/1011344285529182211
 
-- **Discover allies.** Once you ship a Gatsby website, other Gatsby enthusiasts may come out of the woodwork. It's common to want change, but believe it's impossible. When the first Gatsby site ships,
+- **Discover allies.** Once you ship a Gatsby website, other Gatsby enthusiasts may come out of the woodwork. It's common to want change, but believe it's impossible. When the first Gatsby site ships, others may join you in trying to push for increased Gatsby usage.
 
 - **Creating a case study.** Once business metrics, such as decreased page load times, increased conversion rates, or decreased bounce rates, are available from the new project launch, you can use these metrics as evidence that Gatsby is worth considering.
 
