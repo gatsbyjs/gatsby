@@ -96,7 +96,7 @@ exports.sourceNodes = async (
   entities = normalize.excludeUnknownEntities(entities)
 
   // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(createNodeId, entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL)
 
   // Creates links between authors and user entities
   entities = normalize.mapAuthorsToUsers(entities)

@@ -1,11 +1,16 @@
 import React, { Component } from "react"
-import presets, { colors, space } from "../utils/presets"
+import {
+  colors,
+  space,
+  breakpoints,
+  scale,
+  lineHeights,
+} from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
@@ -34,8 +39,8 @@ class EvaluationTable extends Component {
           <img
             src={infoIcon}
             css={{
-              height: rhythm(space[3]),
-              marginBottom: rhythm(space[1]),
+              height: space[3],
+              marginBottom: space[1],
               verticalAlign: `baseline`,
             }}
             alt={`Info Icon`}
@@ -116,9 +121,9 @@ class EvaluationTable extends Component {
                       <SectionHeaderBottom
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
-                        key={`section-header-bottom-${i}`}
+                        key={`section-header-${s}-bottom-${i}`}
                       />,
-                      <tr key={`first-row-${i}`}>
+                      <tr key={`section-${s}-first-row-${i}`}>
                         {headers.map((header, j) => (
                           <td
                             key={j}
@@ -135,15 +140,15 @@ class EvaluationTable extends Component {
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: presets.scale[1],
-                              lineHeight: presets.lineHeights.solid,
+                              fontSize: scale[1],
+                              lineHeight: lineHeights.solid,
                             }}
                             id={
                               j === 0
                                 ? row.node.Feature.toLowerCase()
                                     .split(` `)
                                     .join(`-`)
-                                : false
+                                : undefined
                             }
                             onClick={() => {
                               this.setState({
@@ -159,17 +164,15 @@ class EvaluationTable extends Component {
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
-                        key={`second-row-${i}`}
+                        key={`section-${s}-second-row-${i}`}
                       >
                         <td
                           css={{
-                            paddingBottom: `calc(${rhythm(
-                              presets.space[5]
-                            )} - 1px)`,
+                            paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
-                              [presets.Xs]: {
-                                paddingRight: `${rhythm(space[3])}`,
-                                paddingLeft: `${rhythm(space[3])}`,
+                              [breakpoints.xs]: {
+                                paddingRight: `${space[3]}`,
+                                paddingLeft: `${space[3]}`,
                               },
                             },
                           }}

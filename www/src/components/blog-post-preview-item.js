@@ -1,9 +1,15 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
 
-import { rhythm, options } from "../utils/typography"
-import { colors, space, radii } from "../utils/presets"
+import Avatar from "./avatar"
+import { colors, fonts } from "../utils/presets"
+
+const formatDate = dateString =>
+  new Date(dateString).toLocaleDateString(`en-EN`, {
+    month: `long`,
+    day: `numeric`,
+    year: `numeric`,
+  })
 
 const BlogPostPreviewItem = ({ post, className }) => (
   <article className={className} css={{ position: `relative` }}>
@@ -27,24 +33,15 @@ const BlogPostPreviewItem = ({ post, className }) => (
           "&&": { borderBottom: `0` },
         }}
       >
-        <Img
-          alt=""
-          fixed={post.frontmatter.author.avatar.childImageSharp.fixed}
-          css={{
-            borderRadius: radii[6],
-            display: `inline-block`,
-            marginRight: rhythm(space[3]),
-            marginBottom: 0,
-            verticalAlign: `top`,
-            // prevents image twitch in Chrome when hovering the card
-            transform: `translateZ(0)`,
-          }}
+        <Avatar
+          image={post.frontmatter.author.avatar.childImageSharp.fixed}
+          alt={post.frontmatter.author.id}
         />
       </Link>
       <div
         css={{
           display: `inline-block`,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           color: colors.gray.calm,
         }}
       >
@@ -54,7 +51,6 @@ const BlogPostPreviewItem = ({ post, className }) => (
             css={{
               position: `relative`,
               zIndex: 1,
-              "&&": { color: colors.gatsby },
             }}
           >
             {post.frontmatter.author.id}
@@ -62,7 +58,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
           {` `}
           on
           {` `}
-          {post.frontmatter.date}
+          {formatDate(post.frontmatter.date)}
         </div>
       </div>
     </div>
@@ -95,7 +91,7 @@ export const blogPostPreviewFragment = graphql`
     frontmatter {
       excerpt
       title
-      date(formatString: "MMMM Do YYYY")
+      date
       author {
         id
         fields {
@@ -104,8 +100,8 @@ export const blogPostPreviewFragment = graphql`
         avatar {
           childImageSharp {
             fixed(
-              width: 30
-              height: 30
+              width: 32
+              height: 32
               quality: 80
               traceSVG: {
                 turdSize: 10
@@ -115,6 +111,13 @@ export const blogPostPreviewFragment = graphql`
             ) {
               ...GatsbyImageSharpFixed_tracedSVG
             }
+          }
+        }
+      }
+      cover {
+        childImageSharp {
+          fluid(maxWidth: 700, quality: 80) {
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }

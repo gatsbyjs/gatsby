@@ -10,15 +10,15 @@ Note that we need to distinguish in this discussion between variables which have
 special places in order to be used in different deployment environments, and true OS-level
 environment variables that could be used in, for example, command-line calls.
 We'll call the former "Project Env Vars" and the latter "OS Env Vars".
-In both cases we want to be able to access the relevant value of these variable for the environment
+In both cases we want to be able to access the relevant value of these variables for the environment
 we're in.
 
 By default gatsby supports only 2 environments:
 
-- If you run the develop script then you will be in the `development` environment.
-- If you run the build or serve scripts, then you will be in the `production` environment.
+- If you run `gatsby develop`, then you will be in the 'development' environment.
+- If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.
 
-If you want to define other environments then you'll need to do a little more work. See 'Additional Environments' below. You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
+If you want to define other environments then you'll need to do a little more work. See[ "Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
 ## Accessing Environment Variables in JavaScript
 
@@ -27,7 +27,7 @@ when Node.Js is running. They aren't immediately available at run time of the cl
 need to be actively captured and embedded into our client-side JavaScript.
 This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
 
-Once the environment variables have been embedded into the client-side, they are accessible from the
+Once the environment variables have been embedded into the client-side code, they are accessible from the
 global variable `process.env`.
 OS Env Vars are accessible in Node.js from the same `process.env` global variable.
 
@@ -107,7 +107,7 @@ render() {
 }
 ```
 
-`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. If you commit your `.env.*` file containing `API_KEY` to source control it would also be available on the client-side. However we strongly advise against that! You should prefix your variable with `GATSBY_` (as shown above) instead and Gatsby automatically makes it available in the browser context.
+`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. If you commit your `.env.*` file containing `API_KEY` to source control it would also be available on the client-side. However we **strongly** advise against that! You should prefix your variable with `GATSBY_` (as shown above) instead and Gatsby automatically makes it available in the browser context.
 
 ```js
 // In any server-side code, e.g. gatsby-config.js
@@ -146,7 +146,7 @@ As noted above `NODE_ENV` is a reserved environment variable in Gatsby as it is 
 You can define your own OS Env Var to track the active environment, and then to locate the relevant Project Env Vars to load. Gatsby itself will not do anything with that OS Env Var, but you can use it in `gatsby-config.js`.
 Specifically, you can use `dotenv` and your individual OS Env Var to locate the `.env.myCustomEnvironment` file, and then use module.exports to store those Project Env Vars somewhere that the client-side Javascript can access the values (via GraphQL queries).
 
-For instance. If you would like to add a `staging` environment with a custom Google Analytics Tracking ID, and a dedicated `apiUrl`. You can add `.env.staging` at the root of your project with the following modification to your `gatsby-config.js`
+For instance: if you would like to add a `staging` environment with a custom Google Analytics Tracking ID, and a dedicated `apiUrl`. You can add `.env.staging` at the root of your project with the following modification to your `gatsby-config.js`
 
 ### Example
 
@@ -156,7 +156,8 @@ API_URL="http://foo.bar"
 ```
 
 ```javascript:title=gatsby-config.js
-let activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || "development"
+let activeEnv =
+  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
 
 console.log(`Using environment config: '${activeEnv}'`)
 
@@ -188,10 +189,8 @@ module.exports = {
 
 This will then load the values from the relevant environment's `.env.*` file and make them available via GraphQL queries and the analytics plugin respectively.
 
-Note that `ACTIVE_ENV` could be called anything - it's not used or known about by anything else in Gatsby (as opposed to `NODE_ENV` which is, as previously discussed).
-
 Local testing of the `staging` environment can be done with:
 
 ```shell
-ACTIVE_ENV=staging npm run develop
+GATSBY_ACTIVE_ENV=staging npm run develop
 ```
