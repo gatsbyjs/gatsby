@@ -62,8 +62,6 @@ Once the source plugin is set up, you can use the `createPages` API in `gatsby-n
 There are several ways to structure queries depending on how you prefer to work, but here's a very minimal example:
 
 ```javascript:title=gatsby-node.js
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
 const path = require(`path`)
 
 exports.createPages = ({ graphql, actions }) => {
@@ -94,7 +92,7 @@ exports.createPages = ({ graphql, actions }) => {
 
         const items = result.data.allGhostPost.edges
 
-        _.forEach(items, ({ node }) => {
+        items.forEach(({ node }) => {
           node.url = `/${node.slug}/`
 
           createPage({
