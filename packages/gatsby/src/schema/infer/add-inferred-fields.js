@@ -102,10 +102,10 @@ const addInferredFieldsImpl = ({
       let lists = 0
       let namedFieldType = fieldType
       while (namedFieldType.ofType) {
-        namedFieldType = namedFieldType.ofType
         if (namedFieldType instanceof GraphQLList) {
           lists++
         }
+        namedFieldType = namedFieldType.ofType
       }
 
       if (arrays === lists) {
