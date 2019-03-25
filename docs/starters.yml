@@ -2086,12 +2086,9 @@
   repo: https://github.com/erikdstock/gatsby-starter-ts-mdx
   description: Gatsby, Typescript, Netlify-cms and MDX, step-by-step
   tags:
-    - Typescript
-    - Rebass
-    - styled-system
-    - tutorial
-    - netlify-cms
-    - markdown
+    - TypeScript
+    - Styling:Rebass
+    - Netlify CMS
     - MDX
   features:
     - Repo includes pull requests with full setup for major steps
