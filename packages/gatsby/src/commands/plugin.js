@@ -1,11 +1,18 @@
 const enquirer = require(`enquirer`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const execa = require(`execa`)
+const preferDefault = require(`../bootstrap/prefer-default`)
+const loadPlugins = require(`../bootstrap/load-plugins`)
+const { store } = require(`../redux`)
+const getConfigFile = require(`../bootstrap/get-config-file`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 const spawn = cmd => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args)
 }
+
+let rootPath = ``
 
 // Returns true if yarn exists, false otherwise
 const shouldUseYarn = () => {
@@ -68,6 +75,38 @@ const verbs = {
   },
 }
 
+const configurePlugins = async plugins => {
+  // Initialize store and load plugins.
+  try {
+    let activity = reporter.activityTimer(`open and validate gatsby-configs`)
+    activity.start()
+    let config = await preferDefault(getConfigFile(rootPath, `gatsby-config`))
+
+    store.dispatch({
+      type: `SET_SITE_CONFIG`,
+      payload: config,
+    })
+
+    activity.end()
+
+    activity = reporter.activityTimer(`load plugins`)
+    activity.start()
+    await loadPlugins(config, rootPath)
+    activity.end()
+
+    plugins.forEach(async plugin => {
+      await apiRunnerNode(`onInstall`, {
+        existingConfig: {
+          prompt: enquirer,
+        },
+        plugin,
+      })
+    })
+  } catch (err) {
+    reporter.panic(`Failed to configure plugin(s):`, err)
+  }
+}
+
 const addRemovePlugin = async (action, plugins, dryRun) => {
   let questions = new Array()
 
@@ -126,6 +165,8 @@ const addRemovePlugin = async (action, plugins, dryRun) => {
       spinner.end()
 
       if (action.present === `add`) {
+        await configurePlugins(confirmedPlugins)
+
         confirmedPlugins.forEach(plugin => {
           reporter.info(
             `For more info on using ${plugin} see: https://www.gatsbyjs.org/packages/${plugin}/`
@@ -136,7 +177,7 @@ const addRemovePlugin = async (action, plugins, dryRun) => {
       spinner.end()
       reporter.error(
         `Error ${action.participle} plugin(s): ${pluginString}`,
-        error.stdout
+        error
       )
     }
   } else {
@@ -146,13 +187,12 @@ const addRemovePlugin = async (action, plugins, dryRun) => {
 
 module.exports = async program => {
   let action = verbs[program.action]
-  let plugins = program.plugins
-  let dry = program.dryRun
+  rootPath = program.directory
 
   switch (action.present) {
     case `add`:
     case `remove`:
-      await addRemovePlugin(action, plugins, dry)
+      await addRemovePlugin(action, program.plugins, program.dryRun)
       break
     case `config`:
       reporter.info(

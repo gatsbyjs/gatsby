@@ -100,3 +100,8 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
     JSON.stringify(manifest)
   )
 }
+
+exports.onInstall = ({ prompt }, existingConfig) => {
+  console.log(`onConfigurePlugin has been called in 'gatsby-plugin-manifest`)
+  console.log(`existing config`, existingConfig)
+}
