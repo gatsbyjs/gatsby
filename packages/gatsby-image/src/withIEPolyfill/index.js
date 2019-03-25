@@ -1,12 +1,9 @@
-import React, { Component, createRef } from "react"
+import React, { Component, createRef, forwardRef } from "react"
 import PropTypes from "prop-types"
 import Image from "../index"
 
 class ImageWithIEPolyfill extends Component {
-  constructor(props) {
-    super(props)
-    this.imageRef = createRef()
-  }
+  imageRef = this.props.innerRef || createRef()
 
   // Load object-fit/position polyfill if required (e.g. in IE)
   componentDidMount() {
@@ -49,4 +46,6 @@ ImageWithIEPolyfill.defaultProps = {
   objectPosition: `50% 50%`,
 }
 
-export default ImageWithIEPolyfill
+export default forwardRef((props, ref) => (
+  <ImageWithIEPolyfill {...props} innerRef={ref} />
+))
