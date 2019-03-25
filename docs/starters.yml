@@ -2135,3 +2135,13 @@
     - layout config either stacked or sidebar
     - theme dark/light mode
     - post support
+- url: http://gatsby-starter-default-intl.netlify.com
+  repo: https://github.com/wiziple/gatsby-starter-default-intl
+  description: The default Gatsby starter with features of multi-language url routes and browser language detection.
+  tags:
+    - i18n
+  features:
+    - Localization (Multilanguage) provided by react-intl.
+    - Support automatic redirection based on user's preferred language in browser provided by browser-lang.
+    - Support multi-language url routes within a single page component. That means you don't have to create separate pages such as pages/en/index.js or pages/ko/index.js.
+    - Based on gatsby-starter-default with least modification.
