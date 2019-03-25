@@ -15,9 +15,8 @@ module.exports = class AnalyticsTracker {
   osInfo // lazy
   trackingEnabled // lazy
   componentVersion
-  sessionId
+  sessionId = uuid()
   constructor() {
-    this.sessionId = uuid()
     try {
       this.componentVersion = require(`../package.json`).version
     } catch (e) {
@@ -190,7 +189,7 @@ module.exports = class AnalyticsTracker {
 
   async sendEvents() {
     if (!this.isTrackingEnabled()) {
-      return async _ => {} // so that then/await won't fail
+      return Promise.resolve()
     }
     return this.store.sendEvents()
   }
