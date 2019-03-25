@@ -208,7 +208,7 @@ module.exports = {
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
         icon_options: {
           // For all the options available, please see:
-          // https://www.w3.org/TR/appmanifest/#imageresource-and-its-members
+          // https://developer.mozilla.org/en-US/docs/Web/Manifest
           purpose: `maskable`,
         },
       },
