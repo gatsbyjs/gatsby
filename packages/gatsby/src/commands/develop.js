@@ -33,6 +33,7 @@ const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
+const writeJsRequires = require(`../bootstrap/write-js-requires`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -73,11 +74,6 @@ async function startServer(program) {
       )
     })
 
-  // Start bootstrap process.
-  await bootstrap(program)
-
-  queryRunner.startDaemon()
-
   await createIndexHtml()
 
   const devConfig = await webpackConfig(
@@ -87,6 +83,7 @@ async function startServer(program) {
     program.port
   )
 
+  console.log(`start webpack compile`)
   const compiler = webpack(devConfig)
 
   /**
@@ -287,35 +284,42 @@ module.exports = async (program: any) => {
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detect(port, (err, _port) => {
-      if (err) {
-        report.panic(err)
-      }
-
-      if (port !== _port) {
-        // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-
-        rlInterface.question(question, answer => {
-          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-            program.port = _port // eslint-disable-line no-param-reassign
-          }
-
-          startServer(program).then(([c, l]) => {
-            compiler = c
-            resolve()
-          })
-        })
-      } else {
-        startServer(program).then(([c, l]) => {
-          compiler = c
-          resolve()
-        })
-      }
+  const askQuestion = port => {
+    const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+    return new Promise(resolve => {
+      rlInterface.question(question, answer => {
+        resolve(answer.length === 0 || answer.match(/^yes|y$/i))
+      })
     })
-  })
+  }
+
+  const detectPort = port =>
+    new Promise((resolve, reject) => {
+      detect(port, (err, _port) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(_port)
+        }
+      })
+    })
+
+  const ascertainPort = async port => {
+    let foundPort = port
+    const detectedPort = await detectPort(port)
+    if (port !== detectedPort) {
+      if (await askQuestion(port)) {
+        foundPort = detectedPort
+      }
+    }
+    return foundPort
+  }
+  program.port = await ascertainPort(port)
+
+  // Start bootstrap process.
+  const { pageQueryIds } = await bootstrap(program)
+
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -451,7 +455,22 @@ module.exports = async (program: any) => {
     })
   }
 
+  const runPageQueries = async queryIds => {
+    let activity = report.activityTimer(`run page queries`)
+    activity.start()
+    await queryRunner.processPageQueries(queryIds, {
+      activity,
+      state: store.getState(),
+    })
+    activity.end()
+
+    require(`../redux/actions`).boundActionCreators.setProgramStatus(
+      `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+    )
+  }
+
   let isFirstCompile = true
+
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.hooks.done.tapAsync(`print getsby instructions`, (stats, done) => {
@@ -470,17 +489,22 @@ module.exports = async (program: any) => {
     // }
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
-      printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-      printDeprecationWarnings()
-      if (program.open) {
-        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
-          console.log(
-            `${chalk.yellow(
-              `warn`
-            )} Browser not opened because no browser was found`
+      console.log(`running page queries`)
+      runPageQueries(pageQueryIds).then(result => {
+        queryRunner.startDaemon()
+        writeJsRequires.startDaemon()
+        printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+        printDeprecationWarnings()
+        if (program.open) {
+          Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
+            console.log(
+              `${chalk.yellow(
+                `warn`
+              )} Browser not opened because no browser was found`
+            )
           )
-        )
-      }
+        }
+      })
     }
 
     isFirstCompile = false

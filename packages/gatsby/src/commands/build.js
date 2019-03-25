@@ -11,6 +11,8 @@ const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
+const queryRunner = require(`../query`)
+const { store } = require(`../redux`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -26,6 +28,7 @@ type BuildArgs = {
 }
 
 module.exports = async function build(program: BuildArgs) {
+  let activity
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
@@ -36,7 +39,7 @@ module.exports = async function build(program: BuildArgs) {
   const buildSpan = tracer.startSpan(`build`)
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner } = await bootstrap({
+  const { pageQueryIds, graphqlRunner } = await bootstrap({
     ...program,
     parentSpan: buildSpan,
   })
@@ -50,7 +53,6 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  let activity
   activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
@@ -60,6 +62,18 @@ module.exports = async function build(program: BuildArgs) {
     reportFailure(`Generating JavaScript bundles failed`, err)
   })
   activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryRunner.processPageQueries(pageQueryIds, {
+    activity,
+    state: store.getState(),
+  })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
 
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,

@@ -31,7 +31,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 
 const queryRunner = require(`../query`)
 const { extractQueries } = require(`../query/query-watcher`)
-const { writePages } = require(`./pages-writer`)
+const writeJsRequires = require(`./write-js-requires`)
 const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
@@ -465,27 +465,13 @@ module.exports = async (args: BootstrapArgs) => {
   )
   activity.end()
 
-  activity = report.activityTimer(`run page queries`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await queryRunner.processQueries(
-    pageQueryIds.map(id => queryRunner.makePageQueryJob(state, id)),
-    { activity }
-  )
-  activity.end()
-
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
-  )
-
   // Write out files.
-  activity = report.activityTimer(`write out page data`, {
+  activity = report.activityTimer(`write out generated js requires`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
   try {
-    await writePages()
+    await writeJsRequires.writeAll(store.getState())
   } catch (err) {
     report.panic(`Failed to write out page data`, err)
   }
@@ -499,6 +485,8 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
+  // Run js build here
+
   let onEndJob
 
   const checkJobsDone = _.debounce(async resolve => {
@@ -507,13 +495,16 @@ module.exports = async (args: BootstrapArgs) => {
       emitter.off(`END_JOB`, onEndJob)
 
       await finishBootstrap(bootstrapSpan)
-      resolve({ graphqlRunner })
+      resolve({ graphqlRunner, pageQueryIds })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
     await finishBootstrap(bootstrapSpan)
-    return { graphqlRunner }
+    return {
+      graphqlRunner,
+      pageQueryIds,
+    }
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
