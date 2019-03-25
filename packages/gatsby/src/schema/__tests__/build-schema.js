@@ -244,6 +244,7 @@ describe(`Build schema`, () => {
       expect(interfaceType).toBeInstanceOf(GraphQLInterfaceType)
       const unionType = schema.getType(`UFooBar`)
       expect(unionType).toBeInstanceOf(GraphQLUnionType)
+      expect(unionType.getTypes().length).toBe(3)
       ;[(`Foo`, `Bar`, `Author`)].forEach(typeName => {
         const type = schema.getType(typeName)
         const typeSample = { internal: { type: typeName } }
@@ -442,6 +443,38 @@ describe(`Build schema`, () => {
       const type = schema.getType(`Author`)
       const fields = type.getFields()
       expect(fields[`name`].type).toEqual(GraphQLString)
+    })
+
+    it(`allows setting field type nullability on field`, async () => {
+      createTypes(`
+        type Post implements Node {
+          tags: [String!]!
+          categories: [String]
+        }
+      `)
+      createCreateResolversMock({
+        Post: {
+          tags: {
+            type: `[String]`,
+            resolve() {
+              return [`All good`]
+            },
+          },
+          categories: {
+            type: `[String!]!`,
+            resolve() {
+              return [`Even better`]
+            },
+          },
+        },
+      })
+      const schema = await buildSchema()
+      const type = schema.getType(`Post`)
+      const fields = type.getFields()
+      expect(fields[`tags`].type.toString()).toBe(`[String]`)
+      expect(fields[`tags`].resolve).toBeDefined()
+      expect(fields[`categories`].type.toString()).toBe(`[String!]!`)
+      expect(fields[`categories`].resolve).toBeDefined()
     })
 
     it(`allows overriding field type on field on third-party type`, async () => {
