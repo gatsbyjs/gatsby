@@ -2116,3 +2116,12 @@
     - Responsive images with gatsby-image
     - Extensive SEO
     - ESLint & Prettier
+- url: https://gatsby-starter-landing-page.netlify.com/
+  repo: https://github.com/gillkyle/gatsby-starter-landing-page
+  description: Single page starter for minimal landing pages
+  tags:
+    - Onepage
+  features:
+    - Gatsby image
+    - Google Analytics
+    - Minimal design
