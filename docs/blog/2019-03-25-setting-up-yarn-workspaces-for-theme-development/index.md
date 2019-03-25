@@ -11,13 +11,13 @@ tags:
 
 Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites.
 Using [Yarn workspaces][] is an excellent way to set up a project for theme development.
-It allows you to set up multiple packages in a parent directory and link dependencies together.
+It allows you to keep multiple packages in a single parent directory and link dependencies together.
 For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project.
 In this post, we'll walk through how to use Yarn workspaces to set up a development environment for creating custom themes.
 
 ## Installation and directory structure
 
-First, if you don't have Yarn installed already, here's how to [install Yarn][].
+First, if you don't have Yarn installed already, follow the directions here to [install Yarn][].
 Next, create a new directory for the entire project, where you'll be adding your theme and an example site later.
 
 Create two subdirectories in this folder: one for the theme itself and one for the example site.
@@ -46,13 +46,13 @@ yarn workspace example add gatsby react react-dom
 
 The `yarn workspace` command will run Yarn commands for a specific workspace without needing to switch directories.
 
-Also add these as development dependencies to the theme.
+Also add the following as development dependencies to the theme.
 
 ```shell
 yarn workspace gatsby-theme-example-workspaces add -D gatsby react react-dom
 ```
 
-In the theme's `package.json`, set these dependencies as `peerDependencies` as well.
+In the theme's `package.json`, add these dependencies as `peerDependencies` as well.
 This will help ensure that the end user of your theme can choose to use any compatible version of Gatsby with your theme.
 
 ```json:title=gatsby-theme-example-workspaces/package.json
@@ -66,19 +66,20 @@ This will help ensure that the end user of your theme can choose to use any comp
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
   },
+  // highlight-start
   "peerDependencies": {
-    // highlight-line
-    "gatsby": "^2.2.10", // highlight-line
-    "react": "^16.8.5", // highlight-line
-    "react-dom": "^16.8.5" // highlight-line
+    "gatsby": "^2.2.10",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   }
+  // highlight-end
 }
 ```
 
 ## Base theme setup
 
 To ensure that Gatsby will compile ES6 syntax in your theme, add the following plugin to its `gatsby-config.js`.
-Note that this is only temporarily. Gatsby will automatically transpile themes in a later version.
+Note that this is only needed temporarily. Gatsby will automatically transpile themes in a later version.
 
 ```shell
 yarn workspace gatsby-theme-example-workspaces add gatsby-plugin-compile-es6-packages
@@ -98,8 +99,6 @@ module.exports = {
 ```
 
 Create an empty `index.js` file to the theme's directory that serves as a noop (empty function).
-
-- `src/` ??
 
 ## Example site setup
 
