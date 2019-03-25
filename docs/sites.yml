@@ -5024,3 +5024,41 @@
   built_by: Neo Nie
   built_by_url: https://github.com/nihgwu
   featured: false
+- title: Arctica
+  url: https://arctica.io
+  main_url: https://arctica.io
+  description: >
+    Arctica specialises in purpose-built web sites and progressive web applications with user optimal experiences, tailored to meet the objectives of your business.
+  categories:
+    - Portfolio
+    - Agency
+    - Design
+    - Web Development
+  built_by: Arctica
+  built_by_url: https://arctica.io
+  featured: false
+- title: Shard Ventures
+  url: https://shard.vc
+  main_url: https://shard.vc
+  description: >
+    Shard is building new online companies from scratch, partnering with other like-minded founders to start and invest in technology companies.
+  categories:
+    - Finance
+    - Technology
+    - Portfolio
+  built_by: Arctica
+  built_by_url: https://arctica.io
+  featured: false
+- title: David Brookes
+  url: https://davidbrookes.me
+  main_url: https://davidbrookes.me
+  description: >
+    Specialising in crafting stylish, high performance websites and applications that get results, using the latest cutting edge web development technologies.
+  categories:
+    - Portfolio
+    - Freelance
+    - Frontend
+    - Web Development
+  built_by: Arctica
+  built_by_url: https://arctica.io
+  featured: false
