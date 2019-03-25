@@ -24,7 +24,7 @@ module.exports = async program => {
         return
       }
 
-      resolve()
+      resolve(stats)
     })
   })
 }

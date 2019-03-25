@@ -58,10 +58,16 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  await buildProductionBundle(program).catch(err => {
+  const stats = await buildProductionBundle(program).catch(err => {
     reportFailure(`Generating JavaScript bundles failed`, err)
   })
   activity.end()
+
+  const webpackCompilationHash = stats.hash
+  store.dispatch({
+    type: `SET_WEBPACK_COMPILATION_HASH`,
+    payload: webpackCompilationHash,
+  })
 
   activity = report.activityTimer(`run page queries`)
   activity.start()

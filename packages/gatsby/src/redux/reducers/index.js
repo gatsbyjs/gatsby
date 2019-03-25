@@ -40,6 +40,7 @@ module.exports = {
   staticQueryComponents: require(`./static-query-components`),
   jobs: require(`./jobs`),
   webpack: require(`./webpack`),
+  webpackCompilationHash: require(`./webpack-compilation-hash`),
   redirects: require(`./redirects`),
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),

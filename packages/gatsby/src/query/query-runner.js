@@ -27,7 +27,7 @@ type Args = {
   component: Any,
 }
 
-const makePageData = ({ publicDir }, page, result) => {
+const makePageData = ({ publicDir, webpackCompilationHash }, page, result) => {
   const fixedPagePath = page.path === `/` ? `index` : page.path
   const filePath = path.join(
     publicDir,
@@ -38,6 +38,7 @@ const makePageData = ({ publicDir }, page, result) => {
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
+    compilationHash: webpackCompilationHash,
     ...result,
   }
   return {
@@ -48,7 +49,7 @@ const makePageData = ({ publicDir }, page, result) => {
 
 // Run query
 module.exports = async ({ queryJob, component }: Args) => {
-  const { schema, program, pages } = store.getState()
+  const { schema, program, pages, webpackCompilationHash } = store.getState()
 
   const graphql = (query, context) =>
     graphqlFunction(
@@ -134,7 +135,11 @@ ${formatErrorDetails(errorDetails)}`)
     const publicDir = path.join(program.directory, `public`)
     if (queryJob.isPage) {
       const page = pages.get(queryJob.id)
-      const { filePath, body } = makePageData({ publicDir }, page, result)
+      const { filePath, body } = makePageData(
+        { publicDir, webpackCompilationHash },
+        page,
+        result
+      )
       await fs.outputFile(filePath, JSON.stringify(body))
     } else {
       const staticDir = path.join(publicDir, `static`)
