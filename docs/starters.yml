@@ -2160,3 +2160,20 @@
     - Netlify deployment friendly
     - Nunito font as npm module
     - Site meta tags with React Helmet
+- url: https://agalp.imedadel.me
+  repo: https://github.com/ImedAdel/automatic-gatsbyjs-app-landing-page
+  description: Automatically generate iOS app landing page using GatsbyJS
+  tags:
+    - Onepage
+    - PWA
+    - SEO
+  features:
+    - One Configuration file
+    - Automatically generate a landing page for your iOS app
+    - List app features
+    - App Store and Play Store buttons
+    - App screenshot and video preview
+    - Easily add social media accounts and contact info in the footer via the site-config.js file.
+    - Pick custom Font Awesome icons for the feature list via the site-config.js file.
+    - Built using Prettier and Styled-Components
+    - Easily integrate Google Analytics by adding your ID to site-config.js file.
