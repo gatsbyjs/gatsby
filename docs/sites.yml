@@ -5062,3 +5062,18 @@
   built_by: Arctica
   built_by_url: https://arctica.io
   featured: false
+- title: Dennis Morello
+  url: https://morello.dev
+  main_url: https://morello.dev
+  source_url: https://gitlab.com/dennismorello/dev-blog
+  description: >
+    morello.dev is a development and techology blog written by Dennis Morello.
+  categories:
+    - Blog
+    - Education
+    - Web Development
+    - Open Source
+    - Technology
+  built_by: Dennis Morello
+  built_by_url: https://twitter.com/dennismorello
+  featured: false
