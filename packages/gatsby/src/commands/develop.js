@@ -17,7 +17,7 @@ const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
-const developHtml = require(`./develop-html`)
+const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const launchEditor = require(`react-dev-utils/launchEditor`)
@@ -34,7 +34,6 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
 const writeJsRequires = require(`../bootstrap/write-js-requires`)
-
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
@@ -58,8 +57,11 @@ rlInterface.on(`SIGINT`, () => {
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () =>
-    developHtml(program).catch(err => {
+  const createIndexHtml = async () => {
+    try {
+      await buildHTML.buildRenderer(program, `develop-html`)
+      await buildHTML.buildPages({ program, pagePaths: [`/`] })
+    } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
         return
@@ -72,7 +74,8 @@ async function startServer(program) {
         `,
         err
       )
-    })
+    }
+  }
 
   await createIndexHtml()
 

@@ -85,7 +85,11 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-  await buildHTML({ program, pages: store.getState().pages }).catch(err => {
+  try {
+    await buildHTML.buildRenderer(program, `build-html`)
+    const pagePaths = [...store.getState().pages.keys()]
+    await buildHTML.buildPages({ program, pagePaths })
+  } catch (err) {
     reportFailure(
       report.stripIndent`
         Building static HTML failed${
@@ -98,7 +102,7 @@ module.exports = async function build(program: BuildArgs) {
       `,
       err
     )
-  })
+  }
   activity.end()
 
   await apiRunnerNode(`onPostBuild`, {

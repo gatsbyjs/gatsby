@@ -18,15 +18,9 @@ const runWebpack = compilerConfig =>
     })
   })
 
-async function buildRenderPage(program) {
+const doBuildRenderer = async (program, webpackConfig) => {
   const { directory } = program
-  const compilerConfig = await webpackConfig(
-    program,
-    directory,
-    `build-html`,
-    null
-  )
-  const stats = await runWebpack(compilerConfig)
+  const stats = await runWebpack(webpackConfig)
   const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
     let webpackErrors = stats.toJson().errors.filter(Boolean)
@@ -40,16 +34,21 @@ async function buildRenderPage(program) {
   }
 }
 
-async function buildPages({ program, pages }) {
+const buildRenderer = async (program, stage) => {
+  const { directory } = program
+  const config = await webpackConfig(program, directory, stage, null)
+  await doBuildRenderer(program, config)
+}
+
+async function buildPages({ program, pagePaths }) {
   const { directory } = program
   telemetry.decorateEvent(`BUILD_END`, {
-    siteMeasurements: { pagesCount: pages.length },
+    siteMeasurements: { pagesCount: pagePaths.length },
   })
-  const dirtyPages = [...pages.keys()]
 
   const outputFile = `${directory}/public/render-page.js`
   try {
-    await renderHTMLQueue(outputFile, dirtyPages)
+    await renderHTMLQueue(outputFile, pagePaths)
     try {
       await fs.unlink(outputFile)
       await fs.unlink(`${outputFile}.map`)
@@ -63,7 +62,7 @@ async function buildPages({ program, pages }) {
   }
 }
 
-module.exports = async ({ program, pages }) => {
-  await buildRenderPage(program)
-  await buildPages({ program, pages })
+module.exports = {
+  buildRenderer,
+  buildPages,
 }
