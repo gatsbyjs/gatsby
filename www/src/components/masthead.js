@@ -17,7 +17,6 @@ const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      boxSizing: `border-box`,
       margin: `0 auto`,
       paddingBottom: space[9],
       paddingTop: space[9],
