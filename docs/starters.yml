@@ -2183,7 +2183,7 @@
   tags:
     - Shopify
     - Serverless
-    - firebase
+    - Firebase
     - App
   features:
     - 🗄 Firebase Firestore Realtime DB
