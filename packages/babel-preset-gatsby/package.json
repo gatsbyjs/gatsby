@@ -1,12 +1,12 @@
 {
   "name": "babel-preset-gatsby",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-env": "^7.4.1",
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-macros": "^2.4.2"
   },

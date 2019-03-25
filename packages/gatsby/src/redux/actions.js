@@ -1262,6 +1262,7 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *       fields: {
  *         frontmatter: 'Frontmatter!'
  *       },
+ *       interfaces: ['Node'],
  *     }),
  *     schema.buildObjectType({
  *       name: 'Frontmatter',
