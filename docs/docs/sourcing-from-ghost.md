@@ -71,9 +71,7 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(`
         {
-          allGhostPost(
-            sort: { order: ASC, fields: published_at }
-          ) {
+          allGhostPost(sort: { order: ASC, fields: published_at }) {
             edges {
               node {
                 slug
