@@ -230,12 +230,7 @@ const createTypeComposerFromGatsbyType = ({
           ...type.config,
           types: () => {
             if (type.config.types) {
-              // handle thunk
-              const types = _.isFunction(type.config.types)
-                ? type.config.types()
-                : type.config.types
-
-              return types.map(typeName =>
+              return type.config.types.map(typeName =>
                 schemaComposer.getOTC(typeName).getType()
               )
             } else {
