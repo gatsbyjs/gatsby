@@ -244,6 +244,7 @@ describe(`Build schema`, () => {
       expect(interfaceType).toBeInstanceOf(GraphQLInterfaceType)
       const unionType = schema.getType(`UFooBar`)
       expect(unionType).toBeInstanceOf(GraphQLUnionType)
+      expect(unionType.getTypes().length).toBe(3)
       ;[(`Foo`, `Bar`, `Author`)].forEach(typeName => {
         const type = schema.getType(typeName)
         const typeSample = { internal: { type: typeName } }
