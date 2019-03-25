@@ -2082,3 +2082,17 @@
   features:
     - Showcase of portfolio items
     - About me page
+- url: https://gatsby-typescript-scss-docker-starter.netlify.com/
+  repo: https://github.com/OFranke/gatsby-typescript-scss-docker
+  description: Gatsby starter TypeScript, SCSS, Docker
+  tags:
+    - TypeScript
+    - Styling:SCSS
+    - Linting
+    - Docker
+  features:
+    - Format & Commit Safe by ESLint, StyleLint and Prettier with Lint-Staged (Husky), optimized for VS Code
+    - Typings for scss files are automatically generated
+    - Responsiveness from the beginning through easy breakpoint configuration
+    - Enforce the DRY principle, no hardcoded and repeated `margin`, `font-size`, `color`, `box-shadow`, `border-radius` ... properties anymore
+    - Docker ready - you can run gatsby dev mode on your machine environment or with docker-compose
