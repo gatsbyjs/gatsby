@@ -2,7 +2,7 @@
 
 const fs = require(`fs`)
 const { extname, resolve } = require(`path`)
-const recursiveReaddir = require(`recursive-readdir-synchronous`)
+const readdir = require(`recursive-readdir`)
 const normalizePath = require(`normalize-path`)
 
 const {
@@ -11,8 +11,8 @@ const {
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
 } = require(`./constants`)
 
-exports.createPages = (
-  { actions },
+exports.createPages = async (
+  { actions, reporter },
   {
     directory = OPTION_DEFAULT_LINK_TEXT,
     externals = [],
@@ -27,54 +27,60 @@ exports.createPages = (
   const { createPage } = actions
 
   if (!fs.existsSync(directory)) {
-    throw Error(`Invalid REPL directory specified: "${directory}"`)
+    reporter.panic(`Invalid REPL directory specified: "${directory}"`)
   }
 
   if (!fs.existsSync(redirectTemplate)) {
-    throw Error(
+    reporter.panic(
       `Invalid REPL redirectTemplate specified: "${redirectTemplate}"`
     )
   }
 
-  // TODO We could refactor this to use 'recursive-readdir' instead,
-  // And wrap with Promise.all() to execute createPage() in parallel.
-  // I'd need to find a way to reliably test error handling though.
-  const files = recursiveReaddir(directory)
+  try {
+    const files = await readdir(directory)
+    if (files.length === 0) {
+      console.warn(`Specified REPL directory "${directory}" contains no files`)
 
-  if (files.length === 0) {
-    console.warn(`Specified REPL directory "${directory}" contains no files`)
-
-    return
-  }
-
-  files.forEach(file => {
-    if (extname(file) === `.js` || extname(file) === `.jsx`) {
-      const slug = file
-        .substring(0, file.length - extname(file).length)
-        .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
-      const code = fs.readFileSync(file, `utf8`)
-
-      // Codepen configuration.
-      // https://blog.codepen.io/documentation/api/prefill/
-      const action = `https://codepen.io/pen/define`
-      const payload = JSON.stringify({
-        editors: `0010`,
-        html,
-        js: code,
-        js_external: externals.join(`;`),
-        js_pre_processor: `babel`,
-        layout: `left`,
-      })
-
-      createPage({
-        path: slug,
-        // Normalize the path so tests pass on Linux + Windows
-        component: normalizePath(resolve(redirectTemplate)),
-        context: {
-          action,
-          payload,
-        },
-      })
+      return
     }
-  })
+
+    files.forEach(file => {
+      if (extname(file) === `.js` || extname(file) === `.jsx`) {
+        const slug = file
+          .substring(0, file.length - extname(file).length)
+          .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
+        const code = fs.readFileSync(file, `utf8`)
+
+        // Codepen configuration.
+        // https://blog.codepen.io/documentation/api/prefill/
+        const action = `https://codepen.io/pen/define`
+        const payload = JSON.stringify({
+          editors: `0010`,
+          html,
+          js: code,
+          js_external: externals.join(`;`),
+          js_pre_processor: `babel`,
+          layout: `left`,
+        })
+
+        createPage({
+          path: slug,
+          // Normalize the path so tests pass on Linux + Windows
+          component: normalizePath(resolve(redirectTemplate)),
+          context: {
+            action,
+            payload,
+          },
+        })
+      }
+    })
+  } catch (error) {
+    reporter.panic(
+      `
+      Error in gatsby-remark-code-repls plugin: cannot read directory ${directory}.
+      More details can be found in the error reporting below.
+      `,
+      error
+    )
+  }
 }

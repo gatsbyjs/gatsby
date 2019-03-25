@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.23...gatsby-plugin-manifest@2.0.24) (2019-03-12)
+
+### Features
+
+- **gatsby-plugin-manifest:** add cache busting to icon url ([#8343](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/8343)) ([5f656f8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/5f656f8))
+
+## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.22...gatsby-plugin-manifest@2.0.23) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.21...gatsby-plugin-manifest@2.0.22) (2019-03-05)
+
+### Bug Fixes
+
+- don't crash if cpu-core-count is not available ([#12332](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12332)) ([412217d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/412217d))
+
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.20...gatsby-plugin-manifest@2.0.21) (2019-03-04)
+
+### Features
+
+- **gatsby:** configure physical cores, logical_cores or fixed number ([#10257](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/10257)) ([c51440e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/c51440e))
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.19...gatsby-plugin-manifest@2.0.20) (2019-02-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.18...gatsby-plugin-manifest@2.0.19) (2019-02-22)
+
+### Features
+
+- **gatsby-plugin-manifest:** add option for crossorigin in manifest ([#11953](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/11953)) ([1a16600](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/1a16600))
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.17...gatsby-plugin-manifest@2.0.18) (2019-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** improve SVG->PNG fidelity ([#11608](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/11608)) ([e9345cd](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/e9345cd))
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.16...gatsby-plugin-manifest@2.0.17) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.15...gatsby-plugin-manifest@2.0.16) (2019-01-31)
+
+### Features
+
+- **gatsby-plugin-manifest:** make favicon link tag optional ([#11414](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/11414)) ([1af42bc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/1af42bc))
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.14...gatsby-plugin-manifest@2.0.15) (2019-01-29)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.13...gatsby-plugin-manifest@2.0.14) (2019-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Legacy default to true ([#11203](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/11203)) ([7e84613](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/7e84613))
+
 <a name="2.0.13"></a>
 
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.12...gatsby-plugin-manifest@2.0.13) (2018-12-29)

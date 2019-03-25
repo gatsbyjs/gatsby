@@ -29,3 +29,6 @@ infrastructure
 
 # coverage
 coverage
+
+# forestry files
+.forestry/**/*

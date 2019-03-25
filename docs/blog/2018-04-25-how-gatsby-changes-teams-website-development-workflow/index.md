@@ -1,6 +1,6 @@
 ---
 title: How Gatsby Changes Teams' Website Development Workflow
-date: "2018-04-25"
+date: 2018-04-25
 author: "Sam Bhagwat"
 excerpt: Gatsby is more than just a new website framework -- it changes the way your team works together.
 tags: ["collaboration"]
