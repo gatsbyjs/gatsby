@@ -2125,3 +2125,13 @@
     - Gatsby image
     - Google Analytics
     - Minimal design
+- url: https://thakkaryash94.github.io/gatsby-github-personal-website/
+  repo: https://github.com/thakkaryash94/gatsby-github-personal-website
+  description: It is a conversion of original github personal website repo which is written in ruby for JS developers. This repository gives you the code you'll need to kickstart a personal website that showcases your work as a software developer. And when you manage the code in a GitHub repository, it will automatically render a webpage with the owner's profile information, including a photo, bio, and repositories.
+  tags:
+    - Portfolio
+    - Onepage
+  features:
+    - layout config either stacked or sidebar
+    - theme dark/light mode
+    - post support
