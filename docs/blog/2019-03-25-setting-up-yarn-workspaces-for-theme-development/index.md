@@ -133,11 +133,12 @@ Add Gatsby scripts to the example site's `package.json`.
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  // highlight-start
   "scripts": {
-    // highlight-line
-    "develop": "gatsby develop", // highlight-line
-    "build": "gatsby build" // highlight-line
-  }, // highlight-line
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  },
+  // highlight-end
   "dependencies": {
     "gatsby": "^2.2.10",
     "gatsby-theme-example-workspaces": "1.0.0",
