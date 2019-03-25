@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-filesystem",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-  "version": "2.0.27",
+  "version": "2.0.28",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "better-queue": "^3.8.7",
     "bluebird": "^3.5.0",
-    "chokidar": "^2.1.2",
+    "chokidar": "2.1.2",
     "file-type": "^10.2.0",
     "fs-extra": "^5.0.0",
     "got": "^7.1.0",

@@ -40,7 +40,7 @@ With Gatsby, we can make images way way better.
 1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
 
 ```shell
-  npm i gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+  npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 2. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`

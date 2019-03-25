@@ -86,6 +86,7 @@ const pascalCase = _.flow(
 )
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
+const pageComponentCache = {}
 const fileOkCache = {}
 
 /**
@@ -201,37 +202,48 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(page)
       noPageOrComponent = true
     } else if (page.component) {
-      // normalize component path
-      page.component = slash(page.component)
-      // check if path uses correct casing - incorrect casing will
-      // cause issues in query compiler and inconsistencies when
-      // developing on Mac or Windows and trying to deploy from
-      // linux CI/CD pipeline
-      const trueComponentPath = slash(truePath(page.component))
-      if (trueComponentPath !== page.component) {
-        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-          const markers = page.component
-            .split(``)
-            .map((letter, index) => {
-              if (letter !== trueComponentPath[index]) {
-                return `^`
-              }
-              return ` `
-            })
-            .join(``)
+      // check if we've processed this component path
+      // before, before running the expensive "truePath"
+      // operation
+      if (pageComponentCache[page.component]) {
+        page.component = pageComponentCache[page.component]
+      } else {
+        const originalPageComponent = page.component
 
-          report.warn(
-            stripIndent`
-          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+        // normalize component path
+        page.component = slash(page.component)
+        // check if path uses correct casing - incorrect casing will
+        // cause issues in query compiler and inconsistencies when
+        // developing on Mac or Windows and trying to deploy from
+        // linux CI/CD pipeline
+        const trueComponentPath = slash(truePath(page.component))
+        if (trueComponentPath !== page.component) {
+          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+            const markers = page.component
+              .split(``)
+              .map((letter, index) => {
+                if (letter !== trueComponentPath[index]) {
+                  return `^`
+                }
+                return ` `
+              })
+              .join(``)
 
-          page.component:     "${page.component}"
-          path in filesystem: "${trueComponentPath}"
-                               ${markers}
-        `
-          )
-          hasWarnedForPageComponentInvalidCasing.add(page.component)
+            report.warn(
+              stripIndent`
+            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+            page.component:     "${page.component}"
+            path in filesystem: "${trueComponentPath}"
+                                 ${markers}
+          `
+            )
+            hasWarnedForPageComponentInvalidCasing.add(page.component)
+          }
+
+          page.component = trueComponentPath
         }
-        page.component = trueComponentPath
+        pageComponentCache[originalPageComponent] = page.component
       }
     }
   }
@@ -1250,6 +1262,7 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *       fields: {
  *         frontmatter: 'Frontmatter!'
  *       },
+ *       interfaces: ['Node'],
  *     }),
  *     schema.buildObjectType({
  *       name: 'Frontmatter',
