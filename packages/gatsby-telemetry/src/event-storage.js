@@ -42,9 +42,6 @@ module.exports = class EventStorage {
         headers: { "content-type": `application/json` },
         body: JSON.stringify(events),
       })
-      if (res.ok) {
-        return true
-      }
       return res.ok
     } catch (e) {
       return false

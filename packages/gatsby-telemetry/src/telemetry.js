@@ -184,7 +184,6 @@ module.exports = class AnalyticsTracker {
   setTelemetryEnabled(enabled) {
     this.trackingEnabled = enabled
     this.store.updateConfig(`telemetry.enabled`, enabled)
-    console.log(`Telemetry collection`, enabled ? `enabled` : `disabled`)
   }
 
   async sendEvents() {

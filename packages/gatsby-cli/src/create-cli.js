@@ -355,9 +355,11 @@ module.exports = argv => {
             description: `Disable telemetry`,
           }),
 
-      handler: handlerP(({ enable, disable }) =>
-        setTelemetryEnabled(enable || !disable)
-      ),
+      handler: handlerP(({ enable, disable }) => {
+        const enabled = enable || !disable
+        setTelemetryEnabled(enabled)
+        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
