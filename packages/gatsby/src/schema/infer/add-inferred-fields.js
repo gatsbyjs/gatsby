@@ -361,10 +361,15 @@ const getSimpleFieldConfig = ({
             originalFieldTypeComposer.getTypeName()
           )
         } else {
-          fieldTypeComposer = ObjectTypeComposer.createTemp(
-            createTypeName(selector),
-            schemaComposer
-          )
+          const typeName = createTypeName(selector)
+          if (schemaComposer.has(typeName)) {
+            fieldTypeComposer = schemaComposer.getOTC(typeName)
+          } else {
+            fieldTypeComposer = ObjectTypeComposer.createTemp(
+              createTypeName(selector),
+              schemaComposer
+            )
+          }
         }
 
         return {
