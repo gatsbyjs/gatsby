@@ -2,30 +2,14 @@
 
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
-const report = require(`gatsby-cli/lib/reporter`)
-const websocketManager = require(`../utils/websocket-manager`)
-
 const path = require(`path`)
+const report = require(`gatsby-cli/lib/reporter`)
+const { boundActionCreators } = require(`../redux/actions`)
 const { store } = require(`../redux`)
 const withResolverContext = require(`../schema/context`)
 const { formatErrorDetails } = require(`./utils`)
 
 const resultHashes = {}
-
-type QueryJob = {
-  id: string,
-  hash?: string,
-  jsonName: string,
-  query: string,
-  componentPath: string,
-  context: Object,
-  isPage: Boolean,
-}
-
-type Args = {
-  queryJob: QueryJob,
-  component: Any,
-}
 
 const makePageData = ({ publicDir, webpackCompilationHash }, page, result) => {
   const fixedPagePath = page.path === `/` ? `index` : page.path
@@ -47,8 +31,7 @@ const makePageData = ({ publicDir, webpackCompilationHash }, page, result) => {
   }
 }
 
-// Run query
-module.exports = async ({ queryJob, component }: Args) => {
+const jobHandler = async ({ queryJob }) => {
   const { schema, program, pages, webpackCompilationHash } = store.getState()
 
   const graphql = (query, context) =>
@@ -115,20 +98,6 @@ ${formatErrorDetails(errorDetails)}`)
     .update(resultJSON)
     .digest(`base64`)
 
-  if (process.env.gatsby_executing_command === `develop`) {
-    if (queryJob.isPage) {
-      websocketManager.emitPageData({
-        result,
-        id: queryJob.id,
-      })
-    } else {
-      websocketManager.emitStaticQueryData({
-        result,
-        id: queryJob.id,
-      })
-    }
-  }
-
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
 
@@ -148,5 +117,14 @@ ${formatErrorDetails(errorDetails)}`)
     }
   }
 
+  // Send event that the page query finished.
+  boundActionCreators.pageQueryRun({
+    path: queryJob.id,
+    componentPath: queryJob.componentPath,
+    isPage: queryJob.isPage,
+  })
+
   return result
 }
+
+module.exports = jobHandler

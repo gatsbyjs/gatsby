@@ -1,7 +1,8 @@
 const _ = require(`lodash`)
+const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
 const queryQueue = require(`./query-queue`)
-const convertHrtime = require(`convert-hrtime`)
+const jobHandler = require(`./job-handler`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
@@ -179,16 +180,13 @@ const makePageQueryJob = (state, queryId) => {
   }
 }
 
-/**
- *
- */
 const processQueries = async (queryJobs, { activity }) => {
   if (queryJobs.length == 0) {
     return
   }
   const startQueries = process.hrtime()
 
-  const queue = queryQueue.createBuild()
+  const queue = queryQueue.create()
   queue.on(`task_finish`, () => {
     const stats = queue.getStats()
     activity.setStatus(
@@ -221,9 +219,7 @@ const processQueries = async (queryJobs, { activity }) => {
  *
  * For what constitutes a dirty query, see `calcDirtyQueryIds`
  */
-const startDaemon = () => {
-  const queue = queryQueue.createDaemon()
-
+const startDaemon = queue => {
   const runQueuedActions = () => {
     const state = store.getState()
 
@@ -265,4 +261,6 @@ module.exports = {
   processQueries,
   runQueries,
   startDaemon,
+  createQueue: queryQueue.create,
+  jobHandler,
 }

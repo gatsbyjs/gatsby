@@ -54,6 +54,52 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
+function startQueryDaemon() {
+  const processing = new Set()
+  const waiting = new Map()
+  const betterQueueOptions = {
+    priority: (job, cb) => {
+      const activePaths = Array.from(websocketManager.activePaths.values())
+      if (job.id && activePaths.includes(job.id)) {
+        cb(null, 10)
+      } else {
+        cb(null, 1)
+      }
+    },
+    merge: (oldTask, newTask, cb) => {
+      cb(null, newTask)
+    },
+    filter: (job, cb) => {
+      if (processing.has(job.id)) {
+        waiting.set(job.id, job)
+        cb(`already running`)
+      } else {
+        cb(null, job)
+      }
+    },
+  }
+  const postHandler = async ({ queryJob, result }) => {
+    if (queryJob.isPage) {
+      websocketManager.emitPageData({
+        result,
+        id: queryJob.id,
+      })
+    } else {
+      websocketManager.emitStaticQueryData({
+        result,
+        id: queryJob.id,
+      })
+    }
+    processing.delete(queryJob.id)
+    if (waiting.has(queryJob.id)) {
+      queue.push(waiting.get(queryJob.id))
+      waiting.delete(queryJob.id)
+    }
+  }
+  const queue = queryRunner.createQueue({ postHandler, betterQueueOptions })
+  queryRunner.startDaemon(queue)
+}
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
@@ -494,7 +540,7 @@ module.exports = async (program: any) => {
     if (isSuccessful && isFirstCompile) {
       console.log(`running page queries`)
       runPageQueries(pageQueryIds).then(result => {
-        queryRunner.startDaemon()
+        startQueryDaemon()
         writeJsRequires.startDaemon()
         printInstructions(program.sitePackageJson.name, urls, program.useYarn)
         printDeprecationWarnings()
