@@ -25,16 +25,16 @@ exports.onRenderBody = (
   // Lighthouse recommends pre-connecting to google analytics
   setHeadComponents([
     <link
-        rel="preconnect"
-        key="preconnect-google-analytics"
-        href="https://www.google-analytics.com"
+      rel="preconnect"
+      key="preconnect-google-analytics"
+      href="https://www.google-analytics.com"
     />,
     <link
-        rel="dns-prefetch"
-        key="dns-prefetch-google-analytics"
-        href="https://www.google-analytics.com"
+      rel="dns-prefetch"
+      key="dns-prefetch-google-analytics"
+      href="https://www.google-analytics.com"
     />,
-  ]);
+  ])
 
   let excludeGAPaths = []
   if (typeof pluginOptions.exclude !== `undefined`) {
@@ -53,32 +53,32 @@ exports.onRenderBody = (
   }
 
   const setComponents = pluginOptions.head
-      ? setHeadComponents
-      : setPostBodyComponents
+    ? setHeadComponents
+    : setPostBodyComponents
   return setComponents([
     <script
-        key={`gatsby-plugin-google-analytics`}
-        dangerouslySetInnerHTML={{
-          __html: `
+      key={`gatsby-plugin-google-analytics`}
+      dangerouslySetInnerHTML={{
+        __html: `
   ${
-              excludeGAPaths.length
-                  ? `window.excludeGAPaths=[${excludeGAPaths.join(`,`)}];`
-                  : ``
-              }
+    excludeGAPaths.length
+      ? `window.excludeGAPaths=[${excludeGAPaths.join(`,`)}];`
+      : ``
+  }
   ${
-              typeof pluginOptions.anonymize !== `undefined` &&
-              pluginOptions.anonymize === true
-                  ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${
-                      pluginOptions.trackingId
-                      }',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
-                  : ``
-              }
+    typeof pluginOptions.anonymize !== `undefined` &&
+    pluginOptions.anonymize === true
+      ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${
+          pluginOptions.trackingId
+        }',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
+      : ``
+  }
   if(${
-              typeof pluginOptions.respectDNT !== `undefined` &&
-              pluginOptions.respectDNT == true
-                  ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
-                  : `true`
-              }) {
+    typeof pluginOptions.respectDNT !== `undefined` &&
+    pluginOptions.respectDNT == true
+      ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      : `true`
+  }) {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -86,37 +86,37 @@ exports.onRenderBody = (
   }
   if (typeof ga === "function") {
     ga('create', '${pluginOptions.trackingId}', '${
-              typeof pluginOptions.cookieDomain === `string`
-                  ? pluginOptions.cookieDomain
-                  : `auto`
-              }', ${
-              typeof pluginOptions.name === `string`
-                  ? `'${pluginOptions.name}', `
-                  : ``
-              }${JSON.stringify(gaCreateOptions)});
+          typeof pluginOptions.cookieDomain === `string`
+            ? pluginOptions.cookieDomain
+            : `auto`
+        }', ${
+          typeof pluginOptions.name === `string`
+            ? `'${pluginOptions.name}', `
+            : ``
+        }${JSON.stringify(gaCreateOptions)});
       ${
-              typeof pluginOptions.anonymize !== `undefined` &&
-              pluginOptions.anonymize === true
-                  ? `ga('set', 'anonymizeIp', true);`
-                  : ``
-              }
+        typeof pluginOptions.anonymize !== `undefined` &&
+        pluginOptions.anonymize === true
+          ? `ga('set', 'anonymizeIp', true);`
+          : ``
+      }
       ${
-              typeof pluginOptions.optimizeId !== `undefined`
-                  ? `ga('require', '${pluginOptions.optimizeId}');`
-                  : ``
-              }
+        typeof pluginOptions.optimizeId !== `undefined`
+          ? `ga('require', '${pluginOptions.optimizeId}');`
+          : ``
+      }
       ${
-              typeof pluginOptions.experimentId !== `undefined`
-                  ? `ga('set', 'expId', '${pluginOptions.experimentId}');`
-                  : ``
-              }
+        typeof pluginOptions.experimentId !== `undefined`
+          ? `ga('set', 'expId', '${pluginOptions.experimentId}');`
+          : ``
+      }
       ${
-              typeof pluginOptions.variationId !== `undefined`
-                  ? `ga('set', 'expVar', '${pluginOptions.variationId}');`
-                  : ``
-              }}
+        typeof pluginOptions.variationId !== `undefined`
+          ? `ga('set', 'expVar', '${pluginOptions.variationId}');`
+          : ``
+      }}
       `,
-        }}
+      }}
     />,
   ])
 }
