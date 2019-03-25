@@ -728,8 +728,8 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   )
 
   return trace(tmpFilePath, optionsSVG)
-    .then(svg => optimize(svg))
-    .then(svg => svgToMiniDataURI(svg))
+    .then(optimize)
+    .then(svgToMiniDataURI)
 }
 
 const memoizedTraceSVG = _.memoize(
