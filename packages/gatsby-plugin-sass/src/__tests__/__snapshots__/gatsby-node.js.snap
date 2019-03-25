@@ -37,7 +37,7 @@ exports[`gatsby-plugin-sass Stage: build-html / No options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -81,7 +81,7 @@ exports[`gatsby-plugin-sass Stage: build-html / PostCss plugins 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -129,7 +129,7 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -173,7 +173,7 @@ exports[`gatsby-plugin-sass Stage: build-html / css-loader options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -226,7 +226,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -279,7 +279,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -340,7 +340,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -393,7 +393,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / css-loader options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -446,7 +446,7 @@ exports[`gatsby-plugin-sass Stage: develop / No options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -499,7 +499,7 @@ exports[`gatsby-plugin-sass Stage: develop / PostCss plugins 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -560,7 +560,7 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -613,7 +613,7 @@ exports[`gatsby-plugin-sass Stage: develop / css-loader options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -657,7 +657,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -701,7 +701,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / PostCss plugins 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -749,7 +749,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -793,7 +793,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / css-loader options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],

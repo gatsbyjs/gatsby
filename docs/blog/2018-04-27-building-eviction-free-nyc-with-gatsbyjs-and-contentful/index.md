@@ -1,6 +1,6 @@
 ---
 title: Building Eviction Free NYC with GatsbyJS + Contentful
-date: "2018-04-27"
+date: 2018-04-27
 author: "Dan Kass"
 excerpt: Lessons in building a minimal, low-connectivity site for navigating a daunting legal process.
 tags: ["i18n", "netlify", "case-studies", "contentful"]

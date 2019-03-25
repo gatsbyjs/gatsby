@@ -1,5 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
+jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
   return {
@@ -16,6 +17,8 @@ const {
   queueImageResizing,
   getImageSize,
 } = require(`../`)
+const { scheduleJob } = require(`../scheduler`)
+scheduleJob.mockResolvedValue(Promise.resolve())
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -44,6 +47,42 @@ describe(`gatsby-plugin-sharp`, () => {
       // Width should be: w = (3 * 136) / 281 = 1.451957295
       // We expect value to be rounded to 1
       expect(result.height).toBe(1)
+    })
+
+    it(`file name works with spaces & special characters`, async () => {
+      // test name encoding with various characters
+      const testName = `spaces and '"@#$%^&,`
+
+      const queueResult = queueImageResizing({
+        file: getFileObject(
+          path.join(__dirname, `images/144-density.png`),
+          testName
+        ),
+        args: { width: 3 },
+      })
+
+      const queueResultName = path.parse(queueResult.src).name
+
+      // decoding to check for outputting same name
+      expect(decodeURIComponent(queueResultName)).toBe(testName)
+
+      // regex for special characters above and spaces
+      // testname should match, the queue result should not
+      expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
+      expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
+    })
+
+    // re-enable when image processing on demand is implemented
+    it.skip(`should process immediately when asked`, async () => {
+      scheduleJob.mockClear()
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      await result.finishedPromise
+
+      expect(scheduleJob).toMatchSnapshot()
     })
   })
 
@@ -296,12 +335,60 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result).toMatchSnapshot()
     })
   })
+
+  describe(`tracedSVG`, () => {
+    it(`doesn't always run`, async () => {
+      const args = {
+        maxWidth: 100,
+        width: 100,
+        tracedSVG: { color: `#FF0000` },
+      }
+
+      let result = await fixed({
+        file,
+        args,
+      })
+
+      expect(result.tracedSVG).toBeUndefined()
+
+      result = await fluid({
+        file,
+        args,
+      })
+
+      expect(result.tracedSVG).toBeUndefined()
+    })
+
+    it(`runs on demand`, async () => {
+      const args = {
+        maxWidth: 100,
+        width: 100,
+        generateTracedSVG: true,
+        tracedSVG: { color: `#FF0000` },
+        base64: false,
+      }
+
+      let result = await fixed({
+        file,
+        args,
+      })
+
+      expect(result).toMatchSnapshot()
+
+      result = await fluid({
+        file,
+        args,
+      })
+
+      expect(result).toMatchSnapshot()
+    })
+  })
 })
 
-function getFileObject(absolutePath) {
+function getFileObject(absolutePath, name = `test`) {
   return {
     id: `${absolutePath} absPath of file`,
-    name: `test`,
+    name: name,
     absolutePath,
     extension: `png`,
     internal: {

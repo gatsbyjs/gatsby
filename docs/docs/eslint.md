@@ -18,7 +18,7 @@ npm rm prettier
 npm install --save-dev eslint babel-eslint \
   eslint-config-standard eslint-plugin-node \
   eslint-plugin-standard eslint-plugin-react \
-  eslint-plugin-import eslint-plugin-promise \
+  eslint-plugin-import eslint-plugin-promise
 ```
 
 Now that we have our packages installed, remove `.prettierrc` from the root of your new Gatsby project and create a new file named `.eslintrc.js` using the commands below.

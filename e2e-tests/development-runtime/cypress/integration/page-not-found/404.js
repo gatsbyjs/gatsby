@@ -7,10 +7,10 @@ describe(`page not found`, () => {
       .invoke(`text`)
       .should(`eq`, `Gatsby.js development 404 page`)
   })
-  it.skip(`can preview 404 page`, () => {
+  it(`can preview 404 page`, () => {
     cy.get(`button`).click()
 
-    cy.get(`h1`)
+    cy.getTestElement(`page-title`)
       .invoke(`text`)
       .should(`eq`, `NOT FOUND`)
   })

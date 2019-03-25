@@ -33,8 +33,8 @@ TODO: in query-watcher.js/handleQuery, we remove jsonName from dataDependencies.
 
 ### Usages
 
-- [websocket-manager](TODO). TODO
-- [query-watcher](TODO).
+- [websocket-manager](#TODO). TODO
+- [query-watcher](#TODO).
 
   - `getQueriesSnapshot` returns map with snapshot of `state.staticQueryComponents`
   - handleComponentsWithRemovedQueries. For each staticQueryComponent, if passed in queries doesn't include `staticQueryComponent.componentPath`. TODO: Where is StaticQueryComponent created? TODO: Where is queries passed into `handleComponentsWithRemovedQueries`?

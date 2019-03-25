@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Kichen sink schema test passes kitchen sink query 1`] = `
+Object {
+  "data": Object {
+    "addResolvers": Array [
+      Object {
+        "code": "BdiU-TTFP4h",
+        "id": "1685001452849004065",
+        "likes": 33,
+      },
+      Object {
+        "code": "BdIpEzalAJx",
+        "id": "1677771511187112561",
+        "likes": 29,
+      },
+    ],
+    "filter": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "comment": 1,
+            "id": "1270677182602272387",
+          },
+        },
+        Object {
+          "node": Object {
+            "comment": 0,
+            "id": "1256134251849702933",
+          },
+        },
+      ],
+    },
+    "resolveFilter": Object {
+      "id": "1601601194425654597",
+      "idWithDecoration": "decoration-1601601194425654597",
+      "likes": 9,
+    },
+    "sort": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "_3invalidKey": null,
+            "code": "BShF_8qhtEv",
+            "comment": 0,
+            "id": "1486495736706552111",
+            "idWithDecoration": "decoration-1486495736706552111",
+            "image": Object {
+              "childImageSharp": Object {
+                "id": "f5f0e564-899f-5bbc-92de-a2325b69cb75",
+              },
+            },
+            "likes": 8,
+            "time": "05.04.2017",
+          },
+        },
+        Object {
+          "node": Object {
+            "_3invalidKey": null,
+            "code": "BY6B8z5lR1F",
+            "comment": 0,
+            "id": "1601601194425654597",
+            "idWithDecoration": "decoration-1601601194425654597",
+            "image": Object {
+              "childImageSharp": Object {
+                "id": "6ba97198-5331-53d6-a0e0-c9c063c5094e",
+              },
+            },
+            "likes": 9,
+            "time": "11.09.2017",
+          },
+        },
+      ],
+    },
+    "thirdPartyInterface": Object {
+      "text": "Hello third-party schema!",
+    },
+    "thirdPartyStuff": Object {
+      "child": Object {
+        "text": "Hello from children!",
+      },
+      "text": "Hello third-party schema!",
+    },
+    "thirdPartyUnion": Object {
+      "text": "Hello third-party schema!",
+    },
+  },
+}
+`;

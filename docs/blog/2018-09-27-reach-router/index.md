@@ -29,11 +29,17 @@ The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitt
 
 A primary focus (no pun intended) of @reach/router is to manage focus in client-side routing, out of the box, lifting the onus from devs to manage it from scratch. From the @reach/router documentation:
 
-> Whenever the content of a page changes in response to a user interaction, the focus should be moved to that content; otherwise, users on assistive devices have to search around the page to find what changed–yuck! Without the help of a router, managing focus on route transitions requires a lot effort and knowledge on your part.
+<pullquote>
+Whenever the content of a page changes in response to a user interaction, the focus should be moved to that content; otherwise, users on assistive devices have to search around the page to find what changed–yuck! Without the help of a router, managing focus on route transitions requires a lot effort and knowledge on your part.
+</pullquote>
 
-> Reach Router provides out-of-the-box focus management so your apps are significantly more accessible without you breaking a sweat.
+<pullquote>
+Reach Router provides out-of-the-box focus management so your apps are significantly more accessible without you breaking a sweat.
+</pullquote>
 
-> When the location changes, the top-most part of your application that changed is identified and focus is moved to it. Assistive devices then announce to the user the group of elements they are now focused on, similarly to how it works when they load up a page for the first time.
+<pullquote>
+When the location changes, the top-most part of your application that changed is identified and focus is moved to it. Assistive devices then announce to the user the group of elements they are now focused on, similarly to how it works when they load up a page for the first time.
+</pullquote>
 
 The video below demonstrates this focus management:
 
@@ -51,7 +57,7 @@ For most sites, migrating from v1 to v2 shouldn’t be too painful, but there ar
 
 We look forward to continuing to work actively with Ryan!
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Reach Router is hitting the big time with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> adopting it and Nike shipping a site with it <a href="https://t.co/fthOUQ1lJh">https://t.co/fthOUQ1lJh</a>  :D<br><br>I&#39;ll be spending all day Thursday fixing/adding stuff Gatsby needs. AND! Gatsby is sponsoring my time.<br><br>Thanks <a href="https://twitter.com/kylemathews?ref_src=twsrc%5Etfw">@kylemathews</a> and the rest of the team 🙏🏽</p>&mdash; Ryan Florence (@ryanflorence) <a href="https://twitter.com/ryanflorence/status/1042117992140554241?ref_src=twsrc%5Etfw">September 18, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Reach Router is hitting the big time with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> adopting it and Nike shipping a site with it <a href="https://t.co/fthOUQ1lJh">https://t.co/fthOUQ1lJh</a> :D<br><br>I&#39;ll be spending all day Thursday fixing/adding stuff Gatsby needs. AND! Gatsby is sponsoring my time.<br><br>Thanks <a href="https://twitter.com/kylemathews?ref_src=twsrc%5Etfw">@kylemathews</a> and the rest of the team 🙏🏽</p>&mdash; Ryan Florence (@ryanflorence) <a href="https://twitter.com/ryanflorence/status/1042117992140554241?ref_src=twsrc%5Etfw">September 18, 2018</a></blockquote>
 
 Related Gatsby docs:
 
