@@ -36,6 +36,7 @@ module.exports = {
         gtagConfig: {
           optimize_id: "OPT_CONTAINER_ID",
           anonymize_ip: true,
+          cookie_expires: 0,
         },
         // This object is used for configuration specific to this plugin
         pluginConfig: {
@@ -117,6 +118,14 @@ you can set a link e.g. in your imprint as follows:
 
 `<a href="javascript:gaOptout();">Deactive Google Tracking</a>`
 
+## The "gtagConfig.optimize_id" option
+
+If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
+
+## Other "gtagConfig" options
+
+The `gtagConfig` is passed directly to the gtag config command, so you can specify everything it supports, e.g. `gtagConfig.cookie_name`, `gtagConfig.sample_rate`. If you're migrating from the analytics.js plugin, this means that all Create Only Fields should be snake_cased.
+
 ## The "pluginConfig.respectDNT" option
 
 If you enable this optional option, Google Global Site Tag will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Global Site Tag does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
@@ -124,7 +133,3 @@ If you enable this optional option, Google Global Site Tag will not be loaded at
 ## The "pluginConfig.exclude" option
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
-
-## The "gtagConfig.optimize_id" option
-
-If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.

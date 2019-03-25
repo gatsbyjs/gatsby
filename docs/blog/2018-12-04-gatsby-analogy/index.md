@@ -46,7 +46,7 @@ Similarly, you could spend 10,000 hours becoming a kung fu master in performance
 
 In [Gatsby for apps](/blog/2018-11-07-gatsby-for-apps/), we recently explained:
 
-<pullquote>
+<pullquote citation="Dustin Schau">
   Gatsby is great for building web experiences that leverage the benefits of both so-called static sites and web applications — simultaneously. You don’t have to sacrifice the advantages of one approach to reap the benefits of the other.
 </pullquote>
 

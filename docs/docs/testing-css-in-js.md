@@ -12,7 +12,7 @@ For this example we'll use emotion. The testing utilities of emotion and glamor 
 
 ## Installation
 
-```sh
+```shell
 npm install --save-dev jest-emotion babel-plugin-emotion
 ```
 

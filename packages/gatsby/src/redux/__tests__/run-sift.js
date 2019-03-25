@@ -4,6 +4,7 @@ const {
   GraphQLNonNull,
   GraphQLID,
   GraphQLString,
+  GraphQLList,
 } = require(`graphql`)
 
 jest.mock(`../../db/node-tracking`, () => {
@@ -16,21 +17,49 @@ const mockNodes = [
   {
     id: `id_1`,
     string: `foo`,
+    internal: {
+      type: `notTest`,
+    },
   },
   {
     id: `id_2`,
     string: `bar`,
+    internal: {
+      type: `test`,
+    },
   },
   {
     id: `id_3`,
     string: `baz`,
+    internal: {
+      type: `test`,
+    },
+  },
+  {
+    id: `id_4`,
+    string: `qux`,
+    internal: {
+      type: `test`,
+    },
+    first: {
+      willBeResolved: `willBeResolved`,
+      second: [
+        {
+          willBeResolved: `willBeResolved`,
+          third: {
+            foo: `foo`,
+          },
+        },
+      ],
+    },
   },
 ]
 
 jest.mock(`../../db/nodes`, () => {
   return {
     getNode: id => mockNodes.find(node => node.id === id),
-    getNodesByType: () => mockNodes,
+    getNodesByType: type =>
+      mockNodes.filter(node => node.internal.type === type),
   }
 })
 
@@ -40,8 +69,38 @@ describe(`run-sift`, () => {
     name: typeName,
     fields: () => {
       return {
-        id: new GraphQLNonNull(GraphQLID),
-        string: GraphQLString,
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        string: { type: GraphQLString },
+        first: {
+          type: new GraphQLObjectType({
+            name: `First`,
+            fields: {
+              willBeResolved: {
+                type: GraphQLString,
+                resolve: () => `resolvedValue`,
+              },
+              second: {
+                type: new GraphQLList(
+                  new GraphQLObjectType({
+                    name: `Second`,
+                    fields: {
+                      willBeResolved: {
+                        type: GraphQLString,
+                        resolve: () => `resolvedValue`,
+                      },
+                      third: new GraphQLObjectType({
+                        name: `Third`,
+                        fields: {
+                          foo: GraphQLString,
+                        },
+                      }),
+                    },
+                  })
+                ),
+              },
+            },
+          }),
+        },
       }
     },
   })
@@ -71,6 +130,30 @@ describe(`run-sift`, () => {
       expect(resultMany).toEqual([nodes[1]])
     })
 
+    it(`eq operator honors type`, async () => {
+      const queryArgs = {
+        filter: {
+          id: { eq: `id_1` },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+      })
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+      })
+
+      // `id-1` node is not of queried type, so results should be empty
+      expect(resultSingular).toEqual([])
+      expect(resultMany).toEqual(null)
+    })
+
     it(`non-eq operator`, async () => {
       const queryArgs = {
         filter: {
@@ -90,8 +173,34 @@ describe(`run-sift`, () => {
         firstOnly: false,
       })
 
-      expect(resultSingular).toEqual([nodes[0]])
-      expect(resultMany).toEqual([nodes[0], nodes[2]])
+      expect(resultSingular).toEqual([nodes[2]])
+      expect(resultMany).toEqual([nodes[2], nodes[3]])
     })
+  })
+
+  it(`resolves fields before querying`, async () => {
+    const queryArgs = {
+      filter: {
+        first: {
+          willBeResolved: { eq: `resolvedValue` },
+          second: {
+            elemMatch: {
+              willBeResolved: { eq: `resolvedValue` },
+              third: {
+                foo: { eq: `foo` },
+              },
+            },
+          },
+        },
+      },
+    }
+
+    const results = await runSift({
+      gqlType,
+      queryArgs,
+      firstOnly: true,
+    })
+
+    expect(results[0].id).toBe(`id_4`)
   })
 })

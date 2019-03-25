@@ -58,7 +58,8 @@ to HTML links that open the embedded code examples in a REPL. For example:
 </a>
 
 <!-- before -->
-[Try it on CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
+[Try it on
+CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
 
 <!-- after -->
 <a href="https://codesandbox.io/api/v1/sandboxes/define?parameters=...">
@@ -80,7 +81,8 @@ Sometimes a larger code example would require more than a single file, with vari
 CodeSandbox supports code example with multiple files. With this plugin, you can do:
 
 ```html
-[Try it on CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
+[Try it on
+CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
 ```
 
 > Caveat

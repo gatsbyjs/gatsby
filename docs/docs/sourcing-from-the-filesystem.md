@@ -16,7 +16,7 @@ It will also be useful if you are familiar with [Graph_i_QL](/docs/introducing-g
 
 Install the plugin at the root of your Gatsby project:
 
-```sh
+```shell
 npm install --save gatsby-source-filesystem
 ```
 

@@ -90,7 +90,7 @@ You need update your `package.json` to use the latest version of Gatsby.
 
 Or run
 
-```bash
+```shell
 npm i gatsby@latest
 ```
 
@@ -98,13 +98,13 @@ npm i gatsby@latest
 
 Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
-```bash
+```shell
 npm outdated
 ```
 
 And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
 
-```bash
+```shell
 npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
@@ -114,7 +114,7 @@ npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-
 
 In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
 
-```bash
+```shell
 npm i react react-dom
 ```
 
@@ -122,7 +122,7 @@ npm i react react-dom
 
 Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
 
-```bash
+```shell
 npm i typography react-typography
 ```
 
@@ -160,7 +160,7 @@ export default ({ children }) => (
 
 #### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
 
-```bash
+```shell
 git mv src/layouts/index.js src/components/layout.js
 ```
 
@@ -215,7 +215,7 @@ Replacing a layout's query with `StaticQuery`:
 
 ```diff:title=src/components/layout.js
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (

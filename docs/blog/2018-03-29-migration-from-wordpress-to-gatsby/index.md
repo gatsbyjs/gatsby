@@ -56,7 +56,7 @@ There are many factors to consider. Maturity is important as it means a big comm
 
 ### Modern technologies
 
-Gatsby is built with a lot of interesting technologies. If you are a front-end developer, you'll probably be familiar with most of these, so adoption should be quick. If not, it gives you chance to learn a lot of interesting stuff. Gatsby is powered by React. You'll be able to nicely structure your project to components and use all the existing React components there not specifically developed for Gatsby. For styling, you can attach plain old CSS stylesheet, but Gatsby offers many more choices like Sass, Glamor, Styled Components, Stylus, Less or Styled JSX. Gatsby is built on top of Webpack. And it can generate offline-ready Progressive Web App and uses GraphQL for querying data.
+Gatsby is built with a lot of interesting technologies. If you are a frontend developer, you'll probably be familiar with most of these, so adoption should be quick. If not, it gives you chance to learn a lot of interesting stuff. Gatsby is powered by React. You'll be able to nicely structure your project to components and use all the existing React components there not specifically developed for Gatsby. For styling, you can attach plain old CSS stylesheet, but Gatsby offers many more choices like Sass, Glamor, Styled Components, Stylus, Less or Styled JSX. Gatsby is built on top of Webpack. And it can generate offline-ready Progressive Web App and uses GraphQL for querying data.
 
 ### Data sources and GraphQL
 
@@ -91,6 +91,6 @@ My blog is now deployed on Netlify CDN, which means the user will be served fast
 
 ![after](./results.png)
 
-Quite a difference, right? Long story short - Gatsby is great. You should give it a try, especially if you are a front-end developer. And keep watching its development as I am sure we can look forward to even more awesomeness in the future. If Gatsby is not your cup of the, you should still consider switching to a static site generator as the advantages are too good to ignore. To learn more about Gatsby, check out [this curated list](/docs/awesome-gatsby/) of Gatsby-related resources.
+Quite a difference, right? Long story short - Gatsby is great. You should give it a try, especially if you are a frontend developer. And keep watching its development as I am sure we can look forward to even more awesomeness in the future. If Gatsby is not your cup of the, you should still consider switching to a static site generator as the advantages are too good to ignore. To learn more about Gatsby, check out [this curated list](/docs/awesome-gatsby/) of Gatsby-related resources.
 
 _This article was originally published on [Vojtech Ruzicka's Blog](https://www.vojtechruzicka.com/)._

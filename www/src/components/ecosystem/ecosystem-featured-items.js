@@ -1,23 +1,22 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { colors, space, breakpoints } from "../../utils/presets"
 import { scrollbarStyles } from "../../utils/styles"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
-  margin: ${rhythm(0.1)} -${rhythm(options.blockMarginBottom)};
+  margin: 0 -${space[6]};
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     border-top: 1px solid ${colors.gray.superLight};
-    margin-top: ${rhythm(0.4)};
+    margin-top: ${space[3]};
     margin-bottom: 0;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -25,18 +24,11 @@ const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
   }
 `
 
-export const ListBase = styled(`ul`)`
-  display: inline-flex;
-  list-style: none;
-  margin: 0;
-  padding: 0 calc(${rhythm(options.blockMarginBottom)} - 5px) 4px;
-`
-
 const List = styled(HorizontalScrollerContent)`
-  padding-left: ${rhythm(options.blockMarginBottom)};
-  padding-right: ${rhythm(options.blockMarginBottom)};
+  padding-left: ${space[6]};
+  padding-right: ${space[6]};
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     flex-direction: column;
     padding: 0;
     width: 100%;

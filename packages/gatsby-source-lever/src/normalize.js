@@ -34,7 +34,7 @@ async function createGraphQLNode(ent, type, createNode, store, cache) {
       type: type,
     },
   }
-  node = recursiveAddFields(ent, node, createNode)
+  node = recursiveAddFields(ent, node)
   node.internal.content = JSON.stringify(node)
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
@@ -113,9 +113,8 @@ exports.normalizeEntities = entities =>
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
   entities.map(e =>
-    deepMapKeys(
-      e,
-      key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
+    deepMapKeys(e, key =>
+      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
     )
   )
 

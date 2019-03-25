@@ -13,7 +13,7 @@ const ImageAPI = props => {
         Gatsby offers rich integration with
         {` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/">
-          Contentful's Image API
+          {`Contentful's Image API`}
         </a>
       </p>
       <p>
@@ -62,11 +62,11 @@ const ImageAPI = props => {
       <p>
         If you make queries with <code>fixed</code> then Gatsby automatically
         generates images with 1x, 1.5x, 2x, and 3x versions so your images look
-        great on whatever screen resolution of device they're on.
+        great on whatever screen resolution of device {`they're`} on.
       </p>
       <p>
-        If you're on a retina class screen, notice how much sharper these images
-        are than the above "resized" images.
+        If {`you're`} on a retina class screen, notice how much sharper these
+        images are than the above {`"resized"`} images.
       </p>
       <p>
         You should prefer this operator over <code>resize</code>.
@@ -225,8 +225,8 @@ const ImageAPI = props => {
         WebP is currently only supported in
         {` `}
         <a href="https://caniuse.com/#feat=webp">Chrome and Oprah browsers</a>,
-        and you'll want to fall back to another format for other clients. When
-        this query is used with
+        and {`you'll`} want to fall back to another format for other clients.
+        When this query is used with
         {` `}
         <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
           <code>gatsby-image</code>
