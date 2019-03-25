@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.10...gatsby-plugin-page-creator@2.0.11) (2019-03-22)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** pin chokidar@2.1.2 to fix unix issues ([#12759](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/12759)) ([0ea1505](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/commit/0ea1505))
+
 ## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.9...gatsby-plugin-page-creator@2.0.10) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

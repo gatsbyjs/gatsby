@@ -8,11 +8,17 @@ As we begin to formalize and standardize the methodologies for building Gatsby T
 
 ## Table of Contents
 
+- [Naming](#naming)
 - [Initializing required directories](#initializing-required-directories)
 - [Separating queries and presentational components](#separating-queries-and-presentational-components)
   - [Page queries](#page-queries)
   - [Static queries](#static-queries)
 - [Site metadata](#site-metadata)
+
+## Naming
+
+It's recommended to prefix themes with `gastby-theme-`. So if you'd like to name your theme "awesome" you
+can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`.
 
 ## Initializing Required Directories
 
