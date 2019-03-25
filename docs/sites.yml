@@ -5000,4 +5000,93 @@
     - Education
   built_by: The Couch
   built_by_url: https://thecouch.nyc
+- title: Gatsby Guides
+  url: https://gatsbyguides.com/
+  main_url: https://gatsbyguides.com/
+  description: >
+    Free tutorial course about using Gatsby with a CMS.
+  categories:
+    - Education
+    - Documentation
+    - Web Development
+  built_by: Osio Labs
+  built_by_url: https://osiolabs.com/
+  featured: false
+- title: Architude
+  url: https://architudedesign.com
+  main_url: https://architudedesign.com
+  description: >
+    筑冶 Architude International Design Consultants
+  categories:
+    - Design
+    - Landing Page
+    - Gallery
+  built_by: Neo Nie
+  built_by_url: https://github.com/nihgwu
+  featured: false
+- title: Arctica
+  url: https://arctica.io
+  main_url: https://arctica.io
+  description: >
+    Arctica specialises in purpose-built web sites and progressive web applications with user optimal experiences, tailored to meet the objectives of your business.
+  categories:
+    - Portfolio
+    - Agency
+    - Design
+    - Web Development
+  built_by: Arctica
+  built_by_url: https://arctica.io
+  featured: false
+- title: Shard Ventures
+  url: https://shard.vc
+  main_url: https://shard.vc
+  description: >
+    Shard is building new online companies from scratch, partnering with other like-minded founders to start and invest in technology companies.
+  categories:
+    - Finance
+    - Technology
+    - Portfolio
+  built_by: Arctica
+  built_by_url: https://arctica.io
+  featured: false
+- title: David Brookes
+  url: https://davidbrookes.me
+  main_url: https://davidbrookes.me
+  description: >
+    Specialising in crafting stylish, high performance websites and applications that get results, using the latest cutting edge web development technologies.
+  categories:
+    - Portfolio
+    - Freelance
+    - Frontend
+    - Web Development
+  built_by: Arctica
+  built_by_url: https://arctica.io
+  featured: false
+- title: Dennis Morello
+  url: https://morello.dev
+  main_url: https://morello.dev
+  source_url: https://gitlab.com/dennismorello/dev-blog
+  description: >
+    morello.dev is a development and techology blog written by Dennis Morello.
+  categories:
+    - Blog
+    - Education
+    - Web Development
+    - Open Source
+    - Technology
+  built_by: Dennis Morello
+  built_by_url: https://twitter.com/dennismorello
+  featured: false
+- title: BaseTable
+  url: https://autodesk.github.io/react-base-table/
+  main_url: https://autodesk.github.io/react-base-table/
+  source_url: https://github.com/Autodesk/react-base-table
+  description: >
+    BaseTable is a react table component to display large data set with high performance and flexibility.
+  categories:
+    - Web Development
+    - Documentation
+    - Open Source
+  built_by: Neo Nie
+  built_by_url: https://github.com/nihgwu
   featured: false
