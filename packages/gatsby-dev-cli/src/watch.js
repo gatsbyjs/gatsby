@@ -11,6 +11,7 @@ const { checkDepsChanges } = require(`./local-npm-registry/check-deps-changes`)
 const {
   getDependantPackages,
 } = require(`./local-npm-registry/get-dependant-packages`)
+const { promisifiedSpawn } = require(`./local-npm-registry/utils`)
 
 let numCopied = 0
 
@@ -112,6 +113,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
   let isInitialScan = true
   let ignoredPackageJSON = new Map()
   const waitFor = new Set()
+  let anyPackageNotInstalled = false
 
   const ignorePackageJSONChanges = (packageName, contentArray) => {
     ignoredPackageJSON.set(packageName, contentArray)
@@ -168,7 +170,14 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
             waitFor.add(didDepsChangedPromise)
           }
 
-          const didDepsChanged = await didDepsChangedPromise
+          const {
+            didDepsChanged,
+            packageNotInstalled,
+          } = await didDepsChangedPromise
+
+          if (packageNotInstalled) {
+            anyPackageNotInstalled = true
+          }
 
           if (didDepsChanged) {
             if (isInitialScan) {
@@ -225,15 +234,30 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
       // before publishing / installing
       await Promise.all(Array.from(waitFor))
 
-      if (isInitialScan && packagesToPublish.size > 0) {
-        const publishAndInstallPromise = publishPackagesLocallyAndInstall({
-          packagesToPublish: Array.from(packagesToPublish),
-          root,
-          packages,
-          ignorePackageJSONChanges,
-        })
-        packagesToPublish.clear()
-        allCopies.push(publishAndInstallPromise)
+      if (isInitialScan) {
+        if (packagesToPublish.size > 0) {
+          const publishAndInstallPromise = publishPackagesLocallyAndInstall({
+            packagesToPublish: Array.from(packagesToPublish),
+            root,
+            packages,
+            ignorePackageJSONChanges,
+          })
+          packagesToPublish.clear()
+          allCopies.push(publishAndInstallPromise)
+        } else if (anyPackageNotInstalled) {
+          // run `yarn`
+          const yarnInstallCmd = [
+            `yarn`,
+            [],
+            {
+              cwd: process.cwd(),
+            },
+          ]
+
+          console.log(`Installing packages from public NPM registry`)
+          await promisifiedSpawn(yarnInstallCmd)
+          console.log(`Installation complete`)
+        }
       }
 
       isInitialScan = false

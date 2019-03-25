@@ -45,14 +45,18 @@ const checkDepsChanges = async ({
     if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjsonString)) {
       // we are in middle of publishing and content of package.json is one set during publish process,
       // so we need to not cause false positives
-      return false
+      return {
+        didDepsChanged: false,
+      }
     }
   }
 
   let localPKGjson
+  let packageNotInstalled = false
   try {
     localPKGjson = JSON.parse(fs.readFileSync(newPath))
   } catch {
+    packageNotInstalled = true
     // there is no local package - so we still need to install deps
     // this is nice because devs won't need to do initial package installation - we can handle this.
     if (isInitialScan) {
@@ -80,15 +84,21 @@ const checkDepsChanges = async ({
         })
       } catch {
         console.log(
-          `'${packageName}' doesn't seem to be installed. Will publish it`
+          `'${packageName}' doesn't seem to be installed and is not published on NPM.`
         )
-        return true
+        return {
+          didDepsChanged: true,
+          packageNotInstalled,
+        }
       }
     } else {
       console.log(
         `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to publish it`
       )
-      return false
+      return {
+        didDepsChanged: false,
+        packageNotInstalled,
+      }
     }
   }
 
@@ -157,10 +167,16 @@ const checkDepsChanges = async ({
           `Installation of depenencies after initial scan is not implemented`
         )
       }
-      return needPublishing
+      return {
+        didDepsChanged: needPublishing,
+        packageNotInstalled,
+      }
     }
   }
-  return false
+  return {
+    didDepsChanged: false,
+    packageNotInstalled,
+  }
 }
 
 exports.checkDepsChanges = checkDepsChanges
