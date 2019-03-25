@@ -40,6 +40,12 @@ const nodes = [
     internal: { type: `ArrayTest` },
     array: [{ foo: true }],
   },
+  {
+    id: `id3`,
+    internal: { type: `LinkTest` },
+    link___NODE: `id1`,
+    links___NODE: [`id1`],
+  },
 ]
 
 describe(`merges explicit and inferred type definitions`, () => {
@@ -314,5 +320,41 @@ describe(`merges explicit and inferred type definitions`, () => {
     const { foo, bar } = schema.getType(`FooBar`).getFields()
     expect(foo).toBeUndefined()
     expect(bar.type.toString()).toBe(`Boolean`)
+  })
+
+  it(`preserves foreign-key resolvers on ___NODE fields when noDefaultResolvers: false`, async () => {
+    const typeDefs = `
+      type LinkTest implements Node {
+        link: Test!
+        links: [Test!]!
+      }
+    `
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+
+    await build({})
+    const { schema } = store.getState()
+    const { link, links } = schema.getType(`LinkTest`).getFields()
+    expect(link.type.toString()).toBe(`Test!`)
+    expect(links.type.toString()).toBe(`[Test!]!`)
+    expect(link.resolve).toBeDefined()
+    expect(links.resolve).toBeDefined()
+  })
+
+  it(`ignores foreign-key resolvers on ___NODE fields when noDefaultResolvers: true`, async () => {
+    const typeDefs = `
+      type LinkTest implements Node @infer(noDefaultResolvers: true) {
+        link: Test!
+        links: [Test!]!
+      }
+    `
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+
+    await build({})
+    const { schema } = store.getState()
+    const { link, links } = schema.getType(`LinkTest`).getFields()
+    expect(link.type.toString()).toBe(`Test!`)
+    expect(links.type.toString()).toBe(`[Test!]!`)
+    expect(link.resolve).toBeUndefined()
+    expect(links.resolve).toBeUndefined()
   })
 })
