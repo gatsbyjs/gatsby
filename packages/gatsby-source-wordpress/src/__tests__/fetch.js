@@ -24,16 +24,16 @@ describe(`Fetching`, () => {
   it(`builds full URL correctly for wordpress.com`, () => {
     const key = `/wp/v2/sites/example.wordpress.com/posts`
     const baseUrl = `https://public-api.wordpress.com/wp/v2/sites/example.wordpress.com`
-    const fullUrl = fetch.buildFullUrl(baseUrl, key)
+    const fullUrl = fetch.buildFullUrl(baseUrl, key, true)
     expect(fullUrl).toEqual(
       `https://public-api.wordpress.com/wp/v2/sites/example.wordpress.com/posts`
     )
   })
 
   it(`builds full URL correctly for wordpress.org`, () => {
-    const key = `/wp-json/wp/v2/posts`
+    const key = `/wp/v2/posts`
     const baseUrl = `http://dev-gatbsyjswp.pantheonsite.io/wp-json`
-    const fullUrl = fetch.buildFullUrl(baseUrl, key)
+    const fullUrl = fetch.buildFullUrl(baseUrl, key, false)
     expect(fullUrl).toEqual(
       `http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts`
     )

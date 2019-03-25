@@ -2,6 +2,7 @@ const querystring = require(`querystring`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
 const minimatch = require(`minimatch`)
+const { URL } = require(`url`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 const requestInQueue = require(`./request-in-queue`)
@@ -133,6 +134,7 @@ Mama Route URL: ${url}
       url,
       _verbose,
       _useACF,
+      _hostingWPCOM,
       _acfOptionPageIds,
       _includedRoutes,
       _excludedRoutes,
@@ -565,7 +567,11 @@ function getValidRoutes({
             )}_${entityType.replace(/-/g, `_`)}`
             break
         }
-        validRoutes.push({ url: buildFullUrl(url, key), type: validType })
+
+        validRoutes.push({
+          url: buildFullUrl(url, key, _hostingWPCOM),
+          type: validType,
+        })
       } else {
         if (_verbose) {
           const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
@@ -612,15 +618,19 @@ const getRoutePath = (baseUrl, fullPath) => {
 }
 
 /**
- * Build full URL from baseUrl and fullPath
+ * Build full URL from baseUrl and fullPath.
+ * Method of contructing full URL depends on wether it's hosted on wordpress.com
+ * or not as wordpress.com have slightly different (custom) REST structure
  *
  * @param {any} baseUrl The base site URL that should be prepended to full path
  * @param {any} fullPath The full path to build URL from
+ * @param {boolean} _hostingWPCOM Is hosted on wordpress.com
  */
-const buildFullUrl = (baseUrl, fullPath) => {
-  const baseUrlObj = new URL(baseUrl)
-  const baseOrigin = baseUrlObj.origin
-  return `${baseOrigin}${fullPath}`
+const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
+  if (_hostingWPCOM) {
+    baseUrl = new URL(baseUrl).origin
+  }
+  return `${baseUrl}${fullPath}`
 }
 
 /**
