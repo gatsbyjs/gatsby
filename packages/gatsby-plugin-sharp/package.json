@@ -22,7 +22,7 @@
     "probe-image-size": "^4.0.0",
     "progress": "^1.1.8",
     "sharp": "^0.21.3",
-    "svgo": "^0.7.2"
+    "svgo": "^1.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
