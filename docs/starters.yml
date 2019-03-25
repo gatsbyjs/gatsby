@@ -2132,6 +2132,6 @@
     - Portfolio
     - Onepage
   features:
-    - layout config: stacked, sidebar
-    - theme: dark/light mode
+    - layout config either stacked or sidebar
+    - theme dark/light mode
     - post support
