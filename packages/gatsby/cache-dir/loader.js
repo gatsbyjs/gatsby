@@ -223,11 +223,9 @@ const queue = {
   // click on it soon so let's start prefetching resources for this
   // pathname.
   hovering: path => {
-    console.log(`hovering`)
     queue.getResourcesForPathname(path)
   },
   enqueue: rawPath => {
-    console.log(`enqueueing`)
     if (!apiRunner)
       console.error(`Run setApiRunnerForLoader() before enqueing paths`)
 
@@ -269,12 +267,11 @@ const queue = {
     if (process.env.NODE_ENV === `production`) {
       const pageDataUrl = makePageDataUrl(realPath)
       prefetchHelper(pageDataUrl)
-        .then(() => {
-          console.log(`prefetch page-data finished`)
+        .then(() =>
           // This was just prefetched, so will return a response from
           // the cache instead of making another request to the server
-          return fetchUrl(pageDataUrl)
-        })
+          fetchUrl(pageDataUrl)
+        )
         .then(pageData => {
           // Tell plugins the path has been successfully prefetched
           const chunkName = pageData.componentChunkName
@@ -296,9 +293,10 @@ const queue = {
   // getPage: pathname => findPage(pathname),
 
   getResourcesForPathnameSync: rawPath => {
-    console.log(`getResourcesForPathnameSync: [${rawPath}]`)
     const realPath = findPath(rawPath)
-    console.log(`getResourcesForPathnameSync: realPath: [${realPath}]`)
+    console.log(
+      `getResourcesForPathnameSync: rawPath: [${rawPath}], realPath: [${realPath}]`
+    )
     if (realPath in pathScriptsCache) {
       return pathScriptsCache[realPath]
     } else if (shouldFallbackTo404Resources(realPath)) {
@@ -401,6 +399,7 @@ const queue = {
             const page = {
               componentChunkName,
               path: pageData.path,
+              compilationHash: pageData.compilationHash,
             }
 
             const jsonData = {

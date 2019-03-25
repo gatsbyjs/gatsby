@@ -18,6 +18,8 @@ import EnsureResources from "./ensure-resources"
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
+window.___compilationHash = window.pageData.compilationHash
+console.log(`compilation hash`, window.___compilationHash)
 
 loader.addPageData([window.pageData])
 // loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
@@ -79,9 +81,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   }
 
-  console.log(`getResources from production-app`)
   loader.getResourcesForPathname(browserLoc.pathname).then(() => {
-    console.log(`Creating Root`)
     const Root = () =>
       createElement(
         Router,
@@ -102,14 +102,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     let NewRoot = () => WrappedRoot
 
-    console.log(`running replaceHydrateFunction`)
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
       ReactDOM.hydrate
     )[0]
 
-    console.log(`render dom ready`)
     domReady(() => {
       renderer(
         <NewRoot />,

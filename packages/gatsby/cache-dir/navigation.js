@@ -82,6 +82,15 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.getResourcesForPathname(pathname).then(pageResources => {
+    console.log(`in nav`, pageResources)
+    if (pageResources.page.compilationHash !== window.___compilationHash) {
+      console.log(
+        `compilation has different. window = ${
+          window.___compilationHash
+        }, page = ${pageResources.page.compilationHash}`
+      )
+      window.location = pathname
+    }
     reachNavigate(to, options)
     clearTimeout(timeoutId)
   })
