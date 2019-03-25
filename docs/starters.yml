@@ -1047,7 +1047,7 @@
     - SEO (with Schema JSONLD) & Social Tags
     - Prettier
     - ESLint
-- url: https://gatsby-starter-prismic.netlify.com/
+- url: https://prismic.lekoarts.de/
   repo: https://github.com/LekoArts/gatsby-starter-prismic
   description: A typography-heavy & light-themed Gatsby Starter which uses the Headless CMS Prismic.
   tags:
@@ -2067,8 +2067,7 @@
   repo: https://github.com/WebCu/gatsby-material-kit-react
   description: Adaptation of Material Kit React to Gatsby
   tags:
-    - Material Kit React
-    - Material UI
+    - Styling:Material
   features:
     - 60 Handcrafted Components
     - 4 Customized Plugins
@@ -2078,7 +2077,6 @@
   description: Gatsby portfolio starter for creating quick portfolio
   tags:
     - Portfolio
-    - Showcase
   features:
     - Showcase of portfolio items
     - About me page
@@ -2096,3 +2094,25 @@
     - Responsiveness from the beginning through easy breakpoint configuration
     - Enforce the DRY principle, no hardcoded and repeated `margin`, `font-size`, `color`, `box-shadow`, `border-radius` ... properties anymore
     - Docker ready - you can run gatsby dev mode on your machine environment or with docker-compose
+- url: https://prismic-i18n.lekoarts.de/
+  repo: https://github.com/LekoArts/gatsby-starter-prismic-i18n
+  description: Based on gatsby-starter-prismic with Internationalization (i18n) support.
+  tags:
+    - Prismic
+    - Headless CMS
+    - Styling:CSS-in-JS
+    - Linting
+    - Blog
+    - PWA
+    - Testing
+    - i18n
+  features:
+    - Prismic as Headless CMS
+    - Uses multiple features of Prismic - Slices, Labels, Relationship fields, Custom Types, Internationalization
+    - Emotion for Styling
+    - i18n without any third-party libaries
+    - Cypress for End-to-End testing
+    - Prism.js highlighting
+    - Responsive images with gatsby-image
+    - Extensive SEO
+    - ESLint & Prettier
