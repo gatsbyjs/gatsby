@@ -141,6 +141,7 @@ const SplitButton = ({
     <button
       aria-controls={uid}
       aria-expanded={isExpanded}
+      aria-label={item.title + (isExpanded ? ` collapse` : ` expand`)}
       css={{
         ...styles.resetButton,
         marginLeft: `auto`,
