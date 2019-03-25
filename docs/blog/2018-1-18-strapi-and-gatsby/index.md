@@ -169,7 +169,7 @@ When you manage a static website, your data can come from different sources: Mar
 
 Gatsby understands this pretty well. So its creators decided to build a specific and independent layer: the data layer. This entire system is strongly powered by [GraphQL](http://graphql.org).
 
-To connect Gatsby to a new source of data, you have to [develop a new source plugin](https://www.gatsbyjs.org/docs/create-source-plugin). Fortunately, [several source plugins already exist](https://www.gatsbyjs.org/docs/plugins), so one of them should fill your needs.
+To connect Gatsby to a new source of data, you have to [develop a new source plugin](https://www.gatsbyjs.org/docs/source-plugin-tutorial/). Fortunately, [several source plugins already exist](https://www.gatsbyjs.org/docs/plugins), so one of them should fill your needs.
 
 In this example, we are using Strapi. Obviously, we are going to need a source plugin for Strapi APIs. Good news: [we have built it for you](https://github.com/strapi/gatsby-source-strapi)!
 
