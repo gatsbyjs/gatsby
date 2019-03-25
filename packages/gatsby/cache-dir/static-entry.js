@@ -7,12 +7,7 @@ const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
-const { dataPaths, pages } = require(`./data.json`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
-
-// Speed up looking up pages.
-const pagesObjectMap = new Map()
-pages.forEach(p => pagesObjectMap.set(p.path, p))
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
@@ -45,7 +40,13 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-const getPage = path => pagesObjectMap.get(path)
+// TDO make this async somehow
+const cwd = process.cwd()
+
+const getPageDataPath = path => {
+  const fixedPagePath = path === `/` ? `index` : path
+  return join(`page-data`, fixedPagePath, `page-data.json`)
+}
 
 const createElement = React.createElement
 
@@ -122,22 +123,12 @@ export default (pagePath, callback) => {
     postBodyComponents = sanitizeComponents(components)
   }
 
-  const page = getPage(pagePath)
-
-  let dataAndContext = {}
-  if (page.jsonName in dataPaths) {
-    const pathToJsonData = join(
-      process.cwd(),
-      `/public/static/d`,
-      `${dataPaths[page.jsonName]}.json`
-    )
-    try {
-      dataAndContext = JSON.parse(fs.readFileSync(pathToJsonData))
-    } catch (e) {
-      console.log(`error`, pathToJsonData, e)
-      process.exit()
-    }
-  }
+  const pageDataPath = getPageDataPath(pagePath)
+  const pageDataFile = join(cwd, `public`, pageDataPath)
+  const pageDataUrl = `${__PATH_PREFIX__}/${pageDataPath}`
+  const dataAndContextJson = fs.readFileSync(pageDataFile)
+  const dataAndContext = JSON.parse(dataAndContextJson)
+  const { componentChunkName } = dataAndContext
 
   class RouteHandler extends React.Component {
     render() {
@@ -148,7 +139,7 @@ export default (pagePath, callback) => {
       }
 
       const pageElement = createElement(
-        syncRequires.components[page.componentChunkName],
+        syncRequires.components[componentChunkName],
         props
       )
 
@@ -212,7 +203,7 @@ export default (pagePath, callback) => {
 
   // Create paths to scripts
   let scriptsAndStyles = flatten(
-    [`app`, page.componentChunkName].map(s => {
+    [`app`, componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
@@ -287,16 +278,13 @@ export default (pagePath, callback) => {
       )
     })
 
-  if (page.jsonName in dataPaths) {
-    const dataPath = `${__PATH_PREFIX__}/static/d/${
-      dataPaths[page.jsonName]
-    }.json`
+  if (dataAndContext) {
     headComponents.push(
       <link
         as="fetch"
         rel="preload"
-        key={dataPath}
-        href={dataPath}
+        key={pageDataUrl}
+        href={pageDataUrl}
         crossOrigin="use-credentials"
       />
     )
@@ -334,11 +322,7 @@ export default (pagePath, callback) => {
     })
 
   // Add page metadata for the current page
-  const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
-    page.jsonName in dataPaths
-      ? `window.dataPath="${dataPaths[page.jsonName]}";`
-      : ``
-  }/*]]>*/`
+  const windowData = `/*<![CDATA[*/window.pageData=${dataAndContextJson};/*]]>*/`
 
   postBodyComponents.push(
     <script

@@ -170,10 +170,11 @@ exports.onPrefetchPathname = true
  * Called when prefetching for a pathname is successful. Allows
  * for plugins with custom prefetching logic.
  * @param {object} $0
- * @param {string} $0.pathname The pathname whose resources have now been prefetched
+ * @param {string} $0.path The pathname whose resources have now been prefetched
+ * @param {resourceUrls} $0.resourceUrls An array of resource URLs that have been prefetched for this path
  * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
  */
-exports.onPostPrefetchPathname = true
+exports.onPostPrefetch = true
 
 /**
  * Plugins can take over prefetching logic. If they do, they should call this

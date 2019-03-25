@@ -79,7 +79,7 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-  await buildHTML(program, activity).catch(err => {
+  await buildHTML({ program, pages: store.getState().pages }).catch(err => {
     reportFailure(
       report.stripIndent`
         Building static HTML failed${

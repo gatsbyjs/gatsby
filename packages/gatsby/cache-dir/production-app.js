@@ -2,7 +2,6 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
-import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
 import {
@@ -20,8 +19,8 @@ window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
 
-loader.addPagesArray([window.page])
-loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
+loader.addPageData([window.pageData])
+// loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)
 
@@ -61,29 +60,28 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  const { page, location: browserLoc } = window
+  const { pageData, location: browserLoc } = window
   if (
     // Make sure the window.page object is defined
-    page &&
+    pageData &&
     // The canonical path doesn't match the actual path (i.e. the address bar)
-    __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
-    // ...and if matchPage is specified, it also doesn't match the actual path
-    (!page.matchPath ||
-      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname)) &&
+    __PATH_PREFIX__ + pageData.path !== browserLoc.pathname &&
     // Ignore 404 pages, since we want to keep the same URL
-    page.path !== `/404.html` &&
-    !page.path.match(/^\/404\/?$/) &&
+    pageData.path !== `/404.html` &&
+    !pageData.path.match(/^\/404\/?$/) &&
     // Also ignore the offline shell (since when using the offline plugin, all
     // pages have this canonical path)
-    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+    !pageData.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
     navigate(
-      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
+      __PATH_PREFIX__ + pageData.path + browserLoc.search + browserLoc.hash,
       { replace: true }
     )
   }
 
+  console.log(`getResources from production-app`)
   loader.getResourcesForPathname(browserLoc.pathname).then(() => {
+    console.log(`Creating Root`)
     const Root = () =>
       createElement(
         Router,
@@ -104,12 +102,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     let NewRoot = () => WrappedRoot
 
+    console.log(`running replaceHydrateFunction`)
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
       ReactDOM.hydrate
     )[0]
 
+    console.log(`render dom ready`)
     domReady(() => {
       renderer(
         <NewRoot />,
@@ -117,7 +117,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : void 0,
         () => {
-          postInitialRenderWork()
           apiRunner(`onInitialClientRender`)
         }
       )

@@ -2,7 +2,6 @@ const plugins = require(`./api-runner-browser-plugins`)
 const {
   getResourcesForPathname,
   getResourcesForPathnameSync,
-  getResourceURLsForPathname,
 } = require(`./loader`).publicLoader
 
 exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
@@ -24,7 +23,6 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
 
     args.getResourcesForPathnameSync = getResourcesForPathnameSync
     args.getResourcesForPathname = getResourcesForPathname
-    args.getResourceURLsForPathname = getResourceURLsForPathname
 
     const result = plugin.plugin[api](args, plugin.options)
     if (result && argTransform) {
