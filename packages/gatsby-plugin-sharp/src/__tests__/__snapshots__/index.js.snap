@@ -146,7 +146,7 @@ Object {
   "originalName": undefined,
   "src": "/static/1234/155b3/test.png",
   "srcSet": "/static/1234/155b3/test.png 1x",
-  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' version='1'/%3e",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'/%3e",
   "width": 1,
 }
 `;
@@ -164,6 +164,6 @@ Object {
   "src": "/static/1234/3092c/test.png",
   "srcSet": "/static/1234/3092c/test.png 1w",
   "srcSetType": "image/png",
-  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' version='1'/%3e",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'/%3e",
 }
 `;

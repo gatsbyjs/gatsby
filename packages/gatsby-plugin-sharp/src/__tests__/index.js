@@ -368,19 +368,19 @@ describe(`gatsby-plugin-sharp`, () => {
         base64: false,
       }
 
-      let result = await fixed({
+      const fixedSvg = await fixed({
         file,
         args,
       })
 
-      expect(result).toMatchSnapshot()
+      expect(fixedSvg).toMatchSnapshot()
 
-      result = await fluid({
+      const fluidSvg = await fluid({
         file,
         args,
       })
 
-      expect(result).toMatchSnapshot()
+      expect(fluidSvg).toMatchSnapshot()
     })
   })
 })
