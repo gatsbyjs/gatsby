@@ -1,4 +1,6 @@
 - title: Contributing
+  key: contributing
+  disableAccordions: true
   items:
     - title: Introduction
       link: /contributing/

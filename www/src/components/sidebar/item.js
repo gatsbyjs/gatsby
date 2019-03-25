@@ -27,6 +27,7 @@ class Item extends React.PureComponent {
       onSectionTitleClick,
       ui,
       isSingle,
+      disableAccordions,
     } = this.props
 
     const isParentOfActiveItem = isItemActive(activeItemParents, item)
@@ -51,9 +52,10 @@ class Item extends React.PureComponent {
             openSectionHash={openSectionHash}
             onSectionTitleClick={onSectionTitleClick}
             isSingle={isSingle}
+            disableAccordions={disableAccordions}
           />
         ) : (
-          <li css={this.props.styles}>
+          <li>
             {createLink({
               isActive: item.link === activeItemLink.link,
               item,

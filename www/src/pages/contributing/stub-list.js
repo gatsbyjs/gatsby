@@ -30,7 +30,7 @@ function findStubs(pages) {
 
 class StubListRoute extends React.Component {
   render() {
-    let allPages = [...itemListContributing, ...itemListDocs]
+    let allPages = [...itemListContributing.items, ...itemListDocs.items]
 
     let stubs = findStubs(allPages)
 
