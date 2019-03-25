@@ -5000,4 +5000,15 @@
     - Education
   built_by: The Couch
   built_by_url: https://thecouch.nyc
+- title: Gatsby Guides
+  url: https://gatsbyguides.com/
+  main_url: https://gatsbyguides.com/
+  description: >
+    Free tutorial course about using Gatsby with a CMS.
+  categories:
+    - Education
+    - Documentation
+    - Web Development
+  built_by: Osio Labs
+  built_by_url: https://osiolabs.com/
   featured: false
