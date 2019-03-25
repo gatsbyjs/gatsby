@@ -337,6 +337,32 @@ describe(`Build schema`, () => {
         })
       )
     })
+
+    it(`allows modifying nested types`, async () => {
+      createTypes(`
+        type PostFrontmatter {
+          published: Boolean!
+          newField: String
+        }
+
+        type Post implements Node {
+          frontmatter: PostFrontmatter
+        }
+      `)
+
+      const schema = await buildSchema()
+
+      const type = schema.getType(`Post`)
+      const fields = type.getFields()
+      expect(fields[`frontmatter`].type.toString()).toEqual(`PostFrontmatter`)
+      const nestedType = schema.getType(`PostFrontmatter`)
+      const nestedFields = nestedType.getFields()
+      expect(nestedFields[`authors`].type.toString()).toEqual(`[String]`)
+      expect(nestedFields[`reviewers`].type.toString()).toEqual(`[String]`)
+      expect(nestedFields[`published`].type.toString()).toEqual(`Boolean!`)
+      expect(nestedFields[`date`].type.toString()).toEqual(`Date`)
+      expect(nestedFields[`newField`].type.toString()).toEqual(`String`)
+    })
   })
 
   describe(`createResolvers`, () => {
