@@ -245,7 +245,7 @@ const createTypeComposerFromGatsbyType = ({
       return InterfaceTypeComposer.createTemp(type.config, schemaComposer)
     }
     default: {
-      console.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
+      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
       return null
     }
   }
@@ -354,7 +354,8 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               fieldConfig.type && fieldConfig.type.toString()
             if (
               !fieldTypeName ||
-              tc.getFieldType(fieldName) === fieldConfig.type.toString() ||
+              fieldTypeName.replace(/!/g, ``) ===
+                originalTypeName.replace(/!/g, ``) ||
               tc.getType().isThirdPartyType
             ) {
               const newConfig = {}
