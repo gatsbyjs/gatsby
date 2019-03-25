@@ -229,8 +229,8 @@ const createTypeComposerFromGatsbyType = ({
         {
           ...type.config,
           types: () => {
-            if (type.types) {
-              return type.types.map(typeName =>
+            if (type.config.types) {
+              return type.config.types.map(typeName =>
                 schemaComposer.getOTC(typeName).getType()
               )
             } else {
