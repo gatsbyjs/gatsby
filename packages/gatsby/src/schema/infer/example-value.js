@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const is32BitInteger = require(`./is-32-bit-integer`)
-const { isDate } = require(`../types/date`)
+const { looksLikeADate } = require(`../types/date`)
 
 const getExampleValue = ({
   nodes,
@@ -170,7 +170,7 @@ const getType = value => {
     case `number`:
       return `number`
     case `string`:
-      return isDate(value) ? `date` : `string`
+      return looksLikeADate(value) ? `date` : `string`
     case `boolean`:
       return `boolean`
     case `object`:
