@@ -2096,7 +2096,7 @@
     - List app features
     - App Store and Play Store buttons
     - App screenshot and video preview
-    - Easily add social media accounts and contact info in the footer via the site-config.js file. 
+    - Easily add social media accounts and contact info in the footer via the site-config.js file.
     - Pick custom Font Awesome icons for the feature list via the site-config.js file.
     - Built using Prettier and Styled-Components
     - Easily integrate Google Analytics by adding your ID to site-config.js file.
