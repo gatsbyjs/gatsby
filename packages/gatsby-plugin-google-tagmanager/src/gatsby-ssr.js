@@ -19,20 +19,6 @@ exports.onRenderBody = (
         : ``
 
     setHeadComponents([
-      ...(pluginOptions.dataLayerName
-        ? [
-            <script
-              key="plugin-google-tagmanager-dataLayerName"
-              dangerouslySetInnerHTML={{
-                __html: stripIndent`
-                  // pre-populate the GTM dataLayer
-                  var dataLayer = dataLayer || [];
-                  // set the dataLayerName to the existing dataLayer
-                  var ${[pluginOptions.dataLayerName]} = dataLayer;`,
-              }}
-            />,
-          ]
-        : []),
       <script
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
