@@ -218,13 +218,6 @@
   categories:
     - Gallery
     - Cinema
-- title: Slite
-  main_url: "https://slite.com/"
-  url: "https://slite.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: GraphCMS
   main_url: "https://graphcms.com/"
   url: "https://graphcms.com/"
@@ -276,13 +269,6 @@
   categories:
     - Marketing
     - Technology
-- title: Etcetera Design
-  main_url: "https://etcetera.design/"
-  url: "https://etcetera.design/"
-  source_url: "https://github.com/etceteradesign/website"
-  featured: false
-  categories:
-    - Portfolio
 - title: Hack Club
   main_url: "https://hackclub.com/"
   url: "https://hackclub.com/"
@@ -429,13 +415,6 @@
   categories:
     - Education
     - Library
-- title: GRANDstack
-  main_url: "http://grandstack.io/"
-  url: "http://grandstack.io/"
-  featured: false
-  categories:
-    - Open Source
-    - Web Development
 - title: Théâtres Parisiens
   main_url: "http://theatres-parisiens.fr/"
   url: "http://theatres-parisiens.fr/"
@@ -503,13 +482,6 @@
   categories:
     - Blog
     - Web Development
-- title: FloydHub's Blog
-  main_url: "https://blog.floydhub.com/"
-  url: "https://blog.floydhub.com/"
-  featured: false
-  categories:
-    - Technology
-    - Blog
 - title: iContract Blog
   main_url: "https://blog.icontract.co.uk/"
   url: "http://blog.icontract.co.uk/"
@@ -655,14 +627,6 @@
     - Web Development
   built_by: Fabian Schultz
   built_by_url: "https://fabianschultz.com/"
-- title: Formidable
-  main_url: "https://formidable.com/"
-  url: "https://formidable.com/"
-  featured: false
-  categories:
-    - Web Development
-    - Agency
-    - Open Source
 - title: CalState House Manager
   description: >
     Home service membership that offers proactive and on-demand maintenance for
@@ -884,13 +848,6 @@
     - Blog
     - Portfolio
     - Web Development
-- title: Segment's Blog
-  main_url: "https://segment.com/blog/"
-  url: "https://segment.com/blog/"
-  featured: false
-  categories:
-    - Web Development
-    - Blog
 - title: Several Levels
   main_url: "https://severallevels.io/"
   url: "https://severallevels.io/"
@@ -1124,22 +1081,6 @@
   categories:
     - Marketing
     - Education
-- title: pi-top
-  main_url: "http://www.pi-top.com/"
-  url: "http://www.pi-top.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Web Development
-    - Technology
-    - eCommerce
-- title: Troops
-  main_url: "http://www.troops.ai/"
-  url: "http://www.troops.ai/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: ClearBrain
   main_url: "https://clearbrain.com/"
   url: "https://clearbrain.com/"
@@ -1195,14 +1136,6 @@
   categories:
     - Marketing
     - Technology
-- title: GraphQL College
-  main_url: "https://www.graphql.college/"
-  url: "https://www.graphql.college/"
-  source_url: "https://github.com/GraphQLCollege/graphql-college"
-  featured: false
-  categories:
-    - Web Development
-    - Education
 - title: F1 Vision
   main_url: "https://www.f1vision.com/"
   url: "https://www.f1vision.com/"
@@ -1721,14 +1654,6 @@
   categories:
     - Data
   featured: false
-- title: Trintellix
-  description: |
-    It may help make a difference for your depression (MDD).
-  main_url: "https://us.trintellix.com/"
-  url: "https://us.trintellix.com/"
-  categories:
-    - Health & Wellness
-  featured: false
 - title: The Telegraph Premium
   description: |
     Exclusive stories from award-winning journalists
@@ -1886,14 +1811,6 @@
     - Portfolio
     - Fashion
   featured: false
-- title: Lifestone Church
-  main_url: "https://www.lifestonechurch.net/"
-  url: "https://www.lifestonechurch.net/"
-  source_url: "https://github.com/lifestonechurch/lifestonechurch.net"
-  featured: false
-  categories:
-    - Marketing
-    - Nonprofit
 - title: Artem Sapegin
   description: >
     Little homepage of Artem Sapegin, a frontend developer, passionate
@@ -2126,17 +2043,6 @@
   categories:
     - Technology
     - Design
-  featured: false
-- title: Traffic Design Biennale 2018
-  main_url: "https://trafficdesign.pl"
-  url: "http://trafficdesign.pl/pl/ficzery/2018-biennale/"
-  description: |
-    Mini site for 2018 edition of Traffic Design’s Biennale
-  categories:
-    - Nonprofit
-    - Gallery
-  built_by: Piotr Fedorczyk
-  built_by_url: "https://piotrf.pl"
   featured: false
 - title: Insights
   main_url: "https://justaskusers.com/"
@@ -2727,18 +2633,6 @@
   built_by: IBM
   built_by_url: https://www.ibm.com/
   featured: false
-- title: Retirement Community
-  main_url: https://retirementcommunity.fastcompany.com/
-  url: https://retirementcommunity.fastcompany.com/
-  description: >
-    Bye Bye Funny Business, Pete Holmes and Jamie Lee enter retirement
-  categories:
-    - Entertainment
-    - Retirement
-    - Education
-  built_by: FastCompany
-  built_by_url: https://www.fastcompany.com/
-  featured: false
 - title: McDonald's Design System
   main_url: https://design.mcdonalds.com/
   url: https://design.mcdonalds.com/
@@ -3016,14 +2910,6 @@
     - Web Development
   built_by: Wide Eye
   built_by_url: https://wideeye.co/about-us/
-  featured: false
-- title: Guster
-  description: >
-    American alternative rock band from Boston, Massachusetts.
-  url: http://guster.com/
-  main_url: http://guster.com/
-  categories:
-    - Music
   featured: false
 - title: CodeSandbox
   description: >
@@ -3787,14 +3673,6 @@
   description: Graphene is a collaboratively funded project.Graphene-Python is a library for building GraphQL APIs in Python easily.
   categories:
     - Library
-    - API
-    - Documentation
-  featured: false
-- title: klarna
-  url: https://developers.klarna.com/en/gb/kco-v3
-  main_url: https://developers.klarna.com/en/gb/kco-v3
-  description: Here you will find the integration guides, API documentation, and more to easily integrate with Klarna.
-  categories:
     - API
     - Documentation
   featured: false
@@ -4724,7 +4602,7 @@
     Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
   categories:
     - Portfolio
-    - Personal website
+    - Personal Website
   built_by: Rou Hun Fan Developer
   built_by_url: https://flowen.me
   featured: false
@@ -4834,7 +4712,7 @@
   categories:
     - Blog
     - Portfolio
-    - Personal website
+    - Personal Website
 - title: re-geo
   description: >
     re-geo is react based geo cities style component.
@@ -4954,6 +4832,174 @@
   built_by: d:code:it
   built_by_url: https://dcodeit.com
   featured: false
+- title: Chase Ohlson
+  url: https://chaseohlson.com
+  main_url: https://chaseohlson.com
+  description: >
+    Portfolio of frontend engineer & web developer Chase Ohlson.
+  categories:
+    - Portfolio
+    - React
+    - Web Development
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+  featured: false
+- title: Zach Schnackel
+  url: https://zslabs.com
+  main_url: https://zslabs.com
+  source_url: "https://github.com/zslabs/zslabs.com"
+  description: >
+    Portfolio site for UI/Motion Developer, Zach Schnackel.
+  categories:
+    - Portfolio
+    - React
+    - Web Development
+  built_by: Zach Schnackel
+  built_by_url: "https://zslabs.com"
+- title: Gremlin
+  url: https://www.gremlin.com
+  main_url: https://www.gremlin.com
+  description: >
+    Gremlin's Failure as a Service finds weaknesses in your system before they cause problems.
+  categories:
+    - Marketing
+    - Chaos Engineering
+- title: Headless.page
+  main_url: https://headless.page/
+  url: https://headless.page/
+  description: >
+    Headless.page is a directory of eCommerce sites featuring headless architecture, PWA features and / or the latest JavaScript technology.
+  categories:
+    - Directory
+    - eCommerce
+  built_by: Pilon
+  built_by_url: https://pilon.io/
+  featured: false
+- title: Ouracademy
+  main_url: https://our-academy.org/
+  url: https://our-academy.org/
+  source_url: "https://github.com/ouracademy/website"
+  description: >
+    Ouracademy is an organization that promoves the education in software development throught blog posts & videos smiley.
+  categories:
+    - Open Source
+    - Blog
+    - Education
+  built_by: Ouracademy
+  built_by_url: https://github.com/ouracademy
+  featured: false
+- title: Tenon.io
+  main_url: https://tenon.io
+  url: https://tenon.io
+  description: >
+    Tenon.io is an accessibility tooling, services and consulting company.
+  categories:
+    - API
+    - Accessibility
+    - Business
+    - Consulting
+    - Technology
+  built_by: Tenon.io
+  built_by_url: https://tenon.io
+  featured: false
+- title: Projectival
+  url: https://www.projectival.de/
+  main_url: https://www.projectival.de/
+  description: >
+    Freelancer Online Marketing & Web Development in Cologne, Germany
+  categories:
+    - Freelance
+    - Marketing
+    - Web Development
+    - Blog
+    - Consulting
+    - SEO
+    - Business
+  built_by: Sascha Klapetz
+  built_by_url: https://www.projectival.de/
+  featured: false
+- title: Herman Starikov
+  url: https://hermanya.github.io
+  main_url: https://hermanya.github.io
+  source_url: https://github.com/Hermanya/hermanya.github.io
+  description: >
+    (optional)
+  categories:
+    - Developer
+    - Personal Website
+    - GitHub
+    - Portfolio
+  built_by: Herman Starikov
+  built_by_url: https://github.com/Hermanya
+  featured: false
+- title: Hetzner Online Community
+  main_url: https://community.hetzner.com
+  url: https://community.hetzner.com
+  description: >
+    Hetzner Online Community provides a free collection of high-quality tutorials, which are based on free and open source software, on a variety of topics such as development, system administration, and other web technology.
+  categories:
+    - Web Development
+    - Technology
+    - Programming
+    - Open Source
+    - Community
+    - Tutorials
+  built_by: Hetzner Online GmbH
+  built_by_url: https://www.hetzner.com/
+  featured: false
+- title: AGYNAMIX
+  url: https://www.agynamix.de/
+  main_url: https://www.agynamix.de/
+  source_url: https://github.com/tuhlmann/agynamix.de
+  description: >
+    Full Stack Java, Scala, Clojure, Typescript, React Developer in Thalheim, Germany
+  categories:
+    - Freelance
+    - Web Development
+    - Programming
+    - Blog
+    - Consulting
+    - Portfolio
+    - Business
+  built_by: Torsten Uhlmann
+  built_by_url: https://www.agynamix.de/
+  featured: false
+- title: syracuse.io
+  url: https://syracuse.io
+  main_url: https://syracuse.io
+  source_url: https://github.com/syracuseio/syracuseio/
+  description: >
+    Landing page for Syracuse NY Software Development Meetup Groups
+  categories:
+    - Community
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+- title: Render Documentation
+  main_url: https://render.com/docs
+  url: https://render.com/docs
+  description: >
+    Render is the easiest place to host your sites and apps. We use Gatsby for everything on https://render.com, including our documentation. The site is deployed on Render as well! We also have a guide to deploying Gatsby apps on Render: https://render.com/docs/deploy-gatsby.
+  categories:
+    - Web Development
+    - Programming
+    - Documentation
+    - Deployment
+    - Hosting
+    - Technology
+  built_by: Render Developers
+  built_by_url: https://render.com
+  featured: false
+- title: prima
+  url: https://www.prima.co
+  main_url: https://www.prima.co
+  description: >
+    Discover industry-defining wellness content and trusted organic hemp CBD products safely supporting wellness, stress, mood, skin health, and balance.
+  categories:
+    - Blog
+    - eCommerce
+    - Education
+  built_by: The Couch
+  built_by_url: https://thecouch.nyc
 - title: Gatsby Guides
   url: https://gatsbyguides.com/
   main_url: https://gatsbyguides.com/

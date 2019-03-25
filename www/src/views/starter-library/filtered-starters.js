@@ -4,13 +4,14 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, rhythm } from "../../utils/typography"
+import { rhythm } from "../../utils/typography"
 import {
   colors,
   space,
   radii,
   breakpoints,
   dimensions,
+  fonts,
 } from "../../utils/presets"
 
 import styles from "../shared/styles"
@@ -110,7 +111,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: rhythm(space[10]) }}>
+            <div css={{ height: space[10] }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -164,7 +165,7 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${rhythm(space[6])}`,
+              paddingTop: `${space[6]}`,
               [breakpoints.sm]: {
                 height: dimensions.headerHeight,
                 paddingTop: 0,
@@ -183,7 +184,7 @@ export default class FilteredStarterLibrary extends Component {
               css={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: rhythm(space[2]),
+                marginBottom: space[2],
                 width: `100%`,
                 [breakpoints.sm]: {
                   justifyContent: `flex-end`,
@@ -200,10 +201,10 @@ export default class FilteredStarterLibrary extends Component {
                     border: 0,
                     borderRadius: radii[2],
                     color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(space[1]),
-                    paddingRight: rhythm(space[1]),
-                    paddingBottom: rhythm(space[1]),
+                    fontFamily: fonts.header,
+                    paddingTop: space[1],
+                    paddingRight: space[1],
+                    paddingBottom: space[1],
                     width: rhythm(5),
                   },
                 }}
@@ -215,7 +216,7 @@ export default class FilteredStarterLibrary extends Component {
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
-                    marginTop: rhythm(space[1]),
+                    marginTop: space[1],
                     ...styles.searchInput,
                     width: rhythm(6),
                   }}
@@ -227,13 +228,13 @@ export default class FilteredStarterLibrary extends Component {
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
-                    height: rhythm(space[4]),
+                    height: space[4],
                     left: `5px`,
                     pointerEvents: `none`,
                     position: `absolute`,
                     top: `50%`,
                     transform: `translateY(-50%)`,
-                    width: rhythm(space[4]),
+                    width: space[4],
                   }}
                 />
               </label>

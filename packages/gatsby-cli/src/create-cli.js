@@ -83,6 +83,13 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      if (argv.noColor) {
+        // disables colors in popular terminal output coloring packages
+        //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
+        //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
+        process.env.FORCE_COLOR = `0`
+      }
+
       report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
@@ -141,7 +148,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -171,7 +178,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
@@ -295,6 +302,7 @@ module.exports = argv => {
       global: true,
     })
     .option(`no-color`, {
+      alias: `no-colors`,
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,

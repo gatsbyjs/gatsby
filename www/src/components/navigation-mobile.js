@@ -8,16 +8,18 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, {
+import {
   colors,
   transition,
   radii,
   space,
   breakpoints,
   dimensions,
+  scale,
+  lineHeights,
+  fonts,
 } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import { rhythm, options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -75,7 +77,7 @@ const MobileNavigation = () => (
         borderTop: `1px solid ${colors.ui.light}`,
         background: colors.white,
         height: dimensions.headerHeight,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
         [breakpoints.md]: {
           display: `none`,
@@ -125,11 +127,11 @@ const styles = {
     default: {
       color: colors.lilac,
       borderRadius: radii[1],
-      fontSize: presets.scale[0],
+      fontSize: scale[0],
       flexShrink: 0,
-      lineHeight: presets.lineHeights.solid,
+      lineHeight: lineHeights.solid,
       width: 64,
-      padding: rhythm(space[1]),
+      padding: space[1],
       textDecoration: `none`,
       textAlign: `center`,
       WebkitFontSmoothing: `antialiased`,

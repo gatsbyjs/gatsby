@@ -4,20 +4,14 @@ const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
   { node, loadNodeContent, actions, createNodeId, reporter },
-  {
-    plugins = null,
-    filter = () => true,
-    type = `MarkdownRemark`,
-    ...grayMatterOptions
-  } = {}
+  pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
   if (
-    (node.internal.mediaType !== `text/markdown` &&
-      node.internal.mediaType !== `text/x-markdown`) ||
-    !filter(node)
+    node.internal.mediaType !== `text/markdown` &&
+    node.internal.mediaType !== `text/x-markdown`
   ) {
     return {}
   }
@@ -25,7 +19,7 @@ module.exports = async function onCreateNode(
   const content = await loadNodeContent(node)
 
   try {
-    let data = grayMatter(content, grayMatterOptions)
+    let data = grayMatter(content, pluginOptions)
 
     if (data.data) {
       data.data = _.mapValues(data.data, value => {
@@ -37,12 +31,12 @@ module.exports = async function onCreateNode(
     }
 
     let markdownNode = {
-      id: createNodeId(`${node.id} >>> ${type}`),
+      id: createNodeId(`${node.id} >>> MarkdownRemark`),
       children: [],
       parent: node.id,
       internal: {
         content: data.content,
-        type,
+        type: `MarkdownRemark`,
       },
     }
 
