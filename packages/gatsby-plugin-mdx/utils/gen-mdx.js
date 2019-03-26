@@ -145,7 +145,11 @@ ${code}`;
   results.scopeIdentifiers = identifiers;
   // TODO: be more sophisticated about these replacements
   results.body = result.code
-    .replace(/export\s*{\s*MDXContent\s+as\s+default\s*};?/, "return MDXContent;")
+    .replace("export default", "return")
+    .replace(
+      /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
+      "return MDXContent;"
+    )
     .replace(/\nexport /g, "\n");
 
   /* results.html = renderToStaticMarkup(
