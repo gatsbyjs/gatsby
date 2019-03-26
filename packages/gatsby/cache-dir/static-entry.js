@@ -126,13 +126,13 @@ export default (pagePath, callback) => {
 
   let dataAndContext = {}
   if (page.jsonName in dataPaths) {
-    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
+    const pathToJsonData = join(
+      process.cwd(),
+      `/public/static/d`,
+      `${dataPaths[page.jsonName]}.json`
+    )
     try {
-      dataAndContext = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
-        )
-      )
+      dataAndContext = JSON.parse(fs.readFileSync(pathToJsonData))
     } catch (e) {
       console.log(`error`, pathToJsonData, e)
       process.exit()
