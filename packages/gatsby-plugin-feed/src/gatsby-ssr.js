@@ -1,5 +1,5 @@
 import React from "react"
-import { withPrefix } from "gatsby"
+import { withAssetPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
@@ -19,7 +19,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         rel="alternate"
         type="application/rss+xml"
         title={title}
-        href={withPrefix(output)}
+        href={withAssetPrefix(output)}
       />
     )
   })

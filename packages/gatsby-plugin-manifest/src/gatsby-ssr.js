@@ -1,13 +1,12 @@
 import React from "react"
 import fs from "fs"
-import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
+import { withAssetPrefix } from "gatsby"
 
 import { defaultIcons, createContentDigest, addDigestToPath } from "./common.js"
 
 let iconDigest = null
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  const withPrefix = withAssetPrefix || fallbackWithPrefix
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
@@ -38,7 +37,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         <link
           key={`gatsby-plugin-manifest-icon-link`}
           rel="shortcut icon"
-          href={withPrefix(addDigestToPath(favicon, iconDigest, cacheBusting))}
+          href={withAssetPrefix(
+            addDigestToPath(favicon, iconDigest, cacheBusting)
+          )}
         />
       )
     }
@@ -49,7 +50,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`manifest.webmanifest`)}
+      href={withAssetPrefix(`manifest.webmanifest`)}
       crossOrigin={pluginOptions.crossOrigin}
     />
   )
@@ -78,7 +79,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
         rel="apple-touch-icon"
         sizes={icon.sizes}
-        href={withPrefix(addDigestToPath(icon.src, iconDigest, cacheBusting))}
+        href={withAssetPrefix(
+          addDigestToPath(icon.src, iconDigest, cacheBusting)
+        )}
       />
     ))
 

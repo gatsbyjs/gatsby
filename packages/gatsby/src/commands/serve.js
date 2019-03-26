@@ -5,12 +5,12 @@ const fs = require(`fs-extra`)
 const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
-const getConfigFile = require(`../bootstrap/get-config-file`)
-const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
-
 const telemetry = require(`gatsby-telemetry`)
+
+const getConfigFile = require(`../bootstrap/get-config-file`)
+const preferDefault = require(`../bootstrap/prefer-default`)
 
 const getPages = directory =>
   fs
@@ -51,8 +51,9 @@ module.exports = async program => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
-  let pathPrefix = config && config.pathPrefix
-  pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
+  const { pathPrefix: configPathPrefix } = config
+
+  const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
   const root = path.join(program.directory, `public`)
   const pages = await getPages(program.directory)
