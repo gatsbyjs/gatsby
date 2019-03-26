@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.11...gatsby@2.2.12) (2019-03-26)
+
+### Features
+
+- **gatsby:** Move page component state & side effect handling to xstate ([#11897](https://github.com/gatsbyjs/gatsby/issues/11897)) ([91086d4](https://github.com/gatsbyjs/gatsby/commit/91086d4))
+
 ## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.10...gatsby@2.2.11) (2019-03-25)
 
 **Note:** Version bump only for package gatsby
