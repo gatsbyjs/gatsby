@@ -7,6 +7,7 @@ module.exports = async () => {
   const forked = fork(join(__dirname, `send.js`), {
     detached: true,
     stdio: `ignore`,
+    execArgv: [],
   })
   forked.unref()
 }
