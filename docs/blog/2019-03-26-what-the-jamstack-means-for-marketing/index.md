@@ -7,6 +7,7 @@ tags:
   - jamstack
   - marketing
   - headless cms
+canonicalLink: https://kymellis.co/jamstack-marketing-headless-cms/
 ---
 
 There's an emerging trend in modern web development called the JAMstack. It's largely being discussed in developer circles, but I was lucky enough to work on a site relaunch project as a marketer where I got to see the JAMstack in action.
