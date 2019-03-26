@@ -9,6 +9,8 @@ const { copyStaticDir } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
+const signalExit = require(`signal-exit`)
+const telemetry = require(`gatsby-telemetry`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -25,6 +27,11 @@ type BuildArgs = {
 
 module.exports = async function build(program: BuildArgs) {
   initTracer(program.openTracingConfigFile)
+
+  telemetry.trackCli(`BUILD_START`)
+  signalExit(() => {
+    telemetry.trackCli(`BUILD_END`)
+  })
 
   const buildSpan = tracer.startSpan(`build`)
   buildSpan.setTag(`directory`, program.directory)
@@ -82,6 +89,5 @@ module.exports = async function build(program: BuildArgs) {
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()
-
   await stopTracer()
 }
