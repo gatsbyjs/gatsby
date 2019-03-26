@@ -408,6 +408,50 @@ describe(`GraphQL type inference`, () => {
     expect(result).toMatchSnapshot()
   })
 
+  it(`handles lowercase type names`, async () => {
+    const nodes = [
+      {
+        id: `1`,
+        internal: { type: `wordpress__PAGE` },
+        acfFields: {
+          fooz: `bar`,
+        },
+      },
+    ]
+    const schema = await buildTestSchema(nodes)
+    store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+    const result = await graphql(
+      schema,
+      `
+        query {
+          allWordpressPage {
+            edges {
+              node {
+                __typename
+                id
+                acfFields {
+                  fooz
+                  __typename
+                }
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      {
+        path: `/`,
+        nodeModel: new LocalNodeModel({
+          schema,
+          nodeStore,
+          createPageDependency,
+        }),
+      }
+    )
+
+    expect(result).toMatchSnapshot()
+  })
+
   describe(`Handles dates`, () => {
     it(`Handles integer with valid date format`, async () => {
       const nodes = [
