@@ -25,7 +25,7 @@ exports.onRenderBody = (
   // Lighthouse recommends pre-connecting to google analytics
   setHeadComponents([
     <link
-      rel="dns-prefetch preconnect"
+      rel="preconnect dns-prefetch"
       key="preconnect-google-analytics"
       href="https://www.google-analytics.com"
     />,
