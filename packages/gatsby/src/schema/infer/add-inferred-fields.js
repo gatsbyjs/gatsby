@@ -78,7 +78,7 @@ const addInferredFieldsImpl = ({
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${
           field.key
         }\` - [${possibleFieldsNames}]. Gatsby will use \`${
           field.unsanitizedKey
@@ -385,12 +385,12 @@ const getSimpleFieldConfig = ({
 }
 
 const createTypeName = selector => {
-  const key = selector
-    .split(`.`)
+  const keys = selector.split(`.`)
+  const suffix = keys
+    .slice(1)
     .map(_.upperFirst)
     .join(``)
-
-  return key
+  return `${keys[0]}${suffix}`
 }
 
 const NON_ALPHA_NUMERIC_EXPR = new RegExp(`[^a-zA-Z0-9_]`, `g`)

@@ -6,6 +6,7 @@ const convertHrtime = require(`convert-hrtime`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
 const showMeARandomASCIICat = require(`cat-me`)
+const { trackError } = require(`gatsby-telemetry`)
 
 const VERBOSE = process.env.gatsby_log_level === `verbose`
 
@@ -51,11 +52,13 @@ module.exports = Object.assign(reporter, {
    */
   panic(...args) {
     this.error(...args)
+    trackError(`GENERAL_PANIC`, { error: args })
     process.exit(1)
   },
 
   panicOnBuild(...args) {
     this.error(...args)
+    trackError(`BUILD_PANIC`, { error: args })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }

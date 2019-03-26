@@ -5,15 +5,16 @@ import { colors, breakpoints, dimensions } from "../utils/presets"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
-    <section
+    <nav
       css={{
         ...styles.sidebar,
         // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
         display: !isPluginsIndex ? `none` : false,
       }}
+      aria-label="Plugin navigation"
     >
       <PluginSearchBar location={location} />
-    </section>
+    </nav>
     <main
       id={`reach-skip-nav`}
       css={{

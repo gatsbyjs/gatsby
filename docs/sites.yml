@@ -5101,3 +5101,38 @@
   built_by: Jacob Herper
   built_by_url: https://github.com/jakeherp
   featured: false
+- title: Artem Sapegin Photography
+  description: >
+    Photography portfolio and blog of Artem Sapegin, an award-losing photographer living in Berlin, Germany. Landscapes, cityscapes and dogs.
+  main_url: "https://morning.photos/"
+  url: "https://morning.photos/"
+  source_url: "https://github.com/sapegin/morning.photos"
+  categories:
+    - Portfolio
+    - Photography
+  built_by: Artem Sapegin
+  built_by_url: "https://github.com/sapegin"
+- title: Pattyrn
+  main_url: https://pattyrn.com
+  url: https://pattyrn.com
+  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
+  description: >
+    Pattyrn uses advanced machine learning AI to analyze the platform’s your teams use, making it easy to solve performance problems, reduce bottlenecks, and monitor culture health to optimize your ROI and help boost performance without causing burn out.
+  categories:
+    - Marketing
+    - Technology
+  built_by: Pattyrn
+  built_by_url: https://twitter.com/Pattyrn4
+  featured: false
+- title: Intranet Italia Day
+  main_url: https://www.intranetitaliaday.it/en
+  url: https://www.intranetitaliaday.it/en
+  description: >
+    The Italian event dedicated to the digital workplace that focuses on planning, governance and company intranet management
+  categories:
+    - Event
+    - Intranet
+    - Conference
+  built_by: Ariadne Digital
+  built_by_url: https://www.ariadnedigital.it
+  featured: false

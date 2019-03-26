@@ -1,5 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const sharp = require(`sharp`)
 jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
@@ -268,10 +269,8 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fixed`, () => {
-    console.warn = jest.fn()
-
     beforeEach(() => {
-      console.warn.mockClear()
+      console.warn = jest.fn()
     })
 
     afterAll(() => {
@@ -291,14 +290,15 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`warns when the requested width is greater than the image width`, async () => {
-      const args = { width: 2 }
+      const { width } = await sharp(file.absolutePath).metadata()
+      const args = { width: width * 2 }
 
       const result = await fixed({
         file,
         args,
       })
 
-      expect(result.width).toEqual(1)
+      expect(result.width).toEqual(width)
       expect(console.warn).toHaveBeenCalledTimes(1)
     })
 
@@ -368,19 +368,19 @@ describe(`gatsby-plugin-sharp`, () => {
         base64: false,
       }
 
-      let result = await fixed({
+      const fixedSvg = await fixed({
         file,
         args,
       })
 
-      expect(result).toMatchSnapshot()
+      expect(fixedSvg).toMatchSnapshot()
 
-      result = await fluid({
+      const fluidSvg = await fluid({
         file,
         args,
       })
 
-      expect(result).toMatchSnapshot()
+      expect(fluidSvg).toMatchSnapshot()
     })
   })
 })
