@@ -19,7 +19,7 @@ As such--this post focuses on just a single element of what makes Gatsby great: 
 Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
 </pullquote>
 
-Fun fact--that website in question is [reactjs.org](https://reactjs.org) which is, as you may or may not know, is an application built with and powered by Gatsby 💪
+Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, as you may or may not know, is an application built with and powered by Gatsby 💪
 
 In an effort to answer this initial question, this post outlines several foundational techniques that Gatsby enables _by default_ to deliver this experience. Specifically:
 
