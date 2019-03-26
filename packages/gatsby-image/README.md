@@ -142,6 +142,7 @@ export default ({ data }) => (
       fixed={data.file.childImageSharp.fixed}
       objectFit="cover"
       objectPosition="50% 50%"
+      alt=""
      />
   </div>
 )
