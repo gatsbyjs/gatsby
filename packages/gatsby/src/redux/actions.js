@@ -385,7 +385,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
     id = options
   } else {
-    id = options.node && options.node.id
+    id = options && options.node && options.node.id
   }
 
   // Always get node from the store, as the node we get as an arg
