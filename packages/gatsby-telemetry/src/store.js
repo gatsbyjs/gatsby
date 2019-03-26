@@ -47,19 +47,14 @@ module.exports = class Store {
     }
   }
 
-  getConfigPath() {
-    const configPath = path.join(homedir(), `.config/gatsby`)
+  getBufferFilePath() {
+    const bufferFilePath = path.join(homedir(), `.config/gatsby`)
     try {
-      ensureDirSync(configPath)
+      ensureDirSync(bufferFilePath)
     } catch (e) {
       //ignore
     }
-    return configPath
-  }
-
-  getBufferFilePath() {
-    const configPath = this.getConfigPath()
-    return path.join(configPath, `events.json`)
+    return path.join(bufferFilePath, `events.json`)
   }
 
   async startFlushEvents(flushOperation) {
