@@ -167,7 +167,7 @@ describe(`Test plugin sitemap`, async () => {
       expect(originalFile).toEqual(path.join(`public`, `sitemap-index.xml`))
       expect(newFile).toEqual(path.join(`public`, `sitemap.xml`))
     })
-    it(`set sitempa size and urls are less than it.`, async () => {
+    it(`set sitemap size and urls are less than it.`, async () => {
       const options = {
         sitemapSize: 100,
       }
@@ -175,6 +175,37 @@ describe(`Test plugin sitemap`, async () => {
       const [filePath, contents] = internals.writeFile.mock.calls[0]
       expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
       expect(contents).toMatchSnapshot()
+    })
+    it(`should include path prefix when creating creating index sitemap`, async () => {
+      const mockStream = {
+        once: jest.fn((event, cb) => cb()),
+        end: jest.fn(),
+        write: jest.fn(),
+      }
+
+      const sitemapIndexPath = `./public/sitemap-index.xml`
+      fs.createWriteStream.mockReturnValue(mockStream)
+      const options = {
+        sitemapSize: 1,
+      }
+      const prefix = `/test`
+      await onPostBuild({ graphql, pathPrefix: prefix }, options)
+
+      expect(fs.createWriteStream.mock.calls[2][0]).toEqual(sitemapIndexPath)
+
+      const parser = new DOMParser()
+      const DOM = parser.parseFromString(
+        mockStream.write.mock.calls[2][0],
+        `application/xml`
+      )
+      const elements = DOM.querySelectorAll(`sitemap loc`)
+      expect(elements.length).toBe(2)
+      expect(elements[0].innerHTML).toBe(
+        queryResult.data.site.siteMetadata.siteUrl + prefix + `/sitemap-0.xml`
+      )
+      expect(elements[1].innerHTML).toBe(
+        queryResult.data.site.siteMetadata.siteUrl + prefix + `/sitemap-1.xml`
+      )
     })
   })
 })
