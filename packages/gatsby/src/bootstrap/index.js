@@ -9,6 +9,7 @@ const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
+const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
@@ -111,6 +112,10 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
+
+  telemetry.decorateEvent(`BUILD_END`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
 
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {

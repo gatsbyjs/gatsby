@@ -10,6 +10,8 @@ const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
+const telemetry = require(`gatsby-telemetry`)
+
 const getPages = directory =>
   fs
     .readFile(path.join(directory, `.cache`, `pages.json`))
@@ -41,6 +43,7 @@ const clientOnlyPathsRouter = (pages, options) => {
 }
 
 module.exports = async program => {
+  telemetry.trackCli(`SERVE_START`)
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
@@ -56,6 +59,9 @@ module.exports = async program => {
 
   const app = express()
   const router = express.Router()
+
+  app.use(telemetry.expressMiddleware(`SERVE`))
+
   router.use(compression())
   router.use(express.static(`public`))
   router.use(clientOnlyPathsRouter(pages, { root }))
@@ -86,5 +92,8 @@ module.exports = async program => {
     }
   })
 
-  signalExit(() => server.close())
+  signalExit(() => {
+    telemetry.trackCli(`SERVE_STOP`)
+    server.close()
+  })
 }
