@@ -140,10 +140,6 @@ ${code}`;
     identifiers.push("React");
     imports.push("import React from 'react'");
   }
-  if (!identifiers.includes("MDXTag")) {
-    identifiers.push("MDXTag");
-    imports.push("import { MDXTag } from '@mdx-js/tag'");
-  }
 
   results.scopeImports = imports;
   results.scopeIdentifiers = identifiers;
