@@ -5,9 +5,8 @@ import domReady from "domready"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
+import loader, { setApiRunnerForLoader } from "./loader"
 import syncRequires from "./sync-requires"
-import pages from "./pages.json"
 
 window.___emitter = emitter
 setApiRunnerForLoader(apiRunner)
@@ -46,19 +45,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ReactDOM.render
   )[0]
 
-  loader.addPagesArray(pages)
   loader.addDevRequires(syncRequires)
 
-  loader.getResourcesForPathname(window.location.pathname).then(() => {
-    const preferDefault = m => (m && m.default) || m
-    let Root = preferDefault(require(`./root`))
-    domReady(() => {
-      renderer(<Root />, rootElement, () => {
-        postInitialRenderWork()
-        apiRunner(`onInitialClientRender`)
+  loader
+    .getResourcesForPathname(window.location.pathname)
+    .then(() => {
+      loader.getResourcesForPathname(`/dev-404-page/`)
+    })
+    .then(() => {
+      const preferDefault = m => (m && m.default) || m
+      let Root = preferDefault(require(`./root`))
+      domReady(() => {
+        renderer(<Root />, rootElement, () => {
+          apiRunner(`onInitialClientRender`)
+        })
       })
     })
-  })
 })
 
 function supportsServiceWorkers(location, navigator) {

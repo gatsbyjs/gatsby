@@ -12,22 +12,6 @@ type QueryResult = {
 type QueryResultsMap = Map<string, QueryResult>
 
 /**
- * Get cached query result for given data path.
- * @param {string} dataFileName Cached query result filename.
- * @param {string} directory Root directory of current project.
- */
-const readCachedResults = (dataFileName: string, directory: string): object => {
-  const filePath = path.join(
-    directory,
-    `public`,
-    `static`,
-    `d`,
-    `${dataFileName}.json`
-  )
-  return JSON.parse(fs.readFileSync(filePath, `utf-8`))
-}
-
-/**
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.
@@ -36,22 +20,22 @@ const getCachedPageData = (
   pagePath: string,
   directory: string
 ): QueryResult => {
-  const { jsonDataPaths, pages } = store.getState()
-  const page = pages.get(pagePath)
-  if (!page) {
+  const fixedPagePath = pagePath === `/` ? `index` : pagePath
+  const filePath = path.join(
+    directory,
+    `public`,
+    `page-data`,
+    fixedPagePath,
+    `page-data.json`
+  )
+  const fileResult = fs.readFileSync(filePath, `utf-8`)
+  if (fileResult === undefined) {
     return null
-  }
-  const dataPath = jsonDataPaths[page.jsonName]
-  if (typeof dataPath === `undefined`) {
-    console.log(
-      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
-    )
-    return undefined
-  }
-
-  return {
-    result: readCachedResults(dataPath, directory),
-    id: pagePath,
+  } else {
+    return {
+      ...JSON.parse(fileResult),
+      id: pagePath,
+    }
   }
 }
 
@@ -65,13 +49,20 @@ const getCachedStaticQueryResults = (
   directory: string
 ): QueryResultsMap => {
   const cachedStaticQueryResults = new Map()
-  const { staticQueryComponents, jsonDataPaths } = store.getState()
+  const { staticQueryComponents } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
     // Don't read from file if results were already passed from query runner
     if (resultsMap.has(staticQueryComponent.hash)) return
 
-    const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
-    if (typeof dataPath === `undefined`) {
+    const filePath = path.join(
+      directory,
+      `public`,
+      `static`,
+      `d`,
+      `${staticQueryComponent.hash}.json`
+    )
+    const fileResult = fs.readFileSync(filePath, `utf-8`)
+    if (fileResult === `undefined`) {
       console.log(
         `Error loading a result for the StaticQuery in "${
           staticQueryComponent.componentPath
@@ -79,8 +70,9 @@ const getCachedStaticQueryResults = (
       )
       return
     }
+    const jsonResult = JSON.parse(fileResult)
     cachedStaticQueryResults.set(staticQueryComponent.hash, {
-      result: readCachedResults(dataPath, directory),
+      result: jsonResult,
       id: staticQueryComponent.hash,
     })
   })

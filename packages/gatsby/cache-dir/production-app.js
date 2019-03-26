@@ -12,7 +12,7 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
+import loader, { setApiRunnerForLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
@@ -22,7 +22,6 @@ window.___compilationHash = window.pageData.compilationHash
 console.log(`compilation hash`, window.___compilationHash)
 
 loader.addPageData([window.pageData])
-// loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)
 

@@ -83,7 +83,7 @@ class JSONStore extends React.Component {
   render() {
     const data = this.state.pageQueryData[getPathFromProps(this.props)]
     // eslint-disable-next-line
-    const { pages, ...propsWithoutPages } = this.props
+    const { ...propsWithoutPages } = this.props
     if (!data) {
       return <div />
     }

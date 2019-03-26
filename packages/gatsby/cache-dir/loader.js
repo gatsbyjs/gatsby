@@ -187,15 +187,7 @@ const onPostPrefetch = url => {
   }
 }
 
-/**
- * Check if we should fallback to resources for 404 page if resources for a page are not found
- *
- * We can't do that when we don't have full pages manifest - we don't know if page exist or not if we don't have it.
- * We also can't do that on initial render / mount in case we just can't load resources needed for first page.
- * Not falling back to 404 resources will cause "EnsureResources" component to handle scenarios like this with
- * potential reload
- * @param {string} path Path to a page
- */
+// TODO review to make sure this makes sense
 const shouldFallbackTo404Resources = path => path !== `/404.html`
 
 // Note we're not actively using the path data atm. There
@@ -255,15 +247,14 @@ const queue = {
       return true
     }
 
-    // TODO
-    // if (
-    //   process.env.NODE_ENV !== `production` &&
-    //   process.env.NODE_ENV !== `test`
-    // ) {
-    //   devGetPageData(page.path)
-    // }
+    if (
+      process.env.NODE_ENV !== `production` &&
+      process.env.NODE_ENV !== `test`
+    ) {
+      // Ensure latest version of page data is in the JSON store
+      devGetPageData(realPath)
+    }
 
-    // Prefetch resources.
     if (process.env.NODE_ENV === `production`) {
       const pageDataUrl = makePageDataUrl(realPath)
       prefetchHelper(pageDataUrl)
@@ -299,9 +290,12 @@ const queue = {
     )
     if (realPath in pathScriptsCache) {
       return pathScriptsCache[realPath]
-    } else if (shouldFallbackTo404Resources(realPath)) {
-      return queue.getResourcesForPathnameSync(`/404.html`)
-    } else {
+    }
+    // TODO add this back in?
+    // else if (shouldFallbackTo404Resources(realPath)) {
+    //   return queue.getResourcesForPathnameSync(`/404.html`)
+    // }
+    else {
       return null
     }
   },
@@ -363,28 +357,48 @@ const queue = {
 
       const { componentChunkName } = pageData
 
-      if (process.env.NODE_ENV !== `production`) {
+      const finalResolve = component => {
         const page = {
           componentChunkName: pageData.componentChunkName,
           path: pageData.path,
+          compilationHash: pageData.compilationHash,
         }
+
+        const jsonData = {
+          data: pageData.data,
+          pageContext: pageData.pageContext,
+        }
+
         const pageResources = {
-          component: syncRequires.components[page.componentChunkName],
+          component,
+          json: jsonData,
           page,
         }
 
         // Add to the cache.
         pathScriptsCache[realPath] = pageResources
-        devGetPageData(page.path).then(pageData => {
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources,
-          })
-          // Tell plugins the path has been successfully prefetched
-          // TODO onPostPrefetch(makePageDataUrl(realPath))
+        resolve(pageResources)
 
-          resolve(pageResources)
+        emitter.emit(`onPostLoadPageResources`, {
+          page,
+          pageResources,
         })
+
+        // Tell plugins the path has been successfully prefetched
+        const pageDataUrl = makePageDataUrl(realPath)
+        const componentUrls = createComponentUrls(componentChunkName)
+        const resourceUrls = [pageDataUrl].concat(componentUrls)
+        onPostPrefetch({
+          path: rawPath,
+          resourceUrls,
+        })
+      }
+
+      if (process.env.NODE_ENV !== `production`) {
+        // Ensure latest version of page data is in the JSON store
+        devGetPageData(realPath)
+        const component = syncRequires.components[pageData.componentChunkName]
+        finalResolve(component)
       } else {
         console.log(`getting page component: [${componentChunkName}]`)
         cachedFetch(componentChunkName, fetchComponent)
@@ -395,57 +409,10 @@ const queue = {
               resolve(null)
               return
             }
-
-            const page = {
-              componentChunkName,
-              path: pageData.path,
-              compilationHash: pageData.compilationHash,
-            }
-
-            const jsonData = {
-              data: pageData.data,
-              pageContext: pageData.pageContext,
-            }
-
-            const pageResources = {
-              component,
-              json: jsonData,
-              page,
-            }
-
-            // TODO
-            // pageResources.page.jsonURL = createJsonURL(
-            //   jsonDataPaths[page.jsonName]
-            // )
-            pathScriptsCache[realPath] = pageResources
-            resolve(pageResources)
-
-            emitter.emit(`onPostLoadPageResources`, {
-              page,
-              pageResources,
-            })
-
-            // Tell plugins the path has been successfully prefetched
-            const pageDataUrl = makePageDataUrl(realPath)
-            const componentUrls = createComponentUrls(componentChunkName)
-            const resourceUrls = [pageDataUrl].concat(componentUrls)
-            onPostPrefetch({
-              path: rawPath,
-              resourceUrls,
-            })
+            finalResolve(component)
           })
       }
     }),
-}
-
-// TODO This doesn't make sense anymore
-export const postInitialRenderWork = () => {
-  inInitialRender = false
-  if (process.env.NODE_ENV === `production`) {
-    // We got all resources needed for first mount,
-    // we can fetch resources for all pages.
-    fetchPageResourceMap()
-  }
 }
 
 export const setApiRunnerForLoader = runner => {

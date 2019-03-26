@@ -18,7 +18,6 @@ module.exports = async program => {
     schema,
     config,
     babelrc,
-    jsonDataPaths,
     pages,
     components,
     staticQueryComponents,
@@ -39,7 +38,6 @@ module.exports = async program => {
   // set some globals to make life easier
   _.context.babelrc = babelrc
   _.context.components = components
-  _.context.dataPaths = jsonDataPaths
   _.context.getNode = getNode
   _.context.getNodes = getNodes
   _.context.getNodesByType = getNodesByType
