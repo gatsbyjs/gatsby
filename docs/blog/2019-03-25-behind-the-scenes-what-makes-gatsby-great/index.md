@@ -137,7 +137,7 @@ Next:
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 - Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
 
-Does this sound like something that ✨joy? Oh--let's talk about the deploy process, too.
+Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
 
 Releasing a one-line fix to our SSR application requires deploying an entirely new version of our application. This means spinning down existing versions of our service, spinning up new versions of our service, and handling and remediating any errors that may arise.
 
