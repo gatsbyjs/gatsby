@@ -1,16 +1,7 @@
 const Store = require(`./store`)
 const fetch = require(`node-fetch`)
 
-const isEnvVariableTruthy = envVar => {
-  const number = parseInt(envVar, 10)
-
-  // NaN, return false
-  if (isNaN(number)) return false
-  // Greater than 0, return true
-  if (number > 0) return true
-  // Default to false
-  return false
-}
+const isTruthy = require(`./is-truthy`)
 
 /* The events data collection is a spooled process that
  * buffers events to a local fs based buffer
@@ -20,8 +11,8 @@ const isEnvVariableTruthy = envVar => {
  */
 module.exports = class EventStorage {
   store = new Store()
-  debugEvents = isEnvVariableTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
-  disabled = isEnvVariableTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
+  disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
 
   addEvent(event) {
     if (this.disabled) {
