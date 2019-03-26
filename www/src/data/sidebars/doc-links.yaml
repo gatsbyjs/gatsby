@@ -428,6 +428,60 @@
       link: /docs/image-tutorial/
     - title: Writing Documentation with Docz
       link: /docs/writing-documentation-with-docz/
+- title: Using Gatsby Professionally
+  link: /docs/using-gatsby-professionally/
+  items:
+    - title: Introduction - Convincing Others to Use Gatsby
+      link: /docs/convincing-others/
+    - title: Your First Professional Project
+      link: /docs/first-professional-project/
+    - title: Winning Over Different Stakeholders
+      link: /docs/winning-over-stakeholders/
+      items:
+        - title: Developers
+          link: /docs/winning-over-developers/
+        - title: Engineering Leaders*
+          link: /docs/winning-over-engineering-leaders/
+        - title: Marketers
+          link: /docs/winning-over-marketers/
+        - title: Executives
+          link: /docs/winning-over-executives/
+        - title: Clients
+          link: /docs/winning-over-clients/
+    - title: Spreading Gatsby In Different Types of Organizations
+      link: /docs/different-organization-types/
+      items:
+        - title: As a Freelancer
+          link: /docs/gatsby-for-freelancers/
+          items:
+        - title: Inside an Agency
+          link: /docs/gatsby-for-agencies/
+          items:
+            - title: Lower Bids, More Profit
+              link: /docs/lower-bids-more-profit/
+            - title: Faster Recruiting
+              link: /docs/faster-recruiting/
+            - title: Sanitize Your Stack
+              link: /docs/sanitize-your-stack/
+            - title: Why Agencies Go Gatsby-Only
+              link: /docs/going-gatsby-only/
+        - title: Inside a Company
+          link: /docs/gatsby-for-companies/
+          items:
+            - title: Answering IT/Security Questions
+              link: /docs/answering-it-security/
+    - title: Best Practices for Orgs
+      link: /docs/best-practices-for-orgs/
+      items:
+        - title: Sharing Components Across Websites
+          link: /docs/sharing-components-across-websites/
+          items:
+            - title: Component Libraries
+              link: /docs/component-libraries/
+            - title: Making Components Discoverable
+              link: /docs/making-components-discoverable/
+    - title: How Gatsby Boosts Your Career
+      link: /docs/how-gatsby-boosts-career/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
