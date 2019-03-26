@@ -2,7 +2,6 @@
 
 exports[`mdx-loader snapshot with body 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -34,7 +33,6 @@ export const _frontmatter = {};
 
 exports[`mdx-loader snapshot with frontmatter 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -70,7 +68,6 @@ export const _frontmatter = {
 
 exports[`mdx-loader snapshot with frontmatter-layout 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -109,7 +106,6 @@ export const _frontmatter = {
 
 exports[`mdx-loader snapshot with frontmatter-layout-namedExports 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -153,7 +149,6 @@ export const _frontmatter = {
 
 exports[`mdx-loader snapshot with frontmatter-namedExports 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -194,7 +189,6 @@ export const _frontmatter = {
 
 exports[`mdx-loader snapshot with layout 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -229,7 +223,6 @@ export const _frontmatter = {};
 
 exports[`mdx-loader snapshot with layout-namedExports 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
@@ -269,7 +262,6 @@ export const _frontmatter = {};
 
 exports[`mdx-loader snapshot with namedExports 1`] = `
 import React from "react";
-import { MDXTag } from "@mdx-js/tag";
 
 /* @jsx mdx */
 import mdx from "@mdx-js/mdx/create-element";
