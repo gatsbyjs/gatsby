@@ -253,6 +253,13 @@
           link: /docs/adding-an-rss-feed/
         - title: Linking Between Pages
           link: /docs/linking-between-pages/
+        - title: Adding Page Transitions
+          link: /docs/adding-page-transitions/
+          items:
+            - title: Adding Page Transitions with gatsby-plugin-transition-link
+              link: /docs/adding-page-transitions-with-plugin-transition-link/
+            - title: Adding Page Transitions with gatsby-plugin-page-transitions*
+              link: /docs/adding-page-transitions-with-plugin-page-transitions/
         - title: Making Your Site Accessible
           link: /docs/making-your-site-accessible
         - title: Routing
