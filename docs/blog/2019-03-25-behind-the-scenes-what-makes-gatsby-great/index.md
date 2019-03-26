@@ -471,7 +471,7 @@ With any application, even one with a rock-solid performance basis like Gatsby, 
 
 The quickest and easiest recommendation for measuring performance is to first and foremost use the tools available to you. Chrome has an excellent tool built-in, [Lighthouse](https://github.com/GoogleChrome/lighthouse) accessible via the "Audits" tab in Developer Tools (and fun fact--Gatsby's very own [Ward Peeters](https://github.com/wardpeet) is a core contributor!).
 
-Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` and then `Run audit`. You'll be greated with a result like:
+Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` and then `Run audit`. You'll be greeted with a result like:
 
 ![Lighthouse Example](./images/lighthouse.png)
 
