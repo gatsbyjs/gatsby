@@ -465,7 +465,7 @@ It's been quite a ride 😅 By this point, we've covered the foundational techni
 
 ## Techniques for measuring performance
 
-With any application, even one with a rock-solid performance basis like Gatsby, the advice I'd give is to trust, but validate. It's _unlikely_ you'll introduce a significant performance regression with a new feature and pull request, but even the best of foundations can be torn down. "I think I'll load _six_ fonts each in weights 100-900" he said and "Oh, and I think two feedback libraries _and_ a few analytics libraries are really going to drive conversion and put us over the edge," said someone, assuredly, at some point.
+With any application, even one with a rock-solid performance basis like Gatsby, the advice I'd give is to trust, but validate. It's _unlikely_ you'll introduce a significant performance regression with a new feature and pull request, but even the best of foundations can be torn down. "I think I'll load _six_ fonts each in weights 100-900", they said, and "Oh, and I think two feedback libraries _and_ a few analytics libraries are really going to drive conversion and put us over the edge," said someone, assuredly, at some point.
 
 ### Lighthouse
 
