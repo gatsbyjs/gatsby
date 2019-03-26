@@ -1,19 +1,24 @@
 const fs = require("fs");
 const path = require("path");
 const slash = require("slash");
+const loaderUtils = require("loader-utils");
+const { MDX_SCOPES_LOCATION } = require("../constants");
 
-module.exports = () => {
-  const files = fs.readdirSync("./.cache/gatsby-mdx/mdx-scopes-dir");
-  const abs = path.resolve("./.cache/gatsby-mdx/mdx-scopes-dir");
+module.exports = function() {
+  const { cache } = loaderUtils.getOptions(this);
+  const abs = path.join(cache.directory, MDX_SCOPES_LOCATION);
+  const files = fs.readdirSync(abs);
   return (
     files
       .map(
         (file, i) =>
-          `const scope_${i} = require('${slash(path.join(abs, file))}').default;`
+          `const scope_${i} = require('${slash(
+            path.join(abs, file)
+          )}').default;`
       )
       .join("\n") +
-      `export default 
-        Object.assign({}, ${files.map((_, i) => 'scope_' + i).join(',\n')} )
+    `export default
+        Object.assign({}, ${files.map((_, i) => "scope_" + i).join(",\n")} )
     `
   );
 };

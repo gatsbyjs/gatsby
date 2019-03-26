@@ -3,7 +3,7 @@ const escapeStringRegexp = require("escape-string-regexp");
 const defaultOptions = require("../utils/default-options");
 
 module.exports = (
-  { stage, loaders, actions, plugins, ...other },
+  { stage, loaders, actions, plugins, cache, ...other },
   pluginOptions
 ) => {
   const options = defaultOptions(pluginOptions);
@@ -16,7 +16,7 @@ module.exports = (
       rules: [
         {
           test: /\.js$/,
-          include: path.resolve(__dirname, ".cache/gatsby-mdx"),
+          include: cache.directory,
           use: [loaders.js()]
         },
         {
@@ -34,6 +34,19 @@ module.exports = (
               loader: path.join("gatsby-mdx", "loaders", "mdx-components"),
               options: {
                 plugins: options.mdxPlugins
+              }
+            }
+          ]
+        },
+        {
+          test: /mdx-scopes\.js$/,
+          include: path.dirname(require.resolve("gatsby-mdx")),
+          use: [
+            loaders.js(),
+            {
+              loader: path.join("gatsby-mdx", "loaders", "mdx-scopes"),
+              options: {
+                cache: cache
               }
             }
           ]
@@ -58,6 +71,7 @@ module.exports = (
             {
               loader: path.join("gatsby-mdx", "loaders", "mdx-loader"),
               options: {
+                cache: cache,
                 ...other,
                 pluginOptions: options
               }

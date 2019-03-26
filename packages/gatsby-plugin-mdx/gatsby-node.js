@@ -45,15 +45,14 @@ exports.onCreateBabelConfig = ({ actions }) => {
   });
 };
 
-exports.onPreBootstrap = ({ store }) => {
-  const { directory } = store.getState().program;
-  mkdirp.sync(path.join(directory, MDX_SCOPES_LOCATION));
+exports.onPreBootstrap = ({ cache }) => {
+  mkdirp.sync(path.join(cache.directory, MDX_SCOPES_LOCATION));
 };
 
-exports.onPostBootstrap = (_, pluginOptions) => {
+exports.onPostBootstrap = ({ cache }, pluginOptions) => {
   if (pluginOptions.globalScope) {
     fs.writeFileSync(
-      `${MDX_SCOPES_LOCATION}/global-scope.js`,
+      path.join(cache.directory, MDX_SCOPES_LOCATION, `global-scope.js`),
       pluginOptions.globalScope
     );
   }

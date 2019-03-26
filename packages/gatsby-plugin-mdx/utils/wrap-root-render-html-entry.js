@@ -1,7 +1,7 @@
 /* global __MDX_CONTENT__ */
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import scopeContexts from "../loaders/mdx-scopes!";
+import scopeContexts from "../loaders/mdx-scopes";
 import MDXRenderer from "../mdx-renderer";
 import { plugins as wrappers } from "../loaders/mdx-wrappers";
 import { pipe } from "lodash/fp";
