@@ -20,21 +20,39 @@ const quit = () => {
   process.exit()
 }
 
+let afterPackageInstallation = false
+let queuedCopies = []
+
+const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
+  fs.copy(oldPath, newPath, err => {
+    if (err) {
+      console.error(err)
+      return reject(err)
+    }
+
+    numCopied += 1
+    if (!quiet) {
+      console.log(`Copied ${oldPath} to ${newPath}`)
+    }
+    return resolve()
+  })
+}
+
 const copyPath = (oldPath, newPath, quiet) =>
   new Promise((resolve, reject) => {
-    fs.copy(oldPath, newPath, err => {
-      if (err) {
-        console.error(err)
-        return reject(err)
-      }
-
-      numCopied += 1
-      if (!quiet) {
-        console.log(`Copied ${oldPath} to ${newPath}`)
-      }
-      return resolve()
-    })
+    const argObj = { oldPath, newPath, quiet, resolve, reject }
+    if (afterPackageInstallation) {
+      realCopyPath(argObj)
+    } else {
+      queuedCopies.push(argObj)
+    }
   })
+
+const runQueuedCopies = () => {
+  afterPackageInstallation = true
+  queuedCopies.forEach(argObj => realCopyPath(argObj))
+  queuedCopies = []
+}
 
 const traversePackagesDeps = ({
   root,
@@ -155,6 +173,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
           const didDepsChangedPromise = checkDepsChanges({
             newPath,
             packageName,
+            monoRepoPackages,
             root,
             isInitialScan,
             ignoredPackageJSON,
@@ -235,6 +254,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
       await Promise.all(Array.from(waitFor))
 
       if (isInitialScan) {
+        isInitialScan = false
         if (packagesToPublish.size > 0) {
           const publishAndInstallPromise = publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
@@ -258,9 +278,9 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
           await promisifiedSpawn(yarnInstallCmd)
           console.log(`Installation complete`)
         }
-      }
 
-      isInitialScan = false
+        runQueuedCopies()
+      }
 
       // all files watched, quit once all files are copied if necessary
       Promise.all(allCopies).then(() => {

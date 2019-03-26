@@ -28,6 +28,7 @@ function difference(object, base) {
 const checkDepsChanges = async ({
   newPath,
   packageName,
+  monoRepoPackages,
   root,
   isInitialScan,
   ignoredPackageJSON,
@@ -139,12 +140,19 @@ const checkDepsChanges = async ({
           localPKGjson.dependencies[key] &&
           monorepoPKGjson.dependencies[key]
         ) {
-          acc.push(
-            ` - '${key}' changed version from ${
-              localPKGjson.dependencies[key]
-            } to ${monorepoPKGjson.dependencies[key]}`
-          )
-          needPublishing = true
+          // Check only for version changes in packages
+          // that are not from gatsby repo.
+          // Changes in gatsby packages will be copied over
+          // from monorepo - and if those contain other dependency
+          // changes - they will be covered
+          if (!monoRepoPackages.includes(key)) {
+            acc.push(
+              ` - '${key}' changed version from ${
+                localPKGjson.dependencies[key]
+              } to ${monorepoPKGjson.dependencies[key]}`
+            )
+            needPublishing = true
+          }
         } else if (monorepoPKGjson.dependencies[key]) {
           acc.push(` - '${key}@${monorepoPKGjson.dependencies[key]}' was added`)
           needPublishing = true
