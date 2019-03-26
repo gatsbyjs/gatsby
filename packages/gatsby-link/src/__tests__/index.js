@@ -74,6 +74,13 @@ describe(`<Link />`, () => {
     expect(container).toMatchSnapshot()
   })
 
+  it(`matches partially active snapshot`, () => {
+    const { container } = setup({
+      linkProps: { to: `/active/nested`, partiallyActive: true },
+    })
+    expect(container).toMatchSnapshot()
+  })
+
   it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
       getInstance({})

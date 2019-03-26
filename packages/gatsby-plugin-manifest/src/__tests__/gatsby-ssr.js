@@ -1,3 +1,9 @@
+jest.mock(`fs`, () => {
+  return {
+    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
+  }
+})
+
 const { onRenderBody } = require(`../gatsby-ssr`)
 
 let headComponents
@@ -52,7 +58,7 @@ describe(`gatsby-plugin-manifest`, () => {
     expect(headComponents).toMatchSnapshot()
   })
 
-  it(`Adds link favicon if "include_favicon" option is not provided`, () => {
+  it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string, Adds link favicon if "include_favicon" option is not provided`, () => {
     onRenderBody(ssrArgs, { icon: true })
     expect(headComponents).toMatchSnapshot()
   })
@@ -62,8 +68,13 @@ describe(`gatsby-plugin-manifest`, () => {
     expect(headComponents).toMatchSnapshot()
   })
 
-  it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided or is an empty string`, () => {
-    onRenderBody(ssrArgs, { icon: true })
+  it(`doesn't add cache busting if "cache_busting_mode" option is set to none`, () => {
+    onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `none` })
+    expect(headComponents).toMatchSnapshot()
+  })
+
+  it(`Does file name cache busting if "cache_busting_mode" option is set to name`, () => {
+    onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `name` })
     expect(headComponents).toMatchSnapshot()
   })
 

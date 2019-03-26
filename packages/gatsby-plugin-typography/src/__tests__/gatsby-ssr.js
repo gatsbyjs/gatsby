@@ -100,4 +100,24 @@ describe(`onPreRenderHTML`, () => {
 
     expect(spies.replaceHeadComponents).toHaveBeenCalledWith(components)
   })
+
+  it(`does not fail when head components include null`, () => {
+    const components = [
+      {
+        key: `link-1234`,
+      },
+      {
+        key: `link-preload`,
+      },
+      {
+        key: `_____01234_____`,
+      },
+      null,
+    ]
+
+    const spies = setup(clone(components))
+
+    expect(spies.replaceHeadComponents).toHaveBeenCalledWith(components)
+    expect(spies.replaceHeadComponents).toHaveReturned()
+  })
 })

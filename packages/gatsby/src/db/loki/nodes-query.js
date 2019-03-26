@@ -248,8 +248,8 @@ function toSortFields(sortArgs) {
   const { fields, order } = sortArgs
   const lokiSortFields = []
   for (let i = 0; i < fields.length; i++) {
-    const dottedField = fields[i].replace(/___/g, `.`)
-    const isDesc = order[i] === `desc`
+    const dottedField = fields[i]
+    const isDesc = order[i] && order[i].toLowerCase() === `desc`
     lokiSortFields.push([dottedField, isDesc])
   }
   return lokiSortFields
@@ -291,8 +291,11 @@ function ensureFieldIndexes(coll, lokiArgs) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery({ gqlType, queryArgs, context = {}, firstOnly }) {
-  const lokiArgs = convertArgs(queryArgs, gqlType)
+async function runQuery({ gqlType, queryArgs, firstOnly }) {
+  // Clone args as for some reason graphql-js removes the constructor
+  // from nested objects which breaks a check in sift.js.
+  const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
+  const lokiArgs = convertArgs(gqlArgs, gqlType)
   const coll = getNodeTypeCollection(gqlType.name)
   ensureFieldIndexes(coll, lokiArgs)
   let chain = coll.chain().find(lokiArgs, firstOnly)

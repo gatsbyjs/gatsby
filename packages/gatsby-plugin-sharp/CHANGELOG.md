@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.30...gatsby-plugin-sharp@2.0.31) (2019-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.29...gatsby-plugin-sharp@2.0.30) (2019-03-20)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** bail early if sharp isn't working ([#10677](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/10677)) ([2104a9f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/2104a9f))
+
+## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.28...gatsby-plugin-sharp@2.0.29) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.27...gatsby-plugin-sharp@2.0.28) (2019-03-12)
+
+### Features
+
+- **gatsby-image:** Placeholder Improvements ([#10944](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/10944)) ([44491ef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/44491ef))
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.26...gatsby-plugin-sharp@2.0.27) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.25...gatsby-plugin-sharp@2.0.26) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.24...gatsby-plugin-sharp@2.0.25) (2019-03-05)
 
 ### Bug Fixes

@@ -9,9 +9,16 @@ const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
 const createContentDigest = require(`./create-content-digest`)
+const {
+  buildObjectType,
+  buildUnionType,
+  buildInterfaceType,
+  buildInputObjectType,
+} = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
+const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -163,6 +170,12 @@ const runAPI = (plugin, api, args) => {
         createNodeId: namespacedCreateNodeId,
         createContentDigest,
         tracing,
+        schema: {
+          buildObjectType,
+          buildUnionType,
+          buildInterfaceType,
+          buildInputObjectType,
+        },
       },
       plugin.pluginOptions,
     ]
@@ -176,7 +189,16 @@ const runAPI = (plugin, api, args) => {
           callback(err, val)
           apiFinished = true
         }
-        gatsbyNode[api](...apiCallArgs, cb)
+
+        try {
+          gatsbyNode[api](...apiCallArgs, cb)
+        } catch (e) {
+          trackBuildError(api, {
+            error: e,
+            pluginName: `${plugin.name}@${plugin.version}`,
+          })
+          throw e
+        }
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
@@ -314,6 +336,9 @@ module.exports = async (api, args = {}, pluginSource) =>
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
       }).catch(err => {
+        decorateEvent(`BUILD_PANIC`, {
+          pluginName: `${plugin.name}@${plugin.version}`,
+        })
         reporter.panicOnBuild(`${pluginName} returned an error`, err)
         return null
       })

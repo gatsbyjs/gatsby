@@ -2,7 +2,12 @@ const fs = require(`fs`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const sharp = require(`sharp`)
-const { defaultIcons, doesIconExist } = require(`./common.js`)
+const {
+  defaultIcons,
+  doesIconExist,
+  addDigestToPath,
+  createContentDigest,
+} = require(`./common.js`)
 
 sharp.simd(true)
 
@@ -34,49 +39,64 @@ function generateIcons(icons, srcIcon) {
   })
 }
 
-exports.onPostBootstrap = (args, pluginOptions) =>
-  new Promise((resolve, reject) => {
-    const { icon, ...manifest } = pluginOptions
+exports.onPostBootstrap = async (args, pluginOptions) => {
+  const { icon, ...manifest } = pluginOptions
 
-    // Delete options we won't pass to the manifest.webmanifest.
+  // Delete options we won't pass to the manifest.webmanifest.
+  delete manifest.plugins
+  delete manifest.legacy
+  delete manifest.theme_color_in_head
+  delete manifest.cache_busting_mode
+  delete manifest.crossOrigin
 
-    delete manifest.plugins
-    delete manifest.legacy
-    delete manifest.theme_color_in_head
-    delete manifest.crossOrigin
+  // If icons are not manually defined, use the default icon set.
+  if (!manifest.icons) {
+    manifest.icons = defaultIcons
+  }
 
-    // If icons are not manually defined, use the default icon set.
-    if (!manifest.icons) {
-      manifest.icons = defaultIcons
+  // Determine destination path for icons.
+  const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
+
+  //create destination directory if it doesn't exist
+  if (!fs.existsSync(iconPath)) {
+    fs.mkdirSync(iconPath)
+  }
+
+  // Only auto-generate icons if a src icon is defined.
+  if (icon !== undefined) {
+    // Check if the icon exists
+    if (!doesIconExist(icon)) {
+      throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
     }
 
-    // Determine destination path for icons.
-    const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
+    //add cache busting
+    const cacheMode =
+      typeof pluginOptions.cache_busting_mode !== `undefined`
+        ? pluginOptions.cache_busting_mode
+        : `query`
 
-    //create destination directory if it doesn't exist
-    if (!fs.existsSync(iconPath)) {
-      fs.mkdirSync(iconPath)
+    //if cacheBusting is being done via url query icons must be generated before cache busting runs
+    if (cacheMode === `query`) {
+      await generateIcons(manifest.icons, icon)
     }
 
-    fs.writeFileSync(
-      path.join(`public`, `manifest.webmanifest`),
-      JSON.stringify(manifest)
-    )
+    if (cacheMode !== `none`) {
+      const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    // Only auto-generate icons if a src icon is defined.
-    if (icon !== undefined) {
-      // Check if the icon exists
-      if (!doesIconExist(icon)) {
-        reject(
-          `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
-        )
-      }
-      generateIcons(manifest.icons, icon).then(() => {
-        //images have been generated
-        console.log(`done generating icons for manifest`)
-        resolve()
+      manifest.icons.forEach(icon => {
+        icon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
       })
-    } else {
-      resolve()
     }
-  })
+
+    //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+    if (cacheMode !== `query`) {
+      await generateIcons(manifest.icons, icon)
+    }
+  }
+
+  //Write manifest
+  fs.writeFileSync(
+    path.join(`public`, `manifest.webmanifest`),
+    JSON.stringify(manifest)
+  )
+}
