@@ -161,13 +161,43 @@ Open your browser to `http://localhost:8000` where you should see your _Hello, w
 Currently, the theme does nothing.
 This is the minimal amount of code required to develop a theme with Yarn workspaces.
 
-To demonstrate the theme in action...
+To demonstrate the theme in action, use `gatsby-plugin-page-creator` to add a page from the theme.
 
-**QUESTION** what should the theme do here?
+```shell
+yarn workspace gatsby-theme-example-workspaces add gatsby-plugin-page-creator
+```
 
-- Add base CSS styles
-- Add a plugin
-- Add a page
+```js:title=gatsby-theme-example-workspaces/gatsby-config.js
+const path = require("path") // highlight-line
+module.exports = {
+  plugins: [
+    // highlight-start
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: path.join(__dirname, "src/pages"),
+      },
+    },
+    // highlight-end
+    {
+      resolve: "gatsby-plugin-compile-es6-packages",
+      options: {
+        modules: ["gatsby-theme-example-workspaces"],
+      },
+    },
+  ],
+}
+```
+
+Make a `src/pages` directory in the theme and add a demo page.
+
+```js:title=gatsby-theme-example-workspaces/src/pages/theme-page.js
+import React from "react"
+
+export default props => <h1>Hello, from the theme!</h1>
+```
+
+Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8080/theme-page`.
 
 That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with.
 Be sure to look for more posts on developing Gatsby themes in the near future,
