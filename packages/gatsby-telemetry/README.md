@@ -32,6 +32,7 @@ Enable or disable the telemetry collection.
 
 Returns a debounced events tracker for collecting general activity information for incoming requests.
 
-## Debugging
+## ENV Variables
 
-You can view all the information that is sent by Gatsby’s telemetry by setting the environment variable `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over.
+- Set `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over
+- Set `GATSBY_TELEMETRY_DISABLED` `1` to opt out of all telemetry
