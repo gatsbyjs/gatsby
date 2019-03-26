@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.0...gatsby-telemetry@1.0.1) (2019-03-26)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Ensure all new installs will see the telemetry message at least once ([#12867](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/12867)) ([ddde1ee](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/ddde1ee)), closes [/github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-telemetry/src/telemetry.js#L110](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/L110)
+
 # 1.0.0 (2019-03-26)
 
 ### Features
