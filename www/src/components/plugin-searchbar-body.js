@@ -332,6 +332,7 @@ const Result = ({ hit, pathname, query }) => {
   return (
     <Link
       to={`/packages/${hit.name}/?=${query}`}
+      aria-current={selected ? `true` : undefined}
       css={{
         "&&": {
           background: selected ? colors.ui.whisper : false,

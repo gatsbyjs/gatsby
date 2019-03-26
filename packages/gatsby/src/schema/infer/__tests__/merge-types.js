@@ -37,6 +37,11 @@ const nodes = [
   },
   {
     id: `id2`,
+    internal: { type: `ArrayTest` },
+    array: [{ foo: true }],
+  },
+  {
+    id: `id3`,
     internal: { type: `LinkTest` },
     link___NODE: `id1`,
     links___NODE: [`id1`],
@@ -281,6 +286,40 @@ describe(`merges explicit and inferred type definitions`, () => {
 
     // Date resolvers
     expect(fields.explicitDate.resolve).toBeUndefined()
+  })
+
+  it(`honors array depth when merging types`, async () => {
+    const typeDefs = `
+      type FooBar {
+        bar: Boolean
+      }
+      type ArrayTest implements Node {
+        array: [FooBar]
+      }
+    `
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    await build({})
+    const { schema } = store.getState()
+    const { foo, bar } = schema.getType(`FooBar`).getFields()
+    expect(foo.type.toString()).toBe(`Boolean`)
+    expect(bar.type.toString()).toBe(`Boolean`)
+  })
+
+  it(`does not merge types when array depth does not match`, async () => {
+    const typeDefs = `
+      type FooBar {
+        bar: Boolean
+      }
+      type ArrayTest implements Node {
+        array: FooBar
+      }
+    `
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    await build({})
+    const { schema } = store.getState()
+    const { foo, bar } = schema.getType(`FooBar`).getFields()
+    expect(foo).toBeUndefined()
+    expect(bar.type.toString()).toBe(`Boolean`)
   })
 
   it(`preserves foreign-key resolvers on ___NODE fields when noDefaultResolvers: false`, async () => {

@@ -5,7 +5,7 @@ Object {
   "aspectRatio": 1,
   "height": 20,
   "originalName": undefined,
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "width": 20,
 }
 `;
@@ -49,15 +49,15 @@ Object {
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
-  "originalImg": "/static/1234/1581d/test.png",
+  "originalImg": "/static/1234/197d2/test.png",
   "originalName": undefined,
-  "presentationHeight": 1,
-  "presentationWidth": 1,
-  "sizes": "(max-width: 1px) 100vw, 1px",
-  "src": "/static/1234/1581d/test.png",
-  "srcSet": "/static/1234/1581d/test.png 1w",
+  "presentationHeight": 100,
+  "presentationWidth": 100,
+  "sizes": "(max-width: 100px) 100vw, 100px",
+  "src": "/static/1234/197d2/test.png",
+  "srcSet": "/static/1234/197d2/test.png 100w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -142,12 +142,12 @@ exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
   "aspectRatio": 1,
   "base64": undefined,
-  "height": 1,
+  "height": 100,
   "originalName": undefined,
-  "src": "/static/1234/155b3/test.png",
-  "srcSet": "/static/1234/155b3/test.png 1x",
-  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' version='1'/%3e",
-  "width": 1,
+  "src": "/static/1234/24ae5/test.png",
+  "srcSet": "/static/1234/24ae5/test.png 1x",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3e%3cpath d='M41 24c-18 7-24 29-11 43 15 17 44 8 46-15 1-19-17-34-35-28' fill='red' fill-rule='evenodd'/%3e%3c/svg%3e",
+  "width": 100,
 }
 `;
 
@@ -156,14 +156,16 @@ Object {
   "aspectRatio": 1,
   "base64": undefined,
   "density": 72,
-  "originalImg": "/static/1234/3092c/test.png",
+  "originalImg": "/static/1234/9dd55/test.png",
   "originalName": undefined,
-  "presentationHeight": 1,
-  "presentationWidth": 1,
-  "sizes": "(max-width: 1px) 100vw, 1px",
-  "src": "/static/1234/3092c/test.png",
-  "srcSet": "/static/1234/3092c/test.png 1w",
+  "presentationHeight": 100,
+  "presentationWidth": 100,
+  "sizes": "(max-width: 100px) 100vw, 100px",
+  "src": "/static/1234/9dd55/test.png",
+  "srcSet": "/static/1234/a516e/test.png 25w,
+/static/1234/208be/test.png 50w,
+/static/1234/9dd55/test.png 100w",
   "srcSetType": "image/png",
-  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' version='1'/%3e",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3e%3cpath d='M41 24c-18 7-24 29-11 43 15 17 44 8 46-15 1-19-17-34-35-28' fill='red' fill-rule='evenodd'/%3e%3c/svg%3e",
 }
 `;
