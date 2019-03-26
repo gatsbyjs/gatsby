@@ -481,7 +481,7 @@ Lighthouse is a great _first_ step to asserting whether or not your application 
 
 ### Webpagetest
 
-[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU constrained. You can use a slower network to ensure that you get a accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
+[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU-constrained. You can use a slower network to ensure that you get an accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
 
 I liken the analogy between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
 
