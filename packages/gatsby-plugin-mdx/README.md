@@ -26,8 +26,8 @@ components.
     - [Default layouts](#default-layouts)
     - [Global scope](#global-scope)
     - [Gatbsy remark plugins](#gatsby-remark-plugins)
-    - [Markdown plugins](#md-plugins)
-    - [HAST plugins](#hast-plugins)
+    - [Markdown plugins](#remark-plugins)
+    - [HAST plugins](#rehype-plugins)
     - [Media types](#media-types)
   - [Components](#components)
     - [MDXProvider](#mdxprovider)
@@ -74,8 +74,8 @@ scope, and more.
 | [`defaultLayouts`](#default-layouts)                                                       | `{}`                                   | Set the layout components for MDX source types                       |
 | [`globalScope`](#global-scope)                                                             | `""`                                   | Define components and variables that are accessible to all MDX files |
 | [`gatsbyRemarkPlugins](#gatsby-remark-plugins) | `[]` | Use Gatsby-specific remark plugins |
-| [`mdPlugins`](#md-plugins)                                                                 | `[]`                                   | Specify remark plugins                                               |
-| [`hastPlugins`](#hast-plugins)                                                             | `[]`                                   | Specify rehype plugins                                               |
+| [`remarkPlugins`](#remark-plugins)                                                         | `[]`                                   | Specify remark plugins                                               |
+| [`rehypePlugins`](#rehype-plugins)                                                         | `[]`                                   | Specify rehype plugins                                               |
 | [`mediaTypes`](#media-types)                                                               | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
 
 #### Extensions
@@ -300,7 +300,7 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        mdPlugins: [require("remark-abbr")]
+        remarkPlugins: [require("remark-abbr")]
       }
     }
   ]
@@ -322,7 +322,7 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        hastPlugins: [require("rehype-slug")]
+        rehypePlugins: [require("rehype-slug")]
       }
     }
   ]

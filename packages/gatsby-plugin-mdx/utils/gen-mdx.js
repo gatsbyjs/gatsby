@@ -98,21 +98,25 @@ module.exports = async function genMDX({
    *   cache
    * }); */
 
-  const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins({
-    gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-    mdxNode: node,
-    //          files,
-    getNode,
-    getNodes,
-    reporter,
-    cache,
-    pathPrefix
-  });
+  const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
+    {
+      gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+      mdxNode: node,
+      //          files,
+      getNode,
+      getNodes,
+      reporter,
+      cache,
+      pathPrefix
+    }
+  );
 
   debug("running mdx");
   let code = await mdx(content, {
     ...options,
-    mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins)
+    remarkPlugins: options.remarkPlugins.concat(
+      gatsbyRemarkPluginsAsremarkPlugins
+    )
   });
 
   results.rawMDXOutput = `/* @jsx mdx */
