@@ -127,7 +127,7 @@ module.exports = class AnalyticsTracker {
     try {
       const originBuffer = execSync(
         `git config --local --get remote.origin.url`,
-        { timeout: 1000 }
+        { timeout: 1000, stdio: `pipe` }
       )
       repo = String(originBuffer).trim()
       prefix = `git:`
