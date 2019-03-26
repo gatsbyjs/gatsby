@@ -512,26 +512,8 @@ module.exports = async (args: BootstrapArgs) => {
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    // onPostBootstrap
-    activity = report.activityTimer(`onPostBootstrap`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
-    activity.end()
-
-    bootstrapSpan.finish()
-
-    report.log(``)
-    report.info(`bootstrap finished - ${process.uptime()} s`)
-    report.log(``)
-    emitter.emit(`BOOTSTRAP_FINISHED`)
-    require(`../redux/actions`).boundActionCreators.setProgramStatus(
-      `BOOTSTRAP_FINISHED`
-    )
-    return {
-      graphqlRunner,
-    }
+    await finishBootstrap(bootstrapSpan)
+    return { graphqlRunner }
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
@@ -554,6 +536,9 @@ const finishBootstrap = async bootstrapSpan => {
   report.info(`bootstrap finished - ${process.uptime()} s`)
   report.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_FINISHED`
+  )
 
   bootstrapSpan.finish()
 }
