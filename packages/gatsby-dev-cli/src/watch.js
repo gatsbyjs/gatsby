@@ -20,40 +20,6 @@ const quit = () => {
   process.exit()
 }
 
-let afterPackageInstallation = false
-let queuedCopies = []
-
-const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
-  fs.copy(oldPath, newPath, err => {
-    if (err) {
-      console.error(err)
-      return reject(err)
-    }
-
-    numCopied += 1
-    if (!quiet) {
-      console.log(`Copied ${oldPath} to ${newPath}`)
-    }
-    return resolve()
-  })
-}
-
-const copyPath = (oldPath, newPath, quiet) =>
-  new Promise((resolve, reject) => {
-    const argObj = { oldPath, newPath, quiet, resolve, reject }
-    if (afterPackageInstallation) {
-      realCopyPath(argObj)
-    } else {
-      queuedCopies.push(argObj)
-    }
-  })
-
-const runQueuedCopies = () => {
-  afterPackageInstallation = true
-  queuedCopies.forEach(argObj => realCopyPath(argObj))
-  queuedCopies = []
-}
-
 const traversePackagesDeps = ({
   root,
   packages,
@@ -101,6 +67,40 @@ const traversePackagesDeps = ({
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
 function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
+  let afterPackageInstallation = false
+  let queuedCopies = []
+
+  const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
+    console.log(`wat`)
+    fs.copy(oldPath, newPath, err => {
+      if (err) {
+        console.error(err)
+        return reject(err)
+      }
+
+      numCopied += 1
+      if (!quiet) {
+        console.log(`Copied ${oldPath} to ${newPath}`)
+      }
+      return resolve()
+    })
+  }
+
+  const copyPath = (oldPath, newPath, quiet) =>
+    new Promise((resolve, reject) => {
+      const argObj = { oldPath, newPath, quiet, resolve, reject }
+      if (afterPackageInstallation) {
+        realCopyPath(argObj)
+      } else {
+        queuedCopies.push(argObj)
+      }
+    })
+
+  const runQueuedCopies = () => {
+    afterPackageInstallation = true
+    queuedCopies.forEach(argObj => realCopyPath(argObj))
+    queuedCopies = []
+  }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
   const { seenPackages: allPackagesToWatch, depTree } = traversePackagesDeps({
