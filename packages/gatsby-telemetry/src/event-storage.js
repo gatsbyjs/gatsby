@@ -10,7 +10,7 @@ const fetch = require(`node-fetch`)
 module.exports = class EventStorage {
   store = new Store()
   debugEvents = !!process.env.GATSBY_TELEMETRY_DEBUG
-  disabled = !!process.env.GATSBY_TELEMETRY_OPTOUT
+  disabled = !!process.env.GATSBY_TELEMETRY_DISABLED
 
   addEvent(event) {
     if (this.disabled) {
