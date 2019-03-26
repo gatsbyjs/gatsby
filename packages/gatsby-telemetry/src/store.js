@@ -28,12 +28,20 @@ module.exports = class Store {
 
   appendToBuffer(event) {
     const bufferPath = this.getBufferFilePath()
-    appendFileSync(bufferPath, event, `utf8`)
+    try {
+      appendFileSync(bufferPath, event, `utf8`)
+    } catch (e) {
+      //ignore
+    }
   }
 
   getConfigPath() {
     const configPath = path.join(homedir(), `.config/gatsby`)
-    ensureDirSync(configPath)
+    try {
+      ensureDirSync(configPath)
+    } catch (e) {
+      //ignore
+    }
     return configPath
   }
 
@@ -45,7 +53,12 @@ module.exports = class Store {
   async startFlushEvents(flushOperation) {
     const now = Date.now()
     const filePath = this.getBufferFilePath()
-    if (!existsSync(filePath)) {
+    try {
+      if (!existsSync(filePath)) {
+        return
+      }
+    } catch (e) {
+      // ignore
       return
     }
     const newPath = `${filePath}-${now}`
@@ -56,11 +69,17 @@ module.exports = class Store {
       // ignore
       return
     }
-    const contents = readFileSync(newPath, `utf8`)
+    let contents
+    try {
+      contents = readFileSync(newPath, `utf8`)
+      unlinkSync(newPath)
+    } catch (e) {
+      //ignore
+      return
+    }
 
     // There is still a chance process dies while sending data and some events are lost
     // This will be ok for now, however
-    unlinkSync(newPath)
     let success = false
     try {
       success = await flushOperation(contents)
