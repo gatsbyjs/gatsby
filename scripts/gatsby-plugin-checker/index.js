@@ -65,59 +65,36 @@ const filterNotNotified = (packages, plugins) => {
 }
 
 const removePackagesWithoutRepository = packages =>
-  packages.filter(p => hasRepository(p))
-
-const hasRepository = packageToCheck => {
-  if (packageToCheck.links.repository) {
-    return true
-  }
-  return false
-}
-
-const removePackagesWithBadRepoLinks = async packages => {
-  let packagesWithValidRepoLinks = []
-  for (let i = 0; i < packages.length; i++) {
-    const hasValidRepo = await hasValidRepository(packages[i])
-    if (hasValidRepo) packagesWithValidRepoLinks.push(packages[i])
-  }
-  return packagesWithValidRepoLinks
-}
-
-const hasValidRepository = async packageToSearch => {
-  const response = got(packageToSearch.links.repository)
-  if (response.statusCode == 404) return false
-  return true
-}
+  packages.filter(pkg => !!pkg.links.repository)
 
 const removeBadNameFormats = packages => packages.filter(p => hasGoodName(p))
 
 const hasGoodName = pkg => {
   const name = pkg.name
-
-  if (name.indexOf(`/`) !== -1) {
-    const nameWithoutScope = name.split(`/`, 2)[1]
-    if (startsWithAllowedPrefix(nameWithoutScope)) return true
-  } else {
-    if (startsWithAllowedPrefix(name)) return true
+  const isScopedPackage = name.startsWith(`@`)
+  if (!isScopedPackage) {
+    return startsWithAllowedPrefix(name)
   }
-  return false
+
+  const nameWithoutScope = name.slice(0, name.indexOf(`/`))
+  return startsWithAllowedPrefix(nameWithoutScope)
 }
 
-const startsWithAllowedPrefix = name => {
-  let isGoodName = false
-  keywords.forEach(keyword => {
-    if (name.indexOf(keyword) === 0) isGoodName = true
-  })
-  return isGoodName
-}
+const startsWithAllowedPrefix = name =>
+  keywords.some(keyword => name.startsWith(keyword))
 
 const removePackagesWithoutReadme = packages =>
-  packages.filter(p => hasReadMe(p))
+  packages.filter(pkg => hasReadMe(pkg))
 
 const hasReadMe = pkg => {
   if (pkg.links.homepage || pkg.readme) return true
-  return false
+  if (pkg.links.repository) {
+    return got(pkg.links.repository + `/blob/master/README.md`)
+      .then(response => response.statusCode === 200)
+      .catch(_ => false)
+  } else return false
 }
+
 const updatePlugins = (updates, plugins) => {
   let res = plugins.map(p => Object.assign({}, p))
   updates.forEach(u => {
@@ -139,7 +116,6 @@ const main = () => {
         .then(packages => filterNotBlacklisted(packages, plugins))
         .then(packages => filterNotNotified(packages, plugins))
         .then(packages => removePackagesWithoutRepository(packages))
-        .then(packages => removePackagesWithBadRepoLinks(packages))
         .then(packages => removeBadNameFormats(packages))
         .then(packages => removePackagesWithoutReadme(packages))
         .then(packages =>
