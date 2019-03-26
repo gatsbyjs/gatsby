@@ -399,7 +399,7 @@ There are far, far, far too many otherwise decently performing websites that loa
   - This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
   - Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)
 - An `IntersectionObserver` that swaps the base image for the larger image, when the image is in the viewport
-  - See [the code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
+  - See the [image IntersectionObserver code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
 
 And one of the best wins of all--Gatsby's pluggable ecosystem and GraphQL data layer are both used to produce and pass the optimized images directly to this component. It looks something like:
 
