@@ -31,3 +31,7 @@ Enable or disable the telemetry collection.
 ### expressMiddleware(type)
 
 Returns a debounced events tracker for collecting general activity information for incoming requests.
+
+## Debugging
+
+You can view all the information that is sent by Gatsby’s telemetry by setting the environment variable `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over.
