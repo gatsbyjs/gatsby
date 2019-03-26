@@ -14,7 +14,6 @@ const {
   InputTypeComposer,
 } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
-const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
@@ -22,6 +21,11 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 const buildSchema = async ({
   schemaComposer,
@@ -373,23 +377,23 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               }
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
-              report.warn(
+              dispatch(log({ message, type: `warn` }))
+              const message =
                 `\`createResolvers\` passed resolvers for field ` +
-                  `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
-                  `Such a field with type \`${originalTypeName}\` already exists ` +
-                  `on the type. Use \`createTypes\` to override type fields.`
-              )
+                `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
+                `Such a field with type \`${originalTypeName}\` already exists ` +
+                `on the type. Use \`createTypes\` to override type fields.`
             }
           } else {
             tc.addFields({ [fieldName]: fieldConfig })
           }
         })
       } else {
-        report.warn(
+        const message =
           `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
-            `doesn't exist in the schema. Use \`createTypes\` to add the type ` +
-            `before adding resolvers.`
-        )
+          `doesn't exist in the schema. Use \`createTypes\` to add the type ` +
+          `before adding resolvers.`
+        dispatch(log({ message, type: `warn` }))
       }
     })
   }
@@ -525,7 +529,6 @@ const reportParsingError = error => {
   const { message, source, locations } = error
 
   if (source && locations && locations.length) {
-    const report = require(`gatsby-cli/lib/reporter`)
     const { codeFrameColumns } = require(`@babel/code-frame`)
 
     const frame = codeFrameColumns(
@@ -533,13 +536,13 @@ const reportParsingError = error => {
       { start: locations[0] },
       { linesAbove: 5, linesBelow: 5 }
     )
-    report.panic(
+    const errorMessage =
       `Encountered an error parsing the provided GraphQL type definitions:\n` +
-        message +
-        `\n\n` +
-        frame +
-        `\n`
-    )
+      message +
+      `\n\n` +
+      frame +
+      `\n`
+    dispatch(log({ message: errorMessage, type: `error` }))
   } else {
     throw error
   }

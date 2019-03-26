@@ -1,7 +1,10 @@
 const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
 const redux = require(`../redux`)
-const { emitter } = redux
+const { store, emitter } = redux
+const { actions } = require(`../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 // Even if we are using loki, we still include redux in the list of
 // dbs since it still has pages, config, etc.
@@ -19,7 +22,8 @@ async function saveState() {
   try {
     await Promise.all(dbs.map(db => db.saveState()))
   } catch (err) {
-    report.warn(`Error persisting state: ${(err && err.message) || err}`)
+    const message = `Error persisting state: ${(err && err.message) || err}`
+    dispatch(log({ message, type: `warn` }))
   }
 
   saveInProgress = false

@@ -1,9 +1,13 @@
 // @flow
 const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
 const typeOf = require(`type-of`)
 const util = require(`util`)
 const { findRootNodeAncestor } = require(`../../db/node-tracking`)
+const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 export type TypeConflictExample = {
   value: mixed,
@@ -82,16 +86,15 @@ class TypeConflictEntry {
       ([typeName, value]) => typeName
     )
 
-    report.log(
-      `${this.selector}:${sortedByTypeName
-        .map(
-          ([typeName, { value, description }]) =>
-            `\n - type: ${typeName}\n   value: ${formatValue(
-              value
-            )}${description && `\n   source: ${description}`}`
-        )
-        .join(``)}`
-    )
+    const message = `${this.selector}:${sortedByTypeName
+      .map(
+        ([typeName, { value, description }]) =>
+          `\n - type: ${typeName}\n   value: ${formatValue(
+            value
+          )}${description && `\n   source: ${description}`}`
+      )
+      .join(``)}`
+    dispatch(log({ message, type: `log` }))
   }
 }
 
@@ -133,9 +136,10 @@ class TypeConflictReporter {
 
   printConflicts() {
     if (this.entries.size > 0) {
-      report.warn(
-        `There are conflicting field types in your data. GraphQL schema will omit those fields.`
-      )
+      const message =
+        `There are conflicting field types in your data. ` +
+        `GraphQL schema will omit those fields.`
+      dispatch(log({ message, type: `warn` }))
       this.entries.forEach(entry => entry.printEntry())
     }
   }

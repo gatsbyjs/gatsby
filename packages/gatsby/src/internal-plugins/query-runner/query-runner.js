@@ -2,15 +2,18 @@
 
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
-const report = require(`gatsby-cli/lib/reporter`)
 const websocketManager = require(`../../utils/websocket-manager`)
 
 const path = require(`path`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const withResolverContext = require(`../../schema/context`)
 const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
+
+const { dispatch } = store
+const { log } = actions
 
 const resultHashes = {}
 
@@ -61,10 +64,10 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
     errorDetails.set(`Plugin`, queryJob.pluginCreatorId || `none`)
     errorDetails.set(`Query`, queryJob.query)
 
-    report.panicOnBuild(`
-The GraphQL query from ${queryJob.componentPath} failed.
-
-${formatErrorDetails(errorDetails)}`)
+    const message =
+      `The GraphQL query from ${queryJob.componentPath} failed. \n` +
+      formatErrorDetails(errorDetails)
+    dispatch(log({ message, type: `panicOnBuild` }))
   }
 
   // Add the page context onto the results.

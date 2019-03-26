@@ -1,4 +1,3 @@
-const report = require(`gatsby-cli/lib/reporter`)
 const { getExampleValue } = require(`./example-value`)
 const {
   addNodeInterface,
@@ -6,6 +5,11 @@ const {
 } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 const getInferConfig = require(`./get-infer-config`)
+const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 const addInferredType = ({
   schemaComposer,
@@ -81,18 +85,20 @@ const addInferredTypes = ({
 
   if (noNodeInterfaceTypes.length > 0) {
     noNodeInterfaceTypes.forEach(type => {
-      report.warn(
+      const message =
         `Type \`${type}\` declared in \`createTypes\` looks like a node, ` +
-          `but doesn't implement a \`Node\` interface. It's likely that you should ` +
-          `add the \`Node\` interface to your type def:\n\n` +
-          `\`type ${type} implements Node { ... }\`\n\n` +
-          `If you know that you don't want it to be a node (which would mean no ` +
-          `root queries to retrieve it), you can explicitly disable inference ` +
-          `for it:\n\n` +
-          `\`type ${type} @dontInfer { ... }\``
-      )
+        `but doesn't implement a \`Node\` interface. It's likely that you should ` +
+        `add the \`Node\` interface to your type def:\n\n` +
+        `\`type ${type} implements Node { ... }\`\n\n` +
+        `If you know that you don't want it to be a node (which would mean no ` +
+        `root queries to retrieve it), you can explicitly disable inference ` +
+        `for it:\n\n` +
+        `\`type ${type} @dontInfer { ... }\``
+
+      dispatch(log({ message, type: `warn` }))
     })
-    report.panic(`Building schema failed`)
+    const message = `Building schema failed`
+    dispatch(log({ message, type: `panic` }))
   }
 
   return typeComposers

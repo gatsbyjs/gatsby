@@ -12,6 +12,7 @@ import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForN
 const _ = require(`lodash`)
 
 import { store } from "../../redux"
+import { actions } from "../../redux/actions"
 import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import {
@@ -19,7 +20,6 @@ import {
   graphqlValidationError,
   multipleRootQueriesError,
 } from "./graphql-errors"
-import report from "gatsby-cli/lib/reporter"
 const websocketManager = require(`../../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
@@ -36,6 +36,9 @@ const {
   VariablesAreInputTypesRule,
   VariablesInAllowedPositionRule,
 } = require(`graphql`)
+
+const { dispatch } = store
+const { log } = actions
 
 type RootQuery = {
   name: string,
@@ -82,8 +85,8 @@ class Runner {
   }
 
   reportError(message) {
-    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-    report.panicOnBuild(queryErrorMessage)
+    const queryErrorMessage = `GraphQL Error ${message}`
+    dispatch(log({ message: queryErrorMessage, type: `panicOnBuild` }))
     if (process.env.gatsby_executing_command === `develop`) {
       websocketManager.emitError(overlayErrorID, queryErrorMessage)
       lastRunHadErrors = true
@@ -222,10 +225,10 @@ class Runner {
         process.env.NODE_ENV === `production` &&
         typeof require(`react`).useContext !== `function`
       ) {
-        report.panicOnBuild(
-          `You're likely using a version of React that doesn't support Hooks\n` +
-            `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
-        )
+        const message =
+          `You're likely using a version of React that doesn't support Hooks.\n` +
+          `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+        dispatch(log({ message, type: `panicOnBuild` }))
       }
 
       compiledNodes.set(filePath, query)

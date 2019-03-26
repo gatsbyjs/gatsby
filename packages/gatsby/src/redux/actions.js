@@ -4,7 +4,6 @@ const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
-const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
 const truePath = require(`true-case-path`)
@@ -68,7 +67,6 @@ type ActionOptions = {
 type LogItem = {
   message: String,
   type: String,
-  id: ?number,
 }
 
 /**
@@ -119,7 +117,7 @@ actions.createPage = (
   page: PageInput,
   plugin?: Plugin,
   actionOptions?: ActionOptions
-) => {
+) => dispatch => {
   let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -185,10 +183,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
-        report.panic(error)
+        dispatch(actions.log({ message: error, type: `panic` }))
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
-          report.warn(error)
+          dispatch(actions.log({ message: error, type: `warn` }))
           hasWarnedForPageComponentInvalidContext.add(page.component)
         }
       }
@@ -235,15 +233,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
               })
               .join(``)
 
-            report.warn(
-              stripIndent`
-            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+            const message = stripIndent`
+              ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
-            page.component:     "${page.component}"
-            path in filesystem: "${trueComponentPath}"
-                                 ${markers}
-          `
-            )
+              page.component:     "${page.component}"
+              path in filesystem: "${trueComponentPath}"
+                                  ${markers}
+            `
+            dispatch(actions.log({ message, type: `warn` }))
             hasWarnedForPageComponentInvalidCasing.add(page.component)
           }
 
@@ -255,23 +252,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (!page.component || !path.isAbsolute(page.component)) {
-    const message = `${name} must set the absolute path to the page component when create creating a page`
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-    } else {
-      return message
-    }
+    const message = `\n${name} must set the absolute path to the page component when create creating a page.\n`
+    dispatch(actions.log({ message: chalk.bold.red(message), type: `log` }))
     noPageOrComponent = true
   }
 
   if (noPageOrComponent) {
-    report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
-    )
+    const message = `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
+    dispatch(actions.log({ message, type: `panic` }))
   }
 
   let jsonName
@@ -338,15 +326,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        report.panicOnBuild(
-          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
-        )
+        const message =
+          `You have an empty file in the "src/pages" directory at "${relativePath}".\n` +
+          `Please remove it or make it a valid component.`
+        dispatch(actions.log({ message, type: `panicOnBuild` }))
       }
 
       if (!includesDefaultExport) {
-        report.panicOnBuild(
-          `[${fileName}] The page component must export a React component for it to be valid`
-        )
+        const message = `[${fileName}] The page component must export a React component for it to be valid.`
+        dispatch(actions.log({ message, type: `panicOnBuild` }))
       }
     }
 
@@ -357,13 +345,13 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
-  return {
+  return dispatch({
     ...actionOptions,
     type: `CREATE_PAGE`,
     contextModified,
     plugin,
     payload: internalPage,
-  }
+  })
 }
 
 /**
@@ -373,7 +361,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (options: any, plugin: Plugin, args: any) => dispatch => {
   let node = _.get(options, `node`)
 
   // Check if using old method signature. Warn about incorrect usage but get
@@ -387,7 +375,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
       plugin = args
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
-    report.warn(msg)
+    dispatch(actions.log({ message: msg, type: `warn` }))
 
     node = getNode(options)
   }
@@ -411,9 +399,9 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
       .map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
-    return [...deleteDescendantsActions, deleteAction]
+    return dispatch([...deleteDescendantsActions, deleteAction])
   } else {
-    return deleteAction
+    return dispatch(deleteAction)
   }
 }
 
@@ -423,14 +411,14 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
  * @example
  * deleteNodes([`node1`, `node2`])
  */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
+actions.deleteNodes = (nodes: any[], plugin: Plugin) => dispatch => {
   let msg =
     `The "deleteNodes" action is now deprecated and will be removed in ` +
     `Gatsby v3. Please use "deleteNode" instead.`
   if (plugin && plugin.name) {
     msg = msg + ` "deleteNodes" was called by ${plugin.name}`
   }
-  report.warn(msg)
+  dispatch(actions.log({ message: msg, type: `warn` }))
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
@@ -442,7 +430,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     plugin,
     payload: [...nodes, ...descendantNodes],
   }
-  return deleteNodesAction
+  return dispatch(deleteNodesAction)
 }
 
 const typeOwners = {}
@@ -512,7 +500,7 @@ actions.createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
-) => {
+) => dispatch => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -538,12 +526,10 @@ actions.createNode = (
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    report.error(JSON.stringify(node, null, 4))
-    report.panic(
-      chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugins`
-      )
+    const message = chalk.bold.red(
+      `The node internal.owner field is set automatically by Gatsby and not by plugins`
     )
+    dispatch(actions.log({ message, type: `panic` }))
   }
 
   // Add the plugin name to the internal object.
@@ -667,9 +653,9 @@ actions.createNode = (
   }
 
   if (deleteActions && deleteActions.length) {
-    return [...deleteActions, updateNodeAction]
+    return dispatch([...deleteActions, updateNodeAction])
   } else {
-    return updateNodeAction
+    return dispatch(updateNodeAction)
   }
 }
 
@@ -1325,7 +1311,7 @@ actions.log = (logItem: LogItem, plugin: Plugin, traceId?: string) => {
  * @param {Object} logger
  * @private
  */
-actions.log = (logger: Object, plugin: Plugin, traceId?: string) => {
+actions.setLogger = (logger: Object, plugin: Plugin, traceId?: string) => {
   return {
     type: `SET_LOGGER`,
     plugin,

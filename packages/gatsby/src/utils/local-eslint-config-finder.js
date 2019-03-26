@@ -1,7 +1,11 @@
 const path = require(`path`)
 const glob = require(`glob`)
 const debug = require(`debug`)(`gatsby:webpack-eslint-config`)
-const report = require(`gatsby-cli/lib/reporter`)
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 module.exports = directory => {
   try {
@@ -12,7 +16,9 @@ module.exports = directory => {
       return true
     }
   } catch (err) {
-    report.error(`There was a problem processing the package.json file`, err)
+    const message =
+      `There was a problem processing the package.json file.\n` + err
+    dispatch(log({ message, type: `error` }))
   }
 
   debug(`Checking for eslint config file`)

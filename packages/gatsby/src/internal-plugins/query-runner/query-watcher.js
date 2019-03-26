@@ -14,14 +14,21 @@ const path = require(`path`)
 const slash = require(`slash`)
 
 const { store, emitter } = require(`../../redux/`)
-const { boundActionCreators } = require(`../../redux/actions`)
+const { actions } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
-const report = require(`gatsby-cli/lib/reporter`)
 const {
   queueQueryForPathname,
   runQueuedActions: runQueuedQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
+
+const { dispatch } = store
+const {
+  log,
+  replaceComponentQuery,
+  deleteComponentsDependencies,
+  replaceStaticQuery,
+} = actions
 
 const getQueriesSnapshot = () => {
   const state = store.getState()
@@ -43,10 +50,12 @@ const handleComponentsWithRemovedQueries = (
   components.forEach(c => {
     if (c.query !== `` && !queries.has(c.componentPath)) {
       debug(`Page query was removed from ${c.componentPath}`)
-      boundActionCreators.replaceComponentQuery({
-        query: ``,
-        componentPath: c.componentPath,
-      })
+      dispatch(
+        replaceComponentQuery({
+          query: ``,
+          componentPath: c.componentPath,
+        })
+      )
       queueQueriesForPageComponent(c.componentPath)
     }
   })
@@ -56,11 +65,11 @@ const handleComponentsWithRemovedQueries = (
   staticQueryComponents.forEach(c => {
     if (c.query !== `` && !queries.has(c.componentPath)) {
       debug(`Static query was removed from ${c.componentPath}`)
-      store.dispatch({
+      dispatch({
         type: `REMOVE_STATIC_QUERY`,
         payload: c.jsonName,
       })
-      boundActionCreators.deleteComponentsDependencies([c.jsonName])
+      dispatch(deleteComponentsDependencies([c.jsonName]))
     }
   })
 }
@@ -86,14 +95,16 @@ const handleQuery = (
       oldQuery.hash !== query.hash ||
       oldQuery.text !== query.text
     ) {
-      boundActionCreators.replaceStaticQuery({
-        name: query.name,
-        componentPath: query.path,
-        id: query.jsonName,
-        jsonName: query.jsonName,
-        query: query.text,
-        hash: query.hash,
-      })
+      dispatch(
+        replaceStaticQuery({
+          name: query.name,
+          componentPath: query.path,
+          id: query.jsonName,
+          jsonName: query.jsonName,
+          query: query.text,
+          hash: query.hash,
+        })
+      )
 
       debug(
         `Static query in ${component} ${
@@ -101,7 +112,7 @@ const handleQuery = (
         }.`
       )
 
-      boundActionCreators.deleteComponentsDependencies([query.jsonName])
+      dispatch(deleteComponentsDependencies([query.jsonName]))
       queueQueryForPathname(query.jsonName)
     }
     return true
@@ -109,10 +120,12 @@ const handleQuery = (
     // If this is page query
   } else if (components.has(component)) {
     if (components.get(component).query !== query.text) {
-      boundActionCreators.replaceComponentQuery({
-        query: query.text,
-        componentPath: component,
-      })
+      dispatch(
+        replaceComponentQuery({
+          query: query.text,
+          componentPath: component,
+        })
+      )
 
       debug(
         `Page query in ${component} ${
@@ -141,29 +154,25 @@ const updateStateAndRunQueries = isFirstRun => {
       if (queryWillRun) {
         watchComponent(component)
       } else if (isFirstRun) {
-        report.warn(
-          `The GraphQL query in the non-page component "${component}" will not be run.`
-        )
+        const message = `The GraphQL query in the non-page component "${component}" will not be run.`
+        dispatch(log({ message, type: `warn` }))
         queriesWillNotRun = true
       }
     })
 
     if (queriesWillNotRun) {
-      report.log(report.stripIndent`
-
-        Exported queries are only executed for Page components. It's possible you're
-        trying to create pages in your gatsby-node.js and that's failing for some
-        reason.
-
-        If the failing component(s) is a regular component and not intended to be a page
-        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
-        instead of exporting a page query.
-
-        If you're more experienced with GraphQL, you can also export GraphQL
-        fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
-
-      `)
+      const message =
+        `Exported queries are only executed for Page components. It's possible you're ` +
+        `trying to create pages in your gatsby-node.js and that's failing for some reason.` +
+        `\n\n` +
+        `If the failing component(s) is a regular component and not intended to be a page ` +
+        `component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query) ` +
+        `instead of exporting a page query.` +
+        `\n\n` +
+        `If you're more experienced with GraphQL, you can also export GraphQL ` +
+        `fragments from components and compose the fragments in the Page component ` +
+        `query and pass data down into the child component — http://graphql.org/learn/queries/#fragments\n\n`
+      dispatch(log({ message, type: `log` }))
     }
     runQueuedQueries()
 
@@ -219,9 +228,7 @@ const queueQueriesForPageComponent = componentPath => {
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
-  boundActionCreators.deleteComponentsDependencies(
-    pages.map(p => p.path || p.id)
-  )
+  dispatch(deleteComponentsDependencies(pages.map(p => p.path || p.id)))
   pages.forEach(page => queueQueryForPathname(page.path))
 }
 

@@ -39,7 +39,7 @@ module.exports = async ({ parentSpan } = {}) => {
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state)
   pluginsWithNoNodes.forEach(name => {
     const message = `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
-    store.dispatch(log({ message, level: `warn` }))
+    store.dispatch(log({ message, type: `warn` }))
   })
 
   // Garbage collect stale data nodes
@@ -59,7 +59,7 @@ module.exports = async ({ parentSpan } = {}) => {
         const message =
           `It looks like you have a node that's set its parent as itself: ` +
           rootNode
-        store.dispatch(log({ message, level: `warn` }))
+        store.dispatch(log({ message, type: `warn` }))
       }
     }
 

@@ -1,15 +1,19 @@
 const getDevelopmentCertificate = require(`devcert-san`).default
-const report = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs`)
 const path = require(`path`)
+
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 module.exports = async ({ name, certFile, keyFile, directory }) => {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
-    report.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
-    )
+    const message = `For custom ssl --https, --cert-file, and --key-file must be used together.`
+    dispatch(log({ message, type: `panic` }))
   }
 
   if (certFile && keyFile) {
@@ -24,13 +28,15 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
     }
   }
 
-  report.info(`setting up automatic SSL certificate (may require sudo)\n`)
+  const message = `setting up automatic SSL certificate (may require sudo)\n`
+  dispatch(log({ message, type: `info` }))
   try {
     return await getDevelopmentCertificate(name, {
       installCertutil: true,
     })
   } catch (err) {
-    report.panic(`\nFailed to generate dev SSL certificate`, err)
+    const message = `\nFailed to generate dev SSL certificate.\n` + err
+    dispatch(log({ message, type: `panic` }))
   }
 
   return false

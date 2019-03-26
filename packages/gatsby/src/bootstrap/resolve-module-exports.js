@@ -4,7 +4,11 @@ const traverse = require(`@babel/traverse`).default
 const get = require(`lodash/get`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
-const report = require(`gatsby-cli/lib/reporter`)
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 /**
  * Given a `require.resolve()` compatible path pointing to a JS module,
@@ -42,9 +46,9 @@ module.exports = (modulePath, resolver = require.resolve) => {
         }
       )
 
-      report.panic(
-        `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`
-      )
+      const message =
+        `Syntax error in "${absPath}":\n` + `${err.message}\n${codeFrame}`
+      dispatch(log({ message, type: `panic` }))
     } else {
       // if it's not syntax error, just throw it
       throw err
@@ -105,16 +109,14 @@ module.exports = (modulePath, resolver = require.resolve) => {
   })
 
   if (isES6 && isCommonJS && process.env.NODE_ENV !== `test`) {
-    report.panic(
-      `This plugin file is using both CommonJS and ES6 module systems together which we don't support.
-You'll need to edit the file to use just one or the other.
-
-plugin: ${modulePath}.js
-
-This didn't cause a problem in Gatsby v1 so you might want to review the migration doc for this:
-https://gatsby.dev/no-mixed-modules
-      `
-    )
+    const message =
+      `This plugin file is using both CommonJS and ES6 module systems together ` +
+      `which we don't support. You'll need to edit the file to use just one or ` +
+      `the other.\n\n` +
+      `Plugin: ${modulePath}.js\n\n` +
+      `This didn't cause a problem in Gatsby v1 so you might want to review ` +
+      `the migration doc for this: https://gatsby.dev/no-mixed-modules`
+    dispatch(log({ message, type: `panic` }))
   }
   return exportNames
 }

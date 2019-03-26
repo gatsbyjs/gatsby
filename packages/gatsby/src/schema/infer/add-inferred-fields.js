@@ -7,12 +7,16 @@ const {
 } = require(`graphql`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
 const invariant = require(`invariant`)
-const report = require(`gatsby-cli/lib/reporter`)
+const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 
 const { isFile } = require(`./is-file`)
 const { link, fileByPath } = require(`../resolvers`)
 const { isDate, dateResolver } = require(`../types/date`)
 const is32BitInteger = require(`./is-32-bit-integer`)
+
+const { dispatch } = store
+const { log } = actions
 
 const addInferredFields = ({
   schemaComposer,
@@ -77,13 +81,12 @@ const addInferredFieldsImpl = ({
       const possibleFieldsNames = possibleFields
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
-      report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${
-          field.key
-        }\` - [${possibleFieldsNames}]. Gatsby will use \`${
-          field.unsanitizedKey
-        }\`.`
-      )
+      const message =
+        `Multiple node fields resolve to the same GraphQL field ` +
+        `\`${field.key}\` - [${possibleFieldsNames}]. ` +
+        `Gatsby will use \`${field.unsanitizedKey}\`.`
+      dispatch(log({ message, type: `warn` }))
+
       fieldConfig = field.fieldConfig
     } else {
       fieldConfig = possibleFields[0].fieldConfig

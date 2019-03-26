@@ -14,6 +14,7 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -24,9 +25,13 @@ const nodeTracking = require(`../db/node-tracking`)
 const withResolverContext = require(`../schema/context`)
 require(`../db`).startAutosave()
 
+const { dispatch } = store
+const { log } = actions
+const logger = ({ message, type = `info` }) => report[type](message)
+
 // Show stack trace on unhandled promises.
-process.on(`unhandledRejection`, (reason, p) => {
-  report.panic(reason)
+process.on(`unhandledRejection`, reason => {
+  dispatch(log({ message: reason, type: `panic` }))
 })
 
 const {
@@ -53,11 +58,25 @@ type BootstrapArgs = {
 }
 
 module.exports = async (args: BootstrapArgs) => {
-  const logger = ({ message, level = `info` }) => report[level](message)
-  store.dispatch({ type: `SET_LOGGER`, payload: logger })
+  dispatch({ type: `SET_LOGGER`, payload: logger })
+  // dispatch(setLogger(logger))
 
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
+
+  const run = async (message, cb) => {
+    const activity = dispatch(
+      log({
+        message,
+        type: `activityTimer`,
+        tracing: { parentSpan: bootstrapSpan },
+      })
+    )
+    activity.start()
+    const result = await cb(activity)
+    activity.end()
+    return result
+  }
 
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
@@ -72,308 +91,279 @@ module.exports = async (args: BootstrapArgs) => {
     directory,
   }
 
-  store.dispatch({
-    type: `SET_PROGRAM`,
-    payload: program,
-  })
+  dispatch({ type: `SET_PROGRAM`, payload: program })
 
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-configs`, {
-    parentSpan: bootstrapSpan,
+  const config = await run(`open and validate gatsby-configs`, async () => {
+    let config = await preferDefault(
+      getConfigFile(program.directory, `gatsby-config`)
+    )
+
+    // theme gatsby configs can be functions or objects
+    if (config && config.__experimentalThemes) {
+      const themes = await loadThemes(config)
+      config = themes.config
+
+      dispatch({ type: `SET_RESOLVED_THEMES`, payload: themes.themes })
+    }
+
+    if (config && config.polyfill) {
+      const message =
+        `Support for custom Promise polyfills has been removed in Gatsby v2. ` +
+        `We only support Babel 7's new automatic polyfilling behavior.`
+      dispatch(log({ message, type: `warn` }))
+    }
+
+    dispatch({ type: `SET_SITE_CONFIG`, payload: config })
+
+    return config
   })
-  activity.start()
-  let config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+
+  const flattenedPlugins = await run(`load plugins`, () =>
+    loadPlugins(config, program.directory)
   )
 
-  // theme gatsby configs can be functions or objects
-  if (config && config.__experimentalThemes) {
-    const themes = await loadThemes(config)
-    config = themes.config
-
-    store.dispatch({
-      type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes,
-    })
-  }
-
-  if (config && config.polyfill) {
-    report.warn(
-      `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
-    )
-  }
-
-  store.dispatch({
-    type: `SET_SITE_CONFIG`,
-    payload: config,
-  })
-
-  activity.end()
-
-  activity = report.activityTimer(`load plugins`)
-  activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
-  activity.end()
-
   // onPreInit
-  activity = report.activityTimer(`onPreInit`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
-  activity.end()
+  await run(`onPreInit`, activity =>
+    apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
+  )
 
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   if (process.env.NODE_ENV === `production`) {
-    activity = report.activityTimer(
-      `delete html and css files from previous builds`,
-      {
-        parentSpan: bootstrapSpan,
-      }
+    await run(`delete html and css files from previous builds`, () =>
+      del([
+        `public/*.{html,css}`,
+        `public/**/*.{html,css}`,
+        `!public/static`,
+        `!public/static/**/*.{html,css}`,
+      ])
     )
-    activity.start()
-    await del([
-      `public/*.{html,css}`,
-      `public/**/*.{html,css}`,
-      `!public/static`,
-      `!public/static/**/*.{html,css}`,
+  }
+
+  const cacheDirectory = await run(`initialize cache`, async () => {
+    // Check if any plugins have been updated since our last run. If so
+    // we delete the cache is there's likely been changes
+    // since the previous run.
+    //
+    // We do this by creating a hash of all the version numbers of installed
+    // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
+    // The last, gatsby-node.js, is important as many gatsby sites put important
+    // logic in there e.g. generating slugs for custom pages.
+    const pluginVersions = flattenedPlugins.map(p => p.version)
+    const hashes = await Promise.all([
+      md5File(`package.json`),
+      Promise.resolve(
+        md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
+      ), // ignore as this file isn't required),
+      Promise.resolve(
+        md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
+      ), // ignore as this file isn't required),
     ])
-    activity.end()
-  }
+    const pluginsHash = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(pluginVersions.concat(hashes)))
+      .digest(`hex`)
+    let state = store.getState()
+    const oldPluginsHash =
+      state && state.status ? state.status.PLUGINS_HASH : ``
 
-  activity = report.activityTimer(`initialize cache`)
-  activity.start()
-  // Check if any plugins have been updated since our last run. If so
-  // we delete the cache is there's likely been changes
-  // since the previous run.
-  //
-  // We do this by creating a hash of all the version numbers of installed
-  // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
-  // The last, gatsby-node.js, is important as many gatsby sites put important
-  // logic in there e.g. generating slugs for custom pages.
-  const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes = await Promise.all([
-    md5File(`package.json`),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
-    ), // ignore as this file isn't required),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
-    ), // ignore as this file isn't required),
-  ])
-  const pluginsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(pluginVersions.concat(hashes)))
-    .digest(`hex`)
-  let state = store.getState()
-  const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
-
-  // Check if anything has changed. If it has, delete the site's .cache
-  // directory and tell reducers to empty themselves.
-  //
-  // Also if the hash isn't there, then delete things just in case something
-  // is weird.
-  if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
-    report.info(report.stripIndent`
-      One or more of your plugins have changed since the last time you ran Gatsby. As
-      a precaution, we're deleting your site's cache to ensure there's not any stale
-      data
-    `)
-  }
-  const cacheDirectory = `${program.directory}/.cache`
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
-    try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
-    } catch (e) {
-      report.error(`Failed to remove .cache files.`, e)
+    // Check if anything has changed. If it has, delete the site's .cache
+    // directory and tell reducers to empty themselves.
+    //
+    // Also if the hash isn't there, then delete things just in case something
+    // is weird.
+    if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
+      const message =
+        `One or more of your plugins have changed since the last time you ran ` +
+        `Gatsby. As a precaution, we're deleting your site's cache to ensure ` +
+        `there's not any stale data.`
+      dispatch(log({ message, type: `info` }))
     }
-    // Tell reducers to delete their data (the store will already have
-    // been loaded from the file system cache).
-    store.dispatch({
-      type: `DELETE_CACHE`,
-    })
-  }
+    const cacheDirectory = `${program.directory}/.cache`
+    if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+      try {
+        // Attempt to empty dir if remove fails,
+        // like when directory is mount point
+        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      } catch (err) {
+        const message = `Failed to remove .cache files.\n` + err
+        dispatch(log({ message, type: `error` }))
+      }
+      // Tell reducers to delete their data (the store will already have
+      // been loaded from the file system cache).
+      dispatch({ type: `DELETE_CACHE` })
+    }
 
-  // Update the store with the new plugins hash.
-  store.dispatch({
-    type: `UPDATE_PLUGINS_HASH`,
-    payload: pluginsHash,
+    // Update the store with the new plugins hash.
+    dispatch({ type: `UPDATE_PLUGINS_HASH`, payload: pluginsHash })
+
+    // Now that we know the .cache directory is safe, initialize the cache
+    // directory.
+    fs.ensureDirSync(cacheDirectory)
+
+    // Ensure the public/static directory
+    fs.ensureDirSync(`${program.directory}/public/static`)
+
+    return cacheDirectory
   })
-
-  // Now that we know the .cache directory is safe, initialize the cache
-  // directory.
-  await fs.ensureDir(cacheDirectory)
-
-  // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
-
-  activity.end()
 
   if (process.env.GATSBY_DB_NODES === `loki`) {
-    const loki = require(`../db/loki`)
-    // Start the nodes database (in memory loki js with interval disk
-    // saves). If data was saved from a previous build, it will be
-    // loaded here
-    activity = report.activityTimer(`start nodes db`, {
-      parentSpan: bootstrapSpan,
+    await run(`start nodes db`, async () => {
+      const loki = require(`../db/loki`)
+      // Start the nodes database (in memory loki js with interval disk
+      // saves). If data was saved from a previous build, it will be
+      // loaded here
+      const dbSaveFile = `${cacheDirectory}/loki/loki.db`
+      try {
+        await loki.start({
+          saveFile: dbSaveFile,
+        })
+      } catch (e) {
+        const message = `Error starting DB. Perhaps try deleting ${path.dirname(
+          dbSaveFile
+        )}.`
+        dispatch(log({ message, type: `error` }))
+      }
     })
-    activity.start()
-    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
-    try {
-      await loki.start({
-        saveFile: dbSaveFile,
-      })
-    } catch (e) {
-      report.error(
-        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
-      )
-    }
-    activity.end()
   }
 
-  // By now, our nodes database has been loaded, so ensure that we
-  // have tracked all inline objects
+  /**
+   * Initialize node tracking
+   *
+   * By now, our nodes database has been loaded, so ensure that we have
+   * tracked all inline objects.
+   */
   nodeTracking.trackDbNodes()
 
-  // Copy our site files to the root of the site.
-  activity = report.activityTimer(`copy gatsby files`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  const srcDir = `${__dirname}/../../cache-dir`
-  const siteDir = cacheDirectory
-  const tryRequire = `${__dirname}/../utils/test-require-error.js`
-  try {
-    await fs.copy(srcDir, siteDir, {
-      clobber: true,
-    })
-    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
-      clobber: true,
-    })
-    await fs.ensureDirSync(`${cacheDirectory}/json`)
-
-    // Ensure .cache/fragments exists and is empty. We want fragments to be
-    // added on every run in response to data as fragments can only be added if
-    // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${cacheDirectory}/fragments`)
-  } catch (err) {
-    report.panic(`Unable to copy site files to .cache`, err)
-  }
-
-  // Find plugins which implement gatsby-browser and gatsby-ssr and write
-  // out api-runners for them.
-  const hasAPIFile = (env, plugin) => {
-    // The plugin loader has disabled SSR APIs for this plugin. Usually due to
-    // multiple implementations of an API that can only be implemented once
-    if (env === `ssr` && plugin.skipSSR === true) return undefined
-
-    const envAPIs = plugin[`${env}APIs`]
-
-    // Always include gatsby-browser.js files if they exists as they're
-    // a handy place to include global styles and other global imports.
+  /**
+   * Copy our site files to the root of the site.
+   */
+  await run(`copy gatsby files`, async () => {
+    const srcDir = `${__dirname}/../../cache-dir`
+    const siteDir = cacheDirectory
+    const tryRequire = `${__dirname}/../utils/test-require-error.js`
     try {
-      if (env === `browser`) {
-        return slash(
-          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
-        )
-      }
-    } catch (e) {
-      // ignore
+      await fs.copy(srcDir, siteDir, {
+        clobber: true,
+      })
+      await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
+        clobber: true,
+      })
+      await fs.ensureDirSync(`${cacheDirectory}/json`)
+
+      // Ensure .cache/fragments exists and is empty. We want fragments to be
+      // added on every run in response to data as fragments can only be added if
+      // the data used to create the schema they're dependent on is available.
+      await fs.emptyDir(`${cacheDirectory}/fragments`)
+    } catch (err) {
+      const message = `Unable to copy site files to .cache.\n` + err
+      dispatch(log({ message, type: `error` }))
     }
 
-    if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      return slash(path.join(plugin.resolve, `gatsby-${env}`))
+    // Find plugins which implement gatsby-browser and gatsby-ssr and write
+    // out api-runners for them.
+    const hasAPIFile = (env, plugin) => {
+      // The plugin loader has disabled SSR APIs for this plugin. Usually due to
+      // multiple implementations of an API that can only be implemented once
+      if (env === `ssr` && plugin.skipSSR === true) return undefined
+
+      const envAPIs = plugin[`${env}APIs`]
+
+      // Always include gatsby-browser.js files if they exists as they're
+      // a handy place to include global styles and other global imports.
+      try {
+        if (env === `browser`) {
+          return slash(
+            require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
+          )
+        }
+      } catch (e) {
+        // ignore
+      }
+
+      if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
+        return slash(path.join(plugin.resolve, `gatsby-${env}`))
+      }
+      return undefined
     }
-    return undefined
-  }
 
-  const ssrPlugins = _.filter(
-    flattenedPlugins.map(plugin => {
-      return {
-        resolve: hasAPIFile(`ssr`, plugin),
-        options: plugin.pluginOptions,
-      }
-    }),
-    plugin => plugin.resolve
-  )
-
-  const browserPlugins = _.filter(
-    flattenedPlugins.map(plugin => {
-      return {
-        resolve: hasAPIFile(`browser`, plugin),
-        options: plugin.pluginOptions,
-      }
-    }),
-    plugin => plugin.resolve
-  )
-
-  const browserPluginsRequires = browserPlugins
-    .map(
-      plugin =>
-        `{
-      plugin: require('${plugin.resolve}'),
-      options: ${JSON.stringify(plugin.options)},
-    }`
+    const ssrPlugins = _.filter(
+      flattenedPlugins.map(plugin => {
+        return {
+          resolve: hasAPIFile(`ssr`, plugin),
+          options: plugin.pluginOptions,
+        }
+      }),
+      plugin => plugin.resolve
     )
-    .join(`,`)
 
-  const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
-
-  let sSRAPIRunner = ``
-
-  try {
-    sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
-  } catch (err) {
-    report.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
-  }
-
-  const ssrPluginsRequires = ssrPlugins
-    .map(
-      plugin =>
-        `{
-      plugin: require('${plugin.resolve}'),
-      options: ${JSON.stringify(plugin.options)},
-    }`
+    const browserPlugins = _.filter(
+      flattenedPlugins.map(plugin => {
+        return {
+          resolve: hasAPIFile(`browser`, plugin),
+          options: plugin.pluginOptions,
+        }
+      }),
+      plugin => plugin.resolve
     )
-    .join(`,`)
-  sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
-  fs.writeFileSync(
-    `${siteDir}/api-runner-browser-plugins.js`,
-    browserAPIRunner,
-    `utf-8`
-  )
-  fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
+    const browserPluginsRequires = browserPlugins
+      .map(
+        plugin =>
+          `{
+        plugin: require('${plugin.resolve}'),
+        options: ${JSON.stringify(plugin.options)},
+      }`
+      )
+      .join(`,`)
 
-  activity.end()
+    const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
+
+    let sSRAPIRunner = ``
+
+    try {
+      sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
+    } catch (err) {
+      const message = `Failed to read ${siteDir}/api-runner-ssr.js\n` + err
+      dispatch(log({ message, type: `panic` }))
+    }
+
+    const ssrPluginsRequires = ssrPlugins
+      .map(
+        plugin =>
+          `{
+        plugin: require('${plugin.resolve}'),
+        options: ${JSON.stringify(plugin.options)},
+      }`
+      )
+      .join(`,`)
+    sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
+
+    fs.writeFileSync(
+      `${siteDir}/api-runner-browser-plugins.js`,
+      browserAPIRunner,
+      `utf-8`
+    )
+    fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
+  })
+
   /**
    * Start the main bootstrap processes.
    */
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
-  activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
-  activity.end()
+  await run(`onPreBootstrap`, () => apiRunnerNode(`onPreBootstrap`))
 
   // Source nodes
-  activity = report.activityTimer(`source and transform nodes`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await require(`../utils/source-nodes`)({ parentSpan: activity.span })
-  activity.end()
+  await run(`source and transform nodes`, activity =>
+    require(`../utils/source-nodes`)({ parentSpan: activity.span })
+  )
 
   // Create Schema.
-  activity = report.activityTimer(`building schema`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await require(`../schema`).build({ parentSpan: activity.span })
-  activity.end()
+  await run(`building schema`, activity =>
+    require(`../schema`).build({ parentSpan: activity.span })
+  )
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
@@ -384,7 +374,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
 
-  store.dispatch({
+  dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
     payload: _.flattenDeep([extensions, apiResults]),
   })
@@ -401,56 +391,40 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   // Collect pages.
-  activity = report.activityTimer(`createPages`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`createPages`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPages`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
-  activity.end()
+  await run(`createPages`, activity =>
+    apiRunnerNode(`createPages`, {
+      graphql: graphqlRunner,
+      traceId: `initial-createPages`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    })
+  )
 
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  activity = report.activityTimer(`createPagesStatefully`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`createPagesStatefully`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPagesStatefully`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
-  activity.end()
 
-  activity = report.activityTimer(`onPreExtractQueries`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
-  activity.end()
+  await run(`createPagesStatefully`, activity =>
+    apiRunnerNode(`createPagesStatefully`, {
+      graphql: graphqlRunner,
+      traceId: `initial-createPagesStatefully`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    })
+  )
+
+  await run(`onPreExtractQueries`, activity =>
+    apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
+  )
 
   // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
-  activity.end()
+  await run(`update schema`, activity =>
+    require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
+  )
 
   // Extract queries
-  activity = report.activityTimer(`extract queries from components`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await extractQueries()
-  activity.end()
+  await run(`extract queries from components`, () => extractQueries())
 
   // Start the createPages hot reloader.
   if (process.env.NODE_ENV !== `production`) {
@@ -458,41 +432,31 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   // Run queries
-  activity = report.activityTimer(`run graphql queries`, {
-    parentSpan: bootstrapSpan,
+  await run(`run graphql queries`, activity => {
+    const startQueries = process.hrtime()
+    queryQueue.on(`task_finish`, () => {
+      const stats = queryQueue.getStats()
+      activity.setStatus(
+        `${stats.total}/${stats.peak} ${(
+          stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+        ).toFixed(2)} queries/second`
+      )
+    })
+    return runInitialQueries(activity)
   })
-  activity.start()
-  const startQueries = process.hrtime()
-  queryQueue.on(`task_finish`, () => {
-    const stats = queryQueue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
-  })
-  await runInitialQueries(activity)
-  activity.end()
 
   // Write out files.
-  activity = report.activityTimer(`write out page data`, {
-    parentSpan: bootstrapSpan,
+  await run(`Failed to write out page data`, async () => {
+    try {
+      await writePages()
+    } catch (err) {
+      const message = `Failed to write out page data: ` + err
+      dispatch(log({ message, type: `error` }))
+    }
   })
-  activity.start()
-  try {
-    await writePages()
-  } catch (err) {
-    report.panic(`Failed to write out page data`, err)
-  }
-  activity.end()
 
   // Write out redirects.
-  activity = report.activityTimer(`write out redirect data`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await writeRedirects()
-  activity.end()
+  await run(`write out redirect data`, () => writeRedirects())
 
   let onEndJob
 
@@ -501,13 +465,13 @@ module.exports = async (args: BootstrapArgs) => {
     if (state.jobs.active.length === 0) {
       emitter.off(`END_JOB`, onEndJob)
 
-      await finishBootstrap(bootstrapSpan)
+      await finishBootstrap(run, bootstrapSpan)
       resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    await finishBootstrap(bootstrapSpan)
+    await finishBootstrap(run, bootstrapSpan)
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {
@@ -518,18 +482,15 @@ module.exports = async (args: BootstrapArgs) => {
   }
 }
 
-const finishBootstrap = async bootstrapSpan => {
+const finishBootstrap = async (run, bootstrapSpan) => {
   // onPostBootstrap
-  const activity = report.activityTimer(`onPostBootstrap`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
-  activity.end()
+  await run(`onPostBootstrap`, activity =>
+    apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+  )
 
-  report.log(``)
-  report.info(`bootstrap finished - ${process.uptime()} s`)
-  report.log(``)
+  const message = `bootstrap finished - ${process.uptime()} s\n`
+  dispatch(log({ message, type: `info` }))
+
   emitter.emit(`BOOTSTRAP_FINISHED`)
 
   bootstrapSpan.finish()

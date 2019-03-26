@@ -2,10 +2,14 @@
 const levenshtein = require(`fast-levenshtein`)
 const fs = require(`fs-extra`)
 const testRequireError = require(`../utils/test-require-error`).default
-const report = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const path = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 function isNearMatch(
   fileName: string,
@@ -32,20 +36,23 @@ module.exports = async function getConfigFile(
       })
     )
     if (!testRequireError(configPath, err)) {
-      report.panic(
-        `We encountered an error while trying to load your site's ${configName}. Please fix the error and try again.`,
+      const message =
+        `We encountered an error while trying to load your site's ${configName}. ` +
+        `Please fix the error and try again.\n` +
         err
-      )
+      dispatch(log({ message, type: `panic` }))
     } else if (nearMatch) {
-      report.panic(
-        `It looks like you were trying to add the config file? Please rename "${chalk.bold(
-          nearMatch
-        )}" to "${chalk.bold(configName)}"`
-      )
+      const message =
+        `It looks like you were trying to add the config file? ` +
+        `Please rename "${chalk.bold(nearMatch)}" to ` +
+        `"${chalk.bold(configName)}".`
+      dispatch(log({ message, type: `panic` }))
     } else if (existsSync(path.join(rootDir, `src`, configName))) {
-      report.panic(
-        `Your ${configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`
-      )
+      const message =
+        `Your ${configName} file is in the wrong place. You've placed it in the ` +
+        `src/ directory. It must instead be at the root of your site next to ` +
+        `your package.json file.`
+      dispatch(log({ message, type: `panic` }))
     }
   }
 

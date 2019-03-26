@@ -57,7 +57,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       message: `Posted a success message with the redux logger`,
       type: `success`,
     })
-    reporter.info(`back-compat success message`)
+    reporter.success(`back-compat success message`)
     activity.end()
     activity = reporter.activityTimer(`do activities get new ids?`)
     activity.start()

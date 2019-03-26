@@ -1,8 +1,12 @@
 const _ = require(`lodash`)
 const semver = require(`semver`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
-const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
+const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 // Given a plugin object, an array of the API names it exports and an
 // array of valid API names, return an array of invalid API exports.
@@ -22,18 +26,16 @@ const getBadExports = (plugin, pluginAPIKeys, apis) => {
 }
 
 const getBadExportsMessage = (badExports, exportType, apis) => {
-  const { stripIndent } = require(`common-tags`)
   const stringSimiliarity = require(`string-similarity`)
   let capitalized = `${exportType[0].toUpperCase()}${exportType.slice(1)}`
   if (capitalized === `Ssr`) capitalized = `SSR`
 
-  let message = `\n`
-  message += stripIndent`
-    Your plugins must export known APIs from their gatsby-${exportType}.js.
-    The following exports aren't APIs. Perhaps you made a typo or your plugin is outdated?
-
-    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs
-  `
+  let message =
+    `\nYour plugins must export known APIs from their gatsby-${exportType}.js.\n` +
+    `The following exports aren't APIs. Perhaps you made a typo or your plugin ` +
+    `is outdated?\n\n` +
+    `See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of ` +
+    `Gatsby ${capitalized} APIs.`
 
   badExports.forEach(bady => {
     message += `\n\n`
@@ -57,29 +59,23 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
       const { replacement, migrationLink } = badExportsMigrationMap[
         bady.exportName
       ]
-      message += stripIndent`
-        - Your site's gatsby-${exportType}.js is exporting "${
-        bady.exportName
-      }" which was removed in Gatsby v2. Refer to the migration guide for more info on upgrading to "${replacement}":
-      `
-      message += `\n ${migrationLink}`
+      message +=
+        `- Your site's gatsby-${exportType}.js is exporting ` +
+        `"${bady.exportName}" which was removed in Gatsby v2. ` +
+        `Refer to the migration guide for more info on upgrading to "${replacement}":\n`
+      message += migrationLink
     } else if (isDefaultPlugin) {
-      message += stripIndent`
-        - Your site's gatsby-${exportType}.js is exporting a variable named "${
-        bady.exportName
-      }" which isn't an API.
-      `
+      message +=
+        `- Your site's gatsby-${exportType}.js is exporting a variable named ` +
+        `"${bady.exportName}" which isn't an API.\n`
     } else {
-      message += stripIndent`
-        - The plugin "${bady.pluginName}@${
-        bady.pluginVersion
-      }" is exporting a variable named "${bady.exportName}" which isn't an API.
-      `
+      message +=
+        `- The plugin "${bady.pluginName}@${bady.pluginVersion}" is ` +
+        `exporting a variable named "${bady.exportName}" which isn't an API.\n`
     }
 
     if (similarities.bestMatch.rating > 0.5 && !isOldAPI) {
-      message += `\n\n`
-      message += `Perhaps you meant to export "${
+      message += `\n\nPerhaps you meant to export "${
         similarities.bestMatch.target
       }"?`
     }
@@ -93,9 +89,12 @@ const handleBadExports = ({ apis, badExports }) => {
   _.toPairs(badExports).forEach(badItem => {
     const [exportType, entries] = badItem
     if (entries.length > 0) {
-      reporter.panicOnBuild(
-        getBadExportsMessage(entries, exportType, apis[exportType])
+      const message = getBadExportsMessage(
+        entries,
+        exportType,
+        apis[exportType]
       )
+      dispatch(log({ message, type: `panicOnBuild` }))
     }
   })
 }
@@ -171,22 +170,19 @@ const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
     const rendererPlugins = [...apiToPlugins.replaceRenderer]
 
     if (rendererPlugins.includes(`default-site-plugin`)) {
-      reporter.warn(`replaceRenderer API found in these plugins:`)
-      reporter.warn(rendererPlugins.join(`, `))
-      reporter.warn(
-        `This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
-      )
-    } else {
-      console.log(``)
-      reporter.error(
-        `Gatsby's replaceRenderer API is implemented by multiple plugins:`
-      )
-      reporter.error(rendererPlugins.join(`, `))
-      reporter.error(`This will break your build`)
-      reporter.error(
+      const message =
+        `replaceRenderer API found in these plugins: ` +
+        rendererPlugins.join(`, `) +
+        `\nThis might be an error. ` +
         `See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
-      )
-      if (process.env.NODE_ENV === `production`) process.exit(1)
+      dispatch(log({ message, type: `warn` }))
+    } else {
+      const message =
+        `Gatsby's replaceRenderer API is implemented by multiple plugins: ` +
+        rendererPlugins.join(`, `) +
+        `\nThis will break your build. ` +
+        `See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
+      dispatch(log({ message, type: `panicOnBuild` }))
     }
 
     // Now update plugin list so only final replaceRenderer will run
@@ -206,9 +202,7 @@ const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
       }
     })
     if (messages.length > 0) {
-      console.log(``)
-      messages.forEach(m => reporter.warn(m))
-      console.log(``)
+      messages.forEach(message => dispatch(log({ message, type: `warn` })))
     }
   }
 
@@ -222,9 +216,10 @@ function warnOnIncompatiblePeerDependency(name, packageJSON) {
     gatsbyPeerDependency &&
     !semver.satisfies(gatsbyVersion, gatsbyPeerDependency)
   ) {
-    reporter.warn(
-      `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`
-    )
+    const message =
+      `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion}. ` +
+      `It requires gatsby@${gatsbyPeerDependency}.`
+    dispatch(log({ message, type: `warn` }))
   }
 }
 

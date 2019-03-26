@@ -1,9 +1,10 @@
 // @flow
 
 import { print, visit, GraphQLError, getLocation } from "graphql"
+import { stripIndent } from "common-tags"
+import chalk from "chalk"
 import babelCodeFrame from "@babel/code-frame"
 import _ from "lodash"
-import report from "gatsby-cli/lib/reporter"
 
 type RelayGraphQLError = Error & { validationErrors?: Object }
 
@@ -41,17 +42,11 @@ const handlers = [
 ]
 
 function formatFilePath(filePath: string) {
-  return `${report.format.bold(`file:`)} ${report.format.blue(filePath)}`
+  return `${chalk.bold(`file:`)} ${chalk.blue(filePath)}`
 }
 
 function formatError(message: string, filePath: string, codeFrame: string) {
-  return (
-    report.stripIndent`
-    ${message}
-
-      ${formatFilePath(filePath)}
-  ` + `\n\n${codeFrame}\n`
-  )
+  return message + `\n\n` + formatFilePath(filePath) + `\n\n` + codeFrame
 }
 
 function extractError(error: Error): { message: string, docName: string } {
@@ -123,8 +118,8 @@ export function multipleRootQueriesError(
     `Multiple "root" queries found in file: "${name}" and "${otherName}". ` +
       `Only the first ("${otherName}") will be registered.`,
     filePath,
-    `  ${report.format.yellow(`Instead of:`)} \n\n` +
-      babelCodeFrame(report.stripIndent`
+    `  ${chalk.yellow(`Instead of:`)} \n\n` +
+      babelCodeFrame(stripIndent`
       query ${otherName} {
         bar {
           #...
@@ -137,8 +132,8 @@ export function multipleRootQueriesError(
         }
       }
     `) +
-      `\n\n  ${report.format.green(`Do:`)} \n\n` +
-      babelCodeFrame(report.stripIndent`
+      `\n\n  ${chalk.green(`Do:`)} \n\n` +
+      babelCodeFrame(stripIndent`
       query ${unifiedName} {
         bar {
           #...
