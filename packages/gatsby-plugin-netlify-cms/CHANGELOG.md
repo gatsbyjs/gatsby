@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.16...gatsby-plugin-netlify-cms@3.0.17) (2019-03-26)
+
+### Features
+
+- **gatsby-plugin-netlify-cms:** support multiple cms module paths ([#12672](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/12672)) ([a17df90](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/a17df90))
+
 ## [3.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.15...gatsby-plugin-netlify-cms@3.0.16) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms
