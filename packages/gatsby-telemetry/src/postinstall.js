@@ -9,7 +9,6 @@ try {
         `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
         `To learn more, checkout http://gatsby.dev/telemetry`
     )
-    enabled = config.set(`telemetry.enabled`, true)
   }
 } catch (e) {
   // ignore
