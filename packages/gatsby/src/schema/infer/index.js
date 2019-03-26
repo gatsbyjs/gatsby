@@ -68,7 +68,7 @@ const addInferredTypes = ({
   })
 
   // XXX(freiksenet): We iterate twice to pre-create all types
-  const typeComposers = typeNames.map(typeName => {
+  const typeComposers = typeNames.map(typeName =>
     addInferredType({
       schemaComposer,
       nodeStore,
@@ -77,7 +77,7 @@ const addInferredTypes = ({
       typeMapping,
       parentSpan,
     })
-  })
+  )
 
   if (noNodeInterfaceTypes.length > 0) {
     noNodeInterfaceTypes.forEach(type => {
