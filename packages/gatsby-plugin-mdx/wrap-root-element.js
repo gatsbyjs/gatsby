@@ -2,9 +2,7 @@ import React from "react";
 import { MDXProvider } from "@mdx-js/tag";
 import { withMDXComponents } from "@mdx-js/tag/dist/mdx-provider";
 import { MDXScopeProvider } from "./context";
-// this import, unlike the more complicated one below, executes the
-// mdx-scopes loader with no arguments. No funny-business.
-import scopeContexts from "./loaders/mdx-scopes!";
+
 /**
  * so, this import is weird right?
  *
@@ -27,6 +25,7 @@ import scopeContexts from "./loaders/mdx-scopes!";
  * Submit a PR
  */
 import { plugins as mdxPlugins } from "./loaders/mdx-components";
+import scopeContexts from "./loaders/mdx-scopes";
 
 const componentsAndGuards = {};
 

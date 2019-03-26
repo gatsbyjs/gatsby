@@ -22,7 +22,6 @@ module.exports = async (
     createNodeId,
     getNode,
     getNodes,
-    store,
     reporter,
     cache,
     pathPrefix
@@ -70,19 +69,19 @@ module.exports = async (
     options
   });
   await cacheScope({
+    cache,
     scopeIdentifiers,
     scopeImports,
     createContentDigest: contentDigest,
-    directory: store.getState().program.directory,
     parentNode: node
   });
 };
 
 async function cacheScope({
+  cache,
   scopeImports,
   scopeIdentifiers,
   createContentDigest,
-  directory,
   parentNode
 }) {
   // scope files are the imports from an MDX file pulled out and re-exported.
@@ -94,7 +93,8 @@ export default { ${scopeIdentifiers.join(", ")} }`;
   // relative to new .cache location
   if (parentNode.internal.type === "File") {
     const instance = new BabelPluginTransformRelativeImports({
-      parentFilepath: parentNode.dir
+      parentFilepath: parentNode.dir,
+      cache: cache
     });
     const result = babel.transform(scopeFileContent, {
       configFile: false,
@@ -104,7 +104,7 @@ export default { ${scopeIdentifiers.join(", ")} }`;
   }
 
   const filePath = path.join(
-    directory,
+    cache.directory,
     MDX_SCOPES_LOCATION,
     `${createContentDigest(scopeFileContent)}.js`
   );
@@ -115,7 +115,7 @@ export default { ${scopeIdentifiers.join(", ")} }`;
 const declare = require("@babel/helper-plugin-utils").declare;
 
 class BabelPluginTransformRelativeImports {
-  constructor({ parentFilepath }) {
+  constructor({ parentFilepath, cache }) {
     this.plugin = declare(api => {
       api.assertVersion(7);
 
@@ -125,7 +125,7 @@ class BabelPluginTransformRelativeImports {
             if (node.value.startsWith(".")) {
               const valueAbsPath = path.resolve(parentFilepath, node.value);
               const replacementPath = path.relative(
-                MDX_SCOPES_LOCATION,
+                path.join(cache.directory, MDX_SCOPES_LOCATION),
                 valueAbsPath
               );
               node.value = replacementPath;
