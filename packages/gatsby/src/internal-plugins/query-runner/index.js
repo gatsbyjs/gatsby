@@ -98,9 +98,32 @@ const popExtractedQueries = () => {
   return queries
 }
 
+/**
+ * Calculates the set of dirty query IDs (page.paths, or
+ * staticQuery.hash's). These are queries that:
+ *
+ * - depend on nodes or node collections (via
+ *   `actions.createPageDependency`) that have changed.
+ * - do NOT have node dependencies. Since all queries should return
+ *   data, then this implies that node dependencies have not been
+ *   tracked, and therefore these queries haven't been run before
+ * - have been recently extracted (see `./query-watcher.js`)
+ *
+ * Note, this function pops queries off internal queues, so it's up
+ * to the caller to reference the results
+ */
+
 const calcDirtyQueryIds = state =>
   _.union(popNodeAndDepQueries(state), popExtractedQueries())
 
+/**
+ * Same as `calcDirtyQueryIds`, except that we only include extracted
+ * queries that depend on nodes or haven't been run yet. We do this
+ * because the page component reducer/machine always enqueues
+ * extractedQueryIds but during bootstrap we may not want to run those
+ * page queries if their data hasn't changed since the last time we
+ * ran Gatsby.
+ */
 const calcBootstrapDirtyQueryIds = state => {
   const nodeAndNoDepQueries = popNodeAndDepQueries(state)
 
@@ -111,7 +134,10 @@ const calcBootstrapDirtyQueryIds = state => {
   return _.union(extractedQueriesThatNeedRunning, nodeAndNoDepQueries)
 }
 
-const categorizeQueryIds = queryIds => {
+/**
+ * groups queryIds by whether they are static or page queries.
+ */
+const groupQueryIds = queryIds => {
   const grouped = _.groupBy(queryIds, p => p.slice(0, 4) === `sq--`)
   return {
     staticQueryIds: grouped[true] || [],
@@ -153,6 +179,9 @@ const makePageQueryJob = (state, queryId) => {
   }
 }
 
+/**
+ *
+ */
 const processQueries = async (queryJobs, { activity }) => {
   if (queryJobs.length == 0) {
     return
@@ -181,6 +210,17 @@ const processQueries = async (queryJobs, { activity }) => {
 /////////////////////////////////////////////////////////////////////
 // Background query daemon (for gatsby develop)
 
+/**
+ * Starts a background process that processes any dirty queries upon
+ * whenever one of the following occurs.
+ *
+ * 1. A node has changed (but only after the api call has finished
+ * running)
+ * 2. A component query (e.g by editing a React Component) has
+ * changed
+ *
+ * For what constitutes a dirty query, see `calcDirtyQueryIds`
+ */
 const startDaemon = () => {
   const queue = queryQueue.create()
 
@@ -188,7 +228,7 @@ const startDaemon = () => {
     const state = store.getState()
 
     const dirtyQueryIds = calcDirtyQueryIds(state)
-    const { staticQueryIds, pageQueryIds } = categorizeQueryIds(dirtyQueryIds)
+    const { staticQueryIds, pageQueryIds } = groupQueryIds(dirtyQueryIds)
 
     staticQueryIds
       .map(id => makeStaticQueryJob(state, id))
@@ -207,16 +247,19 @@ const startDaemon = () => {
   emitter.on(`QUERY_RUNNER_QUERIES_ENQUEUED`, runQueuedActions)
 }
 
+/**
+ * Force query processing to run. Noop until `startDaemon` has been
+ * called.
+ */
 const runQueries = () => {
-  // emitter will be ignored until `startDaemon` has been invoked
-  // (during `gatsby develop`)
+  // A bit hacky bit it works well.
   emitter.emit(`QUERY_RUNNER_QUERIES_ENQUEUED`)
 }
 
 module.exports = {
   enqueueExtractedQueryId,
   calcBootstrapDirtyQueryIds,
-  categorizeQueryIds,
+  groupQueryIds,
   makeStaticQueryJob,
   makePageQueryJob,
   processQueries,

@@ -457,9 +457,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   state = store.getState()
   const queryIds = queryRunner.calcBootstrapDirtyQueryIds(state)
-  const { staticQueryIds, pageQueryIds } = queryRunner.categorizeQueryIds(
-    queryIds
-  )
+  const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
 
   activity = report.activityTimer(`run static queries`, {
     parentSpan: bootstrapSpan,
