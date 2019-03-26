@@ -10,6 +10,7 @@ const {
   setDefaultTags,
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
+console.log(require.resolve(`gatsby-telemetry`))
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
