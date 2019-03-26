@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.12...gatsby@2.2.13) (2019-03-26)
+
+### Bug Fixes
+
+- **schema:** Add tests for incorrect list counting ([#12824](https://github.com/gatsbyjs/gatsby/issues/12824)) ([d2bf6f5](https://github.com/gatsbyjs/gatsby/commit/d2bf6f5))
+- **schema:** Remove accidental capitalization of lowercase typenames. ([#12837](https://github.com/gatsbyjs/gatsby/issues/12837)) ([d25b39d](https://github.com/gatsbyjs/gatsby/commit/d25b39d))
+
 ## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.11...gatsby@2.2.12) (2019-03-26)
 
 ### Features
