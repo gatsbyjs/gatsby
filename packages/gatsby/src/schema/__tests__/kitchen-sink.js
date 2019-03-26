@@ -104,6 +104,27 @@ describe(`Kichen sink schema test`, () => {
           }
           thirdPartyStuff {
             text
+            child {
+              ... on ThirdPartyStuff {
+                text
+              }
+              ... on ThirdPartyStuff2 {
+                foo
+              }
+            }
+          }
+          thirdPartyUnion {
+            ... on ThirdPartyStuff {
+              text
+            }
+            ... on ThirdPartyStuff2 {
+              foo
+            }
+          }
+          thirdPartyInterface {
+            ... on ThirdPartyStuff3 {
+              text
+            }
           }
         }
     `)
@@ -116,19 +137,74 @@ const buildThirdPartySchema = () => {
   schemaComposer.addTypeDefs(`
     type ThirdPartyStuff {
       text: String
+      child: ThirdPartyUnion2
     }
+
+    type ThirdPartyStuff2 {
+      foo: String
+    }
+
+    union ThirdPartyUnion = ThirdPartyStuff | ThirdPartyStuff2
+
+    interface ThirdPartyInterface {
+      text: String
+      relay: Query
+    }
+
+    type ThirdPartyStuff3 implements ThirdPartyInterface {
+      text: String
+      relay: Query
+    }
+
+    union ThirdPartyUnion2 = ThirdPartyStuff | ThirdPartyStuff2
 
     type Query {
       thirdPartyStuff: ThirdPartyStuff
+      thirdPartyUnion: ThirdPartyUnion
+      thirdPartyInterface: ThirdPartyInterface
+      relay: Query
+      relay2: [Query]!
     }
   `)
+  schemaComposer
+    .getUTC(`ThirdPartyUnion`)
+    .setResolveType(() => `ThirdPartyStuff`)
+  schemaComposer
+    .getUTC(`ThirdPartyUnion2`)
+    .setResolveType(() => `ThirdPartyStuff`)
+  schemaComposer
+    .getIFTC(`ThirdPartyInterface`)
+    .setResolveType(() => `ThirdPartyStuff3`)
   schemaComposer.Query.extendField(`thirdPartyStuff`, {
+    resolve() {
+      return {
+        text: `Hello third-party schema!`,
+        child: {
+          text: `Hello from children!`,
+        },
+      }
+    },
+  })
+  schemaComposer.Query.extendField(`thirdPartyUnion`, {
+    resolve() {
+      return {
+        text: `Hello third-party schema!`,
+        child: {
+          text: `Hello from children!`,
+        },
+      }
+    },
+  })
+  schemaComposer.Query.extendField(`thirdPartyInterface`, {
     resolve() {
       return {
         text: `Hello third-party schema!`,
       }
     },
   })
+  schemaComposer.addSchemaMustHaveType(
+    schemaComposer.getOTC(`ThirdPartyStuff3`)
+  )
   return schemaComposer.buildSchema()
 }
 

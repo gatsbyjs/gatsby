@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.49](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.48...gatsby-source-wordpress@3.0.49) (2019-03-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.48](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.47...gatsby-source-wordpress@3.0.48) (2019-03-19)
+
+### Features
+
+- **gatsby-source-wordpress:** use unique multi-site node id's ([#12683](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/12683)) ([925a655](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/925a655))
+
 ## [3.0.47](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.46...gatsby-source-wordpress@3.0.47) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-source-wordpress

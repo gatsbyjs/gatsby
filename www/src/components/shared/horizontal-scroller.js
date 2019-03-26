@@ -1,9 +1,8 @@
 import styled from "@emotion/styled"
 
-import { rhythm } from "../../utils/typography"
 import { space, radii, colors, shadows } from "../../utils/presets"
 
-const BOX_SHADOW_BLUR = rhythm(space[2])
+const BOX_SHADOW_BLUR = space[2]
 
 export const HorizontalScroller = styled(`div`)`
   overflow-x: scroll;
@@ -13,7 +12,7 @@ export const HorizontalScroller = styled(`div`)`
 export const HorizontalScrollerContent = styled(`ul`)`
   display: inline-flex;
   list-style: none;
-  padding: ${BOX_SHADOW_BLUR} ${rhythm(space[6])} calc(${BOX_SHADOW_BLUR} * 1.5);
+  padding: ${BOX_SHADOW_BLUR} ${space[6]} calc(${BOX_SHADOW_BLUR} * 1.5);
   margin: 0;
 `
 
@@ -22,7 +21,7 @@ export const HorizontalScrollerItem = styled(`li`)`
   border-radius: ${radii[2]}px;
   box-shadow: ${shadows.raised};
   margin: 0;
-  margin-right: ${rhythm(space[6])};
+  margin-right: ${space[6]};
   width: 77vw;
 
   :last-child {

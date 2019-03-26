@@ -178,7 +178,20 @@
           link: /docs/post-css/
         - title: TailwindCSS
           link: /docs/tailwind-css/
-    - title: Adding Testing
+    - title: Adding Components to Content with MDX
+      link: /docs/mdx/
+      items:
+        - title: Getting started
+          link: /docs/mdx/getting-started/
+        - title: Writing pages
+          link: /docs/mdx/writing-pages/
+        - title: Customizing components
+          link: /docs/mdx/customizing-components/
+        - title: Programmatically creating pages
+          link: /docs/mdx/programmatically-creating-pages/
+        - title: Using plugins
+          link: /docs/mdx/plugins/
+    - title: Adding testing
       link: /docs/testing/
       items:
         - title: Unit Testing

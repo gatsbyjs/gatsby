@@ -7,6 +7,12 @@ const {
   assertValidName,
   getNamedType,
 } = require(`graphql`)
+const {
+  ObjectTypeComposer,
+  InterfaceTypeComposer,
+  UnionTypeComposer,
+  InputTypeComposer,
+} = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -50,7 +56,7 @@ const rebuildSchemaWithSitePage = async ({
 }) => {
   const typeComposer = addInferredType({
     schemaComposer,
-    typeComposer: schemaComposer.getTC(`SitePage`),
+    typeComposer: schemaComposer.getOTC(`SitePage`),
     nodeStore,
     typeConflictReporter,
     typeMapping,
@@ -113,7 +119,7 @@ const processTypeComposer = async ({
   parentSpan,
 }) => {
   if (
-    typeComposer instanceof schemaComposer.TypeComposer &&
+    typeComposer instanceof ObjectTypeComposer &&
     typeComposer.hasInterface(`Node`)
   ) {
     await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
@@ -160,8 +166,8 @@ const processAddedType = ({ schemaComposer, type, parentSpan }) => {
   checkIsAllowedTypeName(typeName)
   const typeComposer = schemaComposer.get(typeName)
   if (
-    typeComposer instanceof schemaComposer.InterfaceTypeComposer ||
-    typeComposer instanceof schemaComposer.UnionTypeComposer
+    typeComposer instanceof InterfaceTypeComposer ||
+    typeComposer instanceof UnionTypeComposer
   ) {
     if (!typeComposer.getResolveType()) {
       typeComposer.setResolveType(node => node.internal.type)
@@ -195,45 +201,51 @@ const createTypeComposerFromGatsbyType = ({
 }) => {
   switch (type.kind) {
     case GatsbyGraphQLTypeKind.OBJECT: {
-      return schemaComposer.TypeComposer.createTemp({
-        ...type.config,
-        interfaces: () => {
-          if (type.config.interfaces) {
-            return type.config.interfaces.map(iface => {
-              if (typeof iface === `string`) {
-                return schemaComposer.getIFTC(iface).getType()
-              } else {
-                return iface
-              }
-            })
-          } else {
-            return []
-          }
+      return ObjectTypeComposer.createTemp(
+        {
+          ...type.config,
+          interfaces: () => {
+            if (type.config.interfaces) {
+              return type.config.interfaces.map(iface => {
+                if (typeof iface === `string`) {
+                  return schemaComposer.getIFTC(iface).getType()
+                } else {
+                  return iface
+                }
+              })
+            } else {
+              return []
+            }
+          },
         },
-      })
+        schemaComposer
+      )
     }
     case GatsbyGraphQLTypeKind.INPUT_OBJECT: {
-      return schemaComposer.InputTypeComposer.createTemp(type.config)
+      return InputTypeComposer.createTemp(type.config, schemaComposer)
     }
     case GatsbyGraphQLTypeKind.UNION: {
-      return schemaComposer.UnionTypeComposer.createTemp({
-        ...type.config,
-        types: () => {
-          if (type.types) {
-            return type.types.map(typeName =>
-              schemaComposer.getTC(typeName).getType()
-            )
-          } else {
-            return []
-          }
+      return UnionTypeComposer.createTemp(
+        {
+          ...type.config,
+          types: () => {
+            if (type.config.types) {
+              return type.config.types.map(typeName =>
+                schemaComposer.getOTC(typeName).getType()
+              )
+            } else {
+              return []
+            }
+          },
         },
-      })
+        schemaComposer
+      )
     }
     case GatsbyGraphQLTypeKind.INTERFACE: {
-      return schemaComposer.InterfaceTypeComposer.createTemp(type.config)
+      return InterfaceTypeComposer.createTemp(type.config, schemaComposer)
     }
     default: {
-      console.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
+      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
       return null
     }
   }
@@ -246,10 +258,7 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({
 }) =>
   Promise.all(
     Array.from(schemaComposer.values()).map(async tc => {
-      if (
-        tc instanceof schemaComposer.TypeComposer &&
-        tc.hasInterface(`Node`)
-      ) {
+      if (tc instanceof ObjectTypeComposer && tc.hasInterface(`Node`)) {
         const typeName = tc.getTypeName()
         const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
           type: {
@@ -277,7 +286,12 @@ const addThirdPartySchemas = ({
 }) => {
   thirdPartySchemas.forEach(schema => {
     const schemaQueryType = schema.getQueryType()
-    const queryTC = schemaComposer.TypeComposer.createTemp(schemaQueryType)
+    const queryTC = ObjectTypeComposer.createTemp(schemaQueryType)
+    processThirdPartyType({
+      schemaComposer,
+      typeComposer: queryTC,
+      schemaQueryType,
+    })
     const fields = queryTC.getFields()
     schemaComposer.Query.addFields(fields)
 
@@ -291,20 +305,36 @@ const addThirdPartySchemas = ({
         !isSpecifiedScalarType(type) &&
         !isIntrospectionType(type)
       ) {
-        type.isThirdPartyType = true
-        const typeComposer = schemaComposer.TypeComposer.createTemp(type)
-        typeComposer.getFieldNames().forEach(fieldName => {
-          const fieldType = typeComposer.getFieldType(fieldName)
-          if (getNamedType(fieldType) === schemaQueryType) {
-            typeComposer.extendField(fieldName, {
-              type: `Query`,
-            })
-          }
-        })
-        schemaComposer.add(typeComposer)
+        schemaComposer.addAsComposer(type)
+        const typeComposer = schemaComposer.getAnyTC(type.name)
+        processThirdPartyType({ schemaComposer, typeComposer, schemaQueryType })
+        schemaComposer.addSchemaMustHaveType(typeComposer)
       }
     })
   })
+}
+
+const processThirdPartyType = ({
+  schemaComposer,
+  typeComposer,
+  schemaQueryType,
+}) => {
+  typeComposer.getType().isThirdPartyType = true
+  // Fix for types that refer to Query. Thanks Relay Classic!
+  if (
+    typeComposer instanceof ObjectTypeComposer ||
+    typeComposer instanceof InterfaceTypeComposer
+  ) {
+    typeComposer.getFieldNames().forEach(fieldName => {
+      const fieldType = typeComposer.getFieldType(fieldName)
+      if (getNamedType(fieldType) === schemaQueryType) {
+        typeComposer.extendField(fieldName, {
+          type: fieldType.toString().replace(schemaQueryType.name, `Query`),
+        })
+      }
+    })
+  }
+  return typeComposer
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
@@ -313,7 +343,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     Object.keys(resolvers).forEach(typeName => {
       const fields = resolvers[typeName]
       if (schemaComposer.has(typeName)) {
-        const tc = schemaComposer.getTC(typeName)
+        const tc = schemaComposer.getOTC(typeName)
         Object.keys(fields).forEach(fieldName => {
           const fieldConfig = fields[fieldName]
           if (tc.hasField(fieldName)) {
@@ -324,7 +354,8 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               fieldConfig.type && fieldConfig.type.toString()
             if (
               !fieldTypeName ||
-              tc.getFieldType(fieldName) === fieldConfig.type.toString() ||
+              fieldTypeName.replace(/!/g, ``) ===
+                originalTypeName.replace(/!/g, ``) ||
               tc.getType().isThirdPartyType
             ) {
               const newConfig = {}

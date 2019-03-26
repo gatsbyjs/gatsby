@@ -4,24 +4,24 @@ import styled from "@emotion/styled"
 
 import Button from "../button"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, breakpoints } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import { colors, space, breakpoints, scale, fonts } from "../../utils/presets"
 
-const ICON_SIZE = rhythm(space[7])
+const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
   background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  padding: ${rhythm(space[5])} ${rhythm(space[6])};
+  padding: ${space[5]} ${space[6]};
   width: 100%;
 
   ${breakpoints.xl} {
     margin: -1px 0;
-    padding: ${rhythm(space[5])} 5%;
+    padding: ${space[5]} 5%;
   }
 
   ${breakpoints.xxl} {
-    padding: ${rhythm(space[7])} 8%;
+    padding: ${space[7]} 8%;
   }
 `
 export const Header = styled(`header`)`
@@ -30,7 +30,7 @@ export const Header = styled(`header`)`
   }
 
   ${breakpoints.lg} {
-    margin-left: ${rhythm(space[9])};
+    margin-left: ${space[9]};
   }
 `
 
@@ -38,7 +38,7 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: ${presets.scale[2]};
+  font-size: ${scale[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
@@ -66,14 +66,14 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: ${presets.scale[6]};
+  font-size: ${scale[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: ${presets.scale[3]};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-size: ${scale[3]};
+  font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `
@@ -81,14 +81,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: ${rhythm(space[4])} 0 ${rhythm(space[6])};
+  margin: ${space[4]} 0 ${space[6]};
 
   > a {
-    margin-right: ${rhythm(space[1])};
+    margin-right: ${space[1]};
   }
 
   ${breakpoints.lg} {
-    margin: ${rhythm(space[4])} 0 ${rhythm(space[8])};
+    margin: ${space[4]} 0 ${space[8]};
   }
 `
 

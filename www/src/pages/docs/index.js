@@ -42,43 +42,45 @@ class IndexRoute extends React.Component {
               <li>
                 Choose your own adventure and peruse the various sections of the
                 Gatsby docs:
+                <ul>
+                  <li>
+                    <Link to="/docs/guides/">Guides</Link>: Dive deeper into
+                    different topics around building with Gatsby, like sourcing
+                    data, deployment, and more.
+                  </li>
+                  <li>
+                    <Link to="/ecosystem/">Ecosystem</Link>: Check out libraries
+                    for Gatsby starters and plugins, as well as external
+                    community resources.
+                  </li>
+                  <li>
+                    <Link to="/docs/api-reference/">API Reference</Link>: Learn
+                    more about Gatsby APIs and configuration.
+                  </li>
+                  <li>
+                    <Link to="/docs/releases-and-migration/">
+                      Releases &amp; Migration
+                    </Link>
+                    : Find release notes and guides for migration between major
+                    versions.
+                  </li>
+                  <li>
+                    <Link to="/docs/conceptual-guide/">Conceptual Guide</Link>:
+                    Read high-level overviews of the Gatsby approach.
+                  </li>
+                  <li>
+                    <Link to="/docs/behind-the-scenes/">Behind the Scenes</Link>
+                    : Dig into how Gatsby works under the hood.
+                  </li>
+                  <li>
+                    <Link to="/docs/advanced-tutorials/">
+                      Advanced Tutorials
+                    </Link>
+                    : Learn about topics that are too large for a doc and
+                    warrant a tutorial.
+                  </li>
+                </ul>
               </li>
-              <ul>
-                <li>
-                  <Link to="/docs/guides/">Guides</Link>: Dive deeper into
-                  different topics around building with Gatsby, like sourcing
-                  data, deployment, and more.
-                </li>
-                <li>
-                  <Link to="/ecosystem/">Ecosystem</Link>: Check out libraries
-                  for Gatsby starters and plugins, as well as external community
-                  resources.
-                </li>
-                <li>
-                  <Link to="/docs/api-reference/">API Reference</Link>: Learn
-                  more about Gatsby APIs and configuration.
-                </li>
-                <li>
-                  <Link to="/docs/releases-and-migration/">
-                    Releases &amp; Migration
-                  </Link>
-                  : Find release notes and guides for migration between major
-                  versions.
-                </li>
-                <li>
-                  <Link to="/docs/conceptual-guide/">Conceptual Guide</Link>:
-                  Read high-level overviews of the Gatsby approach.
-                </li>
-                <li>
-                  <Link to="/docs/behind-the-scenes/">Behind the Scenes</Link>:
-                  Dig into how Gatsby works under the hood.
-                </li>
-                <li>
-                  <Link to="/docs/advanced-tutorials/">Advanced Tutorials</Link>
-                  : Learn about topics that are too large for a doc and warrant
-                  a tutorial.
-                </li>
-              </ul>
             </ol>
             <p>
               Visit the <Link to="/contributing">Contributing</Link> section to

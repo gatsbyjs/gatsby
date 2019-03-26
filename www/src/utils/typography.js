@@ -1,55 +1,34 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets, {
-  colors,
+import {
   space,
+  scale as scaleTokens,
+  colors,
   transition,
   radii,
   breakpoints,
-} from "./presets"
-
-const systemFontFamily = [
-  `-apple-system`,
-  `BlinkMacSystemFont`,
-  `Segoe UI`,
-  `Roboto`,
-  `Helvetica Neue`,
-  `Arial`,
-  `Noto Sans`,
-  `sans-serif`,
-  `Apple Color Emoji`,
-  `Segoe UI Emoji`,
-  `Segoe UI Symbol`,
-  `Noto Color Emoji`,
-]
-const headerFontFamily = [`Futura PT`, ...systemFontFamily]
-const monospaceFontFamily = [
-  `SFMono-Regular`,
-  `Menlo`,
-  `Monaco`,
-  `Consolas`,
-  `Liberation Mono`,
-  `Courier New`,
-  `monospace`,
-]
+  lineHeights,
+  letterSpacings,
+  fonts,
+} from "./tokens"
 
 const _options = {
-  bodyFontFamily: systemFontFamily,
-  headerFontFamily,
-  monospaceFontFamily,
-  systemFontFamily,
-  baseLineHeight: presets.lineHeights.default,
-  headerLineHeight: presets.lineHeights.dense,
+  bodyFontFamily: fonts.system,
+  headerFontFamily: fonts.header,
+  monospaceFontFamily: fonts.monospace.join(`,`),
+  systemFontFamily: fonts.system,
+  baseLineHeight: lineHeights.default,
+  headerLineHeight: lineHeights.dense,
   headerColor: colors.gray.dark,
   bodyColor: colors.gray.copy,
   plugins: [new CodePlugin()],
-  overrideStyles: ({ rhythm, scale }, options) => {
+  overrideStyles: ({ rhythm }) => {
     return {
       a: {
         textDecoration: `none`,
       },
       "h1, h2, h3, h4, h5, h6": {
-        letterSpacing: presets.letterSpacings.tight,
+        letterSpacing: letterSpacings.tight,
       },
       h1: { color: `#000` },
       h2: {
@@ -81,7 +60,7 @@ const _options = {
         paddingBottom: `0.2em`,
       },
       "tt, code, kbd, .gatsby-code-title": {
-        fontFamily: options.monospaceFontFamily.join(`,`),
+        fontFamily: fonts.monospace.join(`,`),
         fontSize: `90%`,
         // Disable ligatures as they look funny as code.
         fontVariant: `none`,
@@ -112,10 +91,10 @@ const _options = {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
-        fontSize: presets.scale[0],
-        fontFamily: options.monospaceFontFamily.join(`,`),
-        letterSpacing: presets.letterSpacings.tracked,
-        lineHeight: presets.lineHeights.solid,
+        fontSize: scaleTokens[0],
+        fontFamily: fonts.monospace.join(`,`),
+        letterSpacing: letterSpacings.tracked,
+        lineHeight: lineHeights.solid,
         padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
         position: `absolute`,
         right: rhythm(space[6]),
@@ -216,8 +195,8 @@ const _options = {
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        fontSize: presets.scale[1],
-        lineHeight: presets.lineHeights.dense,
+        fontSize: scaleTokens[1],
+        lineHeight: lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(space[9]),
         display: `block`,
@@ -236,7 +215,7 @@ const _options = {
         borderBottom: `1px solid ${colors.lilac}`,
       },
       ".main-body a:hover": {
-        borderBottomColor: colors.ui.border,
+        borderBottomColor: colors.ui.bright,
       },
       ".post-body figure img": {
         marginBottom: 0,
@@ -326,7 +305,7 @@ const _options = {
           marginRight: rhythm(-space[7]),
           marginLeft: rhythm(-space[7]),
           padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            space[3]
+            rhythm(space[3])
           )}`,
         },
         ".gatsby-highlight pre[class*='language-']::before": {

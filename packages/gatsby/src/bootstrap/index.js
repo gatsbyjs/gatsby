@@ -468,8 +468,16 @@ module.exports = async (args: BootstrapArgs) => {
       ).toFixed(2)} queries/second`
     )
   })
-  await runInitialQueries(activity)
+  // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+  emitter.emit(`START_QUERY_QUEUE`)
+  // END HACKY
+  runInitialQueries(activity)
+  await new Promise(resolve => queryQueue.on(`drain`, resolve))
   activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
 
   // Write out files.
   activity = report.activityTimer(`write out page data`, {
@@ -528,6 +536,9 @@ const finishBootstrap = async bootstrapSpan => {
   report.info(`bootstrap finished - ${process.uptime()} s`)
   report.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_FINISHED`
+  )
 
   bootstrapSpan.finish()
 }

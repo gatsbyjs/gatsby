@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import Container from "../components/container"
+import Rotator from "../components/rotator"
 import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, dimensions } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import { colors, space, dimensions, scale } from "../utils/presets"
 
 class Plugins extends Component {
   render() {
@@ -28,8 +29,8 @@ class Plugins extends Component {
             src={logo}
             css={{
               display: `inline-block`,
-              height: rhythm(4),
-              width: rhythm(4),
+              height: rhythm(3),
+              width: rhythm(3),
               marginLeft: `auto`,
               marginRight: `auto`,
             }}
@@ -37,21 +38,68 @@ class Plugins extends Component {
           />
           <h1
             css={{
-              fontSize: presets.scale[6],
-              marginLeft: rhythm(space[5]),
-              marginRight: rhythm(space[5]),
+              fontSize: scale[6],
+              marginLeft: space[5],
+              marginRight: space[5],
+              marginBottom: 0,
               textAlign: `center`,
             }}
           >
             Welcome to the Gatsby Plugin Library!
           </h1>
+          <Rotator
+            items={[
+              {
+                text: `SEO?`,
+                pluginName: `gatsby-plugin-react-helmet`,
+              },
+              {
+                text: `responsive images?`,
+                pluginName: `gatsby-image`,
+              },
+              {
+                text: `offline support?`,
+                pluginName: `gatsby-plugin-offline`,
+              },
+              {
+                text: `Sass support?`,
+                pluginName: `gatsby-plugin-sass`,
+              },
+              {
+                text: `a sitemap?`,
+                pluginName: `gatsby-plugin-sitemap`,
+              },
+              {
+                text: `an RSS feed?`,
+                pluginName: `gatsby-plugin-feed`,
+              },
+              {
+                text: `great typography?`,
+                pluginName: `gatsby-plugin-typography`,
+              },
+              {
+                text: `Typescript?`,
+                pluginName: `gatsby-plugin-typescript`,
+              },
+              {
+                text: `Google Analytics?`,
+                pluginName: `gatsby-plugin-google-analytics`,
+              },
+              {
+                text: `Wordpress integration?`,
+                pluginName: `gatsby-source-wordpress`,
+              },
+              {
+                text: `anything?`,
+              },
+            ]}
+            color={colors.lilac}
+          />
+
           <p
             css={{
-              color: colors.gray.calm,
-              marginLeft: rhythm(space[9]),
-              marginRight: rhythm(space[9]),
-              fontSize: presets.scale[4],
-              fontFamily: options.headerFontFamily.join(`,`),
+              color: colors.gray.lightCopy,
+              fontSize: scale[2],
               textAlign: `center`,
             }}
           >
@@ -59,7 +107,7 @@ class Plugins extends Component {
             blazing fast site even more awesome. If you
             {`'`}d like to create your own plugin, see the
             {` `}
-            <Link to="/docs/plugin-authoring/">Plugin Authoring</Link> page in
+            <Link to="/docs/how-plugins-work/">Plugin Authoring</Link> page in
             the docs! To learn more about Gatsby plugins, visit the
             {` `}
             <Link to="/docs/plugins">plugins doc page</Link>.
