@@ -106,7 +106,9 @@ The React plugin assists your development experience with Gatsby by helping you 
 
 > In short, A11Y means “accessibility”
 
-The [A11Y Project](https://a11yproject.com/) focuses in reinforcing accessibility in your code, ensuring your new Gatsby project can be used effectively by those with visual or auditory impairment. This plugin helps you remember to include alternative text to image tags, [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminating redundant role properties. Accessibility is often overlook, and by doing so can hinder the ability to provide a phenomenal user experience. Including this plugin and its recommended rule set reduces the time required to implement accessibility by reminding you throughout development.
+The [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y) tool is an accessibility linter for your code, helping you develop more inclusive Gatsby projects. This plugin encourages you to include alternative text for image tags, validates [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminates redundant role properties, among other things. 
+
+Accessibility is often overlooked, and by developing with it in mind we can provide a phenomenal user experience. Including this plugin and its recommended rule set reduces the time required to implement accessibility by reminding you throughout development.
 
 ### Running ESLint with a Script
 
