@@ -23,8 +23,8 @@ const slash = require("slash");
 
 const DEFAULT_OPTIONS = {
   footnotes: true,
-  mdPlugins: [],
-  hastPlugins: [],
+  remarkPlugins: [],
+  rehypePlugins: [],
   compilers: [],
   blocks: [BLOCKS_REGEX]
 };

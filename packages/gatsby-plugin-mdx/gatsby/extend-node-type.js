@@ -48,10 +48,10 @@ module.exports = (
         if (_.isArray(parserPlugin)) {
           const [parser, parserPluginOptions] = parserPlugin;
           debug("adding mdPlugin with options", plugin, parserPluginOptions);
-          options.mdPlugins.push([parser, parserPluginOptions]);
+          options.remarkPlugins.push([parser, parserPluginOptions]);
         } else {
           debug("adding mdPlugin", plugin);
-          options.mdPlugins.push(parserPlugin);
+          options.remarkPlugins.push(parserPlugin);
         }
       }
     }

@@ -11,13 +11,13 @@ module.exports = pluginOptions => {
       defaultLayouts: {},
       extensions: [".mdx"],
       mediaTypes: ["text/markdown", "text/x-markdown"],
-      hastPlugins: [],
-      mdPlugins: [],
+      rehypePlugins: [],
+      remarkPlugins: [],
       plugins: [],
       root: process.cwd(),
       gatsbyRemarkPlugins: [],
       globalScope: `export default {}`,
-      shouldBlockNodeFromTransformation: () => false,
+      shouldBlockNodeFromTransformation: () => false
     },
     pluginOptions
   );
