@@ -13,7 +13,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "dependencies": {
-    "gatsby": "^2.2.11",
+    "gatsby": "^2.2.13",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
   },
