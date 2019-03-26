@@ -11,9 +11,21 @@ const { ensureDirSync } = require(`fs-extra`)
 const Configstore = require(`configstore`)
 
 module.exports = class Store {
-  config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+  config
 
-  constructor() {}
+  constructor() {
+    try {
+      this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+    } catch (e) {
+      // in case of some permission issues the configstore throws
+      // so fallback to a simple in memory config
+      this.config = {
+        get: key => this.config[key],
+        set: (key, value) => (this.config[key] = value),
+        all: this.config,
+      }
+    }
+  }
 
   getConfig(key) {
     if (key) {
