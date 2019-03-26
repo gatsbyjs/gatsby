@@ -419,7 +419,7 @@ export default function AnActuallyGoodAndResponsiveHeroImage() {
     }
   `)
 
-  return <Image fluid={data.file.childImageSharp.fluid} />
+  return <Image fluid={data.file.childImageSharp.fluid} alt="" />
 }
 ```
 
