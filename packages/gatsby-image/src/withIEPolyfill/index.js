@@ -13,7 +13,7 @@ class ImageWithIEPolyfill extends Component {
       typeof testImg.style.objectPosition === `undefined`
     ) {
       import(`object-fit-images`).then(({ default: ObjectFitImages }) =>
-        ObjectFitImages(this.imageRef.current.querySelector(`img`))
+        ObjectFitImages(this.imageRef.current.imageRef.current)
       )
     }
   }
