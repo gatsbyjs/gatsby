@@ -34,5 +34,5 @@ Returns a debounced events tracker for collecting general activity information f
 
 ## ENV Variables
 
-- Set `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over
-- Set `GATSBY_TELEMETRY_DISABLED` `1` to opt out of all telemetry
+- Set `GATSBY_TELEMETRY_DEBUG` to `1` to print the telemetry data instead of sending it over
+- Set `GATSBY_TELEMETRY_DISABLED` to `1` to opt out of all telemetry
