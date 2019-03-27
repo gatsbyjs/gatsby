@@ -140,112 +140,115 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     }
   }
 
+  const watchEvents = [`change`, `add`]
+
   chokidar
     .watch(watchers, {
       ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
     })
     .on(`all`, async (event, filePath) => {
-      const watchEvents = [`change`, `add`]
-      if (_.includes(watchEvents, event)) {
-        const [packageName] = filePath
-          .split(/packages[/\\]/)
-          .pop()
-          .split(/[/\\]/)
-        const prefix = path.join(root, `/packages/`, packageName)
-
-        // Copy it over local version.
-        // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
-        if (_.includes(filePath, `dist/gatsby-cli.js`)) {
-          return
-        }
-
-        const relativePackageFile = path.relative(prefix, filePath)
-
-        const newPath = path.join(
-          `./node_modules/${packageName}`,
-          relativePackageFile
-        )
-
-        if (relativePackageFile === `package.json`) {
-          // Compare dependencies with local version
-
-          const didDepsChangedPromise = checkDepsChanges({
-            newPath,
-            packageName,
-            monoRepoPackages,
-            root,
-            isInitialScan,
-            ignoredPackageJSON,
-          })
-
-          if (isInitialScan) {
-            // normally checkDepsChanges would be sync,
-            // but because it also can do async GET request
-            // to unpkg if local package is not installed
-            // keep track of it to make sure all of it
-            // finish before installing
-
-            waitFor.add(didDepsChangedPromise)
-          }
-
-          const {
-            didDepsChanged,
-            packageNotInstalled,
-          } = await didDepsChangedPromise
-
-          if (packageNotInstalled) {
-            anyPackageNotInstalled = true
-          }
-
-          if (didDepsChanged) {
-            if (isInitialScan) {
-              waitFor.delete(didDepsChangedPromise)
-              // handle dependency change only in initial scan - this is for sure doable to
-              // handle this in watching mode correctly - but for the sake of shipping
-              // this I limit more work/time consuming edge cases.
-
-              // Dependency changed - now we need to figure out
-              // the packages that actually need to be published.
-              // If package with changed dependencies is dependency of other
-              // gatsby package - like for example `gatsby-plugin-page-creator`
-              // we need to publish both `gatsby-plugin-page-creator` and `gatsby`
-              // and install `gatsby` in example site project.
-              getDependantPackages({
-                packageName,
-                depTree,
-                packages,
-              }).forEach(packageToPublish => {
-                // scheduling publish - we will publish when `ready` is emitted
-                // as we can do single publish then
-                packagesToPublish.add(packageToPublish)
-              })
-            }
-          }
-
-          // don't ever copy package.json as this will mess up any future dependency
-          // changes checks
-          return
-        }
-
-        if (packagesToPublish.has(packageName)) {
-          // we are in middle of publishing to localy registry,
-          // so we don't need to copy files as yarn will handle this
-          return
-        }
-
-        let localCopies = [copyPath(filePath, newPath, quiet)]
-
-        // If this is from "cache-dir" also copy it into the site's .cache
-        if (_.includes(filePath, `cache-dir`)) {
-          const newCachePath = path.join(
-            `.cache/`,
-            path.relative(path.join(prefix, `cache-dir`), filePath)
-          )
-          localCopies.push(copyPath(filePath, newCachePath, quiet))
-        }
-
-        allCopies = allCopies.concat(localCopies)
+      if (!watchEvents.includes(event)) {
+        return
       }
+
+      const [packageName] = filePath
+        .split(/packages[/\\]/)
+        .pop()
+        .split(/[/\\]/)
+      const prefix = path.join(root, `/packages/`, packageName)
+
+      // Copy it over local version.
+      // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
+      if (_.includes(filePath, `dist/gatsby-cli.js`)) {
+        return
+      }
+
+      const relativePackageFile = path.relative(prefix, filePath)
+
+      const newPath = path.join(
+        `./node_modules/${packageName}`,
+        relativePackageFile
+      )
+
+      if (relativePackageFile === `package.json`) {
+        // Compare dependencies with local version
+
+        const didDepsChangedPromise = checkDepsChanges({
+          newPath,
+          packageName,
+          monoRepoPackages,
+          root,
+          isInitialScan,
+          ignoredPackageJSON,
+        })
+
+        if (isInitialScan) {
+          // normally checkDepsChanges would be sync,
+          // but because it also can do async GET request
+          // to unpkg if local package is not installed
+          // keep track of it to make sure all of it
+          // finish before installing
+
+          waitFor.add(didDepsChangedPromise)
+        }
+
+        const {
+          didDepsChanged,
+          packageNotInstalled,
+        } = await didDepsChangedPromise
+
+        if (packageNotInstalled) {
+          anyPackageNotInstalled = true
+        }
+
+        if (didDepsChanged) {
+          if (isInitialScan) {
+            waitFor.delete(didDepsChangedPromise)
+            // handle dependency change only in initial scan - this is for sure doable to
+            // handle this in watching mode correctly - but for the sake of shipping
+            // this I limit more work/time consuming edge cases.
+
+            // Dependency changed - now we need to figure out
+            // the packages that actually need to be published.
+            // If package with changed dependencies is dependency of other
+            // gatsby package - like for example `gatsby-plugin-page-creator`
+            // we need to publish both `gatsby-plugin-page-creator` and `gatsby`
+            // and install `gatsby` in example site project.
+            getDependantPackages({
+              packageName,
+              depTree,
+              packages,
+            }).forEach(packageToPublish => {
+              // scheduling publish - we will publish when `ready` is emitted
+              // as we can do single publish then
+              packagesToPublish.add(packageToPublish)
+            })
+          }
+        }
+
+        // don't ever copy package.json as this will mess up any future dependency
+        // changes checks
+        return
+      }
+
+      if (packagesToPublish.has(packageName)) {
+        // we are in middle of publishing to localy registry,
+        // so we don't need to copy files as yarn will handle this
+        return
+      }
+
+      let localCopies = [copyPath(filePath, newPath, quiet)]
+
+      // If this is from "cache-dir" also copy it into the site's .cache
+      if (_.includes(filePath, `cache-dir`)) {
+        const newCachePath = path.join(
+          `.cache/`,
+          path.relative(path.join(prefix, `cache-dir`), filePath)
+        )
+        localCopies.push(copyPath(filePath, newCachePath, quiet))
+      }
+
+      allCopies = allCopies.concat(localCopies)
     })
     .on(`ready`, async () => {
       // wait for all async work needed to be done
