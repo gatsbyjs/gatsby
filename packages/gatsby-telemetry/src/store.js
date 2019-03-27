@@ -1,4 +1,3 @@
-const { homedir } = require(`os`)
 const path = require(`path`)
 const {
   appendFileSync,
