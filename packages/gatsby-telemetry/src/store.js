@@ -48,13 +48,14 @@ module.exports = class Store {
   }
 
   getBufferFilePath() {
-    const bufferFilePath = path.join(homedir(), `.config/gatsby`)
+    const filePath = this.config.path
+    const parentFolder = path.dirname(filePath)
     try {
       ensureDirSync(bufferFilePath)
     } catch (e) {
       //ignore
     }
-    return path.join(bufferFilePath, `events.json`)
+    return path.join(parentFolder, `events.json`)
   }
 
   async startFlushEvents(flushOperation) {
