@@ -20,7 +20,7 @@ It got me excited about the future because I've been in marketing for the best p
 
 ## What is the JAMstack?
 
-JAM stands for JavaScript, APIs and Markup and if you're interested in reading more about the technical details you can do so [here](https://jamstack.org/), watch [this](https://www.youtube.com/watch?v=uWTMEDEPw8c) and read about the history of JAMstack [here](https://snipcart.com/blog/jamstack).
+JAM stands for **J**avaScript, **A**PIs, and **M**arkup. If you're interested in learning more about the technical details you can [check out JAMStack.org](https://jamstack.org/), watch ["The Rise of the JAMStack" on Youtube](https://www.youtube.com/watch?v=uWTMEDEPw8c) and [read about the history of JAMstack](https://snipcart.com/blog/jamstack).
 
 In terms of what this means to you as a marketer – it's essentially a modern way to build a website that is static instead of dynamic. This provides you with some very important business benefits: speed, security, stability and scalability. I didn't intend for them all to begin with the letter S, but here we are!
 
