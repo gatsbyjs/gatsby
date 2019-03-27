@@ -10,7 +10,6 @@ module.exports = (
   const testPattern = new RegExp(
     options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join("|")
   );
-
   actions.setWebpackConfig({
     module: {
       rules: [

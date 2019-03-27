@@ -39,6 +39,7 @@ const BabelPluginPluckImports = require("./babel-plugin-pluck-imports");
  *  */
 
 module.exports = async function genMDX({
+  isLoader,
   node,
   options,
   getNode,
@@ -114,47 +115,49 @@ module.exports = async function genMDX({
     mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins)
   });
 
-  code = `/* @jsx mdx */
+  results.rawMDXOutput = `/* @jsx mdx */
+import mdx from '@mdx-js/mdx/create-element';
 ${code}`;
 
-  debug("compiling scope");
-  const instance = new BabelPluginPluckImports();
-  const result = babel.transform(code, {
-    configFile: false,
-    plugins: [instance.plugin, objRestSpread, htmlAttrToJSXAttr],
-    presets: [
-      require("@babel/preset-react"),
-      [
-        require("@babel/preset-env"),
-        {
-          useBuiltIns: "entry",
-          modules: "false"
-        }
+  if (!isLoader) {
+    debug("compiling scope");
+    const instance = new BabelPluginPluckImports();
+    const result = babel.transform(code, {
+      configFile: false,
+      plugins: [instance.plugin, objRestSpread, htmlAttrToJSXAttr],
+      presets: [
+        require("@babel/preset-react"),
+        [
+          require("@babel/preset-env"),
+          {
+            useBuiltIns: "entry",
+            modules: "false"
+          }
+        ]
       ]
-    ]
-  });
+    });
 
-  const identifiers = Array.from(instance.state.identifiers);
-  const imports = Array.from(instance.state.imports);
-  if (!identifiers.includes("React")) {
-    identifiers.push("React");
-    imports.push("import React from 'react'");
+    const identifiers = Array.from(instance.state.identifiers);
+    const imports = Array.from(instance.state.imports);
+    if (!identifiers.includes("React")) {
+      identifiers.push("React");
+      imports.push("import React from 'react'");
+    }
+
+    results.scopeImports = imports;
+    results.scopeIdentifiers = identifiers;
+    // TODO: be more sophisticated about these replacements
+    results.body = result.code
+      .replace(
+        /export\s*default\s*function\s*MDXContent\s*/,
+        "return function MDXContent"
+      )
+      .replace(
+        /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
+        "return MDXContent;"
+      )
+      .replace(/\nexport /g, "\n");
   }
-
-  results.scopeImports = imports;
-  results.scopeIdentifiers = identifiers;
-  // TODO: be more sophisticated about these replacements
-  results.body = result.code
-    .replace(
-      /export\s*default\s*function\s*MDXContent\s*/,
-      "return function MDXContent"
-    )
-    .replace(
-      /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
-      "return MDXContent;"
-    )
-    .replace(/\nexport /g, "\n");
-
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
    * ); */
