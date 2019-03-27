@@ -23,29 +23,27 @@ which is at the core of programmatically creating a page.
 
 ```js:title=gatsby-node.js
 exports.createPages = async function({ actions, graphql }) {
-  // highlight-next-line
-  await graphql(`
-    {
-      allMarkdownRemark {
-        edges {
-          node {
-            fields {
-              slug
-            }
-          }
-        }
-      }
-    }
-  `).then(res => {
-    res.data.allMarkdownRemark.edges.forEach(edge => {
-      const slug = edge.node.fields.slug
-      actions.createPage({
-        path: slug,
-        component: require.resolve(`./src/templates/blog-post.js`),
-        context: { slug: slug },
-      })
+  // highlight-start
+  const { data } = await graphql(`
+    allMarkdownRemark {
+      edges {
+        node {
+          fields {
+            slug
+           }
+         }
+       }
+     }
+  `)
+  data.allMarkdownRemark.edges.forEach(edge => {
+    const slug = edge.node.fields.slug
+    actions.createPage({
+      path: slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: { slug: slug },
     })
   })
+  // highlight-end
 }
 ```
 
