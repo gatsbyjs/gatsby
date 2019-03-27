@@ -6,6 +6,8 @@ const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
+const _ = require(`lodash`)
+const crypto = require(`crypto`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -24,7 +26,49 @@ try {
   // doesn't support cpu-core-count utility.
 }
 
-module.exports = (file, transforms, options = {}) => {
+/**
+ * List of arguments used by `processFile` function.
+ * This is used to generate args hash using only
+ * arguments that affect output of that function.
+ */
+const argsWhitelist = [
+  `height`,
+  `width`,
+  `cropFocus`,
+  `toFormat`,
+  `pngCompressionLevel`,
+  `quality`,
+  `jpegProgressive`,
+  `grayscale`,
+  `rotate`,
+  `duotone`,
+]
+
+/**
+ * @typedef {Object} TransformArgs
+ * @property {number} height
+ * @property {number} width
+ * @property {number} cropFocus
+ * @property {string} toFormat
+ * @property {number} pngCompressionLevel
+ * @property {number} quality
+ * @property {boolean} jpegProgressive
+ * @property {boolean} grayscale
+ * @property {number} rotate
+ * @property {object} duotone
+ */
+
+/**+
+ * @typedef {Object} Transform
+ * @property {string} outputPath
+ * @property {TransformArgs} args
+ */
+
+/**
+ * @param {String} file
+ * @param {Transform[]} transforms
+ */
+exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
     pipeline = sharp(file)
@@ -169,3 +213,26 @@ const compressWebP = (pipeline, outputPath, options) =>
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
+
+exports.createArgsDigest = args => {
+  const filtered = _.pickBy(args, (value, key) => {
+    // remove falsy
+    if (!value) return false
+    if (args.toFormat.match(/^jp*/) && _.includes(key, `png`)) {
+      return false
+    } else if (args.toFormat.match(/^png/) && key.match(/^jp*/)) {
+      return false
+    }
+    // after initial processing - get rid of unknown/unneeded fields
+    return argsWhitelist.includes(key)
+  })
+
+  const argsDigest = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(filtered, Object.keys(filtered).sort()))
+    .digest(`hex`)
+
+  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
+
+  return argsDigestShort
+}

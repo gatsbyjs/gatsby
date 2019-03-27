@@ -6,7 +6,6 @@ const {
   defaultFieldResolver,
   assertValidName,
   getNamedType,
-  GraphQLObjectType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -230,8 +229,8 @@ const createTypeComposerFromGatsbyType = ({
         {
           ...type.config,
           types: () => {
-            if (type.types) {
-              return type.types.map(typeName =>
+            if (type.config.types) {
+              return type.config.types.map(typeName =>
                 schemaComposer.getOTC(typeName).getType()
               )
             } else {
@@ -246,7 +245,7 @@ const createTypeComposerFromGatsbyType = ({
       return InterfaceTypeComposer.createTemp(type.config, schemaComposer)
     }
     default: {
-      console.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
+      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
       return null
     }
   }
@@ -288,6 +287,11 @@ const addThirdPartySchemas = ({
   thirdPartySchemas.forEach(schema => {
     const schemaQueryType = schema.getQueryType()
     const queryTC = ObjectTypeComposer.createTemp(schemaQueryType)
+    processThirdPartyType({
+      schemaComposer,
+      typeComposer: queryTC,
+      schemaQueryType,
+    })
     const fields = queryTC.getFields()
     schemaComposer.Query.addFields(fields)
 
@@ -299,23 +303,38 @@ const addThirdPartySchemas = ({
       if (
         type !== schemaQueryType &&
         !isSpecifiedScalarType(type) &&
-        !isIntrospectionType(type) &&
-        type instanceof GraphQLObjectType
+        !isIntrospectionType(type)
       ) {
-        type.isThirdPartyType = true
-        const typeComposer = ObjectTypeComposer.createTemp(type)
-        typeComposer.getFieldNames().forEach(fieldName => {
-          const fieldType = typeComposer.getFieldType(fieldName)
-          if (getNamedType(fieldType) === schemaQueryType) {
-            typeComposer.extendField(fieldName, {
-              type: `Query`,
-            })
-          }
-        })
-        schemaComposer.add(typeComposer)
+        schemaComposer.addAsComposer(type)
+        const typeComposer = schemaComposer.getAnyTC(type.name)
+        processThirdPartyType({ schemaComposer, typeComposer, schemaQueryType })
+        schemaComposer.addSchemaMustHaveType(typeComposer)
       }
     })
   })
+}
+
+const processThirdPartyType = ({
+  schemaComposer,
+  typeComposer,
+  schemaQueryType,
+}) => {
+  typeComposer.getType().isThirdPartyType = true
+  // Fix for types that refer to Query. Thanks Relay Classic!
+  if (
+    typeComposer instanceof ObjectTypeComposer ||
+    typeComposer instanceof InterfaceTypeComposer
+  ) {
+    typeComposer.getFieldNames().forEach(fieldName => {
+      const fieldType = typeComposer.getFieldType(fieldName)
+      if (getNamedType(fieldType) === schemaQueryType) {
+        typeComposer.extendField(fieldName, {
+          type: fieldType.toString().replace(schemaQueryType.name, `Query`),
+        })
+      }
+    })
+  }
+  return typeComposer
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
@@ -335,7 +354,8 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               fieldConfig.type && fieldConfig.type.toString()
             if (
               !fieldTypeName ||
-              tc.getFieldType(fieldName) === fieldConfig.type.toString() ||
+              fieldTypeName.replace(/!/g, ``) ===
+                originalTypeName.replace(/!/g, ``) ||
               tc.getType().isThirdPartyType
             ) {
               const newConfig = {}

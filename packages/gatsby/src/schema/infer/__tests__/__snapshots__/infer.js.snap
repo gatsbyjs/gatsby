@@ -167,6 +167,16 @@ Object {
                 ],
               },
             ],
+            "anObjectArrayWithNull": Array [
+              Object {
+                "anotherObjectArray": Array [
+                  Object {
+                    "baz": "quz",
+                  },
+                ],
+              },
+              null,
+            ],
             "date": "1012",
             "deepObject": Object {
               "deepObject": Object {
@@ -216,6 +226,16 @@ Object {
                 ],
               },
             ],
+            "anObjectArrayWithNull": Array [
+              Object {
+                "anotherObjectArray": Array [
+                  Object {
+                    "baz": "quz",
+                  },
+                ],
+              },
+              null,
+            ],
             "date": "1984",
             "deepObject": null,
             "domain": null,
@@ -225,6 +245,27 @@ Object {
               "title": "The world of slash and adventure",
             },
             "hair": 2,
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference handles lowercase type names 1`] = `
+Object {
+  "data": Object {
+    "allWordpressPage": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "__typename": "wordpress__PAGE",
+            "acfFields": Object {
+              "__typename": "wordpress__PAGEAcfFields",
+              "fooz": "bar",
+            },
+            "id": "1",
           },
         },
       ],

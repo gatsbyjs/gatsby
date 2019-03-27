@@ -752,10 +752,9 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            slug
+            path
             status
             template
-            slug
           }
         }
       }
@@ -763,11 +762,10 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            slug
+            path
             status
             template
             format
-            slug
           }
         }
       }
@@ -784,8 +782,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Create Page pages.
   const pageTemplate = path.resolve(`./src/templates/page.js`)
-  // We want to create a detailed page for each
-  // page node. We'll just use the WordPress Slug for the slug.
+  // We want to create a detailed page for each page node.
+  // The path field contains the relative original WordPress link
+  // and we use it for the slug to preserve url structure.
   // The Page ID is prefixed with 'PAGE_'
   allWordpressPage.edges.forEach(edge => {
     // Gatsby uses Redux to manage its internal state.
@@ -796,7 +795,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // as a template component. The `context` is
       // optional but is often necessary so the template
       // can query data specific to each page.
-      path: `/${edge.node.slug}/`,
+      path: edge.node.path,
       component: slash(pageTemplate),
       context: {
         id: edge.node.id,
@@ -805,12 +804,13 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   const postTemplate = path.resolve(`./src/templates/post.js`)
-  // We want to create a detailed page for each
-  // post node. We'll just use the WordPress Slug for the slug.
+  // We want to create a detailed page for each post node.
+  // The path field stems from the original WordPress link
+  // and we use it for the slug to preserve url structure.
   // The Post ID is prefixed with 'POST_'
   allWordpressPost.edges.forEach(edge => {
     createPage({
-      path: `/${edge.node.slug}/`,
+      path: edge.node.path,
       component: slash(postTemplate),
       context: {
         id: edge.node.id,
