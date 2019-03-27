@@ -1,8 +1,7 @@
 const _ = require(`lodash`)
-const { store, emitter } = require(`../../redux`)
+const { store, emitter } = require(`../redux`)
 const queryQueue = require(`./query-queue`)
 const convertHrtime = require(`convert-hrtime`)
-require(`./pages-writer`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
@@ -64,7 +63,7 @@ const findIdsWithoutDataDependencies = state => {
 const popNodeQueries = ({ state }) => {
   const actions = _.uniq(queuedDirtyActions, a => a.payload.id)
 
-const uniqDirties = _.uniq(
+  const uniqDirties = _.uniq(
     actions.reduce((dirtyIds, action) => {
       const node = action.payload
 

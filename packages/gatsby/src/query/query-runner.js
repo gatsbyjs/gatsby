@@ -3,12 +3,12 @@
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
-const websocketManager = require(`../../utils/websocket-manager`)
+const websocketManager = require(`../utils/websocket-manager`)
 
 const path = require(`path`)
-const { store } = require(`../../redux`)
-const withResolverContext = require(`../../schema/context`)
-const { generatePathChunkName } = require(`../../utils/js-chunk-names`)
+const { store } = require(`../redux`)
+const withResolverContext = require(`../schema/context`)
+const { generatePathChunkName } = require(`../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
 

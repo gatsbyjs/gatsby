@@ -11,8 +11,8 @@ import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompiler
 import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
 
-import { store } from "../../redux"
-const { boundActionCreators } = require(`../../redux/actions`)
+import { store } from "../redux"
+const { boundActionCreators } = require(`../redux/actions`)
 import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import {
@@ -21,7 +21,7 @@ import {
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
-const websocketManager = require(`../../utils/websocket-manager`)
+const websocketManager = require(`../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 

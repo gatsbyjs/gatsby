@@ -32,7 +32,7 @@ const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
-const queryRunner = require(`../internal-plugins/query-runner`)
+const queryRunner = require(`../query`)
 
 // const isInteractive = process.stdout.isTTY
 

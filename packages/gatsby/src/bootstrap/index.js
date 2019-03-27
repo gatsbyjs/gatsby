@@ -29,14 +29,10 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const queryRunner = require(`../internal-plugins/query-runner`)
-const {
-  extractQueries,
-} = require(`../internal-plugins/query-runner/query-watcher`)
-const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
-const {
-  writeRedirects,
-} = require(`../internal-plugins/query-runner/redirects-writer`)
+const queryRunner = require(`../query`)
+const { extractQueries } = require(`../query/query-watcher`)
+const { writePages } = require(`./pages-writer`)
+const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.

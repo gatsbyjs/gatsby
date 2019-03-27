@@ -8,7 +8,7 @@ jest.mock(`fs-extra`, () => {
       new Promise(resolve => resolve(mockFiles[filePath])),
   }
 })
-jest.mock(`../../../utils/api-runner-node`, () => () => [])
+jest.mock(`../../utils/api-runner-node`, () => () => [])
 
 const FileParser = require(`../file-parser`).default
 
