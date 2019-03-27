@@ -23,8 +23,8 @@ which is at the core of programmatically creating a page.
 
 ```js:title=gatsby-node.js
 exports.createPages = async function({ actions, graphql }) {
-  // highlight-start
-  graphql(`
+  // highlight-next-line
+  await graphql(`
     {
       allMarkdownRemark {
         edges {
@@ -41,12 +41,11 @@ exports.createPages = async function({ actions, graphql }) {
       const slug = edge.node.fields.slug
       actions.createPage({
         path: slug,
-        component: require.resolve(`./src/templates/blog-post.js`),
-        context: { slug: slug },
+        component: require.resolve(`./src/templates/post.js`),
+        context: { slug },
       })
     })
   })
-  // highlight-end
 }
 ```
 
