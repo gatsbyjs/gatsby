@@ -5,6 +5,7 @@ const path = require(`path`)
 const { onPostBuild } = require(`../gatsby-node`)
 const internals = require(`../internals`)
 const pathPrefix = ``
+const sitemap = require(`sitemap`)
 
 describe(`Test plugin sitemap`, async () => {
   it(`default settings work properly`, async () => {
@@ -177,34 +178,14 @@ describe(`Test plugin sitemap`, async () => {
       expect(contents).toMatchSnapshot()
     })
     it(`should include path prefix when creating creating index sitemap`, async () => {
-      const mockStream = {
-        once: jest.fn((event, cb) => cb()),
-        end: jest.fn(),
-        write: jest.fn(),
-      }
-
-      const sitemapIndexPath = `./public/sitemap-index.xml`
-      fs.createWriteStream.mockReturnValue(mockStream)
+      const sitemapSpy = jest.spyOn(sitemap, `createSitemapIndex`)
       const options = {
         sitemapSize: 1,
       }
       const prefix = `/test`
       await onPostBuild({ graphql, pathPrefix: prefix }, options)
-
-      expect(fs.createWriteStream.mock.calls[2][0]).toEqual(sitemapIndexPath)
-
-      const parser = new DOMParser()
-      const DOM = parser.parseFromString(
-        mockStream.write.mock.calls[2][0],
-        `application/xml`
-      )
-      const elements = DOM.querySelectorAll(`sitemap loc`)
-      expect(elements.length).toBe(2)
-      expect(elements[0].innerHTML).toBe(
-        queryResult.data.site.siteMetadata.siteUrl + prefix + `/sitemap-0.xml`
-      )
-      expect(elements[1].innerHTML).toBe(
-        queryResult.data.site.siteMetadata.siteUrl + prefix + `/sitemap-1.xml`
+      expect(sitemapSpy.mock.calls[0][0].hostname).toEqual(
+        `${queryResult.data.site.siteMetadata.siteUrl}${prefix}`
       )
     })
   })
