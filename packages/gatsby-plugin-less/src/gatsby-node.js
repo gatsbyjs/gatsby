@@ -7,7 +7,7 @@ exports.onCreateWebpackConfig = (
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
   const isSSR = stage.includes(`html`)
-  
+
   const lessLoader = {
     loader: resolve(`less-loader`),
     options: {
