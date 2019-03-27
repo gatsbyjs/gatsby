@@ -22,7 +22,7 @@ module.exports = {
   setDefaultTags: tags => instance.decorateAll(tags),
   decorateEvent: (event, tags) => instance.decorateNextEvent(event, tags),
   setTelemetryEnabled: enabled => instance.setTelemetryEnabled(enabled),
-  startBackgroudUptate: _ => {
+  startBackgroundUpdate: _ => {
     setTimeout(tick, interval)
   },
 

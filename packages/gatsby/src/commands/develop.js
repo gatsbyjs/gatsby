@@ -258,7 +258,7 @@ async function startServer(program) {
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
   telemetry.trackCli(`DEVELOP_START`)
-  telemetry.startBackgroudUptate()
+  telemetry.startBackgroundUpdate()
 
   const detect = require(`detect-port`)
   const port =
