@@ -2,7 +2,7 @@
 
 This example demonstrates usage of a local plugin -- in this case a source plugin.
 
-You might also be interested in the docs section on [local plugins](/docs/plugin-authoring/#local-plugins), or the [source plugin tutorial](/docs/source-plugin-tutorial/).
+You might also be interested in the docs section on [local plugins](/docs/how-plugins-work/#local-plugins), or the [source plugin tutorial](/docs/source-plugin-tutorial/).
 
 ## Using Gatsby's GraphQL integration layer
 

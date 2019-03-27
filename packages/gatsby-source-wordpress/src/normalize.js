@@ -2,6 +2,7 @@ const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { URL } = require(`url`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -178,12 +179,14 @@ exports.excludeUnknownEntities = entities =>
 // Create node ID from known entities
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
 // we create the node ID based upon type if the wordpress_id doesn't exist
-exports.createGatsbyIds = (createNodeId, entities) =>
+exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
   entities.map(e => {
     if (e.wordpress_id) {
-      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+      e.id = createNodeId(
+        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`
+      )
     } else {
-      e.id = createNodeId(e.__type)
+      e.id = createNodeId(`${e.__type}-${_siteURL}`)
     }
     return e
   })
@@ -500,6 +503,7 @@ exports.downloadMediaFiles = async ({
               cache,
               createNode,
               createNodeId,
+              parentNodeId: e.id,
               auth: _auth,
             })
 
@@ -617,3 +621,16 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     })
   })
 }
+
+exports.createUrlPathsFromLinks = entities =>
+  entities.map(e => {
+    if (e.link && !e.path) {
+      try {
+        const link = new URL(e.link)
+        e.path = link.pathname
+      } catch (error) {
+        e.path = e.link
+      }
+    }
+    return e
+  })

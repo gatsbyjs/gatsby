@@ -7,7 +7,7 @@ Run locally with:
 - `yarn install`
 - `npm run develop`
 
-See the full contributing instructions at https://www.gatsbyjs.org/docs/how-to-contribute/.
+See the full contributing instructions at https://www.gatsbyjs.org/contributing/how-to-contribute/.
 
 ## Environment variables
 
@@ -39,6 +39,17 @@ GATSBY_FEEDBACK_KEY_STARTERLIB=ADD_KEY
 ```
 
 If there's a problem with the feedback widgets, please open an issue in the repo.
+
+### Enabling guess.js
+
+Guess.js is disabled by default and can be enabled by setting `ANALYTICS_SERVICE_ACCOUNT` and `ANALYTICS_SERVICE_ACCOUNT_KEY` env variables. These variables need to have access to the gatsbyjs.org analytics.
+
+If you have access to the keys, add them like so:
+
+```
+ANALYTICS_SERVICE_ACCOUNT="service account@email.com"
+ANALYTICS_SERVICE_ACCOUNT_KEY="PEM KEY VALUE"
+```
 
 ## Running slow build? (Screenshots placeholder)
 
