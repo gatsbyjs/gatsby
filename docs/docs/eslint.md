@@ -96,7 +96,7 @@ module.exports = {
 
 ### Understanding the Plugins
 
-In the example configuration file above we explored a few plugins, as well as *extending* their recommended rule sets. Now we will discover the purpose of including these plugins and their value.
+In the example configuration file above we explored a few plugins, as well as _extending_ their recommended rule sets. Now we will discover the purpose of including these plugins and their value.
 
 #### eslint-plugin-react
 
@@ -106,7 +106,7 @@ The React plugin assists your development experience with Gatsby by helping you 
 
 > In short, A11Y means “accessibility”
 
-The [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y) tool is an accessibility linter for your code, helping you develop more inclusive Gatsby projects. This plugin encourages you to include alternative text for image tags, validates [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminates redundant role properties, among other things. 
+The [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y) tool is an accessibility linter for your code, helping you develop more inclusive Gatsby projects. This plugin encourages you to include alternative text for image tags, validates [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminates redundant role properties, among other things.
 
 Accessibility is often overlooked, and by developing with it in mind we can provide a phenomenal user experience. Including this plugin and its recommended rule set reduces the time required to implement accessibility by reminding you throughout development.
 
