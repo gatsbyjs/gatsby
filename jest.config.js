@@ -45,4 +45,5 @@ module.exports = {
   },
   collectCoverageFrom: coverageDirs,
   reporters: [`default`].concat(useCoverage ? `jest-junit` : []),
+  testEnvironment: `jest-environment-jsdom-fourteen`,
 }
