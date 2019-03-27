@@ -60,44 +60,43 @@ const checkDepsChanges = async ({
     packageNotInstalled = true
     // there is no local package - so we still need to install deps
     // this is nice because devs won't need to do initial package installation - we can handle this.
-    if (isInitialScan) {
-      // if package is not installed, we will do http GET request to
-      // unkpg to check if dependency in package published in public
-      // npm repository are different
-
-      // this allow us to not publish to local repository
-      // and save some time/work
-
-      try {
-        localPKGjson = await new Promise((resolve, reject) => {
-          request(`https://unpkg.com/${packageName}/package.json`, function(
-            error,
-            response,
-            body
-          ) {
-            if (response && response.statusCode === 200) {
-              resolve(JSON.parse(body))
-              return
-            }
-
-            reject(error)
-          })
-        })
-      } catch {
-        console.log(
-          `'${packageName}' doesn't seem to be installed and is not published on NPM.`
-        )
-        return {
-          didDepsChanged: true,
-          packageNotInstalled,
-        }
-      }
-    } else {
+    if (!isInitialScan) {
       console.log(
         `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to publish it`
       )
       return {
         didDepsChanged: false,
+        packageNotInstalled,
+      }
+    }
+
+    // if package is not installed, we will do http GET request to
+    // unkpg to check if dependency in package published in public
+    // npm repository are different
+
+    // this allow us to not publish to local repository
+    // and save some time/work
+    try {
+      localPKGjson = await new Promise((resolve, reject) => {
+        request(`https://unpkg.com/${packageName}/package.json`, function(
+          error,
+          response,
+          body
+        ) {
+          if (response && response.statusCode === 200) {
+            resolve(JSON.parse(body))
+            return
+          }
+
+          reject(error)
+        })
+      })
+    } catch {
+      console.log(
+        `'${packageName}' doesn't seem to be installed and is not published on NPM.`
+      )
+      return {
+        didDepsChanged: true,
         packageNotInstalled,
       }
     }
