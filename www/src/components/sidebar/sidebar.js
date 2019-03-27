@@ -4,8 +4,15 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import {
+  colors,
+  space,
+  scale,
+  transition,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
+import presets from "../../utils/sidebar/presets"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -193,6 +200,8 @@ class SidebarBody extends Component {
     const { closeSidebar, itemList, location, onPositionChange } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
+    const isSingle = itemList.filter(item => item.level === 0).length === 1
+
     return (
       <section
         aria-label="Secondary Navigation"
@@ -224,8 +233,8 @@ class SidebarBody extends Component {
             ...styles.sidebarScrollContainer,
             height: itemList[0].disableExpandAll
               ? `100%`
-              : `calc(100% - ${presets.sidebarUtilityHeight})`,
-            [presets.Md]: {
+              : `calc(100% - ${dimensions.sidebarUtilityHeight})`,
+            [breakpoints.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}
@@ -238,11 +247,11 @@ class SidebarBody extends Component {
                 isActive={openSectionHash[item.title]}
                 item={item}
                 key={index}
-                level={0}
                 location={location}
                 onLinkClick={closeSidebar}
                 onSectionTitleClick={this._toggleSection}
                 openSectionHash={openSectionHash}
+                isSingle={isSingle}
               />
             ))}
           </ul>
@@ -256,47 +265,33 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.ui.light}`,
+    borderRight: `1px solid ${colors.gray.border}`,
     display: `flex`,
     alignItems: `center`,
-    height: presets.sidebarUtilityHeight,
-    background: colors.ui.whisper,
-    paddingLeft: 20,
+    height: dimensions.sidebarUtilityHeight,
+    background: presets.backgroundDefault,
+    paddingLeft: space[4],
     paddingRight: 8,
-    borderBottom: `1px solid ${colors.ui.border}`,
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
-    background: `#fff`,
+    background: presets.backgroundDefault,
     border: 0,
     display: `block`,
     overflowY: `auto`,
-    transition: `opacity 0.5s ease`,
+    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.ui.light}`,
-    "::-webkit-scrollbar": {
-      height: `6px`,
-      width: `6px`,
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: colors.lilac,
-    },
-    "::-webkit-scrollbar-track": {
-      background: colors.ui.light,
-    },
+    borderRight: `1px solid ${colors.gray.border}`,
   },
   sidebarScrollContainerTablet: {
-    backgroundColor: colors.ui.whisper,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
+    backgroundColor: presets.backgroundTablet,
+    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
   },
   list: {
     margin: 0,
-    paddingTop: rhythm(options.blockMarginBottom),
-    paddingBottom: rhythm(options.blockMarginBottom),
-    fontSize: presets.scale[1],
+    paddingTop: space[4],
+    paddingBottom: space[4],
+    fontSize: scale[1],
     "& li": {
       margin: 0,
       listStyle: `none`,

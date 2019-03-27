@@ -86,6 +86,7 @@ const pascalCase = _.flow(
 )
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
+const pageComponentCache = {}
 const fileOkCache = {}
 
 /**
@@ -201,37 +202,48 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(page)
       noPageOrComponent = true
     } else if (page.component) {
-      // normalize component path
-      page.component = slash(page.component)
-      // check if path uses correct casing - incorrect casing will
-      // cause issues in query compiler and inconsistencies when
-      // developing on Mac or Windows and trying to deploy from
-      // linux CI/CD pipeline
-      const trueComponentPath = slash(truePath(page.component))
-      if (trueComponentPath !== page.component) {
-        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-          const markers = page.component
-            .split(``)
-            .map((letter, index) => {
-              if (letter !== trueComponentPath[index]) {
-                return `^`
-              }
-              return ` `
-            })
-            .join(``)
+      // check if we've processed this component path
+      // before, before running the expensive "truePath"
+      // operation
+      if (pageComponentCache[page.component]) {
+        page.component = pageComponentCache[page.component]
+      } else {
+        const originalPageComponent = page.component
 
-          report.warn(
-            stripIndent`
-          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+        // normalize component path
+        page.component = slash(page.component)
+        // check if path uses correct casing - incorrect casing will
+        // cause issues in query compiler and inconsistencies when
+        // developing on Mac or Windows and trying to deploy from
+        // linux CI/CD pipeline
+        const trueComponentPath = slash(truePath(page.component))
+        if (trueComponentPath !== page.component) {
+          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+            const markers = page.component
+              .split(``)
+              .map((letter, index) => {
+                if (letter !== trueComponentPath[index]) {
+                  return `^`
+                }
+                return ` `
+              })
+              .join(``)
 
-          page.component:     "${page.component}"
-          path in filesystem: "${trueComponentPath}"
-                               ${markers}
-        `
-          )
-          hasWarnedForPageComponentInvalidCasing.add(page.component)
+            report.warn(
+              stripIndent`
+            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+            page.component:     "${page.component}"
+            path in filesystem: "${trueComponentPath}"
+                                 ${markers}
+          `
+            )
+            hasWarnedForPageComponentInvalidCasing.add(page.component)
+          }
+
+          page.component = trueComponentPath
         }
-        page.component = trueComponentPath
+        pageComponentCache[originalPageComponent] = page.component
       }
     }
   }
@@ -273,6 +285,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
+    isCreatedByStatefulCreatePages:
+      actionOptions &&
+      actionOptions.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
@@ -353,7 +368,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * deleteNode({node: node})
  */
 actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
-  let node = _.get(options, `node`)
+  let id
 
   // Check if using old method signature. Warn about incorrect usage but get
   // node from nodeID anyway.
@@ -368,8 +383,14 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
     report.warn(msg)
 
-    node = getNode(options)
+    id = options
+  } else {
+    id = options && options.node && options.node.id
   }
+
+  // Always get node from the store, as the node we get as an arg
+  // might already have been deleted.
+  const node = getNode(id)
 
   const createDeleteAction = node => {
     return {
@@ -1102,6 +1123,17 @@ actions.setPluginStatus = (
 }
 
 /**
+ * Check if path is absolute and add pathPrefix in front if it's not
+ */
+const maybeAddPathPrefix = (path, pathPrefix) => {
+  const parsed = url.parse(path)
+  const isRelativeProtocol = path.startsWith(`//`)
+  return `${
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  }${path}`
+}
+
+/**
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
@@ -1132,20 +1164,13 @@ actions.createRedirect = ({
     pathPrefix = store.getState().config.pathPrefix
   }
 
-  // Parse urls to get their protocols
-  // url.parse will not cover protocol-relative urls so do a separate check for those
-  const parsed = url.parse(toPath)
-  const isRelativeProtocol = toPath.startsWith(`//`)
-  const toPathPrefix =
-    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
-
   return {
     type: `CREATE_REDIRECT`,
     payload: {
-      fromPath: `${pathPrefix}${fromPath}`,
+      fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
       redirectInBrowser,
-      toPath: `${toPathPrefix}${toPath}`,
+      toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
     },
   }
@@ -1172,6 +1197,239 @@ actions.addThirdPartySchema = (
     plugin,
     traceId,
     payload: schema,
+  }
+}
+
+import type GatsbyGraphQLType from "../schema/types/type-builders"
+/**
+ * Add type definitions to the GraphQL schema.
+ *
+ * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
+ *
+ * Type definitions can be provided either as
+ * [`graphql-js` types](https://graphql.org/graphql-js/), in
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn/)
+ * or using Gatsby Type Builders available on the `schema` API argument.
+ *
+ * Things to note:
+ * * needs to be called *before* schema generation. It is recommended to use
+ *   `createTypes` in the `sourceNodes` API.
+ * * type definitions targeting node types, i.e. `MarkdownRemark` and others
+ *   added in `sourceNodes` or `onCreateNode` APIs, need to implement the
+ *   `Node` interface. Interface fields will be added automatically, but it
+ *   is mandatory to label those types with `implements Node`.
+ * * by default, explicit type definitions from `createTypes` will be merged
+ *   with inferred field types, and default field resolvers for `Date` (which
+ *   adds formatting options) and `File` (which resolves the field value as
+ *   a `relativePath` foreign-key field) are added. This behavior can be
+ *   customised with `@infer` and `@dontInfer` directives, and their
+ *   `noDefaultResolvers` argument.
+ *
+ * @example
+ * exports.sourceNodes = ({ actions }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = `
+ *     """
+ *     Markdown Node
+ *     """
+ *     type MarkdownRemark implements Node {
+ *       frontmatter: Frontmatter!
+ *     }
+ *
+ *     """
+ *     Markdown Frontmatter
+ *     """
+ *     type Frontmatter {
+ *       title: String!
+ *       author: AuthorJson!
+ *       date: Date!
+ *       published: Boolean!
+ *       tags: [String!]!
+ *     }
+ *
+ *     """
+ *     Author information
+ *     """
+ *     # Does not include automatically inferred fields
+ *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *       name: String!
+ *       birthday: Date! # no default resolvers for Date formatting added
+ *     }
+ *   `
+ *   createTypes(typeDefs)
+ * }
+ *
+ * // using Gatsby Type Builder API
+ * exports.sourceNodes = ({ actions, schema }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = [
+ *     schema.buildObjectType({
+ *       name: 'MarkdownRemark',
+ *       fields: {
+ *         frontmatter: 'Frontmatter!'
+ *       },
+ *       interfaces: ['Node'],
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'Frontmatter',
+ *       fields: {
+ *         title: {
+ *           type: 'String!',
+ *           resolve(parent) {
+ *             return parent.title || '(Untitled)'
+ *           }
+ *         },
+ *         author: 'AuthorJson!',
+ *         date: 'Date!',
+ *         published: 'Boolean!',
+ *         tags: '[String!]!',
+ *       }
+ *     })
+ *   ]
+ *   createTypes(typeDefs)
+ * }
+ */
+actions.createTypes = (
+  types:
+    | string
+    | GraphQLOutputType
+    | GatsbyGraphQLType
+    | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `CREATE_TYPES`,
+    plugin,
+    traceId,
+    payload: types,
+  }
+}
+
+/**
+ *
+ * Report that a query has been extracted from a component. Used by
+ * query-compilier.js.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {query} $0.query The GraphQL query that was extracted from the component.
+ * @private
+ */
+actions.queryExtracted = (
+  { componentPath, query },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTED`,
+    plugin,
+    traceId,
+    payload: { componentPath, query },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a graphql error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The GraphQL query that was extracted from the component.
+ * @private
+ */
+actions.queryExtractionGraphQLError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ *
+ * Report that babel was able to extract the graphql query.
+ * Indicates that the file is free of JS errors.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @private
+ */
+actions.queryExtractedBabelSuccess = (
+  { componentPath },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
+    plugin,
+    traceId,
+    payload: { componentPath },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a babel error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The Babel error object
+ * @private
+ */
+actions.queryExtractionBabelError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
+ *
+ * @param {string} Program status
+ * @private
+ */
+actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `SET_PROGRAM_STATUS`,
+    plugin,
+    traceId,
+    payload: status,
+  }
+}
+
+/**
+ * Broadcast that a page's query was run.
+ *
+ * @param {string} Path to the page component that changed.
+ * @private
+ */
+actions.pageQueryRun = (
+  { path, componentPath, isPage },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `PAGE_QUERY_RUN`,
+    plugin,
+    traceId,
+    payload: { path, componentPath, isPage },
   }
 }
 

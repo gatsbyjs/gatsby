@@ -41,4 +41,3 @@ build:
   - BUILD_DIR=www/
   preview_output_directory: public
   output_directory: www/public
-  instant_preview_command: gatsby develop -H 0.0.0.0 -p 8080

@@ -1,3 +1,22 @@
+try {
+  require(`sharp`)
+} catch (error) {
+  // Bail early if sharp isn't available
+  console.error(
+    `
+      The dependency "sharp" does not seem to have been built or installed correctly.
+
+      - Try to reinstall packages and look for errors during installation
+      - Consult "sharp" installation page at http://sharp.pixelplumbing.com/en/stable/install/
+      
+      If neither of the above work, please open an issue in https://github.com/gatsbyjs/gatsby/issues
+    `
+  )
+  console.log()
+  console.error(error)
+  process.exit(1)
+}
+
 const sharp = require(`sharp`)
 const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
@@ -42,6 +61,7 @@ exports.queue = queue
 
 /// Plugin options are loaded onPreInit in gatsby-node
 const pluginDefaults = {
+  forceBase64Format: false,
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
   lazyImageGeneration: true,
@@ -59,6 +79,7 @@ const generalArgs = {
   duotone: false,
   pathPrefix: ``,
   toFormat: ``,
+  toFormatBase64: ``,
   sizeByPixelDensity: false,
 }
 
@@ -94,6 +115,7 @@ const healOptions = (
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
+  options.toFormatBase64 = options.toFormatBase64.toLowerCase()
 
   // when toFormat is not set we set it based on fileExtension
   if (options.toFormat === ``) {
@@ -215,9 +237,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
+// A value in pixels(Int)
+const defaultBase64Width = () => pluginOptions.base64Width || 20
 async function generateBase64({ file, args, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: 20,
+    width: defaultBase64Width(),
   })
   let pipeline
   try {
@@ -225,6 +249,12 @@ async function generateBase64({ file, args, reporter }) {
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
+  }
+
+  const forceBase64Format =
+    args.toFormatBase64 || pluginOptions.forceBase64Format
+  if (forceBase64Format) {
+    args.toFormat = forceBase64Format
   }
 
   pipeline
@@ -240,6 +270,10 @@ async function generateBase64({ file, args, reporter }) {
       quality: options.quality,
       progressive: options.jpegProgressive,
       force: args.toFormat === `jpg`,
+    })
+    .webp({
+      quality: options.quality,
+      force: args.toFormat === `webp`,
     })
 
   // grayscale
@@ -322,9 +356,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   const { width, height, density, format } = metadata
+  const defaultImagePPI = 72 // Standard digital image pixel density
   const pixelRatio =
     options.sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / 72
+      ? density / defaultImagePPI
       : 1
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
@@ -426,13 +461,14 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = 20
+    const base64Width = options.base64Width || defaultBase64Width()
     const base64Height = Math.max(1, Math.round((base64Width * height) / width))
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
       toFormat: options.toFormat,
+      toFormatBase64: options.toFormatBase64,
       width: base64Width,
       height: base64Height,
     }
@@ -546,10 +582,13 @@ async function fixed({ file, args = {}, reporter, cache }) {
   let base64Image
   if (options.base64) {
     const base64Args = {
+      // height is adjusted accordingly with respect to the aspect ratio
+      width: options.base64Width,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
       toFormat: options.toFormat,
+      toFormatBase64: options.toFormatBase64,
     }
 
     // Get base64 version
@@ -669,8 +708,8 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   )
 
   return trace(tmpFilePath, optionsSVG)
-    .then(svg => optimize(svg))
-    .then(svg => svgToMiniDataURI(svg))
+    .then(optimize)
+    .then(svgToMiniDataURI)
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -685,9 +724,7 @@ async function traceSVG(args) {
 const optimize = svg => {
   const SVGO = require(`svgo`)
   const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
-  return new Promise((resolve, reject) => {
-    svgo.optimize(svg, ({ data }) => resolve(data))
-  })
+  return svgo.optimize(svg).then(({ data }) => data)
 }
 
 function toArray(buf) {

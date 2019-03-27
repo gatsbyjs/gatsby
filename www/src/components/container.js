@@ -1,20 +1,18 @@
 import React from "react"
 
-import presets from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { space, breakpoints } from "../utils/presets"
+import { rhythm } from "../utils/typography"
 
 const Container = ({ children, hasSideBar = true, overrideCSS }) => (
   <div
     css={{
       maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
       margin: `0 auto`,
-      padding: `${rhythm(options.blockMarginBottom)} ${rhythm(
-        options.blockMarginBottom
-      )}`,
+      padding: space[6],
       position: `relative`,
-      [presets.Lg]: {
-        paddingTop: rhythm(options.blockMarginBottom * 2),
-        paddingBottom: rhythm(options.blockMarginBottom * 2),
+      [breakpoints.lg]: {
+        paddingTop: space[9],
+        paddingBottom: space[9],
       },
       ...overrideCSS,
     }}

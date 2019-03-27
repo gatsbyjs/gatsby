@@ -1,0 +1,24 @@
+import { graphql } from 'gatsby'
+
+import TagList from '../components/tag-list'
+
+# Tags
+
+<TagList {...props} />
+
+export const query = graphql`
+  query {
+    allMdx(
+      filter: {
+        frontmatter: {
+        	draft: { ne: true }
+        }
+      }
+    ) {
+      group(field: frontmatter___tags) {
+        fieldValue
+        totalCount
+      }
+    }
+  }
+`

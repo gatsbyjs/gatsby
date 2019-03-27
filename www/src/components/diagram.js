@@ -2,14 +2,24 @@ import React, { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+  letterSpacings,
+  lineHeights,
+  scale,
+  fonts,
+} from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `255, 255, 255, 0.9`
+const stripeColor = `0, 0, 0, 0.025`
 const stripeSize = 15
 const stripeAnimation = keyframes({
   "0%": {
@@ -24,9 +34,7 @@ const stripeBg = {
   animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = keyframes({
-  to: {
-    strokeDashoffset: 10,
-  },
+  to: { strokeDashoffset: 10 },
 })
 
 const Segment = ({ className, children }) => (
@@ -49,15 +57,15 @@ const SegmentTitle = ({ children }) => (
       display: `inline`,
       background: colors.accent,
       color: colors.gray.copy,
-      borderRadius: presets.radii[1],
+      borderRadius: radii[1],
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-.5rem`,
-      padding: `.35rem .6rem`,
+      bottom: `-${space[2]}`,
+      padding: `${space[2]} ${space[3]}`,
       fontWeight: `normal`,
-      letterSpacing: `.5px`,
-      fontSize: presets.scale[1],
-      lineHeight: presets.lineHeights.solid,
+      letterSpacing: letterSpacings.tracked,
+      fontSize: scale[1],
+      lineHeight: lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -87,17 +95,16 @@ const VerticalLine = () => (
 )
 
 const box = {
-  background: `#fff`,
   border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radii[2],
-  padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
+  borderRadius: radii[2],
+  padding: `${space[5]} ${space[7]} 0`,
 }
 
 const borderAndBoxShadow = {
-  background: `#fff`,
-  border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radii[1],
-  boxShadow: presets.shadows.card,
+  background: colors.white,
+  border: 0,
+  borderRadius: radii[1],
+  boxShadow: shadows.raised,
   transform: `translateZ(0)`,
   width: `100%`,
 }
@@ -115,18 +122,18 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(space[3])} ${rhythm(space[4])}` }
+const boxPadding = { padding: `${space[3]} ${space[4]}` }
 
 const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
-      padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
+      padding: `0 ${space[4]} ${space[5]}`,
       display: `flex`,
-      [presets.Xs]: {
+      [breakpoints.xs]: {
         flex: `1 1 50%`,
       },
-      [presets.Sm]: {
+      [breakpoints.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -136,7 +143,7 @@ const SourceItem = ({ children }) => (
       css={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: presets.lineHeights.dense,
+        lineHeight: lineHeights.dense,
         textAlign: `left`,
       }}
     >
@@ -151,7 +158,7 @@ const ItemTitle = ({ children }) => (
       color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      fontSize: presets.scale[2],
+      fontSize: scale[2],
     }}
   >
     {children}
@@ -161,11 +168,11 @@ const ItemTitle = ({ children }) => (
 const ItemDescription = ({ children }) => (
   <small
     css={{
-      lineHeight: presets.lineHeights.dense,
+      lineHeight: lineHeights.dense,
       display: `block`,
       color: colors.gray.calm,
-      fontSize: presets.scale[1],
-      fontFamily: options.systemFontFamily.join(`,`),
+      fontSize: scale[1],
+      fontFamily: fonts.system,
     }}
   >
     {children}
@@ -173,7 +180,14 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link css={{ "&&": { fontWeight: `normal` } }} to={to}>
+  <Link
+    css={{
+      "&&": {
+        color: colors.gatsbyDark,
+      },
+    }}
+    to={to}
+  >
     {children}
   </Link>
 )
@@ -182,11 +196,11 @@ const Gatsby = () => (
   <div
     css={{
       ...borderAndBoxShadow,
-      padding: rhythm(space[5]),
+      padding: space[5],
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [presets.Lg]: {
+      [breakpoints.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -196,31 +210,26 @@ const Gatsby = () => (
       src={logo}
       css={{
         display: `inline-block`,
-        height: rhythm(1.75),
-        width: rhythm(1.75),
-        [presets.Lg]: {
-          width: rhythm(2.25),
-          height: rhythm(2.25),
-        },
+        height: space[8],
         margin: 0,
         verticalAlign: `middle`,
+        width: `auto`,
+        [breakpoints.lg]: {
+          height: space[9],
+        },
       }}
       alt="Gatsby"
     />
     <ItemDescription>
       <small
         css={{
-          marginTop: `.25rem`,
+          marginTop: space[1],
           display: `block`,
         }}
       >
         powered by
       </small>
-      <span
-        css={{
-          color: colors.gatsby,
-        }}
-      >
+      <span css={{ color: colors.gatsby }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -245,8 +254,8 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          fontFamily: options.headerFontFamily.join(`,`),
-          padding: rhythm(space[6]),
+          fontFamily: fonts.header,
+          padding: space[6],
           textAlign: `center`,
           flex: `1 1 100%`,
         }}
@@ -254,15 +263,15 @@ const Diagram = () => (
         <h1
           css={{
             marginTop: 0,
-            marginBottom: rhythm(space[6]),
-            [presets.Md]: {
-              marginTop: rhythm(space[6]),
+            marginBottom: space[6],
+            [breakpoints.md]: {
+              marginTop: space[6],
             },
           }}
         >
           How Gatsby works
         </h1>
-        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${space[9]}` }}>
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>
@@ -308,8 +317,8 @@ const Diagram = () => (
               css={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
-                paddingTop: rhythm(space[3]),
-                paddingBottom: rhythm(space[3]),
+                paddingTop: space[3],
+                paddingBottom: space[3],
                 width: `auto`,
                 display: `inline-block`,
               }}
@@ -332,7 +341,7 @@ const Diagram = () => (
           <div
             css={{
               ...box,
-              paddingBottom: rhythm(space[5]),
+              paddingBottom: space[5],
             }}
           >
             <ItemTitle>Static Web Host</ItemTitle>
