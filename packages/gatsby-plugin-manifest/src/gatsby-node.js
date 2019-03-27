@@ -54,6 +54,11 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
     manifest.icons = defaultIcons
   }
 
+  // Specify extra options for each icon (if requested).
+  manifest.icons.forEach(icon => {
+    Object.assign(icon, pluginOptions.icon_options)
+  })
+
   // Determine destination path for icons.
   const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
 
