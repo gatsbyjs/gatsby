@@ -39,7 +39,7 @@ docs](https://www.gatsbyjs.org/docs/plugins/#how-to-use-gatsby-plugins).
 
 ### `modulePath`
 
-(_optional_, default: `undefined`)
+(_optional_, type: `string | Array<string>`, default: `undefined`)
 
 If you need to customize Netlify CMS, e.g. registering [custom
 widgets](https://www.netlifycms.org/docs/custom-widgets/#registerwidget) or
@@ -100,7 +100,7 @@ CMS.registerWidget(`image-gallery`, ImageGalleryWidget, ImageGalleryPreview)
 
 ### `manualInit`
 
-(_optional_, default: `false`)
+(_optional_, type: `boolean`, default: `false`)
 
 Set this to `true` If you need to [manually initialize](https://www.netlifycms.org/docs/beta-features/#manual-initialization) Netlify CMS. The plugin will take care of setting `window.CMS_MANUAL_INIT` to `true`:
 
@@ -135,7 +135,7 @@ init({
 
 ### `enableIdentityWidget`
 
-(_optional_, default: `true`)
+(_optional_, type: `boolean`, default: `true`)
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
 Identity](https://www.netlify.com/docs/identity/) to be used without
@@ -156,13 +156,13 @@ plugins: [
 
 ### `publicPath`
 
-(_optional_, default: `"admin"`)
+(_optional_, type: `string`, default: `"admin"`)
 
 Customize the path to Netlify CMS on your Gatsby site.
 
 ### `htmlTitle`
 
-(_optional_, default: `Content Manager`)
+(_optional_, type: `string`, default: `Content Manager`)
 
 Customize the value of the `title` tag in your CMS HTML (shows in the browser
 bar).

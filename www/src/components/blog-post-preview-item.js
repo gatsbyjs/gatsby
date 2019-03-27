@@ -2,8 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 
 import Avatar from "./avatar"
-import { options } from "../utils/typography"
-import { colors } from "../utils/presets"
+import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
@@ -42,7 +41,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
       <div
         css={{
           display: `inline-block`,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           color: colors.gray.calm,
         }}
       >

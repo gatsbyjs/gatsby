@@ -1,3 +1,22 @@
+try {
+  require(`sharp`)
+} catch (error) {
+  // Bail early if sharp isn't available
+  console.error(
+    `
+      The dependency "sharp" does not seem to have been built or installed correctly.
+
+      - Try to reinstall packages and look for errors during installation
+      - Consult "sharp" installation page at http://sharp.pixelplumbing.com/en/stable/install/
+      
+      If neither of the above work, please open an issue in https://github.com/gatsbyjs/gatsby/issues
+    `
+  )
+  console.log()
+  console.error(error)
+  process.exit(1)
+}
+
 const sharp = require(`sharp`)
 const crypto = require(`crypto`)
 const imageSize = require(`probe-image-size`)
@@ -709,8 +728,8 @@ async function notMemoizedtraceSVG({ file, args, fileArgs, reporter }) {
   )
 
   return trace(tmpFilePath, optionsSVG)
-    .then(svg => optimize(svg))
-    .then(svg => svgToMiniDataURI(svg))
+    .then(optimize)
+    .then(svgToMiniDataURI)
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -725,9 +744,7 @@ async function traceSVG(args) {
 const optimize = svg => {
   const SVGO = require(`svgo`)
   const svgo = new SVGO({ multipass: true, floatPrecision: 0 })
-  return new Promise((resolve, reject) => {
-    svgo.optimize(svg, ({ data }) => resolve(data))
-  })
+  return svgo.optimize(svg).then(({ data }) => data)
 }
 
 function toArray(buf) {

@@ -28,6 +28,7 @@ const makeNodes = () => [
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       { anotherObjectArray: [{ bar: 10 }] },
     ],
+    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
     deepObject: {
       level: 1,
       deepObject: {
@@ -63,6 +64,7 @@ const makeNodes = () => [
     anArray: [1, 2, 5, 4],
     aNestedArray: [[1, 2, 3, 4]],
     anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
+    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
     "with space": 3,
     "with-hyphen": 4,
     123: 24,
@@ -226,6 +228,38 @@ describe(`GraphQL type inference`, () => {
     )
   })
 
+  it(`handles sparse arrays`, async () => {
+    const nodes = [
+      { sparse: [null, true], internal: { type: `Test` }, id: `1` },
+      { sparse: [null], internal: { type: `Test` }, id: `2` },
+      { sparse: null, internal: { type: `Test` }, id: `3` },
+    ]
+    const result = await getQueryResult(
+      nodes,
+      `
+      sparse
+      `
+    )
+    const { edges } = result.data.allTest
+    expect(edges[0].node.sparse).toEqual([null, true])
+  })
+
+  it(`handles sparse arrays of objects`, async () => {
+    const nodes = [
+      { sparse: [null, { foo: true }], internal: { type: `Test` }, id: `1` },
+      { sparse: [null], internal: { type: `Test` }, id: `2` },
+      { sparse: null, internal: { type: `Test` }, id: `3` },
+    ]
+    const result = await getQueryResult(
+      nodes,
+      `
+      sparse { foo }
+      `
+    )
+    const { edges } = result.data.allTest
+    expect(edges[0].node.sparse[1].foo).toBe(true)
+  })
+
   // NOTE: Honestly this test does not makes much sense now
   it.skip(`Removes specific root fields`, () => {
     const { addInferredFields } = require(`../infer`)
@@ -247,7 +281,7 @@ describe(`GraphQL type inference`, () => {
       },
     ]
     const schemaComposer = createSchemaComposer()
-    const typeComposer = schemaComposer.createTC(`Test`)
+    const typeComposer = schemaComposer.createObjectTC(`Test`)
     addInferredFields({
       schemaComposer,
       typeComposer,
@@ -371,6 +405,50 @@ describe(`GraphQL type inference`, () => {
     const { edges } = result.data.allTest
     expect(edges[0].node[`_2invalid`].nested.check).toBe(true)
     expect(edges[1].node[`_2invalid`].nested.check).toBe(false)
+    expect(result).toMatchSnapshot()
+  })
+
+  it(`handles lowercase type names`, async () => {
+    const nodes = [
+      {
+        id: `1`,
+        internal: { type: `wordpress__PAGE` },
+        acfFields: {
+          fooz: `bar`,
+        },
+      },
+    ]
+    const schema = await buildTestSchema(nodes)
+    store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+    const result = await graphql(
+      schema,
+      `
+        query {
+          allWordpressPage {
+            edges {
+              node {
+                __typename
+                id
+                acfFields {
+                  fooz
+                  __typename
+                }
+              }
+            }
+          }
+        }
+      `,
+      undefined,
+      {
+        path: `/`,
+        nodeModel: new LocalNodeModel({
+          schema,
+          nodeStore,
+          createPageDependency,
+        }),
+      }
+    )
+
     expect(result).toMatchSnapshot()
   })
 
@@ -987,6 +1065,11 @@ describe(`GraphQL type inference`, () => {
             baz
           }
         },
+        anObjectArrayWithNull {
+          anotherObjectArray {
+            baz
+          }
+        }
         deepObject {
           level
           deepObject {

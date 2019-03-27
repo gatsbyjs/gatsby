@@ -12,7 +12,8 @@ import {
 } from "./signature"
 import ReturnBlock from "./returns"
 import { Header } from "./utils"
-import { options, scale } from "../../utils/typography"
+import { scale } from "../../utils/typography"
+import { fonts } from "../../utils/presets"
 
 const Optional = styled.span`
   :before {
@@ -30,7 +31,7 @@ const Deprecated = ({ definition }) => {
           p:before {
             color: #e8bd36;
             content: "(deprecated) ";
-            font-family: ${options.headerFontFamily.join(`,`)};
+            font-family: ${fonts.header};
           }
         `}
         dangerouslySetInnerHTML={{

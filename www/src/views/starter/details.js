@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { colors, space, radii, breakpoints } from "../../utils/presets"
+import { colors, space, radii, breakpoints, fonts } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -14,12 +14,12 @@ const Details = ({
 }) => (
   <div
     css={{
-      padding: rhythm(space[6]),
+      padding: space[6],
       [breakpoints.lg]: {
-        padding: rhythm(space[8]),
+        padding: space[8],
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
-        gridRowGap: rhythm(space[5]),
+        gridRowGap: space[5],
       },
     }}
   >
@@ -51,7 +51,7 @@ const Details = ({
           marginBottom: rhythm(options.blockMarginBottom * 5),
           [breakpoints.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridGap: rhythm(space[5]),
+            gridGap: space[5],
           },
         }}
       >
@@ -85,17 +85,17 @@ export default Details
 const styles = {
   headline: {
     color: colors.gray.calm,
-    fontFamily: options.headerFontFamily.join(`,`),
-    paddingRight: rhythm(space[5]),
+    fontFamily: fonts.header,
+    paddingRight: space[5],
   },
   showMoreButton: {
     backgroundColor: colors.gatsby,
     border: 0,
     borderRadius: radii[1],
     cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `bold`,
-    padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+    padding: `${space[1]} ${space[4]}`,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       borderBottom: `none`,
