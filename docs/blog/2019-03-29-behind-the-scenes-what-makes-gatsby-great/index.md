@@ -1,6 +1,6 @@
 ---
 title: "Behind the Scenes: What makes Gatsby Great"
-date: 2019-03-25
+date: 2019-03-29
 author: Dustin Schau
 excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicriously fast experience that your users will love."
 tags:
@@ -13,7 +13,7 @@ tags:
 
 Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
 
-As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider this post on the `webdev` subreddit on Reddit.
+As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
 <pullquote citation="reddit/r/webdev">
 Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
@@ -469,7 +469,7 @@ With any application, even one with a rock-solid performance basis like Gatsby, 
 
 ### Lighthouse
 
-The quickest and easiest recommendation for measuring performance is to first and foremost use the tools available to you. Chrome has an excellent tool built-in, [Lighthouse](https://github.com/GoogleChrome/lighthouse) accessible via the "Audits" tab in Developer Tools (and fun fact--Gatsby's very own [Ward Peeters](https://github.com/wardpeet) is a core contributor!).
+The quickest and easiest recommendation for measuring performance is to first and foremost use the tools available to you. Chrome has an excellent tool built-in, [Lighthouse](https://github.com/GoogleChrome/lighthouse) accessible via the "Audits" tab in Developer Tools (and fun fact--Gatsby's very own [Ward Peeters](https://github.com/wardpeet) and [Marcy Sutton](https://twitter.com/marcysutton) are core contributors!).
 
 Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` and then `Run audit`. You'll be greated with a result like:
 
