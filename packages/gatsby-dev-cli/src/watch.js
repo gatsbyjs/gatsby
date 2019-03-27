@@ -265,13 +265,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
           allCopies.push(publishAndInstallPromise)
         } else if (anyPackageNotInstalled) {
           // run `yarn`
-          const yarnInstallCmd = [
-            `yarn`,
-            [],
-            {
-              cwd: process.cwd(),
-            },
-          ]
+          const yarnInstallCmd = [`yarn`]
 
           console.log(`Installing packages from public NPM registry`)
           await promisifiedSpawn(yarnInstallCmd)
