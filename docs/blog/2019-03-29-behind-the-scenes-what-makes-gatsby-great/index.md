@@ -19,7 +19,7 @@ As such--this post focuses on just a single element of what makes Gatsby great: 
 Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
 </pullquote>
 
-Fun fact--that website in question is [reactjs.org](https://reactjs.org) which is, as you may or may not know, is an application built with and powered by Gatsby 💪
+Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, as you may or may not know, is an application built with and powered by Gatsby 💪
 
 In an effort to answer this initial question, this post outlines several foundational techniques that Gatsby enables _by default_ to deliver this experience. Specifically:
 
@@ -104,7 +104,7 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Creating a [Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossary/CDN) to route your content _as close as possible_ to where your users are requesting it
   - This is often called "on the edge" and Gatsby can and should be deployed on the edge--[it reduces latency and improves page-load times](https://www.cloudflare.com/learning/cdn/glossary/edge-server/)
 - Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
-- Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content routable via a pretty URL, e.g. gatsbyjs.org
+- Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
 - Routing the CDN layer in front of your static content
 
 ... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/hosting-on-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
@@ -137,7 +137,7 @@ Next:
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 - Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
 
-Does this sound like something that ✨joy? Oh--let's talk about the deploy process, too.
+Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
 
 Releasing a one-line fix to our SSR application requires deploying an entirely new version of our application. This means spinning down existing versions of our service, spinning up new versions of our service, and handling and remediating any errors that may arise.
 
@@ -237,7 +237,7 @@ Consider the output of [`webpack-bundle-analyzer`](https://github.com/webpack-co
 
 ![Webpack Bundle Analyzer](./images/bundle-analyzer.png)
 
-### `component---{route-name}-{unique-hash}.js
+### `component---{route-name}-{unique-hash}.js`
 
 `component---src-pages-contact-js-34c976efa1482a119a50.js` contains metadata that defines the necessary resources for a specific route. We'll come back to this--promise!
 
@@ -399,7 +399,7 @@ There are far, far, far too many otherwise decently performing websites that loa
   - This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
   - Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)
 - An `IntersectionObserver` that swaps the base image for the larger image, when the image is in the viewport
-  - See [the code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
+  - See the [image IntersectionObserver code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
 
 And one of the best wins of all--Gatsby's pluggable ecosystem and GraphQL data layer are both used to produce and pass the optimized images directly to this component. It looks something like:
 
@@ -419,7 +419,7 @@ export default function AnActuallyGoodAndResponsiveHeroImage() {
     }
   `)
 
-  return <Image fluid={data.file.childImageSharp.fluid} />
+  return <Image fluid={data.file.childImageSharp.fluid} alt="" />
 }
 ```
 
@@ -465,13 +465,13 @@ It's been quite a ride 😅 By this point, we've covered the foundational techni
 
 ## Techniques for measuring performance
 
-With any application, even one with a rock-solid performance basis like Gatsby, the advice I'd give is to trust, but validate. It's _unlikely_ you'll introduce a significant performance regression with a new feature and pull request, but even the best of foundations can be torn down. "I think I'll load _six_ fonts each in weights 100-900" he said and "Oh, and I think two feedback libraries _and_ a few analytics libraries are really going to drive conversion and put us over the edge," said someone, assuredly, at some point.
+With any application, even one with a rock-solid performance basis like Gatsby, the advice I'd give is to trust, but validate. It's _unlikely_ you'll introduce a significant performance regression with a new feature and pull request, but even the best of foundations can be torn down. "I think I'll load _six_ fonts each in weights 100-900", they said, and "Oh, and I think two feedback libraries _and_ a few analytics libraries are really going to drive conversion and put us over the edge," said someone, assuredly, at some point.
 
 ### Lighthouse
 
 The quickest and easiest recommendation for measuring performance is to first and foremost use the tools available to you. Chrome has an excellent tool built-in, [Lighthouse](https://github.com/GoogleChrome/lighthouse) accessible via the "Audits" tab in Developer Tools (and fun fact--Gatsby's very own [Ward Peeters](https://github.com/wardpeet) and [Marcy Sutton](https://twitter.com/marcysutton) are core contributors!).
 
-Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` and then `Run audit`. You'll be greated with a result like:
+Lighthouse is accessible via the developer tools in Chrome: `F12` -> `Audits` and then `Run audit`. You'll be greeted with a result like:
 
 ![Lighthouse Example](./images/lighthouse.png)
 
@@ -481,7 +481,7 @@ Lighthouse is a great _first_ step to asserting whether or not your application 
 
 ### Webpagetest
 
-[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU constrained. You can use a slower network to ensure that you get a accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
+[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU-constrained. You can use a slower network to ensure that you get an accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
 
 I liken the relationship between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
 
