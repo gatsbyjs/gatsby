@@ -2,6 +2,7 @@ const _ = require("lodash");
 const { getOptions } = require("loader-utils");
 const grayMatter = require("gray-matter");
 const unified = require("unified");
+
 const {
   isImport,
   isExport,
@@ -9,15 +10,12 @@ const {
   BLOCKS_REGEX,
   EMPTY_NEWLINE
 } = require("@mdx-js/mdx/util");
-const babel = require("@babel/core");
 
 const toMDAST = require("remark-parse");
 const squeeze = require("remark-squeeze-paragraphs");
 const debug = require("debug")("gatsby-mdx:mdx-loader");
-const debugMore = require("debug")("gatsby-mdx-info:mdx-loader");
 
-const mdx = require("../utils/mdx");
-const getSourcePluginsAsRemarkPlugins = require("../utils/get-source-plugins-as-remark-plugins");
+const genMdx = require("../utils/gen-mdx");
 const withDefaultOptions = require("../utils/default-options");
 const createMDXNode = require("../utils/create-mdx-node");
 const { createFileNode } = require("../utils/create-fake-file-node");
@@ -130,10 +128,11 @@ module.exports = async function(content) {
   // check needs to happen first.
   if (!hasDefaultExport(content, DEFAULT_OPTIONS) && !!defaultLayout) {
     debug("inserting default layout", defaultLayout);
-    const { content: contentWithoutFrontmatter } = grayMatter(content);
+    const { content: contentWithoutFrontmatter, matter } = grayMatter(content);
 
-    code = `import DefaultLayout from "${slash(defaultLayout)}"
+    code = `${matter}
 
+import DefaultLayout from "${slash(defaultLayout)}"
 
 export default DefaultLayout
 
@@ -147,9 +146,11 @@ ${contentWithoutFrontmatter}`;
       return rawGetNode(id);
     }
   };
-  const gatsbyRemarkPluginsAsMDPlugins = await getSourcePluginsAsRemarkPlugins({
-    gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
-    mdxNode,
+
+  const { rawMDXOutput } = await genMdx({
+    isLoader: true,
+    options,
+    node: { ...mdxNode, rawBody: code },
     getNode,
     getNodes,
     reporter,
@@ -157,34 +158,8 @@ ${contentWithoutFrontmatter}`;
     pathPrefix
   });
 
-  code = await mdx(code, {
-    ...options,
-    mdPlugins: options.mdPlugins.concat(gatsbyRemarkPluginsAsMDPlugins),
-    hastPlugins: options.hastPlugins
-  });
-
-  code = `
-  /* @jsx mdx */
-import mdx from '@mdx-js/mdx/create-element';
-${code}`;
-
   try {
-    const result = babel.transform(code, {
-      configFile: false,
-      plugins: [
-        require("@babel/plugin-syntax-jsx"),
-        require("@babel/plugin-syntax-object-rest-spread"),
-        require("../utils/babel-plugin-html-attr-to-jsx-attr")
-      ]
-    });
-    debugMore("transformed code", result.code);
-    return callback(
-      null,
-      `import React from 'react'
-
-  ${result.code}
-      `
-    );
+    return callback(null, rawMDXOutput);
   } catch (e) {
     callback(e);
   }
