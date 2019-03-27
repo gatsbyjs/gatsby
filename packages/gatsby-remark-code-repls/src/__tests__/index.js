@@ -33,7 +33,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
     fs.readFileSync.mockReset()
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
-    JSONstringifySpy.mockReset()
+    JSONstringifySpy.mockClear()
   })
 
   Object.keys(REMARK_TESTS).forEach(name => {
