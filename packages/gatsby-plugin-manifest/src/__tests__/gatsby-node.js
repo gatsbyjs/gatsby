@@ -60,6 +60,12 @@ const manifestOptions = {
       src: `icons/icon-48x48.png`,
       sizes: `48x48`,
       type: `image/png`,
+      purpose: `all`,
+    },
+    {
+      src: `icons/icon-128x128.png`,
+      sizes: `128x128`,
+      type: `image/png`,
     },
   ],
 }
@@ -99,23 +105,22 @@ describe(`Test plugin manifest options`, () => {
     const icon = `pretend/this/exists.png`
     const size = 48
 
+    let pluginSpecificOptions = {
+      icon: icon,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+      ],
+    }
+
     await onPostBootstrap(
       { reporter },
       {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon,
-        icons: [
-          {
-            src: `icons/icon-48x48.png`,
-            sizes: `${size}x${size}`,
-            type: `image/png`,
-          },
-        ],
+        ...manifestOptions,
+        ...pluginSpecificOptions,
       }
     )
 
@@ -126,23 +131,15 @@ describe(`Test plugin manifest options`, () => {
   it(`fails on non existing icon`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
 
+    let pluginSpecificOptions = {
+      icon: `non/existing/path`,
+    }
+
     return onPostBootstrap(
       { reporter },
       {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `non/existing/path`,
-        icons: [
-          {
-            src: `icons/icon-48x48.png`,
-            sizes: `48x48`,
-            type: `image/png`,
-          },
-        ],
+        ...manifestOptions,
+        ...pluginSpecificOptions,
       }
     ).catch(err => {
       expect(sharp).toHaveBeenCalledTimes(0)
@@ -188,7 +185,7 @@ describe(`Test plugin manifest options`, () => {
       }
     )
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
   })
@@ -209,8 +206,31 @@ describe(`Test plugin manifest options`, () => {
       }
     )
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
+  })
+
+  it(`icon options iterator adds options and the icon array take precedence`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      icon_options: {
+        purpose: `maskable`,
+      },
+    }
+    await onPostBootstrap(
+      { reporter },
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      }
+    )
+
+    expect(sharp).toHaveBeenCalledTimes(3)
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(content.icons[0].purpose).toEqual(`all`)
+    expect(content.icons[1].purpose).toEqual(`maskable`)
   })
 })
