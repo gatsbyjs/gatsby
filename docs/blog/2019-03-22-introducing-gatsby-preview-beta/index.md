@@ -11,11 +11,11 @@ tags:
 
 ## What we’ve been up to
 
-Back in July we sent out our [alpha version of Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/). The team has been working hard getting your feedback and incorporating it into Gatsby Preview beta.
+Back in July we announced [our alpha release of Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/). The team has been hard at work since getting your feedback and incorporating it into Gatsby Preview product.
 
-We’re excited to let you know that this week, the Gatsby Preview beta will be officially open!
+We’re excited to announce Gatsby Preview is now in beta! To the many people that have signed up to try Preview, we'll be inviting more and more of you over the coming weeks. Gatsby Preview will continue to be invite-only until we've worked with enough customers that we're confident of the usability, reliability, and scalability of our platform.
 
-_In beta, we’ll be supporting Gatsby sites that are set up with Contentful._
+_In beta, we will only be supporting Gatsby sites using [Contentful](https://www.contentful.com)._
 
 ## What Gatsby Preview can do for you and your team
 

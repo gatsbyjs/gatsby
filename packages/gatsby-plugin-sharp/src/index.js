@@ -25,6 +25,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { scheduleJob } = require(`./scheduler`)
+const { createArgsDigest } = require(`./process-file`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -148,33 +149,12 @@ const healOptions = (
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension)
-  // Filter out false args, and args not for this extension and put width at
-  // end (for the file path)
-  const pairedArgs = _.toPairs(args)
-  let filteredArgs
-  // Remove non-true arguments
-  filteredArgs = _.filter(pairedArgs, arg => arg[1])
-  // Remove pathPrefix
-  filteredArgs = _.filter(filteredArgs, arg => arg[0] !== `pathPrefix`)
-  filteredArgs = _.filter(filteredArgs, arg => {
-    if (file.extension.match(/^jp*/)) {
-      return !_.includes(arg[0], `png`)
-    } else if (file.extension.match(/^png/)) {
-      return !arg[0].match(/^jp*/)
-    }
-    return true
-  })
-  const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const fileExtension = options.toFormat ? options.toFormat : file.extension
+  if (!options.toFormat) {
+    options.toFormat = file.extension
+  }
 
-  const argsDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(sortedArgs))
-    .digest(`hex`)
-
-  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
-
-  const imgSrc = `/${file.name}.${fileExtension}`
+  const argsDigestShort = createArgsDigest(options)
+  const imgSrc = `/${file.name}.${options.toFormat}`
   const dirPath = path.join(
     process.cwd(),
     `public`,
@@ -212,7 +192,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${fileExtension}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`

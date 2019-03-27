@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.7...gatsby-remark-code-repls@2.0.8) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby-remark-code-repls:** handle scoped packages in dependencies ([#12347](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/12347)) ([bc7d472](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/commit/bc7d472)), closes [#12327](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/12327)
+
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.6...gatsby-remark-code-repls@2.0.7) (2019-03-13)
 
 **Note:** Version bump only for package gatsby-remark-code-repls

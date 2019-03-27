@@ -5,7 +5,7 @@ const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const { copyStaticDir } = require(`../utils/get-static-dir`)
+const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
@@ -48,7 +48,7 @@ module.exports = async function build(program: BuildArgs) {
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
-  copyStaticDir()
+  copyStaticDirs()
 
   let activity
   activity = report.activityTimer(
