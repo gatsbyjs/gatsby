@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.2...gatsby@2.3.3) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby:** Handle already deleted nodes in deleteNode action ([#12866](https://github.com/gatsbyjs/gatsby/issues/12866)) ([1548841](https://github.com/gatsbyjs/gatsby/commit/1548841))
+- **gatsby-telemetry:** Ensure quickly running commands exit freely ([#12888](https://github.com/gatsbyjs/gatsby/issues/12888)) ([e30d264](https://github.com/gatsbyjs/gatsby/commit/e30d264))
+- **themes:** Handle shared parent theme with component shadowing ([#12883](https://github.com/gatsbyjs/gatsby/issues/12883)) ([7a82dc2](https://github.com/gatsbyjs/gatsby/commit/7a82dc2))
+
+### Features
+
+- **themes:** copy static folders in themes ([#12746](https://github.com/gatsbyjs/gatsby/issues/12746)) ([edd6cb1](https://github.com/gatsbyjs/gatsby/commit/edd6cb1))
+
 ## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.1...gatsby@2.3.2) (2019-03-26)
 
 **Note:** Version bump only for package gatsby
