@@ -188,7 +188,7 @@ const processQueries = async (queryJobs, { activity }) => {
   }
   const startQueries = process.hrtime()
 
-  const queue = queryQueue.create()
+  const queue = queryQueue.createBuild()
   queue.on(`task_finish`, () => {
     const stats = queue.getStats()
     activity.setStatus(
@@ -222,7 +222,7 @@ const processQueries = async (queryJobs, { activity }) => {
  * For what constitutes a dirty query, see `calcDirtyQueryIds`
  */
 const startDaemon = () => {
-  const queue = queryQueue.create()
+  const queue = queryQueue.createDaemon()
 
   const runQueuedActions = () => {
     const state = store.getState()
