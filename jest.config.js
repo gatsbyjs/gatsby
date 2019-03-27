@@ -11,7 +11,12 @@ const builtTestsDirs = pkgs
   .filter(p => fs.existsSync(path.join(p, `src`)))
   .map(p => path.join(p, `__tests__`))
 const distDirs = pkgs.map(p => path.join(p, `dist`))
-const ignoreDirs = [].concat(gatsbyBuildDirs, builtTestsDirs, distDirs)
+const ignoreDirs = [`<rootDir>/packages/gatsby-dev-cli/verdaccio`].concat(
+  gatsbyBuildDirs,
+  builtTestsDirs,
+  distDirs
+)
+
 const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
 const useCoverage = !!process.env.GENERATE_JEST_REPORT
 
