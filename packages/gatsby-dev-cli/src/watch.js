@@ -71,7 +71,6 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
   let queuedCopies = []
 
   const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
-    console.log(`wat`)
     fs.copy(oldPath, newPath, err => {
       if (err) {
         console.error(err)
