@@ -51,7 +51,7 @@ module.exports = class Store {
     const filePath = this.config.path
     const parentFolder = path.dirname(filePath)
     try {
-      ensureDirSync(bufferFilePath)
+      ensureDirSync(parentFolder)
     } catch (e) {
       //ignore
     }
