@@ -311,7 +311,9 @@ function reducer(state = new Map(), action) {
       return null
 
     case `DELETE_NODE`: {
-      deleteNode(action.payload)
+      if (action.payload) {
+        deleteNode(action.payload)
+      }
       return null
     }
 
