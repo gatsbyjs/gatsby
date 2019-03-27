@@ -483,11 +483,57 @@ Lighthouse is a great _first_ step to asserting whether or not your application 
 
 [Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU constrained. You can use a slower network to ensure that you get a accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
 
-I liken the analogy between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
+I liken the relationship between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
 
 Both are valuable--and both have their place!
 
-<!-- TODO: finish this out and add links to CI integration -->
+### Trust, but validate
+
+As mentioned, performance is something that should be regularly monitored. Using tools like Webpagetest and Lighthouse are **great** techniques that should be used and help uncover performance problems (among other key concerns like accessibility improvements, SEO, etc.). However, the usage of these tools are oftentimes done in a reactionary, ad-hoc manner. Performing a Lighthouse test, discovering issues, and devoting a week or two to remediate is _all_ too common.
+
+Why react to something (!) with manual, ad-hoc spot checking? What if we could remediate and diagnose at pull request time?
+
+Using Continuous Integration checks is a great technique that can catch regressions before merging, therefore catching regressions before _shipping_ regressions. It looks a little something like this:
+
+![Continuous Integration Status Check](./images/ci-check.png)
+
+If you check out the [pull request](https://github.com/DSchau/gatsby-perf-audit/pull/4), you can see that the failing CI status check alerts us of a possible performance regression that is introduced _in_ the pull request. The check runs Lighthouse in a CI container, and will fail the check if our code in the pull request reduces the scores below their expected baselines.
+
+In this pull request, I _intentionally_ introduce a few dependencies like Bootstrap, lodash, and... jQuery because let's at least make the performance problems clear and obvious! If you check out the [CI logs](https://circleci.com/gh/DSchau/gatsby-perf-audit/13?utm_campaign=vcs-integration-link&utm_medium=referral&utm_source=github-build-link) you can see the output from the failing CI check:
+
+```
+ ● performance audit
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0.99
+
+      31 |   console.log(output(scores))
+      32 |
+    > 33 |   expect(scores.performance).toBe(1)
+         |                              ^
+      34 |   expect(scores.accessibility).toBe(1)
+      35 |   expect(scores['best-practices']).toBeGreaterThanOrEqual(0.93)
+      36 |   expect(scores.seo).toBe(1)
+
+      at Object.toBe (lighthouse.test.js:33:30)
+
+  console.log lighthouse.test.js:31
+    ┌────────────────┬──────┐
+    │ performance    │ 0.99 │
+    ├────────────────┼──────┤
+    │ accessibility  │ 0.92 │
+    ├────────────────┼──────┤
+    │ best-practices │ 0.93 │
+    ├────────────────┼──────┤
+    │ seo            │ 1    │
+    ├────────────────┼──────┤
+    │ pwa            │ 0.65 │
+    └────────────────┴──────┘
+```
+
+If we set up a performance baseline (and we're using Gatsby here, so let's shoot for scores of 💯), we can catch regressions at pull request time. Using Gatsby gives us some luxuries here in being performant _out of the box_ but a performant default does not mean that you should rest easy, unconcerned of such _trivial_ concerns as performance, accessibility, and more. Trust, but validate.
 
 ## Wrap-up
 
