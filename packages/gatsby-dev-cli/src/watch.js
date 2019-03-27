@@ -36,10 +36,7 @@ const traversePackagesDeps = ({
     )
 
     fromMonoRepo.forEach(pkgName => {
-      if (!depTree[pkgName]) {
-        depTree[pkgName] = new Set()
-      }
-      depTree[pkgName].add(p)
+      depTree[pkgName] = (depTree[pkgName] || new Set()).add(p)
     })
 
     // only traverse not yet seen packages to avoid infinite loops
