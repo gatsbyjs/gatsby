@@ -8,23 +8,15 @@ import mdx from "@mdx-js/mdx/create-element";
 /* @jsx mdx */
 
 const layoutProps = {};
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.layout = null;
-  }
-
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <h1>{\`Some title\`}</h1>
-        <p>{\`a bit of a paragraph\`}</p>
-        <p>{\`some content\`}</p>
-      </div>
-    );
-  }
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {};
@@ -39,23 +31,15 @@ import mdx from "@mdx-js/mdx/create-element";
 /* @jsx mdx */
 
 const layoutProps = {};
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.layout = null;
-  }
-
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <h1>{\`Some title\`}</h1>
-        <p>{\`a bit of a paragraph\`}</p>
-        <p>{\`some content\`}</p>
-      </div>
-    );
-  }
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {
@@ -74,26 +58,17 @@ import mdx from "@mdx-js/mdx/create-element";
 /* @jsx mdx */
 
 const layoutProps = {};
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.layout = ({ children, ...props }) => <div>{children}</div>;
-  }
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <Layout {...layoutProps} {...props}>
-          <h1>{\`Some title\`}</h1>
-          <p>{\`a bit of a paragraph\`}</p>
-          <p>{\`some content\`}</p>
-        </Layout>
-      </div>
-    );
-  }
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {
@@ -117,26 +92,17 @@ export const meta = {
 const layoutProps = {
   meta
 };
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.layout = ({ children, ...props }) => <div>{children}</div>;
-  }
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <Layout {...layoutProps} {...props}>
-          <h1>{\`Some title\`}</h1>
-          <p>{\`a bit of a paragraph\`}</p>
-          <p>{\`some content\`}</p>
-        </Layout>
-      </div>
-    );
-  }
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {
@@ -160,23 +126,15 @@ export const meta = {
 const layoutProps = {
   meta
 };
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.layout = null;
-  }
-
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <h1>{\`Some title\`}</h1>
-        <p>{\`a bit of a paragraph\`}</p>
-        <p>{\`some content\`}</p>
-      </div>
-    );
-  }
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {
@@ -195,26 +153,17 @@ import mdx from "@mdx-js/mdx/create-element";
 /* @jsx mdx */
 
 const layoutProps = {};
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.layout = ({ children, ...props }) => <div>{children}</div>;
-  }
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <Layout {...layoutProps} {...props}>
-          <h1>{\`Some title\`}</h1>
-          <p>{\`a bit of a paragraph\`}</p>
-          <p>{\`some content\`}</p>
-        </Layout>
-      </div>
-    );
-  }
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {};
@@ -234,26 +183,17 @@ export const meta = {
 const layoutProps = {
   meta
 };
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.layout = ({ children, ...props }) => <div>{children}</div>;
-  }
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <Layout {...layoutProps} {...props}>
-          <h1>{\`Some title\`}</h1>
-          <p>{\`a bit of a paragraph\`}</p>
-          <p>{\`some content\`}</p>
-        </Layout>
-      </div>
-    );
-  }
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {};
@@ -273,23 +213,15 @@ export const meta = {
 const layoutProps = {
   meta
 };
-export default class MDXContent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.layout = null;
-  }
-
-  render() {
-    const { components, ...props } = this.props;
-    const Layout = this.layout;
-    return (
-      <div name="wrapper" components={components}>
-        <h1>{\`Some title\`}</h1>
-        <p>{\`a bit of a paragraph\`}</p>
-        <p>{\`some content\`}</p>
-      </div>
-    );
-  }
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout {...layoutProps} {...props} components={components}>
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
 }
 MDXContent.isMDXComponent = true;
 export const _frontmatter = {};
