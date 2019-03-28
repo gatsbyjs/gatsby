@@ -123,6 +123,8 @@ It can difficult to know whether an API key should be kept secret. If the page g
 
 ## Conclusion
 
-Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in you client-side code. Now go make awesome static sites that are completely secure!
+Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in your client-side code. 
+
+Now go make awesome Gatsby sites that are completely secure!
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain false, inaccurate, or incomplete information. It is your responsibility to properly secure your sites.
