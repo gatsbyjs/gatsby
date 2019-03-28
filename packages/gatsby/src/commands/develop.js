@@ -314,21 +314,28 @@ module.exports = async (program: any) => {
     })
   })
 
-  function prepareUrls(protocol, host, port) {
-    const formatUrl = hostname =>
+  function prepareUrls(protocol, host, port, path) {
+    const formatUrl = (hostname, pathname) =>
       url.format({
         protocol,
         hostname,
         port,
-        pathname: `/`,
+        pathname,
       })
-    const prettyPrintUrl = hostname =>
+    const prettyPrintUrl = (hostname, pathname) =>
       url.format({
         protocol,
         hostname,
         port: chalk.bold(port),
-        pathname: `/`,
+        pathname,
       })
+
+    // Prepare the path
+    // remove leading and trailing slashes
+    const normalizedPathname = path.replace(/^\/|\/$/g, ``)
+    const pathnameWithSlashes = normalizedPathname.length
+      ? `/${normalizedPathname}/`
+      : `/`
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
     let lanUrlForConfig, lanUrlForTerminal
@@ -345,7 +352,10 @@ module.exports = async (program: any) => {
             )
           ) {
             // Address is private, format it for later use
-            lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig)
+            lanUrlForTerminal = prettyPrintUrl(
+              lanUrlForConfig,
+              pathnameWithSlashes
+            )
           } else {
             // Address is not private, so we will discard it
             lanUrlForConfig = undefined
@@ -358,13 +368,17 @@ module.exports = async (program: any) => {
     // TODO collect errors (GraphQL + Webpack) in Redux so we
     // can clear terminal and print them out on every compile.
     // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(host)
-    const localUrlForBrowser = formatUrl(host)
+    const localUrlForTerminal = prettyPrintUrl(host, pathnameWithSlashes)
+    const localUrlForBrowser = formatUrl(host, pathnameWithSlashes)
+    const localUrlWithoutPath = prettyPrintUrl(host, `/`)
+
+    // append path-prefix
     return {
       lanUrlForConfig,
       lanUrlForTerminal,
       localUrlForTerminal,
       localUrlForBrowser,
+      localUrlWithoutPath,
     }
   }
 
@@ -393,7 +407,7 @@ module.exports = async (program: any) => {
       }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    console.log(`  ${urls.localUrlWithoutPath}___graphql`)
 
     console.log()
     console.log(`Note that the development build is not optimized.`)
@@ -456,10 +470,15 @@ module.exports = async (program: any) => {
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
+
+    const configPathPrefix = store.getState().config.pathPrefix
+    const pathPrefix =
+      program.prefixPaths && configPathPrefix ? configPathPrefix : ``
     const urls = prepareUrls(
       program.ssl ? `https` : `http`,
       program.host,
-      program.port
+      program.port,
+      pathPrefix
     )
     const isSuccessful = !messages.errors.length
     // if (isSuccessful) {
