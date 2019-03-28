@@ -1,6 +1,8 @@
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-const { getMonorepoPackageJsonPath } = require(`./utils`)
+const {
+  getMonorepoPackageJsonPath,
+} = require(`./get-monorepo-package-json-path`)
 const request = require(`request`)
 
 function difference(object, base) {
@@ -25,7 +27,7 @@ function difference(object, base) {
  * This allow gatsby-dev to skip publishing unnecesairly and
  * let install packages from public npm repository if nothing changed.
  */
-const checkDepsChanges = async ({
+exports.checkDepsChanges = async ({
   newPath,
   packageName,
   monoRepoPackages,
@@ -184,5 +186,3 @@ const checkDepsChanges = async ({
     packageNotInstalled,
   }
 }
-
-exports.checkDepsChanges = checkDepsChanges

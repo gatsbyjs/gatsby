@@ -4,10 +4,10 @@ const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 
 const {
-  promisifiedSpawn,
   getMonorepoPackageJsonPath,
-  registerCleanupTask,
-} = require(`./utils`)
+} = require(`../utils/get-monorepo-package-json-path`)
+const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
+const { registerCleanupTask } = require(`./cleanup-tasks`)
 
 let VerdaccioInitPromise = null
 
