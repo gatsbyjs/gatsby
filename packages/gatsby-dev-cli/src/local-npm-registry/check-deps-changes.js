@@ -55,7 +55,7 @@ const checkDepsChanges = async ({
   let localPKGjson
   let packageNotInstalled = false
   try {
-    localPKGjson = JSON.parse(fs.readFileSync(newPath))
+    localPKGjson = JSON.parse(fs.readFileSync(newPath, `utf-8``))
   } catch {
     packageNotInstalled = true
     // there is no local package - so we still need to install deps
@@ -122,7 +122,7 @@ const checkDepsChanges = async ({
     let isPublishing = false
     const depChangeLog = _.uniq(Object.keys({ ...diff, ...diff2 }))
       .reduce((acc, key) => {
-        if (monorepoPKGjson.dependencies[key] === `gatsby-dev `) {
+        if (monorepoPKGjson.dependencies[key] === `gatsby-dev`) {
           // if we are in middle of publishing to local repository - ignore
           isPublishing = true
           return acc
@@ -167,7 +167,7 @@ const checkDepsChanges = async ({
       console.log(`Dependencies of '${packageName}' changed:\n${depChangeLog}`)
       if (isInitialScan) {
         console.log(
-          `Will ${!needPublishing ? `not ` : ``} publish to local npm registry.`
+          `Will ${!needPublishing ? `not ` : ``}publish to local npm registry.`
         )
       } else {
         console.warn(
