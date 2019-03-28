@@ -87,7 +87,7 @@ This is pretty much the base of the "JAMstack" and allows for private content in
 
 ### Public Dynamic Content
 
-This should be easy right? It is public content after all. But, if you need anonymous users to be able to both read and write this data, you should be concerned. Content read publicly, but written privately was covered by previous section. Admittedly, public reading and writing of content is less common.
+This should be easy right? It is public content after all. But, if you need anonymous users to be able to both read and write this data, you should be concerned. Content read publicly, but written privately, was covered in the previous section. Admittedly, public reading and writing of content is less common.
 
 Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on Facebook or Twitter, these all require authentication. Even public APIs like GitHub's requite authentication or sites like wikipedia. Even if anyone in the world can create an account and access these tools.
 
