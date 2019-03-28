@@ -131,7 +131,7 @@ describe(`Test plugin manifest options`, () => {
   it(`fails on non existing icon`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
 
-    let pluginSpecificOptions = {
+    const pluginSpecificOptions = {
       icon: `non/existing/path`,
     }
 
