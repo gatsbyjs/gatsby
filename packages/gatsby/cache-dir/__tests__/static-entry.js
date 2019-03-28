@@ -175,6 +175,7 @@ describe(`develop-static-entry`, () => {
 describe(`static-entry sanity checks`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
   })
 
   const methodsToCheck = [
