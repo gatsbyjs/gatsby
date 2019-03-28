@@ -68,7 +68,7 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   }
 
   // Specify extra options for each icon (if requested).
-  if (pluginOptions.icon_options) {
+  if (manifest.icon_options) {
     manifest.icons = manifest.icons.map(icon => {
       return {
         ...pluginOptions.icon_options,
