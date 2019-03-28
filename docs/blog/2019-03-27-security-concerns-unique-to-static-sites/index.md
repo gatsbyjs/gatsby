@@ -21,7 +21,7 @@ These are not to be considered universal definitions, just how the author will u
 
 - **site** - Any website, web-app, or other content you can browse on the internet in a web browser.
 
-- **server-side site** - Any site that renders dynamic content on the server, at time of request -- whether using node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
+- **server-side site** - Any site that renders content on the server, at time of request -- whether using node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
 
 - **client-side site** - Gatsby only generates static sites. Single Page Apps (SPAs) are different but any security issue affecting a pure static site will also affect an SPA. Collectively both methods deliver all needed assets(HTML/CSS/JS) to the client for site rendering.
 
