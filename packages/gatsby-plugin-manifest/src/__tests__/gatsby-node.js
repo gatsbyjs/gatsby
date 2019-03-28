@@ -105,7 +105,7 @@ describe(`Test plugin manifest options`, () => {
     const icon = `pretend/this/exists.png`
     const size = 48
 
-    let pluginSpecificOptions = {
+    const pluginSpecificOptions = {
       icon: icon,
       icons: [
         {
