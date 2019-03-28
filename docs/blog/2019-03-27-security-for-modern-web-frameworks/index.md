@@ -130,6 +130,6 @@ It can difficult to know whether an API key should be kept secret. If the page g
 
 Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in your client-side code.
 
-Now go make awesome Gatsby sites that are completely secure! Fo more information on web security checkout the [OWASP Top Ten](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf). The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
+Now go make awesome Gatsby sites that are completely secure! Fo more information on web security checkout the [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project). The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or inaccurate information. It is your responsibility to properly secure your sites.
