@@ -103,7 +103,7 @@ There is a small blog that does this very thing. They build the Firebase credent
 
 Assuming Russia is not trying to hack you and you would like to better secure your claps, what are you options? You need an API.
 
-That sounds hard? Go checkout Netlify, They will provide great static hosting and allow you to deploy serverless functions right along side your static site. They are not the only ones, Azure, Google, Amazon, Zeit.co, and others all have solutions.
+One great option is to check out Netlify. They will provide great static hosting and allow you to deploy serverless functions right along side your Gatsby site. They are not the only ones: Azure, Google, Amazon, Zeit.co, and others all have API solutions.
 
 What does this API allow? First, you can secure your database. Any API keys can be secured on your serverless...server 😭. The point is, they will be secure. But what does this gain you? After all, instead of pillaging your database directly you have given them an API through which to pillage.
 
