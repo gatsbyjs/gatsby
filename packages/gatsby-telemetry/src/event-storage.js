@@ -1,5 +1,7 @@
+const path = require(`path`)
 const Store = require(`./store`)
 const fetch = require(`node-fetch`)
+const Configstore = require(`configstore`)
 
 const isTruthy = require(`./is-truthy`)
 
@@ -10,9 +12,26 @@ const isTruthy = require(`./is-truthy`)
  * to continue even when working offline.
  */
 module.exports = class EventStorage {
-  store = new Store()
-  debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
-  disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  constructor() {
+    try {
+      this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+    } catch (e) {
+      // in case of some permission issues the configstore throws
+      // so fallback to a simple in memory config
+      // this.config = {
+      //   get: key => this.config[key],
+      //   set: (key, value) => (this.config[key] = value),
+      //   all: this.config,
+      // }
+      // Log this event
+    }
+
+    const parentFolder = path.dirname(this.config.path)
+
+    this.store = new Store(parentFolder)
+    this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
+    this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  }
 
   addEvent(event) {
     if (this.disabled) {
@@ -52,12 +71,12 @@ module.exports = class EventStorage {
 
   getConfig(key) {
     if (key) {
-      return this.store.getConfig(key)
+      return this.config.get(key)
     }
-    return this.store.getConfig()
+    return this.config.all
   }
 
-  updateConfig(...conf) {
-    return this.store.updateConfig(...conf)
+  updateConfig(key, value) {
+    return this.config.set(key, value)
   }
 }

@@ -7,38 +7,15 @@ const {
   unlinkSync,
 } = require(`fs`)
 const { ensureDirSync } = require(`fs-extra`)
-const Configstore = require(`configstore`)
 
 module.exports = class Store {
-  config
-
-  constructor() {
-    try {
-      this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
-    } catch (e) {
-      // in case of some permission issues the configstore throws
-      // so fallback to a simple in memory config
-      this.config = {
-        get: key => this.config[key],
-        set: (key, value) => (this.config[key] = value),
-        all: this.config,
-      }
-    }
-  }
-
-  getConfig(key) {
-    if (key) {
-      return this.config.get(key)
-    }
-    return this.config.all
-  }
-
-  updateConfig(...fields) {
-    this.config.set(...fields)
+  constructor(parentFolder) {
+    this.parentFolder = parentFolder
   }
 
   appendToBuffer(event) {
     const bufferPath = this.getBufferFilePath()
+    console.log(bufferPath)
     try {
       appendFileSync(bufferPath, event, `utf8`)
     } catch (e) {
@@ -47,14 +24,13 @@ module.exports = class Store {
   }
 
   getBufferFilePath() {
-    const filePath = this.config.path
-    const parentFolder = path.dirname(filePath)
+    // TODO: Don't run this for every event
     try {
-      ensureDirSync(parentFolder)
+      ensureDirSync(this.parentFolder)
     } catch (e) {
       //ignore
     }
-    return path.join(parentFolder, `events.json`)
+    return path.join(this.parentFolder, `events.json`)
   }
 
   async startFlushEvents(flushOperation) {
