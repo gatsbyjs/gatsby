@@ -2,7 +2,12 @@ const startVerdaccio = require(`verdaccio`).default
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-const { promisifiedSpawn, getMonorepoPackageJsonPath } = require(`./utils`)
+
+const {
+  promisifiedSpawn,
+  getMonorepoPackageJsonPath,
+  registerCleanupTask,
+} = require(`./utils`)
 
 let VerdaccioInitPromise = null
 
@@ -116,11 +121,11 @@ const adjustPackageJson = ({
 
   return {
     newPackageVersion: monorepoPKGjson.version,
-    unadjustPackageJson: () => {
+    unadjustPackageJson: registerCleanupTask(() => {
       // restore original package.json
       fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
       unignorePackageJSONChanges()
-    },
+    }),
   }
 }
 
@@ -134,9 +139,9 @@ const createTemporaryNPMRC = ({ pathToPackage }) => {
   const NPMRCPath = path.join(pathToPackage, `.npmrc`)
   fs.outputFileSync(NPMRCPath, NPMRCContent)
 
-  return () => {
+  return registerCleanupTask(() => {
     fs.removeSync(NPMRCPath)
-  }
+  })
 }
 
 const publishPackage = async ({
