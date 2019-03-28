@@ -35,7 +35,7 @@ export default function socketIo() {
             if (didDataChange(msg, pageQueryData)) {
               pageQueryData = {
                 ...pageQueryData,
-                [msg.payload.id]: msg.payload.result,
+                [msg.payload.id]: msg.payload,
               }
             }
           } else if (msg.type === `overlayError`) {

@@ -383,15 +383,6 @@ const queue = {
           page,
           pageResources,
         })
-
-        // Tell plugins the path has been successfully prefetched
-        const pageDataUrl = makePageDataUrl(realPath)
-        const componentUrls = createComponentUrls(componentChunkName)
-        const resourceUrls = [pageDataUrl].concat(componentUrls)
-        onPostPrefetch({
-          path: rawPath,
-          resourceUrls,
-        })
       }
 
       if (process.env.NODE_ENV !== `production`) {
@@ -410,6 +401,14 @@ const queue = {
               return
             }
             finalResolve(component)
+            // Tell plugins the path has been successfully prefetched
+            const pageDataUrl = makePageDataUrl(realPath)
+            const componentUrls = createComponentUrls(componentChunkName)
+            const resourceUrls = [pageDataUrl].concat(componentUrls)
+            onPostPrefetch({
+              path: rawPath,
+              resourceUrls,
+            })
           })
       }
     }),

@@ -69,12 +69,13 @@ module.exports = async function build(program: BuildArgs) {
     payload: webpackCompilationHash,
   })
 
+  const state = store.getState()
   activity = report.activityTimer(`run page queries`)
   activity.start()
-  await queryRunner.processPageQueries(pageQueryIds, {
-    activity,
-    state: store.getState(),
-  })
+  await queryRunner.processQueries(
+    pageQueryIds.map(id => queryRunner.makePageQueryJob(state, id)),
+    { activity }
+  )
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
