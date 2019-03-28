@@ -64,7 +64,7 @@ If you are using a headless CMS, the static content is fetched at build time and
 
 Fortunately, this is an easy fix using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/). This means not committing your `accessToken` to the git repository for all the world to read. Instead it is stored securely on the build server and your Contentful config reads like this:
 
-```js
+```js:title=gatsby-config.js
 {
   resolve: `gatsby-source-contentful`,
   options: {
