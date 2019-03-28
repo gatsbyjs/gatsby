@@ -11,43 +11,31 @@ const { ensureDirSync } = require(`fs-extra`)
 module.exports = class Store {
   constructor(parentFolder) {
     this.parentFolder = parentFolder
+    this.bufferFilePath = path.join(this.parentFolder, `events.json`)
   }
 
   appendToBuffer(event) {
-    const bufferPath = this.getBufferFilePath()
-    console.log(bufferPath)
     try {
-      appendFileSync(bufferPath, event, `utf8`)
+      appendFileSync(this.bufferFilePath, event, `utf8`)
     } catch (e) {
       //ignore
     }
-  }
-
-  getBufferFilePath() {
-    // TODO: Don't run this for every event
-    try {
-      ensureDirSync(this.parentFolder)
-    } catch (e) {
-      //ignore
-    }
-    return path.join(this.parentFolder, `events.json`)
   }
 
   async startFlushEvents(flushOperation) {
     const now = Date.now()
-    const filePath = this.getBufferFilePath()
     try {
-      if (!existsSync(filePath)) {
+      if (!existsSync(this.bufferFilePath)) {
         return
       }
     } catch (e) {
       // ignore
       return
     }
-    const newPath = `${filePath}-${now}`
+    const newPath = `${this.bufferFilePath}-${now}`
 
     try {
-      renameSync(filePath, newPath)
+      renameSync(this.bufferFilePath, newPath)
     } catch (e) {
       // ignore
       return

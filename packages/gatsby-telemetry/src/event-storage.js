@@ -23,10 +23,16 @@ module.exports = class EventStorage {
       //   set: (key, value) => (this.config[key] = value),
       //   all: this.config,
       // }
-      // Log this event
+      // TODO: Log this event
     }
 
     const parentFolder = path.dirname(this.config.path)
+
+    try {
+      ensureDirSync(parentFolder)
+    } catch (e) {
+      // TODO: Log this event
+    }
 
     this.store = new Store(parentFolder)
     this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
