@@ -2,7 +2,7 @@
 title: Cheat Sheet
 ---
 
-The Gatsby team has created a resource that you might find useful when building a Gatsby site: a cheat sheet with all the top commands and development tips! Feel free to <a href="/gatsby-cheat-sheet.pdf" download>download it</a> to print yourself a copy.
+The Gatsby team has created a resource that you might find useful when building a Gatsby site: a cheat sheet with all the top commands and development tips! Feel free to download it and reference digitally or print yourself a copy. For related online information, visit the [Quick Start](/docs/quick-start/) page.
 
 Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</a>
 
@@ -18,7 +18,7 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
 </figure>
 
 <div id="cheat_sheet-text" style=" position: absolute; height: 1px; width: 1px;overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">
-    <h2>Gatsby Cheat Sheet</h2>
+    <h2>Gatsby Cheat Sheet contents</h2>
     <p>v1.0 for Gatsby 2.x
         <a href="https://gatsby.dev/cheatsheet">Latest version <span aria-hidden="true">↗</span></a>
     </p>
