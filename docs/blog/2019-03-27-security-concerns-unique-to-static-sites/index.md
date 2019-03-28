@@ -119,7 +119,7 @@ Your site needs to be able to access your unique Firebase instance, to authentic
 
 This is also the case with Cloudinary. While they have a private API key (a secret) required to access private content, they also require an API key for [anonymous uploads](https://cloudinary.com/documentation/upload_images#unsigned_upload). This key is designed to be public and is used as a unique identifier of your cloud instance and not as a security measure.
 
-It can difficult to know whether an API key should be kept secret. If the page giving you the keys does not specify, check the docs. If all else fails use a search engine, someone on Stack Overflow has already asked.
+It can difficult to know whether an API key should be kept secret. If the page giving you the keys does not specify, check the docs. If all else fails use a search engine: someone on Stack Overflow has likely already asked.
 
 ## Conclusion
 
