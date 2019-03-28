@@ -2,6 +2,7 @@ const path = require(`path`)
 const Store = require(`./store`)
 const fetch = require(`node-fetch`)
 const Configstore = require(`configstore`)
+const { ensureDirSync } = require(`fs-extra`)
 
 const isTruthy = require(`./is-truthy`)
 
