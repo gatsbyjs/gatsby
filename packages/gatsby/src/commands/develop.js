@@ -177,6 +177,18 @@ async function startServer(program) {
     })
   )
 
+  const mapToObject = map => {
+    const obj = {}
+    for (let [key, value] of map) {
+      obj[key] = value
+    }
+    return obj
+  }
+
+  app.get(`/___pages`, (req, res) => {
+    res.json(mapToObject(store.getState().pages))
+  })
+
   // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
   app.use((req, res, next) => {
     res.header(`Access-Control-Allow-Origin`, `*`)
