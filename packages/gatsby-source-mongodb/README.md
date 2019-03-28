@@ -51,6 +51,18 @@ module.exports = {
 - **clienOptions**: for setting options on the creation of a `new MongoClient`. By default, to handle the various connection URI's necessary for newer versions of MongoDB Atlas, for instance, we pass { `useNewUrlParser`: `true` }. You can override the default by passing either an empty object literal or filled with other valid connection options These are the subset of connection options that have to be passed as part of an object to the creation of a new `MongoClient` instance: http://mongodb.github.io/node-mongodb-native/3.1/reference/connecting/connection-settings/
 - **preserveObjectIds**: if you use `ObjectID`s to store relationships between documents and collections, set this to the Boolean `true`, ex: preserveObjectIds: `true`. Please note, this uses a recursive algorithm to walk through each document tree and replace instances of `ObjectID` with a valid string. For large datasets, this could slow down the build process.
 
+##### How does _preserveObjectIds_ affect peformance?
+
+|  Items |                                                                                Breakdown | Source & Transform (sec) | queries / sec | Bootstrap Finished (sec) |
+| -----: | ---------------------------------------------------------------------------------------: | -----------------------: | ------------: | -----------------------: |
+|    100 |             Categories (20), Comments (100), Posts (100 w/3 Categories Each), Users (20) |                    3.290 |         72.31 |                   11.887 |
+|   1000 |           Categories (50), Comments (1000), Posts (1000 w/3 Categories Each), Users (50) |                    5.114 |         51.19 |                   14.465 |
+|   2000 |         Categories (100), Comments (2000), Posts (2000 w/3 Categories Each), Users (100) |                    6.568 |         40.02 |                   16.121 |
+|   5000 |         Categories (200), Comments (5000), Posts (5000 w/3 Categories Each), Users (200) |                    8.896 |         28.37 |                   19.635 |
+|  10000 |       Categories (500), Comments (10000), Posts (10000 w/3 Categories Each), Users (500) |                   16.258 |         22.36 |                   27.951 |
+|  50000 |     Categories (2000), Comments (50000), Posts (50000 w/3 Categories Each), Users (2000) |                  247.940 |          8.13 |                  260.558 |
+| 100000 | Categories (20000), Comments (100000), Posts (100000 w/3 Categories Each), Users (20000) |                  815.137 |          3.62 |                  836.335 |
+
 ### Mapping mediatype feature
 
 Gatsby supports transformer plugins that know how to transform one data type to
