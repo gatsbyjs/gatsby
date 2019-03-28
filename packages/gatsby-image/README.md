@@ -138,12 +138,12 @@ import Img from "gatsby-image/withIEPolyfill"
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img 
+    <Img
       fixed={data.file.childImageSharp.fixed}
       objectFit="cover"
       objectPosition="50% 50%"
       alt=""
-     />
+    />
   </div>
 )
 
@@ -352,9 +352,10 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
 | `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
-| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`. 
+| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.          |
+
 |
-| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`. 
+| `objectPosition` | `string` | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.
 |
 
 ## Image processing arguments
