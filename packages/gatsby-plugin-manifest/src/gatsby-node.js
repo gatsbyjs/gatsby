@@ -86,9 +86,9 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
       throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
     }
 
-    let sharpIcon = sharp(icon)
+    const sharpIcon = sharp(icon)
 
-    let metadata = await sharpIcon.metadata()
+    const metadata = await sharpIcon.metadata()
 
     if (metadata.width !== metadata.height) {
       reporter.warn(

@@ -20,7 +20,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
   // If icons were generated, also add a favicon link.
   if (pluginOptions.icon) {
-    let favicon = icons && icons.length ? icons[0].src : null
+    const favicon = icons && icons.length ? icons[0].src : null
 
     if (cacheBusting !== `none`) {
       iconDigest = createContentDigest(fs.readFileSync(pluginOptions.icon))
@@ -54,7 +54,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
-    let insertMetaTag =
+    const insertMetaTag =
       typeof pluginOptions.theme_color_in_head !== `undefined`
         ? pluginOptions.theme_color_in_head
         : true
