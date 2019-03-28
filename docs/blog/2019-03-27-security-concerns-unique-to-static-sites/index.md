@@ -107,9 +107,9 @@ One great option is to check out Netlify. They will provide great static hosting
 
 What does this API allow? First, you can secure your database. Any API keys can be secured on your serverless...server 😭. The point is, they will be secure. But what does this gain you? After all, instead of pillaging your database directly you have given them an API through which to pillage.
 
-Control, you have gained the ability to add rate limiting, better logging, auto blocking of IPs, etc. You can throw the proverbial "secure API handbook" (except for the authentication part) at your users to make sure they behave. More aggressively, you could use a secure cookie for your site to uniquely and anonymously identify each user. This would assist in the previously mentioned security practices and, while not hard to delete a cookie, adds another layer of security.
+**Control:** You have gained the ability to add rate limiting, better logging, auto blocking of IPs, etc. You can throw the proverbial "secure API handbook" (except for the authentication part) at your users to make sure they behave. More aggressively, you could use a secure cookie for your site to uniquely and anonymously identify each user. This would assist in the previously mentioned security practices and, while not hard for a user to delete a cookie, it adds another layer of security.
 
-In the end if you need hardened security, you need authentication. If you want a simpler solution for simpler features, these suggestions might just help. Remember, if you need access a database and you already have authentication, do not ship those secure API keys to the client!
+In the end if you need hardened security, you need authentication. If you want a simpler solution for basic features, these suggestions might just help. Remember, if you need access to a database and you already have authentication, do not ship those secure API keys in the client-side code!
 
 ### Exceptions
 
