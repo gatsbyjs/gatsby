@@ -13,7 +13,7 @@ Among the many lauded benefits of using a static site generator (i.e. Gatsby) is
 
 Please understand, there are whole classes of security vulnerabilities that are eliminated by using Gatsby. But, there are still others that are shared and some that are created. You just need to make sure you're aware of those new concerns and how to remedy them. But, what security vulnerabilities exist in Gatsby sites and how do you avoid them?
 
-This article will briefly cover shared security concerns that exist between all flavors of website. It will then take dive deeper on those security concerns unique to static sites.
+This article will briefly cover shared security concerns that exist between all flavors of websites. It will then dive deeper on the security concerns unique to static sites.
 
 ## Defining Terms
 
