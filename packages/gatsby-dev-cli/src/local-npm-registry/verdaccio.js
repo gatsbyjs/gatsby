@@ -26,7 +26,6 @@ const verdaccioConfig = {
       url: `https://registry.npmjs.org/`,
     },
   },
-  self_path: path.join(__dirname, `..`, `verdaccio`),
 }
 
 const registryUrl = `http://localhost:${verdaccioConfig.port}`
