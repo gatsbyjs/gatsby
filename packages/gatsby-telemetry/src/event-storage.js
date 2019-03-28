@@ -1,3 +1,4 @@
+const os = require(`os`)
 const path = require(`path`)
 const Store = require(`./store`)
 const fetch = require(`node-fetch`)
@@ -17,14 +18,15 @@ module.exports = class EventStorage {
     try {
       this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
     } catch (e) {
-      // in case of some permission issues the configstore throws
-      // so fallback to a simple in memory config
-      // this.config = {
-      //   get: key => this.config[key],
-      //   set: (key, value) => (this.config[key] = value),
-      //   all: this.config,
-      // }
-      // TODO: Log this event
+      // This should never happen
+      this.config = {
+        get: key => this.config[key],
+        set: (key, value) => (this.config[key] = value),
+        all: this.config,
+        path: os.tmpdir(),
+        "telemetry.enabled": true,
+        "telemetry.machineId": `not-a-machine-id`,
+      }
     }
 
     const parentFolder = path.dirname(this.config.path)
