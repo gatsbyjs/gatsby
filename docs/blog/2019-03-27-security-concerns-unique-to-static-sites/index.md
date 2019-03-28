@@ -58,7 +58,7 @@ So, you could have private-static content, private-dynamic content, public-stati
 
 ### Public Static Content
 
-This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](https://www.gatsbyjs.org/docs/source-plugin-tutorial/). Whatever platform, whether it be a GitHub repository or a headless CMS, that platform is charged with securing your content from unauthorized reads and writes.
+This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/source-plugin-tutorial/). Whatever source platform you use, whether it be a GitHub repository or a headless CMS, that platform is charged with securing your content from unauthorized reads and writes.
 
 If you are using a headless CMS, the static content is fetched at build time and Gatsby will need api key to do so. For example, [gatsby-source-contentful](https://www.gatsbyjs.org/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it to the public would mean anyone could take your structured data and use it any way they want.
 
