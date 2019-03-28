@@ -28,7 +28,15 @@ const traversePackagesDeps = ({
   depTree = {},
 }) => {
   packages.forEach(p => {
-    const pkgJson = require(path.join(root, `packages`, p, `package.json`))
+    let pkgJson
+    try {
+      pkgJson = require(path.join(root, `packages`, p, `package.json`))
+    } catch {
+      console.error(`"${p}" package doesn't exist in monorepo.`)
+      // remove from seenPackages
+      seenPackages = seenPackages.filter(seenPkg => seenPkg !== p)
+      return
+    }
 
     const fromMonoRepo = _.intersection(
       Object.keys({ ...pkgJson.dependencies }),
@@ -104,6 +112,11 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     packages,
     monoRepoPackages,
   })
+
+  if (allPackagesToWatch.length === 0) {
+    console.error(`There are no packages to watch.`)
+    return
+  }
 
   // nice DX would be to  start `yarn watch --scope={${allPackagesToWatch}.join(`,)}`
   // probably behind some flag or configstore setting as we needed to run those
