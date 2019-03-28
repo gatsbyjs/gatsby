@@ -6,7 +6,6 @@ const {
   existsSync,
   unlinkSync,
 } = require(`fs`)
-const { ensureDirSync } = require(`fs-extra`)
 
 module.exports = class Store {
   constructor(parentFolder) {
@@ -23,39 +22,25 @@ module.exports = class Store {
   }
 
   async startFlushEvents(flushOperation) {
+    // TODO: Think about concurrent processes
     const now = Date.now()
+    let success = false
+
     try {
       if (!existsSync(this.bufferFilePath)) {
         return
       }
-    } catch (e) {
-      // ignore
-      return
-    }
-    const newPath = `${this.bufferFilePath}-${now}`
-
-    try {
+      const newPath = `${this.bufferFilePath}-${now}`
       renameSync(this.bufferFilePath, newPath)
-    } catch (e) {
-      // ignore
-      return
-    }
-    let contents
-    try {
-      contents = readFileSync(newPath, `utf8`)
+      const contents = readFileSync(newPath, `utf8`)
       unlinkSync(newPath)
-    } catch (e) {
-      //ignore
-      return
-    }
 
-    // There is still a chance process dies while sending data and some events are lost
-    // This will be ok for now, however
-    let success = false
-    try {
+      // There is still a chance process dies while sending data and some events are lost
+      // This will be ok for now, however
       success = await flushOperation(contents)
     } catch (e) {
       // ignore
+      // TODO: Log this event
     } finally {
       // if sending fails, we write the data back to the log
       if (!success) {
