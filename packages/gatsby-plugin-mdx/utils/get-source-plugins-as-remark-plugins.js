@@ -41,7 +41,6 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
 
   // return list of remarkPlugins
   const userPlugins = gatsbyRemarkPlugins
-    .map(plugin => (_.isString(plugin) ? { resolve: plugin } : plugin))
     .filter(plugin => {
       if (_.isFunction(require(plugin.resolve))) {
         return true;

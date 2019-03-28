@@ -33,11 +33,6 @@ module.exports = (
   const options = defaultOptions(pluginOptions);
 
   for (let plugin of options.gatsbyRemarkPlugins) {
-    if (!plugin.resolve) {
-      throw new Error(
-        'gatsby-remark plugins must be configured in the form {resolve: "plugin", options: {}}'
-      );
-    }
     debug("requiring", plugin.resolve);
     const requiredPlugin = require(plugin.resolve);
     debug("required", plugin);
@@ -47,10 +42,14 @@ module.exports = (
       )) {
         if (_.isArray(parserPlugin)) {
           const [parser, parserPluginOptions] = parserPlugin;
-          debug("adding mdPlugin with options", plugin, parserPluginOptions);
+          debug(
+            "adding remarkPlugin with options",
+            plugin,
+            parserPluginOptions
+          );
           options.remarkPlugins.push([parser, parserPluginOptions]);
         } else {
-          debug("adding mdPlugin", plugin);
+          debug("adding remarkPlugin", plugin);
           options.remarkPlugins.push(parserPlugin);
         }
       }

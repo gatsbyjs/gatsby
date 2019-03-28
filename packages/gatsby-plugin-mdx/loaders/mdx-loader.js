@@ -2,6 +2,7 @@ const _ = require("lodash");
 const { getOptions } = require("loader-utils");
 const grayMatter = require("gray-matter");
 const unified = require("unified");
+const babel = require("@babel/core");
 
 const {
   isImport,
@@ -14,6 +15,7 @@ const {
 const toMDAST = require("remark-parse");
 const squeeze = require("remark-squeeze-paragraphs");
 const debug = require("debug")("gatsby-mdx:mdx-loader");
+const debugMore = require("debug")("gatsby-mdx-info:mdx-loader");
 
 const genMdx = require("../utils/gen-mdx");
 const withDefaultOptions = require("../utils/default-options");
@@ -130,7 +132,7 @@ module.exports = async function(content) {
     debug("inserting default layout", defaultLayout);
     const { content: contentWithoutFrontmatter, matter } = grayMatter(content);
 
-    code = `${matter}
+    code = `${matter ? matter : ""}
 
 import DefaultLayout from "${slash(defaultLayout)}"
 
@@ -159,7 +161,22 @@ ${contentWithoutFrontmatter}`;
   });
 
   try {
-    return callback(null, rawMDXOutput);
+    const result = babel.transform(rawMDXOutput, {
+      configFile: false,
+      plugins: [
+        require("@babel/plugin-syntax-jsx"),
+        require("@babel/plugin-syntax-object-rest-spread"),
+        require("../utils/babel-plugin-html-attr-to-jsx-attr")
+      ]
+    });
+    debugMore("transformed code", result.code);
+    return callback(
+      null,
+      `import React from 'react'
+  import { MDXTag } from '@mdx-js/tag'
+  ${result.code}
+      `
+    );
   } catch (e) {
     callback(e);
   }
