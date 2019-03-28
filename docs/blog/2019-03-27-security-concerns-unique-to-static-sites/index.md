@@ -93,7 +93,7 @@ Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on
 
 Why address this scenario? Two reasons:
 
-- **Simplicity** - Consider a small blog or non-profit site where authentication is not already needed. To develop it would require a lot of time and long term investment. For users authenticating to small blog just to hit "like" is bad user experience and is probably a hurtle they will not bother jumping.
+- **Simplicity** - Consider a small blog or non-profit site where authentication is not already needed. To develop it would require a lot of time and long term investment. Users authenticating to a small blog just to hit "like" is a poor user experience and probably a hurtle they will not bother jumping.
 
 - **Privacy** - No matter the size of your platform, requiring user to authenticate means having to secure private data. This requires time and money. Alternatively, as a platform, you may decide your users' privacy is more important.
 
