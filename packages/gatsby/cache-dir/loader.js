@@ -108,7 +108,13 @@ const fetchUrl = url =>
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
         if (req.status === 200) {
-          resolve(JSON.parse(req.responseText))
+          // TODO is this safe? Maybe just do this check in dev mode?
+          const contentType = req.getResponseHeader(`content-type`)
+          if (!contentType || !contentType.startsWith(`application/json`)) {
+            reject()
+          } else {
+            resolve(JSON.parse(req.responseText))
+          }
         } else {
           reject()
         }
@@ -290,12 +296,9 @@ const queue = {
     )
     if (realPath in pathScriptsCache) {
       return pathScriptsCache[realPath]
-    }
-    // TODO add this back in?
-    // else if (shouldFallbackTo404Resources(realPath)) {
-    //   return queue.getResourcesForPathnameSync(`/404.html`)
-    // }
-    else {
+    } else if (shouldFallbackTo404Resources(realPath)) {
+      return queue.getResourcesForPathnameSync(`/404.html`)
+    } else {
       return null
     }
   },

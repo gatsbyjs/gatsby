@@ -20,7 +20,7 @@ export default function socketIo() {
 
         const didDataChange = (msg, queryData) =>
           !(msg.payload.id in queryData) ||
-          JSON.stringify(msg.payload.result) !==
+          JSON.stringify(msg.payload) !==
             JSON.stringify(queryData[msg.payload.id])
 
         socket.on(`message`, msg => {

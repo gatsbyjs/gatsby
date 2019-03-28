@@ -28,14 +28,14 @@ const getCachedPageData = (
     fixedPagePath,
     `page-data.json`
   )
-  const fileResult = fs.readFileSync(filePath, `utf-8`)
-  if (fileResult === undefined) {
-    return null
-  } else {
+  try {
+    const fileResult = fs.readFileSync(filePath, `utf-8`)
     return {
       ...JSON.parse(fileResult),
       id: pagePath,
     }
+  } catch (err) {
+    return null
   }
 }
 
