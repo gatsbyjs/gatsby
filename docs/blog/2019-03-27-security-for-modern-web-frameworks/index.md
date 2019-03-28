@@ -1,19 +1,19 @@
 ---
-title: Security for static sites.
+title: Security for Modern Web Frameworks.
 date: 2019-03-27
 author: Alex Moon
-excerpt: "While more secure than their server side counterparts, static sites provide new and unique security concerns."
+excerpt: "While more secure than their server-side counterparts, modern web frameworks provide new and unique security concerns."
 tags:
   - security
   - api
   - JAMstack
 ---
 
-Among the many lauded benefits of using a static site generator (i.e. Gatsby) is security. So much so, that in the Gatsby blog there has never been a single post focussed on mitigating security issues. There is not even a doc! This is troubling, because, it creates the myth that there are no security issues to worry about. HINT: You should still be worried about security.
+Among the many lauded benefits of using Gatsby (and other client-side frameworks) is security. It is really nice to see a framework not require developers to stress about security, however. For those new to Gatsby or web development, this can contribute to a myth that there are no security issues.
 
-Please understand, there are whole classes of security vulnerabilities that are eliminated by using Gatsby. But, there are still others that are shared and some that are created. You just need to make sure you're aware of those new concerns and how to remedy them. But, what security vulnerabilities exist in Gatsby sites and how do you avoid them?
+Please understand, there are whole classes of security vulnerabilities that are eliminated by using Gatsby for web development. But, there are still others that are shared and some that are created. You need to make sure you are aware of these possible vulnerabilities and how to remedy them.
 
-This article will briefly cover shared security concerns that exist between all flavors of websites. It will then dive deeper on the security concerns unique to static sites.
+This article will briefly cover shared security concerns that exist between all flavors of websites. It will then dive deeper on the security concerns unique to modern web frameworks.
 
 ## Defining Terms
 
@@ -21,27 +21,32 @@ These are not to be considered universal definitions, just how the author will u
 
 - **site** - Any website, web-app, or other content you can browse on the internet in a web browser.
 
-- **server-side site** - Any site that renders content on the server, at time of request -- whether using node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
+- **server-side site** - Any site that pre-processes code at time of request -- whether using node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
 
-- **client-side site** - Gatsby only generates static sites. Single Page Apps (SPAs) are different but any security issue affecting a pure static site will also affect an SPA. Collectively both methods deliver all needed assets(HTML/CSS/JS) to the client for site rendering.
+- **client-side site** - Any site (GatsbyJS, NuxtJS, NextJS, Single Page App, etc...) where static files(HTML/CSS/JS) are shipped to the browser for processing -- pre-processing may happen at build time, but does not happen time of request.
 
-- **attack vector** - A resource through which to hack a site. Just because an attack vector exists doesn't mean your site is vulnerable to that attack, however. A server is an attack vector; but, the server requires a vulnerability for an attacker to exploit (use) that server as an attack vector.
+- **attack vector** - A resource through which to hack a site. Just because an attack vector exists does not mean your site is vulnerable to that attack, however. A server is an attack vector; but, the server requires a vulnerability for an attacker to exploit (use) that server as an attack vector.
 
 ## Shared Security Concerns
 
 No matter how you deploy your site, how little JavaScript you use, whether it is sever-side or client-side: your site has attack vectors.
 
-When it comes to static sites, if you are going to get hacked, it is going to be at the infastructure level (server/CDN, DNS, CI, etc.) or network level([MitM](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)). Thanks to the cloud, most of this work is done for you and you do not have to secure these layers. As long as you are using two-factor authentication(2FA) and a strong password. You are all using 2FA (when possible) and strong passwords, right!? Good.
+When it comes to client-side sites, if you are going to get hacked, it is likely going to be at the infrastructure or network level:
+
+- **Infrastructure** - This might be your CDN, code repository, DNS, CI, etc. Thanks to the cloud, most of the work securing this layer is done for you. As long as, you are using two-factor authentication (2FA) and a strong password. You are all using 2FA (when possible) and strong passwords, right!? Good.
+
+- **Network** - This kind of attack happens when an attacker can access to the network being used to access your site. It could be a rouge third-party in your cloud provider, or someone sitting across the coffee shop on the same public WiFi as your user. The exact attack methods vary, but are collectively referred to as a [Man-in-the-Middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack.
+  The defense here is HTTPS (TLS encryption). Other related technologies such as [Cross-Origin-Resource-Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security), [Public Key Pinning](*https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning), and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) all assist in securing network traffic. No matter who is looking at your network traffic, they can not read or modify it.
 
 Other possible attacks relate to using `iframes` or not removing referrer tags on external links. Thankfully, fixing these is a pretty low bar. This [article](https://blog.sqreen.com/static-websites-security/) covers all these security issues well and includes solutions and deeper discussion.
 
 ## Unique Security Concerns
 
-When you ship **everything** to the browser, the user can access **everything**. No amount of minification or obfuscation can hide the code and content you're shipping. If a user knows how to use their browsers dev tools, the user can get that content. This makes showing dynamic or private content on client-side sites seemingly impossible. This is why server-side rendering of sites was invented.
+When you ship **everything** to the browser, the user can access **everything**. No amount of minification or obfuscation can hide the code and content you are shipping. If a user knows how to use their browser's dev tools, the user can get that content. This makes showing dynamic or private content on client-side sites seemingly impossible. This is why server-side rendering of sites was invented.
 
 In the server-side world the solution is to...well there is not really a problem to begin with because all the secrets and private content is secured on a server. The client browser never needs to directly access them. The server fetches content from the API or database, and sends back only the content the client is authorized to access.
 
-How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org/)". Hopefully you're all fairly familiar with this concept given you're building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs (accessed by JavaScript) to provide content and features. All of this is done from the client-side.
+How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org/)". Hopefully you are all fairly familiar with this concept given you are building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs (accessed by JavaScript) to provide content and features. All of this is done from the client-side.
 
 The biggest security struggle with client-side sites is securing those APIs. Most APIs require an API key or another kind of authentication. Simply adding those secrets to the code only further obfuscates access to the same content. It does nothing to actually secure that content.
 
@@ -60,7 +65,7 @@ So, you could have private-static content, private-dynamic content, public-stati
 
 This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/source-plugin-tutorial/). Whatever source platform you use, whether it be a GitHub repository or a headless CMS, that platform is charged with securing your content from unauthorized reads and writes.
 
-If you are using a headless CMS, the static content is fetched at build time and Gatsby will need api key to do so. For example, [gatsby-source-contentful](https://www.gatsbyjs.org/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it to the public would mean anyone could take your structured data and use it any way they want.
+If you are using a headless CMS, the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it to the public in your code would mean anyone could take your structured data and use it any way they want.
 
 Fortunately, this is an easy fix using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/). This means not committing your `accessToken` to the git repository for all the world to read. Instead it is stored securely on the build server and your Contentful config reads like this:
 
@@ -95,13 +100,13 @@ Why address this scenario? Two reasons:
 
 - **Simplicity** - Consider a small blog or non-profit site where authentication is not already needed. To develop it would require a lot of time and long term investment. Users authenticating to a small blog just to hit "like" is a poor user experience and probably a hurtle they will not bother jumping.
 
-- **Privacy** - No matter the size of your platform, requiring user to authenticate means having to secure private data. This requires time and money. Alternatively, as a platform, you may decide your users' privacy is more important.
+- **Privacy** - No matter the size of your platform, requiring users to authenticate means having to secure private data: this requires time and money. Alternatively, as a platform, you may decide your users' privacy is more important then better security controls.
 
 Using Medium's "clap" feature as example, what are the security issues? First, we would need some kind of database to store the claps. Do we leave no security mechanism on this database for reads and writes? We could add security, but then the necessary API key has to be shipped in the code and the user can access it. Either way, your more nefarious users could access this database; reading and (more importantly) writing to their devious heart's content.
 
-There is a small blog that does this very thing. They build the Firebase credentials into the code at build time. Because this is a small blog, and their is no real incentive for someone to add or delete claps, this blogger is probably safe. What is the worse case scenario? Someone deletes their claps? Gives all their posts a million claps? Maybe this is defeating the point of a security post. But security is bout threat assessment. This blogger is clearly not worried about a nation state hacking their claps or someone gaming a system. Nothing but authentication is going to solve those kinds of issues.
+There is a small blog that does this very thing. They build the Firebase credentials into the code at build time. Because this is a small blog, and there is no real incentive for someone to add or delete claps, this blogger is probably safe. What is the worse case scenario? Someone deletes their claps? Gives all their posts a million claps? Maybe this is defeating the point of a security post. But security is about threat assessment. This blogger is clearly not worried about a nation state hacking their claps or someone gaming the system. Nothing but authentication is going to solve those kinds of issues
 
-Assuming Russia is not trying to hack you and you would like to better secure your claps, what are you options? You need an API.
+Assuming a nation state is not trying to attack you, what are you options for better security? You need an API.
 
 One great option is to check out Netlify. They will provide great static hosting and allow you to deploy serverless functions right along side your Gatsby site. They are not the only ones: Azure, Google, Amazon, Zeit.co, and others all have API solutions.
 
@@ -113,7 +118,7 @@ In the end if you need hardened security, you need authentication. If you want a
 
 ### Exceptions
 
-Every good rule has its exceptions. Never shipping API keys in client-side code is no exception. Let me be clear, you should never ship **SECURE** API keys (often called secrets) to a client. But, there is such a thing as non-secure/public API keys. These keys are generally used for identification and not for access control. Firebase authentication is a great example of this.
+Every good rule has its exceptions. Never shipping API keys in client-side code is no exception. To be clear, you should never ship **SECURE** API keys (often called secrets) to a client. But, there is such a thing as non-secure/public API keys. These keys are generally used for identification and not for access control. Firebase authentication is a great example of this.
 
 Your site needs to be able to access your unique Firebase instance, to authenticate users. To do this, Firebase uses an API key to identify your app. This key is [designed to be public](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public) and their documentation tells you to add it to your client-side code. [Firebase has other controls](https://stackoverflow.com/questions/35418143/how-to-restrict-firebase-data-modification) that determine what an anonymous user is allowed to do with this key.
 
@@ -123,8 +128,8 @@ It can difficult to know whether an API key should be kept secret. If the page g
 
 ## Conclusion
 
-Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in your client-side code. 
+Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in your client-side code.
 
-Now go make awesome Gatsby sites that are completely secure!
+Now go make awesome Gatsby sites that are completely secure! Fo more information on web security checkout the [OWASP Top Ten](https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf). The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or innaccurate information. It is your responsibility to properly secure your sites.
