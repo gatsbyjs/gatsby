@@ -54,10 +54,10 @@ What's the solution? Well there are several problems to solve.
 
 **Quick Definitions**:
 
-- Private - unique to a person or group of people using your site.
-- Public - accessible to any and all users on your site.
-- Dynamic - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
-- Static - any content that changes less than once in a given 5 minute interval.
+- **Private** - unique to a person or group of people using your site.
+- **Public** - accessible to any and all users on your site.
+- **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
+- **Static** - any content that changes less than once in a given 5 minute interval.
 
 So, you could have private-static content, private-dynamic content, public-static content, and public-dynamic content. You also need to be aware of whether you are securing the ability to read or write content. Without further delay, in order of difficulty...
 
