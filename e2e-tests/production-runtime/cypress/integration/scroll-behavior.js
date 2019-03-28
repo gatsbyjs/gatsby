@@ -1,46 +1,46 @@
 describe(`Scroll behaviour`, () => {
-  // it(`should restore scroll position only when going back in history`, () => {
-  //   cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+  it(`should restore scroll position only when going back in history`, () => {
+    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
 
-  //   cy.getTestElement(`long-page`)
-  //     .click()
-  //     .waitForAPI(`onRouteUpdate`)
+    cy.getTestElement(`long-page`)
+      .click()
+      .waitForAPI(`onRouteUpdate`)
 
-  //   cy.scrollTo(`bottom`)
+    cy.scrollTo(`bottom`)
 
-  //   // allow ScrollContext to update scroll position store
-  //   // it uses requestAnimationFrame so wait a bit to allow
-  //   // it to store scroll position
-  //   cy.wait(500)
+    // allow ScrollContext to update scroll position store
+    // it uses requestAnimationFrame so wait a bit to allow
+    // it to store scroll position
+    cy.wait(500)
 
-  //   cy.getTestElement(`below-the-fold`)
-  //     .click()
-  //     .waitForAPI(`onRouteUpdate`)
+    cy.getTestElement(`below-the-fold`)
+      .click()
+      .waitForAPI(`onRouteUpdate`)
 
-  //   // after going back we expect page will
-  //   // be restore previous scroll position
-  //   cy.go(`back`).waitForAPI(`onRouteUpdate`)
+    // after going back we expect page will
+    // be restore previous scroll position
+    cy.go(`back`).waitForAPI(`onRouteUpdate`)
 
-  //   cy.window().then(win => {
-  //     expect(win.scrollY).not.to.eq(0, 0)
-  //   })
+    cy.window().then(win => {
+      expect(win.scrollY).not.to.eq(0, 0)
+    })
 
-  //   cy.go(`forward`).waitForAPI(`onRouteUpdate`)
+    cy.go(`forward`).waitForAPI(`onRouteUpdate`)
 
-  //   // after clicking link we expect page will be scrolled to top
-  //   cy.getTestElement(`long-page`)
-  //     .click()
-  //     .waitForAPI(`onRouteUpdate`)
+    // after clicking link we expect page will be scrolled to top
+    cy.getTestElement(`long-page`)
+      .click()
+      .waitForAPI(`onRouteUpdate`)
 
-  //   cy.window().then(win => {
-  //     expect(win.scrollY).to.eq(0, 0)
-  //   })
+    cy.window().then(win => {
+      expect(win.scrollY).to.eq(0, 0)
+    })
 
-  //   // reset to index page
-  //   cy.getTestElement(`index-link`)
-  //     .click()
-  //     .waitForAPI(`onRouteUpdate`)
-  // })
+    // reset to index page
+    cy.getTestElement(`index-link`)
+      .click()
+      .waitForAPI(`onRouteUpdate`)
+  })
 
   it(`should keep track of location.key`, () => {
     cy.visit(`/`).waitForAPI(`onRouteUpdate`)
