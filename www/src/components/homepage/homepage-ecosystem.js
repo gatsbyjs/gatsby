@@ -18,8 +18,16 @@ import {
 import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+  scale,
+  letterSpacings,
+  fonts,
+} from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -27,21 +35,21 @@ const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     flex-direction: row;
-    margin: 0 -8px;
+    margin: 0 -${space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
-  margin-bottom: ${rhythm(presets.gutters.default / 2)};
-  padding: ${rhythm(options.blockMarginBottom)};
+  box-shadow: ${shadows.raised};
+  border-radius: ${radii[2]}px;
+  margin-bottom: ${space[6]};
+  padding: ${space[6]};
 
-  ${presets.Md} {
-    margin: 0 8px 0px;
-    padding: ${rhythm(options.blockMarginBottom)};
+  ${breakpoints.md} {
+    margin: 0 ${space[2]} 0;
+    padding: ${space[6]};
 
     :last-child {
       align-self: stretch;
@@ -51,27 +59,27 @@ const Section = styled(EcosystemSection)`
 
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
-  margin-top: 2rem;
+  font-size: ${scale[3]};
+  margin-bottom: ${space[1]};
+  margin-top: ${space[7]};
 
-  ${presets.Lg} {
-    margin-left: 3rem;
-    margin-bottom: 1rem;
+  ${breakpoints.lg} {
+    margin-left: ${space[9]};
+    margin-bottom: ${space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
+  margin: 0 -${space[6]};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin: 0;
     overflow-x: visible;
   }
 `
 
 const FeaturedItemsList = styled(HorizontalScrollerContent)`
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -80,17 +88,17 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${rhythm(presets.gutters.default / 2)};
+  margin-right: ${space[6]};
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     border-bottom: none;
-    margin: ${rhythm(presets.gutters.default / 2)};
+    margin: ${space[6]};
     margin-top: 0;
     margin-left: 0;
-    width: 320px;
+    width: 20rem;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-basis: 28%;
 
     :nth-of-type(4) {
@@ -99,18 +107,16 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(3 / 4)} + 1.1rem);
+    padding-left: calc(${space[5]} + ${space[6]});
     position: relative;
+    border: 0;
+    box-shadow: ${shadows.raised};
 
-    /* this ovveride the .main-body a style*/
-    box-shadow: none;
-    font-weight: normal;
-
-    ${presets.Md} {
-      border-radius: ${presets.radiusLg}px;
+    ${breakpoints.md} {
+      border-radius: ${radii[2]}px;
     }
 
-    ${presets.Lg} {
+    ${breakpoints.lg} {
       :hover {
         background: ${colors.ui.whisper};
       }
@@ -119,13 +125,13 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     :before {
       background: ${props =>
         props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
-      border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+      border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
       position: absolute;
       top: 0;
-      width: 1.1rem;
+      width: ${space[5]};
     }
 
     :after {
@@ -133,10 +139,10 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       content: "${props => props.item.type}";
       color: ${props =>
         props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
-      font-family: ${options.headerFontFamily.join(`,`)};
-      font-size: 0.8rem;
+      font-family: ${fonts.header};
+      font-size: ${scale[1]};
       left: 0;
-      letter-spacing: 0.05em;
+      letter-spacing: ${letterSpacings.tracked};
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;
@@ -169,7 +175,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
           { label: `Browse Plugins`, to: `/plugins/` },
           {
             label: `Creating Plugins`,
-            to: `/docs/plugin-authoring/`,
+            to: `/docs/how-plugins-work/`,
             secondary: true,
           },
           { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },

@@ -9,6 +9,7 @@ const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
+const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
@@ -21,6 +22,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
+const withResolverContext = require(`../schema/context`)
 require(`../db`).startAutosave()
 
 // Show stack trace on unhandled promises.
@@ -110,6 +112,10 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
+
+  telemetry.decorateEvent(`BUILD_END`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
 
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {
@@ -387,7 +393,13 @@ module.exports = async (args: BootstrapArgs) => {
 
   const graphqlRunner = (query, context = {}) => {
     const schema = store.getState().schema
-    return graphql(schema, query, context, context, context)
+    return graphql(
+      schema,
+      query,
+      context,
+      withResolverContext(context, schema),
+      context
+    )
   }
 
   // Collect pages.
@@ -431,10 +443,8 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`).build({ parentSpan: activity.span })
+  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
-
-  require(`../schema/type-conflict-reporter`).printConflicts()
 
   // Extract queries
   activity = report.activityTimer(`extract queries from components`, {
@@ -463,8 +473,16 @@ module.exports = async (args: BootstrapArgs) => {
       ).toFixed(2)} queries/second`
     )
   })
-  await runInitialQueries(activity)
+  // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+  emitter.emit(`START_QUERY_QUEUE`)
+  // END HACKY
+  runInitialQueries(activity)
+  await new Promise(resolve => queryQueue.on(`drain`, resolve))
   activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
 
   // Write out files.
   activity = report.activityTimer(`write out page data`, {
@@ -488,48 +506,19 @@ module.exports = async (args: BootstrapArgs) => {
 
   let onEndJob
 
-  const checkJobsDone = _.debounce(resolve => {
+  const checkJobsDone = _.debounce(async resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
       emitter.off(`END_JOB`, onEndJob)
 
-      report.log(``)
-      report.info(`bootstrap finished - ${process.uptime()} s`)
-      report.log(``)
-
-      // onPostBootstrap
-      activity = report.activityTimer(`onPostBootstrap`, {
-        parentSpan: bootstrapSpan,
-      })
-      activity.start()
-      apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(
-        () => {
-          activity.end()
-          bootstrapSpan.finish()
-          resolve({ graphqlRunner })
-        }
-      )
+      await finishBootstrap(bootstrapSpan)
+      resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    // onPostBootstrap
-    activity = report.activityTimer(`onPostBootstrap`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
-    activity.end()
-
-    bootstrapSpan.finish()
-
-    report.log(``)
-    report.info(`bootstrap finished - ${process.uptime()} s`)
-    report.log(``)
-    emitter.emit(`BOOTSTRAP_FINISHED`)
-    return {
-      graphqlRunner,
-    }
+    await finishBootstrap(bootstrapSpan)
+    return { graphqlRunner }
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
@@ -537,4 +526,24 @@ module.exports = async (args: BootstrapArgs) => {
       emitter.on(`END_JOB`, onEndJob)
     })
   }
+}
+
+const finishBootstrap = async bootstrapSpan => {
+  // onPostBootstrap
+  const activity = report.activityTimer(`onPostBootstrap`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+  activity.end()
+
+  report.log(``)
+  report.info(`bootstrap finished - ${process.uptime()} s`)
+  report.log(``)
+  emitter.emit(`BOOTSTRAP_FINISHED`)
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_FINISHED`
+  )
+
+  bootstrapSpan.finish()
 }

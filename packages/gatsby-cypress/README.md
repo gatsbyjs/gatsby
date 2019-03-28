@@ -1,17 +1,22 @@
 # gatsby-cypress
 
-This package provies additional Cypress commands for use with testing Gatsby
-websites. To use these commands, import the plugin in `cypress/support/index.js`
-as follows:
+This package provides additional [Cypress](https://cypress.io/) commands for [testing Gatsby websites](/docs/end-to-end-testing/). To use these commands, first install the necessary packages:
 
-```js
+```bash
+npm install cypress gatsby-cypress --save-dev
+```
+
+Once you have installed Cypress, it will automatically create a place to install the Gatsby plugin,
+in `cypress/support/index.js`:
+
+```js:title=cypress/support/index.js
 import "gatsby-cypress/commands"
 ```
 
-You also need to expose a `CYPRESS_SUPPORT` environment variable to entirely eliminate any code relating to Cypress in the normal browser build. You can place it in your test script for example:
+You also need to expose a `CYPRESS_SUPPORT` environment variable to entirely eliminate any code relating to Cypress in the normal browser build. You can place it in your test script in `package.json`, for example:
 
-```
-"test": "CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test"
+```json:title=package.json
+"test": "CYPRESS_SUPPORT=y npm run build && start-server-and-test develop http://localhost:8000 cypress open"
 ```
 
 Once imported, the following additional commands are available:

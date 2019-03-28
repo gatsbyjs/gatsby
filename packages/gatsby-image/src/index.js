@@ -18,7 +18,7 @@ const convertProps = props => {
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
-const imageCache = {}
+const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
@@ -40,7 +40,7 @@ const activateCacheForImage = props => {
 }
 
 let io
-const listeners = []
+const listeners = new WeakMap()
 
 function getIO() {
   if (
@@ -51,15 +51,15 @@ function getIO() {
     io = new window.IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          listeners.forEach(l => {
-            if (l[0] === entry.target) {
-              // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-              if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                io.unobserve(l[0])
-                l[1]()
-              }
+          if (listeners.has(entry.target)) {
+            const cb = listeners.get(entry.target)
+            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+              io.unobserve(entry.target)
+              listeners.delete(entry.target)
+              cb()
             }
-          })
+          }
         })
       },
       { rootMargin: `200px` }
@@ -70,8 +70,17 @@ function getIO() {
 }
 
 const listenToIntersections = (el, cb) => {
-  getIO().observe(el)
-  listeners.push([el, cb])
+  const observer = getIO()
+
+  if (observer) {
+    observer.observe(el)
+    listeners.set(el, cb)
+  }
+
+  return () => {
+    observer.unobserve(el)
+    listeners.delete(el)
+  }
 }
 
 const noscriptImg = props => {
@@ -89,7 +98,10 @@ const noscriptImg = props => {
   const height = props.height ? `height="${props.height}" ` : ``
   const opacity = props.opacity ? props.opacity : `1`
   const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  const crossOrigin = props.crossOrigin
+    ? `crossorigin="${props.crossOrigin}" `
+    : ``
+  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -159,7 +171,7 @@ class Image extends React.Component {
       IOSupported = false
     }
 
-    const hasNoScript = !(this.props.critical && !this.props.fadeIn)
+    const hasNoScript = !(props.critical && !props.fadeIn)
 
     this.state = {
       isVisible,
@@ -187,9 +199,15 @@ class Image extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.cleanUpListeners) {
+      this.cleanUpListeners()
+    }
+  }
+
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
-      listenToIntersections(ref, () => {
+      this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
@@ -235,10 +253,11 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
+    const initialDelay = `0.25s`
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       transition: `opacity 0.5s`,
-      transitionDelay: this.state.imgLoaded ? `0.5s` : `0.25s`,
+      transitionDelay: this.state.imgLoaded ? `0.5s` : initialDelay,
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -278,16 +297,6 @@ class Image extends React.Component {
             }}
           />
 
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
@@ -298,11 +307,21 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: `0.35s`,
+                transitionDelay: initialDelay,
                 right: 0,
                 left: 0,
               }}
             />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
@@ -321,6 +340,7 @@ class Image extends React.Component {
                 title={title}
                 sizes={image.sizes}
                 src={image.src}
+                crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
@@ -365,16 +385,6 @@ class Image extends React.Component {
           ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
         >
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
-          )}
-
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
@@ -383,10 +393,20 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: `0.25s`,
+                transitionDelay: initialDelay,
                 height: image.height,
               }}
             />
+          )}
+
+          {/* Show the blurry base64 image. */}
+          {image.base64 && (
+            <Img src={image.base64} {...placeholderImageProps} />
+          )}
+
+          {/* Show the traced SVG image. */}
+          {image.tracedSVG && (
+            <Img src={image.tracedSVG} {...placeholderImageProps} />
           )}
 
           {/* Once the image is visible, start downloading the image */}
@@ -407,6 +427,7 @@ class Image extends React.Component {
                 height={image.height}
                 sizes={image.sizes}
                 src={image.src}
+                crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
@@ -478,6 +499,7 @@ Image.propTypes = {
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   critical: PropTypes.bool,
+  crossOrigin: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,
