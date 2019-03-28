@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.50](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.49...gatsby-source-wordpress@3.0.50) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** adjust how endpoint urls are constructed to fix fetching for wordpress.com hosted sites and proxied urls ([#10624](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10624)) ([85b8749](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/85b8749)), closes [#10427](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10427) [#10427](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/10427)
+
 ## [3.0.49](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.48...gatsby-source-wordpress@3.0.49) (2019-03-22)
 
 **Note:** Version bump only for package gatsby-source-wordpress

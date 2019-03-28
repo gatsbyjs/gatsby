@@ -368,7 +368,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * deleteNode({node: node})
  */
 actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
-  let node = _.get(options, `node`)
+  let id
 
   // Check if using old method signature. Warn about incorrect usage but get
   // node from nodeID anyway.
@@ -383,8 +383,14 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
     report.warn(msg)
 
-    node = getNode(options)
+    id = options
+  } else {
+    id = options && options.node && options.node.id
   }
+
+  // Always get node from the store, as the node we get as an arg
+  // might already have been deleted.
+  const node = getNode(id)
 
   const createDeleteAction = node => {
     return {
@@ -468,9 +474,20 @@ const typeOwners = {}
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
- * @param {string} node.internal.content An optional field. The raw content
- * of the node. Can be excluded if it'd require a lot of memory to load in
- * which case you must define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.content An optional field. This is rarely
+ * used. It is used when a source plugin sources data it doesn't know how
+ * to transform e.g. a markdown string pulled from an API. The source plugin
+ * can defer the transformation to a specialized transformer plugin like
+ * gatsby-transformer-remark. This `content` field holds the raw content
+ * (so for the markdown case, the markdown string).
+ *
+ * Data that's already structured should be added to the top-level of the node
+ * object and _not_ added here. You should not `JSON.stringify` your node's
+ * data here.
+ *
+ * If the content is very large and can be lazy-loaded, e.g. a file on disk,
+ * you can define a `loadNodeContent` function for this node and the node
+ * content will be lazy loaded when it's needed.
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.

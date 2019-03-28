@@ -44,6 +44,7 @@ const clientOnlyPathsRouter = (pages, options) => {
 
 module.exports = async program => {
   telemetry.trackCli(`SERVE_START`)
+  telemetry.startBackgroundUpdate()
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 

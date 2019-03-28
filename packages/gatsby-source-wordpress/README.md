@@ -752,10 +752,9 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            slug
+            path
             status
             template
-            slug
           }
         }
       }
@@ -763,11 +762,10 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            slug
+            path
             status
             template
             format
-            slug
           }
         }
       }
@@ -784,8 +782,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Create Page pages.
   const pageTemplate = path.resolve(`./src/templates/page.js`)
-  // We want to create a detailed page for each
-  // page node. We'll just use the WordPress Slug for the slug.
+  // We want to create a detailed page for each page node.
+  // The path field contains the relative original WordPress link
+  // and we use it for the slug to preserve url structure.
   // The Page ID is prefixed with 'PAGE_'
   allWordpressPage.edges.forEach(edge => {
     // Gatsby uses Redux to manage its internal state.
@@ -796,7 +795,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // as a template component. The `context` is
       // optional but is often necessary so the template
       // can query data specific to each page.
-      path: `/${edge.node.slug}/`,
+      path: edge.node.path,
       component: slash(pageTemplate),
       context: {
         id: edge.node.id,
@@ -805,12 +804,13 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   const postTemplate = path.resolve(`./src/templates/post.js`)
-  // We want to create a detailed page for each
-  // post node. We'll just use the WordPress Slug for the slug.
+  // We want to create a detailed page for each post node.
+  // The path field stems from the original WordPress link
+  // and we use it for the slug to preserve url structure.
   // The Post ID is prefixed with 'POST_'
   allWordpressPost.edges.forEach(edge => {
     createPage({
-      path: `/${edge.node.slug}/`,
+      path: edge.node.path,
       component: slash(postTemplate),
       context: {
         id: edge.node.id,
@@ -901,11 +901,15 @@ To resolve this issue, make sure that your ids in the `acfOptionPageIds` array, 
 
 When running locally, or in other situations that may involve self-signed certificates, you may run into the error: `The request failed with error code "DEPTH_ZERO_SELF_SIGNED_CERT"`.
 
-To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `gatsby-node.js`:
+To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
+NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+
+Please note that you need to add `dotenv`, as mentioned earlier, to expose environment variables in your gatsby-config.js or gatsby-node.js files.
+
+**CAUTION:** This should never be set in production. Always ensure that you disable `NODE_TLS_REJECT_UNAUTHORIZED` in development with `gatsby develop` only.
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://www.gatsbyjs.org/docs/environment-variables
