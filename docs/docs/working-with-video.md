@@ -16,7 +16,7 @@ The discussion around best practices for video in Gatsby is also ongoing on Gith
 - [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
 - [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
 - [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
-- [Hosting your own video files](#hosting-your-own-video-files)
+- [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
 - [Using custom video players](#using-custom-video-players)
 
 ## Sourcing video from a host
