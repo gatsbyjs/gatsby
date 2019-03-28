@@ -29,6 +29,7 @@ module.exports = class EventStorage {
     const parentFolder = path.dirname(this.config.path)
 
     this.store = new Store(parentFolder)
+    this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
     this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
   }
@@ -38,11 +39,18 @@ module.exports = class EventStorage {
       return
     }
 
-    if (this.debugEvents) {
-      console.error(`Captured event:`, JSON.stringify(event))
-    } else {
-      this.store.appendToBuffer(JSON.stringify(event) + `\n`)
+    const eventString = JSON.stringify(event)
+
+    if (this.debugEvents || this.verbose) {
+      console.error(`Captured event:`, eventString)
+
+      if (this.debugEvents) {
+        // Bail because we don't want to send debug events
+        return
+      }
     }
+
+    this.store.appendToBuffer(eventString + `\n`)
   }
 
   async sendEvents() {
