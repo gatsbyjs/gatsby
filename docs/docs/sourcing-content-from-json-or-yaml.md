@@ -1,6 +1,6 @@
 ---
 
-## title: "Client-side sourcing with JSON or YAML"
+## title: "Sourcing Content from JSON or YAML"
 
 ## Table of Contents
 
@@ -34,7 +34,7 @@ You'll start by creating a new Gatsby website based on the official _hello world
 Open up a terminal and run the following command.
 
 ```bash
-gatsby new gatsby-client-sourcing-YAML-JSON https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 After the process is complete, some additional packages are needed.
@@ -45,24 +45,18 @@ Change directories to the newly created Gatsby website and issue the following c
 npm install --save uuid
 ```
 
-Or if Yarn is being used:
-
-```bash
-yarn add uuid
-```
-
 This package is used to ensure uniqueness with React prop keys.
 
 ## YAML example
 
-Starting from YAML, if you want to see how to do it using JSON, jump to the [next section](#JSON-example).
+Starting from YAML, if you want to see how to do it using JSON, instead jump to the [next section](#JSON-example).
 
 ### Adding the YAML content
 
-Create a folder called `content` and inside, add a file called `client-data.yaml` with the following content inside:
+Create a folder called `content` and inside, add a file called `My-YAML-Content.yaml` with the following content inside:
 
 ```yml
-title: YAML used in the client with React and Gatsby
+title: YAML content used at build time with Gatsby
 content:
   - item:
       Cupcake ipsum dolor. Sit amet marshmallow topping cheesecake muffin. Halvah
@@ -71,11 +65,10 @@ content:
       oat cake. Powder cake jujubes oat cake. Lemon drops tootsie roll marshmallow halvah
       carrot cake.
   - item:
-      Just say anything, George, say what ever's natural, the first thing that comes
-      to your mind. Take that you mutated son-of-a-bitch. My pine, why you. You space
-      bastard, you killed a pine. You do? Yeah, it's 8:00. Hey, McFly, I thought I told
-      you never to come in here. Well it's gonna cost you. How much money you got on
-      you?
+      Spicy jalapeno bacon ipsum dolor amet t-bone burgdoggen short loin kevin flank.
+      Filet mignon frankfurter spare ribs, sausage corned beef picanha beef ribs pork belly kevin cupim porchetta alcatra hamburger.
+      Picanha brisket shankle buffalo tri-tip. Doner prosciutto meatloaf ribeye kevin kielbasa jowl beef ribs flank burgdoggen venison.
+      Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!
   - item: 192.33
   - item: 111111
 ```
@@ -84,27 +77,27 @@ content:
 
 Now that you have something you want to show, the only thing missing is to create a page that will consume the data.
 
-Add a new file called `ymlonclient.js` inside the `pages` folder, with the following code:
+Add a new file called `yml-at-buildtime.js` inside the `pages` folder, with the following code:
 
 ```javascript
 import React from "react"
 import uuid from "uuid"
-import YAMLData from "../../content/client-data.yaml"
+import YAMLData from "../../content/My-YAML-Content.yaml"
 
-const ClientYAML = () => (
+const YAMLbuildtime = () => (
   <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
     <h1>{YAMLData.title}</h1>
-    <div>
+    <ul>
       {YAMLData.content.map(data => {
-        return <div key={`content_item_${uuid.v4()}`}>{data.item}</div>
+        return <li key={`content_item_${uuid.v4()}`}>{data.item}</li>
       })}
-    </div>
+    </ul>
   </div>
 )
-export default ClientYAML
+export default YAMLbuildtime
 ```
 
-As you can see, the code above is nothing more, nothing less than a functional stateless React component, that when rendered by Gatsby, and without any extra configuration will display a page sourced from a YAML file.
+The above code imports YAML source data and renders it in a functional stateless React component, that when rendered by Gatsby, and without any extra configuration will display a page sourced from a YAML file.
 
 ## JSON example
 
@@ -112,17 +105,20 @@ In this part you'll use JSON as a datasource.
 
 ### Adding the JSON content
 
-Create a folder named `content` if it doesn't exist, and then add a new file inside called `client-data.json` with the following content inside:
+Create a folder named `content` if it doesn't exist, and then add a new file inside called `My-JSON-Content.json` with the following content inside:
 
 ```json
 {
-  "title": "JSON used in the client with React and Gatsby",
+  "title": "JSON content used at build time with Gatsby",
   "content": [
     {
       "item": "Cupcake ipsum dolor. Sit amet marshmallow topping cheesecake muffin. Halvah croissant candy canes bonbon candy. Apple pie jelly beans topping carrot cake danish tart cake cheesecake. Muffin danish chocolate soufflé pastry icing bonbon oat cake. Powder cake jujubes oat cake. Lemon drops tootsie roll marshmallow halvah carrot cake."
     },
     {
-      "item": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      "item": "Spicy jalapeno bacon ipsum dolor amet t-bone burgdoggen short loin kevin flank.
+      Filet mignon frankfurter spare ribs, sausage corned beef picanha beef ribs pork belly kevin cupim porchetta alcatra hamburger.
+      Picanha brisket shankle buffalo tri-tip. Doner prosciutto meatloaf ribeye kevin kielbasa jowl beef ribs flank burgdoggen venison.
+      Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!"
     },
     {
       "item": 192.33
@@ -138,23 +134,24 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
 
 Now that you have something that needs to be shown, all that's missing is a page to show it.
 
-Add a new file called `jsononclient.js` inside the `pages` folder with the following code:
+Add a new file called `json-at-buildtime.js` inside the `pages` folder with the following code:
 
 ```javascript
 import React from "react"
 import uuid from "uuid"
-import JSONData from "../../content/client-data.json"
-const ClientJSON = () => (
+import JSONData from "../../content/My-JSON-Content.json"
+
+const JSONbuildtime = () => (
   <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
     <h1>{JSONData.title}</h1>
-    <div>
+    <ul>
       {JSONData.content.map(data => {
-        return <div key={`content_item_${uuid.v4()}`}>{data.item}</div>
+        return <li key={`content_item_${uuid.v4()}`}>{data.item}</li>
       })}
-    </div>
+    </ul>
   </div>
 )
-export default ClientJSON
+export default JSONbuildtime
 ```
 
 The only thing different in this case, is the file import. Instead of the YAML file, this time you're importing directly a JSON file into the page component.
@@ -166,19 +163,20 @@ Once again out of the box and without any extra configuration the page will show
 After all these steps are complete, you should have the following file and folder structure:
 
 ```
-  |gatsby-client-sourcing-YAML-JSON
+  |gatsby-YAML-JSON-at-buildtime
     |content
-      - client-data.yaml / - client-data.json
+      - My-YAML-Content.yaml or - My-JSON-Content.json
     |src
       |pages
         - index.js
+        - jsononclient.js or - ymlonclient.js
         - 404.js
-        - jsononclient.js
-        - ymlonclient.js
 ```
 
-Issuing `gatsby develop` in the terminal and opening a browser window to `http://localhost:8000/jsononclient` or `http://localhost:8000/ymlonclient`, you'll see the results of this small tutorial.
+Running `gatsby develop` in the terminal and opening a browser window to `http://localhost:8000/json-at-buildtime/` or `http://localhost:8000/yml-at-buildtime`, you'll see the results of this small tutorial.
 
-To get it to work on your site, you would only need to copy over the page file `jsononclient.js` located [here](https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/jsononclient.js) for JSON.
+To make this work on your existing Gatsby site, you would need to:
 
-Or the `ymlonclient.js` page file located [here](https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/ymlonclient.js) for YAML.
+- For JSON copy over the file contents of `json-at-buildtime.js` : https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/json-at-buildtime.js and corresponding JSON file https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/My-JSON-Content.json
+
+- For YAML copy over the file contents of `yml-at-buildtime.js`: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/yml-at-buildtime.js and corresponding YAML file https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/My-YAML-Content.yaml

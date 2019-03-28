@@ -16,4 +16,4 @@ Bellow are listed the routes generated via GATSBY API
 - /page4
 - /page5
 
-The route `/jsononclient` and `/ymlonclient` will show some JSON or YAML content loaded on the client side.
+The route `/json-at-buildtime` and `/yml-at-buildtime` will show some JSON or YAML content loaded directly into a page component at build time.

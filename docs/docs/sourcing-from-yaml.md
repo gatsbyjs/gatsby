@@ -1,5 +1,5 @@
 ---
-title: "YAML as a source for building a site"
+title: "Building a Gatsby site from YAML"
 ---
 
 # Table of Contents
@@ -10,17 +10,13 @@ title: "YAML as a source for building a site"
 - [Gatsby Config](#Gatsby-configuration)
 - [Gatsby Template](#Gatsby-Template)
 - [Joining the pieces](#Joining-the-pieces)
-- [Sourcing from JSON](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/)
+- [Using Gatsby without GraphQL](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/)
 
 ## Introduction
 
-As you're presented with Gatsby, you'll see that you have at your disposal a myriad of ways to pull data into your website, ranging from the most used ones like [Contentful](https://www.contentful.com/), or [WordPress](https://wordpress.com/), [Drupal](https://www.drupal.org/), to the most edgier ones like [ButterCMS](https://buttercms.com/) or [GraphCMS](https://graphcms.com/).
+With Gatsby, you have at your disposal a myriad of ways to pull data into your website, ranging from the most used ones like [Contentful](https://www.contentful.com/), or [WordPress](https://wordpress.com/), [Drupal](https://www.drupal.org/), to the most edgier ones like [ButterCMS](https://buttercms.com/) or [GraphCMS](https://graphcms.com/): each one with a corresponding plugin.
 
-Each one using the correspondent plugin.
-
-This tutorial will help you return to the origins.
-
-Instead of pulling data using any of the available plugins for each provider mentioned, you'll create a simple fully functional Gatsby website that is sourced from a YAML file.
+Instead of pulling data using any of the available plugins for each provider mentioned, you'll create a fully functional Gatsby website sourced from a YAML file.
 
 ## Prerequisites
 
@@ -47,12 +43,6 @@ Change directories to the newly created Gatsby website and issue the following c
 
 ```bash
 npm install --save js-yaml uuid
-```
-
-Or if Yarn is being used:
-
-```bash
-yarn add js-yaml uuid
 ```
 
 The newly added packages are responsible for:
@@ -127,9 +117,9 @@ Start by creating a folder called `content` and add a file called `index.yaml` i
     - to: "/page1"
 ```
 
-What the code block above is doing, is nothing more, nothing less, than creating a simple YAML object in which:
+The code block above creates a YAML object in which:
 
-- Each `path` is a page's endpoint.
+- Each `path` is a page's endpoint (the relevant part of its URL).
 - The `contents` list holds some data to be displayed.
 - The `links` list holds some endpoints to other pages.
 
@@ -137,7 +127,7 @@ What the code block above is doing, is nothing more, nothing less, than creating
 
 Now that we have almost all the parts necessary in place, you'll need to make a small adjustment to your Gatsby website.
 
-Start by creating a `gatsby-node.js` with the following contents:
+If you don't already have one, start by creating a `gatsby-node.js` file with the following contents:
 
 ```javascript
 const fs = require("fs")
@@ -162,17 +152,17 @@ Breaking down the code into smaller parts:
 
 1. The `js-yaml` package installed earlier is imported.
 2. The `index.yaml` file is loaded and the content parsed.
-3. Through the use of Gatsby's `createPage()` api, the parsed file will be used to create some pages programmatically.
-4. Using the `context` property, will allow every piece of data you add there, to be accessible in the page as a special prop named `pageContext` allowing it to be consumed. You can read more about it [here](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
+3. Through the use of Gatsby's [`createPage()` API](/docs/actions/#createPage), the parsed file will be used to create some pages programmatically.
+4. The `context` property will pass your data into the page as a special prop named `pageContext`, allowing it to be consumed. You can read more about `context` in [creating and modifying pages](/docs/creating-and-modifying-pages/).
 
 ## Review of the steps so far
 
 Doing a quick review of what you have done so far:
 
-1. Created a new Gatsby website based on a template.
+1. Created a new Gatsby website based on a starter.
 2. Added some dependencies to handle YAML files.
 3. Created the file and folder structure to house the contents.
-4. Configured Gatsby to fetch the data and create some pages programmatically.
+4. Extend Gatsby's default configuration through `gatsby-node.js` to fetch the data and create some pages programmatically at build time.
 
 ## Gatsby Template
 
@@ -190,20 +180,20 @@ const basicTemplate = props => {
 
   return (
     <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
-      <div>
+      <ul>
         {pageContent.map(data => {
-          return <div key={uuid.v4()}>{data.item}</div>
+          return <li key={uuid.v4()}>{data.item}</li>
         })}
-      </div>
-      <div>
+      </ul>
+      <ul>
         {links.map(item => {
           return (
-            <div>
+            <li key={uuid.v4()}>
               <Link to={item.to}>{item.to}</Link>
-            </div>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </div>
   )
 }
@@ -227,6 +217,10 @@ After all these steps are complete, you should have the following file and folde
     - gatsby-node.js
 ```
 
-Issuing `gatsby develop` in the terminal and opening a browser window for instance, to `http://localhost:8000/page1`, you'll see a page with some content,sourced from YAML.
+Running `gatsby develop` in the terminal and opening a browser window for instance, to `http://localhost:8000/page1`, you'll see a page with some content sourced from YAML.
 
-To get it to work on your site, you would only need to copy over the `gatsby-node.js` file located [here](https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/gatsby-node.js). The template located [here](https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/templates/basicTemplate.js). And the yaml file located [here](https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/templates/index.yaml).
+To make this work on your existing Gatsby site, you would need to:
+
+- Copy over the `gatsby-node.js` file contents: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/gatsby-node.js
+- Create a basic template: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/templates/basicTemplate.js
+- And grab the YAML file: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/templates/index.yaml

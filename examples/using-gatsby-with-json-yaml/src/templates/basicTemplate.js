@@ -7,18 +7,18 @@ const basicTemplate = props => {
 
   return (
     <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
-      <div>
+      <ul>
         {pageContent.map(data => (
-          <div key={uuid.v4()}>{data.item}</div>
+          <li key={uuid.v4()}>{data.item}</li>
         ))}
-      </div>
-      <div>
+      </ul>
+      <ul>
         {links.map(item => (
-          <div>
+          <li key={uuid.v4()}>
             <Link to={item.to}>{item.to}</Link>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   )
 }

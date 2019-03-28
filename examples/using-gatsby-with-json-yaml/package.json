@@ -1,17 +1,16 @@
 {
-  "name": "Sourcing from YAML OR JSON",
+  "name": "gatsby-example-using-yaml-json",
   "private": true,
-  "description": "Example to source yaml data with gatsby and import directly on the client",
+  "description": "Gatsby example to use YAML as a source and add JSON and YAML at build time",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "jonniebigodes",
   "dependencies": {
-    "axios": "^0.18.0",
-    "js-yaml": "^3.12.1",
-    "prop-types": "^15.6.2",
-    "uuid": "^3.3.2",
     "gatsby": "^2.1.35",
+    "js-yaml": "^3.13.0",
+    "prop-types": "^15.6.2",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "uuid": "^3.3.2"
   },
   "keywords": [
     "gatsby"
@@ -21,17 +20,9 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
-    "format": "prettier --write \"src/**/*.js\"",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "format": "prettier --write \"src/**/*.js\""
   },
   "devDependencies": {
     "prettier": "^1.15.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
