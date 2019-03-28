@@ -25,6 +25,7 @@ module.exports = class Store {
     // Unique temporary file name across multiple concurrent Gatsby instances
     const now = `${Date.now()}-${process.pid}`
     let success = false
+    let contents = ``
 
     try {
       if (!existsSync(this.bufferFilePath)) {
@@ -32,7 +33,7 @@ module.exports = class Store {
       }
       const newPath = `${this.bufferFilePath}-${now}`
       renameSync(this.bufferFilePath, newPath)
-      const contents = readFileSync(newPath, `utf8`)
+      contents = readFileSync(newPath, `utf8`)
       unlinkSync(newPath)
 
       // There is still a chance process dies while sending data and some events are lost
