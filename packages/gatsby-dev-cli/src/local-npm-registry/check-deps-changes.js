@@ -55,7 +55,7 @@ const checkDepsChanges = async ({
   let localPKGjson
   let packageNotInstalled = false
   try {
-    localPKGjson = JSON.parse(fs.readFileSync(newPath, `utf-8``))
+    localPKGjson = JSON.parse(fs.readFileSync(newPath, `utf-8`))
   } catch {
     packageNotInstalled = true
     // there is no local package - so we still need to install deps
