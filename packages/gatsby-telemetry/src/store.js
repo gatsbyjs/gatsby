@@ -22,8 +22,8 @@ module.exports = class Store {
   }
 
   async startFlushEvents(flushOperation) {
-    // TODO: Think about concurrent processes
-    const now = Date.now()
+    // Unique temporary file name across multiple concurrent Gatsby instances
+    const now = `${Date.now()}-${process.pid}`
     let success = false
 
     try {
