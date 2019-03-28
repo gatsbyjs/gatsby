@@ -8,12 +8,24 @@ import Container from "../components/container"
 import Layout from "../components/layout"
 import { space } from "../utils/presets"
 
+// Select first tag with whitespace instead of hyphens for
+// readability. But if none present, just use the first tag in the
+// collection
+const preferSpacedTag = tags => {
+  for (const tag of tags) {
+    if (!tag.includes(` `)) {
+      return tag
+    }
+  }
+  return tags[0]
+}
+
 const Tags = ({ pageContext, data, location }) => {
-  const { tag } = pageContext
+  const { tags } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? `` : `s`
-  } tagged with "${tag}"`
+  } tagged with "${preferSpacedTag(tags)}"`
 
   return (
     <Layout location={location}>
@@ -40,12 +52,12 @@ const Tags = ({ pageContext, data, location }) => {
 export default Tags
 
 export const pageQuery = graphql`
-  query($tag: String) {
+  query($tags: [String]) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date, fields___slug], order: DESC }
       filter: {
-        frontmatter: { tags: { in: [$tag] } }
+        frontmatter: { tags: { in: $tags } }
         fileAbsolutePath: { regex: "/docs.blog/" }
         fields: { released: { eq: true } }
       }
