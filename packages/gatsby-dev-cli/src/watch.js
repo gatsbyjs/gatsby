@@ -118,9 +118,6 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     return
   }
 
-  // nice DX would be to  start `yarn watch --scope={${allPackagesToWatch}.join(`,)}`
-  // probably behind some flag or configstore setting as we needed to run those
-
   const ignored = [
     /[/\\]node_modules[/\\]/i,
     /\.git/i,
