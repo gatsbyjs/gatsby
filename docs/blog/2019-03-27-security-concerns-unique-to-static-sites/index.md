@@ -25,7 +25,7 @@ These are not to be considered universal definitions, just how the author will u
 
 - **client-side site** - Gatsby only generates static sites. Single Page Apps (SPAs) are different but any security issue affecting a pure static site will also affect an SPA. Collectively both methods deliver all needed assets(HTML/CSS/JS) to the client for site rendering.
 
-- **attack vector** - A resource through which to hack a site. Just because an attack vector exists doesn't mean you site is vulnerable to that attack. A server is an attack vector. But, the server requires a vulnerability for an attacker to exploit(use) the server as an attack vector.
+- **attack vector** - A resource through which to hack a site. Just because an attack vector exists doesn't mean your site is vulnerable to that attack, however. A server is an attack vector; but, the server requires a vulnerability for an attacker to exploit (use) that server as an attack vector.
 
 ## Shared Security Concerns
 
