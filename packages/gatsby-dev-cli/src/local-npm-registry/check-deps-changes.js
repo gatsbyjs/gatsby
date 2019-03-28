@@ -78,18 +78,16 @@ const checkDepsChanges = async ({
     // and save some time/work
     try {
       localPKGjson = await new Promise((resolve, reject) => {
-        request(`https://unpkg.com/${packageName}/package.json`, function(
-          error,
-          response,
-          body
-        ) {
-          if (response && response.statusCode === 200) {
-            resolve(JSON.parse(body))
-            return
-          }
+        request(
+          `https://unpkg.com/${packageName}/package.json`,
+          (error, response, body) => {
+            if (response && response.statusCode === 200) {
+              return resolve(JSON.parse(body))
+            }
 
-          reject(error)
-        })
+            return reject(error)
+          }
+        )
       })
     } catch {
       console.log(
