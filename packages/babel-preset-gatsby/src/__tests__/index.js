@@ -15,6 +15,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
         targets: {
           node: `current`,
         },
+        exclude: [`transform-typeof-symbol`],
       },
     ],
     [
@@ -29,9 +30,35 @@ it(`Specifies proper presets and plugins for test stage`, () => {
   expect(plugins).toEqual([
     [
       expect.stringContaining(
+        path.join(`@babel`, `plugin-transform-destructuring`)
+      ),
+      {
+        loose: false,
+        selectiveLoose: [
+          `useState`,
+          `useEffect`,
+          `useContext`,
+          `useReducer`,
+          `useCallback`,
+          `useMemo`,
+          `useRef`,
+          `useImperativeHandle`,
+          `useLayoutEffect`,
+          `useDebugValue`,
+        ],
+      },
+    ],
+    [
+      expect.stringContaining(
         path.join(`@babel`, `plugin-proposal-class-properties`)
       ),
       { loose: true },
+    ],
+    [
+      expect.stringContaining(
+        path.join(`@babel`, `plugin-proposal-object-rest-spread`)
+      ),
+      { useBuiltIns: true },
     ],
     expect.stringContaining(`babel-plugin-macros`),
     expect.stringContaining(
@@ -42,6 +69,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
       {
         helpers: true,
         regenerator: true,
+        useESModules: false,
       },
     ],
   ])
@@ -70,6 +98,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
         targets: {
           node: `current`,
         },
+        exclude: [`transform-typeof-symbol`],
       },
     ],
     [
@@ -84,9 +113,35 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
   expect(plugins).toEqual([
     [
       expect.stringContaining(
+        path.join(`@babel`, `plugin-transform-destructuring`)
+      ),
+      {
+        loose: false,
+        selectiveLoose: [
+          `useState`,
+          `useEffect`,
+          `useContext`,
+          `useReducer`,
+          `useCallback`,
+          `useMemo`,
+          `useRef`,
+          `useImperativeHandle`,
+          `useLayoutEffect`,
+          `useDebugValue`,
+        ],
+      },
+    ],
+    [
+      expect.stringContaining(
         path.join(`@babel`, `plugin-proposal-class-properties`)
       ),
       { loose: true },
+    ],
+    [
+      expect.stringContaining(
+        path.join(`@babel`, `plugin-proposal-object-rest-spread`)
+      ),
+      { useBuiltIns: true },
     ],
     expect.stringContaining(`babel-plugin-macros`),
     expect.stringContaining(
@@ -97,6 +152,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
       {
         helpers: true,
         regenerator: true,
+        useESModules: false,
       },
     ],
   ])
@@ -116,6 +172,7 @@ it(`Allows to configure browser targets`, () => {
       modules: false,
       useBuiltIns: `usage`,
       targets,
+      exclude: [`transform-typeof-symbol`],
     },
   ])
 })

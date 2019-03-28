@@ -29,6 +29,7 @@ module.exports = function preset(_, options = {}) {
 
   const pluginBabelConfig = loadCachedConfig()
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  const useESModules = stage === `develop` || stage === `build-javascript`
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -50,6 +51,7 @@ module.exports = function preset(_, options = {}) {
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
+          exclude: [`transform-typeof-symbol`],
         },
       ],
       [
@@ -63,9 +65,33 @@ module.exports = function preset(_, options = {}) {
     ],
     plugins: [
       [
+        resolve(`@babel/plugin-transform-destructuring`),
+        {
+          loose: false,
+          selectiveLoose: [
+            `useState`,
+            `useEffect`,
+            `useContext`,
+            `useReducer`,
+            `useCallback`,
+            `useMemo`,
+            `useRef`,
+            `useImperativeHandle`,
+            `useLayoutEffect`,
+            `useDebugValue`,
+          ],
+        },
+      ],
+      [
         resolve(`@babel/plugin-proposal-class-properties`),
         {
           loose: true,
+        },
+      ],
+      [
+        resolve(`@babel/plugin-proposal-object-rest-spread`),
+        {
+          useBuiltIns: true,
         },
       ],
       resolve(`babel-plugin-macros`),
@@ -75,6 +101,7 @@ module.exports = function preset(_, options = {}) {
         {
           helpers: true,
           regenerator: true,
+          useESModules,
         },
       ],
     ],
