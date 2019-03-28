@@ -9,6 +9,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
+  const srcIconExists = pluginOptions.icon == true
+
   const icons = pluginOptions.icons || defaultIcons
   const legacy =
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
@@ -19,7 +21,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       : `query`
 
   // If icons were generated, also add a favicon link.
-  if (pluginOptions.icon) {
+  if (srcIconExists) {
     const favicon = icons && icons.length ? icons[0].src : null
 
     if (cacheBusting !== `none`) {
@@ -76,7 +78,13 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
         rel="apple-touch-icon"
         sizes={icon.sizes}
-        href={withPrefix(addDigestToPath(icon.src, iconDigest, cacheBusting))}
+        href={withPrefix(
+          addDigestToPath(
+            icon.src,
+            iconDigest,
+            srcIconExists ? cacheBusting : `none`
+          )
+        )}
       />
     ))
 
