@@ -127,4 +127,4 @@ Remember, keep it **secret**, keep it **safe**! Do not store API keys in your re
 
 Now go make awesome Gatsby sites that are completely secure!
 
-**Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain false, inaccurate, or incomplete information. It is your responsibility to properly secure your sites.
+**Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or innaccurate information. It is your responsibility to properly secure your sites.
