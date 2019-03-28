@@ -41,7 +41,7 @@ When you ship **everything** to the browser, the user can access **everything**.
 
 In the server-side world the solution is to...well there is not really a problem to begin with because all the secrets and private content is secured on a server. The client browser never needs to directly access them. The server fetches content from the API or database, and sends back only the content the client is authorized to access.
 
-In the client-side world, how do you secure them, If all the content and code is being shipped to the client browser? The "[JAMstack](https://jamstack.org/)". Hopefully you're all fairly familiar with this concept given you're building "JAMstack" sites using gatsby. For the uninitiated: You use HTML/CSS ([M]arkup) to build your site, [J]avascript to make it dynamic, and [A]PIs (accessed by javascript) to provide content and features. All this being done from the client-side.
+How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org/)". Hopefully you're all fairly familiar with this concept given you're building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs (accessed by JavaScript) to provide content and features. All of this is done from the client-side.
 
 The biggest security struggle with client-side sites is securing those APIs. Most APIs require an API key or another kind of authentication. Simply adding those secrets to the code only further obfuscates access to the same content. It does nothing to actually secure that content.
 
