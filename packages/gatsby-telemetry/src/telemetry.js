@@ -1,7 +1,7 @@
 const { createHash } = require(`crypto`)
 const uuid = require(`uuid/v1`)
 const EventStorage = require(`./event-storage`)
-const sanitizeError = require(`./sanitize-error`)
+const { sanitizeError, cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
 const { basename } = require(`path`)
@@ -53,7 +53,8 @@ module.exports = class AnalyticsTracker {
         JSON.parse(JSON.stringify(e, Object.getOwnPropertyNames(e)))
       )
     }
-    tags.error = JSON.stringify(error)
+
+    tags.error = cleanPaths(JSON.stringify(error))
 
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
@@ -66,7 +67,7 @@ module.exports = class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `BUILD_ERROR_${type}`
     sanitizeError(tags)
-    tags.error = JSON.stringify(tags.error)
+    tags.error = cleanPaths(JSON.stringify(tags.error))
 
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }

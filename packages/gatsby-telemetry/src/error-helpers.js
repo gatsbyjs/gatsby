@@ -1,6 +1,14 @@
 const StackUtils = require(`stack-utils`)
 
-module.exports = tags => {
+const cleanPaths = str => {
+  const localPathRegex = new RegExp(
+    process.cwd().replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`),
+    `g`
+  )
+  return str.replace(localPathRegex, `$PWD`)
+}
+
+const sanitizeError = tags => {
   if (!tags) return
   const { error } = tags
   if (error) {
@@ -25,4 +33,9 @@ module.exports = tags => {
       // ignore
     }
   }
+}
+
+module.exports = {
+  sanitizeError,
+  cleanPaths,
 }
