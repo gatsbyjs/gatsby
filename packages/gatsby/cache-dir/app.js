@@ -48,9 +48,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addDevRequires(syncRequires)
 
   loader
-    .getResourcesForPathname(window.location.pathname)
+    .loadPage(window.location.pathname)
     .then(() => {
-      loader.getResourcesForPathname(`/dev-404-page/`)
+      loader.loadPage(`/dev-404-page/`)
+    })
+    .then(() => {
+      loader.loadPage(`/404.html`).catch(err => null)
     })
     .then(() => {
       const preferDefault = m => (m && m.default) || m
@@ -60,6 +63,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           apiRunner(`onInitialClientRender`)
         })
       })
+    })
+    .catch(err => {
+      console.log(err)
     })
 })
 

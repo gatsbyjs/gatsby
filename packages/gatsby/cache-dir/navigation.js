@@ -18,7 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.getResourcesForPathnameSync(pathname)
+      const pageResources = loader.getPage(pathname)
 
       if (pageResources != null) {
         console.error(
@@ -81,9 +81,9 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.getResourcesForPathname(pathname).then(pageResources => {
+  loader.loadPage(pathname).then(pageResources => {
     console.log(`in nav`, pageResources)
-    if (process.env.NODE_ENV === `production`) {
+    if (process.env.NODE_ENV === `production` && pageResources) {
       if (pageResources.page.compilationHash !== window.___compilationHash) {
         console.log(
           `compilation has different. window = ${

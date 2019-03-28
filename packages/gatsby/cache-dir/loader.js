@@ -143,13 +143,15 @@ const makePageDataUrl = path => {
 
 const fetchPageData = path => {
   const url = makePageDataUrl(path)
+  console.log(`url`, url)
   return cachedFetch(url, fetchUrl).then((pageData, err) => {
     fetchedPageData[path] = true
     if (pageData) {
       pageDatas[path] = pageData
       return pageData
     } else {
-      failedPaths[path] = err
+      console.log(`setting failed path`)
+      failedPaths[path] = err || `failed path`
       return null
     }
   })
@@ -221,7 +223,9 @@ const queue = {
   // click on it soon so let's start prefetching resources for this
   // pathname.
   hovering: path => {
-    queue.getResourcesForPathname(path)
+    queue.loadPage(path).catch(err => {
+      console.log(`hovering page not found`, path)
+    })
   },
   enqueue: rawPath => {
     if (!apiRunner)
@@ -286,81 +290,58 @@ const queue = {
     return true
   },
 
-  // TODO
-  // getPage: pathname => findPage(pathname),
+  // getResourcesForPathnameSync: rawPath => {
+  //   const realPath = findPath(rawPath)
+  //   console.log(
+  //     `getResourcesForPathnameSync: rawPath: [${rawPath}], realPath: [${realPath}]`
+  //   )
+  //   if (realPath in pathScriptsCache) {
+  //     return pathScriptsCache[realPath]
+  //   } else if (shouldFallbackTo404Resources(realPath)) {
+  //     return queue.getResourcesForPathnameSync(`/404.html`)
+  //   } else {
+  //     return null
+  //   }
+  // },
 
-  getResourcesForPathnameSync: rawPath => {
-    const realPath = findPath(rawPath)
-    console.log(
-      `getResourcesForPathnameSync: rawPath: [${rawPath}], realPath: [${realPath}]`
-    )
-    if (realPath in pathScriptsCache) {
-      return pathScriptsCache[realPath]
-    } else if (shouldFallbackTo404Resources(realPath)) {
-      return queue.getResourcesForPathnameSync(`/404.html`)
-    } else {
-      return null
-    }
-  },
+  isFailedPath: pathname => !!failedPaths[pathname],
 
-  getResourcesForPathname: rawPath =>
+  loadPageData: rawPath =>
     new Promise((resolve, reject) => {
-      console.log(`getResourcesForPathname: [${rawPath}]`)
-      // Production code path
-      if (failedPaths[rawPath]) {
-        handleResourceLoadError(
-          rawPath,
-          `Previously detected load failure for "${rawPath}"`
-        )
-        reject()
-        return
-      }
-
       const realPath = findPath(rawPath)
-      console.log(`real path is [${realPath}]`)
-
+      console.log(`load page data`, rawPath, realPath)
       if (!fetchedPageData[realPath]) {
-        console.log(`Requesting page data for [${realPath}] for first time`)
-        fetchPageData(realPath).then(() =>
-          resolve(queue.getResourcesForPathname(rawPath))
-        )
-        return
-      }
-
-      const pageData = pageDatas[realPath]
-
-      if (!pageData) {
-        if (shouldFallbackTo404Resources(realPath)) {
-          console.log(`No page found: [${rawPath}]`)
-
-          // Preload the custom 404 page
-          resolve(queue.getResourcesForPathname(`/404.html`))
-          return
-        }
-
-        resolve()
-        return
-      }
-
-      // Check if it's in the cache already.
-      if (pathScriptsCache[realPath]) {
-        const pageResources = pathScriptsCache[realPath]
-        emitter.emit(`onPostLoadPageResources`, {
-          page: pageResources,
-          pageResources: pathScriptsCache[realPath],
+        fetchPageData(realPath).then(pageData => {
+          if (process.env.NODE_ENV !== `production`) {
+            devGetPageData(realPath)
+          }
+          resolve(queue.loadPageData(rawPath))
         })
-        resolve(pageResources)
-        return
+      } else {
+        if (pageDatas[realPath]) {
+          resolve(pageDatas[realPath])
+        } else {
+          reject(new Error(`page not found`))
+        }
       }
+    }),
 
-      // Nope, we need to load resource(s)
-      emitter.emit(`onPreLoadPageResources`, {
-        path: realPath,
+  loadPage: rawPath =>
+    queue
+      .loadPageData(rawPath)
+      .then(pageData => {
+        console.log(`loadPage. pageData`, pageData)
+        if (process.env.NODE_ENV !== `production`) {
+          const component = syncRequires.components[pageData.componentChunkName]
+          return [pageData, component]
+        } else {
+          return cachedFetch(pageData.componentChunkName, fetchComponent)
+            .then(preferDefault)
+            .then(component => [pageData, component])
+        }
       })
-
-      const { componentChunkName } = pageData
-
-      const finalResolve = component => {
+      .then(([pageData, component]) => {
+        console.log(`loadPage. component`, pageData, component)
         const page = {
           componentChunkName: pageData.componentChunkName,
           path: pageData.path,
@@ -378,43 +359,151 @@ const queue = {
           page,
         }
 
-        // Add to the cache.
-        pathScriptsCache[realPath] = pageResources
-        resolve(pageResources)
-
+        pathScriptsCache[findPath(rawPath)] = pageResources
         emitter.emit(`onPostLoadPageResources`, {
-          page,
+          page: pageResources,
           pageResources,
         })
-      }
-
-      if (process.env.NODE_ENV !== `production`) {
-        // Ensure latest version of page data is in the JSON store
-        devGetPageData(realPath)
-        const component = syncRequires.components[pageData.componentChunkName]
-        finalResolve(component)
-      } else {
-        console.log(`getting page component: [${componentChunkName}]`)
-        cachedFetch(componentChunkName, fetchComponent)
-          .then(preferDefault)
-          .then(component => {
-            console.log(`got component`)
-            if (!component) {
-              resolve(null)
-              return
-            }
-            finalResolve(component)
-            // Tell plugins the path has been successfully prefetched
-            const pageDataUrl = makePageDataUrl(realPath)
-            const componentUrls = createComponentUrls(componentChunkName)
-            const resourceUrls = [pageDataUrl].concat(componentUrls)
-            onPostPrefetch({
-              path: rawPath,
-              resourceUrls,
-            })
+        if (process.env.NODE_ENV === `production`) {
+          const pageDataUrl = makePageDataUrl(findPath(rawPath))
+          const componentUrls = createComponentUrls(pageData.componentChunkName)
+          const resourceUrls = [pageDataUrl].concat(componentUrls)
+          onPostPrefetch({
+            path: rawPath,
+            resourceUrls,
           })
-      }
-    }),
+        }
+
+        return pageResources
+      })
+      .catch(err => null),
+
+  getPage: rawPath => pathScriptsCache[findPath(rawPath)],
+
+  getPage404: rawPath => {
+    const page = queue.getPage(rawPath)
+    if (page) {
+      return page
+    } else if (rawPath !== `/404.html`) {
+      return queue.getPage(`/404.html`)
+    } else {
+      return null
+    }
+  },
+
+  // getResourcesForPathname: rawPath =>
+  //   new Promise((resolve, reject) => {
+  //     // console.log(`getResourcesForPathname: [${rawPath}]`)
+  //     // // Production code path
+  //     // if (failedPaths[rawPath]) {
+  //     //   handleResourceLoadError(
+  //     //     rawPath,
+  //     //     `Previously detected load failure for "${rawPath}"`
+  //     //   )
+  //     //   reject()
+  //     //   return
+  //     // }
+
+  //     const realPath = findPath(rawPath)
+  //     console.log(`real path is [${realPath}]`)
+
+  //     if (!fetchedPageData[realPath]) {
+  //       console.log(`Requesting page data for [${realPath}] for first time`)
+  //       fetchPageData(realPath).then(() =>
+  //         resolve(queue.getResourcesForPathname(rawPath))
+  //       )
+  //       return
+  //     }
+
+  //     const pageData = pageDatas[realPath]
+
+  //     if (!pageData) {
+  //       if (shouldFallbackTo404Resources(realPath)) {
+  //         console.log(`No page found: [${rawPath}]`)
+
+  //         // Preload the custom 404 page
+  //         resolve(queue.getResourcesForPathname(`/404.html`))
+  //         return
+  //       }
+
+  //       resolve()
+  //       return
+  //     }
+
+  //     // Check if it's in the cache already.
+  //     if (pathScriptsCache[realPath]) {
+  //       const pageResources = pathScriptsCache[realPath]
+  //       emitter.emit(`onPostLoadPageResources`, {
+  //         page: pageResources,
+  //         pageResources: pathScriptsCache[realPath],
+  //       })
+  //       resolve(pageResources)
+  //       return
+  //     }
+
+  //     // TODO
+  //     // Nope, we need to load resource(s)
+  //     emitter.emit(`onPreLoadPageResources`, {
+  //       path: realPath,
+  //     })
+
+  //     const { componentChunkName } = pageData
+
+  //     const finalResolve = component => {
+  //       const page = {
+  //         componentChunkName: pageData.componentChunkName,
+  //         path: pageData.path,
+  //         compilationHash: pageData.compilationHash,
+  //       }
+
+  //       const jsonData = {
+  //         data: pageData.data,
+  //         pageContext: pageData.pageContext,
+  //       }
+
+  //       const pageResources = {
+  //         component,
+  //         json: jsonData,
+  //         page,
+  //       }
+
+  //       // Add to the cache.
+  //       pathScriptsCache[realPath] = pageResources
+  //       resolve(pageResources)
+
+  //       emitter.emit(`onPostLoadPageResources`, {
+  //         page,
+  //         pageResources,
+  //       })
+  //     }
+
+  //     if (process.env.NODE_ENV !== `production`) {
+  //       // Ensure latest version of page data is in the JSON store
+  //       devGetPageData(realPath)
+  //       const component = syncRequires.components[pageData.componentChunkName]
+  //       finalResolve(component)
+  //     } else {
+  //       console.log(`getting page component: [${componentChunkName}]`)
+  //       cachedFetch(componentChunkName, fetchComponent)
+  //         .then(preferDefault)
+  //         .then(component => {
+  //           console.log(`got component`)
+  //           if (!component) {
+  //             resolve(null)
+  //             return
+  //           }
+  //           finalResolve(component)
+  //           // Tell plugins the path has been successfully prefetched
+  //           const pageDataUrl = makePageDataUrl(realPath)
+  //           const componentUrls = createComponentUrls(componentChunkName)
+  //           const resourceUrls = [pageDataUrl].concat(componentUrls)
+  //           onPostPrefetch({
+  //             path: rawPath,
+  //             resourceUrls,
+  //           })
+  //         })
+  //     }
+  //   })
 }
 
 export const setApiRunnerForLoader = runner => {
@@ -423,8 +512,11 @@ export const setApiRunnerForLoader = runner => {
 }
 
 export const publicLoader = {
-  getResourcesForPathname: queue.getResourcesForPathname,
-  getResourcesForPathnameSync: queue.getResourcesForPathnameSync,
+  getResourcesForPathname: queue.loadPage,
+  getResourcesForPathnameSync: queue.getPage,
+  loadPage: queue.loadPage,
+  getPage: queue.getPage,
+  getPage404: queue.getPage404,
 }
 
 export default queue

@@ -20,6 +20,7 @@ class Dev404Page extends React.Component {
   }
 
   render() {
+    console.log(`dev props`, this.props)
     const { pathname } = this.props.location
     const pages = this.props.pages.filter(
       p => !/^\/dev-404-page\/$/.test(p.path)

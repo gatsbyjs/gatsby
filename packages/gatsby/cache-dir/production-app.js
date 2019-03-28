@@ -80,7 +80,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   }
 
-  loader.getResourcesForPathname(browserLoc.pathname).then(() => {
+  loader.loadPage(browserLoc.pathname).then(() => {
     const Root = () =>
       createElement(
         Router,

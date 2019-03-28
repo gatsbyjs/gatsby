@@ -8,7 +8,6 @@ import {
   RouteUpdates,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
-import syncRequires from "./sync-requires"
 import loader from "./loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
@@ -38,33 +37,38 @@ class RouteHandler extends React.Component {
   render() {
     let { location } = this.props
 
-    // check if page exists - in dev pages are sync loaded, it's safe to use
-    // loader.getPage
-    let page = loader.getResourcesForPathnameSync(location.pathname)
-
-    if (page) {
-      return (
-        <EnsureResources location={location}>
-          {locationAndPageResources => (
-            <RouteUpdates location={location}>
-              <ScrollContext
-                location={location}
-                shouldUpdateScroll={shouldUpdateScroll}
-              >
-                <JSONStore {...this.props} {...locationAndPageResources} />
-              </ScrollContext>
-            </RouteUpdates>
-          )}
-        </EnsureResources>
-      )
+    if (!loader.isFailedPath(location.pathname)) {
+      console.log(`not a failed path`, location.pathname)
+      // check if page exists - in dev pages are sync loaded, it's safe to use
+      // loader.getPage
+      const page = loader.getPage(location.pathname)
+      console.log(`root page`, page)
+      if (page) {
+        return (
+          <EnsureResources location={location}>
+            {locationAndPageResources => (
+              <RouteUpdates location={location}>
+                <ScrollContext
+                  location={location}
+                  shouldUpdateScroll={shouldUpdateScroll}
+                >
+                  <JSONStore {...this.props} {...locationAndPageResources} />
+                </ScrollContext>
+              </RouteUpdates>
+            )}
+          </EnsureResources>
+        )
+      } else {
+        console.log(`shouldn't be here`)
+        throw new Error(`shouldn't be here`)
+      }
     } else {
-      const dev404PageData = loader.getResourcesForPathnameSync(
-        `/dev-404-page/`
-      )
-      const Dev404Page =
-        syncRequires.components[dev404PageData.page.componentChunkName]
+      const pages = [{ path: `/foo` }, { path: `/moo` }]
+      console.log(`failed path`, location.pathname)
+      const dev404Page = loader.getPage(`/dev-404-page/`)
+      const Dev404Page = dev404Page.component
 
-      if (!loader.getResourcesForPathnameSync(`/404.html`)) {
+      if (!loader.getPage(`/404.html`)) {
         return (
           <RouteUpdates location={location}>
             <Dev404Page {...this.props} />
@@ -77,6 +81,7 @@ class RouteHandler extends React.Component {
           {locationAndPageResources => (
             <RouteUpdates location={location}>
               <Dev404Page
+                pages={pages}
                 custom404={
                   <JSONStore {...this.props} {...locationAndPageResources} />
                 }
