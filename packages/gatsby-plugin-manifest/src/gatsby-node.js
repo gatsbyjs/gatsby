@@ -56,6 +56,7 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   delete manifest.theme_color_in_head
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
+  delete manifest.include_favicon
 
   let activity = reporter.activityTimer(`Build manifest and related icons`)
 

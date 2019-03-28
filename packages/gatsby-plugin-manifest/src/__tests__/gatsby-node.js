@@ -160,6 +160,8 @@ describe(`Test plugin manifest options`, () => {
       plugins: [],
       theme_color_in_head: false,
       cache_busting_mode: `name`,
+      include_favicon: true,
+      crossOrigin: `anonymous`,
     }
     await onPostBootstrap(
       { reporter },
