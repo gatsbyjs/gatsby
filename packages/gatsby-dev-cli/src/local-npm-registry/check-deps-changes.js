@@ -33,25 +33,6 @@ const checkDepsChanges = async ({
   isInitialScan,
   ignoredPackageJSON,
 }) => {
-  const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
-    packageName,
-    root,
-  })
-  const monorepoPKGjsonString = fs.readFileSync(
-    monoRepoPackageJsonPath,
-    `utf-8`
-  )
-  const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
-  if (ignoredPackageJSON.has(packageName)) {
-    if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjsonString)) {
-      // we are in middle of publishing and content of package.json is one set during publish process,
-      // so we need to not cause false positives
-      return {
-        didDepsChanged: false,
-      }
-    }
-  }
-
   let localPKGjson
   let packageNotInstalled = false
   try {
@@ -95,6 +76,26 @@ const checkDepsChanges = async ({
       )
       return {
         didDepsChanged: true,
+        packageNotInstalled,
+      }
+    }
+  }
+
+  const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
+    packageName,
+    root,
+  })
+  const monorepoPKGjsonString = fs.readFileSync(
+    monoRepoPackageJsonPath,
+    `utf-8`
+  )
+  const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
+  if (ignoredPackageJSON.has(packageName)) {
+    if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjsonString)) {
+      // we are in middle of publishing and content of package.json is one set during publish process,
+      // so we need to not cause false positives
+      return {
+        didDepsChanged: false,
         packageNotInstalled,
       }
     }
