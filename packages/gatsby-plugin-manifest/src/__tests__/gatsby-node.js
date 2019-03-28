@@ -156,6 +156,7 @@ describe(`Test plugin manifest options`, () => {
       plugins: [],
       theme_color_in_head: false,
       cache_busting_mode: `name`,
+      icon_options: {},
     }
     await onPostBootstrap(
       { reporter },
@@ -164,6 +165,7 @@ describe(`Test plugin manifest options`, () => {
         ...pluginSpecificOptions,
       }
     )
+
     expect(sharp).toHaveBeenCalledTimes(0)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
