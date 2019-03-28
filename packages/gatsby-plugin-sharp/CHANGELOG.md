@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.31...gatsby-plugin-sharp@2.0.32) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** strip non related args when hashing resizing args ([#12129](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12129)) ([da0b622](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/da0b622))
+
 ## [2.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.30...gatsby-plugin-sharp@2.0.31) (2019-03-25)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
