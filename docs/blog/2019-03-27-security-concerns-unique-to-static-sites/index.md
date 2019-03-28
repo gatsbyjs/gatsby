@@ -29,7 +29,7 @@ These are not to be considered universal definitions, just how the author will u
 
 ## Shared Security Concerns
 
-No matter how you deploy your site, how little javascript you use, whether it is sever-side or client-side: your site has attack vectors.
+No matter how you deploy your site, how little JavaScript you use, whether it is sever-side or client-side: your site has attack vectors.
 
 When it comes to static sites, if you are going to get hacked, it is going to be at the infastructure level (server/CDN, DNS, CI, etc.) or network level([MitM](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)). Thanks to the cloud, most of this work is done for you and you do not have to secure these layers. As long as you are using two-factor authentication(2FA) and a strong password. You are all using 2FA (when possible) and strong passwords, right!? Good.
 
