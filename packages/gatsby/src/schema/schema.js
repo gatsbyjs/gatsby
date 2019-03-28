@@ -202,21 +202,23 @@ const processAddedType = ({
   schemaComposer.addSchemaMustHaveType(typeComposer)
 
   typeComposer.setExtension(`createdFrom`, createdFrom)
-  typeComposer.setExtension(`plugin`, plugin)
+  typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
 
   if (createdFrom === `sdl`) {
     if (type.astNode && type.astNode.directives) {
       type.astNode.directives.forEach(directive => {
         if (directive.name.value === `infer`) {
-          typeComposer.setExtension(`inferConfig`, {
-            infer: true,
-            addDefaultResolvers: getNoDefaultResolvers(directive),
-          })
+          typeComposer.setExtension(`infer`, true)
+          typeComposer.setExtension(
+            `addDefaultResolvers`,
+            getNoDefaultResolvers(directive)
+          )
         } else if (directive.name.value === `dontInfer`) {
-          typeComposer.setExtension(`inferConfig`, {
-            infer: false,
-            addDefaultResolvers: getNoDefaultResolvers(directive),
-          })
+          typeComposer.setExtension(`infer`, false)
+          typeComposer.setExtension(
+            `addDefaultResolvers`,
+            getNoDefaultResolvers(directive)
+          )
         }
       })
     }

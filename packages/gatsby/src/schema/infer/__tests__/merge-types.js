@@ -126,10 +126,8 @@ describe(`merges explicit and inferred type definitions`, () => {
         name: `Test`,
         interfaces: [`Node`],
         extensions: {
-          inferConfig: {
-            infer,
-            addDefaultResolvers,
-          },
+          infer,
+          addDefaultResolvers,
         },
         fields: {
           explicitDate: `Date`,

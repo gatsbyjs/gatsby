@@ -15,8 +15,12 @@ const getInferConfig: (
   typeComposer: TypeComposer
 ) => InferConfig = typeComposer => {
   return {
-    ...DEFAULT_INFER_CONFIG,
-    ...(typeComposer.getExtension(`inferConfig`) || {}),
+    infer: typeComposer.hasExtension(`infer`)
+      ? typeComposer.getExtension(`infer`)
+      : DEFAULT_INFER_CONFIG.infer,
+    addDefaultResolvers: typeComposer.hasExtension(`addDefaultResolvers`)
+      ? typeComposer.getExtension(`addDefaultResolvers`)
+      : DEFAULT_INFER_CONFIG.addDefaultResolvers,
   }
 }
 

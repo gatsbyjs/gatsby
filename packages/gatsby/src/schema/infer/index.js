@@ -21,9 +21,7 @@ const addInferredType = ({
     !typeComposer.hasExtension(`plugin`) &&
     typeComposer.getExtension(`createdFrom`) === `infer`
   ) {
-    typeComposer.setExtension(`plugin`, {
-      name: nodes[0].internal.owner,
-    })
+    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
   }
   const exampleValue = getExampleValue({
     nodes,
