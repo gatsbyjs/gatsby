@@ -78,16 +78,20 @@ describe(`Scroll behaviour`, () => {
       .waitForAPI(`onRouteUpdate`)
 
     cy.go(`back`).waitForAPI(`onRouteUpdate`)
-    cy.go(`back`)
-      .waitForAPI(`onRouteUpdate`)
+    cy.go(`back`).waitForAPI(`onRouteUpdate`)
+
+    cy.location(`pathname`)
+      .should(`equal`, `/long-page/`)
       .wait(500)
       // we went back in hitsory 2 times, so we should end up at the bottom of the page
       .shouldMatchScrollPosition(`bottom-of-the-page`)
       .shouldNotMatchScrollPosition(`middle-of-the-page`)
 
     cy.go(`back`).waitForAPI(`onRouteUpdate`)
-    cy.go(`back`)
-      .waitForAPI(`onRouteUpdate`)
+    cy.go(`back`).waitForAPI(`onRouteUpdate`)
+
+    cy.location(`pathname`)
+      .should(`equal`, `/long-page/`)
       .wait(500)
       // we went back in hitsory 2 more times, so we should end up in the middle of the page
       // instead of at the bottom
