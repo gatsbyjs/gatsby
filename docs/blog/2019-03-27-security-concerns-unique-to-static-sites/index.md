@@ -113,7 +113,7 @@ In the end if you need hardened security, you need authentication. If you want a
 
 ### Exceptions
 
-Every good rule has its exceptions. Never shipping API keys in client-side code is no exception. Let me be clear, you should never ship **SECURE** API keys (often called secrets) to a client. But, there is such a thing as non-secure/public API keys. These keys are generally used for identification of and not for access control. Firebase authentication is a great example of this.
+Every good rule has its exceptions. Never shipping API keys in client-side code is no exception. Let me be clear, you should never ship **SECURE** API keys (often called secrets) to a client. But, there is such a thing as non-secure/public API keys. These keys are generally used for identification and not for access control. Firebase authentication is a great example of this.
 
 Your site needs to be able to access your unique firebase instance, to authenticate users. To do this, Firebase uses an API key to identify your app. This key is [designed](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public) to be public and their documentation tells you to add it to your client-side code. Firebase has other [controls](https://stackoverflow.com/questions/35418143/how-to-restrict-firebase-data-modification) that determine what an anonymous user is allowed to do with this key.
 
