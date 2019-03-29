@@ -6,6 +6,8 @@
       link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
+    - title: Cheat Sheet
+      link: /docs/cheat-sheet/
 - title: Guides
   link: /docs/guides/
   items:
