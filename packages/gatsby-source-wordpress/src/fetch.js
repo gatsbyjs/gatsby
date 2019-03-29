@@ -157,6 +157,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
       entities = entities.concat(
         await fetchData({
           route,
+          apiUrl: url,
           _verbose,
           _perPage,
           _auth,
@@ -241,6 +242,7 @@ async function getJWToken(_auth, url) {
  */
 async function fetchData({
   route,
+  apiUrl,
   _verbose,
   _perPage,
   _auth,
@@ -294,9 +296,11 @@ async function fetchData({
     if (type == `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
         if (menu.meta && menu.meta.links && menu.meta.links.self) {
+          menu.meta.links.self = getProperSelfPath(apiUrl, menu.meta.links.self);
           entities = entities.concat(
             await fetchData({
               route: { url: menu.meta.links.self, type: `${type}_items` },
+              apiUrl,
               _verbose,
               _perPage,
               _auth,
@@ -618,6 +622,21 @@ const getRoutePath = (baseUrl, fullPath) => {
 }
 
 /**
+ * Extract the route path for an endpoint
+ *
+ * @param {string} apiUrl he base site API URL
+ * @param {string} self URL that returned from server response. May contain domain differs from apiUrl
+ */
+const getProperSelfPath = (apiUrl, self) => {
+  // Replace route self host to baseUrl if differs
+  const isDifferentDomains = self.indexOf(apiUrl) === -1;
+  if (isDifferentDomains) {
+    return self.replace(/(.*?)\/wp-json/, apiUrl);
+  }
+  return self;
+}
+
+/**
  * Build full URL from baseUrl and fullPath.
  * Method of contructing full URL depends on wether it's hosted on wordpress.com
  * or not as wordpress.com have slightly different (custom) REST structure
@@ -644,4 +663,5 @@ const getManufacturer = route =>
 fetch.getRawEntityType = getRawEntityType
 fetch.getRoutePath = getRoutePath
 fetch.buildFullUrl = buildFullUrl
+fetch.getProperSelfPath = getProperSelfPath
 module.exports = fetch
