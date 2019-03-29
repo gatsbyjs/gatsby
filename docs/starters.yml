@@ -2198,11 +2198,8 @@
   repo: https://github.com/willcode4food/gatsby-starter-paperbase
   description: A Gatsby starter that implements the Paperbase Premium Theme from MaterialUI
   tags:
-    - MaterialUI
+    - Styling:Material
     - Styling:CSS-in-JS
-    - Dashboard
-    - Admin
-    - App
   features:
     - MaterialUI Paperbase theme in Gatsby!
     - Create professional looking admin tools and dashboards
