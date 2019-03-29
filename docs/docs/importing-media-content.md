@@ -7,7 +7,7 @@ issue: https://github.com/gatsbyjs/gatsby/issues/8103
 
 ## Images, SVG, and PDFs
 
-- [Image graphics can be imported](docs/adding-images-fonts-files/) with Webpack and queried with GraphQL.
+- [Image graphics can be imported](/docs/adding-images-fonts-files/) with Webpack and queried with GraphQL.
 - Images can also be [included from the `static folder`](/docs/adding-images-fonts-files/#using-the-static-folder).
 - SVG content can be embedded into JSX. Here's a [handy JSX converter](https://transform.now.sh/html-to-jsx/).
 - SVG can be included in `img` tags or CSS backgrounds. [SVG Tips from CSS Tricks](https://css-tricks.com/using-svg/).

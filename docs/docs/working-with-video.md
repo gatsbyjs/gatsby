@@ -8,7 +8,7 @@ This is a stub. Help our community expand it.
 Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
 pull request gets accepted.
 
-The discussion around best practices for video in Gatsby is also ongoing on Github, chime in with your ideas here: https://github.com/gatsbyjs/gatsby/issues/3346
+The discussion around best practices for video in Gatsby is also ongoing on Github, chime in with your ideas in the Gatsby issue [#3346 Create a special component for HTML5 videos](https://github.com/gatsbyjs/gatsby/issues/3346)
 
 ---
 
@@ -141,7 +141,7 @@ export const pageQuery = graphql`
 
 It's super common to source video from YouTube, Twitch or Vimeo. But what if you want to host your own video and include it as HTML5 video?
 
-> This discussion is ongoing on Github, chime in with your ideas here: https://github.com/gatsbyjs/gatsby/issues/3346
+> This discussion is ongoing on Github, chime in with your ideas in the Gatsby issue [#3346 Create a special component for HTML5 videos](https://github.com/gatsbyjs/gatsby/issues/3346)
 
 To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats">Media formats for HTML audio and video</a>. You may need video converter software to produce the necessary formats to support a range of devices and environments, such as `.webm` and `.mp4`.
 
