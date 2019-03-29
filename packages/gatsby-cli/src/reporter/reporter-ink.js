@@ -1,17 +1,10 @@
 // @flow
 
-const { createReporter } = require(`yurnalist`)
 const { stripIndent } = require(`common-tags`)
-const convertHrtime = require(`convert-hrtime`)
-const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const inkReporter = require(`./ink`)
-
-const VERBOSE = process.env.gatsby_log_level === `verbose`
+const inkReporter = require(`./ink`).default
 
 const errorFormatter = getErrorFormatter()
-const reporter = createReporter({ emoji: true, verbose: VERBOSE })
-const base = Object.getPrototypeOf(reporter)
 
 type ActivityArgs = {
   parentSpan: Object,
@@ -20,7 +13,7 @@ type ActivityArgs = {
 /* Reporter module.
  * @module reporter
  */
-module.exports = Object.assign(reporter, {
+module.exports = Object.assign({
   /**
    * Strip initial indentation template function.
    */
@@ -29,12 +22,13 @@ module.exports = Object.assign(reporter, {
    * Toggle verbosity.
    * @param {boolean} [isVerbose=true]
    */
-  setVerbose: inkReporter.setVerbose.bind(inkReporter),
+  setVerbose: (...args) => inkReporter.setVerbose(...args),
   /**
    * Turn off colors in error output.
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
+    this.isNoColors = isNoColor
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
@@ -60,7 +54,7 @@ module.exports = Object.assign(reporter, {
       error = message
       message = error.message
     }
-    base.error.call(this, message)
+    // base.error.call(this, message)
     if (error) console.log(errorFormatter.render(error))
   },
   /**
@@ -70,9 +64,9 @@ module.exports = Object.assign(reporter, {
   uptime(prefix: string) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
-  success: inkReporter.onSuccess.bind(inkReporter),
-  verbose: inkReporter.onVerbose.bind(inkReporter),
-  info: inkReporter.onInfo.bind(inkReporter),
+  success: (...args) => inkReporter.onSuccess(...args),
+  verbose: (...args) => inkReporter.onVerbose(...args),
+  info: (...args) => inkReporter.onInfo(...args),
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
@@ -80,36 +74,6 @@ module.exports = Object.assign(reporter, {
    * @returns {string} The elapsed time of activity.
    */
   activityTimer(name, activityArgs: ActivityArgs = {}) {
-    const spinner = reporter.activity()
-    const start = process.hrtime()
-    let status
-
-    const elapsedTime = () => {
-      var elapsed = process.hrtime(start)
-      return `${convertHrtime(elapsed)[`seconds`].toFixed(3)} s`
-    }
-
-    const { parentSpan } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const span = tracer.startSpan(name, spanArgs)
-
-    return {
-      start: () => {
-        spinner.tick(name)
-      },
-      setStatus: s => {
-        status = s
-        spinner.tick(`${name} — ${status}`)
-      },
-      end: () => {
-        span.finish()
-        const str = status
-          ? `${name} — ${elapsedTime()} — ${status}`
-          : `${name} — ${elapsedTime()}`
-        this.success(str)
-        spinner.end()
-      },
-      span: span,
-    }
+    return inkReporter.createActivity(name, activityArgs)
   },
 })
