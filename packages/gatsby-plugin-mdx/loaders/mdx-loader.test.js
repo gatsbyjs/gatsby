@@ -77,7 +77,15 @@ describe("mdx-loader", () => {
           getNodes() {
             return fixtures.map(([, node]) => node);
           },
-          pluginOptions: {}
+          pluginOptions: {},
+          cache: {
+            get() {
+              return false;
+            },
+            set() {
+              return;
+            }
+          }
         },
         resourcePath: fakeGatsbyNode.absolutePath
       });
