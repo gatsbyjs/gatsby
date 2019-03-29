@@ -140,8 +140,8 @@ const link = ({ by, from }) => async (source, args, context, info) => {
   )
 }
 
-const fileByPath = (source, args, context, info) => {
-  const fieldValue = source && source[info.fieldName]
+const fileByPath = ({ from }) => (source, args, context, info) => {
+  const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (

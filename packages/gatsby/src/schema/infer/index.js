@@ -1,49 +1,13 @@
 const report = require(`gatsby-cli/lib/reporter`)
+const { ObjectTypeComposer } = require(`graphql-compose`)
 const { getExampleValue } = require(`./example-value`)
 const {
   addNodeInterface,
   getNodeInterface,
 } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
+const { mergeInferredComposer } = require(`./merge-inferred-composer`)
 const getInferConfig = require(`./get-infer-config`)
-
-const addInferredType = ({
-  schemaComposer,
-  typeComposer,
-  nodeStore,
-  typeConflictReporter,
-  typeMapping,
-  parentSpan,
-}) => {
-  const typeName = typeComposer.getTypeName()
-  const nodes = nodeStore.getNodesByType(typeName)
-  if (
-    !typeComposer.hasExtension(`plugin`) &&
-    typeComposer.getExtension(`createdFrom`) === `infer`
-  ) {
-    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
-  }
-  const exampleValue = getExampleValue({
-    nodes,
-    typeName,
-    typeConflictReporter,
-    ignoreFields: [
-      ...getNodeInterface({ schemaComposer }).getFieldNames(),
-      `$loki`,
-    ],
-  })
-
-  addInferredFields({
-    schemaComposer,
-    typeComposer,
-    nodeStore,
-    exampleValue,
-    inferConfig: getInferConfig(typeComposer),
-    typeMapping,
-    parentSpan,
-  })
-  return typeComposer
-}
 
 const addInferredTypes = ({
   schemaComposer,
@@ -57,6 +21,8 @@ const addInferredTypes = ({
   const typeNames = putFileFirst(nodeStore.getTypes())
   const noNodeInterfaceTypes = []
 
+  const nodeTypesToInfer = []
+
   typeNames.forEach(typeName => {
     let typeComposer
     let inferConfig
@@ -67,25 +33,12 @@ const addInferredTypes = ({
         if (!typeComposer.hasInterface(`Node`)) {
           noNodeInterfaceTypes.push(typeComposer.getType())
         }
+        nodeTypesToInfer.push(typeName)
       }
     } else {
-      typeComposer = schemaComposer.createObjectTC(typeName)
-      typeComposer.setExtension(`createdFrom`, `infer`)
-      addNodeInterface({ schemaComposer, typeComposer })
+      nodeTypesToInfer.push(typeName)
     }
   })
-
-  // XXX(freiksenet): We iterate twice to pre-create all types
-  const typeComposers = typeNames.map(typeName =>
-    addInferredType({
-      schemaComposer,
-      nodeStore,
-      typeConflictReporter,
-      typeComposer: schemaComposer.getOTC(typeName),
-      typeMapping,
-      parentSpan,
-    })
-  )
 
   if (noNodeInterfaceTypes.length > 0) {
     noNodeInterfaceTypes.forEach(type => {
@@ -103,7 +56,86 @@ const addInferredTypes = ({
     report.panic(`Building schema failed`)
   }
 
+  nodeTypesToInfer.forEach(typeName => {
+    schemaComposer.getOrCreateOTC(typeName)
+  })
+
+  const typeComposers = nodeTypesToInfer.map(typeName =>
+    addInferredType({
+      schemaComposer,
+      typeName,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  )
+
   return typeComposers
+}
+
+const addInferredType = ({
+  schemaComposer,
+  typeName,
+  nodeStore,
+  typeConflictReporter,
+  typeMapping,
+  parentSpan,
+}) => {
+  const inferredComposer = ObjectTypeComposer.createTemp(
+    typeName,
+    schemaComposer
+  )
+  inferType({
+    schemaComposer,
+    nodeStore,
+    typeConflictReporter,
+    typeComposer: inferredComposer,
+    typeMapping,
+    parentSpan,
+  })
+  const definedComposer = schemaComposer.getOrCreateOTC(typeName)
+  addNodeInterface({ schemaComposer, typeComposer: definedComposer })
+  mergeInferredComposer({
+    schemaComposer,
+    definedComposer,
+    inferredComposer,
+  })
+  return definedComposer
+}
+
+const inferType = ({
+  schemaComposer,
+  typeComposer,
+  nodeStore,
+  typeConflictReporter,
+  typeMapping,
+  parentSpan,
+}) => {
+  const typeName = typeComposer.getTypeName()
+  const nodes = nodeStore.getNodesByType(typeName)
+  typeComposer.setExtension(`createdFrom`, `infer`)
+  typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+
+  const exampleValue = getExampleValue({
+    nodes,
+    typeName,
+    typeConflictReporter,
+    ignoreFields: [
+      ...getNodeInterface({ schemaComposer }).getFieldNames(),
+      `$loki`,
+    ],
+  })
+
+  addInferredFields({
+    schemaComposer,
+    typeComposer,
+    nodeStore,
+    exampleValue,
+    typeMapping,
+    parentSpan,
+  })
+  return typeComposer
 }
 
 const putFileFirst = typeNames => {

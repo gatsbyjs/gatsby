@@ -45,7 +45,7 @@ describe(`Query schema`, () => {
       } else if (api === `createResolvers`) {
         return [
           args[0].createResolvers({
-            Frontmatter: {
+            MarkdownFrontmatter: {
               authors: {
                 resolve(source, args, context, info) {
                   // NOTE: When using the first field resolver argument (here called
@@ -122,8 +122,8 @@ describe(`Query schema`, () => {
     )
 
     const typeDefs = [
-      `type Markdown implements Node { frontmatter: Frontmatter! }`,
-      `type Frontmatter { authors: [Author] }`,
+      `type Markdown implements Node { frontmatter: MarkdownFrontmatter! }`,
+      `type MarkdownFrontmatter { authors: [Author] }`,
       `type Author implements Node { posts: [Markdown] }`,
     ]
     typeDefs.forEach(def =>

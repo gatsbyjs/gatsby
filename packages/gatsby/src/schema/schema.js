@@ -19,6 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
+const { addFieldResolvers } = require(`./add-field-resolvers`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -57,7 +58,7 @@ const rebuildSchemaWithSitePage = async ({
 }) => {
   const typeComposer = addInferredType({
     schemaComposer,
-    typeComposer: schemaComposer.getOTC(`SitePage`),
+    typeName: `SitePage`,
     nodeStore,
     typeConflictReporter,
     typeMapping,
@@ -123,6 +124,7 @@ const processTypeComposer = async ({
     typeComposer instanceof ObjectTypeComposer &&
     typeComposer.hasInterface(`Node`)
   ) {
+    await addFieldResolvers({ schemaComposer, typeComposer, parentSpan })
     await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
     await addResolvers({ schemaComposer, typeComposer, parentSpan })
     await addConvenienceChildrenFields({
@@ -132,6 +134,8 @@ const processTypeComposer = async ({
       parentSpan,
     })
     await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+  } else if (typeComposer instanceof ObjectTypeComposer) {
+    await addFieldResolvers({ schemaComposer, typeComposer, parentSpan })
   }
 }
 
@@ -209,19 +213,43 @@ const processAddedType = ({
       type.astNode.directives.forEach(directive => {
         if (directive.name.value === `infer`) {
           typeComposer.setExtension(`infer`, true)
-          typeComposer.setExtension(
-            `addDefaultResolvers`,
-            getNoDefaultResolvers(directive)
-          )
+          const addDefaultResolvers = getNoDefaultResolvers(directive)
+          if (addDefaultResolvers) {
+            typeComposer.setExtension(
+              `addDefaultResolvers`,
+              addDefaultResolvers
+            )
+          }
         } else if (directive.name.value === `dontInfer`) {
           typeComposer.setExtension(`infer`, false)
-          typeComposer.setExtension(
-            `addDefaultResolvers`,
-            getNoDefaultResolvers(directive)
-          )
+          const addDefaultResolvers = getNoDefaultResolvers(directive)
+          if (addDefaultResolvers) {
+            typeComposer.setExtension(
+              `addDefaultResolvers`,
+              addDefaultResolvers
+            )
+          }
         }
       })
     }
+  }
+
+  // XXX(freiksenet): This currently forces types too early
+  // if (typeComposer.getFieldNames) {
+  //   typeComposer.getFieldNames().forEach(fieldName => {
+  //     typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
+  //     typeComposer.setFieldExtension(
+  //       fieldName,
+  //       `plugin`,
+  //       plugin ? plugin.name : null
+  //     )
+  //   })
+  // }
+
+  if (typeComposer.hasExtension(`addDefaultResolvers`)) {
+    report.warn(
+      `Default resolve behaviour is deprecated. In future, only fields with explicit resolver directives/extensions (date, link) will get arguments and resolvers. "noDefaultResolvers" argument will be removed from the directive.`
+    )
   }
 
   return typeComposer
