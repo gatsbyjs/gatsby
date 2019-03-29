@@ -70,6 +70,7 @@ describe(`Process contentful data`, () => {
     })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
+
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()
