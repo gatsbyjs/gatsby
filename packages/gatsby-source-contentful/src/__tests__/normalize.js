@@ -87,7 +87,7 @@ describe(`Process contentful data`, () => {
         foreignReferenceMap,
         defaultLocale,
         locales,
-        localeFilter: locale => locale.code === `de-DE`,
+        localeFilter: locale => locale.code === `de`,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()

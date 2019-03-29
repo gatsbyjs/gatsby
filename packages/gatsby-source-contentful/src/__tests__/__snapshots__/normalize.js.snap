@@ -4299,3 +4299,834 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
   ],
 ]
 `;
+
+exports[`Process contentful data creates nodes while respecting the locale filtering 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "description": null,
+      "displayField": "title",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "6020d82d8bb5bd6b1de8a97f6f419053",
+        "type": "ContentfulContentType",
+      },
+      "name": "Category",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription___NODE": "uuid-from-gatsby",
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c7LAnCobuuWYSqks6wAwY2a",
+      "createdAt": "2017-06-27T09:35:44.000Z",
+      "icon___NODE": "uuid-from-gatsby",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "f9b87e4976b67d160556e217dcb422fb",
+        "type": "ContentfulCategory",
+      },
+      "node_locale": "de",
+      "parent": "Category",
+      "product___NODE": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "title___NODE": "uuid-from-gatsby",
+      "updatedAt": "2017-06-27T09:55:54.077Z",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription___NODE": "uuid-from-gatsby",
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+      "createdAt": "2017-06-27T09:35:44.992Z",
+      "icon___NODE": "uuid-from-gatsby",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "c2be85a7c3be49d87f8cf06b71b27884",
+        "type": "ContentfulCategory",
+      },
+      "node_locale": "de",
+      "parent": "Category",
+      "product___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "title___NODE": "uuid-from-gatsby",
+      "updatedAt": "2017-06-27T09:46:43.477Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Haus & Küche",
+        "contentDigest": "21786d8d63d043d9cc0f639450bd5b70",
+        "mediaType": "text/markdown",
+        "type": "contentfulCategoryTitleTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "title": "Haus & Küche",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
+        "contentDigest": "7d7b0c68e20954c3f092bae55ccbdd9f",
+        "mediaType": "text/markdown",
+        "type": "contentfulCategoryCategoryDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Spielzeug",
+        "contentDigest": "22658c0cbfd038b32380aa036bff1cfe",
+        "mediaType": "text/markdown",
+        "type": "contentfulCategoryTitleTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "title": "Spielzeug",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription": "Spielzeugladen, Spiele, Lernhilfen",
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Spielzeugladen, Spiele, Lernhilfen",
+        "contentDigest": "93335f47e41d44163239227427760695",
+        "mediaType": "text/markdown",
+        "type": "contentfulCategoryCategoryDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": null,
+      "displayField": "companyName",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "523655fd0d90116babdcba9c139672a3",
+        "type": "ContentfulContentType",
+      },
+      "name": "Brand",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "companyDescription___NODE": "uuid-from-gatsby",
+      "companyName___NODE": "uuid-from-gatsby",
+      "contentful_id": "c651CQ8rLoIYCeY6G0QG22q",
+      "createdAt": "2017-06-27T09:35:43.997Z",
+      "email": "normann@normann-copenhagen.com",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "52ad0868929151dfbfaa988f726009cf",
+        "type": "ContentfulBrand",
+      },
+      "logo___NODE": "uuid-from-gatsby",
+      "node_locale": "de",
+      "parent": "Brand",
+      "phone": Array [
+        "+45 35 55 44 59",
+      ],
+      "product___NODE": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "twitter": "https://twitter.com/NormannCPH",
+      "updatedAt": "2017-06-27T09:55:16.820Z",
+      "website": "http://www.normann-copenhagen.com/",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "companyDescription___NODE": "uuid-from-gatsby",
+      "companyName___NODE": "uuid-from-gatsby",
+      "contentful_id": "c4LgMotpNF6W20YKmuemW0a",
+      "createdAt": "2017-06-27T09:35:44.396Z",
+      "email": "info@acgears.com",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "8e519d7f8faaffd4950e0ac610f60faf",
+        "type": "ContentfulBrand",
+      },
+      "logo___NODE": "uuid-from-gatsby",
+      "node_locale": "de",
+      "parent": "Brand",
+      "phone": Array [],
+      "product___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "updatedAt": "2017-06-27T09:51:15.647Z",
+      "website": "http://www.lemnos.jp/en/",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "companyDescription___NODE": "uuid-from-gatsby",
+      "companyName___NODE": "uuid-from-gatsby",
+      "contentful_id": "JrePkDVYomE8AwcuCUyMi",
+      "createdAt": "2017-06-27T09:35:44.988Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "0e2099a7502685eb3e84bdfb936c412a",
+        "type": "ContentfulBrand",
+      },
+      "logo___NODE": "uuid-from-gatsby",
+      "node_locale": "de",
+      "parent": "Brand",
+      "product___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "updatedAt": "2017-06-27T09:50:36.937Z",
+      "website": "http://playsam.com/",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyName": "Normann Copenhagen",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Normann Copenhagen",
+        "contentDigest": "5fb9d019c3646f6fee84172952337463",
+        "mediaType": "text/markdown",
+        "type": "contentfulBrandCompanyNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyDescription": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
+        "contentDigest": "0a7c7553a38bb0a62a22c20deb99a93f",
+        "mediaType": "text/markdown",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyName": "Lemnos",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Lemnos",
+        "contentDigest": "7b0e3f7cc613d34aafa689516e96056e",
+        "mediaType": "text/markdown",
+        "type": "contentfulBrandCompanyNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyDescription": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+
+Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+
+Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+
+Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+
+In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+
+Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+
+Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+
+Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+
+Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+
+In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+
+Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
+        "contentDigest": "b8d1cb0f951b10e0f84f32a8c28ee503",
+        "mediaType": "text/markdown",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyName": "Playsam",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Playsam",
+        "contentDigest": "1d2de5c3096635ca01f6ab4131252039",
+        "mediaType": "text/markdown",
+        "type": "contentfulBrandCompanyNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyDescription": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
+        "contentDigest": "7b0a48d4861111805b6c614bf2373eb6",
+        "mediaType": "text/markdown",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": null,
+      "displayField": "productName",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "043cf76e7aedca253d7f91e366d103d5",
+        "type": "ContentfulContentType",
+      },
+      "name": "Product",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "uuid-from-gatsby",
+      "categories___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c5KsDBWseXY6QegucYAoacS",
+      "createdAt": "2017-06-27T09:35:43.996Z",
+      "id": "uuid-from-gatsby",
+      "image___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "internal": Object {
+        "contentDigest": "abc413b08f3157046aaa6a2832e241ae",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 44,
+      "productDescription___NODE": "uuid-from-gatsby",
+      "productName___NODE": "uuid-from-gatsby",
+      "quantity": 56,
+      "sizetypecolor": "Length: 135 mm | color: espresso, green, or icar (white)",
+      "sku": "B001R6JUZ2",
+      "slug": "playsam-streamliner-classic-car-espresso",
+      "tags": Array [
+        "wood",
+        "toy",
+        "car",
+        "sweden",
+        "design",
+      ],
+      "updatedAt": "2017-06-27T09:56:59.626Z",
+      "website": "http://www.amazon.com/dp/B001R6JUZ2/",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "uuid-from-gatsby",
+      "categories___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c3DVqIYj4dOwwcKu6sgqOgg",
+      "createdAt": "2017-06-27T09:35:44.006Z",
+      "id": "uuid-from-gatsby",
+      "image___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "internal": Object {
+        "contentDigest": "b9f84c2847412afdef95a02d9423da39",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 11,
+      "productDescription___NODE": "uuid-from-gatsby",
+      "productName___NODE": "uuid-from-gatsby",
+      "quantity": 101,
+      "sizetypecolor": "3 x 3 x 5 inches; 5.3 ounces",
+      "sku": "B00E82D7I8",
+      "slug": "hudson-wall-cup",
+      "tags": Array [
+        "vase",
+        "flowers",
+        "accessories",
+      ],
+      "updatedAt": "2017-06-27T09:54:51.159Z",
+      "website": "http://www.amazon.com/dp/B00E82D7I8/",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "uuid-from-gatsby",
+      "categories___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c6dbjWqNd9SqccegcqYq224",
+      "createdAt": "2017-06-27T09:35:44.049Z",
+      "id": "uuid-from-gatsby",
+      "image___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "internal": Object {
+        "contentDigest": "17c4b3818ee23d43b6c4547ec3a92022",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 22,
+      "productDescription___NODE": "uuid-from-gatsby",
+      "productName___NODE": "uuid-from-gatsby",
+      "quantity": 89,
+      "sizetypecolor": "0.8 x 0.8 x 11.2 inches; 1.6 ounces",
+      "sku": "B0081F2CCK",
+      "slug": "whisk-beater",
+      "tags": Array [
+        "kitchen",
+        "accessories",
+        "whisk",
+        "scandinavia",
+        "design",
+      ],
+      "updatedAt": "2017-06-27T09:53:23.179Z",
+      "website": "http://www.amazon.com/dp/B0081F2CCK/",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "uuid-from-gatsby",
+      "categories___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "children": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c4BqrajvA8E6qwgkieoqmqO",
+      "createdAt": "2017-06-27T09:35:44.130Z",
+      "id": "uuid-from-gatsby",
+      "image___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "internal": Object {
+        "contentDigest": "5431e6661c698cc76934359efec47656",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 120,
+      "productDescription___NODE": "uuid-from-gatsby",
+      "productName___NODE": "uuid-from-gatsby",
+      "quantity": 3,
+      "sizetypecolor": "10\\" x 2.2\\"",
+      "sku": "B00MG4ULK2",
+      "slug": "soso-wall-clock",
+      "tags": Array [
+        "home décor",
+        "clocks",
+        "interior design",
+        "yellow",
+        "gifts",
+      ],
+      "updatedAt": "2017-06-27T09:52:29.215Z",
+      "website": "http://store.dwell.com/soso-wall-clock.html",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Playsam Streamliner Klassisches Auto, Espresso",
+        "contentDigest": "7f76178eaaeb38fc20570d0c6eb49c3e",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productName": "Playsam Streamliner Klassisches Auto, Espresso",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+        "contentDigest": "85779a170b2fe2458d707b34459d4085",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productDescription": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Becher",
+        "contentDigest": "aac31ab0dcf429f1be1d2764db549f43",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productName": "Becher",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+        "contentDigest": "41d1166dbe8f8af2f8f2bad50fe42f03",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productDescription": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Schneebesen",
+        "contentDigest": "811253206ba751ed27cf3ceb68e334dc",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productName": "Schneebesen",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+        "contentDigest": "d0793a3c142dc3f7377edd6625091cb7",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productDescription": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "SoSo wanduhr",
+        "contentDigest": "8b38ff25d8ab847042efc8d525aaf7a0",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productName": "SoSo wanduhr",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+        "contentDigest": "038ff737ccc03e4525691d265d5a92b7",
+        "mediaType": "text/markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "productDescription": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "type": "ContentfulContentType",
+      },
+      "name": "StTest",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "just for testing JSON fields",
+      "displayField": null,
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "9d44539046f153bcd9f3d110e20c428c",
+        "type": "ContentfulContentType",
+      },
+      "name": "JSON-test",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+      ],
+      "contentful_id": "c71mfnH4QKsSsQmgoaQuq6O",
+      "createdAt": "2017-11-28T02:16:10.604Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "62a962f097c57cf89c7795c6dc0bf8a1",
+        "type": "ContentfulJsonTest",
+      },
+      "jsonTest___NODE": "uuid-from-gatsby",
+      "node_locale": "de",
+      "parent": "JSON-test",
+      "updatedAt": "2018-06-11T14:18:54.392Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "devDependencies": Object {
+        "babel-cli": "^6.26.0",
+        "babel-eslint": "^7.2.3",
+        "babel-jest": "^20.0.3",
+        "babel-plugin-add-module-exports": "^0.2.1",
+        "babel-plugin-lodash": "^3.2.11",
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-plugin-transform-flow-strip-types": "^6.22.0",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-flow": "^6.23.0",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "babel-runtime": "^6.26.0",
+        "chokidar": "^1.7.0",
+        "cross-env": "^5.0.5",
+        "eslint": "^4.5.0",
+        "eslint-config-google": "^0.9.1",
+        "eslint-config-prettier": "^2.5.0",
+        "eslint-plugin-flowtype": "^2.35.0",
+        "eslint-plugin-import": "^2.7.0",
+        "eslint-plugin-jsx-a11y": "^6.0.2",
+        "eslint-plugin-prettier": "^2.2.0",
+        "eslint-plugin-react": "^7.3.0",
+        "flow-bin": "^0.42.0",
+        "glob": "^7.1.1",
+        "jest": "^20.0.4",
+        "jest-cli": "^20.0.4",
+        "lerna": "^2.1.1",
+        "plop": "^1.8.1",
+        "prettier": "^1.7.0",
+        "prettier-eslint-cli": "4.2.x",
+        "remotedev-server": "^0.2.3",
+        "rimraf": "^2.6.1",
+      },
+      "engines": Object {
+        "yarn": "^1.2.1",
+      },
+      "eslintIgnore": Array [
+        "interfaces",
+        "**/__tests__/fixtures/",
+      ],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepare\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write /\\"www/*.js/\\" /\\"www/src/**/*.js/\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write /\\"scripts/**/*.js/\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write /\\"examples/**/gatsby-node.js/\\" /\\"examples/**/gatsby-config.js/\\" /\\"examples/**/src/**/*.js/\\"\\",\\"format-packages\\":\\"prettier-eslint --write /\\"packages/*/src/**/*.js/\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write /\\"packages/gatsby/cache-dir/*.js/\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
+        "contentDigest": "bd3309e9154a040413fe8717b19fd4d3",
+        "mediaType": "application/json",
+        "type": "contentfulJsonTestJsonTestJsonNode",
+      },
+      "parent": "uuid-from-gatsby",
+      "private": true,
+      "scripts": Object {
+        "bootstrap": "yarn && npm run check-versions && lerna run prepare",
+        "check-versions": "babel-node scripts/check-versions.js",
+        "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
+        "format-cache-dir": "prettier-eslint --write \\"packages/gatsby/cache-dir/*.js\\"",
+        "format-examples": "prettier-eslint --write \\"examples/**/gatsby-node.js\\" \\"examples/**/gatsby-config.js\\" \\"examples/**/src/**/*.js\\"",
+        "format-packages": "prettier-eslint --write \\"packages/*/src/**/*.js\\"",
+        "format-scripts": "prettier-eslint --write \\"scripts/**/*.js\\"",
+        "format-www": "prettier-eslint --write \\"www/*.js\\" \\"www/src/**/*.js\\"",
+        "jest": "jest",
+        "lerna": "lerna",
+        "lint": "eslint --ext .js,.jsx packages/**/src",
+        "lint:flow": "babel-node scripts/flow-check.js",
+        "plop": "plop",
+        "publish": "lerna publish",
+        "publish-canary": "lerna publish --canary --yes",
+        "publish-next": "lerna publish --npm-tag=next",
+        "remotedev": "remotedev --hostname=localhost --port=19999",
+        "test": "yarn lint && yarn jest",
+        "test:update": "jest --updateSnapshot",
+        "test:watch": "jest --watch",
+        "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
+        "watch": "lerna run watch --no-sort --stream --concurrency 999",
+      },
+      "workspaces": Array [
+        "packages/*",
+      ],
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "type": "ContentfulContentType",
+      },
+      "name": "Remark Test",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "uuid-from-gatsby",
+      ],
+      "content___NODE": "uuid-from-gatsby",
+      "contentful_id": "c4L2GhTsJtCseMYM8Wia64i",
+      "createdAt": "2018-05-28T08:49:06.230Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "33bfe0ebcae9be73b61c2e929b8d6f1b",
+        "type": "ContentfulRemarkTest",
+      },
+      "node_locale": "de",
+      "parent": "Remark Test",
+      "title": "Contentful images inlined in Markdown",
+      "updatedAt": "2018-05-28T08:49:06.230Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "content": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "content": "## Toys
+
+![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) 
+
+## Chive
+
+![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) 
+
+## Playsam Streamliner
+
+![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) 
+
+## Whisk beaters
+
+![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) 
+
+## SoSo Wall Clock
+
+![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) 
+
+## Hudson Wall Cup
+
+![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)",
+        "contentDigest": "af0b4f957e8e4bd750eb406f1dfc453d",
+        "mediaType": "text/markdown",
+        "type": "contentfulRemarkTestContentTextNode",
+      },
+      "parent": "uuid-from-gatsby",
+    },
+  ],
+]
+`;
