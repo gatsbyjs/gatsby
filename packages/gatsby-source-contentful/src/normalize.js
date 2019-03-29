@@ -244,10 +244,9 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
   locales,
-  localeFilter,
 }) => {
   const contentTypeItemId = contentTypeItem.name
-  locales.filter(localeFilter || (() => true)).forEach(locale => {
+  locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
       currentLocale: locale.code,
