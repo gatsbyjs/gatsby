@@ -5,6 +5,11 @@ const report = require(`./reporter`)
 const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
+const {
+  trackCli,
+  setDefaultTags,
+  setTelemetryEnabled,
+} = require(`gatsby-telemetry`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -40,6 +45,11 @@ function buildLocalCommands(cli, isLocalSite) {
         `gatsby`,
         `package.json`
       ))
+      try {
+        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
+      } catch (e) {
+        // ignore
+      }
       majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
     } catch (err) {
       /* ignore */
@@ -311,6 +321,15 @@ module.exports = argv => {
 
   buildLocalCommands(cli, isLocalSite)
 
+  try {
+    const { version } = require(`../package.json`)
+    setDefaultTags({ gatsbyCliVersion: version })
+  } catch (e) {
+    // ignore
+  }
+
+  trackCli(argv)
+
   return cli
     .command({
       command: `new [rootPath] [starter]`,
@@ -321,6 +340,26 @@ module.exports = argv => {
           return initStarter(starter, { rootPath })
         }
       ),
+    })
+    .command({
+      command: `telemetry`,
+      desc: `Enable or disable Gatsby anonymous analytics collection.`,
+      builder: yargs =>
+        yargs
+          .option(`enable`, {
+            type: `boolean`,
+            description: `Enable telemetry (default)`,
+          })
+          .option(`disable`, {
+            type: `boolean`,
+            description: `Disable telemetry`,
+          }),
+
+      handler: handlerP(({ enable, disable }) => {
+        const enabled = enable || !disable
+        setTelemetryEnabled(enabled)
+        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)

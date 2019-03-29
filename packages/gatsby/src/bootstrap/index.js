@@ -9,6 +9,7 @@ const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
+const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
@@ -26,7 +27,7 @@ const withResolverContext = require(`../schema/context`)
 require(`../db`).startAutosave()
 
 const { dispatch } = store
-const { log } = actions
+const { log, setProgramStatus } = actions
 const logger = ({ message, type = `info` }) => report[type](message)
 
 // Show stack trace on unhandled promises.
@@ -122,6 +123,10 @@ module.exports = async (args: BootstrapArgs) => {
   const flattenedPlugins = await run(`load plugins`, () =>
     loadPlugins(config, program.directory)
   )
+
+  telemetry.decorateEvent(`BUILD_END`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
 
   // onPreInit
   await run(`onPreInit`, activity =>
@@ -432,7 +437,7 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   // Run queries
-  await run(`run graphql queries`, activity => {
+  await run(`run graphql queries`, async activity => {
     const startQueries = process.hrtime()
     queryQueue.on(`task_finish`, () => {
       const stats = queryQueue.getStats()
@@ -442,7 +447,12 @@ module.exports = async (args: BootstrapArgs) => {
         ).toFixed(2)} queries/second`
       )
     })
-    return runInitialQueries(activity)
+    // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+    emitter.emit(`START_QUERY_QUEUE`)
+    // END HACKY
+    runInitialQueries(activity)
+    await new Promise(resolve => queryQueue.on(`drain`, resolve))
+    dispatch(setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
   })
 
   // Write out files.
@@ -492,6 +502,7 @@ const finishBootstrap = async (run, bootstrapSpan) => {
   dispatch(log({ message, type: `info` }))
 
   emitter.emit(`BOOTSTRAP_FINISHED`)
+  dispatch(setProgramStatus(`BOOTSTRAP_FINISHED`))
 
   bootstrapSpan.finish()
 }

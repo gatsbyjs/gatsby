@@ -1,6 +1,6 @@
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
-const { isDate } = require(`../date`)
+const { isDate, looksLikeADate } = require(`../date`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 // Timestamps grabbed from https://github.com/moment/moment/blob/2e2a5b35439665d4b0200143d808a7c26d6cd30f/src/test/moment/is_valid.js
@@ -149,6 +149,132 @@ describe(`isDate`, () => {
     `1379066897.157`,
   ])(`should return true for unix timestamps: %s`, dateString => {
     expect(isDate(dateString)).toBeTruthy()
+  })
+})
+
+describe(`looksLikeADate`, () => {
+  it.each([
+    `1970`,
+    `2019`,
+    `1970-01`,
+    `2019-01`,
+    `1970-01-01`,
+    `2010-01-01`,
+    `2010-01-30`,
+    `19700101`,
+    `20100101`,
+    `20100130`,
+    `2010-01-30T23+00:00`,
+    `2010-01-30T23:59+00:00`,
+    `2010-01-30T23:59:59+00:00`,
+    `2010-01-30T23:59:59.999+00:00`,
+    `2010-01-30T23:59:59.999-07:00`,
+    `2010-01-30T00:00:00.000+07:00`,
+    `2010-01-30T23:59:59.999-07`,
+    `2010-01-30T00:00:00.000+07`,
+    `2010-01-30T23Z`,
+    `2010-01-30T23:59Z`,
+    `2010-01-30T23:59:59Z`,
+    `2010-01-30T23:59:59.999Z`,
+    `2010-01-30T00:00:00.000Z`,
+    `1970-01-01T00:00:00.000001Z`,
+    `2012-04-01T00:00:00-05:00`,
+    `2012-11-12T00:00:00+01:00`,
+  ])(`should return true for valid ISO 8601: %s`, dateString => {
+    expect(looksLikeADate(dateString)).toBeTruthy()
+  })
+
+  it.each([
+    `2010-01-30 23+00:00`,
+    `2010-01-30 23:59+00:00`,
+    `2010-01-30 23:59:59+00:00`,
+    `2010-01-30 23:59:59.999+00:00`,
+    `2010-01-30 23:59:59.999-07:00`,
+    `2010-01-30 00:00:00.000+07:00`,
+    `2010-01-30 23:59:59.999-07`,
+    `2010-01-30 00:00:00.000+07`,
+    `1970-01-01 00:00:00.000Z`,
+    `2012-04-01 00:00:00-05:00`,
+    `2012-11-12 00:00:00+01:00`,
+    `1970-01-01 00:00:00.0000001 Z`,
+    `1970-01-01 00:00:00.000 Z`,
+    `1970-01-01 00:00:00 Z`,
+    `1970-01-01 000000 Z`,
+    `1970-01-01 00:00 Z`,
+    `1970-01-01 00 Z`,
+  ])(`should return true for ISO 8601 (no T, extra space): %s`, dateString => {
+    expect(looksLikeADate(dateString)).toBeTruthy()
+  })
+
+  it.each([`1970-W31`, `2006-W01`, `1970W31`, `2009-W53-7`, `2009W537`])(
+    `should return true for ISO 8601 week dates: %s`,
+    dateString => {
+      expect(looksLikeADate(dateString)).toBeTruthy()
+    }
+  )
+
+  it.each([`1970-334`, `1970334`, `2090-001`, `2090001`])(
+    `should return true for ISO 8601 ordinal dates: %s`,
+    dateString => {
+      expect(looksLikeADate(dateString)).toBeTruthy()
+    }
+  )
+
+  it.skip.each([
+    `2018-08-31T23:25:16.019345+02:00`,
+    `2018-08-31T23:25:16.019345Z`,
+  ])(`should return true for microsecond precision: %s`, dateString => {
+    expect(looksLikeADate(dateString)).toBeTruthy()
+  })
+
+  it.skip.each([
+    `2018-08-31T23:25:16.019345123+02:00`,
+    `2018-08-31T23:25:16.019345123Z`,
+  ])(`should return true for nanosecond precision: %s`, dateString => {
+    expect(looksLikeADate(dateString)).toBeTruthy()
+  })
+
+  it.skip.each([`2018-08-31T23:25:16.012345678901+02:00`])(
+    `should return false for precision beyond 9 digits: %s`,
+    dateString => {
+      expect(looksLikeADate(dateString)).toBeFalsy()
+    }
+  )
+
+  it.each([
+    `2010-00-00`,
+    `2010-01-00`,
+    `2010-01-40`,
+    `2010-01-01T24:01`, // 24:00:00 is actually valid
+    `2010-01-40T24:01+00:00`,
+    `2010-01-01T23:60`,
+    `2010-01-01T23:59:60`,
+    `2010-01-40T23:60+00:00`,
+    `2010-01-40T23:59:60+00:00`,
+  ])(`should return true for some valid ISO 8601: %s`, dateString => {
+    expect(looksLikeADate(dateString)).toBeTruthy()
+  })
+
+  it.each([
+    `2010-01-40T23:59:59.9999`,
+    `2010-01-40T23:59:59.9999+00:00`,
+    `2010-01-40T23:59:59,9999+00:00`,
+    `2010-00-00T+00:00`,
+    `2010-01-00T+00:00`,
+    `2010-01-40T+00:00`,
+    `2012-04-01T00:00:00-5:00`, // should be -05:00
+    `2012-04-01T00:00:00+1:00`, // should be +01:00
+    undefined,
+    `undefined`,
+    null,
+    `null`,
+    [],
+    {},
+    ``,
+    ` `,
+    `2012-04-01T00:basketball`,
+  ])(`should return false for invalid ISO 8601: %s`, dateString => {
+    expect(looksLikeADate(dateString)).toBeFalsy()
   })
 })
 

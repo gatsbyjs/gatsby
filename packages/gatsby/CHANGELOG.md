@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.3...gatsby@2.3.4) (2019-03-28)
+
+### Features
+
+- **schema:** Use extensions to specify infer config ([ff102c9](https://github.com/gatsbyjs/gatsby/commit/ff102c9))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.2...gatsby@2.3.3) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby:** Handle already deleted nodes in deleteNode action ([#12866](https://github.com/gatsbyjs/gatsby/issues/12866)) ([1548841](https://github.com/gatsbyjs/gatsby/commit/1548841))
+- **gatsby-telemetry:** Ensure quickly running commands exit freely ([#12888](https://github.com/gatsbyjs/gatsby/issues/12888)) ([e30d264](https://github.com/gatsbyjs/gatsby/commit/e30d264))
+- **themes:** Handle shared parent theme with component shadowing ([#12883](https://github.com/gatsbyjs/gatsby/issues/12883)) ([7a82dc2](https://github.com/gatsbyjs/gatsby/commit/7a82dc2))
+
+### Features
+
+- **themes:** copy static folders in themes ([#12746](https://github.com/gatsbyjs/gatsby/issues/12746)) ([edd6cb1](https://github.com/gatsbyjs/gatsby/commit/edd6cb1))
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.1...gatsby@2.3.2) (2019-03-26)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.0...gatsby@2.3.1) (2019-03-26)
+
+**Note:** Version bump only for package gatsby
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.13...gatsby@2.3.0) (2019-03-26)
+
+### Features
+
+- **gatsby:** add anonymous telemetry instrumentation to gatsby ([#12758](https://github.com/gatsbyjs/gatsby/issues/12758)) ([da8ded9](https://github.com/gatsbyjs/gatsby/commit/da8ded9))
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.12...gatsby@2.2.13) (2019-03-26)
+
+### Bug Fixes
+
+- **schema:** Add tests for incorrect list counting ([#12824](https://github.com/gatsbyjs/gatsby/issues/12824)) ([d2bf6f5](https://github.com/gatsbyjs/gatsby/commit/d2bf6f5))
+- **schema:** Remove accidental capitalization of lowercase typenames. ([#12837](https://github.com/gatsbyjs/gatsby/issues/12837)) ([d25b39d](https://github.com/gatsbyjs/gatsby/commit/d25b39d))
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.11...gatsby@2.2.12) (2019-03-26)
+
+### Features
+
+- **gatsby:** Move page component state & side effect handling to xstate ([#11897](https://github.com/gatsbyjs/gatsby/issues/11897)) ([91086d4](https://github.com/gatsbyjs/gatsby/commit/91086d4))
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.10...gatsby@2.2.11) (2019-03-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.9...gatsby@2.2.10) (2019-03-25)
+
+### Bug Fixes
+
+- **gatsby:** added looksLikeADate to check date on schema creation ([#12722](https://github.com/gatsbyjs/gatsby/issues/12722)) ([aff2c5d](https://github.com/gatsbyjs/gatsby/commit/aff2c5d))
+- **gatsby:** Allow setting nullability in createResolvers ([#12775](https://github.com/gatsbyjs/gatsby/issues/12775)) ([4fbac99](https://github.com/gatsbyjs/gatsby/commit/4fbac99))
+- **gatsby:** Improve handling of sparse arrays in example value creation ([#12807](https://github.com/gatsbyjs/gatsby/issues/12807)) ([3e84352](https://github.com/gatsbyjs/gatsby/commit/3e84352))
+- **schema:** Don't default to tracking all nodes ([#12825](https://github.com/gatsbyjs/gatsby/issues/12825)) ([a9b6d68](https://github.com/gatsbyjs/gatsby/commit/a9b6d68))
+- **schema:** fix `types` for buildUnionType config object ([#12814](https://github.com/gatsbyjs/gatsby/issues/12814)) ([0c2cda4](https://github.com/gatsbyjs/gatsby/commit/0c2cda4))
+- **schema:** Fix querying for filtered File type ([#12752](https://github.com/gatsbyjs/gatsby/issues/12752)) ([c949b9a](https://github.com/gatsbyjs/gatsby/commit/c949b9a))
+- **schema:** Preserve resolvers on \_\_\_NODE fields ([#12806](https://github.com/gatsbyjs/gatsby/issues/12806)) ([e8816bf](https://github.com/gatsbyjs/gatsby/commit/e8816bf))
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.8...gatsby@2.2.9) (2019-03-23)
+
+### Features
+
+- **redux:** cache truePath lookups for performance ([#12693](https://github.com/gatsbyjs/gatsby/issues/12693)) ([d5c3351](https://github.com/gatsbyjs/gatsby/commit/d5c3351))
+
 ## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.2.7...gatsby@2.2.8) (2019-03-22)
 
 ### Bug Fixes

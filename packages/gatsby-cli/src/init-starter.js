@@ -7,7 +7,7 @@ const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
-
+const { trackCli, trackError } = require(`gatsby-telemetry`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit`, ...options })
@@ -147,6 +147,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
 
   const urlObject = url.parse(rootPath)
   if (urlObject.protocol && urlObject.host) {
+    trackError(`NEW_PROJECT_NAME_MISSING`)
     report.panic(
       `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
     )
@@ -154,11 +155,14 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   }
 
   if (existsSync(sysPath.join(rootPath, `package.json`))) {
+    trackError(`NEW_PROJECT_IS_NPM_PROJECT`)
     report.panic(`Directory ${rootPath} is already an npm project`)
     return
   }
 
   const hostedInfo = hostedGitInfo.fromUrl(starter)
+
+  trackCli(`NEW_PROJECT`, { starterName: starter })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starter, rootPath)
 }

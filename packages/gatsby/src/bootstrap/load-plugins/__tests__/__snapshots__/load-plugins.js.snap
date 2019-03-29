@@ -63,9 +63,7 @@ Array [
     "browserAPIs": Array [],
     "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
     "name": "query-runner",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -181,9 +179,7 @@ Array [
     "browserAPIs": Array [],
     "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
     "name": "query-runner",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },

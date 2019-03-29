@@ -18,6 +18,7 @@ const {
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
+const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -189,7 +190,16 @@ const runAPI = (plugin, api, args) => {
           callback(err, val)
           apiFinished = true
         }
-        gatsbyNode[api](...apiCallArgs, cb)
+
+        try {
+          gatsbyNode[api](...apiCallArgs, cb)
+        } catch (e) {
+          trackBuildError(api, {
+            error: e,
+            pluginName: `${plugin.name}@${plugin.version}`,
+          })
+          throw e
+        }
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
@@ -327,6 +337,9 @@ module.exports = async (api, args = {}, pluginSource) =>
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
       }).catch(err => {
+        decorateEvent(`BUILD_PANIC`, {
+          pluginName: `${plugin.name}@${plugin.version}`,
+        })
         reporter.panicOnBuild(`${pluginName} returned an error`, err)
         return null
       })

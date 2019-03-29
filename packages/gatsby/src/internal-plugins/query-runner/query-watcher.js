@@ -19,6 +19,7 @@ const queryCompiler = require(`./query-compiler`).default
 const {
   queueQueryForPathname,
   runQueuedActions: runQueuedQueries,
+  runQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -45,21 +46,6 @@ const handleComponentsWithRemovedQueries = (
   { components, staticQueryComponents },
   queries
 ) => {
-  // If a component previously with a query now doesn't — update the
-  // store.
-  components.forEach(c => {
-    if (c.query !== `` && !queries.has(c.componentPath)) {
-      debug(`Page query was removed from ${c.componentPath}`)
-      dispatch(
-        replaceComponentQuery({
-          query: ``,
-          componentPath: c.componentPath,
-        })
-      )
-      queueQueriesForPageComponent(c.componentPath)
-    }
-  })
-
   // If a component had static query and it doesn't have it
   // anymore - update the store
   staticQueryComponents.forEach(c => {
@@ -116,27 +102,6 @@ const handleQuery = (
       queueQueryForPathname(query.jsonName)
     }
     return true
-
-    // If this is page query
-  } else if (components.has(component)) {
-    if (components.get(component).query !== query.text) {
-      dispatch(
-        replaceComponentQuery({
-          query: query.text,
-          componentPath: component,
-        })
-      )
-
-      debug(
-        `Page query in ${component} ${
-          components.get(component).query.length === 0
-            ? `was added`
-            : `has changed`
-        }.`
-      )
-      queueQueriesForPageComponent(component)
-    }
-    return true
   }
 
   return false
@@ -145,7 +110,23 @@ const handleQuery = (
 const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
   return queryCompiler().then(queries => {
+    // If there's an error while extracting queries, the queryCompiler returns false
+    // or zero results.
+    // Yeah, should probably be an error but don't feel like threading the error
+    // all the way here.
+    if (!queries || queries.size === 0) {
+      return null
+    }
     handleComponentsWithRemovedQueries(snapshot, queries)
+
+    // Run action for each component
+    const { components } = snapshot
+    components.forEach(c =>
+      boundActionCreators.queryExtracted({
+        componentPath: c.componentPath,
+        query: queries.get(c.componentPath)?.text || ``,
+      })
+    )
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -153,7 +134,10 @@ const updateStateAndRunQueries = isFirstRun => {
 
       if (queryWillRun) {
         watchComponent(component)
-      } else if (isFirstRun) {
+        // Check if this is a page component.
+        // If it is and this is our first run during bootstrap,
+        // show a warning about having a query in a non-page component.
+      } else if (isFirstRun && !snapshot.components.has(component)) {
         const message = `The GraphQL query in the non-page component "${component}" will not be run.`
         dispatch(log({ message, type: `warn` }))
         queriesWillNotRun = true
@@ -174,6 +158,7 @@ const updateStateAndRunQueries = isFirstRun => {
         `query and pass data down into the child component — http://graphql.org/learn/queries/#fragments\n\n`
       dispatch(log({ message, type: `log` }))
     }
+
     runQueuedQueries()
 
     return null
@@ -230,7 +215,16 @@ const queueQueriesForPageComponent = componentPath => {
   // Re-running the queries will add back data dependencies.
   dispatch(deleteComponentsDependencies(pages.map(p => p.path || p.id)))
   pages.forEach(page => queueQueryForPathname(page.path))
+  runQueries()
 }
+
+const runQueryForPage = path => {
+  queueQueryForPathname(path)
+  runQueries()
+}
+
+exports.queueQueriesForPageComponent = queueQueriesForPageComponent
+exports.runQueryForPage = runQueryForPage
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()
@@ -257,27 +251,32 @@ const watchComponent = componentPath => {
   }
 }
 
+const debounceCompile = _.debounce(() => {
+  updateStateAndRunQueries()
+}, 100)
+
 exports.watchComponent = watchComponent
+exports.debounceCompile = debounceCompile
 
 const watch = rootDir => {
   if (watcher) return
-  const debounceCompile = _.debounce(() => {
-    updateStateAndRunQueries()
-  }, 100)
 
   watcher = chokidar
     .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
     .on(`change`, path => {
       debounceCompile()
     })
+
   filesToWatch.forEach(filePath => watcher.add(filePath))
 }
 
 if (process.env.gatsby_executing_command === `develop`) {
   let bootstrapFinished = false
+
   emitter.on(`BOOTSTRAP_FINISHED`, () => {
     bootstrapFinished = true
   })
+
   emitter.on(`DELETE_PAGE`, action => {
     if (bootstrapFinished) {
       const componentPath = slash(action.payload.component)

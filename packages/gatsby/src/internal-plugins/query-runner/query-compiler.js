@@ -38,7 +38,7 @@ const {
 } = require(`graphql`)
 
 const { dispatch } = store
-const { log } = actions
+const { log, queryExtractionGraphQLError } = actions
 
 type RootQuery = {
   name: string,
@@ -137,6 +137,7 @@ class Runner {
     const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
     const nameDefMap = new Map()
+    const nameErrorMap = new Map()
     const documents = []
 
     for (let [filePath, doc] of nodes.entries()) {
@@ -144,6 +145,11 @@ class Runner {
 
       if (errors && errors.length) {
         this.reportError(graphqlValidationError(errors, filePath))
+        dispatch(
+          queryExtractionGraphQLError({
+            componentPath: filePath,
+          })
+        )
         return compiledNodes
       }
 
@@ -166,8 +172,20 @@ class Runner {
         )
       )
     } catch (error) {
-      this.reportError(graphqlError(namePathMap, nameDefMap, error))
-      return compiledNodes
+      const { formattedMessage, docName, message, codeBlock } = graphqlError(
+        namePathMap,
+        nameDefMap,
+        error
+      )
+      nameErrorMap.set(docName, { formattedMessage, message, codeBlock })
+      dispatch(
+        queryExtractionGraphQLError({
+          componentPath: namePathMap.get(docName),
+          error: formattedMessage,
+        })
+      )
+      this.reportError(formattedMessage)
+      return false
     }
 
     // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to
@@ -193,6 +211,11 @@ class Runner {
             nameDefMap.get(name),
             otherNode && nameDefMap.get(otherNode.name)
           )
+        )
+        dispatch(
+          queryExtractionGraphQLError({
+            componentPath: filePath,
+          })
         )
         return
       }

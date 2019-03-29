@@ -83,7 +83,7 @@ const addInferredFieldsImpl = ({
         .join(`, `)
       const message =
         `Multiple node fields resolve to the same GraphQL field ` +
-        `\`${field.key}\` - [${possibleFieldsNames}]. ` +
+        `\`${prefix}.${field.key}\` - [${possibleFieldsNames}]. ` +
         `Gatsby will use \`${field.unsanitizedKey}\`.`
       dispatch(log({ message, type: `warn` }))
 
@@ -105,25 +105,27 @@ const addInferredFieldsImpl = ({
       let lists = 0
       let namedFieldType = fieldType
       while (namedFieldType.ofType) {
-        namedFieldType = namedFieldType.ofType
         if (namedFieldType instanceof GraphQLList) {
           lists++
         }
+        namedFieldType = namedFieldType.ofType
       }
 
-      if (arrays === lists) {
+      const namedInferredTypeName =
+        typeof namedInferredType === `string`
+          ? namedInferredType
+          : namedInferredType.getTypeName()
+
+      if (arrays === lists && namedFieldType.name === namedInferredTypeName) {
         if (
           namedFieldType instanceof GraphQLObjectType &&
-          typeof namedInferredType !== `string` &&
-          namedFieldType.name === namedInferredType.getTypeName()
+          namedInferredType instanceof ObjectTypeComposer
         ) {
           const fieldTypeComposer = typeComposer.getFieldTC(key)
           const inferredFields = namedInferredType.getFields()
           fieldTypeComposer.addFields(inferredFields)
-        } else if (
-          addDefaultResolvers &&
-          namedFieldType.name === namedInferredType
-        ) {
+        }
+        if (addDefaultResolvers) {
           let field = typeComposer.getField(key)
           if (!field.type) {
             field = {
@@ -386,12 +388,12 @@ const getSimpleFieldConfig = ({
 }
 
 const createTypeName = selector => {
-  const key = selector
-    .split(`.`)
+  const keys = selector.split(`.`)
+  const suffix = keys
+    .slice(1)
     .map(_.upperFirst)
     .join(``)
-
-  return key
+  return `${keys[0]}${suffix}`
 }
 
 const NON_ALPHA_NUMERIC_EXPR = new RegExp(`[^a-zA-Z0-9_]`, `g`)
