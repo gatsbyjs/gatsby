@@ -815,3 +815,42 @@ exports.onPostBuild = () => {
     `./public/gatsbygram.mp4`
   )
 }
+
+// XXX this should probably be a plugin or something.
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  /*
+   * NOTE: This _only_ defines the schema we currently query for. If anything in
+   * the query at `src/pages/contributing/events.js` changes, we need to make
+   * sure these types are updated as well.
+   *
+   * But why?! Why would I do something this fragile?
+   *
+   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
+   * lazy to make upstream fixes...
+   */
+  const typeDefs = `
+    type AirtableConnection {
+      nodes: [Airtable!]!
+    }
+
+    type Airtable implements Node {
+      id: ID!
+      data: AirtableData
+    }
+
+    type AirtableData {
+      Name_of_Event: String
+      Organizer_Name: String
+      Date_of_Event: Date
+      Location_of_Event: String
+      Event_URL__if_applicable_: String
+      What_type_of_event_is_this_: String
+      Organizer_s_Last_Name: String
+      Gatsby_Speaker_Approved: Boolean
+      Do_you_want_this_event_listed_on_the_gatsbyjs_org_events_page___public_page_: Boolean
+      Approved_for_Mktg_Support: Boolean
+    }
+  `
+
+  createTypes(typeDefs)
+}
