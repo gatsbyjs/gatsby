@@ -23,9 +23,7 @@ const flatten = pages =>
 
 class StubListRoute extends React.Component {
   render() {
-    const pages = flatten([...itemListContributing, ...itemListDocs])
-
-    let stubs = findStubs(pages)
+    const stubs = findStubs(flatten([...itemListContributing, ...itemListDocs]))
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
