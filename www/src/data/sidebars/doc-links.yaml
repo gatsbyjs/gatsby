@@ -455,7 +455,6 @@
       items:
         - title: As a Freelancer
           link: /docs/gatsby-for-freelancers/
-          items:
         - title: Inside an Agency
           link: /docs/gatsby-for-agencies/
           items:
