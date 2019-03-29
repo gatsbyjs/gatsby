@@ -78,7 +78,7 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
                     <p>Adding Images</p>
                 </td>
                 <td>
-                    <p><a href="https://gatsby.dev/image">gatsbyjs.dev/image</a></p>
+                    <p><a href="https://gatsby.dev/image">gatsby.dev/image</a></p>
                 </td>
             </tr>
             <tr>
