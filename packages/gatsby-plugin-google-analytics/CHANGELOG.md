@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.17...gatsby-plugin-google-analytics@2.0.18) (2019-03-26)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** Add preconnect and dns-prefetch ([#12826](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/12826)) ([0640104](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/0640104))
+
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.16...gatsby-plugin-google-analytics@2.0.17) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

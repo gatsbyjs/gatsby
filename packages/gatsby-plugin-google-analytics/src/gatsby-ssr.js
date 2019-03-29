@@ -18,31 +18,43 @@ exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV === `production`) {
-    let excludeGAPaths = []
-    if (typeof pluginOptions.exclude !== `undefined`) {
-      const Minimatch = require(`minimatch`).Minimatch
-      pluginOptions.exclude.map(exclude => {
-        const mm = new Minimatch(exclude)
-        excludeGAPaths.push(mm.makeRe())
-      })
-    }
+  if (process.env.NODE_ENV !== `production`) {
+    return null
+  }
 
-    const gaCreateOptions = {}
-    for (const option in knownOptions) {
-      if (typeof pluginOptions[option] === knownOptions[option]) {
-        gaCreateOptions[option] = pluginOptions[option]
-      }
-    }
+  // Lighthouse recommends pre-connecting to google analytics
+  setHeadComponents([
+    <link
+      rel="preconnect dns-prefetch"
+      key="preconnect-google-analytics"
+      href="https://www.google-analytics.com"
+    />,
+  ])
 
-    const setComponents = pluginOptions.head
-      ? setHeadComponents
-      : setPostBodyComponents
-    return setComponents([
-      <script
-        key={`gatsby-plugin-google-analytics`}
-        dangerouslySetInnerHTML={{
-          __html: `
+  let excludeGAPaths = []
+  if (typeof pluginOptions.exclude !== `undefined`) {
+    const Minimatch = require(`minimatch`).Minimatch
+    pluginOptions.exclude.map(exclude => {
+      const mm = new Minimatch(exclude)
+      excludeGAPaths.push(mm.makeRe())
+    })
+  }
+
+  const gaCreateOptions = {}
+  for (const option in knownOptions) {
+    if (typeof pluginOptions[option] === knownOptions[option]) {
+      gaCreateOptions[option] = pluginOptions[option]
+    }
+  }
+
+  const setComponents = pluginOptions.head
+    ? setHeadComponents
+    : setPostBodyComponents
+  return setComponents([
+    <script
+      key={`gatsby-plugin-google-analytics`}
+      dangerouslySetInnerHTML={{
+        __html: `
   ${
     excludeGAPaths.length
       ? `window.excludeGAPaths=[${excludeGAPaths.join(`,`)}];`
@@ -69,14 +81,14 @@ exports.onRenderBody = (
   }
   if (typeof ga === "function") {
     ga('create', '${pluginOptions.trackingId}', '${
-            typeof pluginOptions.cookieDomain === `string`
-              ? pluginOptions.cookieDomain
-              : `auto`
-          }', ${
-            typeof pluginOptions.name === `string`
-              ? `'${pluginOptions.name}', `
-              : ``
-          }${JSON.stringify(gaCreateOptions)});
+          typeof pluginOptions.cookieDomain === `string`
+            ? pluginOptions.cookieDomain
+            : `auto`
+        }', ${
+          typeof pluginOptions.name === `string`
+            ? `'${pluginOptions.name}', `
+            : ``
+        }${JSON.stringify(gaCreateOptions)});
       ${
         typeof pluginOptions.anonymize !== `undefined` &&
         pluginOptions.anonymize === true
@@ -99,10 +111,7 @@ exports.onRenderBody = (
           : ``
       }}
       `,
-        }}
-      />,
-    ])
-  }
-
-  return null
+      }}
+    />,
+  ])
 }

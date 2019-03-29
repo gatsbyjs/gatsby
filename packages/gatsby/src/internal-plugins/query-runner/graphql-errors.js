@@ -55,21 +55,22 @@ function formatError(message: string, filePath: string, codeFrame: string) {
 }
 
 function extractError(error: Error): { message: string, docName: string } {
-  const docRegex = /Invariant Violation: (RelayParser|GraphQLParser): (.*). Source: document `(.*)` file:/g
+  const docRegex = /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms
   let matches
-  let message = ``,
-    docName = ``
+  let message = ``
+  let docName = ``
+  let codeBlock = ``
   while ((matches = docRegex.exec(error.toString())) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
-    ;[, , message, docName] = matches
+    ;[, , message, docName, codeBlock] = matches
   }
 
   if (!message) {
     message = error.toString()
   }
 
-  return { message, docName }
+  return { message, codeBlock, docName }
 }
 
 function findLocation(extractedMessage, def) {
@@ -169,15 +170,18 @@ export function graphqlError(
   nameDefMap: Map<string, any>,
   error: Error | RelayGraphQLError
 ) {
+  let codeBlock
   let { message, docName } = extractError(error)
   let filePath = namePathMap.get(docName)
 
   if (filePath && docName) {
-    return formatError(
+    codeBlock = getCodeFrameFromRelayError(
+      nameDefMap.get(docName),
       message,
-      filePath,
-      getCodeFrameFromRelayError(nameDefMap.get(docName), message, error)
+      error
     )
+    const formattedMessage = formatError(message, filePath, codeBlock)
+    return { formattedMessage, docName, message, codeBlock }
   }
 
   let reportedMessage = `There was an error while compiling your site's GraphQL queries.
@@ -194,5 +198,5 @@ export function graphqlError(
     reportedMessage += `${error.message.slice(21)}\n`
   }
 
-  return reportedMessage
+  return { formattedMessage: reportedMessage, docName, message, codeBlock }
 }

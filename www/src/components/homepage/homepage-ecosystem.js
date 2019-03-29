@@ -18,13 +18,15 @@ import {
 import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, {
+import {
   colors,
   space,
   radii,
   shadows,
   breakpoints,
+  scale,
+  letterSpacings,
+  fonts,
 } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
@@ -35,19 +37,19 @@ const Sections = styled(`div`)`
 
   ${breakpoints.md} {
     flex-direction: row;
-    margin: 0 -${rhythm(space[2])};
+    margin: 0 -${space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
   box-shadow: ${shadows.raised};
   border-radius: ${radii[2]}px;
-  margin-bottom: ${rhythm(space[6])};
-  padding: ${rhythm(space[6])};
+  margin-bottom: ${space[6]};
+  padding: ${space[6]};
 
   ${breakpoints.md} {
-    margin: 0 ${rhythm(space[2])} 0;
-    padding: ${rhythm(space[6])};
+    margin: 0 ${space[2]} 0;
+    padding: ${space[6]};
 
     :last-child {
       align-self: stretch;
@@ -57,18 +59,18 @@ const Section = styled(EcosystemSection)`
 
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
-  font-size: ${presets.scale[3]};
-  margin-bottom: ${rhythm(space[1])};
-  margin-top: ${rhythm(space[7])};
+  font-size: ${scale[3]};
+  margin-bottom: ${space[1]};
+  margin-top: ${space[7]};
 
   ${breakpoints.lg} {
-    margin-left: ${rhythm(space[9])};
-    margin-bottom: ${rhythm(space[4])};
+    margin-left: ${space[9]};
+    margin-bottom: ${space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(space[6])};
+  margin: 0 -${space[6]};
 
   ${breakpoints.lg} {
     margin: 0;
@@ -86,11 +88,11 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${rhythm(space[6])};
+  margin-right: ${space[6]};
 
   ${breakpoints.md} {
     border-bottom: none;
-    margin: ${rhythm(space[6])};
+    margin: ${space[6]};
     margin-top: 0;
     margin-left: 0;
     width: 20rem;
@@ -105,7 +107,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(space[5])} + ${rhythm(space[6])});
+    padding-left: calc(${space[5]} + ${space[6]});
     position: relative;
     border: 0;
     box-shadow: ${shadows.raised};
@@ -129,7 +131,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       left: 0;
       position: absolute;
       top: 0;
-      width: ${rhythm(space[5])};
+      width: ${space[5]};
     }
 
     :after {
@@ -137,10 +139,10 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       content: "${props => props.item.type}";
       color: ${props =>
         props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
-      font-family: ${options.headerFontFamily.join(`,`)};
-      font-size: ${presets.scale[1]};
+      font-family: ${fonts.header};
+      font-size: ${scale[1]};
       left: 0;
-      letter-spacing: ${presets.letterSpacings.tracked};
+      letter-spacing: ${letterSpacings.tracked};
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;
@@ -173,7 +175,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
           { label: `Browse Plugins`, to: `/plugins/` },
           {
             label: `Creating Plugins`,
-            to: `/docs/plugin-authoring/`,
+            to: `/docs/how-plugins-work/`,
             secondary: true,
           },
           { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },

@@ -1,7 +1,7 @@
 import React from "react"
 import { css } from "@emotion/core"
 
-import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 
 export const Header = ({ children, level }) => {
   const Tag = `h${Math.min(3 + level * 2, 6)}`
@@ -12,7 +12,7 @@ export const Header = ({ children, level }) => {
         margin: 0,
         ...(level > 0
           ? {
-              marginTop: rhythm(0.35),
+              marginTop: space[2],
             }
           : {}),
       }}
@@ -28,7 +28,7 @@ export const SubHeader = ({ children, level }) => {
     <Tag
       css={css`
         margin: 0;
-        margin-top: ${rhythm(0.35)};
+        margin-top: ${space[2]};
       `}
     >
       {children}
