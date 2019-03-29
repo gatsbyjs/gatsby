@@ -33,7 +33,7 @@ If you're using `gatsby-plugin-offline`, you might notice that when opening a li
 
 ## Compatibility with React 16.8 useEffect hook
 
-If you are using this plugin with React hooks, you may notice some errors that look like `maximum call stack size exceeded`. To ensure everything is running smoothly when using these technologies together, make sure of the following:
+If you are using this plugin with React hooks, you may notice some errors like `maximum call stack size exceeded`. To ensure everything is running smoothly when using these technologies together, make sure to validate the following:
 
 - You have updated to the latest version of `gatsby-plugin-react-helmet`
 - You are using version 6.0.0-beta or later of `react-helmet`
