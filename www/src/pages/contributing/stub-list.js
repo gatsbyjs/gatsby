@@ -10,29 +10,20 @@ import {
 import Container from "../../components/container"
 import DocsearchContent from "../../components/docsearch-content"
 
-function findStubs(pages) {
-  let stubs = []
+const findStubs = pages =>
+  pages.filter(
+    page => page.link !== undefined && page.title.indexOf(`*`) !== -1
+  )
 
-  pages.forEach(page => {
-    if (page.items !== undefined) {
-      // Recurse downwards
-      stubs.push(...findStubs(page.items))
-    }
-
-    if (page.link !== undefined && page.title.indexOf(`*`) !== -1) {
-      // found a page which is a stub
-      stubs.push(page)
-    }
-  })
-
-  return stubs
-}
+const flatten = pages =>
+  pages.reduce(
+    (flat, item) => flat.concat(item.items ? flatten(item.items) : item),
+    []
+  )
 
 class StubListRoute extends React.Component {
   render() {
-    let allPages = [...itemListContributing, ...itemListDocs]
-
-    let stubs = findStubs(allPages)
+    const stubs = findStubs(flatten([...itemListContributing, ...itemListDocs]))
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
