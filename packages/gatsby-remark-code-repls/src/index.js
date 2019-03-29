@@ -10,11 +10,11 @@ const normalizePath = require(`normalize-path`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
-  OPTION_DEFAULT_HTML,
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
   PROTOCOL_CODE_SANDBOX,
   PROTOCOL_RAMDA,
+  OPTION_DEFAULT_CODESANDBOX,
 } = require(`./constants`)
 
 // Matches compression used in Babel and CodeSandbox REPLs
@@ -40,13 +40,13 @@ function convertNodeToLink(node, text, href, target) {
 module.exports = (
   { markdownAST },
   {
-    defaultText = OPTION_DEFAULT_LINK_TEXT,
-    dependencies = [],
     directory,
-    html = OPTION_DEFAULT_HTML,
     target,
+    defaultText = OPTION_DEFAULT_LINK_TEXT,
+    codesandbox = OPTION_DEFAULT_CODESANDBOX,
   } = {}
 ) => {
+  codesandbox = { ...OPTION_DEFAULT_CODESANDBOX, ...codesandbox }
   if (!directory) {
     throw Error(`Required REPL option "directory" not specified`)
   } else if (!fs.existsSync(directory)) {
@@ -133,20 +133,23 @@ module.exports = (
           files: {
             "package.json": {
               content: {
-                dependencies: dependencies.reduce((map, dependency) => {
-                  if (dependency.includes(`@`)) {
-                    const [name, version] = dependency.split(`@`)
-                    map[name] = version
-                  } else {
-                    map[dependency] = `latest`
-                  }
-                  return map
-                }, {}),
+                dependencies: codesandbox.dependencies.reduce(
+                  (map, dependency) => {
+                    if (dependency.includes(`@`)) {
+                      const [name, version] = dependency.split(`@`)
+                      map[name] = version
+                    } else {
+                      map[dependency] = `latest`
+                    }
+                    return map
+                  },
+                  {}
+                ),
                 main: filesPaths[0].url,
               },
             },
             "index.html": {
-              content: html,
+              content: codesandbox.html,
             },
           },
         }

@@ -148,7 +148,9 @@ describe(`gatsby-remark-code-repls`, () => {
             { markdownAST },
             {
               directory: `examples`,
-              includeMatchingCSS: true,
+              codepen: {
+                includeMatchingCSS: true,
+              },
             }
           )
         expect(runPlugin).not.toThrow()
@@ -164,7 +166,9 @@ describe(`gatsby-remark-code-repls`, () => {
             { markdownAST },
             {
               directory: `examples`,
-              html: `<span id="foo"></span>`,
+              codesandbox: {
+                html: `<span id="foo"></span>`,
+              },
             }
           )
 
@@ -179,7 +183,9 @@ describe(`gatsby-remark-code-repls`, () => {
           const transformed = plugin(
             { markdownAST },
             {
-              dependencies: [`react`, `react-dom@next`, `prop-types@15.5`],
+              codesandbox: {
+                dependencies: [`react`, `react-dom@next`, `prop-types@15.5`],
+              },
               directory: `examples`,
             }
           )

@@ -7,21 +7,19 @@ const normalizePath = require(`normalize-path`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
-  OPTION_DEFAULT_HTML,
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
-  OPTION_DEFAULT_INCLUDE_MATCHING_CSS,
+  OPTION_DEFAULT_CODEPEN,
 } = require(`./constants`)
 
 exports.createPages = async (
   { actions, reporter },
   {
     directory = OPTION_DEFAULT_LINK_TEXT,
-    externals = [],
-    html = OPTION_DEFAULT_HTML,
     redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
-    includeMatchingCSS = OPTION_DEFAULT_INCLUDE_MATCHING_CSS,
+    codepen = OPTION_DEFAULT_CODEPEN,
   } = {}
 ) => {
+  codepen = { ...OPTION_DEFAULT_CODEPEN, ...codepen }
   if (!directory.endsWith(`/`)) {
     directory += `/`
   }
@@ -54,7 +52,7 @@ exports.createPages = async (
         const code = fs.readFileSync(file, `utf8`)
 
         let css
-        if (includeMatchingCSS === true) {
+        if (codepen.includeMatchingCSS === true) {
           try {
             css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
           } catch (err) {
@@ -70,14 +68,13 @@ exports.createPages = async (
         const action = `https://codepen.io/pen/define`
         const payload = JSON.stringify({
           editors: `0010`,
-          html,
+          html: codepen.html,
           js: code,
-          js_external: externals.join(`;`),
+          js_external: codepen.externals.join(`;`),
           js_pre_processor: `babel`,
           layout: `left`,
           css,
         })
-
         createPage({
           path: slug,
           // Normalize the path so tests pass on Linux + Windows

@@ -161,17 +161,166 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(js_external).toBe(``)
     })
 
-    it(`should load custom externals if specified`, async () => {
-      readdir.mockResolvedValue([`file.js`])
+    describe(`codepen specific`, () => {
+      it(`should load custom externals if specified`, async () => {
+        readdir.mockResolvedValue([`file.js`])
 
-      await createPages(createPagesParams, { externals: [`foo.js`, `bar.js`] })
+        await createPages(createPagesParams, {
+          codepen: {
+            externals: [`foo.js`, `bar.js`],
+          },
+        })
+        const { js_external } = JSON.parse(
+          createPage.mock.calls[0][0].context.payload
+        )
 
-      const { js_external } = JSON.parse(
-        createPage.mock.calls[0][0].context.payload
-      )
+        expect(js_external).toContain(`foo.js`)
+        expect(js_external).toContain(`bar.js`)
+      })
+      it(`should support custom, user-defined HTML for index page`, async () => {
+        readdir.mockResolvedValue([`file.js`])
 
-      expect(js_external).toContain(`foo.js`)
-      expect(js_external).toContain(`bar.js`)
+        await createPages(createPagesParams, {
+          codepen: { html: `<span id="foo"></span>` },
+        })
+        const { html } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+
+        expect(html).toBe(`<span id="foo"></span>`)
+      })
+
+      it(`should support includeMatchingCSS = "true" when matching file exists`, async () => {
+        readdir.mockResolvedValue([`file.js`, `file.css`])
+        fs.readFileSync.mockReset()
+        fs.readFileSync.mockImplementation((path, options) => {
+          if (path === `file.js`) {
+            return `const foo = "bar";`
+          } else if (path === `file.css`) {
+            return `html { color: red; }`
+          } else {
+            throwFileNotFoundErr(path)
+          }
+          return null
+        })
+
+        await createPages(createPagesParams, {
+          codepen: {
+            includeMatchingCSS: true,
+          },
+        })
+
+        const { css, js } = JSON.parse(
+          createPage.mock.calls[0][0].context.payload
+        )
+
+        expect(js).toBe(`const foo = "bar";`)
+        expect(css).toBe(`html { color: red; }`)
+      })
+
+      it(`should support includeMatchingCSS = "false" when matching file exists`, async () => {
+        readdir.mockResolvedValue([`file.js`, `file.css`])
+        fs.readFileSync.mockReset()
+        fs.readFileSync.mockImplementation((path, options) => {
+          if (path === `file.js`) {
+            return `const foo = "bar";`
+          } else if (path === `file.css`) {
+            return `html { color: red; }`
+          } else {
+            throwFileNotFoundErr(path)
+          }
+          return null
+        })
+
+        await createPages(createPagesParams, {
+          codepen: {
+            includeMatchingCSS: false,
+          },
+        })
+
+        const { css, js } = JSON.parse(
+          createPage.mock.calls[0][0].context.payload
+        )
+
+        expect(js).toBe(`const foo = "bar";`)
+        expect(css).toBe(undefined)
+      })
+
+      it(`should support includeMatchingCSS = "true" when matching file doesn't exist`, async () => {
+        readdir.mockResolvedValue([`file.js`])
+        fs.readFileSync.mockReset()
+        fs.readFileSync.mockImplementation((path, options) => {
+          if (path === `file.js`) {
+            return `const foo = "bar";`
+          } else {
+            throwFileNotFoundErr(path)
+          }
+          return null
+        })
+
+        await createPages(createPagesParams, {
+          codepen: {
+            includeMatchingCSS: true,
+          },
+        })
+
+        const { css, js } = JSON.parse(
+          createPage.mock.calls[0][0].context.payload
+        )
+
+        expect(js).toBe(`const foo = "bar";`)
+        expect(css).toBe(undefined)
+      })
+
+      it(`should support includeMatchingCSS = "false" when matching file doesn't exist`, async () => {
+        readdir.mockResolvedValue([`file.js`])
+        fs.readFileSync.mockReset()
+        fs.readFileSync.mockImplementation((path, options) => {
+          if (path === `file.js`) {
+            return `const foo = "bar";`
+          } else {
+            throwFileNotFoundErr(path)
+          }
+          return null
+        })
+
+        await createPages(createPagesParams, {
+          codepen: {
+            includeMatchingCSS: false,
+          },
+        })
+
+        const { css, js } = JSON.parse(
+          createPage.mock.calls[0][0].context.payload
+        )
+
+        expect(js).toBe(`const foo = "bar";`)
+        expect(css).toBe(undefined)
+      })
+    })
+
+    describe(`codesandbox specific`, () => {
+      beforeEach(() => {
+        fs.existsSync.mockReset()
+        fs.existsSync.mockReturnValue(true)
+
+        fs.readFileSync.mockReset()
+        fs.readFileSync.mockReturnValue(`const foo = "bar";`)
+
+        readdir.mockReset()
+        readdir.mockResolvedValue([`file.js`])
+
+        createPage.mockReset()
+      })
+      it(`should support custom, user-defined HTML for index page`, async () => {
+        readdir.mockResolvedValue([`file.js`])
+
+        await createPages(createPagesParams, {
+          codepen: { html: `<span id="foo"></span>` },
+        })
+
+        const { html } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+
+        expect(html).toBe(`<span id="foo"></span>`)
+      })
     })
 
     it(`should inject the required prop-types for the Codepen prefill API`, async () => {
@@ -193,116 +342,6 @@ describe(`gatsby-remark-code-repls`, () => {
       const { html } = JSON.parse(createPage.mock.calls[0][0].context.payload)
 
       expect(html).toBe(OPTION_DEFAULT_HTML)
-    })
-
-    it(`should support custom, user-defined HTML for index page`, async () => {
-      readdir.mockResolvedValue([`file.js`])
-
-      await createPages(createPagesParams, { html: `<span id="foo"></span>` })
-
-      const { html } = JSON.parse(createPage.mock.calls[0][0].context.payload)
-
-      expect(html).toBe(`<span id="foo"></span>`)
-    })
-
-    it(`should support includeMatchingCSS = "true" when matching file exists`, async () => {
-      readdir.mockResolvedValue([`file.js`, `file.css`])
-      fs.readFileSync.mockReset()
-      fs.readFileSync.mockImplementation((path, options) => {
-        if (path === `file.js`) {
-          return `const foo = "bar";`
-        } else if (path === `file.css`) {
-          return `html { color: red; }`
-        } else {
-          throwFileNotFoundErr(path)
-        }
-        return null
-      })
-
-      await createPages(createPagesParams, {
-        includeMatchingCSS: true,
-      })
-
-      const { css, js } = JSON.parse(
-        createPage.mock.calls[0][0].context.payload
-      )
-
-      expect(js).toBe(`const foo = "bar";`)
-      expect(css).toBe(`html { color: red; }`)
-    })
-
-    it(`should support includeMatchingCSS = "false" when matching file exists`, async () => {
-      readdir.mockResolvedValue([`file.js`, `file.css`])
-      fs.readFileSync.mockReset()
-      fs.readFileSync.mockImplementation((path, options) => {
-        if (path === `file.js`) {
-          return `const foo = "bar";`
-        } else if (path === `file.css`) {
-          return `html { color: red; }`
-        } else {
-          throwFileNotFoundErr(path)
-        }
-        return null
-      })
-
-      await createPages(createPagesParams, {
-        includeMatchingCSS: false,
-      })
-
-      const { css, js } = JSON.parse(
-        createPage.mock.calls[0][0].context.payload
-      )
-
-      expect(js).toBe(`const foo = "bar";`)
-      expect(css).toBe(undefined)
-    })
-
-    it(`should support includeMatchingCSS = "true" when matching file doesn't exist`, async () => {
-      readdir.mockResolvedValue([`file.js`])
-      fs.readFileSync.mockReset()
-      fs.readFileSync.mockImplementation((path, options) => {
-        if (path === `file.js`) {
-          return `const foo = "bar";`
-        } else {
-          throwFileNotFoundErr(path)
-        }
-        return null
-      })
-
-      await createPages(createPagesParams, {
-        includeMatchingCSS: true,
-      })
-
-      const { css, js } = JSON.parse(
-        createPage.mock.calls[0][0].context.payload
-      )
-
-      expect(js).toBe(`const foo = "bar";`)
-      expect(css).toBe(undefined)
-    })
-
-    it(`should support includeMatchingCSS = "false" when matching file doesn't exist`, async () => {
-      readdir.mockResolvedValue([`file.js`])
-      fs.readFileSync.mockReset()
-      fs.readFileSync.mockImplementation((path, options) => {
-        if (path === `file.js`) {
-          return `const foo = "bar";`
-        } else {
-          throwFileNotFoundErr(path)
-        }
-        return null
-      })
-
-      await createPages(createPagesParams, {
-        includeMatchingCSS: false,
-      })
-
-      const { css, js } = JSON.parse(
-        createPage.mock.calls[0][0].context.payload
-      )
-
-      expect(js).toBe(`const foo = "bar";`)
-      expect(css).toBe(undefined)
     })
   })
 })
