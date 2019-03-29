@@ -120,7 +120,7 @@ module.exports = async function genMDX({
   });
 
   results.rawMDXOutput = `/* @jsx mdx */
-import mdx from '@mdx-js/mdx/create-element';
+import mdx from '@mdx-js/react/create-element';
 ${code}`;
 
   if (!isLoader) {
