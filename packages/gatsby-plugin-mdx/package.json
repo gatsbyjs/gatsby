@@ -8,8 +8,8 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@mdx-js/mdx": "^1.0.0-alpha.0",
-    "@mdx-js/tag": "^1.0.0-alpha.0"
+    "@mdx-js/mdx": "^1.0.0-alpha.13",
+    "@mdx-js/react": "^1.0.0-alpha.13"
   },
   "dependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",

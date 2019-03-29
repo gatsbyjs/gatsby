@@ -372,7 +372,7 @@ for inline `<code>` and `wrapper` is the special element that wraps
 all of the MDX content.
 
 ```js
-import { MDXProvider } from "@mdx-js/tag";
+import { MDXProvider } from "@mdx-js/react";
 
 const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />;
 const MyParagraph = props => (

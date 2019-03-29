@@ -1,6 +1,6 @@
 const React = require("react");
-const { withMDXComponents } = require("@mdx-js/tag");
-const mdx = require("@mdx-js/mdx/create-element");
+const { withMDXComponents } = require("@mdx-js/react");
+const mdx = require("@mdx-js/react/create-element");
 const { withMDXScope } = require("./context");
 
 module.exports = withMDXScope(

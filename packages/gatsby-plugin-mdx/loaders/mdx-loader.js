@@ -173,7 +173,6 @@ ${contentWithoutFrontmatter}`;
     return callback(
       null,
       `import React from 'react'
-  import { MDXTag } from '@mdx-js/tag'
   ${result.code}
       `
     );
