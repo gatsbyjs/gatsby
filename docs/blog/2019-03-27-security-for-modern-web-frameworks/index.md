@@ -9,7 +9,7 @@ tags:
   - JAMstack
 ---
 
-Among the many lauded benefits of using Gatsby (and other client-side frameworks) is security. It is really nice to see a framework not require developers to stress about security, however. For those new to Gatsby or web development, this can contribute to a myth that there are no security issues.
+Among the many lauded benefits of using Gatsby (and other client-side frameworks) is security. It is encouraging to see a framework not require developers to stress about security, but. For those new to Gatsby or web development, this can contribute to a myth that there are no security issues.
 
 Please understand, there are whole classes of security vulnerabilities that are eliminated by using Gatsby for web development. But, there are still others that are shared and some that are created. You need to make sure you are aware of these possible vulnerabilities and how to remedy them.
 
