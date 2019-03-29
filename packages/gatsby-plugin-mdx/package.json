@@ -34,7 +34,7 @@
     "unist-util-visit": "^1.4.0"
   },
   "devDependencies": {
-    "jest": "^23.4.2",
+    "jest": "^24.0.0",
     "js-combinatorics": "^0.5.3"
   },
   "jest": {
