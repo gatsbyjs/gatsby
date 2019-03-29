@@ -2177,3 +2177,20 @@
     - Pick custom Font Awesome icons for the feature list via the site-config.js file.
     - Built using Prettier and Styled-Components
     - Easily integrate Google Analytics by adding your ID to site-config.js file.
+- url: https://gatsby-starter-shopify-app.firebaseapp.com/install
+  repo: https://github.com/gil--/gatsby-starter-shopify-app
+  description: Easily create Serverless Shopify Admin Apps powered by Gatsby and Firebase Functions
+  tags:
+    - Shopify
+    - Serverless
+    - Firebase
+    - App
+  features:
+    - 🗄 Firebase Firestore Realtime DB
+    - ⚡️ Serverless Functions API layer (Firebase Functions)
+    - 💼 Admin API (Graphql) Serverless Proxy
+    - 🎨 Shopify Polaris (AppProvider, etc.)
+    - 💰 Application Charge Logic (30 days) with variable trial duration
+    - 📡 Webhook Validation & Creation
+    - 🔑 GDPR Ready (Including GDPR Webhooks)
+    - 🏗 CircleCI Config for easy continuous deployments to Firebase

@@ -134,7 +134,7 @@ In the manual mode, you are responsible for defining the entire web app manifest
 
 #### Iterative icon options
 
-The `icon_options` object may be used to iteratively configure the [default icon array](#automatic-mode-configuration). Any options included in this object will be merged with each item of the `icons` array. This may be used in Automatic and Hybrid modes.
+The `icon_options` object may be used to iteratively add configuration items to the `icons` array. Any options included in this object will be merged with each object of the `icons` array (custom or default). Key value pairs already in the `icons` array will take precedence over duplicate items in the `icon_options` array.
 
 `icon_options` may be used as follows:
 
