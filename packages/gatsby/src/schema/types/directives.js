@@ -14,6 +14,7 @@ const InferDirective = new GraphQLDirective({
       type: new GraphQLNonNull(GraphQLBoolean),
       default: false,
       description: `Don't add default resolvers to defined fields.`,
+      deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
     },
   },
 })
@@ -27,6 +28,7 @@ const DontInferDirective = new GraphQLDirective({
       type: new GraphQLNonNull(GraphQLBoolean),
       default: false,
       description: `Don't add default resolvers to defined fields.`,
+      deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
     },
   },
 })
