@@ -78,9 +78,7 @@ module.exports = (state = new Map(), action) => {
       })
       return state
     }
-    case `QUERY_EXTRACTION_BABEL_SUCCESS`:
-    case `QUERY_EXTRACTION_BABEL_ERROR`:
-    case `QUERY_EXTRACTION_GRAPHQL_ERROR`: {
+    case `QUERY_EXTRACTION_BABEL_SUCCESS`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const service = services.get(action.payload.componentPath)
       if (service) {
@@ -89,6 +87,10 @@ module.exports = (state = new Map(), action) => {
           ...action.payload,
         })
       }
+      return state
+    }
+    case `QUERY_EXTRACTION_BABEL_ERROR`:
+    case `QUERY_EXTRACTION_GRAPHQL_ERROR`: {
       return state
     }
     case `PAGE_QUERY_RUN`: {
