@@ -188,7 +188,7 @@ module.exports = {
 }
 ```
 
-## Iterative icon options
+## Custom icon options
 
 The `icon_options` object may be used to iteratively add configuration items to the `icons` array. Any options included in this object will be merged with each object of the `icons` array (custom or default). Key value pairs already in the `icons` array will take precedence over duplicate items in the `icon_options` array.
 
