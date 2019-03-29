@@ -52,13 +52,24 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
        * people that do.
        */
       if (request.context.issuer) {
-        const issuerExtension = path.extname(request.context.issuer)
+        const possiblePaths = this.themes.reduce((shadowingPaths, theme) => {
+          // Generate a full list of possible theme shadowing paths from the installed themes
+          // TODO is the order of `this.themes` reliably parent-first?
+          const nestedShadowingPaths = [...shadowingPaths].map(
+            parent => `${theme}/src/${parent}`
+          )
+          const dedupedShadowablePaths = new Set([
+            ...shadowingPaths,
+            ...nestedShadowingPaths,
+            theme,
+          ])
 
-        if (
-          request.context.issuer
-            .slice(0, -issuerExtension.length)
-            .endsWith(component)
-        ) {
+          // Convert the `Set` to an array and reverse it.
+          return Array.from(dedupedShadowablePaths).reverse()
+        }, [])
+
+        // XXX this currently seems to disable ALL shadowing
+        if (possiblePaths.find(p => request.context.issuer.includes(p))) {
           return resolver.doResolve(
             `describedRelative`,
             request,
