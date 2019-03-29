@@ -7,6 +7,11 @@ const getDependantPackages = ({
   depTree,
   packagesToPublish = new Set(),
 }) => {
+  if (packagesToPublish.has(packageName)) {
+    // bail early if package was already handled
+    return packagesToPublish
+  }
+
   packagesToPublish.add(packageName)
   const dependants = depTree[packageName]
   if (dependants) {

@@ -15,4 +15,15 @@ describe(`getDependantPackages`, () => {
       new Set([`package-a`, `package-a-dep1`, `package-a-dep1-dep1`])
     )
   })
+
+  it(`doesn't get stuck in circular dependency loops`, () => {
+    const packagesToPublish = getDependantPackages({
+      packageName: `package-a`,
+      depTree: {
+        "package-a": new Set([`package-b`]),
+        "package-b": new Set([`package-a`]),
+      },
+    })
+    expect(packagesToPublish).toEqual(new Set([`package-a`, `package-b`]))
+  })
 })
