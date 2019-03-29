@@ -5136,3 +5136,14 @@
   built_by: Ariadne Digital
   built_by_url: https://www.ariadnedigital.it
   featured: false
+- title: OneDeck
+  main_url: https://www.onedeck.co
+  url: https://www.onedeck.co
+  description: >
+    OneDeck is a simple yet powerful tool for creating and sharing your one-page investment summary in under 10 minutes.
+  categories:
+    - Finance
+    - Technology
+  built_by: William Neill
+  built_by_url: https://twitter.com/williamneill
+  featured: false

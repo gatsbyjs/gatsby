@@ -190,7 +190,9 @@ module.exports = {
 
 ## Custom icon options
 
-In order to specify manifest options merged with each item of the `icons` array, `icon_options` may be used as follows:
+The `icon_options` object may be used to iteratively add configuration items to the `icons` array. Any options included in this object will be merged with each object of the `icons` array (custom or default). Key value pairs already in the `icons` array will take precedence over duplicate items in the `icon_options` array.
+
+`icon_options` may be used as follows:
 
 ```js
 // in gatsby-config.js
@@ -205,7 +207,7 @@ module.exports = {
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
         display: `standalone`,
-        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/icon.png`,
         icon_options: {
           // For all the options available, please see:
           // https://developer.mozilla.org/en-US/docs/Web/Manifest
