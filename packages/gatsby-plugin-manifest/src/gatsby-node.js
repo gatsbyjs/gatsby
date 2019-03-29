@@ -52,6 +52,7 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   delete manifest.theme_color_in_head
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
+  delete manifest.icon_options
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
@@ -59,9 +60,14 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   }
 
   // Specify extra options for each icon (if requested).
-  manifest.icons.forEach(icon => {
-    Object.assign(icon, pluginOptions.icon_options)
-  })
+  if (pluginOptions.icon_options) {
+    manifest.icons = manifest.icons.map(icon => {
+      return {
+        ...pluginOptions.icon_options,
+        ...icon,
+      }
+    })
+  }
 
   // Determine destination path for icons.
   const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
