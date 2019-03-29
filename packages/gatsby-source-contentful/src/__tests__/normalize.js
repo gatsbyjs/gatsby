@@ -71,6 +71,28 @@ describe(`Process contentful data`, () => {
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 
+  it(`creates nodes while respecting the locale filtering`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createContentTypeNodes({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i].map(normalize.fixIds),
+        createNode,
+        createNodeId,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        localeFilter: locale => locale.code === `de-DE`,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()

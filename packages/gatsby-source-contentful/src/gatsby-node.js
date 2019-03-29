@@ -197,6 +197,7 @@ exports.sourceNodes = async (
       foreignReferenceMap,
       defaultLocale,
       locales,
+      localeFilter: options.localeFilter,
     })
   })
 
