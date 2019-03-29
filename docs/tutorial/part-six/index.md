@@ -21,12 +21,12 @@ content from source plugins and _transform_ it into something more usable.
 For example, markdown files. Markdown is nice to write in but when you build a
 page with it, you need the markdown to be HTML.
 
-Let's add a markdown file to your site at
+Add a markdown file to your site at
 `src/pages/sweet-pandas-eating-sweets.md` (This will become your first markdown
 blog post) and learn how to _transform_ it to HTML using transformer plugins and
 GraphQL.
 
-```markdown
+```markdown:title=src/pages/sweet-pandas-eating-sweets.md
 ---
 title: "Sweet Pandas Eating Sweets"
 date: "2017-08-10"
@@ -45,7 +45,7 @@ the table. This is a very powerful feature of Gatsby. Like the earlier
 `gatsby-source-filesystem` is always scanning for new files to be added and when
 they are, re-runs your queries.
 
-Let's add a transformer plugin that can transform markdown files:
+Add a transformer plugin that can transform markdown files:
 
 ```shell
 npm install --save gatsby-transformer-remark
@@ -53,7 +53,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -66,7 +66,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-transformer-remark`,
+    `gatsby-transformer-remark`, // highlight-line
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -96,7 +96,7 @@ data transformation you might need when building a Gatsby site.
 
 ## Create a list of your site's markdown files in `src/pages/index.js`
 
-Let's now create a list of your markdown files on the front page. Like many
+Now you'll have to create a list of your markdown files on the front page. Like many
 blogs, you want to end up with a list of links on the front page pointing to each
 blog post. With GraphQL you can _query_ for the current list of markdown blog
 posts so you won't need to maintain the list manually.
@@ -104,10 +104,10 @@ posts so you won't need to maintain the list manually.
 Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a GraphQL query with some initial HTML and styling.
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
@@ -117,7 +117,7 @@ export default ({ data }) => {
     <Layout>
       <div>
         <h1
-          className={css`
+          css={css`
             display: inline-block;
             border-bottom: 1px solid;
           `}
@@ -128,13 +128,13 @@ export default ({ data }) => {
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
             <h3
-              className={css`
+              css={css`
                 margin-bottom: ${rhythm(1 / 4)};
               `}
             >
               {node.frontmatter.title}{" "}
               <span
-                className={css`
+                css={css`
                   color: #bbb;
                 `}
               >
@@ -175,7 +175,7 @@ Now the frontpage should look like:
 But your one blog post looks a bit lonely. So let's add another one at
 `src/pages/pandas-and-bananas.md`
 
-```markdown
+```markdown:title=src/pages/pandas-and-bananas.md
 ---
 title: "Pandas and Bananas"
 date: "2017-08-21"
@@ -198,7 +198,7 @@ this powerful set of operators, you can select any data you want—in the format
 need.
 
 In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save
+`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save
 this and the sort order should be fixed.
 
 Try opening Graph_i_QL and playing with different sort options. You can sort the

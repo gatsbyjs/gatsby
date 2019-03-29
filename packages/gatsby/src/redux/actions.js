@@ -7,9 +7,12 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
+const truePath = require(`true-case-path`)
+const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
-const { hasNodeChanged, getNode } = require(`./index`)
-const { trackInlineObjectsInRootNode } = require(`../schema/node-tracking`)
+const slash = require(`slash`)
+const { hasNodeChanged, getNode } = require(`../db/nodes`)
+const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
@@ -81,12 +84,14 @@ const pascalCase = _.flow(
   _.camelCase,
   _.upperFirst
 )
-const hasWarnedForPageComponent = new Set()
+const hasWarnedForPageComponentInvalidContext = new Set()
+const hasWarnedForPageComponentInvalidCasing = new Set()
+const pageComponentCache = {}
 const fileOkCache = {}
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
+ * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
@@ -136,7 +141,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorName`,
+      `pluginCreatorId`,
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -176,9 +181,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
         report.panic(error)
       } else {
-        if (!hasWarnedForPageComponent.has(page.component)) {
+        if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
-          hasWarnedForPageComponent.add(page.component)
+          hasWarnedForPageComponentInvalidContext.add(page.component)
         }
       }
     }
@@ -188,12 +193,58 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
     if (!fileExistsSync(page.component)) {
-      const message = `${name} created a page with a component that doesn't exist`
+      const message = `${name} created a page with a component that doesn't exist. Missing component is ${
+        page.component
+      }`
       console.log(``)
       console.log(chalk.bold.red(message))
       console.log(``)
       console.log(page)
       noPageOrComponent = true
+    } else if (page.component) {
+      // check if we've processed this component path
+      // before, before running the expensive "truePath"
+      // operation
+      if (pageComponentCache[page.component]) {
+        page.component = pageComponentCache[page.component]
+      } else {
+        const originalPageComponent = page.component
+
+        // normalize component path
+        page.component = slash(page.component)
+        // check if path uses correct casing - incorrect casing will
+        // cause issues in query compiler and inconsistencies when
+        // developing on Mac or Windows and trying to deploy from
+        // linux CI/CD pipeline
+        const trueComponentPath = slash(truePath(page.component))
+        if (trueComponentPath !== page.component) {
+          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+            const markers = page.component
+              .split(``)
+              .map((letter, index) => {
+                if (letter !== trueComponentPath[index]) {
+                  return `^`
+                }
+                return ` `
+              })
+              .join(``)
+
+            report.warn(
+              stripIndent`
+            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+            page.component:     "${page.component}"
+            path in filesystem: "${trueComponentPath}"
+                                 ${markers}
+          `
+            )
+            hasWarnedForPageComponentInvalidCasing.add(page.component)
+          }
+
+          page.component = trueComponentPath
+        }
+        pageComponentCache[originalPageComponent] = page.component
+      }
     }
   }
 
@@ -212,12 +263,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (noPageOrComponent) {
-    console.log(``)
-    console.log(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    report.panic(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
     )
-    console.log(``)
-    process.exit(1)
   }
 
   let jsonName
@@ -237,6 +285,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
+    isCreatedByStatefulCreatePages:
+      actionOptions &&
+      actionOptions.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
@@ -268,7 +319,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
-      !fileContent.includes(`exports.default`)
+      !fileContent.includes(`exports.default`) &&
+      // this check only applies to js and ts, not mdx
+      /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
       includesDefaultExport = false
     }
@@ -279,33 +332,29 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
         )
-        console.log(``)
-        // TODO actually do die during builds.
-        // process.exit(1)
       }
 
       if (!includesDefaultExport) {
-        console.log(``)
-        console.log(
+        report.panicOnBuild(
           `[${fileName}] The page component must export a React component for it to be valid`
         )
-        console.log(``)
       }
-
-      // TODO actually do die during builds.
-      // process.exit(1)
     }
 
     fileOkCache[internalPage.component] = true
   }
 
+  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const contextModified =
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
+    contextModified,
     plugin,
     payload: internalPage,
   }
@@ -318,44 +367,50 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
-  let node = _.get(options, `node`)
+actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+  let id
 
   // Check if using old method signature. Warn about incorrect usage but get
   // node from nodeID anyway.
   if (typeof options === `string`) {
-    console.warn(
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
-    )
-
-    if (args[0] && args[0].name) {
+    let msg =
+      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
+      `object containing a full node instead: deleteNode({ node }).`
+    if (args && args.name) {
       // `plugin` used to be the third argument
-      console.log(`"deleteNode" was called by ${args[0].name}`)
+      plugin = args
+      msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
+    report.warn(msg)
 
-    node = getNode(options)
+    id = options
+  } else {
+    id = options && options.node && options.node.id
   }
 
-  let deleteDescendantsActions
+  // Always get node from the store, as the node we get as an arg
+  // might already have been deleted.
+  const node = getNode(id)
+
+  const createDeleteAction = node => {
+    return {
+      type: `DELETE_NODE`,
+      plugin,
+      payload: node,
+    }
+  }
+
+  const deleteAction = createDeleteAction(node)
+
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
-  if (node) {
-    // Also delete any nodes transformed from this one.
-    const descendantNodes = findChildrenRecursively(node.children)
-    if (descendantNodes.length > 0) {
-      deleteDescendantsActions = descendantNodes.map(n =>
-        actions.deleteNode({ node: getNode(n) }, plugin)
-      )
-    }
-  }
+  const deleteDescendantsActions =
+    node &&
+    findChildrenRecursively(node.children)
+      .map(getNode)
+      .map(createDeleteAction)
 
-  const deleteAction = {
-    type: `DELETE_NODE`,
-    plugin,
-    payload: node,
-  }
-
-  if (deleteDescendantsActions) {
+  if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
   } else {
     return deleteAction
@@ -369,35 +424,25 @@ actions.deleteNode = (options: any, plugin: Plugin, ...args) => {
  * deleteNodes([`node1`, `node2`])
  */
 actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  console.log(
-    `The "deleteNodes" action is now deprecated and will be removed in Gatsby v3. Please use "deleteNode" instead.`
-  )
+  let msg =
+    `The "deleteNodes" action is now deprecated and will be removed in ` +
+    `Gatsby v3. Please use "deleteNode" instead.`
   if (plugin && plugin.name) {
-    console.log(`"deleteNodes" was called by ${plugin.name}`)
+    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
   }
+  report.warn(msg)
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
     nodes.map(n => findChildrenRecursively(getNode(n).children))
   )
-  let deleteDescendantsActions
-  if (descendantNodes.length > 0) {
-    deleteDescendantsActions = descendantNodes.map(n =>
-      actions.deleteNode({ node: getNode(n) }, plugin)
-    )
-  }
 
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: nodes,
+    payload: [...nodes, ...descendantNodes],
   }
-
-  if (deleteDescendantsActions) {
-    return [...deleteDescendantsActions, deleteNodesAction]
-  } else {
-    return deleteNodesAction
-  }
+  return deleteNodesAction
 }
 
 const typeOwners = {}
@@ -429,9 +474,20 @@ const typeOwners = {}
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
- * @param {string} node.internal.content An optional field. The raw content
- * of the node. Can be excluded if it'd require a lot of memory to load in
- * which case you must define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.content An optional field. This is rarely
+ * used. It is used when a source plugin sources data it doesn't know how
+ * to transform e.g. a markdown string pulled from an API. The source plugin
+ * can defer the transformation to a specialized transformer plugin like
+ * gatsby-transformer-remark. This `content` field holds the raw content
+ * (so for the markdown case, the markdown string).
+ *
+ * Data that's already structured should be added to the top-level of the node
+ * object and _not_ added here. You should not `JSON.stringify` your node's
+ * data here.
+ *
+ * If the content is very large and can be lazy-loaded, e.g. a file on disk,
+ * you can define a `loadNodeContent` function for this node and the node
+ * content will be lazy loaded when it's needed.
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
@@ -493,13 +549,12 @@ actions.createNode = (
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    console.log(JSON.stringify(node, null, 4))
-    console.log(
+    report.error(JSON.stringify(node, null, 4))
+    report.panic(
       chalk.bold.red(
         `The node internal.owner field is set automatically by Gatsby and not by plugins`
       )
     )
-    process.exit(1)
   }
 
   // Add the plugin name to the internal object.
@@ -586,7 +641,7 @@ actions.createNode = (
     actionOptions.parentSpan.setTag(`nodeType`, node.id)
   }
 
-  let deleteAction
+  let deleteActions
   let updateNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
@@ -600,24 +655,30 @@ actions.createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const descendantNodes = findChildrenRecursively(oldNode.children)
-      if (descendantNodes.length > 0) {
-        deleteAction = descendantNodes.map(n =>
-          actions.deleteNode({ node: getNode(n) })
-        )
+      const createDeleteAction = node => {
+        return {
+          type: `DELETE_NODE`,
+          plugin,
+          ...actionOptions,
+          payload: node,
+        }
       }
+      deleteActions = findChildrenRecursively(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
     }
 
     updateNodeAction = {
       type: `CREATE_NODE`,
       plugin,
+      oldNode,
       ...actionOptions,
       payload: node,
     }
   }
 
-  if (deleteAction) {
-    return [deleteAction, updateNodeAction]
+  if (deleteActions && deleteActions.length) {
+    return [...deleteActions, updateNodeAction]
   } else {
     return updateNodeAction
   }
@@ -890,7 +951,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc javascript object
+ * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
  * @example
  * setBabelOptions({
  *   options: {
@@ -1073,19 +1134,34 @@ actions.setPluginStatus = (
 }
 
 /**
+ * Check if path is absolute and add pathPrefix in front if it's not
+ */
+const maybeAddPathPrefix = (path, pathPrefix) => {
+  const parsed = url.parse(path)
+  const isRelativeProtocol = path.startsWith(`//`)
+  return `${
+    parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
+  }${path}`
+}
+
+/**
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/)).
+ * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/packages/gatsby-plugin-s3/).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
  */
 actions.createRedirect = ({
   fromPath,
@@ -1102,10 +1178,10 @@ actions.createRedirect = ({
   return {
     type: `CREATE_REDIRECT`,
     payload: {
-      fromPath: `${pathPrefix}${fromPath}`,
+      fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
       redirectInBrowser,
-      toPath: `${pathPrefix}${toPath}`,
+      toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
     },
   }
@@ -1132,6 +1208,239 @@ actions.addThirdPartySchema = (
     plugin,
     traceId,
     payload: schema,
+  }
+}
+
+import type GatsbyGraphQLType from "../schema/types/type-builders"
+/**
+ * Add type definitions to the GraphQL schema.
+ *
+ * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
+ *
+ * Type definitions can be provided either as
+ * [`graphql-js` types](https://graphql.org/graphql-js/), in
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn/)
+ * or using Gatsby Type Builders available on the `schema` API argument.
+ *
+ * Things to note:
+ * * needs to be called *before* schema generation. It is recommended to use
+ *   `createTypes` in the `sourceNodes` API.
+ * * type definitions targeting node types, i.e. `MarkdownRemark` and others
+ *   added in `sourceNodes` or `onCreateNode` APIs, need to implement the
+ *   `Node` interface. Interface fields will be added automatically, but it
+ *   is mandatory to label those types with `implements Node`.
+ * * by default, explicit type definitions from `createTypes` will be merged
+ *   with inferred field types, and default field resolvers for `Date` (which
+ *   adds formatting options) and `File` (which resolves the field value as
+ *   a `relativePath` foreign-key field) are added. This behavior can be
+ *   customised with `@infer` and `@dontInfer` directives, and their
+ *   `noDefaultResolvers` argument.
+ *
+ * @example
+ * exports.sourceNodes = ({ actions }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = `
+ *     """
+ *     Markdown Node
+ *     """
+ *     type MarkdownRemark implements Node {
+ *       frontmatter: Frontmatter!
+ *     }
+ *
+ *     """
+ *     Markdown Frontmatter
+ *     """
+ *     type Frontmatter {
+ *       title: String!
+ *       author: AuthorJson!
+ *       date: Date!
+ *       published: Boolean!
+ *       tags: [String!]!
+ *     }
+ *
+ *     """
+ *     Author information
+ *     """
+ *     # Does not include automatically inferred fields
+ *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *       name: String!
+ *       birthday: Date! # no default resolvers for Date formatting added
+ *     }
+ *   `
+ *   createTypes(typeDefs)
+ * }
+ *
+ * // using Gatsby Type Builder API
+ * exports.sourceNodes = ({ actions, schema }) => {
+ *   const { createTypes } = actions
+ *   const typeDefs = [
+ *     schema.buildObjectType({
+ *       name: 'MarkdownRemark',
+ *       fields: {
+ *         frontmatter: 'Frontmatter!'
+ *       },
+ *       interfaces: ['Node'],
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'Frontmatter',
+ *       fields: {
+ *         title: {
+ *           type: 'String!',
+ *           resolve(parent) {
+ *             return parent.title || '(Untitled)'
+ *           }
+ *         },
+ *         author: 'AuthorJson!',
+ *         date: 'Date!',
+ *         published: 'Boolean!',
+ *         tags: '[String!]!',
+ *       }
+ *     })
+ *   ]
+ *   createTypes(typeDefs)
+ * }
+ */
+actions.createTypes = (
+  types:
+    | string
+    | GraphQLOutputType
+    | GatsbyGraphQLType
+    | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `CREATE_TYPES`,
+    plugin,
+    traceId,
+    payload: types,
+  }
+}
+
+/**
+ *
+ * Report that a query has been extracted from a component. Used by
+ * query-compilier.js.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {query} $0.query The GraphQL query that was extracted from the component.
+ * @private
+ */
+actions.queryExtracted = (
+  { componentPath, query },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTED`,
+    plugin,
+    traceId,
+    payload: { componentPath, query },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a graphql error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The GraphQL query that was extracted from the component.
+ * @private
+ */
+actions.queryExtractionGraphQLError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ *
+ * Report that babel was able to extract the graphql query.
+ * Indicates that the file is free of JS errors.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @private
+ */
+actions.queryExtractedBabelSuccess = (
+  { componentPath },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
+    plugin,
+    traceId,
+    payload: { componentPath },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a babel error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The Babel error object
+ * @private
+ */
+actions.queryExtractionBabelError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
+ *
+ * @param {string} Program status
+ * @private
+ */
+actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `SET_PROGRAM_STATUS`,
+    plugin,
+    traceId,
+    payload: status,
+  }
+}
+
+/**
+ * Broadcast that a page's query was run.
+ *
+ * @param {string} Path to the page component that changed.
+ * @private
+ */
+actions.pageQueryRun = (
+  { path, componentPath, isPage },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `PAGE_QUERY_RUN`,
+    plugin,
+    traceId,
+    payload: { path, componentPath, isPage },
   }
 }
 

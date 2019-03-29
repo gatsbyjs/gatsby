@@ -9,11 +9,6 @@ const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
 
 describe(`codemods`, () => {
   tests.forEach(test =>
-    defineTest(
-      __dirname,
-      `navigate-calls`,
-      null,
-      `navigate-calls/${test}`
-    )
+    defineTest(__dirname, `navigate-calls`, null, `navigate-calls/${test}`)
   )
 })

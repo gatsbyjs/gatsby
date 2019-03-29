@@ -2,7 +2,9 @@ const Queue = require(`better-queue`)
 
 const queryRunner = require(`./query-runner`)
 const { store, emitter } = require(`../../redux`)
+const { boundActionCreators } = require(`../../redux/actions`)
 const websocketManager = require(`../../utils/websocket-manager`)
+const FastMemoryStore = require(`./better-queue-custom-store`)
 
 const processing = new Set()
 const waiting = new Map()
@@ -32,6 +34,7 @@ const queueOptions = {
       cb(null, job)
     }
   },
+  store: FastMemoryStore(),
 }
 
 // During builds we don't need all the filtering, etc. so we
@@ -55,14 +58,49 @@ const queue = new Queue((plObj, callback) => {
           queue.push(waiting.get(plObj.id))
           waiting.delete(plObj.id)
         }
+
+        // Send event that the page query finished.
+        boundActionCreators.pageQueryRun({
+          path: plObj.id,
+          componentPath: plObj.componentPath,
+          isPage: plObj.isPage,
+        })
+
         return callback(null, result)
       },
       error => callback(error)
     )
 }, queueOptions)
 
+// HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+// We start paused until we call `runInitialQueries` during bootstrap.
+let isBootstrapping = true
+queue.pause()
+
+emitter.on(`START_QUERY_QUEUE`, () => {
+  isBootstrapping = false
+  queue.resume()
+})
+// END HACKY
+
+// Pause running queries when new nodes are added (processing starts).
+emitter.on(`CREATE_NODE`, () => {
+  queue.pause()
+})
+
+// Resume running queries as soon as the api queue is empty.
+emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
+  if (!isBootstrapping) {
+    queue.resume()
+  }
+})
+
 queue.on(`drain`, () => {
   emitter.emit(`QUERY_QUEUE_DRAINED`)
+})
+
+queue.on(`task_queued`, () => {
+  emitter.emit(`QUERY_ENQUEUED`)
 })
 
 module.exports = queue

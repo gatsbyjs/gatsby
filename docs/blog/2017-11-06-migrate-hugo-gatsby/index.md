@@ -19,7 +19,7 @@ I focused on the process, looking for ways to make site building more generic
 and reusable.
 
 - Content migration
-- Programatic page creation in Gatsby
+- Programmatic page creation in Gatsby
 - Manage styles with
   [`Typography.js`](http://kyleamathews.github.io/typography.js/)
 - Automatic pagination
@@ -83,9 +83,9 @@ parse-able, so I just had to cut some words out where problematic.
 
 My previous frontmatter already contained `title`, `date`, `tags`, and most
 importantly - the `slug` fields. These were enough for my later work on the
-programatic creation of pages explained in the next section.
+programmatic creation of pages explained in the next section.
 
-### Programatic page creation
+### Programmatic page creation
 
 This is the official
 [documentation](/docs/creating-and-modifying-pages/),
@@ -93,7 +93,7 @@ plus there is a
 [tutorial](/tutorial/part-four/#data-in-gatsby), which
 gives examples. In sum, I created a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](/docs/bound-action-creators/).
+[`boundActionCreators`](/docs/actions/).
 
 This might sound way more complicated than what it is:
 
@@ -116,7 +116,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     }
   `).then(result => {
     const posts = result.data.allMarkdownRemark.edges
-    // Create content programatically here
+    // Create content programmatically here
   })
 }
 ```
@@ -263,7 +263,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 ```
 
-Easy to read, understand and mantain. The pagination module is a bit longer than
+Easy to read, understand and maintain. The pagination module is a bit longer than
 the one of the posts:
 
 ```jsx
@@ -380,7 +380,7 @@ createPage({
 
 Initially, I tried to use the `git-gateway` identity management approach in
 Netlify, but it didn't work for me. I could not reach the point to validate or
-reset the password for my user 1, so I kept the "old-school" way of github
+reset the password for my user 1, so I kept the "old-school" way of GitHub
 integration which works just fine for me at the moment, having the fact I will
 be 1 user to work on the site.
 
@@ -425,14 +425,14 @@ production.
 The branch in this configuration has to match to deployment branch of Netlify
 service:
 
-![](Efubv8f.png)
+![Deploy Settings](Efubv8f.png)
 
 This is my admin page React component which is placed in `src/pages/admin` so
 that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const AdminPage = () => (
   <div className="admin">

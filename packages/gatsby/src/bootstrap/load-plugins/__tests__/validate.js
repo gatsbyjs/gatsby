@@ -1,9 +1,17 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    panicOnBuild: jest.fn(),
+    warn: jest.fn(),
+  }
+})
 jest.mock(`../../resolve-module-exports`)
 
+const reporter = require(`gatsby-cli/lib/reporter`)
 const {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
 
 describe(`collatePluginAPIs`, () => {
@@ -81,7 +89,7 @@ describe(`collatePluginAPIs`, () => {
 
 describe(`handleBadExports`, () => {
   it(`Does nothing when there are no bad exports`, async () => {
-    const result = handleBadExports({
+    handleBadExports({
       apis: {
         node: [`these`, `can`, `be`],
         browser: [`anything`, `as there`],
@@ -93,12 +101,10 @@ describe(`handleBadExports`, () => {
         ssr: [],
       },
     })
-
-    expect(result).toEqual(false)
   })
 
-  it(`Returns true and logs a message when bad exports are detected`, async () => {
-    const result = handleBadExports({
+  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {
+    handleBadExports({
       apis: {
         node: [``],
         browser: [``],
@@ -115,8 +121,8 @@ describe(`handleBadExports`, () => {
         ],
       },
     })
-    // TODO: snapshot console.log()'s from handleBadExports?
-    expect(result).toEqual(true)
+
+    expect(reporter.panicOnBuild.mock.calls.length).toBe(1)
   })
 })
 
@@ -191,5 +197,29 @@ describe(`handleMultipleReplaceRenderers`, () => {
     })
 
     expect(result).toMatchSnapshot()
+  })
+})
+
+describe(`warnOnIncompatiblePeerDependency`, () => {
+  beforeEach(() => {
+    reporter.warn.mockClear()
+  })
+
+  it(`Does not warn when no peer dependency`, () => {
+    warnOnIncompatiblePeerDependency(`dummy-package`, { peerDependencies: {} })
+
+    expect(reporter.warn).not.toHaveBeenCalled()
+  })
+
+  it(`Warns on incompatible gatsby peer dependency`, async () => {
+    warnOnIncompatiblePeerDependency(`dummy-package`, {
+      peerDependencies: {
+        gatsby: `<2.0.0`,
+      },
+    })
+
+    expect(reporter.warn).toHaveBeenCalledWith(
+      expect.stringContaining(`Plugin dummy-package is not compatible`)
+    )
   })
 })

@@ -1,3 +1,3 @@
-const moduleA = "Hello"
+const moduleA = `Hello`
 
 export { moduleA }

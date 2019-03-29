@@ -10,7 +10,7 @@ The easiest way to push a Gatsby app to GitHub Pages is by using a package calle
 
 Add a `deploy` script to `package.json`
 
-```json
+```json:title=package.json
 {
   "scripts": {
     "deploy": "gatsby build --prefix-paths && gh-pages -d public"
@@ -20,7 +20,7 @@ Add a `deploy` script to `package.json`
 
 The `--prefix-paths` flag is used because your website is inside a folder like `http://username.github.io/reponame/`, you'll need to add your `/reponame` path prefix as an option to `gatsby-config.js`:
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   pathPrefix: "/reponame",
 }
@@ -34,7 +34,7 @@ Create a repository named like `username.github.io`.
 
 **Note**: In this case you don't need to specify `pathPrefix` and your website needs to be pushed to `master` branch.
 
-```json
+```json:title=package.json
     {
         "scripts": {
             ...

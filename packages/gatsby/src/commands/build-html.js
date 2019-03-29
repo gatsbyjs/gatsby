@@ -7,6 +7,7 @@ const webpackConfig = require(`../utils/webpack.config`)
 const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const renderHTMLQueue = require(`../utils/html-renderer-queue`)
+const telemetry = require(`gatsby-telemetry`)
 
 module.exports = async (program: any, activity: any) => {
   const { directory } = program
@@ -14,6 +15,9 @@ module.exports = async (program: any, activity: any) => {
   debug(`generating static HTML`)
   // Reduce pages objects to an array of paths.
   const pages = Array.from(store.getState().pages.values(), page => page.path)
+  telemetry.decorateEvent(`BUILD_END`, {
+    siteMeasurements: { pagesCount: pages.length },
+  })
 
   // Static site generation.
   const compilerConfig = await webpackConfig(
@@ -53,7 +57,12 @@ module.exports = async (program: any, activity: any) => {
           return resolve(null, stats)
         })
         .catch(e => {
-          reject(createErrorFromString(e.stack, `${outputFile}.map`))
+          const prettyError = createErrorFromString(
+            e.stack,
+            `${outputFile}.map`
+          )
+          prettyError.context = e.context
+          reject(prettyError)
         })
     })
   })

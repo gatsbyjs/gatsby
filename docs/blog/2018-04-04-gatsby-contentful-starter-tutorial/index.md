@@ -28,7 +28,7 @@ Here’s an overview of what’s involved:
 
 ###Getting started
 
-This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a [Github account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
+This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
 
 Start by using this with the Gatsby CLI:
 
@@ -36,7 +36,7 @@ Start by using this with the Gatsby CLI:
 gatsby new contentful-starter https://github.com/contentful-userland/gatsby-contentful-starter
 ```
 
-Alternatively, you can also clone a sample repo from Github:
+Alternatively, you can also clone a sample repo from GitHub:
 
 ```bash
 git clone git@github.com:contentful-userland/gatsby-contentful-starter.git

@@ -2,10 +2,8 @@ import React, { Component } from "react"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
 
-import { options, scale, rhythm } from "../../utils/typography"
-import { colors } from "../../utils/presets"
-
-import styles from "./styles"
+import { rhythm } from "../../utils/typography"
+import { colors, space, scale, letterSpacings } from "../../utils/presets"
 
 class Collapsible extends Component {
   state = {
@@ -17,7 +15,7 @@ class Collapsible extends Component {
   }
 
   render() {
-    const { heading, children } = this.props
+    const { heading, fixed, children } = this.props
     const { collapsed } = this.state
 
     return (
@@ -26,7 +24,11 @@ class Collapsible extends Component {
           borderBottom: collapsed ? 0 : `1px solid ${colors.ui.light}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
-          // paddingBottom: collapsed ? 0 : rhythm(options.blockMarginBottom),
+          minHeight: fixed ? `${fixed}px` : `initial`,
+          maxHeight: fixed ? `${fixed}px` : `initial`,
+          flexBasis: 0,
+          overflowY: `auto`,
+          // paddingBottom: collapsed ? 0 : space[6],
         }}
       >
         <div
@@ -45,10 +47,10 @@ class Collapsible extends Component {
               display: `flex`,
               flexShrink: 0,
               fontWeight: `normal`,
-              fontSize: scale(-2 / 5).fontSize,
-              marginTop: rhythm(options.blockMarginBottom),
+              fontSize: scale[1],
+              marginTop: space[6],
               marginRight: rhythm(5 / 4),
-              letterSpacing: `.1em`,
+              letterSpacing: letterSpacings.tracked,
               textTransform: `uppercase`,
               "&:hover": {
                 color: colors.gatsby,
@@ -64,7 +66,6 @@ class Collapsible extends Component {
           </h4>
           <div
             css={{
-              ...styles.scrollbar,
               display: collapsed ? `none` : `block`,
               overflowY: `auto`,
             }}

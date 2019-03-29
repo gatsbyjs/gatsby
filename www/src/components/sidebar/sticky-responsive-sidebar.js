@@ -3,7 +3,14 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, { colors } from "../../utils/presets"
+import {
+  colors,
+  transition,
+  shadows,
+  space,
+  breakpoints,
+  dimensions,
+} from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -32,7 +39,7 @@ class StickyResponsiveSidebar extends Component {
     } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
-    const iconOffset = open ? 8 : -4
+    const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
     const menuOffset = open ? 0 : rhythm(10)
 
@@ -69,21 +76,29 @@ class StickyResponsiveSidebar extends Component {
           css={{ ...styles.sidebarToggleButton }}
           onClick={this._openSidebar}
           role="button"
+          aria-label="Show Secondary Navigation"
+          aria-controls="SecondaryNavigation"
+          aria-expanded={open ? `true` : `false`}
           tabIndex={0}
         >
           <div css={{ ...styles.sidebarToggleButtonInner }}>
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(2px, ${iconOffset}px) rotate(180deg)`,
-                transition: `transform 0.2s ease`,
+                transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
             <ChevronSvg
               size={15}
               cssProps={{
-                transform: `translate(2px, ${0 - iconOffset}px)`,
-                transition: `transform 0.2s ease`,
+                transform: `translate(${5 -
+                  iconOffset}px, -5px) rotate(270deg)`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
           </div>
@@ -103,28 +118,30 @@ const styles = {
     height: `100vh`,
     position: `fixed`,
     top: 0,
-    transition: `opacity 0.5s ease`,
+    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [presets.Tablet]: {
-      height: `calc(100vh - ${presets.headerHeight} - ${
-        presets.bannerHeight
-      } + 1px)`,
+    [breakpoints.md]: {
+      height: `calc(100vh - ${dimensions.headerHeight} - ${
+        dimensions.bannerHeight
+      })`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-      width: rhythm(10),
+      top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
+      width: rhythm(dimensions.sidebarWidth.default),
     },
-    [presets.Desktop]: {
-      width: rhythm(12),
+    [breakpoints.lg]: {
+      width: rhythm(dimensions.sidebarWidth.large),
     },
   },
   sidebar: {
     height: `100%`,
-    transition: `transform 0.5s ease`,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.15)`,
-    [presets.Tablet]: {
+    transition: `transform ${transition.speed.slow} ${
+      transition.curve.default
+    }`,
+    boxShadow: shadows.dialog,
+    [breakpoints.md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -132,26 +149,26 @@ const styles = {
   sidebarToggleButton: {
     backgroundColor: colors.gatsby,
     borderRadius: `50%`,
-    bottom: 64,
-    boxShadow: `0 0 20px rgba(0, 0, 0, 0.3)`,
+    bottom: space[11],
+    boxShadow: shadows.dialog,
     cursor: `pointer`,
     display: `flex`,
-    height: 60,
+    height: space[10],
     justifyContent: `space-around`,
     position: `fixed`,
-    right: 20,
+    right: space[6],
     visibility: `visible`,
-    width: 60,
+    width: space[10],
     zIndex: 20,
-    [presets.Tablet]: { display: `none` },
+    [breakpoints.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,
-    color: `#fff`,
+    color: colors.white,
     display: `flex`,
     flexDirection: `column`,
-    height: 20,
+    height: space[5],
     visibility: `visible`,
-    width: 20,
+    width: space[5],
   },
 }

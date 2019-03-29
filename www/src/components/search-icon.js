@@ -6,6 +6,8 @@ const SearchIcon = ({ overrideCSS }) => (
     viewBox="0 0 40 40"
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
+    focusable="false"
+    aria-hidden="true"
     css={{ ...overrideCSS }}
   >
     {/* Based on the 'search' icon in https://github.com/ionic-team/ionicons */}

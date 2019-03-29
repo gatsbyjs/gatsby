@@ -39,12 +39,17 @@ plugins: [
             // the language "sh" which will highlight using the
             // bash highlighter.
             aliases: {},
-            // This toggles the display of line numbers alongside the code.
+            // This toggles the display of line numbers globally alongside the code.
             // To use it, add the following line in src/layouts/index.js
             // right after importing the prism color scheme:
             //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
             // Defaults to false.
+            // If you wish to only show line numbers on certain code blocks,
+            // leave false and use the {numberLines: true} syntax below
             showLineNumbers: false,
+            // If setting this to true, the parser won't handle and highlight inline
+            // code used in markdown i.e. single backtick code like `this`.
+            noInlineHighlight: false,
           },
         },
       ],
@@ -126,20 +131,48 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
-.gatsby-highlight pre[class*="language-"].line-numbers {
-  padding-left: 2.8em; /* 3 */
-}
 ```
 
 #### Optional: Add line numbering
 
 If you want to add line numbering alongside your code, you need to
 import the corresponding CSS file from PrismJS, right after importing your
-colorscheme in `layout/index.js`:
+colorscheme in `src/components/layout.js`:
 
 ```javascript
-// layouts/index.js
+// src/components/layout.js
 require("prismjs/plugins/line-numbers/prism-line-numbers.css")
+```
+
+Then add in the corresponding CSS:
+
+```css
+/**
+ * If you already use line highlighting
+ */
+
+/* Adjust the position of the line numbers */
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding-left: 2.8em;
+}
+
+/**
+ * If you only want to use line numbering
+ */
+
+.gatsby-highlight {
+  background-color: #fdf6e3;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
 ```
 
 ### Usage in Markdown
@@ -159,6 +192,8 @@ This is some beautiful code:
       }
     ]
     ```
+
+### Line numbering
 
 To see the line numbers alongside your code, you can use the `numberLines` option:
 
@@ -193,27 +228,101 @@ will start at index 5):
     ]
     ```
 
+### Line highlighting
+
 You can also add line highlighting. It adds a span around lines of code with a
 special class `.gatsby-highlight-code-line` that you can target with styles. See
 this README for more info.
 
+To highlight lines, you can use one of the following directives as comments in your
+code:
+
+- `highlight-line` highlights the current line;
+- `highlight-next-line` highlights the next line;
+- `highlight-start` highlights the lines until the matching `hightlight-end`;
+- `highlight-range{1, 4-6}` will highlight the next line, and the fourth, fifth and sixth lines.
+
+````
+```jsx
+class FlavorForm extends React.Component { // highlight-line
+  constructor(props) {
+    super(props);
+    this.state = {value: 'coconut'};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    // highlight-next-line
+    this.setState({value: event.target.value});
+  }
+
+  // highlight-start
+  handleSubmit(event) {
+    alert('Your favorite flavor is: ' + this.state.value);
+    event.preventDefault();
+  }
+  // highlight-end
+
+  render() {
+    return (
+      { /* highlight-range{1,4-9,12} */ }
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Pick your favorite flavor:
+          <select value={this.state.value} onChange={this.handleChange}>
+            <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option value="coconut">Coconut</option>
+            <option value="mango">Mango</option>
+          </select>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+````
+
+You can also specify the highlighted lines outside of the code block.
 In the following code snippet, lines 1 and 4 through 6 will get the line
 highlighting. The line range parsing is done with
 <https://www.npmjs.com/package/parse-numeric-range>.
 
-    ```javascript{1,4-6}
-    // In your gatsby-config.js
-    plugins: [
-      {
-        resolve: `gatsby-transformer-remark`,
-        options: {
-          plugins: [
-            `gatsby-remark-prismjs`,
-          ]
-        }
-      }
-    ]
-    ```
+````
+```javascript{1,4-6}
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        `gatsby-remark-prismjs`,
+      ]
+    }
+  }
+]
+```
+````
+
+### Line hiding
+
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
+
+As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
+
+The available directives are:
+
+- `hide-line` hides the current line;
+- `hide-next-line` hides the next line;
+- `hide-start` hides the lines until the matching `hide-end`;
+- `hide-range{1, 4-6}` will hide the next line, and the fourth, fifth and sixth lines.
+
+The hide-line directives will always be hidden too. Check out [the using-remark example site](https://using-remark.gatsbyjs.org/embed-snippets/) to see how this looks on a live site.
+
+### Inline code blocks
 
 In addition to fenced code blocks, inline code blocks will be passed through
 PrismJS as well.
@@ -226,6 +335,8 @@ Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
 
 This will be rendered in a `<code class=language-css>` with just the (syntax
 highlighted) text of `.some-class { background-color: red }`
+
+### Disabling syntax highlighting
 
 If you need to prevent any escaping or highlighting, you can use the `none`
 language; the inner contents will not be changed at all.

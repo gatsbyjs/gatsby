@@ -32,7 +32,7 @@ These routes will exist on the client only and will not correspond to index.html
 
 To create client-only routes, add the following code to your site’s `gatsby-node.js` file:
 
-```javascript
+```javascript:title=gatsby-node.js
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, actions }) => {

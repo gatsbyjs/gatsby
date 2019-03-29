@@ -3,28 +3,26 @@ import { navigate } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
-import presets, { colors } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
+import { colors, space, breakpoints, fonts } from "../../utils/presets"
 
 class Pagination extends React.Component {
   changePage = e => {
-    navigate(`/blog/${e.target.value}`)
+    navigate(e.target.value ? `/blog/page/${e.target.value}` : `/blog/`)
   }
   render() {
     const { numPages, currentPage } = this.props.context
     const isFirst = currentPage === 1
     const isLast = currentPage === numPages
     const prevPageNum =
-      currentPage - 1 === 1 ? `` : (currentPage - 1).toString()
+      currentPage - 1 === 1 ? `` : `page/${(currentPage - 1).toString()}`
     const nextPageNum = (currentPage + 1).toString()
     const prevPageLink = isFirst ? null : `/blog/${prevPageNum}`
-    const nextPageLink = isLast ? null : `/blog/${nextPageNum}`
+    const nextPageLink = isLast ? null : `/blog/page/${nextPageNum}`
 
     const prevNextLinkStyles = {
       "&&": {
-        boxShadow: `none`,
         borderBottom: 0,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         fontWeight: `bold`,
         color: colors.gatsby,
       },
@@ -35,9 +33,9 @@ class Pagination extends React.Component {
         css={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: `${rhythm(1)} 0`,
+          margin: `${space[5]} 0`,
           flexDirection: `column`,
-          [presets.Tablet]: {
+          [breakpoints.md]: {
             flexDirection: `row`,
           },
         }}
@@ -49,8 +47,8 @@ class Pagination extends React.Component {
             padding: `0`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            marginBottom: rhythm(1 / 2),
-            [presets.Tablet]: {
+            marginBottom: space[3],
+            [breakpoints.md]: {
               width: `15rem`,
               marginBottom: 0,
             },
@@ -70,7 +68,7 @@ class Pagination extends React.Component {
             display: `flex`,
             alignItems: `center`,
             justifyContent: `flex-end`,
-            fontFamily: options.headerFontFamily.join(`,`),
+            fontFamily: fonts.header,
           }}
         >
           <span>Showing page &nbsp;</span>

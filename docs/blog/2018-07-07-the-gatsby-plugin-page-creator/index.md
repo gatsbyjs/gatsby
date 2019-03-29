@@ -1,9 +1,8 @@
 ---
 title: Automatically create pages from components in any directory
-date: "2018-07-07"
+date: 2018-07-07
 image: "gatsbymanor.jpg" # change this to the npm package stats
 author: "Steven Natera"
-tags: ["themes", "starters", "gatsby-manor"]
 ---
 
 ![Gatsby plugin page creator in the plugin library](plugin-library-page-creator.png)
@@ -19,7 +18,7 @@ Here's how it all got started. The goal with [Gatsby Manor](https://gatsbymanor.
 is to create professional designed Gatsby starters
 to give your site a clean, modern look the moment you create a new project.
 While creating our newest starter
-[gatsby-starter-eventually](https://gatsbymanor.com/demo/eventually),
+[gatsby-starter-eventually](https://github.com/gatsbymanor/gatsby-starter-eventually),
 I wanted to organize the directory structure of the project to better fit my
 workflow.
 
@@ -29,7 +28,7 @@ as an internal plugin. There was no way to have a different folder
 automatically create pages from components because the default **src/pages**
 path was hardcoded. The side effect of this behavior
 is that you have a hard time creating folder structures that best fit your needs.
-If you wanted all your javascript to live in a single folder, you would
+If you wanted all your JavaScript to live in a single folder, you would
 lose the ability to automatically create pages.
 
 # The community asks for a solution

@@ -8,7 +8,7 @@ Processes [graphviz](https://www.graphviz.org/) (`dot` and `circo`) code blocks 
 
 `npm install --save gatsby-remark-graphviz`
 
-Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure javascript port of graphviz.
+Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure JavaScript port of graphviz.
 
 ## How to use
 
@@ -19,7 +19,9 @@ plugins: [
     resolve: 'gatsby-transformer-remark',
     options: {
       plugins: [
-        'gatsby-remark-graphviz'
+        'gatsby-remark-graphviz',
+        // place before other plugins that modify code blocks (such as prismjs)
+        // 'gatsby-remark-prismjs',
       ]
     }
   }

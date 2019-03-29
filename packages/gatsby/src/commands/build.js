@@ -5,9 +5,12 @@ const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
+const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
+const signalExit = require(`signal-exit`)
+const telemetry = require(`gatsby-telemetry`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -17,7 +20,6 @@ function reportFailure(msg, err: Error) {
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
-  browserslist: string[],
   prefixPaths: boolean,
   noUglify: boolean,
   openTracingConfigFile: string,
@@ -25,6 +27,11 @@ type BuildArgs = {
 
 module.exports = async function build(program: BuildArgs) {
   initTracer(program.openTracingConfigFile)
+
+  telemetry.trackCli(`BUILD_START`)
+  signalExit(() => {
+    telemetry.trackCli(`BUILD_END`)
+  })
 
   const buildSpan = tracer.startSpan(`build`)
   buildSpan.setTag(`directory`, program.directory)
@@ -41,7 +48,7 @@ module.exports = async function build(program: BuildArgs) {
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
-  copyStaticDirectory()
+  copyStaticDirs()
 
   let activity
   activity = report.activityTimer(
@@ -61,9 +68,13 @@ module.exports = async function build(program: BuildArgs) {
   await buildHTML(program, activity).catch(err => {
     reportFailure(
       report.stripIndent`
-        Building static HTML for pages failed
+        Building static HTML failed${
+          err.context && err.context.path
+            ? ` for path "${chalk.bold(err.context.path)}"`
+            : ``
+        }
 
-        See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+        See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
       `,
       err
     )
@@ -78,6 +89,5 @@ module.exports = async function build(program: BuildArgs) {
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()
-
   await stopTracer()
 }

@@ -7,7 +7,7 @@ arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-json`
 
-You also need to have `gatsby-source-filesystem` installed and configured so it
+If you want to transform json files, you also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
 ## How to use
@@ -134,6 +134,88 @@ Which would return:
         },
       },
     ]
+  }
+}
+```
+
+## Configuration options
+
+**`typeName`** [string|function][optional]
+
+The default naming convention documented above can be changed with
+either a static string value (e.g. to be able to query all json with a
+simple query):
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        typeName: `Json`, // a fixed string
+      },
+    },
+  ],
+}
+```
+
+```graphql
+{
+  allJson {
+    edges {
+      node {
+        value
+      }
+    }
+  }
+}
+```
+
+or a function that receives the following arguments:
+
+- `node`: the graphql node that is being processed, e.g. a File node with
+  json content
+- `object`: a single object (either an item from an array or the whole json content)
+- `isArray`: boolean, true if `object` is part of an array
+
+```json
+[
+  {
+    "level": "info",
+    "message": "hurray"
+  },
+  {
+    "level": "info",
+    "message": "it works"
+  },
+  {
+    "level": "warning",
+    "message": "look out"
+  }
+]
+```
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        typeName: ({ node, object, isArray }) => object.level,
+      },
+    },
+  ],
+}
+```
+
+```graphql
+{
+  allInfo {
+    edges {
+      node {
+        message
+      }
+    }
   }
 }
 ```

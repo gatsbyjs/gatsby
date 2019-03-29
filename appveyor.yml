@@ -3,9 +3,9 @@ platform:
 
 #TODO, I think we need to create the folder first in the init in case it doesn't exist
 #cache:
-  #- '%AppData%/npm-cache'
-  #- "%LOCALAPPDATA%/Yarn"
-  #- C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
+#- '%AppData%/npm-cache'
+#- "%LOCALAPPDATA%/Yarn"
+#- C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
 
 skip_branch_with_pr: true
 
@@ -13,35 +13,35 @@ skip_commits:
   files:
     - docs/**
     - www/**
-    - '**/*.md'
+    - "**/*.md"
 
 environment:
   nodejs_version: "8"
 
   matrix:
-  - example: gatsbygram
-    buildon: commit
+    - example: gatsbygram
+      buildon: commit
 
-  - example: using-javascript-transforms
-    buildon: tag
+    - example: using-javascript-transforms
+      buildon: tag
 
-  - example: using-remark
-    buildon: tag
+    - example: using-remark
+      buildon: tag
 
-  - example: using-contentful
-    buildon: tag
+    - example: using-contentful
+      buildon: tag
 
-  - example: using-wordpress
-    buildon: tag
+    - example: using-wordpress
+      buildon: tag
 
-  - example: using-mongodb
-    buildon: tag
+    - example: using-mongodb
+      buildon: tag
 
-  - example: using-typescript
-    buildon: tag
+    - example: using-typescript
+      buildon: tag
 
-  - example: no-plugins
-    buildon: tag
+    - example: no-plugins
+      buildon: tag
 
 # Install scripts. (runs after repo cloning)
 install:

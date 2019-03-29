@@ -25,7 +25,10 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 
 const strip = payload => payload.replace(prefix, ``)
 
-exports.sourceNodes = async ({ actions, createNodeId }, { username, limit }) => {
+exports.sourceNodes = async (
+  { actions, createNodeId },
+  { username, limit }
+) => {
   const { createNode } = actions
 
   try {
@@ -87,14 +90,14 @@ exports.sourceNodes = async ({ actions, createNodeId }, { username, limit }) => 
               ),
             }
           : resource.type === `User`
-            ? {
-                posts___NODE: resources
-                  .filter(
-                    r => r.type === `Post` && r.creatorId === resource.userId
-                  )
-                  .map(r => r.id),
-              }
-            : {}
+          ? {
+              posts___NODE: resources
+                .filter(
+                  r => r.type === `Post` && r.creatorId === resource.userId
+                )
+                .map(r => r.id),
+            }
+          : {}
 
       const node = Object.assign(
         resource,

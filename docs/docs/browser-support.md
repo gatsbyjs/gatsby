@@ -35,8 +35,7 @@ Browserslist — https://css-tricks.com/browserlist-good-idea/
 
 By default, Gatsby emulates the following config:
 
-```javascript
-// package.json
+```javascript:title=package.json
 {
  "browserslist": [
    ">0.25%",

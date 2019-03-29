@@ -1,0 +1,479 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
+Object {
+  "excerpt": "",
+  "excerptAst": Object {
+    "children": Array [],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to default value 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly prunes length to provided parameter with truncate 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dol…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?
+",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": "
+",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it correctly maps nested markdown to html 1`] = `
+Object {
+  "excerpt": "<p>Where oh <a href=\\"nick.com\\"><em>where</em></a> <strong><em>is</em></strong> <img src=\\"pony.png\\" alt=\\"that pony\\">?</p>",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "where",
+                  },
+                ],
+                "properties": Object {},
+                "tagName": "em",
+                "type": "element",
+              },
+            ],
+            "properties": Object {
+              "href": "nick.com",
+            },
+            "tagName": "a",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "is",
+                  },
+                ],
+                "properties": Object {},
+                "tagName": "em",
+                "type": "element",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "strong",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " ",
+          },
+          Object {
+            "children": Array [],
+            "properties": Object {
+              "alt": "that pony",
+              "src": "pony.png",
+            },
+            "tagName": "img",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": "?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it prunes large excerpts 1`] = `
+Object {
+  "excerpt": "<p>Where oh where is that pony? Is he in the stable…</p>",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is that pony? Is he in the stable…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given an html format, it respects the excerpt_separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>
+",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is that ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "pony",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "em",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": "? Is he in the stable or by the stream?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+      Object {
+        "type": "text",
+        "value": "
+",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given raw html in the text body, this html is not escaped 1`] = `
+Object {
+  "excerpt": "<p>Where is my <code>pony</code> named leo?</p>",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where is my ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "pony",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "code",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " named leo?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value with inlineCode 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns value with mixed text 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "An important heading with inline code and text",
+    },
+  ],
+}
+`;
+
+exports[`Links are correctly prefixed correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Table of contents is generated correctly from schema correctly generates table of contents 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"/my%20little%20pony/#first-title\\">first title</a></p>
+<ul>
+<li><a href=\\"/my%20little%20pony/#second-title\\">second title</a></li>
+</ul>
+</li>
+<li><a href=\\"/my%20little%20pony/#third-title\\">third title</a></li>
+</ul>",
+}
+`;
+
+exports[`Table of contents is generated correctly from schema returns null on non existing table of contents field 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": null,
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "timeToRead": 1,
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for wordCount 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "wordCount": Object {
+    "paragraphs": null,
+    "sentences": null,
+    "words": null,
+  },
+}
+`;
+
+exports[`Wordcount and timeToRead are generated correctly from schema correctly uses wordCount parameters 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "wordCount": Object {
+    "paragraphs": 2,
+    "sentences": 19,
+    "words": 150,
+  },
+}
+`;

@@ -1,8 +1,11 @@
 /*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@reach/router"
-import { parsePath } from "gatsby"
+import { Link } from "@reach/router"
+
+import { parsePath } from "./parse-path"
+
+export { parsePath }
 
 export function withPrefix(path) {
   return normalizePath(`${__PATH_PREFIX__}/${path}`)
@@ -15,6 +18,7 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
+  partiallyActive: PropTypes.bool,
 }
 
 // Set up IntersectionObserver
@@ -38,18 +42,15 @@ const handleIntersection = (el, cb) => {
 
 class GatsbyLink extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
     if (typeof window !== `undefined` && window.IntersectionObserver) {
       IOSupported = true
     }
 
-    const { location } = props
-
     this.state = {
       IOSupported,
-      location,
     }
     this.handleRef = this.handleRef.bind(this)
   }
@@ -69,7 +70,11 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
-    this.props.innerRef && this.props.innerRef(ref)
+    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
+      this.props.innerRef.current = ref
+    } else if (this.props.innerRef) {
+      this.props.innerRef(ref)
+    }
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
@@ -79,8 +84,8 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isCurrent }) => {
-    if (isCurrent) {
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+    if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
           .filter(Boolean)
@@ -97,16 +102,23 @@ class GatsbyLink extends React.Component {
       getProps = this.defaultGetProps,
       onClick,
       onMouseEnter,
-      location,
       /* eslint-disable no-unused-vars */
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
-      ref: $ref,
       innerRef: $innerRef,
+      partiallyActive,
       state,
+      replace,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
+
+    const LOCAL_URL = /^\/(?!\/)/
+    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
+      console.warn(
+        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
+      )
+    }
 
     const prefixedTo = withPrefix(to)
 
@@ -117,13 +129,15 @@ class GatsbyLink extends React.Component {
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
-          // eslint-disable-line
-          onMouseEnter && onMouseEnter(e)
+          if (onMouseEnter) {
+            onMouseEnter(e)
+          }
           ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
-          // eslint-disable-line
-          onClick && onClick(e)
+          if (onClick) {
+            onClick(e)
+          }
 
           if (
             e.button === 0 && // ignore right clicks
@@ -135,25 +149,10 @@ class GatsbyLink extends React.Component {
             !e.shiftKey
           ) {
             e.preventDefault()
-            // Is this link pointing to a hash on the same page? If so,
-            // just scroll there.
-            const { pathname, hash } = parsePath(prefixedTo)
-            if (pathname === location.pathname || !pathname) {
-              const element = hash
-                ? document.getElementById(hash.substr(1))
-                : null
-              if (element !== null) {
-                element.scrollIntoView()
-              } else {
-                // This is just a normal link to the current page so let's emulate default
-                // browser behavior by scrolling now to the top of the page.
-                window.scrollTo(0, 0)
-              }
-            }
 
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            navigate(prefixedTo, { state })
+            navigate(to, { state, replace })
           }
 
           return true
@@ -166,42 +165,37 @@ class GatsbyLink extends React.Component {
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
-  innerRef: PropTypes.func,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
-// eslint-disable-next-line react/display-name
-const withLocation = Comp => props => (
-  <Location>
-    {({ location }) => <Comp location={location} {...props} />}
-  </Location>
-)
-
-export default withLocation(GatsbyLink)
+export default React.forwardRef((props, ref) => (
+  <GatsbyLink innerRef={ref} {...props} />
+))
 
 export const navigate = (to, options) => {
-  window.___navigate(to, options)
+  window.___navigate(withPrefix(to), options)
 }
 
 export const push = to => {
   console.warn(
     `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
-  window.___push(to)
+  window.___push(withPrefix(to))
 }
 
 export const replace = to => {
   console.warn(
     `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
-  window.___replace(to)
+  window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
   console.warn(
-    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "push" instead.`
+    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
   return push(to)
 }

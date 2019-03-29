@@ -28,3 +28,6 @@ node_modules
 
 decls
 dist
+
+# built files
+cache-dir/commonjs/

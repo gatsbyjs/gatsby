@@ -1,4 +1,5 @@
 const Promise = require(`bluebird`)
+const os = require(`os`)
 const yaml = require(`js-yaml`)
 
 const { onCreateNode } = require(`../gatsby-node`)
@@ -6,7 +7,7 @@ const { onCreateNode } = require(`../gatsby-node`)
 describe(`Process YAML nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       contentDigest: `whatever`,
@@ -27,12 +28,14 @@ describe(`Process YAML nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -44,19 +47,21 @@ describe(`Process YAML nodes correctly`, () => {
   it(`correctly creates a node from JSON which is a single object`, async () => {
     const data = { blue: true, funny: `yup` }
     node.content = yaml.safeDump(data)
-    node.dir = `/tmp/bar/`
+    node.dir = `${os.tmpdir()}/bar/`
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

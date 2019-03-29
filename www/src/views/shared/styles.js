@@ -1,52 +1,59 @@
-import typography, { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-import { style } from "glamor"
-import hex2rgba from "hex2rgba"
-
-const { curveDefault, speedDefault } = presets.animation
+import {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+  breakpoints,
+  dimensions,
+  scale,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 
 const styles = {
-  featuredSitesCard: style({
+  featuredSitesCard: {
     display: `flex`,
     flexDirection: `column`,
     flexGrow: 0,
     flexShrink: 0,
     width: 320,
-    marginBottom: rhythm(options.blockMarginBottom * 2),
-    marginRight: rhythm(3 / 4),
-    [presets.Hd]: {
+    marginBottom: space[9],
+    marginRight: space[6],
+    [breakpoints.xl]: {
       width: 360,
-      marginRight: rhythm(6 / 4),
+      marginRight: space[8],
     },
-    [presets.VHd]: {
+    [breakpoints.xxl]: {
       width: 400,
     },
-  }),
+  },
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
-    padding: rhythm(3 / 4),
-    justifyContent: `center`,
-    [presets.Desktop]: {
-      justifyContent: `flex-start`,
-    },
+    padding: space[6],
+    justifyContent: `space-evenly`,
   },
   showcaseItem: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(3 / 4),
-    width: 282,
+    margin: space[6],
+    minWidth: 259, //shows 3 items/row on windows > 1200px wide
+    maxWidth: 350,
+    flex: `1 0 0`,
     position: `relative`,
   },
   featuredItem: {
     display: `none`,
-    transition: `background .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-    [presets.Desktop]: {
+    transition: `background ${transition.speed.slow} ${
+      transition.curve.default
+    }, transform ${transition.speed.slow} ${transition.curve.default}`,
+    [breakpoints.lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
-      borderTopRightRadius: presets.radius,
-      borderBottomLeftRadius: presets.radius,
+      borderTopRightRadius: radii[1],
+      borderBottomLeftRadius: radii[1],
       boxShadow: `none`,
       cursor: `pointer`,
       display: `flex`,
@@ -66,86 +73,78 @@ const styles = {
     margin: `0 auto`,
     display: `block`,
   },
-  withTitleHover: style({
+  withTitleHover: {
     "& .title": {
-      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-      boxShadow: `inset 0 0px 0px 0px ${colors.ui.whisper}`,
+      transition: `box-shadow ${transition.speed.slow} ${
+        transition.curve.default
+      }, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
-      boxShadow: `inset 0 -3px 0px 0px ${colors.ui.bright}`,
-    },
-  }),
-  button: {
-    border: 0,
-    borderRadius: presets.radius,
-    cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
-    fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
-    "&&": {
-      backgroundColor: colors.gatsby,
-      borderBottom: `none`,
-      boxShadow: `none`,
-      color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
+      boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
     },
   },
   loadMoreButton: {
     alignItems: `center`,
     display: `flex`,
     flexFlow: `row wrap`,
-    margin: `0 auto ${rhythm(3)}`,
-    padding: `${rhythm(1 / 3)} ${rhythm(3)}`,
-    [presets.Desktop]: {
-      margin: `0 auto ${rhythm(2 / 2)}`,
-    },
+    margin: `0 auto ${space[9]}`,
   },
   sticky: {
-    paddingTop: rhythm(options.blockMarginBottom),
     position: `sticky`,
-    top: `calc(${presets.bannerHeight} - 1px)`,
-    [presets.Desktop]: {
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
+    // We need the -1px here to work around a weird issue on Chrome
+    // where the sticky element is consistently positioned 1px too far down,
+    // leaving a nasty gap that the page content peeks through.
+    // FWIW the problem is only present on the "Site Showcase" index page,
+    // not the "Starter Showcase" index page; if the "Featured Sites" block
+    // is removed, the problem goes away. I tried removing elements in the
+    // "Featured Sites" content block, but no success—only removing the entire block
+    // resolves the issue.
+    top: `calc(${dimensions.bannerHeight} - 1px)`,
+    [breakpoints.lg]: {
+      top: `calc(${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
+      } - 1px)`,
     },
   },
   scrollbar: {
     WebkitOverflowScrolling: `touch`,
     "&::-webkit-scrollbar": {
-      width: `6px`,
-      height: `6px`,
+      width: space[2],
+      height: space[2],
     },
     "&::-webkit-scrollbar-thumb": {
       background: colors.ui.bright,
     },
     "&::-webkit-scrollbar-track": {
-      background: colors.ui.light,
+      background: colors.ui.whisper,
     },
   },
   screenshot: {
-    borderRadius: presets.radius,
-    boxShadow: `0 4px 10px ${hex2rgba(colors.gatsby, 0.1)}`,
-    marginBottom: rhythm(options.blockMarginBottom / 2),
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    borderRadius: radii[1],
+    boxShadow: shadows.raised,
+    marginBottom: space[3],
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
   },
   screenshotHover: {
     background: `transparent`,
     color: colors.gatsby,
     "& .gatsby-image-wrapper": {
-      transform: `translateY(-3px)`,
-      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+      transform: `translateY(-${space[1]})`,
+      boxShadow: shadows.overlay,
     },
   },
-  noLinkUnderline: {
-    borderBottom: `none !important`, // i know i know
-    boxShadow: `none !important`, // but people really want this
+  shortcutIcon: {
+    paddingLeft: space[1],
+    "&&": {
+      color: colors.gray.bright,
+      borderBottom: `none`,
+      "&:hover": {
+        color: colors.gatsby,
+      },
+    },
   },
   meta: {
-    ...scale(-1 / 5),
+    fontSize: scale[1],
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -153,17 +152,19 @@ const styles = {
   },
   searchInput: {
     appearance: `none`,
-    backgroundColor: `transparent`,
     border: 0,
-    borderRadius: presets.radiusLg,
+    borderRadius: radii[2],
     color: colors.gatsby,
-    paddingTop: rhythm(1 / 8),
-    paddingRight: rhythm(1 / 4),
-    paddingBottom: rhythm(1 / 8),
-    paddingLeft: rhythm(1),
+    padding: space[1],
+    paddingRight: space[3],
+    paddingLeft: space[6],
     overflow: `hidden`,
-    fontFamily: typography.options.headerFontFamily.join(`,`),
-    transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+    fontFamily: fonts.header,
+    transition: `width ${transition.speed.default} ${
+      transition.curve.default
+    }, background-color ${transition.speed.default} ${
+      transition.curve.default
+    }`,
     width: `6.8rem`,
     "&::placeholder": {
       color: colors.lilac,
@@ -173,6 +174,96 @@ const styles = {
       width: `9rem`,
       background: colors.ui.light,
     },
+  },
+  filterButton: {
+    fontSize: scale[1],
+    margin: 0,
+    alignItems: `flex-start`,
+    background: `none`,
+    border: `none`,
+    color: colors.gray.text,
+    cursor: `pointer`,
+    display: `flex`,
+    justifyContent: `space-between`,
+    outline: `none`,
+    padding: 0,
+    paddingRight: space[5],
+    paddingBottom: space[1],
+    paddingTop: space[1],
+    width: `100%`,
+    textAlign: `left`,
+    ":hover": {
+      color: colors.gatsby,
+    },
+  },
+  filterCheckbox: {
+    marginRight: space[2],
+    fontSize: scale[2],
+  },
+  filterCount: {
+    color: colors.gray.bright,
+  },
+  sidebarHeader: {
+    margin: 0,
+    [breakpoints.lg]: {
+      fontSize: scale[3],
+      display: `none`,
+      borderBottom: `1px solid ${colors.ui.light}`,
+      color: colors.gray.calm,
+      fontWeight: `normal`,
+      flexShrink: 0,
+      lineHeight: lineHeights.solid,
+      height: dimensions.headerHeight,
+      margin: 0,
+      paddingLeft: space[6],
+      paddingRight: space[6],
+      paddingTop: space[6],
+      paddingBottom: space[6],
+    },
+  },
+  sidebarBody: {
+    paddingLeft: space[6],
+    height: `calc(100vh - ((${dimensions.headerHeight}) + ${
+      dimensions.bannerHeight
+    }))`,
+    display: `flex`,
+    flexDirection: `column`,
+  },
+  sidebarContainer: {
+    display: `none`,
+    [breakpoints.lg]: {
+      display: `block`,
+      flexBasis: `15rem`,
+      minWidth: `15rem`,
+      paddingTop: 0,
+      borderRight: `1px solid ${colors.ui.light}`,
+      height: `calc(100vh - (${dimensions.headerHeight} + ${
+        dimensions.bannerHeight
+      }))`,
+    },
+  },
+  contentHeader: {
+    alignItems: `center`,
+    background: `rgba(255,255,255,0.98)`,
+    borderBottom: `1px solid ${colors.ui.light}`,
+    display: `flex`,
+    flexDirection: `row`,
+    flexWrap: `wrap`,
+    height: dimensions.headerHeight,
+    justifyContent: `space-between`,
+    paddingLeft: space[6],
+    paddingRight: space[6],
+    zIndex: 1,
+  },
+  contentTitle: {
+    color: colors.gatsby,
+    margin: 0,
+    fontSize: scale[3],
+    lineHeight: lineHeights.solid,
+  },
+  resultCount: {
+    color: colors.lilac,
+    fontWeight: `normal`,
   },
 }
 
