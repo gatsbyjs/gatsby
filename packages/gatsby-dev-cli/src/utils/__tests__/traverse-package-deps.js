@@ -1,7 +1,9 @@
+const path = require(`path`)
+
 const { traversePackagesDeps } = require(`../traverse-package-deps`)
 
 jest.doMock(
-  `<monorepo-path>/packages/package-a/package.json`,
+  path.join(...`<monorepo-path>/packages/package-a/package.json`.split(`/`)),
   () => {
     return {
       dependencies: {
@@ -14,7 +16,9 @@ jest.doMock(
 )
 
 jest.doMock(
-  `<monorepo-path>/packages/package-a-dep1/package.json`,
+  path.join(
+    ...`<monorepo-path>/packages/package-a-dep1/package.json`.split(`/`)
+  ),
   () => {
     return {
       dependencies: {
@@ -26,7 +30,9 @@ jest.doMock(
 )
 
 jest.doMock(
-  `<monorepo-path>/packages/package-a-dep1-dep1/package.json`,
+  path.join(
+    ...`<monorepo-path>/packages/package-a-dep1-dep1/package.json`.split(`/`)
+  ),
   () => {
     return {
       dependencies: {},

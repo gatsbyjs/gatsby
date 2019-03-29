@@ -43,7 +43,6 @@ const traversePackagesDeps = ({
   packages.forEach(p => {
     let pkgJson
     try {
-      // console.log(path.join(root, `packages`, p, `package.json`))
       pkgJson = require(path.join(root, `packages`, p, `package.json`))
     } catch {
       console.error(`"${p}" package doesn't exist in monorepo.`)
