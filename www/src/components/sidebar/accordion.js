@@ -3,10 +3,7 @@ import React, { Fragment } from "react"
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
 import { colors, space } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
-
-const paddingLeft = level =>
-  level === 0 ? rhythm((level + 1) * space[6]) : rhythm((level + 1) * space[3])
+import presets from "../../utils/sidebar/presets"
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -14,7 +11,6 @@ const ItemWithSubitems = ({
   isExpanded,
   isParentOfActiveItem,
   item,
-  level,
   location,
   onLinkClick,
   onSectionTitleClick,
@@ -32,7 +28,6 @@ const ItemWithSubitems = ({
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
@@ -44,9 +39,7 @@ const ItemWithSubitems = ({
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           onSectionTitleClick={onSectionTitleClick}
-          title={item.title}
           uid={uid}
         />
       )}
@@ -83,11 +76,11 @@ class Accordion extends React.Component {
       isActive,
       isParentOfActiveItem,
       item,
-      level,
       location,
       onLinkClick,
       onSectionTitleClick,
       openSectionHash,
+      isSingle,
     } = this.props
     const uid = `item_` + this.state.uid
     const isExpanded = openSectionHash[item.title] || item.disableAccordions
@@ -96,8 +89,12 @@ class Accordion extends React.Component {
       <li
         css={{
           background:
-            isExpanded && isActive && level > 0 ? colors.ui.light : false,
+            isExpanded && isActive && item.level > 0
+              ? presets.activeSectionBackground
+              : false,
           position: `relative`,
+          // marginTop:
+          //   level === 0 && isExpanded ? `${space[4]} !important` : false,
         }}
       >
         <ItemWithSubitems
@@ -108,7 +105,6 @@ class Accordion extends React.Component {
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
@@ -119,10 +115,16 @@ class Accordion extends React.Component {
           css={{
             ...styles.ul,
             display: isExpanded ? `block` : `none`,
-            paddingBottom: level === 0 && isExpanded ? rhythm(space[6]) : false,
-            "& li": {
-              paddingLeft: paddingLeft(level),
-            },
+            paddingBottom:
+              item.level === 0 && isExpanded && !isSingle ? space[6] : false,
+            borderBottom:
+              item.level === 0 && isExpanded && !isSingle
+                ? `1px solid ${colors.gray.border}`
+                : false,
+            marginBottom:
+              item.level === 0 && isExpanded && !isSingle
+                ? `${space[6]} !important`
+                : false,
           }}
         >
           {item.items.map(subitem => (
@@ -132,7 +134,6 @@ class Accordion extends React.Component {
               createLink={createLink}
               item={subitem}
               key={subitem.title}
-              level={level + 1}
               location={location}
               onLinkClick={onLinkClick}
               isExpanded={isExpanded}
@@ -159,28 +160,16 @@ const styles = {
     listStyle: `none`,
     margin: 0,
     position: `relative`,
-    "& li": {
-      marginBottom: 0,
-    },
   },
   ulStepsUI: {
     "&:after": {
       background: colors.ui.bright,
-      bottom: rhythm(space[6]),
-      content: `''`,
-      left: 0,
-      position: `absolute`,
-      top: rhythm(space[6]),
-      width: 1,
-    },
-    "&:before": {
-      borderLeft: `1px dashed ${colors.ui.bright}`,
       bottom: 0,
       content: `''`,
-      height: `100%`,
-      left: 0,
+      left: 27,
       position: `absolute`,
-      width: 0,
+      top: 0,
+      width: 1,
     },
   },
 }

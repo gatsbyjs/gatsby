@@ -1,5 +1,12 @@
 import React from "react"
-import presets, { colors, space, radii, breakpoints } from "../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  scale,
+  lineHeights,
+} from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
@@ -17,12 +24,12 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(space[3])} ${rhythm(space[3])} ${rhythm(3 / 8)}`,
+            padding: `${space[3]} ${space[3]} ${rhythm(3 / 8)}`,
           },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: presets.scale[0],
-          lineHeight: presets.lineHeights.solid,
+          fontSize: scale[0],
+          lineHeight: lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,
           verticalAlign: `bottom`,

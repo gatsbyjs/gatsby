@@ -7,6 +7,7 @@ const LZString = require(`lz-string`)
 const { join } = require(`path`)
 const map = require(`unist-util-map`)
 const normalizePath = require(`normalize-path`)
+const npa = require(`npm-package-arg`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
@@ -135,16 +136,13 @@ module.exports = (
               content: {
                 dependencies: codesandbox.dependencies.reduce(
                   (map, dependency) => {
-                    if (dependency.includes(`@`)) {
-                      const [name, version] = dependency.split(`@`)
-                      map[name] = version
-                    } else {
-                      map[dependency] = `latest`
-                    }
+                    const { name, fetchSpec } = npa(dependency)
+                    map[name] = fetchSpec
                     return map
                   },
                   {}
                 ),
+
                 main: filesPaths[0].url,
               },
             },

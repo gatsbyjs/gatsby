@@ -2,13 +2,12 @@ import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import { colors, space, dimensions } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { colors, space, dimensions, fonts } from "../utils/presets"
 
-const horizontalPadding = rhythm(space[6])
+const horizontalPadding = space[6]
 const backgroundColor = colors.gatsby
 
-const BannerContainer = styled(`div`)`
+const BannerContainer = styled(`aside`)`
   background-color: ${backgroundColor};
   height: ${dimensions.bannerHeight};
   position: fixed;
@@ -28,7 +27,7 @@ const InnerContainer = styled(`div`)`
 
 const Content = styled(`div`)`
   color: ${colors.ui.bright};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   padding-left: ${horizontalPadding};
   padding-right: ${horizontalPadding};
   -webkit-font-smoothing: antialiased;
