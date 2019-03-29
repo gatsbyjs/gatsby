@@ -1,15 +1,5 @@
 ---
-title: Working With Video*
-issue: https://github.com/gatsbyjs/gatsby/issues/12903
----
-
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
-
-The discussion around best practices for video in Gatsby is also ongoing on Github, chime in with your ideas in the Gatsby issue [#3346 Create a special component for HTML5 videos](https://github.com/gatsbyjs/gatsby/issues/3346)
-
+title: Working With Video
 ---
 
 - [Sourcing video from a host](#sourcing-video-from-a-host)
@@ -25,7 +15,7 @@ The easiest method for including video on a Gatsby site is to source an uploaded
 
 ## Embedding hosted videos in Markdown
 
-There are numerous Gatsby plugins for working with hosted video in your Markdown posts and pages. We recommend checking out the [gatsby-remark-embed-video](<(/packages/gatsby-remark-embed-video/?=video)>) plugin for sourcing from a variety of hosts.
+There are numerous Gatsby plugins for working with hosted video in your Markdown posts and pages. We recommend checking out the [gatsby-remark-embed-video](/packages/gatsby-remark-embed-video/?=video) plugin for sourcing from a variety of hosts.
 
 ### Writing custom components for hosted video
 
@@ -143,14 +133,10 @@ It's super common to source video from YouTube, Twitch or Vimeo. But what if you
 
 > This discussion is ongoing on Github, chime in with your ideas in the Gatsby issue [#3346 Create a special component for HTML5 videos](https://github.com/gatsbyjs/gatsby/issues/3346)
 
-To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats">Media formats for HTML audio and video</a>. You may need video converter software to produce the necessary formats to support a range of devices and environments, such as `.webm` and `.mp4`.
+To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: [Media formats for HTML audio and video](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats). You may need video converter software to produce the necessary formats to support a range of devices and environments, such as `.webm` and `.mp4`.
 
 ## Using custom video players
 
 One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. It is strongly encouraged to provide captions and subtitles for your videos, and use a player with accessible controls.
 
-Check out the accessible HTML5 video player for React from Paypal: https://github.com/paypal/accessible-html5-video-player#react-version
-
----
-
-This is a stub. Help our community expand it.
+Check out the accessible [HTML5 video player from Paypal](https://github.com/paypal/accessible-html5-video-player#react-version) for an example compatible with Gatsby and React.

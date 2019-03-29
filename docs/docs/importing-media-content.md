@@ -1,6 +1,5 @@
 ---
-title: Importing Media Content*
-issue: https://github.com/gatsbyjs/gatsby/issues/8103
+title: Importing Media Content
 ---
 
 "Media content" is a broad term that generally includes images, videos, documents and files that are displayed on your website. For Gatsby sites, you have multiple options for importing media content depending on the type:
@@ -23,11 +22,4 @@ The HTML5 `<canvas>` element provides a space for 2-dimensional drawing in a web
 
 [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL), on the other hand, creates a 3-dimensional space in a web environment using the `<canvas>` element. Libraries like [Three.js](https://threejs.org/) are often used to enable WebGL experiences in React apps.
 
-Using canvas and/or WebGL may require modifying your Webpack config. Do you have experience with making this work in your Gatsby site? Contribute to the docs by adding more details to this page.
-
----
-
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+> Using canvas and/or WebGL may require modifying your Webpack config. Do you have experience with making this work in your Gatsby site? Contribute to the docs by adding more details to this page.

@@ -67,11 +67,11 @@
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Working With Video*
+        - title: Working With Video
           link: /docs/working-with-video/
         - title: Using the Static Folder
           link: /docs/static-folder/
-        - title: Importing Media Content*
+        - title: Importing Media Content
           link: /docs/importing-media-content/
         - title: gatsby-source-filesystem Programmatic Import*
           link: /docs/gatsby-source-filesystem-programmatic-import/
