@@ -25,9 +25,9 @@ const debug = require(`debug`)(`gatsby:query-watcher`)
 
 const { dispatch } = store
 const {
-  log,
-  replaceComponentQuery,
   deleteComponentsDependencies,
+  log,
+  queryExtracted,
   replaceStaticQuery,
 } = actions
 
@@ -122,10 +122,12 @@ const updateStateAndRunQueries = isFirstRun => {
     // Run action for each component
     const { components } = snapshot
     components.forEach(c =>
-      boundActionCreators.queryExtracted({
-        componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
-      })
+      dispatch(
+        queryExtracted({
+          componentPath: c.componentPath,
+          query: queries.get(c.componentPath)?.text || ``,
+        })
+      )
     )
 
     let queriesWillNotRun = false

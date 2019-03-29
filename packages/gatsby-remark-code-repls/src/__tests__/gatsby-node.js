@@ -5,16 +5,9 @@ jest.mock(`fs`, () => {
   }
 })
 jest.mock(`recursive-readdir`, () => jest.fn())
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    panic: jest.fn(),
-  }
-})
 
 const fs = require(`fs`)
 const readdir = require(`recursive-readdir`)
-
-const reporter = require(`gatsby-cli/lib/reporter`)
 
 const {
   OPTION_DEFAULT_HTML,
@@ -27,7 +20,7 @@ const createPagesParams = {
   actions: {
     createPage,
   },
-  reporter,
+  reporter: { panic: jest.fn() },
 }
 
 describe(`gatsby-remark-code-repls`, () => {

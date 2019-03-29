@@ -1,4 +1,4 @@
-module.exports = (state = null, action) => {
+module.exports = (state = () => {}, action) => {
   switch (action.type) {
     case `SET_LOGGER`:
       return action.payload

@@ -125,15 +125,7 @@ actions.createPage = (
   }
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-    } else {
-      return message
-    }
-    noPageOrComponent = true
+    return dispatch(actions.log({ message, type: `error` }))
   }
 
   // Validate that the context object doesn't overlap with any core page fields
@@ -177,13 +169,11 @@ The following fields are used by the page object and should be avoided.
 ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
             `
-      if (process.env.NODE_ENV === `test`) {
-        return error
-        // Only error if the context version is different than the page
-        // version.  People in v1 often thought that they needed to also pass
-        // the path to context for it to be available in GraphQL
-      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
-        dispatch(actions.log({ message: error, type: `panic` }))
+      // Only error if the context version is different than the page
+      // version.  People in v1 often thought that they needed to also pass
+      // the path to context for it to be available in GraphQL
+      if (invalidFields.some(f => page.context[f] !== page[f])) {
+        return dispatch(actions.log({ message: error, type: `panic` }))
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           dispatch(actions.log({ message: error, type: `warn` }))
@@ -252,14 +242,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (!page.component || !path.isAbsolute(page.component)) {
-    const message = `\n${name} must set the absolute path to the page component when create creating a page.\n`
+    const message = `${name} must set the absolute path to the page component when creating a page.`
     dispatch(actions.log({ message: chalk.bold.red(message), type: `log` }))
     noPageOrComponent = true
   }
 
   if (noPageOrComponent) {
     const message = `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
-    dispatch(actions.log({ message, type: `panic` }))
+    return dispatch(actions.log({ message, type: `panic` }))
   }
 
   let jsonName
@@ -329,12 +319,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         const message =
           `You have an empty file in the "src/pages" directory at "${relativePath}".\n` +
           `Please remove it or make it a valid component.`
-        dispatch(actions.log({ message, type: `panicOnBuild` }))
+        return dispatch(actions.log({ message, type: `panicOnBuild` }))
       }
 
       if (!includesDefaultExport) {
         const message = `[${fileName}] The page component must export a React component for it to be valid.`
-        dispatch(actions.log({ message, type: `panicOnBuild` }))
+        return dispatch(actions.log({ message, type: `panicOnBuild` }))
       }
     }
 

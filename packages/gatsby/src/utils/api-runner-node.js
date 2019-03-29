@@ -4,7 +4,6 @@ const _ = require(`lodash`)
 const chalk = require(`chalk`)
 
 const tracer = require(`opentracing`).globalTracer()
-// const reporter = require(`gatsby-cli/lib/reporter`)
 const reporter = require(`./create-reporter`)
 const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
@@ -19,6 +18,12 @@ const {
 const { emitter } = require(`../redux`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
+const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
+const { stripIndent } = require(`common-tags`)
+
+const { dispatch } = store
+const { log } = actions
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -42,6 +47,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
           } else if (args.length === 2) {
             return boundActionCreator(args[0], args[1], actionOptions)
           }
+          return undefined // Lint
         }
       }
     }
@@ -122,7 +128,7 @@ const runAPI = (plugin, api, args) => {
           createPageAction(...args)
           if (apiFinished && !alreadyDisplayed) {
             const warning = [
-              reporter.stripIndent(`
+              stripIndent(`
               Action ${chalk.bold(
                 `createPage`
               )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
@@ -144,7 +150,8 @@ const runAPI = (plugin, api, args) => {
               warning.push(possiblyCodeFrame)
             }
 
-            reporter.warn(warning.join(`\n\n`))
+            const message = warning.join(`\n\n`)
+            dispatch(log({ message, type: `warn` }))
             alreadyDisplayed = true
           }
         },
@@ -238,7 +245,8 @@ module.exports = async (api, args = {}, pluginSource) =>
     // we'd have an API (returning a promise) for that. But this
     // works nicely in the meantime.
     if (!apiList[api] && api !== `FAKE_API_CALL`) {
-      reporter.panic(`api: "${api}" is not a valid Gatsby api`)
+      const message = `api: "${api}" is not a valid Gatsby api`
+      dispatch(log({ message, type: `panic` }))
     }
 
     const { store } = require(`../redux`)
@@ -340,7 +348,8 @@ module.exports = async (api, args = {}, pluginSource) =>
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
-        reporter.panicOnBuild(`${pluginName} returned an error`, err)
+        const message = `${pluginName} returned an error ` + err
+        dispatch(log({ message, type: `panicOnBuild` }))
         return null
       })
     }).then(results => {

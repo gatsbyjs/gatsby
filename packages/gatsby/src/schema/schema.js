@@ -313,7 +313,8 @@ const createTypeComposerFromGatsbyType = ({
       return InterfaceTypeComposer.createTemp(type.config, schemaComposer)
     }
     default: {
-      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
+      const message = `Illegal type definition: ${JSON.stringify(type.config)}`
+      dispatch(log({ message, type: `warn` }))
       return null
     }
   }
@@ -442,12 +443,12 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               }
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
-              dispatch(log({ message, type: `warn` }))
               const message =
                 `\`createResolvers\` passed resolvers for field ` +
                 `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
                 `Such a field with type \`${originalTypeName}\` already exists ` +
                 `on the type. Use \`createTypes\` to override type fields.`
+              dispatch(log({ message, type: `warn` }))
             }
           } else {
             tc.addFields({ [fieldName]: fieldConfig })

@@ -3,8 +3,9 @@ const { getNode, getNodes } = require(`../nodes`)
 const { store } = require(`../../redux`)
 require(`./fixtures/ensure-loki`)()
 
-const report = require(`gatsby-cli/lib/reporter`)
-jest.mock(`gatsby-cli/lib/reporter`)
+const log = jest.fn()
+store.dispatch({ type: `SET_LOGGER`, payload: log })
+afterEach(() => log.mockClear())
 
 describe(`nodes db tests`, () => {
   beforeEach(() => {
@@ -346,7 +347,10 @@ describe(`nodes db tests`, () => {
       `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
       `object containing a full node instead: deleteNode({ node }). ` +
       `"deleteNode" was called by tests`
-    expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
+    expect(log).toHaveBeenCalledWith({
+      message: deprecationNotice,
+      type: `warn`,
+    })
   })
 
   it(`does not crash when delete node is called on undefined`, () => {

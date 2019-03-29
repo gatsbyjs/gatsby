@@ -7,7 +7,12 @@ const _ = require(`lodash`)
 import traverse from "@babel/traverse"
 const getGraphQLTag = require(`babel-plugin-remove-graphql-queries`)
   .getGraphQLTag
-const report = require(`gatsby-cli/lib/reporter`)
+
+const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
+
+const { dispatch } = store
+const { log } = actions
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 import { babelParseToAst } from "../../utils/babel-parse-to-ast"
@@ -28,14 +33,18 @@ const generateQueryName = ({ def, hash, file }) => {
   return def
 }
 
-const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
-  report.warn(
-    `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into the ${usageFunction} declaration in "${file}".
-
-Perhaps the variable name has a typo?
-
-Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
-  )
+const warnForUnknownQueryVariable = (varName, file, usageFunction) => {
+  const message =
+    `We were unable to find the declaration of variable "${varName}", which ` +
+    `you passed as the "query" prop into the ${usageFunction} declaration in "${file}".\n\n` +
+    `Perhaps the variable name has a typo?\n\n` +
+    `Also note that we are currently unable to use queries defined in files ` +
+    `other than the file where the ${usageFunction} is defined. If you're ` +
+    `attempting to import the query, please move it into "${file}". If being ` +
+    `able to import queries from another file is an important capability for ` +
+    `you, we invite your help fixing it.\n`
+  dispatch(log({ message, type: `warn` }))
+}
 
 async function parseToAst(filePath, fileStr) {
   let ast
@@ -53,7 +62,7 @@ async function parseToAst(filePath, fileStr) {
         ast = tmp
         break
       } catch (error) {
-        report.error(error)
+        dispatch(log({ message: error, type: `error` }))
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -61,7 +70,8 @@ async function parseToAst(filePath, fileStr) {
       }
     }
     if (ast === undefined) {
-      report.error(`Failed to parse preprocessed file ${filePath}`)
+      const message = `Failed to parse preprocessed file ${filePath}`
+      dispatch(log({ message, type: `error` }))
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: filePath,
       })
@@ -76,12 +86,13 @@ async function parseToAst(filePath, fileStr) {
         componentPath: filePath,
         error,
       })
-      report.error(
+      const message =
         `There was a problem parsing "${filePath}"; any GraphQL ` +
-          `fragments or queries in this file were not processed. \n` +
-          `This may indicate a syntax error in the code, or it may be a file type ` +
-          `that Gatsby does not know how to parse.`
-      )
+        `fragments or queries in this file were not processed. \n` +
+        `This may indicate a syntax error in the code, or it may be a file type ` +
+        `that Gatsby does not know how to parse.`
+
+      dispatch(log({ message, type: `error` }))
 
       return null
     }
@@ -90,12 +101,13 @@ async function parseToAst(filePath, fileStr) {
   return ast
 }
 
-const warnForGlobalTag = file =>
-  report.warn(
+const warnForGlobalTag = file => {
+  const message =
     `Using the global \`graphql\` tag is deprecated, and will not be supported in v3.\n` +
-      `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
-      file
-  )
+    `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
+    file
+  dispatch(log({ message, type: `warn` }))
+}
 
 async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
@@ -303,7 +315,8 @@ export default class FileParser {
     try {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
-      report.error(`There was a problem reading the file: ${file}`, err)
+      const message = `There was a problem reading the file: ${file}\n` + err
+      dispatch(log({ message, type: `error` }))
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: file,
       })
@@ -337,10 +350,9 @@ export default class FileParser {
           }
         : null
     } catch (err) {
-      report.error(
-        `There was a problem parsing the GraphQL query in file: ${file}`,
-        err
-      )
+      const message =
+        `There was a problem parsing the GraphQL query in file: ${file}\n` + err
+      dispatch(log({ message, type: `error` }))
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: file,
       })

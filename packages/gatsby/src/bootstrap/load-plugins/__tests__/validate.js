@@ -1,18 +1,16 @@
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    panicOnBuild: jest.fn(),
-    warn: jest.fn(),
-  }
-})
 jest.mock(`../../resolve-module-exports`)
 
-const reporter = require(`gatsby-cli/lib/reporter`)
 const {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
   warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
+
+const { store } = require(`../../../redux`)
+const log = jest.fn()
+store.dispatch({ type: `SET_LOGGER`, payload: log })
+afterEach(() => log.mockClear())
 
 describe(`collatePluginAPIs`, () => {
   const MOCK_RESULTS = {
@@ -103,7 +101,7 @@ describe(`handleBadExports`, () => {
     })
   })
 
-  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {
+  it(`Logs panicOnBuild message when bad exports are detected`, async () => {
     handleBadExports({
       apis: {
         node: [``],
@@ -122,7 +120,8 @@ describe(`handleBadExports`, () => {
       },
     })
 
-    expect(reporter.panicOnBuild.mock.calls.length).toBe(1)
+    expect(log.mock.calls.length).toBe(1)
+    expect(log.mock.calls[0][0].type).toBe(`panicOnBuild`)
   })
 })
 
@@ -201,14 +200,10 @@ describe(`handleMultipleReplaceRenderers`, () => {
 })
 
 describe(`warnOnIncompatiblePeerDependency`, () => {
-  beforeEach(() => {
-    reporter.warn.mockClear()
-  })
-
   it(`Does not warn when no peer dependency`, () => {
     warnOnIncompatiblePeerDependency(`dummy-package`, { peerDependencies: {} })
 
-    expect(reporter.warn).not.toHaveBeenCalled()
+    expect(log).not.toHaveBeenCalled()
   })
 
   it(`Warns on incompatible gatsby peer dependency`, async () => {
@@ -218,8 +213,11 @@ describe(`warnOnIncompatiblePeerDependency`, () => {
       },
     })
 
-    expect(reporter.warn).toHaveBeenCalledWith(
-      expect.stringContaining(`Plugin dummy-package is not compatible`)
-    )
+    expect(log).toHaveBeenCalledWith({
+      message: expect.stringContaining(
+        `Plugin dummy-package is not compatible`
+      ),
+      type: `warn`,
+    })
   })
 })

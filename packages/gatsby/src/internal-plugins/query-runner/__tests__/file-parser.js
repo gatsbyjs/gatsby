@@ -10,6 +10,11 @@ jest.mock(`fs-extra`, () => {
 })
 jest.mock(`../../../utils/api-runner-node`, () => () => [])
 
+const { store } = require(`../../../redux`)
+const log = jest.fn()
+store.dispatch({ type: `SET_LOGGER`, payload: log })
+afterEach(() => log.mockClear())
+
 const FileParser = require(`../file-parser`).default
 
 describe(`File parser`, () => {
@@ -152,16 +157,13 @@ export default () => (
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    const spyStderr = jest.spyOn(process.stderr, `write`)
     const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
     expect(results).toMatchSnapshot()
     expect(
-      spyStderr.mock.calls
-        .filter(c => c[0].includes(`warning`))
+      log.mock.calls
         // Remove console colors + trim whitespace
         // eslint-disable-next-line
-        .map(c => c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim())
+        .map(c => c[0].message.replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim())
     ).toMatchSnapshot()
-    spyStderr.mockRestore()
   })
 })

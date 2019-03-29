@@ -1,13 +1,12 @@
 jest.mock(`fs`)
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    panic: jest.fn(),
-  }
-})
 
-const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
 let resolver
+
+const { store } = require(`../../redux`)
+const log = jest.fn()
+store.dispatch({ type: `SET_LOGGER`, payload: log })
+afterEach(() => log.mockClear())
 
 describe(`Resolve module exports`, () => {
   const MOCK_FILE_INFO = {
@@ -120,7 +119,6 @@ describe(`Resolve module exports`, () => {
   beforeEach(() => {
     resolver = jest.fn(arg => arg)
     require(`fs`).__setMockFiles(MOCK_FILE_INFO)
-    reporter.panic.mockClear()
   })
 
   it(`Returns empty array for file paths that don't exist`, () => {
@@ -136,10 +134,10 @@ describe(`Resolve module exports`, () => {
   it(`Show meaningful error message for invalid JavaScript`, () => {
     resolveModuleExports(`/bad/file`, resolver)
     expect(
-      reporter.panic.mock.calls.map(c =>
+      log.mock.calls.map(c =>
         // Remove console colors + trim whitespace
         // eslint-disable-next-line
-        c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
+        c[0].message.replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
       )
     ).toMatchSnapshot()
   })
