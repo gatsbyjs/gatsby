@@ -13,7 +13,7 @@ Among the many lauded benefits of using Gatsby (and other client-side frameworks
 
 Please understand, there are whole classes of security vulnerabilities that are eliminated by using Gatsby for web development. But, there are still others that are shared and some that are created. You need to make sure you are aware of these possible vulnerabilities and how to remedy them.
 
-The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers all these security issues well and includes excellent solutions.
+The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers all these security issues well and includes complete solutions.
 
 ## Defining Terms
 
