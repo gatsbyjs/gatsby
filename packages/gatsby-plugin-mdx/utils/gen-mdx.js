@@ -123,7 +123,7 @@ export const _frontmatter = ${JSON.stringify(data)}`;
   });
 
   results.rawMDXOutput = `/* @jsx mdx */
-import mdx from '@mdx-js/react/create-element';
+import { mdx } from '@mdx-js/react';
 ${code}`;
 
   if (!isLoader) {
