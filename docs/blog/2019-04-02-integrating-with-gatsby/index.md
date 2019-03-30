@@ -98,7 +98,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - Webhooks firing if the staging content is updated. These webhooks should fire in less than 3 seconds after the content changes.
 
-- A button in the CMS editor where users can click on the button
+- A button in the CMS editor where users can click through to Preview
 
 - Featured on a plugin marketplace, if applicable. Eg, [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview/)
 
