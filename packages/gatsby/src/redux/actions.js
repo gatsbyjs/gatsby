@@ -591,7 +591,7 @@ actions.createNode = (
     )
   }
 
-  trackInlineObjectsInRootNode(node)
+  trackInlineObjectsInRootNode(node, true)
 
   const oldNode = getNode(node.id)
 

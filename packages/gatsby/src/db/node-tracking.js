@@ -16,10 +16,28 @@ const getRootNodeId = node => rootNodeMap.get(node)
  * @param {(Object|Array)} data Inline object or array
  * @param {string} nodeId Id of node that contains data passed in first parameter
  */
-const addRootNodeToInlineObject = (data, nodeId) => {
+const addRootNodeToInlineObject = (data, nodeId, sanitize, parent, key) => {
   if (_.isPlainObject(data) || _.isArray(data)) {
-    _.each(data, o => addRootNodeToInlineObject(o, nodeId))
+    _.each(data, (o, key) => {
+      addRootNodeToInlineObject(o, nodeId, sanitize, key, data)
+    })
     rootNodeMap.set(data, nodeId)
+
+    // arrays and plain objects are supported - no need to to sanitize
+    return
+  }
+
+  if (sanitize) {
+    const type = typeof data
+    // supported types
+    const isSupported =
+      type === `number` ||
+      type === `string` ||
+      type === `boolean` ||
+      data instanceof Date
+    if (!isSupported) {
+      delete parent[key]
+    }
   }
 }
 
@@ -28,13 +46,13 @@ const addRootNodeToInlineObject = (data, nodeId) => {
  * and that Node object.
  * @param {Node} node Root Node
  */
-const trackInlineObjectsInRootNode = node => {
+const trackInlineObjectsInRootNode = (node, sanitize = false) => {
   _.each(node, (v, k) => {
     // Ignore the node internal object.
     if (k === `internal`) {
       return
     }
-    addRootNodeToInlineObject(v, node.id)
+    addRootNodeToInlineObject(v, node.id, sanitize, node, k)
   })
 
   return node
