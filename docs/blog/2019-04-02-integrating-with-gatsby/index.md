@@ -96,7 +96,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - A staging environment accessible by API. Some examples: [Contentful’s Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/), [DatoCMS staging environment](https://www.datocms.com/changelog/multiple-deployment-environments), etc
 
-- Webhooks firing if, and only if, the staging content is updated. These webhooks should fire in less than 3 seconds after the content changes.
+- Webhooks firing if the staging content is updated. These webhooks should fire in less than 3 seconds after the content changes.
 
 - A button in the CMS editor where users can click on the button
 
