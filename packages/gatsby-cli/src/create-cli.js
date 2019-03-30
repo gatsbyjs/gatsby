@@ -264,6 +264,11 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         describe: `Don't actually write any changes to disk or run npm/yarn.`,
       })
+        .option(`confirm`, {
+          default: false,
+          type: `boolean`,
+          describe: `Do not prompt for install or config confirmation`,
+        })
         .positional(`action`, {
           type: `string`,
           describe: `Action to be taken for provided plugin.`,
