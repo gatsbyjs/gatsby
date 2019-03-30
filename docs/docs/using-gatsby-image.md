@@ -105,7 +105,7 @@ So this is all very nice and it’s far better to be able to use this from NPM v
 
 ### References:
 
-- [Plugin README file](/packages/gatsby-image/)
+- [Gatsby image plugin README file](/packages/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
 - [Starters that use gatsby-image](/starters/?d=gatsby-image&v=2)
