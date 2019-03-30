@@ -1,13 +1,11 @@
-/* eslint-disable */
-import React, { createContext } from "react";
+import React, { createContext, useContext } from "react";
 
 const GatsbyMDXScopeContext = createContext({});
 
-export const withMDXScope = Component => ({ scope, ...props }) => (
-  <GatsbyMDXScopeContext.Consumer>
-    {contextScope => <Component scope={scope || contextScope} {...props} />}
-  </GatsbyMDXScopeContext.Consumer>
-);
+export const useMDXScope = scope => {
+  const contextScope = useContext(GatsbyMDXScopeContext);
+  return scope || contextScope;
+};
 
 export const MDXScopeProvider = ({ __mdxScope, children }) => (
   <GatsbyMDXScopeContext.Provider value={__mdxScope}>
