@@ -112,7 +112,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 ## Conclusion: The Content Mesh
 
-One of the trends we’re seeing is that the CMS is becoming a "[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)". It’s unbundling, and best of breed tools are taking over separate pieces of functionality (headless CMS, specialized CMS, forms, analytics, auth, A/B testing, UI frameworks)....
+One of the trends we’re seeing is that the CMS is becoming a "[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)" -- best of breed tools are emerging with distinct feature set -- headless CMS, specialized CMS, forms, analytics, auth, A/B testing, UI frameworks, and so on.
 
 In this new world, the key to producing really high quality sites is making it easy for developer teams to choose best of breed tools that are tightly integrated with each other.
 
