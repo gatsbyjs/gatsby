@@ -28,13 +28,10 @@ class IndexRoute extends React.Component {
                 <Link to="/tutorial/">Tutorial</Link>: Step-by-step instructions
                 on how to install Gatsby and start a project: written for people
                 without Gatsby or web development experience, though it has
-                helped developers of all skill levels. development experience,
-                though developers of all skill levels have said they got a lot
-                of value from it.
+                helped developers of all skill levels.
               </li>
               <li>
-                <Link to="/docs/quick-start">Quick start</Link>: Go to the quick
-                start for a one page summary of how to install Gatsby and start
+                <Link to="/docs/quick-start">Quick start</Link>: One page summary of how to install Gatsby and start
                 a new project.
               </li>
               <li>
