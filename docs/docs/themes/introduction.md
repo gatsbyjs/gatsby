@@ -20,8 +20,12 @@ This means an install of a starter will consist of demo content and a compact `g
 
 ### Related
 
+- [Why Themes?](/blog/2019-01-31-why-themes/)
+- [Themes Roadmap](/blog/2019-03-11-gatsby-themes-roadmap/)
+- [Getting Started with Gatsby Themes and MDX](/blog/2019-02-26-getting-started-with-gatsby-themes/)
+- [Watch Us Build a Theme Live](/blog/2019-02-11-gatsby-themes-livestream-and-example/)
 - [Introducing Gatsby Themes by Chris Biscardi at Gatsby Days](https://www.gatsbyjs.com/gatsby-days-themes-chris/)
-- [Blog posts on themes](https://www.gatsbyjs.org/blog/tags/themes)
+- [See all blog posts on themes](/blog/tags/themes)
 
 ## How Do They Work?
 

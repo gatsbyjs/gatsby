@@ -67,9 +67,10 @@ exports.onCreateWebpackConfig = (
         cms: [
           manualInit && `${__dirname}/cms-manual-init.js`,
           `${__dirname}/cms.js`,
-          modulePath,
           enableIdentityWidget && `${__dirname}/cms-identity.js`,
-        ].filter(p => p),
+        ]
+          .concat(modulePath)
+          .filter(p => p),
       },
       output: {
         path: path.join(program.directory, `public`, publicPathClean),

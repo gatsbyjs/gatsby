@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.15...gatsby-source-mongodb@2.0.16) (2019-03-22)
+
+### Features
+
+- **gatsby-source-mongodb:** mongodb to ver 3, added ability to pass entire connection string ([#11698](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/11698)) ([f61e437](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/commit/f61e437))
+
 ## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.14...gatsby-source-mongodb@2.0.15) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-source-mongodb
