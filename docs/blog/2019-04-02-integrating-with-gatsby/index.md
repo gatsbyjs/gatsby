@@ -40,7 +40,7 @@ These stages are:
 
 - **Second,** your team launching the integration
 
-- **Third, **co-marketing, and
+- **Third,** co-marketing, and
 
 - **Fourth,** integrating with Gatsby Preview and co-selling.
 
