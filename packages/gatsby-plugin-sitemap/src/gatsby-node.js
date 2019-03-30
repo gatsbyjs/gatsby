@@ -45,14 +45,16 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     },
   } = queryRecords
   return new Promise(resolve => {
-    // sitemapv-index.xml is default file name. (https://git.io/fhNgG)
+    // sitemap-index.xml is default file name. (https://git.io/fhNgG)
     const indexFilePath = path.join(
       publicPath,
       `${rest.sitemapName || `sitemap`}-index.xml`
     )
     const sitemapIndexOptions = {
       ...rest,
-      hostname: hostname || withoutTrailingSlash(siteUrl),
+      hostname:
+        (hostname || withoutTrailingSlash(siteUrl)) +
+        withoutTrailingSlash(pathPrefix || ``),
       targetFolder: publicPath,
       urls,
       callback: error => {

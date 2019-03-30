@@ -6,7 +6,10 @@
       link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
+    - title: Cheat Sheet
+      link: /docs/cheat-sheet/
 - title: Guides
+  link: /docs/guides/
   items:
     - title: Preparing Your Environment
       link: /docs/preparing-your-environment/
@@ -36,6 +39,8 @@
           link: /docs/deploying-to-gitlab-pages/
         - title: Hosting on Netlify
           link: /docs/hosting-on-netlify
+        - title: Deploying to Render
+          link: /docs/deploying-to-render/
         - title: Path Prefix
           link: /docs/path-prefix/
         - title: How Gatsby Works with GitHub Pages
@@ -177,7 +182,20 @@
           link: /docs/post-css/
         - title: TailwindCSS
           link: /docs/tailwind-css/
-    - title: Adding Testing
+    - title: Adding Components to Content with MDX
+      link: /docs/mdx/
+      items:
+        - title: Getting started
+          link: /docs/mdx/getting-started/
+        - title: Writing pages
+          link: /docs/mdx/writing-pages/
+        - title: Customizing components
+          link: /docs/mdx/customizing-components/
+        - title: Programmatically creating pages
+          link: /docs/mdx/programmatically-creating-pages/
+        - title: Using plugins
+          link: /docs/mdx/plugins/
+    - title: Adding testing
       link: /docs/testing/
       items:
         - title: Unit Testing
@@ -239,6 +257,13 @@
           link: /docs/adding-an-rss-feed/
         - title: Linking Between Pages
           link: /docs/linking-between-pages/
+        - title: Adding Page Transitions
+          link: /docs/adding-page-transitions/
+          items:
+            - title: Adding Page Transitions with gatsby-plugin-transition-link
+              link: /docs/adding-page-transitions-with-plugin-transition-link/
+            - title: Adding Page Transitions with gatsby-plugin-page-transitions*
+              link: /docs/adding-page-transitions-with-plugin-page-transitions/
         - title: Making Your Site Accessible
           link: /docs/making-your-site-accessible
         - title: Routing
@@ -288,6 +313,7 @@
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby/
 - title: API Reference
+  link: /docs/api-reference/
   items:
     - title: Gatsby Link
       link: /docs/gatsby-link/
@@ -295,17 +321,22 @@
       link: /docs/gatsby-config/
     - title: Gatsby Node APIs
       link: /docs/node-apis/
+    - title: Gatsby Node Helpers
+      link: /docs/node-api-helpers/
     - title: Gatsby Browser APIs
       link: /docs/browser-apis/
     - title: Gatsby SSR APIs
       link: /docs/ssr-apis/
     - title: Actions
       link: /docs/actions/
+    - title: Node Model
+      link: /docs/node-model/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Philosophy
       link: /docs/api-specification/
 - title: Releases & Migration
+  link: /docs/releases-and-migration/
   items:
     - title: v2 Release Notes
       link: /docs/v2-release-notes/
@@ -316,6 +347,7 @@
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
 - title: Conceptual Guide
+  link: /docs/conceptual-guide/
   items:
     - title: The Gatsby Core Philosophy*
       link: /docs/gatsby-core-philosophy/
@@ -386,6 +418,7 @@
     - title: Terminology
       link: /docs/behind-the-scenes-terminology/
 - title: Advanced Tutorials
+  link: /docs/advanced-tutorials/
   items:
     - title: Making a Site with User Authentication
       link: /docs/authentication-tutorial/
@@ -399,6 +432,59 @@
       link: /docs/image-tutorial/
     - title: Writing Documentation with Docz
       link: /docs/writing-documentation-with-docz/
+- title: Using Gatsby Professionally
+  link: /docs/using-gatsby-professionally/
+  items:
+    - title: Introduction - Convincing Others to Use Gatsby
+      link: /docs/convincing-others/
+    - title: Your First Professional Project
+      link: /docs/first-professional-project/
+    - title: Winning Over Different Stakeholders
+      link: /docs/winning-over-stakeholders/
+      items:
+        - title: Developers
+          link: /docs/winning-over-developers/
+        - title: Engineering Leaders*
+          link: /docs/winning-over-engineering-leaders/
+        - title: Marketers
+          link: /docs/winning-over-marketers/
+        - title: Executives
+          link: /docs/winning-over-executives/
+        - title: Clients
+          link: /docs/winning-over-clients/
+    - title: Spreading Gatsby In Different Types of Organizations
+      link: /docs/different-organization-types/
+      items:
+        - title: As a Freelancer
+          link: /docs/gatsby-for-freelancers/
+        - title: Inside an Agency
+          link: /docs/gatsby-for-agencies/
+          items:
+            - title: Lower Bids, More Profit
+              link: /docs/lower-bids-more-profit/
+            - title: Faster Recruiting
+              link: /docs/faster-recruiting/
+            - title: Sanitize Your Stack
+              link: /docs/sanitize-your-stack/
+            - title: Why Agencies Go Gatsby-Only
+              link: /docs/going-gatsby-only/
+        - title: Inside a Company
+          link: /docs/gatsby-for-companies/
+          items:
+            - title: Answering IT/Security Questions
+              link: /docs/answering-it-security/
+    - title: Best Practices for Orgs
+      link: /docs/best-practices-for-orgs/
+      items:
+        - title: Sharing Components Across Websites
+          link: /docs/sharing-components-across-websites/
+          items:
+            - title: Component Libraries
+              link: /docs/component-libraries/
+            - title: Making Components Discoverable
+              link: /docs/making-components-discoverable/
+    - title: How Gatsby Boosts Your Career
+      link: /docs/how-gatsby-boosts-career/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)

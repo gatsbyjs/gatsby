@@ -21,37 +21,29 @@ access to the
 [`createPage`](/docs/actions/#createPage) action
 which is at the core of programmatically creating a page.
 
-```javascript:title=gatsby-node.js
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
-  return new Promise((resolve, reject) => {
-    graphql(`
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-      }
-    `).then(result => {
-      // highlight-start
-      result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-        createPage({
-          path: node.fields.slug,
-          component: path.resolve(`./src/templates/blog-post.js`),
-          context: {
-            slug: node.fields.slug,
-          },
-        })
-      })
-      // highlight-end
-      resolve()
+```js:title=gatsby-node.js
+exports.createPages = async function({ actions, graphql }) {
+  const { data } = await graphql(`
+    allMarkdownRemark {
+      edges {
+        node {
+          fields {
+            slug
+           }
+         }
+       }
+     }
+  `)
+  // highlight-start
+  data.allMarkdownRemark.edges.forEach(edge => {
+    const slug = edge.node.fields.slug
+    actions.createPage({
+      path: slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: { slug: slug },
     })
   })
+  // highlight-end
 }
 ```
 

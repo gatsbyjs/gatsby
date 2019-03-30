@@ -23,6 +23,14 @@ Just add the plugin to the plugins array in your `gatsby-config.js`
 plugins: [`gatsby-plugin-react-helmet`]
 ```
 
+## Titles don't appear when opening in the background, while using `gatsby-plugin-offline`
+
+If you're using `gatsby-plugin-offline`, you might notice that when opening a link in the background, the title doesn't appear in the tab bar until switching to that tab. This is an [upstream issue with React Helmet](https://github.com/nfl/react-helmet/issues/315); however, it can be worked around by passing the `defer={false}` prop into your `Helmet` component. For example:
+
+```javascript
+<Helmet title="foo bar" defer={false} />
+```
+
 ## Examples
 
 - [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/site-metadata.js)

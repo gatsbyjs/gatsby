@@ -35,7 +35,7 @@ The above configuration file can be passed to Gatsby with the `--open-tracing-co
 
 ## Tracing backend examples
 
-There are many open tracing compatible backends available. Below is an example of how to hook Zipkin into Gatsby.
+There are many OpenTracing compatible backends available. Below is an example of how to hook Zipkin into Gatsby.
 
 ### local Jaeger with Docker
 
@@ -102,7 +102,7 @@ There are many open tracing compatible backends available. Below is an example o
 
 The default tracing that comes with Gatsby can give you a good idea of which plugins or stages of the build are slowing down your site. But sometimes, you'll want to trace the internals of your site. Or if you're a plugin author, you might want to trace long operations.
 
-To provide custom tracing, you can use the `tracing` object, which is present in the args passed to API implementers. This tracing object contains a function called `startSpan`. This simply wraps [open tracing startSpan](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts#L79), but provides the default `childOf: parentSpan` span args. `startSpan` returns a span object that you must explicitly end by calling its `.finish()` method. For example:
+To provide custom tracing, you can use the `tracing` object, which is present in the args passed to API implementers. This tracing object contains a function called `startSpan`. This simply wraps [OpenTracing startSpan](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts#L79), but provides the default `childOf: parentSpan` span args. `startSpan` returns a span object that you must explicitly end by calling its `.finish()` method. For example:
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions, tracing }) => {

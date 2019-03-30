@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@2.0.5...gatsby-transformer-documentationjs@3.0.0) (2019-03-13)
+
+### Features
+
+- **gatsby-transformer-documentationjs:** support linking typedefs ([#11597](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/issues/11597)) ([16b7d0d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/commit/16b7d0d))
+
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@2.0.4...gatsby-transformer-documentationjs@2.0.5) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

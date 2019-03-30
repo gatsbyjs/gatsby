@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.9...babel-preset-gatsby@0.1.10) (2019-03-23)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Add corejs to config ([#12781](https://github.com/gatsbyjs/gatsby/issues/12781)) ([4b49da1](https://github.com/gatsbyjs/gatsby/commit/4b49da1)), closes [#12744](https://github.com/gatsbyjs/gatsby/issues/12744)
+
 ## [0.1.9](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.8...babel-preset-gatsby@0.1.9) (2019-03-11)
 
 **Note:** Version bump only for package babel-preset-gatsby

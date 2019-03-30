@@ -3,8 +3,7 @@ import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
-import Functions from "../../components/function-list"
-import { rhythm } from "../../utils/typography"
+import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -68,14 +67,14 @@ class NodeAPIDocs extends React.Component {
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Usage</h2>
-          <p css={{ marginBottom: rhythm(space[5]) }}>
+          <h2 css={{ marginBottom: space[3] }}>Usage</h2>
+          <p css={{ marginBottom: space[5] }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>APIs</h2>
+          <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
@@ -86,7 +85,7 @@ class NodeAPIDocs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <Functions functions={funcs} />
+          <APIReference docs={funcs} />
         </Container>
       </Layout>
     )
@@ -100,7 +99,7 @@ export const pageQuery = graphql`
     file(relativePath: { regex: "/src.*api-node-docs.js/" }) {
       childrenDocumentationJs {
         name
-        ...FunctionList
+        ...DocumentationFragment
       }
     }
   }
