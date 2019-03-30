@@ -31,8 +31,8 @@ class IndexRoute extends React.Component {
                 helped developers of all skill levels.
               </li>
               <li>
-                <Link to="/docs/quick-start">Quick start</Link>: One page summary of how to install Gatsby and start
-                a new project.
+                <Link to="/docs/quick-start">Quick start</Link>: One page
+                summary of how to install Gatsby and start a new project.
               </li>
               <li>
                 <Link to="/docs/recipes/">Recipes</Link>: A happy medium between
