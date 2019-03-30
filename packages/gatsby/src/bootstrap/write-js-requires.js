@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 import { joinPath } from "../utils/path"
-const { emitter } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 
 const writeAll = async state => {
   let { program, pages, matchPaths } = state
@@ -63,7 +63,9 @@ const preferDefault = m => m && m.default || m
   ])
 }
 
-const debouncedWriteAll = _.debounce(writeAll, 500, { leading: true })
+const debouncedWriteAll = _.debounce(() => writeAll(store.getState()), 500, {
+  leading: true,
+})
 
 const startDaemon = () => {
   emitter.on(`CREATE_PAGE`, () => {

@@ -34,16 +34,13 @@ class JSONStore extends React.Component {
       pageQueryData: getPageQueryData(),
       path: null,
     }
-    console.log(`constructor`, this.state)
   }
 
   handleMittEvent = (type, event) => {
-    console.log(`mitt`, type, event)
     this.setState({
       staticQueryData: getStaticQueryData(),
       pageQueryData: getPageQueryData(),
     })
-    console.log(`after handle`, this.state)
   }
 
   componentDidMount() {
@@ -58,7 +55,6 @@ class JSONStore extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     const newPath = getPathFromProps(props)
-    console.log(`get derived`, props, newPath)
     if (newPath !== state.path) {
       socketUnregisterPath(state.path)
       socketRegisterPath(newPath)
@@ -76,15 +72,6 @@ class JSONStore extends React.Component {
     // - page data for path changed
     // - static query results changed
 
-    console.log(`should`, this.state, nextState)
-    console.log(
-      `should update`,
-      this.props.location !== nextProps.location ||
-        this.state.path !== nextState.path ||
-        this.state.pageQueryData[nextState.path] !==
-          nextState.pageQueryData[nextState.path] ||
-        this.state.staticQueryData !== nextState.staticQueryData
-    )
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
@@ -96,7 +83,7 @@ class JSONStore extends React.Component {
 
   render() {
     const data = this.state.pageQueryData[getPathFromProps(this.props)]
-    console.log(`json store render`, this.props, data)
+    console.log(`json render data`, data)
     // eslint-disable-next-line
     const { ...propsWithoutPages } = this.props
     if (!data) {

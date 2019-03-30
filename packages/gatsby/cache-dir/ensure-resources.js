@@ -134,7 +134,6 @@ class EnsureResources extends React.Component {
     }
 
     isInitialRender = false
-    console.log(`render ensure resources`, this.props, this.state)
     return this.props.children(this.state)
   }
 }

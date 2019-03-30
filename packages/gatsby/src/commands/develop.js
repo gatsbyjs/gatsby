@@ -81,12 +81,12 @@ function startQueryDaemon() {
   const postHandler = async ({ queryJob, result }) => {
     if (queryJob.isPage) {
       websocketManager.emitPageData({
-        result,
+        ...result,
         id: queryJob.id,
       })
     } else {
       websocketManager.emitStaticQueryData({
-        result,
+        ...result,
         id: queryJob.id,
       })
     }
@@ -132,7 +132,6 @@ async function startServer(program) {
     program.port
   )
 
-  console.log(`start webpack compile`)
   const compiler = webpack(devConfig)
 
   /**
@@ -552,7 +551,6 @@ module.exports = async (program: any) => {
     // }
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
-      console.log(`running page queries`)
       runPageQueries(pageQueryIds).then(result => {
         startQueryDaemon()
         writeJsRequires.startDaemon()

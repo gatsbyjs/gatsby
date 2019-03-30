@@ -17,11 +17,15 @@ const create = ({
   betterQueueOptions = {},
 } = {}) => {
   const queueOptions = { ...makeBaseOptions, ...betterQueueOptions }
-  const queue = new Queue((queryJob, callback) => {
-    jobHandler({ queryJob })
-      .then(postHandler)
-      .catch(e => console.log(`Error running queryRunner`, e))
-      .then(result => callback(null, result), error => callback(error))
+  const queue = new Queue(async (queryJob, callback) => {
+    try {
+      const result = await jobHandler({ queryJob })
+      postHandler({ queryJob, result })
+      callback(null, result)
+    } catch (err) {
+      console.log(`Error running queryRunner`, err)
+      callback(err)
+    }
   }, queueOptions)
   return queue
 }

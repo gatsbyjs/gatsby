@@ -143,14 +143,12 @@ const makePageDataUrl = path => {
 
 const fetchPageData = path => {
   const url = makePageDataUrl(path)
-  console.log(`url`, url)
   return cachedFetch(url, fetchUrl).then((pageData, err) => {
     fetchedPageData[path] = true
     if (pageData) {
       pageDatas[path] = pageData
       return pageData
     } else {
-      console.log(`setting failed path`)
       failedPaths[path] = err || `failed path`
       return null
     }
@@ -309,7 +307,6 @@ const queue = {
   loadPageData: rawPath =>
     new Promise((resolve, reject) => {
       const realPath = findPath(rawPath)
-      console.log(`load page data`, rawPath, realPath)
       if (!fetchedPageData[realPath]) {
         fetchPageData(realPath).then(pageData => {
           if (process.env.NODE_ENV !== `production`) {
@@ -330,7 +327,6 @@ const queue = {
     queue
       .loadPageData(rawPath)
       .then(pageData => {
-        console.log(`loadPage. pageData`, pageData)
         if (process.env.NODE_ENV !== `production`) {
           const component = syncRequires.components[pageData.componentChunkName]
           return [pageData, component]
@@ -341,7 +337,6 @@ const queue = {
         }
       })
       .then(([pageData, component]) => {
-        console.log(`loadPage. component`, pageData, component)
         const page = {
           componentChunkName: pageData.componentChunkName,
           path: pageData.path,

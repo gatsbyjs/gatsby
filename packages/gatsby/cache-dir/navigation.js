@@ -82,7 +82,6 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.loadPage(pathname).then(pageResources => {
-    console.log(`in nav`, pageResources)
     if (process.env.NODE_ENV === `production` && pageResources) {
       if (pageResources.page.compilationHash !== window.___compilationHash) {
         console.log(
