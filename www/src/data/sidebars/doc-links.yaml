@@ -154,6 +154,8 @@
           link: /docs/creating-a-source-plugin/
         - title: Source Plugin Tutorial
           link: /docs/source-plugin-tutorial/
+        - title: Plugin Library
+          link: /plugins/
     - title: Starters
       link: /docs/starters/
       items:
