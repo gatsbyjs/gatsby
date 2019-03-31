@@ -49,12 +49,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   loader
     .loadPage(window.location.pathname)
-    .then(() => {
-      loader.loadPage(`/dev-404-page/`)
-    })
-    .then(() => {
-      loader.loadPage(`/404.html`).catch(err => null)
-    })
+    .then(() => loader.loadPage(`/dev-404-page/`))
+    .then(() => loader.loadPage(`/404.html`).catch(err => null))
     .then(() => {
       const preferDefault = m => (m && m.default) || m
       let Root = preferDefault(require(`./root`))
