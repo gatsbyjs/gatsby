@@ -24,7 +24,7 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
   );
 
   if (options.gatsbyRemarkPlugins.length > 0) {
-    options.gatsbyRemarkPlugins.map(
+    options.gatsbyRemarkPlugins = options.gatsbyRemarkPlugins.map(
       plugin => (typeof plugin === "string" ? { resolve: plugin } : plugin)
     );
   }
