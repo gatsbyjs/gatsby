@@ -30,10 +30,10 @@ exports.createPages = async function({ actions, graphql }) {
           node {
             fields {
               slug
-             }
-           }
-         }
-       }
+            }
+          }
+        }
+      }
     }
   `)
   // highlight-start
