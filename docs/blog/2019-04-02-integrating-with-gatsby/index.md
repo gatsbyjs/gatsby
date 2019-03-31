@@ -96,7 +96,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - A staging environment accessible by API. Some examples: [Contentful’s Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/), [DatoCMS staging environment](https://www.datocms.com/changelog/multiple-deployment-environments), etc
 
-- A way to alert Gatsby Prevew about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending weebhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
+- A way to alert Gatsby Prevew about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
 
 - A button in the CMS editor where users can click through to Preview
 
