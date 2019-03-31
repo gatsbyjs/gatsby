@@ -157,6 +157,8 @@
     - title: Starters
       link: /docs/starters/
       items:
+        - title: Starter Library
+          link: /starters/
         - title: Create a Starter*
           link: /contributing/create-a-starter/
     - title: Styling Your Site
