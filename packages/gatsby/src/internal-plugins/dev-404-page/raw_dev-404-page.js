@@ -21,8 +21,8 @@ class Dev404Page extends React.Component {
 
   render() {
     const { pathname } = this.props.location
-    const pages = this.props.pages.filter(
-      p => !/^\/dev-404-page\/$/.test(p.path)
+    const paths = this.props.pagePaths.filter(
+      p => !/^\/dev-404-page\/$/.test(p)
     )
     let newFilePath
     if (pathname === `/`) {
@@ -62,17 +62,17 @@ class Dev404Page extends React.Component {
           and this page will automatically refresh to show the new page
           component you created.
         </p>
-        {pages.length > 0 && (
+        {paths.length > 0 && (
           <div>
             <p>
               If you were trying to reach another page, perhaps you can find it
               below.
             </p>
-            <h2>Pages ({pages.length})</h2>
+            <h2>Pages ({paths.length})</h2>
             <ul>
-              {pages.map(page => (
-                <li key={page.path}>
-                  <Link to={page.path}>{page.path}</Link>
+              {paths.map(path => (
+                <li key={path}>
+                  <Link to={path}>{path}</Link>
                 </li>
               ))}
             </ul>

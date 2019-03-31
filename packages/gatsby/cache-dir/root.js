@@ -9,6 +9,7 @@ import {
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
+import devLoader from "./dev-loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
 
@@ -36,6 +37,8 @@ navigationInit()
 class RouteHandler extends React.Component {
   render() {
     let { location } = this.props
+    const pages = devLoader.getPagesManifest()
+    const pagePaths = Object.keys(pages)
 
     if (!loader.isFailedPath(location.pathname)) {
       // check if page exists - in dev pages are sync loaded, it's safe to use
@@ -61,14 +64,13 @@ class RouteHandler extends React.Component {
         throw new Error(`shouldn't be here`)
       }
     } else {
-      const pages = [{ path: `/foo` }, { path: `/moo` }]
       const dev404Page = loader.getPage(`/dev-404-page/`)
       const Dev404Page = dev404Page.component
 
       if (!loader.getPage(`/404.html`)) {
         return (
           <RouteUpdates location={location}>
-            <Dev404Page {...this.props} />
+            <Dev404Page {...this.props} pagePaths={pagePaths} />
           </RouteUpdates>
         )
       }
@@ -78,7 +80,7 @@ class RouteHandler extends React.Component {
           {locationAndPageResources => (
             <RouteUpdates location={location}>
               <Dev404Page
-                pages={pages}
+                pagePaths={pagePaths}
                 custom404={
                   <JSONStore {...this.props} {...locationAndPageResources} />
                 }

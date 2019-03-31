@@ -6,6 +6,7 @@ import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import loader, { setApiRunnerForLoader } from "./loader"
+import devLoader from "./dev-loader"
 import syncRequires from "./sync-requires"
 
 window.___emitter = emitter
@@ -51,6 +52,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     .loadPage(window.location.pathname)
     .then(() => loader.loadPage(`/dev-404-page/`))
     .then(() => loader.loadPage(`/404.html`).catch(err => null))
+    .then(() => devLoader.loadPages())
     .then(() => {
       const preferDefault = m => (m && m.default) || m
       let Root = preferDefault(require(`./root`))
