@@ -187,11 +187,13 @@ const processQueries = async (queryJobs, { activity }) => {
   const queue = queryQueue.create()
   queue.on(`task_finish`, () => {
     const stats = queue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
+    if (activity) {
+      activity.setStatus(
+        `${stats.total}/${stats.peak} ${(
+          stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+        ).toFixed(2)} queries/second`
+      )
+    }
   })
   const drainedPromise = new Promise(resolve => {
     queue.once(`drain`, resolve)
@@ -201,6 +203,20 @@ const processQueries = async (queryJobs, { activity }) => {
     queue.push(queryJob)
   })
   await drainedPromise
+}
+
+const processPageQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  await processQueries(queryIds.map(id => makePageQueryJob(state, id)), {
+    activity,
+  })
+}
+
+const processStaticQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  await processQueries(queryIds.map(id => makeStaticQueryJob(state, id)), {
+    activity,
+  })
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -254,9 +270,9 @@ module.exports = {
   enqueueExtractedQueryId,
   calcBootstrapDirtyQueryIds,
   groupQueryIds,
-  makeStaticQueryJob,
-  makePageQueryJob,
   processQueries,
+  processPageQueries,
+  processStaticQueries,
   runQueries,
   startDaemon,
   createQueue: queryQueue.create,

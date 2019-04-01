@@ -102,23 +102,10 @@ function startQueryDaemon() {
   queryRunner.startDaemon(queue)
 }
 
-async function runStaticQueries(queryIds) {
-  let activity = report.activityTimer(`run static queries`)
-  activity.start()
-  await queryRunner.processQueries(
-    queryIds.map(id => queryRunner.makeStaticQueryJob(store.getState(), id)),
-    { activity }
-  )
-  activity.end()
-}
-
 const runPageQueries = async queryIds => {
   let activity = report.activityTimer(`run page queries`)
   activity.start()
-  await queryRunner.processQueries(
-    queryIds.map(id => queryRunner.makePageQueryJob(store.getState(), id)),
-    { activity }
-  )
+  await queryRunner.processPageQueries(queryIds, { activity })
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
@@ -556,7 +543,10 @@ module.exports = async (program: any) => {
 
   const queryIds = queryRunner.calcBootstrapDirtyQueryIds(store.getState())
   const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
-  await runStaticQueries(staticQueryIds)
+  let activity = report.activityTimer(`run static queries`)
+  activity.start()
+  await queryRunner.processStaticQueries(staticQueryIds, { activity })
+  activity.end()
 
   const [compiler] = await startServer(program)
 

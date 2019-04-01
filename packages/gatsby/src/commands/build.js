@@ -28,18 +28,6 @@ type BuildArgs = {
   openTracingConfigFile: string,
 }
 
-async function runStaticQueries({ parentSpan }, staticQueryIds) {
-  let activity = report.activityTimer(`run static queries`, { parentSpan })
-  activity.start()
-  await queryRunner.processQueries(
-    staticQueryIds.map(id =>
-      queryRunner.makeStaticQueryJob(store.getState(), id)
-    ),
-    { activity }
-  )
-  activity.end()
-}
-
 module.exports = async function build(program: BuildArgs) {
   let activity
   initTracer(program.openTracingConfigFile)
@@ -60,7 +48,12 @@ module.exports = async function build(program: BuildArgs) {
   const queryIds = queryRunner.calcBootstrapDirtyQueryIds(store.getState())
   const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
 
-  await runStaticQueries({ parentSpan: buildSpan }, staticQueryIds)
+  activity = report.activityTimer(`run static queries`, {
+    parentSpan: buildSpan,
+  })
+  activity.start()
+  await queryRunner.processStaticQueries(staticQueryIds, { activity })
+  activity.end()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -87,13 +80,9 @@ module.exports = async function build(program: BuildArgs) {
     payload: webpackCompilationHash,
   })
 
-  const state = store.getState()
   activity = report.activityTimer(`run page queries`)
   activity.start()
-  await queryRunner.processQueries(
-    pageQueryIds.map(id => queryRunner.makePageQueryJob(state, id)),
-    { activity }
-  )
+  await queryRunner.processPageQueries(pageQueryIds, { activity })
   activity.end()
 
   const waitJobsFinished = () =>
