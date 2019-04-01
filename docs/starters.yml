@@ -2194,3 +2194,12 @@
     - 📡 Webhook Validation & Creation
     - 🔑 GDPR Ready (Including GDPR Webhooks)
     - 🏗 CircleCI Config for easy continuous deployments to Firebase
+- url: https://gatsby-starter-devto.netlify.com/
+  repo: https://github.com/geocine/gatsby-starter-devto
+  description: A GatsbyJS starter template that leverages the Dev.to API
+  tags:
+    - Dev.to
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
