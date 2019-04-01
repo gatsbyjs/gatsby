@@ -40,7 +40,7 @@ const buildRenderer = async (program, stage) => {
   await doBuildRenderer(program, config)
 }
 
-async function buildPages({ program, pagePaths }) {
+async function buildPages({ program, pagePaths, activity }) {
   const { directory } = program
   telemetry.decorateEvent(`BUILD_END`, {
     siteMeasurements: { pagesCount: pagePaths.length },
@@ -48,7 +48,7 @@ async function buildPages({ program, pagePaths }) {
 
   const outputFile = `${directory}/public/render-page.js`
   try {
-    await renderHTMLQueue(outputFile, pagePaths)
+    await renderHTMLQueue(outputFile, pagePaths, activity)
     try {
       await fs.unlink(outputFile)
       await fs.unlink(`${outputFile}.map`)

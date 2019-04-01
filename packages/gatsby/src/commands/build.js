@@ -89,7 +89,7 @@ module.exports = async function build(program: BuildArgs) {
   try {
     await buildHTML.buildRenderer(program, `build-html`)
     const pagePaths = [...store.getState().pages.keys()]
-    await buildHTML.buildPages({ program, pagePaths })
+    await buildHTML.buildPages({ program, pagePaths, activity })
   } catch (err) {
     reportFailure(
       report.stripIndent`
