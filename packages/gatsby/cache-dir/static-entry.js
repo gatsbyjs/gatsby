@@ -40,9 +40,6 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-// TDO make this async somehow
-const cwd = process.cwd()
-
 const getPageDataPath = path => {
   const fixedPagePath = path === `/` ? `index` : path
   return join(`page-data`, fixedPagePath, `page-data.json`)
@@ -124,18 +121,17 @@ export default (pagePath, callback) => {
   }
 
   const pageDataPath = getPageDataPath(pagePath)
-  const pageDataFile = join(cwd, `public`, pageDataPath)
+  const pageDataFile = join(process.cwd(), `public`, pageDataPath)
   const pageDataUrl = `${__PATH_PREFIX__}/${pageDataPath}`
-  const dataAndContextJson = fs.readFileSync(pageDataFile)
-  const dataAndContext = JSON.parse(dataAndContextJson)
-  const { componentChunkName } = dataAndContext
+  const pageDataJson = fs.readFileSync(pageDataFile)
+  const pageData = JSON.parse(pageDataJson)
+  const { componentChunkName } = pageData
 
   class RouteHandler extends React.Component {
     render() {
       const props = {
         ...this.props,
-        ...dataAndContext,
-        pathContext: dataAndContext.pageContext,
+        ...pageData,
       }
 
       const pageElement = createElement(
@@ -278,7 +274,7 @@ export default (pagePath, callback) => {
       )
     })
 
-  if (dataAndContext) {
+  if (pageData) {
     headComponents.push(
       <link
         as="fetch"
@@ -322,7 +318,7 @@ export default (pagePath, callback) => {
     })
 
   // Add page metadata for the current page
-  const windowData = `/*<![CDATA[*/window.pageData=${dataAndContextJson};/*]]>*/`
+  const windowData = `/*<![CDATA[*/window.pageData=${pageDataJson};/*]]>*/`
 
   postBodyComponents.push(
     <script
