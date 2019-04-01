@@ -1,6 +1,6 @@
 const { onCreateNode } = require(`../gatsby-node`)
 
-describe(`Process TOML nodes correctly`, () => {
+describe(`Process TOML nodes`, () => {
   const node = {
     id: `whatever`,
     parent: null,
@@ -15,7 +15,7 @@ describe(`Process TOML nodes correctly`, () => {
   // Provide fake functions
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(`Correctly creates nodes from TOML test file`, async () => {
+  it(`should correctly creates nodes from TOML test file`, async () => {
     // Unfortunately due to TOML limitations no JSON -> TOML convertors exist,
     // which means that we are stuck with JS template literals.
     node.content = `
@@ -62,7 +62,7 @@ describe(`Process TOML nodes correctly`, () => {
     })
   })
 
-  it(`fallsback to crypto when createDigestContent is not available`, async () => {
+  it(`should fallback to crypto when createDigestContent is not available`, async () => {
     // Unfortunately due to TOML limitations no JSON -> TOML convertors exist,
     // which means that we are stuck with JS template literals.
     node.content = `

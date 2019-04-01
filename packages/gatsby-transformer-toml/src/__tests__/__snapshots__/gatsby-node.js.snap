@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Process TOML nodes correctly Correctly creates nodes from TOML test file 1`] = `
+exports[`Process TOML nodes should correctly creates nodes from TOML test file 1`] = `
 Array [
   Array [
     Object {
@@ -37,7 +37,7 @@ Array [
 ]
 `;
 
-exports[`Process TOML nodes correctly Correctly creates nodes from TOML test file 2`] = `
+exports[`Process TOML nodes should correctly creates nodes from TOML test file 2`] = `
 Array [
   Array [
     Object {
@@ -104,7 +104,7 @@ Array [
 ]
 `;
 
-exports[`Process TOML nodes correctly fallsback to crypto when createDigestContent is not available 1`] = `
+exports[`Process TOML nodes should fallback to crypto when createDigestContent is not available 1`] = `
 Array [
   Array [
     Object {
@@ -141,7 +141,7 @@ Array [
 ]
 `;
 
-exports[`Process TOML nodes correctly fallsback to crypto when createDigestContent is not available 2`] = `
+exports[`Process TOML nodes should fallback to crypto when createDigestContent is not available 2`] = `
 Array [
   Array [
     Object {
