@@ -46,8 +46,8 @@ yarn workspace example add gatsby react react-dom
 
 The `yarn workspace` command will run Yarn commands for a specific workspace without needing to switch directories.
 
-Also add the following as peer dependencies to the theme.
-This will help ensure that the end user of your theme can choose to use any compatible version of Gatsby with your theme.
+Then add the following as peer dependencies to the theme.
+This will ensure that the end user of your theme can choose any compatible version of Gatsby.
 
 ```shell
 yarn workspace gatsby-theme-example-workspaces add --peer gatsby react react-dom
