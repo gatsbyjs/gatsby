@@ -8,28 +8,9 @@ const { boundActionCreators } = require(`../redux/actions`)
 const { store } = require(`../redux`)
 const withResolverContext = require(`../schema/context`)
 const { formatErrorDetails } = require(`./utils`)
+const pageDataUtil = require(`../utils/page-data`)
 
 const resultHashes = {}
-
-const makePageData = ({ publicDir, webpackCompilationHash }, page, result) => {
-  const fixedPagePath = page.path === `/` ? `index` : page.path
-  const filePath = path.join(
-    publicDir,
-    `page-data`,
-    fixedPagePath,
-    `page-data.json`
-  )
-  const body = {
-    componentChunkName: page.componentChunkName,
-    path: page.path,
-    compilationHash: webpackCompilationHash,
-    ...result,
-  }
-  return {
-    filePath,
-    body,
-  }
-}
 
 const jobHandler = async ({ queryJob }) => {
   const { schema, program, pages, webpackCompilationHash } = store.getState()
@@ -103,12 +84,12 @@ ${formatErrorDetails(errorDetails)}`)
     const publicDir = path.join(program.directory, `public`)
     if (queryJob.isPage) {
       const page = pages.get(queryJob.id)
-      const { filePath, body } = makePageData(
-        { publicDir, webpackCompilationHash },
+      await pageDataUtil.write(
+        { publicDir },
         page,
-        result
+        result,
+        webpackCompilationHash
       )
-      await fs.outputFile(filePath, JSON.stringify(body))
     } else {
       const staticDir = path.join(publicDir, `static`)
       const resultPath = path.join(staticDir, `d`, `${queryJob.hash}.json`)

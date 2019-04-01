@@ -80,6 +80,7 @@ function saveState() {
     `componentDataDependencies`,
     `components`,
     `staticQueryComponents`,
+    `webpackCompilationHash`,
   ])
 
   pickedState.staticQueryComponents = mapToObject(

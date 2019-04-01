@@ -1,5 +1,7 @@
 /* @flow */
 
+const _ = require(`lodash`)
+const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
@@ -14,6 +16,7 @@ const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
 const { store, emitter } = require(`../redux`)
 const db = require(`../db`)
+const pageDataUtil = require(`../utils/page-data`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -26,6 +29,20 @@ type BuildArgs = {
   prefixPaths: boolean,
   noUglify: boolean,
   openTracingConfigFile: string,
+}
+
+const handleChangedCompilationHash = async (state, pageQueryIds, newHash) => {
+  const publicDir = path.join(state.program.directory, `public`)
+  const stalePaths = _.difference([...state.pages.keys()], pageQueryIds)
+  await pageDataUtil.rewriteCompilationHashes(
+    { publicDir },
+    stalePaths,
+    newHash
+  )
+  store.dispatch({
+    type: `SET_WEBPACK_COMPILATION_HASH`,
+    payload: newHash,
+  })
 }
 
 module.exports = async function build(program: BuildArgs) {
@@ -75,10 +92,18 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   const webpackCompilationHash = stats.hash
-  store.dispatch({
-    type: `SET_WEBPACK_COMPILATION_HASH`,
-    payload: webpackCompilationHash,
-  })
+  if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
+    activity = report.activityTimer(`Rewriting compilation hashes`, {
+      parentSpan: buildSpan,
+    })
+    activity.start()
+    await handleChangedCompilationHash(
+      store.getState(),
+      pageQueryIds,
+      webpackCompilationHash
+    )
+    activity.end()
+  }
 
   activity = report.activityTimer(`run page queries`)
   activity.start()
