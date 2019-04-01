@@ -8,9 +8,23 @@ const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
+const detect = require(`detect-port`)
+const report = require(`gatsby-cli/lib/reporter`)
+const rl = require(`readline`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
 const telemetry = require(`gatsby-telemetry`)
+
+const rlInterface = rl.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
+
+// Quit immediately on hearing ctrl-c
+rlInterface.on(`SIGINT`, () => {
+  telemetry.trackCli(`DEVELOP_STOP`)
+  process.exit()
+})
 
 const getPages = directory =>
   fs
@@ -74,22 +88,46 @@ module.exports = async program => {
   })
   app.use(pathPrefix, router)
 
-  const server = app.listen(port, host, () => {
-    let openUrlString = `http://${host}:${port}${pathPrefix}`
-    console.log(
-      `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
-        openUrlString
-      )}`
-    )
-    if (open) {
-      console.log(`${chalk.blue(`info`)} Opening browser...`)
-      Promise.resolve(openurl(openUrlString)).catch(err =>
-        console.log(
-          `${chalk.yellow(
-            `warn`
-          )} Browser not opened because no browser was found`
-        )
+  // Starts listening and returns server
+  const startListening = () =>
+    app.listen(port, host, () => {
+      let openUrlString = `http://${host}:${port}${pathPrefix}`
+      console.log(
+        `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
+          openUrlString
+        )}`
       )
+      if (open) {
+        console.log(`${chalk.blue(`info`)} Opening browser...`)
+        Promise.resolve(openurl(openUrlString)).catch(err =>
+          console.log(
+            `${chalk.yellow(
+              `warn`
+            )} Browser not opened because no browser was found`
+          )
+        )
+      }
+    })
+
+  let server
+
+  detect(port, (err, _port) => {
+    if (err) {
+      report.panic(err)
+    }
+
+    if (port !== _port) {
+      // eslint-disable-next-line max-len
+      const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+
+      rlInterface.question(question, answer => {
+        if (answer.length === 0 || answer.match(/^yes|y$/i)) {
+          port = _port // eslint-disable-line no-param-reassign
+        }
+        server = startListening()
+      })
+    } else {
+      server = startListening()
     }
   })
 
