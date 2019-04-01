@@ -7,13 +7,11 @@ import matchPaths from "./match-paths.json"
 
 const preferDefault = m => (m && m.default) || m
 
+const pageNotFoundPaths = new Set()
+
 let apiRunner
 let syncRequires = {}
 let asyncRequires = {}
-let fetchHistory = []
-
-const failedPaths = {}
-const MAX_HISTORY = 5
 
 const fetchedPageData = {}
 const pageDatas = {}
@@ -78,24 +76,11 @@ const cleanAndFindPath = rawPathname => {
   return foundPath
 }
 
-const wrapHistory = fetchPromise => {
-  let succeeded = false
-  return fetchPromise
-    .then(resource => {
-      succeeded = true
-      return resource
-    })
-    .finally(() => {
-      fetchHistory.push({ succeeded })
-      fetchHistory = fetchHistory.slice(-MAX_HISTORY)
-    })
-}
-
 const cachedFetch = (resourceName, fetchFn) => {
   if (resourceName in fetchPromiseStore) {
     return fetchPromiseStore[resourceName]
   } else {
-    const promise = wrapHistory(fetchFn(resourceName))
+    const promise = fetchFn(resourceName)
     fetchPromiseStore[resourceName] = promise
     return promise.catch(err => {
       delete fetchPromiseStore[resourceName]
@@ -104,28 +89,45 @@ const cachedFetch = (resourceName, fetchFn) => {
   }
 }
 
-const fetchUrl = url =>
+const doFetch = url =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(`GET`, url, true)
     req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
-        if (req.status === 200) {
-          // TODO is this safe? Maybe just do this check in dev mode?
-          const contentType = req.getResponseHeader(`content-type`)
-          if (!contentType || !contentType.startsWith(`application/json`)) {
-            reject()
-          } else {
-            resolve(JSON.parse(req.responseText))
-          }
-        } else {
-          reject()
-        }
+        resolve(req)
       }
     }
     req.send(null)
   })
+
+const handlePageDataResponse = (path, req) => {
+  fetchedPageData[path] = true
+  if (req.status === 200) {
+    const contentType = req.getResponseHeader(`content-type`)
+    if (!contentType || !contentType.startsWith(`application/json`)) {
+      pageNotFoundPaths.add(path)
+      return null
+    } else {
+      const pageData = JSON.parse(req.responseText)
+      pageDatas[path] = pageData
+      return pageData
+    }
+  } else if (req.status === 404) {
+    pageNotFoundPaths.add(path)
+    return null
+  } else {
+    throw new Error(`error fetching page`)
+  }
+}
+
+const fetchPageData = path => {
+  const url = makePageDataUrl(path)
+  return cachedFetch(url, doFetch).then(req =>
+    handlePageDataResponse(path, req)
+  )
+}
 
 const createComponentUrls = componentChunkName =>
   window.___chunkMapping[componentChunkName].map(
@@ -143,20 +145,6 @@ const stripSurroundingSlashes = s => {
 const makePageDataUrl = path => {
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
   return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
-}
-
-const fetchPageData = path => {
-  const url = makePageDataUrl(path)
-  return cachedFetch(url, fetchUrl).then((pageData, err) => {
-    fetchedPageData[path] = true
-    if (pageData) {
-      pageDatas[path] = pageData
-      return pageData
-    } else {
-      failedPaths[path] = err || `failed path`
-      return null
-    }
-  })
 }
 
 const onPrefetchPathname = pathname => {
@@ -246,7 +234,7 @@ const queue = {
         .then(() =>
           // This was just prefetched, so will return a response from
           // the cache instead of making another request to the server
-          fetchUrl(pageDataUrl)
+          fetchPageData(realPath)
         )
         .then(pageData => {
           // Tell plugins the path has been successfully prefetched
@@ -265,7 +253,7 @@ const queue = {
     return true
   },
 
-  isFailedPath: pathname => !!failedPaths[pathname],
+  isPageNotFound: pathname => pageNotFoundPaths.has(pathname),
 
   loadPageData: rawPath =>
     new Promise((resolve, reject) => {

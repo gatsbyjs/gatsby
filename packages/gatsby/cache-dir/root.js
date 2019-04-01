@@ -40,7 +40,7 @@ class RouteHandler extends React.Component {
     const pages = devLoader.getPagesManifest()
     const pagePaths = Object.keys(pages)
 
-    if (!loader.isFailedPath(location.pathname)) {
+    if (!loader.isPageNotFound(location.pathname)) {
       // check if page exists - in dev pages are sync loaded, it's safe to use
       // loader.getPage
       const page = loader.getPage(location.pathname)
