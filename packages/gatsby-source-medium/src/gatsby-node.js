@@ -76,7 +76,7 @@ exports.sourceNodes = async (
     resources.map(resource => {
       convertTimestamps(resource)
 
-      const contentDigest = createContentDigest(JSON.stringify(resource))
+      const contentDigest = createContentDigest(resource)
 
       const links =
         resource.type === `Post`
