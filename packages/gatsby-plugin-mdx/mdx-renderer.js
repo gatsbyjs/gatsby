@@ -3,8 +3,8 @@ const { useMDXComponents, mdx } = require("@mdx-js/react");
 const { useMDXScope } = require("./context");
 
 module.exports = function MDXRenderer({
-  scope = {},
-  components = {},
+  scope,
+  components,
   children,
   ...props
 }) {
