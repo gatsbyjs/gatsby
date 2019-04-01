@@ -35,6 +35,8 @@ const updateCompilationHash = async (
   await fs.outputFile(filePath, JSON.stringify(pageData))
 }
 
+// TODO We should move this to a worker model (like html page
+// rendering) for performance
 const rewriteCompilationHashes = (
   { publicDir },
   pagePaths,
@@ -43,14 +45,14 @@ const rewriteCompilationHashes = (
   if (pagePaths.length === 0) {
     return Promise.resolve()
   }
-  const options = {
+  const queueOptions = {
     concurrent: 4,
   }
   const handler = async (pagePath, callback) => {
     await updateCompilationHash({ publicDir }, pagePath, compilationHash)
     callback(null)
   }
-  const q = new Queue(handler, options)
+  const q = new Queue(handler, queueOptions)
   const drainPromise = new Promise(resolve => {
     q.once(`drain`, () => resolve())
   })
