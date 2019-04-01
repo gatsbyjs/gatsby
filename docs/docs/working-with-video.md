@@ -139,4 +139,4 @@ To include your own video files that will work in multiple web browsers and plat
 
 One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. It is strongly encouraged to provide captions and subtitles for your videos, and use a player with accessible controls.
 
-Check out the accessible [HTML5 video player from Paypal](https://github.com/paypal/accessible-html5-video-player#react-version) for an example compatible with Gatsby and React.
+Check out the accessible [HTML5 video player from PayPal](https://github.com/paypal/accessible-html5-video-player#react-version) for an example compatible with Gatsby and React.
