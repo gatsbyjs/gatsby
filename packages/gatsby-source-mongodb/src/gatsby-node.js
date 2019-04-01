@@ -67,6 +67,7 @@ function createNodes(
   createNodeId,
   collectionName
 ) {
+  const { preserveObjectIds = false } = pluginOptions
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
     let cursor = collection.find()
@@ -77,13 +78,11 @@ function createNodes(
         reject(err)
       }
 
-      documents.forEach(doc => {
-        const item = { ...doc } // lets keep doc immutable
-        const id = item._id.toHexString()
-        delete item._id
+      documents.forEach(({ _id, ...item }) => {
+        const id = _id.toHexString()
 
         // only call recursive function to preserve relations represented by objectids if pluginoption set.
-        if (pluginOptions.preserveObjectIds) {
+        if (preserveObjectIds) {
           for (let key in item) {
             item[key] = stringifyObjectIds(item[key])
           }
