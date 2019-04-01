@@ -51,16 +51,16 @@ Gatsby is unique among most open source projects because:
 
 ### General Guidelines
 
-- **Be empathic.** The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
+- **Be empathetic.** The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
 - **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
 - **Encourage community contributions.** Getting people involved makes a huge impact. It’s often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
 - **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
 
-### Labelling
+### Labeling
 
-Labelling helps group issues into manageable sets and also improves searchability and scannability. We have a set of labels that we use to group issues based on their type and status. While we want to limit adding too many labels, feel free to add one if it seems relevant and helps with this grouping!
+Labeling helps group issues into manageable sets and also improves searchability and scannability. We have a set of labels that we use to group issues based on their type and status. While we want to limit adding too many labels, feel free to add one if it seems relevant and helps with this grouping!
 
-It's nice to update labels as the state of an issue changes or if for example, a question becomes a feature request or a bug report
+It's nice to update labels as the state of an issue changes or if the type of an issue changes, for example if a question becomes a feature request.
 
 ### Resolution Flow Chart
 
@@ -74,9 +74,9 @@ https://github.com/orgs/gatsbyjs/teams/admin/discussions/3
 
 We have a bot that helps us automate some aspects:
 
-- Issues with a question mark in their title or starting with "how" are automatically labelled as questions
+- Issues with a question mark in their title or starting with "how" are automatically labeled as questions
 - Issues with an empty body are closed
-- Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless anyone comments saying not stale or adds the not stale label
+- Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless there are additional comments or the "not stale" label is applied
 
 ## Frequently Asked Questions
 
