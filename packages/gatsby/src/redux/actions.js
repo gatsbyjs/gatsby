@@ -50,7 +50,6 @@ type Page = {
   component: string,
   context: Object,
   internalComponentName: string,
-  jsonName: string,
   componentChunkName: string,
   updatedAt: number,
 }
@@ -268,18 +267,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  let jsonName
   let internalComponentName
   if (page.path === `/`) {
-    jsonName = `index`
     internalComponentName = `ComponentIndex`
   } else {
-    jsonName = `${kebabHash(page.path)}`
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
   let internalPage: Page = {
-    jsonName,
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,

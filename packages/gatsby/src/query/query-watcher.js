@@ -42,9 +42,9 @@ const handleComponentsWithRemovedQueries = (
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
         type: `REMOVE_STATIC_QUERY`,
-        payload: c.jsonName,
+        payload: c.id,
       })
-      boundActionCreators.deleteComponentsDependencies([c.jsonName])
+      boundActionCreators.deleteComponentsDependencies([c.id])
     }
   })
 }
@@ -57,7 +57,7 @@ const handleQuery = (
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
-    const oldQuery = staticQueryComponents.get(query.jsonName)
+    const oldQuery = staticQueryComponents.get(query.id)
     const isNewQuery = !oldQuery
 
     // Compare query text because text is compiled query with any attached
@@ -71,10 +71,9 @@ const handleQuery = (
       oldQuery.text !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
+        id: query.id,
         name: query.name,
         componentPath: query.path,
-        id: query.jsonName,
-        jsonName: query.jsonName,
         query: query.text,
         hash: query.hash,
       })
@@ -85,8 +84,8 @@ const handleQuery = (
         }.`
       )
 
-      boundActionCreators.deleteComponentsDependencies([query.jsonName])
-      queryRunner.enqueueExtractedQueryId(query.jsonName)
+      boundActionCreators.deleteComponentsDependencies([query.id])
+      queryRunner.enqueueExtractedQueryId(query.id)
     }
     return true
   }

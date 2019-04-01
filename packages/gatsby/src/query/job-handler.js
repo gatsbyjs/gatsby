@@ -80,7 +80,6 @@ ${formatErrorDetails(errorDetails)}`)
 
   // Delete internal data from pageContext
   if (result.pageContext) {
-    delete result.pageContext.jsonName
     delete result.pageContext.path
     delete result.pageContext.internalComponentName
     delete result.pageContext.component

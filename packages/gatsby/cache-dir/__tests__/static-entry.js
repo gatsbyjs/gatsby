@@ -22,29 +22,6 @@ jest.mock(
   }
 )
 
-jest.mock(
-  `../data.json`,
-  () => {
-    return {
-      dataPaths: [
-        {
-          [`about.json`]: `/400/about`,
-        },
-      ],
-      pages: [
-        {
-          path: `/about/`,
-          componentChunkName: `page-component---src-pages-test-js`,
-          jsonName: `about.json`,
-        },
-      ],
-    }
-  },
-  {
-    virtual: true,
-  }
-)
-
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
