@@ -69,7 +69,7 @@ Thanks for being part of the open source community! 💪💜
 [twitter]: https://twitter.com/gatsbyjs
 [org]: https://github.com/gatsbyjs
 [store]: https://store.gatsbyjs.org/
-[swag]: /docs/contributor-swag/
+[swag]: /contributing/contributor-swag/
 [swag-source]: https://github.com/gatsbyjs/store.gatsbyjs.org
 [swag-api]: https://github.com/gatsbyjs/api.gatsbyjs.org
 [v2]: /blog/2018-06-16-announcing-gatsby-v2-beta-launch/
@@ -78,4 +78,4 @@ Thanks for being part of the open source community! 💪💜
 [auth0]: https://auth0.com/
 [invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/rules/invite-collaborator.ts
 [peril]: https://github.com/danger/peril
-[contribute]: /docs/how-to-contribute/
+[contribute]: /contributing/how-to-contribute/

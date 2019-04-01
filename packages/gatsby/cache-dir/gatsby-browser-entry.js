@@ -6,9 +6,9 @@ import Link, {
   push,
   replace,
   navigateTo,
+  parsePath,
 } from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
-import parsePath from "./parse-path"
 
 const StaticQueryContext = React.createContext({})
 

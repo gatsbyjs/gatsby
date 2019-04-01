@@ -19,11 +19,11 @@ First you’ll need to install the `gatsby-source-wordpress` plugin that has ima
 Create a new Gatsby project and change directories into the new project you just created:
 
 ```shell
-npx gatsby new images-tutorial-site
+gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s READme file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install --save gatsby-source-wordpress
@@ -48,7 +48,7 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
          */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
@@ -95,7 +95,7 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
-         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
          */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.

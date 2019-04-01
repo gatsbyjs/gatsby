@@ -12,7 +12,7 @@ In this tutorial you'll create your own source plugin. Your plugin will source d
 
 Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/create-source-plugin/)
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/source-plugin-tutorial/)
 
 ## Why create a source plugin?
 
@@ -53,7 +53,7 @@ Your plugin will have the following behavior:
 Create a new Gatsby project and change directories into the new project you just created.
 
 ```shell
-npx gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
+gatsby new source-tutorial-site https://github.com/gatsbyjs/gatsby-starter-default
 cd source-tutorial-site
 ```
 
@@ -362,7 +362,7 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
 
 ## Summary
 
@@ -381,7 +381,7 @@ Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugi
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 
-Check out Gatsby's docs on [plugin authoring](/docs/plugin-authoring/) and [creating a source plugin](/docs/create-source-plugin).
+Check out Gatsby's docs on [plugin authoring](/docs/how-plugins-work/) and [creating a source plugin](/docs/source-plugin-tutorial/).
 
 ### A note on JavaScript versions
 

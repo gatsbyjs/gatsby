@@ -10,6 +10,8 @@ const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 
+const telemetry = require(`gatsby-telemetry`)
+
 const getPages = directory =>
   fs
     .readFile(path.join(directory, `.cache`, `pages.json`))
@@ -17,18 +19,23 @@ const getPages = directory =>
     .catch(() => [])
 
 const clientOnlyPathsRouter = (pages, options) => {
-  const clientOnlyRoutes = pages
-    .filter(page => page.matchPath)
-    .map(page => page.matchPath)
+  const clientOnlyRoutes = pages.filter(page => page.matchPath)
   return (req, res, next) => {
     const { url } = req
     if (req.accepts(`html`)) {
-      if (clientOnlyRoutes.some(route => reachMatch(route, url) !== null)) {
-        return res.sendFile(`index.html`, options, err => {
-          if (err) {
-            next()
+      const route = clientOnlyRoutes.find(
+        clientRoute => reachMatch(clientRoute.matchPath, url) !== null
+      )
+      if (route && route.path) {
+        return res.sendFile(
+          path.join(route.path, `index.html`),
+          options,
+          err => {
+            if (err) {
+              next()
+            }
           }
-        })
+        )
       }
     }
     return next()
@@ -36,6 +43,8 @@ const clientOnlyPathsRouter = (pages, options) => {
 }
 
 module.exports = async program => {
+  telemetry.trackCli(`SERVE_START`)
+  telemetry.startBackgroundUpdate()
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
@@ -51,6 +60,9 @@ module.exports = async program => {
 
   const app = express()
   const router = express.Router()
+
+  app.use(telemetry.expressMiddleware(`SERVE`))
+
   router.use(compression())
   router.use(express.static(`public`))
   router.use(clientOnlyPathsRouter(pages, { root }))
@@ -81,5 +93,8 @@ module.exports = async program => {
     }
   })
 
-  signalExit(() => server.close())
+  signalExit(() => {
+    telemetry.trackCli(`SERVE_STOP`)
+    server.close()
+  })
 }
