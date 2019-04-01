@@ -72,7 +72,7 @@ const getCachedStaticQueryResults = (
     }
     const jsonResult = JSON.parse(fileResult)
     cachedStaticQueryResults.set(staticQueryComponent.hash, {
-      result: jsonResult,
+      ...jsonResult,
       id: staticQueryComponent.hash,
     })
   })

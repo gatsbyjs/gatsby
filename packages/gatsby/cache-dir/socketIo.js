@@ -28,7 +28,7 @@ export default function socketIo() {
             if (didDataChange(msg, staticQueryData)) {
               staticQueryData = {
                 ...staticQueryData,
-                [msg.payload.id]: msg.payload.result,
+                [msg.payload.id]: msg.payload,
               }
             }
           } else if (msg.type === `pageQueryResult`) {
