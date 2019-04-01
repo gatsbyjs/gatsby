@@ -15,7 +15,6 @@ Add a plugin-entry to your `gatsby-config.js`
 
 ```js
 module.exports = {
-  // ...
   plugins: [`gatsby-transformer-react-docgen`],
 }
 ```
@@ -26,7 +25,6 @@ argument for more Gatsby specific handler behavior.
 
 ```js
 module.exports = {
-  // ...
   plugins: [
     {
       resolve: "gatsby-transformer-react-docgen",
@@ -49,7 +47,6 @@ how to properly resolve your local babel config. See the [react-docgen documenta
 
 ```js
 module.exports = {
-  // ...
   plugins: [
     {
       resolve: "gatsby-transformer-react-docgen",
