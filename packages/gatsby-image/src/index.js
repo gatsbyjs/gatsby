@@ -218,7 +218,9 @@ class Image extends React.Component {
         }
 
         // imgCached and imgLoaded must update after isVisible,
-        // more details in this comments related commit
+        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
+        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
+        // avoiding initiating unnecessary animation frames from style changes.
         this.setState({ isVisible: true }, () =>
           this.setState({
             imgLoaded: imageInCache,
