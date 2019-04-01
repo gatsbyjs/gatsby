@@ -2,16 +2,14 @@
 const path = require(`path`)
 const openurl = require(`better-opn`)
 const fs = require(`fs-extra`)
-const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
-const detect = require(`detect-port`)
-const report = require(`gatsby-cli/lib/reporter`)
-const rl = require(`readline`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const rl = require(`readline`)
 
 const telemetry = require(`gatsby-telemetry`)
 
@@ -22,7 +20,7 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
-  telemetry.trackCli(`DEVELOP_STOP`)
+  telemetry.trackCli(`SERVE_STOP`)
   process.exit()
 })
 
@@ -88,8 +86,7 @@ module.exports = async program => {
   })
   app.use(pathPrefix, router)
 
-  // Starts listening and returns server
-  const startListening = () =>
+  const startListening = () => {
     app.listen(port, host, () => {
       let openUrlString = `http://${host}:${port}${pathPrefix}`
       console.log(
@@ -108,31 +105,10 @@ module.exports = async program => {
         )
       }
     })
+  }
 
-  let server
-
-  detect(port, (err, _port) => {
-    if (err) {
-      report.panic(err)
-    }
-
-    if (port !== _port) {
-      // eslint-disable-next-line max-len
-      const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-
-      rlInterface.question(question, answer => {
-        if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-          port = _port // eslint-disable-line no-param-reassign
-        }
-        server = startListening()
-      })
-    } else {
-      server = startListening()
-    }
-  })
-
-  signalExit(() => {
-    telemetry.trackCli(`SERVE_STOP`)
-    server.close()
+  detectPortInUseAndPrompt(port, rlInterface, newPort => {
+    port = newPort
+    startListening()
   })
 }

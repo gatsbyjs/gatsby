@@ -32,6 +32,7 @@ const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -260,7 +261,6 @@ module.exports = async (program: any) => {
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
-  const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
@@ -286,31 +286,12 @@ module.exports = async (program: any) => {
 
   let compiler
   await new Promise(resolve => {
-    detect(port, (err, _port) => {
-      if (err) {
-        report.panic(err)
-      }
-
-      if (port !== _port) {
-        // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-
-        rlInterface.question(question, answer => {
-          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-            program.port = _port // eslint-disable-line no-param-reassign
-          }
-
-          startServer(program).then(([c, l]) => {
-            compiler = c
-            resolve()
-          })
-        })
-      } else {
-        startServer(program).then(([c, l]) => {
-          compiler = c
-          resolve()
-        })
-      }
+    detectPortInUseAndPrompt(port, rlInterface, newPort => {
+      program.port = newPort
+      startServer(program).then(([c, l]) => {
+        compiler = c
+        resolve()
+      })
     })
   })
 
