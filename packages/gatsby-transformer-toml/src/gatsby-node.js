@@ -23,8 +23,7 @@ async function onCreateNode({
   // This version suffers from:
   // 1) More TOML files -> more types
   // 2) Different files with the same name creating conflicts
-  const parsedContentStr = JSON.stringify(parsedContent)
-  const contentDigest = createDigestContent(parsedContentStr)
+  const contentDigest = createDigestContent(parsedContent)
 
   const newNode = {
     ...parsedContent,
