@@ -25,15 +25,34 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 > 💡 For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
 
-## Install Node.js
+## Install Homebrew for Node.js
+
+To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+
+How to install or verify Homebrew on your computer:
+
+1. Open your Terminal
+1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number, if so.
+1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
+1. Once you've installed Homebrew, repeat step 2 to verify.
+1. Run `brew update` to make sure you have the latest version of Homebrew.
+
+### Mac Users: install XCode Command Line Tools
+
+1. Open your Terminal
+1. On a Mac, install XCode Command line tools by running `xcode-select --install`.
+1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+
+## ⌚ Install Node.js and npm
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
-### ⌚ Download Node.js
+1. Open your Terminal.
+1. Run this command to install Node and npm in one go: `brew install node`
 
-Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:
+Once you have followed the installation steps, make sure everything was installed properly:
 
 ### Check your Node.js installation
 
