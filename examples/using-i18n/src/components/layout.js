@@ -1,10 +1,9 @@
 import React from "react"
 
-const Layout = () => (
-  <React.Fragment>
-    <h1>content 1</h1>
-    <p>TODO</p>
-  </React.Fragment>
+const LocaleContext = React.createContext()
+
+const Layout = ({ children, pageContext: { locale } }) => (
+  <LocaleContext.Provider value={{ locale }}>{children}</LocaleContext.Provider>
 )
 
-export default Layout
+export { Layout, LocaleContext }
