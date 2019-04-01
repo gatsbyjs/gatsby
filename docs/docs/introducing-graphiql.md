@@ -33,4 +33,4 @@ Make sure to check out the Graph_i_QL docs in the upper right-hand corner of the
 ## Other resources
 
 - See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using Graph_i_QL
-- See the [READme for Graph_i_QL](https://github.com/graphql/graphiql)
+- See the [README for Graph_i_QL](https://github.com/graphql/graphiql)

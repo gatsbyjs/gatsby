@@ -50,7 +50,7 @@ Here’s a summary of what I learned from over 80 interviews with Gatsby users. 
 
 The empathy map reflects the following pain points:
 
-- the Awesome Gatsby list of sites (used to be part of the READme in the open source repo) was growing long and was not searchable or filterable
+- the Awesome Gatsby list of sites (used to be part of the README in the open source repo) was growing long and was not searchable or filterable
 - the Awesome Gatsby list also had no visual indication of what the sites looked like
 - there isn’t enough time or room for everyone's awesome sites to get retweeted by the @Gatsbyjs account
 
