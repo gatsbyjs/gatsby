@@ -149,7 +149,7 @@ Now you can save the config.yml file, commit the change, and push it to your Git
 See the [GitLab Backend](https://www.netlifycms.org/docs/authentication-backends/#gitlab-backend)
 section for details on how to configure authentication with GitLab.
 
-If you use the Client-Side Implicit Grant option, disable the Netlify Identity service in your
+If you use the [Client-Side Implicit Grant](https://www.netlifycms.org/docs/authentication-backends/#client-side-implicit-grant) option, disable the Netlify Identity service in your
 `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
