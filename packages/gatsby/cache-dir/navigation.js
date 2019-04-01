@@ -82,6 +82,8 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.loadPage(pathname).then(pageResources => {
+    // If the loaded page has a different compilation hash to the
+    // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {
       if (pageResources.page.compilationHash !== window.___compilationHash) {
         console.log(

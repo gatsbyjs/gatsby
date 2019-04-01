@@ -19,7 +19,6 @@ window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
 window.___compilationHash = window.pageData.compilationHash
-console.log(`compilation hash`, window.___compilationHash)
 
 loader.addPageData([window.pageData])
 loader.addProdRequires(asyncRequires)

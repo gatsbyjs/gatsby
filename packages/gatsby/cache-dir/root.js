@@ -41,28 +41,20 @@ class RouteHandler extends React.Component {
     const pagePaths = Object.keys(pages)
 
     if (!loader.isPageNotFound(location.pathname)) {
-      // check if page exists - in dev pages are sync loaded, it's safe to use
-      // loader.getPage
-      const page = loader.getPage(location.pathname)
-      if (page) {
-        return (
-          <EnsureResources location={location}>
-            {locationAndPageResources => (
-              <RouteUpdates location={location}>
-                <ScrollContext
-                  location={location}
-                  shouldUpdateScroll={shouldUpdateScroll}
-                >
-                  <JSONStore {...this.props} {...locationAndPageResources} />
-                </ScrollContext>
-              </RouteUpdates>
-            )}
-          </EnsureResources>
-        )
-      } else {
-        console.log(`shouldn't be here`)
-        throw new Error(`shouldn't be here`)
-      }
+      return (
+        <EnsureResources location={location}>
+          {locationAndPageResources => (
+            <RouteUpdates location={location}>
+              <ScrollContext
+                location={location}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <JSONStore {...this.props} {...locationAndPageResources} />
+              </ScrollContext>
+            </RouteUpdates>
+          )}
+        </EnsureResources>
+      )
     } else {
       const dev404Page = loader.getPage(`/dev-404-page/`)
       const Dev404Page = dev404Page.component

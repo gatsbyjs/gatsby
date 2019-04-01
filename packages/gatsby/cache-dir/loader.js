@@ -154,13 +154,6 @@ const onPrefetchPathname = pathname => {
   }
 }
 
-const onPostPrefetch = url => {
-  if (!prefetchCompleted[url]) {
-    apiRunner(`onPostPrefetch`, { url })
-    prefetchCompleted[url] = true
-  }
-}
-
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -171,6 +164,13 @@ let pathScriptsCache = {}
 let prefetchTriggered = {}
 let prefetchCompleted = {}
 let disableCorePrefetching = false
+
+const onPostPrefetch = url => {
+  if (!prefetchCompleted[url]) {
+    apiRunner(`onPostPrefetch`, { url })
+    prefetchCompleted[url] = true
+  }
+}
 
 const queue = {
   addPageData: pageData => {
@@ -185,11 +185,7 @@ const queue = {
   // Hovering on a link is a very strong indication the user is going to
   // click on it soon so let's start prefetching resources for this
   // pathname.
-  hovering: path => {
-    queue.loadPage(path).catch(err => {
-      console.log(`hovering page not found`, path)
-    })
-  },
+  hovering: path => queue.loadPage(path),
   enqueue: rawPath => {
     if (!apiRunner)
       console.error(`Run setApiRunnerForLoader() before enqueing paths`)
