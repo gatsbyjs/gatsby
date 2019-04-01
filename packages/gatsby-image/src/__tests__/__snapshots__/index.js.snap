@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Img /> should render fixed size images 1`] = `
+exports[`<Image /> should render fixed size images 1`] = `
 <div>
   <div
     class="fixedImage gatsby-image-wrapper"
@@ -41,7 +41,7 @@ exports[`<Img /> should render fixed size images 1`] = `
 </div>
 `;
 
-exports[`<Img /> should render fluid images 1`] = `
+exports[`<Image /> should render fluid images 1`] = `
 <div>
   <div
     class="fixedImage gatsby-image-wrapper"
