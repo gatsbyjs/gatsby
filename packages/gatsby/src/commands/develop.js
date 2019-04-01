@@ -402,7 +402,7 @@ module.exports = async (program: any) => {
       })
     })
 
-  const ascertainPort = async port => {
+  const selectPort = async port => {
     let foundPort = port
     const detectedPort = await detectPort(port)
     if (port !== detectedPort) {
@@ -412,7 +412,7 @@ module.exports = async (program: any) => {
     }
     return foundPort
   }
-  program.port = await ascertainPort(port)
+  program.port = await selectPort(port)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
