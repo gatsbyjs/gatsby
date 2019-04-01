@@ -15,7 +15,7 @@ const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
 const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
@@ -101,6 +101,42 @@ function startQueryDaemon() {
   const queue = queryRunner.createQueue({ postHandler, betterQueueOptions })
   queryRunner.startDaemon(queue)
 }
+
+async function runStaticQueries(queryIds) {
+  let activity = report.activityTimer(`run static queries`)
+  activity.start()
+  await queryRunner.processQueries(
+    queryIds.map(id => queryRunner.makeStaticQueryJob(store.getState(), id)),
+    { activity }
+  )
+  activity.end()
+}
+
+const runPageQueries = async queryIds => {
+  let activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryRunner.processQueries(
+    queryIds.map(id => queryRunner.makePageQueryJob(store.getState(), id)),
+    { activity }
+  )
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+}
+
+const waitJobsFinished = () =>
+  new Promise((resolve, reject) => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
 
 async function startServer(program) {
   const directory = program.directory
@@ -378,11 +414,6 @@ module.exports = async (program: any) => {
   }
   program.port = await ascertainPort(port)
 
-  // Start bootstrap process.
-  const { pageQueryIds } = await bootstrap(program)
-
-  const [compiler] = await startServer(program)
-
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
       url.format({
@@ -517,21 +548,17 @@ module.exports = async (program: any) => {
     })
   }
 
-  const runPageQueries = async queryIds => {
-    let activity = report.activityTimer(`run page queries`)
-    activity.start()
-    await queryRunner.processQueries(
-      pageQueryIds.map(id =>
-        queryRunner.makePageQueryJob(store.getState(), id)
-      ),
-      { activity }
-    )
-    activity.end()
+  // Start bootstrap process.
+  const { graphqlRunner } = await bootstrap(program)
 
-    require(`../redux/actions`).boundActionCreators.setProgramStatus(
-      `BOOTSTRAP_QUERY_RUNNING_FINISHED`
-    )
-  }
+  // Start the createPages hot reloader.
+  require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
+
+  const queryIds = queryRunner.calcBootstrapDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
+  await runStaticQueries(staticQueryIds)
+
+  const [compiler] = await startServer(program)
 
   let isFirstCompile = true
 
@@ -554,6 +581,7 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       runPageQueries(pageQueryIds)
+        .then(() => waitJobsFinished())
         .then(() => writeJsRequires.startDaemon())
         .then(() => db.saveState())
         .then(() => db.startAutosave())

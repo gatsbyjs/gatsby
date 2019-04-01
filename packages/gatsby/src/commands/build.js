@@ -12,7 +12,7 @@ const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const db = require(`../db`)
 
 function reportFailure(msg, err: Error) {
@@ -28,6 +28,18 @@ type BuildArgs = {
   openTracingConfigFile: string,
 }
 
+async function runStaticQueries({ parentSpan }, staticQueryIds) {
+  let activity = report.activityTimer(`run static queries`, { parentSpan })
+  activity.start()
+  await queryRunner.processQueries(
+    staticQueryIds.map(id =>
+      queryRunner.makeStaticQueryJob(store.getState(), id)
+    ),
+    { activity }
+  )
+  activity.end()
+}
+
 module.exports = async function build(program: BuildArgs) {
   let activity
   initTracer(program.openTracingConfigFile)
@@ -40,10 +52,15 @@ module.exports = async function build(program: BuildArgs) {
   const buildSpan = tracer.startSpan(`build`)
   buildSpan.setTag(`directory`, program.directory)
 
-  const { pageQueryIds, graphqlRunner } = await bootstrap({
+  const { graphqlRunner } = await bootstrap({
     ...program,
     parentSpan: buildSpan,
   })
+
+  const queryIds = queryRunner.calcBootstrapDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
+
+  await runStaticQueries({ parentSpan: buildSpan }, staticQueryIds)
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -78,6 +95,20 @@ module.exports = async function build(program: BuildArgs) {
     { activity }
   )
   activity.end()
+
+  const waitJobsFinished = () =>
+    new Promise((resolve, reject) => {
+      const onEndJob = () => {
+        if (store.getState().jobs.active.length === 0) {
+          resolve()
+          emitter.off(`END_JOB`, onEndJob)
+        }
+      }
+      emitter.on(`END_JOB`, onEndJob)
+      onEndJob()
+    })
+
+  await waitJobsFinished()
 
   await db.saveState()
 

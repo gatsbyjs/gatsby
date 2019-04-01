@@ -29,7 +29,6 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const queryRunner = require(`../query`)
 const { extractQueries } = require(`../query/query-watcher`)
 const writeJsRequires = require(`./write-js-requires`)
 const { writeRedirects } = require(`./redirects-writer`)
@@ -446,26 +445,6 @@ module.exports = async (args: BootstrapArgs) => {
   await extractQueries()
   activity.end()
 
-  // Start the createPages hot reloader.
-  if (process.env.NODE_ENV !== `production`) {
-    require(`./page-hot-reloader`)(graphqlRunner)
-  }
-
-  const queryIds = queryRunner.calcBootstrapDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
-
-  activity = report.activityTimer(`run static queries`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await queryRunner.processQueries(
-    staticQueryIds.map(id =>
-      queryRunner.makeStaticQueryJob(store.getState(), id)
-    ),
-    { activity }
-  )
-  activity.end()
-
   try {
     await writeJsRequires.writeAll(store.getState())
   } catch (err) {
@@ -474,36 +453,8 @@ module.exports = async (args: BootstrapArgs) => {
 
   await writeRedirects()
 
-  let onEndJob
-
-  const checkJobsDone = _.debounce(async resolve => {
-    const state = store.getState()
-    if (state.jobs.active.length === 0) {
-      emitter.off(`END_JOB`, onEndJob)
-
-      await finishBootstrap(bootstrapSpan)
-      resolve({ graphqlRunner, pageQueryIds })
-    }
-  }, 100)
-
-  if (store.getState().jobs.active.length === 0) {
-    await finishBootstrap(bootstrapSpan)
-    return {
-      graphqlRunner,
-      pageQueryIds,
-    }
-  } else {
-    return new Promise(resolve => {
-      // Wait until all side effect jobs are finished.
-      onEndJob = () => checkJobsDone(resolve)
-      emitter.on(`END_JOB`, onEndJob)
-    })
-  }
-}
-
-const finishBootstrap = async bootstrapSpan => {
   // onPostBootstrap
-  const activity = report.activityTimer(`onPostBootstrap`, {
+  activity = report.activityTimer(`onPostBootstrap`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -519,4 +470,6 @@ const finishBootstrap = async bootstrapSpan => {
   )
 
   bootstrapSpan.finish()
+
+  return { graphqlRunner }
 }
