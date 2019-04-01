@@ -1,6 +1,6 @@
 ---
 title: "Behind the Scenes: What makes Gatsby Great"
-date: 2019-03-29
+date: 2019-04-02
 author: Dustin Schau
 excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicriously fast experience that your users will love."
 tags:
