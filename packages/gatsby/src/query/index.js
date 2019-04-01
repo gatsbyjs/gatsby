@@ -149,35 +149,6 @@ const groupQueryIds = queryIds => {
 /////////////////////////////////////////////////////////////////////
 // Create Query Jobs
 
-const makeStaticQueryJob = (state, queryId) => {
-  const component = state.staticQueryComponents.get(queryId)
-  const { hash, id, query, componentPath } = component
-  return {
-    id,
-    hash,
-    query,
-    componentPath,
-    context: { path: id },
-  }
-}
-
-const makePageQueryJob = (state, queryId) => {
-  const page = state.pages.get(queryId)
-  const component = state.components.get(page.componentPath)
-  const { path, componentPath, context } = page
-  const { query } = component
-  return {
-    id: path,
-    query,
-    isPage: true,
-    componentPath,
-    context: {
-      ...page,
-      ...context,
-    },
-  }
-}
-
 const processQueries = async (queryJobs, { activity }) => {
   if (queryJobs.length == 0) {
     return
@@ -205,11 +176,40 @@ const processQueries = async (queryJobs, { activity }) => {
   await drainedPromise
 }
 
+const makePageQueryJob = (state, queryId) => {
+  const page = state.pages.get(queryId)
+  const component = state.components.get(page.componentPath)
+  const { path, componentPath, context } = page
+  const { query } = component
+  return {
+    id: path,
+    query,
+    isPage: true,
+    componentPath,
+    context: {
+      ...page,
+      ...context,
+    },
+  }
+}
+
 const processPageQueries = async (queryIds, { state, activity }) => {
   state = state || store.getState()
   await processQueries(queryIds.map(id => makePageQueryJob(state, id)), {
     activity,
   })
+}
+
+const makeStaticQueryJob = (state, queryId) => {
+  const component = state.staticQueryComponents.get(queryId)
+  const { hash, id, query, componentPath } = component
+  return {
+    id,
+    hash,
+    query,
+    componentPath,
+    context: { path: id },
+  }
 }
 
 const processStaticQueries = async (queryIds, { state, activity }) => {
@@ -223,7 +223,7 @@ const processStaticQueries = async (queryIds, { state, activity }) => {
 // Background query daemon (for gatsby develop)
 
 /**
- * Starts a background process that processes any dirty queries upon
+ * Starts a background process that processes any dirty queries
  * whenever one of the following occurs.
  *
  * 1. A node has changed (but only after the api call has finished
@@ -233,7 +233,7 @@ const processStaticQueries = async (queryIds, { state, activity }) => {
  *
  * For what constitutes a dirty query, see `calcDirtyQueryIds`
  */
-const startDaemon = queue => {
+const startListener = queue => {
   const runQueuedActions = () => {
     const state = store.getState()
 
@@ -274,7 +274,7 @@ module.exports = {
   processPageQueries,
   processStaticQueries,
   runQueries,
-  startDaemon,
+  startListener,
   createQueue: queryQueue.create,
   jobHandler,
 }

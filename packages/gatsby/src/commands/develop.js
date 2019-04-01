@@ -56,9 +56,10 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
-function startQueryDaemon() {
+function startQueryListener() {
   const processing = new Set()
   const waiting = new Map()
+
   const betterQueueOptions = {
     priority: (job, cb) => {
       const activePaths = Array.from(websocketManager.activePaths.values())
@@ -80,6 +81,7 @@ function startQueryDaemon() {
       }
     },
   }
+
   const postHandler = async ({ queryJob, result }) => {
     if (queryJob.isPage) {
       websocketManager.emitPageData({
@@ -98,8 +100,9 @@ function startQueryDaemon() {
       waiting.delete(queryJob.id)
     }
   }
+
   const queue = queryRunner.createQueue({ postHandler, betterQueueOptions })
-  queryRunner.startDaemon(queue)
+  queryRunner.startListener(queue)
 }
 
 const runPageQueries = async queryIds => {
@@ -550,10 +553,10 @@ module.exports = async (program: any) => {
 
   await runPageQueries(pageQueryIds)
   await waitJobsFinished()
-  await writeJsRequires.startDaemon()
+  await writeJsRequires.startPageListener()
   await db.saveState()
   db.startAutosave()
-  startQueryDaemon()
+  startQueryListener()
   queryWatcher.startWatchDeletePage()
 
   const [compiler] = await startServer(program)

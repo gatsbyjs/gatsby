@@ -67,7 +67,7 @@ const debouncedWriteAll = _.debounce(() => writeAll(store.getState()), 500, {
   leading: true,
 })
 
-const startDaemon = () => {
+const startPageListener = () => {
   emitter.on(`CREATE_PAGE`, () => {
     debouncedWriteAll()
   })
@@ -87,5 +87,5 @@ const startDaemon = () => {
 
 module.exports = {
   writeAll,
-  startDaemon,
+  startPageListener,
 }
