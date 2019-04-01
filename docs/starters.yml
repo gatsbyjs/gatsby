@@ -2206,3 +2206,12 @@
     - Responsive Design
     - MaterialUI Paper Components
     - MaterialUI Tab Components
+- url: https://gatsby-starter-devto.netlify.com/
+  repo: https://github.com/geocine/gatsby-starter-devto
+  description: A GatsbyJS starter template that leverages the Dev.to API
+  tags:
+    - Dev.to
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
