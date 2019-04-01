@@ -79,7 +79,6 @@ See the [library of official and community plugins](/plugins/)
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
 
-
 ## Other resources
 
 ### DEV Community
