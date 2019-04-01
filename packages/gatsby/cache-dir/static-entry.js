@@ -45,6 +45,23 @@ const getPageDataPath = path => {
   return join(`page-data`, fixedPagePath, `page-data.json`)
 }
 
+const getPageDataUrl = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  return `${__PATH_PREFIX__}/${pageDataPath}`
+}
+
+const getPageDataFile = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  return join(process.cwd(), `public`, pageDataPath)
+}
+
+const loadPageDataSync = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  const pageDataFile = join(process.cwd(), `public`, pageDataPath)
+  const pageDataJson = fs.readFileSync(pageDataFile)
+  return JSON.parse(pageDataJson)
+}
+
 const createElement = React.createElement
 
 const sanitizeComponents = components => {
@@ -120,11 +137,9 @@ export default (pagePath, callback) => {
     postBodyComponents = sanitizeComponents(components)
   }
 
-  const pageDataPath = getPageDataPath(pagePath)
-  const pageDataFile = join(process.cwd(), `public`, pageDataPath)
-  const pageDataUrl = `${__PATH_PREFIX__}/${pageDataPath}`
-  const pageDataJson = fs.readFileSync(pageDataFile)
-  const pageData = JSON.parse(pageDataJson)
+  const pageDataRaw = fs.readFileSync(getPageDataFile(pagePath))
+  const pageData = JSON.parse(pageDataRaw)
+  const pageDataUrl = getPageDataUrl(pagePath)
   const { componentChunkName } = pageData
 
   class RouteHandler extends React.Component {
@@ -253,6 +268,7 @@ export default (pagePath, callback) => {
     setPostBodyComponents,
     setBodyProps,
     pathname: pagePath,
+    loadPageDataSync,
     bodyHtml,
     scripts,
     styles,
@@ -318,7 +334,7 @@ export default (pagePath, callback) => {
     })
 
   // Add page metadata for the current page
-  const windowData = `/*<![CDATA[*/window.pageData=${pageDataJson};/*]]>*/`
+  const windowData = `/*<![CDATA[*/window.pageData=${pageDataRaw};/*]]>*/`
 
   postBodyComponents.push(
     <script
