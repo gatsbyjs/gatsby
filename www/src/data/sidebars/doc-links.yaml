@@ -489,9 +489,9 @@
   link: /contributing/
   items:
     - title: Community
-    link: /contributing/community/
+      link: /contributing/community/
     - title: How to Contribute
-    link: /contributing/how-to-contribute/
+      link: /contributing/how-to-contribute/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
