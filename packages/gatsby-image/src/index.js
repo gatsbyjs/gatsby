@@ -273,13 +273,13 @@ class Image extends React.Component {
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const delayHide = {
+    const delayHideStyle = {
       transitionDelay: durationFadeIn,
     }
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
-      ...(shouldFadeIn && delayHide),
+      ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
       ...placeholderStyle,
     }
@@ -325,7 +325,7 @@ class Image extends React.Component {
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 right: 0,
                 left: 0,
-                ...(shouldFadeIn && delayHide),
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -410,7 +410,7 @@ class Image extends React.Component {
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 height: image.height,
-                ...(shouldFadeIn && delayHide),
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
