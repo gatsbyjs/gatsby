@@ -155,30 +155,6 @@ const fetchPageData = path => {
   })
 }
 
-const appearsOnLine = () => {
-  const isOnLine = navigator.onLine
-  if (typeof isOnLine === `boolean`) {
-    return isOnLine
-  }
-
-  // If no navigator.onLine support assume onLine if any of last N fetches succeeded
-  const succeededFetch = fetchHistory.find(entry => entry.succeeded)
-  return !!succeededFetch
-}
-
-const handleResourceLoadError = (path, message) => {
-  if (!failedPaths[path]) {
-    failedPaths[path] = message
-  }
-
-  if (
-    appearsOnLine() &&
-    window.location.pathname.replace(/\/$/g, ``) !== path.replace(/\/$/g, ``)
-  ) {
-    window.location.pathname = path
-  }
-}
-
 const onPrefetchPathname = pathname => {
   if (!prefetchTriggered[pathname]) {
     apiRunner(`onPrefetchPathname`, { pathname })
@@ -192,9 +168,6 @@ const onPostPrefetch = url => {
     prefetchCompleted[url] = true
   }
 }
-
-// TODO review to make sure this makes sense
-const shouldFallbackTo404Resources = path => path !== `/404.html`
 
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
@@ -288,20 +261,6 @@ const queue = {
     return true
   },
 
-  // getResourcesForPathnameSync: rawPath => {
-  //   const realPath = findPath(rawPath)
-  //   console.log(
-  //     `getResourcesForPathnameSync: rawPath: [${rawPath}], realPath: [${realPath}]`
-  //   )
-  //   if (realPath in pathScriptsCache) {
-  //     return pathScriptsCache[realPath]
-  //   } else if (shouldFallbackTo404Resources(realPath)) {
-  //     return queue.getResourcesForPathnameSync(`/404.html`)
-  //   } else {
-  //     return null
-  //   }
-  // },
-
   isFailedPath: pathname => !!failedPaths[pathname],
 
   loadPageData: rawPath =>
@@ -386,120 +345,21 @@ const queue = {
     }
   },
 
-  // getResourcesForPathname: rawPath =>
-  //   new Promise((resolve, reject) => {
-  //     // console.log(`getResourcesForPathname: [${rawPath}]`)
-  //     // // Production code path
-  //     // if (failedPaths[rawPath]) {
-  //     //   handleResourceLoadError(
-  //     //     rawPath,
-  //     //     `Previously detected load failure for "${rawPath}"`
-  //     //   )
-  //     //   reject()
-  //     //   return
-  //     // }
-
-  //     const realPath = findPath(rawPath)
-  //     console.log(`real path is [${realPath}]`)
-
-  //     if (!fetchedPageData[realPath]) {
-  //       console.log(`Requesting page data for [${realPath}] for first time`)
-  //       fetchPageData(realPath).then(() =>
-  //         resolve(queue.getResourcesForPathname(rawPath))
-  //       )
-  //       return
-  //     }
-
-  //     const pageData = pageDatas[realPath]
-
-  //     if (!pageData) {
-  //       if (shouldFallbackTo404Resources(realPath)) {
-  //         console.log(`No page found: [${rawPath}]`)
-
-  //         // Preload the custom 404 page
-  //         resolve(queue.getResourcesForPathname(`/404.html`))
-  //         return
-  //       }
-
-  //       resolve()
-  //       return
-  //     }
-
-  //     // Check if it's in the cache already.
-  //     if (pathScriptsCache[realPath]) {
-  //       const pageResources = pathScriptsCache[realPath]
-  //       emitter.emit(`onPostLoadPageResources`, {
-  //         page: pageResources,
-  //         pageResources: pathScriptsCache[realPath],
-  //       })
-  //       resolve(pageResources)
-  //       return
-  //     }
-
-  //     // TODO
-  //     // Nope, we need to load resource(s)
-  //     emitter.emit(`onPreLoadPageResources`, {
-  //       path: realPath,
-  //     })
-
-  //     const { componentChunkName } = pageData
-
-  //     const finalResolve = component => {
-  //       const page = {
-  //         componentChunkName: pageData.componentChunkName,
-  //         path: pageData.path,
-  //         compilationHash: pageData.compilationHash,
-  //       }
-
-  //       const jsonData = {
-  //         data: pageData.data,
-  //         pageContext: pageData.pageContext,
-  //       }
-
-  //       const pageResources = {
-  //         component,
-  //         json: jsonData,
-  //         page,
-  //       }
-
-  //       // Add to the cache.
-  //       pathScriptsCache[realPath] = pageResources
-  //       resolve(pageResources)
-
-  //       emitter.emit(`onPostLoadPageResources`, {
-  //         page,
-  //         pageResources,
-  //       })
-  //     }
-
-  //     if (process.env.NODE_ENV !== `production`) {
-  //       // Ensure latest version of page data is in the JSON store
-  //       devGetPageData(realPath)
-  //       const component = syncRequires.components[pageData.componentChunkName]
-  //       finalResolve(component)
-  //     } else {
-  //       console.log(`getting page component: [${componentChunkName}]`)
-  //       cachedFetch(componentChunkName, fetchComponent)
-  //         .then(preferDefault)
-  //         .then(component => {
-  //           console.log(`got component`)
-  //           if (!component) {
-  //             resolve(null)
-  //             return
-  //           }
-  //           finalResolve(component)
-  //           // Tell plugins the path has been successfully prefetched
-  //           const pageDataUrl = makePageDataUrl(realPath)
-  //           const componentUrls = createComponentUrls(componentChunkName)
-  //           const resourceUrls = [pageDataUrl].concat(componentUrls)
-  //           onPostPrefetch({
-  //             path: rawPath,
-  //             resourceUrls,
-  //           })
-  //         })
-  //     }
-  //   })
+  getResourceURLsForPathname: path => {
+    const pageData = queue.getPage(path)
+    if (pageData) {
+      // Original implementation also concatenated the jsonDataPath
+      // for the page
+      return createComponentUrls(pageData.componentChunkName)
+    } else {
+      return null
+    }
+  },
 }
+
+// Deprecated April 2019. Used to fetch the pages-manifest. Now it's a
+// noop
+export const postInitialRenderWork = () => {}
 
 export const setApiRunnerForLoader = runner => {
   apiRunner = runner
@@ -507,8 +367,16 @@ export const setApiRunnerForLoader = runner => {
 }
 
 export const publicLoader = {
+  // Deprecated April 2019. Use `loadPage` instead
   getResourcesForPathname: queue.loadPage,
+  // Deprecated April 2019. Use `getPage` instead
   getResourcesForPathnameSync: queue.getPage,
+  // Deprecated April 2019. Query results used to be in a separate
+  // file, but are now included in the page-data.json, which is
+  // already loaded into the browser by the time this function is
+  // called. Use the resource URLs passed in `onPostPrefetch` instead.
+  getResourceURLsForPathname: queue.getResourceURLsForPathname,
+
   loadPage: queue.loadPage,
   getPage: queue.getPage,
   getPage404: queue.getPage404,

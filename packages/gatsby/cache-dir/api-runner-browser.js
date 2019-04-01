@@ -2,6 +2,9 @@ const plugins = require(`./api-runner-browser-plugins`)
 const {
   getResourcesForPathname,
   getResourcesForPathnameSync,
+  getResourceURLsForPathname,
+  loadPage,
+  getPage,
 } = require(`./loader`).publicLoader
 
 exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
@@ -21,8 +24,14 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
       return undefined
     }
 
+    // Deprecated April 2019. Use `getPage` instead
     args.getResourcesForPathnameSync = getResourcesForPathnameSync
+    // Deprecated April 2019. Use `loadPage` instead
     args.getResourcesForPathname = getResourcesForPathname
+    // Deprecated April 2019. Use resources passed in `onPostPrefetch` instead
+    args.getResourceURLsForPathname = getResourceURLsForPathname
+    args.loadPage = loadPage
+    args.getPage = getPage
 
     const result = plugin.plugin[api](args, plugin.options)
     if (result && argTransform) {
