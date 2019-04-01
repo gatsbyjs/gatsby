@@ -160,8 +160,8 @@ module.exports = async (args: BootstrapArgs) => {
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  let state = store.getState()
-  const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
+  const { status } = store.getState()
+  const oldPluginsHash = status ? status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
   // directory and tell reducers to empty themselves.
@@ -451,8 +451,7 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  state = store.getState()
-  const queryIds = queryRunner.calcBootstrapDirtyQueryIds(state)
+  const queryIds = queryRunner.calcBootstrapDirtyQueryIds(store.getState())
   const { staticQueryIds, pageQueryIds } = queryRunner.groupQueryIds(queryIds)
 
   activity = report.activityTimer(`run static queries`, {
@@ -460,32 +459,20 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   await queryRunner.processQueries(
-    staticQueryIds.map(id => queryRunner.makeStaticQueryJob(state, id)),
+    staticQueryIds.map(id =>
+      queryRunner.makeStaticQueryJob(store.getState(), id)
+    ),
     { activity }
   )
   activity.end()
 
-  // Write out files.
-  activity = report.activityTimer(`write out generated js requires`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
   try {
     await writeJsRequires.writeAll(store.getState())
   } catch (err) {
     report.panic(`Failed to write out page data`, err)
   }
-  activity.end()
 
-  // Write out redirects.
-  activity = report.activityTimer(`write out redirect data`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
   await writeRedirects()
-  activity.end()
-
-  // Run js build here
 
   let onEndJob
 
