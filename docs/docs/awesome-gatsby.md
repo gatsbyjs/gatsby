@@ -67,7 +67,7 @@ See the [library of official and community plugins](/plugins/)
 - [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
 - [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
 
-German
+### German
 
 - [Ultra-schnellen Blog mit React und Gatsby erstellen (German)](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)
 - [styled-components in Gatsby nutzen (German)](https://www.lekoarts.de/blog/styled-components-in-gatsby-nutzen)
@@ -75,7 +75,7 @@ German
 - [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 
-Spanish
+### Spanish
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
 
