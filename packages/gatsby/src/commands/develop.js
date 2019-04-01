@@ -33,6 +33,7 @@ const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const onExit = require(`signal-exit`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -50,8 +51,11 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
-  telemetry.trackCli(`DEVELOP_STOP`)
   process.exit()
+})
+
+onExit(() => {
+  telemetry.trackCli(`DEVELOP_STOP`)
 })
 
 async function startServer(program) {

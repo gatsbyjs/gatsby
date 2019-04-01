@@ -114,6 +114,7 @@
     "semver": "^5.6.0",
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
+    "signal-exit": "^3.0.2",
     "slash": "^1.0.0",
     "socket.io": "^2.0.3",
     "stack-trace": "^0.0.10",

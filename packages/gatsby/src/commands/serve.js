@@ -10,6 +10,7 @@ const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const rl = require(`readline`)
+const onExit = require(`signal-exit`)
 
 const telemetry = require(`gatsby-telemetry`)
 
@@ -20,8 +21,11 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
-  telemetry.trackCli(`SERVE_STOP`)
   process.exit()
+})
+
+onExit(() => {
+  telemetry.trackCli(`SERVE_STOP`)
 })
 
 const getPages = directory =>
