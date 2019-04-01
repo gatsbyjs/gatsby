@@ -2,22 +2,16 @@ import emitter from "./emitter"
 import prefetchHelper from "./prefetch"
 import { match } from "@reach/router/lib/utils"
 import stripPrefix from "./strip-prefix"
+// Generated during bootstrap
 import matchPaths from "./match-paths.json"
 
 const preferDefault = m => (m && m.default) || m
 
-let devGetPageData
+let apiRunner
 let syncRequires = {}
 let asyncRequires = {}
 let fetchHistory = []
 
-// /**
-//  * Indicate if pages manifest is loaded
-//  *  - in production it is split to separate "pages-manifest" chunk that need to be lazy loaded,
-//  *  - in development it is part of single "common" chunk and is available from the start.
-//  */
-// let hasPageGlobals = process.env.NODE_ENV !== `production`
-let apiRunner
 const failedPaths = {}
 const MAX_HISTORY = 5
 
@@ -25,13 +19,23 @@ const fetchedPageData = {}
 const pageDatas = {}
 const fetchPromiseStore = {}
 
+let devGetPageData
 if (process.env.NODE_ENV !== `production`) {
   devGetPageData = require(`./socketIo`).getPageData
 }
 
-const pathCache = {}
+// Cache for `cleanAndFindPath()`. In case `match-paths.json` is large
+const cleanAndFindPathCache = {}
 
-const findPath = rawPathname => {
+// Given a raw URL path, returns the cleaned version of it (trim off
+// `#` and query params), or if it matches an entry in
+// `match-paths.json`, its matched path is returned
+//
+// E.g `/foo?bar=far` => `/foo`
+//
+// Or if `match-paths.json` contains `{ "/foo*": "/page1", ...}`, then
+// `/foo?bar=far` => `/page1`
+const cleanAndFindPath = rawPathname => {
   let pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
   let trimmedPathname = stripPrefix(pathname, __PATH_PREFIX__)
@@ -50,8 +54,8 @@ const findPath = rawPathname => {
       .slice(0, -1)
       .join(``)
   }
-  if (pathCache[trimmedPathname]) {
-    return pathCache[trimmedPathname]
+  if (cleanAndFindPathCache[trimmedPathname]) {
+    return cleanAndFindPathCache[trimmedPathname]
   }
 
   let foundPath
@@ -70,7 +74,7 @@ const findPath = rawPathname => {
   if (!foundPath) {
     foundPath = trimmedPathname
   }
-  pathCache[trimmedPathname] = foundPath
+  cleanAndFindPathCache[trimmedPathname] = foundPath
   return foundPath
 }
 
@@ -222,7 +226,7 @@ const queue = {
     }
 
     // Check if the page exists.
-    let realPath = findPath(rawPath)
+    let realPath = cleanAndFindPath(rawPath)
 
     if (pageDatas[realPath]) {
       return true
@@ -265,7 +269,7 @@ const queue = {
 
   loadPageData: rawPath =>
     new Promise((resolve, reject) => {
-      const realPath = findPath(rawPath)
+      const realPath = cleanAndFindPath(rawPath)
       if (!fetchedPageData[realPath]) {
         fetchPageData(realPath).then(pageData => {
           if (process.env.NODE_ENV !== `production`) {
@@ -313,13 +317,13 @@ const queue = {
           page,
         }
 
-        pathScriptsCache[findPath(rawPath)] = pageResources
+        pathScriptsCache[cleanAndFindPath(rawPath)] = pageResources
         emitter.emit(`onPostLoadPageResources`, {
           page: pageResources,
           pageResources,
         })
         if (process.env.NODE_ENV === `production`) {
-          const pageDataUrl = makePageDataUrl(findPath(rawPath))
+          const pageDataUrl = makePageDataUrl(cleanAndFindPath(rawPath))
           const componentUrls = createComponentUrls(pageData.componentChunkName)
           const resourceUrls = [pageDataUrl].concat(componentUrls)
           onPostPrefetch({
@@ -332,9 +336,9 @@ const queue = {
       })
       .catch(err => null),
 
-  getPage: rawPath => pathScriptsCache[findPath(rawPath)],
+  getPage: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
-  getPage404: rawPath => {
+  getPageOr404: rawPath => {
     const page = queue.getPage(rawPath)
     if (page) {
       return page
@@ -379,7 +383,7 @@ export const publicLoader = {
 
   loadPage: queue.loadPage,
   getPage: queue.getPage,
-  getPage404: queue.getPage404,
+  getPageOr404: queue.getPageOr404,
 }
 
 export default queue

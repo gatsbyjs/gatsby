@@ -1,8 +1,8 @@
-let pagesManifest = {}
+// Initialized by calling loadPages
+let pagesManifest = null
 
 const fetchPages = () =>
   new Promise((resolve, reject) => {
-    console.log(`fetch pages`)
     const req = new XMLHttpRequest()
     req.open(`GET`, `/___pages`, true)
     req.onreadystatechange = () => {
@@ -23,12 +23,25 @@ const fetchPages = () =>
     req.send(null)
   })
 
+// Returns a promise that fetches the `/___pages` resource from the
+// running `gatsby develop` server. It contains a map of all pages on
+// the site (path -> page). Call `getPagesManifest()` to retrieve the
+// pages. Used by dev-404-page to present a list of all pages
 const loadPages = () =>
   fetchPages().then(pages => {
     pagesManifest = pages
   })
 
-const getPagesManifest = () => pagesManifest
+// Returns the map of all pages on the site (path -> page)
+const getPagesManifest = () => {
+  if (pagesManifest === null) {
+    throw new Error(
+      `pages-manifest hasn't been initialized. Ensure the dev-loader/loadPages has been called first`
+    )
+  } else {
+    return pagesManifest
+  }
+}
 
 module.exports = {
   loadPages,

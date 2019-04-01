@@ -17,7 +17,7 @@ class EnsureResources extends React.Component {
 
     this.state = {
       location: { ...location },
-      pageResources: loader.getPage404(location.pathname),
+      pageResources: loader.getPageOr404(location.pathname),
     }
   }
 
@@ -34,7 +34,7 @@ class EnsureResources extends React.Component {
 
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location !== location) {
-      const pageResources = loader.getPage404(location.pathname)
+      const pageResources = loader.getPageOr404(location.pathname)
 
       return {
         pageResources,
