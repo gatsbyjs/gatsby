@@ -6,6 +6,8 @@
       link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
+    - title: Cheat Sheet
+      link: /docs/cheat-sheet/
 - title: Guides
   link: /docs/guides/
   items:
@@ -455,7 +457,6 @@
       items:
         - title: As a Freelancer
           link: /docs/gatsby-for-freelancers/
-          items:
         - title: Inside an Agency
           link: /docs/gatsby-for-agencies/
           items:
@@ -484,11 +485,16 @@
               link: /docs/making-components-discoverable/
     - title: How Gatsby Boosts Your Career
       link: /docs/how-gatsby-boosts-career/
+- title: Contributing
+  link: /contributing/
+  items:
+    - title: Community
+      link: /contributing/community/
+    - title: How to Contribute
+      link: /contributing/how-to-contribute/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
 - title: Gatsby REPL*
   link: /docs/gatsby-repl/
-- title: Contributing
-  link: /contributing/
