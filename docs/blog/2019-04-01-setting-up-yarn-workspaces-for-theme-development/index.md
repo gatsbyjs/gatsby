@@ -1,6 +1,6 @@
 ---
 title: Setting up Yarn Workspaces for Theme Development
-date: 2019-03-25
+date: 2019-04-01
 author: Brent Jackson
 excerpt: ""
 tags:
@@ -26,7 +26,7 @@ Create two subdirectories in this folder: one for the theme itself and one for t
 mkdir gatsby-theme-example-workspaces example
 ```
 
-Add a `package.json` to the root directory with these subdirectories in the `workspaces` field.
+Add a `package.json` to the root directory with these subdirectories in the `workspaces` field. Note that setting `"private": true` is required for Yarn workspaces.
 
 ```json:title=package.json
 {
@@ -46,34 +46,11 @@ yarn workspace example add gatsby react react-dom
 
 The `yarn workspace` command will run Yarn commands for a specific workspace without needing to switch directories.
 
-Also add the following as development dependencies to the theme.
-
-```shell
-yarn workspace gatsby-theme-example-workspaces add -D gatsby react react-dom
-```
-
-In the theme's `package.json`, add these dependencies as `peerDependencies` as well.
+Also add the following as peer dependencies to the theme.
 This will help ensure that the end user of your theme can choose to use any compatible version of Gatsby with your theme.
 
-```json:title=gatsby-theme-example-workspaces/package.json
-{
-  "name": "gatsby-theme-example-workspaces",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "gatsby": "^2.2.10",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5"
-  },
-  // highlight-start
-  "peerDependencies": {
-    "gatsby": "^2.2.10",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5"
-  }
-  // highlight-end
-}
+```shell
+yarn workspace gatsby-theme-example-workspaces add --peer gatsby react react-dom
 ```
 
 ## Base theme setup
