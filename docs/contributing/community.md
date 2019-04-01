@@ -8,7 +8,7 @@ Open source doesn’t always have the best reputation for being friendly and wel
 
 We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through helping you contribute to the Gatsby ecosystem, offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
 
-One of our community's values is that ["you belong here"](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#you-belong-here).
+One of our community's values is that ["you belong here"](/blog/2018-09-07-gatsby-values/#you-belong-here).
 
 ## Gatsby Contributor Covenant Code of Conduct
 
