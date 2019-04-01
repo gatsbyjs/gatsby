@@ -21,11 +21,11 @@ class IndexRoute extends React.Component {
               Contributing to Gatsby.js
             </h1>
             <p>
-              Thanks for being interested in contributing! We're so glad you
+              Thanks for for your interest in contributing! We&apos;re glad you
               want to help!
             </p>
             <p>
-              Below you'll find guides on the Gatsby.js community, code of
+              Below you&apos;ll find guides on the Gatsby.js community, code of
               conduct, and how to get started contributing:
             </p>
             <ul>
