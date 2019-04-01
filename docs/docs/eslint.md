@@ -28,7 +28,7 @@ touch .eslintrc.js
 
 ### Configuring ESLint
 
-The snippet below mimics the [default ESLint config](https://github.com/gatsbyjs/gatsby/blob/master/.eslintrc.json) Gatsby ships with . We recommend copying the content to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
+The snippet below mimics the [default ESLint config](https://github.com/gatsbyjs/gatsby/blob/master/.eslintrc.json) Gatsby ships with. We recommend copying the content to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
 
 ```js:title=.eslintrc.js
 module.exports = {
