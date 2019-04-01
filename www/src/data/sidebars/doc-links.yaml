@@ -485,11 +485,16 @@
               link: /docs/making-components-discoverable/
     - title: How Gatsby Boosts Your Career
       link: /docs/how-gatsby-boosts-career/
+- title: Contributing
+  link: /contributing/
+  items:
+    - title: Community
+      link: /contributing/community/
+    - title: How to Contribute
+      link: /contributing/how-to-contribute/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)
   link: /docs/gatsby-cli/
 - title: Gatsby REPL*
   link: /docs/gatsby-repl/
-- title: Contributing
-  link: /contributing/
