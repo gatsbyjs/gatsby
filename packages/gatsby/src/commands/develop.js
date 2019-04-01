@@ -548,6 +548,14 @@ module.exports = async (program: any) => {
   await queryRunner.processStaticQueries(staticQueryIds, { activity })
   activity.end()
 
+  await runPageQueries(pageQueryIds)
+  await waitJobsFinished()
+  await writeJsRequires.startDaemon()
+  await db.saveState()
+  db.startAutosave()
+  startQueryDaemon()
+  queryWatcher.startWatchDeletePage()
+
   const [compiler] = await startServer(program)
 
   let isFirstCompile = true
@@ -570,26 +578,17 @@ module.exports = async (program: any) => {
     // }
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
-      runPageQueries(pageQueryIds)
-        .then(() => waitJobsFinished())
-        .then(() => writeJsRequires.startDaemon())
-        .then(() => db.saveState())
-        .then(() => db.startAutosave())
-        .then(() => startQueryDaemon())
-        .then(() => queryWatcher.startWatchDeletePage())
-        .then(() => {
-          printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-          printDeprecationWarnings()
-          if (program.open) {
-            Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
-              console.log(
-                `${chalk.yellow(
-                  `warn`
-                )} Browser not opened because no browser was found`
-              )
-            )
-          }
-        })
+      printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+      printDeprecationWarnings()
+      if (program.open) {
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
+          console.log(
+            `${chalk.yellow(
+              `warn`
+            )} Browser not opened because no browser was found`
+          )
+        )
+      }
     }
 
     isFirstCompile = false
