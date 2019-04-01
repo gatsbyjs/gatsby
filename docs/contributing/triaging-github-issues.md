@@ -5,17 +5,17 @@ issue: https://github.com/gatsbyjs/gatsby/issues/11810
 
 ## What is the aim of this document?
 
-As a Gatsby core team, we've found patterns that help us effectively triage incoming Github issues, providing answers to the community's questions, identify bugs as well as opportunities to contribute to Gatsby core. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
+On the Gatsby core team, we've found patterns that help us effectively triage incoming Github issues, providing answers to the community's questions, identifying bugs, and providing contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
 
 We want to share these patterns with the broader community, so that if you're interesting in helping us triage, you're able to do so more effectively!
 
-This document should answer any questions you might have along the way. We’ll answer common questions, list guidelines and illustrate a decision tree.
+In this document we’ll answer common questions, list guidelines and illustrate a decision tree.
 
 ## What is first touch maintenance?
 
 For Gatsby the first line of communication between a user and the team is the issue tracker on GitHub. Typically, every day 20-30 issues are opened -- that's one every hour!
 
-These issues could be:
+An opened issue could be:
 
 - a question that can be answered immediately
 - a bug report
@@ -37,7 +37,7 @@ We do first touch maintenance so that:
 
 - Questions are answered swiftly and correctly, therefore making users happy
 - Bug reports are reproducible and the most relevant data is collected before someone jumps in with a fix
-- Unrelated issues are resolved swiftly so we don't spend too much time on them
+- Unrelated issues are resolved promptly so we don't spend too much time on them
 
 ## What is unique to Gatsby?
 
@@ -88,7 +88,7 @@ When a feature or pattern is not documented, it may be nice to make a demo to ad
 
 Some issues might need more time than others and there isn’t any hard and fast rule. However, it's best to spend time on an issue after the relevant info and reproduction is available.
 
-> Do I have look at Discord?
+> Do I have to look at Discord?
 
 You don’t have to. Some of us are active on Discord and you can be too if you like.
 
