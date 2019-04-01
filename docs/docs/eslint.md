@@ -15,9 +15,9 @@ Here we will explore an ESLint configuration designed to be used with React appl
 npm rm prettier
 
 # Install install the necessary ESLint dependencies
-npm install --save-dev eslint-config-react-app babel-eslint@9.x 
-eslint@5.x eslint-plugin-flowtype@2.x eslint-plugin-import@2.x 
-eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x  
+npm install --save-dev eslint-config-react-app babel-eslint@9.x \
+eslint@5.x eslint-plugin-flowtype@2.x eslint-plugin-import@2.x \
+eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x
 
 ```
 
@@ -37,10 +37,10 @@ We recommend copying the following .eslintrc.js content below to your newly crea
 
 ```js:title=.eslintrc.js
 module.exports = {
-      globals: {
-        graphql: true,
-        __PATH_PREFIX__: true,
-      },
-      extends: `react-app`,
+  globals: {
+    graphql: true,
+    __PATH_PREFIX__: true,
+  },
+  extends: `react-app`,
 }
 ```
