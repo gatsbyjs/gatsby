@@ -106,6 +106,7 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
 - Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
 - Routing the CDN layer in front of your static content
+- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
 
 ... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/hosting-on-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
@@ -123,7 +124,7 @@ Let's contrast this approach with setting up and deploying a purely server-side 
 
 #### Deploying a server-side rendered application
 
-First: perform the **same** steps in setting up a static content host, excluding the step for configuring a bucket/location for hosting static content. Oh and we're not done yet, sweet, sweet summer child.
+First: perform the **same** steps in setting up a static content host. Oh and we're not done yet, sweet, sweet summer child.
 
 ![Sweet, Sweet Summer Child](https://media1.tenor.com/images/0ae8734d4f4184e8ac3d9f6032d0047f/tenor.gif?itemid=5580217)
 
@@ -135,7 +136,6 @@ Next:
   - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
 - Set up auto-scaling to ensure we can accomodate and fall-over based upon heavy load or error states
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
-- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
 
