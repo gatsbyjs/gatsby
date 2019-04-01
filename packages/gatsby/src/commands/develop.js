@@ -34,6 +34,7 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
 const writeJsRequires = require(`../bootstrap/write-js-requires`)
+const db = require(`../db`)
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
@@ -551,21 +552,24 @@ module.exports = async (program: any) => {
     // }
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
-      runPageQueries(pageQueryIds).then(result => {
-        startQueryDaemon()
-        writeJsRequires.startDaemon()
-        printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-        printDeprecationWarnings()
-        if (program.open) {
-          Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
-            console.log(
-              `${chalk.yellow(
-                `warn`
-              )} Browser not opened because no browser was found`
+      runPageQueries(pageQueryIds)
+        .then(() => startQueryDaemon())
+        .then(() => writeJsRequires.startDaemon())
+        .then(() => db.saveState())
+        .then(() => db.startAutosave())
+        .then(() => {
+          printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+          printDeprecationWarnings()
+          if (program.open) {
+            Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
+              console.log(
+                `${chalk.yellow(
+                  `warn`
+                )} Browser not opened because no browser was found`
+              )
             )
-          )
-        }
-      })
+          }
+        })
     }
 
     isFirstCompile = false

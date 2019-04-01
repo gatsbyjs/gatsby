@@ -13,6 +13,7 @@ const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
 const { store } = require(`../redux`)
+const db = require(`../db`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -81,6 +82,8 @@ module.exports = async function build(program: BuildArgs) {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
+
+  await db.saveState()
 
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
