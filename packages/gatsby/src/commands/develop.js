@@ -33,6 +33,7 @@ const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
 const queryRunner = require(`../query`)
+const queryWatcher = require(`../query/query-watcher`)
 const writeJsRequires = require(`../bootstrap/write-js-requires`)
 const db = require(`../db`)
 // const isInteractive = process.stdout.isTTY
@@ -553,10 +554,11 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       runPageQueries(pageQueryIds)
-        .then(() => startQueryDaemon())
         .then(() => writeJsRequires.startDaemon())
         .then(() => db.saveState())
         .then(() => db.startAutosave())
+        .then(() => startQueryDaemon())
+        .then(() => queryWatcher.startWatchDeletePage())
         .then(() => {
           printInstructions(program.sitePackageJson.name, urls, program.useYarn)
           printDeprecationWarnings()

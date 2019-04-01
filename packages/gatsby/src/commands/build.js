@@ -79,11 +79,11 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.end()
 
+  await db.saveState()
+
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
-
-  await db.saveState()
 
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
