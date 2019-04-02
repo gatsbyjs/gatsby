@@ -1,12 +1,10 @@
 ---
-title: Integrating and Partnering with Gatsby
-date: 2019-04-02
-author: Sam Bhagwat
+title: Integrating and Partnering with Gatsby (for Vendors)
 ---
 
 If you've a vendor in the website space -- whether that's content management, analytics, forms, e-commerce, or so on, you may have considered whether integrating or partnering with Gatsby makes sense.
 
-This blog post explains a bit what exactly that would look like.
+This document explains a bit what exactly that would look like.
 
 ## About Gatsby
 
