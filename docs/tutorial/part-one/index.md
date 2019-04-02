@@ -346,7 +346,7 @@ Gatsby.js is a _modern site generator_, which means there are no servers to setu
 
 Try using [Surge](http://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which make it possible to deploy Gatsby sites.
 
-If you haven't previously installed & set up Surge, open a new terminal window and install their command-line tool:
+If you haven't previously installed &amp; set up Surge, open a new terminal window and install their command-line tool:
 
 ```shell
 npm install --global surge
