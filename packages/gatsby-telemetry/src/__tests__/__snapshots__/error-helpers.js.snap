@@ -1,3 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Errors Helpers sanitizeError Sanitizes current path from error stracktraces 1`] = `false`;
+exports[`Errors Helpers sanitizeError Sanitizes current path from error stracktraces 1`] = `
+"Object.it (src/__tests__/error-helpers.js:39:15)
+Object.asyncJestTest (/Users/sidharthachatterjee/Code/gatsby/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:100:37)
+resolve (/Users/sidharthachatterjee/Code/gatsby/node_modules/jest-jasmine2/build/queueRunner.js:41:12)
+new Promise (<anonymous>)
+mapper (/Users/sidharthachatterjee/Code/gatsby/node_modules/jest-jasmine2/build/queueRunner.js:26:19)
+promise.then (/Users/sidharthachatterjee/Code/gatsby/node_modules/jest-jasmine2/build/queueRunner.js:71:41)
+"
+`;
