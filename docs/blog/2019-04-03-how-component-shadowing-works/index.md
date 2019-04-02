@@ -102,8 +102,7 @@ component shadowing resolver plugin.
 The webpack plugin itself has a constructor and an apply function which
 webpack calls as part of module resolution. We tie into the "relative"
 hook in [the
-pipeline](https://github.com/webpack/enhanced-resolve/blob/5c1495a947060cf11106abc325b8adf1a0eff9b1/lib/ResolverFactory.js#L158)
-because WHYYYY?
+pipeline](https://github.com/webpack/enhanced-resolve/blob/5c1495a947060cf11106abc325b8adf1a0eff9b1/lib/ResolverFactory.js#L158).
 
 ```js
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
@@ -379,3 +378,7 @@ is present before we attempt to resolve the shadowed component.
 
 It's also important to note that we recommend not appending to the modules list in themes.
 Though, if you do we will make sure we don't arbitrarily error.
+
+## Summary
+
+TODO
