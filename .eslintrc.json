@@ -48,6 +48,7 @@
     "quotes": ["error", "backtick"],
     "react/display-name": "off",
     "react/jsx-key": "warn",
+    "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"
