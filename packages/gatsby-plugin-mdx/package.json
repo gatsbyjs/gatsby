@@ -1,6 +1,6 @@
 {
   "name": "gatsby-mdx",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
     "core-js": "2",
     "debug": "^4.0.1",
     "escape-string-regexp": "^1.0.5",
