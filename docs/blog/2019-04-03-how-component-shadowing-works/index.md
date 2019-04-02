@@ -224,19 +224,73 @@ and bundle that particular file.
 
 #### Resolving a shadowed component
 
-When looking for a component we perform a search that occurs in three locations:
+When looking for a component we perform a search that occurs in two locations:
 
-- cache
 - user's project
 - themes
 
-##### Cache
-
-We first check the cache, and set a key if it isn't found. We set the cache to
-
 ##### User's project
 
+In order to ensure that the user's project always takes precendence in terms of shadowing
+it's prepended to the theme list when attempting to resolve the component. This ensures that
+`my-site/src/gatsby-theme-tomato/box.js` will take priority over any other theme that
+might want to shadow the same component.
+
 ##### Themes
+
+As discussed before, themes are flattened into a list and then all possible shadow
+paths are constructed to match against. When concatenating with the user's project it's
+important to note again that the themes array is reversed.
+
+#### All together
+
+One other thing added is that the original theme is removed because this is the default
+behavior of webpack so we don't need to resolve a theme to itself.
+
+```js
+resolveComponentPath({
+  matchingTheme: theme,
+  themes: ogThemes,
+  component,
+}) {
+  // don't include matching theme in possible shadowing paths
+  const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
+  if (!this.cache[`${theme}-${component}`]) {
+    this.cache[`${theme}-${component}`] = [
+      path.join(path.resolve(`.`), `src`, theme),
+    ]
+      .concat(
+        Array.from(themes)
+          .reverse()
+          .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+      )
+      .map(dir => path.join(dir, component))
+      .find(possibleComponentPath => {
+        debug(`possibleComponentPath`, possibleComponentPath)
+        let dir
+        try {
+          // we use fs/path instead of require.resolve to work with
+          // TypeScript and alternate syntaxes
+          dir = fs.readdirSync(path.dirname(possibleComponentPath))
+        } catch (e) {
+          return false
+        }
+        const exists = dir
+          .map(filepath => {
+            const ext = path.extname(filepath)
+            const filenameWithoutExtension = path.basename(filepath, ext)
+            return filenameWithoutExtension
+          })
+          .includes(
+            path.basename(
+              possibleComponentPath,
+              path.extname(possibleComponentPath)
+            )
+          )
+        return exists
+      })
+  }
+```
 
 ### Handling component extending
 
