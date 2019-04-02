@@ -18,7 +18,7 @@ describe(`Errors Helpers`, () => {
             },
             envPairs: [`VERSION=1.2.3`],
 
-            stderr: Buffer.from(`this is a test`),
+            stderr: Buffer.from(`this is a an error`),
             stdout: Buffer.from(`this is a test`),
           },
         ],
