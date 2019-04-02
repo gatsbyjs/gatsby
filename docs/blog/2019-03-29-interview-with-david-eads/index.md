@@ -41,13 +41,13 @@ We've used it to simply embed responsive content in stories but also to build fu
 
 **Sam:** Can you talk a bit about the benefit of using Gatsby specifically in a news organization?
 
-**David:** The benefits that I've found are: 
+**David:** The benefits that I've found are:
 
-1) the general maintainability of static apps (which can be built with all kinds of tools and are critical to sustainable newsroom infrastructure), 
+1. the general maintainability of static apps (which can be built with all kinds of tools and are critical to sustainable newsroom infrastructure),
 
-2) the consolidated query system, which is very important for journalistic work where data can come from many sources such as Google Sheets used to keep track of small bits of text or translations, massive databases, CSV files, and practically anything else you can think of, and 
+2. the consolidated query system, which is very important for journalistic work where data can come from many sources such as Google Sheets used to keep track of small bits of text or translations, massive databases, CSV files, and practically anything else you can think of, and
 
-3) the speed of the built sites. Getting content onto people's screens is of utmost importance in journalism, and Gatsby does a good job with that.
+3. the speed of the built sites. Getting content onto people's screens is of utmost importance in journalism, and Gatsby does a good job with that.
 
 The dependence on React has been a barrier to wider adoption within ProPublica -- rightfully, not everyone wants to be tied to React. But ProPublica Illinois has seen a lot of benefit from it.
 
@@ -127,7 +127,7 @@ I hope to write a source plugin for Gatsby that pulls in ArchieML as structured 
 
 **Sam:** Neat! Spreadsheets are an incredibly powerful tool for entering and storing data -- they need basically no onboarding, which is in contrast to every other system out there.
 
-In creating an effective content authoring and publishing workflow, a recipe I've seen succeed in a lot of different domains  is to: 
+In creating an effective content authoring and publishing workflow, a recipe I've seen succeed in a lot of different domains is to:
 
 (1) find the best tool or format for authoring, and then
 (2) write a Gatsby source plugin for that (if it doesn't already exist)
