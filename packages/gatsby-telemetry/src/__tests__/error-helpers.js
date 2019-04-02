@@ -24,17 +24,10 @@ describe(`Errors Helpers`, () => {
         ],
       }
 
-      const error = tags.error[0]
-      expect(error).toBeDefined()
-      expect(error.envPairs).toBeDefined()
-      expect(error.options).toBeDefined()
-
-      expect(typeof error.stdout).toEqual(`object`)
-
       sanitizeError(tags)
-      expect(typeof error.stdout).toEqual(`string`)
-
-      expect(error).toBeDefined()
+      const error = tags.error[0]
+      expect(error.stderr).toStrictEqual(`this is a an error`)
+      expect(error.stdout).toStrictEqual(`this is a test`)
       expect(error.envPairs).toBeUndefined()
       expect(error.options).toBeUndefined()
     })
