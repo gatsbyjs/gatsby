@@ -8,9 +8,8 @@ const {
 } = require(`fs`)
 
 module.exports = class Store {
-  constructor(parentFolder) {
-    this.parentFolder = parentFolder
-    this.bufferFilePath = path.join(this.parentFolder, `events.json`)
+  constructor(baseDir) {
+    this.bufferFilePath = path.join(baseDir, `events.json`)
   }
 
   appendToBuffer(event) {
