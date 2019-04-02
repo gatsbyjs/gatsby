@@ -21,6 +21,8 @@
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "devDependencies": {
-    "babel-preset-gatsby-package": "^0.1.4"
+    "@babel/cli": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.4",
+    "cross-env": "^5.1.4"
   }
 }

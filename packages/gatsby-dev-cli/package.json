@@ -13,9 +13,13 @@
     "@babel/runtime": "^7.0.0",
     "chokidar": "^1.7.0",
     "configstore": "^3.1.0",
+    "execa": "^1.0.0",
     "fs-extra": "^4.0.1",
     "is-absolute": "^0.2.6",
     "lodash": "^4.17.10",
+    "request": "2.88.0",
+    "signal-exit": "^3.0.2",
+    "verdaccio": "^3.11.1",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
@@ -32,9 +36,9 @@
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir dist --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "babel -w src --out-dir dist"
+    "watch": "babel -w src --out-dir dist --ignore **/__tests__"
   }
 }
