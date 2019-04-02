@@ -44,7 +44,7 @@ From the root directory, run the following to install Gatsby's dependencies for 
 yarn workspace example add gatsby react react-dom
 ```
 
-The `yarn workspace` command will run Yarn commands for a specific workspace without needing to switch directories.
+The `yarn workspace <package>` command will run Yarn commands for a specific workspace without needing to switch directories.
 
 Then add the following as peer dependencies to the theme.
 This will ensure that the end user of your theme can choose any compatible version of Gatsby.
