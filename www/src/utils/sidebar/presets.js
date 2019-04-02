@@ -7,5 +7,5 @@ export default {
   itemHoverBackground: hex2rgba(colors.ui.bright, 0.275),
   itemMinHeight: space[8],
   itemBorderColor: `transparent`, // `rgba(0,0,0,0.05)`,
-  activeSectionBackground: hex2rgba(colors.ui.bright, 0.2),
+  activeSectionBackground: hex2rgba(colors.ui.bright, 0.15),
 }
