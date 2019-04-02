@@ -87,7 +87,7 @@ describe(`Errors Helpers`, () => {
       const fakePathRegex = /fake-path/g
       expect(usernameRegex.test(e.stack)).toBeTruthy()
 
-      const sanitizedErrorString = sanitizeError(e)
+      const sanitizedErrorString = sanitizeError(e, `/`)
 
       expect(sanitizedErrorString.includes(errormessage)).toBe(true)
       expect(usernameRegex.test(sanitizedErrorString)).toBe(false)
