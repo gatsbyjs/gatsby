@@ -23,21 +23,21 @@ module.exports = class EventStorage {
         get: key => this.config[key],
         set: (key, value) => (this.config[key] = value),
         all: this.config,
-        path: path.join(os.tmpdir(), 'gatsby'),
+        path: path.join(os.tmpdir(), `gatsby`),
         "telemetry.enabled": true,
         "telemetry.machineId": `not-a-machine-id`,
       }
     }
 
-    const parentFolder = path.dirname(this.config.path)
+    const baseDir = path.dirname(this.config.path)
 
     try {
-      ensureDirSync(parentFolder)
+      ensureDirSync(baseDir)
     } catch (e) {
       // TODO: Log this event
     }
 
-    this.store = new Store(parentFolder)
+    this.store = new Store(baseDir)
     this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
     this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
