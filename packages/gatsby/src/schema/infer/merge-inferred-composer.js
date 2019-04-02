@@ -1,14 +1,27 @@
 const _ = require(`lodash`)
-const { GraphQLList, GraphQLNonNull } = require(`graphql`)
-const { UnionTypeComposer, ObjectTypeComposer } = require(`graphql-compose`)
+const { GraphQLList, GraphQLNonNull, GraphQLObjectType } = require(`graphql`)
+const { ObjectTypeComposer } = require(`graphql-compose`)
 
 export const mergeInferredComposer = ({
   schemaComposer,
   definedComposer,
   inferredComposer,
+  dontAddFields,
+  addDefaultResolvers,
 }) => {
-  const addDefaultResolvers =
-    definedComposer.getExtension(`addDefaultResolvers`) || true
+  if (dontAddFields == null && definedComposer.hasExtension(`infer`)) {
+    const infer = definedComposer.getExtension(`infer`)
+    dontAddFields = !infer ? true : dontAddFields
+  }
+
+  if (
+    addDefaultResolvers == null &&
+    definedComposer.hasExtension(`addDefaultResolvers`)
+  ) {
+    addDefaultResolvers = definedComposer.getExtension(`addDefaultResolvers`)
+  } else {
+    addDefaultResolvers = true
+  }
 
   inferredComposer.getFieldNames().forEach(fieldName => {
     const inferredField = inferredComposer.getField(fieldName)
@@ -18,9 +31,21 @@ export const mergeInferredComposer = ({
         definedComposer,
         inferredComposer,
         fieldName,
+        dontAddFields,
         addDefaultResolvers,
       })
-    } else {
+    } else if (!dontAddFields) {
+      const inferredFieldComposer = inferredComposer.getFieldTC(fieldName)
+      const typeName = inferredFieldComposer.getTypeName()
+      if (schemaComposer.has(typeName)) {
+        const wrappedType = mapType(
+          inferredComposer.getFieldType(fieldName),
+          () => schemaComposer.get(typeName).getType()
+        )
+        inferredField.type = wrappedType
+      } else {
+        schemaComposer.addAsComposer(inferredFieldComposer)
+      }
       definedComposer.addFields({ [fieldName]: inferredField })
     }
   })
@@ -44,16 +69,14 @@ const maybeExtendDefinedField = ({
   definedComposer,
   inferredComposer,
   fieldName,
+  dontAddFields,
   addDefaultResolvers,
 }) => {
   const inferredField = inferredComposer.getField(fieldName)
 
-  let inferredFieldComposer
-  try {
-    inferredFieldComposer = inferredComposer.getFieldTC(fieldName)
-  } catch (e) {
-    inferredFieldComposer = null
-  }
+  const definedFieldComposer = definedComposer.getFieldTC(fieldName)
+  const inferredFieldComposer = inferredComposer.getFieldTC(fieldName)
+
   const definedField = definedComposer.getField(fieldName)
   if (
     typesLooselyEqual(
@@ -90,30 +113,24 @@ const maybeExtendDefinedField = ({
       }
     }
 
-    if (inferredFieldComposer instanceof UnionTypeComposer) {
-      if (!schemaComposer.has(inferredFieldComposer.getTypeName())) {
-        schemaComposer.addAsComposer(inferredFieldComposer)
-      }
-    } else if (
+    if (
       inferredFieldComposer instanceof ObjectTypeComposer &&
-      !inferredFieldComposer.hasInterface(`Node`)
+      !inferredFieldComposer.hasInterface(`Node`) &&
+      definedFieldComposer instanceof ObjectTypeComposer &&
+      !definedFieldComposer.hasInterface(`Node`) &&
+      (!definedFieldComposer.hasExtension(`infer`) ||
+        definedFieldComposer.getExtension(`infer`))
     ) {
-      const definedFieldComposer = schemaComposer.getOrCreateOTC(
-        inferredFieldComposer.getTypeName()
+      schemaComposer.set(
+        definedFieldComposer.getTypeName(),
+        mergeInferredComposer({
+          schemaComposer,
+          definedComposer: definedFieldComposer,
+          inferredComposer: inferredFieldComposer,
+          dontAddFields,
+          addDefaultResolvers,
+        })
       )
-      if (
-        !definedFieldComposer.hasExtension(`infer`) ||
-        definedFieldComposer.getExtension(`infer`)
-      ) {
-        schemaComposer.set(
-          definedFieldComposer.getTypeName(),
-          mergeInferredComposer({
-            schemaComposer,
-            definedComposer: definedFieldComposer,
-            inferredComposer: inferredFieldComposer,
-          })
-        )
-      }
     }
   }
 }
@@ -126,6 +143,19 @@ const typesLooselyEqual = (left, right) => {
   } else if (right instanceof GraphQLNonNull) {
     return typesLooselyEqual(left, right.ofType)
   } else {
-    return left.name === right.name
+    return (
+      left.name === right.name ||
+      (left instanceof GraphQLObjectType && right instanceof GraphQLObjectType)
+    )
+  }
+}
+
+const mapType = (type, fn) => {
+  if (type instanceof GraphQLList) {
+    return new GraphQLList(mapType(type.ofType, fn))
+  } else if (type instanceof GraphQLNonNull) {
+    return new GraphQLNonNull(mapType(type.ofType, fn))
+  } else {
+    return fn(type)
   }
 }

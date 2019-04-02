@@ -214,7 +214,7 @@ const processAddedType = ({
         if (directive.name.value === `infer`) {
           typeComposer.setExtension(`infer`, true)
           const addDefaultResolvers = getNoDefaultResolvers(directive)
-          if (addDefaultResolvers) {
+          if (addDefaultResolvers != null) {
             typeComposer.setExtension(
               `addDefaultResolvers`,
               addDefaultResolvers
@@ -223,7 +223,7 @@ const processAddedType = ({
         } else if (directive.name.value === `dontInfer`) {
           typeComposer.setExtension(`infer`, false)
           const addDefaultResolvers = getNoDefaultResolvers(directive)
-          if (addDefaultResolvers) {
+          if (addDefaultResolvers != null) {
             typeComposer.setExtension(
               `addDefaultResolvers`,
               addDefaultResolvers

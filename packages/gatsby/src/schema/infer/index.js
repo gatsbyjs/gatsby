@@ -7,7 +7,6 @@ const {
 } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 const { mergeInferredComposer } = require(`./merge-inferred-composer`)
-const getInferConfig = require(`./get-infer-config`)
 
 const addInferredTypes = ({
   schemaComposer,
@@ -25,11 +24,14 @@ const addInferredTypes = ({
 
   typeNames.forEach(typeName => {
     let typeComposer
-    let inferConfig
     if (schemaComposer.has(typeName)) {
       typeComposer = schemaComposer.getOTC(typeName)
-      inferConfig = getInferConfig(typeComposer)
-      if (inferConfig.infer) {
+      // Infer we have enable infer or if it's "@dontInfer" but we have "addDefaultResolvers: false"
+      const runInfer = typeComposer.hasExtension(`infer`)
+        ? typeComposer.getExtension(`infer`) ||
+          typeComposer.getExtension(`addDefaultResolvers`)
+        : true
+      if (runInfer) {
         if (!typeComposer.hasInterface(`Node`)) {
           noNodeInterfaceTypes.push(typeComposer.getType())
         }
