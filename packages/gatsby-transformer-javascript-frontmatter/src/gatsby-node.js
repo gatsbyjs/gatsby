@@ -1,14 +1,9 @@
 const _ = require(`lodash`)
+const crypto = require(`crypto`)
 const babylon = require(`@babel/parser`)
 const traverse = require(`@babel/traverse`).default
 
-async function onCreateNode({
-  node,
-  getNode,
-  actions,
-  loadNodeContent,
-  createContentDigest,
-}) {
+async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
   const { createNode, createParentChildLink } = actions
   const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
 
@@ -112,7 +107,12 @@ async function onCreateNode({
         error: error,
       }
 
-      const contentDigest = createContentDigest(node)
+      const objStr = JSON.stringify(node)
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(objStr)
+        .digest(`hex`)
+
       const nodeData = {
         id: `${node.id} >>> JavascriptFrontmatter`,
         children: [],
