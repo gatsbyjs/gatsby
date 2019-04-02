@@ -1,8 +1,8 @@
 import _ from "lodash"
 import crypto from "crypto"
 import fs from "fs-extra"
-import { store, emitter } from "../../redux/"
-import { joinPath } from "../../utils/path"
+import { store, emitter } from "../redux/"
+import { joinPath } from "../utils/path"
 
 let lastHash = null
 

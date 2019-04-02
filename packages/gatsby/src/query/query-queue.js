@@ -1,9 +1,9 @@
 const Queue = require(`better-queue`)
 
 const queryRunner = require(`./query-runner`)
-const { store, emitter } = require(`../../redux`)
-const { boundActionCreators } = require(`../../redux/actions`)
-const websocketManager = require(`../../utils/websocket-manager`)
+const { store, emitter } = require(`../redux`)
+const { boundActionCreators } = require(`../redux/actions`)
+const websocketManager = require(`../utils/websocket-manager`)
 const FastMemoryStore = require(`./better-queue-custom-store`)
 
 const processing = new Set()

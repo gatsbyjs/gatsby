@@ -2,16 +2,16 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 
-const { store, emitter } = require(`../../redux/`)
+const { store, emitter } = require(`../redux/`)
 
-import { joinPath } from "../../utils/path"
+import { joinPath } from "../utils/path"
 
 let lastHash = null
 
 // Write out pages information.
 const writePages = async () => {
   bootstrapFinished = true
-  let { program, jsonDataPaths, pages } = store.getState()
+  let { program, jsonDataPaths, pages, matchPaths } = store.getState()
   pages = [...pages.values()]
 
   const pagesComponentDependencies = {}
@@ -119,6 +119,7 @@ const preferDefault = m => m && m.default || m
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
+    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
     writeAndMove(
       `data.json`,
       JSON.stringify({
