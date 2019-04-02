@@ -199,7 +199,7 @@ describe(`Resolve module exports`, () => {
     expect(result).toEqual([`foo`, `bar`, `baz`])
   })
 
-  it(`Resolves exports when using require mode`, () => {
+  it(`Resolves exports when using require mode - simple case`, () => {
     jest.mock(`require/exports`)
 
     const result = resolveModuleExports(`require/exports`, {
@@ -208,7 +208,7 @@ describe(`Resolve module exports`, () => {
     expect(result).toEqual([`foo`, `bar`])
   })
 
-  it(`Resolves exports when using require mode`, () => {
+  it(`Resolves exports when using require mode - unusual case`, () => {
     jest.mock(`require/unusual-exports`)
 
     const result = resolveModuleExports(`require/unusual-exports`, {
