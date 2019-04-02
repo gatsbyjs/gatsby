@@ -2,30 +2,43 @@ const loadLanguageExtension = require(`../load-prism-language-extension`)
 const Prism = require(`prismjs`)
 
 describe(`extend/add prism language`, () => {
-  afterEach(() => {
-    //jest.resetModules()
-  })
   it(`should throw an error if the request is not an array or an object`, () => {
     let request = 4
 
-    expect(() => loadLanguageExtension(request)).toThrow(
-      `'languageExtensions' needs to be defined as an array or a JSON object.`
-    )
+    expect(() => loadLanguageExtension(request)).toThrow()
 
     request = `A weird string value, instead of an object or array`
 
-    expect(() => loadLanguageExtension(request)).toThrow(
-      `'languageExtensions' needs to be defined as an array or a JSON object.`
-    )
+    expect(() => loadLanguageExtension(request)).toThrow()
   })
-  it(`should not throw an error if the request is an object or an array`, () => {
+  it(`should not throw an error if the request is an array`, () => {
     let request = []
 
     expect(() => loadLanguageExtension(request)).not.toThrow()
-
-    request = {}
+  })
+  it(`should not throw an error if the request is a valid object (containing 'language' and 'definition')`, () => {
+    let request = {
+      language: `aTypicalLanguage`,
+      definition: /aRegexp/,
+    }
 
     expect(() => loadLanguageExtension(request)).not.toThrow()
+  })
+  it(`should throw an error if the request is not a valid object (containing 'language' and 'definition')`, () => {
+    let request = {}
+
+    expect(() => loadLanguageExtension(request)).toThrow()
+  })
+  it(`should throw an error if the request is an array containing an invalid object (not containing 'language' and 'definition')`, () => {
+    let request = [
+      {
+        language: `aTypicalLanguage`,
+        definition: /aRegexp/,
+      },
+      {},
+    ]
+
+    expect(() => loadLanguageExtension(request)).toThrow()
   })
   it(`should extend pre-loaded language`, () => {
     const request = {
@@ -37,7 +50,7 @@ describe(`extend/add prism language`, () => {
 
     loadLanguageExtension(request)
 
-    expect(Prism.languages).toHaveProperty(request.extend)
+    expect(Prism.languages[request.extend]).toBeDefined()
     expect(Prism.languages[request.extend]).toHaveProperty(`flexc_keyword`)
     expect(Prism.languages[request.extend][`flexc_keyword`]).toEqual(
       request.definition.flexc_keyword
@@ -53,7 +66,7 @@ describe(`extend/add prism language`, () => {
 
     loadLanguageExtension(request)
 
-    expect(Prism.languages).toHaveProperty(request.extend)
+    expect(Prism.languages[request.extend]).toBeDefined()
     expect(Prism.languages[request.extend]).toHaveProperty(`flexc_keyword`)
     expect(Prism.languages[request.extend][`flexc_keyword`]).toEqual(
       request.definition.flexc_keyword

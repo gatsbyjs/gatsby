@@ -1,5 +1,3 @@
-"use strict"
-
 const Prism = require(`prismjs`)
 const _ = require(`lodash`)
 const loadPrismLanguage = require(`./load-prism-language`)

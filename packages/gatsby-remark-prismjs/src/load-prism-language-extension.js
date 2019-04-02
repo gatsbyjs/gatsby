@@ -3,22 +3,8 @@ const loadPrismLanguage = require(`./load-prism-language`)
 const replaceStringWithRegex = require(`./replace-string-with-regexp`)
 
 module.exports = languageExtensions => {
-  //  We only accept array or object as the 'languageExtensions' config property
-  //  (Note that 'instanceof Object' will return true for both Array and Object)
-  if (!(languageExtensions instanceof Object)) {
-    console.log(
-      `'languageExtensions' needs to be defined as an array or a JSON object: `,
-      languageExtensions
-    )
-    throw new Error(
-      `'languageExtensions' needs to be defined as an array or a JSON object.`
-    )
-  }
-
-  //If an object is given in the config we convert it to an array with a single object.
-  if (!(languageExtensions instanceof Array)) {
-    languageExtensions = [languageExtensions]
-  }
+  //Create array of languageExtensions (if input is object)
+  languageExtensions = [].concat(languageExtensions)
 
   languageExtensions.forEach(l => {
     loadLanguageExtension(l)
@@ -26,12 +12,20 @@ module.exports = languageExtensions => {
 }
 
 let loadLanguageExtension = languageExtension => {
-  if (!containsMandatoryProperties(languageExtension)) {
-    console.log(
-      `A languageExtension needs to contain 'language' and 'extend' or both and a 'definition'. Given config will not be loaded: `,
-      languageExtension
+  if (!isObjectAndNotArray(languageExtension)) {
+    throw new Error(
+      `A languageExtension needs to be defined as an object. Given config is not valid: ${JSON.stringify(
+        languageExtension
+      )}`
     )
-    return
+  }
+
+  if (!containsMandatoryProperties(languageExtension)) {
+    throw new Error(
+      `A languageExtension needs to contain 'language' and 'extend' or both and a 'definition'. Given config is not valid: ${JSON.stringify(
+        languageExtension
+      )}`
+    )
   }
 
   //If only 'extend' property is given, we extend the given extend language.
@@ -58,7 +52,10 @@ let loadLanguageExtension = languageExtension => {
   }
 }
 
+const isObjectAndNotArray = extension =>
+  //Array is an Object in javascript
+  !(extension instanceof Array) && extension instanceof Object
+
 const containsMandatoryProperties = languageExtension =>
-  (languageExtension.hasOwnProperty(`language`) ||
-    languageExtension.hasOwnProperty(`extend`)) &&
-  languageExtension.hasOwnProperty(`definition`)
+  (languageExtension.language || languageExtension.extend) &&
+  languageExtension.definition
