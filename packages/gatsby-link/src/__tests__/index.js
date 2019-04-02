@@ -118,6 +118,12 @@ describe(`<Link />`, () => {
       setup({ linkProps: { to } })
       expect(console.warn).toBeCalled()
     })
+
+    it(`supports non-encoded URIs`, () => {
+      const location = `/some bad url`
+      const { link } = setup({ linkProps: { to: location } })
+      expect(link.getAttribute(`href`)).toEqual(`${encodeURI(location)}`)
+    })
   })
 
   it(`push is called with correct args`, () => {
