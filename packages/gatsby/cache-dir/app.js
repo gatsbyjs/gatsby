@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import domReady from "domready"
+import domReady from "domready-loaded"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
