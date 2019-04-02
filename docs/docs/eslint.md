@@ -4,22 +4,23 @@ title: ESLint
 
 ## Why use ESLint
 
-Gatsby ships with Prettier, which is a simple, opinionated code _formatter_. [ESLint](https://eslint.org) can be both a _linter_ and _formatter_, meaning you can use it to check for syntactical errors as well as formatting. Prettier will work for most sites, however if you'd like to add linting capabilities _and_ highly-configurable formatting you should implement ESLint into your Gatsby project.
+ESLint is an open source JavaScript linting utility. Code linting is a type of static analysis that is frequently used to find problematic patterns. There are code linters for most programming languages, and compilers sometimes incorporate linting into the compilation process.
+
+JavaScript, being a dynamic and loosely-typed language, is especially prone to developer error. Without the benefit of a compilation process, JavaScript code is typically executed in order to find syntax or other errors. Linting tools like ESLint allow developers to discover problems with their JavaScript code without executing it.
 
 ## How to use ESLint
 
-Here we will explore an ESLint configuration designed to be used with React applications. ESLint might seem intimidating at first, however it is aimed at providing a number of configurable options to make your code format fit your style. Run the following commands to install ESLint and necessary dependencies.
+Gatsby ships with a built-in [ESLint](https://eslint.org) setup. For _most_ users, our built-in ESlint setup is all you need. If you know however that you'd like to customize your ESlint config e.g. your company has their own custom ESlint setup, this shows how this can be done.
+
+We'll replicate (mostly) the [ESlint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/.eslintrc.json) so you can then add additional presets, plugins, and rules.
 
 ```shell
 
-# Install install the necessary ESLint dependencies
-npm install --save-dev eslint-config-react-app babel-eslint@9.x \
-eslint@5.x eslint-plugin-flowtype@2.x eslint-plugin-import@2.x \
-eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x
-
+# First install the necessary ESLint dependencies
+npm install --save-dev eslint-config-react-app
 ```
 
-Now that we have our packages installed, create a new file named `.eslintrc.js` using the command below.
+Now that we have our packages installed, create a new file at the root of the site named `.eslintrc.js` using the command below.
 
 ```shell
 # Create a config file for ESLint
@@ -28,7 +29,7 @@ touch .eslintrc.js
 
 ### Configuring ESLint
 
-The snippet below mimics the [default ESLint config](https://github.com/gatsbyjs/gatsby/blob/master/.eslintrc.json) Gatsby ships with. We recommend copying the content to your newly created `.eslintrc.js` file and modifying it per your needs. Reference ESLint's [rules documentation](https://eslint.org/docs/rules/) for more options.
+Copy the snippet below to the newly created `.eslintrc.js` file. Then add additional presets, plugins, and rules as desired.
 
 ```js:title=.eslintrc.js
 module.exports = {
