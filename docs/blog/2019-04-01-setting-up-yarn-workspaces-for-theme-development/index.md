@@ -35,8 +35,18 @@ Add a `package.json` to the root directory with these subdirectories in the `wor
 }
 ```
 
-Switch to each subdirectory and run `yarn init` to create a `package.json` for each one.
+Switch to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
 Be sure the `name` field in your theme's `package.json` matches the directory name exactly.
+This is currently a limitation of the shadowing feature, not Yarn workspaces.
+
+Your directory structure should now look like this:
+
+```
+example/
+  package.json
+gatsby-theme-example-workspaces/
+  package.json
+```
 
 From the root directory, run the following to install Gatsby's dependencies for the example site.
 
@@ -75,7 +85,25 @@ module.exports = {
 }
 ```
 
-Create an empty `index.js` file to the theme's directory that serves as a noop (empty function).
+Change the `main` field in your theme's `package.json` to point to the `gatsby-config.js` file.
+
+```json:title=gatsby-theme-example-workspaces/package.json
+{
+  "name": "gatsby-theme-example-workspaces",
+  "description": "",
+  "version": "1.0.0",
+  "main": "gatsby-config.js", // highlight-line
+  "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^2.2.10",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
+  },
+  "dependencies": {
+    "gatsby-plugin-compile-es6-packages": "^1.0.6"
+  }
+}
+```
 
 ## Example site setup
 
