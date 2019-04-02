@@ -28,13 +28,15 @@ module.exports = class AnalyticsTracker {
     if (!this.isTrackingEnabled()) {
       return
     }
+    let baseEventType = `CLI_COMMAND`
     if (Array.isArray(type)) {
       type = type.length > 2 ? type[2].toUpperCase() : ``
+      baseEventType = `CLI_RAW_COMMAND`
     }
 
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
-    const eventType = `CLI_COMMAND_${type}`
+    const eventType = `${baseEventType}_${type}`
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
 
