@@ -2,15 +2,31 @@
 const path = require(`path`)
 const openurl = require(`better-opn`)
 const fs = require(`fs-extra`)
-const signalExit = require(`signal-exit`)
 const compression = require(`compression`)
 const express = require(`express`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const rl = require(`readline`)
+const onExit = require(`signal-exit`)
 
 const telemetry = require(`gatsby-telemetry`)
+
+const rlInterface = rl.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
+
+// Quit immediately on hearing ctrl-c
+rlInterface.on(`SIGINT`, () => {
+  process.exit()
+})
+
+onExit(() => {
+  telemetry.trackCli(`SERVE_STOP`)
+})
 
 const getPages = directory =>
   fs
@@ -74,27 +90,29 @@ module.exports = async program => {
   })
   app.use(pathPrefix, router)
 
-  const server = app.listen(port, host, () => {
-    let openUrlString = `http://${host}:${port}${pathPrefix}`
-    console.log(
-      `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
-        openUrlString
-      )}`
-    )
-    if (open) {
-      console.log(`${chalk.blue(`info`)} Opening browser...`)
-      Promise.resolve(openurl(openUrlString)).catch(err =>
-        console.log(
-          `${chalk.yellow(
-            `warn`
-          )} Browser not opened because no browser was found`
-        )
+  const startListening = () => {
+    app.listen(port, host, () => {
+      let openUrlString = `http://${host}:${port}${pathPrefix}`
+      console.log(
+        `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
+          openUrlString
+        )}`
       )
-    }
-  })
+      if (open) {
+        console.log(`${chalk.blue(`info`)} Opening browser...`)
+        Promise.resolve(openurl(openUrlString)).catch(err =>
+          console.log(
+            `${chalk.yellow(
+              `warn`
+            )} Browser not opened because no browser was found`
+          )
+        )
+      }
+    })
+  }
 
-  signalExit(() => {
-    telemetry.trackCli(`SERVE_STOP`)
-    server.close()
+  detectPortInUseAndPrompt(port, rlInterface, newPort => {
+    port = newPort
+    startListening()
   })
 }
