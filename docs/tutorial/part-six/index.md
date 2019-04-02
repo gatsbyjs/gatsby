@@ -41,7 +41,7 @@ Here's a video of a panda eating sweets.
 
 Once you save the file, look at `/my-files/` again—the new markdown file is in
 the table. This is a very powerful feature of Gatsby. Like the earlier
-`siteMetadata` example, source plugins can live reload data.
+`siteMetadata` example, source plugins can live-reload data.
 `gatsby-source-filesystem` is always scanning for new files to be added and when
 they are, re-runs your queries.
 
@@ -89,7 +89,7 @@ available on the `MarkdownRemark` node.
 
 ![markdown-query](markdown-query.png)
 
-Ok! Hopefully some basics are starting to fall into place. Source plugins bring
+Ok! Hopefully, some basics are starting to fall into place. Source plugins bring
 data _into_ Gatsby's data system and _transformer_ plugins transform raw content
 brought by source plugins. This pattern can handle all data sourcing and
 data transformation you might need when building a Gatsby site.
