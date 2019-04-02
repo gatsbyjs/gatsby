@@ -1,6 +1,6 @@
 # Using gatsby-image to prevent image bloat
 
-`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin READme](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
+`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
 _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full-width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
@@ -22,7 +22,7 @@ But creating optimized images for websites has long been a thorny problem. Ideal
 - Generate multiple smaller images so smartphones and tablets don’t download desktop-sized images
 - Strip all unnecessary metadata and optimize JPEG and PNG compression
 - Efficiently lazy load images to speed initial page load and save bandwidth
-- Use the “blur-up” technique or a ”traced placeholder” SVG to show a preview of the image while it loads
+- Use the “blur-up” technique or a “traced placeholder” SVG to show a preview of the image while it loads
 - Hold the image position so your page doesn’t jump while images load
 
 Doing this consistently across a site feels like sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
@@ -37,30 +37,75 @@ With Gatsby, we can make images way way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images, you only need to:
 
-1. Import gatsby-image and use it in place of the built-in img
-1. Write a GraphQL query using one of the included GraphQL “fragments” which specify the fields needed by `gatsby-image`.
+1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
 
-The GraphQL query creates multiple thumbnails with optimized JPEG and PNG compression. The `gatsby-image` component automatically sets up the “blur-up” effect as well as lazy loading of images further down the screen.
+```shell
+  npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+```
 
-Here’s what a really simple Gatsby page component using gatsby-image would look like:
+2. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`],
+}
+```
+
+3. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an update to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option with wherever your images are located relative to your project.
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    // highlight-start
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    // highlight-end
+  ],
+}
+```
+
+4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example will use `GatsbyImageSharpFluid`. An example of a GraphQL query is below where the path listed is the path relative to the location specified in the `gatsby-source-filesystem` options.
+
+```graphql
+file(relativePath: { eq: "images/default.jpg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+}
+```
+
+5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well.
 
 ```jsx
-import React from "react"
 import Img from "gatsby-image"
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
-    <Img resolutions={data.file.childImageSharp.resolutions} />
+    <Img
+      fluid={data.file.childImageSharp.fluid}
+      alt="Gatsby Docs are awesome"
+    />
   </div>
 )
 ```
+
+This GraphQL query creates multiple sizes of the image and when the page is rendered the image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between) is used. The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
 
 So this is all very nice and it’s far better to be able to use this from NPM vs. implementing it yourself or cobbling together several standalone libraries.
 
 ### References:
 
-- [Plugin READme file](/packages/gatsby-image/)
+- [Gatsby image plugin README file](/packages/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
 - [Starters that use gatsby-image](/starters/?d=gatsby-image&v=2)
