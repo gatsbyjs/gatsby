@@ -34,6 +34,8 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const pageQueryRunner = require(`../query/page-query-runner`)
+const queryQueue = require(`../query/queue`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -79,6 +81,8 @@ async function startServer(program) {
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  pageQueryRunner.startListening(queryQueue.makeDevelop())
 
   await createIndexHtml()
 

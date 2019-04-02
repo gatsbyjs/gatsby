@@ -3,7 +3,6 @@
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
-const websocketManager = require(`../utils/websocket-manager`)
 
 const path = require(`path`)
 const { store } = require(`../redux`)
@@ -11,6 +10,7 @@ const withResolverContext = require(`../schema/context`)
 const { generatePathChunkName } = require(`../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
+const { boundActionCreators } = require(`../redux/actions`)
 
 const resultHashes = {}
 
@@ -25,7 +25,7 @@ type QueryJob = {
 }
 
 // Run query
-module.exports = async (queryJob: QueryJob, component: Any) => {
+module.exports = async (queryJob: QueryJob) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -103,20 +103,6 @@ ${formatErrorDetails(errorDetails)}`)
     dataPath = queryJob.hash
   }
 
-  if (process.env.gatsby_executing_command === `develop`) {
-    if (queryJob.isPage) {
-      websocketManager.emitPageData({
-        result,
-        id: queryJob.id,
-      })
-    } else {
-      websocketManager.emitStaticQueryData({
-        result,
-        id: queryJob.id,
-      })
-    }
-  }
-
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
     let modInt = ``
@@ -150,9 +136,13 @@ ${formatErrorDetails(errorDetails)}`)
         value: dataPath,
       },
     })
-
-    return result
   }
+
+  boundActionCreators.pageQueryRun({
+    path: queryJob.id,
+    componentPath: queryJob.componentPath,
+    isPage: queryJob.isPage,
+  })
 
   return result
 }

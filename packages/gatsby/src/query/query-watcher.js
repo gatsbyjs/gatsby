@@ -19,8 +19,7 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const {
   queueQueryForPathname,
-  runQueuedActions: runQueuedQueries,
-  runQueries,
+  runQueuedQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -212,12 +211,12 @@ const queueQueriesForPageComponent = componentPath => {
     pages.map(p => p.path || p.id)
   )
   pages.forEach(page => queueQueryForPathname(page.path))
-  runQueries()
+  runQueuedQueries()
 }
 
 const runQueryForPage = path => {
   queueQueryForPathname(path)
-  runQueries()
+  runQueuedQueries()
 }
 
 exports.queueQueriesForPageComponent = queueQueriesForPageComponent
