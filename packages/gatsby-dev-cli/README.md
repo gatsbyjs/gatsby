@@ -55,7 +55,7 @@ https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 #### `--quiet`
 
-Don't output anything except for a quit message when used together with
+Don't output anything except for a success message when used together with
 `--scan-once`.
 
 #### `--copy-all`
