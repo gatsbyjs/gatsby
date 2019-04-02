@@ -64,18 +64,16 @@
           link: /docs/eslint/
         - title: Proxying API Requests
           link: /docs/api-proxy/
-    - title: Images and Files
+    - title: Images, Video, and Files
       link: /docs/images-and-files/
       items:
         - title: Adding Images, Fonts, and Files
           link: /docs/adding-images-fonts-files/
-        - title: Static Folder
+        - title: Working With Video
+          link: /docs/working-with-video/
+        - title: Using the Static Folder
           link: /docs/static-folder/
-        - title: Dropping Images into Static Folders*
-          link: /docs/dropping-images-into-static-folders/
-        - title: Importing Single Files*
-          link: /docs/importing-single-files/
-        - title: Importing Media Content*
+        - title: Importing Media Content
           link: /docs/importing-media-content/
         - title: gatsby-source-filesystem Programmatic Import*
           link: /docs/gatsby-source-filesystem-programmatic-import/
@@ -492,6 +490,13 @@
       link: /contributing/community/
     - title: How to Contribute
       link: /contributing/how-to-contribute/
+- title: Partnering With Gatsby
+  link: /docs/partnering-with-gatsby/
+  items:
+    - title: Integrating and Partnering For Vendors
+      link: /docs/gatsby-vendor-partnership/
+    - title: Agency Partnership Program
+      link: /docs/gatsby-agency-partnership/
 - title: Glossary*
   link: /docs/glossary/
 - title: Commands (Gatsby CLI)

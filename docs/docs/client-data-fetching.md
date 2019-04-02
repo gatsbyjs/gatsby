@@ -37,7 +37,7 @@ export default ClientFetchingExample
 
 To query for Rick's character info and image, we'll use the `gatsby-source-graphql` plugin. This will allow us to query the Rick and Morty API using Gatsby queries.
 
-> Note: To learn more about using [`gatsby-source-graphql`](/packages/gatsby-source-graphql/), or about [Gatsby's GraphQL data layer](https://www.gatsbyjs.org/docs/graphql/), check out their respective docs. The purpose of including it here is only for comparison.
+> Note: To learn more about using [`gatsby-source-graphql`](/packages/gatsby-source-graphql/), or about [Gatsby's GraphQL data layer](/docs/graphql/), check out their respective docs. The purpose of including it here is only for comparison.
 
 ```javascript:title=gatsby-config.js
 module.exports = {

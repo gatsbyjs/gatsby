@@ -1,7 +1,7 @@
 import "@babel/polyfill"
 import React from "react"
 import { render, cleanup, fireEvent } from "react-testing-library"
-import Img from "../"
+import Image from "../"
 
 afterAll(cleanup)
 
@@ -25,7 +25,7 @@ const fluidShapeMock = {
 
 const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
   const { container } = render(
-    <Img
+    <Image
       backgroundColor
       className={`fixedImage`}
       style={{ display: `inline` }}
@@ -45,7 +45,7 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
   return container
 }
 
-describe(`<Img />`, () => {
+describe(`<Image />`, () => {
   it(`should render fixed size images`, () => {
     const component = setup()
     expect(component).toMatchSnapshot()
@@ -73,7 +73,7 @@ describe(`<Img />`, () => {
     )
     // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition: opacity 0.5s; transition-delay: 0.25s; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 0.5s; color: red;`
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })

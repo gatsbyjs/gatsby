@@ -23,7 +23,7 @@ mostly develop with Node). I tried to develop my blog inside a Docker container,
 but this was extremely slow.
 
 Some weeks ago, one of my colleagues at work told me about
-[Gatsby](https://www.gatsbyjs.org) Since I was already learning
+[Gatsby](/) Since I was already learning
 [React](https://reactjs.org/) and had started looking at
 [GraphQL](http://graphql.org/) (after attending a talk at
 [Nordic.js](http://nordicjs.com/))—I was very interested in giving it a try.
