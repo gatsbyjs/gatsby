@@ -31,6 +31,7 @@ const saveStateDebounced = _.debounce(saveState, 1000)
  * disk upon any action (debounced to every 1 second)
  */
 function startAutosave() {
+  saveStateDebounced()
   emitter.on(`*`, () => saveStateDebounced())
 }
 
