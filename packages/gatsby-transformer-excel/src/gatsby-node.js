@@ -10,7 +10,7 @@ function _loadNodeContent(fileNode, fallback) {
 }
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId, createDigestContent },
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
   const { createNode, createParentChildLink } = actions
@@ -44,7 +44,7 @@ async function onCreateNode(
 
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {
-        const contentDigest = createDigestContent(obj)
+        const contentDigest = createContentDigest(obj)
         return {
           ...obj,
           id: obj.id
@@ -68,7 +68,7 @@ async function onCreateNode(
       })
 
       const shObj = { name: n, idx: idx }
-      const contentDigest = createDigestContent(shObj)
+      const contentDigest = createContentDigest(shObj)
       const z = {
         id: createNodeId(`${node.id} [${idx}] >>> ${node.extension}`),
         children: [],

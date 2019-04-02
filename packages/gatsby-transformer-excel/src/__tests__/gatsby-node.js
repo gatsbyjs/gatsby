@@ -29,20 +29,20 @@ describe(`Process nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createDigestContent = jest.fn().mockReturnValue(`contentDigest`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
-      createDigestContent,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2 + 1)
       expect(createParentChildLink).toHaveBeenCalledTimes(2 + 1)
-      expect(createDigestContent).toHaveBeenCalledTimes(2 + 1)
+      expect(createContentDigest).toHaveBeenCalledTimes(2 + 1)
     })
   })
 
@@ -56,7 +56,7 @@ describe(`Process nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createDigestContent = jest.fn().mockReturnValue(`contentDigest`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode(
       {
@@ -64,7 +64,7 @@ describe(`Process nodes correctly`, () => {
         loadNodeContent,
         actions,
         createNodeId,
-        createDigestContent,
+        createContentDigest,
       },
       { raw: false }
     ).then(() => {
@@ -72,7 +72,7 @@ describe(`Process nodes correctly`, () => {
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2 + 1)
       expect(createParentChildLink).toHaveBeenCalledTimes(2 + 1)
-      expect(createDigestContent).toHaveBeenCalledTimes(2 + 1)
+      expect(createContentDigest).toHaveBeenCalledTimes(2 + 1)
     })
   })
 
@@ -86,7 +86,7 @@ describe(`Process nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createDigestContent = jest.fn().mockReturnValue(`contentDigest`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode(
       {
@@ -94,7 +94,7 @@ describe(`Process nodes correctly`, () => {
         loadNodeContent,
         actions,
         createNodeId,
-        createDigestContent,
+        createContentDigest,
       },
       { rawOutput: false }
     ).then(() => {
@@ -102,7 +102,7 @@ describe(`Process nodes correctly`, () => {
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2 + 1)
       expect(createParentChildLink).toHaveBeenCalledTimes(2 + 1)
-      expect(createDigestContent).toHaveBeenCalledTimes(2 + 1)
+      expect(createContentDigest).toHaveBeenCalledTimes(2 + 1)
     })
   })
 })
