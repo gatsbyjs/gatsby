@@ -17,6 +17,49 @@ mind melty because themes can add parent themes to a configuration so we
 need to be able to walk the composition of themes to determine the "last
 shadow" since the last one wins in the algorithm.
 
+## Theme composition
+
+It's important to begin discussing how the composition of themes works. An
+end user of a theme can configure any number of themes. Each of these
+themes are considered sibling themes. Here is a `gatsby-config.js` that
+configures two sibling themes:
+
+```js:title=gatsby-config.js
+module.exports = {
+  _experimentalThemes: [
+    "gatsby-theme-tomato-blog",
+    "gatsby-theme-tomato-portfolio",
+  ],
+}
+```
+
+Both of the themes above (blog and portfolio) can install and configure
+any other theme so we end up with a tree of themes which we call a theme
+composition.
+
+The theme composition itself has a few properties:
+
+- the last theme wins
+- a theme that uses another theme is the child theme
+- a theme that is used by another theme is the parent theme
+- themes trees are flattened during resolution
+
+These characteristics are what we use in the component shadowing algorithm
+to decide which component to render. So, for example, if
+`gatsby-theme-tomato-blog` has `gastby-theme-parent` as a parent theme we'd
+result in the following themes array:
+
+```js
+;[
+  "gatsby-theme-parent",
+  "gatsby-theme-tomato-blog",
+  "gatsby-theme-tomato-portfolio",
+]
+```
+
+This means that `gatsby-theme-tomato-portfolio` receives priority for
+component resolution.
+
 ## Modifying the webpack config
 
 It's a bit meta because component shadowing is implemented as an internal
