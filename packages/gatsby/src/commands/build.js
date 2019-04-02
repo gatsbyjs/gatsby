@@ -89,5 +89,8 @@ module.exports = async function build(program: BuildArgs) {
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()
+
+  report.cat()
+
   await stopTracer()
 }
