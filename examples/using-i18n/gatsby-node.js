@@ -4,6 +4,9 @@ const locales = require(`./i18n/config`)
 const removeTrailingSlash = path =>
   path === `/` ? path : path.replace(/\/$/, ``)
 
+const localizedSlug = ({ isDefault, lang, slug }) =>
+  isDefault ? `/${slug}` : `/${lang}/${slug}`
+
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
 
@@ -27,6 +30,60 @@ exports.onCreatePage = ({ page, actions }) => {
       // Pass in the locale as context to every page
       // This context also gets passed to the src/components/layout file
       // This should ensure that the locale is available on every page
+      context: {
+        locale: lang,
+      },
+    })
+  })
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const postTemplate = require.resolve(`./src/templates/post.js`)
+
+  const result = await graphql(`
+    {
+      blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+        edges {
+          node {
+            name
+            relativeDirectory
+            childMdx {
+              frontmatter {
+                title
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  if (result.errors) {
+    console.error(result.errors)
+    return
+  }
+
+  const postList = result.data.blog.edges
+
+  postList.forEach(({ node: post }) => {
+    // Check if post.name is "index" -- because that's the file for default language
+    // (In this case "en")
+    const isDefault = post.name === `index`
+
+    // Files are defined with "name-with-dashes.lang.mdx"
+    // post.name returns "name-with-dashes.lang"
+    // So grab the lang from that string
+    const lang = isDefault ? `en` : post.name.split(`.`)[1]
+
+    // All files for a blogpost are stored in a folder
+    // relativeDirectory is the name of the folder
+    const slug = post.relativeDirectory
+
+    createPage({
+      path: localizedSlug({ isDefault, lang, slug }),
+      component: postTemplate,
       context: {
         locale: lang,
       },
