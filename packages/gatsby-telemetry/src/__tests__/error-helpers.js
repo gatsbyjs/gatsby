@@ -3,33 +3,31 @@ const { sanitizeError, cleanPaths } = require(`../error-helpers`)
 describe(`Errors Helpers`, () => {
   describe(`sanitizeError`, () => {
     it(`Removes env, output and converts buffers to strings from execa output`, () => {
-      const tags = {
-        error: [
-          {
-            error: null,
-            cmd: `git commit -m"test"`,
-            file: `/bin/sh`,
-            args: [`/bin/sh`, `-c`, `git commit -m"test`],
-            options: {
-              cwd: `here`,
-              shell: true,
-              envPairs: [`VERSION=1.2.3`],
-              stdio: [{}, {}, {}], // pipes
-            },
-            envPairs: [`VERSION=1.2.3`],
+      const error = {
+        error: null,
+        cmd: `git commit -m"test"`,
+        file: `/bin/sh`,
+        args: [`/bin/sh`, `-c`, `git commit -m"test`],
+        options: {
+          cwd: `here`,
+          shell: true,
+          envPairs: [`VERSION=1.2.3`],
+          stdio: [{}, {}, {}], // pipes
+        },
+        envPairs: [`VERSION=1.2.3`],
 
-            stderr: Buffer.from(`this is a an error`),
-            stdout: Buffer.from(`this is a test`),
-          },
-        ],
+        stderr: Buffer.from(`this is a an error`),
+        stdout: Buffer.from(`this is a test`),
       }
 
-      sanitizeError(tags)
-      const error = tags.error[0]
-      expect(error.stderr).toStrictEqual(`this is a an error`)
-      expect(error.stdout).toStrictEqual(`this is a test`)
-      expect(error.envPairs).toBeUndefined()
-      expect(error.options).toBeUndefined()
+      const errorString = sanitizeError(error)
+
+      const sanitizedError = JSON.parse(errorString)
+
+      expect(sanitizedError.stderr).toStrictEqual(`this is a an error`)
+      expect(sanitizedError.stdout).toStrictEqual(`this is a test`)
+      expect(sanitizedError.envPairs).toBeUndefined()
+      expect(sanitizedError.options).toBeUndefined()
     })
 
     it(`Sanitizes current path from error stracktraces`, () => {
@@ -47,11 +45,8 @@ describe(`Errors Helpers`, () => {
         process.cwd().replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
       )
       expect(localPathRegex.test(e.stack)).toBeTruthy()
-      const tags = { error: [e] }
 
-      sanitizeError(tags)
-
-      expect(e.stack).toMatchSnapshot()
+      expect(sanitizeError(e)).toMatchSnapshot()
     })
   })
   describe(`cleanPaths`, () => {

@@ -1,7 +1,7 @@
 const { createHash } = require(`crypto`)
 const uuid = require(`uuid/v1`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeError, cleanPaths } = require(`./error-helpers`)
+const { sanitizeErrors } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
 const { basename } = require(`path`)
@@ -44,17 +44,11 @@ module.exports = class AnalyticsTracker {
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
-    sanitizeError(tags)
 
-    // JSON.stringify won't work for Errors w/o some trickery:
-    let { error } = tags
-    if (error) {
-      error = error.map(e =>
-        JSON.parse(JSON.stringify(e, Object.getOwnPropertyNames(e)))
-      )
+    if (tags.error) {
+      // `error` ought to have been `errors` but is `error` in the database
+      tags.error = sanitizeErrors(tags.error)
     }
-
-    tags.error = cleanPaths(JSON.stringify(error))
 
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
@@ -66,8 +60,11 @@ module.exports = class AnalyticsTracker {
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `BUILD_ERROR_${type}`
-    sanitizeError(tags)
-    tags.error = cleanPaths(JSON.stringify(tags.error))
+
+    if (tags.error) {
+      // `error` ought to have been `errors` but is `error` in the database
+      tags.error = sanitizeErrors(tags.error)
+    }
 
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
