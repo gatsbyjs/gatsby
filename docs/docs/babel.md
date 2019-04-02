@@ -23,6 +23,7 @@ browsers.
 
 Gatsby ships with a default .babelrc setup that should work for most sites. If you'd like
 to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and overwrite the `targets` option.
+Note that the api-runner-browser.js file will need to be ignored as shown below.
 
 ```shell
 npm install --save-dev babel-preset-gatsby
@@ -40,9 +41,12 @@ npm install --save-dev babel-preset-gatsby
         }
       }
     ]
-  ]
+  ],
+  "ignore": ['.cache/api-runner-browser.js']
 }
 ```
 <!-- prettier-ignore-end -->
 
 For more advanced configurations, you can also copy the defaults from [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby) and customize them to suit your needs.
+
+
