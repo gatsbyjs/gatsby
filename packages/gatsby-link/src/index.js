@@ -120,7 +120,7 @@ class GatsbyLink extends React.Component {
       )
     }
 
-    const prefixedTo = withPrefix(to)
+    const prefixedTo = withPrefix(encodeURI(to))
 
     return (
       <Link
