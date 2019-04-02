@@ -117,7 +117,6 @@ const SplitButton = ({
         location,
         onLinkClick,
         level: item.level,
-        indention: indention(item.level),
         customCSS: {
           ...(item.level === 0 && {
             "&&": {

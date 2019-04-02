@@ -133,7 +133,7 @@ class Accordion extends React.Component {
                 : false,
             ...(item.ui === `steps` && {
               "&:after": {
-                background: presets.itemBorderColor,
+                background: colors.gray.border,
                 bottom: 0,
                 content: `''`,
                 left: 27,

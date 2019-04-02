@@ -2,7 +2,6 @@ import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
 import createLink from "../../utils/sidebar/create-link"
-import indention from "../../utils/sidebar/indention"
 
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {
@@ -63,7 +62,6 @@ class Item extends React.PureComponent {
               onLinkClick,
               ui,
               level: item.level,
-              indention: indention(item.level),
             })}
           </li>
         )}
