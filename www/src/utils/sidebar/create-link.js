@@ -14,7 +14,7 @@ const createLink = ({
   onLinkClick,
   isActive,
   isParentOfActiveItem,
-  stepsUI,
+  ui,
   customCSS,
   level,
   indention,
@@ -86,7 +86,7 @@ const createLink = ({
         onClick={onLinkClick}
         to={item.link}
       >
-        {stepsUI && <span css={{ ...styles.subsectionLink }} />}
+        {ui === `steps` && <span css={{ ...styles.subsectionLink }} />}
         {title}
       </Link>
     </span>

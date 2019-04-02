@@ -61,7 +61,7 @@ class Item extends React.PureComponent {
               item,
               location,
               onLinkClick,
-              stepsUI: ui === `steps`,
+              ui,
               level: item.level,
               indention: indention(item.level),
             })}
