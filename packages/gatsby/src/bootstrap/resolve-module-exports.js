@@ -120,7 +120,7 @@ https://gatsby.dev/no-mixed-modules
  * @param {string} mode
  * @param {function} resolver
  */
-module.exports = (modulePath, { mode = `analisys`, resolver } = {}) => {
+module.exports = (modulePath, { mode = `analysis`, resolver } = {}) => {
   if (mode === `require`) {
     try {
       return Object.keys(require(modulePath))
