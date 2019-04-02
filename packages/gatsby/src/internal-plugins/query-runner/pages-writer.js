@@ -11,13 +11,14 @@ let lastHash = null
 // Write out pages information.
 const writePages = async () => {
   bootstrapFinished = true
-  let { program, jsonDataPaths, pages, matchPaths } = store.getState()
+  let { program, jsonDataPaths, pages } = store.getState()
   pages = [...pages.values()]
 
   const pagesComponentDependencies = {}
 
   // Write out pages.json
   let pagesData = []
+  let matchPaths = []
   pages.forEach(({ path, matchPath, componentChunkName, jsonName }) => {
     const pageComponentsChunkNames = {
       componentChunkName,
@@ -33,6 +34,10 @@ const writePages = async () => {
       path,
       matchPath,
     })
+
+    if (matchPath) {
+      matchPaths[matchPath] = path
+    }
   })
 
   pagesData = _(pagesData)
