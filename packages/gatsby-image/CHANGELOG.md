@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.36...gatsby-image@2.0.37) (2019-04-02)
+
+### Features
+
+- **gatsby-image:** don't fadein image when already loaded "browser-cache" ([#12468](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/12468)) ([8646aa4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/8646aa4)), closes [#12254](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/12254)
+
 ## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.35...gatsby-image@2.0.36) (2019-04-01)
 
 **Note:** Version bump only for package gatsby-image

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.4...gatsby@2.3.5) (2019-04-02)
+
+### Bug Fixes
+
+- **gatsby:** Only use one redux namespace for plugins ([#12263](https://github.com/gatsbyjs/gatsby/issues/12263)) ([bba69e9](https://github.com/gatsbyjs/gatsby/commit/bba69e9))
+
+### Features
+
+- **gatsby-cli:** Detect if something is already running on a port when running gatsby serve ([#12989](https://github.com/gatsbyjs/gatsby/issues/12989)) ([e587e57](https://github.com/gatsbyjs/gatsby/commit/e587e57))
+
 ## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.3...gatsby@2.3.4) (2019-03-28)
 
 ### Features
