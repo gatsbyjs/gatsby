@@ -35,7 +35,6 @@ How to install or verify Homebrew on your computer:
 1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number, if so.
 1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
 1. Once you've installed Homebrew, repeat step 2 to verify.
-1. Run `brew update` to make sure you have the latest version of Homebrew.
 
 ### Mac Users: install XCode Command Line Tools
 
@@ -50,6 +49,7 @@ Node.js is an environment that can run JavaScript code outside of a web browser.
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
 1. Open your Terminal.
+1. Run `brew update` to make sure you have the latest version of Homebrew.
 1. Run this command to install Node and npm in one go: `brew install node`
 
 Once you have followed the installation steps, make sure everything was installed properly:
