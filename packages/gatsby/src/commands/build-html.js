@@ -9,9 +9,9 @@ const telemetry = require(`gatsby-telemetry`)
 
 const runWebpack = compilerConfig =>
   new Promise((resolve, reject) => {
-    webpack(compilerConfig).run((e, stats) => {
-      if (e) {
-        reject(e)
+    webpack(compilerConfig).run((err, stats) => {
+      if (err) {
+        reject(err)
       } else {
         resolve(stats)
       }
