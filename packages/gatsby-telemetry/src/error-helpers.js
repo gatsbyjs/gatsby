@@ -18,7 +18,7 @@ const cleanPaths = (str, separator = sep) => {
 const ensureArray = value => [].concat(value)
 
 // Takes an Error and returns a sanitized JSON String
-const sanitizeError = error => {
+const sanitizeError = (error, pathseparator) => {
   // Convert Buffers to Strings
   if (error.stderr) error.stderr = String(error.stderr)
   if (error.stdout)
@@ -33,7 +33,7 @@ const sanitizeError = error => {
   const errorString = JSON.stringify(error)
 
   // Removes all user paths
-  return cleanPaths(errorString)
+  return cleanPaths(errorString, pathseparator)
 }
 
 // error could be Error or [Error]

@@ -89,7 +89,6 @@ describe(`Errors Helpers`, () => {
 
       const sanitizedErrorString = sanitizeError(e, `/`)
 
-      console.log(`received`, sanitizedErrorString)
       expect(sanitizedErrorString.includes(errormessage)).toBe(true)
       expect(usernameRegex.test(sanitizedErrorString)).toBe(false)
       expect(sanitizedErrorString.match(fakePathRegex).length).toBe(2)
