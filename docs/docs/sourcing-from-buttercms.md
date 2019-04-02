@@ -833,7 +833,7 @@ export const pageQuery = graphql`
 
 ## Creating a blog template
 
-Now we've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](https://www.gatsbyjs.org/docs/node-apis/#createPages) API we would generate blog post pages using a template:
+Now we've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/node-apis/#createPages) API we would generate blog post pages using a template:
 
 `src/pages/template/blog-post.js`
 

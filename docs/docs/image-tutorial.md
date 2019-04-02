@@ -23,7 +23,7 @@ gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install --save gatsby-source-wordpress

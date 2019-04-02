@@ -11,7 +11,7 @@ Kyle Mathews is presenting on “Gatsby + Drupal” at [Decoupled Drupal Days NY
 
 (Hint: it’s about how nicely Gatsby and Drupal work together!)
 
-Take a look at the source code of [the official Gatsby + Drupal example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal) or [see it live](https://using-drupal.gatsbyjs.org/). Gatsby co-founder, Kyle Mathews, has a [long history with Drupal](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#drupal-and-the-lamp-stack) and built this example site in Gatsby’s early days:
+Take a look at the source code of [the official Gatsby + Drupal example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal) or [see it live](https://using-drupal.gatsbyjs.org/). Gatsby co-founder, Kyle Mathews, has a [long history with Drupal](/blog/2018-05-24-launching-new-gatsby-company/#drupal-and-the-lamp-stack) and built this example site in Gatsby’s early days:
 
 ![Screenshot of decoupled Drupal site build with Gatsby](umami-site.png)
 
@@ -25,7 +25,7 @@ It only takes a few steps to use Gatsby with Drupal as a headless CMS (also know
 
 Hooking up Gatsby to a new or existing Drupal site takes just a few steps:
 
-- Add the [`gatsby-source-drupal` plugin](https://www.gatsbyjs.org/packages/gatsby-source-drupal/) to your Gatsby site
+- Add the [`gatsby-source-drupal` plugin](/packages/gatsby-source-drupal/) to your Gatsby site
 - Configure the plugin with your Drupal credentials & hosted URL
 - Access all your Drupal data using GraphQL queries
 
