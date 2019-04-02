@@ -51,7 +51,7 @@ describe(`Errors Helpers`, () => {
 
       sanitizeError(tags)
 
-      expect(localPathRegex.test(e.stack)).toBeFalsy()
+      expect(localPathRegex.test(e.stack)).toMatchSnapshot()
     })
   })
   describe(`cleanPaths`, () => {
