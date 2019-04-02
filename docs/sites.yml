@@ -5147,3 +5147,14 @@
   built_by: William Neill
   built_by_url: https://twitter.com/williamneill
   featured: false
+- title: Assortment
+  main_url: https://assortment.io
+  url: https://assortment.io
+  description: >
+    Assortment aims to provide detailed tutorials (and more) for developers of all skill levels within the Web Development Industry. Attempting to cut out the fluff and arm you with the facts.
+  categories:
+    - Blog
+    - Web Development
+  built_by: Luke Whitehouse
+  built_by_url: https://twitter.com/_lukewh
+  featured: false
