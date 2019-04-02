@@ -5,7 +5,6 @@ const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const showMeARandomASCIICat = require(`cat-me`)
 const { trackError } = require(`gatsby-telemetry`)
 
 const VERBOSE = process.env.gatsby_log_level === `verbose`
@@ -23,9 +22,6 @@ type ActivityArgs = {
  */
 
 module.exports = Object.assign(reporter, {
-  cat() {
-    console.log(showMeARandomASCIICat())
-  },
   /**
    * Strip initial indentation template function.
    */
