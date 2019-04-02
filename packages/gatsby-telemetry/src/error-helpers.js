@@ -9,11 +9,9 @@ const cleanPaths = str => {
 }
 
 const sanitizeError = tags => {
-  if (!tags) return
-  const { error } = tags
-  if (error) {
+  if (tags && tags.error) {
     try {
-      ;[].concat(error).forEach(e => {
+      ;[].concat(tags.error).forEach(e => {
         ;[`envPairs`, `options`, `output`].forEach(f => delete e[f])
         // These may be buffers
         if (e.stderr) e.stderr = String(e.stderr)
