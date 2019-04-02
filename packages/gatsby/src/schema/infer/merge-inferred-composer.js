@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const { GraphQLList, GraphQLNonNull, GraphQLObjectType } = require(`graphql`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 export const mergeInferredComposer = ({
   schemaComposer,
@@ -85,7 +86,7 @@ const maybeExtendDefinedField = ({
     )
   ) {
     const extensions = definedComposer.getFieldExtensions(fieldName)
-    if (addDefaultResolvers && !definedField.resolver && !extensions.resolver) {
+    if (addDefaultResolvers && !extensions.addResolver) {
       const config = {}
       if (
         (!definedField.args || _.isEmpty(definedField.args)) &&
@@ -99,16 +100,14 @@ const maybeExtendDefinedField = ({
       }
 
       definedComposer.extendField(fieldName, config)
-      if (inferredField.extensions.resolver) {
-        definedComposer.setFieldExtension(
-          fieldName,
-          `resolver`,
-          inferredField.extensions.resolver
+      if (inferredField.extensions.addResolver) {
+        report.warn(
+          `Deprecation warning - adding inferred resolver for field ${definedComposer.getTypeName()}.${fieldName}. In Gatsby 3, only fields with a "addResolver" directive/extension will get a resolver.`
         )
         definedComposer.setFieldExtension(
           fieldName,
-          `resolverOptions`,
-          inferredField.extensions.resolverOptions
+          `addResolver`,
+          inferredField.extensions.addResolver
         )
       }
     }

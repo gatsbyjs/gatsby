@@ -234,21 +234,9 @@ const processAddedType = ({
     }
   }
 
-  // XXX(freiksenet): This currently forces types too early
-  // if (typeComposer.getFieldNames) {
-  //   typeComposer.getFieldNames().forEach(fieldName => {
-  //     typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
-  //     typeComposer.setFieldExtension(
-  //       fieldName,
-  //       `plugin`,
-  //       plugin ? plugin.name : null
-  //     )
-  //   })
-  // }
-
   if (typeComposer.hasExtension(`addDefaultResolvers`)) {
     report.warn(
-      `Default resolve behaviour is deprecated. In future, only fields with explicit resolver directives/extensions (date, link) will get arguments and resolvers. "noDefaultResolvers" argument will be removed from the directive.`
+      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, defined fields won't get resolvers, unless "addResolver" directive/extension is used.`
     )
   }
 

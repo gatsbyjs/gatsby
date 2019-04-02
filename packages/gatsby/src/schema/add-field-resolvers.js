@@ -12,15 +12,18 @@ export const addFieldResolvers = ({
     let field = typeComposer.getField(fieldName)
 
     const extensions = typeComposer.getFieldExtensions(fieldName)
-
-    if (!field.resolve && extensions.resolver) {
-      const options = extensions.resolverOptions || {}
-      switch (extensions.resolver) {
+    if (
+      !field.resolve &&
+      extensions.addResolver &&
+      _.isObject(extensions.addResolver)
+    ) {
+      const options = extensions.addResolver.options || {}
+      switch (extensions.addResolver.type) {
         case `date`: {
           addDateResolver({
             typeComposer,
             fieldName,
-            options: extensions.resolverOptions || {},
+            options,
           })
           break
         }
@@ -62,20 +65,20 @@ const addDateResolver = ({
 }) => {
   const field = typeComposer.getField(fieldName)
 
-  let options = {
+  let fieldConfig = {
     resolve: dateResolver.resolve,
   }
   if (!field.args || _.isEmpty(field.args)) {
-    options.args = {
+    fieldConfig.args = {
       ...dateResolver.args,
     }
     if (defaultFormat) {
-      options.args.formatString.defaultValue = defaultFormat
+      fieldConfig.args.formatString.defaultValue = defaultFormat
     }
     if (defaultLocale) {
-      options.args.formatString.defaultLocale = defaultLocale
+      fieldConfig.args.formatString.defaultLocale = defaultLocale
     }
   }
 
-  typeComposer.extendField(fieldName, options)
+  typeComposer.extendField(fieldName, fieldConfig)
 }

@@ -2,8 +2,10 @@ const {
   GraphQLBoolean,
   GraphQLNonNull,
   GraphQLDirective,
+  GraphQLString,
   DirectiveLocation,
 } = require(`graphql`)
+const { GraphQLJSON } = require(`graphql-compose`)
 
 const InferDirective = new GraphQLDirective({
   name: `infer`,
@@ -11,8 +13,7 @@ const InferDirective = new GraphQLDirective({
   locations: [DirectiveLocation.OBJECT],
   args: {
     noDefaultResolvers: {
-      type: new GraphQLNonNull(GraphQLBoolean),
-      default: false,
+      type: GraphQLBoolean,
       description: `Don't add default resolvers to defined fields.`,
       deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
     },
@@ -25,10 +26,25 @@ const DontInferDirective = new GraphQLDirective({
   locations: [DirectiveLocation.OBJECT],
   args: {
     noDefaultResolvers: {
-      type: new GraphQLNonNull(GraphQLBoolean),
-      default: true,
+      type: GraphQLBoolean,
       description: `Don't add default resolvers to defined fields.`,
       deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
+    },
+  },
+})
+
+const AddResolver = new GraphQLDirective({
+  name: `addResolver`,
+  description: `Add a resolver specified by "type" to field`,
+  locations: [DirectiveLocation.FIELD_DEFINITION],
+  args: {
+    type: {
+      type: new GraphQLNonNull(GraphQLString),
+      description: `Type of the resolver. Types available by default are: "date", "link" and "relativeFile".`,
+    },
+    options: {
+      type: GraphQLJSON,
+      description: `Resolver options. Vary based on resolver type.`,
     },
   },
 })
@@ -36,4 +52,5 @@ const DontInferDirective = new GraphQLDirective({
 module.exports = {
   InferDirective,
   DontInferDirective,
+  AddResolver,
 }

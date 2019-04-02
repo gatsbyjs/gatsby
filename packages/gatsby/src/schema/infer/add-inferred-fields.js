@@ -243,9 +243,11 @@ const getFieldConfigFromFieldNameConvention = ({
   return {
     type,
     extensions: {
-      resolver: `link`,
-      resolverOptions: {
-        by: foreignKey || `id`,
+      addResolver: {
+        type: `link`,
+        options: {
+          by: foreignKey || `id`,
+        },
       },
     },
   }
@@ -267,19 +269,22 @@ const getSimpleFieldConfig = ({
       return { type: is32BitInteger(value) ? `Int` : `Float` }
     case `string`:
       if (isDate(value)) {
-        return { type: `Date`, extensions: { resolver: `date` } }
+        return { type: `Date`, extensions: { addResolver: { type: `date` } } }
       }
       if (isFile(nodeStore, selector, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
         // the first entry (which could point to an existing file or not).
-        return { type: `File`, extensions: { resolver: `relativeFile` } }
+        return {
+          type: `File`,
+          extensions: { addResolver: { type: `relativeFile` } },
+        }
       }
       return { type: `String` }
     case `object`:
       if (value instanceof Date) {
-        return { type: `Date`, extensions: { resolver: `date` } }
+        return { type: `Date`, extensions: { addResolver: { type: `date` } } }
       }
       if (value instanceof String) {
         return { type: `String` }
