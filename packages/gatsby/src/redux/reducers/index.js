@@ -30,6 +30,7 @@ module.exports = {
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   pages: require(`./pages`),
+  matchPaths: require(`./match-paths`),
   schema: require(`./schema`),
   status: require(`./status`),
   componentDataDependencies: require(`./component-data-dependencies`),
