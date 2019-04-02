@@ -28,9 +28,10 @@ module.exports = class AnalyticsTracker {
     if (!this.isTrackingEnabled()) {
       return
     }
-    if (Array.isArray(type) && type.length > 2) {
-      type = type[2].toUpperCase()
+    if (Array.isArray(type)) {
+      type = type.length > 2 ? type[2].toUpperCase() : ``
     }
+
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `CLI_COMMAND_${type}`
