@@ -1,0 +1,35 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Roboto Light", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.global-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.global-header {
+  margin-bottom: 3rem;
+}
+
+.global-header nav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}

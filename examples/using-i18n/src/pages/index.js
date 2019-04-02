@@ -1,3 +1,14 @@
 import React from "react"
+import useTranslations from "../components/useTranslations"
 
-export default () => <div>Hello world!</div>
+const Index = () => {
+  const { hello } = useTranslations()
+
+  return (
+    <>
+      <h1>{hello}</h1>
+    </>
+  )
+}
+
+export default Index
