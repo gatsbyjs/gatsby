@@ -144,6 +144,23 @@ backend:
 
 Now you can save the config.yml file, commit the change, and push it to your GitHub repo.
 
+#### Authenticating with GitLab
+
+See the [GitLab Backend](https://www.netlifycms.org/docs/authentication-backends/#gitlab-backend)
+section for details on how to configure authentication with GitLab.
+
+If you use the [Client-Side Implicit Grant](https://www.netlifycms.org/docs/authentication-backends/#client-side-implicit-grant) option, disable the Netlify Identity service in your
+`gatsby-config.js`:
+
+```javascript:title=gatsby-config.js
+{
+  resolve: `gatsby-plugin-netlify-cms`,
+  options: {
+    enableIdentityWidget: false,
+  }
+}
+```
+
 #### Making Changes
 
 Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!

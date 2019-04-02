@@ -31,8 +31,8 @@ class IndexRoute extends React.Component {
                 helped developers of all skill levels.
               </li>
               <li>
-                <Link to="/docs/quick-start">Quick start</Link>: One page summary of how to install Gatsby and start
-                a new project.
+                <Link to="/docs/quick-start">Quick start</Link>: One page
+                summary of how to install Gatsby and start a new project.
               </li>
               <li>
                 <Link to="/docs/recipes/">Recipes</Link>: A happy medium between
@@ -78,6 +78,19 @@ class IndexRoute extends React.Component {
                     </Link>
                     : Learn about topics that are too large for a doc and
                     warrant a tutorial.
+                  </li>
+                  <li>
+                    <Link to="/docs/using-gatsby-professionally/">
+                      Using Gatsby Professionally
+                    </Link>
+                    : Learn tips and tricks for how to explain Gatsby to others
+                    at work, so that you have more opportunities to work with
+                    Gatsby professionally.
+                  </li>
+                  <li>
+                    <Link to="/contributing/">Contributing</Link>: Find guides
+                    on the Gatsby.js community, code of conduct, and how to get
+                    started contributing.
                   </li>
                 </ul>
               </li>
