@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const is32BitInteger = require(`./is-32-bit-integer`)
-const { isDate } = require(`../types/date`)
+const { looksLikeADate } = require(`../types/date`)
 
 const getExampleValue = ({
   nodes,
@@ -54,7 +54,7 @@ const getExampleObject = ({
     let { value, type } = entriesByType[0]
     let arrayWrappers = 0
     while (Array.isArray(value)) {
-      value = value[0]
+      value = value.find(v => v != null)
       arrayWrappers++
     }
 
@@ -94,9 +94,10 @@ const getExampleObject = ({
     ) {
       const objects = entries.reduce((acc, entry) => {
         let { value } = entry
+
         let arrays = arrayWrappers - 1
         while (arrays > 0) {
-          value = value[0]
+          value = value.find(v => v != null)
           arrays--
         }
         return acc.concat(value)
@@ -169,7 +170,7 @@ const getType = value => {
     case `number`:
       return `number`
     case `string`:
-      return isDate(value) ? `date` : `string`
+      return looksLikeADate(value) ? `date` : `string`
     case `boolean`:
       return `boolean`
     case `object`:

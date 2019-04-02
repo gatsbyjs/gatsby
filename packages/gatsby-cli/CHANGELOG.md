@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.3...gatsby-cli@2.5.4) (2019-03-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.2...gatsby-cli@2.5.3) (2019-03-27)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.1...gatsby-cli@2.5.2) (2019-03-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.0...gatsby-cli@2.5.1) (2019-03-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.17...gatsby-cli@2.5.0) (2019-03-26)
+
+### Features
+
+- **gatsby:** add anonymous telemetry instrumentation to gatsby ([#12758](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12758)) ([da8ded9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/da8ded9))
+
 ## [2.4.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.16...gatsby-cli@2.4.17) (2019-03-21)
 
 **Note:** Version bump only for package gatsby-cli

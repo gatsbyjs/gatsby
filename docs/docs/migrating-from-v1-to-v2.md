@@ -925,7 +925,7 @@ See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](h
 
 If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's babel docs for more details](/docs/babel).
 
-> Note: This works for your own code, but is not yet implemented for code imported from `node_modules`. Track progress of this feature at [bullet 5 of this issue](https://github.com/gatsbyjs/gatsby/issues/3870).
+> Note: This works for your own code, but is not yet implemented for code imported from `node_modules`. Track progress of this feature in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
 
 ## For Plugin Maintainers
 

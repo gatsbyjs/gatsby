@@ -4,9 +4,11 @@
     - title: Introduction
       link: /docs/
     - title: Quick Start
-      link: /docs/quick-start/
+      link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
+    - title: Cheat Sheet
+      link: /docs/cheat-sheet/
     - title: Guides
       link: /docs/guides/
       items:
@@ -25,9 +27,9 @@
             - title: Preparing your Site for Deployment*
               link: /docs/preparing-for-deployment/
             - title: Deploying to AWS Amplify
-              link: /docs/deploying-to-aws-amplify/
+              link: /docs/deploying-to-aws-amplify
             - title: Deploying to S3 and CloudFront
-              link: /docs/deploying-to-s3-cloudfront/
+              link: /docs/deploying-to-s3-cloudfront
             - title: Deploying to Aerobatic
               link: /docs/deploying-to-aerobatic/
             - title: Deploying to Heroku
@@ -37,7 +39,9 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
             - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify/
+              link: /docs/hosting-on-netlify
+            - title: Deploying to Render
+              link: /docs/deploying-to-render/
             - title: Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -254,6 +258,13 @@
               link: /docs/adding-an-rss-feed/
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
+            - title: Adding Page Transitions
+              link: /docs/adding-page-transitions/
+              items:
+                - title: Adding Page Transitions with gatsby-plugin-transition-link
+                  link: /docs/adding-page-transitions-with-plugin-transition-link/
+                - title: Adding Page Transitions with gatsby-plugin-page-transitions*
+                  link: /docs/adding-page-transitions-with-plugin-page-transitions/
             - title: Making Your Site Accessible
               link: /docs/making-your-site-accessible
             - title: Routing
@@ -422,11 +433,76 @@
           link: /docs/image-tutorial/
         - title: Writing Documentation with Docz
           link: /docs/writing-documentation-with-docz/
+    - title: Using Gatsby Professionally
+      link: /docs/using-gatsby-professionally/
+      items:
+        - title: Introduction - Convincing Others to Use Gatsby
+          link: /docs/convincing-others/
+        - title: Your First Professional Project
+          link: /docs/first-professional-project/
+        - title: Winning Over Different Stakeholders
+          link: /docs/winning-over-stakeholders/
+          items:
+            - title: Developers
+              link: /docs/winning-over-developers/
+            - title: Engineering Leaders*
+              link: /docs/winning-over-engineering-leaders/
+            - title: Marketers
+              link: /docs/winning-over-marketers/
+            - title: Executives
+              link: /docs/winning-over-executives/
+            - title: Clients
+              link: /docs/winning-over-clients/
+        - title: Spreading Gatsby In Different Types of Organizations
+          link: /docs/different-organization-types/
+          items:
+            - title: As a Freelancer
+              link: /docs/gatsby-for-freelancers/
+            - title: Inside an Agency
+              link: /docs/gatsby-for-agencies/
+              items:
+                - title: Lower Bids, More Profit
+                  link: /docs/lower-bids-more-profit/
+                - title: Faster Recruiting
+                  link: /docs/faster-recruiting/
+                - title: Sanitize Your Stack
+                  link: /docs/sanitize-your-stack/
+                - title: Why Agencies Go Gatsby-Only
+                  link: /docs/going-gatsby-only/
+            - title: Inside a Company
+              link: /docs/gatsby-for-companies/
+              items:
+                - title: Answering IT/Security Questions
+                  link: /docs/answering-it-security/
+        - title: Best Practices for Orgs
+          link: /docs/best-practices-for-orgs/
+          items:
+            - title: Sharing Components Across Websites
+              link: /docs/sharing-components-across-websites/
+              items:
+                - title: Component Libraries
+                  link: /docs/component-libraries/
+                - title: Making Components Discoverable
+                  link: /docs/making-components-discoverable/
+        - title: How Gatsby Boosts Your Career
+          link: /docs/how-gatsby-boosts-career/
+    - title: Contributing
+      link: /contributing/
+      items:
+        - title: Community
+          link: /contributing/community/
+        - title: How to Contribute
+          link: /contributing/how-to-contribute/
+    - title: Partnering With Gatsby
+      link: /docs/partnering-with-gatsby/
+      items:
+        - title: Integrating and Partnering For Vendors
+          link: /docs/gatsby-vendor-partnership/
+        - title: Agency Partnership Program
+          link: /docs/gatsby-agency-partnership/
     - title: Glossary*
       link: /docs/glossary/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/
-    - title: Contributing
-      link: /contributing/

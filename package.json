@@ -23,6 +23,7 @@
     "husky": "1.1.1",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
+    "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^6.1.0",
     "jest-serializer-path": "^0.1.15",
     "lerna": "^3.10.7",

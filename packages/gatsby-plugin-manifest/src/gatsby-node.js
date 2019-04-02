@@ -33,13 +33,17 @@ function generateIcons(icons, srcIcon) {
     // Sharp accept density from 1 to 2400
     const density = Math.min(2400, Math.max(1, size))
     return sharp(srcIcon, { density })
-      .resize(size)
+      .resize({
+        width: size,
+        height: size,
+        fit: `contain`,
+        background: { r: 255, g: 255, b: 255, alpha: 0 },
+      })
       .toFile(imgPath)
-      .then(() => {})
   })
 }
 
-exports.onPostBootstrap = async (args, pluginOptions) => {
+exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   const { icon, ...manifest } = pluginOptions
 
   // Delete options we won't pass to the manifest.webmanifest.
@@ -48,10 +52,21 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
   delete manifest.theme_color_in_head
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
+  delete manifest.icon_options
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
     manifest.icons = defaultIcons
+  }
+
+  // Specify extra options for each icon (if requested).
+  if (pluginOptions.icon_options) {
+    manifest.icons = manifest.icons.map(icon => {
+      return {
+        ...pluginOptions.icon_options,
+        ...icon,
+      }
+    })
   }
 
   // Determine destination path for icons.
@@ -67,6 +82,17 @@ exports.onPostBootstrap = async (args, pluginOptions) => {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
       throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+    }
+
+    let sharpIcon = sharp(icon)
+
+    let metadata = await sharpIcon.metadata()
+
+    if (metadata.width !== metadata.height) {
+      reporter.warn(
+        `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square.\n` +
+          `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
+      )
     }
 
     //add cache busting

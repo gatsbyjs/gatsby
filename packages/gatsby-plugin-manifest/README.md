@@ -188,6 +188,38 @@ module.exports = {
 }
 ```
 
+## Custom icon options
+
+The `icon_options` object may be used to iteratively add configuration items to the `icons` array. Any options included in this object will be merged with each object of the `icons` array (custom or default). Key value pairs already in the `icons` array will take precedence over duplicate items in the `icon_options` array.
+
+`icon_options` may be used as follows:
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        icon_options: {
+          // For all the options available, please see:
+          // https://developer.mozilla.org/en-US/docs/Web/Manifest
+          // https://w3c.github.io/manifest/#purpose-member
+          purpose: `maskable`,
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Legacy option
 
 iOS 11.3 added support for service workers but not the complete webmanifest spec. Therefore iOS won't recognize the icons defined in the webmanifest and the creation of `apple-touch-icon` links in `<head>` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the `legacy` option to `false` in plugin configuration:
