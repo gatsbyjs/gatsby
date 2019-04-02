@@ -154,9 +154,6 @@
           link: /docs/source-plugin-tutorial/
     - title: Starters
       link: /docs/starters/
-      items:
-        - title: Create a Starter*
-          link: /contributing/create-a-starter/
     - title: Styling Your Site
       link: /docs/styling/
       items:

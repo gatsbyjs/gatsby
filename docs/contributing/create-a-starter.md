@@ -1,9 +1,74 @@
 ---
 title: Create a Starter
-issue: https://github.com/gatsbyjs/gatsby/issues/8103
 ---
 
-This is a stub. Help our community expand it.
+[Starters](/docs/starters/) are boilerplate projects that Gatsby developers can use to set up a new site quickly. 
 
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+When creating a starter, it needs to include some basic files (see the [Hello World starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/) for a barebones example):
+
+- `README.md`: instructions for how to install and configure your starter, a list of its features or structure, and any helpful tips.
+- `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [Hello World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/package.json).
+- `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/gatsby-config/) for more information.
+- `src/pages`: a directory for page components to live, with at least [one example](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
+- `static`: a directory for static assets, such as a `favicon.ico` file.
+- `.gitignore` *(optional)*: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
+- `.prettierrc` *(optional)*: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
+
+Your starter should also have these qualities:
+
+- Open source and available from a stable URL
+- Configurable
+- Fast
+- Web accessible
+
+Let's expand upon these items to prepare you for creating a winning starter.
+
+## Open source and available from a stable URL
+
+The Gatsby CLI allows users to install a new site with a starter using the command `gatsby new <starter-url>`. For this to work, your starter needs to be available to download. The easiest way to accomplish this is to host your starter on GitHub or Gitlab and use the publicly available repo URL, such as:
+
+```shell
+gatsby new https://github.com/gatsbyjs/gatsby-starter-blog
+```
+
+Although the official starters live in the Gatsby repo, community members can offer their own starters from their own repos. Here's an example of installing a community starter:
+```shell
+gatsby new https://github.com/netlify-templates/gatsby-starter-netlify-cms
+```
+
+## Configurable
+
+Starters should utilize metadata in `gatsby-config.js` wherever possible, as this is typically the first place users will look for site configuration information. Some examples of things you could make configurable in `gatsby-config` include:
+
+- Site title
+- Basic color palette
+- Author name, contact information, and bio
+
+Alternatively, for starters connecting to a headless CMS, author-specific items could be pulled in tp the starter from a CMS platform using a source plugin and GraphQL instead. Showing users how this is done can make your starter very helpful!
+
+## Fast
+
+Gatsby is pretty darned fast out of the box. To make a starter that supports users in the "Gatsby way", you'll want to set up a test implementation with your starter for debugging performance. Using tools like [Lighthouse](https://developers.google.com/web/tools/lighthouse/) and [Webpagetest.org](https://www.webpagetest.org/), you can evaluate the speed of your test site and make any necessary improvements to the starter source code so your users will benefit from fast defaults.
+
+If there are areas of the starter that could be impacted by the user, it may help to add some documentation or code comments reminding them to optimize for performance (e.g. compressing images)!
+
+## Web accessible
+
+In addition to performance, creating a starter free of accessibility issues is a wonderful way to contribute to the Gatsby ecosystem. Here are some tips for creating an inclusive, accessible starter:
+
+- Use adequate [color contrast](https://webaim.org/articles/contrast/). (This is the most common accessibility issue on the web!)
+- Preserve [visible keyboard focus indicators](https://webaim.org/techniques/keyboard/).
+- Use [image alt text](https://webaim.org/techniques/alttext/) in your examples.
+- Recommend and use [semantic HTML](https://webaim.org/techniques/semanticstructure/) wherever possible.
+- [Label your form inputs](https://webaim.org/techniques/forms/).
+
+For more accessibility help, check out the [A11y Project checklist](https://a11yproject.com/checklist) and [WebAIM](https://webaim.org). You can also check out [tips on creating accessible web apps](https://www.deque.com/blog/accessibility-tips-in-single-page-applications/) heavy on client-side JavaScript.
+
+## Add your starter to the Gatsby Starter Library
+
+To make sure your starter is easily discoverable, don't forget to add it to the [Gatsby Starter Library](/contributing/submit-to-starter-library/). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
+
+## Further reading:
+
+- [How to create a Gatsby Starter
+](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano

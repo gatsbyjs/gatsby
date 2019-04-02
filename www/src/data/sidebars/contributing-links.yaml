@@ -47,6 +47,8 @@
           link: /contributing/code-contributions/
         - title: Setting Up Your Local Dev Environment
           link: /contributing/setting-up-your-local-dev-environment/
+        - title: Create a Starter
+          link: /contributing/create-a-starter/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:

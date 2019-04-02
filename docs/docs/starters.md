@@ -33,6 +33,8 @@ Official starters are maintained by Gatsby.
 
 Community starters are created and maintained by Gatsby community members.
 
+> Learn [how to make a starter](/contributing/create-a-starter/) in the Gatsby contributing docs.
+
 Looking for a starter for a particular use case? Peruse starters that have been submitted to the [Starter Library](/starters/)
 
 Created a starter you'd like to share? Follow [these steps to submit your starter](/contributing/submit-to-starter-library/) to the Starter Library.
