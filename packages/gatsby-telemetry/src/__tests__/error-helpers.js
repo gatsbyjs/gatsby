@@ -30,7 +30,7 @@ describe(`Errors Helpers`, () => {
       expect(sanitizedError.options).toBeUndefined()
     })
 
-    it(`Sanitizes current path from error stracktraces`, () => {
+    it(`Sanitizes current path from error stacktraces`, () => {
       const errormessage = `this is a test`
       let e
       try {
@@ -46,7 +46,7 @@ describe(`Errors Helpers`, () => {
       )
       expect(localPathRegex.test(e.stack)).toBeTruthy()
 
-      expect(sanitizeError(e)).toMatchSnapshot()
+      expect(localPathRegex.test(e)).toBeFalsy()
     })
   })
   describe(`cleanPaths`, () => {
@@ -59,7 +59,9 @@ describe(`Errors Helpers`, () => {
 
       const errormessage = `this${mockPath}is\n${mockPath}a test: ${mockPath}`
 
-      expect(cleanPaths(errormessage)).toBe(`this$PWDis\n$PWDa test: $PWD`)
+      expect(cleanPaths(errormessage, `/`)).toBe(
+        `this$SNIPis\n$SNIPa test: $SNIP`
+      )
       mockCwd.mockRestore()
     })
     it(`cleans Windows paths`, () => {
@@ -71,7 +73,9 @@ describe(`Errors Helpers`, () => {
 
       const errormessage = `this${mockPath}is\n${mockPath}a test: ${mockPath}`
 
-      expect(cleanPaths(errormessage)).toBe(`this$PWDis\n$PWDa test: $PWD`)
+      expect(cleanPaths(errormessage, `\\`)).toBe(
+        `this$SNIPis\n$SNIPa test: $SNIP`
+      )
       mockCwd.mockRestore()
     })
   })

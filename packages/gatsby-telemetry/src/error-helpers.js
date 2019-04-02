@@ -1,11 +1,18 @@
+const { sep } = require(`path`)
+
 // Removes all user paths
-const cleanPaths = str => {
-  // TODO: Recursively remove path sections
-  const localPathRegex = new RegExp(
-    process.cwd().replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`),
-    `g`
-  )
-  return str.replace(localPathRegex, `$PWD`)
+const cleanPaths = (str, separator = sep) => {
+  const stack = process.cwd().split(separator)
+  while (stack.length > 1) {
+    const currentPath = stack.join(separator)
+    const currentRegex = new RegExp(
+      currentPath.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`),
+      `g`
+    )
+    str = str.replace(currentRegex, `$SNIP`)
+    stack.pop()
+  }
+  return str
 }
 
 const ensureArray = value => [].concat(value)
