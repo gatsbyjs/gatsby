@@ -23,7 +23,7 @@ module.exports = class EventStorage {
         get: key => this.config[key],
         set: (key, value) => (this.config[key] = value),
         all: this.config,
-        path: os.tmpdir(),
+        path: path.join(os.tmpdir(), 'gatsby'),
         "telemetry.enabled": true,
         "telemetry.machineId": `not-a-machine-id`,
       }
