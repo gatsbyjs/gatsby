@@ -2,17 +2,19 @@
 title: Create a Starter
 ---
 
-[Starters](/docs/starters/) are boilerplate projects that Gatsby developers can use to set up a new site quickly. 
+[Starters](/docs/starters/) are boilerplate projects that Gatsby developers can use to set up a new site quickly. Before creating a starter, it may be helpful to peruse the [Gatsby Starter Library](/starters/) to see what already exists and determine how your starter will provide value.
 
-When creating a starter, it needs to include some basic files (see the [Hello World starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/) for a barebones example):
+## Basic requirements
+
+For a starter to work properly, it needs to include some files (see the [Hello World starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/) for a barebones example):
 
 - `README.md`: instructions for how to install and configure your starter, a list of its features or structure, and any helpful tips.
 - `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [Hello World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/package.json).
 - `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/gatsby-config/) for more information.
 - `src/pages`: a directory for page components to live, with at least [one example](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `static`: a directory for static assets, such as a `favicon.ico` file.
-- `.gitignore` *(optional)*: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
-- `.prettierrc` *(optional)*: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
+- `.gitignore` _(optional)_: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
+- `.prettierrc` _(optional)_: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
 
 Your starter should also have these qualities:
 
@@ -27,14 +29,11 @@ Let's expand upon these items to prepare you for creating a winning starter.
 
 The Gatsby CLI allows users to install a new site with a starter using the command `gatsby new <starter-url>`. For this to work, your starter needs to be available to download. The easiest way to accomplish this is to host your starter on GitHub or Gitlab and use the publicly available repo URL, such as:
 
-```shell
-gatsby new https://github.com/gatsbyjs/gatsby-starter-blog
-```
+`gatsby new https://github.com/gatsbyjs/gatsby-starter-blog`
 
 Although the official starters live in the Gatsby repo, community members can offer their own starters from their own repos. Here's an example of installing a community starter:
-```shell
-gatsby new https://github.com/netlify-templates/gatsby-starter-netlify-cms
-```
+
+`gatsby new https://github.com/netlify-templates/gatsby-starter-netlify-cms`
 
 ## Configurable
 
@@ -71,4 +70,5 @@ To make sure your starter is easily discoverable, don't forget to add it to the 
 ## Further reading:
 
 - [How to create a Gatsby Starter
-](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
+  ](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
+- [Introducing Gatsby Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)
