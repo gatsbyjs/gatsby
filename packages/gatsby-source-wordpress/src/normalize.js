@@ -172,6 +172,7 @@ exports.excludeUnknownEntities = entities =>
       e.wordpress_id ||
       e.__type === `wordpress__wp_settings` ||
       e.__type === `wordpress__site_metadata`
+  )
 // Excluding entities without ID, or WP Settings
 
 // Create node ID from known entities
