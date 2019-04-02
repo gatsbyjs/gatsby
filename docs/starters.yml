@@ -1741,7 +1741,7 @@
     - User sign in
 - url: https://gatsby-starter.mdbootstrap.com/
   repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
-  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  description: A simple starter which lets you quickly start developing with Gatsby and Material Design For Bootstrap
   tags:
     - Styling:Material
   features:
