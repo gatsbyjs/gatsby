@@ -41,25 +41,19 @@ const addInferredFieldsImpl = ({
 }) => {
   const fields = []
   Object.keys(exampleObject).forEach(unsanitizedKey => {
-    const exampleValue = exampleObject[unsanitizedKey]
-    fields.push(
-      getFieldConfig({
-        schemaComposer,
-        typeComposer,
-        nodeStore,
-        prefix,
-        exampleValue,
-        unsanitizedKey,
-        typeMapping,
-      })
-    )
+    let key = createFieldName(unsanitizedKey)
+    fields.push({
+      key,
+      unsanitizedKey,
+      exampleValue: exampleObject[unsanitizedKey],
+    })
   })
 
   const fieldsByKey = _.groupBy(fields, field => field.key)
 
   Object.keys(fieldsByKey).forEach(key => {
     const possibleFields = fieldsByKey[key]
-    let fieldConfig
+    let selectedField
     if (possibleFields.length > 1) {
       const field = resolveMultipleFields(possibleFields)
       const possibleFieldsNames = possibleFields
@@ -72,10 +66,20 @@ const addInferredFieldsImpl = ({
           field.unsanitizedKey
         }\`.`
       )
-      fieldConfig = field.fieldConfig
+      selectedField = field
     } else {
-      fieldConfig = possibleFields[0].fieldConfig
+      selectedField = possibleFields[0]
     }
+
+    let fieldConfig
+    ;({ key, fieldConfig } = getFieldConfig({
+      ...selectedField,
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      prefix,
+      typeMapping,
+    }))
 
     let namedInferredType = fieldConfig.type
     while (Array.isArray(namedInferredType)) {
@@ -95,11 +99,10 @@ const getFieldConfig = ({
   nodeStore,
   prefix,
   exampleValue,
+  key,
   unsanitizedKey,
   typeMapping,
-  addDefaultResolvers,
 }) => {
-  let key = createFieldName(unsanitizedKey)
   const selector = `${prefix}.${key}`
 
   let arrays = 0
@@ -131,7 +134,6 @@ const getFieldConfig = ({
       value,
       selector,
       typeMapping,
-      addDefaultResolvers,
     })
   }
 
