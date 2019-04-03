@@ -1,9 +1,9 @@
 import React from "react"
-import { Box, Color } from "ink"
+import { Color } from "ink"
 
 const ColorSwitcher = ({ hideColors, children, ...props }) => {
   if (hideColors) {
-    return children
+    return <>{children}</>
   }
 
   return <Color {...props}>{children}</Color>
@@ -23,12 +23,14 @@ const getLabel = type => {
       return createLabel(`warn`, `yellow`)
     case `info`:
       return createLabel(`info`, `blue`)
+    default:
+      return createLabel(`empty ${type}`, `blue`)
   }
 }
 
 export const Message = ({ type, hideColors, children }) => {
   if (!type) {
-    return children
+    return <>{children}</>
   }
 
   const TextLabel = getLabel(type)

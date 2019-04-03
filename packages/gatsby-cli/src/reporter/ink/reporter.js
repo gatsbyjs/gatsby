@@ -1,5 +1,5 @@
 import React from "react"
-import { Static, Box, Text } from "ink"
+import { Static, Box } from "ink"
 import { globalTracer } from "opentracing"
 import util from "util"
 import Activity, { calcElapsedTime } from "./components/activity"
@@ -127,7 +127,7 @@ export default class GatsbyReporter extends React.Component {
             {this.state.messages.map((msg, index) => (
               <Box textWrap="wrap" key={index}>
                 <Message type={msg.type} hideColors={this.state.disableColors}>
-                  {msg.txt}
+                  {msg.text}
                 </Message>
               </Box>
             ))}

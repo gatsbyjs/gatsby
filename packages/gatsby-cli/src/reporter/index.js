@@ -56,7 +56,7 @@ const reporter = {
       message = error.message
     }
     // base.error.call(this, message)
-    if (error) console.log(errorFormatter.render(error))
+    if (error) this.log(errorFormatter.render(error))
   },
   /**
    * Set prefix on uptime.
