@@ -3,6 +3,7 @@
 const { stripIndent } = require(`common-tags`)
 const { getErrorFormatter } = require(`./errors`)
 const inkReporter = require(`./ink`).default
+const { trackError } = require(`gatsby-telemetry`)
 
 const errorFormatter = getErrorFormatter()
 
@@ -40,11 +41,13 @@ const reporter = {
    */
   panic(...args) {
     this.error(...args)
+    trackError(`GENERAL_PANIC`, { error: args })
     process.exit(1)
   },
 
   panicOnBuild(...args) {
     this.error(...args)
+    trackError(`BUILD_PANIC`, { error: args })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
