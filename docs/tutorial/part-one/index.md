@@ -37,7 +37,7 @@ Let’s take a look at the code that powers the homepage.
 
 ## Familiarizing with Gatsby pages
 
-Open up the `/src` directory in your code editor. Inside is a single directory: `/pages`.
+Open up the `/src` directory in your code editor. Open single directory inside: `/pages`.
 
 Open the file at `src/pages/index.js`. The code in this file creates a component that contains a single div, and some text — appropriately, “Hello world!”
 
