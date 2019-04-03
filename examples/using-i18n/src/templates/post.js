@@ -1,14 +1,14 @@
 import React from "react"
 import { graphql } from "gatsby"
 import MDXRenderer from "gatsby-mdx/mdx-renderer"
-import LocalizedLink from "../components/localizedLink"
+import MdxLink from "../components/mdxLink"
 
 const Post = ({ data: { mdx } }) => (
   <>
     <h1>{mdx.frontmatter.title}</h1>
     <MDXRenderer
       components={{
-        a: LocalizedLink,
+        a: MdxLink,
       }}
     >
       {mdx.code.body}
