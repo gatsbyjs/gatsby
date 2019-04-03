@@ -5147,3 +5147,25 @@
   built_by: William Neill
   built_by_url: https://twitter.com/williamneill
   featured: false
+- title: Assortment
+  main_url: https://assortment.io
+  url: https://assortment.io
+  description: >
+    Assortment aims to provide detailed tutorials (and more) for developers of all skill levels within the Web Development Industry. Attempting to cut out the fluff and arm you with the facts.
+  categories:
+    - Blog
+    - Web Development
+  built_by: Luke Whitehouse
+  built_by_url: https://twitter.com/_lukewh
+  featured: false
+- title: Gerald Martinez Dev
+  main_url: https://gmartinez.dev/
+  url: https://gmartinez.dev/
+  description: >
+    Personal web site for show my skills and my works.
+  categories:
+    - Web Development
+    - Portfolio
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
+  featured: false
