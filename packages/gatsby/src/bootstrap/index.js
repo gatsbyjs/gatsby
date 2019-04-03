@@ -40,9 +40,7 @@ const {
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const queryQueue = require(`../internal-plugins/query-runner/query-queue`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
-const {
-  writeRedirects,
-} = require(`../internal-plugins/query-runner/redirects-writer`)
+const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
