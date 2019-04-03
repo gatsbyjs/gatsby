@@ -120,7 +120,10 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
     const pluginNodeExports = resolveModuleExports(
-      `${plugin.resolve}/gatsby-node`
+      `${plugin.resolve}/gatsby-node`,
+      {
+        mode: `require`,
+      }
     )
     const pluginBrowserExports = resolveModuleExports(
       `${plugin.resolve}/gatsby-browser`

@@ -159,9 +159,13 @@
               link: /docs/creating-a-source-plugin/
             - title: Source Plugin Tutorial
               link: /docs/source-plugin-tutorial/
+            - title: Plugin Library
+              link: /plugins/
         - title: Starters
           link: /docs/starters/
           items:
+            - title: Starter Library
+              link: /starters/
             - title: Create a Starter*
               link: /contributing/create-a-starter/
         - title: Styling Your Site
@@ -308,6 +312,15 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
+    - title: Ecosystem
+      link: /ecosystem/
+      items:
+        - title: Plugin Library
+          link: /plugins
+        - title: Starter Library
+          link: /starters/
+        - title: Awesome Gatsby Resources
+          link: /docs/awesome-gatsby/
     - title: API Reference
       link: /docs/api-reference/
       items:
