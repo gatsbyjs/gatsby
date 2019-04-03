@@ -76,7 +76,7 @@ Say you order delivery for dinner. It arrives, you eat. Later, you look at the m
 
 ## 5. Consolidate data sourcing and transformations
 
-With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)”:
+With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](/blog/2018-10-04-journey-to-the-content-mesh/)”:
 
 <pullquote>
   [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
