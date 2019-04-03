@@ -7,55 +7,9 @@ const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
 const queryQueue = require(`./queue`)
 
-let queuedDirtyActions = []
-
-const extractedQueryIds = new Set()
-const enqueueExtractedQueryId = pathname => {
-  extractedQueryIds.add(pathname)
-}
-
-const calcQueries = (initial = false) => {
-  // Find paths dependent on dirty nodes
-  queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  const dirtyIds = findDirtyIds(queuedDirtyActions)
-  queuedDirtyActions = []
-
-  // Find ids without data dependencies (i.e. no queries have been run for
-  // them before) and run them.
-  const cleanIds = findIdsWithoutDataDependencies()
-
-  // Construct paths for all queries to run
-  let pathnamesToRun = _.uniq([...dirtyIds, ...cleanIds])
-
-  // If this is the initial run, remove pathnames from `extractedQueryIds`
-  // if they're also not in the dirtyIds or cleanIds.
-  //
-  // We do this because the page component reducer/machine always
-  // adds pages to extractedQueryIds but during bootstrap
-  // we may not want to run those page queries if their data hasn't
-  // changed since the last time we ran Gatsby.
-  let diffedPathnames = [...extractedQueryIds]
-  if (initial) {
-    diffedPathnames = _.intersection([...extractedQueryIds], pathnamesToRun)
-  }
-
-  // Combine.
-  pathnamesToRun = _.union(diffedPathnames, pathnamesToRun)
-
-  extractedQueryIds.clear()
-
-  return pathnamesToRun
-}
-
-emitter.on(`CREATE_NODE`, action => {
-  queuedDirtyActions.push(action)
-})
-
-emitter.on(`DELETE_NODE`, action => {
-  queuedDirtyActions.push({ payload: action.payload })
-})
-
 let seenIdsWithoutDataDependencies = []
+let queuedDirtyActions = []
+const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
 // so their query will be run again if they're created again.
@@ -65,8 +19,22 @@ emitter.on(`DELETE_PAGE`, action => {
   )
 })
 
-const findIdsWithoutDataDependencies = () => {
-  const state = store.getState()
+emitter.on(`CREATE_NODE`, action => {
+  queuedDirtyActions.push(action)
+})
+
+emitter.on(`DELETE_NODE`, action => {
+  queuedDirtyActions.push({ payload: action.payload })
+})
+
+const enqueueExtractedQueryId = pathname => {
+  extractedQueryIds.add(pathname)
+}
+
+/////////////////////////////////////////////////////////////////////
+// Calculate dirty static/page queries
+
+const findIdsWithoutDataDependencies = state => {
   const allTrackedIds = _.uniq(
     _.flatten(
       _.concat(
@@ -94,6 +62,61 @@ const findIdsWithoutDataDependencies = () => {
   ])
 
   return notTrackedIds
+}
+
+const findDirtyIds = actions => {
+  const state = store.getState()
+  const uniqDirties = _.uniq(
+    actions.reduce((dirtyIds, action) => {
+      const node = action.payload
+
+      if (!node || !node.id || !node.internal.type) return dirtyIds
+
+      // Find components that depend on this node so are now dirty.
+      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+
+      // Find connections that depend on this node so are now invalid.
+      dirtyIds = dirtyIds.concat(
+        state.componentDataDependencies.connections[node.internal.type]
+      )
+
+      return _.compact(dirtyIds)
+    }, [])
+  )
+  return uniqDirties
+}
+
+const calcQueries = (initial = false) => {
+  // Find paths dependent on dirty nodes
+  queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
+  const dirtyIds = findDirtyIds(queuedDirtyActions)
+  queuedDirtyActions = []
+
+  // Find ids without data dependencies (i.e. no queries have been run for
+  // them before) and run them.
+  const cleanIds = findIdsWithoutDataDependencies(store.getState())
+
+  // Construct paths for all queries to run
+  let pathnamesToRun = _.uniq([...dirtyIds, ...cleanIds])
+
+  // If this is the initial run, remove pathnames from `extractedQueryIds`
+  // if they're also not in the dirtyIds or cleanIds.
+  //
+  // We do this because the page component reducer/machine always
+  // adds pages to extractedQueryIds but during bootstrap
+  // we may not want to run those page queries if their data hasn't
+  // changed since the last time we ran Gatsby.
+  let diffedPathnames = [...extractedQueryIds]
+  if (initial) {
+    diffedPathnames = _.intersection([...extractedQueryIds], pathnamesToRun)
+  }
+
+  // Combine.
+  pathnamesToRun = _.union(diffedPathnames, pathnamesToRun)
+
+  extractedQueryIds.clear()
+
+  return pathnamesToRun
 }
 
 const makeQueryJobs = pathnames => {
@@ -135,28 +158,6 @@ const makeQueryJobs = pathnames => {
     }
   })
   return queryJobs
-}
-
-const findDirtyIds = actions => {
-  const state = store.getState()
-  const uniqDirties = _.uniq(
-    actions.reduce((dirtyIds, action) => {
-      const node = action.payload
-
-      if (!node || !node.id || !node.internal.type) return dirtyIds
-
-      // Find components that depend on this node so are now dirty.
-      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
-
-      // Find connections that depend on this node so are now invalid.
-      dirtyIds = dirtyIds.concat(
-        state.componentDataDependencies.connections[node.internal.type]
-      )
-
-      return _.compact(dirtyIds)
-    }, [])
-  )
-  return uniqDirties
 }
 
 const runInitialQueries = async activity => {
