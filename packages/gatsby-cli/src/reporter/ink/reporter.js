@@ -60,17 +60,14 @@ export default class GatsbyReporter extends React.Component {
 
         this.onSuccess(successText)
 
-        this.setState(
-          state => {
-            const activities = { ...state.activities }
-            delete activities[name]
+        this.setState(state => {
+          const activities = { ...state.activities }
+          delete activities[name]
 
-            return {
-              activities,
-            }
-          },
-          () => {}
-        )
+          return {
+            activities,
+          }
+        })
       },
       span,
     }
