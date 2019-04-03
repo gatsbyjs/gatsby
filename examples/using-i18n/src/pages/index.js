@@ -19,6 +19,7 @@ const Index = ({ data: { allMdx } }) => {
             <LocalizedLink to={`/${post.parent.relativeDirectory}`}>
               {post.frontmatter.title}
             </LocalizedLink>
+            <div>{post.frontmatter.date}</div>
           </li>
         ))}
       </ul>
@@ -30,7 +31,10 @@ export default Index
 
 export const query = graphql`
   query Index($locale: String!) {
-    allMdx(filter: { fields: { locale: { eq: $locale } } }) {
+    allMdx(
+      filter: { fields: { locale: { eq: $locale } } }
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       edges {
         node {
           frontmatter {

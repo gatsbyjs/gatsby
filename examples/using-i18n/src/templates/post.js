@@ -3,8 +3,11 @@ import { graphql } from "gatsby"
 import MDXRenderer from "gatsby-mdx/mdx-renderer"
 import MdxLink from "../components/mdxLink"
 
+// The normal <a> tag is modified here (so that internal links use gatsby-link/LocalizedLink
+// More info:
+// https://www.gatsbyjs.org/docs/mdx/customizing-components/
 const Post = ({ data: { mdx } }) => (
-  <>
+  <div className="blogpost">
     <h1>{mdx.frontmatter.title}</h1>
     <MDXRenderer
       components={{
@@ -13,7 +16,7 @@ const Post = ({ data: { mdx } }) => (
     >
       {mdx.code.body}
     </MDXRenderer>
-  </>
+  </div>
 )
 
 export default Post

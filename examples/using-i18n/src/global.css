@@ -11,6 +11,17 @@ html {
     "Roboto Light", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
+  color: #2a2a2a;
+}
+
+a {
+  text-decoration: none;
+  box-shadow: inset 0 -2px 0 rgba(102, 51, 153, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+a:hover {
+  color: black;
+  background: rgba(102, 51, 153, 0.2);
 }
 
 body {
@@ -41,4 +52,20 @@ body {
 
 .post-list li {
   font-size: 1.25rem;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-list li div {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.blogpost p {
+  font-size: 1.1rem;
+  letter-spacing: -0.003em;
+  line-height: 1.58;
+  --baseline-multiplier: 0.179;
+  --x-height-multiplier: 0.35;
 }
