@@ -2,7 +2,6 @@ import React, { Fragment } from "react"
 
 import Accordion from "./accordion"
 import createLink from "../../utils/sidebar/create-link"
-import indention from "../../utils/sidebar/indention"
 
 const isItemActive = (activeItemParents, item) => {
   if (activeItemParents) {
@@ -27,6 +26,7 @@ class Item extends React.PureComponent {
       onSectionTitleClick,
       ui,
       isSingle,
+      disableAccordions,
     } = this.props
 
     const isParentOfActiveItem = isItemActive(activeItemParents, item)
@@ -51,17 +51,17 @@ class Item extends React.PureComponent {
             openSectionHash={openSectionHash}
             onSectionTitleClick={onSectionTitleClick}
             isSingle={isSingle}
+            disableAccordions={disableAccordions}
           />
         ) : (
-          <li css={this.props.styles}>
+          <li>
             {createLink({
               isActive: item.link === activeItemLink.link,
               item,
               location,
               onLinkClick,
-              stepsUI: ui === `steps`,
+              ui,
               level: item.level,
-              indention: indention(item.level),
             })}
           </li>
         )}

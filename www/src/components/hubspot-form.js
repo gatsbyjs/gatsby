@@ -1,10 +1,9 @@
 import React, { Component } from "react"
-import HubspotForm from "react-hubspot-form"
+import HubspotForm from "./react-hubspot-form"
 import hex2rgba from "hex2rgba"
 
 import { colors, radii, space, scale } from "../utils/presets"
-import { formInput } from "../utils/styles"
-import { buttonStyles } from "../utils/styles"
+import { formInput, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {

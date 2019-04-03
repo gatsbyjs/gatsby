@@ -24,6 +24,8 @@ const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
 const withResolverContext = require(`../schema/context`)
 require(`../db`).startAutosave()
+// Add `util.promisify` polyfill for old node versions
+require(`util.promisify/shim`)()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -34,7 +36,7 @@ const { extractQueries } = require(`../query/query-watcher`)
 const { runInitialQueries } = require(`../query/page-query-runner`)
 const queryQueue = require(`../query/query-queue`)
 const { writePages } = require(`../query/pages-writer`)
-const { writeRedirects } = require(`../query/redirects-writer`)
+const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.

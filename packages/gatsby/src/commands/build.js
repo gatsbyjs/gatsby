@@ -11,6 +11,7 @@ const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
+const { store } = require(`../redux`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -65,7 +66,14 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-  await buildHTML(program, activity).catch(err => {
+  try {
+    await buildHTML.buildPages({
+      program,
+      stage: `build-html`,
+      pagePaths: [...store.getState().pages.keys()],
+      activity,
+    })
+  } catch (err) {
     reportFailure(
       report.stripIndent`
         Building static HTML failed${
@@ -78,7 +86,7 @@ module.exports = async function build(program: BuildArgs) {
       `,
       err
     )
-  })
+  }
   activity.end()
 
   await apiRunnerNode(`onPostBuild`, {
