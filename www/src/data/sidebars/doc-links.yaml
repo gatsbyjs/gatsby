@@ -310,15 +310,6 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
-    - title: Ecosystem
-      link: /ecosystem/
-      items:
-        - title: Plugin Library
-          link: /plugins
-        - title: Starter Library
-          link: /starters/
-        - title: Awesome Gatsby Resources
-          link: /docs/awesome-gatsby/
     - title: API Reference
       link: /docs/api-reference/
       items:
