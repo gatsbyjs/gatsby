@@ -64,8 +64,8 @@ const findIdsWithoutDataDependencies = state => {
   return notTrackedIds
 }
 
-const findDirtyIds = actions => {
-  const state = store.getState()
+const popNodeQueries = state => {
+  const actions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const uniqDirties = _.uniq(
     actions.reduce((dirtyIds, action) => {
       const node = action.payload
@@ -83,18 +83,19 @@ const findDirtyIds = actions => {
       return _.compact(dirtyIds)
     }, [])
   )
+  queuedDirtyActions = []
   return uniqDirties
 }
 
 const calcQueries = (initial = false) => {
+  const state = store.getState()
+
   // Find paths dependent on dirty nodes
-  queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  const dirtyIds = findDirtyIds(queuedDirtyActions)
-  queuedDirtyActions = []
+  const dirtyIds = popNodeQueries(state)
 
   // Find ids without data dependencies (i.e. no queries have been run for
   // them before) and run them.
-  const cleanIds = findIdsWithoutDataDependencies(store.getState())
+  const cleanIds = findIdsWithoutDataDependencies(state)
 
   // Construct paths for all queries to run
   let pathnamesToRun = _.uniq([...dirtyIds, ...cleanIds])
