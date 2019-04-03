@@ -3,24 +3,9 @@ import { Static, Box, Text } from "ink"
 import { globalTracer } from "opentracing"
 import util from "util"
 import Activity, { calcElapsedTime } from "./components/activity"
-import { Success, Warn, Info, Verbose } from "./components/messages"
+import { Message } from "./components/messages"
 
 const tracer = globalTracer()
-
-const getMessageComponent = type => {
-  switch (type) {
-    case `success`:
-      return Success
-    case `verbose`:
-      return Verbose
-    case `warn`:
-      return Warn
-    case `info`:
-      return Info
-    default:
-      return ({ children }) => <Box>{children}</Box>
-  }
-}
 
 export default class GatsbyReporter extends React.Component {
   verbose = process.env.gatsby_log_level === `verbose`
@@ -91,6 +76,12 @@ export default class GatsbyReporter extends React.Component {
     }
   }
 
+  setColors(useColors = false) {
+    this.setState({
+      disableColors: !useColors,
+    })
+  }
+
   setVerbose(isVerbose = true) {
     this.verbose = isVerbose
   }
@@ -133,11 +124,13 @@ export default class GatsbyReporter extends React.Component {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static>
-            {this.state.messages.map((msg, index) => {
-              const Component = getMessageComponent(msg.type)
-
-              return <Component key={index}>{msg.text}</Component>
-            })}
+            {this.state.messages.map((msg, index) => (
+              <Box textWrap="wrap" key={index}>
+                <Message type={msg.type} hideColors={this.state.disableColors}>
+                  {msg.txt}
+                </Message>
+              </Box>
+            ))}
           </Static>
 
           <Box flexDirection="column" marginTop={1}>
