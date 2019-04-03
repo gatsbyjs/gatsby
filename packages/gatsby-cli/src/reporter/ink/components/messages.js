@@ -9,39 +9,35 @@ const ColorSwitcher = ({ hideColors, children, ...props }) => {
   return <Color {...props}>{children}</Color>
 }
 
-export const Success = ({ hideColors, children }) => (
-  <Box>
-    <ColorSwitcher hideColors={hideColors} green>
-      success
-    </ColorSwitcher>
-    {` `}
-    {children}
-  </Box>
+const createLabel = (text, color) => (...props) => (
+  <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
 )
-export const Verbose = ({ hideColors, children }) => (
-  <Box>
-    <ColorSwitcher hideColors={hideColors} gray>
-      verbose
-    </ColorSwitcher>
-    {` `}
-    {children}
-  </Box>
-)
-export const Info = ({ hideColors, children }) => (
-  <Box>
-    <ColorSwitcher hideColors={hideColors} blue>
-      info
-    </ColorSwitcher>
-    {` `}
-    {children}
-  </Box>
-)
-export const Warn = ({ hideColors, children }) => (
-  <Box>
-    <ColorSwitcher hideColors={hideColors} yellow>
-      warn
-    </ColorSwitcher>
-    {` `}
-    {children}
-  </Box>
-)
+
+const getLabel = type => {
+  switch (type) {
+    case `success`:
+      return createLabel(`success`, `green`)
+    case `verbose`:
+      return createLabel(`verbose`, `gray`)
+    case `warn`:
+      return createLabel(`warn`, `yellow`)
+    case `info`:
+      return createLabel(`info`, `blue`)
+  }
+}
+
+export const Message = ({ type, hideColors, children }) => {
+  if (!type) {
+    return children
+  }
+
+  const TextLabel = getLabel(type)
+
+  return (
+    <>
+      <TextLabel hideColors={hideColors} />
+      {` `}
+      {children}
+    </>
+  )
+}

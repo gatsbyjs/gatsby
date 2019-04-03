@@ -28,7 +28,8 @@ const reporter = {
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
-    this.isNoColors = isNoColor
+    inkReporter.setColors(isNoColor)
+
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
