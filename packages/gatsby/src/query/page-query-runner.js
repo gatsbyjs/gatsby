@@ -147,6 +147,24 @@ const groupQueryIds = queryIds => {
   }
 }
 
+const reportStats = (queue, activity) => {
+  const startQueries = process.hrtime()
+  queue.on(`task_finish`, () => {
+    const stats = queue.getStats()
+    activity.setStatus(
+      `${stats.total}/${stats.peak} ${(
+        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+      ).toFixed(2)} queries/second`
+    )
+  })
+}
+
+const processQueries = async (queryJobs, activity) => {
+  const queue = queryQueue.makeBuild()
+  reportStats(queue, activity)
+  await queryQueue.processBatch(queue, queryJobs)
+}
+
 const makeStaticQueryJob = (state, queryId) => {
   const component = state.staticQueryComponents.get(queryId)
   const { hash, jsonName, query, componentPath } = component
@@ -158,6 +176,14 @@ const makeStaticQueryJob = (state, queryId) => {
     componentPath,
     context: { path: jsonName },
   }
+}
+
+const processStaticQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  await processQueries(
+    queryIds.map(id => makeStaticQueryJob(state, id)),
+    activity
+  )
 }
 
 const makePageQueryJob = (state, queryId) => {
@@ -178,37 +204,12 @@ const makePageQueryJob = (state, queryId) => {
   }
 }
 
-const makeQueryJobs = pathnames => {
-  const { staticQueryIds, pageQueryIds } = groupQueryIds(pathnames)
-  const state = store.getState()
-
-  const staticQueryJobs = staticQueryIds.map(id =>
-    makeStaticQueryJob(state, id)
+const processPageQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  await processQueries(
+    queryIds.map(id => makePageQueryJob(state, id)),
+    activity
   )
-  const pageQueryJobs = pageQueryIds.map(id => makePageQueryJob(state, id))
-  return [...staticQueryJobs, ...pageQueryJobs]
-}
-
-const runInitialQueries = async activity => {
-  const pathnamesToRun = calcInitialDirtyQueryIds(store.getState())
-  if (pathnamesToRun.length === 0) {
-    return
-  }
-
-  const queryJobs = makeQueryJobs(pathnamesToRun)
-
-  const queue = queryQueue.makeBuild()
-
-  const startQueries = process.hrtime()
-  queue.on(`task_finish`, () => {
-    const stats = queue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
-  })
-  await queryQueue.processBatch(queue, queryJobs)
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -223,7 +224,15 @@ let listenerQueue
  */
 const runQueuedQueries = () => {
   if (listenerQueue) {
-    listenerQueue.push(makeQueryJobs(calcDirtyQueryIds(store.getState())))
+    const state = store.getState()
+    const { staticQueryIds, pageQueryIds } = groupQueryIds(
+      calcDirtyQueryIds(state)
+    )
+    const queryJobs = [
+      ...staticQueryIds.map(id => makeStaticQueryJob(state, id)),
+      ...pageQueryIds.map(id => makePageQueryJob(state, id)),
+    ]
+    listenerQueue.push(queryJobs)
   }
 }
 
@@ -252,7 +261,10 @@ const startListening = queue => {
 }
 
 module.exports = {
-  runInitialQueries,
+  calcInitialDirtyQueryIds,
+  groupQueryIds,
+  processStaticQueries,
+  processPageQueries,
   startListening,
   runQueuedQueries,
   enqueueExtractedQueryId,
