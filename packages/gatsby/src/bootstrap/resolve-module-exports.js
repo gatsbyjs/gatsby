@@ -123,7 +123,9 @@ https://gatsby.dev/no-mixed-modules
 module.exports = (modulePath, { mode = `analysis`, resolver } = {}) => {
   if (mode === `require`) {
     try {
-      return Object.keys(require(modulePath))
+      return Object.keys(require(modulePath)).filter(
+        exportName => exportName !== `__esModule`
+      )
     } catch {
       return []
     }
