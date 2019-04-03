@@ -213,7 +213,7 @@ Try creating a new page containing a blog post and see what happens to the list 
 ## What's coming next?
 
 This is great! You've just created a nice index page where you're querying your markdown
-files and producing a list of blogpost titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
+files and producing a list of blog post titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
 
 You could continue to create pages by placing React components in `src/pages`. However, you'll
 next learn how to _programmatically_ create pages from _data_. Gatsby is _not_
