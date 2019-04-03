@@ -186,7 +186,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
-  headers = {},
+  httpHeaders = {},
   createNodeId,
   ext,
   name,
@@ -202,7 +202,7 @@ async function processRemoteNode({
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
-  const headers = {}
+  const headers = { httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
   }
@@ -315,7 +315,7 @@ module.exports = ({
   createNode,
   parentNodeId = null,
   auth = {},
-  headers = {},
+  httpHeaders = {},
   createNodeId,
   ext = null,
   name = null,
@@ -361,7 +361,7 @@ module.exports = ({
     parentNodeId,
     createNodeId,
     auth,
-    headers,
+    httpHeaders,
     ext,
     name,
   })
