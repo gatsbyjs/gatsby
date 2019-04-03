@@ -65,7 +65,7 @@ Library. After a few weeks of code reviews the
 # How you can use this plugin
 
 You can find
-[`gatsby-plugin-page-creator`](https://www.gatsbyjs.org/packages/gatsby-plugin-page-creator/?=page-creator)
+[`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/?=page-creator)
 in the plugin library. Use `yarn add gatsby-plugin-page-creator` to add this
 into your project. In `gatsby-config.js`, use a JSON object to use the
 plugin, making sure to add the required path option with your desired directory

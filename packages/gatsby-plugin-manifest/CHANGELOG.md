@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.25...gatsby-plugin-manifest@2.0.26) (2019-03-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** ensure icon_options is stripped ([#12907](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12907)) ([201a4f5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/201a4f5))
+
 ## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.24...gatsby-plugin-manifest@2.0.25) (2019-03-27)
 
 ### Bug Fixes
