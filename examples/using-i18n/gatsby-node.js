@@ -1,11 +1,10 @@
-const locales = require(`./i18n/config`)
-
-// Use a little helper function to remove trailing slashes from paths
-const removeTrailingSlash = path =>
-  path === `/` ? path : path.replace(/\/$/, ``)
-
-const localizedSlug = ({ isDefault, lang, slug }) =>
-  isDefault ? `/${slug}` : `/${lang}/${slug}`
+const path = require(`path`)
+const locales = require(`./config/i18n`)
+const {
+  localizedSlug,
+  findKey,
+  removeTrailingSlash,
+} = require(`./src/utils/gatsby-node-helpers`)
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
@@ -37,6 +36,36 @@ exports.onCreatePage = ({ page, actions }) => {
   })
 }
 
+// As you don't want to manually add the correct languge to the frontmatter of each file
+// a new node is created automatically with the filename
+// It's necessary to do that -- otherwise you couldn't filter by language
+exports.onCreateNode = ({ node, actions }) => {
+  const { createNodeField } = actions
+
+  // Check for "Mdx" type so that other files (e.g. images) are exluded
+  if (node.internal.type === `Mdx`) {
+    // Use path.basename
+    // https://nodejs.org/api/path.html#path_path_basename_path_ext
+    const name = path.basename(node.fileAbsolutePath, `.mdx`)
+
+    // Check if post.name is "index" -- because that's the file for default language
+    // (In this case "en")
+    const isDefault = name === `index`
+
+    // Find the key that has "default: true" set (in this case it returns "en")
+    const defaultKey = findKey(locales, o => o.default === true)
+
+    // Files are defined with "name-with-dashes.lang.mdx"
+    // name returns "name-with-dashes.lang"
+    // So grab the lang from that string
+    // If it's the default language, pass the locale for that
+    const lang = isDefault ? defaultKey : name.split(`.`)[1]
+
+    createNodeField({ node, name: `locale`, value: lang })
+    createNodeField({ node, name: `isDefault`, value: isDefault })
+  }
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -47,9 +76,12 @@ exports.createPages = async ({ graphql, actions }) => {
       blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
         edges {
           node {
-            name
             relativeDirectory
             childMdx {
+              fields {
+                locale
+                isDefault
+              }
               frontmatter {
                 title
               }
@@ -68,25 +100,25 @@ exports.createPages = async ({ graphql, actions }) => {
   const postList = result.data.blog.edges
 
   postList.forEach(({ node: post }) => {
-    // Check if post.name is "index" -- because that's the file for default language
-    // (In this case "en")
-    const isDefault = post.name === `index`
-
-    // Files are defined with "name-with-dashes.lang.mdx"
-    // post.name returns "name-with-dashes.lang"
-    // So grab the lang from that string
-    // If it's the default language, pass the locale for that
-    const lang = isDefault ? `en` : post.name.split(`.`)[1]
-
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
     const slug = post.relativeDirectory
 
+    const title = post.childMdx.frontmatter.title
+
+    // Use the fields created in exports.onCreateNode
+    const locale = post.childMdx.fields.locale
+    const isDefault = post.childMdx.fields.isDefault
+
     createPage({
-      path: localizedSlug({ isDefault, lang, slug }),
+      path: localizedSlug({ isDefault, locale, slug }),
       component: postTemplate,
       context: {
-        locale: lang,
+        // Pass both the "title" and "locale" to find a unique file
+        // Only the title would not have been sufficient as articles could have the same title
+        // in different languages, e.g. because an english phrase is also common in german
+        locale,
+        title,
       },
     })
   })

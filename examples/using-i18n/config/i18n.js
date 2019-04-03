@@ -1,5 +1,4 @@
 // Only one item MUST have the "default: true" key
-// You also have to modify the "lang" check in gatsby-node.js to include your default language
 
 module.exports = {
   en: {

@@ -33,3 +33,12 @@ body {
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+
+.post-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.post-list li {
+  font-size: 1.25rem;
+}
