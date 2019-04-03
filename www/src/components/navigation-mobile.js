@@ -15,7 +15,7 @@ import {
   space,
   breakpoints,
   dimensions,
-  scale,
+  fontSizes,
   lineHeights,
   fonts,
 } from "../utils/presets"
@@ -127,7 +127,7 @@ const styles = {
     default: {
       color: colors.lilac,
       borderRadius: radii[1],
-      fontSize: scale[0],
+      fontSize: fontSizes[0],
       flexShrink: 0,
       lineHeight: lineHeights.solid,
       width: 64,

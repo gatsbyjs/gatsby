@@ -7,7 +7,7 @@ import radii from "./radii"
 import shadows from "./shadows"
 import space from "./space"
 import transition from "./transition"
-import scale from "./scale"
+import fontSizes from "./font-sizes"
 import fonts from "./fonts"
 
 export {
@@ -20,6 +20,6 @@ export {
   shadows,
   space,
   transition,
-  scale,
+  fontSizes,
   fonts,
 }

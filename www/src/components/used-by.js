@@ -2,7 +2,7 @@ import React from "react"
 import { rhythm } from "../utils/typography"
 import {
   space,
-  scale,
+  fontSizes,
   transition,
   colors,
   breakpoints,
@@ -103,10 +103,10 @@ const UsedBy = () => (
         css={{
           color: colors.lilac,
           fontFamily: fonts.header,
-          fontSize: scale[1],
+          fontSize: fontSizes[1],
           marginBottom: 0,
           [breakpoints.sm]: {
-            fontSize: scale[2],
+            fontSize: fontSizes[2],
             textAlign: `right`,
           },
         }}

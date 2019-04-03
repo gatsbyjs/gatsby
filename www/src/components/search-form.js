@@ -11,7 +11,7 @@ import {
   shadows,
   breakpoints,
   dimensions,
-  scale,
+  fontSizes,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
 
@@ -57,7 +57,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
     color: ${colors.gray.calm} !important;
-    font-size: ${scale[1]} !important;
+    font-size: ${fontSizes[1]} !important;
     font-weight: normal !important;
     padding: ${space[1]} ${space[3]} !important;
   }
@@ -161,7 +161,7 @@ const algoliaStyles = css`
   .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
     padding: ${space[1]} ${space[3]} !important;
     margin-top: 0 !important;
-    font-size: ${scale[1]} !important;
+    font-size: ${fontSizes[1]} !important;
     border-color: ${colors.ui.light} !important;
     color: ${colors.gatsby} !important;
     font-weight: bold !important;

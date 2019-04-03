@@ -6,7 +6,7 @@ import {
   shadows,
   breakpoints,
   dimensions,
-  scale,
+  fontSizes,
   lineHeights,
   fonts,
 } from "../../utils/presets"
@@ -144,7 +144,7 @@ const styles = {
     },
   },
   meta: {
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
     alignItems: `baseline`,
     "&&": {
       color: colors.gray.bright,
@@ -176,7 +176,7 @@ const styles = {
     },
   },
   filterButton: {
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
     margin: 0,
     alignItems: `flex-start`,
     background: `none`,
@@ -198,7 +198,7 @@ const styles = {
   },
   filterCheckbox: {
     marginRight: space[2],
-    fontSize: scale[2],
+    fontSize: fontSizes[2],
   },
   filterCount: {
     color: colors.gray.bright,
@@ -206,7 +206,7 @@ const styles = {
   sidebarHeader: {
     margin: 0,
     [breakpoints.lg]: {
-      fontSize: scale[3],
+      fontSize: fontSizes[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
       color: colors.gray.calm,
@@ -258,7 +258,7 @@ const styles = {
   contentTitle: {
     color: colors.gatsby,
     margin: 0,
-    fontSize: scale[3],
+    fontSize: fontSizes[3],
     lineHeight: lineHeights.solid,
   },
   resultCount: {

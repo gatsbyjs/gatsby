@@ -7,7 +7,7 @@ import {
   transition,
   radii,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
   fonts,
 } from "./presets"
@@ -86,21 +86,21 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    fontSize: scale[4],
+    fontSize: fontSizes[4],
     padding: `${space[3]} ${space[4]}`,
   },
   small: {
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
     padding: `${space[2]} ${space[3]}`,
     [breakpoints.md]: {
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
     },
   },
   tiny: {
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
     padding: `${space[1]} ${space[2]}`,
     [breakpoints.md]: {
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
     },
   },
   ondark: {
@@ -139,7 +139,7 @@ export const svgStyles = {
 
 // This is an exceptionally bad name
 export const linkStyles = {
-  fontSize: scale[1],
+  fontSize: fontSizes[1],
   lineHeight: lineHeights.solid,
   padding: `${space[3]} 0`,
   "&&": {
@@ -159,7 +159,7 @@ export const formInput = {
   borderRadius: radii[1],
   color: colors.brand,
   padding: space[2],
-  fontSize: scale[2],
+  fontSize: fontSizes[2],
   verticalAlign: `middle`,
   transition: `all ${transition.speed.default} ${transition.curve.default}`,
   "::placeholder": {
@@ -179,7 +179,7 @@ export const skipLink = {
   overflow: `hidden`,
   position: `absolute`,
   zIndex: 100,
-  fontSize: scale[1],
+  fontSize: fontSizes[1],
   ":focus": {
     padding: space[4],
     position: `fixed`,

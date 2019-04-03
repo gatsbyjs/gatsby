@@ -7,7 +7,7 @@ import {
   radii,
   shadows,
   space as spaceTokens,
-  scale,
+  fontSizes,
   transition,
   fonts as fontTokens,
 } from "./tokens"
@@ -30,6 +30,6 @@ export {
   letterSpacings,
   lineHeights,
   space,
-  scale,
+  fontSizes,
   fonts,
 }

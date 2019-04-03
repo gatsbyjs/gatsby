@@ -7,7 +7,7 @@ import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import {
   colors,
   space,
-  scale,
+  fontSizes,
   transition,
   breakpoints,
   dimensions,
@@ -245,7 +245,7 @@ class SidebarBody extends Component {
               color: colors.gray.calm,
               paddingLeft: space[6],
               paddingRight: space[6],
-              fontSize: scale[1],
+              fontSize: fontSizes[1],
               paddingTop: space[6],
               margin: 0,
               fontWeight: `normal`,
@@ -312,7 +312,7 @@ const styles = {
     margin: 0,
     paddingTop: space[4],
     paddingBottom: space[4],
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
     "& li": {
       margin: 0,
       listStyle: `none`,

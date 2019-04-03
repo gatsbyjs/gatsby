@@ -4,7 +4,7 @@ import {
   colors,
   space,
   dimensions,
-  scale,
+  fontSizes,
   lineHeights,
   letterSpacings,
   fonts,
@@ -153,7 +153,7 @@ const styles = {
   },
   creatorsLink: {
     "&&": {
-      fontSize: scale[4],
+      fontSize: fontSizes[4],
       color: colors.gatsby,
       borderBottom: `none`,
       marginRight: space[3],
@@ -164,7 +164,7 @@ const styles = {
   },
   CreatorsHeaderLink: {
     "&&": {
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
       lineHeight: lineHeights.solid,
       letterSpacing: letterSpacings.tracked,
       textTransform: `uppercase`,

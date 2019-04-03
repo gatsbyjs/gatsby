@@ -9,7 +9,7 @@ import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
-  scale,
+  fontSizes,
   transition,
   breakpoints,
   dimensions,
@@ -49,7 +49,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
-        fontSize: scale[2],
+        fontSize: fontSizes[2],
         ...overrideCSS,
       }}
     >
@@ -167,7 +167,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: scale[2] }}
+            overrideCSS={{ paddingRight: 0, fontSize: fontSizes[2] }}
           >
             .com
           </SocialNavItem>
@@ -220,7 +220,7 @@ const styles = {
     position: `relative`,
   },
   navItem: {
-    fontSize: scale[3],
+    fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
     color: colors.gray.copy,
     display: `block`,
