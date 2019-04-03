@@ -55,7 +55,7 @@ const reporter = {
       error = message
       message = error.message
     }
-    // base.error.call(this, message)
+    reporter.error.call(this, message)
     if (error) this.log(errorFormatter.render(error))
   },
   /**
