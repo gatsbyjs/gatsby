@@ -9,9 +9,9 @@ tags:
   - JAMstack
 ---
 
-Among the many lauded benefits of using Gatsby (and other client-side frameworks) is security. It is encouraging to see a framework not require developers to stress about security, but. For those new to Gatsby or web development, this can contribute to a myth that there are no security issues.
+Among the many lauded benefits of using Gatsby (and other static app frameworks) is security. It is encouraging to see a framework not require developers to stress about security, but for those new to Gatsby or web development, this can contribute to a myth that there are no security issues.
 
-Please understand, there are whole classes of security vulnerabilities that are eliminated by using Gatsby for web development. But, there are still others that are shared and some that are created. You need to make sure you are aware of these possible vulnerabilities and how to remedy them.
+There are indeed whole classes of security vulnerabilities that are eliminated by using Gatsby for web development; but there are still other vulnerabilities that are shared and some that are created. As a Gatsby developer, you need to make sure you are aware of these possible vulnerabilities and how to remedy them.
 
 The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers all these security issues well and includes complete solutions.
 
@@ -94,7 +94,7 @@ This is pretty much the base of the "JAMstack" and allows for private content in
 
 This should be easy right? It is public content after all. But, if you need anonymous users to be able to both read and write this data, you should be concerned. Content read publicly, but written privately, was covered in the previous section. Admittedly, public reading and writing of content is less common.
 
-Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on Facebook or Twitter, these all require authentication. Even public APIs like GitHub's require authentication, even sites like Wikipedia; even if anyone in the world can create an account and access these tools.
+Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on Facebook or Twitter; these interactions all require authentication. Even public APIs like GitHub's require authentication, even sites like Wikipedia; even if anyone in the world can create an account and access these tools.
 
 Why address this scenario? Two reasons:
 
@@ -120,7 +120,7 @@ In the end if you need hardened security, you need authentication. If you want a
 
 Every good rule has its exceptions. Never shipping API keys in client-side code is no exception. To be clear, you should never ship **SECURE** API keys (often called secrets) to a client. But, there is such a thing as non-secure/public API keys. These keys are generally used for identification and not for access control. Firebase authentication is a great example of this.
 
-Your site needs to be able to access your unique Firebase instance, to authenticate users. To do this, Firebase uses an API key to identify your app. This key is [designed to be public](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public) and their documentation tells you to add it to your client-side code. [Firebase has other controls](https://stackoverflow.com/questions/35418143/how-to-restrict-firebase-data-modification) that determine what an anonymous user is allowed to do with this key.
+Your site needs to be able to access your unique Firebase instance to authenticate users. To do this, Firebase uses an API key to identify your app. This key is [designed to be public](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public) and their documentation tells you to add it to your client-side code. [Firebase has other controls](https://stackoverflow.com/questions/35418143/how-to-restrict-firebase-data-modification) that determine what an anonymous user is allowed to do with this key.
 
 This is also the case with Cloudinary. While they have a private API key (a secret) required to access private content, they also require an API key for [anonymous uploads](https://cloudinary.com/documentation/upload_images#unsigned_upload). This key is designed to be public and is used as a unique identifier of your cloud instance and not as a security measure.
 
