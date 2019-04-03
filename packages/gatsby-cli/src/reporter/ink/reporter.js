@@ -1,6 +1,7 @@
 import React from "react"
-import { Static, Box } from "ink"
+import { Static, Box, Text } from "ink"
 import { globalTracer } from "opentracing"
+import util from "util"
 import Activity, { calcElapsedTime } from "./components/activity"
 import { Success, Warn, Info, Verbose } from "./components/messages"
 
@@ -15,8 +16,9 @@ const getMessageComponent = type => {
     case `warn`:
       return Warn
     case `info`:
-    default:
       return Info
+    default:
+      return ({ children }) => <Box>{children}</Box>
   }
 }
 
@@ -93,7 +95,14 @@ export default class GatsbyReporter extends React.Component {
     this.verbose = isVerbose
   }
 
-  _addMessage(type, str) {
+  _addMessage(type, ...args) {
+    let str = util.format(...args)
+
+    // threat null/undefind as an empty character, it seems like ink can't handle empty str
+    if (!str) {
+      str = `\u2800`
+    }
+
     this.setState(state => {
       return {
         messages: [
@@ -107,6 +116,7 @@ export default class GatsbyReporter extends React.Component {
     })
   }
 
+  onLog = this._addMessage.bind(this, null)
   onInfo = this._addMessage.bind(this, `info`)
   onSuccess = this._addMessage.bind(this, `success`)
   onWarn = this._addMessage.bind(this, `warn`)
@@ -123,10 +133,10 @@ export default class GatsbyReporter extends React.Component {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static>
-            {this.state.messages.map(msg => {
+            {this.state.messages.map((msg, index) => {
               const Component = getMessageComponent(msg.type)
 
-              return <Component key={msg.text}>{msg.text}</Component>
+              return <Component key={index}>{msg.text}</Component>
             })}
           </Static>
 

@@ -13,7 +13,7 @@ type ActivityArgs = {
 /* Reporter module.
  * @module reporter
  */
-module.exports = Object.assign({
+const reporter = {
   /**
    * Strip initial indentation template function.
    */
@@ -67,6 +67,8 @@ module.exports = Object.assign({
   success: (...args) => inkReporter.onSuccess(...args),
   verbose: (...args) => inkReporter.onVerbose(...args),
   info: (...args) => inkReporter.onInfo(...args),
+  warn: (...args) => inkReporter.onWarn(...args),
+  log: (...args) => inkReporter.onLog(...args),
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
@@ -76,4 +78,11 @@ module.exports = Object.assign({
   activityTimer(name, activityArgs: ActivityArgs = {}) {
     return inkReporter.createActivity(name, activityArgs)
   },
-})
+}
+
+console.log = reporter.log
+console.warn = reporter.warn
+console.info = reporter.info
+console.error = reporter.error
+
+module.exports = reporter
