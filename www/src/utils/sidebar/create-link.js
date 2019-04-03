@@ -122,7 +122,7 @@ const styles = {
     "&&": {
       color: colors.gatsby,
       fontWeight: 600,
-      background: presets.activeSectionBackground,
+      background: presets.activeItemBackground,
     },
   },
   link: {
