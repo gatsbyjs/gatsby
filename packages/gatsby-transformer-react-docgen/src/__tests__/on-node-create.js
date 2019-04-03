@@ -16,17 +16,20 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let loadNodeContent, actions, node, createdNodes, updatedNodes
   const createNodeId = jest.fn()
   createNodeId.mockReturnValue(`uuid-from-gatsby`)
-  let run = (node, opts = {}) =>
-    onCreateNode(
+  let run = (node, opts = {}) => {
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    return onCreateNode(
       {
         node,
         loadNodeContent,
         actions,
         createNodeId,
         reporter: { error: console.error },
+        createContentDigest,
       },
       opts
     )
+  }
 
   let consoleError
   beforeEach(() => {
