@@ -5,7 +5,7 @@ import { LocaleContext } from "./layout"
 function useTranslations() {
   // Grab the locale (passed through context) from the Context Provider
   const { locale } = React.useContext(LocaleContext)
-  // Query the JSON files in i18n/translations
+  // Query the JSON files in <rootDir>/i18n/translations
   const { rawData } = useStaticQuery(query)
 
   // Simplify the response from GraphQL

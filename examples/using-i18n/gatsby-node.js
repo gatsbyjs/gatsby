@@ -75,6 +75,7 @@ exports.createPages = async ({ graphql, actions }) => {
     // Files are defined with "name-with-dashes.lang.mdx"
     // post.name returns "name-with-dashes.lang"
     // So grab the lang from that string
+    // If it's the default language, pass the locale for that
     const lang = isDefault ? `en` : post.name.split(`.`)[1]
 
     // All files for a blogpost are stored in a folder
