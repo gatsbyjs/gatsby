@@ -1,5 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const generatePageManifests = require(`./page-manifest-generator`)
 
 class GatsbyWebpackStatsExtractor {
   constructor(options) {
@@ -7,7 +8,7 @@ class GatsbyWebpackStatsExtractor {
     this.options = options || {}
   }
   apply(compiler) {
-    compiler.hooks.done.tapAsync(this.plugin, (stats, done) => {
+    compiler.hooks.done.tapPromise(this.plugin, async stats => {
       let assets = {}
       let assetsMap = {}
       for (let chunkGroup of stats.compilation.chunkGroups) {
@@ -30,17 +31,17 @@ class GatsbyWebpackStatsExtractor {
         ...stats.toJson({ all: false, chunkGroups: true }),
         assetsByChunkName: assets,
       }
-      fs.writeFile(
+
+      await fs.writeFile(
         path.join(`public`, `chunk-map.json`),
-        JSON.stringify(assetsMap),
-        () => {
-          fs.writeFile(
-            path.join(`public`, `webpack.stats.json`),
-            JSON.stringify(webpackStats),
-            done
-          )
-        }
+        JSON.stringify(assetsMap)
       )
+      await fs.writeFile(
+        path.join(`public`, `webpack.stats.json`),
+        JSON.stringify(webpackStats)
+      )
+
+      await generatePageManifests()
     })
   }
 }
