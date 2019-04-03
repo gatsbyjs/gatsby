@@ -133,7 +133,11 @@ exports.createGatsbyIds = (createNodeId, entities) =>
     return e
   })
 
-exports.createNodesFromEntities = ({ entities, createNode }) => {
+exports.createNodesFromEntities = ({
+  entities,
+  createNode,
+  createContentDigest,
+}) => {
   entities.forEach(e => {
     let { ...entity } = e
     let node = {
@@ -142,7 +146,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       children: [],
       internal: {
         type: `lever`,
-        contentDigest: digest(JSON.stringify(entity)),
+        contentDigest: createContentDigest(entity),
       },
     }
     createNode(node)
