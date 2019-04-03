@@ -122,7 +122,10 @@ const SplitButton = ({
           ...(item.level === 0 && {
             "&&": {
               ...styles.level0,
-              color: isActive ? colors.gatsby : colors.gray.copy,
+              color:
+                (isParentOfActiveItem && isExpanded) || isActive
+                  ? colors.gatsby
+                  : colors.gray.copy,
               // fontWeight: isActive ? `bold` : `normal`,
               // fontWeight: `bold`,
             },
