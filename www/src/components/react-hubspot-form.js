@@ -52,7 +52,7 @@ class HubspotForm extends React.Component {
         },
       }
       window.hbspt.forms.create(options)
-      return true
+      return
     } else {
       setTimeout(this.createForm, 1)
     }
