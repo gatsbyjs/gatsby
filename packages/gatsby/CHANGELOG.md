@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.7...gatsby@2.3.8) (2019-04-03)
+
+### Bug Fixes
+
+- **gatsby:** don't try to statically analyze gatsby-node, require it and examine exports instead ([#13053](https://github.com/gatsbyjs/gatsby/issues/13053)) ([d74b3f0](https://github.com/gatsbyjs/gatsby/commit/d74b3f0))
+
 ## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.6...gatsby@2.3.7) (2019-04-02)
 
 **Note:** Version bump only for package gatsby
