@@ -9,9 +9,9 @@ const queryQueue = require(`./queue`)
 
 let queuedDirtyActions = []
 
-const runQueriesForPathnamesQueue = new Set()
-const queueQueryForPathname = pathname => {
-  runQueriesForPathnamesQueue.add(pathname)
+const extractedQueryIds = new Set()
+const enqueueExtractedQueryId = pathname => {
+  extractedQueryIds.add(pathname)
 }
 
 const calcQueries = (initial = false) => {
@@ -27,25 +27,22 @@ const calcQueries = (initial = false) => {
   // Construct paths for all queries to run
   let pathnamesToRun = _.uniq([...dirtyIds, ...cleanIds])
 
-  // If this is the initial run, remove pathnames from `runQueriesForPathnamesQueue`
+  // If this is the initial run, remove pathnames from `extractedQueryIds`
   // if they're also not in the dirtyIds or cleanIds.
   //
   // We do this because the page component reducer/machine always
-  // adds pages to runQueriesForPathnamesQueue but during bootstrap
+  // adds pages to extractedQueryIds but during bootstrap
   // we may not want to run those page queries if their data hasn't
   // changed since the last time we ran Gatsby.
-  let diffedPathnames = [...runQueriesForPathnamesQueue]
+  let diffedPathnames = [...extractedQueryIds]
   if (initial) {
-    diffedPathnames = _.intersection(
-      [...runQueriesForPathnamesQueue],
-      pathnamesToRun
-    )
+    diffedPathnames = _.intersection([...extractedQueryIds], pathnamesToRun)
   }
 
   // Combine.
   pathnamesToRun = _.union(diffedPathnames, pathnamesToRun)
 
-  runQueriesForPathnamesQueue.clear()
+  extractedQueryIds.clear()
 
   return pathnamesToRun
 }
@@ -228,5 +225,5 @@ module.exports = {
   runInitialQueries,
   startListening,
   runQueuedQueries,
-  queueQueryForPathname,
+  enqueueExtractedQueryId,
 }
