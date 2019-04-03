@@ -53,6 +53,7 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
   delete manifest.icon_options
+  delete manifest.include_favicon
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
@@ -70,11 +71,13 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   }
 
   // Determine destination path for icons.
-  const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
+  for (let i = 0; i < manifest.icons.length; i++) {
+    const iconPath = path.join(`public`, path.dirname(manifest.icons[i].src))
 
-  //create destination directory if it doesn't exist
-  if (!fs.existsSync(iconPath)) {
-    fs.mkdirSync(iconPath)
+    //create destination directory if it doesn't exist
+    if (!fs.existsSync(iconPath)) {
+      fs.mkdirSync(iconPath)
+    }
   }
 
   // Only auto-generate icons if a src icon is defined.
