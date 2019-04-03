@@ -20,6 +20,11 @@ export const mergeInferredComposer = ({
     definedComposer.hasExtension(`addDefaultResolvers`)
   ) {
     addDefaultResolvers = definedComposer.getExtension(`addDefaultResolvers`)
+  } else if (
+    definedComposer.hasExtension(`infer`) &&
+    !definedComposer.hasExtension(`addDefaultResolvers`)
+  ) {
+    addDefaultResolvers = false
   } else {
     addDefaultResolvers = true
   }

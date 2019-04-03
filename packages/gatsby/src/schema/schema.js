@@ -13,6 +13,7 @@ const {
   InterfaceTypeComposer,
   UnionTypeComposer,
   InputTypeComposer,
+  GraphQLJSON,
 } = require(`graphql-compose`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -88,13 +89,24 @@ const updateSchemaComposer = async ({
   parentSpan,
 }) => {
   await addTypes({ schemaComposer, parentSpan, types })
-  await addInferredTypes({
+  const inferredTypes = await addInferredTypes({
     schemaComposer,
     nodeStore,
     typeConflictReporter,
     typeMapping,
     parentSpan,
   })
+  await processFieldExtensions({ schemaComposer })
+  inferredTypes.map(inferredType =>
+    addInferredType({
+      schemaComposer,
+      typeName: inferredType.getTypeName(),
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  )
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
@@ -254,6 +266,33 @@ const getNoDefaultResolvers = directive => {
   }
 
   return null
+}
+
+const processFieldExtensions = ({ schemaComposer }) => {
+  schemaComposer.forEach(typeComposer => {
+    if (
+      typeComposer.getExtension(`createdFrom`) === `sdl` &&
+      (typeComposer instanceof ObjectTypeComposer ||
+        typeComposer instanceof InterfaceTypeComposer)
+    ) {
+      typeComposer.getFieldNames().forEach(fieldName => {
+        const field = typeComposer.getField(fieldName)
+        if (field.astNode && field.astNode.directives) {
+          field.astNode.directives.forEach(directive => {
+            if (directive.name.value === `addResolver`) {
+              const options = {}
+              directive.arguments.forEach(argument => {
+                options[argument.name.value] = GraphQLJSON.parseLiteral(
+                  argument.value
+                )
+              })
+              typeComposer.setFieldExtension(fieldName, `addResolver`, options)
+            }
+          })
+        }
+      })
+    }
+  })
 }
 
 const checkIsAllowedTypeName = name => {

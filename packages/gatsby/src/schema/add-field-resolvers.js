@@ -76,7 +76,7 @@ const addDateResolver = ({
       fieldConfig.args.formatString.defaultValue = defaultFormat
     }
     if (defaultLocale) {
-      fieldConfig.args.formatString.defaultLocale = defaultLocale
+      fieldConfig.args.locale.defaultValue = defaultLocale
     }
   }
 

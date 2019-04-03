@@ -58,22 +58,9 @@ const addInferredTypes = ({
     report.panic(`Building schema failed`)
   }
 
-  nodeTypesToInfer.forEach(typeName => {
+  return nodeTypesToInfer.map(typeName =>
     schemaComposer.getOrCreateOTC(typeName)
-  })
-
-  const typeComposers = nodeTypesToInfer.map(typeName =>
-    addInferredType({
-      schemaComposer,
-      typeName,
-      nodeStore,
-      typeConflictReporter,
-      typeMapping,
-      parentSpan,
-    })
   )
-
-  return typeComposers
 }
 
 const addInferredType = ({
@@ -98,11 +85,13 @@ const addInferredType = ({
   })
   const definedComposer = schemaComposer.getOrCreateOTC(typeName)
   addNodeInterface({ schemaComposer, typeComposer: definedComposer })
+
   mergeInferredComposer({
     schemaComposer,
     definedComposer,
     inferredComposer,
   })
+
   return definedComposer
 }
 

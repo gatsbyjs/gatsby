@@ -47,10 +47,11 @@ describe(`Kichen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        type PostsJson implements Node {
+        type PostsJson implements Node @infer {
           id: String!
-          time: Date
+          time: Date @addResolver(type: "date", options: { defaultLocale: "fi", defaultFormat: "DD MMMM"})
           code: String
+          image: File @addResolver(type: "relativeFile")
         }
       `,
     })
@@ -72,6 +73,9 @@ describe(`Kichen sink schema test`, () => {
                 id
                 idWithDecoration
                 time(formatString: "DD.MM.YYYY")
+                localeString: time(locale: "ru")
+                localeFormat: time(formatString: "DD MMMM YYYY")
+                defaultTime: time
                 code
                 likes
                 comment
