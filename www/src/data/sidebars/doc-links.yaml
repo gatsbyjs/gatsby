@@ -7,8 +7,6 @@
       link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
-    - title: Cheat Sheet
-      link: /docs/cheat-sheet/
     - title: Plugin Library
       link: /plugins
     - title: Starter Library
@@ -512,5 +510,7 @@
       link: /docs/glossary/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
+    - title: Cheat Sheet
+      link: /docs/cheat-sheet/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/
