@@ -39,7 +39,7 @@ export const Info = ({ hideColors, children }) => (
 export const Warn = ({ hideColors, children }) => (
   <Box>
     <ColorSwitcher hideColors={hideColors} yellow>
-      info
+      warn
     </ColorSwitcher>
     {` `}
     {children}
