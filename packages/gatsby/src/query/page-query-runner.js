@@ -1,6 +1,5 @@
 // @flow
 
-import type { QueryJob } from "../query-runner"
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
 const convertHrtime = require(`convert-hrtime`)
@@ -137,45 +136,57 @@ const calcInitialDirtyQueryIds = state => {
   return _.union(extractedQueriesThatNeedRunning, nodeAndNoDepQueries)
 }
 
+/**
+ * groups queryIds by whether they are static or page queries.
+ */
+const groupQueryIds = queryIds => {
+  const grouped = _.groupBy(queryIds, p => p.slice(0, 4) === `sq--`)
+  return {
+    staticQueryIds: grouped[true] || [],
+    pageQueryIds: grouped[false] || [],
+  }
+}
+
+const makeStaticQueryJob = (state, queryId) => {
+  const component = state.staticQueryComponents.get(queryId)
+  const { hash, jsonName, query, componentPath } = component
+  return {
+    id: hash,
+    hash,
+    jsonName,
+    query,
+    componentPath,
+    context: { path: jsonName },
+  }
+}
+
+const makePageQueryJob = (state, queryId) => {
+  const page = state.pages.get(queryId)
+  const component = state.components.get(page.componentPath)
+  const { path, jsonName, componentPath, context } = page
+  const { query } = component
+  return {
+    id: path,
+    jsonName,
+    query,
+    isPage: true,
+    componentPath,
+    context: {
+      ...page,
+      ...context,
+    },
+  }
+}
+
 const makeQueryJobs = pathnames => {
-  const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
-  const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
+  const { staticQueryIds, pageQueryIds } = groupQueryIds(pathnames)
   const state = store.getState()
-  const queryJobs = []
 
-  staticQueries.forEach(id => {
-    const staticQueryComponent = store.getState().staticQueryComponents.get(id)
-    const queryJob: QueryJob = {
-      id: staticQueryComponent.hash,
-      hash: staticQueryComponent.hash,
-      jsonName: staticQueryComponent.jsonName,
-      query: staticQueryComponent.query,
-      componentPath: staticQueryComponent.componentPath,
-      context: { path: staticQueryComponent.jsonName },
-    }
-    queryJobs.push(queryJob)
-  })
-
-  const pages = state.pages
-  pageQueries.forEach(id => {
-    const page = pages.get(id)
-    if (page) {
-      queryJobs.push(
-        ({
-          id: page.path,
-          jsonName: page.jsonName,
-          query: store.getState().components.get(page.componentPath).query,
-          isPage: true,
-          componentPath: page.componentPath,
-          context: {
-            ...page,
-            ...page.context,
-          },
-        }: QueryJob)
-      )
-    }
-  })
-  return queryJobs
+  const staticQueryJobs = staticQueryIds.map(id =>
+    makeStaticQueryJob(state, id)
+  )
+  const pageQueryJobs = pageQueryIds.map(id => makePageQueryJob(state, id))
+  return [...staticQueryJobs, ...pageQueryJobs]
 }
 
 const runInitialQueries = async activity => {
