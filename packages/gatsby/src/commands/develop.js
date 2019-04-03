@@ -288,16 +288,9 @@ module.exports = async (program: any) => {
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detectPortInUseAndPrompt(port, rlInterface, newPort => {
-      program.port = newPort
-      startServer(program).then(([c, l]) => {
-        compiler = c
-        resolve()
-      })
-    })
-  })
+  program.port = await detectPortInUseAndPrompt(port, rlInterface)
+
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
