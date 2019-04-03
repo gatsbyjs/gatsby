@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
+const telemetry = require(`gatsby-telemetry`)
 
 // Create event emitter for actions
 const emitter = mitt()
@@ -74,6 +75,12 @@ const store = Redux.createStore(
 // Persist state.
 function saveState() {
   if (process.env.DANGEROUSLY_DISABLE_OOM) {
+    // meausure how many people are using DANGEROUSLY_DISABLE_OOM in build statements
+    telemetry.decorateEvent(`BUILD_END`, {
+      env: {
+        DANGEROUSLY_DISABLE_OOM: true,
+      },
+    })
     return Promise.resolve()
   }
 
