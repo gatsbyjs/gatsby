@@ -117,8 +117,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     it(`doesn't create multiple nodes with same id`, () => {
-      Object.values(groupBy(createdNodes, `id`)).forEach(nodes =>
-        expect(nodes.length).toBe(1)
+      const groupedById = groupBy(createdNodes, `id`)
+      Object.keys(groupedById).forEach(id =>
+        expect(groupedById[id].length).toBe(1)
       )
     })
   })
@@ -246,8 +247,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     it(`doesn't create multiple nodes with same id`, () => {
-      Object.values(groupBy(createdNodes, `id`)).forEach(nodes =>
-        expect(nodes.length).toBe(1)
+      const groupedById = groupBy(createdNodes, `id`)
+      Object.keys(groupedById).forEach(id =>
+        expect(groupedById[id].length).toBe(1)
       )
     })
   })
@@ -258,8 +260,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     it(`doesn't create multiple nodes with same id`, () => {
-      Object.values(groupBy(createdNodes, `id`)).forEach(nodes =>
-        expect(nodes.length).toBe(1)
+      const groupedById = groupBy(createdNodes, `id`)
+      Object.keys(groupedById).forEach(id =>
+        expect(groupedById[id].length).toBe(1)
       )
     })
   })
