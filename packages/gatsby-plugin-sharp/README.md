@@ -96,6 +96,12 @@ a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).
 
+When both a `maxWidth` and `maxHeight` are provided, the default way by which the image `fit` is `COVER`, with additional available options of `CONTAIN`, and `FILL`.
+
+`CONTAIN` and `FILL` will not work with `cropFocus` of [sharp.strategy][6]. A `cropFocus` option must be passed that is not `ENTROPY` or `ATTENTION`.
+
+`background` - background colour when using a `fit` of `CONTAIN`, parsed by the [color module][18], defaults to black without transparency.
+
 #### Parameters
 
 - `maxWidth` (int, default: 800)
@@ -103,6 +109,8 @@ plugin for Markdown content as gatsby-remark-images).
 - `quality` (int, default: 50)
 - `sizeByPixelDensity` (bool, default: false)
 - `srcSetBreakpoints` (array of int, default: [])
+- `fit` (string, default: '[sharp.fit.cover][6]')
+- `background` (string, default: 'rgba(0,0,0,1)')
 
 #### Returns
 
@@ -308,3 +316,4 @@ pre-process your images with a tool such as [ExifTool][17].
 [15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
 [16]: https://github.com/mozilla/mozjpeg
 [17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
+[18]: https://www.npmjs.com/package/color
