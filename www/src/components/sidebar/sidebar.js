@@ -11,6 +11,7 @@ import {
   transition,
   breakpoints,
   dimensions,
+  letterSpacings,
 } from "../../utils/presets"
 import presets from "../../utils/sidebar/presets"
 
@@ -64,7 +65,7 @@ class SidebarBody extends Component {
     const node = this.scrollRef.current
 
     if (hasLocalStorage) {
-      const key = this.props.itemList[0].key
+      const key = this.props.sidebarKey
       const initialState = this.state
       const localState = this._readLocalStorage(key)
 
@@ -132,7 +133,7 @@ class SidebarBody extends Component {
     const state = {
       openSectionHash: {},
       expandAll: false,
-      key: props.itemList[0].key,
+      key: props.sidebarKey,
       activeItemHash: props.activeItemHash,
       activeItemLink: activeItemLink,
       activeItemParents: getActiveItemParents(
@@ -209,7 +210,7 @@ class SidebarBody extends Component {
         className="docSearch-sidebar"
         css={{ height: `100%` }}
       >
-        {!itemList[0].disableExpandAll && (
+        {!this.props.disableExpandAll && (
           <header css={{ ...styles.utils }}>
             <ExpandAllButton
               onClick={this._expandAll}
@@ -231,7 +232,7 @@ class SidebarBody extends Component {
           ref={this.scrollRef}
           css={{
             ...styles.sidebarScrollContainer,
-            height: itemList[0].disableExpandAll
+            height: this.props.disableExpandAll
               ? `100%`
               : `calc(100% - ${dimensions.sidebarUtilityHeight})`,
             [breakpoints.md]: {
@@ -239,12 +240,31 @@ class SidebarBody extends Component {
             },
           }}
         >
+          <h3
+            css={{
+              color: colors.gray.calm,
+              paddingLeft: space[6],
+              paddingRight: space[6],
+              fontSize: scale[1],
+              paddingTop: space[6],
+              margin: 0,
+              fontWeight: `normal`,
+              textTransform: `uppercase`,
+              letterSpacing: letterSpacings.tracked,
+              // [breakpoints.md]: {
+              //   display: `none`,
+              // },
+            }}
+          >
+            {this.props.title}
+          </h3>
           <ul css={{ ...styles.list }}>
             {itemList.map((item, index) => (
               <Item
                 activeItemLink={activeItemLink}
                 activeItemParents={activeItemParents}
-                isActive={openSectionHash[item.title]}
+                isActive={item.link === location.pathname}
+                isExpanded={openSectionHash[item.title]}
                 item={item}
                 key={index}
                 location={location}
@@ -252,6 +272,7 @@ class SidebarBody extends Component {
                 onSectionTitleClick={this._toggleSection}
                 openSectionHash={openSectionHash}
                 isSingle={isSingle}
+                disableAccordions={this.props.disableAccordions}
               />
             ))}
           </ul>
@@ -271,7 +292,7 @@ const styles = {
     height: dimensions.sidebarUtilityHeight,
     background: presets.backgroundDefault,
     paddingLeft: space[4],
-    paddingRight: 8,
+    paddingRight: space[6],
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,

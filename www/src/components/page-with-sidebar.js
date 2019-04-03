@@ -24,7 +24,11 @@ export default props => {
         </div>
         <StickyResponsiveSidebar
           enableScrollSync={props.enableScrollSync}
-          itemList={props.itemList}
+          itemList={props.itemList.items}
+          title={props.itemList.title}
+          sidebarKey={props.itemList.key}
+          disableExpandAll={props.itemList.disableExpandAll}
+          disableAccordions={props.itemList.disableAccordions}
           key={props.location.pathname}
           location={props.location}
         />

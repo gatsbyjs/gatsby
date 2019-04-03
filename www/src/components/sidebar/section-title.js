@@ -6,7 +6,6 @@ import {
   transition,
   scale,
   letterSpacings,
-  fonts,
   space,
 } from "../../utils/presets"
 import indention from "../../utils/sidebar/indention"
@@ -15,20 +14,14 @@ import presets from "../../utils/sidebar/presets"
 const Chevron = ({ isExpanded }) => (
   <span
     css={{
-      alignItems: `center`,
       display: `flex`,
       flexShrink: 0,
       marginLeft: `auto`,
       height: `100%`,
       width: `100%`,
+      paddingTop: `1.3em`,
       minHeight: presets.itemMinHeight,
       minWidth: presets.itemMinHeight,
-      "&:before": {
-        ...styles.ulHorizontalDivider,
-        bottom: 0,
-        left: `0 !important`,
-        top: `auto`,
-      },
       "&:hover": {
         background: presets.activeSectionBackground,
       },
@@ -36,10 +29,10 @@ const Chevron = ({ isExpanded }) => (
   >
     <ChevronSvg
       cssProps={{
-        color: isExpanded ? colors.gray.light : colors.gray.light,
+        color: colors.gray.calm,
         marginLeft: `auto`,
         marginRight: `auto`,
-        transform: isExpanded ? `rotateX(180deg)` : `rotateX(0deg)`,
+        transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
         transition: `transform ${transition.speed.fast} ${
           transition.curve.default
         }`,
@@ -53,7 +46,6 @@ const TitleButton = ({
   isExpanded,
   item,
   onSectionTitleClick,
-  title,
   uid,
 }) => (
   <button
@@ -125,13 +117,16 @@ const SplitButton = ({
         location,
         onLinkClick,
         level: item.level,
-        indention: indention(item.level),
         customCSS: {
           ...(item.level === 0 && {
             "&&": {
-              ...styles.smallCaps,
-              color: isExpanded ? colors.gatsby : false,
-              fontWeight: isActive ? `bold` : `normal`,
+              ...styles.level0,
+              color:
+                (isParentOfActiveItem && isExpanded) || isActive
+                  ? colors.gatsby
+                  : colors.gray.copy,
+              // fontWeight: isActive ? `bold` : `normal`,
+              // fontWeight: `bold`,
             },
           }),
           paddingRight: presets.itemMinHeight,
@@ -186,10 +181,20 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
       alignItems: `center`,
       display: `flex`,
       fontSize: scale[1],
-      fontWeight: isActive ? `bold` : `normal`,
+      // fontFamily: fonts.system,
+      // fontWeight: isActive ? `bold` : `normal`,
+      fontWeight: `normal`,
+      textTransform: `uppercase`,
+      letterSpacing: letterSpacings.tracked,
+      textRendering: `optimizelegibility`,
       margin: 0,
-      ...(item.level === 0 && { ...styles.smallCaps }),
-      color: isExpanded ? colors.gatsby : false,
+      ...(item.level === 0 && { ...styles.level0 }),
+      color:
+        isExpanded && !disabled
+          ? colors.gatsby
+          : disabled
+          ? colors.gray.calm
+          : false,
       "&:hover": {
         color: disabled ? false : colors.gatsby,
       },
@@ -220,11 +225,13 @@ const styles = {
     height: 1,
     position: `absolute`,
     right: 0,
-    left: 24,
+    left: space[6],
   },
-  smallCaps: {
-    fontFamily: fonts.header,
-    letterSpacing: letterSpacings.tracked,
-    textTransform: `uppercase`,
+  level0: {
+    // fontFamily: fonts.header,
+    // letterSpacing: letterSpacings.tracked,
+    // textTransform: `uppercase`,
+    fontSize: scale[1],
+    // fontWeight: `bold !important`,
   },
 }
