@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.8...gatsby@2.3.9) (2019-04-03)
+
+### Features
+
+- **gatsby:** add util.promisify polyfill for older node version ([#13024](https://github.com/gatsbyjs/gatsby/issues/13024)) ([b278a60](https://github.com/gatsbyjs/gatsby/commit/b278a60))
+
 ## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.7...gatsby@2.3.8) (2019-04-03)
 
 ### Bug Fixes
