@@ -7,6 +7,7 @@ import {
   scale,
   letterSpacings,
   space,
+  fonts,
 } from "../../utils/presets"
 import indention from "../../utils/sidebar/indention"
 import presets from "../../utils/sidebar/presets"
@@ -29,7 +30,7 @@ const Chevron = ({ isExpanded }) => (
   >
     <ChevronSvg
       cssProps={{
-        color: isExpanded ? colors.gray.calm : colors.gray.calm,
+        color: colors.gray.calm,
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,

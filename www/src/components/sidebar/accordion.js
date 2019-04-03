@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
-import { colors, space } from "../../utils/presets"
+import { colors, space, transition } from "../../utils/presets"
 import presets from "../../utils/sidebar/presets"
 
 const ItemWithSubitems = ({
@@ -96,6 +96,35 @@ class Accordion extends React.Component {
               ? presets.activeSectionBackground
               : false,
           position: `relative`,
+          transition: `all ${transition.speed.fast} ${
+            transition.curve.default
+          }`,
+          marginTop:
+            item.level === 0 && disableAccordions && !isSingle
+              ? `${space[4]} !important`
+              : false,
+          ...(item.level === 0 &&
+            !isSingle && {
+              "::before": {
+                content: `" "`,
+                position: `absolute`,
+                borderTop:
+                  !isExpanded && !isSingle && !isActive
+                    ? `1px solid ${colors.gray.border}`
+                    : `1px solid ${colors.ui.light}`,
+                left:
+                  (isParentOfActiveItem && isExpanded) ||
+                  (isActive && isExpanded)
+                    ? 0
+                    : space[6],
+                right: 0,
+                top: 0,
+              },
+              ":after": {
+                top: `auto`,
+                bottom: -1,
+              },
+            }),
           // marginTop:
           //   level === 0 && isExpanded ? `${space[4]} !important` : false,
         }}
@@ -121,16 +150,6 @@ class Accordion extends React.Component {
             margin: 0,
             position: `relative`,
             display: isExpanded ? `block` : `none`,
-            paddingBottom:
-              item.level === 0 && isExpanded && !isSingle ? space[6] : false,
-            borderBottom:
-              item.level === 0 && isExpanded && !isSingle
-                ? `1px solid ${colors.gray.border}`
-                : false,
-            marginBottom:
-              item.level === 0 && isExpanded && !isSingle
-                ? `${space[6]} !important`
-                : false,
             ...(item.ui === `steps` && {
               "&:after": {
                 background: colors.gray.border,
