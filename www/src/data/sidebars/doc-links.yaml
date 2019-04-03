@@ -497,11 +497,11 @@
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
-    - title: Glossary*
-      link: /docs/glossary/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
       link: /docs/cheat-sheet/
+    - title: Glossary*
+      link: /docs/glossary/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/
