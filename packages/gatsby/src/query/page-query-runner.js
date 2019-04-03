@@ -34,6 +34,12 @@ const enqueueExtractedQueryId = pathname => {
 /////////////////////////////////////////////////////////////////////
 // Calculate dirty static/page queries
 
+const popExtractedQueries = () => {
+  const queries = [...extractedQueryIds]
+  extractedQueryIds.clear()
+  return queries
+}
+
 const findIdsWithoutDataDependencies = state => {
   const allTrackedIds = _.uniq(
     _.flatten(
@@ -87,37 +93,48 @@ const popNodeQueries = state => {
   return uniqDirties
 }
 
-const calcQueries = (initial = false) => {
-  const state = store.getState()
+const popNodeAndDepQueries = state => {
+  const nodeQueries = popNodeQueries(state)
 
-  // Find paths dependent on dirty nodes
-  const dirtyIds = popNodeQueries(state)
+  const noDepQueries = findIdsWithoutDataDependencies(state)
 
-  // Find ids without data dependencies (i.e. no queries have been run for
-  // them before) and run them.
-  const cleanIds = findIdsWithoutDataDependencies(state)
+  return _.uniq([...nodeQueries, ...noDepQueries])
+}
 
-  // Construct paths for all queries to run
-  let pathnamesToRun = _.uniq([...dirtyIds, ...cleanIds])
+/**
+ * Calculates the set of dirty query IDs (page.paths, or
+ * staticQuery.hash's). These are queries that:
+ *
+ * - depend on nodes or node collections (via
+ *   `actions.createPageDependency`) that have changed.
+ * - do NOT have node dependencies. Since all queries should return
+ *   data, then this implies that node dependencies have not been
+ *   tracked, and therefore these queries haven't been run before
+ * - have been recently extracted (see `./query-watcher.js`)
+ *
+ * Note, this function pops queries off internal queues, so it's up
+ * to the caller to reference the results
+ */
 
-  // If this is the initial run, remove pathnames from `extractedQueryIds`
-  // if they're also not in the dirtyIds or cleanIds.
-  //
-  // We do this because the page component reducer/machine always
-  // adds pages to extractedQueryIds but during bootstrap
-  // we may not want to run those page queries if their data hasn't
-  // changed since the last time we ran Gatsby.
-  let diffedPathnames = [...extractedQueryIds]
-  if (initial) {
-    diffedPathnames = _.intersection([...extractedQueryIds], pathnamesToRun)
-  }
+const calcDirtyQueryIds = state =>
+  _.union(popNodeAndDepQueries(state), popExtractedQueries())
 
-  // Combine.
-  pathnamesToRun = _.union(diffedPathnames, pathnamesToRun)
+/**
+ * Same as `calcDirtyQueryIds`, except that we only include extracted
+ * queries that depend on nodes or haven't been run yet. We do this
+ * because the page component reducer/machine always enqueues
+ * extractedQueryIds but during bootstrap we may not want to run those
+ * page queries if their data hasn't changed since the last time we
+ * ran Gatsby.
+ */
+const calcInitialDirtyQueryIds = state => {
+  const nodeAndNoDepQueries = popNodeAndDepQueries(state)
 
-  extractedQueryIds.clear()
-
-  return pathnamesToRun
+  const extractedQueriesThatNeedRunning = _.intersection(
+    popExtractedQueries(),
+    nodeAndNoDepQueries
+  )
+  return _.union(extractedQueriesThatNeedRunning, nodeAndNoDepQueries)
 }
 
 const makeQueryJobs = pathnames => {
@@ -162,7 +179,7 @@ const makeQueryJobs = pathnames => {
 }
 
 const runInitialQueries = async activity => {
-  const pathnamesToRun = calcQueries(true)
+  const pathnamesToRun = calcInitialDirtyQueryIds(store.getState())
   if (pathnamesToRun.length === 0) {
     return
   }
@@ -195,7 +212,7 @@ let listenerQueue
  */
 const runQueuedQueries = () => {
   if (listenerQueue) {
-    listenerQueue.push(makeQueryJobs(calcQueries(false)))
+    listenerQueue.push(makeQueryJobs(calcDirtyQueryIds(store.getState())))
   }
 }
 
