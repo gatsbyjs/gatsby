@@ -36,6 +36,9 @@ const queryRunner = require(`../query`)
 const queryWatcher = require(`../query/query-watcher`)
 const writeJsRequires = require(`../bootstrap/write-js-requires`)
 const db = require(`../db`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const onExit = require(`signal-exit`)
+
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
@@ -52,7 +55,6 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
-  telemetry.trackCli(`DEVELOP_STOP`)
   process.exit()
 })
 
@@ -127,6 +129,10 @@ const waitJobsFinished = () =>
     emitter.on(`END_JOB`, onEndJob)
     onEndJob()
   })
+
+onExit(() => {
+  telemetry.trackCli(`DEVELOP_STOP`)
+})
 
 async function startServer(program) {
   const directory = program.directory
@@ -348,7 +354,6 @@ module.exports = async (program: any) => {
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
-  const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
@@ -372,37 +377,11 @@ module.exports = async (program: any) => {
     })
   }
 
-  const askQuestion = port => {
-    const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-    return new Promise(resolve => {
-      rlInterface.question(question, answer => {
-        resolve(answer.length === 0 || answer.match(/^yes|y$/i))
-      })
+  program.port = await new Promise(resolve => {
+    detectPortInUseAndPrompt(port, rlInterface, newPort => {
+      resolve(newPort)
     })
-  }
-
-  const detectPort = port =>
-    new Promise((resolve, reject) => {
-      detect(port, (err, _port) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(_port)
-        }
-      })
-    })
-
-  const selectPort = async port => {
-    let foundPort = port
-    const detectedPort = await detectPort(port)
-    if (port !== detectedPort) {
-      if (await askQuestion(port)) {
-        foundPort = detectedPort
-      }
-    }
-    return foundPort
-  }
-  program.port = await selectPort(port)
+  })
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>

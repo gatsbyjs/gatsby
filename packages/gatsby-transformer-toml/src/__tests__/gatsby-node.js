@@ -42,17 +42,20 @@ describe(`Process TOML nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createDigestContent = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createDigestContent,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(1)
       expect(createParentChildLink).toHaveBeenCalledTimes(1)
+      expect(createDigestContent).toHaveBeenCalledTimes(1)
     })
   })
 

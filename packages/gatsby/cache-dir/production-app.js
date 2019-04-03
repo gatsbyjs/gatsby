@@ -3,7 +3,7 @@ import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import domReady from "domready"
+import domReady from "@mikaelkristiansson/domready"
 import {
   shouldUpdateScroll,
   init as navigationInit,
