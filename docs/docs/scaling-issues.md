@@ -46,8 +46,10 @@ success extract queries from components — 0.127 s
 A scaling issue _can_ arise in varied cases, but typically something like:
 
 - A Gatsby application with ~100K+ pages
+  - See [this issue](https://github.com/gatsbyjs/gatsby/issues/12343) for an example
 - Extremely large `json` files sourced with `gatsby-transformer-json`
 - Extremely large GraphQL queries, which are stored in memory in the `develop` lifecycle
+  - See [this issue](https://github.com/gatsbyjs/gatsby/issues/12566) for an example
 
 If you are seeing errors or slowness **and** your Gatsby app matches one of the above use-cases, it's very likely you are hitting some scaling issues.
 
