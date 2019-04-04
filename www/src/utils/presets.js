@@ -1,7 +1,7 @@
 import {
   breakpoints,
   colors,
-  dimensions,
+  sizes,
   letterSpacings,
   lineHeights,
   radii,
@@ -23,7 +23,7 @@ for (let fontFamily in fontTokens) {
 export {
   breakpoints,
   colors,
-  dimensions,
+  sizes,
   transition,
   radii,
   shadows,

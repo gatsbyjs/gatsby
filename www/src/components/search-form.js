@@ -10,7 +10,7 @@ import {
   transition,
   shadows,
   breakpoints,
-  dimensions,
+  sizes,
   fontSizes,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
@@ -26,9 +26,7 @@ const searchDropdownOffsetTop = space[9]
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: calc(${searchDropdownOffsetTop} + ${
-  dimensions.bannerHeight
-}) !important;
+    top: calc(${searchDropdownOffsetTop} + ${sizes.bannerHeight}) !important;
     left: ${space[3]} !important;
     right: ${space[3]} !important;
     min-width: calc(100vw - ${space[5]}) !important;
@@ -90,7 +88,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     max-height: calc(
-      100vh - ${dimensions.headerHeight} - ${dimensions.bannerHeight}
+      100vh - ${sizes.headerHeight} - ${sizes.bannerHeight}
     ) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;

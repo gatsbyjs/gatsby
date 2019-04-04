@@ -14,7 +14,7 @@ import {
   radii,
   space,
   breakpoints,
-  dimensions,
+  sizes,
   fontSizes,
   lineHeights,
   fonts,
@@ -76,7 +76,7 @@ const MobileNavigation = () => (
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.light}`,
         background: colors.white,
-        height: dimensions.headerHeight,
+        height: sizes.headerHeight,
         fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
         [breakpoints.md]: {

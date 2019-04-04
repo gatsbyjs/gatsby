@@ -1,6 +1,6 @@
 import breakpoints from "./breakpoints"
 import colors from "./colors"
-import dimensions from "./dimensions"
+import sizes from "./sizes"
 import letterSpacings from "./letter-spacings"
 import lineHeights from "./line-heights"
 import radii from "./radii"
@@ -13,7 +13,7 @@ import fonts from "./fonts"
 export {
   breakpoints,
   colors,
-  dimensions,
+  sizes,
   letterSpacings,
   lineHeights,
   radii,

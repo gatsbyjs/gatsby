@@ -6,7 +6,7 @@ import {
   colors,
   space,
   breakpoints,
-  dimensions,
+  sizes,
   lineHeights,
   fontSizes,
 } from "../../utils/presets"
@@ -18,7 +18,7 @@ const PageHeadingContainer = styled(`header`)`
     left: 0;
     position: fixed;
     padding: 0;
-    top: ${`calc(${dimensions.bannerHeight} + ${dimensions.headerHeight})`};
+    top: ${`calc(${sizes.bannerHeight} + ${sizes.headerHeight})`};
   }
 `
 

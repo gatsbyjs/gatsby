@@ -10,7 +10,7 @@ import {
   fontSizes,
   transition,
   breakpoints,
-  dimensions,
+  sizes,
   letterSpacings,
 } from "../../utils/presets"
 import presets from "../../utils/sidebar/presets"
@@ -234,7 +234,7 @@ class SidebarBody extends Component {
             ...styles.sidebarScrollContainer,
             height: this.props.disableExpandAll
               ? `100%`
-              : `calc(100% - ${dimensions.sidebarUtilityHeight})`,
+              : `calc(100% - ${sizes.sidebarUtilityHeight})`,
             [breakpoints.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
@@ -289,7 +289,7 @@ const styles = {
     borderRight: `1px solid ${colors.gray.border}`,
     display: `flex`,
     alignItems: `center`,
-    height: dimensions.sidebarUtilityHeight,
+    height: sizes.sidebarUtilityHeight,
     background: presets.backgroundDefault,
     paddingLeft: space[4],
     paddingRight: space[6],
@@ -306,7 +306,7 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: presets.backgroundTablet,
-    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
   },
   list: {
     margin: 0,

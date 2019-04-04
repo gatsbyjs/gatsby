@@ -23,7 +23,7 @@ import {
   transition,
   radii,
   breakpoints,
-  dimensions,
+  sizes,
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -261,8 +261,8 @@ class Search extends Component {
           <div
             css={{
               [breakpoints.md]: {
-                height: `calc(100vh - ${dimensions.headerHeight} - ${
-                  dimensions.bannerHeight
+                height: `calc(100vh - ${sizes.headerHeight} - ${
+                  sizes.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },

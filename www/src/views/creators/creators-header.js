@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import {
   colors,
   space,
-  dimensions,
+  sizes,
   fontSizes,
   lineHeights,
   letterSpacings,
@@ -148,7 +148,7 @@ const styles = {
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${space[6]}`,
-    height: dimensions.headerHeight,
+    height: sizes.headerHeight,
     fontFamily: fonts.header,
   },
   creatorsLink: {

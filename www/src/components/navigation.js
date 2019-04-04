@@ -12,7 +12,7 @@ import {
   fontSizes,
   transition,
   breakpoints,
-  dimensions,
+  sizes,
   fonts,
 } from "../utils/presets"
 
@@ -62,10 +62,10 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: dimensions.headerHeight,
+        height: sizes.headerHeight,
         left: 0,
         right: 0,
-        top: dimensions.bannerHeight,
+        top: sizes.bannerHeight,
         zIndex: 2,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
@@ -225,7 +225,7 @@ const styles = {
     color: colors.gray.copy,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     top: 0,

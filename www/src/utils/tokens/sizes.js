@@ -1,6 +1,3 @@
-// todo rename to `sizes`
-// see https://github.com/system-ui/theme-specification/pull/2
-
 export default {
   headerHeight: `3.75rem`,
   bannerHeight: `2.5rem`,
