@@ -29,6 +29,10 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
       return page
     })
 
+    if (!r.data.site.siteMetadata.siteUrl) {
+      throw new Error(`SiteMetaData 'siteUrl' property is required`)
+    }
+
     if (r.data.site.siteMetadata.siteUrl) {
       // remove trailing slash of siteUrl
       r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
