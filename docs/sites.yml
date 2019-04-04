@@ -5158,6 +5158,20 @@
   built_by: Luke Whitehouse
   built_by_url: https://twitter.com/_lukewh
   featured: false
+- title: Mission42
+  main_url: https://mission42.zauberware.com
+  url: https://mission42.zauberware.com
+  description: >
+    A landing page for the mobile app Mission42. Mission42 wants to help you learn new skills.
+  categories:
+    - App
+    - Tutorials
+    - Personal Training
+    - Learning
+    - Education
+    - Landing Page
+  built_by: Philipp Siegmund, zauberware
+  built_by_url: https://www.zauberware.com
 - title: Altstadtdomizil Idstein
   main_url: https://www.altstadtdomizil-idstein.de/
   url: https://www.altstadtdomizil-idstein.de/
