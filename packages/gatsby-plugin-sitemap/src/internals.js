@@ -30,15 +30,15 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
     })
 
     if (!r.data.site.siteMetadata.siteUrl) {
-      throw new Error(`SiteMetaData 'siteUrl' property is required`)
-    }
-
-    if (r.data.site.siteMetadata.siteUrl) {
-      // remove trailing slash of siteUrl
-      r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
-        r.data.site.siteMetadata.siteUrl
+      throw new Error(
+        `SiteMetaData 'siteUrl' property is required. (https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use)`
       )
     }
+
+    // remove trailing slash of siteUrl
+    r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
+      r.data.site.siteMetadata.siteUrl
+    )
 
     return r.data
   })
