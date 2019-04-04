@@ -59,7 +59,7 @@ const reporter = {
       error = message
       message = error.message
     }
-    reporter.error.call(this, message)
+    inkReporter.onError(message)
     if (error) this.log(errorFormatter.render(error))
   },
   /**

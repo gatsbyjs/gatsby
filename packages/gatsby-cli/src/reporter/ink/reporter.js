@@ -111,6 +111,7 @@ export default class GatsbyReporter extends React.Component {
   onInfo = this._addMessage.bind(this, `info`)
   onSuccess = this._addMessage.bind(this, `success`)
   onWarn = this._addMessage.bind(this, `warn`)
+  onError = this._addMessage.bind(this, `error`)
   onVerbose = str => {
     if (!this.verbose) {
       return

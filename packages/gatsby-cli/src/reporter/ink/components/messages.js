@@ -18,14 +18,16 @@ const getLabel = type => {
   switch (type) {
     case `success`:
       return createLabel(`success`, `green`)
-    case `verbose`:
-      return createLabel(`verbose`, `gray`)
+    case `error`:
+      return createLabel(`error`, `red`)
     case `warn`:
       return createLabel(`warn`, `yellow`)
+    case `verbose`:
+      return createLabel(`verbose`, `gray`)
     case `info`:
       return createLabel(`info`, `blue`)
     default:
-      return createLabel(`empty ${type}`, `blue`)
+      return createLabel(`debug ${type}`, `blue`)
   }
 }
 
