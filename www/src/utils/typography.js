@@ -77,7 +77,7 @@ const _options = {
       ".gatsby-highlight pre[class*='language-']": {
         backgroundColor: `transparent`,
         border: 0,
-        padding: `1.5rem 0`,
+        padding: `${rhythm(space[6])} 0`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']::before": {
@@ -164,7 +164,7 @@ const _options = {
         float: `left`,
         minWidth: `100%`,
         // reset code vertical padding declared earlier
-        padding: `0 1.5rem`,
+        padding: `0 ${rhythm(space[6])}`,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
