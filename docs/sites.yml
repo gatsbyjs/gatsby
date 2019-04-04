@@ -5173,3 +5173,27 @@
      - Landing Page
    built_by: Philipp Siegmund, zauberware
    built_by_url: https://www.zauberware.com
+- title: Gerald Martinez Dev
+  main_url: https://gmartinez.dev/
+  url: https://gmartinez.dev/
+  description: >
+    Personal web site for show my skills and my works.
+  categories:
+    - Web Development
+    - Portfolio
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
+  featured: false
+- title: Becreatives
+  main_url: "https://becreatives.com"
+  url: "https://becreatives.com"
+  featured: false
+  description: >
+    Digital software ouse. Enlights ideas. Think smart execute harder.
+  categories:
+    - Technology
+    - Web Development
+    - Agency
+    - Marketing
+  built_by: Becreatives
+  built_by_url: "https://becreatives.com"
