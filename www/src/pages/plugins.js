@@ -5,7 +5,7 @@ import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
-import { colors, space, dimensions, scale } from "../utils/presets"
+import { colors, space, sizes, fontSizes } from "../utils/presets"
 
 class Plugins extends Component {
   render() {
@@ -14,8 +14,8 @@ class Plugins extends Component {
         overrideCSS={{
           alignItems: `center`,
           display: `flex`,
-          minHeight: `calc(100vh - (${dimensions.headerHeight} + ${
-            dimensions.bannerHeight
+          minHeight: `calc(100vh - (${sizes.headerHeight} + ${
+            sizes.bannerHeight
           }))`,
         }}
       >
@@ -38,7 +38,7 @@ class Plugins extends Component {
           />
           <h1
             css={{
-              fontSize: scale[6],
+              fontSize: fontSizes[6],
               marginLeft: space[5],
               marginRight: space[5],
               marginBottom: 0,
@@ -99,7 +99,7 @@ class Plugins extends Component {
           <p
             css={{
               color: colors.gray.lightCopy,
-              fontSize: scale[2],
+              fontSize: fontSizes[2],
               textAlign: `center`,
             }}
           >

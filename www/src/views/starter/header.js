@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { colors, space, breakpoints, scale } from "../../utils/presets"
+import { colors, space, breakpoints, fontSizes } from "../../utils/presets"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
@@ -24,7 +24,7 @@ const Header = ({ stub }) => (
         to={`/starters`}
         css={{
           "&&": {
-            fontSize: scale[1],
+            fontSize: fontSizes[1],
             borderBottom: 0,
             color: colors.gatsby,
             fontWeight: `normal`,

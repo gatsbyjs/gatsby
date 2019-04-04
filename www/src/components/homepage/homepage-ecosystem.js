@@ -24,7 +24,7 @@ import {
   radii,
   shadows,
   breakpoints,
-  scale,
+  fontSizes,
   letterSpacings,
   fonts,
 } from "../../utils/presets"
@@ -59,7 +59,7 @@ const Section = styled(EcosystemSection)`
 
 const SubTitle = styled(`h3`)`
   color: ${colors.lemon};
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
   margin-bottom: ${space[1]};
   margin-top: ${space[7]};
 
@@ -140,7 +140,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       color: ${props =>
         props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
       font-family: ${fonts.header};
-      font-size: ${scale[1]};
+      font-size: ${fontSizes[1]};
       left: 0;
       letter-spacing: ${letterSpacings.tracked};
       position: absolute;

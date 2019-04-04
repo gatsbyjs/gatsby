@@ -1,3 +1,8 @@
+// todo break these up into
+// - `breakpoints` — raw values
+// - `mediaQueries` — ready to use
+// see https://system-ui.com/theme
+
 export default {
   Xs: `(min-width: 400px)`,
   xs: `@media (min-width: 400px)`,
