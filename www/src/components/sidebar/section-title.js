@@ -4,7 +4,7 @@ import ChevronSvg from "./chevron-svg"
 import {
   colors,
   transition,
-  fontSizes,
+  scale,
   letterSpacings,
   space,
   fonts,
@@ -180,7 +180,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      fontSize: fontSizes[1],
+      fontSize: scale[1],
       // fontFamily: fonts.system,
       // fontWeight: isActive ? `bold` : `normal`,
       fontWeight: `normal`,
