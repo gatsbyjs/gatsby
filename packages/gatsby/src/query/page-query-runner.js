@@ -1,5 +1,6 @@
 // @flow
 
+// a comment
 import type { QueryJob } from "../query-runner"
 
 /**
