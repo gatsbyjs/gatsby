@@ -2220,7 +2220,6 @@
   description: A GatsbyJS starter template that is connected to a Framer X project
   tags:
     - Framer X
-    - Prototyping
     - TypeScript
   features:
     - TypeScript support
