@@ -7,10 +7,10 @@ import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import {
   colors,
   space,
-  scale,
+  fontSizes,
   transition,
   breakpoints,
-  dimensions,
+  sizes,
   letterSpacings,
 } from "../../utils/presets"
 import presets from "../../utils/sidebar/presets"
@@ -234,7 +234,7 @@ class SidebarBody extends Component {
             ...styles.sidebarScrollContainer,
             height: this.props.disableExpandAll
               ? `100%`
-              : `calc(100% - ${dimensions.sidebarUtilityHeight})`,
+              : `calc(100% - ${sizes.sidebarUtilityHeight})`,
             [breakpoints.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
@@ -245,7 +245,7 @@ class SidebarBody extends Component {
               color: colors.gray.calm,
               paddingLeft: space[6],
               paddingRight: space[6],
-              fontSize: scale[1],
+              fontSize: fontSizes[1],
               paddingTop: space[6],
               margin: 0,
               fontWeight: `normal`,
@@ -289,7 +289,7 @@ const styles = {
     borderRight: `1px solid ${colors.gray.border}`,
     display: `flex`,
     alignItems: `center`,
-    height: dimensions.sidebarUtilityHeight,
+    height: sizes.sidebarUtilityHeight,
     background: presets.backgroundDefault,
     paddingLeft: space[4],
     paddingRight: space[6],
@@ -306,13 +306,13 @@ const styles = {
   },
   sidebarScrollContainerTablet: {
     backgroundColor: presets.backgroundTablet,
-    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
   },
   list: {
     margin: 0,
     paddingTop: space[4],
     paddingBottom: space[4],
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
     "& li": {
       margin: 0,
       listStyle: `none`,
