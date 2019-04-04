@@ -59,7 +59,7 @@ It's difficult to pin down exactly _how_ to fix a scaling issue. We have some re
 
 Note: the application of these techniques should be considered analogous to a applying a bandage. A bandage solves the underlying issue, but at some inderminite point in the future--the underlying issue may be healed! In the same way--treat these techniques as temporary, and re-visit in the future if future versions of Gatsby have resolved the underlying scaling issues.
 
-### `DANGEROUSLY_DISABLE_CACHING`
+### `DANGEROUSLY_DISABLE_OOM`
 
 Gatsby's caching mechanism persists a (possibly!) large `json` file to disk _in memory._ To opt-out of this, consider something like:
 
@@ -69,7 +69,7 @@ Gatsby's caching mechanism persists a (possibly!) large `json` file to disk _in 
     "cross-env": "^5.2.0"
   },
   "scripts": {
-    "build": "cross-env DANGEROUSLY_DISABLE_CACHING=true gatsby build"
+    "build": "cross-env DANGEROUSLY_DISABLE_OOM=true gatsby build"
   }
 }
 ```
