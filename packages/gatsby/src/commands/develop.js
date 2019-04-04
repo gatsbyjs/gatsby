@@ -35,6 +35,7 @@ const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -87,6 +88,8 @@ async function startServer(program) {
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
