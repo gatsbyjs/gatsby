@@ -88,7 +88,7 @@ const createLink = ({
             css={{
               left: space[6],
               background: colors.white,
-              border: `1px solid ${colors.ui.bright}`,
+              border: `1px solid ${colors.gray.border}`,
               borderRadius: radii[6],
               display: `block`,
               fontWeight: `normal`,

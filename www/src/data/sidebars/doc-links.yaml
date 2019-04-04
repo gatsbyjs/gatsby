@@ -7,8 +7,6 @@
       link: /docs/quick-start
     - title: Recipes
       link: /docs/recipes/
-    - title: Cheat Sheet
-      link: /docs/cheat-sheet/
     - title: Plugin Library
       link: /plugins
     - title: Starter Library
@@ -312,15 +310,6 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
-    - title: Ecosystem
-      link: /ecosystem/
-      items:
-        - title: Plugin Library
-          link: /plugins
-        - title: Starter Library
-          link: /starters/
-        - title: Awesome Gatsby Resources
-          link: /docs/awesome-gatsby/
     - title: API Reference
       link: /docs/api-reference/
       items:
@@ -508,9 +497,11 @@
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
-    - title: Glossary*
-      link: /docs/glossary/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
+    - title: Cheat Sheet
+      link: /docs/cheat-sheet/
+    - title: Glossary*
+      link: /docs/glossary/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/
