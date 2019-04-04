@@ -12,7 +12,7 @@ import type { QueryJob } from "../query-runner"
 const _ = require(`lodash`)
 
 const queue = require(`./query-queue`)
-const { store, emitter } = require(`../../redux`)
+const { store, emitter } = require(`../redux`)
 
 let queuedDirtyActions = []
 
