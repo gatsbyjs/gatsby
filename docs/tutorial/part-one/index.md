@@ -23,7 +23,7 @@ If you omit a URL from the end, Gatsby will automatically generate a site for yo
 
 ### ✋ Open up the code.
 
-In your code editor, open up the code generated for your “Hello World” site, and take a look at the different directories and files contained in the ‘hello-world’ directory. It should look something like this:
+In your code editor, open up the code generated for your “Hello World” site and take a look at the different directories and files contained in the ‘hello-world’ directory. It should look something like this:
 
 ![Hello World project in VS Code](01-hello-world-vscode.png)
 
@@ -37,20 +37,20 @@ Let’s take a look at the code that powers the homepage.
 
 Open up the `/src` directory in your code editor. Inside is a single directory: `/pages`.
 
-Open the file at `src/pages/index.js`. The code in this file creates a component that contains a single div, and some text — appropriately, “Hello world!”
+Open the file at `src/pages/index.js`. The code in this file creates a component that contains a single div and some text — appropriately, “Hello world!”
 
 ### ✋ Make changes to the “Hello World” homepage
 
-1.  Change the “Hello World!” text to “Hello Gatsby!”, and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
+1.  Change the “Hello World!” text to “Hello Gatsby!” and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./02-demo-hot-reloading.mp4"></source>
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
-> 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page, or restart the development server — your changes just appear.
+> 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you’re running a Gatsby development server, the Gatsby site files are being “watched” in the background — any time you save a file, your changes will be immediately reflected in the browser. You don’t need to hard refresh the page or restart the development server — your changes just appear.
 
-2.  Now you can make your changes a little more visible. Try replacing the code in `src/pages/index.js` with the code below, and save again. You’ll see changes to the text; The text color will be purple, and the font size will be larger.
+2.  Now you can make your changes a little more visible. Try replacing the code in `src/pages/index.js` with the code below and save again. You’ll see changes to the text — the text color will be purple and the font size will be larger.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -62,7 +62,7 @@ export default () => (
 
 > 💡 We’ll be covering more about styling in Gatsby in [**part two**](/tutorial/part-two/) of the tutorial.
 
-3.  Remove the font size styling. Change the “Hello Gatsby!” text to a level-one header. Add a paragraph beneath the header.
+3.  Remove the font size styling, change the “Hello Gatsby!” text to a level-one header, and add a paragraph beneath the header.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -124,14 +124,13 @@ The homepage you were just making edits to was created by defining a page compon
 
 Broadly defined, a component is a building block for your site; It is a self-contained piece of code that describes a section of UI (user interface).
 
-Gatsby is built on React. When we talk about using and defining **components**, we are really talking about **React components** — self-contained pieces of code (usually written with JSX) that can accept input, and return React elements describing a section of UI.
+Gatsby is built on React. When we talk about using and defining **components**, we are really talking about **React components** — self-contained pieces of code (usually written with JSX) that can accept input and return React elements describing a section of UI.
 
-One of the big mental shifts you make when starting to build with components (if you are already a developer) is that now your CSS, HTML, and JavaScript are tightly coupled, and often living even within the same file.
+One of the big mental shifts you make when starting to build with components (if you are already a developer) is that now your CSS, HTML, and JavaScript are tightly coupled and often living even within the same file.
 
 While a seemingly simple change, this has profound implications for how you think about building websites.
 
-Take the example of creating a custom button. In the past, you would
-create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
+Take the example of creating a custom button. In the past, you would create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
 
 ```html
 <button class="primary-button">Click me</button>
@@ -144,8 +143,7 @@ In the world of components, you instead create a `PrimaryButton` component with 
 <PrimaryButton>Click me</PrimaryButton>
 ```
 
-Components become the base building blocks of your site. Instead of being
-limited to the building blocks the browser provides e.g. `<button />`, you can easily create new building blocks that elegantly meet the needs of your projects.
+Components become the base building blocks of your site. Instead of being limited to the building blocks the browser provides, e.g. `<button />`, you can easily create new building blocks that elegantly meet the needs of your projects.
 
 ### ✋ Using page components
 
@@ -174,9 +172,9 @@ Just by putting a React component in the `src/pages/about.js` file, you now have
 
 ### ✋ Using sub-components
 
-Let’s say the homepage and the about page both got quite large, and you were rewriting a lot of things. You can use sub-components to break the UI into reusable pieces. Both of your pages have `<h1>` headers — create a component that will describe a `Header`.
+Let’s say the homepage and the about page both got quite large and you were rewriting a lot of things. You can use sub-components to break the UI into reusable pieces. Both of your pages have `<h1>` headers — create a component that will describe a `Header`.
 
-1.  Create a new directory at `src/components`, and a file within that directory called `header.js`.
+1.  Create a new directory at `src/components` and a file within that directory called `header.js`.
 2.  Add the following code to the new `src/components/header.js` file.
 
 ```jsx:title=src/components/header.js
@@ -203,7 +201,7 @@ export default () => (
 
 In the browser, the “About Gatsby” header text should now be replaced with “This is a header.” But you don’t want the “About” page to say “This is a header.” You want it to say, “About Gatsby”.
 
-4.  Head back to `src/components/header.js`, and make the following change:
+4.  Head back to `src/components/header.js` and make the following change:
 
 ```jsx:title=src/components/header.js
 import React from "react"
@@ -231,7 +229,7 @@ You should now see your “About Gatsby” header text again!
 
 ### What are “props”?
 
-Earlier you defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic, you need to be able to supply them with different data. You do that with input called “props". Props are (appropriately enough) properties supplied to React components.
+Earlier you defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic you need to be able to supply them with different data. You do that with input called “props". Props are (appropriately enough) properties supplied to React components.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 
@@ -239,7 +237,7 @@ In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` 
 <Header headerText="About Gatsby" />
 ```
 
-Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that) So you can access it like so:
+Over in `header.js`, the header component expects to receive the `headerText` prop (because you’ve written it to expect that). So you can access it like so:
 
 ```jsx:title=src/components/header.js
 <h1>{props.headerText}</h1>
@@ -255,7 +253,7 @@ If you had passed another prop to our `<Header />` component, like so...
 
 ...you would have been able to also access the `arbitraryPhrase` prop: `{props.arbitraryPhrase}`.
 
-6.  To emphasize how this makes your components reusable, add an extra `<Header />` component to the about page. Add the following code to the `src/pages/about.js` file, and save.
+6.  To emphasize how this makes your components reusable, add an extra `<Header />` component to the about page, add the following code to the `src/pages/about.js` file, and save.
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -276,17 +274,17 @@ And there you have it; A second header — without rewriting any code — by pas
 
 ### Using layout components
 
-Layout components are for sections of a site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts include a sidebar, and/or a navigation menu.
+Layout components are for sections of a site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts include a sidebar and/or a navigation menu.
 
 You’ll explore layout components in [**part three**](/tutorial/part-three/).
 
 ## Linking between pages
 
-You'll often want to link between pages -- Let's look at routing in a Gatsby site.
+You'll often want to link between pages — Let's look at routing in a Gatsby site.
 
 ### ✋ Using the `<Link />` component
 
-1.  Open the index page component (`src/pages/index.js`). Import the `<Link />` component from Gatsby. Add a `<Link />` component above the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
+1.  Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -309,7 +307,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 ...the Gatsby development 404 page. Why? Because you're attempting to link to a page that doesn't exist yet.
 
-2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
+2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
@@ -338,11 +336,9 @@ The Gatsby `<Link />` component is for linking between pages within your site. F
 
 Gatsby.js is a _modern site generator_, which means there are no servers to setup or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTML and JavaScript files which you can deploy to a static site hosting service.
 
-Try using [Surge](http://surge.sh/) for deploying your first Gatsby
-website. Surge is one of many "static site hosts" which make it possible to
-deploy Gatsby sites.
+Try using [Surge](http://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which make it possible to deploy Gatsby sites.
 
-If you haven't previously installed & set up Surge, open a new terminal window and install their terminal tool:
+If you haven't previously installed &amp; set up Surge, open a new terminal window and install their command-line tool:
 
 ```shell
 npm install --global surge
