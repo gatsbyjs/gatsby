@@ -18,6 +18,8 @@ This downloads the files and initializes the site by running `npm install`
 
 If you don't specify a custom starter, your site will be created from the [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
+> Learn [how to make a starter](/contributing/create-a-starter/) in the Gatsby contributing docs. Starters can be created for your team(s) only, or distributed to the broader community. It's up to you!
+
 ## Official starters
 
 Official starters are maintained by Gatsby.
@@ -32,8 +34,6 @@ Official starters are maintained by Gatsby.
 ## Community starters
 
 Community starters are created and maintained by Gatsby community members.
-
-> Learn [how to make a starter](/contributing/create-a-starter/) in the Gatsby contributing docs.
 
 Looking for a starter for a particular use case? Peruse starters that have been submitted to the [Starter Library](/starters/)
 

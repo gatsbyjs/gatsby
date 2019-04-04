@@ -9,11 +9,11 @@ title: Create a Starter
 For a starter to work properly, it needs to include some files (see the [Hello World starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/) for a barebones example):
 
 - `README.md`: instructions for how to install and configure your starter, a list of its features or structure, and any helpful tips.
-- `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [Hello World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/package.json).
+- `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [Hello World starter's package.json](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/package.json) file.
 - `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/gatsby-config/) for more information.
-- `src/pages`: a directory for page components to live, with at least [one example](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
+- `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `static`: a directory for static assets, such as a `favicon.ico` file.
-- `.gitignore` _(optional)_: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
+- `.gitignore`: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.
 - `.prettierrc` _(optional)_: a configuration file for [Prettier](https://prettier.io/), a JavaScript linter and formatter used for Gatsby development.
 
 Your starter should also have these qualities:
@@ -43,7 +43,7 @@ Starters should utilize metadata in `gatsby-config.js` wherever possible, as thi
 - Basic color palette
 - Author name, contact information, and bio
 
-Alternatively, for starters connecting to a headless CMS, author-specific items could be pulled in tp the starter from a CMS platform using a source plugin and GraphQL instead. Showing users how this is done can make your starter very helpful!
+Alternatively, for starters connecting to a headless CMS, author-specific items could be pulled in to the starter from a CMS platform using a source plugin and GraphQL instead. Showing users how this is done can make your starter very helpful!
 
 ## Fast
 
@@ -71,4 +71,4 @@ To make sure your starter is easily discoverable, don't forget to add it to the 
 
 - [How to create a Gatsby Starter
   ](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
-- [Introducing Gatsby Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)
+- [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)
