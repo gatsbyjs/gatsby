@@ -40,10 +40,12 @@ Although the official starters live in the Gatsby repo, community members can of
 Starters should utilize metadata in `gatsby-config.js` wherever possible, as this is typically the first place users will look for site configuration information. Some examples of things you could make configurable in `gatsby-config` include:
 
 - Site title
-- Basic color palette
 - Author name, contact information, and bio
+- Social media description
 
 Alternatively, for starters connecting to a headless CMS, author-specific items could be pulled in to the starter from a CMS platform using a source plugin and GraphQL instead. Showing users how this is done can make your starter very helpful!
+
+It's also highly appreciated if the built-in theming capabilities are used and a "theme" file is exposed for configuration, for example when using styled-components or a design system.
 
 ## Fast
 
