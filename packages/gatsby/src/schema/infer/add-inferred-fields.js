@@ -5,7 +5,6 @@ const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
-const { link } = require(`../resolvers`)
 const { isDate } = require(`../types/date`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
@@ -187,7 +186,12 @@ const hasMapping = (mapping, selector) =>
 
 const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
   const [type, ...path] = typeMapping[selector].split(`.`)
-  return { type, resolve: link({ by: path.join(`.`) || `id` }) }
+  return {
+    type,
+    extensions: {
+      addResolver: { type: `link`, options: { by: path.join(`.`) || `id` } },
+    },
+  }
 }
 
 // probably should be in example value
