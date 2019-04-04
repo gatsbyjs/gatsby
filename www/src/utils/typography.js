@@ -287,8 +287,11 @@ const _options = {
           marginRight: rhythm(-space[7]),
         },
         ".gatsby-highlight pre": {
-          padding: rhythm(space[7]),
+          padding: `${rhythm(space[7])} 0`,
           marginBottom: rhythm(space[7]),
+        },
+        ".gatsby-highlight pre code": {
+          padding: `0 ${rhythm(space[7])}`,
         },
         ".gatsby-highlight-code-line": {
           marginRight: rhythm(-space[7]),
