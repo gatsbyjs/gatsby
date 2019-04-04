@@ -76,7 +76,9 @@ class DefaultLayout extends React.Component {
     if (isModal && window.innerWidth > 750) {
       return (
         <>
-          <PageRenderer location={{ pathname: this.props.location.pathname }} />
+          <PageRenderer
+            location={{ pathname: this.props.modalBackgroundPath }}
+          />
           <Modal
             isOpen={true}
             style={{
