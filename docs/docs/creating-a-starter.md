@@ -1,5 +1,5 @@
 ---
-title: Create a Starter
+title: Creating a Starter
 ---
 
 [Starters](/docs/starters/) are boilerplate projects that Gatsby developers can use to set up a new site quickly. Before creating a starter, it may be helpful to peruse the [Gatsby Starter Library](/starters/) to see what already exists and determine how your starter will provide value.

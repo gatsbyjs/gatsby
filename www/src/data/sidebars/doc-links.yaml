@@ -163,6 +163,11 @@
               link: /plugins/
         - title: Starters
           link: /docs/starters/
+          items:
+            - title: Starter Library
+              link: /starters/
+            - title: Creating a Starter
+              link: /docs/creating-a-starter/
         - title: Styling Your Site
           link: /docs/styling/
           items:
