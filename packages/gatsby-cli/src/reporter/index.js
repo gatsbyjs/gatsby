@@ -1,10 +1,10 @@
 // @flow
 
+const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const { trackError } = require(`gatsby-telemetry`)
 const { getErrorFormatter } = require(`./errors`)
 const inkReporter = require(`./ink`).default
-const util = require(`util`)
 
 const errorFormatter = getErrorFormatter()
 
