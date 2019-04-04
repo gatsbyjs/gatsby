@@ -18,6 +18,7 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
+  partiallyActive: PropTypes.bool,
 }
 
 // Set up IntersectionObserver
@@ -83,8 +84,8 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isCurrent }) => {
-    if (isCurrent) {
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+    if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
           .filter(Boolean)
@@ -105,6 +106,7 @@ class GatsbyLink extends React.Component {
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
       innerRef: $innerRef,
+      partiallyActive,
       state,
       replace,
       /* eslint-enable no-unused-vars */

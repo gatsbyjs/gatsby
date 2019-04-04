@@ -7,7 +7,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
+        "contentDigest": "contentDigest",
         "type": "",
       },
       "parent": "whatever",
@@ -45,7 +45,7 @@ Array [
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
+          "contentDigest": "contentDigest",
           "type": "",
         },
         "parent": "whatever",

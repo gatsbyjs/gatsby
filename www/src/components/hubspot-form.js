@@ -1,10 +1,9 @@
 import React, { Component } from "react"
-import HubspotForm from "react-hubspot-form"
-import presets, { colors, radii, space } from "../utils/presets"
-import { options, rhythm } from "../utils/typography"
+import HubspotForm from "./react-hubspot-form"
 import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/styles"
-import { buttonStyles } from "../utils/styles"
+
+import { colors, radii, space, scale } from "../utils/presets"
+import { formInput, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {
@@ -20,8 +19,7 @@ export default class GatsbyHubspotForm extends Component {
           backgroundColor: colors.ui.light,
           borderRadius: radii[1],
           color: colors.gatsby,
-          fontFamily: options.headerFontFamily.join(`,`),
-          padding: `15px`,
+          padding: space[4],
           "& form": {
             margin: 0,
           },
@@ -30,13 +28,13 @@ export default class GatsbyHubspotForm extends Component {
             width: `100%`,
           },
           "& .hs-form-field": {
-            paddingBottom: `20px`,
+            paddingBottom: space[5],
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,
             margin: 0,
             color: colors.warning,
-            fontSize: presets.scale[1],
+            fontSize: scale[1],
           },
           "& .hs-form-required": {
             color: colors.warning,
@@ -49,10 +47,7 @@ export default class GatsbyHubspotForm extends Component {
             ":focus": {
               borderColor: colors.gatsby,
               outline: 0,
-              boxShadow: `0 0 0 ${rhythm(space[1])} ${hex2rgba(
-                colors.lilac,
-                0.25
-              )}`,
+              boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
             },
           },
           "& .hs-button.primary": {

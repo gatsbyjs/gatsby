@@ -134,7 +134,7 @@ describe(`Resolve module exports`, () => {
   })
 
   it(`Show meaningful error message for invalid JavaScript`, () => {
-    resolveModuleExports(`/bad/file`, resolver)
+    resolveModuleExports(`/bad/file`, { resolver })
     expect(
       reporter.panic.mock.calls.map(c =>
         // Remove console colors + trim whitespace
@@ -145,57 +145,75 @@ describe(`Resolve module exports`, () => {
   })
 
   it(`Resolves an export`, () => {
-    const result = resolveModuleExports(`/simple/export`, resolver)
+    const result = resolveModuleExports(`/simple/export`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves multiple exports`, () => {
-    const result = resolveModuleExports(`/multiple/export`, resolver)
+    const result = resolveModuleExports(`/multiple/export`, { resolver })
     expect(result).toEqual([`bar`, `baz`, `foo`])
   })
 
   it(`Resolves an export from an ES6 file`, () => {
-    const result = resolveModuleExports(`/import/with/export`, resolver)
+    const result = resolveModuleExports(`/import/with/export`, { resolver })
     expect(result).toEqual([`baz`])
   })
 
   it(`Resolves an exported const`, () => {
-    const result = resolveModuleExports(`/export/const`, resolver)
+    const result = resolveModuleExports(`/export/const`, { resolver })
     expect(result).toEqual([`fooConst`])
   })
 
   it(`Resolves module.exports`, () => {
-    const result = resolveModuleExports(`/module/exports`, resolver)
+    const result = resolveModuleExports(`/module/exports`, { resolver })
     expect(result).toEqual([`barExports`])
   })
 
   it(`Resolves exports from a larger file`, () => {
-    const result = resolveModuleExports(`/realistic/export`, resolver)
+    const result = resolveModuleExports(`/realistic/export`, { resolver })
     expect(result).toEqual([`replaceHistory`, `replaceComponentRenderer`])
   })
 
   it(`Ignores exports.__esModule`, () => {
-    const result = resolveModuleExports(`/esmodule/export`, resolver)
+    const result = resolveModuleExports(`/esmodule/export`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves a named export`, () => {
-    const result = resolveModuleExports(`/export/named`, resolver)
+    const result = resolveModuleExports(`/export/named`, { resolver })
     expect(result).toEqual([`foo`])
   })
 
   it(`Resolves a named export from`, () => {
-    const result = resolveModuleExports(`/export/named/from`, resolver)
+    const result = resolveModuleExports(`/export/named/from`, { resolver })
     expect(result).toEqual([`Component`])
   })
 
   it(`Resolves a named export as`, () => {
-    const result = resolveModuleExports(`/export/named/as`, resolver)
+    const result = resolveModuleExports(`/export/named/as`, { resolver })
     expect(result).toEqual([`bar`])
   })
 
   it(`Resolves multiple named exports`, () => {
-    const result = resolveModuleExports(`/export/named/multiple`, resolver)
+    const result = resolveModuleExports(`/export/named/multiple`, { resolver })
     expect(result).toEqual([`foo`, `bar`, `baz`])
+  })
+
+  it(`Resolves exports when using require mode - simple case`, () => {
+    jest.mock(`require/exports`)
+
+    const result = resolveModuleExports(`require/exports`, {
+      mode: `require`,
+    })
+    expect(result).toEqual([`foo`, `bar`])
+  })
+
+  it(`Resolves exports when using require mode - unusual case`, () => {
+    jest.mock(`require/unusual-exports`)
+
+    const result = resolveModuleExports(`require/unusual-exports`, {
+      mode: `require`,
+    })
+    expect(result).toEqual([`foo`])
   })
 })

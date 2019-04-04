@@ -18,7 +18,7 @@ const convertProps = props => {
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
-const imageCache = {}
+const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
@@ -40,7 +40,7 @@ const activateCacheForImage = props => {
 }
 
 let io
-const listeners = []
+const listeners = new WeakMap()
 
 function getIO() {
   if (
@@ -51,15 +51,15 @@ function getIO() {
     io = new window.IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          listeners.forEach(l => {
-            if (l[0] === entry.target) {
-              // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-              if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                io.unobserve(l[0])
-                l[1]()
-              }
+          if (listeners.has(entry.target)) {
+            const cb = listeners.get(entry.target)
+            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+              io.unobserve(entry.target)
+              listeners.delete(entry.target)
+              cb()
             }
-          })
+          }
         })
       },
       { rootMargin: `200px` }
@@ -70,8 +70,17 @@ function getIO() {
 }
 
 const listenToIntersections = (el, cb) => {
-  getIO().observe(el)
-  listeners.push([el, cb])
+  const observer = getIO()
+
+  if (observer) {
+    observer.observe(el)
+    listeners.set(el, cb)
+  }
+
+  return () => {
+    observer.unobserve(el)
+    listeners.delete(el)
+  }
 }
 
 const noscriptImg = props => {
@@ -87,9 +96,11 @@ const noscriptImg = props => {
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
-  const opacity = props.opacity ? props.opacity : `1`
-  const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  const crossOrigin = props.crossOrigin
+    ? `crossorigin="${props.crossOrigin}" `
+    : ``
+
+  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -131,6 +142,7 @@ class Image extends React.Component {
     // default settings for browser without Intersection Observer available
     let isVisible = true
     let imgLoaded = false
+    let imgCached = false
     let IOSupported = false
     let fadeIn = props.fadeIn
 
@@ -159,11 +171,12 @@ class Image extends React.Component {
       IOSupported = false
     }
 
-    const hasNoScript = !(this.props.critical && !this.props.fadeIn)
+    const hasNoScript = !(props.critical && !props.fadeIn)
 
     this.state = {
       isVisible,
       imgLoaded,
+      imgCached,
       IOSupported,
       fadeIn,
       hasNoScript,
@@ -187,9 +200,15 @@ class Image extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.cleanUpListeners) {
+      this.cleanUpListeners()
+    }
+  }
+
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
-      listenToIntersections(ref, () => {
+      this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
@@ -198,7 +217,16 @@ class Image extends React.Component {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: imageInCache })
+        // imgCached and imgLoaded must update after isVisible,
+        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
+        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
+        // avoiding initiating unnecessary animation frames from style changes.
+        this.setState({ isVisible: true }, () =>
+          this.setState({
+            imgLoaded: imageInCache,
+            imgCached: this.imageRef.current.currentSrc.length > 0,
+          })
+        )
       })
     }
   }
@@ -232,22 +260,28 @@ class Image extends React.Component {
       itemProp,
     } = convertProps(this.props)
 
+    const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+    const durationFadeIn = `0.5s`
+
+    const imageStyle = {
+      opacity: shouldReveal ? 1 : 0,
+      transition: shouldFadeIn ? `opacity ${durationFadeIn}` : `none`,
+      ...imgStyle,
+    }
+
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const initialDelay = `0.25s`
-    const imagePlaceholderStyle = {
-      opacity: this.state.imgLoaded ? 0 : 1,
-      transition: `opacity 0.5s`,
-      transitionDelay: this.state.imgLoaded ? `0.5s` : initialDelay,
-      ...imgStyle,
-      ...placeholderStyle,
+    const delayHideStyle = {
+      transitionDelay: durationFadeIn,
     }
 
-    const imageStyle = {
-      opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
-      transition: this.state.fadeIn === true ? `opacity 0.5s` : `none`,
+    const imagePlaceholderStyle = {
+      opacity: this.state.imgLoaded ? 0 : 1,
+      ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
+      ...placeholderStyle,
     }
 
     const placeholderImageProps = {
@@ -289,9 +323,9 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 right: 0,
                 left: 0,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -322,6 +356,7 @@ class Image extends React.Component {
                 title={title}
                 sizes={image.sizes}
                 src={image.src}
+                crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
@@ -374,8 +409,8 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 height: image.height,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -408,6 +443,7 @@ class Image extends React.Component {
                 height={image.height}
                 sizes={image.sizes}
                 src={image.src}
+                crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
@@ -425,8 +461,6 @@ class Image extends React.Component {
                 __html: noscriptImg({
                   alt,
                   title,
-                  width: image.width,
-                  height: image.height,
                   ...image,
                 }),
               }}
@@ -479,6 +513,7 @@ Image.propTypes = {
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   critical: PropTypes.bool,
+  crossOrigin: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
   placeholderStyle: PropTypes.object,

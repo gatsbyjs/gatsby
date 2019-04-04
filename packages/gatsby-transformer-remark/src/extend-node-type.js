@@ -486,6 +486,21 @@ module.exports = (
       },
     })
 
+    const WordCountType = new GraphQLObjectType({
+      name: `wordCount`,
+      fields: {
+        paragraphs: {
+          type: GraphQLInt,
+        },
+        sentences: {
+          type: GraphQLInt,
+        },
+        words: {
+          type: GraphQLInt,
+        },
+      },
+    })
+
     return resolve({
       html: {
         type: GraphQLString,
@@ -602,20 +617,7 @@ module.exports = (
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCount`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt,
-            },
-            sentences: {
-              type: GraphQLInt,
-            },
-            words: {
-              type: GraphQLInt,
-            },
-          },
-        }),
+        type: WordCountType,
         resolve(markdownNode) {
           let counts = {}
 

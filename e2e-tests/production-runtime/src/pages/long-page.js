@@ -9,7 +9,11 @@ const LongPage = () => (
     <p>Welcome to long page</p>
     <div style={{ height: `200vh` }} />
     <Link to="/" data-testid="below-the-fold">
-      Go back to the homepage
+      Go back to the homepage - middle of the page
+    </Link>
+    <div style={{ height: `200vh` }} />
+    <Link to="/" data-testid="even-more-below-the-fold">
+      Go back to the homepage - bottom of the page
     </Link>
   </Layout>
 )
