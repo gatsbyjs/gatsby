@@ -1,5 +1,5 @@
 ---
-title: Scaling Gatsby
+title: Scaling Issues
 ---
 
 In certain circumstances, your application may hit some scaling issues that necessitate workarounds. These workarounds should be treated as _temporary_ and should be revisited in the future as Gatsby scales to support larger applications with hundreds of thousands of pages.
