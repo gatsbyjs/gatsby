@@ -6,7 +6,6 @@ import {
   transition,
   fontSizes,
   letterSpacings,
-  scale,
   space,
   fonts,
 } from "../../utils/presets"
@@ -232,6 +231,6 @@ const styles = {
     fontFamily: fonts.header,
     letterSpacing: letterSpacings.tracked,
     textTransform: `uppercase`,
-    fontSize: scale[1],
+    fontSize: fontSizes[1],
   },
 }
