@@ -86,7 +86,7 @@ Loki allows us to opt-in to possibly more performant internal operations and it 
     "cross-env": "^5.2.0"
   },
   "scripts": {
-    "build": "GATSBY_DB_NODES=loki gatsby build"
+    "build": "cross-env GATSBY_DB_NODES=loki gatsby build"
   }
 }
 ```
