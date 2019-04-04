@@ -8,12 +8,13 @@ const {
 } = require("gatsby/graphql");
 const _ = require("lodash");
 const remark = require("remark");
-const retext = require("retext");
+const english = require("retext-english");
+const remark2retext = require("remark-retext");
+const unified = require("unified");
 const visit = require("unist-util-visit");
 const remove = require("unist-util-remove");
 const toString = require("mdast-util-to-string");
 const generateTOC = require("mdast-util-toc");
-const stripMarkdown = require("strip-markdown");
 const prune = require("underscore.string/prune");
 
 const debug = require("debug")("gatsby-mdx:extend-node-type");
@@ -59,7 +60,8 @@ module.exports = (
   const processMDX = ({ node }) =>
     genMDX({ node, getNode, getNodes, reporter, cache, pathPrefix, options });
   return new Promise((resolve /*, reject*/) => {
-    async function getText(mdxNode) {
+    async function getCounts(mdxNode) {
+      let counts = {};
       const { mdast } = await processMDX({ node: mdxNode });
 
       // convert the mdxast to back to mdast
@@ -69,11 +71,30 @@ module.exports = (
         node.type = "html";
       });
 
-      const textAst = await remark()
-        .use(stripMarkdown)
+      await remark()
+        .use(
+          remark2retext,
+          unified()
+            .use(english)
+            .use(count)
+        )
         .run(mdast);
 
-      return remark().stringify(textAst);
+      function count() {
+        return counter;
+        function counter(tree) {
+          visit(tree, visitor);
+          function visitor(node) {
+            counts[node.type] = (counts[node.type] || 0) + 1;
+          }
+        }
+      }
+
+      return {
+        paragraphs: counts.ParagraphNode,
+        sentences: counts.SentenceNode,
+        words: counts.WordNode
+      };
     }
 
     const HeadingType = new GraphQLObjectType({
@@ -215,11 +236,10 @@ module.exports = (
       timeToRead: {
         type: GraphQLInt,
         async resolve(mdxNode) {
-          const text = await getText(mdxNode);
+          const { words } = await getCounts(mdxNode);
           let timeToRead = 0;
           const avgWPM = 265;
-          const wordCount = _.words(text).length;
-          timeToRead = Math.round(wordCount / avgWPM);
+          timeToRead = Math.round(words / avgWPM);
           if (timeToRead === 0) {
             timeToRead = 1;
           }
@@ -242,29 +262,7 @@ module.exports = (
           }
         }),
         async resolve(mdxNode) {
-          let counts = {};
-
-          const text = await getText(mdxNode);
-
-          await retext()
-            .use(count)
-            .process(text);
-
-          return {
-            paragraphs: counts.ParagraphNode,
-            sentences: counts.SentenceNode,
-            words: counts.WordNode
-          };
-
-          function count() {
-            return counter;
-            function counter(tree) {
-              visit(tree, visitor);
-              function visitor(node) {
-                counts[node.type] = (counts[node.type] || 0) + 1;
-              }
-            }
-          }
+          return getCounts(mdxNode);
         }
       }
     });
