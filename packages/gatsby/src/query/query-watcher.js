@@ -13,8 +13,8 @@ const chokidar = require(`chokidar`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-const { store, emitter } = require(`../../redux/`)
-const { boundActionCreators } = require(`../../redux/actions`)
+const { store, emitter } = require(`../redux/`)
+const { boundActionCreators } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const {

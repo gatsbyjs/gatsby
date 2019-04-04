@@ -2,9 +2,9 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 
-const { store, emitter } = require(`../../redux/`)
+const { store, emitter } = require(`../redux/`)
 
-import { joinPath } from "../../utils/path"
+import { joinPath } from "../utils/path"
 
 let lastHash = null
 

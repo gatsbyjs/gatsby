@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const { writePages, resetLastHash } = require(`../pages-writer`)
-const { joinPath } = require(`../../../utils/path`)
+const { joinPath } = require(`../../utils/path`)
 
 const jsonDataPathsFixture = require(`./fixtures/jsonDataPaths.json`)
 const pagesFixture = require(`./fixtures/pages.json`)
@@ -24,7 +24,7 @@ let mockState = {
   },
 }
 
-jest.mock(`../../../redux/`, () => {
+jest.mock(`../../redux/`, () => {
   return {
     store: {
       getState: () => mockState,
