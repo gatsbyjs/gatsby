@@ -304,7 +304,7 @@ const _options = {
           marginRight: rhythm(-space[7]),
           marginLeft: rhythm(-space[7]),
           padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            rhythm(space[3])
+            space[3]
           )}`,
         },
         ".gatsby-highlight pre[class*='language-']::before": {
