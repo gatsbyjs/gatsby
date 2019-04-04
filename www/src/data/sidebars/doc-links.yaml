@@ -440,20 +440,20 @@
         - title: Winning Over Different Stakeholders
           link: /docs/winning-over-stakeholders/
           items:
-            - title: Developers
+            - title: Developers*
               link: /docs/winning-over-developers/
             - title: Engineering Leaders*
               link: /docs/winning-over-engineering-leaders/
             - title: Marketers
               link: /docs/winning-over-marketers/
-            - title: Executives
+            - title: Executives*
               link: /docs/winning-over-executives/
-            - title: Clients
+            - title: Clients*
               link: /docs/winning-over-clients/
-        - title: Spreading Gatsby In Different Types of Organizations
+        - title: Spreading Gatsby In Different Types of Organizations*
           link: /docs/different-organization-types/
           items:
-            - title: As a Freelancer
+            - title: As a Freelancer*
               link: /docs/gatsby-for-freelancers/
             - title: Inside an Agency
               link: /docs/gatsby-for-agencies/
@@ -469,19 +469,19 @@
             - title: Inside a Company
               link: /docs/gatsby-for-companies/
               items:
-                - title: Answering IT/Security Questions
+                - title: Answering IT/Security Questions*
                   link: /docs/answering-it-security/
-        - title: Best Practices for Orgs
+        - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:
-            - title: Sharing Components Across Websites
+            - title: Sharing Components Across Websites*
               link: /docs/sharing-components-across-websites/
               items:
                 - title: Component Libraries
                   link: /docs/component-libraries/
-                - title: Making Components Discoverable
+                - title: Making Components Discoverable*
                   link: /docs/making-components-discoverable/
-        - title: How Gatsby Boosts Your Career
+        - title: How Gatsby Boosts Your Career*
           link: /docs/how-gatsby-boosts-career/
     - title: Contributing
       link: /contributing/
