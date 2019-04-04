@@ -222,7 +222,7 @@ const styles = {
   navItem: {
     fontSize: scale[3],
     borderBottom: `2px solid transparent`,
-    color: colors.gray.calm,
+    color: colors.gray.copy,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,

@@ -5158,3 +5158,53 @@
   built_by: Luke Whitehouse
   built_by_url: https://twitter.com/_lukewh
   featured: false
+- title: Mission42
+  main_url: https://mission42.zauberware.com
+  url: https://mission42.zauberware.com
+  description: >
+    A landing page for the mobile app Mission42. Mission42 wants to help you learn new skills.
+  categories:
+    - App
+    - Tutorials
+    - Personal Training
+    - Learning
+    - Education
+    - Landing Page
+  built_by: Philipp Siegmund, zauberware
+  built_by_url: https://www.zauberware.com
+- title: Altstadtdomizil Idstein
+  main_url: https://www.altstadtdomizil-idstein.de/
+  url: https://www.altstadtdomizil-idstein.de/
+  description: >
+    A landing page for a holiday apartment in Idstein, Germany.
+  categories:
+    - Landing Page
+    - Travel
+    - Tourism
+    - Real Estate
+  built_by: Simon Franzen, zauberware
+  built_by_url: https://www.zauberware.com
+- title: Gerald Martinez Dev
+  main_url: https://gmartinez.dev/
+  url: https://gmartinez.dev/
+  description: >
+    Personal web site for show my skills and my works.
+  categories:
+    - Web Development
+    - Portfolio
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
+  featured: false
+- title: Becreatives
+  main_url: "https://becreatives.com"
+  url: "https://becreatives.com"
+  featured: false
+  description: >
+    Digital software house. Enlights ideas. Think smart execute harder.
+  categories:
+    - Technology
+    - Web Development
+    - Agency
+    - Marketing
+  built_by: Becreatives
+  built_by_url: "https://becreatives.com"

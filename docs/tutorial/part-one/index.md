@@ -19,8 +19,6 @@ When creating a new Gatsby site, you can use the following command structure to 
 gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
-> 💡 See a list of the existing [**official and community starters**](/starters/)!
-
 If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero.
 
 ### ✋ Open up the code.
@@ -148,8 +146,6 @@ In the world of components, you instead create a `PrimaryButton` component with 
 
 Components become the base building blocks of your site. Instead of being
 limited to the building blocks the browser provides e.g. `<button />`, you can easily create new building blocks that elegantly meet the needs of your projects.
-
-> 💡 See the [Building with Components](/docs/building-with-components/) docs page for more on components in Gatsby, and links to other resources.
 
 ### ✋ Using page components
 
@@ -313,8 +309,6 @@ When you click the new "Contact" link on the homepage, you should see...
 
 ...the Gatsby development 404 page. Why? Because you're attempting to link to a page that doesn't exist yet.
 
-> 💡 Want to know more about 404 pages in Gatsby? Check out [the docs](/docs/add-404-page/).
-
 2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js`, and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
@@ -339,8 +333,6 @@ After you save the file, you should see the contact page and be able to link bet
 </video>
 
 The Gatsby `<Link />` component is for linking between pages within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
-
-> 💡 Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).
 
 ## Deploying a Gatsby site
 

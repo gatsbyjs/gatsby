@@ -158,8 +158,8 @@ export const formInput = {
   border: `1px solid ${colors.ui.bright}`,
   borderRadius: radii[1],
   color: colors.brand,
-  fontFamily: fonts.header,
-  padding: space[3],
+  padding: space[2],
+  fontSize: scale[2],
   verticalAlign: `middle`,
   transition: `all ${transition.speed.default} ${transition.curve.default}`,
   "::placeholder": {

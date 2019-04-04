@@ -20,7 +20,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       background: `transparent`,
       border: `none`,
       borderRadius: radii[1],
-      color: colors.gray.lightCopy,
+      color: colors.gray.calm,
       display: `flex`,
       cursor: `pointer`,
       alignItems: `center`,
@@ -30,7 +30,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       textAlign: `left`,
       transition: `all ${transition.speed.fast}`,
       "&:hover": {
-        background: colors.ui.bright,
+        background: colors.ui.light,
       },
     }}
   >
