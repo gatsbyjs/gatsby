@@ -33,6 +33,7 @@ const query = graphql`
           translations: childTranslationsJson {
             hello
             subline
+            backToHome
           }
         }
       }

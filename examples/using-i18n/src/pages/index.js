@@ -30,7 +30,7 @@ const Index = ({ data: { allMdx } }) => {
 export default Index
 
 export const query = graphql`
-  query Index($locale: String!) {
+  query Index($locale: String!, $dateFormat: String!) {
     allMdx(
       filter: { fields: { locale: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
@@ -39,7 +39,7 @@ export const query = graphql`
         node {
           frontmatter {
             title
-            date(formatString: "DD/MM/YYYY")
+            date(formatString: $dateFormat)
           }
           fields {
             locale
