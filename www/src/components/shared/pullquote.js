@@ -9,7 +9,7 @@ import {
   radii,
   space,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
   fonts,
 } from "../../utils/presets"
@@ -19,7 +19,7 @@ const PullquoteRoot = styled(`blockquote`)`
   border-radius: ${radii[2]}px;
   color: ${colors.gatsby};
   font-family: ${fonts.header};
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
   font-weight: bold;
   padding: ${space[7]} 3rem;
   position: relative;

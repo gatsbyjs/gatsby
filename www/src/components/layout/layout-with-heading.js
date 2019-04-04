@@ -9,7 +9,7 @@ import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import { breakpoints, dimensions, scale } from "../../utils/presets"
+import { breakpoints, sizes, fontSizes } from "../../utils/presets"
 import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
@@ -19,12 +19,12 @@ import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 const Content = styled(`div`)`
-  padding-top: ${dimensions.bannerHeight};
-  padding-bottom: ${scale[10]};
+  padding-top: ${sizes.bannerHeight};
+  padding-bottom: ${fontSizes[10]};
 
   ${breakpoints.md} {
-    margin-left: ${dimensions.pageHeadingDesktopWidth};
-    padding-top: calc(${dimensions.bannerHeight} + ${dimensions.headerHeight});
+    margin-left: ${sizes.pageHeadingDesktopWidth};
+    padding-top: calc(${sizes.bannerHeight} + ${sizes.headerHeight});
     padding-bottom: 0;
   }
 `

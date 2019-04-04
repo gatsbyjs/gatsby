@@ -14,8 +14,8 @@ import {
   radii,
   space,
   breakpoints,
-  dimensions,
-  scale,
+  sizes,
+  fontSizes,
   lineHeights,
   fonts,
 } from "../utils/presets"
@@ -76,7 +76,7 @@ const MobileNavigation = () => (
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.light}`,
         background: colors.white,
-        height: dimensions.headerHeight,
+        height: sizes.headerHeight,
         fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
         [breakpoints.md]: {
@@ -127,7 +127,7 @@ const styles = {
     default: {
       color: colors.lilac,
       borderRadius: radii[1],
-      fontSize: scale[0],
+      fontSize: fontSizes[0],
       flexShrink: 0,
       lineHeight: lineHeights.solid,
       width: 64,

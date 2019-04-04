@@ -12,7 +12,7 @@ import {
   space,
   radii,
   breakpoints,
-  scale,
+  fontSizes,
   letterSpacings,
   lineHeights,
   fonts,
@@ -71,7 +71,7 @@ const Ornament = styled(`span`)`
 const Name = styled(`h3`)`
   color: ${colors.lilac};
   font-family: ${fonts.header};
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   font-weight: normal;
   letter-spacing: ${letterSpacings.tracked};
   margin: 0;
@@ -80,7 +80,7 @@ const Name = styled(`h3`)`
 
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
   line-height: ${lineHeights.dense};
   margin: 0;
   margin-top: ${space[1]};
