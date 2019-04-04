@@ -438,7 +438,7 @@ const processThirdPartyType = ({
   typeComposer,
   schemaQueryType,
 }) => {
-  typeComposer.getType().isThirdPartyType = true
+  typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
   // Fix for types that refer to Query. Thanks Relay Classic!
   if (
     typeComposer instanceof ObjectTypeComposer ||
@@ -475,7 +475,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               !fieldTypeName ||
               fieldTypeName.replace(/!/g, ``) ===
                 originalTypeName.replace(/!/g, ``) ||
-              tc.getType().isThirdPartyType
+              tc.getExtension(`createdFrom`) === `thirdPartySchema`
             ) {
               const newConfig = {}
               if (fieldConfig.type) {
