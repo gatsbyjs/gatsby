@@ -41,4 +41,32 @@ describe(`load prism language`, () => {
     expect(Prism.languages).toHaveProperty(requiredLanguage)
     expect(languagesAfterLoaded.length).toBe(languagesBeforeLoaded.length + 2)
   })
+
+  it(`loads languages when referred by their aliases (set as a String in components)`, () => {
+    const language = `python`
+    const languageAlias = `py`
+    const Prism = require(`prismjs`)
+
+    expect(Prism.languages).not.toHaveProperty(language)
+    expect(Prism.languages).not.toHaveProperty(languageAlias)
+
+    loadPrismLanguage(languageAlias)
+
+    expect(Prism.languages).toHaveProperty(language)
+    expect(Prism.languages).toHaveProperty(languageAlias)
+  })
+
+  it(`loads languages when referred by their aliases (set as as Array in components)`, () => {
+    const language = `lisp`
+    const languageAlias = `emacs-lisp`
+    const Prism = require(`prismjs`)
+
+    expect(Prism.languages).not.toHaveProperty(language)
+    expect(Prism.languages).not.toHaveProperty(languageAlias)
+
+    loadPrismLanguage(languageAlias)
+
+    expect(Prism.languages).toHaveProperty(language)
+    expect(Prism.languages).toHaveProperty(languageAlias)
+  })
 })
