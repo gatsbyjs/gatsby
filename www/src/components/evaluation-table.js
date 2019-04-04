@@ -3,7 +3,7 @@ import {
   colors,
   space,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
@@ -140,7 +140,7 @@ class EvaluationTable extends Component {
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: scale[1],
+                              fontSize: fontSizes[1],
                               lineHeight: lineHeights.solid,
                             }}
                             id={

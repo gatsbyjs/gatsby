@@ -2215,3 +2215,12 @@
     - Styling:CSS-in-JS
   features:
     - Blog post listing with previews (image + summary) for each blog post
+- url: https://gatsby-starter-framer-x.netlify.com/
+  repo: https://github.com/simulieren/gatsby-starter-framer-x
+  description: A GatsbyJS starter template that is connected to a Framer X project
+  tags:
+    - Framer X
+    - TypeScript
+  features:
+    - TypeScript support
+    - Easily work in GatsbyJS and Framer X at the same time

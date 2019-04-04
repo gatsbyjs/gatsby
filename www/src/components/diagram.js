@@ -11,7 +11,7 @@ import {
   breakpoints,
   letterSpacings,
   lineHeights,
-  scale,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import logo from "../monogram.svg"
@@ -64,7 +64,7 @@ const SegmentTitle = ({ children }) => (
       padding: `${space[2]} ${space[3]}`,
       fontWeight: `normal`,
       letterSpacing: letterSpacings.tracked,
-      fontSize: scale[1],
+      fontSize: fontSizes[1],
       lineHeight: lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
@@ -158,7 +158,7 @@ const ItemTitle = ({ children }) => (
       color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
     }}
   >
     {children}
@@ -171,7 +171,7 @@ const ItemDescription = ({ children }) => (
       lineHeight: lineHeights.dense,
       display: `block`,
       color: colors.gray.calm,
-      fontSize: scale[1],
+      fontSize: fontSizes[1],
       fontFamily: fonts.system,
     }}
   >

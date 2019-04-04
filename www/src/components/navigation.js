@@ -9,10 +9,10 @@ import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
-  scale,
+  fontSizes,
   transition,
   breakpoints,
-  dimensions,
+  sizes,
   fonts,
 } from "../utils/presets"
 
@@ -49,7 +49,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
-        fontSize: scale[2],
+        fontSize: fontSizes[2],
         ...overrideCSS,
       }}
     >
@@ -62,10 +62,10 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: dimensions.headerHeight,
+        height: sizes.headerHeight,
         left: 0,
         right: 0,
-        top: dimensions.bannerHeight,
+        top: sizes.bannerHeight,
         zIndex: 2,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
@@ -167,7 +167,7 @@ const Navigation = ({ pathname }) => {
           <SocialNavItem
             href="https://www.gatsbyjs.com"
             title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: scale[2] }}
+            overrideCSS={{ paddingRight: 0, fontSize: fontSizes[2] }}
           >
             .com
           </SocialNavItem>
@@ -220,12 +220,12 @@ const styles = {
     position: `relative`,
   },
   navItem: {
-    fontSize: scale[3],
+    fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
     color: colors.gray.copy,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     top: 0,
