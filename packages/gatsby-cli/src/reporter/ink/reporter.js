@@ -3,8 +3,19 @@ import { Static, Box } from "ink"
 import { globalTracer } from "opentracing"
 import Activity, { calcElapsedTime } from "./components/activity"
 import { Message } from "./components/messages"
+import { isCI } from "ci-info"
 
 const tracer = globalTracer()
+const showProgress = process.stdout.isTTY && !isCI
+
+const generateActivityFinishedText = (name, activity) => {
+  let successText = `${name} - ${calcElapsedTime(activity.startTime)} s`
+  if (activity.status) {
+    successText += ` — ${activity.status}`
+  }
+
+  return successText
+}
 
 export default class GatsbyReporter extends React.Component {
   verbose = process.env.gatsby_log_level === `verbose`
@@ -52,12 +63,7 @@ export default class GatsbyReporter extends React.Component {
         span.finish()
         const activity = this.state.activities[name]
 
-        let successText = `${name} - ${calcElapsedTime(activity.startTime)} s`
-        if (activity.status) {
-          successText += ` — ${activity.status}`
-        }
-
-        this.onSuccess(successText)
+        this.onSuccess(generateActivityFinishedText(name, activity))
 
         this.setState(state => {
           const activities = { ...state.activities }
@@ -128,13 +134,14 @@ export default class GatsbyReporter extends React.Component {
           </Static>
 
           <Box flexDirection="column" marginTop={1}>
-            {Object.keys(this.state.activities).map(activityName => (
-              <Activity
-                key={activityName}
-                name={activityName}
-                {...this.state.activities[activityName]}
-              />
-            ))}
+            {showProgress &&
+              Object.keys(this.state.activities).map(activityName => (
+                <Activity
+                  key={activityName}
+                  name={activityName}
+                  {...this.state.activities[activityName]}
+                />
+              ))}
           </Box>
         </Box>
       </Box>
