@@ -6,7 +6,7 @@ In certain circumstances, your application may hit some scaling issues that nece
 
 However -- until we get to that point, some workarounds are useful to consider if they unblock your team from deploying, developing, etc.
 
-> Just looking for possible soultions? [Jump ahead](#possible-solutions-to-scaling-issues)
+> Just looking for possible solutions? [Jump ahead](#possible-solutions-to-scaling-issues)
 
 ## What is a scaling issue?
 
@@ -31,14 +31,12 @@ success createPagesStatefully — 0.025 s
 success onPreExtractQueries — 0.000 s
 success update schema — 0.478 s
 success extract queries from components — 0.127 s
-# highlight-start
 ⠄ run graphql queries — 310/728 2.51 queries/second
 <--- Last few GCs --->
 
 [10208:0000029380BC1810]   139036 ms: Scavenge 1374.2 (1423.1) -> 1373.3 (1424.1) MB, 2.2 / 0.0 ms  (average mu = 0.317, current mu = 0.262) allocation failure
 [10208:0000029380BC1810]   139039 ms: Scavenge 1374.3 (1424.1) -> 1373.5 (1424.6) MB, 2.0 / 0.0 ms  (average mu = 0.317, current mu = 0.262) allocation failure
 [10208:0000029380BC1810]   139043 ms: Scavenge 1374.4 (1424.6) -> 1373.6 (1425.1) MB, 2.1 / 0.0 ms  (average mu = 0.317, current mu = 0.262) allocation failure
-# highlight-end
 ```
 
 ## When can a scaling issue arise?
