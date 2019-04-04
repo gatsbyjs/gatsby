@@ -1,7 +1,7 @@
 import React from "react"
 import convertHrtime from "convert-hrtime"
 import { Box } from "ink"
-import Spinner from "./ink-spinner"
+import Spinner from "ink-spinner"
 
 export const calcElapsedTime = startTime => {
   const elapsed = process.hrtime(startTime)
