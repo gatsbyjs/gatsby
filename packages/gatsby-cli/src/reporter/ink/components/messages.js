@@ -1,9 +1,10 @@
 import React from "react"
 import { Color } from "ink"
+import stripAnsi from "strip-ansi"
 
 const ColorSwitcher = ({ hideColors, children, ...props }) => {
   if (hideColors) {
-    return <>{children}</>
+    return <>{stripAnsi(children)}</>
   }
 
   return <Color {...props}>{children}</Color>
