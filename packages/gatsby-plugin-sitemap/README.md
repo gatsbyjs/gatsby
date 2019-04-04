@@ -21,6 +21,10 @@ plugins: [`gatsby-plugin-sitemap`]
 Above is the minimal configuration required to have it work. By default, the
 generated sitemap will include all of your site's pages, except the ones you exclude.
 
+## Note
+
+`siteUrl` is required with `gatsby-plugin-sitemap`.
+
 ## Options
 
 The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L34) can be overridden.
