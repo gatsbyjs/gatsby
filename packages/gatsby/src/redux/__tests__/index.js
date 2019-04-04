@@ -35,12 +35,13 @@ describe(`redux db`, () => {
     )
   })
 
-  it(`shoudn't write cache to disk when DANGEROUSLY_DISABLE_OOM is set`, async () => {
-    process.env.DANGEROUSLY_DISABLE_OOM = `1`
+  it(`does not write to the cache when DANGEROUSLY_DISABLE_CACHE is set`, async () => {
+    process.env.DANGEROUSLY_DISABLE_CACHE = true
 
     await saveState()
 
     expect(fs.writeFile).not.toBeCalled()
-    delete process.env.DANGEROUSLY_DISABLE_OOM
+
+    delete process.env.DANGEROUSLY_DISABLE_CACHE
   })
 })

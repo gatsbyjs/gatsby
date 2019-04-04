@@ -73,7 +73,7 @@ const store = Redux.createStore(
 
 // Persist state.
 function saveState() {
-  if (process.env.DANGEROUSLY_DISABLE_OOM) {
+  if (process.env.DANGEROUSLY_DISABLE_CACHE) {
     return Promise.resolve()
   }
 
