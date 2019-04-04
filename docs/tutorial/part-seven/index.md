@@ -190,8 +190,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `
-  ).then(result => {
+  `).then(result => {
     console.log(JSON.stringify(result, null, 4))
   })
 }
@@ -371,8 +370,7 @@ export default ({ data }) => {
               css={css`
                 text-decoration: none;
                 color: inherit;
-              `
-              }
+              `}
             >
               {/* highlight-end */}
               <h3
