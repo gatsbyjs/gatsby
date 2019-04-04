@@ -1,10 +1,17 @@
-jest.mock(`fs`)
+jest.mock(`fs`, () => {
+  const fs = jest.requireActual(`fs`)
+  return {
+    ...fs,
+    readFileSync: jest.fn(),
+  }
+})
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panic: jest.fn(),
   }
 })
 
+const fs = require(`fs`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
 let resolver
@@ -119,7 +126,10 @@ describe(`Resolve module exports`, () => {
 
   beforeEach(() => {
     resolver = jest.fn(arg => arg)
-    require(`fs`).__setMockFiles(MOCK_FILE_INFO)
+    fs.readFileSync.mockImplementation(file => {
+      const existing = MOCK_FILE_INFO[file]
+      return existing
+    })
     reporter.panic.mockClear()
   })
 

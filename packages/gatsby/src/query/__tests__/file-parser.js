@@ -1,14 +1,13 @@
 jest.mock(`fs-extra`, () => {
-  let mockFiles = {}
+  const fs = jest.requireActual(`fs`)
   return {
-    __setMockFiles: newMockFiles => {
-      mockFiles = Object.assign({}, newMockFiles)
-    },
-    readFile: (filePath, parser) =>
-      new Promise(resolve => resolve(mockFiles[filePath])),
+    ...fs,
+    readFile: jest.fn(),
   }
 })
 jest.mock(`../../utils/api-runner-node`, () => () => [])
+
+const fs = require(`fs-extra`)
 
 const FileParser = require(`../file-parser`).default
 
@@ -148,7 +147,9 @@ export default () => (
   const parser = new FileParser()
 
   beforeAll(() => {
-    require(`fs-extra`).__setMockFiles(MOCK_FILE_INFO)
+    fs.readFile.mockImplementation(file =>
+      Promise.resolve(MOCK_FILE_INFO[file])
+    )
   })
 
   it(`extracts query AST correctly from files`, async () => {
