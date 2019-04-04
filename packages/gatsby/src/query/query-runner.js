@@ -11,6 +11,7 @@ const { generatePathChunkName } = require(`../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
 const { boundActionCreators } = require(`../redux/actions`)
+const pageDataUtil = require(`../utils/page-data`)
 
 const resultHashes = {}
 
@@ -91,20 +92,23 @@ ${formatErrorDetails(errorDetails)}`)
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
-    // Remove potentially unsafe characters. This increases chances of collisions
-    // slightly but it should still be very safe + we get a shorter
-    // url vs hex.
-    .replace(/[^a-zA-Z0-9-_]/g, ``)
-
-  let dataPath
-  if (queryJob.isPage) {
-    dataPath = `${generatePathChunkName(queryJob.jsonName)}-${resultHash}`
-  } else {
-    dataPath = queryJob.hash
-  }
 
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
+
+    // Remove potentially unsafe characters. This increases chances of collisions
+    // slightly but it should still be very safe + we get a shorter
+    // url vs hex.
+    const readableResultHash = resultHash.replace(/[^a-zA-Z0-9-_]/g, ``)
+
+    let dataPath
+    if (queryJob.isPage) {
+      const pathChunkName = generatePathChunkName(queryJob.jsonName)
+      dataPath = `${pathChunkName}-${readableResultHash}`
+    } else {
+      dataPath = queryJob.hash
+    }
+
     let modInt = ``
     // We leave StaticQuery results at public/static/d
     // as the babel plugin has that path hard-coded
@@ -136,6 +140,15 @@ ${formatErrorDetails(errorDetails)}`)
         value: dataPath,
       },
     })
+
+    // Save page-data.json. This isn't used yet but is part of
+    // https://github.com/gatsbyjs/gatsby/pull/13004
+    if (queryJob.isPage) {
+      const publicDir = path.join(program.directory, `public`)
+      const { pages } = store.getState()
+      const page = pages.get(queryJob.id)
+      await pageDataUtil.write({ publicDir }, page, result)
+    }
   }
 
   boundActionCreators.pageQueryRun({
