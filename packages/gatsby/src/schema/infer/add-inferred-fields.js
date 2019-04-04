@@ -80,11 +80,6 @@ const addInferredFieldsImpl = ({
       typeMapping,
     }))
 
-    let namedInferredType = fieldConfig.type
-    while (Array.isArray(namedInferredType)) {
-      namedInferredType = namedInferredType[0]
-    }
-
     typeComposer.addFields({ [key]: fieldConfig })
     typeComposer.setFieldExtension(key, `createdFrom`, `infer`)
   })
