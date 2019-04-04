@@ -5158,6 +5158,18 @@
   built_by: Luke Whitehouse
   built_by_url: https://twitter.com/_lukewh
   featured: false
+- title: Altstadtdomizil Idstein
+  main_url: https://www.altstadtdomizil-idstein.de/
+  url: https://www.altstadtdomizil-idstein.de/
+  description: >
+    A landing page for a holiday apartment in Idstein, Germany.
+  categories:
+    - Landing Page
+    - Travel
+    - Tourism
+    - Real Estate
+  built_by: Simon Franzen, zauberware
+  built_by_url: https://www.zauberware.com
 - title: Gerald Martinez Dev
   main_url: https://gmartinez.dev/
   url: https://gmartinez.dev/
