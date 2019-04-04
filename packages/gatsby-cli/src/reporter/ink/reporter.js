@@ -1,7 +1,6 @@
 import React from "react"
 import { Static, Box } from "ink"
 import { globalTracer } from "opentracing"
-import util from "util"
 import Activity, { calcElapsedTime } from "./components/activity"
 import { Message } from "./components/messages"
 
@@ -83,9 +82,7 @@ export default class GatsbyReporter extends React.Component {
     this.verbose = isVerbose
   }
 
-  _addMessage(type, ...args) {
-    let str = util.format(...args)
-
+  _addMessage(type, str) {
     // threat null/undefind as an empty character, it seems like ink can't handle empty str
     if (!str) {
       str = `\u2800`

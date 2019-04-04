@@ -1,9 +1,10 @@
 // @flow
 
 const { stripIndent } = require(`common-tags`)
+const { trackError } = require(`gatsby-telemetry`)
 const { getErrorFormatter } = require(`./errors`)
 const inkReporter = require(`./ink`).default
-const { trackError } = require(`gatsby-telemetry`)
+const util = require(`util`)
 
 const errorFormatter = getErrorFormatter()
 
@@ -84,9 +85,9 @@ const reporter = {
   },
 }
 
-console.log = reporter.log
-console.warn = reporter.warn
-console.info = reporter.info
-console.error = reporter.error
+console.log = (...args) => reporter.log(util.format(...args))
+console.warn = (...args) => reporter.warn(util.format(...args))
+console.info = (...args) => reporter.info(util.format(...args))
+console.error = (...args) => reporter.error(util.format(...args))
 
 module.exports = reporter
