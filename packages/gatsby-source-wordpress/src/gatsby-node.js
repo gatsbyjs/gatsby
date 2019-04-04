@@ -118,6 +118,7 @@ exports.sourceNodes = async (
     createNode,
     createNodeId,
     touchNode,
+    getNode,
     _auth,
   })
 
