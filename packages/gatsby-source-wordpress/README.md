@@ -135,7 +135,7 @@ module.exports = {
         normalizer: function({ entities }) {
           return entities
         },
-        // Set the status argument on selected routes.
+        // Set the status argument on selected routes. You must be authenticated.
         status: [
           {
             status: ["publish", "draft"],
