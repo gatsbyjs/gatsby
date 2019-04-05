@@ -1,6 +1,6 @@
-const path = require(`path`)
+// const path = require(`path`)
 const _ = require(`lodash`)
-jest.mock(`fs-extra`)
+
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const { saveState, store, readState } = require(`../index`)
 
@@ -26,7 +26,8 @@ describe(`redux db`, () => {
       createPage(
         {
           path: `/my-sweet-new-page/`,
-          component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+          // seems like jest serializer doesn't play nice with Maps on Windows
+          component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
           // The context is passed as props to the component as well
           // as into the component's GraphQL query.
           context: {

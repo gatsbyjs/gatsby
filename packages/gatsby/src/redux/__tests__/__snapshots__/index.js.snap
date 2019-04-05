@@ -7,8 +7,8 @@ Object {
     "nodes": Object {},
   },
   "components": Map {
-    "<PROJECT_ROOT>/src/templates/my-sweet-new-page.js" => Object {
-      "componentPath": "<PROJECT_ROOT>/src/templates/my-sweet-new-page.js",
+    "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+      "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
       "isInBootstrap": true,
       "pages": Array [
         "/my-sweet-new-page/",
