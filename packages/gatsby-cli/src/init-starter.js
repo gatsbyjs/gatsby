@@ -6,7 +6,7 @@ const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
-const validate = require(`validate-npm-package-name`);
+const validate = require(`validate-npm-package-name`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
 const spawn = (cmd: string, options: any) => {
@@ -156,12 +156,12 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   }
 
   const validationResult = validate(rootPath)
-	if (!validationResult.validForNewPackages) {
-    	  report.panic(
-      		`Could not create a project called ${appName} because of npm naming restrictions`
-        )
-    	return
-	}
+  if (!validationResult.validForNewPackages) {
+    report.panic(
+      `Could not create a project called ${rootPath} because of npm naming restrictions`
+    )
+    return
+  }
 
   if (existsSync(sysPath.join(rootPath, `package.json`))) {
     trackError(`NEW_PROJECT_IS_NPM_PROJECT`)
