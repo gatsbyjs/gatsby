@@ -34,6 +34,10 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
       r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
         r.data.site.siteMetadata.siteUrl
       )
+    } else {
+      console.warn(
+        `No siteURL defined. Please define a siteURL for gatsby-plugin-sitemap to work properly.`
+      )
     }
 
     return r.data
