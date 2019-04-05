@@ -69,6 +69,20 @@ describe(`results using default settings`, () => {
 
       verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
     })
+
+    it(`should fail when siteUrl is not set`, async () => {
+      const graphql = () =>
+        Promise.resolve(generateQueryResultsMock({ siteUrl: null }))
+      expect.assertions(1)
+
+      try {
+        await runQuery(graphql, ``, [], pathPrefix)
+      } catch (err) {
+        expect(err.message).toEqual(
+          expect.stringContaining(`SiteMetaData 'siteUrl' property is required`)
+        )
+      }
+    })
   }
 
   describe(`no path-prefix`, () => {
