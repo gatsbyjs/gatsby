@@ -643,11 +643,15 @@ Full example:
 
 ```graphql
 {
-  wordpressYoastRedirects {
-    origin
-    url
-    type
-    format
+  allWordpressYoastRedirects {
+    edges {
+      node {
+        origin
+        url
+        type
+        format
+      }
+    }
   }
 }
 ```
