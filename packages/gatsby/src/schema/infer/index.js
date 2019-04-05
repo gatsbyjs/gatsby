@@ -58,8 +58,19 @@ const addInferredTypes = ({
     report.panic(`Building schema failed`)
   }
 
-  return nodeTypesToInfer.map(typeName =>
+  nodeTypesToInfer.forEach(typeName => {
     schemaComposer.getOrCreateOTC(typeName)
+  })
+
+  return nodeTypesToInfer.map(typeName =>
+    addInferredType({
+      schemaComposer,
+      typeName,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
   )
 }
 

@@ -7,6 +7,9 @@ const {
   assertValidName,
   getNamedType,
   Kind,
+  GraphQLObjectType,
+  GraphQLInterfaceType,
+  GraphQLUnionType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -15,6 +18,10 @@ const {
   InputTypeComposer,
   GraphQLJSON,
 } = require(`graphql-compose`)
+const {
+  defineFieldMapToConfig,
+} = require(`graphql-compose/lib/utils/configToDefine`)
+
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -89,24 +96,13 @@ const updateSchemaComposer = async ({
   parentSpan,
 }) => {
   await addTypes({ schemaComposer, parentSpan, types })
-  const inferredTypes = await addInferredTypes({
+  await addInferredTypes({
     schemaComposer,
     nodeStore,
     typeConflictReporter,
     typeMapping,
     parentSpan,
   })
-  await processFieldExtensions({ schemaComposer })
-  inferredTypes.map(inferredType =>
-    addInferredType({
-      schemaComposer,
-      typeName: inferredType.getTypeName(),
-      nodeStore,
-      typeConflictReporter,
-      typeMapping,
-      parentSpan,
-    })
-  )
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
@@ -221,8 +217,9 @@ const processAddedType = ({
   typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
 
   if (createdFrom === `sdl`) {
-    if (type.astNode && type.astNode.directives) {
-      type.astNode.directives.forEach(directive => {
+    const ast = typeComposer.getType().astNode
+    if (ast && ast.directives) {
+      ast.directives.forEach(directive => {
         if (directive.name.value === `infer`) {
           typeComposer.setExtension(`infer`, true)
           const addDefaultResolvers = getNoDefaultResolvers(directive)
@@ -246,6 +243,37 @@ const processAddedType = ({
     }
   }
 
+  if (
+    typeComposer instanceof ObjectTypeComposer ||
+    typeComposer instanceof InterfaceTypeComposer
+  ) {
+    typeComposer.getFieldNames().forEach(fieldName => {
+      typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
+      typeComposer.setFieldExtension(
+        fieldName,
+        `plugin`,
+        plugin ? plugin.name : null
+      )
+
+      if (createdFrom === `sdl`) {
+        const field = typeComposer.getField(fieldName)
+        if (field.astNode && field.astNode.directives) {
+          field.astNode.directives.forEach(directive => {
+            if (directive.name.value === `addResolver`) {
+              const options = {}
+              directive.arguments.forEach(argument => {
+                options[argument.name.value] = GraphQLJSON.parseLiteral(
+                  argument.value
+                )
+              })
+              typeComposer.setFieldExtension(fieldName, `addResolver`, options)
+            }
+          })
+        }
+      }
+    })
+  }
+
   if (typeComposer.hasExtension(`addDefaultResolvers`)) {
     report.warn(
       `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, defined fields won't get resolvers, unless "addResolver" directive/extension is used.`
@@ -266,33 +294,6 @@ const getNoDefaultResolvers = directive => {
   }
 
   return null
-}
-
-const processFieldExtensions = ({ schemaComposer }) => {
-  schemaComposer.forEach(typeComposer => {
-    if (
-      typeComposer.getExtension(`createdFrom`) === `sdl` &&
-      (typeComposer instanceof ObjectTypeComposer ||
-        typeComposer instanceof InterfaceTypeComposer)
-    ) {
-      typeComposer.getFieldNames().forEach(fieldName => {
-        const field = typeComposer.getField(fieldName)
-        if (field.astNode && field.astNode.directives) {
-          field.astNode.directives.forEach(directive => {
-            if (directive.name.value === `addResolver`) {
-              const options = {}
-              directive.arguments.forEach(argument => {
-                options[argument.name.value] = GraphQLJSON.parseLiteral(
-                  argument.value
-                )
-              })
-              typeComposer.setFieldExtension(fieldName, `addResolver`, options)
-            }
-          })
-        }
-      })
-    }
-  })
 }
 
 const checkIsAllowedTypeName = name => {
@@ -405,14 +406,6 @@ const addThirdPartySchemas = ({
 }) => {
   thirdPartySchemas.forEach(schema => {
     const schemaQueryType = schema.getQueryType()
-    const queryTC = ObjectTypeComposer.createTemp(schemaQueryType)
-    processThirdPartyType({
-      schemaComposer,
-      typeComposer: queryTC,
-      schemaQueryType,
-    })
-    const fields = queryTC.getFields()
-    schemaComposer.Query.addFields(fields)
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `createResolvers` API.
@@ -424,36 +417,84 @@ const addThirdPartySchemas = ({
         !isSpecifiedScalarType(type) &&
         !isIntrospectionType(type)
       ) {
-        schemaComposer.addAsComposer(type)
-        const typeComposer = schemaComposer.getAnyTC(type.name)
-        processThirdPartyType({ schemaComposer, typeComposer, schemaQueryType })
-        schemaComposer.addSchemaMustHaveType(typeComposer)
+        processThirdPartyType({ schemaComposer, type, schemaQueryType })
       }
     })
+
+    const queryTC = ObjectTypeComposer.createTemp(
+      {
+        name: `TempQuery`,
+        fields: processThirdPartyTypeFields({
+          type: schemaQueryType,
+          schemaQueryType,
+        }),
+      },
+      schemaComposer
+    )
+    schemaComposer.Query.addFields(queryTC.getFields())
   })
 }
 
-const processThirdPartyType = ({
-  schemaComposer,
-  typeComposer,
-  schemaQueryType,
-}) => {
-  typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
+const processThirdPartyType = ({ schemaComposer, type, schemaQueryType }) => {
+  let typeComposer
   // Fix for types that refer to Query. Thanks Relay Classic!
   if (
-    typeComposer instanceof ObjectTypeComposer ||
-    typeComposer instanceof InterfaceTypeComposer
+    type instanceof GraphQLObjectType ||
+    type instanceof GraphQLInterfaceType
   ) {
-    typeComposer.getFieldNames().forEach(fieldName => {
-      const fieldType = typeComposer.getFieldType(fieldName)
-      if (getNamedType(fieldType) === schemaQueryType) {
-        typeComposer.extendField(fieldName, {
-          type: fieldType.toString().replace(schemaQueryType.name, `Query`),
-        })
-      }
-    })
+    const fields = processThirdPartyTypeFields({ type, schemaQueryType })
+    if (type instanceof GraphQLObjectType) {
+      typeComposer = ObjectTypeComposer.create(
+        {
+          name: type.name,
+          fields,
+          interfaces: () =>
+            type
+              .getInterfaces()
+              .map(iface => schemaComposer.getIFTC(iface.toString()).getType()),
+        },
+        schemaComposer
+      )
+    } else {
+      typeComposer = schemaComposer.getOrCreateIFTC(type.name)
+      typeComposer.setResolveType(type.resolveType)
+    }
+    typeComposer.setFields(fields)
+  } else if (type instanceof GraphQLUnionType) {
+    const types = type.getTypes()
+    typeComposer = schemaComposer.getOrCreateUTC(type.name)
+    typeComposer.setResolveType(type.resolveType)
+    typeComposer.setTypes(types.map(type => type.toString()))
+    schemaComposer.add(typeComposer)
+  } else {
+    schemaComposer.addAsComposer(type)
+    typeComposer = schemaComposer.get(type.name)
   }
+  typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
+  schemaComposer.addSchemaMustHaveType(typeComposer)
+
   return typeComposer
+}
+
+const processThirdPartyTypeFields = ({ type, schemaQueryType }) => {
+  const fields = {}
+  const typeFields = defineFieldMapToConfig(type.getFields())
+  Object.keys(typeFields).forEach(fieldName => {
+    const field = typeFields[fieldName]
+    const fieldType = field.type
+    if (getNamedType(fieldType) === schemaQueryType) {
+      fields[fieldName] = {
+        ...field,
+        type: fieldType.toString().replace(schemaQueryType.name, `Query`),
+      }
+    } else {
+      fields[fieldName] = {
+        ...field,
+        type: fieldType.toString(),
+      }
+    }
+  })
+  return fields
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
