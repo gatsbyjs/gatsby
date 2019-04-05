@@ -1357,23 +1357,6 @@
     - Google Analytics Integration
     - Uses Gatsby v2
     - SEO
-- url: http://starter-ghost-blog.surge.sh/
-  repo: https://github.com/little-wolf-studio/gatsby-starter-ghost-blog
-  description: Ghost Blog Starter Kit
-  tags:
-    - Ghost
-    - Blog
-    - Linting
-    - Headless CMS
-    - Styling:CSS-in-JS
-  features:
-    - Uses the Ghost CMS source
-    - Renders pages for posts, tags and authors
-    - Responsive Design
-    - Google Analytics Integration
-    - Uses Gatsby v2
-    - ESLint and Prettier
-    - Offline support
 - url: https://gatsby-starter-notes.netlify.com/
   repo: https://github.com/patricoferris/gatsby-starter-notes
   description: Gatsby starter for creating notes organised by subject and topic
