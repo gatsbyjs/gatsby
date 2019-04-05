@@ -24,7 +24,7 @@ After that, you'll find winning over [engineering leaders](/docs/winning-over-en
 
 Internet-adjacent organizations whose activities have been significantly affected by the web, including areas like travel, retail, consumer finance, media, and so on.
 
-[Digital presence is increasingly important](https://www.gatsbyjs.org/blog/2018-10-10-unbundling-of-the-cms) for these businesses, but they often don't often see themselves as software companies.
+[Digital presence is increasingly important](/blog/2018-10-10-unbundling-of-the-cms) for these businesses, but they often don't often see themselves as software companies.
 
 Because developers are often not the decision-makers around technologies in these businesses, bottoms-up adoption can be challenging.
 

@@ -14,7 +14,7 @@ import {
   radii,
   shadows,
   breakpoints,
-  scale,
+  fontSizes,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
@@ -62,7 +62,7 @@ const Title = styled(`h1`)`
   align-items: center;
   color: ${colors.gatsby};
   display: flex;
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
   line-height: ${lineHeights.solid};
   margin: 0;
   margin-bottom: ${space[1]};
@@ -81,7 +81,7 @@ const Icon = styled(`span`)`
 
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   font-weight: normal;
   letter-spacing: ${letterSpacings.tracked};
   margin: 0;
@@ -91,7 +91,7 @@ const SubTitle = styled(`h2`)`
 
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
-  font-size: ${scale[2]};
+  font-size: ${fontSizes[2]};
 `
 
 const Actions = styled(`div`)`

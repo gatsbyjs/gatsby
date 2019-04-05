@@ -12,17 +12,17 @@ excerpt: Gatsby is great for not only static sites but also traditional web appl
 
 > A: Gatsby can be used to build fully dynamic sites, which surprises some people because of it’s label as a “static site generator”. It’s fully equipped to be a powerful alternative to create-react-app and other similar solutions with the addition of easy pre-rendering and perf baked in. — biscarch
 
-Even though Dustin [recently wrote about Gatsby for Apps](https://www.gatsbyjs.org/blog/2018-11-07-gatsby-for-apps/) and open sourced his [Gatsby Mail](https://gatsby-mail.netlify.com/) demo, I do still find people constantly having to explain that Gatsby is "not just for sites".
+Even though Dustin [recently wrote about Gatsby for Apps](/blog/2018-11-07-gatsby-for-apps/) and open sourced his [Gatsby Mail](https://gatsby-mail.netlify.com/) demo, I do still find people constantly having to explain that Gatsby is "not just for sites".
 
 Today I'd like to show you how you can incrementally add functionality to a Gatsby static site with Netlify Functions, and then add authentication with Netlify Identity to begin a proper Gatsby app.
 
 ## Static-Dynamic is a spectrum
 
-Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundreds of Static Site Generators](https://www.staticgen.com/) out there? [There are many reasons](https://www.gatsbyjs.org/blog/2018-2-27-why-i-upgraded-my-website-to-gatsbyjs-from-jekyll/), but one of the unique selling points is how Gatsby helps you build ["Static Progressive Web Apps"](https://www.gatsbyjs.org/docs/progressive-web-app/#progressive-web-app) with React.
+Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundreds of Static Site Generators](https://www.staticgen.com/) out there? [There are many reasons](/blog/2018-2-27-why-i-upgraded-my-website-to-gatsbyjs-from-jekyll/), but one of the unique selling points is how Gatsby helps you build ["Static Progressive Web Apps"](/docs/progressive-web-app/#progressive-web-app) with React.
 
-[Gatsby's ability to rehydrate](https://www.gatsbyjs.org/docs/production-app/#dom-hydration) (what a delicious word!) the DOM means you can do incredibly dynamic things with Javascript and React that would be much harder with legacy SSG's.
+[Gatsby's ability to rehydrate](/docs/production-app/#dom-hydration) (what a delicious word!) the DOM means you can do incredibly dynamic things with Javascript and React that would be much harder with legacy SSG's.
 
-Let's say you have a typical static Gatsby site, like [gatsby-starter-default](https://www.gatsbyjs.org/starters/gatsby-starter-default). You can `npm run build` it, and it spits out a bunch of HTML files. Great! I can host that for free!
+Let's say you have a typical static Gatsby site, like [gatsby-starter-default](/starters/gatsby-starter-default). You can `npm run build` it, and it spits out a bunch of HTML files. Great! I can host that for free!
 
 Now your client comes to you and asks you to add some custom logic that needs to be executed on the server:
 

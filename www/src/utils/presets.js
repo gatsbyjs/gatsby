@@ -1,13 +1,13 @@
 import {
   breakpoints,
   colors,
-  dimensions,
+  sizes,
   letterSpacings,
   lineHeights,
   radii,
   shadows,
   space as spaceTokens,
-  scale,
+  fontSizes,
   transition,
   fonts as fontTokens,
 } from "./tokens"
@@ -23,13 +23,13 @@ for (let fontFamily in fontTokens) {
 export {
   breakpoints,
   colors,
-  dimensions,
+  sizes,
   transition,
   radii,
   shadows,
   letterSpacings,
   lineHeights,
   space,
-  scale,
+  fontSizes,
   fonts,
 }

@@ -15,7 +15,7 @@ import {
   radii,
   shadows,
   breakpoints,
-  scale,
+  fontSizes,
   fonts,
 } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
@@ -73,7 +73,7 @@ class FeaturedSites extends Component {
           />
           <h1
             css={{
-              fontSize: scale[4],
+              fontSize: fontSizes[4],
               color: colors.gray.dark,
               fontFamily: fonts.header,
               fontWeight: `bold`,
@@ -90,7 +90,7 @@ class FeaturedSites extends Component {
             css={{
               ...styles.withTitleHover,
               display: `none`,
-              fontSize: scale[1],
+              fontSize: fontSizes[1],
               [breakpoints.sm]: {
                 display: `block`,
               },
@@ -118,7 +118,7 @@ class FeaturedSites extends Component {
             <div
               css={{
                 color: colors.gray.calm,
-                fontSize: scale[1],
+                fontSize: fontSizes[1],
                 marginRight: 15,
                 display: `none`,
                 [breakpoints.md]: {
@@ -167,7 +167,7 @@ class FeaturedSites extends Component {
                   css={{
                     "&&": {
                       borderBottom: `none`,
-                      fontSize: scale[3],
+                      fontSize: fontSizes[3],
                       fontWeight: `bold`,
                       color: colors.gray.dark,
                       fontFamily: fonts.header,
@@ -196,7 +196,7 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   css={{
-                    fontSize: scale[1],
+                    fontSize: fontSizes[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
                     [breakpoints.lg]: {
