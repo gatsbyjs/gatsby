@@ -31,7 +31,7 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
 
     if (!r.data.site.siteMetadata.siteUrl) {
       throw new Error(
-        `SiteMetaData 'siteUrl' property is required. (https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use)`
+        `SiteMetaData 'siteUrl' property is required. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
       )
     }
 
