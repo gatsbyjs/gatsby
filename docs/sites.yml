@@ -5208,3 +5208,16 @@
     - Marketing
   built_by: Becreatives
   built_by_url: "https://becreatives.com"
+- title: Paul Clifton Photography
+  main_url: https://paulcliftonphotography.com
+  url: https://paulcliftonphotography.com
+  featured: false
+  description: >
+    A full migration from WordPress to GatsbyJS and DatoCMS. Includes custom cropping on images as viewport changes size and also an infinity scroll that doesn't preload all of the results.
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Photography
+  built_by: Little Wolf Studio
+  built_by_url: https://littlewolfstudio.co.uk
