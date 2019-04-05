@@ -44,4 +44,4 @@ The launch was a success and landed Design+Code at #1 on [Product Hunt](https://
 
 Gatsby ignited their Search Engine Optimization (SEO) with Lighthouse scores of SEO at 100, Best Practices at 93, and Performance at 97 out of 100. The site is far out-performing its predecessor and has become the content-driven, sales machine that was anticipated.
 
-Try out Gatsby to see how it can do the same for you. [Get started here](https://www.gatsbyjs.org/ "Gatsby get started").
+Try out Gatsby to see how it can do the same for you. [Get started here](/ "Gatsby get started").

@@ -66,6 +66,7 @@ See the [library of official and community plugins](/plugins/)
 - [Zero to Deploy: A Practical Guide to Static Sites with Gatsby.js](https://scotch.io/tutorials/zero-to-deploy-a-practical-guide-to-static-sites-with-gatsbyjs)
 - [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
 - [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
+- [Why I used GatsbyJS](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
 
 ### German
 
