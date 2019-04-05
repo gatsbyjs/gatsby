@@ -23,7 +23,9 @@ Ritual chose a rebuild with Gatsby due to the restrictions they were running int
 
 In addition, they had some specific business and impact goals they were trying to achieve with the new site and top on that list was improving their development velocity.
 
+<pullquote>
 “We felt that investing in the combination of React, GraphQL, and a headless CMS as early as possible would allow us to streamline our delivery pipeline and iterate faster.”
+</pullquote>
 
 ## Gatsby and React: Shorter builds, rapid changes
 
@@ -37,6 +39,6 @@ The initial site re-launched on Gatsby v1 while bringing over some of the legacy
 
 “I think the most important facet of the Gatsby experience is its Node environment, enabling data to not only inform the content of our site, but how it’s structured and the pages within,” said Daniel. “It’s allowed us to scale out many pages very quickly, and to easily relate among data nodes.”
 
-And like so many others, Daniel confirmed that the Gatsby “documentation and community are HUGE reasons for anybody to pay attention to Gatsby.” “There’s so many great plugins and open source contributions as well, making it such a vibrant community of talented engineers.”
+And like so many others, Daniel confirmed that the Gatsby “documentation and community are _huge_ reasons for anybody to pay attention to Gatsby. There’s so many great plugins and open source contributions as well, making it such a vibrant community of talented engineers.”
 
 Is this your kind of community? Join us!
