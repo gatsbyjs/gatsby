@@ -153,10 +153,10 @@ exports.onCreateWebpackConfig = (
       ].filter(p => p),
 
       /**
-       * Remove mode and common chunks style optimizations from Gatsby's default
+       * Remove common chunks style optimizations from Gatsby's default
        * config, they cause issues for our pre-bundled code.
        */
-      mode: `none`,
+      mode: stage === `develop` ? `development` : `production`,
       optimization: {},
       devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
     }
@@ -164,7 +164,14 @@ exports.onCreateWebpackConfig = (
     if (stage === `develop`) {
       webpack(config).watch({}, () => {})
     } else {
-      webpack(config).run()
+      return new Promise((resolve, reject) => {
+        webpack(config).run((err, stats) => {
+          if (err) return reject(err)
+          const errors = stats.compilation.errors || []
+          if (errors.length > 0) return reject(stats.compilation.errors)
+          return resolve(stats)
+        })
+      })
     }
   }
 }
