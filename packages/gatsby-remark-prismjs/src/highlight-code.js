@@ -12,19 +12,26 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
       loadPrismLanguage(language)
     } catch (e) {
       // Language wasn't loaded so let's bail.
-      if (language === `none`) {
-        return code // Don't escape if set to none.
-      } else {
-        const lang = language.toLowerCase()
-        if (!unsupportedLanguages.has(lang)) {
-          console.warn(
-            `unable to find prism language '${lang}' for highlighting.`,
-            `applying generic code block`
-          )
-          unsupportedLanguages.add(lang)
-        }
-        return _.escape(code)
+      let message = null
+      switch (language) {
+        case `none`:
+          return code // Don't escape if set to none.
+        case `text`:
+          message = `code block language not specified in markdown.`
+          break
+        case `inline-text`:
+          message = `inline code language not specified in markdown.`
+          break
+        default:
+          message = `unable to find prism language '${language}' for highlighting.`
       }
+
+      const lang = language.toLowerCase()
+      if (!unsupportedLanguages.has(lang)) {
+        console.warn(message, `applying generic code block`)
+        unsupportedLanguages.add(lang)
+      }
+      return _.escape(code)
     }
   }
 

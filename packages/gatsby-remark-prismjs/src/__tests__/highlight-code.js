@@ -56,7 +56,7 @@ export default Counter
   })
 
   describe(`with language-text`, () => {
-    it(`escapes &, <, " elements #4597 and warns`, () => {
+    it(`escapes &, <, " elements and warns`, () => {
       spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
@@ -64,7 +64,7 @@ export default Counter
       const code = `<button />`
       expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
       expect(console.warn).toHaveBeenCalledWith(
-        `unable to find prism language 'text' for highlighting.`,
+        `code block language not specified in markdown.`,
         `applying generic code block`
       )
     })
@@ -84,12 +84,27 @@ export default Counter
       expect(console.warn).toHaveBeenCalledTimes(2)
       expect(console.warn).toHaveBeenNthCalledWith(
         1,
-        `unable to find prism language 'text' for highlighting.`,
+        `code block language not specified in markdown.`,
         `applying generic code block`
       )
       expect(console.warn).toHaveBeenNthCalledWith(
         2,
         `unable to find prism language 'raw' for highlighting.`,
+        `applying generic code block`
+      )
+    })
+  })
+
+  describe(`with language-inline-text`, () => {
+    it(`escapes &, <, " elements and warns`, () => {
+      spyOn(console, `warn`)
+
+      const highlightCode = require(`../highlight-code`)
+      const language = `inline-text`
+      const code = `<button />`
+      expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
+      expect(console.warn).toHaveBeenCalledWith(
+        `inline code language not specified in markdown.`,
         `applying generic code block`
       )
     })

@@ -79,7 +79,7 @@ module.exports = (
 
   if (!noInlineHighlight) {
     visit(markdownAST, `inlineCode`, node => {
-      let languageName = `text`
+      let languageName = `inline-text`
 
       if (inlineCodeMarker) {
         let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
