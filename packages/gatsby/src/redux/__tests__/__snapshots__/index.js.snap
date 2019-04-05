@@ -17,8 +17,6 @@ Object {
     },
   },
   "jsonDataPaths": Object {},
-  "nodes": Map {},
-  "nodesByType": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "plugins": Object {},

@@ -63,7 +63,9 @@ describe(`redux db`, () => {
 
     // make sure data was read and is not the same as our clean redux state
     expect(data.components).not.toEqual(initialComponentsState)
-    expect(data).toMatchSnapshot()
+
+    // yuck - loki and redux will have different shape of redux state (nodes and nodesByType)
+    expect(_.omit(data, [`nodes`, `nodesByType`])).toMatchSnapshot()
   })
 
   it(`does not write to the cache when DANGEROUSLY_DISABLE_OOM is set`, async () => {
