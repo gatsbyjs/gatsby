@@ -1,11 +1,11 @@
 const path = require(`path`)
-const fs = require(`fs-extra`)
 const { saveState, store } = require(`../index`)
+const { writeToCache } = require(`../persist`)
 const {
   actions: { createPage },
 } = require(`../actions`)
 
-jest.mock(`fs-extra`)
+jest.mock(`../persist`)
 
 describe(`redux db`, () => {
   beforeEach(() => {
@@ -24,15 +24,12 @@ describe(`redux db`, () => {
       )
     )
 
-    fs.writeFile.mockClear()
+    writeToCache.mockClear()
   })
   it(`should write cache to disk`, async () => {
     await saveState()
 
-    expect(fs.writeFile).toBeCalledWith(
-      expect.stringContaining(`.cache/redux-state.json`),
-      expect.stringContaining(`my-sweet-new-page.js`)
-    )
+    expect(writeToCache).toBeCalled()
   })
 
   it(`does not write to the cache when DANGEROUSLY_DISABLE_OOM is set`, async () => {
@@ -40,7 +37,7 @@ describe(`redux db`, () => {
 
     await saveState()
 
-    expect(fs.writeFile).not.toBeCalled()
+    expect(writeToCache).not.toBeCalled()
 
     delete process.env.DANGEROUSLY_DISABLE_OOM
   })
