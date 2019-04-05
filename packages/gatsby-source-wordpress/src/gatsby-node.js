@@ -74,6 +74,9 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
+  // Create fake wordpressId form element who done have any in the database
+  entities = normalize.generateFakeWordpressId(entities)
+
   // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
 

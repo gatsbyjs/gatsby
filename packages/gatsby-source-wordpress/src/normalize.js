@@ -96,6 +96,15 @@ exports.combineACF = function(entities) {
   return entities
 }
 
+// Create wordpress_id if the entity don't have one
+exports.generateFakeWordpressId = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__yoast_redirects`) {
+      e.wordpress_id = `${e.origin}-${e.url}-${e.type}`
+    }
+    return e
+  })
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
