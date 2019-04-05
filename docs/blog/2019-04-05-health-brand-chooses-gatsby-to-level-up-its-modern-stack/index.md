@@ -1,7 +1,6 @@
 ---
 title: "Health Brand Chooses Gatsby to Level-Up Its Modern Stack"
 date: 2019-04-05
-date: 2019-04-05
 author: Linda Watkins
 excerpt: "See how health brand Ritual used Gatsby to improve their SEO, page load times, delivery pipeline, and more!"
 tags:
