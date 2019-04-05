@@ -8,7 +8,6 @@ tags:
  - ritual
  - react
  - graphql
-
 ---
 
 [Ritual](https://ritual.com/) is a health brand led by the belief that women should know exactly what’s in their vitamins. Ritual’s vitamins work smarter to fill the gaps in women’s diets with high quality nutrients. They’re on a mission to inspire women to feel their best, every day. Ritual’s clean, modern stack website, leads customers speedily through an educational purchase experience to learn more about the products, the ingredients, and overall benefits they can find by investing in their vitamin habits every day.
@@ -23,7 +22,7 @@ Ritual chose a rebuild with Gatsby due to the restrictions they were running int
 
 In addition, they had some specific business and impact goals they were trying to achieve with the new site and top on that list was improving their development velocity.
 
-<pullquote>
+<pullquote citation="Daniel Archer">
 “We felt that investing in the combination of React, GraphQL, and a headless CMS as early as possible would allow us to streamline our delivery pipeline and iterate faster.”
 </pullquote>
 
