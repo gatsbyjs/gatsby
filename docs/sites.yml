@@ -5216,8 +5216,7 @@
     A simple agency site built using GatsbyJS and DatoCMS. Aesthetic was creating using a customisation of Bulma.
   categories:
     - Blog
-    - Portfolio
-    - Gallery
-    - Photography
+    - Agency
+    - Web Development
   built_by: Little Wolf Studio
   built_by_url: https://littlewolfstudio.co.uk
