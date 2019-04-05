@@ -96,6 +96,15 @@ exports.combineACF = function(entities) {
   return entities
 }
 
+// Create wordpress_id if the entity don't have one
+exports.generateFakeWordpressId = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__yoast_redirects`) {
+      e.wordpress_id = `${e.origin}-${e.url}-${e.type}`
+    }
+    return e
+  })
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
@@ -179,12 +188,14 @@ exports.excludeUnknownEntities = entities =>
 // Create node ID from known entities
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
 // we create the node ID based upon type if the wordpress_id doesn't exist
-exports.createGatsbyIds = (createNodeId, entities) =>
+exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
   entities.map(e => {
     if (e.wordpress_id) {
-      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+      e.id = createNodeId(
+        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`
+      )
     } else {
-      e.id = createNodeId(e.__type)
+      e.id = createNodeId(`${e.__type}-${_siteURL}`)
     }
     return e
   })
@@ -476,6 +487,7 @@ exports.downloadMediaFiles = async ({
   createNode,
   createNodeId,
   touchNode,
+  getNode,
   _auth,
 }) =>
   Promise.all(
@@ -488,8 +500,16 @@ exports.downloadMediaFiles = async ({
         // If we have cached media data and it wasn't modified, reuse
         // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
-          fileNodeID = cacheMediaData.fileNodeID
-          touchNode({ nodeId: cacheMediaData.fileNodeID })
+          const fileNode = getNode(cacheMediaData.fileNodeID)
+
+          // check if node still exists in cache
+          // it could be removed if image was made private
+          if (fileNode) {
+            fileNodeID = cacheMediaData.fileNodeID
+            touchNode({
+              nodeId: fileNodeID,
+            })
+          }
         }
 
         // If we don't have cached data, download the file

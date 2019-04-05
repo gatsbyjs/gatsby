@@ -1,20 +1,20 @@
 const axios = require(`axios`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 const { nodeFromData } = require(`./normalize`)
 
-// Get content digest of node.
-const createContentDigest = obj =>
-  crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(obj))
-    .digest(`hex`)
-
 exports.sourceNodes = async (
-  { actions, getNode, hasNodeChanged, store, cache, createNodeId },
-  { baseUrl, apiBase, basicAuth }
+  {
+    actions,
+    getNode,
+    hasNodeChanged,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+  },
+  { baseUrl, apiBase, basicAuth, filters }
 ) => {
   const { createNode } = actions
 
@@ -50,6 +50,15 @@ exports.sourceNodes = async (
         if (typeof url === `object`) {
           // url can be string or object containing href field
           url = url.href
+
+          // Apply any filters configured in gatsby-config.js. Filters
+          // can be any valid JSON API filter query string.
+          // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
+          if (typeof filters === `object`) {
+            if (filters.hasOwnProperty(type)) {
+              url = url + `?${filters[type]}`
+            }
+          }
         }
 
         let d

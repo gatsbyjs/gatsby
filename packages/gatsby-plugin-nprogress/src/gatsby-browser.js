@@ -2,7 +2,7 @@ import NProgress from "nprogress"
 
 const defaultOptions = { color: `#29d` }
 
-exports.onClientEntry = (a, pluginOptions = {}) => {
+export const onClientEntry = (a, pluginOptions = {}) => {
   // Merge default options with user defined options in `gatsby-config.js`
   const options = { ...defaultOptions, ...pluginOptions }
 
@@ -74,7 +74,7 @@ exports.onClientEntry = (a, pluginOptions = {}) => {
         transform: rotate(360deg);
       }
     }
-`
+  `
 
   const node = document.createElement(`style`)
   node.id = `nprogress-styles`
@@ -84,10 +84,10 @@ exports.onClientEntry = (a, pluginOptions = {}) => {
   NProgress.configure(options)
 }
 
-exports.onRouteUpdateDelayed = () => {
+export const onRouteUpdateDelayed = () => {
   NProgress.start()
 }
 
-exports.onRouteUpdate = () => {
+export const onRouteUpdate = () => {
   NProgress.done()
 }

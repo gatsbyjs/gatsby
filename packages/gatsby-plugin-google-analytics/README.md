@@ -82,7 +82,7 @@ ga('set', 'anonymizeIp', 1);
 If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
 you can set a link e.g. in your imprint as follows:
 
-`<a href="javascript:gaOptout();">Deactive Google Analytics</a>`
+`<a href="javascript:gaOptout();">Deactivate Google Analytics</a>`
 
 ## The "respectDNT" option
 
@@ -98,7 +98,7 @@ If you need to use Google Optimize for A/B testing, you can add this optional Op
 
 ## The "experimentId" option
 
-If you need to setup SERVER_SIDE Google Optimize experiment, you can add the experiment ID. The experiment ID is shown on the right-hand panel on the experiment details page. [Server-side Experiments](https://developers.google.com/optimize/devguides/experiments)
+If you need to set up SERVER_SIDE Google Optimize experiment, you can add the experiment ID. The experiment ID is shown on the right-hand panel on the experiment details page. [Server-side Experiments](https://developers.google.com/optimize/devguides/experiments)
 
 ## The "variationId" option
 

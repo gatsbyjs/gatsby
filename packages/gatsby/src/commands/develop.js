@@ -9,6 +9,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const { formatError } = require(`graphql`)
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
@@ -16,19 +17,25 @@ const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
-const developHtml = require(`./develop-html`)
+const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
+const telemetry = require(`gatsby-telemetry`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const onExit = require(`signal-exit`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -49,11 +56,21 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
+onExit(() => {
+  telemetry.trackCli(`DEVELOP_STOP`)
+})
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () =>
-    developHtml(program).catch(err => {
+  const createIndexHtml = async () => {
+    try {
+      await buildHTML.buildPages({
+        program,
+        stage: `develop-html`,
+        pagePaths: [`/`],
+      })
+    } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
         return
@@ -62,14 +79,17 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://gatsby.app/debug-html
+          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
         err
       )
-    })
+    }
+  }
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -86,6 +106,7 @@ async function startServer(program) {
    * Set up the express app.
    **/
   const app = express()
+  app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
       log: false,
@@ -103,11 +124,23 @@ async function startServer(program) {
       () => {}
     )
   }
+
   app.use(
     `/___graphql`,
-    graphqlHTTP({
-      schema: store.getState().schema,
-      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+    graphqlHTTP(() => {
+      const schema = store.getState().schema
+      return {
+        schema,
+        graphiql:
+          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        context: withResolverContext({}, schema),
+        formatError(err) {
+          return {
+            ...formatError(err),
+            stack: err.stack ? err.stack.split(`\n`) : [],
+          }
+        },
+      }
     })
   )
 
@@ -144,7 +177,11 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(`public`))
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(require(`./develop-static`)(`public`, { index: false }))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -236,8 +273,9 @@ async function startServer(program) {
 
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
+  telemetry.trackCli(`DEVELOP_START`)
+  telemetry.startBackgroundUpdate()
 
-  const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
@@ -261,35 +299,11 @@ module.exports = async (program: any) => {
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detect(port, (err, _port) => {
-      if (err) {
-        report.panic(err)
-      }
+  program.port = await detectPortInUseAndPrompt(port, rlInterface)
 
-      if (port !== _port) {
-        // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+  db.startAutosave()
 
-        rlInterface.question(question, answer => {
-          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-            program.port = _port // eslint-disable-line no-param-reassign
-          }
-
-          startServer(program).then(([c, l]) => {
-            compiler = c
-            resolve()
-          })
-        })
-      } else {
-        startServer(program).then(([c, l]) => {
-          compiler = c
-          resolve()
-        })
-      }
-    })
-  })
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -385,11 +399,11 @@ module.exports = async (program: any) => {
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://gatsby.app/boundActionCreators`,
+        docsLink: `https://gatsby.dev/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://gatsby.app/pathContext`,
+        docsLink: `https://gatsby.dev/pathContext`,
       },
     }
     const deprecatedLocations = {}

@@ -30,13 +30,13 @@ However, it would be a pain to have to manually convert images into different si
 
 Even so, when I tried to do more complicated workflows like adding CSS preprocessing with dependence on the JavaScript ecosystem with the [Node Package Manager (npm)](https://www.npmjs.com/), it became a lot more convoluted. Looking at a few recipes I’ve found, I would have to dive down the road of writing [Gulp](https://gulpjs.com/) workflows and somehow connect them to Jekyll commands. I also chanced upon the [Jekyll Asset Pipeline](https://github.com/matthodan/jekyll-asset-pipeline) which seems what I could use. I didn’t dive too deep into it, but from brief glances it seems like I would have to come up with a lot of custom scripting to interface with JavaScript libraries on my own.
 
-I guess having used [webpack](https://webpack.js.org/) at work, I was pampered by this open source community where there are loaders and documented recipes for doing almost anything, granted that someone was willing to wade into the world of "JavaScript fatigue". Around the same time, [@yangshun](https://github.com/yangshun) introduced me to [Gatsby](https://www.gatsbyjs.org/), a React static site generator which seemed really fascinating. It also seemed a good opportunity for me to get my hands dirty with frontend development again.
+I guess having used [webpack](https://webpack.js.org/) at work, I was pampered by this open source community where there are loaders and documented recipes for doing almost anything, granted that someone was willing to wade into the world of "JavaScript fatigue". Around the same time, [@yangshun](https://github.com/yangshun) introduced me to [Gatsby](/), a React static site generator which seemed really fascinating. It also seemed a good opportunity for me to get my hands dirty with frontend development again.
 
 As I had some free time on my hands, why not rewrite everything again and keep myself updated with the ever-changing JavaScript ecosystem? Seems like a lot of fun!
 
 ## Final Form — Gatsby
 
-[Gatsby](https://www.gatsbyjs.org/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/content/blog/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
+[Gatsby](/) is a static site generator that can render sites from markup documents using templates defined as React components. It functions similarly to Jekyll, where you can pick a [starter project](https://github.com/gatsbyjs/gatsby-starter-blog), [drop in](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/content/blog/hello-world/index.md) some markdown documents for articles, and [be rewarded](https://gatsbyjs.github.io/gatsby-starter-blog/) with a website with minimal effort.
 
 It offers much much more, however. Gatsby lets me leverage all the modern tools for building web applications and to add interactive experiences for visitors like a fully fledged [React](https://reactjs.org/) application. Not only that, it is unlike traditional single page applications, and works _without_ JavaScript! Things would certainly be more complicated if I were to add a JavaScript compilation pipeline to a Jekyll site, and a JavaScript framework would be a better fit.
 
@@ -98,7 +98,7 @@ Because of the APIs exposed by Gatsby for interfacing with its internals, powerf
 
 - Can be extended with a `gatsby-node.js` file in the root of the project
 
-The [Node.js APIs](https://www.gatsbyjs.org/docs/node-apis/) let plugins extend or modify the heavy lifting performed by the Node.js process when compiling the application. Your gatsby-node.js file can export functions which modify the GraphQL data that is provided to React components when they are rendered. The APIs are also used by plugins to extend the internals of Gatsby e.g. the default webpack config can also be customized here.
+The [Node.js APIs](/docs/node-apis/) let plugins extend or modify the heavy lifting performed by the Node.js process when compiling the application. Your gatsby-node.js file can export functions which modify the GraphQL data that is provided to React components when they are rendered. The APIs are also used by plugins to extend the internals of Gatsby e.g. the default webpack config can also be customized here.
 
 Take the example of what happens during the processing of markdown files into pages. The [gatsby-source-filesystem](/packages/gatsby-source-filesystem) plugin scans directories and from files it finds, creates File nodes. These File nodes are then processed by [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/tree/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-transformer-remark) , parsing the markup into HTML with the [Remark](https://remark.js.org/) markdown processor.
 
@@ -106,15 +106,15 @@ Take the example of what happens during the processing of markdown files into pa
 
 - Can be extended with a `gatsby-ssr.js` file in the root of the project
 
-The [server side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) allow hooks to be defined to modify the rendering process of the application. For example, the [Typography.js Plugin](/packages/gatsby-plugin-typography) uses this to [inline the styles](https://github.com/gatsbyjs/gatsby/blob/ab1d7f50adcff5b7085e6236973b8c30083aa523/packages/gatsby-plugin-typography/src/gatsby-ssr.js#L11-L14) required into the DOM head when rendering.
+The [server side rendering APIs](/docs/ssr-apis/) allow hooks to be defined to modify the rendering process of the application. For example, the [Typography.js Plugin](/packages/gatsby-plugin-typography) uses this to [inline the styles](https://github.com/gatsbyjs/gatsby/blob/ab1d7f50adcff5b7085e6236973b8c30083aa523/packages/gatsby-plugin-typography/src/gatsby-ssr.js#L11-L14) required into the DOM head when rendering.
 
 #### Browser APIs
 
 - Can be extended with a `gatsby-browser.js` file in the root of the project
 
-Finally, the [browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) allows plugins to run code on lifecycle events while Gatsby is running in the browser. The [Google Analytics Plugin](/packages/gatsby-plugin-google-analytics) [uses these APIs](https://github.com/gatsbyjs/gatsby/blob/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-plugin-google-analytics/src/gatsby-browser.js#L4-L5) to track the location of the user on route changes.
+Finally, the [browser APIs](/docs/browser-apis/) allows plugins to run code on lifecycle events while Gatsby is running in the browser. The [Google Analytics Plugin](/packages/gatsby-plugin-google-analytics) [uses these APIs](https://github.com/gatsbyjs/gatsby/blob/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-plugin-google-analytics/src/gatsby-browser.js#L4-L5) to track the location of the user on route changes.
 
-The best part about using Gatsby is that there plenty of plugins available leveraging these APIs that give us new features almost for free. Want to add offline mode to your application? RSS feeds? Styled components? Just lookup the [available plugins](https://www.gatsbyjs.org/docs/plugins/#official-plugins) and drop them into the [`gatsby-config.js`](https://github.com/jiahaog/jiahao.codes/blob/master/gatsby-config.js)!
+The best part about using Gatsby is that there plenty of plugins available leveraging these APIs that give us new features almost for free. Want to add offline mode to your application? RSS feeds? Styled components? Just lookup the [available plugins](/docs/plugins/#official-plugins) and drop them into the [`gatsby-config.js`](https://github.com/jiahaog/jiahao.codes/blob/master/gatsby-config.js)!
 
 ## Next Steps
 

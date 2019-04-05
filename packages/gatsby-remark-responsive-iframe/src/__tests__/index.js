@@ -28,14 +28,10 @@ describe(`gatsby-remark-responsive-iframe`, () => {
 
       const transformed = await plugin({ markdownAST })
       const node = find(transformed, function(node) {
-        return node.type === `unknown`
+        return node.type === `html`
       })
       expect(node).toBeDefined()
-      expect(node.data).toBeDefined()
-      expect(node.data.hChildren).toBeDefined()
-      expect(node.data.hChildren.length).toBeGreaterThan(0)
-      const [child] = node.data.hChildren
-      expect(child.value).toMatchSnapshot()
+      expect(node.value).toMatchSnapshot()
     })
   })
   ;[`iframe`, `object`].forEach(tag => {
@@ -46,14 +42,34 @@ describe(`gatsby-remark-responsive-iframe`, () => {
 
       const transformed = await plugin({ markdownAST })
       const node = find(transformed, function(node) {
-        return node.type === `unknown`
+        return node.type === `html`
       })
       expect(node).toBeDefined()
-      expect(node.data).toBeDefined()
-      expect(node.data.hChildren).toBeDefined()
-      expect(node.data.hChildren.length).toBeGreaterThan(0)
-      const [child] = node.data.hChildren
-      expect(child.value).toMatchSnapshot()
+      expect(node.value).toMatchSnapshot()
+    })
+    it(`transforms an ${tag} and maintains existing styles`, async () => {
+      const markdownAST = remark.parse(`
+<${tag} url="http://www.example.com/" style="border:0" width="600px" height="400px"></${tag}>
+    `)
+
+      const transformed = await plugin({ markdownAST })
+      const node = find(transformed, function(node) {
+        return node.type === `html`
+      })
+      expect(node).toBeDefined()
+      expect(node.value).toMatchSnapshot()
+    })
+    it(`transforms an ${tag} and maintains existing styles when a semicolon exists`, async () => {
+      const markdownAST = remark.parse(`
+<${tag} url="http://www.example.com/" style="border:0;" width="600px" height="400px"></${tag}>
+    `)
+
+      const transformed = await plugin({ markdownAST })
+      const node = find(transformed, function(node) {
+        return node.type === `html`
+      })
+      expect(node).toBeDefined()
+      expect(node.value).toMatchSnapshot()
     })
   })
 

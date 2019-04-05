@@ -5,7 +5,6 @@ import { graphql } from "gatsby"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
-import Avatar from "../components/Avatar"
 import Post from "../components/post"
 import Layout from "../layouts"
 
@@ -93,15 +92,6 @@ class Index extends React.Component {
               flexWrap: `wrap`,
             }}
           >
-            <div
-              css={{
-                marginRight: rhythm(1),
-                flexGrow: 1,
-                flexShrink: 0,
-              }}
-            >
-              <Avatar user={user} />
-            </div>
             <div
               css={{
                 flexGrow: 2,
@@ -205,7 +195,6 @@ export const pageQuery = graphql`
       edges {
         node {
           username
-          ...Avatar_user
         }
       }
     }

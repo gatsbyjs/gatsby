@@ -26,7 +26,7 @@ For this guide, you don't have to worry about most of the features. You'll just 
 
 #### Adding content to existing pages
 
-Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](https://www.gatsbyjs.org/docs/quick-start/#install-gatsbys-command-line-tool), create a new site and navigate to it in your terminal:
+Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](/docs/quick-start/#install-gatsbys-command-line-tool), create a new site and navigate to it in your terminal:
 
 ```shell
 gatsby new kentico-cloud-guide
@@ -206,7 +206,7 @@ Now you know how to create pages programmatically and pull their content from Ke
 
 To keep your site static but always up to date with the latest content from Kentico Cloud, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://www.netlify.com/docs/continuous-deployment/), but the principle is similar using other services like [Travis CI](https://travis-ci.org/), as with another [site sourced from Kentico Cloud](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
 
-For simple automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git respository.
+For simple automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git repository.
 
 Now that your site's up and running, you need to set up automatic builds when published content in Kentico Cloud changes. First, in Netlify [create a new build hook](https://www.netlify.com/docs/webhooks/) with a name like "Change in Kentico Cloud content" and copy the URL. Then go to Kentico Cloud. Under _Project settings_, choose _Webhooks_ and create a new webhook. Give it a name like "Netlify build" and paste the URL into the _URL address_ field. And that's it. Now whenever published content changes ([see what actions call a webhook](https://developer.kenticocloud.com/docs/webhooks#section-when-webhooks-are-called)), your webhook will trigger a build in Netlify to ensure your static content is updated to the latest version.
 
@@ -217,4 +217,4 @@ You've seen how to set up a simple Gatsby site that sources content from Kentico
 - See [more about what the Kentico Cloud source plugin can do](https://github.com/Kentico/gatsby-source-kentico-cloud#features).
 - Read the [Kentico Cloud documentation](https://developer.kenticocloud.com/docs) to see what's possible.
 - Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kentico-cloud) to see a more complete example.
-- Read a [blog post about using Kentico Cloud and Gatsby](https://www.gatsbyjs.org/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
+- Read a [blog post about using Kentico Cloud and Gatsby](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
