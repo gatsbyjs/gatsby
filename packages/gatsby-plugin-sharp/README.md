@@ -96,11 +96,10 @@ a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).
 
-When both a `maxWidth` and `maxHeight` are provided, the default way by which the image `fit` is `COVER`, with additional available options of `CONTAIN`, and `FILL`.
+When both a `maxWidth` and `maxHeight` are provided, sharp will use `COVER` as a fit strategy by default. This might not be ideal so you can now choose between `COVER`, `CONTAIN` and `FILL` as a fit strategy. To see them in action the [CSS property object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) comes close to its implementation.
 
-`CONTAIN` and `FILL` will not work with `cropFocus` of [sharp.strategy][6]. A `cropFocus` option must be passed that is not `ENTROPY` or `ATTENTION`.
-
-`background` - background colour when using a `fit` of `CONTAIN`, parsed by the [color module][18], defaults to black without transparency.
+#### Note
+fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned to [sharp.strategy][6]. The `cropFocus` option cannot be `ENTROPY` or `ATTENTION`
 
 #### Parameters
 
