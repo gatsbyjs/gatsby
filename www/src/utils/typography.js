@@ -2,7 +2,7 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import {
   space,
-  scale as scaleTokens,
+  fontSizes,
   colors,
   transition,
   radii,
@@ -71,27 +71,20 @@ const _options = {
       ".gatsby-highlight": {
         background: colors.code.bg,
         borderRadius: `${radii[1]}px`,
-        marginBottom: rhythm(space[6]),
-        overflow: `auto`,
-        padding: rhythm(space[6]),
         position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']": {
         backgroundColor: `transparent`,
         border: 0,
-        float: `left`,
-        padding: 0,
-        marginTop: 0,
-        marginBottom: 0,
-        minWidth: `100%`,
-        overflow: `initial`,
+        padding: `${rhythm(space[6])} 0`,
+        WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']::before": {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
-        fontSize: scaleTokens[0],
+        fontSize: fontSizes[0],
         fontFamily: fonts.monospace.join(`,`),
         letterSpacing: letterSpacings.tracked,
         lineHeight: lineHeights.solid,
@@ -167,8 +160,11 @@ const _options = {
       ".gatsby-highlight pre code": {
         display: `block`,
         fontSize: `100%`,
+        lineHeight: 1.5,
+        float: `left`,
+        minWidth: `100%`,
         // reset code vertical padding declared earlier
-        padding: 0,
+        padding: `0 ${rhythm(space[6])}`,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
@@ -181,21 +177,21 @@ const _options = {
         }`,
         display: `block`,
       },
-      ".gatsby-highlight::-webkit-scrollbar": {
+      ".gatsby-highlight pre::-webkit-scrollbar": {
         width: rhythm(space[2]),
         height: rhythm(space[2]),
       },
-      ".gatsby-highlight::-webkit-scrollbar-thumb": {
+      ".gatsby-highlight pre::-webkit-scrollbar-thumb": {
         background: colors.code.scrollbarThumb,
       },
-      ".gatsby-highlight::-webkit-scrollbar-track": {
+      ".gatsby-highlight pre::-webkit-scrollbar-track": {
         background: colors.code.border,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        fontSize: scaleTokens[1],
+        fontSize: fontSizes[1],
         lineHeight: lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(space[9]),
@@ -290,9 +286,12 @@ const _options = {
           marginLeft: rhythm(-space[7]),
           marginRight: rhythm(-space[7]),
         },
-        ".gatsby-highlight": {
-          padding: rhythm(space[7]),
+        ".gatsby-highlight pre": {
+          padding: `${rhythm(space[7])} 0`,
           marginBottom: rhythm(space[7]),
+        },
+        ".gatsby-highlight pre code": {
+          padding: `0 ${rhythm(space[7])}`,
         },
         ".gatsby-highlight-code-line": {
           marginRight: rhythm(-space[7]),
@@ -305,7 +304,7 @@ const _options = {
           marginRight: rhythm(-space[7]),
           marginLeft: rhythm(-space[7]),
           padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            rhythm(space[3])
+            space[3]
           )}`,
         },
         ".gatsby-highlight pre[class*='language-']::before": {

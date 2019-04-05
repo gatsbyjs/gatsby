@@ -8,7 +8,7 @@ import {
   radii,
   shadows,
   breakpoints,
-  scale,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
@@ -55,10 +55,10 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
 `
 const CancelIcon = styled(CancelMdIcon)`
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
 `
 
 const StatusMessage = styled(`span`)`
@@ -67,8 +67,8 @@ const StatusMessage = styled(`span`)`
   background: ${colors.gray.dark};
   bottom: 60px;
   color: ${colors.white};
-  font-size: ${scale[2]};
-  padding: ${scale[2]} ${scale[4]};
+  font-size: ${fontSizes[2]};
+  padding: ${fontSizes[2]} ${fontSizes[4]};
   text-align: left;
   left: 0;
 `
@@ -99,7 +99,7 @@ const Label = styled(`label`)`
   justify-content: center;
   align-items: center;
   padding: ${space[8]};
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
   float: left;
 `
 
@@ -111,7 +111,7 @@ const Input = styled(`input`)`
   float: left;
   height: 60px;
   width: calc(100% - 60px);
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   padding: ${space[5]};
   border: none;
   resize: none;

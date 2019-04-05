@@ -4,7 +4,7 @@ import TagsIcon from "react-icons/lib/ti/tags"
 
 import Button from "./button"
 import { rhythm } from "../utils/typography"
-import { space, scale } from "../utils/presets"
+import { space, fontSizes } from "../utils/presets"
 const _ = require(`lodash`)
 
 const TagsSection = ({ tags }) => {
@@ -29,7 +29,7 @@ const TagsSection = ({ tags }) => {
     >
       <em
         css={{
-          fontSize: scale[1],
+          fontSize: fontSizes[1],
           display: `block`,
           flexBasis: `60%`,
           flexGrow: 1,
