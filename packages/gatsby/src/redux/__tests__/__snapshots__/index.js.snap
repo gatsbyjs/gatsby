@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redux db should write cache to disk 1`] = `
+Object {
+  "componentDataDependencies": Object {
+    "connections": Object {},
+    "nodes": Object {},
+  },
+  "components": Map {
+    "<PROJECT_ROOT>/src/templates/my-sweet-new-page.js" => Object {
+      "componentPath": "<PROJECT_ROOT>/src/templates/my-sweet-new-page.js",
+      "isInBootstrap": true,
+      "pages": Array [
+        "/my-sweet-new-page/",
+      ],
+      "query": "",
+    },
+  },
+  "jsonDataPaths": Object {},
+  "nodes": Map {},
+  "nodesByType": Map {},
+  "staticQueryComponents": Map {},
+  "status": Object {
+    "plugins": Object {},
+  },
+}
+`;

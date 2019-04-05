@@ -12,22 +12,28 @@ const { writeToCache, readFromCache } = require(`./persist`)
 
 // Read old node data from cache.
 let initialState = {}
-try {
-  initialState = readFromCache()
-  if (initialState.nodes) {
-    // re-create nodesByType
-    initialState.nodesByType = new Map()
-    initialState.nodes.forEach(node => {
-      const { type } = node.internal
-      if (!initialState.nodesByType.has(type)) {
-        initialState.nodesByType.set(type, new Map())
-      }
-      initialState.nodesByType.get(type).set(node.id, node)
-    })
+const readState = () => {
+  try {
+    initialState = readFromCache()
+    if (initialState.nodes) {
+      // re-create nodesByType
+      initialState.nodesByType = new Map()
+      initialState.nodes.forEach(node => {
+        const { type } = node.internal
+        if (!initialState.nodesByType.has(type)) {
+          initialState.nodesByType.set(type, new Map())
+        }
+        initialState.nodesByType.get(type).set(node.id, node)
+      })
+    }
+  } catch (e) {
+    // ignore errors.
+    initialState = {}
   }
-} catch (e) {
-  // ignore errors.
+  return initialState
 }
+readState()
+exports.readState = readState
 
 const store = Redux.createStore(
   Redux.combineReducers({ ...reducers }),
