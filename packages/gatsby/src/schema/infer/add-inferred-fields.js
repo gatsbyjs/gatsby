@@ -252,6 +252,9 @@ const getFieldConfigFromFieldNameConvention = ({
   }
 }
 
+const DATE_EXTENSION = { addResolver: { type: `date` } }
+const FILE_EXTENSION = { addResolver: { type: `relativeFile` } }
+
 const getSimpleFieldConfig = ({
   schemaComposer,
   typeComposer,
@@ -268,7 +271,7 @@ const getSimpleFieldConfig = ({
       return { type: is32BitInteger(value) ? `Int` : `Float` }
     case `string`:
       if (isDate(value)) {
-        return { type: `Date`, extensions: { addResolver: { type: `date` } } }
+        return { type: `Date`, extensions: DATE_EXTENSION }
       }
       if (isFile(nodeStore, selector, value)) {
         // NOTE: For arrays of files, where not every path references
@@ -277,13 +280,13 @@ const getSimpleFieldConfig = ({
         // the first entry (which could point to an existing file or not).
         return {
           type: `File`,
-          extensions: { addResolver: { type: `relativeFile` } },
+          extensions: FILE_EXTENSION,
         }
       }
       return { type: `String` }
     case `object`:
       if (value instanceof Date) {
-        return { type: `Date`, extensions: { addResolver: { type: `date` } } }
+        return { type: `Date`, extensions: DATE_EXTENSION }
       }
       if (value instanceof String) {
         return { type: `String` }

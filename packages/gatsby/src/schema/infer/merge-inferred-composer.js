@@ -3,6 +3,31 @@ const { GraphQLList, GraphQLNonNull, GraphQLObjectType } = require(`graphql`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
 const report = require(`gatsby-cli/lib/reporter`)
 
+/**
+  Combined types defined in `createTypes` and types inferred from the data.
+
+  This is called assuming we already inferred the type, so when we don't infer,
+  this doesn't need to be called. Because we have to accomodate legacy logic,
+  stuff is a bit more complex. With 3.0 we can remove all the extra code except
+  the one that adds the fields.
+
+  Algorithm in brief:
+
+  * for every field not present in definedComposer, but present in
+    inferredComposer, add it. If the type of field is unknown, add it to
+    composer.
+
+  * legacy - won't add new fields if "dontAddFields" are true all (for
+    `@dontInfer(noDefaultResolvers: false)`) case
+
+  * for fields that are present in definedComposer, we merge them together.
+    This is needed so that if we have inline object type, we can recurse into it
+    add add inferred fields to it too. When recursing, we inherit infer config,
+    unless inline type has those defined
+
+  * legacy - add extensions, args and resolvers for fields that match the type,
+    but don't have those. For `noDefaultResolvers: false` cases
+ */
 export const mergeInferredComposer = ({
   schemaComposer,
   definedComposer,
