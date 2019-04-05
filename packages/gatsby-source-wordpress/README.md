@@ -135,6 +135,13 @@ module.exports = {
         normalizer: function({ entities }) {
           return entities
         },
+        // Set the status argument on selected routes.
+        status: [
+          {
+            status: ["publish", "draft"],
+            includedRoutes: ["**/posts", "**/pages"],
+          },
+        ],
       },
     },
   ],

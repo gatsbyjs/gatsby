@@ -52,6 +52,7 @@ async function fetch({
   _concurrentRequests,
   _includedRoutes,
   _excludedRoutes,
+  _routesStatus,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -138,6 +139,7 @@ Mama Route URL: ${url}
       _acfOptionPageIds,
       _includedRoutes,
       _excludedRoutes,
+      _routesStatus,
       typePrefix,
       refactoredEntityTypes,
     })
@@ -247,7 +249,7 @@ async function fetchData({
   _accessToken,
   _concurrentRequests,
 }) {
-  const { type, url, optionPageId } = route
+  const { type, url, optionPageId, status } = route
 
   if (_verbose) {
     console.log(
@@ -263,6 +265,7 @@ async function fetchData({
 
   let routeResponse = await getPages({
     url,
+    status,
     _perPage,
     _auth,
     _accessToken,
@@ -336,7 +339,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _auth, _accessToken, _concurrentRequests, _verbose },
+  { url, status, _perPage, _auth, _accessToken, _concurrentRequests, _verbose },
   page = 1
 ) {
   try {
@@ -348,6 +351,7 @@ async function getPages(
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
+          status: status ? status.join(`,`) : null,
         })}`,
       }
 
@@ -439,6 +443,7 @@ function getValidRoutes({
   _hostingWPCOM,
   _includedRoutes,
   _excludedRoutes,
+  _routesStatus,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -521,6 +526,8 @@ function getValidRoutes({
 
       const routePath = getRoutePath(url, key)
 
+      const routesStatusList = _routesStatus
+
       const whiteList = _includedRoutes
       const blackList = [...excludedTypes, ..._excludedRoutes]
 
@@ -568,9 +575,19 @@ function getValidRoutes({
             break
         }
 
+        let status
+        const statusObject = routesStatusList.find(({ includedRoutes }) =>
+          checkRouteList(routePath, includedRoutes)
+        )
+
+        if (statusObject) {
+          status = statusObject.status
+        }
+
         validRoutes.push({
           url: buildFullUrl(url, key, _hostingWPCOM),
           type: validType,
+          status: status,
         })
       } else {
         if (_verbose) {

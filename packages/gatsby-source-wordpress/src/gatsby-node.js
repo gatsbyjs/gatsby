@@ -22,6 +22,7 @@ let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
 let _normalizer
+let _routesStatus
 
 exports.sourceNodes = async (
   { actions, getNode, store, cache, createNodeId },
@@ -39,6 +40,7 @@ exports.sourceNodes = async (
     includedRoutes = [`**`],
     excludedRoutes = [],
     normalizer,
+    status = [],
   }
 ) => {
   const { createNode, touchNode } = actions
@@ -55,6 +57,7 @@ exports.sourceNodes = async (
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
   _normalizer = normalizer
+  _routesStatus = status
 
   let entities = await fetch({
     baseUrl,
@@ -68,6 +71,7 @@ exports.sourceNodes = async (
     _concurrentRequests,
     _includedRoutes,
     _excludedRoutes,
+    _routesStatus,
     typePrefix,
     refactoredEntityTypes,
   })
