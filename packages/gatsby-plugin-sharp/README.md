@@ -99,6 +99,7 @@ plugin for Markdown content as gatsby-remark-images).
 When both a `maxWidth` and `maxHeight` are provided, sharp will use `COVER` as a fit strategy by default. This might not be ideal so you can now choose between `COVER`, `CONTAIN` and `FILL` as a fit strategy. To see them in action the [CSS property object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) comes close to its implementation.
 
 #### Note
+
 fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned to [sharp.strategy][6]. The `cropFocus` option cannot be `ENTROPY` or `ATTENTION`
 
 #### Parameters
