@@ -17,7 +17,7 @@ class EnsureResources extends React.Component {
 
     this.state = {
       location: { ...location },
-      pageResources: loader.getResourcesForPathnameSync(location.pathname),
+      pageResources: loader.getPageOr404(location.pathname),
     }
   }
 
@@ -34,9 +34,7 @@ class EnsureResources extends React.Component {
 
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location !== location) {
-      const pageResources = loader.getResourcesForPathnameSync(
-        location.pathname
-      )
+      const pageResources = loader.getPageOr404(location.pathname)
 
       return {
         pageResources,
@@ -62,7 +60,7 @@ class EnsureResources extends React.Component {
   retryResources(nextProps) {
     const { pathname } = nextProps.location
 
-    if (!loader.getResourcesForPathnameSync(pathname)) {
+    if (!loader.getPage(pathname)) {
       // Store the previous and next location before resolving resources
       const prevLocation = this.props.location
       this.nextLocation = nextProps.location
@@ -70,7 +68,7 @@ class EnsureResources extends React.Component {
       // Page resources won't be set in cases where the browser back button
       // or forward button is pushed as we can't wait as normal for resources
       // to load before changing the page.
-      loader.getResourcesForPathname(pathname).then(pageResources => {
+      loader.loadPage(pathname).then(pageResources => {
         // The page may have changed since we started this, in which case doesn't update
         if (this.nextLocation !== nextProps.location) {
           return
