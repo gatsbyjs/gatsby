@@ -15,30 +15,65 @@ const getRootNodeId = node => rootNodeMap.get(node)
  * @see trackInlineObjectsInRootNode
  * @param {(Object|Array)} data Inline object or array
  * @param {string} nodeId Id of node that contains data passed in first parameter
+ * @param {boolean} sanitize Wether to strip objects of unuspported and not serializable fields
+ * @param {string} [ignore] Fieldname that doesn't need to be tracked and sanitized
+ *
  */
-const addRootNodeToInlineObject = (data, nodeId, sanitize, parent, key) => {
-  if (_.isPlainObject(data) || _.isArray(data)) {
+const addRootNodeToInlineObject = (data, nodeId, sanitize, ignore = null) => {
+  const isPlainObject = _.isPlainObject(data)
+
+  if (isPlainObject || _.isArray(data)) {
+    let returnData = data
+    if (sanitize) {
+      returnData = isPlainObject ? {} : []
+    }
+    let anyFieldChanged = false
     _.each(data, (o, key) => {
-      addRootNodeToInlineObject(o, nodeId, sanitize, key, data)
+      if (ignore == key) {
+        returnData[key] = o
+        return
+      }
+      returnData[key] = addRootNodeToInlineObject(
+        o,
+        nodeId,
+        sanitize,
+        null,
+        key
+      )
+
+      if (returnData[key] !== o) {
+        anyFieldChanged = true
+      }
     })
+
+    if (anyFieldChanged) {
+      if (isPlainObject) {
+        data = _.pickBy(returnData, p => p !== undefined)
+      } else {
+        data = returnData.filter(p => p !== undefined)
+      }
+    }
+
     rootNodeMap.set(data, nodeId)
 
     // arrays and plain objects are supported - no need to to sanitize
-    return
+    return data
   }
 
-  if (sanitize) {
+  if (sanitize && data !== null) {
     const type = typeof data
-    // supported types
     const isSupported =
       type === `number` ||
       type === `string` ||
       type === `boolean` ||
       data instanceof Date
+
     if (!isSupported) {
-      delete parent[key]
+      return undefined
     }
   }
+  // either supported or not sanitizing
+  return data
 }
 
 /**
@@ -46,17 +81,8 @@ const addRootNodeToInlineObject = (data, nodeId, sanitize, parent, key) => {
  * and that Node object.
  * @param {Node} node Root Node
  */
-const trackInlineObjectsInRootNode = (node, sanitize = false) => {
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    addRootNodeToInlineObject(v, node.id, sanitize, node, k)
-  })
-
-  return node
-}
+const trackInlineObjectsInRootNode = (node, sanitize = false) =>
+  addRootNodeToInlineObject(node, node.id, sanitize, `internal`)
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 
 /**
