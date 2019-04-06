@@ -1,8 +1,9 @@
-const { dataToEsm } = require(`rollup-pluginutils`)
 const enquirer = require(`enquirer`)
 const execa = require(`execa`)
 const fs = require(`fs`)
 const path = require(`path`)
+const { parse } = require(`@babel/parser`)
+const generate = require(`@babel/generator`).default
 const prettier = require(`prettier`)
 
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -116,21 +117,20 @@ const configurePlugins = async plugins => {
         plugin,
       })
 
-      // cleanup returned value
-      // pluginConfig = pluginConfig[0]
-
       if (pluginConfig !== []) {
-        // console.log("pluginConfig:", pluginConfig)
+        const fileLocation = path.join(rootPath, `gatsby-config.js`)
+        const file = fs.readFileSync(fileLocation).toString()
+        const currentConfigAST = parse(file, { strictMode: true })
 
-        let newConfig = pluginConfig[0]
+        // let newConfig = pluginConfig[0]
 
         // console.log("newConfig", newConfig)
 
-        let mergedConfig = appendPluginConfig(config, newConfig)
+        // let mergedConfig = appendPluginConfig(config, newConfig)
 
         // console.log("returned config", mergedConfig)
 
-        await writeGatsbyConfig(mergedConfig)
+        await writeGatsbyConfig(currentConfigAST)
       }
     })
   } catch (err) {
@@ -165,37 +165,31 @@ const appendPluginConfig = (oldConfig, pluginConfig) => {
 
 /**
  * // Write a gatsby config to the gatsby-config.js
- * @param {Object} newConfig - Config to be written
+ * @param {String} newConfig - Config to be written
  */
 const writeGatsbyConfig = async newConfig => {
-  //remove auto added fields
-  if (newConfig.pathPrefix === ``) delete newConfig.pathPrefix
-  delete newConfig.polyfill
-
-  // convert to ESM
-  let configString = dataToEsm(newConfig, {
+  // convert to String
+  const configString = generate(newConfig, {
+    comments: true,
     compact: false,
-    indent: `  `,
-    namedExports: false,
-  })
+    concise: false,
+  }).code
 
   //format with prettier
-  const prettierPath = await prettier.resolveConfigFile(rootPath)
-  let prettierConfig = await prettier.resolveConfig(prettierPath)
+  // const prettierPath = await prettier.resolveConfigFile(rootPath)
+  // let prettierConfig = await prettier.resolveConfig(prettierPath)
 
-  configString = prettier.format(configString, {
-    parser: `babel`,
-    ...prettierConfig,
+  // const prettyConfigString = prettier.format(configString, {
+  //   parser: `babel`,
+  //   ...prettierConfig,
+  // })
+
+  // //get config path
+  // const configPath = path.join(rootPath, `gatsby-config-test.js`)
+
+  fs.writeFile(`gatsby-config-test.js`, configString, err => {
+    if (err) throw new Error(`addToReducerIndex.js write error: ${err}`)
   })
-
-  //get config path
-  const configPath = path.join(rootPath, `gatsby-config-test.js`)
-
-  //make node module
-  configString = configString.replace(`export default`, `module.exports =`)
-
-  //write config string to file
-  module.exports = fs.writeFileSync(configPath, configString)
 }
 
 /**
