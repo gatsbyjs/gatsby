@@ -22,7 +22,6 @@ const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
 const withResolverContext = require(`../schema/context`)
-require(`../db`).startAutosave()
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 

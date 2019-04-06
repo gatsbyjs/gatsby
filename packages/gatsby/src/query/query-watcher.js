@@ -266,32 +266,24 @@ const watch = rootDir => {
   filesToWatch.forEach(filePath => watcher.add(filePath))
 }
 
-if (process.env.gatsby_executing_command === `develop`) {
-  let bootstrapFinished = false
-
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    bootstrapFinished = true
-  })
-
+exports.startWatchDeletePage = () => {
   emitter.on(`DELETE_PAGE`, action => {
-    if (bootstrapFinished) {
-      const componentPath = slash(action.payload.component)
-      const { pages } = store.getState()
-      let otherPageWithTemplateExists = false
-      for (let page of pages.values()) {
-        if (slash(page.component) === componentPath) {
-          otherPageWithTemplateExists = true
-          break
-        }
+    const componentPath = slash(action.payload.component)
+    const { pages } = store.getState()
+    let otherPageWithTemplateExists = false
+    for (let page of pages.values()) {
+      if (slash(page.component) === componentPath) {
+        otherPageWithTemplateExists = true
+        break
       }
-      if (!otherPageWithTemplateExists) {
-        store.dispatch({
-          type: `REMOVE_TEMPLATE_COMPONENT`,
-          payload: {
-            componentPath,
-          },
-        })
-      }
+    }
+    if (!otherPageWithTemplateExists) {
+      store.dispatch({
+        type: `REMOVE_TEMPLATE_COMPONENT`,
+        payload: {
+          componentPath,
+        },
+      })
     }
   })
 }

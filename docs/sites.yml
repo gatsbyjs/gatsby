@@ -393,8 +393,8 @@
     - Marketing
     - Featured
 - title: Azer Koçulu
-  main_url: "http://azer.bike/"
-  url: "http://azer.bike/photography"
+  main_url: "https://kodfabrik.com/"
+  url: "https://kodfabrik.com/photography/"
   featured: false
   categories:
     - Portfolio
@@ -1045,9 +1045,9 @@
   categories:
     - Blog
     - Web Development
-- title: EaseCentral
-  main_url: "https://www.easecentral.com/"
-  url: "https://www.easecentral.com/"
+- title: Ease
+  main_url: "https://www.ease.com/"
+  url: "https://www.ease.com/"
   featured: false
   categories:
     - Marketing
@@ -3008,7 +3008,7 @@
   description: >
     Ketogenic Diet, Podcasts, and Blockchain.
   url: https://www.disruptingnate.com/
-  main_url: https://disruptingnate.com/
+  main_url: https://www.disruptingnate.com/
   categories:
     - Technology
     - Podcasts
@@ -5208,3 +5208,16 @@
     - Marketing
   built_by: Becreatives
   built_by_url: "https://becreatives.com"
+- title: Paul Clifton Photography
+  main_url: https://paulcliftonphotography.com
+  url: https://paulcliftonphotography.com
+  featured: false
+  description: >
+    A full migration from WordPress to GatsbyJS and DatoCMS. Includes custom cropping on images as viewport changes size and also an infinity scroll that doesn't preload all of the results.
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Photography
+  built_by: Little Wolf Studio
+  built_by_url: https://littlewolfstudio.co.uk
