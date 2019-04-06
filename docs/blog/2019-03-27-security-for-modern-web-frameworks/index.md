@@ -13,7 +13,7 @@ Among the many lauded benefits of using Gatsby (and other static app frameworks)
 
 There are indeed whole classes of security vulnerabilities that are eliminated by using Gatsby for web development; but there are still other vulnerabilities that are shared and some that are created. As a Gatsby developer, you need to make sure you are aware of these possible vulnerabilities and how to remedy them.
 
-The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers these security issues well and includes complete solutions; this post will act as an introduction to get you familiar with these same concepts in Gatsby.
+This post will act as an introduction to get you familiar with these concepts in Gatsby.
 
 ## Defining Terms
 
@@ -38,7 +38,7 @@ When it comes to client-side sites, if you are going to get hacked, it is likely
 - **Network** - This kind of attack happens when an attacker can access to the network being used to access your site. It could be a rouge third-party in your cloud provider, or someone sitting across the coffee shop on the same public WiFi as your user. The exact attack methods vary, but are collectively referred to as a [Man-in-the-Middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack.
   The defense here is HTTPS (TLS encryption). Other related technologies such as [Cross-Origin-Resource-Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security), [Public Key Pinning](*https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning), and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) all assist in securing network traffic. No matter who is looking at your network traffic, they can not read or modify it.
 
-Other possible attacks relate to using `iframes` or not removing referrer tags on external links. Thankfully, fixing these is a pretty low bar. This [article](https://blog.sqreen.com/static-websites-security/) covers all these security issues well and includes solutions and deeper discussion.
+Other possible attacks relate to using `iframes` without securing them or not removing referrer tags on external links. Thankfully, fixing these is a pretty low bar. More on this later.
 
 ## Unique Security Concerns
 
@@ -112,7 +112,7 @@ One great option is to check out Netlify. They will provide great static hosting
 
 What does this API allow? First, you can secure your database. Any API keys can be secured on your serverless...server 😭. The point is, they will be secure. But what does this gain you? After all, instead of pillaging your database directly you have given them an API through which to pillage.
 
-**Control:** You have gained the ability to add rate limiting, better logging, auto blocking of IPs, etc. You can throw the proverbial "secure API handbook" (except for the authentication part) at your users to make sure they behave. More aggressively, you could use a secure cookie for your site to uniquely and anonymously identify each user. This would assist in the previously mentioned security practices and, while not hard for a user to delete a cookie, it adds another layer of security.
+**Control:** You have gained the ability to add rate limiting, logging, auto blocking of IPs, etc. You can use every API security best practice there is (except for the authentication part) to make sure your API is not abused. More aggressively, you could use a secure cookie for your site to uniquely and anonymously identify each user. This would assist in the previously mentioned security practices and, while not hard for a user to delete a cookie, it adds another layer of security.
 
 In the end if you need hardened security, you need authentication. If you want a simpler solution for basic features, these suggestions might just help. Remember, if you need access to a database and you already have authentication, do not ship those secure API keys in the client-side code!
 
@@ -130,6 +130,12 @@ It can difficult to know whether an API key should be kept secret. If the page g
 
 Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in your client-side code.
 
-Now go make awesome Gatsby sites that are completely secure! Fo more information on web security checkout the [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project). The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
+Now go make awesome Gatsby sites that are completely secure! Fo more information on web security checkout these resources:
+
+- **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
+
+* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions; this
+
+- **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or inaccurate information. It is your responsibility to properly secure your sites.
