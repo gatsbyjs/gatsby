@@ -224,3 +224,21 @@ export const PRODUCT_TYPES_QUERY = `
     }
   }
 `
+
+export const PAGES_QUERY = `
+  query GetPages($first: Int!) {
+    pages(first: 10) {
+      edges {
+        node {
+          id
+          handle
+          title
+          body
+          bodySummary
+          updatedAt
+          url
+        }
+      }
+    }
+  }
+`
