@@ -46,7 +46,7 @@ When you ship **everything** to the browser, the user can access **everything**.
 
 In the server-side world the solution is to...well there is not really a problem to begin with because all the secrets and private content is secured on a server. The client browser never needs to directly access them. The server fetches content from the API or database, and sends back only the content the client is authorized to access.
 
-How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org/)". Hopefully you are all fairly familiar with this concept given you are building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs (accessed by JavaScript) to provide content and features. All of this is done from the client-side.
+How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org/)". Hopefully you are all fairly familiar with this concept given you are building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs to provide content and features. All of this is done from the client-side.
 
 The biggest security struggle with client-side sites is securing those APIs. Most APIs require an API key or another kind of authentication. Simply adding those secrets to the code only further obfuscates access to the same content. It does nothing to actually secure that content.
 
@@ -58,6 +58,8 @@ What's the solution? Well there are several problems to solve.
 - **Public** - accessible to any and all users on your site.
 - **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
 - **Static** - any content that changes less than once in a given 5 minute interval.
+
+NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything **changed more** often tricky. This build time problem is a core tenant of [Gatsby Inc.](https://www.gatsbyjs.com/) and future Gatsby features(like [incramental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
 
 So, you could have private-static content, private-dynamic content, public-static content, and public-dynamic content. You also need to be aware of whether you are securing the ability to read or write content. Without further delay, in order of difficulty...
 
@@ -86,15 +88,15 @@ Fortunately, this is an easy fix using [environment variables](https://www.gatsb
 
 Private content, whether dynamic or static, is another solution and is well documented in Gatsby's [authentication tutorial](/docs/authentication-tutorial/#security-notice).
 
-**TL;DR:** Authenticate users using JSON Web Tokens(JWTs) and dynamically render pages only to authorized users. Any API calls that need to be made in order to fetch content can use the user's JWT and be verified by the API. If you need to access a third party API, any API Keys can be stored securely by your API which is securely authenticated to using the JWT.
+**TL;DR:** Authenticate users using JSON Web Tokens(JWTs) and dynamically render pages only to authorized users. Any API calls that need to be made in order to fetch content can use the user's JWT and be verified by the API. If you need to access a third party API, any API keys can be stored securely by your API which is securely authenticated to using the JWT.
 
-This is pretty much the base of the "JAMstack" and allows for private content in client-side sites. Requiring user authentication will cover all use cases involving private data and will also help in situations where data is read publicly but written by authenticated users (e.g. CMS backend or comments section).
+This is pretty much the base of the "JAMstack" and allows for private content in client-side sites. Requiring user authentication will cover all use cases involving private data and will also help in situations where data is read publicly but written by authenticated users (e.g. CMS backend or a comments section).
 
 ### Public Dynamic Content
 
 This should be easy right? It is public content after all. But, if you need anonymous users to be able to both read and write this data, you should be concerned. Content read publicly, but written privately, was covered in the previous section. Admittedly, public reading and writing of content is less common.
 
-Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on Facebook or Twitter; these interactions all require authentication. Even public APIs like GitHub's require authentication, even sites like Wikipedia; even if anyone in the world can create an account and access these tools.
+Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on Facebook or Twitter; these interactions all require authentication. Even public APIs like GitHub's and sites like Wikipedia require authentication; even if anyone in the world can create an account and access these tools.
 
 Why address this scenario? Two reasons:
 
@@ -104,7 +106,7 @@ Why address this scenario? Two reasons:
 
 Using Medium's "clap" feature as example, what are the security issues? First, we would need some kind of database to store the claps. Do we leave no security mechanism on this database for reads and writes? We could add security, but then the necessary API key has to be shipped in the code and the user can access it. Either way, your more nefarious users could access this database; reading and (more importantly) writing to their devious heart's content.
 
-There is a small blog that does this very thing. They build the Firebase credentials into the code at build time. Because this is a small blog, and there is no real incentive for someone to add or delete claps, this blogger is probably safe. What is the worse case scenario? Someone deletes their claps? Gives all their posts a million claps? Maybe this is defeating the point of a security post. But security is about threat assessment. This blogger is clearly not worried about a nation state hacking their claps or someone gaming the system. Nothing but authentication is going to solve those kinds of issues
+There is a small blog that does this very thing. They build the Firebase credentials into the code at build time. Because this is a small blog, and there is no real incentive for someone to add or delete claps, this blogger is probably safe. What is the worse case scenario? Someone deletes their claps? Gives all their posts a million claps? Maybe this is defeating the point of a security post. But security is about threat assessment. This blogger is not worried about a nation state hacking their claps or someone gaming the system. Nothing but secure authentication is going to solve those kinds of issues.
 
 Assuming a nation state is not trying to attack you, what are you options for better security? You need an API.
 
@@ -112,7 +114,7 @@ One great option is to check out Netlify. They will provide great static hosting
 
 What does this API allow? First, you can secure your database. Any API keys can be secured on your serverless...server 😭. The point is, they will be secure. But what does this gain you? After all, instead of pillaging your database directly you have given them an API through which to pillage.
 
-**Control:** You have gained the ability to add rate limiting, logging, auto blocking of IPs, etc. You can use every API security best practice there is (except for the authentication part) to make sure your API is not abused. More aggressively, you could use a secure cookie for your site to uniquely and anonymously identify each user. This would assist in the previously mentioned security practices and, while not hard for a user to delete a cookie, it adds another layer of security.
+**Control:** You have gained the ability to add rate limiting, logging, auto blocking of IPs, etc. You can use every API security best practice there is (except for authentication) to make sure your API is not abused. More aggressively, you could use a secure cookie for your site to uniquely and anonymously identify each user. This would assist in the previously mentioned security practices and, while not hard for a user to delete a cookie, it adds another layer of security.
 
 In the end if you need hardened security, you need authentication. If you want a simpler solution for basic features, these suggestions might just help. Remember, if you need access to a database and you already have authentication, do not ship those secure API keys in the client-side code!
 
@@ -128,14 +130,16 @@ It can difficult to know whether an API key should be kept secret. If the page g
 
 ## Conclusion
 
-Remember, keep it **secret**, keep it **safe**! Do not store API keys in your repository and do not ship them in your client-side code.
+Remember, keep it **secret**, keep it **safe** 🧙🏼‍! Do not store API keys in your repository and do not ship them in your client-side code.
 
-Now go make awesome Gatsby sites that are completely secure! Fo more information on web security checkout these resources:
+Now go make awesome Gatsby sites that are completely secure! For more information on web security checkout these resources:
 
 - **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
 
-* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions; this
+* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
 
 - **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
+
+- **[Gatsby Authentication Tutorial](/docs/authentication-tutorial/#security-notice)**
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or inaccurate information. It is your responsibility to properly secure your sites.
