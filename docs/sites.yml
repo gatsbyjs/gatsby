@@ -5221,3 +5221,15 @@
     - Photography
   built_by: Little Wolf Studio
   built_by_url: https://littlewolfstudio.co.uk
+  - title: RedCarpetUp
+    main_url: https://www.redcarpetup.com
+    url: https://www.redcarpetup.com/
+    description: >
+      RedCarpetUp's home page for a predominantly mobile-only customer base in India with major constraints on bandwidth availability
+    categories:
+     - Finance
+     - Loans
+     - Credit Card
+    built_by: RedCarpet Dev Team
+    built_by_url: https://www.redcarpetup.com
+
