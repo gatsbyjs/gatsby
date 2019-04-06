@@ -90,7 +90,6 @@ class IndexRoute extends React.Component {
             content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
-        <MastheadContent />
         <main
           id={`reach-skip-nav`}
           css={{
@@ -100,6 +99,7 @@ class IndexRoute extends React.Component {
             justifyContent: `space-between`,
           }}
         >
+          <MastheadContent />
           <div
             css={{
               padding: space[6],

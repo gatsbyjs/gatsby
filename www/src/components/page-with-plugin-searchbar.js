@@ -1,19 +1,20 @@
 import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import { colors, breakpoints, dimensions } from "../utils/presets"
+import { colors, breakpoints, sizes } from "../utils/presets"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
-    <section
+    <nav
       css={{
         ...styles.sidebar,
         // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
         display: !isPluginsIndex ? `none` : false,
       }}
+      aria-label="Plugin navigation"
     >
       <PluginSearchBar location={location} />
-    </section>
+    </nav>
     <main
       id={`reach-skip-nav`}
       css={{
@@ -32,10 +33,10 @@ const widthLarge = rhythm(16)
 
 const styles = {
   sidebar: {
-    height: `calc(100vh - ${dimensions.headerHeight})`,
+    height: `calc(100vh - ${sizes.headerHeight})`,
     width: `100%`,
     zIndex: 1,
-    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight} - 1px)`,
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
     [breakpoints.md]: {
       display: `block`,
       width: widthDefault,

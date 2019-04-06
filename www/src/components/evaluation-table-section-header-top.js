@@ -4,7 +4,7 @@ import {
   space,
   radii,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -28,7 +28,7 @@ const superHeader = () => (
           },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: scale[0],
+          fontSize: fontSizes[0],
           lineHeight: lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,

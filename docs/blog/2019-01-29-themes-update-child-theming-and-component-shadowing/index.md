@@ -8,7 +8,7 @@ tags: ["themes", "architecture"]
 
 > If you aren't familiar with Gatsby themes yet, then check out [Introducing
 > Gatsby
-> Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/)
+> Themes](/blog/2018-11-11-introducing-gatsby-themes/)
 > for a written introduction and [my Gatsby Days
 > talk](https://www.youtube.com/watch?v=wX84vXBpMR8) for a more audio/visual
 > approach.

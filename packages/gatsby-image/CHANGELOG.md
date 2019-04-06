@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.36...gatsby-image@2.0.37) (2019-04-02)
+
+### Features
+
+- **gatsby-image:** don't fadein image when already loaded "browser-cache" ([#12468](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/12468)) ([8646aa4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/8646aa4)), closes [#12254](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/12254)
+
+## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.35...gatsby-image@2.0.36) (2019-04-01)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.34...gatsby-image@2.0.35) (2019-03-26)
+
+### Features
+
+- **gatsby-image:** Add gatsby-image/withIEPolyfill export with object-fit/position support ([#12681](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/12681)) ([4b9b6a1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/4b9b6a1)), closes [#4021](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/4021)
+
 ## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.33...gatsby-image@2.0.34) (2019-03-15)
 
 ### Bug Fixes

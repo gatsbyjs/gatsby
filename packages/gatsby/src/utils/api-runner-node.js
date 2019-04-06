@@ -1,5 +1,4 @@
 const Promise = require(`bluebird`)
-const glob = require(`glob`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 
@@ -17,6 +16,7 @@ const {
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
+const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -188,7 +188,16 @@ const runAPI = (plugin, api, args) => {
           callback(err, val)
           apiFinished = true
         }
-        gatsbyNode[api](...apiCallArgs, cb)
+
+        try {
+          gatsbyNode[api](...apiCallArgs, cb)
+        } catch (e) {
+          trackBuildError(api, {
+            error: e,
+            pluginName: `${plugin.name}@${plugin.version}`,
+          })
+          throw e
+        }
       })
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
@@ -202,9 +211,6 @@ const runAPI = (plugin, api, args) => {
 
   return null
 }
-
-let filteredPlugins
-const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
 let apisRunningById = new Map()
 let apisRunningByTraceId = new Map()
@@ -232,23 +238,15 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
-    // Get the list of plugins that implement gatsby-node
-    if (!filteredPlugins) {
-      filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
-    }
 
-    // Break infinite loops.
-    // Sometimes a plugin will implement an API and call an
-    // action which will trigger the same API being called.
-    // "onCreatePage" is the only example right now.
-    // In these cases, we should avoid calling the originating plugin
-    // again.
-    let noSourcePluginPlugins = filteredPlugins
-    if (pluginSource) {
-      noSourcePluginPlugins = filteredPlugins.filter(
-        p => p.name !== pluginSource
-      )
-    }
+    // Get the list of plugins that implement this API.
+    // Also: Break infinite loops. Sometimes a plugin will implement an API and
+    // call an action which will trigger the same API being called.
+    // `onCreatePage` is the only example right now. In these cases, we should
+    // avoid calling the originating plugin again.
+    const implementingPlugins = plugins.filter(
+      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
+    )
 
     const apiRunInstance = {
       api,
@@ -313,7 +311,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       }
     }
 
-    Promise.mapSeries(noSourcePluginPlugins, plugin => {
+    Promise.mapSeries(implementingPlugins, plugin => {
       if (stopQueuedApiRuns) {
         return null
       }
@@ -326,6 +324,9 @@ module.exports = async (api, args = {}, pluginSource) =>
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
       }).catch(err => {
+        decorateEvent(`BUILD_PANIC`, {
+          pluginName: `${plugin.name}@${plugin.version}`,
+        })
         reporter.panicOnBuild(`${pluginName} returned an error`, err)
         return null
       })

@@ -9,6 +9,7 @@ const del = require(`del`)
 const path = require(`path`)
 const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
+const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
@@ -22,24 +23,19 @@ const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
 const withResolverContext = require(`../schema/context`)
-require(`../db`).startAutosave()
+// Add `util.promisify` polyfill for old node versions
+require(`util.promisify/shim`)()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const {
-  extractQueries,
-} = require(`../internal-plugins/query-runner/query-watcher`)
-const {
-  runInitialQueries,
-} = require(`../internal-plugins/query-runner/page-query-runner`)
-const queryQueue = require(`../internal-plugins/query-runner/query-queue`)
-const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
-const {
-  writeRedirects,
-} = require(`../internal-plugins/query-runner/redirects-writer`)
+const { extractQueries } = require(`../query/query-watcher`)
+const { runInitialQueries } = require(`../query/page-query-runner`)
+const queryQueue = require(`../query/query-queue`)
+const { writePages } = require(`../query/pages-writer`)
+const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -111,6 +107,10 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
+
+  telemetry.decorateEvent(`BUILD_END`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
 
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {
@@ -468,8 +468,16 @@ module.exports = async (args: BootstrapArgs) => {
       ).toFixed(2)} queries/second`
     )
   })
-  await runInitialQueries(activity)
+  // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
+  emitter.emit(`START_QUERY_QUEUE`)
+  // END HACKY
+  runInitialQueries(activity)
+  await new Promise(resolve => queryQueue.on(`drain`, resolve))
   activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
 
   // Write out files.
   activity = report.activityTimer(`write out page data`, {
@@ -528,6 +536,9 @@ const finishBootstrap = async bootstrapSpan => {
   report.info(`bootstrap finished - ${process.uptime()} s`)
   report.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_FINISHED`
+  )
 
   bootstrapSpan.finish()
 }

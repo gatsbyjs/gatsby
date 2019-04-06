@@ -9,7 +9,7 @@ import {
   shadows,
   space,
   breakpoints,
-  dimensions,
+  sizes,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
@@ -122,17 +122,15 @@ const styles = {
     width: 320,
     zIndex: 10,
     [breakpoints.md]: {
-      height: `calc(100vh - ${dimensions.headerHeight} - ${
-        dimensions.bannerHeight
-      })`,
+      height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
-      width: rhythm(dimensions.sidebarWidth.default),
+      top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
+      width: rhythm(sizes.sidebarWidth.default),
     },
     [breakpoints.lg]: {
-      width: rhythm(dimensions.sidebarWidth.large),
+      width: rhythm(sizes.sidebarWidth.large),
     },
   },
   sidebar: {
