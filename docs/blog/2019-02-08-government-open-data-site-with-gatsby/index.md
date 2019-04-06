@@ -185,7 +185,7 @@ Fortunately, Gatsby provides a hook into the entire lifecycle of its build proce
 
 Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
-Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gastby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
+Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
 
 ```javascript
 exports.onClientEntry = () => {
@@ -213,7 +213,7 @@ exports.onClientEntry = () => {
 
 As mentioned above, we use [Federalist](https://federalist.18f.gov/) to build and deploy the site. Federalist builds out every branch in our GitHub repository, so we can preview the changes before we merge them.
 
-We encountered an issue with the Federalist preview URLs and relative links and assets. Gastby solves this by using a `pathPrefix` variable in `gastby-config.js` and a custom component named `Link`.
+We encountered an issue with the Federalist preview URLs and relative links and assets. Gatsby solves this by using a `pathPrefix` variable in `gatsby-config.js` and a custom component named `Link`.
 
 We set a `BASEURL` environment variable in `gatsby-config.js` that resolves the Federalist preview URL at build time.
 

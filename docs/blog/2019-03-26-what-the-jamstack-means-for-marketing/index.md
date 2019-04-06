@@ -20,7 +20,7 @@ It got me excited about the future because I've been in marketing for the best p
 
 ## What is the JAMstack?
 
-JAM stands for JavaScript, APIs and Markup and if you're interested in reading more about the technical details you can do so [here](https://jamstack.org/), watch [this](https://www.youtube.com/watch?v=uWTMEDEPw8c) and read about the history of JAMstack [here](https://snipcart.com/blog/jamstack).
+JAM stands for **J**avaScript, **A**PIs, and **M**arkup. If you're interested in learning more about the technical details you can [check out JAMStack.org](https://jamstack.org/), watch ["The Rise of the JAMStack" on Youtube](https://www.youtube.com/watch?v=uWTMEDEPw8c) and [read about the history of JAMstack](https://snipcart.com/blog/jamstack).
 
 In terms of what this means to you as a marketer – it's essentially a modern way to build a website that is static instead of dynamic. This provides you with some very important business benefits: speed, security, stability and scalability. I didn't intend for them all to begin with the letter S, but here we are!
 
@@ -108,7 +108,7 @@ As always, there is still work to do to ensure the site ranks well for the most 
 - [Algolia](https://algolia.com/) powering the search functionality
 - [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
 
-We have also built and contributed an [advanced sitemap plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which automatically builds a sitemap for any Gatsby project.
+We have also built and contributed an [advanced sitemap plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which automatically builds a sitemap for any Gatsby project.
 
 Much of the SEO functionality is being pulled directly from Ghost via the API (which has all of the structured data, custom meta data, canonicals etc built-in). This means I can manage most of the content and meta data directly in the Ghost admin client. When I save new changes they're pushed into the static front-end via Netlify – it's a fantastic workflow!
 

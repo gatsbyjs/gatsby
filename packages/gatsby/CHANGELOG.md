@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.13...gatsby@2.3.14) (2019-04-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.12...gatsby@2.3.13) (2019-04-04)
+
+### Features
+
+- **gatsby:** add DANGEROUSLY_DISABLE_OOM ([#13066](https://github.com/gatsbyjs/gatsby/issues/13066)) ([800b8d7](https://github.com/gatsbyjs/gatsby/commit/800b8d7))
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.11...gatsby@2.3.12) (2019-04-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.10...gatsby@2.3.11) (2019-04-03)
+
+### Bug Fixes
+
+- **query-extraction:** handle duplicated graphql query names error ([#12931](https://github.com/gatsbyjs/gatsby/issues/12931)) ([0263a77](https://github.com/gatsbyjs/gatsby/commit/0263a77))
+
+### Features
+
+- **gatsby:** write match-paths.json ([#13012](https://github.com/gatsbyjs/gatsby/issues/13012)) ([cec5e28](https://github.com/gatsbyjs/gatsby/commit/cec5e28))
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.9...gatsby@2.3.10) (2019-04-03)
+
+### Bug Fixes
+
+- **gatsby:** ignore \_\_esModule export in gatsby-node exports ([#13081](https://github.com/gatsbyjs/gatsby/issues/13081)) ([1c78ffb](https://github.com/gatsbyjs/gatsby/commit/1c78ffb)), closes [#13079](https://github.com/gatsbyjs/gatsby/issues/13079)
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.8...gatsby@2.3.9) (2019-04-03)
+
+### Features
+
+- **gatsby:** add util.promisify polyfill for older node version ([#13024](https://github.com/gatsbyjs/gatsby/issues/13024)) ([b278a60](https://github.com/gatsbyjs/gatsby/commit/b278a60))
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.7...gatsby@2.3.8) (2019-04-03)
+
+### Bug Fixes
+
+- **gatsby:** don't try to statically analyze gatsby-node, require it and examine exports instead ([#13053](https://github.com/gatsbyjs/gatsby/issues/13053)) ([d74b3f0](https://github.com/gatsbyjs/gatsby/commit/d74b3f0))
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.6...gatsby@2.3.7) (2019-04-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.5...gatsby@2.3.6) (2019-04-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.4...gatsby@2.3.5) (2019-04-02)
+
+### Bug Fixes
+
+- **gatsby:** Only use one redux namespace for plugins ([#12263](https://github.com/gatsbyjs/gatsby/issues/12263)) ([bba69e9](https://github.com/gatsbyjs/gatsby/commit/bba69e9))
+
+### Features
+
+- **gatsby-cli:** Detect if something is already running on a port when running gatsby serve ([#12989](https://github.com/gatsbyjs/gatsby/issues/12989)) ([e587e57](https://github.com/gatsbyjs/gatsby/commit/e587e57))
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.3...gatsby@2.3.4) (2019-03-28)
+
+### Features
+
+- **schema:** Use extensions to specify infer config ([ff102c9](https://github.com/gatsbyjs/gatsby/commit/ff102c9))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.2...gatsby@2.3.3) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby:** Handle already deleted nodes in deleteNode action ([#12866](https://github.com/gatsbyjs/gatsby/issues/12866)) ([1548841](https://github.com/gatsbyjs/gatsby/commit/1548841))
+- **gatsby-telemetry:** Ensure quickly running commands exit freely ([#12888](https://github.com/gatsbyjs/gatsby/issues/12888)) ([e30d264](https://github.com/gatsbyjs/gatsby/commit/e30d264))
+- **themes:** Handle shared parent theme with component shadowing ([#12883](https://github.com/gatsbyjs/gatsby/issues/12883)) ([7a82dc2](https://github.com/gatsbyjs/gatsby/commit/7a82dc2))
+
+### Features
+
+- **themes:** copy static folders in themes ([#12746](https://github.com/gatsbyjs/gatsby/issues/12746)) ([edd6cb1](https://github.com/gatsbyjs/gatsby/commit/edd6cb1))
+
 ## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.1...gatsby@2.3.2) (2019-03-26)
 
 **Note:** Version bump only for package gatsby

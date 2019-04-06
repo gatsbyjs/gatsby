@@ -1357,23 +1357,6 @@
     - Google Analytics Integration
     - Uses Gatsby v2
     - SEO
-- url: http://starter-ghost-blog.surge.sh/
-  repo: https://github.com/little-wolf-studio/gatsby-starter-ghost-blog
-  description: Ghost Blog Starter Kit
-  tags:
-    - Ghost
-    - Blog
-    - Linting
-    - Headless CMS
-    - Styling:CSS-in-JS
-  features:
-    - Uses the Ghost CMS source
-    - Renders pages for posts, tags and authors
-    - Responsive Design
-    - Google Analytics Integration
-    - Uses Gatsby v2
-    - ESLint and Prettier
-    - Offline support
 - url: https://gatsby-starter-notes.netlify.com/
   repo: https://github.com/patricoferris/gatsby-starter-notes
   description: Gatsby starter for creating notes organised by subject and topic
@@ -1741,7 +1724,7 @@
     - User sign in
 - url: https://gatsby-starter.mdbootstrap.com/
   repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
-  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  description: A simple starter which lets you quickly start developing with Gatsby and Material Design For Bootstrap
   tags:
     - Styling:Material
   features:
@@ -2177,3 +2160,50 @@
     - Pick custom Font Awesome icons for the feature list via the site-config.js file.
     - Built using Prettier and Styled-Components
     - Easily integrate Google Analytics by adding your ID to site-config.js file.
+- url: https://gatsby-starter-shopify-app.firebaseapp.com/install
+  repo: https://github.com/gil--/gatsby-starter-shopify-app
+  description: Easily create Serverless Shopify Admin Apps powered by Gatsby and Firebase Functions
+  tags:
+    - Shopify
+    - Serverless
+    - Firebase
+    - App
+  features:
+    - 🗄 Firebase Firestore Realtime DB
+    - ⚡️ Serverless Functions API layer (Firebase Functions)
+    - 💼 Admin API (Graphql) Serverless Proxy
+    - 🎨 Shopify Polaris (AppProvider, etc.)
+    - 💰 Application Charge Logic (30 days) with variable trial duration
+    - 📡 Webhook Validation & Creation
+    - 🔑 GDPR Ready (Including GDPR Webhooks)
+    - 🏗 CircleCI Config for easy continuous deployments to Firebase
+- url: https://gatsby-starter-paperbase.netlify.com/
+  repo: https://github.com/willcode4food/gatsby-starter-paperbase
+  description: A Gatsby starter that implements the Paperbase Premium Theme from MaterialUI
+  tags:
+    - Styling:Material
+    - Styling:CSS-in-JS
+  features:
+    - MaterialUI Paperbase theme in Gatsby!
+    - Create professional looking admin tools and dashboards
+    - Responsive Design
+    - MaterialUI Paper Components
+    - MaterialUI Tab Components
+- url: https://gatsby-starter-devto.netlify.com/
+  repo: https://github.com/geocine/gatsby-starter-devto
+  description: A GatsbyJS starter template that leverages the Dev.to API
+  tags:
+    - Dev.to
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+- url: https://gatsby-starter-framer-x.netlify.com/
+  repo: https://github.com/simulieren/gatsby-starter-framer-x
+  description: A GatsbyJS starter template that is connected to a Framer X project
+  tags:
+    - Framer X
+    - TypeScript
+  features:
+    - TypeScript support
+    - Easily work in GatsbyJS and Framer X at the same time

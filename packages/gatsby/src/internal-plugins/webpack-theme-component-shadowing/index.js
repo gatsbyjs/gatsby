@@ -1,6 +1,7 @@
 const path = require(`path`)
 const debug = require(`debug`)(`gatsby:component-shadowing`)
 const fs = require(`fs`)
+const _ = require(`lodash`)
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
@@ -14,10 +15,15 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   apply(resolver) {
     resolver.plugin(`relative`, (request, callback) => {
       // find out which theme's src/components dir we're requiring from
-      const matchingThemes = this.themes.filter(name =>
+      const allMatchingThemes = this.themes.filter(name =>
         request.path.includes(path.join(name, `src`))
       )
-      // 0 matching themes happens a lot fo rpaths we don't want to handle
+
+      // The same theme can be included twice in the themes list causing multiple
+      // matches. This case should only be counted as a single match for that theme.
+      const matchingThemes = _.uniq(allMatchingThemes)
+
+      // 0 matching themes happens a lot for paths we don't want to handle
       // > 1 matching theme means we have a path like
       //   `gatsby-theme-blog/src/components/gatsby-theme-something/src/components`
       if (matchingThemes.length > 1) {
