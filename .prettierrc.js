@@ -1,10 +1,12 @@
 module.exports = {
+  
   endOfLine: "lf",
   semi: false,
   singleQuote: false,
   tabWidth: 2,
   trailingComma: "es5",
   overrides: [
+    
     {
       // This file uses semicolons. It's needed here because `documentation`
       // package (used to parse jsdoc and provide content for API reference pages)
