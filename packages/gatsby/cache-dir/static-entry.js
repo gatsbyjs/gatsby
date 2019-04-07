@@ -172,6 +172,7 @@ export default (pagePath, callback) => {
       Router,
       {
         baseuri: `${__PATH_PREFIX__}`,
+        id: `gatsby-focus-wrapper`,
       },
       createElement(RouteHandler, { path: `/*` })
     )

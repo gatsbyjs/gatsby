@@ -35,8 +35,5 @@ Cypress.Commands.add(`shouldNotMatchScrollPosition`, id =>
 )
 
 Cypress.Commands.add(`assertRouterWrapperFocus`, () =>
-  cy
-    .focused()
-    .parent()
-    .should(`have.attr`, `id`, `___gatsby`)
+  cy.focused().should(`have.attr`, `id`, `gatsby-focus-wrapper`)
 )

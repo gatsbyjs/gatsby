@@ -1,8 +1,8 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React, { createElement } from "react"
+import React from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate } from "@reach/router"
-import { match } from "@reach/router/lib/utils"
+import { Router, navigate, Location } from "@reach/router"
+import { match } from "@reach/router/es/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import {
@@ -35,27 +35,41 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  class RouteHandler extends React.Component {
+  class LocationHandler extends React.Component {
     render() {
       let { location } = this.props
 
       return (
         <EnsureResources location={location}>
-          {({ pageResources, location }) => (
-            <RouteUpdates location={location}>
-              <ScrollContext
-                location={location}
-                shouldUpdateScroll={shouldUpdateScroll}
-              >
-                <PageRenderer
-                  {...this.props}
+          {({ pageResources, location }) =>
+            console.log(pageResources) || (
+              <RouteUpdates location={location}>
+                <ScrollContext
                   location={location}
-                  pageResources={pageResources}
-                  {...pageResources.json}
-                />
-              </ScrollContext>
-            </RouteUpdates>
-          )}
+                  shouldUpdateScroll={shouldUpdateScroll}
+                >
+                  <Router
+                    basepath={__PATH_PREFIX__}
+                    location={location}
+                    id="gatsby-focus-wrapper"
+                  >
+                    <PageRenderer
+                      path={
+                        pageResources.page.path === `/404.html`
+                          ? location.pathname
+                          : pageResources.page.matchPath ||
+                            pageResources.page.path
+                      }
+                      {...this.props}
+                      location={location}
+                      pageResources={pageResources}
+                      {...pageResources.json}
+                    />
+                  </Router>
+                </ScrollContext>
+              </RouteUpdates>
+            )
+          }
         </EnsureResources>
       )
     }
@@ -84,14 +98,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   loader.getResourcesForPathname(browserLoc.pathname).then(() => {
-    const Root = () =>
-      createElement(
-        Router,
-        {
-          basepath: __PATH_PREFIX__,
-        },
-        createElement(RouteHandler, { path: `/*` })
-      )
+    const Root = () => (
+      <Location>
+        {({ location }) => <LocationHandler location={location} />}
+      </Location>
+    )
 
     const WrappedRoot = apiRunner(
       `wrapRootElement`,
