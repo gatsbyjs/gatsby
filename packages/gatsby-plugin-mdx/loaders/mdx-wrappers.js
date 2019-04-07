@@ -16,7 +16,7 @@ const loaderUtils = require("loader-utils");
  */
 module.exports = function() {
   const options = loaderUtils.getOptions(this);
-  const { plugins } = options.store.getState();
+  const { flattenedPlugins: plugins } = options.store.getState();
   const wrapperPlugins = plugins
     .filter(plugin => plugin.ssrAPIs.includes("wrapRootElement"))
     .map(plugin => `${plugin.resolve}/gatsby-ssr.js`);
