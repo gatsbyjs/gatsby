@@ -50,6 +50,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   loader.addDevRequires(syncRequires)
   Promise.all([
     loader.getResourcesForPathname(`/dev-404-page/`),
+    loader.getResourcesForPathname(`/404.html`),
     loader.getResourcesForPathname(window.location.pathname),
   ]).then(() => {
     const preferDefault = m => (m && m.default) || m
