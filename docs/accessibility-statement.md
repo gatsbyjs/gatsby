@@ -12,13 +12,13 @@ This page was created to collect accessibility information about the Gatsby ecos
 
 Gatsbyjs.org is the online home of the open source Gatsby website framework; it includes documentation, tutorials, and guides on how and why to build with Gatsby, as well as a blog, site showcase, and information on how to contribute to the project.
 
-Gatsbyjs.com is the business website for Gatsby, Inc. the startup building Gatsby, as well as products around the framework, starting with Gatsby Preview: a cloud service allowing marketers and other team members to preview a Gatsby site in progress.
+Gatsbyjs.com is the business website for Gatsby, Inc. the startup building Gatsby, including our first product, Gatsby Preview: a cloud service allowing team members to collaborate on a Gatsby site in development.
 
 ## Providing feedback and getting accessibility help
 
 We strive to make these websites and the Gatsby framework itself as accessible as possible. Our goal is to meet WCAG 2.0 AA, with which we are partially compliant. We’ll be the first to admit the Gatsby ecosystem is a work in progress, and we are open to all feedback to make things better.
 
-To contact the core team with your accessibility feedback or challenges, please file an issue on Github: https://github.com/gatsbyjs/gatsby/issues/new/choose
+To contact the core team with your accessibility feedback or challenges, please [file an issue on Github](https://github.com/gatsbyjs/gatsby/issues/new/choose).
 
 Alternatively, we welcome you to reach out directly to Marcy Sutton, Head of Learning at Gatsby: [marcy@gatsbyjs.com](mailto:marcy@gatsbyjs.com)
 
@@ -28,7 +28,7 @@ To learn how to build an accessible website with Gatsby, visit our [docs accessi
 
 ## Third-party platforms, products and services
 
-Common Gatsby workflows involve third-party products and services such as connecting to Content Management Systems and managing and deploying sites with hosting platforms. Some of these platforms were not built with accessibility in mind, and we encourage those vendors to improve their accessibility along with us.
+Common Gatsby workflows involve third-party products and services, such as sourcing from Content Management Systems, and managing and deploying sites with hosting platforms. Some of these platforms appear to have been designed and/or built without accessibility in mind; we encourage those vendors to improve their accessibility along with us.
 
 Our current recommendations for accessible CMS platforms are:
 
