@@ -34,7 +34,7 @@ Cypress.Commands.add(`shouldNotMatchScrollPosition`, id =>
   })
 )
 
-Cypress.Commands.add(`routerWrapperFocused`, () =>
+Cypress.Commands.add(`assertRouterWrapperFocus`, () =>
   cy
     .focused()
     .parent()

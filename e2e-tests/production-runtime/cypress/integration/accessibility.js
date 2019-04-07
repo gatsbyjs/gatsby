@@ -8,12 +8,12 @@ describe(`focus managment`, () => {
       .click()
       .waitForRouteChange()
 
-    cy.routerWrapperFocused()
+    cy.assertRouterWrapperFocus()
 
     cy.getTestElement(`index-link`)
       .click()
       .waitForRouteChange()
 
-    cy.routerWrapperFocused()
+    cy.assertRouterWrapperFocus()
   })
 })
