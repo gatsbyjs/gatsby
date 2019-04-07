@@ -311,9 +311,9 @@ module.exports = async (
     return { rules: configRules }
   }
 
-  function getResolve() {
+  function getResolve(stage) {
     const { program } = store.getState()
-    return {
+    const resolve = {
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
@@ -343,6 +343,19 @@ module.exports = async (
         PnpWebpackPlugin,
       ],
     }
+
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+    if (target === `web`) {
+      // force to use es modules when importing internals of @reach.router
+      // for browser bundles
+      resolve.alias[`@reach/router`] = path.join(
+        path.dirname(require.resolve(`@reach/router/package.json`)),
+        `es`
+      )
+    }
+
+    return resolve
   }
 
   function getResolveLoader() {
@@ -390,7 +403,7 @@ module.exports = async (
     mode: getMode(),
 
     resolveLoader: getResolveLoader(),
-    resolve: getResolve(),
+    resolve: getResolve(stage),
 
     node: {
       __filename: true,
