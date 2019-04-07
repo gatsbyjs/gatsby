@@ -5,7 +5,7 @@ import loader from "./loader"
 import JSONStore from "./json-store"
 
 const DevPageRenderer = ({ location }) => {
-  const pageResources = loader.getResourcesForPathnameSync(location.pathname)
+  const pageResources = loader.getPage(location.pathname)
   return React.createElement(JSONStore, {
     location,
     pageResources,
