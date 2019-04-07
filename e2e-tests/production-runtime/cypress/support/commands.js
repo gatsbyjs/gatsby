@@ -33,3 +33,10 @@ Cypress.Commands.add(`shouldNotMatchScrollPosition`, id =>
     expect(scrollPosition).not.to.be.closeTo(storedScrollPositions[id], 100)
   })
 )
+
+Cypress.Commands.add(`routerWrapperFocused`, () =>
+  cy
+    .focused()
+    .parent()
+    .should(`have.attr`, `id`, `___gatsby`)
+)
