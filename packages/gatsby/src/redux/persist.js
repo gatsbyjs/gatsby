@@ -21,7 +21,7 @@ const mapToObject = map => {
 const jsonStringify = contents => {
   contents.staticQueryComponents = mapToObject(contents.staticQueryComponents)
   contents.components = mapToObject(contents.components)
-  contents.nodes = mapToObject(contents.nodes)
+  contents.nodes = contents.nodes ? mapToObject(contents.nodes) : {}
   return stringify(contents, null, 2)
 }
 
@@ -29,7 +29,7 @@ const jsonParse = buffer => {
   const parsed = JSON.parse(buffer.toString(`utf8`))
   parsed.staticQueryComponents = objectToMap(parsed.staticQueryComponents)
   parsed.components = objectToMap(parsed.components)
-  parsed.nodes = objectToMap(parsed.nodes)
+  parsed.nodes = objectToMap(parsed.nodes || {})
   return parsed
 }
 

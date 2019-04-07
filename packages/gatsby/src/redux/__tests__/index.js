@@ -1,4 +1,3 @@
-// const path = require(`path`)
 const _ = require(`lodash`)
 
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
