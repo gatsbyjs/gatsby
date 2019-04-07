@@ -1,6 +1,6 @@
 {
   "name": "gatsby-mdx",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
