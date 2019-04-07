@@ -2,7 +2,7 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location } from "@reach/router"
-import { match } from "@reach/router/es/lib/utils"
+import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import {

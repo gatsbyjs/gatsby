@@ -1,7 +1,7 @@
 import React from "react"
 import ScrollBehavior from "scroll-behavior"
 import PropTypes from "prop-types"
-import { globalHistory as history } from "@reach/router/es/lib/history"
+import { globalHistory as history } from "@reach/router/lib/history"
 
 import SessionStorage from "./StateStorage"
 
