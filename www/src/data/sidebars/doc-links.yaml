@@ -185,6 +185,7 @@
               link: /starters/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
+        # restructure docs styling section
         - title: Styling Your Site
           link: /docs/styling/
           items:
