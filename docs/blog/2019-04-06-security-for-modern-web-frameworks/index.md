@@ -1,6 +1,6 @@
 ---
 title: Security for Modern Web Frameworks.
-date: 2019-03-27
+date: 2019-04-06
 author: Alex Moon
 excerpt: "While more secure than their server-side counterparts, modern web frameworks provide new and unique security concerns."
 tags:
@@ -59,7 +59,7 @@ What's the solution? Well there are several problems to solve.
 - **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
 - **Static** - any content that changes less than once in a given 5 minute interval.
 
-NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything **changed more** often tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com/) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
+NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything changed **more often** tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com/) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
 
 So, you could have private-static content, private-dynamic content, public-static content, and public-dynamic content. You also need to be aware of whether you are securing the ability to read or write content. Without further delay, in order of difficulty...
 
