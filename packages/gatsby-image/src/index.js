@@ -490,6 +490,7 @@ const fixedObject = PropTypes.shape({
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
+  media: PropTypes.string,
 })
 
 const fluidObject = PropTypes.shape({
@@ -501,6 +502,7 @@ const fluidObject = PropTypes.shape({
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
+  media: PropTypes.string,
 })
 
 Image.propTypes = {

@@ -9,6 +9,7 @@ interface FixedObject {
   tracedSVG?: string
   srcWebp?: string
   srcSetWebp?: string
+  media?: string
 }
 
 interface FluidObject {
@@ -20,6 +21,7 @@ interface FluidObject {
   tracedSVG?: string
   srcWebp?: string
   srcSetWebp?: string
+  media?: string
 }
 
 interface GatsbyImageProps {
