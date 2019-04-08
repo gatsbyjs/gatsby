@@ -136,13 +136,10 @@ jobs:
 
   unit_tests_www:
     executor: node
+    working_directory: ~/www
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "www/*|docs/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - run: cd www
       - run: yarn
       - run: yarn test
 
