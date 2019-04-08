@@ -46,26 +46,26 @@
               link: /docs/hosting-on-netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
-            - title: Path Prefix
+            - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
               link: /docs/how-gatsby-works-with-github-pages/
-            - title: Multi-core builds
+            - title: Multi-Core Builds
               link: /docs/multi-core-builds/
-        - title: Custom configuration
+        - title: Custom Configuration
           link: /docs/customization/
           items:
-            - title: Babel.js
+            - title: Customizing Babel.js Config
               link: /docs/babel/
-            - title: Babel Plugin Macros
+            - title: USing Babel Plugin Macros
               link: /docs/babel-plugin-macros/
-            - title: Custom Webpack Config
+            - title: Customizing Webpack Config
               link: /docs/add-custom-webpack-config/
             - title: Customizing html.js
               link: /docs/custom-html/
-            - title: Environment Variables
+            - title: Using Environment Variables
               link: /docs/environment-variables/
-            - title: ESLint
+            - title: Using ESLint
               link: /docs/eslint/
             - title: Proxying API Requests
               link: /docs/api-proxy/
@@ -169,11 +169,11 @@
         - title: Styling Your Site
           link: /docs/styling/
           items:
-            - title: Layout Components
+            - title: Using Layout Components
               link: /docs/layout-components/
-            - title: CSS Modules
+            - title: Using CSS Modules
               link: /docs/css-modules/
-            - title: Typography.js
+            - title: Using Typography.js
               link: /docs/typography-js/
             - title: Using CSS-in-JS Library Emotion
               link: /docs/emotion/
@@ -183,26 +183,26 @@
               link: /docs/styled-components/
             - title: Creating Global Styles
               link: /docs/creating-global-styles/
-            - title: Component CSS
+            - title: Writing Component CSS
               link: /docs/component-css/
-            - title: PostCSS
+            - title: Using PostCSS
               link: /docs/post-css/
-            - title: TailwindCSS
+            - title: Using TailwindCSS
               link: /docs/tailwind-css/
         - title: Adding Components to Content with MDX
           link: /docs/mdx/
           items:
-            - title: Getting started
+            - title: Getting Started
               link: /docs/mdx/getting-started/
-            - title: Writing pages
+            - title: Writing Pages
               link: /docs/mdx/writing-pages/
-            - title: Customizing components
+            - title: Customizing Components
               link: /docs/mdx/customizing-components/
-            - title: Programmatically creating pages
+            - title: Programmatically Creating Pages
               link: /docs/mdx/programmatically-creating-pages/
-            - title: Using plugins
+            - title: Using MDX Plugins
               link: /docs/mdx/plugins/
-        - title: Adding testing
+        - title: Adding Testing
           link: /docs/testing/
           items:
             - title: Unit Testing
@@ -228,7 +228,7 @@
               link: /docs/debugging-the-build-process/
             - title: Debugging Cache Issues
               link: /docs/debugging-cache-issues/
-            - title: Trace Gatsby Builds
+            - title: Tracing Gatsby Builds
               link: /docs/performance-tracing/
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
@@ -238,7 +238,7 @@
             - title: Adding Search
               link: /docs/adding-search/
               items:
-                - title: Adding search with Algolia
+                - title: Adding Search with Algolia
                   link: /docs/adding-search-with-algolia/
                 - title: Adding Search with elasticlunr*
                   link: /docs/adding-search-with-elasticlunr/
@@ -287,19 +287,19 @@
         - title: Improving Performance
           link: /docs/performance/
           items:
-            - title: Progressive Web App (PWA)
+            - title: Supporting Progressive Web Apps (PWAs)
               link: /docs/progressive-web-app/
             - title: Caching
               link: /docs/caching/
-            - title: Local HTTPS
+            - title: Using Local HTTPS
               link: /docs/local-https/
-            - title: Audit with Lighthouse
+            - title: Auditing with Lighthouse
               link: /docs/audit-with-lighthouse/
-            - title: Add a Manifest File
+            - title: Adding a Manifest File
               link: /docs/add-a-manifest-file/
-            - title: Add Offline Support with a Service Worker
+            - title: Adding Offline Support with a Service Worker
               link: /docs/add-offline-support-with-a-service-worker
-            - title: Add Page Metadata
+            - title: Adding Page Metadata
               link: /docs/add-page-metadata/
             - title: Search Engine Optimization (SEO)
               link: /docs/seo/
