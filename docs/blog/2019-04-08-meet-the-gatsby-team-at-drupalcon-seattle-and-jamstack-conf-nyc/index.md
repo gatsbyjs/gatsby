@@ -34,7 +34,7 @@ On Thursday, during the DrupalCon closing plenary, **[Marcy Sutton](https://twit
 
 ## Meet Gatsby CEO Kyle Mathews at Decoupled Summit
 
-Tomorrow, our CEO **[Kyle Mathews](https://twitter.com/kylemathews)** will be joined by [yours truly](https://twitter.com/prestonso) on stage at DrupalCon’s [Decoupled Summit](https://events.drupal.org/seattle2019/decoupled-summit) to talk about how Gatsby helps teams and organizations around the world build blazing fast web applications, all while having fun in the process. Catch our presentation during the Decoupled Summit on Tuesday from 11:15am–12pm.
+Tomorrow (April 9th), our CEO **[Kyle Mathews](https://twitter.com/kylemathews)** will be joined by [yours truly](https://twitter.com/prestonso) on stage at DrupalCon’s [Decoupled Summit](https://events.drupal.org/seattle2019/decoupled-summit) to talk about how Gatsby helps teams and organizations around the world build blazing fast web applications, all while having fun in the process. Catch our presentation during the Decoupled Summit on Tuesday from 11:15am–12pm.
 
 Gatsby also has first-class support for Drupal! As the session abstract states: “We’ll then dive into Gatsby's Drupal integration, show how the two make a beautiful match, and investigate some of the synergies between Gatsby and Drupal and motivations for adopting Gatsby no matter where you are in your decoupled architecture.”
 
