@@ -9,13 +9,14 @@ const {
 const { createHttpLink } = require(`apollo-link-http`)
 const fetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+
 const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
-  { actions, createNodeId, cache, store, createContentDigest },
+  { actions, createNodeId, cache, createContentDigest },
   options
 ) => {
   const { addThirdPartySchema, createPageDependency, createNode } = actions
