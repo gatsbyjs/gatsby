@@ -94,8 +94,10 @@ Since we’ll be doing a lot of discovery, usability research, and prototyping, 
 We’ll prioritize based on OKRs we talked about before. Objectives show what we want to accomplish and key results show how we’ll measure that we’ve accomplished it.
 
 The business vision and objective is set at the company level, and the business results are set by the individual teams. This means that teams will have the autonomy to hit the business objective in the best way they see fit.
-How we put it all together
-Outcome-based roadmaps
+
+## How we put it all together
+
+### Outcome-based roadmaps
 
 Once we understand the ideas we want to prioritize, the objectives we’re trying to hit, and the results we’ll use to measure those outcomes, we can put together a roadmap that shows where we want to focus.
 
