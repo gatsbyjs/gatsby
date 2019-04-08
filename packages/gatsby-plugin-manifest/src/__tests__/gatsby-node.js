@@ -29,11 +29,16 @@ jest.mock(`sharp`, () => {
         }
       }()
   )
+
   sharp.simd = jest.fn()
   sharp.concurrency = jest.fn()
 
   return sharp
 })
+
+jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
+  jest.fn(() => `contentDigest`)
+)
 
 const fs = require(`fs`)
 const path = require(`path`)
@@ -48,6 +53,10 @@ const reporter = {
 }
 const { onPostBootstrap } = require(`../gatsby-node`)
 
+const apiArgs = {
+  reporter,
+}
+
 const manifestOptions = {
   name: `GatsbyJS`,
   short_name: `GatsbyJS`,
@@ -59,6 +68,12 @@ const manifestOptions = {
     {
       src: `icons/icon-48x48.png`,
       sizes: `48x48`,
+      type: `image/png`,
+      purpose: `all`,
+    },
+    {
+      src: `icons/icon-128x128.png`,
+      sizes: `128x128`,
       type: `image/png`,
     },
   ],
@@ -76,17 +91,14 @@ describe(`Test plugin manifest options`, () => {
   })
 
   it(`correctly works with default parameters`, async () => {
-    await onPostBootstrap(
-      { reporter },
-      {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+    })
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(sharp).toHaveBeenCalledTimes(0)
@@ -99,25 +111,21 @@ describe(`Test plugin manifest options`, () => {
     const icon = `pretend/this/exists.png`
     const size = 48
 
-    await onPostBootstrap(
-      { reporter },
-      {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon,
-        icons: [
-          {
-            src: `icons/icon-48x48.png`,
-            sizes: `${size}x${size}`,
-            type: `image/png`,
-          },
-        ],
-      }
-    )
+    const pluginSpecificOptions = {
+      icon: icon,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+      ],
+    }
+
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
     expect(sharp).toHaveBeenCalledTimes(2)
@@ -126,25 +134,14 @@ describe(`Test plugin manifest options`, () => {
   it(`fails on non existing icon`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => false })
 
-    return onPostBootstrap(
-      { reporter },
-      {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: `non/existing/path`,
-        icons: [
-          {
-            src: `icons/icon-48x48.png`,
-            sizes: `48x48`,
-            type: `image/png`,
-          },
-        ],
-      }
-    ).catch(err => {
+    const pluginSpecificOptions = {
+      icon: `non/existing/path`,
+    }
+
+    return onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    }).catch(err => {
       expect(sharp).toHaveBeenCalledTimes(0)
       expect(err).toBe(
         `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
@@ -159,14 +156,15 @@ describe(`Test plugin manifest options`, () => {
       plugins: [],
       theme_color_in_head: false,
       cache_busting_mode: `name`,
+      include_favicon: true,
+      crossOrigin: `anonymous`,
+      icon_options: {},
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
     expect(sharp).toHaveBeenCalledTimes(0)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
@@ -180,15 +178,12 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       cache_busting_mode: `name`,
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
   })
@@ -201,16 +196,33 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       cache_busting_mode: `none`,
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content).toEqual(manifestOptions)
+  })
+
+  it(`icon options iterator adds options and the icon array take precedence`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      icon_options: {
+        purpose: `maskable`,
+      },
+    }
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    expect(sharp).toHaveBeenCalledTimes(3)
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(content.icons[0].purpose).toEqual(`all`)
+    expect(content.icons[1].purpose).toEqual(`maskable`)
   })
 })

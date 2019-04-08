@@ -27,7 +27,7 @@ Many developers use static site generators alongside locally stored Markdown fil
 
 This is where a headless CMS comes in, which provides an admin client for authoring and content management, while still bringing all of the benefits of having a static front-end. Developers can use their preferred stack, and writers have an editor, content scheduling, SEO and much more at their fingertips.
 
-When you look at the bigger picture of the [content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/), it really starts to feel like an inevitable future for building publishing websites.
+When you look at the bigger picture of the [content mesh](/blog/2018-10-04-journey-to-the-content-mesh/), it really starts to feel like an inevitable future for building publishing websites.
 
 ![](./images/ghost-jamstack.png)
 

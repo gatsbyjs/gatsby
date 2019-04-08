@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.52](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.51...gatsby-source-wordpress@3.0.52) (2019-04-05)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** fix local files being nulles after unpublishing and republishing posts ([#13140](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/13140)) ([378f863](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/378f863))
+
+### Features
+
+- **gatsby-source-wordpress:** Add yoast premium redirects support ([#11595](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11595)) ([e01f080](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/e01f080))
+
 ## [3.0.51](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.50...gatsby-source-wordpress@3.0.51) (2019-03-28)
 
 **Note:** Version bump only for package gatsby-source-wordpress

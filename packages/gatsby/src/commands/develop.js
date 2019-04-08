@@ -17,7 +17,7 @@ const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
-const developHtml = require(`./develop-html`)
+const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const launchEditor = require(`react-dev-utils/launchEditor`)
@@ -31,7 +31,11 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const onExit = require(`signal-exit`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -49,15 +53,24 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
-  telemetry.trackCli(`DEVELOP_STOP`)
   process.exit()
+})
+
+onExit(() => {
+  telemetry.trackCli(`DEVELOP_STOP`)
 })
 
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () =>
-    developHtml(program).catch(err => {
+  const createIndexHtml = async () => {
+    try {
+      await buildHTML.buildPages({
+        program,
+        stage: `develop-html`,
+        pagePaths: [`/`],
+      })
+    } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
         return
@@ -70,10 +83,14 @@ async function startServer(program) {
         `,
         err
       )
-    })
+    }
+  }
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  db.startAutosave()
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -260,7 +277,6 @@ module.exports = async (program: any) => {
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
-  const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
@@ -284,35 +300,9 @@ module.exports = async (program: any) => {
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detect(port, (err, _port) => {
-      if (err) {
-        report.panic(err)
-      }
+  program.port = await detectPortInUseAndPrompt(port, rlInterface)
 
-      if (port !== _port) {
-        // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-
-        rlInterface.question(question, answer => {
-          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-            program.port = _port // eslint-disable-line no-param-reassign
-          }
-
-          startServer(program).then(([c, l]) => {
-            compiler = c
-            resolve()
-          })
-        })
-      } else {
-        startServer(program).then(([c, l]) => {
-          compiler = c
-          resolve()
-        })
-      }
-    })
-  })
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
