@@ -70,6 +70,8 @@ module.exports = {
         // Must be using V3 of ACF to REST to include these routes
         // Example: `["option_page_1", "option_page_2"]` will include the proper ACF option
         // routes with the ID option_page_1 and option_page_2
+        // The IDs provided to this array should correspond to the `post_id` value when defining your
+        // options page using the provided `acf_add_options_page` method, in your WordPress setup
         // Dashes in IDs will be converted to underscores for use in GraphQL
         acfOptionPageIds: [],
         auth: {
@@ -95,7 +97,7 @@ module.exports = {
           // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
-          jwt_base_path: "/jwt-auth/v1/token" # Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
+          jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
@@ -173,6 +175,12 @@ plugins.
 
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
+
+- [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
+  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in wordpress.
+  - Will pull the `yoast_meta: { ... }` field's contents in entity.
+  - Work with Yoast premium :
+    - Will create Yoast redirects model base on Yoast redirect
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -598,6 +606,56 @@ Full example:
 }
 ```
 
+### Query pages with the Yoast Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        yoast_meta {
+          yoast_wpseo_title
+          yoast_wpseo_metadesc
+          yoast_wpseo_canonical
+          yoast_wpseo_facebook_title
+          yoast_wpseo_facebook_description
+          yoast_wpseo_facebook_type
+          yoast_wpseo_facebook_image
+          yoast_wpseo_twitter_title
+          yoast_wpseo_twitter_description
+          yoast_wpseo_twitter_image
+          yoast_wpseo_social_url
+          yoast_wpseo_company_or_person
+          yoast_wpseo_person_name
+          yoast_wpseo_company_name
+          yoast_wpseo_company_logo
+          yoast_wpseo_website_name
+        }
+      }
+    }
+  }
+}
+```
+
+### Query Yoast Redirects
+
+**_only work with Yoast Premium_**
+
+```graphql
+{
+  allWordpressYoastRedirects {
+    edges {
+      node {
+        origin
+        url
+        type
+        format
+      }
+    }
+  }
+}
+```
+
 ## Image processing
 
 To use image processing you need `gatsby-transformer-sharp`, `gatsby-plugin-sharp` and their
@@ -741,7 +799,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   // The “graphql” function allows us to run arbitrary
-  // queries against the local WordPress graphql schema. Think of
+  // queries against the local Gatsby GraphQL schema. Think of
   // it like the site has a built-in database constructed
   // from the fetched data that you can run queries against.
   const result = await graphql(`
@@ -750,7 +808,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            link
+            path
             status
             template
           }
@@ -760,7 +818,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            link
+            path
             status
             template
             format
@@ -780,8 +838,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Create Page pages.
   const pageTemplate = path.resolve(`./src/templates/page.js`)
-  // We want to create a detailed page for each
-  // page node. We'll just use the WordPress Slug for the slug.
+  // We want to create a detailed page for each page node.
+  // The path field contains the relative original WordPress link
+  // and we use it for the slug to preserve url structure.
   // The Page ID is prefixed with 'PAGE_'
   allWordpressPage.edges.forEach(edge => {
     // Gatsby uses Redux to manage its internal state.
@@ -792,7 +851,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // as a template component. The `context` is
       // optional but is often necessary so the template
       // can query data specific to each page.
-      path: `/${edge.node.slug}/`,
+      path: edge.node.path,
       component: slash(pageTemplate),
       context: {
         id: edge.node.id,
@@ -800,14 +859,14 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  // Create Post pages
   const postTemplate = path.resolve(`./src/templates/post.js`)
-  // We want to create a detailed page for each
-  // post node. We'll just use the WordPress Slug for the slug.
+  // We want to create a detailed page for each post node.
+  // The path field stems from the original WordPress link
+  // and we use it for the slug to preserve url structure.
   // The Post ID is prefixed with 'POST_'
   allWordpressPost.edges.forEach(edge => {
     createPage({
-      path: `/${edge.node.slug}/`,
+      path: edge.node.path,
       component: slash(postTemplate),
       context: {
         id: edge.node.id,
@@ -888,15 +947,25 @@ which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
 
+### ACF Option Pages - Option page data not showing or not updating
+
+This issue occurs when you are trying to pull in data from your ACF Option pages. On certain occasions (initial setup or rebuilding) the data will not appear or won't update to the latest data.
+
+To resolve this issue, make sure that your ids in the `acfOptionPageIds` array, in the plugin config, corresponds to the `post_id` value when defining your Options page with the `acf_add_options_page` method provided by ACF.
+
 ### Self-signed certificates
 
 When running locally, or in other situations that may involve self-signed certificates, you may run into the error: `The request failed with error code "DEPTH_ZERO_SELF_SIGNED_CERT"`.
 
-To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `gatsby-node.js`:
+To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
+NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+
+Please note that you need to add `dotenv`, as mentioned earlier, to expose environment variables in your gatsby-config.js or gatsby-node.js files.
+
+**CAUTION:** This should never be set in production. Always ensure that you disable `NODE_TLS_REJECT_UNAUTHORIZED` in development with `gatsby develop` only.
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://www.gatsbyjs.org/docs/environment-variables

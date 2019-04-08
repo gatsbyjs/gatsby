@@ -25,7 +25,7 @@ To add a new blog post to the gatsbyjs.org blog:
 - If your blog post contains images add them to your blog post folder and reference them in your post's `index.md`.
 - Ensure any links to gatsbyjs.org are relative links - `/contributing/how-to-contribute/` instead of `https://gatsbyjs.org/contributing/how-to-contribute`
 - Follow the [Style Guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
-- Double check your grammar and capitalise correctly
+- Double check your grammar and capitalize correctly
 - Commit and push to your fork
 - Create a pull request from your branch
   - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change` ([PR example](https://github.com/gatsbyjs/gatsby/commit/9c21394add7906974dcfd22ad5dc1351a99d7ceb#diff-bf544fce773d8a5381f64c37d48d9f12))
@@ -58,7 +58,9 @@ If you want to make changes, improvements, or add new functionality to the websi
 
 - Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
-- Run `npm run develop` to preview the blog at `http://localhost:8000/blog`.
+- Run `npm run develop` to preview the site at `http://localhost:8000/`.
+
+> Note: If you are experiencing issues on a Linux machine, run `sudo apt install libvips-dev`, to install a native dependency. You can also reference [Gatsby guide on Linux](/docs/gatsby-on-linux/) for other Linux-specific requirements.
 
 Now you can make and preview your changes before raising a pull request!
 

@@ -38,7 +38,7 @@ Array [
         "content": "blue: true
 funny: yup
 ",
-        "dir": "/tmp/bar/",
+        "dir": "<TEMP_DIR>/bar/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",

@@ -21,8 +21,12 @@ class IndexRoute extends React.Component {
               Contributing to Gatsby.js
             </h1>
             <p>
-              Find guides on the Gatsby.js community, code of conduct, and how
-              to get started contributing:
+              Thanks for being interested in contributing! We're so glad you
+              want to help!
+            </p>
+            <p>
+              Below you'll find guides on the Gatsby.js community, code of
+              conduct, and how to get started contributing:
             </p>
             <ul>
               <li>
@@ -55,7 +59,7 @@ class IndexRoute extends React.Component {
               <li>
                 <Link to="/contributing/rfc-process">RFC process</Link>: Learn
                 how the Gatsby.js team manages bigger changes, by way of a
-                "Request-for-comment" process on GitHub
+                “Request-for-comment” process on GitHub
               </li>
             </ul>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />

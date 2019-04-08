@@ -1,6 +1,6 @@
 const Redux = require(`redux`)
 const _ = require(`lodash`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
 
@@ -73,6 +73,10 @@ const store = Redux.createStore(
 
 // Persist state.
 function saveState() {
+  if (process.env.DANGEROUSLY_DISABLE_OOM) {
+    return Promise.resolve()
+  }
+
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
@@ -89,11 +93,7 @@ function saveState() {
   pickedState.components = mapToObject(pickedState.components)
   pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
   const stringified = stringify(pickedState, null, 2)
-  fs.writeFile(
-    `${process.cwd()}/.cache/redux-state.json`,
-    stringified,
-    () => {}
-  )
+  return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
 }
 
 exports.saveState = saveState
