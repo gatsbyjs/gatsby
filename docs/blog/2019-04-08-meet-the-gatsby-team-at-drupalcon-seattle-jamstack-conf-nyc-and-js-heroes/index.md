@@ -5,7 +5,6 @@ author: Preston So
 excerpt: "Members of the Gatsby team will be in attendance at DrupalCon Seattle, JAMstack Conf NYC, and JS Heroes, ready to answer your questions throughout the week."
 tags:
   - drupal
-  - drupalcon
   - events
   - open source
 ---
@@ -19,6 +18,8 @@ Here are just a few of the things members of the Gatsby team will be getting up 
 ## Amberley Romo at JAMstack Conf NYC
 
 If you aren’t able to catch Gatsby at DrupalCon Seattle this year, and if you happen to be traveling along the East Coast, be sure to catch **[Amberley Romo](https://twitter.com/amber1ey)**, Software Engineer at Gatsby, at [JAMstack Conf NYC](https://jamstackconf.com/nyc/), where she’ll be presenting a session entitled “What’s Your JAM(stack)?” at 3:30pm on Tuesday, April 9th.
+
+"Shifting from a monolithic CMS approach to a JAMstack setup comes with an abundance of choice. On the other hand, all that choice can come with indecision paralysis. Where’s a dev to start?" asks Amberley in her abstract. "Thankfully, there’s a thriving ecosystem of frameworks offering varying flexibility and structure, different approaches to performance and delivery, etc. We’ll talk about some ways to evaluate available tools, using Gatsby as an example."
 
 ## Gatsby at DrupalCon Seattle
 
@@ -47,6 +48,8 @@ On Thursday, April 11th, I’ll be presenting a session in Room 6B, bright and e
 ## Jason Lengstorf at JS Heroes
 
 Late in the week at JS Heroes in Cluj-Napoca, **[Jason Lengstorf](https://twitter.com/jlengstorf)**, Developer Advocate, will be joining forces with Sara Vieira to present a full-day workshop, ["Advanced Performance Tuning for React Applications"](https://jsheroes.io/workshops/react), on Wednesday, April 10th. Covered topics include evaluating an existing React application, diagnosing performance issues, prioritizing fixes, and implementing performance fixes.
+
+"By the end of the workshop," write Jason and Sara, "you’ll be able to diagnose performance problems and solve them with a combination of modern and time-tested performance techniques. You’ll also learn how to weigh the trade-offs of implementing fixes to ensure that both your apps and your teams perform well. The tools added to your toolbox will continue to serve you, your team, and your users for years to come."
 
 Then, on Thursday, April 11th, see Jason on stage at JS Heroes with his session, ["You Belong Here: How to Make Open Source More Open"](https://jsheroes.io/#schedule), being held from 2:00-2:30pm.
 
