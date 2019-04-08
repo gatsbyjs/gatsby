@@ -1,5 +1,6 @@
 /* @flow */
 const { execSync } = require(`child_process`)
+const Configstore = require(`configstore`)
 const execa = require(`execa`)
 const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
@@ -13,6 +14,9 @@ const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit`, ...options })
 }
+
+const pkg = require(`../package.json`)
+const conf = new Configstore(pkg.name, {})
 
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
@@ -80,11 +84,12 @@ const install = async rootPath => {
             { title: `yarn`, value: `yarnpkg` },
             { title: `npm`, value: npmCmd },
           ],
-          max: 1,
+          initial: 0,
         },
       ])
       response = promptsAnswer.package_manager
     }
+    conf.set(`package_manager`, response)
     if (response.includes(`yarn`)) {
       await spawn(`rm package-lock.json`)
     } else {
