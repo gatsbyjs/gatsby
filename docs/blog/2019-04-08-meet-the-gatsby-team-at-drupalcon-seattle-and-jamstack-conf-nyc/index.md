@@ -16,22 +16,21 @@ DrupalCon Seattle, the annual conference for [Drupal](https://www.drupal.org/) d
 
 Here are just a few of the things members of the Gatsby team will be getting up to this week in Seattle and in New York City.
 
-## Get your Gatsby sticker at the booth!
-
-All week, team members will be on hand and available to answer all of your questions about how Gatsby works, why it’s a great choice for your organization, and how Drupal and Gatsby fit together like peas in a pod. Come find us at Booth #319 in the exhibit hall and pick up your T-shirt and Gatsby sticker!
-
-Four of our team will be behind the table at various times during DrupalCon, including **[Marisa Morby](https://twitter.com/marisamorby)**, Product Manager; **[Dustin Schau](https://twitter.com/schaudustin)**, Software Engineer; **[Marcy Sutton](https://twitter.com/marcysutton)**, Head of Learning; and **[Preston So
-(https://twitter.com/prestonso)**, Principal Product Manager.
-
-## “JavaScript and Civil Rights” by Marcy Sutton, Head of Learning
-
-On Thursday, during the closing plenary, **[Marcy Sutton](https://twitter.com/marcysutton)**, our Head of Learning, will deliver one of the keynotes to close out DrupalCon with a discussion of how to design and build software that fosters inclusion. [“JavaScript and Civil Rights”](https://events.drupal.org/seattle2019/sessions/javascript-and-civil-rights) will take place in Hall 4E from 4:15-5:30pm on Thursday.
-
-“As designers and developers of software, we act as gatekeepers in people’s lives more than we realize,” states the keynote abstract. “Now more than ever, it is our duty to create digital experiences that honor our users’ rights to inclusion–no matter where they live, or how they access the Web. This applies to both authors and contributors, as well as end-users and consumers; we must do more to protect everyone’s rights to access, safety, security, and privacy.”
-
 ## “What’s Your JAM(stack)?” by Amberley Romo, Software Engineer
 
 If you aren’t able to catch Gatsby at DrupalCon Seattle this year, and if you happen to be traveling along the East Coast, be sure to catch **[Amberley Romo](https://twitter.com/amber1ey)**, Software Engineer at Gatsby, at [JAMstack Conf NYC](https://jamstackconf.com/nyc/), where she’ll be presenting a session entitled “What’s Your JAM(stack)?” at 3:30pm.
+
+## Get your Gatsby sticker at our DrupalCon booth!
+
+All week, team members will be on hand and available to answer all of your questions about how Gatsby works, why it’s a great choice for your organization, and how Drupal and Gatsby fit together like peas in a pod. Come find us at Booth #319 in the exhibit hall and pick up your T-shirt and Gatsby sticker!
+
+Four of our team will be behind the table at various times during DrupalCon, including **[Marisa Morby](https://twitter.com/marisamorby)**, Product Manager; **[Dustin Schau](https://twitter.com/schaudustin)**, Software Engineer; **[Marcy Sutton](https://twitter.com/marcysutton)**, Head of Learning; and **[Preston So](https://twitter.com/prestonso)**, Principal Product Manager.
+
+## “JavaScript and Civil Rights” by Marcy Sutton, Head of Learning
+
+On Thursday, during the DrupalCon closing plenary, **[Marcy Sutton](https://twitter.com/marcysutton)**, our Head of Learning, will deliver one of the keynotes to close out DrupalCon with a discussion of how to design and build software that fosters inclusion. [“JavaScript and Civil Rights”](https://events.drupal.org/seattle2019/sessions/javascript-and-civil-rights) will take place in Hall 4E from 4:15-5:30pm on Thursday.
+
+“As designers and developers of software, we act as gatekeepers in people’s lives more than we realize,” states the keynote abstract. “Now more than ever, it is our duty to create digital experiences that honor our users’ rights to inclusion–no matter where they live, or how they access the Web. This applies to both authors and contributors, as well as end-users and consumers; we must do more to protect everyone’s rights to access, safety, security, and privacy.”
 
 ## Meet Gatsby CEO Kyle Mathews at Decoupled Summit
 
