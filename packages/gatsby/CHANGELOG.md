@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.14...gatsby@2.3.15) (2019-04-08)
+
+### Bug Fixes
+
+- **gatsby:** move db.startAutosave after bootstrap in `gatsby develop` ([#13180](https://github.com/gatsbyjs/gatsby/issues/13180)) ([530e087](https://github.com/gatsbyjs/gatsby/commit/530e087))
+
 ## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.13...gatsby@2.3.14) (2019-04-05)
 
 **Note:** Version bump only for package gatsby
