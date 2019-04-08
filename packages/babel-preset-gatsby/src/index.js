@@ -1,5 +1,7 @@
 const path = require(`path`)
 
+console.log(`hlelo`)
+
 const resolve = m => require.resolve(m)
 
 const loadCachedConfig = () => {
