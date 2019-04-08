@@ -183,7 +183,10 @@ class Image extends React.Component {
 
     // Chrome Canary 75 added native lazy loading support!
     // https://addyosmani.com/blog/lazy-loading/
-    if (`loading` in HTMLImageElement.prototype) {
+    if (
+      typeof HTMLImageElement !== `undefined` &&
+      `loading` in HTMLImageElement.prototype
+    ) {
       // Setting isVisible to true to short circuit our IO code and let the browser do its magic
       isVisible = true
       nativeLazyLoadSupported = true
