@@ -5244,3 +5244,15 @@
     - Technology
     - Web Development
   featured: false
+- title: RedCarpetUp
+  main_url: https://www.redcarpetup.com
+  url: https://www.redcarpetup.com/
+  description: >
+    RedCarpetUp's home page for a predominantly mobile-only customer base in India with major constraints on bandwidth availability
+  categories:
+    - Finance
+    - Loans
+    - Credit Card
+  built_by: RedCarpet Dev Team
+  built_by_url: https://www.redcarpetup.com
+  featured: false
