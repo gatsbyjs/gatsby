@@ -47,13 +47,13 @@ The product organization is responsible for making sure our key results are set 
 
 ### Creating an outcome-based roadmap that gives the company a sense of where we are with product development or features
 
-As we learn more about our community and our customers through research, discovery, and metrics, we will create a roadmap that shows what outcomes we want to provide for people. This is different from a traditional roadmap because we won’t be focusing on features, but rather on the problems we’ve seen and the outcome that would show we’ve solved the problem.
+As we learn more about our community and our customers through research, discovery, and metrics, we will create a roadmap that shows what outcomes we want to provide for people. This is different from a traditional roadmap because we won’t be focusing on features, but rather on the problems we’ve seen and the outcome that will show we’ve solved the problem.
 
 ### Giving internal stakeholders high integrity commitments
 
 There is always some measure of conflict between sales, marketing, engineering, and product. Each group has a goal that it’s trying to accomplish. These goals should create a checks and balances system that keeps teams researching, prototyping, building, and communicating with customers. As an example, engineering wants to build the best possible product from a technical standpoint. Product wants to create value for the users. Sales wants to sell as much of the product as possible to the broadest audience on the shortest timeline. Marketing wants exciting improvements that generate buzz and create opportunities for publicity.
 
-All of these goals are important, but create a necessary tension that forces us to make collaborate and make decisions in order to keep moving forward.
+All of these goals are important, and create a necessary tension that forces us to make collaborate and make decisions in order to keep moving forward.
 
 As we create and improve upon our products, managing that conflict works best when expectations are properly set.
 
@@ -63,7 +63,9 @@ A high integrity commitment is a commitment that we can make to internal stakeho
 
 Instead of giving this outright, we instead look at the problem we’re trying to solve, do prototyping and feasibility testing, and create a scope. After taking the time to understand what the problem is, how we can solve it, and how much time it will take us to create the solution, we’re able to give a much better estimate for highly awaited products or features.
 
-We won’t give these high-integrity commitments for everything, but if we know that sales or marketing is waiting on us to move forward, then we have a reasonable timeframe to talk about that’s based in reality.
+We won’t give these high-integrity commitments for everything, but if we know that sales or marketing is waiting on us to move forward, then we have a reasonable timeframe to talk about that’s based in reality. 
+
+This will also help us set better expectations with our community, and make our plans more clear.
 
 ## How does the product organization fit in with the rest of the company?
 
