@@ -134,6 +134,18 @@ jobs:
     executor: node
     <<: *test_template
 
+  unit_tests_www:
+    executor: node
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "www/*|docs/*"
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *persist_cache
+      - run: cd www
+      - run: yarn
+      - run: yarn test
+
   integration_tests_long_term_caching:
     executor: node
     steps:
@@ -213,6 +225,9 @@ workflows:
             - bootstrap
       - unit_tests_node10:
           <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_www:
           requires:
             - bootstrap
       - integration_tests_long_term_caching:
