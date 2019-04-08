@@ -91,6 +91,7 @@ async function startServer(program) {
   // Start bootstrap process.
   await bootstrap(program)
 
+  db.startAutosave()
   pageQueryRunner.startListening(queryQueue.makeDevelop())
   queryWatcher.startWatchDeletePage()
 
@@ -303,8 +304,6 @@ module.exports = async (program: any) => {
   }
 
   program.port = await detectPortInUseAndPrompt(port, rlInterface)
-
-  db.startAutosave()
 
   const [compiler] = await startServer(program)
 

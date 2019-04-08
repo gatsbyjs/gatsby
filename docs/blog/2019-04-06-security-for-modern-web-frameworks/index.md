@@ -1,6 +1,6 @@
 ---
 title: Security for Modern Web Frameworks.
-date: 2019-03-27
+date: 2019-04-06
 author: Alex Moon
 excerpt: "While more secure than their server-side counterparts, modern web frameworks provide new and unique security concerns."
 tags:
@@ -59,7 +59,7 @@ What's the solution? Well there are several problems to solve.
 - **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
 - **Static** - any content that changes less than once in a given 5 minute interval.
 
-NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything **changed more** often tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com/) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
+NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything changed **more often** tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com/) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
 
 So, you could have private-static content, private-dynamic content, public-static content, and public-dynamic content. You also need to be aware of whether you are securing the ability to read or write content. Without further delay, in order of difficulty...
 
@@ -67,9 +67,9 @@ So, you could have private-static content, private-dynamic content, public-stati
 
 This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/source-plugin-tutorial/). Whatever source platform you use, whether it be a GitHub repository or a headless CMS, that platform is charged with securing your content from unauthorized reads and writes.
 
-If you are using a headless CMS, the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it to the public in your code would mean anyone could take your structured data and use it any way they want.
+If you are using a headless CMS, the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it in your code would mean anyone with access to your code repository could take your structured data and use it any way they want.
 
-Fortunately, this is an easy fix using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/). This means not committing your `accessToken` to the git repository for all the world to read. Instead it is stored securely on the build server and your Contentful config reads like this:
+Fortunately, this is an easy fix using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/). This means not committing your `accessToken` to the git repository where many can possibly access it. Instead it is stored securely on the build server and your Contentful config reads like this:
 
 ```js:title=gatsby-config.js
 {
