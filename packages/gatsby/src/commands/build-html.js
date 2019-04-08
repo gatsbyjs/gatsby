@@ -44,8 +44,8 @@ const buildRenderer = async (program, stage) => {
 
 const deleteRenderer = async rendererPath => {
   try {
-    await fs.unlink(rendererPath)
-    await fs.unlink(`${rendererPath}.map`)
+    fs.unlinkSync(rendererPath)
+    fs.unlinkSync(`${rendererPath}.map`)
   } catch (e) {
     // This function will fail on Windows with no further consequences.
   }
