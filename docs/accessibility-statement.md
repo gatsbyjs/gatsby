@@ -2,7 +2,7 @@
 title: Accessibility Statement
 ---
 
-_Last updated: April 7, 2019_
+_Last updated: April 8, 2019_
 
 We want everyone who uses Gatsby to feel welcome and find the experience rewarding: this includes developers with disabilities and users with disabilities for Gatsby sites, docs, and resources.
 
