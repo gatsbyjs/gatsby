@@ -104,7 +104,7 @@ Typical roadmaps are difficult to use because they don’t communicate informati
 To make sure that we don’t fall into this trap, we will do outcome-based roadmaps. Our roadmap will include:
 - our business vision
 - our objectives
-our business results
+- our business results
 
 This will help us focus our roadmaps on business problems we’re trying to solve, rather than a general feature that we’re not sure is important.
 
