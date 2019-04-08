@@ -8,6 +8,7 @@ const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
+const prompts = require(`prompts`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit`, ...options })
@@ -67,8 +68,29 @@ const install = async rootPath => {
   process.chdir(rootPath)
 
   try {
-    let cmd = shouldUseYarn() ? spawn(`yarnpkg`) : spawn(`npm install`)
-    await cmd
+    const npmCmd = `npm install`
+    let response = npmCmd
+    if (shouldUseYarn()) {
+      const promptsAnswer = await prompts([
+        {
+          type: `select`,
+          name: `package_manager`,
+          message: `Which package manager would you like to use ?`,
+          choices: [
+            { title: `yarn`, value: `yarnpkg` },
+            { title: `npm`, value: npmCmd },
+          ],
+          max: 1,
+        },
+      ])
+      response = promptsAnswer.package_manager
+    }
+    if (response.includes(`yarn`)) {
+      await spawn(`rm package-lock.json`)
+    } else {
+      await spawn(`rm yarn.lock`)
+    }
+    await spawn(response)
   } finally {
     process.chdir(prevDir)
   }
