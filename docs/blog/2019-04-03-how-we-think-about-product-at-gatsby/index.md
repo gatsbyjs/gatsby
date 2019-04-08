@@ -107,16 +107,18 @@ our business results
 
 This will help us focus our roadmaps on business problems we’re trying to solve, rather than a general feature that we’re not sure is important.
 
-Where will all of this information live?
+## Where will all of this information live?
 This is obviously a lot of information to gather and we want to be sure we capture the important parts and provide a reference and source of truth for the team to work from.
-Product Requirement Documents
+
+### Product Requirement Documents
 Specifically for product, we create Product Requirement Documents (PRDs) that will explain what we want to do and why. They will include information that we need to scope out the product or feature, and also include the evidence that shows why we should do this. Because we want to make sure our decisions are based on actual problems, research, and data we always include that in the PRDs as justification.
-RFCs
+
+### RFCs
 At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what’s changing in the codebase and why. It’s basically a technical proposal for a spec change.
 How do PRDs relate to RFCs?
 PRDs layout what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
 
-Rolling with changes
+### Rolling with changes
 We’re sure that processes and needs will change as we scale and grow. But how we think about product within Gatsby will help us make decisions on whether the processes we currently have are helping us, and give us a foundation for new processes in the future.
 
 ## We need your help to be better
