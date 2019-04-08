@@ -134,4 +134,4 @@ We’d love your help in hearing what Gatsby means to you. The first step in all
 
 One of the best ways you can help is by talking to us about how you use Gatsby now, what works for you, and what problems you have. Getting the opportunity to understand your problems helps us create better solutions for you!
 
-If you’d like to participate in our research efforts, @shannonbux is always looking for research participants. You can [sign up here](https://airtable.com/shrKDSF2E7ljCaYCd) to get notified about upcoming research studies.
+If you’d like to participate in our research efforts, [@shannonbux](https://twitter.com/shannonb_ux) is always looking for research participants. You can [sign up here](https://airtable.com/shrKDSF2E7ljCaYCd) to get notified about upcoming research studies.
