@@ -135,11 +135,11 @@ jobs:
     <<: *test_template
 
   unit_tests_www:
-    executor: node
     working_directory: ~/www
+    executor: node
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "www/*|docs/*"
+      - checkout:
+          path: ~/www
       - run: yarn
       - run: yarn test
 
