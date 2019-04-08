@@ -62,9 +62,24 @@ export default Counter
       const highlightCode = require(`../highlight-code`)
       const language = `text`
       const code = `<button />`
-      expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
+      expect(highlightCode(language, code, [], true)).toMatch(
+        `&lt;button /&gt;`
+      )
       expect(console.warn).toHaveBeenCalledWith(
         `code block language not specified in markdown.`,
+        `applying generic code block`
+      )
+    })
+
+    it(`can warn about languages missing from inline code`, () => {
+      spyOn(console, `warn`)
+
+      const highlightCode = require(`../highlight-code`)
+      const language = `text`
+      const code = `<button />`
+      expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block or inline code language not specified in markdown.`,
         `applying generic code block`
       )
     })
@@ -84,27 +99,12 @@ export default Counter
       expect(console.warn).toHaveBeenCalledTimes(2)
       expect(console.warn).toHaveBeenNthCalledWith(
         1,
-        `code block language not specified in markdown.`,
+        `code block or inline code language not specified in markdown.`,
         `applying generic code block`
       )
       expect(console.warn).toHaveBeenNthCalledWith(
         2,
         `unable to find prism language 'raw' for highlighting.`,
-        `applying generic code block`
-      )
-    })
-  })
-
-  describe(`with language-inline-text`, () => {
-    it(`escapes &, <, " elements and warns`, () => {
-      spyOn(console, `warn`)
-
-      const highlightCode = require(`../highlight-code`)
-      const language = `inline-text`
-      const code = `<button />`
-      expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
-      expect(console.warn).toHaveBeenCalledWith(
-        `inline code language not specified in markdown.`,
         `applying generic code block`
       )
     })

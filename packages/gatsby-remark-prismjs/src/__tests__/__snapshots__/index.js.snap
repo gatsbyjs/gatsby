@@ -355,7 +355,7 @@ Object {
             },
           },
           "type": "html",
-          "value": "<code class=\\"custom-inline-text\\">foo bar</code>",
+          "value": "<code class=\\"custom-text\\">foo bar</code>",
         },
       ],
       "position": Position {
@@ -465,7 +465,7 @@ Object {
             },
           },
           "type": "html",
-          "value": "<code class=\\"language-inline-text\\">foo bar</code>",
+          "value": "<code class=\\"language-text\\">foo bar</code>",
         },
       ],
       "position": Position {

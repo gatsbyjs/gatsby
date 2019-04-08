@@ -70,7 +70,7 @@ module.exports = (
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
-    +       `${highlightCode(languageName, node.value, highlightLines)}`
+    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`
@@ -79,7 +79,7 @@ module.exports = (
 
   if (!noInlineHighlight) {
     visit(markdownAST, `inlineCode`, node => {
-      let languageName = `inline-text`
+      let languageName = `text`
 
       if (inlineCodeMarker) {
         let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)

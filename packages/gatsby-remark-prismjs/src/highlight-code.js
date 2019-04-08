@@ -5,7 +5,12 @@ const loadPrismLanguage = require(`./load-prism-language`)
 const handleDirectives = require(`./directives`)
 const unsupportedLanguages = new Set()
 
-module.exports = (language, code, lineNumbersHighlight = []) => {
+module.exports = (
+  language,
+  code,
+  lineNumbersHighlight = [],
+  notInline = false
+) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {
     try {
@@ -17,10 +22,9 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
         case `none`:
           return code // Don't escape if set to none.
         case `text`:
-          message = `code block language not specified in markdown.`
-          break
-        case `inline-text`:
-          message = `inline code language not specified in markdown.`
+          message = notInline
+            ? `code block language not specified in markdown.`
+            : `code block or inline code language not specified in markdown.`
           break
         default:
           message = `unable to find prism language '${language}' for highlighting.`
