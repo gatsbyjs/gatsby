@@ -15,7 +15,13 @@ const {
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
-  { actions, createNodeId, cache, store },
+  { 
+    actions, 
+    createNodeId, 
+    cache, 
+    store, 
+    createContentDigest, 
+  },
   options
 ) => {
   const { addThirdPartySchema, createPageDependency, createNode } = actions
@@ -28,7 +34,6 @@ exports.sourceNodes = async (
     createLink,
     createSchema,
     refetchInterval,
-    createContentDigest,
   } = options
 
   invariant(
