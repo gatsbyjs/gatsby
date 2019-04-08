@@ -78,6 +78,7 @@ Since we are a growing startup, any process we write here will probably change a
 ### How we communicate product ideas
 
 We are a remote company, so it’s very important that we have common knowledge and understanding. Introducing a communication strategy that is more agile and allows for open communication is one way we will tackle this.
+
 That means that product initiatives will collaborate with research, engineering, and design right from the beginning to make sure we have shared context where it counts most.
 
 We’ll also focus on product discovery, rapid prototyping, and validation so that we can prioritize effectively. We’ll make sure to do MVPs, described as Minimum Viable _Prototypes_ in Marty Cagan’s book _Inspired_. This is really a difference in functionality and fidelity. A product will typically have many features at high fidelity, while a prototype will have limited functionality at a lower fidelity.
