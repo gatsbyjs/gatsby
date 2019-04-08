@@ -35,7 +35,7 @@ Our current recommendations for accessible CMS platforms are:
 - Wordpress with the Classic Editor Plugin
 - Drupal
 
-For managing and deploying Gatsby sites, we recommend:
+For managing and deploying Gatsby sites with accessible tools, we recommend:
 
 - Netlify
 
