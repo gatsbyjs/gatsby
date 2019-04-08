@@ -82,6 +82,7 @@ We are a remote company, so it’s very important that we have common knowledge 
 That means that product initiatives will collaborate with research, engineering, and design right from the beginning to make sure we have shared context where it counts most.
 
 We’ll also focus on product discovery, rapid prototyping, and validation so that we can prioritize effectively. We’ll make sure to do MVPs, described as Minimum Viable _Prototypes_ in Marty Cagan’s book _Inspired_. This is really a difference in functionality and fidelity. A product will typically have many features at high fidelity, while a prototype will have limited functionality at a lower fidelity.
+
 We typically think of MVPs and Minimum Viable Products, but that often means that we are creating something that’s very well thought out and crafted _before_ we check to make sure it’s something people want or something we should spend our time doing. By focusing on research, discovery, and _prototyping_ we keep the focus on our end users and retain the ability to rapidly test potential solutions.
 
 ### How we focus on personas
