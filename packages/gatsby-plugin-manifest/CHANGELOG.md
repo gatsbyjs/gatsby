@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.26...gatsby-plugin-manifest@2.0.27) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.25...gatsby-plugin-manifest@2.0.26) (2019-03-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** ensure icon_options is stripped ([#12907](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12907)) ([201a4f5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/201a4f5))
+
+## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.24...gatsby-plugin-manifest@2.0.25) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Fix incorrect favicons size bug ([#12081](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12081)) ([366980b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/366980b)), closes [#12051](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12051) [#12051](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12051)
+
+### Features
+
+- **gatsby-plugin-manifest:** add icon_options as an option to support the purpose property ([#12794](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12794)) ([127f232](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/127f232)), closes [#12793](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12793)
+
 ## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.23...gatsby-plugin-manifest@2.0.24) (2019-03-12)
 
 ### Features

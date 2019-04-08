@@ -246,3 +246,15 @@
   bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
+- id: Tania Rascia
+  bio: Designer, developer, writer. I build open source projects and write the missing instruction manuals of the web.
+  avatar: avatars/tania-rascia.jpg
+  twitter: "@taniarascia"
+- id: Kym Ellis
+  bio: Marketing lead @TryGhost. Traveler, photographer and aspiring sailor!
+  avatar: avatars/kym-ellis.jpg
+  twitter: "@kymellis"
+- id: Alex Moon
+  bio: Full-Stack developer. OSS Contributor @ GatsbyJS. Thru-hiker.
+  avatar: avatars/alex-moon.jpg
+  twitter: "@moon_meister"

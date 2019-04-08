@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`graphql`)
 const {
@@ -29,6 +28,7 @@ exports.sourceNodes = async (
     createLink,
     createSchema,
     refetchInterval,
+    createContentDigest,
   } = options
 
   invariant(
@@ -80,7 +80,12 @@ exports.sourceNodes = async (
   })
 
   const nodeId = createNodeId(`gatsby-source-graphql-${typeName}`)
-  const node = createSchemaNode({ id: nodeId, typeName, fieldName })
+  const node = createSchemaNode({
+    id: nodeId,
+    typeName,
+    fieldName,
+    createContentDigest,
+  })
   createNode(node)
 
   const resolver = (parent, args, context) => {
@@ -112,12 +117,9 @@ exports.sourceNodes = async (
   }
 }
 
-function createSchemaNode({ id, typeName, fieldName }) {
+function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
   const nodeContent = uuidv4()
-  const nodeContentDigest = crypto
-    .createHash(`md5`)
-    .update(nodeContent)
-    .digest(`hex`)
+  const nodeContentDigest = createContentDigest(nodeContent)
   return {
     id,
     typeName: typeName,

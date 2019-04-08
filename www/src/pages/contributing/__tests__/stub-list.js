@@ -1,31 +1,27 @@
 jest.mock(`../../../utils/sidebar/item-list`, () => {
   return {
-    itemListContributing: [
-      {
-        title: `Contributing`,
-        items: [
-          {
-            title: `Why Contribute to Gatsby?`,
-            link: `/contributing/why-contribute-to-gatsby/`,
-          },
-          {
-            title: `Gatsby's Governance Model*`,
-            link: `/contributing/gatsby-governance-model/`,
-          },
-        ],
-      },
-    ],
-    itemListDocs: [
-      {
-        title: `Documentation`,
-        items: [
-          {
-            title: `Introduction`,
-            link: `/docs/`,
-          },
-        ],
-      },
-    ],
+    itemListContributing: {
+      title: `Contributing`,
+      items: [
+        {
+          title: `Why Contribute to Gatsby?`,
+          link: `/contributing/why-contribute-to-gatsby/`,
+        },
+        {
+          title: `Gatsby's Governance Model*`,
+          link: `/contributing/gatsby-governance-model/`,
+        },
+      ],
+    },
+    itemListDocs: {
+      title: `Documentation`,
+      items: [
+        {
+          title: `Introduction`,
+          link: `/docs/`,
+        },
+      ],
+    },
   }
 })
 jest.mock(`react-modal`, () => {

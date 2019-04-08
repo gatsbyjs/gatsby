@@ -52,7 +52,9 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     )
     const sitemapIndexOptions = {
       ...rest,
-      hostname: hostname || withoutTrailingSlash(siteUrl),
+      hostname:
+        (hostname || withoutTrailingSlash(siteUrl)) +
+        withoutTrailingSlash(pathPrefix || ``),
       targetFolder: publicPath,
       urls,
       callback: error => {

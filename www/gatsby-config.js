@@ -4,7 +4,7 @@ require(`dotenv`).config({
 
 const GA = {
   identifier: `UA-93349937-5`,
-  viewId: `142357465`,
+  viewId: `176383508`,
 }
 
 const dynamicPlugins = []
