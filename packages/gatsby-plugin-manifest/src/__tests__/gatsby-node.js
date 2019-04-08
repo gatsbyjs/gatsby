@@ -47,7 +47,13 @@ const reporter = {
     }
   }),
 }
+const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 const { onPostBootstrap } = require(`../gatsby-node`)
+
+const apiArgs = {
+  reporter,
+  createContentDigest,
+}
 
 const manifestOptions = {
   name: `GatsbyJS`,
@@ -83,17 +89,14 @@ describe(`Test plugin manifest options`, () => {
   })
 
   it(`correctly works with default parameters`, async () => {
-    await onPostBootstrap(
-      { reporter },
-      {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+    })
     const [filePath, contents] = fs.writeFileSync.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(sharp).toHaveBeenCalledTimes(0)
@@ -117,13 +120,10 @@ describe(`Test plugin manifest options`, () => {
       ],
     }
 
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
     expect(sharp).toHaveBeenCalledTimes(2)
@@ -136,13 +136,10 @@ describe(`Test plugin manifest options`, () => {
       icon: `non/existing/path`,
     }
 
-    return onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    ).catch(err => {
+    return onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    }).catch(err => {
       expect(sharp).toHaveBeenCalledTimes(0)
       expect(err).toBe(
         `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
@@ -161,13 +158,10 @@ describe(`Test plugin manifest options`, () => {
       crossOrigin: `anonymous`,
       icon_options: {},
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(0)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
@@ -182,13 +176,10 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       cache_busting_mode: `name`,
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
@@ -203,13 +194,10 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       cache_busting_mode: `none`,
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
@@ -225,13 +213,10 @@ describe(`Test plugin manifest options`, () => {
         purpose: `maskable`,
       },
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
