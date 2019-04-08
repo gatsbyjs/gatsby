@@ -135,13 +135,15 @@ jobs:
     <<: *test_template
 
   unit_tests_www:
-    working_directory: ~/www
     executor: node
     steps:
-      - checkout:
-          path: ~/www
-      - run: yarn
-      - run: yarn test
+      - checkout
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          command: yarn test
+          working_directory: ~/project/www
 
   integration_tests_long_term_caching:
     executor: node
