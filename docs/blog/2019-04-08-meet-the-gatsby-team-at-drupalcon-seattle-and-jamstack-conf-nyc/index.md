@@ -22,7 +22,7 @@ If you aren’t able to catch Gatsby at DrupalCon Seattle this year, and if you 
 
 ## Get your Gatsby sticker at our DrupalCon booth!
 
-All week, team members will be on hand and available to answer all of your questions about how Gatsby works, why it’s a great choice for your organization, and how Drupal and Gatsby fit together like peas in a pod. Come find us at Booth #319 in the exhibit hall and pick up your T-shirt and Gatsby sticker!
+All week at DrupalCon Seattle, team members will be on hand and available to answer all of your questions about how Gatsby works, why it’s a great choice for your organization, and how Drupal and Gatsby fit together like peas in a pod. Come find us at Booth #319 in the exhibit hall and pick up your T-shirt and Gatsby sticker!
 
 Four of our team will be behind the table at various times during DrupalCon, including **[Marisa Morby](https://twitter.com/marisamorby)**, Product Manager; **[Dustin Schau](https://twitter.com/schaudustin)**, Software Engineer; **[Marcy Sutton](https://twitter.com/marcysutton)**, Head of Learning; and **[Preston So](https://twitter.com/prestonso)**, Principal Product Manager.
 
