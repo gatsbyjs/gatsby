@@ -117,7 +117,7 @@ Specifically for product, we create Product Requirement Documents (PRDs) that wi
 ### RFCs
 At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what’s changing in the codebase and why. It’s basically a technical proposal for a spec change.
 How do PRDs relate to RFCs?
-PRDs layout what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
+PRDs lay out what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
 
 ### Rolling with changes
 We’re sure that processes and needs will change as we scale and grow. But how we think about product within Gatsby will help us make decisions on whether the processes we currently have are helping us, and give us a foundation for new processes in the future.
