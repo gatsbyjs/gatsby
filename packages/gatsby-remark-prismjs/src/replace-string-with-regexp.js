@@ -4,7 +4,7 @@ module.exports = function replaceStringWithRegex(object) {
       try {
         object[propName] = new RegExp(object[propName])
       } catch (e) {
-        console.log(`Invalid RegEx: `, object[propName])
+        console.warn(`Invalid RegEx: `, object[propName])
       }
     }
 
