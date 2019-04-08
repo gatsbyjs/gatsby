@@ -5208,6 +5208,18 @@
     - Marketing
   built_by: Becreatives
   built_by_url: "https://becreatives.com"
+- title: Little Wolf Studio
+  main_url: https://littlewolfstudio.co.uk
+  url: https://littlewolfstudio.co.uk
+  featured: false
+  description: >
+    A simple agency site built using GatsbyJS and DatoCMS. Aesthetic was creating using a customisation of Bulma.
+  categories:
+    - Blog
+    - Agency
+    - Web Development
+  built_by: Little Wolf Studio
+  built_by_url: https://littlewolfstudio.co.uk
 - title: Paul Clifton Photography
   main_url: https://paulcliftonphotography.com
   url: https://paulcliftonphotography.com
@@ -5221,6 +5233,17 @@
     - Photography
   built_by: Little Wolf Studio
   built_by_url: https://littlewolfstudio.co.uk
+- title: Atte Juvonen - Blog
+  url: https://www.attejuvonen.fi/
+  main_url: https://www.attejuvonen.fi/
+  source_url: https://github.com/baobabKoodaa/blog
+  description: >
+    A blog with streamlined design and smooth UX
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  featured: false
 - title: Kibuk Construction
   url: https://kibukconstruction.com/
   main_url: https://kibukconstruction.com/

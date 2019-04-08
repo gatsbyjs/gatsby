@@ -1,13 +1,8 @@
-const fs = require(`fs`)
-const path = require(`path`)
-const Promise = require(`bluebird`)
-const sharp = require(`sharp`)
-const {
-  defaultIcons,
-  doesIconExist,
-  addDigestToPath,
-  createContentDigest,
-} = require(`./common.js`)
+import fs from "fs"
+import path from "path"
+import sharp from "sharp"
+import createContentDigest from "gatsby/dist/utils/create-content-digest"
+import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 
 sharp.simd(true)
 
@@ -23,24 +18,29 @@ try {
 }
 
 function generateIcons(icons, srcIcon) {
-  return Promise.map(icons, icon => {
-    const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-    const imgPath = path.join(`public`, icon.src)
+  return Promise.all(
+    icons.map(async icon => {
+      const size = parseInt(
+        icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`))
+      )
+      const imgPath = path.join(`public`, icon.src)
 
-    // For vector graphics, instruct sharp to use a pixel density
-    // suitable for the resolution we're rasterizing to.
-    // For pixel graphics sources this has no effect.
-    // Sharp accept density from 1 to 2400
-    const density = Math.min(2400, Math.max(1, size))
-    return sharp(srcIcon, { density })
-      .resize({
-        width: size,
-        height: size,
-        fit: `contain`,
-        background: { r: 255, g: 255, b: 255, alpha: 0 },
-      })
-      .toFile(imgPath)
-  })
+      // For vector graphics, instruct sharp to use a pixel density
+      // suitable for the resolution we're rasterizing to.
+      // For pixel graphics sources this has no effect.
+      // Sharp accept density from 1 to 2400
+      const density = Math.min(2400, Math.max(1, size))
+
+      return sharp(srcIcon, { density })
+        .resize({
+          width: size,
+          height: size,
+          fit: `contain`,
+          background: { r: 255, g: 255, b: 255, alpha: 0 },
+        })
+        .toFile(imgPath)
+    })
+  )
 }
 
 exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
@@ -53,6 +53,10 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
   delete manifest.icon_options
+  delete manifest.include_favicon
+
+  const activity = reporter.activityTimer(`Build manifest and related icons`)
+  activity.start()
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
@@ -84,9 +88,9 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
       throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
     }
 
-    let sharpIcon = sharp(icon)
+    const sharpIcon = sharp(icon)
 
-    let metadata = await sharpIcon.metadata()
+    const metadata = await sharpIcon.metadata()
 
     if (metadata.width !== metadata.height) {
       reporter.warn(
@@ -125,4 +129,6 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
     path.join(`public`, `manifest.webmanifest`),
     JSON.stringify(manifest)
   )
+
+  activity.end()
 }
