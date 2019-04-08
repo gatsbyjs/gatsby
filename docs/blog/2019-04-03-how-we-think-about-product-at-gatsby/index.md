@@ -102,7 +102,7 @@ Once we understand the ideas we want to prioritize, the objectives we’re tryin
 Typical roadmaps are difficult to use because they don’t communicate information in a way that addresses everyone’s needs.
 
 To make sure that we don’t fall into this trap, we will do outcome-based roadmaps. Our roadmap will include:
-our business vision
+- our business vision
 our objectives
 our business results
 
