@@ -59,8 +59,7 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   delete manifest.icon_options
   delete manifest.include_favicon
 
-  let activity = reporter.activityTimer(`Build manifest and related icons`)
-
+  const activity = reporter.activityTimer(`Build manifest and related icons`)
   activity.start()
 
   // If icons are not manually defined, use the default icon set.

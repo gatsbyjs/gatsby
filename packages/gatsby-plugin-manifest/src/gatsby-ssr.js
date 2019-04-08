@@ -9,7 +9,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
-  const srcIconExists = pluginOptions.icon == true
+  const srcIconExists = !!pluginOptions.icon
 
   const icons = pluginOptions.icons || defaultIcons
   const legacy =
