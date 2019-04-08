@@ -248,16 +248,21 @@ function buildLocalCommands(cli, isLocalSite) {
             : args.clipboard
 
         envinfo
-          .run({
-            System: [`OS`, `CPU`, `Shell`],
-            Binaries: [`Node`, `npm`, `Yarn`],
-            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
-            Languages: [`Python`],
-            npmPackages: `gatsby*`,
-            npmGlobalPackages: `gatsby*`,
-          })
+          .run(
+            {
+              System: [`OS`, `CPU`, `Shell`],
+              Binaries: [`Node`, `npm`, `Yarn`],
+              Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
+              Languages: [`Python`],
+              npmPackages: `gatsby*`,
+              npmGlobalPackages: `gatsby*`,
+            },
+            {
+              duplicates: true,
+              showNotFound: true,
+            }
+          )
           .then(envinfoOutput => {
-            console.log(`\nEnvironment Info:`)
             console.log(envinfoOutput)
 
             if (copyToClipboard) {
