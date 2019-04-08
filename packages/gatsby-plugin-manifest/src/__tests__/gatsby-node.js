@@ -36,6 +36,10 @@ jest.mock(`sharp`, () => {
   return sharp
 })
 
+jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
+  jest.fn(() => `contentDigest`)
+)
+
 const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
@@ -47,12 +51,10 @@ const reporter = {
     }
   }),
 }
-const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 const { onPostBootstrap } = require(`../gatsby-node`)
 
 const apiArgs = {
   reporter,
-  createContentDigest,
 }
 
 const manifestOptions = {

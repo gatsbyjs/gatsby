@@ -4,15 +4,17 @@ jest.mock(`fs`, () => {
   }
 })
 
+jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
+  jest.fn(() => `contentDigest`)
+)
+
 const { onRenderBody } = require(`../gatsby-ssr`)
 
 let headComponents
 const setHeadComponents = args => (headComponents = headComponents.concat(args))
-const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
 const ssrArgs = {
   setHeadComponents,
-  createContentDigest,
 }
 
 describe(`gatsby-plugin-manifest`, () => {

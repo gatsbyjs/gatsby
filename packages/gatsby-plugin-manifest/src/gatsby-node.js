@@ -1,6 +1,7 @@
 import fs from "fs"
 import path from "path"
 import sharp from "sharp"
+import createContentDigest from "gatsby/dist/utils/create-content-digest"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 
 sharp.simd(true)
@@ -42,10 +43,7 @@ function generateIcons(icons, srcIcon) {
   )
 }
 
-exports.onPostBootstrap = async (
-  { reporter, createContentDigest },
-  pluginOptions
-) => {
+exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   const { icon, ...manifest } = pluginOptions
 
   // Delete options we won't pass to the manifest.webmanifest.
