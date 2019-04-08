@@ -1,8 +1,6 @@
 /* @flow */
 const webpack = require(`webpack`)
-const fs = require(`fs`)
-const { promisify } = require(`util`)
-const promisifiedUnlink = promisify(fs.unlink)
+const fs = require(`fs-extra`)
 
 const webpackConfig = require(`../utils/webpack.config`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
@@ -46,8 +44,8 @@ const buildRenderer = async (program, stage) => {
 
 const deleteRenderer = async rendererPath => {
   try {
-    await promisifiedUnlink(rendererPath)
-    await promisifiedUnlink(`${rendererPath}.map`)
+    await fs.remove(rendererPath)
+    await fs.remove(`${rendererPath}.map`)
   } catch (e) {
     // This function will fail on Windows with no further consequences.
   }
