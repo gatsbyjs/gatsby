@@ -118,7 +118,9 @@ module.exports = {
     {
       resolve: "gatsby-plugin-compile-es6-packages",
       options: {
-        modules: ["NAME_OF_YOUR_THEME"],
+        // replace with the name of your theme
+        // highlight-next-line
+        modules: ["gatsby-theme-developer"],
       },
     },
   ],
