@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.0...gatsby-transformer-react-docgen@4.0.1) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
 # [4.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.7...gatsby-transformer-react-docgen@4.0.0) (2019-04-02)
 
 ### Features
