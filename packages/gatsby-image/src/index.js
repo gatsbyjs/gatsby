@@ -125,6 +125,10 @@ const Img = React.forwardRef((props, ref) => {
     ...otherProps
   } = props
 
+  const loadingAttribute = {
+    ...(nativeLazyLoadSupported && loading),
+  }
+
   return (
     <img
       sizes={sizes}
@@ -134,7 +138,7 @@ const Img = React.forwardRef((props, ref) => {
       onLoad={onLoad}
       onError={onError}
       ref={ref}
-      {...nativeLazyLoadSupported && { loading }}
+      {...loadingAttribute}
       style={{
         position: `absolute`,
         top: 0,
