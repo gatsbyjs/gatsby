@@ -1,6 +1,6 @@
 ---
 title: "How we think about product at Gatsby"
-date: 2019-04-03
+date: 2019-04-08
 author: Marisa Morby
 excerpt: "How do we make decisions about products at Gatsby? Take a look behind the scenes to see how we're using outcome-based planning, product discovery, and other strategies to create the best possible products for our community."
 tags:
