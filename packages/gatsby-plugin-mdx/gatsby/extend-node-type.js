@@ -18,15 +18,16 @@ const generateTOC = require("mdast-util-toc");
 const prune = require("underscore.string/prune");
 
 const debug = require("debug")("gatsby-mdx:extend-node-type");
-const renderHTML = require("../utils/render-html");
 const getTableOfContents = require("../utils/get-table-of-content");
 const defaultOptions = require("../utils/default-options");
 const genMDX = require("../utils/gen-mdx");
+const { mdxHTMLLoader: loader } = require("../utils/render-html");
 
 module.exports = (
-  { type, store, pathPrefix, getNode, getNodes, cache, reporter },
+  { type, pathPrefix, getNode, getNodes, cache, reporter },
   pluginOptions
 ) => {
+  const mdxHTMLLoader = loader({ reporter, cache });
   if (type.name !== `Mdx`) {
     return {};
   }
@@ -206,14 +207,14 @@ module.exports = (
           }
           const { body } = await processMDX({ node: mdxNode });
           try {
-            const withMDX = renderHTML(body);
-            return withMDX(store.getState().webpack);
+            const html = await mdxHTMLLoader.load({ ...mdxNode, body });
+            return html;
           } catch (e) {
-            throw new Error(
-              "Error querying the `html` field. This field is intended for use with RSS feed generation.\n" +
-                "If you're trying to use it in application-level code, try querying for code.body instead.\n" +
-                "Original error: " +
-                e
+            reporter.error(
+              `Error querying the \`html\` field. This field is intended for use with RSS feed generation.
+If you're trying to use it in application-level code, try querying for code.body instead.
+Original error:
+${e}`
             );
           }
         }

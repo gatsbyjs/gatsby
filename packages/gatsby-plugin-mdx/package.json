@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "core-js": "2",
+    "dataloader": "^1.4.0",
     "debug": "^4.0.1",
     "escape-string-regexp": "^1.0.5",
     "fs-extra": "^7.0.0",
