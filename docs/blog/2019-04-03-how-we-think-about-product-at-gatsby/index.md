@@ -63,7 +63,7 @@ A high integrity commitment is a commitment that we can make to internal stakeho
 
 Instead of giving this outright, we instead look at the problem we’re trying to solve, do prototyping and feasibility testing, and create a scope. After taking the time to understand what the problem is, how we can solve it, and how much time it will take us to create the solution, we’re able to give a much better estimate for highly awaited products or features.
 
-We won’t give these high-integrity commitments for everything, but if we know that sales or marketing is waiting on us to move forward, then we have a reasonable timeframe to talk about that’s based in reality. 
+We won’t give these high-integrity commitments for everything, but if we know that sales or marketing is waiting on us to move forward, then we have a reasonable timeframe to talk about that’s based in reality.
 
 This will also help us set better expectations with our community, and make our plans more clear.
 
@@ -104,6 +104,7 @@ Once we understand the ideas we want to prioritize, the objectives we’re tryin
 Typical roadmaps are difficult to use because they don’t communicate information in a way that addresses everyone’s needs.
 
 To make sure that we don’t fall into this trap, we will do outcome-based roadmaps. Our roadmap will include:
+
 - our business vision
 - our objectives
 - our business results
@@ -111,17 +112,21 @@ To make sure that we don’t fall into this trap, we will do outcome-based roadm
 This will help us focus our roadmaps on business problems we’re trying to solve, rather than a general feature that we’re not sure is important.
 
 ## Where will all of this information live?
+
 This is obviously a lot of information to gather and we want to be sure we capture the important parts and provide a reference and source of truth for the team to work from.
 
 ### Product Requirement Documents
+
 Specifically for product, we create Product Requirement Documents (PRDs) that will explain what we want to do and why. They will include information that we need to scope out the product or feature, and also include the evidence that shows why we should do this. Because we want to make sure our decisions are based on actual problems, research, and data we always include that in the PRDs as justification.
 
 ### RFCs
+
 At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what’s changing in the codebase and why. It’s basically a technical proposal for a spec change.
 How do PRDs relate to RFCs?
 PRDs lay out what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
 
 ### Rolling with changes
+
 We’re sure that processes and needs will change as we scale and grow. But how we think about product within Gatsby will help us make decisions on whether the processes we currently have are helping us, and give us a foundation for new processes in the future.
 
 ## We need your help to be better
