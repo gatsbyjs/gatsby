@@ -117,7 +117,7 @@ We’re sure that processes and needs will change as we scale and grow. But how 
 
 ## We need your help to be better
 
-You may be wondering why we’re telling you all of this. One of our [company values is to work in the open](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#work-in-the-open). And that means letting our community know what our plans are, how we’re organizing our work, and how you can help us.
+You may be wondering why we’re telling you all of this. One of our [company values is to work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open). And that means letting our community know what our plans are, how we’re organizing our work, and how you can help us.
 
 This is our initial effort to let you know how we think about product at Gatsby and what it means to us.
 
