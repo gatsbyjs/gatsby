@@ -49,8 +49,6 @@ By default, Gatsby emulates the following config:
 If you only support newer browsers, make sure to specify this in your
 `package.json`. This will often enable you to ship smaller JavaScript files.
 
-## Note about IE < 11
+## Note about IE support
 
-React depends on collection types `Map` and `Set`. While these are not used by Gatsby, Gatsby uses React and you will need to polyfill these if you support older browsers and devices including IE < 11.
-
-Read more about this in [https://reactjs.org/docs/javascript-environment-requirements.html](https://reactjs.org/docs/javascript-environment-requirements.html)
+Gatsby will polyfil minimum requirements for IE support according to the `browserslist` config.

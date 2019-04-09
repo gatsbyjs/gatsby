@@ -30,16 +30,16 @@ module.exports = async (
 ) => {
   const directoryPath = withBasePath(directory)
 
-  // Polyfil for IE support
+  // Polyfill for IE support
   const supportedBrowsers = browserslist(program.browserslist)
-  let iePolyfil = false
+  let iePolyfill = false
   if (
     supportedBrowsers.includes(`ie 9`) ||
     supportedBrowsers.includes(`ie 10`)
   ) {
-    iePolyfil = `react-app-polyfill/ie9`
+    iePolyfill = `react-app-polyfill/ie9`
   } else if (supportedBrowsers.includes(`ie 11`)) {
-    iePolyfil = `react-app-polyfill/ie11`
+    iePolyfill = `react-app-polyfill/ie11`
   }
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -164,7 +164,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
-            iePolyfil,
+            iePolyfill,
             `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
@@ -182,7 +182,7 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          app: [iePolyfil, directoryPath(`.cache/production-app`)].filter(
+          app: [iePolyfill, directoryPath(`.cache/production-app`)].filter(
             Boolean
           ),
         }

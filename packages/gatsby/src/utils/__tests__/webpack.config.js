@@ -17,6 +17,7 @@ const { DefinePlugin } = require(`webpack`)
 const { readFileSync } = require(`fs-extra`)
 const webpackConfig = require(`../webpack.config`)
 const { store } = require(`../../redux`)
+const { joinPath } = require(`../path`)
 
 beforeEach(() => {
   DefinePlugin.mockClear()
@@ -119,53 +120,47 @@ describe(`environment variables`, () => {
   })
 })
 
-describe(`polyfil for ie support`, () => {
-  it(`should not add ie polyfil if ie is not supported`, async () => {
+describe(`polyfill for ie support`, () => {
+  const directory = `gatsby-app`
+  const appEntry = joinPath(directory, `.cache/production-app`)
+
+  it(`should not add ie polyfill if ie is not supported`, async () => {
     const config = await getConfig(
       { browserslist: `defaults, not ie >= 9` },
-      `gatsby-app`,
+      directory,
       `build-javascript`
     )
 
-    expect(config.entry.app).toEqual([`gatsby-app/.cache/production-app`])
+    expect(config.entry.app).toEqual([appEntry])
   })
 
-  it(`should add ie9 polyfil if ie >= 9 is supported`, async () => {
+  it(`should add ie9 polyfill if ie >= 9 is supported`, async () => {
     const config = await getConfig(
       { browserslist: `defaults, ie >= 9` },
-      `gatsby-app`,
+      directory,
       `build-javascript`
     )
 
-    expect(config.entry.app).toEqual([
-      `react-app-polyfill/ie9`,
-      `gatsby-app/.cache/production-app`,
-    ])
+    expect(config.entry.app).toEqual([`react-app-polyfill/ie9`, appEntry])
   })
 
-  it(`should add ie9 polyfil if ie >= 10 is supported`, async () => {
+  it(`should add ie9 polyfill if ie >= 10 is supported`, async () => {
     const config = await getConfig(
       { browserslist: `defaults, ie >= 10` },
-      `gatsby-app`,
+      directory,
       `build-javascript`
     )
 
-    expect(config.entry.app).toEqual([
-      `react-app-polyfill/ie9`,
-      `gatsby-app/.cache/production-app`,
-    ])
+    expect(config.entry.app).toEqual([`react-app-polyfill/ie9`, appEntry])
   })
 
-  it(`should add ie11 polyfil if ie >= 11 is supported`, async () => {
+  it(`should add ie11 polyfill if ie >= 11 is supported`, async () => {
     const config = await getConfig(
       { browserslist: `defaults, ie >= 11` },
-      `gatsby-app`,
+      directory,
       `build-javascript`
     )
 
-    expect(config.entry.app).toEqual([
-      `react-app-polyfill/ie11`,
-      `gatsby-app/.cache/production-app`,
-    ])
+    expect(config.entry.app).toEqual([`react-app-polyfill/ie11`, appEntry])
   })
 })
