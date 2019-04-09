@@ -5266,3 +5266,17 @@
   built_by: RedCarpet Dev Team
   built_by_url: https://www.redcarpetup.com
   featured: false
+- title: Maitrik's Portfolio
+  url: https://www.maitrikpatel.com/
+  main_url: https://www.maitrikpatel.com/
+  source_url: https://github.com/maitrikjpatel/portfolio
+  description: >
+    Portfolio of a Front-End Developer / UX Designer who designs and develops pixel perfect user interface, experiences and web applications.
+  categories:
+    - Portfolio
+    - Blog
+    - Design
+    - Web Development
+  built_by: Maitrik Patel
+  built_by_url: https://www.maitrikpatel.com/
+  featured: false
