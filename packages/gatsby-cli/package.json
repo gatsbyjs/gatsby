@@ -17,7 +17,7 @@
     "convert-hrtime": "^2.0.0",
     "core-js": "^2.5.0",
     "envinfo": "^5.8.1",
-    "execa": "^0.8.0",
+    "execa": "^1.0.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^4.0.1",
     "gatsby-telemetry": "^1.0.6",
@@ -26,6 +26,7 @@
     "meant": "^1.0.1",
     "node-fetch": "2.3.0",
     "opentracing": "^0.14.3",
+    "pkg": "^4.3.7",
     "pretty-error": "^2.1.1",
     "resolve-cwd": "^2.0.0",
     "source-map": "^0.5.7",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@zeit/ncc": "^0.17.4",
     "babel-preset-gatsby-package": "^0.1.4",
     "cross-env": "^5.1.4"
   },
@@ -53,6 +55,7 @@
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli",
   "scripts": {
     "build": "babel src --out-dir lib --ignore **/__tests__",
+    "postbuild": "ncc build lib/index.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir lib --ignore **/__tests__"
   },
