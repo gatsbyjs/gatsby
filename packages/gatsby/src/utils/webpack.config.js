@@ -5,6 +5,7 @@ const path = require(`path`)
 const dotenv = require(`dotenv`)
 const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
+const browserslist = require(`browserslist`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -28,6 +29,18 @@ module.exports = async (
   webpackPort = 1500
 ) => {
   const directoryPath = withBasePath(directory)
+
+  // Polyfil for IE support
+  const supportedBrowsers = browserslist(program.browserslist)
+  let iePolyfil = false
+  if (
+    supportedBrowsers.includes(`ie 9`) ||
+    supportedBrowsers.includes(`ie 10`)
+  ) {
+    iePolyfil = `react-app-polyfill/ie9`
+  } else if (supportedBrowsers.includes(`ie 11`)) {
+    iePolyfil = `react-app-polyfill/ie11`
+  }
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
 
@@ -151,12 +164,13 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
+            iePolyfil,
             `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
-          ],
+          ].filter(Boolean),
         }
       case `develop-html`:
         return {
@@ -168,7 +182,9 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          app: directoryPath(`.cache/production-app`),
+          app: [iePolyfil, directoryPath(`.cache/production-app`)].filter(
+            Boolean
+          ),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
