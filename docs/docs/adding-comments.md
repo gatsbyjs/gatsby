@@ -13,15 +13,19 @@ There are many options out there for adding comment functionality, several of th
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
 
-In this guide, we'll show you how to implement Disqus on your blog as it has a number of great features.
+In this guide, we'll show you how to implement Disqus on your blog as it has a number of nice features.
 
 - It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) is easy.
 - It provides official [React support](https://github.com/disqus/disqus-react).
 - It offers a [generous free tier](https://disqus.com/pricing).
 - It [seems to be by far the most widely used service](https://www.datanyze.com/market-share/comment-systems/disqus-market-share).
-- It’s easy to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and easily share your review about the post through those channels.
-- Its commenting interface has a distinct but unobtrusive look that many users will instantly recognize and trust.
+- It’s easy to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and users can easily share the comments they write through those channels.
+- The Disqus UI has a distinct but unobtrusive look that many users will recognize and trust.
 - All Disqus components are lazy-loaded, meaning they won't negatively impact the load time of your posts.
+
+Bear in mind, however, that choosing Disqus also incurs a tradeoff. Your site is no longer entirely static but depends on an external platform to deliver your comments through embedded `iframe`s on the fly. Moreover, you should consider the privacy implications of letting a third party store your visitors' comments and potentially track their browsing behavior. You may consult the [Disqus privacy policy](https://help.disqus.com/terms-and-policies/disqus-privacy-policy), the [privacy FAQs](https://help.disqus.com/terms-and-policies/privacy-faq) (specifically the last question on GDPR compliance) and inform your users [how to edit their data sharing settings](https://help.disqus.com/terms-and-policies/how-to-edit-your-data-sharing-settings).
+
+If these concerns outweigh the benefits of Disqus, you may want to look into some of the other options above. We welcome pull requests to expand this guide with setup instructions for other services.
 
 ## Implementing Disqus
 
@@ -44,7 +48,7 @@ Here are the steps for adding Disqus comments to your own blog:
    ```
    ```:env:title=.env
    ...
-   GATSBY_DISQUS_NAME=yourOwnSiteShortname
+   GATSBY_DISQUS_NAME=yourSiteShortname
    ```
 4. In your blog post template (usually `src/templates/post.js`) import the `DiscussionEmbed` component.
 
@@ -82,7 +86,3 @@ Here are the steps for adding Disqus comments to your own blog:
 And you're done. You should now see the Disqus comment form appear beneath your blog post [looking like this](https://janosh.io/blog/disqus-comments#disqus_thread). Happy blogging!
 
 [![Disqus comments](images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)
-
-<!-- ## Other options
-
-All of the above listed services are excellent and worth checking out. Staticman, for instance, took an interesting approach. Essentially, you set up your own HTML form for writing comments, let it send a POST request on submission to one of their endpoints. From this Staticman will automatically submit a pull request to your site's repo which you can accept or deny. This has the big advantage of keeping everything static (hence the name). All your data is in one place (your repo) as opposed to having to be loaded through JavaScript embeds or iframes on the fly. It will remain there even if Staticman is ever discontinued. With most other services, you depend on an external platform to deliver your comments. Of course, in return you have the increased manual setup of putting together the comment form and hooking it up to Staticman. Depending on your use case, this degree of customizability might be an advantage. -->
