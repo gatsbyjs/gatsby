@@ -80,36 +80,30 @@ const SiteNavigation = () => (
 
 ### Show active styles for partially matched and parent links
 
-<iframe title="Screencast on egghead of how to style partially matched links in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-customize-styles-for-partially-matched-urls-with-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
-
-The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
 - Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
-In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+In instances like these, just add the `partiallyActive` prop to your `<Link>` component and the style will also be applied even if the `to` prop only is a partial match:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-const PartialNavLink = () => (
+const Header = <>
   <Link
-    to="/blog/"
-    {/* highlight-start */}
-    getProps={({ isPartiallyCurrent }) =>
-      isPartiallyCurrent ? { className: "active" } : null
-    }
-    {/* highlight-end */}
+    to="/articles/"
+    activeStyle={{ color: "red" }}
+    {/* highlight-next-line */}
+    partiallyActive={true}
   >
-    Blog
+    Articles
   </Link>
-)
+</>;
 ```
 
-Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
+_**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please check your version and/or update._
 
 ### Pass state as props to the linked page
 

@@ -32,7 +32,7 @@ For example, if you wanted to enable a non-technical person to be able to add cu
 
 Run this in your terminal:
 
-`npx gatsby new butter-site`
+`gatsby new butter-site`
 
 ## Install the source plugin
 
@@ -776,7 +776,7 @@ class BlogIndex extends React.Component {
                     </Link>
                   </h3>
                   <small>{node.date}</small>
-                  <p
+                  <div
                     dangerouslySetInnerHTML={{ __html: node.meta_description }}
                   />
                 </div>
@@ -833,7 +833,7 @@ export const pageQuery = graphql`
 
 ## Creating a blog template
 
-Now we've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](https://www.gatsbyjs.org/docs/node-apis/#createPages) API we would generate blog post pages using a template:
+Now we've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/node-apis/#createPages) API we would generate blog post pages using a template:
 
 `src/pages/template/blog-post.js`
 

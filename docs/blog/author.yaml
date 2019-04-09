@@ -59,7 +59,7 @@
   avatar: avatars/arden-de-raaij.jpg
   twitter: "@ardennl"
 - id: Shannon Soper
-  bio: UX researcher and educational psychology fan. Teaches piano and keeps up with her dog's Instagram fans @dgtrwatson.
+  bio: UX designer and educational psychology, music, & art fan. Keeps up with her dog's Instagram fans @dgtrwatson.
   avatar: avatars/shannon-soper.jpg
   twitter: "@shannonb_ux"
 - id: Sam Bhagwat
@@ -235,7 +235,7 @@
   avatar: avatars/daniel-lemay.jpg
   twitter: "@dslemay"
 - id: Travis Stanley
-  bio: Techlead for the Webteam at @ Fitplan. Adoring partner, father of three, Codemonkey, gamer, and writer. Thats about the gist of it.
+  bio: Techlead for the Webteam @ Fitplan. Adoring partner, father of three, Codemonkey, gamer, and writer. Thats about the gist of it.
   avatar: avatars/travis_stanley.jpg
   twitter: "@cpt_silverfox"
 - id: Katie Fujihara
@@ -246,3 +246,19 @@
   bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
+- id: Tania Rascia
+  bio: Designer, developer, writer. I build open source projects and write the missing instruction manuals of the web.
+  avatar: avatars/tania-rascia.jpg
+  twitter: "@taniarascia"
+- id: Kym Ellis
+  bio: Marketing lead @TryGhost. Traveler, photographer and aspiring sailor!
+  avatar: avatars/kym-ellis.jpg
+  twitter: "@kymellis"
+- id: Alex Moon
+  bio: Full-Stack developer. OSS Contributor @ GatsbyJS. Thru-hiker.
+  avatar: avatars/alex-moon.jpg
+  twitter: "@moon_meister"
+- id: Preston So
+  bio: Product strategist. Developer advocate. Book author. Off-the-beaten-path traveler. Language nerd. Transit lover. Fantasy mapmaker.
+  avatar: avatars/preston-so.png
+  twitter: "@prestonso"

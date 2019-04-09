@@ -32,6 +32,7 @@
     "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
+    "gatsby-cypress": "^0.1.7",
     "prettier": "^1.14.3",
     "start-server-and-test": "^1.7.1"
   },

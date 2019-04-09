@@ -3,8 +3,8 @@ import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import sortBy from "lodash/sortBy"
 
-import Functions from "../../components/function-list"
-import { rhythm, scale } from "../../utils/typography"
+import APIReference from "../../components/api-reference"
+import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -45,14 +45,14 @@ class ActionCreatorsDocs extends React.Component {
               className="language-javascript"
               dangerouslySetInnerHTML={{
                 __html: `<code class="language-javascript"><span class="token comment">// For function createNodeField</span>
-  exports<span class="token punctuation">.</span><span class="token function-variable function">onCreateNode</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> node<span class="token punctuation">,</span> getNode<span class="token punctuation">,</span> actions <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> <span class="token punctuation">{</span> createNodeField <span class="token punctuation">}</span> <span class="token operator">=</span> actions
-  <span class="token punctuation">}</span></code>`,
+exports<span class="token punctuation">.</span><span class="token function-variable function">onCreateNode</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> node<span class="token punctuation">,</span> getNode<span class="token punctuation">,</span> actions <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> createNodeField <span class="token punctuation">}</span> <span class="token operator">=</span> actions
+<span class="token punctuation">}</span></code>`,
               }}
             />
           </div>
-          <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <h2 css={{ marginBottom: space[3] }}>Functions</h2>
+          <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
@@ -61,7 +61,7 @@ class ActionCreatorsDocs extends React.Component {
           </ul>
           <hr />
           <h2>Reference</h2>
-          <Functions functions={funcs} />
+          <APIReference docs={funcs} />
         </Container>
       </Layout>
     )
@@ -75,7 +75,7 @@ export const pageQuery = graphql`
     file(relativePath: { eq: "gatsby/src/redux/actions.js" }) {
       childrenDocumentationJs {
         name
-        ...FunctionList
+        ...DocumentationFragment
       }
     }
   }

@@ -1,39 +1,42 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import Button from "../button"
 
-import { rhythm, options } from "../../utils/typography"
-import { vP } from "../gutters"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import {
+  colors,
+  space,
+  breakpoints,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 
-const ICON_SIZE = `32px`
+const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsby : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  margin: 0 -${rhythm(presets.gutters.default / 2)};
-  padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
-  width: calc(100% + ${rhythm(presets.gutters.default)});
+  padding: ${space[5]} ${space[6]};
+  width: 100%;
 
-  ${presets.Hd} {
-    margin: -1px -${vP};
-    padding: ${rhythm(1)} 5%;
-    width: calc(100% + (${vP} * 2));
+  ${breakpoints.xl} {
+    margin: -1px 0;
+    padding: ${space[5]} 5%;
   }
 
-  ${presets.VHd} {
-    padding: ${rhythm(1.5)} 8%;
+  ${breakpoints.xxl} {
+    padding: ${space[7]} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     max-width: 30rem;
   }
 
-  ${presets.Desktop} {
-    margin-left: 3rem;
+  ${breakpoints.lg} {
+    margin-left: ${space[9]};
   }
 `
 
@@ -41,13 +44,13 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: 1rem;
+  font-size: ${fontSizes[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -55,7 +58,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -69,14 +72,14 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: 1.75rem;
+  font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: 1.125rem;
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-size: ${fontSizes[3]};
+  font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `
@@ -84,14 +87,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 1.5rem;
+  margin: ${space[4]} 0 ${space[6]};
 
   > a {
-    margin-right: ${rhythm(0.2)};
+    margin-right: ${space[1]};
   }
 
-  ${presets.Desktop} {
-    margin: 1rem 0 2.5rem;
+  ${breakpoints.lg} {
+    margin: ${space[4]} 0 ${space[8]};
   }
 `
 
@@ -124,7 +127,7 @@ const HomepageSection = ({
         {links && (
           <Actions>
             {links.map((item, idx) => {
-              const { to, label, icon: Icon, secondary } = item
+              const { to, label, icon: Icon, secondary, tracking } = item
 
               return (
                 <Button
@@ -133,6 +136,7 @@ const HomepageSection = ({
                   small
                   ondark={inverseStyle ? true : false}
                   secondary={secondary}
+                  tracking={tracking}
                 >
                   {label} {Icon && <Icon />}
                 </Button>
