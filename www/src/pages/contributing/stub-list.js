@@ -47,7 +47,7 @@ class StubListRoute extends React.Component {
               {` `}
               to learn more.
             </p>
-            <ul>
+            <ul data-testid="list-of-stubs">
               {stubs.map(stub => (
                 <li key={stub.title}>
                   <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
