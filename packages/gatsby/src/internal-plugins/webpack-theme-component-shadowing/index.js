@@ -3,6 +3,11 @@ const debug = require(`debug`)(`gatsby:component-shadowing`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 
+const pathWithoutExtension = fullPath => {
+  const parsed = path.parse(fullPath)
+  return path.join(parsed.dir, parsed.name)
+}
+
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
@@ -26,9 +31,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           )} for path ${request.path}`
         )
       }
+
       if (matchingThemes.length !== 1) {
         return callback()
       }
+
       // theme is the theme package from which we're requiring the relative component
       const [theme] = matchingThemes
       // get the location of the component relative to src/
@@ -72,7 +79,6 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         matchingTheme: theme,
         themes: this.themes,
         component,
-        projectRoot: this.projectRoot,
       })
 
       return resolver.doResolve(
@@ -86,12 +92,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the cache, the user's project, and finally the theme files
-  resolveComponentPath({
-    matchingTheme: theme,
-    themes: ogThemes,
-    component,
-    projectRoot,
-  }) {
+  resolveComponentPath({ matchingTheme: theme, themes: ogThemes, component }) {
     // don't include matching theme in possible shadowing paths
     const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
     if (!this.cache[`${theme}-${component}`]) {
@@ -156,6 +157,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         }
       })
   }
+
   requestPathIsIssuerShadowPath({ requestPath, issuerPath }) {
     // get the issuer's theme
     const matchingThemes = this.getMatchingThemesForPath(requestPath)
@@ -168,10 +170,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     const [, component] = requestPath.split(path.join(theme, `src`))
 
     // get list of potential shadow locations
-    const shadowDirectories = this.getBaseShadowDirsForThemes(theme).map(dir =>
+    const shadowFiles = this.getBaseShadowDirsForThemes(theme).map(dir =>
       path.join(dir, component)
     )
+
     // if the issuer is requesting a path that is a potential shadow path of itself
-    return shadowDirectories.includes(issuerPath)
+    return shadowFiles.includes(pathWithoutExtension(issuerPath))
   }
 }
