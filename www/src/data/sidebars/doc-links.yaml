@@ -82,8 +82,6 @@
               link: /docs/using-gatsby-image/
             - title: Preoptimizing your Images
               link: /docs/preoptimizing-images/
-            - title: gatsby-source-filesystem Programmatic Import*
-              link: /docs/gatsby-source-filesystem-programmatic-import/
             - title: Working With Video
               link: /docs/working-with-video/
             - title: Importing Media Content
