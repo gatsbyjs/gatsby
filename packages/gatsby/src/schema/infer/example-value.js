@@ -106,6 +106,7 @@ const getExampleObject = ({
         nodes: objects,
         prefix: selector,
         typeConflictReporter,
+        ignoreFields,
       })
       if (!Object.keys(exampleObject).length) return acc
       exampleFieldValue = exampleObject
