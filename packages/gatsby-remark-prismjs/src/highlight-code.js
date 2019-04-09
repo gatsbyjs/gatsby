@@ -9,7 +9,7 @@ module.exports = (
   language,
   code,
   lineNumbersHighlight = [],
-  notInline = false
+  noInlineHighlight = false
 ) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {
@@ -22,7 +22,7 @@ module.exports = (
         case `none`:
           return code // Don't escape if set to none.
         case `text`:
-          message = notInline
+          message = noInlineHighlight
             ? `code block language not specified in markdown.`
             : `code block or inline code language not specified in markdown.`
           break
