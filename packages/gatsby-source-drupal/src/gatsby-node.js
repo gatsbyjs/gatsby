@@ -40,7 +40,11 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/${apiBase}`, { auth: basicAuth, headers: headers, params: params })
+  const data = await axios.get(`${baseUrl}/${apiBase}`, {
+    auth: basicAuth,
+    headers: headers,
+    params: params,
+  })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
@@ -54,7 +58,11 @@ exports.sourceNodes = async (
 
         let d
         try {
-          d = await axios.get(url, { auth: basicAuth, headers: headers, params: params })
+          d = await axios.get(url, {
+            auth: basicAuth,
+            headers: headers,
+            params: params,
+          })
         } catch (error) {
           if (error.response && error.response.status == 405) {
             // The endpoint doesn't support the GET method, so just skip it.

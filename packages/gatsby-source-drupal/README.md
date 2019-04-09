@@ -58,9 +58,9 @@ module.exports = {
 }
 ```
 
-## Request Headers 
+## Request Headers
 
-You can add optional request headers to the request using `headers` param. 
+You can add optional request headers to the request using `headers` param.
 
 ```javascript
 // In your gatsby-config.js
@@ -72,17 +72,17 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
         headers: {
-          'Host': 'https://example.com', // any valid request header here 
-        }
+          Host: "https://example.com", // any valid request header here
+        },
       },
     },
   ],
 }
 ```
 
-## GET Params 
+## GET Params
 
-You can append optional GET request params to the request url using `params` option. 
+You can append optional GET request params to the request url using `params` option.
 
 ```javascript
 // In your gatsby-config.js
@@ -94,8 +94,8 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
         params: {
-          'api-key': 'your-api-key-header-here', // any valid key value pair here 
-        }
+          "api-key": "your-api-key-header-here", // any valid key value pair here
+        },
       },
     },
   ],
