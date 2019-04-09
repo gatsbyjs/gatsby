@@ -6,7 +6,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
   __experimentalThemes: Joi.array(),
   polyfill: Joi.boolean(),
   siteMetadata: Joi.object({
-    siteUrl: normalizeUrl(Joi.string()).uri(),
+    siteUrl: stripTrailingSlash(Joi.string()).uri(),
   }).unknown(),
   pathPrefix: Joi.string().uri({
     allowRelative: true,
