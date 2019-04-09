@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.7...gatsby-remark-prismjs@3.2.8) (2019-04-09)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** Update warnings to handle missing language ([#13159](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/13159)) ([422f91d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/422f91d))
+
+## [3.2.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.6...gatsby-remark-prismjs@3.2.7) (2019-04-04)
+
+### Features
+
+- **gatsby-remark-prismjs:** load languages when referred to by an alias ([#13127](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/13127)) ([de8f99b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/de8f99b))
+
+## [3.2.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.5...gatsby-remark-prismjs@3.2.6) (2019-03-18)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.2.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.4...gatsby-remark-prismjs@3.2.5) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 ## [3.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.3...gatsby-remark-prismjs@3.2.4) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-remark-prismjs

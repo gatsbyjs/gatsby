@@ -1,38 +1,44 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
-import { options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import {
+  colors,
+  radii,
+  space,
+  breakpoints,
+  fontSizes,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
-  border-radius: ${presets.radiusLg}px;
+  border-radius: ${radii[2]}px;
   color: ${colors.gatsby};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 1.2rem;
+  font-family: ${fonts.header};
+  font-size: ${fontSizes[3]};
   font-weight: bold;
-  line-height: 1.5;
-  padding: 2rem 3rem;
+  padding: ${space[7]} 3rem;
   position: relative;
-  text-indent: 2rem;
-  margin: 2.5rem 0;
+  text-indent: ${space[7]};
+  margin: ${space[8]} 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
-    margin: 2.5rem 0;
+    margin: ${space[8]} 0;
   }
 
-  ${presets.Desktop} {
-    line-height: 1.7;
-    margin: 2.5rem -3.5rem;
+  ${breakpoints.lg} {
+    line-height: ${lineHeights.loose};
+    margin: ${space[8]} -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: 2.5rem -3.5rem;
+      margin: ${space[8]} -3.5rem;
     }
   }
 `
@@ -41,21 +47,21 @@ const Citation = styled(`cite`)`
   display: block;
   font-style: italic;
   font-weight: normal;
-  margin-top: 1rem;
+  margin-top: ${space[4]};
   text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
   display: flex;
-  left: 2.5rem;
+  left: ${space[8]};
   position: absolute;
-  top: 2rem;
+  top: ${space[7]};
 
   svg {
     fill: ${colors.gatsbyDark};
   }
 
-  ${presets.Desktop} {
+  ${breakpoints.lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -75,7 +81,7 @@ const Star = styled(`span`)`
     width: 100%;
   }
 
-  :nth-child(1) {
+  :nth-of-type(1) {
     height: 20px;
     left: 0;
     top: 1.8rem;
@@ -86,7 +92,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${presets.Desktop} {
+    ${breakpoints.lg} {
       height: 27px;
       width: 27px;
     }
@@ -94,7 +100,7 @@ const Star = styled(`span`)`
     .variantB & {
       left: auto;
       right: 0;
-      top: 2rem;
+      top: ${space[7]};
       transform: translate(50%, 0);
     }
 
@@ -107,7 +113,7 @@ const Star = styled(`span`)`
     }
   }
 
-  :nth-child(2) {
+  :nth-of-type(2) {
     left: 5rem;
     height: 14px;
     top: 0;
@@ -133,12 +139,12 @@ const Star = styled(`span`)`
     }
   }
 
-  :nth-child(3) {
+  :nth-of-type(3) {
     bottom: 0;
-    height: 12px;
+    height: ${space[3]};
     right: 4rem;
     transform: translateY(50%);
-    width: 12px;
+    width: ${space[3]};
 
     svg {
       fill: ${colors.warning};

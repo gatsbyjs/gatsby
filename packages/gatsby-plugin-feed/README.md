@@ -10,45 +10,11 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 
 ```javascript
 // In your gatsby-config.js
-siteMetadata: {
-  title: `GatsbyJS`,
-  description: `Blazing fast modern site generator for React`,
-  siteUrl: `https://www.gatsbyjs.org`
-},
-plugins: [
-  {
-    resolve: `gatsby-plugin-feed`
-  }
-]
-```
-
-Here's an example of [how you could implement](/docs/adding-an-rss-feed/) this plugin with Markdown, but for other sources, you will need a way to uniquely identify content--typically a URL or slug.
-
-```javascript:title=gatsby-node.js
-const { createFilePath } = require(`gatsby-source-filesystem`)
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
-  }
-}
-```
-
-Above is the minimal configuration required to begin working. If you wish to
-customize the query being executed to retrieve nodes, try this:
-
-```javascript
-// In your gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-feed`,
     options: {
+      // this base query will be merged with any queries in each feed
       query: `
         {
           site {
@@ -104,6 +70,12 @@ plugins: [
 ]
 ```
 
-To see what option keys are valid, see [the itemOptions section](https://www.npmjs.com/package/rss#itemoptions) of the RSS module.
+Each feed must include `output`, `query`, and `title`. Additionally, it is strongly recommended to pass a custom `serialize` function, otherwise an internal serialize function will be used which may not exactly match your particular use case.
 
-NOTE: This plugin only generates the `/rss.xml` file when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`.
+All additional options are passed through to the [`rss`][rss] utillity. For more info on those additional options, [explore the `itemOptions` section of the `rss` package](https://www.npmjs.com/package/rss#itemoptions).
+
+Check out an example of [how you could implement](/docs/adding-an-rss-feed/) to your own site, with a custom `serialize` function, and additional functionality.
+
+_NOTE: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`._
+
+[rss]: https://www.npmjs.com/package/rss

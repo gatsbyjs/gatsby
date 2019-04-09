@@ -1,9 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 import axios from "axios"
-import styled from "react-emotion"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import styled from "@emotion/styled"
+import {
+  colors,
+  space,
+  radii,
+  shadows,
+  breakpoints,
+  fontSizes,
+  fonts,
+} from "../utils/presets"
 import EnvelopeFaIcon from "react-icons/lib/fa/envelope-o"
 import CancelMdIcon from "react-icons/lib/md/close"
 import SendIcon from "react-icons/lib/io/paper-airplane"
@@ -14,15 +21,15 @@ const FeedbackComponent = styled(`section`)`
 `
 
 const FeedbackToggle = styled(`div`)`
-  width: 60px;
-  height: 60px;
-  bottom: 64px;
+  width: ${space[10]};
+  height: ${space[10]};
+  bottom: ${space[11]};
   background-color: ${colors.gatsby};
-  color: #fff;
+  color: ${colors.white};
   border-radius: 100%;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
+  box-shadow: ${shadows.dialog};
   position: fixed;
-  right: 20px;
+  right: ${space[6]};
   z-index: 99999;
   cursor: pointer;
 
@@ -30,9 +37,8 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${presets.Tablet} {
-    bottom: 30px;
-    right: 30px;
+  ${breakpoints.md} {
+    bottom: ${space[6]};
   }
 `
 
@@ -49,10 +55,10 @@ const IconWrapper = styled(`div`)`
 `
 
 const EnvelopeIcon = styled(EnvelopeFaIcon)`
-  font-size: ${rhythm(1)};
+  font-size: ${fontSizes[4]};
 `
 const CancelIcon = styled(CancelMdIcon)`
-  font-size: ${rhythm(1.2)};
+  font-size: ${fontSizes[3]};
 `
 
 const StatusMessage = styled(`span`)`
@@ -60,9 +66,9 @@ const StatusMessage = styled(`span`)`
   width: 100%;
   background: ${colors.gray.dark};
   bottom: 60px;
-  color: #fff;
-  font-size: 16px;
-  padding: 0.4rem 0.8rem;
+  color: ${colors.white};
+  font-size: ${fontSizes[2]};
+  padding: ${fontSizes[2]} ${fontSizes[4]};
   text-align: left;
   left: 0;
 `
@@ -73,11 +79,11 @@ const FeedbackForm = styled(`div`)`
   bottom: 134px;
   width: 90%;
   background-color: ${colors.gatsby};
-  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.2);
-  border-radius: ${presets.radiusLg}px;
-  font-family: ${options.systemFontFamily.join(`,`)};
+  box-shadow: ${shadows.dialog};
+  border-radius: ${radii[2]}px;
+  font-family: ${fonts.system};
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     width: 350px;
     right: 30px;
     bottom: 100px;
@@ -85,15 +91,15 @@ const FeedbackForm = styled(`div`)`
 `
 
 const Label = styled(`label`)`
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   font-weight: 600;
   height: 240px;
-  color: #fff;
+  color: ${colors.white};
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
-  font-size: 22px;
+  padding: ${space[8]};
+  font-size: ${fontSizes[3]};
   float: left;
 `
 
@@ -105,8 +111,8 @@ const Input = styled(`input`)`
   float: left;
   height: 60px;
   width: calc(100% - 60px);
-  font-size: 14px;
-  padding: 20px;
+  font-size: ${fontSizes[1]};
+  padding: ${space[5]};
   border: none;
   resize: none;
   border-right: 1px solid #ddd;
@@ -119,7 +125,7 @@ const Send = styled(`button`)`
   height: 60px;
   cursor: pointer;
   border: none;
-  background: #fff;
+  background: ${colors.white};
   padding: 0;
 
   svg {

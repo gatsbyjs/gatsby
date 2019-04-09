@@ -1,18 +1,24 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import {
+  colors,
+  space,
+  breakpoints,
+  sizes,
+  lineHeights,
+  fontSizes,
+} from "../../utils/presets"
 
 const PageHeadingContainer = styled(`header`)`
-  padding: ${rhythm(options.blockMarginBottom)};
+  padding: ${space[6]};
 
-  ${presets.Tablet} {
+  ${breakpoints.md} {
     left: 0;
     position: fixed;
     padding: 0;
-    top: ${`calc(${presets.bannerHeight} + ${presets.headerHeight})`};
+    top: ${`calc(${sizes.bannerHeight} + ${sizes.headerHeight})`};
   }
 `
 
@@ -20,37 +26,43 @@ const H1 = styled(`h1`)`
   align-items: center;
   color: ${colors.lilac};
   display: flex;
-  font-size: 1.5rem;
+  font-size: ${fontSizes[5]};
+  line-height: ${lineHeights.solid};
   margin: 0;
   position: relative;
   width: 100%;
 
-  ${presets.Tablet} {
-    transform: rotate(-90deg) translate(calc(-100% - 2rem), 0.7rem);
+  ${breakpoints.md} {
+    transform: rotate(-90deg) translate(calc(-100% - ${space[7]}), ${space[4]});
     transform-origin: top left;
   }
 
   :after {
-    bottom: 2rem;
+    bottom: -${space[4]};
     content: attr(data-title);
     display: none;
     font-size: 12rem;
-    opacity: 0.03;
     position: absolute;
-    right: -0.7rem;
+    right: -${space[3]};
     z-index: -1;
+    color: ${colors.ui.whisper};
 
-    ${presets.Tablet} {
+    ${breakpoints.md} {
       display: block;
     }
   }
 `
 
 const Icon = styled(`span`)`
-  display: block;
-  width: 36px;
-  height: 32px;
-  margin: 0.1rem 0.1rem 0 -0.3rem;
+  display: flex;
+  align-items: center;
+  margin-right: ${space[2]};
+
+  svg {
+    width: ${space[7]};
+    height: auto;
+    margin: 0;
+  }
 
   .svg-stroke {
     stroke-miterlimit: 10;
@@ -70,7 +82,7 @@ const Icon = styled(`span`)`
     fill: ${colors.lavender};
   }
   .svg-fill-brightest {
-    fill: #fff;
+    fill: ${colors.white};
   }
   .svg-fill-accent {
     fill: ${colors.lavender};
@@ -85,7 +97,7 @@ const Icon = styled(`span`)`
     fill: transparent;
   }
   .svg-fill-gradient-accent-white-bottom: {
-    fill: #fff;
+    fill: ${colors.white};
   }
   .svg-fill-gradient-purple {
     fill: ${colors.lavender};

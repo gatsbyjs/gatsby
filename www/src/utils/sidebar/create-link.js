@@ -1,21 +1,29 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import presets, { colors } from "../presets"
+import { colors, space, transition, radii } from "../presets"
+import presets from "../../utils/sidebar/presets"
+import indention from "../../utils/sidebar/indention"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
 const _isDraft = title => title.slice(-1) === `*`
+
+const bulletSize = 8
+const bulletSizeActive = 100
+const bulletOffsetTop = `1.3em`
 
 const createLink = ({
   item,
   onLinkClick,
   isActive,
   isParentOfActiveItem,
-  stepsUI,
+  ui,
   customCSS,
+  level,
 }) => {
   const isDraft = _isDraft(item.title)
   const title = _getTitle(item.title, isDraft)
+  const indent = ui === `steps` ? indention(level + 1) : indention(level)
 
   return (
     <span
@@ -24,14 +32,14 @@ const createLink = ({
         alignItems: `center`,
         position: `relative`,
         "&:before": {
-          background: colors.ui.border,
+          background: presets.itemBorderColor,
           bottom: 0,
           top: `auto`,
           content: `''`,
           height: 1,
           position: `absolute`,
           right: 0,
-          left: 0,
+          left: indent,
         },
       }}
     >
@@ -42,28 +50,61 @@ const createLink = ({
           isActive && styles.activeLink,
           isParentOfActiveItem && styles.parentOfActiveLink,
           customCSS && customCSS,
+          { paddingLeft: indent },
+          {
+            "&:before, &:after": {
+              content: `''`,
+              left:
+                level === 0 || (level === 1 && ui !== `steps`)
+                  ? `calc(${indent} - ${space[4]})`
+                  : `calc(${indent} - ${space[6]})`,
+              top: bulletOffsetTop,
+              height: bulletSize,
+              position: `absolute`,
+              transition: `all ${transition.speed.default} ${
+                transition.curve.default
+              }`,
+              width: bulletSize,
+            },
+            "&:before": {
+              background: isActive ? colors.gatsby : false,
+              borderRadius: radii[6],
+              transform: isActive ? `scale(1)` : `scale(0.1)`,
+            },
+            "&:after": {
+              background: colors.gatsby,
+              borderRadius: radii[2],
+              opacity: isActive ? 1 : 0,
+              transform: `translateX(-${bulletSizeActive - bulletSize}px)`,
+              width: isActive ? bulletSizeActive : 0,
+            },
+          },
         ]}
         onClick={onLinkClick}
         to={item.link}
       >
-        {stepsUI && <span css={{ ...styles.subsectionLink }} />}
+        {ui === `steps` && (
+          <span
+            css={{
+              left: space[6],
+              background: colors.white,
+              border: `1px solid ${colors.gray.border}`,
+              borderRadius: radii[6],
+              display: `block`,
+              fontWeight: `normal`,
+              height: bulletSize,
+              position: `absolute`,
+              width: bulletSize,
+              top: bulletOffsetTop,
+              zIndex: -1,
+            }}
+          />
+        )}
         {title}
       </Link>
     </span>
   )
 }
-
-const bulletOffset = {
-  default: {
-    left: -25,
-    top: `1.15em`,
-  },
-  desktop: {
-    top: `1.2em`,
-  },
-}
-
-const bulletSize = 8
 
 const styles = {
   draft: {
@@ -74,87 +115,36 @@ const styles = {
   parentOfActiveLink: {
     "&&": {
       color: colors.gatsby,
-      fontWeight: `bold`,
+      fontWeight: 600,
     },
   },
   activeLink: {
     "&&": {
       color: colors.gatsby,
-      fontWeight: `bold`,
-    },
-    "&:before": {
-      background: colors.gatsby,
-      transform: `scale(1)`,
-    },
-    "&:after": {
-      width: 200,
-      opacity: 1,
+      fontWeight: 600,
+      background: presets.activeItemBackground,
     },
   },
   link: {
-    paddingRight: 40,
-    minHeight: 40,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingRight: space[4],
+    minHeight: presets.itemMinHeight,
+    paddingTop: space[3],
+    paddingBottom: space[3],
     position: `relative`,
     zIndex: 1,
     width: `100%`,
     "&&": {
       border: 0,
-      boxShadow: `none`,
+      color: colors.gray.copy,
       fontWeight: `normal`,
       "&:hover": {
-        background: `transparent`,
+        background: presets.itemHoverBackground,
         color: colors.gatsby,
         "&:before": {
           background: colors.gatsby,
           transform: `scale(1)`,
         },
       },
-    },
-    "&:before, &:after": {
-      ...bulletOffset.default,
-      height: bulletSize,
-      position: `absolute`,
-      transition: `all ${presets.animation.speedDefault} ${
-        presets.animation.curveDefault
-      }`,
-    },
-    "&:before": {
-      borderRadius: `100%`,
-      content: `''`,
-      transform: `scale(0.1)`,
-      width: bulletSize,
-      [presets.Tablet]: {
-        ...bulletOffset.desktop,
-      },
-    },
-    "&:after": {
-      background: colors.gatsby,
-      borderRadius: 4,
-      content: `''`,
-      left: bulletOffset.default.left + 7,
-      opacity: 0,
-      transform: `translateX(-200px)`,
-      width: 1,
-      [presets.Tablet]: {
-        ...bulletOffset.desktop,
-      },
-    },
-  },
-  subsectionLink: {
-    ...bulletOffset.default,
-    background: `#fff`,
-    border: `1px solid ${colors.ui.bright}`,
-    borderRadius: `100%`,
-    display: `block`,
-    fontWeight: `normal`,
-    height: bulletSize,
-    position: `absolute`,
-    width: bulletSize,
-    zIndex: -1,
-    [presets.Tablet]: {
-      ...bulletOffset.desktop,
     },
   },
 }

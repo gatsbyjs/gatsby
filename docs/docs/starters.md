@@ -4,19 +4,21 @@ title: "Gatsby Starters"
 
 The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsby sites maintained by the community.
 
-`npx gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing Git history.
+`gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing Git history.
 
 When creating a new site, you can optionally specify a starter to base your new site on e.g.
 
-`npx gatsby new [SITE_DIRECTORY] [URL_OF_STARTER_GITHUB_REPO]`
+`gatsby new [SITE_DIRECTORY] [URL_OF_STARTER_GITHUB_REPO]`
 
 For example, to quickly create a blog using Gatsby, you could install the Gatsby Starter Blog by running:
 
-`npx gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog`
+`gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog`
 
 This downloads the files and initializes the site by running `npm install`
 
 If you don't specify a custom starter, your site will be created from the [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
+
+> Learn [how to make a starter](/docs/creating-a-starter/) in the Gatsby docs. Starters can be created for your team(s) only, or distributed to the broader community. It's up to you!
 
 ## Official starters
 
