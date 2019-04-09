@@ -1,21 +1,8 @@
-const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
-const stringify = require(`json-stringify-safe`)
 
 const conflictFieldPrefix = `lever_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
-
-/**
- * Encrypts a String using md5 hash of hexadecimal digest.
- *
- * @param {any} str
- */
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 /**
  * Create the Graph QL Node
@@ -24,7 +11,14 @@ const digest = str =>
  * @param {any} type
  * @param {any} createNode
  */
-async function createGraphQLNode(ent, type, createNode, store, cache) {
+async function createGraphQLNode(
+  ent,
+  type,
+  createNode,
+  store,
+  cache,
+  createContentDigest
+) {
   let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
   let node = {
     id: `${type}_${id.toString()}`,
@@ -36,7 +30,7 @@ async function createGraphQLNode(ent, type, createNode, store, cache) {
   }
   node = recursiveAddFields(ent, node)
   node.internal.content = JSON.stringify(node)
-  node.internal.contentDigest = digest(stringify(node))
+  node.internal.contentDigest = createContentDigest(node)
   createNode(node)
 }
 exports.createGraphQLNode = createGraphQLNode
@@ -133,7 +127,11 @@ exports.createGatsbyIds = (createNodeId, entities) =>
     return e
   })
 
-exports.createNodesFromEntities = ({ entities, createNode }) => {
+exports.createNodesFromEntities = ({
+  entities,
+  createNode,
+  createContentDigest,
+}) => {
   entities.forEach(e => {
     let { ...entity } = e
     let node = {
@@ -142,7 +140,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       children: [],
       internal: {
         type: `lever`,
-        contentDigest: digest(JSON.stringify(entity)),
+        contentDigest: createContentDigest(entity),
       },
     }
     createNode(node)
