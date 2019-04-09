@@ -93,7 +93,7 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
-What just happened?
+**What just happened?**
 
 ```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -129,13 +129,13 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 ## Set up a code editor
 
-A code editor is a program designed specifically for editing computer code. There are many great ones out there.
+A code editor is a program designed specifically for editing computer code. There are many great ones out there. If you already have a code ditor setup ready then feel free to skip the next VS Code installation setup.
 
-> If you haven't worked with a code editor before, we recommend [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial will match, and may be easier to follow.
+> If you haven't yet worked with a code editor before, we recommend using [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial will match, and therefore may be easier to follow along.
 
 ### Download VS Code
 
-Gatsby documentation sometimes includes screenshots of code editors; these screenshots show the VS Code editor, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+Gatsby documentation sometimes includes screenshots of code editors; these screenshots have been taken using the VS Code editor, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code website](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
 ### Install the Prettier plugin
 
