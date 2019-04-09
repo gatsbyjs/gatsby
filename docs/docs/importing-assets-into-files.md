@@ -6,10 +6,10 @@ There are two major ways to import assets, such as images, fonts, and files, int
 
 ## Importing assets with Webpack
 
-With Webpack you can **`import` a file right in a JavaScript module**. This tells Webpack to include that file in the bundle. Unlike CSS imports, importing a file gives you a string value. This value is the final path you can reference in your code, e.g. as the `src` attribute of an image or the `href` of a link to a PDF.
+With Webpack you can **`import` a file right in a JavaScript module**. This tells Webpack to include that file in the bundle. Unlike CSS imports, importing a file gives you a string value. This imported file's value is the final path you can reference in your code, e.g. as the `src` attribute of an image or the `href` of a link to a PDF.
 
 To reduce the number of requests to the server, importing images that are less than 10,000 bytes returns a
-[data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) instead of a path. This applies to the following file extensions: svg, jpg, jpeg, png, gif, mp4, webm, wav, mp3, m4a, aac, and oga.
+[data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) instead of a path. This applies to the following file extensions: `svg`, `jpg`, `jpeg`, `png`, `gif`, `mp4`, `webm`, `wav`, `mp3`, `m4a`, `aac`, and `oga`.
 
 Here's an example:
 
@@ -49,9 +49,9 @@ Two alternative ways of handling static assets are described in the next section
 
 You can query the `publicURL` field of `File` nodes found in your data layer to trigger copying those files to the public directory and get URLs to them.
 
-Examples:
+### Examples:
 
-- Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
+1. Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
 
 ```graphql
 {
@@ -65,9 +65,7 @@ Examples:
 }
 ```
 
-- Copy post attachments defined in your Markdown files:
-
-  Link to your attachments in the markdown front matter:
+2. Link to attachments in your Markdown files:
 
 ```markdown
 ---
@@ -80,7 +78,7 @@ attachments:
 Hi, this is a great article.
 ```
 
-In the article template component file, you can query for the attachments:
+In the article template component file, you can then query for the attachments:
 
 ```graphql
 query($slug: String!) {
@@ -95,3 +93,5 @@ query($slug: String!) {
   }
 }
 ```
+
+Read more about querying for files in [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/).
