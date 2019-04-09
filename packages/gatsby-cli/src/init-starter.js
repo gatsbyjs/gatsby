@@ -15,7 +15,6 @@ const spawn = (cmd: string, options: any) => {
   return execa(file, args, { stdio: `inherit`, ...options })
 }
 
-const pkg = require(`../package.json`)
 const conf = new Configstore(`gatsby`, {}, { globalConfigPath: true })
 
 // Checks the existence of yarn package
