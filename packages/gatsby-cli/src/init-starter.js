@@ -16,7 +16,7 @@ const spawn = (cmd: string, options: any) => {
 }
 
 const pkg = require(`../package.json`)
-const conf = new Configstore(pkg.name, {})
+const conf = new Configstore(`gatsby`, {}, { globalConfigPath: true })
 
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
