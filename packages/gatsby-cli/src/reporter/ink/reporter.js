@@ -1,9 +1,10 @@
 import React from "react"
 import { Static, Box } from "ink"
 import { globalTracer } from "opentracing"
+import { isCI } from "ci-info"
+import chalk from "chalk"
 import Activity, { calcElapsedTime } from "./components/activity"
 import { Message } from "./components/messages"
-import { isCI } from "ci-info"
 
 const tracer = globalTracer()
 const showProgress = process.stdout.isTTY && !isCI
@@ -24,6 +25,8 @@ export default class GatsbyReporter extends React.Component {
     messages: [],
     activities: {},
   }
+
+  format = chalk
 
   createActivity = (name, activityArgs) => {
     const { parentSpan } = activityArgs
