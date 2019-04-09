@@ -15,7 +15,7 @@ for folder in $FOLDER/*; do
 
   NAME=$(cat $folder/package.json | jq -r '.name')
   CLONE_DIR="__${NAME}__clone__"
-  
+
   # sync to read-only clones
   if [ "$CLONE" = true ]; then
     # clone, delete files in the clone, and copy (new) files over
@@ -24,24 +24,26 @@ for folder in $FOLDER/*; do
     cd $CLONE_DIR
     find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
     cp -r $BASE/$folder/. .
-  
+
     rm -rf yarn.lock
     yarn import # generate a new yarn.lock file based on package-lock.json
 
     git add .
     git commit --message "$COMMIT_MESSAGE"
     git push origin master
-  else
-    # validate
-    cd $folder
-    npm audit &&
-    npm install &&
-    # check both npm and yarn, sometimes yarn registry lags behind
-    rm -rf node_modules &&
-    yarn &&
-    npm run build ||
-    exit 1
+
+    continue
   fi
+
+  # validate
+  cd $folder
+  npm audit &&
+  npm install &&
+  # check both npm and yarn, sometimes yarn registry lags behind
+  rm -rf node_modules &&
+  yarn &&
+  npm run build ||
+  exit 1
 
   cd $BASE
 done

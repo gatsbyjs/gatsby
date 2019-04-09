@@ -12,12 +12,12 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
   if (!packages.length) {
     console.log(`${user} has write access to all packages`)
     return
-  } else {
-    console.log(`Will be adding ${user} to packages:`)
-    packages.forEach(pkg => {
-      console.log(` - ${pkg.name}`)
-    })
   }
+
+  console.log(`Will be adding ${user} to packages:`)
+  packages.forEach(pkg => {
+    console.log(` - ${pkg.name}`)
+  })
 
   for (let pkg of packages) {
     const cmd = `npm owner add ${user} ${pkg.name}`
@@ -25,9 +25,9 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
       const { stderr } = await exec(cmd)
       if (stderr) {
         console.error(`Error adding ${user} to ${pkg.name}:\n`, stderr)
-      } else {
-        console.log(`Added ${user} to ${pkg.name}`)
+        return
       }
+      console.log(`Added ${user} to ${pkg.name}`)
     } catch (e) {
       console.error(`Error adding ${user} to ${pkg.name}:\n`, e.stderr)
     }

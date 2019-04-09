@@ -70,9 +70,10 @@ const updatePlugins = (updates, plugins) => {
     const idx = res.findIndex(r => r.name === u.name)
     if (idx >= 0) {
       res[idx] = Object.assign({}, res[idx], u)
-    } else {
-      res.push(u)
+      return
     }
+
+    res.push(u)
   })
   return updates
 }
