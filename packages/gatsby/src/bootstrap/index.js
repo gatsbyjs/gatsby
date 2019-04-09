@@ -1,7 +1,5 @@
 /* @flow */
 
-// hi
-
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
