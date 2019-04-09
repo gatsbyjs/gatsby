@@ -4,7 +4,7 @@ const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`returns 200 on base route`, () => {
@@ -38,9 +38,9 @@ describe(`Production pathPrefix`, () => {
     it(`can go back`, () => {
       cy.getTestElement(`page-2-link`)
         .click()
-        .waitForAPI(`onRouteUpdate`)
+        .waitForRouteChange()
 
-      cy.go(`back`).waitForAPI(`onRouteUpdate`)
+      cy.go(`back`).waitForRouteChange()
 
       cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
     })

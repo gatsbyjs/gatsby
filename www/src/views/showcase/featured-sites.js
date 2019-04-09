@@ -8,8 +8,16 @@ import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import { options, rhythm } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+  breakpoints,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -28,12 +36,10 @@ class FeaturedSites extends Component {
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(
-            presets.space[6]
-          )} 0`,
+          margin: `${space[6]} ${space[6]} 0`,
           position: `relative`,
           display: `none`,
-          [presets.Lg]: {
+          [breakpoints.lg]: {
             display: `block`,
           },
         }}
@@ -54,7 +60,7 @@ class FeaturedSites extends Component {
         />
         <div
           css={{
-            marginBottom: rhythm(options.blockMarginBottom * 2),
+            marginBottom: space[9],
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
@@ -63,13 +69,13 @@ class FeaturedSites extends Component {
           <img
             src={FeaturedSitesIcon}
             alt="icon"
-            css={{ marginBottom: 0, height: `1rem` }}
+            css={{ marginBottom: 0, height: space[4] }}
           />
           <h1
             css={{
-              fontSize: presets.scale[4],
+              fontSize: fontSizes[4],
               color: colors.gray.dark,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               fontWeight: `bold`,
               marginRight: 30,
               marginLeft: 4,
@@ -84,8 +90,8 @@ class FeaturedSites extends Component {
             css={{
               ...styles.withTitleHover,
               display: `none`,
-              fontSize: presets.scale[1],
-              [presets.Sm]: {
+              fontSize: fontSizes[1],
+              [breakpoints.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -112,10 +118,10 @@ class FeaturedSites extends Component {
             <div
               css={{
                 color: colors.gray.calm,
-                fontSize: presets.scale[1],
+                fontSize: fontSizes[1],
                 marginRight: 15,
                 display: `none`,
-                [presets.Md]: {
+                [breakpoints.md]: {
                   display: `block`,
                 },
               }}
@@ -144,9 +150,9 @@ class FeaturedSites extends Component {
               display: `flex`,
               overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${rhythm(space[6])}`,
-              padding: `3px ${rhythm(space[6])} 0`,
-              ...styles.scrollbar,
+              margin: `0 -${space[6]}`,
+              padding: `3px ${space[6]} 0`,
+              borderBottom: `1px solid ${colors.gray.border}`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
@@ -161,11 +167,13 @@ class FeaturedSites extends Component {
                   css={{
                     "&&": {
                       borderBottom: `none`,
-                      fontSize: presets.scale[3],
+                      fontSize: fontSizes[3],
                       fontWeight: `bold`,
                       color: colors.gray.dark,
-                      fontFamily: options.headerFontFamily.join(`,`),
-                      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
+                      fontFamily: fonts.header,
+                      transition: `box-shadow ${transition.speed.slow} ${
+                        transition.curve.default
+                      }, transform .3s ${transition.curve.default}`,
                       "&:hover": { ...styles.screenshotHover },
                     },
                   }}
@@ -188,10 +196,10 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   css={{
-                    fontSize: presets.scale[1],
+                    fontSize: fontSizes[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [presets.Lg]: {
+                    [breakpoints.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -199,7 +207,7 @@ class FeaturedSites extends Component {
                   {node.built_by && (
                     <div
                       css={{
-                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontFamily: fonts.header,
                       }}
                     >
                       Built by {node.built_by}
@@ -220,20 +228,19 @@ class FeaturedSites extends Component {
               <a
                 href="#showcase"
                 css={{
-                  marginRight: `${rhythm(space[6])} !important`,
+                  marginRight: `${space[6]} !important`,
                   backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                  borderRadius: presets.radii[1],
+                  borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
-                    border: `1px solid ${colors.ui.light}`,
-                    boxShadow: `none`,
-                    transition: `all ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
+                    border: 0,
+                    transition: `all ${transition.speed.default} ${
+                      transition.curve.default
                     }`,
                     "&:hover": {
-                      background: `#fff`,
-                      transform: `translateY(-3px)`,
-                      boxShadow: `0 8px 20px ${hex2rgba(colors.lilac, 0.5)}`,
+                      background: colors.white,
+                      transform: `translateY(-${space[1]})`,
+                      boxShadow: shadows.overlay,
                     },
                   },
                   ...styles.featuredSitesCard,
@@ -242,7 +249,7 @@ class FeaturedSites extends Component {
               >
                 <div
                   css={{
-                    borderRadius: presets.radii[1],
+                    borderRadius: radii[1],
                     display: `flex`,
                     alignItems: `center`,
                     position: `relative`,
@@ -260,11 +267,11 @@ class FeaturedSites extends Component {
                         height: 44,
                         width: `auto`,
                         display: `block`,
-                        margin: `0 auto ${rhythm(options.blockMarginBottom)}`,
-                        [presets.Md]: {
+                        margin: `0 auto ${space[6]}`,
+                        [breakpoints.md]: {
                           height: 64,
                         },
-                        [presets.Xl]: {
+                        [breakpoints.xl]: {
                           height: 72,
                         },
 
@@ -288,8 +295,8 @@ class FeaturedSites extends Component {
             css={{
               position: `absolute`,
               top: `0`,
-              bottom: rhythm(options.blockMarginBottom),
-              right: `-${rhythm(space[6])}`,
+              bottom: space[6],
+              right: `-${space[6]}`,
               width: 60,
               pointerEvents: `none`,
               background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,

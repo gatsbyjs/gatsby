@@ -8,9 +8,18 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, { colors } from "../utils/presets"
+import {
+  colors,
+  transition,
+  radii,
+  space,
+  breakpoints,
+  sizes,
+  fontSizes,
+  lineHeights,
+  fonts,
+} from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import { rhythm, options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -66,11 +75,11 @@ const MobileNavigation = () => (
         right: 0,
         zIndex: 1,
         borderTop: `1px solid ${colors.ui.light}`,
-        background: `#fff`,
-        minHeight: presets.headerHeight,
-        fontFamily: options.headerFontFamily.join(`,`),
+        background: colors.white,
+        height: sizes.headerHeight,
+        fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Md]: {
+        [breakpoints.md]: {
           display: `none`,
         },
       }}
@@ -101,12 +110,12 @@ const styles = {
       "& .svg-stroke-lilac": { stroke: colors.lavender },
       "& .svg-fill-lilac": { fill: colors.lavender },
       "& .svg-fill-gatsby": { fill: colors.lavender },
-      "& .svg-fill-brightest": { fill: `#fff` },
+      "& .svg-fill-brightest": { fill: colors.white },
       "& .svg-fill-accent": { fill: colors.lavender },
       "& .svg-stroke-gatsby": { stroke: colors.lavender },
       "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
       "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
+      "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
       "& .svg-fill-gradient-purple": { fill: colors.lavender },
       "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
       "& .svg-fill-wisteria": { fill: `transparent` },
@@ -117,14 +126,12 @@ const styles = {
   link: {
     default: {
       color: colors.lilac,
-      borderRadius: presets.radii[1],
-      fontSize: presets.scale[0],
+      borderRadius: radii[1],
+      fontSize: fontSizes[0],
       flexShrink: 0,
-      lineHeight: presets.lineHeights.solid,
+      lineHeight: lineHeights.solid,
       width: 64,
-      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
-        options.blockMarginBottom / 4
-      )} 0`,
+      padding: space[1],
       textDecoration: `none`,
       textAlign: `center`,
       WebkitFontSmoothing: `antialiased`,
@@ -133,8 +140,8 @@ const styles = {
         height: 32,
         margin: `0 auto`,
         "& path, & line, & polygon": {
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
+          transition: `all ${transition.speed.default} ${
+            transition.curve.default
           }`,
         },
       },

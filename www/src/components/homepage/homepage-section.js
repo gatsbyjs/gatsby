@@ -4,33 +4,39 @@ import styled from "@emotion/styled"
 
 import Button from "../button"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import {
+  colors,
+  space,
+  breakpoints,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 
-const ICON_SIZE = `32px`
+const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  padding: ${rhythm(space[5])} ${rhythm(space[6])};
+  padding: ${space[5]} ${space[6]};
   width: 100%;
 
-  ${presets.Xl} {
+  ${breakpoints.xl} {
     margin: -1px 0;
-    padding: ${rhythm(space[5])} 5%;
+    padding: ${space[5]} 5%;
   }
 
-  ${presets.Xxl} {
-    padding: ${rhythm(1.5)} 8%;
+  ${breakpoints.xxl} {
+    padding: ${space[7]} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${presets.Md} {
+  ${breakpoints.md} {
     max-width: 30rem;
   }
 
-  ${presets.Lg} {
-    margin-left: 3rem;
+  ${breakpoints.lg} {
+    margin-left: ${space[9]};
   }
 `
 
@@ -38,13 +44,13 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: ${presets.scale[2]};
+  font-size: ${fontSizes[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -52,7 +58,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -66,14 +72,14 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: ${presets.scale[6]};
+  font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: ${presets.scale[3]};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-size: ${fontSizes[3]};
+  font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `
@@ -81,14 +87,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 1.5rem;
+  margin: ${space[4]} 0 ${space[6]};
 
   > a {
-    margin-right: ${rhythm(0.2)};
+    margin-right: ${space[1]};
   }
 
-  ${presets.Lg} {
-    margin: 1rem 0 2.5rem;
+  ${breakpoints.lg} {
+    margin: ${space[4]} 0 ${space[8]};
   }
 `
 

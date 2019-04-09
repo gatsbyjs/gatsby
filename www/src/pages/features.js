@@ -7,8 +7,14 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
-import { options, rhythm } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import {
+  colors,
+  space,
+  breakpoints,
+  fontSizes,
+  letterSpacings,
+  fonts,
+} from "../utils/presets"
 
 const legendBorderColor = colors.ui.light
 
@@ -36,7 +42,7 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [presets.Sm]: {
+    [breakpoints.sm]: {
       borderBottom: 0,
     },
   }
@@ -60,34 +66,19 @@ const LegendTable = () => {
   ]
 
   const legendText = [
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-1`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
       <h5 style={{ margin: 0 }}>Feature Availability</h5>
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-2`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
       Out of the box
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-3`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
       Plugins available
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-4`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
       Needs customization
     </div>,
-    <div
-      css={legendExplanationCellStyle}
-      key={`${legendExplanationCellStyle}-5`}
-    >
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
       Not possible
     </div>,
   ]
@@ -101,9 +92,9 @@ const LegendTable = () => {
         css={{
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           display: `none`,
-          [presets.Sm]: {
+          [breakpoints.sm]: {
             display: `table`,
           },
         }}
@@ -116,8 +107,8 @@ const LegendTable = () => {
           display: `table`,
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
-          [presets.Sm]: {
+          fontFamily: fonts.header,
+          [breakpoints.sm]: {
             display: `none`,
           },
         }}
@@ -176,7 +167,14 @@ const FeaturesHeader = () => (
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
     </p>
-    <h6 id="legend" css={{ textTransform: `uppercase` }}>
+    <h6
+      id="legend"
+      css={{
+        fontWeight: `normal`,
+        textTransform: `uppercase`,
+        letterSpacing: letterSpacings.tracked,
+      }}
+    >
       Legend
     </h6>
     <LegendTable />
@@ -207,7 +205,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: presets.scale[1], marginTop: rhythm(space[8]) }}>
+  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

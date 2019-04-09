@@ -1,5 +1,12 @@
 import React from "react"
-import presets, { colors, space } from "../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  fontSizes,
+  lineHeights,
+} from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
@@ -17,37 +24,34 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(space[3])} ${rhythm(presets.space[3])} ${rhythm(
-              3 / 8
-            )}`,
+            padding: `${space[3]} ${space[3]} ${rhythm(3 / 8)}`,
           },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: presets.scale[0],
-          lineHeight: presets.lineHeights.solid,
+          fontSize: fontSizes[0],
+          lineHeight: lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,
           border: 0,
-          // fontFamily: options.headerFontFamily.join(`,`),
           color: colors.gray.calm,
           background: colors.ui.whisper,
           "span:first-of-type": {
-            borderTopLeftRadius: presets.radii[2],
+            borderTopLeftRadius: radii[2],
             textAlign: `left`,
           },
           "&:last-child": {
-            borderTopRightRadius: presets.radii[2],
+            borderTopRightRadius: radii[2],
           },
-          [presets.Xs]: {
+          [breakpoints.xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [presets.Md]: {
+          [breakpoints.md]: {
             width: 150,
           },
-          [presets.Lg]: {
+          [breakpoints.lg]: {
             width: 175,
           },
         }}
