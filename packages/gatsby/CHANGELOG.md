@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.15...gatsby@2.3.16) (2019-04-09)
+
+### Features
+
+- **gatsby:** Add normalization for pathPrefix, siteUrl, etc ([#12139](https://github.com/gatsbyjs/gatsby/issues/12139)) ([1e74779](https://github.com/gatsbyjs/gatsby/commit/1e74779)), closes [#11871](https://github.com/gatsbyjs/gatsby/issues/11871) [#11871](https://github.com/gatsbyjs/gatsby/issues/11871)
+
 ## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.14...gatsby@2.3.15) (2019-04-08)
 
 ### Bug Fixes
