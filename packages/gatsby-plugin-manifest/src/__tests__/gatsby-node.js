@@ -2,6 +2,7 @@ jest.mock(`fs`, () => {
   return {
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
+    mkdirSync: jest.fn(),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
     statSync: jest.fn(),
   }
@@ -82,6 +83,8 @@ const manifestOptions = {
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
+    fs.mkdirSync.mockReset()
+    fs.existsSync.mockReset()
     sharp.mockClear()
   })
 
@@ -103,6 +106,45 @@ describe(`Test plugin manifest options`, () => {
     expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
+  })
+
+  it(`correctly works with multiple icon paths`, async () => {
+    fs.existsSync.mockReturnValue(false)
+
+    const size = 48
+
+    const pluginSpecificOptions = {
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+        {
+          src: `other-icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+      ],
+    }
+
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    const firstIconPath = path.join(
+      `public`,
+      path.dirname(`icons/icon-48x48.png`)
+    )
+    const secondIconPath = path.join(
+      `public`,
+      path.dirname(`other-icons/icon-48x48.png`)
+    )
+
+    const calls = fs.mkdirSync.mock.calls
+    expect(calls[0][0]).toEqual(firstIconPath)
+    expect(calls[1][0]).toEqual(secondIconPath)
   })
 
   it(`invokes sharp if icon argument specified`, async () => {
