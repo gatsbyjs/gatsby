@@ -2,6 +2,7 @@
 
 const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
+const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const { getErrorFormatter } = require(`./errors`)
 const inkReporter = require(`./ink`).default
@@ -20,6 +21,7 @@ const reporter = {
    * Strip initial indentation template function.
    */
   stripIndent,
+  format: chalk,
   /**
    * Toggle verbosity.
    * @param {boolean} [isVerbose=true]
