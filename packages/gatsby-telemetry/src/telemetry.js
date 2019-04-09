@@ -6,6 +6,7 @@ const ci = require(`ci-info`)
 const os = require(`os`)
 const { basename } = require(`path`)
 const { execSync } = require(`child_process`)
+const isDocker = require(`is-docker`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -155,6 +156,7 @@ module.exports = class AnalyticsTracker {
       arch: os.arch(),
       ci: ci.isCI,
       ciName: (ci.isCI && ci.name) || undefined,
+      docker: isDocker(),
     }
     this.osInfo = osInfo
     return osInfo
