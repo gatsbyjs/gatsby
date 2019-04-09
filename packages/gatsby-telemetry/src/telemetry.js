@@ -4,7 +4,7 @@ const EventStorage = require(`./event-storage`)
 const sanitizeError = require(`./sanitize-error`)
 const ci = require(`ci-info`)
 const os = require(`os`)
-const { basename, join } = require(`path`)
+const { basename, join, sep } = require(`path`)
 const { execSync } = require(`child_process`)
 
 module.exports = class AnalyticsTracker {
@@ -43,7 +43,15 @@ module.exports = class AnalyticsTracker {
 
   getGatsbyCliVersion() {
     try {
-      const { version } = require(`../package.json`)
+      const jsonfile = join(
+        require
+          .resolve(`gatsby-cli`) // Resolve where current gatsby-cli would be loaded from.
+          .split(sep)
+          .slice(0, -2) // drop lib/index.js
+          .join(sep),
+        `package.json`
+      )
+      const { version } = require(jsonfile).version
       return version
     } catch (e) {
       // ignore
