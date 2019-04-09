@@ -98,6 +98,50 @@ module.exports = {
 }
 ```
 
+## Request Headers
+
+You can add optional request headers to the request using `headers` param.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        headers: {
+          Host: "https://example.com", // any valid request header here
+        },
+      },
+    },
+  ],
+}
+```
+
+## GET Params
+
+You can append optional GET request params to the request url using `params` option.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        params: {
+          "api-key": "your-api-key-header-here", // any valid key value pair here
+        },
+      },
+    },
+  ],
+}
+```
+
 ## How to query
 
 You can query nodes created from Drupal like the following:
