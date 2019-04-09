@@ -430,6 +430,8 @@
       link: /docs/image-tutorial/
     - title: Writing Documentation with Docz
       link: /docs/writing-documentation-with-docz/
+    - title: Manipulating Remark ASTs
+      link: /docs/remark-ast/
 - title: Using Gatsby Professionally
   link: /docs/using-gatsby-professionally/
   items:
