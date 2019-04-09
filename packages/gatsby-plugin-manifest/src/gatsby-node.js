@@ -74,12 +74,18 @@ exports.onPostBootstrap = async ({ reporter }, pluginOptions) => {
   }
 
   // Determine destination path for icons.
-  const iconPath = path.join(`public`, path.dirname(manifest.icons[0].src))
-
-  //create destination directory if it doesn't exist
-  if (!fs.existsSync(iconPath)) {
-    fs.mkdirSync(iconPath)
-  }
+  let paths = {}
+  manifest.icons.forEach(icon => {
+    const iconPath = path.join(`public`, path.dirname(icon.src))
+    if (!paths[iconPath]) {
+      const exists = fs.existsSync(iconPath)
+      //create destination directory if it doesn't exist
+      if (!exists) {
+        fs.mkdirSync(iconPath)
+      }
+      paths[iconPath] = true
+    }
+  })
 
   // Only auto-generate icons if a src icon is defined.
   if (icon !== undefined) {
