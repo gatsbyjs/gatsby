@@ -116,6 +116,30 @@ function generateImageSources(imageVariants) {
   })
 }
 
+function generateTracedSVGSources(imageVariants) {
+  if (imageVariants.length === 1) {
+    return null
+  }
+
+  return imageVariants.map(variant => (
+    <source
+      key={variant.src}
+      media={variant.media}
+      srcSet={variant.tracedSVG}
+    />
+  ))
+}
+
+function generateBase64Sources(imageVariants) {
+  if (imageVariants.length === 1) {
+    return null
+  }
+
+  return imageVariants.map(variant => (
+    <source key={variant.src} media={variant.media} srcSet={variant.base64} />
+  ))
+}
+
 const listenToIntersections = (el, cb) => {
   const observer = getIO()
 
@@ -382,12 +406,18 @@ class Image extends React.Component {
 
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
+            <picture>
+              {generateBase64Sources(imageVariants)}
+              <Img src={image.base64} {...placeholderImageProps} />
+            </picture>
           )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
+            <picture>
+              {generateTracedSVGSources(imageVariants)}
+              <Img src={image.tracedSVG} {...placeholderImageProps} />
+            </picture>
           )}
 
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
@@ -463,12 +493,18 @@ class Image extends React.Component {
 
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
+            <picture>
+              {generateBase64Sources(imageVariants)}
+              <Img src={image.base64} {...placeholderImageProps} />
+            </picture>
           )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
+            <picture>
+              {generateTracedSVGSources(imageVariants)}
+              <Img src={image.tracedSVG} {...placeholderImageProps} />
+            </picture>
           )}
 
           {/* Once the image is visible, start downloading the image */}

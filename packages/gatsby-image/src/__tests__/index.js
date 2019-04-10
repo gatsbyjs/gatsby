@@ -57,7 +57,7 @@ describe(`<Image />`, () => {
   })
 
   it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
-    const imageTag = setup().querySelector(`picture img`)
+    const imageTag = setup().querySelectorAll(`picture img`)[1]
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
     expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
@@ -81,9 +81,9 @@ describe(`<Image />`, () => {
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
-    const imageTag = setup(true, onLoadMock, onErrorMock).querySelector(
+    const imageTag = setup(true, onLoadMock, onErrorMock).querySelectorAll(
       `picture img`
-    )
+    )[1]
     fireEvent.load(imageTag)
     fireEvent.error(imageTag)
 

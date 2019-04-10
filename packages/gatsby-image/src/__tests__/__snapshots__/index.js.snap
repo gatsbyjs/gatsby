@@ -10,13 +10,15 @@ exports[`<Image /> should render fixed size images 1`] = `
       style="background-color: lightgray; width: 100px; opacity: 1; height: 100px; transition-delay: 0.5s;"
       title="Title for the image"
     />
-    <img
-      alt=""
-      class="placeholder"
-      src="string_of_base64"
-      style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 0.5s; color: red;"
-      title="Title for the image"
-    />
+    <picture>
+      <img
+        alt=""
+        class="placeholder"
+        src="string_of_base64"
+        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 0.5s; color: red;"
+        title="Title for the image"
+      />
+    </picture>
     <picture>
       <source
         srcset="some srcSetWebp"
@@ -54,13 +56,15 @@ exports[`<Image /> should render fluid images 1`] = `
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 0.5s;"
       title="Title for the image"
     />
-    <img
-      alt=""
-      class="placeholder"
-      src="string_of_base64"
-      style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 0.5s; color: red;"
-      title="Title for the image"
-    />
+    <picture>
+      <img
+        alt=""
+        class="placeholder"
+        src="string_of_base64"
+        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 0.5s; color: red;"
+        title="Title for the image"
+      />
+    </picture>
     <picture>
       <source
         sizes="(max-width: 600px) 100vw, 600px"
