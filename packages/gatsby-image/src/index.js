@@ -96,12 +96,11 @@ const noscriptImg = props => {
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
-  const opacity = props.opacity ? props.opacity : `1`
-  const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
   const crossOrigin = props.crossOrigin
     ? `crossorigin="${props.crossOrigin}" `
     : ``
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+
+  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -143,6 +142,7 @@ class Image extends React.Component {
     // default settings for browser without Intersection Observer available
     let isVisible = true
     let imgLoaded = false
+    let imgCached = false
     let IOSupported = false
     let fadeIn = props.fadeIn
 
@@ -176,6 +176,7 @@ class Image extends React.Component {
     this.state = {
       isVisible,
       imgLoaded,
+      imgCached,
       IOSupported,
       fadeIn,
       hasNoScript,
@@ -216,7 +217,16 @@ class Image extends React.Component {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: imageInCache })
+        // imgCached and imgLoaded must update after isVisible,
+        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
+        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
+        // avoiding initiating unnecessary animation frames from style changes.
+        this.setState({ isVisible: true }, () =>
+          this.setState({
+            imgLoaded: imageInCache,
+            imgCached: this.imageRef.current.currentSrc.length > 0,
+          })
+        )
       })
     }
   }
@@ -250,22 +260,28 @@ class Image extends React.Component {
       itemProp,
     } = convertProps(this.props)
 
+    const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+    const durationFadeIn = `0.5s`
+
+    const imageStyle = {
+      opacity: shouldReveal ? 1 : 0,
+      transition: shouldFadeIn ? `opacity ${durationFadeIn}` : `none`,
+      ...imgStyle,
+    }
+
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const initialDelay = `0.25s`
-    const imagePlaceholderStyle = {
-      opacity: this.state.imgLoaded ? 0 : 1,
-      transition: `opacity 0.5s`,
-      transitionDelay: this.state.imgLoaded ? `0.5s` : initialDelay,
-      ...imgStyle,
-      ...placeholderStyle,
+    const delayHideStyle = {
+      transitionDelay: durationFadeIn,
     }
 
-    const imageStyle = {
-      opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
-      transition: this.state.fadeIn === true ? `opacity 0.5s` : `none`,
+    const imagePlaceholderStyle = {
+      opacity: this.state.imgLoaded ? 0 : 1,
+      ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
+      ...placeholderStyle,
     }
 
     const placeholderImageProps = {
@@ -307,9 +323,9 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 right: 0,
                 left: 0,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -393,8 +409,8 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 height: image.height,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -445,8 +461,6 @@ class Image extends React.Component {
                 __html: noscriptImg({
                   alt,
                   title,
-                  width: image.width,
-                  height: image.height,
                   ...image,
                 }),
               }}

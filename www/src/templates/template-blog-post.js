@@ -13,7 +13,7 @@ import {
   transition,
   breakpoints,
   lineHeights,
-  scale,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -169,7 +169,7 @@ class BlogPostTemplate extends React.Component {
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      fontSize: scale[3],
+                      fontSize: fontSizes[3],
                       marginBottom: space[1],
                       color: `${colors.gatsby}`,
                     }}

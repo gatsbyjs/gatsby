@@ -1,11 +1,12 @@
 const { createHash } = require(`crypto`)
 const uuid = require(`uuid/v1`)
 const EventStorage = require(`./event-storage`)
-const sanitizeError = require(`./sanitize-error`)
+const { sanitizeErrors } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
 const { basename } = require(`path`)
 const { execSync } = require(`child_process`)
+const isDocker = require(`is-docker`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -28,12 +29,15 @@ module.exports = class AnalyticsTracker {
     if (!this.isTrackingEnabled()) {
       return
     }
-    if (Array.isArray(type) && type.length > 2) {
-      type = type[2].toUpperCase()
+    let baseEventType = `CLI_COMMAND`
+    if (Array.isArray(type)) {
+      type = type.length > 2 ? type[2].toUpperCase() : ``
+      baseEventType = `CLI_RAW_COMMAND`
     }
+
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
-    const eventType = `CLI_COMMAND_${type}`
+    const eventType = `${baseEventType}_${type}`
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
 
@@ -44,16 +48,11 @@ module.exports = class AnalyticsTracker {
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
-    sanitizeError(tags)
 
-    // JSON.stringify won't work for Errors w/o some trickery:
-    let { error } = tags
-    if (error) {
-      error = error.map(e =>
-        JSON.parse(JSON.stringify(e, Object.getOwnPropertyNames(e)))
-      )
+    if (tags.error) {
+      // `error` ought to have been `errors` but is `error` in the database
+      tags.error = sanitizeErrors(tags.error)
     }
-    tags.error = JSON.stringify(error)
 
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
@@ -65,8 +64,11 @@ module.exports = class AnalyticsTracker {
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `BUILD_ERROR_${type}`
-    sanitizeError(tags)
-    tags.error = JSON.stringify(tags.error)
+
+    if (tags.error) {
+      // `error` ought to have been `errors` but is `error` in the database
+      tags.error = sanitizeErrors(tags.error)
+    }
 
     this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
   }
@@ -108,11 +110,13 @@ module.exports = class AnalyticsTracker {
     }
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
-      console.log(
-        `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
-          `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
-          `To learn more, checkout http://gatsby.dev/telemetry`
-      )
+      if (!ci.isCI) {
+        console.log(
+          `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
+            `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
+            `To learn more, checkout http://gatsby.dev/telemetry`
+        )
+      }
       enabled = true
       this.store.updateConfig(`telemetry.enabled`, enabled)
     }
@@ -152,6 +156,7 @@ module.exports = class AnalyticsTracker {
       arch: os.arch(),
       ci: ci.isCI,
       ciName: (ci.isCI && ci.name) || undefined,
+      docker: isDocker(),
     }
     this.osInfo = osInfo
     return osInfo
