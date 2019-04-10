@@ -5,7 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.28...gatsby-plugin-manifest@2.0.29) (2019-04-10)
 
-**Note:** Version bump only for package gatsby-plugin-manifest
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** fix regression with sharp failing to load ([#13271](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13271)) ([c264a85](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/c264a85)), closes [#13055](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13264)
 
 ## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.27...gatsby-plugin-manifest@2.0.28) (2019-04-09)
 
