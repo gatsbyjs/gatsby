@@ -2,7 +2,6 @@
 
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
-const websocketManager = require(`../utils/websocket-manager`)
 
 const path = require(`path`)
 const { store } = require(`../redux`)
@@ -13,7 +12,7 @@ const { formatErrorDetails } = require(`./utils`)
 const mod = require(`hash-mod`)(999)
 
 const { dispatch } = store
-const { log } = actions
+const { log, pageQueryRun } = actions
 
 const resultHashes = {}
 
@@ -28,7 +27,7 @@ export type QueryJob = {
 }
 
 // Run query
-module.exports = async (queryJob: QueryJob, component: Any) => {
+module.exports = async (queryJob: QueryJob) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -106,20 +105,6 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
     dataPath = queryJob.hash
   }
 
-  if (process.env.gatsby_executing_command === `develop`) {
-    if (queryJob.isPage) {
-      websocketManager.emitPageData({
-        result,
-        id: queryJob.id,
-      })
-    } else {
-      websocketManager.emitStaticQueryData({
-        result,
-        id: queryJob.id,
-      })
-    }
-  }
-
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
     let modInt = ``
@@ -146,16 +131,22 @@ module.exports = async (queryJob: QueryJob, component: Any) => {
 
     await fs.outputFile(resultPath, resultJSON)
 
-    store.dispatch({
+    dispatch({
       type: `SET_JSON_DATA_PATH`,
       payload: {
         key: queryJob.jsonName,
         value: dataPath,
       },
     })
-
-    return result
   }
+
+  dispatch(
+    pageQueryRun({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      isPage: queryJob.isPage,
+    })
+  )
 
   return result
 }

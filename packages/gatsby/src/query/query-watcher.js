@@ -18,8 +18,7 @@ const { actions } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const {
   queueQueryForPathname,
-  runQueuedActions: runQueuedQueries,
-  runQueries,
+  runQueuedQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -217,12 +216,12 @@ const queueQueriesForPageComponent = componentPath => {
   // Re-running the queries will add back data dependencies.
   dispatch(deleteComponentsDependencies(pages.map(p => p.path || p.id)))
   pages.forEach(page => queueQueryForPathname(page.path))
-  runQueries()
+  runQueuedQueries()
 }
 
 const runQueryForPage = path => {
   queueQueryForPathname(path)
-  runQueries()
+  runQueuedQueries()
 }
 
 exports.queueQueriesForPageComponent = queueQueriesForPageComponent

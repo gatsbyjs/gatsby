@@ -7,7 +7,6 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
-const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
@@ -38,7 +37,6 @@ process.on(`unhandledRejection`, reason => {
 
 const { extractQueries } = require(`../query/query-watcher`)
 const { runInitialQueries } = require(`../query/page-query-runner`)
-const queryQueue = require(`../query/query-queue`)
 const { writePages } = require(`../query/pages-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
 
@@ -431,22 +429,8 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  // Run queries
   await run(`run graphql queries`, async activity => {
-    const startQueries = process.hrtime()
-    queryQueue.on(`task_finish`, () => {
-      const stats = queryQueue.getStats()
-      activity.setStatus(
-        `${stats.total}/${stats.peak} ${(
-          stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-        ).toFixed(2)} queries/second`
-      )
-    })
-    // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
-    emitter.emit(`START_QUERY_QUEUE`)
-    // END HACKY
-    runInitialQueries(activity)
-    await new Promise(resolve => queryQueue.on(`drain`, resolve))
+    await runInitialQueries(activity)
     dispatch(setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
   })
 
