@@ -976,18 +976,36 @@ Map {
 `;
 
 exports[`File parser extracts query AST correctly from files 2`] = `
-Array [
-  "warning 
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "
 We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the <StaticQuery> declaration in \\"query-not-defined.js\\".
 
 Perhaps the variable name has a typo?
 
-Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-not-defined.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.",
-  "warning 
+Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-not-defined.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
+",
+    ],
+    Array [
+      "
 We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the <StaticQuery> declaration in \\"query-imported.js\\".
 
 Perhaps the variable name has a typo?
 
-Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.",
-]
+Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
+",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
 `;

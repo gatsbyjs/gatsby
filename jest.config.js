@@ -36,6 +36,8 @@ module.exports = {
   transform: { "^.+\\.js$": `<rootDir>/jest-transformer.js` },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
+    // hosting isn't being done by yarn workspaces so we map it ourselves
+    "^ink$": `<rootDir>/packages/gatsby-cli/node_modules/ink`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverage: useCoverage,
