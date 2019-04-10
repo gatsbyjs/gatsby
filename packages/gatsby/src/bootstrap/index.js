@@ -27,7 +27,7 @@ const withResolverContext = require(`../schema/context`)
 require(`util.promisify/shim`)()
 
 const { dispatch } = store
-const { log, setProgramStatus } = actions
+const { setLogger, log, setProgramStatus } = actions
 const logger = ({ message, type = `info` }) => report[type](message)
 
 // Show stack trace on unhandled promises.
@@ -52,8 +52,7 @@ type BootstrapArgs = {
 }
 
 module.exports = async (args: BootstrapArgs) => {
-  dispatch({ type: `SET_LOGGER`, payload: logger })
-  // dispatch(setLogger(logger))
+  dispatch(setLogger(logger))
 
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)

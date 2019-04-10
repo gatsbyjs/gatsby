@@ -608,7 +608,7 @@ const reportParsingError = error => {
       `\n\n` +
       frame +
       `\n`
-    dispatch(log({ message: errorMessage, type: `error` }))
+    dispatch(log({ message: errorMessage, type: `panic` }))
   } else {
     throw error
   }
