@@ -8,7 +8,9 @@ In certain instances, a developer may want to customize certain markdown nodes w
 
 ## What will be learned in this tutorial
 
-TODO
+- How to learn how to understand the remark AST
+- How to integrate plugins with `gatsby-transformer-remark`
+- How to manipulate the remark AST to add additional functionality.
 
 ## Understanding the Syntax Tree
 
@@ -155,11 +157,73 @@ If we wanted to add some options, we could switch to the object syntax:
 
 ## Find and Modify Markdown Nodes
 
-TODO
+When modifying nodes, you'll want to walk the tree and then implement new functionality on specific nodes.
+
+A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist which stands for United Syntax Tree is a standard for markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
+
+As an example from `unist-util-visit`'s readme, it allows for an easy interface to visit particular nodes based on a particular type:
+
+```js
+var remark = require("remark")
+var visit = require("unist-util-visit")
+
+var tree = remark().parse("Some _emphasis_, **importance**, and `code`.")
+
+visit(tree, "text", visitor)
+
+function visitor(node) {
+  console.log(node)
+}
+```
+
+Here, it finds all text nodes and will `console.log` the nodes.
+
+Now with this, we can take the AST from our plugin and get working on adding functionality for headers:
+
+```js
+const visit = require("unist-util-visit")
+
+module.exports = ({ markdownAST }, pluginOptions) => {
+  visit(markdownAST, "heading", node => {
+    // Do stuff with heading nodes
+  })
+
+  return markdownAST
+}
+```
+
+Now we will visit all heading nodes and pass it into a transformer function which we can do whatever we wish.
+
+Looking again at the AST node for header:
+
+```JSON
+{
+  "type": "heading",
+  "depth": 1,
+  "children": [
+    {
+      "type": "text",
+      "value": "Hello World!",
+      "position": {
+        "start": { "line": 1, "column": 3, "offset": 2 },
+        "end": { "line": 1, "column": 15, "offset": 14 },
+        "indent": []
+      }
+    }
+  ],
+  "position": {
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 1, "column": 15, "offset": 14 },
+    "indent": []
+  }
+},
+```
+
+We have context about the text as well as what depth the header is (for instance here we have a depth of 1 which would equate to an `h1` element)
 
 ## Loading in changes and seeing effect.
 
-After doing such, we setup some pages to be programatically created from markdown as shown in [Part 3 of the Gatsby Tutorial](/tutorial/part-seven/). Once this is set up, we can examine that our colorize-headers plugin works as seen below.
+After doing such, we setup some pages to be programatically created from markdown as shown in [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). Once this is set up, we can examine that our colorize-headers plugin works as seen below.
 
 TODO: Add result image
 
@@ -170,3 +234,7 @@ To be shared with others, we can extract the plugin to it's own directory outsid
 ## Summary
 
 TODO
+
+```
+
+```
