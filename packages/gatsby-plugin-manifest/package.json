@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "sharp": "^0.22.0"
+    "sharp": "^0.21.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
