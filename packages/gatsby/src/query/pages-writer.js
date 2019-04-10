@@ -124,6 +124,7 @@ const preferDefault = m => m && m.default || m
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
+    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
     writeAndMove(
       `data.json`,
       JSON.stringify({
