@@ -7,6 +7,7 @@ If you're using Gatsby to run a blog and you've started adding some content to i
 There are many options out there for adding comment functionality, several of them specifically targeted at static sites. While this list is by no means exhaustive, it does serve as a good starting point to illustrate what's available:
 
 - [Disqus](https://disqus.com)
+- [Commento](https://commento.io)
 - [Facebook comments](https://www.npmjs.com/package/react-facebook)
 - [Staticman](https://staticman.net)
 - [JustComments](https://just-comments.com)
