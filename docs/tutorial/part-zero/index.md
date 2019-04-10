@@ -137,6 +137,7 @@ Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/
 ## References
 
 ## Overview of core technologies
+
 It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
 
 - **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
@@ -146,6 +147,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 - **GraphQL**: A query language. A programming language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
 
 ## What is a website?
+
 For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
 
 ## Learn more about the command line
@@ -165,4 +167,5 @@ npm has three distinct components: the npm website, the npm registry, and the np
 > 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
 
 ## Learn more about Git
+
 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
