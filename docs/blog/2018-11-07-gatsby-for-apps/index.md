@@ -27,7 +27,7 @@ To begin, what even _is_ an application, anyways?
 
 ## What is an application?
 
-I've previously attempted the [surprisingly difficult task][whats-an-app] of defining what consititutes a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
+I've previously attempted the [surprisingly difficult task][whats-an-app] of defining what constitutes a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
 
 - dynamic data fetching
 - user authentication and authenticated client-only routes
