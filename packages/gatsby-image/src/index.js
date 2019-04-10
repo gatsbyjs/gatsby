@@ -13,6 +13,13 @@ const convertProps = props => {
     delete convertedProps.sizes
   }
 
+  if (convertedProps.fixedImages) {
+    convertedProps.fixed = convertedProps.fixedImages[0]
+  }
+  if (convertedProps.fluidImages) {
+    convertedProps.fluid = convertedProps.fluidImages[0]
+  }
+
   return convertedProps
 }
 
@@ -67,6 +74,46 @@ function getIO() {
   }
 
   return io
+}
+
+function generateImageSources(imageVariants) {
+  const initialImage = imageVariants[0]
+
+  if (imageVariants.length === 1) {
+    return initialImage.srcSetWebp ? (
+      <source
+        type={`image/webp`}
+        media={initialImage.media}
+        srcSet={initialImage.srcSetWebp}
+        sizes={initialImage.sizes}
+      />
+    ) : null
+  }
+
+  return imageVariants.map(variant => {
+    const webPSource = variant.srcSetWebp ? (
+      <source
+        key={`${variant.src}-webp`}
+        type="image/webp"
+        media={variant.media}
+        srcSet={variant.srcSetWebp}
+        sizes={variant.sizes}
+      />
+    ) : (
+      undefined
+    )
+
+    const nonWebPSource = (
+      <source
+        key={variant.src}
+        media={variant.media}
+        srcSet={variant.srcSet}
+        sizes={variant.sizes}
+      />
+    )
+
+    return [webPSource, nonWebPSource]
+  })
 }
 
 const listenToIntersections = (el, cb) => {
@@ -295,6 +342,7 @@ class Image extends React.Component {
 
     if (fluid) {
       const image = fluid
+      const imageVariants = fluidImages || [fluid]
 
       return (
         <Tag
@@ -345,13 +393,7 @@ class Image extends React.Component {
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSetWebp && (
-                <source
-                  type={`image/webp`}
-                  srcSet={image.srcSetWebp}
-                  sizes={image.sizes}
-                />
-              )}
+              {generateImageSources(imageVariants)}
 
               <Img
                 alt={alt}
@@ -383,6 +425,8 @@ class Image extends React.Component {
 
     if (fixed) {
       const image = fixed
+      const imageVariants = fixedImages || [fixed]
+
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
@@ -430,13 +474,7 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSetWebp && (
-                <source
-                  type={`image/webp`}
-                  srcSet={image.srcSetWebp}
-                  sizes={image.sizes}
-                />
-              )}
+              {generateImageSources(imageVariants)}
 
               <Img
                 alt={alt}
