@@ -141,6 +141,8 @@
     "@babel/runtime": "^7.0.0",
     "babel-preset-gatsby-package": "^0.1.4",
     "cross-env": "^5.1.4",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "rimraf": "^2.6.1"
   },
   "engines": {
