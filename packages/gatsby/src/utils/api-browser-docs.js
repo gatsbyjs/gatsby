@@ -21,10 +21,11 @@ exports.onInitialClientRender = true
  * Called when changing location is started.
  * @param {object} $0
  * @param {object} $0.location A location object
- * @param {object} $0.action The "action" that caused the route change
+ * @param {object|null} $0.prevLocation The previous location object
  * @example
- * exports.onPreRouteUpdate = ({ location }) => {
- *   console.log("Gatsby started to change location", location.pathname)
+ * exports.onPreRouteUpdate = ({ location, prevLocation }) => {
+ *   console.log("Gatsby started to change location to", location.pathname)
+ *   console.log("Gatsby started to change location from", prevLocation ? prevLocation.pathname : null)
  * }
  */
 exports.onPreRouteUpdate = true
@@ -45,10 +46,11 @@ exports.onRouteUpdateDelayed = true
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object
- * @param {object} $0.action The "action" that caused the route change
+ * @param {object|null} $0.prevLocation The previous location object
  * @example
- * exports.onRouteUpdate = ({ location }) => {
+ * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
+ *   console.log('old pathname', prevLocation ? prevLocation.pathname : null)
  *
  *   // Track pageview with google analytics
  *   window.ga(
@@ -115,11 +117,11 @@ exports.replaceComponentRenderer = true
  *
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageElement)
  * @param {object} $0
- * @param {object} $0.element The "Page" React Element built by Gatsby.
+ * @param {ReactNode} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
  * @example
  * import React from "react"
- * import Layout from "./src/components/Layout"
+ * import Layout from "./src/components/layout"
  *
  * export const wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get
@@ -137,7 +139,7 @@ exports.wrapPageElement = true
  *
  * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
  * @param {object} $0
- * @param {object} $0.element The "Root" React Element built by Gatsby.
+ * @param {ReactNode} $0.element The "Root" React Element built by Gatsby.
  * @example
  * import React from "react"
  * import { Provider } from "react-redux"
@@ -208,6 +210,14 @@ exports.onServiceWorkerInstalled = true
  * @param {object} $0.serviceWorker The service worker instance.
  */
 exports.onServiceWorkerUpdateFound = true
+
+/**
+ * Inform plugins when a service worker has been updated in the background
+ * and the page is ready to reload to apply changes.
+ * @param {object} $0
+ * @param {object} $0.serviceWorker The service worker instance.
+ */
+exports.onServiceWorkerUpdateReady = true
 
 /**
  * Inform plugins when a service worker has become active.

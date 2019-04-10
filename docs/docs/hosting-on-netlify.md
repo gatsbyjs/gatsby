@@ -29,10 +29,10 @@ Note that the development build is not optimized.
 To create a production build, use Gatsby build
 ```
 
-For the production build, we will need to run `gatsby build` command and Gatsby will generate our production site under `public` folder, it will contain css, js, images and html files.
+For the production build, we will need to run the `npm run build` command and Gatsby will generate our production site under `public` folder, it will contain CSS, JavaScript, images and HTML files.
 
 ```shell
-gatsby build
+npm run build
 ```
 
 Once, the build is complete, we are ready to upload our site to Netlify. Go to [Netlify](https://app.netlify.com/) and login in/sign up using any method. We will see below message after successful login.
@@ -48,7 +48,7 @@ As written on the website, we only need to drag and drop our `public` folder ove
 
 #### Git Repository Setup
 
-We can use git with Netlify to host our website. There are many benefits of this such as we can have past versions of our website so that we can rollback to previous versions whenever we want, no need to manually build our website and upload it everytime we change anything. Netlify supports [Github](https://github.com/), [Gitlab](https://about.gitlab.com/) and [Bitbucket](https://bitbucket.org/). All we have to do is push our code to the respective repository. Our repository can be private or public.
+We can use git with Netlify to host our website. There are many benefits of this such as we can have past versions of our website so that we can rollback to previous versions whenever we want, no need to manually build our website and upload it everytime we change anything. Netlify supports [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/) and [Bitbucket](https://bitbucket.org/). All we have to do is push our code to the respective repository. Our repository can be private or public.
 
 Now, login to Netlify and we will see a `New site from git` button at the top right corner on our screen. Click on it and connect with the same git provider that you used to host your website and authorize Netlify to use your account. Choose your website repository and it will take you to deploy settings with below options.
 

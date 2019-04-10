@@ -1,7 +1,7 @@
 import fs from "fs"
-import path from "path"
 import { groupBy } from "lodash"
 import onCreateNode from "../on-node-create"
+import path from "path"
 
 const readFile = file =>
   new Promise((y, n) => {
@@ -28,7 +28,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       opts
     )
 
+  let consoleError
   beforeEach(() => {
+    consoleError = global.console.error
+    global.console.error = jest.fn()
     createdNodes = []
     updatedNodes = []
     node = {
@@ -46,16 +49,35 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
   })
 
-  it(`should only process javascript and jsx nodes`, async () => {
-    loadNodeContent = jest.fn(() => new Promise(() => {}))
+  afterAll(() => {
+    global.console.error = consoleError
+  })
 
-    expect(await run({ internal: { mediaType: `text/x-foo` } })).toBeUndefined()
-    expect(
-      run({ internal: { mediaType: `application/javascript` } })
-    ).toBeDefined()
-    expect(run({ internal: { mediaType: `text/jsx` } })).toBeDefined()
+  it(`should only process javascript, jsx, and typescript nodes`, async () => {
+    loadNodeContent = jest.fn().mockResolvedValue({})
 
-    expect(loadNodeContent.mock.calls).toHaveLength(2)
+    const unknown = [
+      null,
+      { internal: { mediaType: `text/x-foo` } },
+      { internal: { mediaType: `text/markdown` } },
+    ]
+
+    const expected = [
+      { internal: { mediaType: `application/javascript` } },
+      { internal: { mediaType: `text/jsx` } },
+      { internal: { mediaType: `text/tsx` } },
+      { internal: {}, extension: `tsx` },
+      { internal: {}, extension: `ts` },
+    ]
+
+    await Promise.all(
+      []
+        .concat(unknown)
+        .concat(expected)
+        .map(node => run(node))
+    )
+
+    expect(loadNodeContent).toHaveBeenCalledTimes(expected.length)
   })
 
   it(`should extract all components in a file`, async () => {
@@ -80,6 +102,16 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     ])
   })
 
+  it(`should handle duplicate doclet values`, async () => {
+    await run(node)
+
+    let Bar = groupBy(createdNodes, `internal.type`).ComponentMetadata.find(
+      d => d.displayName === `Bar`
+    )
+
+    expect(Bar.doclets.filter(d => d.tag === `property`)).toHaveLength(2)
+  })
+
   it(`should infer a name`, async () => {
     node.__fixture = `unnamed.js`
     node.absolutePath = path.join(__dirname, `UnnamedExport`)
@@ -102,10 +134,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     expect(types.ComponentProp[0].description).toEqual(
       `An object hash of field (fix this @mention?) errors for the form.`
     )
-    expect(types.ComponentProp[0].doclets).toEqual({
-      type: `{Foo}`,
-      default: `blue`,
-    })
+    expect(types.ComponentProp[0].doclets).toEqual([
+      { tag: `type`, value: `{Foo}` },
+      { tag: `default`, value: `blue` },
+    ])
   })
 
   it(`should extract create description nodes with markdown types`, async () => {

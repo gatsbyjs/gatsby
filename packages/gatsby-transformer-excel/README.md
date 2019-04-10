@@ -115,7 +115,7 @@ Which would return:
 
 ### Default Values
 
-If your spreadsheet contains column headers with only blank cells, the default behaviour is to exclude this column in the graphql output as per the [documentation](https://docs.sheetjs.com/#json)
+If your spreadsheet contains column headers with only blank cells, the default behavior is to exclude this column in the graphql output as per the [documentation](https://docs.sheetjs.com/#json)
 
 > If `defval` is not specified, `null` and `undefined` values are skipped normally. If specified, all `null` and `undefined` points will be filled with `defval`.
 

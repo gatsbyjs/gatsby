@@ -90,14 +90,14 @@ exports.sourceNodes = async (
               ),
             }
           : resource.type === `User`
-            ? {
-                posts___NODE: resources
-                  .filter(
-                    r => r.type === `Post` && r.creatorId === resource.userId
-                  )
-                  .map(r => r.id),
-              }
-            : {}
+          ? {
+              posts___NODE: resources
+                .filter(
+                  r => r.type === `Post` && r.creatorId === resource.userId
+                )
+                .map(r => r.id),
+            }
+          : {}
 
       const node = Object.assign(
         resource,

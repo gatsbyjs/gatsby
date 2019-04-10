@@ -52,8 +52,15 @@ module.exports = {
               dashes: `oldschool`,
             },
           },
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-embed-snippet`,
+            options: {
+              // Example code links are relative to this dir.
+              directory: `${__dirname}/src/code-examples/`,
+            },
+          },
           `gatsby-remark-autolink-headers`,
+          `gatsby-remark-prismjs`,
           `gatsby-remark-katex`,
         ],
       },
