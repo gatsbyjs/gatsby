@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.32...gatsby-plugin-sharp@2.0.33) (2019-04-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** don't write to same temporary time multiple times at a same time ([#12927](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12927)) ([5e254e2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/5e254e2)), closes [#8301](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/8301)
+
 ## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.31...gatsby-plugin-sharp@2.0.32) (2019-03-27)
 
 ### Bug Fixes

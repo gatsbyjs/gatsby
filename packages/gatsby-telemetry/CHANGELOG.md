@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.5...gatsby-telemetry@1.0.6) (2019-04-09)
+
+### Features
+
+- **gatsby-telemetry:** Include a boolean flag to telemetry data whether gatsby is running in docker or not. ([#13246](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/13246)) ([f07147a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/f07147a)), closes [1#discussion-57-comment-1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/discussion-57-comment-1)
+
 ## [1.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.4...gatsby-telemetry@1.0.5) (2019-04-04)
 
 **Note:** Version bump only for package gatsby-telemetry

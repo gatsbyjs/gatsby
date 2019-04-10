@@ -2566,7 +2566,7 @@
   featured: false
 - title: Fitekran
   description: >
-    One of the most visited Turkish blog about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
+    One of the most visited Turkish blogs about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
   main_url: "https://www.fitekran.com"
   url: "https://www.fitekran.com"
   categories:
@@ -5208,6 +5208,18 @@
     - Marketing
   built_by: Becreatives
   built_by_url: "https://becreatives.com"
+- title: Little Wolf Studio
+  main_url: https://littlewolfstudio.co.uk
+  url: https://littlewolfstudio.co.uk
+  featured: false
+  description: >
+    A simple agency site built using GatsbyJS and DatoCMS. Aesthetic was creating using a customisation of Bulma.
+  categories:
+    - Blog
+    - Agency
+    - Web Development
+  built_by: Little Wolf Studio
+  built_by_url: https://littlewolfstudio.co.uk
 - title: Paul Clifton Photography
   main_url: https://paulcliftonphotography.com
   url: https://paulcliftonphotography.com
@@ -5221,3 +5233,50 @@
     - Photography
   built_by: Little Wolf Studio
   built_by_url: https://littlewolfstudio.co.uk
+- title: Atte Juvonen - Blog
+  url: https://www.attejuvonen.fi/
+  main_url: https://www.attejuvonen.fi/
+  source_url: https://github.com/baobabKoodaa/blog
+  description: >
+    A blog with streamlined design and smooth UX
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+  featured: false
+- title: Kibuk Construction
+  url: https://kibukconstruction.com/
+  main_url: https://kibukconstruction.com/
+  description: >
+    Kibuk Construction is a fully licensed and insured contractor specializing in Siding, Decks, Windows & Doors!
+  categories:
+    - Construction
+    - Business
+  built_by: David Krasniy
+  built_by_url: http://dkrasniy.com
+- title: RedCarpetUp
+  main_url: https://www.redcarpetup.com
+  url: https://www.redcarpetup.com/
+  description: >
+    RedCarpetUp's home page for a predominantly mobile-only customer base in India with major constraints on bandwidth availability
+  categories:
+    - Finance
+    - Loans
+    - Credit Card
+  built_by: RedCarpet Dev Team
+  built_by_url: https://www.redcarpetup.com
+  featured: false
+- title: Maitrik's Portfolio
+  url: https://www.maitrikpatel.com/
+  main_url: https://www.maitrikpatel.com/
+  source_url: https://github.com/maitrikjpatel/portfolio
+  description: >
+    Portfolio of a Front-End Developer / UX Designer who designs and develops pixel perfect user interface, experiences and web applications.
+  categories:
+    - Portfolio
+    - Blog
+    - Design
+    - Web Development
+  built_by: Maitrik Patel
+  built_by_url: https://www.maitrikpatel.com/
+  featured: false

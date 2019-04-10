@@ -56,7 +56,7 @@ const getDocsData = location => {
     tutorial: itemListTutorial,
   }
 
-  return [urlSegment, itemListLookup[urlSegment] || itemListTutorial]
+  return [urlSegment, itemListLookup[urlSegment]]
 }
 
 function DocsTemplate({ data, location }) {

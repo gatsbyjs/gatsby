@@ -2,6 +2,7 @@ jest.mock(`fs`, () => {
   return {
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
+    mkdirSync: jest.fn(),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
     statSync: jest.fn(),
   }
@@ -29,11 +30,16 @@ jest.mock(`sharp`, () => {
         }
       }()
   )
+
   sharp.simd = jest.fn()
   sharp.concurrency = jest.fn()
 
   return sharp
 })
+
+jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
+  jest.fn(() => `contentDigest`)
+)
 
 const fs = require(`fs`)
 const path = require(`path`)
@@ -47,6 +53,10 @@ const reporter = {
   }),
 }
 const { onPostBootstrap } = require(`../gatsby-node`)
+
+const apiArgs = {
+  reporter,
+}
 
 const manifestOptions = {
   name: `GatsbyJS`,
@@ -73,6 +83,8 @@ const manifestOptions = {
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
+    fs.mkdirSync.mockReset()
+    fs.existsSync.mockReset()
     sharp.mockClear()
   })
 
@@ -82,21 +94,59 @@ describe(`Test plugin manifest options`, () => {
   })
 
   it(`correctly works with default parameters`, async () => {
-    await onPostBootstrap(
-      { reporter },
-      {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-      }
+    await onPostBootstrap(apiArgs, {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+    })
+    const contents = fs.writeFileSync.mock.calls[0][1]
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      path.join(`public`, `manifest.webmanifest`),
+      expect.anything()
     )
-    const [filePath, contents] = fs.writeFileSync.mock.calls[0]
-    expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
+  })
+
+  it(`correctly works with multiple icon paths`, async () => {
+    fs.existsSync.mockReturnValue(false)
+
+    const size = 48
+
+    const pluginSpecificOptions = {
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+        {
+          src: `other-icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+      ],
+    }
+
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    const firstIconPath = path.join(
+      `public`,
+      path.dirname(`icons/icon-48x48.png`)
+    )
+    const secondIconPath = path.join(
+      `public`,
+      path.dirname(`other-icons/icon-48x48.png`)
+    )
+
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
   })
 
   it(`invokes sharp if icon argument specified`, async () => {
@@ -116,13 +166,10 @@ describe(`Test plugin manifest options`, () => {
       ],
     }
 
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
     expect(sharp).toHaveBeenCalledTimes(2)
@@ -135,13 +182,10 @@ describe(`Test plugin manifest options`, () => {
       icon: `non/existing/path`,
     }
 
-    return onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    ).catch(err => {
+    return onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    }).catch(err => {
       expect(sharp).toHaveBeenCalledTimes(0)
       expect(err).toBe(
         `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
@@ -156,19 +200,20 @@ describe(`Test plugin manifest options`, () => {
       plugins: [],
       theme_color_in_head: false,
       cache_busting_mode: `name`,
+      include_favicon: true,
+      crossOrigin: `anonymous`,
       icon_options: {},
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(0)
-    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toEqual(manifestOptions)
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(manifestOptions)
+    )
   })
 
   it(`does file name based cache busting`, async () => {
@@ -179,17 +224,16 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       cache_busting_mode: `name`,
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(3)
-    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toEqual(manifestOptions)
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(manifestOptions)
+    )
   })
 
   it(`does not do cache cache busting`, async () => {
@@ -200,17 +244,16 @@ describe(`Test plugin manifest options`, () => {
       legacy: true,
       cache_busting_mode: `none`,
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(3)
-    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toEqual(manifestOptions)
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(manifestOptions)
+    )
   })
 
   it(`icon options iterator adds options and the icon array take precedence`, async () => {
@@ -222,13 +265,10 @@ describe(`Test plugin manifest options`, () => {
         purpose: `maskable`,
       },
     }
-    await onPostBootstrap(
-      { reporter },
-      {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }
-    )
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
 
     expect(sharp).toHaveBeenCalledTimes(3)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])

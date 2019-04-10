@@ -15915,7 +15915,7 @@ Array [
     Object {
       "children": Array [],
       "internal": Object {
-        "contentDigest": "14d9a406858cbf66499eb9f810894428",
+        "contentDigest": "contentDigest",
         "type": "wordpress__PAGE",
       },
       "link": "/packages/gatsby-source-wordpress/",
