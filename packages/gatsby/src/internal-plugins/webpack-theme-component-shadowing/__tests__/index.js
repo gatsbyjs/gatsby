@@ -1,3 +1,4 @@
+import path from "path"
 import ShadowingPlugin from "../"
 
 describe(`Component Shadowing`, () => {
@@ -6,14 +7,22 @@ describe(`Component Shadowing`, () => {
       themes: [`a-theme`, `theme-b`, `gatsby-theme-c`].map(name => {
         return {
           themeName: name,
-          themeDir: `/some/place/${name}`,
+          themeDir: path.join(path.sep, `some`, `place`, name),
         }
       }),
     })
     expect(
       // simple request path to a theme's component
       plugin.getMatchingThemesForPath(
-        `/some/place/a-theme/src/components/a-component`
+        path.join(
+          path.sep,
+          `some`,
+          `place`,
+          `a-theme`,
+          `src`,
+          `components`,
+          `a-component`
+        )
       )
     ).toEqual([`a-theme`])
 
@@ -21,7 +30,16 @@ describe(`Component Shadowing`, () => {
       // request to a shadowed component in theme b
       // component-path is expected to be `a-theme/components/a-component`
       plugin.getMatchingThemesForPath(
-        `/some/place/theme-b/src/a-theme/components/a-component`
+        path.join(
+          path.sep,
+          `some`,
+          `place`,
+          `theme-b`,
+          `src`,
+          `a-theme`,
+          `components`,
+          `a-component`
+        )
       )
     ).toEqual([`theme-b`])
   })
@@ -31,26 +49,60 @@ describe(`Component Shadowing`, () => {
       themes: [`a-theme`, `theme-b`, `gatsby-theme-c`].map(name => {
         return {
           themeName: name,
-          themeDir: `/some/place/${name}`,
+          themeDir: path.join(path.sep, `some`, `place`, name),
         }
       }),
     })
     expect(
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in `theme-b`
-        issuerPath: `/some/place/theme-b/src/a-theme/components/a-component`,
+        issuerPath: path.join(
+          path.sep,
+          `some`,
+          `place`,
+          `theme-b`,
+          `src`,
+          `a-theme`,
+          `components`,
+          `a-component`
+        ),
         // require'ing a file it is a "shadow child" of in a-theme
-        requestPath: `/some/place/a-theme/src/components/a-component`,
+        requestPath: path.join(
+          path.sep,
+          `some`,
+          `place`,
+          `a-theme`,
+          `src`,
+          `components`,
+          `a-component`
+        ),
       })
     ).toEqual(true)
 
     expect(
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in `theme-b`
-        issuerPath: `/some/place/theme-b/src/a-theme/components/a-component`,
+        issuerPath: path.join(
+          path.sep,
+          `some`,
+          `place`,
+          `theme-b`,
+          `src`,
+          `a-theme`,
+          `components`,
+          `a-component`
+        ),
         // require'ing a file it is NOT a "shadow child" of, also in theme-b
         // the `component-path` here would be "components/a-component"
-        requestPath: `/some/place/theme-b/src/components/a-component`,
+        requestPath: path.join(
+          path.sep,
+          `some`,
+          `place`,
+          `theme-b`,
+          `src`,
+          `components`,
+          `a-component`
+        ),
       })
     ).toEqual(false)
   })
