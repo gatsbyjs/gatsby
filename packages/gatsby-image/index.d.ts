@@ -29,6 +29,8 @@ interface GatsbyImageProps {
   sizes?: FluidObject
   fixed?: FixedObject
   fluid?: FluidObject
+  fixedImages?: FixedObject[]
+  fluidImages?: FluidObject[]
   fadeIn?: boolean
   title?: string
   alt?: string
