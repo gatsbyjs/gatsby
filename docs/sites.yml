@@ -5280,27 +5280,14 @@
   built_by: Maitrik Patel
   built_by_url: https://www.maitrikpatel.com/
   featured: false
- - title: Ste O'Neill
-
-  # this is the URL that is linked from the showcase
+- title: Ste O'Neill
   main_url: https://www.steoneill.dev
-
-  # this URL is used to generate a screenshot
   url: https://www.steoneill.dev
-
-  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
     MVP of a portfolio site for a full stack UK based developer.
-
-  # You can list as many categories as you want here. Check list of Categories below in this doc!
-  # If you'd like to create a new category, simply list it here.
   categories:
     - Blog
     - Portfolio
-
-  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: Ste O'Neill
   built_by_url: https://steoneill.dev
-
-  # leave as false, the Gatsby site review board will choose featured sites quarterly
   featured: false
