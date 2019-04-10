@@ -17,7 +17,7 @@ const { log } = actions
 
 const resultHashes = {}
 
-type QueryJob = {
+export type QueryJob = {
   id: string,
   hash?: string,
   jsonName: string,

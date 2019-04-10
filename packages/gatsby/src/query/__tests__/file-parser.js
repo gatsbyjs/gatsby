@@ -9,7 +9,7 @@ jest.mock(`../../utils/api-runner-node`, () => () => [])
 
 const fs = require(`fs-extra`)
 
-const { store } = require(`../../../redux`)
+const { store } = require(`../../redux`)
 const log = jest.fn()
 store.dispatch({ type: `SET_LOGGER`, payload: log })
 afterEach(() => log.mockClear())

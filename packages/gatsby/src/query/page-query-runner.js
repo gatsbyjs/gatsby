@@ -1,6 +1,6 @@
 // @flow
 
-import type { QueryJob } from "../query-runner"
+import type { QueryJob } from "./query-runner"
 
 /**
  * Jobs of this module
