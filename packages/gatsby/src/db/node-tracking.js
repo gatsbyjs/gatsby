@@ -27,6 +27,10 @@ const omitUndefined = data => {
  * @return {boolean}
  */
 const isTypeSupported = data => {
+  if (data === null) {
+    return true
+  }
+
   const type = typeof data
   const isSupported =
     type === `number` ||
