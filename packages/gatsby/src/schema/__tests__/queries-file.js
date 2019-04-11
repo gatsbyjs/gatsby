@@ -48,6 +48,30 @@ const nodes = [
     absolutePath: filePath(`test.txt`),
   },
   {
+    id: `file4`,
+    parent: `file5`,
+    children: [`test2`],
+    internal: {
+      type: `File`,
+      contentDigest: `file4`,
+    },
+    name: `parent.txt`,
+    dir: basePath,
+    absolutePath: filePath(`parent.txt`),
+  },
+  {
+    id: `file5`,
+    parent: null,
+    children: [`file4`],
+    internal: {
+      type: `File`,
+      contentDigest: `file5`,
+    },
+    name: `root.txt`,
+    dir: `/`,
+    absolutePath: `/root.txt`,
+  },
+  {
     id: `test1`,
     parent: `file3`,
     children: [],
@@ -70,6 +94,15 @@ const nodes = [
         files: [`./2.png`],
       },
     ],
+  },
+  {
+    id: `test2`,
+    parent: `file4`,
+    children: [],
+    internal: {
+      type: `TestChild`,
+    },
+    file: `./1.png`,
   },
 ]
 
@@ -184,6 +217,24 @@ describe(`Query fields of type File`, () => {
             files: [{ name: `2.png` }],
           },
         ],
+      },
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+
+  it(`uses nearest File node ancestor to resolve relative paths`, async () => {
+    const query = `
+      {
+        testChild {
+          file { name }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      testChild: {
+        file: { name: `1.png` },
       },
     }
     expect(results.errors).toBeUndefined()
