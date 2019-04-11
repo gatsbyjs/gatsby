@@ -2207,3 +2207,18 @@
   features:
     - TypeScript support
     - Easily work in GatsbyJS and Framer X at the same time
+- url: https://gatsby-firebase-hosting.firebaseapp.com/
+  repo: https://github.com/bijenkorf-james-wakefield/gatsby-firebase-hosting-starter
+  description: A starter with configuration for Firebase Hosting and Cloud Build deployment.
+  tags:
+    - Firebase
+    - Google Cloud
+    - Linting
+  features:
+    - Linting with ESLint
+    - Jest Unit testing configuration
+    - Lint-staged on precommit hook
+    - Commitizen for conventional commit messages
+    - Configuration for Firebase hosting
+    - Configuration for Cloud Build deployment
+    - Clear documentation to have your site deployed on Firebase behind SSL in no time!
