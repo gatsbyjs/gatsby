@@ -10,6 +10,7 @@ const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
 const prompts = require(`prompts`)
+const isTTY = require(`./utils/isTTY`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit`, ...options })
@@ -73,7 +74,7 @@ const install = async rootPath => {
   try {
     const npmCmd = `npm install`
     let response = npmCmd
-    if (shouldUseYarn()) {
+    if (isTTY() && shouldUseYarn()) {
       const promptsAnswer = await prompts([
         {
           type: `select`,
