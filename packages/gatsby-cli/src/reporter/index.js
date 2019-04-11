@@ -1,5 +1,7 @@
 // @flow
-
+// loads Object.entries polyfill on node 6
+// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+require(`object.entries/auto`)
 const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
