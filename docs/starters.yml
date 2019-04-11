@@ -2207,3 +2207,17 @@
   features:
     - TypeScript support
     - Easily work in GatsbyJS and Framer X at the same time
+- url: https://www.jannikbuschke.de/gatsby-antd-docs/
+  repo: https://github.com/jannikbuschke/gatsby-antd-docs
+  description: A template for documenation websites
+  tags:
+    - Documentation
+    - Typescript
+    - Antd
+    - AntDesign
+    - Markdown
+  features:
+    - Markdown
+    - Anchors
+    - Menues
+    - Landingpage
