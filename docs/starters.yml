@@ -2262,6 +2262,9 @@
     - Documentation
     - TypeScript
     - Ant Design
+    - Typescript
+    - Antd
+    - AntDesign
     - Markdown
   features:
     - Markdown
@@ -2309,3 +2312,4 @@
     - Optimized images
     - Sitemap Page
     - Seo Ready
+    - Landingpage
