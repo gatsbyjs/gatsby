@@ -11,6 +11,11 @@ const {
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
 
+const {
+  setPackageManager,
+  promptPackageManager,
+} = require(`./util/configstore`)
+
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
@@ -359,6 +364,22 @@ module.exports = argv => {
         const enabled = enable || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
+    })
+    .command({
+      command: `package-manager [preferredPackageManager]`,
+      desc: `Set prefered package manager`,
+      builder: yargs =>
+        yargs.positional(`preferredPackageManager`, {
+          description: `Prefered package manager`,
+          choices: [`npm`, `yarn`],
+        }),
+      handler: handlerP(async ({ preferredPackageManager }) => {
+        if (!preferredPackageManager) {
+          await promptPackageManager()
+        } else {
+          setPackageManager(preferredPackageManager)
+        }
       }),
     })
     .wrap(cli.terminalWidth())
