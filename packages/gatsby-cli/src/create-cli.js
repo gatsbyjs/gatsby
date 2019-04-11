@@ -366,22 +366,6 @@ module.exports = argv => {
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
       }),
     })
-    .command({
-      command: `package-manager [preferredPackageManager]`,
-      desc: `Set prefered package manager`,
-      builder: yargs =>
-        yargs.positional(`preferredPackageManager`, {
-          description: `Prefered package manager`,
-          choices: [`npm`, `yarn`],
-        }),
-      handler: handlerP(async ({ preferredPackageManager }) => {
-        if (!preferredPackageManager) {
-          await promptPackageManager()
-        } else {
-          setPackageManager(preferredPackageManager)
-        }
-      }),
-    })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
