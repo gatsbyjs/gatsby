@@ -13,6 +13,7 @@
     "@babel/code-frame": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
+    "ci-info": "^2.0.0",
     "common-tags": "^1.4.0",
     "configstore": "^4.0.0",
     "convert-hrtime": "^2.0.0",
