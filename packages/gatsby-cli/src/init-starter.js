@@ -90,9 +90,9 @@ const install = async rootPath => {
     }
     conf.set(`package_manager`, response)
     if (response.includes(`yarn`)) {
-      fs.unlinkSync(`package-lock.json`)
+      await fs.remove(`package-lock.json`)
     } else {
-      fs.unlinkSync(`yarn.lock`)
+      await fs.remove(`yarn.lock`)
     }
     await spawn(response)
   } finally {
