@@ -11,11 +11,6 @@ const {
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
 
-const {
-  setPackageManager,
-  promptPackageManager,
-} = require(`./util/configstore`)
-
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
