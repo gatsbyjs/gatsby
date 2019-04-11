@@ -5292,3 +5292,14 @@
   built_by: NGWIN
   built_by_url: https://picpick.app/
   featured: false
+- title: Ste O'Neill
+  main_url: https://www.steoneill.dev
+  url: https://www.steoneill.dev
+  description: >
+    MVP of a portfolio site for a full stack UK based developer.
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Ste O'Neill
+  built_by_url: https://steoneill.dev
+  featured: false
