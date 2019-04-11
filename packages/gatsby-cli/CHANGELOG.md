@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.6...gatsby-cli@2.5.7) (2019-04-11)
+
+### Bug Fixes
+
+- add tty helper to not ask for prompt in non tty/ci env ([#13290](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13290)) ([efae20e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/efae20e))
+
+### Features
+
+- **gatsby-cli:** Remove one of package-lock.json and yarn.lock on gatsby new ([#13225](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13225)) ([3510a46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/3510a46)), closes [#13210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13210)
+
 ## [2.5.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.5...gatsby-cli@2.5.6) (2019-04-09)
 
 **Note:** Version bump only for package gatsby-cli
