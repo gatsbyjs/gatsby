@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.19...gatsby@2.3.20) (2019-04-11)
+
+### Features
+
+- **gatsby:** use V8.serialize instead of JSON.stringify if available ([#10732](https://github.com/gatsbyjs/gatsby/issues/10732)) ([c043816](https://github.com/gatsbyjs/gatsby/commit/c043816))
+
 ## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.18...gatsby@2.3.19) (2019-04-11)
 
 ### Bug Fixes
