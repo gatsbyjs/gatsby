@@ -13,17 +13,9 @@ Of the many possibilities, plugins can:
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs. For larger, more complex sites, plugins let you modularize your site customizations into site-specific plugins.
 
-## Search published plugins
+Here are the guides this section of the docs includes:
 
-Gatsby has a large and growing ecosystem of official and community plugins. To browse plugins and their documentation, visit the [Gatsby Plugin Library](/plugins/).
-
-## Learn more about plugins
-
-For documentation with further detail on what comprises a Gatsby plugin (file structure, etc), see the [plugin authoring page](/docs/how-plugins-work/).
-
-## Build and publish a plugin
-
-For a walkthrough of how to build and publish your own plugin, see the [source plugin tutorial](/docs/source-plugin-tutorial/).
+[[guidelist]]
 
 ## Use a plugin in your site
 
