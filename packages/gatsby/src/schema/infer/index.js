@@ -16,8 +16,15 @@ const addInferredType = ({
   parentSpan,
 }) => {
   const typeName = typeComposer.getTypeName()
+  const nodes = nodeStore.getNodesByType(typeName)
+  if (
+    !typeComposer.hasExtension(`plugin`) &&
+    typeComposer.getExtension(`createdFrom`) === `infer`
+  ) {
+    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+  }
   const exampleValue = getExampleValue({
-    nodes: nodeStore.getNodesByType(typeName),
+    nodes,
     typeName,
     typeConflictReporter,
     ignoreFields: [
@@ -63,12 +70,13 @@ const addInferredTypes = ({
       }
     } else {
       typeComposer = schemaComposer.createObjectTC(typeName)
+      typeComposer.setExtension(`createdFrom`, `infer`)
       addNodeInterface({ schemaComposer, typeComposer })
     }
   })
 
   // XXX(freiksenet): We iterate twice to pre-create all types
-  const typeComposers = typeNames.map(typeName => {
+  const typeComposers = typeNames.map(typeName =>
     addInferredType({
       schemaComposer,
       nodeStore,
@@ -77,7 +85,7 @@ const addInferredTypes = ({
       typeMapping,
       parentSpan,
     })
-  })
+  )
 
   if (noNodeInterfaceTypes.length > 0) {
     noNodeInterfaceTypes.forEach(type => {

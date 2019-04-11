@@ -10,7 +10,7 @@ import {
   space,
   radii,
   breakpoints,
-  dimensions,
+  sizes,
   fonts,
 } from "../../utils/presets"
 
@@ -167,7 +167,7 @@ export default class FilteredStarterLibrary extends Component {
               height: `6rem`,
               paddingTop: `${space[6]}`,
               [breakpoints.sm]: {
-                height: dimensions.headerHeight,
+                height: sizes.headerHeight,
                 paddingTop: 0,
               },
             }}

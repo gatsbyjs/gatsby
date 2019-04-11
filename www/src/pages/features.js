@@ -11,7 +11,7 @@ import {
   colors,
   space,
   breakpoints,
-  scale,
+  fontSizes,
   letterSpacings,
   fonts,
 } from "../utils/presets"
@@ -205,7 +205,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: scale[1], marginTop: space[8] }}>
+  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

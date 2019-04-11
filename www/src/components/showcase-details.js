@@ -7,7 +7,7 @@ import qs from "qs"
 import {
   colors,
   space,
-  scale,
+  fontSizes,
   radii,
   shadows,
   breakpoints,
@@ -364,7 +364,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: scale[4],
+                          fontSize: fontSizes[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}
