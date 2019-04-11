@@ -67,6 +67,7 @@ See the [library of official and community plugins](/plugins/)
 - [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
 - [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
 - [Why I used GatsbyJS](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
+- [Introducing Dashbored — Generate Static Dashboards Using Gatsby](https://medium.com/planes-agency/introducing-dashbored-62550a028fcc)
 
 ### German
 

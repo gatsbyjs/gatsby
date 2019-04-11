@@ -5280,6 +5280,18 @@
   built_by: Maitrik Patel
   built_by_url: https://www.maitrikpatel.com/
   featured: false
+- title: PicPick
+  url: https://picpick.app/
+  main_url: https://picpick.app/
+  description: >
+    All-in-one Graphic Design Tool, Screen Capture Software, Image Editor, Color Picker, Pixel Ruler and More
+  categories:
+    - Productivity
+    - App
+    - Technology
+  built_by: NGWIN
+  built_by_url: https://picpick.app/
+  featured: false
 - title: Ste O'Neill
   main_url: https://www.steoneill.dev
   url: https://www.steoneill.dev
