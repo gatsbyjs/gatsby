@@ -10,6 +10,19 @@ const rootNodeMap = new WeakMap()
 const getRootNodeId = node => rootNodeMap.get(node)
 
 /**
+ * @param {Object} data
+ * @returns {Object} data without undefined values
+ */
+const omitUndefined = data => {
+  const isPlainObject = _.isPlainObject(data)
+  if (isPlainObject) {
+    return _.pickBy(data, p => p !== undefined)
+  }
+
+  return data.filter(p => p !== undefined)
+}
+
+/**
  * Add link between passed data and Node. This function shouldn't be used
  * directly. Use higher level `trackInlineObjectsInRootNode`
  * @see trackInlineObjectsInRootNode
@@ -41,11 +54,7 @@ const addRootNodeToInlineObject = (data, nodeId, sanitize, isNode = false) => {
     })
 
     if (anyFieldChanged) {
-      if (isPlainObject) {
-        data = _.pickBy(returnData, p => p !== undefined)
-      } else {
-        data = returnData.filter(p => p !== undefined)
-      }
+      data = omitUndefined(returnData)
     }
 
     // don't need to track node itself
