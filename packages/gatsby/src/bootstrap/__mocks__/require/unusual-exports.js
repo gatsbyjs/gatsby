@@ -4,3 +4,6 @@ Object.defineProperty(exports, `foo`, {
     return () => {}
   },
 })
+Object.defineProperty(exports, `__esModule`, {
+  value: true,
+})

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml/compare/gatsby-transformer-toml@2.1.8...gatsby-transformer-toml@2.1.9) (2019-04-04)
+
+### Bug Fixes
+
+- **gatsby-transformer-toml:** Fix createContentDigest usage ([#13118](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml/issues/13118)) ([506d7c3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml/commit/506d7c3)), closes [#13112](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml/issues/13112)
+
 ## [2.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml/compare/gatsby-transformer-toml@2.1.7...gatsby-transformer-toml@2.1.8) (2019-04-02)
 
 **Note:** Version bump only for package gatsby-transformer-toml

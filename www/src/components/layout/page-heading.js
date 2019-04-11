@@ -6,9 +6,9 @@ import {
   colors,
   space,
   breakpoints,
-  dimensions,
+  sizes,
   lineHeights,
-  scale,
+  fontSizes,
 } from "../../utils/presets"
 
 const PageHeadingContainer = styled(`header`)`
@@ -18,7 +18,7 @@ const PageHeadingContainer = styled(`header`)`
     left: 0;
     position: fixed;
     padding: 0;
-    top: ${`calc(${dimensions.bannerHeight} + ${dimensions.headerHeight})`};
+    top: ${`calc(${sizes.bannerHeight} + ${sizes.headerHeight})`};
   }
 `
 
@@ -26,7 +26,7 @@ const H1 = styled(`h1`)`
   align-items: center;
   color: ${colors.lilac};
   display: flex;
-  font-size: ${scale[5]};
+  font-size: ${fontSizes[5]};
   line-height: ${lineHeights.solid};
   margin: 0;
   position: relative;

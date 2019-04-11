@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.16...gatsby@2.3.17) (2019-04-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.15...gatsby@2.3.16) (2019-04-09)
+
+### Features
+
+- **gatsby:** Add normalization for pathPrefix, siteUrl, etc ([#12139](https://github.com/gatsbyjs/gatsby/issues/12139)) ([1e74779](https://github.com/gatsbyjs/gatsby/commit/1e74779)), closes [#11871](https://github.com/gatsbyjs/gatsby/issues/11871) [#11871](https://github.com/gatsbyjs/gatsby/issues/11871)
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.14...gatsby@2.3.15) (2019-04-08)
+
+### Bug Fixes
+
+- **gatsby:** move db.startAutosave after bootstrap in `gatsby develop` ([#13180](https://github.com/gatsbyjs/gatsby/issues/13180)) ([530e087](https://github.com/gatsbyjs/gatsby/commit/530e087))
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.13...gatsby@2.3.14) (2019-04-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.12...gatsby@2.3.13) (2019-04-04)
+
+### Features
+
+- **gatsby:** add DANGEROUSLY_DISABLE_OOM ([#13066](https://github.com/gatsbyjs/gatsby/issues/13066)) ([800b8d7](https://github.com/gatsbyjs/gatsby/commit/800b8d7))
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.11...gatsby@2.3.12) (2019-04-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.10...gatsby@2.3.11) (2019-04-03)
+
+### Bug Fixes
+
+- **query-extraction:** handle duplicated graphql query names error ([#12931](https://github.com/gatsbyjs/gatsby/issues/12931)) ([0263a77](https://github.com/gatsbyjs/gatsby/commit/0263a77))
+
+### Features
+
+- **gatsby:** write match-paths.json ([#13012](https://github.com/gatsbyjs/gatsby/issues/13012)) ([cec5e28](https://github.com/gatsbyjs/gatsby/commit/cec5e28))
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.9...gatsby@2.3.10) (2019-04-03)
+
+### Bug Fixes
+
+- **gatsby:** ignore \_\_esModule export in gatsby-node exports ([#13081](https://github.com/gatsbyjs/gatsby/issues/13081)) ([1c78ffb](https://github.com/gatsbyjs/gatsby/commit/1c78ffb)), closes [#13079](https://github.com/gatsbyjs/gatsby/issues/13079)
+
 ## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.8...gatsby@2.3.9) (2019-04-03)
 
 ### Features
