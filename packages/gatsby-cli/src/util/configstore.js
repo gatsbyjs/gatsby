@@ -2,7 +2,19 @@ const Configstore = require(`configstore`)
 const prompts = require(`prompts`)
 const report = require(`../reporter`)
 
-const conf = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+let conf
+try {
+  conf = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+} catch (e) {
+  // This should never happen (?)
+  conf = {
+    settings: {
+      "cli.packageManager": undefined,
+    },
+    get: key => conf.settings[key],
+    set: (key, value) => (conf.settings[key] = value),
+  }
+}
 
 const packageMangerConfigKey = `cli.packageManager`
 exports.getPackageManager = () => conf.get(packageMangerConfigKey)
