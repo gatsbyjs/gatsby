@@ -1,6 +1,7 @@
 import React from "react"
 import { withPrefix } from "gatsby"
-import { defaultIcons, createContentDigest, addDigestToPath } from "./common.js"
+import createContentDigest from "gatsby/dist/utils/create-content-digest"
+import { defaultIcons, addDigestToPath } from "./common.js"
 import fs from "fs"
 
 let iconDigest = null
@@ -8,6 +9,8 @@ let iconDigest = null
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
+
+  const srcIconExists = !!pluginOptions.icon
 
   const icons = pluginOptions.icons || defaultIcons
   const legacy =
@@ -19,8 +22,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       : `query`
 
   // If icons were generated, also add a favicon link.
-  if (pluginOptions.icon) {
-    let favicon = icons && icons.length ? icons[0].src : null
+  if (srcIconExists) {
+    const favicon = icons && icons.length ? icons[0].src : null
 
     if (cacheBusting !== `none`) {
       iconDigest = createContentDigest(fs.readFileSync(pluginOptions.icon))
@@ -54,7 +57,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (pluginOptions.theme_color) {
-    let insertMetaTag =
+    const insertMetaTag =
       typeof pluginOptions.theme_color_in_head !== `undefined`
         ? pluginOptions.theme_color_in_head
         : true
@@ -76,7 +79,13 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
         rel="apple-touch-icon"
         sizes={icon.sizes}
-        href={withPrefix(addDigestToPath(icon.src, iconDigest, cacheBusting))}
+        href={withPrefix(
+          addDigestToPath(
+            icon.src,
+            iconDigest,
+            srcIconExists ? cacheBusting : `none`
+          )
+        )}
       />
     ))
 

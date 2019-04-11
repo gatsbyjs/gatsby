@@ -35,6 +35,8 @@ const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const pageQueryRunner = require(`../query/page-query-runner`)
+const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
@@ -89,6 +91,8 @@ async function startServer(program) {
   // Start bootstrap process.
   await bootstrap(program)
 
+  db.startAutosave()
+  pageQueryRunner.startListening(queryQueue.makeDevelop())
   queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
@@ -300,8 +304,6 @@ module.exports = async (program: any) => {
   }
 
   program.port = await detectPortInUseAndPrompt(port, rlInterface)
-
-  db.startAutosave()
 
   const [compiler] = await startServer(program)
 
