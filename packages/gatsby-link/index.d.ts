@@ -17,6 +17,7 @@ export default class GatsbyLink<TState> extends React.Component<
 > {}
 export const navigate: NavigateFn
 export const withPrefix: (path: string) => string
+export const isInternalLink: (to: string) => boolean
 
 // TODO: Remove navigateTo, push & replace for Gatsby v3
 export const push: (to: string) => void

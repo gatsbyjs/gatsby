@@ -21,6 +21,8 @@ const NavLinkPropTypes = {
   partiallyActive: PropTypes.bool,
 }
 
+const LOCAL_URL = /^\/(?!\/)/
+
 // Set up IntersectionObserver
 const handleIntersection = (el, cb) => {
   const io = new window.IntersectionObserver(entries => {
@@ -113,8 +115,7 @@ class GatsbyLink extends React.Component {
       ...rest
     } = this.props
 
-    const LOCAL_URL = /^\/(?!\/)/
-    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
+    if (process.env.NODE_ENV !== `production` && !isInternalLink(to)) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
@@ -199,3 +200,5 @@ export const navigateTo = to => {
   )
   return push(to)
 }
+
+export const isInternalLink = to => LOCAL_URL.test(to)
