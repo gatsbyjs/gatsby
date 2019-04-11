@@ -23,6 +23,21 @@ const omitUndefined = data => {
 }
 
 /**
+ * @param {*} data
+ * @return {boolean}
+ */
+const isTypeSupported = data => {
+  const type = typeof data
+  const isSupported =
+    type === `number` ||
+    type === `string` ||
+    type === `boolean` ||
+    data instanceof Date
+
+  return isSupported
+}
+
+/**
  * Add link between passed data and Node. This function shouldn't be used
  * directly. Use higher level `trackInlineObjectsInRootNode`
  * @see trackInlineObjectsInRootNode
@@ -66,17 +81,8 @@ const addRootNodeToInlineObject = (data, nodeId, sanitize, isNode = false) => {
     return data
   }
 
-  if (sanitize && data !== null) {
-    const type = typeof data
-    const isSupported =
-      type === `number` ||
-      type === `string` ||
-      type === `boolean` ||
-      data instanceof Date
-
-    if (!isSupported) {
-      return undefined
-    }
+  if (sanitize && !isTypeSupported(data)) {
+    return undefined
   }
   // either supported or not sanitizing
   return data
