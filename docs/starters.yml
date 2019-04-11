@@ -1357,23 +1357,6 @@
     - Google Analytics Integration
     - Uses Gatsby v2
     - SEO
-- url: http://starter-ghost-blog.surge.sh/
-  repo: https://github.com/little-wolf-studio/gatsby-starter-ghost-blog
-  description: Ghost Blog Starter Kit
-  tags:
-    - Ghost
-    - Blog
-    - Linting
-    - Headless CMS
-    - Styling:CSS-in-JS
-  features:
-    - Uses the Ghost CMS source
-    - Renders pages for posts, tags and authors
-    - Responsive Design
-    - Google Analytics Integration
-    - Uses Gatsby v2
-    - ESLint and Prettier
-    - Offline support
 - url: https://gatsby-starter-notes.netlify.com/
   repo: https://github.com/patricoferris/gatsby-starter-notes
   description: Gatsby starter for creating notes organised by subject and topic
@@ -1741,7 +1724,7 @@
     - User sign in
 - url: https://gatsby-starter.mdbootstrap.com/
   repo: https://github.com/anna-morawska/gatsby-material-design-for-bootstrap
-  description: A simple starter which lets you quickly start developing with Gastby and Material Design For Bootstrap
+  description: A simple starter which lets you quickly start developing with Gatsby and Material Design For Bootstrap
   tags:
     - Styling:Material
   features:
@@ -2194,3 +2177,48 @@
     - 📡 Webhook Validation & Creation
     - 🔑 GDPR Ready (Including GDPR Webhooks)
     - 🏗 CircleCI Config for easy continuous deployments to Firebase
+- url: https://gatsby-starter-paperbase.netlify.com/
+  repo: https://github.com/willcode4food/gatsby-starter-paperbase
+  description: A Gatsby starter that implements the Paperbase Premium Theme from MaterialUI
+  tags:
+    - Styling:Material
+    - Styling:CSS-in-JS
+  features:
+    - MaterialUI Paperbase theme in Gatsby!
+    - Create professional looking admin tools and dashboards
+    - Responsive Design
+    - MaterialUI Paper Components
+    - MaterialUI Tab Components
+- url: https://gatsby-starter-devto.netlify.com/
+  repo: https://github.com/geocine/gatsby-starter-devto
+  description: A GatsbyJS starter template that leverages the Dev.to API
+  tags:
+    - Dev.to
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+- url: https://gatsby-starter-framer-x.netlify.com/
+  repo: https://github.com/simulieren/gatsby-starter-framer-x
+  description: A GatsbyJS starter template that is connected to a Framer X project
+  tags:
+    - Framer X
+    - TypeScript
+  features:
+    - TypeScript support
+    - Easily work in GatsbyJS and Framer X at the same time
+- url: https://gatsby-firebase-hosting.firebaseapp.com/
+  repo: https://github.com/bijenkorf-james-wakefield/gatsby-firebase-hosting-starter
+  description: A starter with configuration for Firebase Hosting and Cloud Build deployment.
+  tags:
+    - Firebase
+    - Google Cloud
+    - Linting
+  features:
+    - Linting with ESLint
+    - Jest Unit testing configuration
+    - Lint-staged on precommit hook
+    - Commitizen for conventional commit messages
+    - Configuration for Firebase hosting
+    - Configuration for Cloud Build deployment
+    - Clear documentation to have your site deployed on Firebase behind SSL in no time!

@@ -29,7 +29,7 @@ It was a good improvement, but even the resulting 30-minute build time was too s
 
 ## Improving the preview experience
 
-On a highly customizable website, previewing the changes you make is crucial. The fastest way to change something on a Gatsby platform is by using what we developers use daily: the development server. This server has a [feature](https://www.gatsbyjs.org/docs/environment-variables/#reserved-environment-variables) that allows you to live reload the data on the development server and everything on the website will be updated automatically. Neat!
+On a highly customizable website, previewing the changes you make is crucial. The fastest way to change something on a Gatsby platform is by using what we developers use daily: the development server. This server has a [feature](/docs/environment-variables/#reserved-environment-variables) that allows you to live reload the data on the development server and everything on the website will be updated automatically. Neat!
 
 We started using this feature at the beginning of the migration, and content managers loved the feature. They just had to click a button to see their changes, all it took was a few seconds.
 

@@ -79,7 +79,7 @@ module.exports = Machine(
       runPageComponentQueries: (context, event) => {
         const {
           queueQueriesForPageComponent,
-        } = require(`../../internal-plugins/query-runner/query-watcher`)
+        } = require(`../../query/query-watcher`)
         // Wait a bit as calling this function immediately triggers
         // an Action call which Redux squawks about.
         setTimeout(() => {
@@ -98,9 +98,7 @@ module.exports = Machine(
       setPage: assign({
         pages: (ctx, event) => {
           if (event.path) {
-            const {
-              runQueryForPage,
-            } = require(`../../internal-plugins/query-runner/query-watcher`)
+            const { runQueryForPage } = require(`../../query/query-watcher`)
             // Wait a bit as calling this function immediately triggers
             // an Action call which Redux squawks about.
             setTimeout(() => {

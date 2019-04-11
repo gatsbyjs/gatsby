@@ -1,5 +1,6 @@
 /* @flow */
 const { execSync } = require(`child_process`)
+const Configstore = require(`configstore`)
 const execa = require(`execa`)
 const hostedGitInfo = require(`hosted-git-info`)
 const fs = require(`fs-extra`)
@@ -8,10 +9,13 @@ const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
+const prompts = require(`prompts`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit`, ...options })
 }
+
+const conf = new Configstore(`gatsby`, {}, { globalConfigPath: true })
 
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
@@ -67,8 +71,30 @@ const install = async rootPath => {
   process.chdir(rootPath)
 
   try {
-    let cmd = shouldUseYarn() ? spawn(`yarnpkg`) : spawn(`npm install`)
-    await cmd
+    const npmCmd = `npm install`
+    let response = npmCmd
+    if (shouldUseYarn()) {
+      const promptsAnswer = await prompts([
+        {
+          type: `select`,
+          name: `package_manager`,
+          message: `Which package manager would you like to use ?`,
+          choices: [
+            { title: `yarn`, value: `yarnpkg` },
+            { title: `npm`, value: npmCmd },
+          ],
+          initial: 0,
+        },
+      ])
+      response = promptsAnswer.package_manager
+    }
+    conf.set(`package_manager`, response)
+    if (response.includes(`yarn`)) {
+      await fs.remove(`package-lock.json`)
+    } else {
+      await fs.remove(`yarn.lock`)
+    }
+    await spawn(response)
   } finally {
     process.chdir(prevDir)
   }

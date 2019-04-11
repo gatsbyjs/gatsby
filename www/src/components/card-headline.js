@@ -1,10 +1,10 @@
 import React from "react"
-import { lineHeights, scale } from "../utils/presets"
+import { lineHeights, fontSizes } from "../utils/presets"
 
 const CardHeadline = ({ children }) => (
   <h2
     css={{
-      fontSize: scale[4],
+      fontSize: fontSizes[4],
       lineHeight: lineHeights.dense,
       marginTop: 0,
     }}
