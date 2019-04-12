@@ -62,7 +62,7 @@ function watch(
   }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
-  const { seenPackages, depTree } = traversePackagesDeps({
+  const { seenPackages: allPackagesToWatch, depTree } = traversePackagesDeps({
     root,
     packages: _.uniq([...localPackages, ...packages]),
     monoRepoPackages,
@@ -79,6 +79,8 @@ function watch(
   //   - if user doesn't have neither
   //     - throw error - make sure that user add filesystem or
   //       any plugin that depend on that to local site
+  //   - if user have both filesystem and wordpress
+  //     - watch filesystem and install both
 
   // let allPackagesToWatch = [...packages]
   let packagesToInstall = []
@@ -96,7 +98,15 @@ function watch(
       packagesToInstall.push(pkg)
     }
   })
-  allPackagesToWatch = _.uniq(allPackagesToWatch)
+  // allPackagesToWatch = _.uniq(allPackagesToWatch)
+
+  return {
+    allPackagesToWatch,
+    packagesToInstall,
+    packages,
+    depTree,
+    monoRepoPackages,
+  }
 
   process.exit()
 
