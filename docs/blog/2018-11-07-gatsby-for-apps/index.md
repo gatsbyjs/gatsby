@@ -27,7 +27,7 @@ To begin, what even _is_ an application, anyways?
 
 ## What is an application?
 
-I've previously attempted the [surprisingly difficult task][whats-an-app] of defining what consititutes a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
+I've previously attempted the [surprisingly difficult task][whats-an-app] of defining what constitutes a traditional web application. In an effort to not re-hash all the work there, I think there are several, key features that indicate a more app-like experience:
 
 - dynamic data fetching
 - user authentication and authenticated client-only routes
@@ -75,7 +75,7 @@ These two web applications will serve as key foundational pieces to keep in mind
 
 What if I told you... that building a Gatsby website enables all of these traditional web-app like functionalities because a Gatsby "static site" is an application?
 
-Every Gatsby application isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Client-side JavaScript (via React!) takes over as the enginge for dynamic application functionality. A quick overview of Gatsby's general build process is effective to illustrate the concept.
+Every Gatsby application isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Client-side JavaScript (via React!) takes over as the engine for dynamic application functionality. A quick overview of Gatsby's general build process is effective to illustrate the concept.
 
 1. Inject pages with data (from [GraphQL][gatsby-graphql] or even [without using GraphQL][gatsby-without-graphql])
 1. Use the [ReactDOMServer.renderToString][react-dom-render-to-string] API to invoke server-side APIs to render React components to _HTML_ files

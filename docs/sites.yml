@@ -2566,7 +2566,7 @@
   featured: false
 - title: Fitekran
   description: >
-    One of the most visited Turkish blog about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
+    One of the most visited Turkish blogs about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
   main_url: "https://www.fitekran.com"
   url: "https://www.fitekran.com"
   categories:
@@ -5266,3 +5266,50 @@
   built_by: RedCarpet Dev Team
   built_by_url: https://www.redcarpetup.com
   featured: false
+- title: Maitrik's Portfolio
+  url: https://www.maitrikpatel.com/
+  main_url: https://www.maitrikpatel.com/
+  source_url: https://github.com/maitrikjpatel/portfolio
+  description: >
+    Portfolio of a Front-End Developer / UX Designer who designs and develops pixel perfect user interface, experiences and web applications.
+  categories:
+    - Portfolio
+    - Blog
+    - Design
+    - Web Development
+  built_by: Maitrik Patel
+  built_by_url: https://www.maitrikpatel.com/
+  featured: false
+- title: PicPick
+  url: https://picpick.app/
+  main_url: https://picpick.app/
+  description: >
+    All-in-one Graphic Design Tool, Screen Capture Software, Image Editor, Color Picker, Pixel Ruler and More
+  categories:
+    - Productivity
+    - App
+    - Technology
+  built_by: NGWIN
+  built_by_url: https://picpick.app/
+  featured: false
+- title: Ste O'Neill
+  main_url: https://www.steoneill.dev
+  url: https://www.steoneill.dev
+  description: >
+    MVP of a portfolio site for a full stack UK based developer.
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Ste O'Neill
+  built_by_url: https://steoneill.dev
+  featured: false
+- title: Filipe Santos Correa's Portfolio
+  description: >
+    Filipe's Personal About Me / Portfolio.
+  main_url: "https://filipesantoscorrea.com/"
+  url: "https://filipesantoscorrea.com/"
+  source_url: "https://github.com/Safi1012/filipesantoscorrea.com"
+  featured: false
+  categories:
+    - Personal Website
+    - Portfolio
