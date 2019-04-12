@@ -36,7 +36,7 @@ const Chevron = ({ isExpanded }) => (
   >
     <ChevronSvg
       cssProps={{
-        color: isExpanded ? colors.gray.light : colors.gray.light,
+        color: colors.gray.light ,
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotateX(180deg)` : `rotateX(0deg)`,
@@ -53,7 +53,6 @@ const TitleButton = ({
   isExpanded,
   item,
   onSectionTitleClick,
-  title,
   uid,
 }) => (
   <button

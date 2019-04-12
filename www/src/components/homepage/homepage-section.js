@@ -120,7 +120,7 @@ const HomepageSection = ({
         )}
         {links && (
           <Actions>
-            {links.map((item, idx) => {
+            {links.map((item) => {
               const { to, label, icon: Icon, secondary, tracking } = item
 
               return (
