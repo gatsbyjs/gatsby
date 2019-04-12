@@ -5313,3 +5313,15 @@
   categories:
     - Personal Website
     - Portfolio
+- title: Progressive Massachusetts Legislator Scorecard
+  main_url: https://scorecard.progressivemass.com
+  url: https://scorecard.progressivemass.com
+  featured: false
+  source_url: https://github.com/progressivemass/legislator-scorecard
+  description: >
+    Learn about MA state legislators' voting records through a progressive lens
+  categories:
+    - Government
+    - Education
+  built_by: Alex Holachek
+  built_by_url: "https://alex.holachek.com/"
