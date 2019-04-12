@@ -63,6 +63,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         this.requestPathIsIssuerShadowPath({
           requestPath: request.path,
           issuerPath: request.context.issuer,
+          userSiteDir: path.resolve(`.`),
         })
       ) {
         return resolver.doResolve(
@@ -158,7 +159,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       })
   }
 
-  requestPathIsIssuerShadowPath({ requestPath, issuerPath }) {
+  requestPathIsIssuerShadowPath({ requestPath, issuerPath, userSiteDir }) {
     // get the issuer's theme
     const matchingThemes = this.getMatchingThemesForPath(requestPath)
     if (matchingThemes.length !== 1) {
@@ -170,9 +171,9 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     const [, component] = requestPath.split(path.join(theme, `src`))
 
     // get list of potential shadow locations
-    const shadowFiles = this.getBaseShadowDirsForThemes(theme).map(dir =>
-      path.join(dir, component)
-    )
+    const shadowFiles = this.getBaseShadowDirsForThemes(theme)
+      .concat(path.join(userSiteDir, `src`, theme))
+      .map(dir => path.join(dir, component))
 
     // if the issuer is requesting a path that is a potential shadow path of itself
     return shadowFiles.includes(pathWithoutExtension(issuerPath))
