@@ -22,7 +22,11 @@ const quit = () => {
  * non-existant packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
-function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
+function watch(
+  root,
+  packages,
+  { scanOnce, quiet, monoRepoPackages, localPackages }
+) {
   let afterPackageInstallation = false
   let queuedCopies = []
 
@@ -58,11 +62,43 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
   }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
-  const { seenPackages: allPackagesToWatch, depTree } = traversePackagesDeps({
+  const { seenPackages, depTree } = traversePackagesDeps({
     root,
-    packages,
+    packages: _.uniq([...localPackages, ...packages]),
     monoRepoPackages,
   })
+
+  // scenarios
+  // - --packages gatsby-cli
+  //   install `gatsby` and watch just gatsby-cli
+  // - --packages gatsby-source-filesystem
+  //   - if user have gatsby-source-wordpress
+  //     - we want to install wordpress and watch for filesystem
+  //   - if user have just gatsby-source-filesystem
+  //     - we want to install filesystem and watch for filesystem
+  //   - if user doesn't have neither
+  //     - throw error - make sure that user add filesystem or
+  //       any plugin that depend on that to local site
+
+  // let allPackagesToWatch = [...packages]
+  let packagesToInstall = []
+
+  const getTopMostPackage = pkg => {}
+
+  // add all packages that depend on things we want to watch
+  packages.forEach(pkg => {
+    // while( )
+
+    if (depTree[pkg]) {
+      getTopMostPackage(pkg)
+      // allPackagesToWatch = allPackagesToWatch.concat([...depTree[pkg]])
+    } else {
+      packagesToInstall.push(pkg)
+    }
+  })
+  allPackagesToWatch = _.uniq(allPackagesToWatch)
+
+  process.exit()
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
