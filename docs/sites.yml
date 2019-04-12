@@ -5303,3 +5303,13 @@
   built_by: Ste O'Neill
   built_by_url: https://steoneill.dev
   featured: false
+- title: Filipe Santos Correa's Portfolio
+  description: >
+    Filipe's Personal About Me / Portfolio.
+  main_url: "https://filipesantoscorrea.com/"
+  url: "https://filipesantoscorrea.com/"
+  source_url: "https://github.com/Safi1012/filipesantoscorrea.com"
+  featured: false
+  categories:
+    - Personal Website
+    - Portfolio
