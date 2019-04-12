@@ -86,12 +86,12 @@ If you need to proxy websocket connections.
 var proxy = require("http-proxy-middleware")
 module.exports = {
   developMiddleware: (app, server) => {
-    const proxy = proxyMiddleware('/api', {
-      target: 'http://localhost:9000',
+    const proxy = proxyMiddleware("/api", {
+      target: "http://localhost:9000",
       ws: true,
     })
     app.use(proxy)
-    server.on('upgrade', proxy.upgrade)
+    server.on("upgrade", proxy.upgrade)
   },
 }
 ```
