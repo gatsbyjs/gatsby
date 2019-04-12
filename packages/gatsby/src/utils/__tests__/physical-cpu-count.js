@@ -11,48 +11,44 @@ describe(`physical-cpu-count`, () => {
     os = require(`os`)
     os.cpus.mockImplementation(() => [{ model: `Test` }])
   })
-  it(`should return correct CPU count on Linux`, () => {
-    const cProc = require(`child_process`)
-    os.cpus.mockImplementation(() => [{ model: `Test` }])
-    cProc.execSync.mockImplementation(() => `4`)
-    mockPlatform(`linux`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(4)
-  })
-  it(`should return fallback CPU count on Linux when childProcess fails`, () => {
-    const cProc = require(`child_process`)
-    cProc.execSync.mockImplementation(() => {
-      throw new Error(`Fail!`)
-    })
-    mockPlatform(`linux`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(1)
-  })
-  it(`should return correct CPU count on Darwin`, () => {
-    const cProc = require(`child_process`)
-    os.cpus.mockImplementation(() => [{ model: `Test` }])
-    cProc.execSync.mockImplementation(() => `4`)
-    mockPlatform(`darwin`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(4)
-  })
-  it(`should return fallback CPU count on Darwin when childProcess fails`, () => {
-    const cProc = require(`child_process`)
-    cProc.execSync.mockImplementation(() => {
-      throw new Error(`Fail!`)
-    })
-    mockPlatform(`darwin`)
-    const pcc = require(`../physical-cpu-count`)
-    expect(pcc).toBe(1)
-  })
+
+  it.each([`linux`, `darwin`])(
+    `should return correct CPU count on %s`,
+    platform => {
+      const cProc = require(`child_process`)
+      cProc.execSync.mockImplementation(() => `4`)
+      mockPlatform(platform)
+      const pcc = require(`../physical-cpu-count`)
+      expect(pcc).toBe(4)
+    }
+  )
+
+  it.each([`linux`, `darwin`])(
+    `should return fallback CPU count on %s when childProcess fails`,
+    platform => {
+      const cProc = require(`child_process`)
+      cProc.execSync.mockImplementation(() => `4`)
+      mockPlatform(platform)
+      const pcc = require(`../physical-cpu-count`)
+      expect(pcc).toBe(4)
+    }
+  )
+
   it(`should return correct CPU count on Windows`, () => {
     const cProc = require(`child_process`)
     os.cpus.mockImplementation(() => [{ model: `Test` }])
-    cProc.execSync.mockImplementation(() => `4`)
+    cProc.execSync.mockImplementation(
+      () => `NumberOfCores
+
+    4
+
+    `
+    )
     mockPlatform(`win32`)
     const pcc = require(`../physical-cpu-count`)
     expect(pcc).toBe(4)
   })
+
   it(`should return fallback CPU count on Windows when childProcess fails`, () => {
     const cProc = require(`child_process`)
     cProc.execSync.mockImplementation(() => {
