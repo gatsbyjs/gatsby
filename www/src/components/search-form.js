@@ -10,8 +10,8 @@ import {
   transition,
   shadows,
   breakpoints,
-  dimensions,
-  scale,
+  sizes,
+  fontSizes,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
 
@@ -26,9 +26,7 @@ const searchDropdownOffsetTop = space[9]
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: calc(${searchDropdownOffsetTop} + ${
-  dimensions.bannerHeight
-}) !important;
+    top: calc(${searchDropdownOffsetTop} + ${sizes.bannerHeight}) !important;
     left: ${space[3]} !important;
     right: ${space[3]} !important;
     min-width: calc(100vw - ${space[5]}) !important;
@@ -57,7 +55,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
     color: ${colors.gray.calm} !important;
-    font-size: ${scale[1]} !important;
+    font-size: ${fontSizes[1]} !important;
     font-weight: normal !important;
     padding: ${space[1]} ${space[3]} !important;
   }
@@ -90,7 +88,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     max-height: calc(
-      100vh - ${dimensions.headerHeight} - ${dimensions.bannerHeight}
+      100vh - ${sizes.headerHeight} - ${sizes.bannerHeight}
     ) !important;
     padding: 0 !important;
     border-color: ${colors.ui.bright} !important;
@@ -161,7 +159,7 @@ const algoliaStyles = css`
   .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
     padding: ${space[1]} ${space[3]} !important;
     margin-top: 0 !important;
-    font-size: ${scale[1]} !important;
+    font-size: ${fontSizes[1]} !important;
     border-color: ${colors.ui.light} !important;
     color: ${colors.gatsby} !important;
     font-weight: bold !important;

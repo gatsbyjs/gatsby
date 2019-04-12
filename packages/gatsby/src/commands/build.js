@@ -7,6 +7,7 @@ const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
+const db = require(`../db`)
 const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
@@ -41,6 +42,8 @@ module.exports = async function build(program: BuildArgs) {
     ...program,
     parentSpan: buildSpan,
   })
+
+  await db.saveState()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,

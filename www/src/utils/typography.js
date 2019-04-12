@@ -2,7 +2,7 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import {
   space,
-  scale as scaleTokens,
+  fontSizes,
   colors,
   transition,
   radii,
@@ -45,6 +45,9 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
+      iframe: {
+        border: 0,
+      },
       "tt, code, kbd, samp": {
         // reset line-height set by
         // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198
@@ -84,7 +87,7 @@ const _options = {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
-        fontSize: scaleTokens[0],
+        fontSize: fontSizes[0],
         fontFamily: fonts.monospace.join(`,`),
         letterSpacing: letterSpacings.tracked,
         lineHeight: lineHeights.solid,
@@ -191,7 +194,7 @@ const _options = {
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        fontSize: scaleTokens[1],
+        fontSize: fontSizes[1],
         lineHeight: lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(space[9]),

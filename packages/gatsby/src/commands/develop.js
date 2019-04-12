@@ -31,9 +31,13 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const pageQueryRunner = require(`../query/page-query-runner`)
+const queryQueue = require(`../query/queue`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -86,6 +90,10 @@ async function startServer(program) {
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  db.startAutosave()
+  pageQueryRunner.startListening(queryQueue.makeDevelop())
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 

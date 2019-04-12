@@ -19,8 +19,7 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const {
   queueQueryForPathname,
-  runQueuedActions: runQueuedQueries,
-  runQueries,
+  runQueuedQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -212,12 +211,12 @@ const queueQueriesForPageComponent = componentPath => {
     pages.map(p => p.path || p.id)
   )
   pages.forEach(page => queueQueryForPathname(page.path))
-  runQueries()
+  runQueuedQueries()
 }
 
 const runQueryForPage = path => {
   queueQueryForPathname(path)
-  runQueries()
+  runQueuedQueries()
 }
 
 exports.queueQueriesForPageComponent = queueQueriesForPageComponent
@@ -267,32 +266,24 @@ const watch = rootDir => {
   filesToWatch.forEach(filePath => watcher.add(filePath))
 }
 
-if (process.env.gatsby_executing_command === `develop`) {
-  let bootstrapFinished = false
-
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    bootstrapFinished = true
-  })
-
+exports.startWatchDeletePage = () => {
   emitter.on(`DELETE_PAGE`, action => {
-    if (bootstrapFinished) {
-      const componentPath = slash(action.payload.component)
-      const { pages } = store.getState()
-      let otherPageWithTemplateExists = false
-      for (let page of pages.values()) {
-        if (slash(page.component) === componentPath) {
-          otherPageWithTemplateExists = true
-          break
-        }
+    const componentPath = slash(action.payload.component)
+    const { pages } = store.getState()
+    let otherPageWithTemplateExists = false
+    for (let page of pages.values()) {
+      if (slash(page.component) === componentPath) {
+        otherPageWithTemplateExists = true
+        break
       }
-      if (!otherPageWithTemplateExists) {
-        store.dispatch({
-          type: `REMOVE_TEMPLATE_COMPONENT`,
-          payload: {
-            componentPath,
-          },
-        })
-      }
+    }
+    if (!otherPageWithTemplateExists) {
+      store.dispatch({
+        type: `REMOVE_TEMPLATE_COMPONENT`,
+        payload: {
+          componentPath,
+        },
+      })
     }
   })
 }
