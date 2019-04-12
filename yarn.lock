@@ -2587,6 +2587,14 @@
     string-width "^2.0.0"
     strip-ansi "^3"
 
+"@pieh/ink-spinner@latest":
+  version "3.0.0-peer-deps.2"
+  resolved "https://registry.yarnpkg.com/@pieh/ink-spinner/-/ink-spinner-3.0.0-peer-deps.2.tgz#8a5b4e704bd1b15cf0ab78bad1b63c733bfb33f3"
+  integrity sha512-AlVXqFaDRcCzoFBKouAC0Fc0JtZAzmLOZBJNW1Mz4a/mJn4reHDKTC/2IJMIjdWhFHeU0pyTwTVQzLdAo8yZMA==
+  dependencies:
+    cli-spinners "^1.0.0"
+    prop-types "^15.5.10"
+
 "@reach/router@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.1.1.tgz#24a5b20f1cc9e55e2cbcdc454fb82c94db479a81"
@@ -11224,14 +11232,6 @@ init-package-json@^1.10.3:
     semver "2.x || 3.x || 4 || 5"
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^3.0.0"
-
-ink-spinner@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-3.0.0.tgz#816df8ae84d687ce9c32a828a7892092412f8ddf"
-  integrity sha512-+8+MbLJTDxOAzefVNdtOpl6Ku3hLlUwrB0SrNzQ0ro2xdv0BOH99ricBo9JIkg0HPbfozk4OLBU9ZF61599lxw==
-  dependencies:
-    cli-spinners "^1.0.0"
-    prop-types "^15.5.10"
 
 ink@^2.0.5:
   version "2.0.5"
