@@ -47,7 +47,9 @@ With `gatsby-transformer-sharp`:
 
 ```graphql
 image {
-  sqip(numberOfPrimitives: 12, blur: 12, width: 256, height: 256),
+  sqip(numberOfPrimitives: 12, blur: 12, width: 256, height: 256) {
+    dataURI
+  },
   sizes(maxWidth: 400, maxHeight: 400) {
     ...GatsbyImageSharpSizes_noBase64
   }
@@ -58,7 +60,9 @@ With `gatsby-source-contentful`:
 
 ```graphql
 image {
-  sqip(numberOfPrimitives: 30, blur: 0),
+  sqip(numberOfPrimitives: 30, blur: 0) {
+    dataURI
+  },
   resolutions {
     ...GatsbyContentfulResolutions_withWebp_noBase64
   }
@@ -181,7 +185,7 @@ const Img = require(`gatsby-image`)
 <Img
   resolutions={{
     ...image.resolutions,
-    base64: image.sqip
+    base64: image.sqip.dataURI
   }}
 />
 
@@ -190,7 +194,7 @@ const Img = require(`gatsby-image`)
 <Img
   sizes={{
     ...image.sizes,
-    base64: image.sqip
+    base64: image.sqip.dataURI
   }}
 />
 ```
