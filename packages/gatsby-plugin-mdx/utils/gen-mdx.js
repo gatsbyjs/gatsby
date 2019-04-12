@@ -38,25 +38,21 @@ const BabelPluginPluckImports = require("./babel-plugin-pluck-imports");
  * }
  *  */
 
-module.exports = async function genMDX({
-  isLoader,
-  node,
-  options,
-  getNode,
-  getNodes,
-  reporter,
-  cache,
-  pathPrefix
-}) {
+module.exports = async function genMDX(
+  { isLoader, node, options, getNode, getNodes, reporter, cache, pathPrefix },
+  { forceDisableCache = false } = {}
+) {
   const pathPrefixCacheStr = pathPrefix || ``;
   const payloadCacheKey = node =>
     `gatsby-mdx-entire-payload-${
       node.internal.contentDigest
     }-${pathPrefixCacheStr}`;
 
-  const cachedPayload = await cache.get(payloadCacheKey(node));
-  if (cachedPayload) {
-    return cachedPayload;
+  if (!forceDisableCache) {
+    const cachedPayload = await cache.get(payloadCacheKey(node));
+    if (cachedPayload) {
+      return cachedPayload;
+    }
   }
 
   let results = {
@@ -169,6 +165,8 @@ ${code}`;
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
    * ); */
-  cache.set(payloadCacheKey(node), results);
+  if (!forceDisableCache) {
+    await cache.set(payloadCacheKey(node), results);
+  }
   return results;
 };
