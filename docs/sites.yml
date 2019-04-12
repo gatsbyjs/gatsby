@@ -5325,3 +5325,16 @@
     - Education
   built_by: Alex Holachek
   built_by_url: "https://alex.holachek.com/"
+- title: Jeff Wolff – Portfolio
+  main_url: https://www.jeffwolff.net
+  url: https://www.jeffwolff.net
+  featured: false
+  description: >
+    A guy from San Diego who makes websites.
+  categories:
+    - Blog
+    - Portfolio
+    - Developer
+    - Frontend
+    - Personal Website
+    - Web Development
