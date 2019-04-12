@@ -195,13 +195,6 @@ async function startServer(program) {
     })
   )
 
-  // Expose access to app for advanced use cases
-  const { developMiddleware } = store.getState().config
-
-  if (developMiddleware) {
-    developMiddleware(app)
-  }
-
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
@@ -245,6 +238,13 @@ async function startServer(program) {
   }
   websocketManager.init({ server, directory: program.directory })
   const socket = websocketManager.getSocket()
+
+  // Expose access to app for advanced use cases
+  const { developMiddleware } = store.getState().config
+
+  if (developMiddleware) {
+    developMiddleware(app, server)
+  }
 
   const listener = server.listen(program.port, program.host, err => {
     if (err) {

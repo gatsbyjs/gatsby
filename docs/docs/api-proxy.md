@@ -77,3 +77,23 @@ module.exports = {
   },
 }
 ```
+
+### Websockets
+
+If you need to proxy websocket connections.
+
+```javascript:title=gatsby-config.js
+var proxy = require("http-proxy-middleware")
+module.exports = {
+  developMiddleware: (app, server) => {
+    const proxy = proxyMiddleware('/api', {
+      target: 'http://localhost:9000',
+      ws: true,
+    })
+    app.use(proxy)
+    server.on('upgrade', proxy.upgrade)
+  },
+}
+```
+
+Keep in mind that middleware only has effect in development (with `gatsby develop`).
