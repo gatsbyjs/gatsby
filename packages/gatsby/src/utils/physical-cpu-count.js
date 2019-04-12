@@ -44,7 +44,7 @@ function getPhysicalCpuCount() {
         .filter(value => !isNaN(value))
         .reduce((sum, number) => sum + number, 0)
     }
-  } catch {
+  } catch (err) {
     // carry on
   }
 
