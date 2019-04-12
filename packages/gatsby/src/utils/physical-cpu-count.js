@@ -39,7 +39,8 @@ function getPhysicalCpuCount() {
     if (platform === `win32`) {
       const output = exec(`WMIC CPU Get NumberOfCores`)
       return output
-        .split(os.EOL)
+        .replace(/\r/g, ``)
+        .split(`\n`)
         .map(line => Number(line))
         .filter(value => !isNaN(value))
         .reduce((sum, number) => sum + number, 0)

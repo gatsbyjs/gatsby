@@ -37,7 +37,11 @@ describe(`physical-cpu-count`, () => {
   it(`should return correct CPU count on Windows`, () => {
     const cProc = require(`child_process`)
     os.cpus.mockImplementation(() => [{ model: `Test` }])
-    cProc.execSync.mockImplementation(() => `4`)
+    cProc.execSync.mockImplementation(
+      () => `NumberOfCores
+    4
+    `
+    )
     mockPlatform(`win32`)
     const pcc = require(`../physical-cpu-count`)
     expect(pcc).toBe(4)
