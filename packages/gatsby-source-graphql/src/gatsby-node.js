@@ -109,7 +109,14 @@ exports.sourceNodes = async (
     if (refetchInterval) {
       const msRefetchInterval = refetchInterval * 1000
       const refetcher = () => {
-        createNode(createSchemaNode({ id: nodeId, typeName, fieldName }))
+        createNode(
+          createSchemaNode({
+            id: nodeId,
+            typeName,
+            fieldName,
+            createContentDigest,
+          })
+        )
         setTimeout(refetcher, msRefetchInterval)
       }
       setTimeout(refetcher, msRefetchInterval)
