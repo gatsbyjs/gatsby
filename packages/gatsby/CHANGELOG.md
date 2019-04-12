@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.20...gatsby@2.3.21) (2019-04-12)
+
+### Bug Fixes
+
+- **themes:** Restrict the paths that count as shadowable for an issuer ([#12930](https://github.com/gatsbyjs/gatsby/issues/12930)) ([e040947](https://github.com/gatsbyjs/gatsby/commit/e040947))
+
 ## [2.3.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.19...gatsby@2.3.20) (2019-04-11)
 
 ### Features
