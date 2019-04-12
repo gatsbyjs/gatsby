@@ -37,13 +37,7 @@ describe(`physical-cpu-count`, () => {
   it(`should return correct CPU count on Windows`, () => {
     const cProc = require(`child_process`)
     os.cpus.mockImplementation(() => [{ model: `Test` }])
-    cProc.execSync.mockImplementation(
-      () => `NumberOfCores
-
-    4
-
-    `
-    )
+    cProc.execSync.mockImplementation(() => `4`)
     mockPlatform(`win32`)
     const pcc = require(`../physical-cpu-count`)
     expect(pcc).toBe(4)
@@ -55,6 +49,18 @@ describe(`physical-cpu-count`, () => {
       throw new Error(`Fail!`)
     })
     mockPlatform(`win32`)
+    const pcc = require(`../physical-cpu-count`)
+    expect(pcc).toBe(1)
+  })
+
+  it(`should check for hyperthreading when intel is the processor`, () => {
+    const cProc = require(`child_process`)
+    cProc.execSync.mockImplementation(() => {
+      throw new Error(`Fail!`)
+    })
+
+    os.cpus.mockImplementation(() => [{ model: `Intel` }, { model: `Intel` }])
+    mockPlatform(`linux`)
     const pcc = require(`../physical-cpu-count`)
     expect(pcc).toBe(1)
   })
