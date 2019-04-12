@@ -8,8 +8,8 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@mdx-js/mdx": "^1.0.0-alpha.17",
-    "@mdx-js/react": "^1.0.0-alpha.17"
+    "@mdx-js/mdx": "^1.0.0",
+    "@mdx-js/react": "^1.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
