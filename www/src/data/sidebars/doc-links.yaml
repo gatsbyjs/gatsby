@@ -153,16 +153,17 @@
               link: /plugins/
             - title: Creating Plugins
               link: /docs/creating-plugins/
-              - title: How Plugins Work
-                link: /docs/how-plugins-work/
-              - title: Creating a Source Plugin
-                link: /docs/creating-a-source-plugin/
-              - title: Creating a Transformer Plugin
-                link: /docs/creating-a-transformer-plugin/
-              - title: Submit to Plugin Library
-                link: /contributing/submit-to-plugin-library/
-              - title: Source Plugin Tutorial
-                link: /docs/source-plugin-tutorial/
+              items:
+                - title: How Plugins Work
+                  link: /docs/how-plugins-work/
+                - title: Creating a Source Plugin
+                  link: /docs/creating-a-source-plugin/
+                - title: Creating a Transformer Plugin
+                  link: /docs/creating-a-transformer-plugin/
+                - title: Submit to Plugin Library
+                  link: /contributing/submit-to-plugin-library/
+                - title: Source Plugin Tutorial
+                  link: /docs/source-plugin-tutorial/
         - title: Starters
           link: /docs/starters/
           items:
