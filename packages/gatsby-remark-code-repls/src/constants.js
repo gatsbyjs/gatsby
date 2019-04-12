@@ -9,6 +9,7 @@ module.exports = {
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH: normalizePath(
     join(__dirname, `default-redirect-template.js`)
   ),
+  OPTION_DEFAULT_INCLUDE_MATCHING_CSS: false,
   PROTOCOL_BABEL: `babel://`,
   PROTOCOL_CODEPEN: `codepen://`,
   PROTOCOL_CODE_SANDBOX: `codesandbox://`,
