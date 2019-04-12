@@ -74,7 +74,6 @@
     "graphql": "^14.1.1",
     "graphql-compose": "^6.0.3",
     "graphql-playground-middleware-express": "^1.7.10",
-    "graphql-relay": "^0.6.0",
     "hash-mod": "^0.0.5",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",

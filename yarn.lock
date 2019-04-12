@@ -10259,13 +10259,6 @@ graphql-playground-middleware-express@^1.7.10:
   dependencies:
     graphql-playground-html "1.6.11"
 
-graphql-relay@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.6.0.tgz#18ec36b772cfcb3dbb9bd369c3f8004cf42c7b93"
-  integrity sha512-OVDi6C9/qOT542Q3KxZdXja3NrDvqzbihn1B44PH8P/c5s0Q90RyQwT6guhGqXqbYEH6zbeLJWjQqiYvcg2vVw==
-  dependencies:
-    prettier "^1.16.0"
-
 graphql-request@^1.5.0, graphql-request@^1.6.0:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-1.8.2.tgz#398d10ae15c585676741bde3fc01d5ca948f8fbe"
@@ -16750,11 +16743,6 @@ prettier-linter-helpers@^1.0.0:
   integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
   dependencies:
     fast-diff "^1.1.2"
-
-prettier@^1.16.0:
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.3.tgz#8c62168453badef702f34b45b6ee899574a6a65d"
-  integrity sha512-kn/GU6SMRYPxUakNXhpP0EedT/KmaPzr0H5lIsDogrykbaxOpOfAFfk5XA7DZrJyMAv1wlMV3CPcZruGXVVUZw==
 
 prettier@^1.16.4:
   version "1.16.4"
