@@ -55,13 +55,6 @@ const getPageDataFile = pagePath => {
   return join(process.cwd(), `public`, pageDataPath)
 }
 
-const loadPageDataSync = pagePath => {
-  const pageDataPath = getPageDataPath(pagePath)
-  const pageDataFile = join(process.cwd(), `public`, pageDataPath)
-  const pageDataJson = fs.readFileSync(pageDataFile)
-  return JSON.parse(pageDataJson)
-}
-
 const createElement = React.createElement
 
 const sanitizeComponents = components => {
@@ -268,7 +261,6 @@ export default (pagePath, callback) => {
     setPostBodyComponents,
     setBodyProps,
     pathname: pagePath,
-    loadPageDataSync,
     bodyHtml,
     scripts,
     styles,
