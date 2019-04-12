@@ -45,6 +45,9 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
+      iframe: {
+        border: 0,
+      },
       "tt, code, kbd, samp": {
         // reset line-height set by
         // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198

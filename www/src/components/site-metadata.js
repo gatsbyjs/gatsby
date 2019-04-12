@@ -6,10 +6,8 @@ import gatsbyIcon from "../assets/gatsby-icon.png"
 
 const SiteMetadata = ({ pathname }) => {
   const {
-    data: {
-      site: {
-        siteMetadata: { siteUrl, title, twitter },
-      },
+    site: {
+      siteMetadata: { siteUrl, title, twitter },
     },
   } = useStaticQuery(graphql`
     query SiteMetadata {

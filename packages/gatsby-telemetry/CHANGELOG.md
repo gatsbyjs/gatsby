@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.6...gatsby-telemetry@1.0.7) (2019-04-11)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Ensure we capture cli version even with older gatsby-cli ([#13087](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/13087)) ([b978db6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/b978db6))
+
+### Features
+
+- **gatsby-cli:** Remove one of package-lock.json and yarn.lock on gatsby new ([#13225](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/13225)) ([3510a46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/3510a46)), closes [#13210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/13210)
+
 ## [1.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.5...gatsby-telemetry@1.0.6) (2019-04-09)
 
 ### Features

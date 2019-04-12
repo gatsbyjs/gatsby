@@ -224,7 +224,7 @@ class Image extends React.Component {
         this.setState({ isVisible: true }, () =>
           this.setState({
             imgLoaded: imageInCache,
-            imgCached: this.imageRef.current.currentSrc.length > 0,
+            imgCached: !!this.imageRef.current.currentSrc,
           })
         )
       })
