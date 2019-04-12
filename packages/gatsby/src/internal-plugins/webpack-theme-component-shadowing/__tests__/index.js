@@ -49,7 +49,7 @@ describe(`Component Shadowing`, () => {
       themes: [`a-theme`, `theme-b`, `gatsby-theme-c`].map(name => {
         return {
           themeName: name,
-          themeDir: path.join(path.sep, `some`, `place`, name),
+          themeDir: path.join(path.sep, `some`, `node_modules`, name),
         }
       }),
     })
@@ -59,7 +59,7 @@ describe(`Component Shadowing`, () => {
         issuerPath: path.join(
           path.sep,
           `some`,
-          `place`,
+          `node_modules`,
           `theme-b`,
           `src`,
           `a-theme`,
@@ -70,12 +70,13 @@ describe(`Component Shadowing`, () => {
         requestPath: path.join(
           path.sep,
           `some`,
-          `place`,
+          `node_modules`,
           `a-theme`,
           `src`,
           `components`,
           `a-component`
         ),
+        userSiteDir: path.join(path.sep, `some`),
       })
     ).toEqual(true)
 
@@ -85,7 +86,7 @@ describe(`Component Shadowing`, () => {
         issuerPath: path.join(
           path.sep,
           `some`,
-          `place`,
+          `node_modules`,
           `theme-b`,
           `src`,
           `a-theme`,
@@ -97,13 +98,39 @@ describe(`Component Shadowing`, () => {
         requestPath: path.join(
           path.sep,
           `some`,
-          `place`,
+          `node_modules`,
           `theme-b`,
           `src`,
           `components`,
           `a-component`
         ),
+        userSiteDir: path.join(path.sep, `some`),
       })
     ).toEqual(false)
+
+    expect(
+      plugin.requestPathIsIssuerShadowPath({
+        // issuer is in the user's site
+        issuerPath: path.join(
+          path.sep,
+          `some`,
+          `src`,
+          `theme-b`,
+          `components`,
+          `a-component`
+        ),
+        // require'ing a file it is a "shadow child" of
+        requestPath: path.join(
+          path.sep,
+          `some`,
+          `node_modules`,
+          `theme-b`,
+          `src`,
+          `components`,
+          `a-component`
+        ),
+        userSiteDir: path.join(path.sep, `some`),
+      })
+    ).toEqual(true)
   })
 })
