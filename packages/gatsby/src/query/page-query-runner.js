@@ -1,44 +1,20 @@
 // @flow
 
 import type { QueryJob } from "../query-runner"
-
-/**
- * Jobs of this module
- * - Ensure on bootstrap that all invalid page queries are run and report
- *   when this is done
- * - Watch for when a page's query is invalidated and re-run it.
- */
-
 const _ = require(`lodash`)
-
-const queue = require(`./query-queue`)
+const Queue = require(`better-queue`)
+const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
+const queryQueue = require(`./queue`)
 
 let queuedDirtyActions = []
 
-let active = false
-let running = false
-
 const runQueriesForPathnamesQueue = new Set()
-exports.queueQueryForPathname = pathname => {
+const queueQueryForPathname = pathname => {
   runQueriesForPathnamesQueue.add(pathname)
 }
 
-// Do initial run of graphql queries during bootstrap.
-// Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
-// for dirty nodes before running queries.
-exports.runInitialQueries = async () => {
-  active = true
-  await runQueries(true)
-  return
-}
-
-const runQueries = async (initial = false) => {
-  // Don't run queries until bootstrap gets to "run graphql queries"
-  if (!active) {
-    return
-  }
-
+const calcQueries = (initial = false) => {
   // Find paths dependent on dirty nodes
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
@@ -71,12 +47,8 @@ const runQueries = async (initial = false) => {
 
   runQueriesForPathnamesQueue.clear()
 
-  // Run these paths
-  await runQueriesForPathnames(pathnamesToRun)
-  return
+  return pathnamesToRun
 }
-
-exports.runQueries = runQueries
 
 emitter.on(`CREATE_NODE`, action => {
   queuedDirtyActions.push(action)
@@ -85,26 +57,6 @@ emitter.on(`CREATE_NODE`, action => {
 emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.payload })
 })
-
-const runQueuedActions = async () => {
-  if (active && !running) {
-    try {
-      running = true
-      await runQueries()
-    } finally {
-      running = false
-      if (queuedDirtyActions.length > 0) {
-        runQueuedActions()
-      }
-    }
-  }
-}
-exports.runQueuedActions = runQueuedActions
-
-// Wait until all plugins have finished running (e.g. various
-// transformer plugins) before running queries so we don't
-// query things in a 1/2 finished state.
-emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
 let seenIdsWithoutDataDependencies = []
 
@@ -147,10 +99,11 @@ const findIdsWithoutDataDependencies = () => {
   return notTrackedIds
 }
 
-const runQueriesForPathnames = pathnames => {
+const makeQueryJobs = pathnames => {
   const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
   const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
   const state = store.getState()
+  const queryJobs = []
 
   staticQueries.forEach(id => {
     const staticQueryComponent = store.getState().staticQueryComponents.get(id)
@@ -162,16 +115,14 @@ const runQueriesForPathnames = pathnames => {
       componentPath: staticQueryComponent.componentPath,
       context: { path: staticQueryComponent.jsonName },
     }
-    queue.push(queryJob)
+    queryJobs.push(queryJob)
   })
 
   const pages = state.pages
-  let didNotQueueItems = true
   pageQueries.forEach(id => {
     const page = pages.get(id)
     if (page) {
-      didNotQueueItems = false
-      queue.push(
+      queryJobs.push(
         ({
           id: page.path,
           jsonName: page.jsonName,
@@ -186,18 +137,7 @@ const runQueriesForPathnames = pathnames => {
       )
     }
   })
-
-  if (didNotQueueItems || !pathnames || pathnames.length === 0) {
-    return Promise.resolve()
-  }
-
-  return new Promise(resolve => {
-    const onDrain = () => {
-      queue.removeListener(`drain`, onDrain)
-      resolve()
-    }
-    queue.on(`drain`, onDrain)
-  })
+  return queryJobs
 }
 
 const findDirtyIds = actions => {
@@ -220,4 +160,73 @@ const findDirtyIds = actions => {
     }, [])
   )
   return uniqDirties
+}
+
+const runInitialQueries = async activity => {
+  const pathnamesToRun = calcQueries(true)
+  if (pathnamesToRun.length === 0) {
+    return
+  }
+
+  const queryJobs = makeQueryJobs(pathnamesToRun)
+
+  const queue = queryQueue.makeBuild()
+
+  const startQueries = process.hrtime()
+  queue.on(`task_finish`, () => {
+    const stats = queue.getStats()
+    activity.setStatus(
+      `${stats.total}/${stats.peak} ${(
+        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+      ).toFixed(2)} queries/second`
+    )
+  })
+  await queryQueue.processBatch(queue, queryJobs)
+}
+
+/////////////////////////////////////////////////////////////////////
+// Listener for gatsby develop
+
+// Initialized via `startListening`
+let listenerQueue
+
+/**
+ * Run any dirty queries. See `calcQueries` for what constitutes a
+ * dirty query
+ */
+const runQueuedQueries = () => {
+  if (listenerQueue) {
+    listenerQueue.push(makeQueryJobs(calcQueries(false)))
+  }
+}
+
+/**
+ * Starts a background process that processes any dirty queries
+ * whenever one of the following occurs:
+ *
+ * 1. A node has changed (but only after the api call has finished
+ * running)
+ * 2. A component query (e.g by editing a React Component) has
+ * changed
+ *
+ * For what constitutes a dirty query, see `calcQueries`
+ */
+const startListening = queue => {
+  // We use a queue to process batches of queries so that they are
+  // processed consecutively
+  listenerQueue = new Queue((queryJobs, callback) =>
+    queryQueue
+      .processBatch(queue, queryJobs)
+      .then(() => callback(null))
+      .catch(callback)
+  )
+
+  emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
+}
+
+module.exports = {
+  runInitialQueries,
+  startListening,
+  runQueuedQueries,
+  queueQueryForPathname,
 }

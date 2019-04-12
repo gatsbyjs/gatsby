@@ -64,7 +64,9 @@ class EvaluationTable extends Component {
             >
               <button
                 css={{
+                  background: `none`,
                   border: 0,
+                  cursor: `inherit`,
                   padding: 0,
                   textAlign: `left`,
                 }}
