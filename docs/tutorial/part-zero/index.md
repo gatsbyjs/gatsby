@@ -5,25 +5,11 @@ typora-copy-images-to: ./
 
 Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
 
-## Overview of core technologies
-
-It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
-
-- **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
-- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
-- **JavaScript**: A programming language that helps us make the web dynamic and interactive.
-- **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
-- **GraphQL**: A query language. A programming language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
-
-> 💡 (Optional!) For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
-
 ## Familiarize yourself with the command line
 
 The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
 Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) or [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows).
-
-> 💡 For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
 
 ## Install Node.js
 
@@ -45,18 +31,6 @@ The output of each of those commands should be a version number. Your versions m
 
 ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
-## Familiarize yourself with npm
-
-npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
-
-npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
-
-- On the npm website, you can browse what JavaScript packages are available in the npm registry.
-- The npm registry is a large database of information about JavaScript packages available on npm.
-- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
-
-> 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
-
 ## Install Git
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
@@ -66,8 +40,6 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
-
-> 💡 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
 ## Using the Gatsby CLI
 
@@ -131,7 +103,7 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there.
 
-> If you haven't worked with a code editor before, we recommend [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial will match, and may be easier to follow.
+> If you haven't worked with a code editor before, we recommend [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial were taken in VS Code, and therefore may look more similar to your screen.
 
 ### Download VS Code
 
@@ -139,7 +111,7 @@ Gatsby documentation sometimes includes screenshots of code editors; these scree
 
 ### Install the Prettier plugin
 
-We also recommend using [Prettier](https://github.com/prettier/prettier) -- Prettier is a tool that helps format your code, keeping it consistent and helping to avoid errors.
+We also recommend using [Prettier](https://github.com/prettier/prettier), a tool that helps format your code to avoid errors.
 
 You can use Prettier directly in your editor using the [Prettier VS Code plugin](https://github.com/prettier/prettier-vscode):
 
@@ -153,7 +125,6 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 To summarize, in this section you:
 
-- Learned about web technologies used with Gatsby (HTML, CSS, JavaScript, React, and GraphQL)
 - Learned about the command line and how to use it
 - Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool
 - Generated a new Gatsby site using the Gatsby CLI tool
@@ -162,3 +133,39 @@ To summarize, in this section you:
 - Installed a code formatter called Prettier
 
 Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
+
+## References
+
+## Overview of core technologies
+
+It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
+
+- **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
+- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
+- **JavaScript**: A programming language that helps us make the web dynamic and interactive.
+- **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
+- **GraphQL**: A query language. A programming language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
+
+## What is a website?
+
+For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
+
+## Learn more about the command line
+
+For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
+
+## Learn more about npm
+
+npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
+
+npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
+
+- On the npm website, you can browse what JavaScript packages are available in the npm registry.
+- The npm registry is a large database of information about JavaScript packages available on npm.
+- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
+
+> 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
+
+## Learn more about Git
+
+You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).

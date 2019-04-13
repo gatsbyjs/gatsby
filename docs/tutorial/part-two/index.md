@@ -309,7 +309,7 @@ CSS-in-JS is a component-oriented styling approach. Most generally, it is a patt
 
 #### Using CSS-in-JS with Gatsby
 
-There are many different CSS-in-JS libraries and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries in particular, [Glamor](/docs/glamor/) and [Styled Components](/docs/styled-components/).
+There are many different CSS-in-JS libraries and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries in particular, [Emotion](/docs/emotion/) and [Styled Components](/docs/styled-components/).
 
 #### Suggested reading on CSS-in-JS
 
@@ -321,9 +321,9 @@ Gatsby supports almost every possible styling option (if there isn't a plugin ye
 
 - [Typography.js](/packages/gatsby-plugin-typography/)
 - [Sass](/packages/gatsby-plugin-sass/)
-- [Emotion](/packages/gatsby-plugin-emotion/)
 - [JSS](/packages/gatsby-plugin-jss/)
 - [Stylus](/packages/gatsby-plugin-stylus/)
+- [PostCSS](/packages/gatsby-plugin-postcss/)
 
 and more!
 
