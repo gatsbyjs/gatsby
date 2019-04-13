@@ -102,7 +102,7 @@ This is the syntax tree that will be parsed by remark into HTML by `gatsby-trans
 
 ## Setting up a plugin
 
-For example, we are going to create a plugin that colors all top level headings in the markdown with the color purple.
+For example, we are going to create a plugin that colors all top-level headings in the markdown with the color purple.
 
 First create a local plugin by adding a `plugins` folder in your site and generating a package.json file for it. As well, create an index.js file. In this file, it will export a single function.
 
@@ -122,9 +122,9 @@ Finally, the function will return the markdownAST after the fields you wish to b
 
 ## Adding the plugin to your site
 
-You likely will want to grab `gatsby-source-filesystem` to grab the file nodes initally. in this example I am going to assume the markdown files we are working with exist in a `src/data/` directory.
+You likely will want to grab `gatsby-source-filesystem` to grab the file nodes initially. in this example I am going to assume the markdown files we are working with exist in a `src/data/` directory.
 
-The plugin is now initally set so we can add it as a sub-plugin inside `gatsby-transformer-remark`
+The plugin is now initially set so we can add it as a sub-plugin inside `gatsby-transformer-remark`
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -253,13 +253,13 @@ A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util
 
 ## Loading in changes and seeing effect.
 
-After doing such, we setup some pages to be programatically created from markdown as shown in [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). Once this is set up, we can examine that our plugin works as seen below based on the markdown we wrote earlier.
+After doing such, we setup some pages to be programmatically created from markdown as shown in [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). Once this is set up, we can examine that our plugin works as seen below based on the markdown we wrote earlier.
 
 ![Output](images/remark-ast-output.png)
 
 ## Publishing the plugin
 
-To be shared with others, we can extract the plugin to it's own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
+To be shared with others, we can extract the plugin to its own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
 
 ## Summary
 
@@ -267,4 +267,4 @@ You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transforme
 
 ## Where next?
 
-If you wish to see other plugins that maniupulate the Remark AST, search for `gatsby-remark-` in the plugin library.
+If you wish to see other plugins that manipulate the Remark AST, search for `gatsby-remark-` in the plugin library.
