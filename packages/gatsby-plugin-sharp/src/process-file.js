@@ -42,6 +42,8 @@ const argsWhitelist = [
   `grayscale`,
   `rotate`,
   `duotone`,
+  `fit`,
+  `background`,
 ]
 
 /**
@@ -104,6 +106,8 @@ exports.processFile = (file, transforms, options = {}) => {
     clonedPipeline
       .resize(roundedWidth, roundedHeight, {
         position: args.cropFocus,
+        fit: args.fit,
+        background: args.background,
       })
       .png({
         compressionLevel: args.pngCompressionLevel,

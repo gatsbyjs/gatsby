@@ -102,8 +102,11 @@ describe(`Test plugin manifest options`, () => {
       theme_color: `#a2466c`,
       display: `standalone`,
     })
-    const [filePath, contents] = fs.writeFileSync.mock.calls[0]
-    expect(filePath).toEqual(path.join(`public`, `manifest.webmanifest`))
+    const contents = fs.writeFileSync.mock.calls[0][1]
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      path.join(`public`, `manifest.webmanifest`),
+      expect.anything()
+    )
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
   })
@@ -142,9 +145,8 @@ describe(`Test plugin manifest options`, () => {
       path.dirname(`other-icons/icon-48x48.png`)
     )
 
-    const calls = fs.mkdirSync.mock.calls
-    expect(calls[0][0]).toEqual(firstIconPath)
-    expect(calls[1][0]).toEqual(secondIconPath)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
   })
 
   it(`invokes sharp if icon argument specified`, async () => {
@@ -208,8 +210,10 @@ describe(`Test plugin manifest options`, () => {
     })
 
     expect(sharp).toHaveBeenCalledTimes(0)
-    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toEqual(manifestOptions)
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(manifestOptions)
+    )
   })
 
   it(`does file name based cache busting`, async () => {
@@ -226,8 +230,10 @@ describe(`Test plugin manifest options`, () => {
     })
 
     expect(sharp).toHaveBeenCalledTimes(3)
-    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toEqual(manifestOptions)
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(manifestOptions)
+    )
   })
 
   it(`does not do cache cache busting`, async () => {
@@ -244,8 +250,10 @@ describe(`Test plugin manifest options`, () => {
     })
 
     expect(sharp).toHaveBeenCalledTimes(3)
-    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
-    expect(content).toEqual(manifestOptions)
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(manifestOptions)
+    )
   })
 
   it(`icon options iterator adds options and the icon array take precedence`, async () => {

@@ -5290,3 +5290,85 @@
   built_by: Axel Fuhrmann
   built_by_url: https://axelfuhrmann.com/
   featured: false
+- title: Maitrik's Portfolio
+  url: https://www.maitrikpatel.com/
+  main_url: https://www.maitrikpatel.com/
+  source_url: https://github.com/maitrikjpatel/portfolio
+  description: >
+    Portfolio of a Front-End Developer / UX Designer who designs and develops pixel perfect user interface, experiences and web applications.
+  categories:
+    - Portfolio
+    - Blog
+    - Design
+    - Web Development
+  built_by: Maitrik Patel
+  built_by_url: https://www.maitrikpatel.com/
+  featured: false
+- title: PicPick
+  url: https://picpick.app/
+  main_url: https://picpick.app/
+  description: >
+    All-in-one Graphic Design Tool, Screen Capture Software, Image Editor, Color Picker, Pixel Ruler and More
+  categories:
+    - Productivity
+    - App
+    - Technology
+  built_by: NGWIN
+  built_by_url: https://picpick.app/
+  featured: false
+- title: Ste O'Neill
+  main_url: https://www.steoneill.dev
+  url: https://www.steoneill.dev
+  description: >
+    MVP of a portfolio site for a full stack UK based developer.
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Ste O'Neill
+  built_by_url: https://steoneill.dev
+  featured: false
+- title: Filipe Santos Correa's Portfolio
+  description: >
+    Filipe's Personal About Me / Portfolio.
+  main_url: "https://filipesantoscorrea.com/"
+  url: "https://filipesantoscorrea.com/"
+  source_url: "https://github.com/Safi1012/filipesantoscorrea.com"
+  featured: false
+  categories:
+    - Personal Website
+    - Portfolio
+- title: Progressive Massachusetts Legislator Scorecard
+  main_url: https://scorecard.progressivemass.com
+  url: https://scorecard.progressivemass.com
+  featured: false
+  source_url: https://github.com/progressivemass/legislator-scorecard
+  description: >
+    Learn about MA state legislators' voting records through a progressive lens
+  categories:
+    - Government
+    - Education
+  built_by: Alex Holachek
+  built_by_url: "https://alex.holachek.com/"
+- title: Jeff Wolff – Portfolio
+  main_url: https://www.jeffwolff.net
+  url: https://www.jeffwolff.net
+  featured: false
+  description: >
+    A guy from San Diego who makes websites.
+  categories:
+    - Blog
+    - Portfolio
+    - Developer
+    - Frontend
+    - Personal Website
+    - Web Development
+- title: Jp Valery – Portfolio
+  main_url: https://jpvalery.photo
+  url: https://jpvalery.photo
+  featured: false
+  description: >
+    Self-taught photographer documenting spaces and people
+  categories:
+    - Portfolio
+    - Personal Website
+    - Photography

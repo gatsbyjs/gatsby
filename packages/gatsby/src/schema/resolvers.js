@@ -170,7 +170,10 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the File node for this node (we assume the node is something
   // like markdown which would be a child node of a File node).
-  const parentFileNode = context.nodeModel.findRootNodeAncestor(source)
+  const parentFileNode = context.nodeModel.findRootNodeAncestor(
+    source,
+    node => node.internal && node.internal.type === `File`
+  )
 
   // Find the linked File node(s)
   if (isArray) {
