@@ -157,7 +157,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
 
   if (!isValid(rootPath)) {
     report.panic(
-      `Could not create a project called ${rootPath} because of npm naming restrictions`
+      `Could not create a project in ${rootPath} because it's not valid path`
     )
     return
   }
