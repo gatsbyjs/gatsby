@@ -3,8 +3,8 @@ import { Link } from "gatsby"
 import {
   colors,
   space,
-  dimensions,
-  scale,
+  sizes,
+  fontSizes,
   lineHeights,
   letterSpacings,
   fonts,
@@ -148,12 +148,12 @@ const styles = {
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${space[6]}`,
-    height: dimensions.headerHeight,
+    height: sizes.headerHeight,
     fontFamily: fonts.header,
   },
   creatorsLink: {
     "&&": {
-      fontSize: scale[4],
+      fontSize: fontSizes[4],
       color: colors.gatsby,
       borderBottom: `none`,
       marginRight: space[3],
@@ -164,7 +164,7 @@ const styles = {
   },
   CreatorsHeaderLink: {
     "&&": {
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
       lineHeight: lineHeights.solid,
       letterSpacing: letterSpacings.tracked,
       textTransform: `uppercase`,

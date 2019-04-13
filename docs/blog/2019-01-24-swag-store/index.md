@@ -264,4 +264,4 @@ And this:
 
 Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
 
-You can also read about how we built out the store [here](https://www.gatsbyjs.org/blog/2018-08-09-swag-store/)!
+You can also read about how we built out the store [here](/blog/2018-08-09-swag-store/)!

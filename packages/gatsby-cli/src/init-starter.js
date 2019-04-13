@@ -8,20 +8,37 @@ const report = require(`./reporter`)
 const url = require(`url`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
+
+const {
+  getPackageManager,
+  promptPackageManager,
+} = require(`./util/configstore`)
+const isTTY = require(`./util/is-tty`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit`, ...options })
 }
 
-// Checks the existence of yarn package
+// Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-//
-// Returns true if yarn exists, false otherwise
-const shouldUseYarn = () => {
+const shouldUseYarn = async () => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
-    return true
+
+    let packageManager = getPackageManager()
+    if (!packageManager) {
+      // if package manager is not set:
+      //  - prompt user to pick package manager if in interactive console
+      //  - default to yarn if not in interactive console
+      if (isTTY()) {
+        packageManager = (await promptPackageManager()) || `yarn`
+      } else {
+        packageManager = `yarn`
+      }
+    }
+
+    return packageManager === `yarn`
   } catch (e) {
     return false
   }
@@ -67,8 +84,13 @@ const install = async rootPath => {
   process.chdir(rootPath)
 
   try {
-    let cmd = shouldUseYarn() ? spawn(`yarnpkg`) : spawn(`npm install`)
-    await cmd
+    if (await shouldUseYarn()) {
+      await fs.remove(`package-lock.json`)
+      await spawn(`yarnpkg`)
+    } else {
+      await fs.remove(`yarn.lock`)
+      await spawn(`npm install`)
+    }
   } finally {
     process.chdir(prevDir)
   }

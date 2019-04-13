@@ -1,9 +1,11 @@
 const {
   setBoundActionCreators,
-  setPluginOptions,
   // queue: jobQueue,
   // reportError,
 } = require(`./index`)
+
+const { setPluginOptions } = require(`./plugin-options`)
+
 // const { scheduleJob } = require(`./scheduler`)
 // let normalizedOptions = {}
 

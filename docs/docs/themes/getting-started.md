@@ -8,7 +8,7 @@ Scaffolding out a project that uses themes requires you to use a starter that's 
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ```
 
-With you use a starter that's built with a theme, you will see that you're initially presented with a lighter weight `gatsby-config.js`. The goal with most themes is to allow you to get up and running with something like a blog in seconds. Now you can focus on writing and gradually introduce changes and customizations only if you want to.
+When you use a starter that's built with a theme, you will see that you're initially presented with a lighter weight `gatsby-config.js`. The goal with most themes is to allow you to get up and running with something like a blog in seconds. Now you can focus on writing and gradually introduce changes and customizations only if you want to.
 
 For example, a theme-based starter for a blog might do the following:
 
