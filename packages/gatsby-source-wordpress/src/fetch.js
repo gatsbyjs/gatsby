@@ -296,7 +296,7 @@ async function fetchData({
     if (type == `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
         if (menu.meta && menu.meta.links && menu.meta.links.self) {
-          menu.meta.links.self = getProperSelfPath(apiUrl, menu.meta.links.self);
+          menu.meta.links.self = getProperSelfPath(apiUrl, menu.meta.links.self)
           entities = entities.concat(
             await fetchData({
               route: { url: menu.meta.links.self, type: `${type}_items` },
@@ -629,11 +629,11 @@ const getRoutePath = (baseUrl, fullPath) => {
  */
 const getProperSelfPath = (apiUrl, self) => {
   // Replace route self host to baseUrl if differs
-  const isDifferentDomains = self.indexOf(apiUrl) === -1;
+  const isDifferentDomains = self.indexOf(apiUrl) === -1
   if (isDifferentDomains) {
-    return self.replace(/(.*?)\/wp-json/, apiUrl);
+    return self.replace(/(.*?)\/wp-json/, apiUrl)
   }
-  return self;
+  return self
 }
 
 /**
