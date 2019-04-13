@@ -30,3 +30,23 @@ a `rel=canonical` e.g.
 ```html
 <link rel="canonical" href="https://www.example.com/about-us/" />
 ```
+
+### Adding search params
+
+URL search parameters are **not** included in the canonical url by default. This is to prevent search bots 
+penalizing a website for having duplicate content on pages when search tags are present. 
+
+To enable search parameters being added to the canonical url, set the `search` option to `true`:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-canonical-urls`,
+    options: {
+      siteUrl: `https://www.example.com`,
+      search: true,
+    },
+  },
+]
+```
