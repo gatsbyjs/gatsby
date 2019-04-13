@@ -98,13 +98,15 @@ the generated `markdownAST` would be as appears:
 }
 ```
 
+This is the syntax tree that will be parsed by remark into HTML by `gatsby-transformer-remark`.
+
 ## Setting up a plugin
 
 For example, we are going to create a plugin that colors all top level headings in the markdown with the color purple.
 
 First create a local plugin by adding a `plugins` folder in your site and generating a package.json file for it. As well, create an index.js file. In this file, it will export a single function.
 
-```js
+```js:title=plugins/gatsby-remark-purple-headers/index.js
 module.exports = ({ markdownAST }, pluginOptions) => {
   // Manipulate AST
 
@@ -120,7 +122,7 @@ Finally, the function will return the markdownAST after the fields you wish to b
 
 ## Adding the plugin to your site
 
-You likely will want to grab `gatsby-source-filesystem` to grab the file nodes initally. in this example I am going to assume the markdown files we are working with exist in `src/data/`.
+You likely will want to grab `gatsby-source-filesystem` to grab the file nodes initally. in this example I am going to assume the markdown files we are working with exist in a `src/data/` directory.
 
 The plugin is now initally set so we can add it as a sub-plugin inside `gatsby-transformer-remark`
 
@@ -137,7 +139,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-colorize-headers`],
+        plugins: [`gatsby-remark-purple-headers`],
       },
     },
   ],
@@ -148,7 +150,7 @@ If we wanted to add some options, we could switch to the object syntax:
 
 ```js
 {
-  resolve: `gatsby-remark-colorize-headers`,
+  resolve: `gatsby-remark-purple-headers`,
   options: {
     // Options here
   }
@@ -221,20 +223,48 @@ Looking again at the AST node for header:
 
 We have context about the text as well as what depth the header is (for instance here we have a depth of 1 which would equate to an `h1` element)
 
+with the inner function of the `visit` call, I parse out all of the text and if it will map to a h1, I set the type of the node to `html` and set the node's value to be some custom html.
+
+```js
+const toString = require("mdast-util-to-string")
+
+visit(markdownAST, "heading", node => {
+  let { depth } = node
+
+  // Skip if not an h1
+  if (depth !== 1) return
+
+  // Grab the innerText of the heading node
+  let text = toString(node)
+
+  const html = `
+      <h1 style="color: rebeccapurple">
+        ${text}
+      </h1>
+    `
+
+  node.type = "html"
+  node.children = undefined
+  node.value = html
+})
+```
+
+A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) which is also made by Unified was used to extract the plaintext of the inner nodes, so this would remove links or other types of nodes inside the header, but given you have full access to the markdown AST, you can modify it however you wish.
+
 ## Loading in changes and seeing effect.
 
-After doing such, we setup some pages to be programatically created from markdown as shown in [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). Once this is set up, we can examine that our colorize-headers plugin works as seen below.
+After doing such, we setup some pages to be programatically created from markdown as shown in [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). Once this is set up, we can examine that our plugin works as seen below based on the markdown we wrote earlier.
 
-TODO: Add result image
+![Output](images/remark-ast-output.png)
 
 ## Publishing the plugin
 
-To be shared with others, we can extract the plugin to it's own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and viewable in the [Plugin Library](/plugins/).
+To be shared with others, we can extract the plugin to it's own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
 
 ## Summary
 
-TODO
+You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transformer-remark` that Manipulates the Remark AST and have a further understanding about the structure of Markdown Abstract Syntax Trees
 
-```
+## Where next?
 
-```
+If you wish to see other plugins that maniupulate the Remark AST, search for `gatsby-remark-` in the plugin library.
