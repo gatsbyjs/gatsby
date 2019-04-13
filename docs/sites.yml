@@ -5372,3 +5372,12 @@
     - Portfolio
     - Personal Website
     - Photography
+- title: Pantene
+  main_url: https://pantene.com
+  url: https://pantene.com
+  featured: false
+  description: >
+    Pantene is a Swiss-created American brand of hair care products owned by Procter & Gamble
+  categories:
+    - Beauty
+    - Business
