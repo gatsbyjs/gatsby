@@ -1,64 +1,34 @@
 const Redux = require(`redux`)
 const _ = require(`lodash`)
-const fs = require(`fs-extra`)
+
 const mitt = require(`mitt`)
-const stringify = require(`json-stringify-safe`)
 const thunk = require(`redux-thunk`).default
+const reducers = require(`./reducers`)
+const { writeToCache, readFromCache } = require(`./persist`)
 
 // Create event emitter for actions
 const emitter = mitt()
 
-// Reducers
-const reducers = require(`./reducers`)
-
-const objectToMap = obj => {
-  let map = new Map()
-  Object.keys(obj).forEach(key => {
-    map.set(key, obj[key])
-  })
-  return map
-}
-
-const mapToObject = map => {
-  const obj = {}
-  for (let [key, value] of map) {
-    obj[key] = value
+// Read old node data from cache.
+const readState = () => {
+  try {
+    const state = readFromCache()
+    if (state.nodes) {
+      // re-create nodesByType
+      state.nodesByType = new Map()
+      state.nodes.forEach(node => {
+        const { type } = node.internal
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
+        }
+        state.nodesByType.get(type).set(node.id, node)
+      })
+    }
+    return state
+  } catch (e) {
+    // ignore errors.
   }
-  return obj
-}
-
-// Read from cache the old node data.
-let initialState = {}
-try {
-  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  // Apparently the file mocking in node-tracking-test.js
-  // can override the file reading replacing the mocked string with
-  // an already parsed object.
-  if (Buffer.isBuffer(file) || typeof file === `string`) {
-    initialState = JSON.parse(file)
-  }
-  if (initialState.staticQueryComponents) {
-    initialState.staticQueryComponents = objectToMap(
-      initialState.staticQueryComponents
-    )
-  }
-  if (initialState.components) {
-    initialState.components = objectToMap(initialState.components)
-  }
-  if (initialState.nodes) {
-    initialState.nodes = objectToMap(initialState.nodes)
-
-    initialState.nodesByType = new Map()
-    initialState.nodes.forEach(node => {
-      const { type } = node.internal
-      if (!initialState.nodesByType.has(type)) {
-        initialState.nodesByType.set(type, new Map())
-      }
-      initialState.nodesByType.get(type).set(node.id, node)
-    })
-  }
-} catch (e) {
-  // ignore errors.
+  return {}
 }
 
 const multi = ({ dispatch }) => next => action =>
@@ -71,10 +41,14 @@ const configureStore = initialState =>
     Redux.applyMiddleware(thunk, multi)
   )
 
-const store = configureStore(initialState)
+const store = configureStore(readState())
 
 // Persist state.
-function saveState() {
+const saveState = () => {
+  if (process.env.DANGEROUSLY_DISABLE_OOM) {
+    return Promise.resolve()
+  }
+
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
@@ -85,13 +59,7 @@ function saveState() {
     `staticQueryComponents`,
   ])
 
-  pickedState.staticQueryComponents = mapToObject(
-    pickedState.staticQueryComponents
-  )
-  pickedState.components = mapToObject(pickedState.components)
-  pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
-  const stringified = stringify(pickedState, null, 2)
-  return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
+  return writeToCache(pickedState)
 }
 
 store.subscribe(() => {
@@ -100,10 +68,9 @@ store.subscribe(() => {
 })
 
 module.exports = {
-  /** Event emitter */
   emitter,
-  /** Redux store */
   store,
   configureStore,
+  readState,
   saveState,
 }

@@ -6,7 +6,7 @@ import {
   colors,
   space,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
   letterSpacings,
   fonts,
@@ -17,9 +17,11 @@ const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${space[8]}`,
+      margin: `0 auto`,
       paddingBottom: space[9],
       paddingTop: space[9],
+      paddingLeft: space[8],
+      paddingRight: space[8],
       textAlign: `center`,
       [breakpoints.md]: {
         paddingBottom: rhythm(3),
@@ -44,15 +46,15 @@ const MastheadContent = () => (
       css={{
         color: colors.gray.copy,
         fontFamily: fonts.header,
-        fontSize: scale[4],
+        fontSize: fontSizes[4],
         maxWidth: rhythm(30),
         margin: `0 auto ${space[7]}`,
         WebkitFontSmoothing: `antialiased`,
         [breakpoints.sm]: {
-          fontSize: scale[5],
+          fontSize: fontSizes[5],
         },
         [breakpoints.lg]: {
-          fontSize: scale[6],
+          fontSize: fontSizes[6],
         },
       }}
     >

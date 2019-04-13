@@ -11,8 +11,16 @@ const stringifyMarkdownAST = (node = ``) => {
   }
 }
 
-const docId = (parentId, docsJson) =>
-  `documentationJS ${parentId} path #${JSON.stringify(docsJson.path)}`
+const docId = (parentId, docsJson) => {
+  const lineNumber = docsJson.loc
+    ? docsJson.loc.start.line
+    : docsJson.lineNumber
+
+  return `documentationJS ${parentId} path #${JSON.stringify(
+    docsJson.path
+  )} line ${lineNumber}`
+}
+
 const descriptionId = (parentId, name) =>
   `${parentId}--DocumentationJSComponentDescription--${name}`
 

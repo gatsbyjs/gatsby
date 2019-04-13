@@ -141,13 +141,17 @@ const link = ({ by, from }) => async (source, args, context, info) => {
 }
 
 const fileByPath = (source, args, context, info) => {
-  let fieldValue = source[info.fieldName]
+  const fieldValue = source && source[info.fieldName]
+
+  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
+  if (
+    Array.isArray(fieldValue) &&
+    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
+  ) {
+    return fieldValue
+  }
 
   const isArray = getNullableType(info.returnType) instanceof GraphQLList
-
-  if (!fieldValue) {
-    return null
-  }
 
   const findLinkedFileNode = async relativePath => {
     // Use the parent File node to create the absolute path to
@@ -166,7 +170,10 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the File node for this node (we assume the node is something
   // like markdown which would be a child node of a File node).
-  const parentFileNode = context.nodeModel.findRootNodeAncestor(source)
+  const parentFileNode = context.nodeModel.findRootNodeAncestor(
+    source,
+    node => node.internal && node.internal.type === `File`
+  )
 
   // Find the linked File node(s)
   if (isArray) {

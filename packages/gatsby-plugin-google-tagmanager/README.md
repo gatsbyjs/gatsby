@@ -23,6 +23,7 @@ plugins: [
       // Specify optional GTM environment details.
       gtmAuth: "YOUR_GOOGLE_TAGMANAGER_ENVIROMENT_AUTH_STRING",
       gtmPreview: "YOUR_GOOGLE_TAGMANAGER_ENVIROMENT_PREVIEW_NAME",
+      dataLayerName: "YOUR_DATA_LAYER_NAME",
     },
   },
 ]
@@ -30,4 +31,4 @@ plugins: [
 
 #### Note
 
-Out of the box this plugin will simply load Google Tag Manager on the initial page/app load. It's up to you to fire tags based on changes in your app. To automatically track page changes, in GA for instance, you can configure your tags in GTM to trigger on [History Change](https://support.google.com/tagmanager/topic/7679384?hl=en&rd=1#HistoryChange).
+Out of the box this plugin will simply load Google Tag Manager on the initial page/app load. It's up to you to fire tags based on changes in your app. To automatically track page changes, in GA for instance, you can configure your tags in GTM to trigger on [History Change](https://support.google.com/tagmanager/answer/7679322?hl=en&ref_topic=7679108).
