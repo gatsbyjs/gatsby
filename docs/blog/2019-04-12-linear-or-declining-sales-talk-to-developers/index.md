@@ -9,7 +9,7 @@ tags:
   - developer experience
 ---
 
-So you’ve spent countless hours on sales enablement to help improve your sales teams conversion rates and deal size. You’ve spent thousands of dollars on sales tools to make your team more effective and efficient. You’ve spent days/months searching for that next “rockstar rep”. You’ve optimized your CRM to help surface hot leads and implemented a sales process to get help you achieve predictable outcomes from your sales metrics.
+So you’ve spent countless hours on sales enablement to help improve your sales teams conversion rates and deal size. You’ve spent thousands of dollars on sales tools to make your team more effective and efficient. You’ve spent days/months searching for that next “rockstar rep”. You’ve optimized your CRM to help surface hot leads and implemented a sales process to help you achieve predictable outcomes from your sales metrics.
 
 Your marketing team is doing all they can to drive leads to the top of the funnel for the sales team. You’re A/B testing content and landing pages to improve SEO and signups. Your marketing automation solution is blasting emails high, wide and deep. You’re attending expensive trade shows and events. You’re analyzing all the marketing channels to see how effective your marketing spend and content is performing. You’re hiring PR contractors and content folks to help drive more quality leads and expand your brand.
 
@@ -70,7 +70,7 @@ So why does poor performance persist? Simply put: organizational knowledge silos
 
 2. **Developers don’t know it’s a priority.** Commercial Executives and Leaders simply assume their development teams are always using the best tools for performance and treating performance as a key initiative at all times. In reality, development organizations are responsive to and prioritize the needs vocalized by the commercial organization. If development teams don’t know performance is important to sales and marketing, they won’t prioritize it accordingly.
 
-3. **Organizations don’t track performance as a key metric.** Commercial Executives and Leaders often don’t think about what a huge impact site/app performance could have on the KPI’s they care about most. therefore, they never thought to focus on it? You’d be surprised how many companies I talk with don’t have someone owning performance as a key metric.
+3. **Organizations don’t track performance as a key metric.** Commercial Executives and Leaders often don’t think about what a huge impact site/app performance could have on the KPI’s they care about most, therefore, they never thought to focus on it. You’d be surprised how many companies I talk with don’t have someone owning performance as a key metric.
 
 **I feel strongly that there needs to be a tighter bond between the commercial and engineering organizations.**
 
@@ -100,7 +100,7 @@ What you may not have is the right questions. That’s what I would like to help
 
 Developers love having a great developer experience. You may be wondering: what does that mean? In short, they need tools to do their job to provide amazing outputs, the outputs you want too. The tools they use to have the right functionality, stable, easy to use and have clarity.
 
-Many developers do not have a great [developer experience](https://hackernoon.com/developer-experience-dx-devs-are-people-too-6590d6577afe) though. They are using old school monolithic CMS’s to create websites. They are using old frameworks for development that are slow and clunky. They are frustrated with the time it takes to get something deployed to production because they are waiting on other dependencies. The list goes on and on. **To drive home this point, let’s say you gave your sales team an Excel spreadsheet to use instead of a CRM. Do think they would like the “sales experience”?** I think you get the point now.
+Many developers do not have a great [developer experience](https://hackernoon.com/developer-experience-dx-devs-are-people-too-6590d6577afe) though. They are using old school monolithic CMS’s to create websites. They are using old frameworks for development that are slow and clunky. They are frustrated with the time it takes to get something deployed to production because they are waiting on other dependencies. The list goes on and on. **To drive home this point, let’s say you gave your sales team an Excel spreadsheet to use instead of a CRM. Do you think they would like the “sales experience”?** I think you get the point now.
 .
 Many would like to change but they may not have a strong enough voice to make that change. This is where you come in.
 
@@ -122,7 +122,7 @@ So: what can you do?
 
 7. How do they feel about working with the current CMS you may have in-house today? If they are not pleased, what would they ideally like to use and why?
 
-8. Do they have the tools/technology in place to allow them to ensure your site/app easily loads across any device? What about poor network connections? The abandonment rate for mobile and other handheld devices is astonishing with poor performance. Check your own sites mobile speed and compare it to your competitors’ here.
+8. Do they have the tools/technology in place to allow them to ensure your site/app easily loads across any device? What about poor network connections? The abandonment rate for mobile and other handheld devices is astonishing with poor performance. Check your own sites mobile speed and compare it to your competitors’ [here](https://www.thinkwithgoogle.com/feature/testmysite).
 
 9. **Ask if there are ways to improve performance while drastically reducing infra spend**. There are many ways today to completely eliminate your backend servers and gain amazing performance -- while increasing your gross margin!
 
