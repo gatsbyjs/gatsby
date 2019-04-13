@@ -179,7 +179,9 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
 
   if (!isValid(rootPath)) {
     report.panic(
-      `Could not create a project in ${rootPath} because it's not valid path`
+      `Could not create a project in "${sysPath.resolve(
+        rootPath
+      )}" because it's not a valid path`
     )
     return
   }
