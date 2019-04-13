@@ -10,12 +10,14 @@ import Avatar from "../avatar"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, {
+import {
   colors,
   space,
   radii,
   transition,
   shadows,
+  fontSizes,
+  breakpoints,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
@@ -36,14 +38,14 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${presets.Md} {
+  ${breakpoints.md} {
     width: 20rem;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-shrink: 0;
     margin-right: 0;
-    margin-bottom: ${rhythm(space[8])};
+    margin-bottom: ${space[8]};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
     transition: transform ${transition.speed.default}
@@ -51,7 +53,7 @@ const HomepageBlogPostRoot = styled(
       box-shadow ${transition.speed.default} ${transition.curve.default};
 
     :hover {
-      transform: translateY(-${rhythm(space[1])});
+      transform: translateY(-${space[1]});
       box-shadow: ${shadows.overlay};
     }
 
@@ -65,20 +67,20 @@ const HomepageBlogPostRoot = styled(
 const Cover = styled(Img)`
   border-radius: ${radii[2]}px ${radii[2]}px 0 0;
   display: block;
-  margin-bottom: -${rhythm(space[3])};
+  margin-bottom: -${space[3]};
 `
 
 const Header = styled(`h1`)`
   color: ${colors.gatsbyDarker};
-  font-size: ${presets.scale[4]};
+  font-size: ${fontSizes[4]};
   font-weight: bold;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${presets.Lg} {
-    font-size: ${props => (props.first ? presets.scale[6] : presets.scale[5])};
-    padding: ${rhythm(space[7])};
+  ${breakpoints.lg} {
+    font-size: ${props => (props.first ? fontSizes[6] : fontSizes[5])};
+    padding: ${space[7]};
     padding-bottom: 0;
   }
 `
@@ -88,17 +90,17 @@ const Meta = styled(`div`)`
   color: ${colors.gray.calm};
   display: flex;
   flex-wrap: wrap;
-  font-size: ${presets.scale[1]};
-  margin-top: ${rhythm(space[4])};
+  font-size: ${fontSizes[1]};
+  margin-top: ${space[4]};
   padding: 0 ${rhythm(4 / 5)};
 
   & > * {
     flex-shrink: 0;
   }
 
-  ${presets.Lg} {
-    margin-top: ${rhythm(space[6])};
-    padding: 0 ${rhythm(space[7])};
+  ${breakpoints.lg} {
+    margin-top: ${space[6]};
+    padding: 0 ${space[7]};
   }
 `
 
@@ -116,7 +118,7 @@ const Author = styled(Link)`
     font-weight: normal;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     :hover {
       span {
         background: ${colors.ui.bright};
@@ -129,10 +131,10 @@ const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
   padding: 0 ${rhythm(4 / 5)};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin: 0;
-    margin-top: ${rhythm(space[6])};
-    padding: 0 ${rhythm(space[7])};
+    margin-top: ${space[6]};
+    padding: 0 ${space[7]};
   }
 `
 
@@ -143,7 +145,7 @@ const ReadMore = styled(Link)`
   color: ${colors.gatsby};
   display: flex;
   flex-grow: 1;
-  font-size: ${presets.scale[1]};
+  font-size: ${fontSizes[1]};
   left: 0;
   padding: ${rhythm(4 / 5)};
   position: absolute;
@@ -156,19 +158,19 @@ const ReadMore = styled(Link)`
   }
 
   svg {
-    height: ${rhythm(space[4])};
-    width: ${rhythm(space[4])};
+    height: ${space[4]};
+    width: ${space[4]};
   }
 
   span {
     color: ${colors.gatsby};
     border-bottom: 1px solid ${colors.ui.bright};
     font-weight: bold;
-    margin-right: ${rhythm(space[1])};
+    margin-right: ${space[1]};
   }
 
-  ${presets.Lg} {
-    padding: ${rhythm(space[7])};
+  ${breakpoints.lg} {
+    padding: ${space[7]};
 
     span {
       :hover {

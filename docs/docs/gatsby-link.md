@@ -103,6 +103,8 @@ const Header = <>
 </>;
 ```
 
+_**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please check your version and/or update._
+
 ### Pass state as props to the linked page
 
 <iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />

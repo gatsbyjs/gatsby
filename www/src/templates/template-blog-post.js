@@ -7,8 +7,16 @@ import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 
 import Layout from "../components/layout"
-import presets, { colors, space, transition } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import {
+  colors,
+  space,
+  transition,
+  breakpoints,
+  lineHeights,
+  fontSizes,
+  fonts,
+} from "../utils/presets"
+import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -34,7 +42,7 @@ class BlogPostTemplate extends React.Component {
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: options.headerFontFamily.join(`,`),
+        fontFamily: fonts.header,
         fontWeight: `bold`,
         color: colors.gatsby,
       },
@@ -44,13 +52,13 @@ class BlogPostTemplate extends React.Component {
       marginBottom: 0,
       color: colors.gray.calm,
       fontWeight: `normal`,
-      lineHeight: presets.lineHeights.solid,
+      lineHeight: lineHeights.solid,
     }
     const BioLine = ({ children }) => (
       <p
         css={{
-          lineHeight: presets.lineHeights.dense,
-          fontFamily: options.headerFontFamily.join(`,`),
+          lineHeight: lineHeights.dense,
+          fontFamily: fonts.header,
           margin: 0,
           color: colors.gray.calm,
         }}
@@ -140,10 +148,10 @@ class BlogPostTemplate extends React.Component {
             <section
               css={{
                 display: `flex`,
-                marginBottom: rhythm(space[5]),
-                [presets.Md]: {
-                  marginTop: rhythm(space[3]),
-                  marginBottom: rhythm(space[9]),
+                marginBottom: space[5],
+                [breakpoints.md]: {
+                  marginTop: space[3],
+                  marginBottom: space[9],
                 },
               }}
             >
@@ -161,8 +169,8 @@ class BlogPostTemplate extends React.Component {
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      fontSize: presets.scale[3],
-                      marginBottom: rhythm(space[1]),
+                      fontSize: fontSizes[3],
+                      marginBottom: space[1],
                       color: `${colors.gatsby}`,
                     }}
                   >
@@ -199,14 +207,14 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [presets.Lg]: { marginBottom: rhythm(5 / 4) },
+                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
-                <div css={{ marginBottom: rhythm(space[5]) }}>
+                <div css={{ marginBottom: space[5] }}>
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                   {post.frontmatter.imageAuthor &&
                     post.frontmatter.imageAuthorLink && (
@@ -232,28 +240,28 @@ class BlogPostTemplate extends React.Component {
         <div
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
-            marginTop: rhythm(space[9]),
-            [presets.Md]: {
-              marginTop: rhythm(space[9]),
-              paddingBottom: rhythm(space[5]),
-              paddingTop: rhythm(space[5]),
+            marginTop: space[9],
+            [breakpoints.md]: {
+              paddingBottom: space[5],
+              paddingTop: space[5],
             },
-            [presets.Lg]: {
-              marginTop: rhythm(3),
-              paddingBottom: rhythm(space[9]),
-              paddingTop: rhythm(space[9]),
+            [breakpoints.lg]: {
+              paddingBottom: space[9],
+              paddingTop: space[9],
             },
           }}
         >
           <Container>
-            <div css={{ [presets.Sm]: { display: `flex`, width: `100%` } }}>
-              <div css={{ [presets.Sm]: { width: `50%` } }}>
+            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
+              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [presets.Md]: { marginLeft: `-${rhythm(space[4])}` },
+                        [breakpoints.md]: {
+                          marginLeft: `-${space[4]}`,
+                        },
                       }}
                     >
                       <ArrowBackIcon style={{ verticalAlign: `sub` }} />
@@ -265,8 +273,8 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(space[5]),
-                  [presets.Sm]: { marginTop: 0, width: `50%` },
+                  marginTop: space[5],
+                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -274,7 +282,9 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [presets.Md]: { marginRight: `-${rhythm(space[4])}` },
+                        [breakpoints.md]: {
+                          marginRight: `-${space[4]}`,
+                        },
                       }}
                     >
                       {next.frontmatter.title}

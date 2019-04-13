@@ -7,8 +7,14 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
-import { options, rhythm } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import {
+  colors,
+  space,
+  breakpoints,
+  fontSizes,
+  letterSpacings,
+  fonts,
+} from "../utils/presets"
 
 const legendBorderColor = colors.ui.light
 
@@ -36,7 +42,7 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [presets.Sm]: {
+    [breakpoints.sm]: {
       borderBottom: 0,
     },
   }
@@ -86,9 +92,9 @@ const LegendTable = () => {
         css={{
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           display: `none`,
-          [presets.Sm]: {
+          [breakpoints.sm]: {
             display: `table`,
           },
         }}
@@ -101,8 +107,8 @@ const LegendTable = () => {
           display: `table`,
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
-          [presets.Sm]: {
+          fontFamily: fonts.header,
+          [breakpoints.sm]: {
             display: `none`,
           },
         }}
@@ -166,7 +172,7 @@ const FeaturesHeader = () => (
       css={{
         fontWeight: `normal`,
         textTransform: `uppercase`,
-        letterSpacing: presets.letterSpacings.tracked,
+        letterSpacing: letterSpacings.tracked,
       }}
     >
       Legend
@@ -199,7 +205,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: presets.scale[1], marginTop: rhythm(space[8]) }}>
+  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

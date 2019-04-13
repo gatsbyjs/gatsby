@@ -3,6 +3,7 @@
  * Redux, css-in-js libraries, etc. that need custom setups for server
  * rendering.
  * @param {Object} $0
+ * @param {string} $0.pathname The pathname of the page currently being rendered.
  * @param {function} $0.replaceBodyHTMLString Call this with the HTML string
  * you render. **WARNING** if multiple plugins implement this API it's the
  * last plugin that "wins". TODO implement an automated warning against this.
@@ -99,6 +100,7 @@ exports.onRenderBody = true
  * replace head components to be rendered in your `html.js`. This is useful if
  * you need to reorder scripts or styles added by other plugins.
  * @param {Object} $0
+ * @param {string} $0.pathname The pathname of the page currently being rendered.
  * @param {Array<ReactNode>} $0.getHeadComponents Returns the current `headComponents` array.
  * @param {function} $0.replaceHeadComponents Takes an array of components as its
  * first argument which replace the `headComponents` array which is passed

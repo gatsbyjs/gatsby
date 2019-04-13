@@ -3,11 +3,13 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import presets, {
+import {
   colors,
   transition,
   shadows,
   space,
+  breakpoints,
+  sizes,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
@@ -119,16 +121,16 @@ const styles = {
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [presets.Md]: {
-      height: `calc(100vh - ${presets.headerHeight} - ${presets.bannerHeight})`,
+    [breakpoints.md]: {
+      height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${presets.headerHeight} + ${presets.bannerHeight})`,
-      width: rhythm(presets.sidebar.width.default),
+      top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
+      width: rhythm(sizes.sidebarWidth.default),
     },
-    [presets.Lg]: {
-      width: rhythm(presets.sidebar.width.large),
+    [breakpoints.lg]: {
+      width: rhythm(sizes.sidebarWidth.large),
     },
   },
   sidebar: {
@@ -137,7 +139,7 @@ const styles = {
       transition.curve.default
     }`,
     boxShadow: shadows.dialog,
-    [presets.Md]: {
+    [breakpoints.md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -145,26 +147,26 @@ const styles = {
   sidebarToggleButton: {
     backgroundColor: colors.gatsby,
     borderRadius: `50%`,
-    bottom: rhythm(space[11]),
+    bottom: space[11],
     boxShadow: shadows.dialog,
     cursor: `pointer`,
     display: `flex`,
-    height: rhythm(space[10]),
+    height: space[10],
     justifyContent: `space-around`,
     position: `fixed`,
-    right: rhythm(space[6]),
+    right: space[6],
     visibility: `visible`,
-    width: rhythm(space[10]),
+    width: space[10],
     zIndex: 20,
-    [presets.Md]: { display: `none` },
+    [breakpoints.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,
     color: colors.white,
     display: `flex`,
     flexDirection: `column`,
-    height: rhythm(space[5]),
+    height: space[5],
     visibility: `visible`,
-    width: rhythm(space[5]),
+    width: space[5],
   },
 }

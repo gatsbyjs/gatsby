@@ -4,8 +4,15 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, { colors, space, radii, shadows } from "../utils/presets"
-import { options, rhythm } from "../utils/typography"
+import {
+  colors,
+  space,
+  fontSizes,
+  radii,
+  shadows,
+  breakpoints,
+  fonts,
+} from "../utils/presets"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -17,8 +24,8 @@ import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = rhythm(space[6])
-const gutterDesktop = rhythm(space[8])
+const gutter = space[6]
+const gutterDesktop = space[8]
 
 const styles = {
   link: {
@@ -27,7 +34,7 @@ const styles = {
   },
   prevNextLink: {
     color: colors.lilac,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     position: `absolute`,
     top: 280,
     width: 300,
@@ -43,12 +50,12 @@ const styles = {
   },
   prevNextPermalinkLabel: {
     color: colors.gray.calm,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `normal`,
   },
   prevNextPermalinkImage: {
     marginBottom: 0,
-    marginTop: rhythm(space[6]),
+    marginTop: space[6],
   },
   prevNextPermalinkTitle: {
     color: colors.gatsby,
@@ -70,12 +77,12 @@ const styles = {
     marginRight: 4,
     verticalAlign: `sub`,
     position: `absolute`,
-    left: `-${rhythm(space[6])}`,
+    left: `-${space[6]}`,
     top: `50%`,
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(space[8]),
+    marginLeft: space[8],
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -263,10 +270,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: rhythm(space[2]),
-                  [presets.Lg]: {
+                  paddingBottom: space[2],
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: rhythm(space[6]),
+                    paddingBottom: space[6],
                   },
                 }}
               >
@@ -311,9 +318,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 css={{
                   display: `flex`,
                   borderTop: `1px solid ${colors.ui.light}`,
-                  fontFamily: options.headerFontFamily.join(`,`),
+                  fontFamily: fonts.header,
                   margin: `0 ${gutter}`,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -357,7 +364,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: presets.scale[4],
+                          fontSize: fontSizes[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}
@@ -405,17 +412,17 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         border: 0,
                         borderRadius: radii[1],
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
-                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontFamily: fonts.header,
                         fontWeight: `bold`,
-                        marginRight: rhythm(space[2]),
-                        padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+                        marginRight: space[2],
+                        padding: `${space[1]} ${space[4]}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
                           color: colors.white,
                           borderBottom: `none`,
                         },
-                        [shouldShowVisitButtonOnMobile && presets.Sm]: {
+                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
                           display: `block`,
                         },
                       }}
@@ -458,7 +465,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [presets.Lg]: {
+                  [breakpoints.lg]: {
                     padding: gutterDesktop,
                   },
                 }}
@@ -467,7 +474,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <div
                   css={{
                     display: `flex`,
-                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontFamily: fonts.header,
                   }}
                 >
                   <div
