@@ -5266,6 +5266,30 @@
   built_by: RedCarpet Dev Team
   built_by_url: https://www.redcarpetup.com
   featured: false
+- title: talita traveler
+  url: https://talitatraveler.com/
+  main_url: https://talitatraveler.com/
+  source_url: https://github.com/afuh/talitatraveler
+  description: >
+    Talita Traveler's personal blog.
+  categories:
+    - Blog
+    - Personal Website
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+- title: Pastelería el Progreso
+  url: https://pasteleriaelprogreso.com/
+  main_url: https://pasteleriaelprogreso.com/
+  source_url: https://github.com/afuh/elprogreso
+  description: >
+    Famous bakery in Buenos Aires.
+  categories:
+    - Food
+    - Gallery
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
 - title: Maitrik's Portfolio
   url: https://www.maitrikpatel.com/
   main_url: https://www.maitrikpatel.com/
