@@ -12,7 +12,7 @@ import {
   transition,
   radii,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -164,7 +164,7 @@ class CreatorTemplate extends Component {
                 <div
                   css={{
                     alignSelf: `flex-start`,
-                    fontSize: scale[1],
+                    fontSize: fontSizes[1],
                     marginRight: space[2],
                   }}
                 >

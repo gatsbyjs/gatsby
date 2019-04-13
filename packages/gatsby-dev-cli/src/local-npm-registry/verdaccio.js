@@ -2,6 +2,7 @@ const startVerdaccio = require(`verdaccio`).default
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
+const os = require(`os`)
 
 const {
   getMonorepoPackageJsonPath,
@@ -12,7 +13,7 @@ const { registerCleanupTask } = require(`./cleanup-tasks`)
 let VerdaccioInitPromise = null
 
 const verdaccioConfig = {
-  storage: path.join(__dirname, `..`, `..`, `verdaccio`, `storage`),
+  storage: path.join(os.tmpdir(), `verdaccio`, `storage`),
   port: 4873, // default
   web: {
     enable: true,
