@@ -10220,7 +10220,7 @@ graceful-fs@^4.1.15, graceful-fs@^4.1.9:
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
   integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
 
-graphql-compose@^6.0.3:
+graphql-compose@6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-6.0.3.tgz#fa5668a30694abef4166703aa03af07a741039a8"
   integrity sha512-QpywEtNvlEQS0a5VIseMA/tk67QmEN9NNUx1B1tzGR/p7MePyus9wvci2cIP/mwdDrvLRRbwpmidSKQXFD3SEA==
