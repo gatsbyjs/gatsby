@@ -24,7 +24,7 @@ let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId },
+  { actions, getNode, store, cache, createNodeId, createContentDigest },
   {
     baseUrl,
     protocol,
@@ -166,7 +166,11 @@ exports.sourceNodes = async (
   }
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({ entities, createNode })
+  normalize.createNodesFromEntities({
+    entities,
+    createNode,
+    createContentDigest,
+  })
 
   return
 }
