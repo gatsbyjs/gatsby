@@ -98,10 +98,20 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   loader.getResourcesForPathname(browserLoc.pathname).then(() => {
-    const Root = () => (
-      <Location>
-        {({ location }) => <LocationHandler location={location} />}
-      </Location>
+    // const Root = () => (
+    //   <Location>
+    //     {locationContext => <LocationHandler {...locationContext} />}
+    //   </Location>
+    // )
+
+    const Root = () =>
+      React.createElement(
+        Router,
+        {
+          // basepath: __PATH_PREFIX__,
+          primary: false,
+        },
+        React.createElement(LocationHandler, { path: `/*` })
     )
 
     const WrappedRoot = apiRunner(
