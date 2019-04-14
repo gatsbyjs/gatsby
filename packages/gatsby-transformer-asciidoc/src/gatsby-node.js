@@ -65,6 +65,8 @@ async function onCreateNode({
       };
     }
 
+    let pageAttributes = extractPageAttributes(doc.getAttributes())
+
     const asciiNode = {
       id: createNodeId(`${node.id} >>> ASCIIDOC`),
       parent: node.id,
@@ -80,7 +82,8 @@ async function onCreateNode({
         main: title.getMain()
       },
       revision,
-      author
+      author,
+      'pageAttributes': pageAttributes,
     };
     asciiNode.internal.contentDigest = createContentDigest(asciiNode);
     createNode(asciiNode);
@@ -106,5 +109,19 @@ const resolveImagesDir = (pathPrefix, optionImagesDir) => {
 }
 
 const withPathPrefix = (pathPrefix, url) => (pathPrefix + url).replace(/\/\//, `/`)
+
+const extractPageAttributes = (allAttributes) => {
+  var allPageAttributes = Object.keys(allAttributes).filter(v => v.startsWith('page-'));
+  var newAttributes = {}
+
+  for (const key in allPageAttributes) {
+    var currentKey = allPageAttributes[key]
+    var newKey = currentKey.replace('page-', '')
+    var value = allAttributes[currentKey]
+    newAttributes[newKey]=value
+  }
+
+  return newAttributes
+}
 
 exports.onCreateNode = onCreateNode;
