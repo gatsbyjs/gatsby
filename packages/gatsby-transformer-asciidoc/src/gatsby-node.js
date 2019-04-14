@@ -1,43 +1,57 @@
-const asciidoc = require(`asciidoctor.js`)()
+"use strict";
 
-async function onCreateNode(
-  {
-    node,
-    actions,
-    loadNodeContent,
-    createNodeId,
-    reporter,
-    createContentDigest,
-  },
-  pluginOptions
-) {
-  // Filter out non-adoc content
-  if (!node.extension || node.extension !== `adoc`) {
-    return
+const asciidoc = require(`asciidoctor.js`)();
+
+async function onCreateNode({
+  node,
+  actions,
+  pathPrefix,
+  loadNodeContent,
+  createNodeId,
+  reporter,
+  createContentDigest
+}, pluginOptions) {
+  var extensionsConfig = pluginOptions.fileExtensions
+
+  // make extensions configurable and use adoc and asciidoc as default
+  var supportedExtensions = ( typeof extensionsConfig != 'undefined' && extensionsConfig instanceof Array ) ? extensionsConfig : [`adoc`, `.asciidoc`]
+  var currentExtension = node.extension
+  var isSupportedExtension = (supportedExtensions.indexOf(currentExtension) > -1);
+
+  if (!isSupportedExtension) {
+    return;
   }
 
-  const { createNode, createParentChildLink } = actions
-  // Load Asciidoc contents
-  const content = await loadNodeContent(node)
-  // Load Asciidoc file for extracting
+  // changes the incoming imagesdir option to take the
+  var changedImagesDir = resolveImagesDir(pathPrefix, pluginOptions.attributes.imagesdir)
+  pluginOptions.attributes.imagesDir = changedImagesDir
+
+  const {
+    createNode,
+    createParentChildLink
+  } = actions; // Load Asciidoc contents
+
+  const content = await loadNodeContent(node); // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
   // We use a `let` here as a warning: some operations, like .convert() mutate the document
-  let doc = await asciidoc.load(content, pluginOptions)
+
+  let doc = await asciidoc.load(content, pluginOptions);
 
   try {
-    const html = doc.convert()
-    // Use "partition" option to be able to get title, subtitle, combined
-    const title = doc.getDocumentTitle({ partition: true })
+    const html = doc.convert(); // Use "partition" option to be able to get title, subtitle, combined
 
-    let revision = null
-    let author = null
+    const title = doc.getDocumentTitle({
+      partition: true
+    });
+    let revision = null;
+    let author = null;
 
     if (doc.hasRevisionInfo()) {
       revision = {
         date: doc.getRevisionDate(),
         number: doc.getRevisionNumber(),
-        remark: doc.getRevisionRemark(),
-      }
+        remark: doc.getRevisionRemark()
+      };
     }
 
     if (doc.getAuthor()) {
@@ -47,8 +61,8 @@ async function onCreateNode(
         lastName: doc.getAttribute(`lastname`) || ``,
         middleName: doc.getAttribute(`middlename`) || ``,
         authorInitials: doc.getAttribute(`authorinitials`) || ``,
-        email: doc.getAttribute(`email`) || ``,
-      }
+        email: doc.getAttribute(`email`) || ``
+      };
     }
 
     const asciiNode = {
@@ -56,31 +70,41 @@ async function onCreateNode(
       parent: node.id,
       internal: {
         type: `Asciidoc`,
-        mediaType: `text/html`,
+        mediaType: `text/html`
       },
       children: [],
       html,
       document: {
         title: title.getCombined(),
         subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
-        main: title.getMain(),
+        main: title.getMain()
       },
       revision,
-      author,
-    }
-
-    asciiNode.internal.contentDigest = createContentDigest(asciiNode)
-
-    createNode(asciiNode)
-    createParentChildLink({ parent: node, child: asciiNode })
+      author
+    };
+    asciiNode.internal.contentDigest = createContentDigest(asciiNode);
+    createNode(asciiNode);
+    createParentChildLink({
+      parent: node,
+      child: asciiNode
+    });
   } catch (err) {
-    reporter.panicOnBuild(
-      `Error processing Asciidoc ${
-        node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
-      }:\n
-      ${err.message}`
-    )
+    reporter.panicOnBuild(`Error processing Asciidoc ${node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`}:\n
+      ${err.message}`);
   }
 }
 
-exports.onCreateNode = onCreateNode
+const resolveImagesDir = (pathPrefix, optionImagesDir) => {
+  var defaultImagesDir = `/images`
+  var currentPathPrefix = pathPrefix || ``
+
+  if (optionImagesDir === undefined) {
+    return withPathPrefix(currentPathPrefix, defaultImagesDir)
+  }
+
+  return withPathPrefix(currentPathPrefix, defaultImagesDir)
+}
+
+const withPathPrefix = (pathPrefix, url) => (pathPrefix + url).replace(/\/\//, `/`)
+
+exports.onCreateNode = onCreateNode;
