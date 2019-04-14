@@ -1,7 +1,4 @@
-exports.onRouteUpdate = (
-  { location },
-  pluginOptions
-) => {
+exports.onRouteUpdate = ({ location }, pluginOptions) => {
   const domElem = document.querySelector(`link[rel='canonical']`)
   var existingValue = domElem.getAttribute(`href`)
   var baseProtocol = domElem.getAttribute(`data-baseProtocol`)
@@ -13,9 +10,6 @@ exports.onRouteUpdate = (
       value += location.search
     }
 
-    domElem.setAttribute(
-      `href`,
-      `${value}${location.hash}`
-    )
+    domElem.setAttribute(`href`, `${value}${location.hash}`)
   }
 }
