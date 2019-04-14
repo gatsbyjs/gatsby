@@ -78,7 +78,7 @@ const paginate = (results = [], { skip = 0, limit }) => {
   const hasNextPage = skip + limit < count
 
   return {
-    totalCount: items.length,
+    totalCount: count,
     edges: items.map((item, i, arr) => {
       return {
         node: item,
