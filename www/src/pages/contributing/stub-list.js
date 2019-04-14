@@ -9,6 +9,7 @@ import {
 } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import DocsearchContent from "../../components/docsearch-content"
+import FooterLinks from "../../components/shared/footer-links"
 
 const findStubs = pages =>
   pages.filter(
@@ -56,6 +57,7 @@ class StubListRoute extends React.Component {
             </ul>
           </Container>
         </DocsearchContent>
+        <FooterLinks />
       </Layout>
     )
   }

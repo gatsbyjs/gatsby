@@ -5,6 +5,7 @@ import { colors, space } from "../utils/presets"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
+import FooterLinks from "../components/shared/footer-links"
 
 class NewsLetter extends Component {
   render() {
@@ -41,6 +42,7 @@ class NewsLetter extends Component {
             }}
           />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

@@ -24,6 +24,7 @@ import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
 import Avatar from "../components/avatar"
+import FooterLinks from "../components/shared/footer-links"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -295,6 +296,7 @@ class BlogPostTemplate extends React.Component {
               </div>
             </div>
           </Container>
+          <FooterLinks />
         </div>
       </Layout>
     )
