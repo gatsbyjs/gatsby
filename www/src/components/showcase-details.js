@@ -279,6 +279,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               >
                 <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
                 <a
+                  rel={`noopener noreferrer`}
+                  target={`_blank`}
                   href={data.sitesYaml.main_url}
                   css={{
                     ...styles.link,
@@ -406,6 +408,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     }}
                   >
                     <a
+                      rel={`noopener noreferrer`}
+                      target={`_blank`}
                       href={data.sitesYaml.main_url}
                       css={{
                         backgroundColor: colors.gatsby,
