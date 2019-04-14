@@ -6,7 +6,7 @@ import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
 import { colors, space, sizes, fontSizes } from "../utils/presets"
-import FooterLinks from "../components/shared/footer-links.js"
+import FooterLinks from "../components/shared/footer-links"
 
 class Plugins extends Component {
   render() {
