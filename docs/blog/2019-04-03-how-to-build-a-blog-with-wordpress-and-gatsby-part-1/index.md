@@ -84,7 +84,7 @@ I know I was on my soap box earlier about using a bunch of plugins, and generall
 
 ### Advanced Custom Fields
 
-The first plugin I'd like to mention is [Advanced Custom Fields](https://www.advancedcustomfields.com/), or ACF. This is perhaps one of my favorite plugins of all time since it allows you to create custom fields for any post type or page. You can override defaults. You can create any number of fields for the user ranging from What You See Is What You Get (or WYSIWYG) editors and date pickers (free) to galleries and repeater fields (pro). With this tool, you can truly customize the site to be exactly what your client needs.
+The first plugin I'd like to mention is [Advanced Custom Fields](https://www.advancedcustomfields.com/), or ACF for short. This is perhaps one of my favorite plugins of all time since it allows you to create custom fields for any post type or page. You can override defaults. You can create any number of fields for the user ranging from What You See Is What You Get (or WYSIWYG) editors and date pickers (free) to galleries and repeater fields (pro). With this tool, you can truly customize the site to be exactly what your client needs.
 
 ### ACF to REST API
 
@@ -92,9 +92,14 @@ Another plugin that works hand-in-hand with ACF is called [ACF to REST API](http
 
 ### WP API Menus
 
-One of the great functions in WordPress is the ability for users to easily create and update menus for their site. If you hardcode the menu into your Gatsby site, it removes this ability for your users. To make it flexible for them, you can install the [WP API Menus](https://github.com/unfulvio/wp-api-menus) plugin to create REST routes for the menu items. Please note: According to the [gatsby-source-wordpress docs](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress), it must be this version of the plugin and not the newer one. The newer version will not work.
+One of the great functions in WordPress is the ability for users to easily create and update menus for their site. If you hardcode the menu into your Gatsby site, it removes this ability for your users. To make it flexible for them, you can install the [WP API Menus](https://github.com/unfulvio/wp-api-menus) plugin to create REST routes for the menu items. Please note: There are a few different plugins built to create APIs from menus. According to the [gatsby-source-wordpress docs](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress), it must be this particular plugin to work.
 
 ### WP Trigger Netlify Build
+
+<video autoplay muted loop>
+  <source src="./images/wp_netlify_build.webm">
+  <source src="./images/wp_netlify_build.mp4">
+</video>
 
 When I build a Gatsby website, I like to use Netlify to handle the deployment of the site. Netlify rebuilds whenever a new commit is pushed or merged to the master branch of the repository, but what about when someone updates their WordPress site?
 
