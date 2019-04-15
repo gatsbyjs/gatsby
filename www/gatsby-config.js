@@ -1,8 +1,39 @@
+require(`dotenv`).config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+const GA = {
+  identifier: `UA-93349937-5`,
+  viewId: `176383508`,
+}
+
+const dynamicPlugins = []
+if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
+  // pick data from 3 months ago
+  const startDate = new Date()
+  startDate.setMonth(startDate.getMonth() - 3)
+  dynamicPlugins.push({
+    resolve: `gatsby-plugin-guess-js`,
+    options: {
+      GAViewID: GA.viewId,
+      jwt: {
+        client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
+        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
+      },
+      period: {
+        startDate,
+        endDate: new Date(),
+      },
+    },
+  })
+}
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `GatsbyJS`,
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing fast modern site generator for React`,
+    twitter: `@gatsbyjs`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -26,6 +57,14 @@ module.exports = {
       options: {
         name: `packages`,
         path: `${__dirname}/../packages/`,
+        ignore: [`**/dist/**`],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `ecosystem`,
+        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {
@@ -37,10 +76,17 @@ module.exports = {
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/data/diagram`,
+      },
+    },
+    {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
           `gatsby-remark-graphviz`,
+          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -52,7 +98,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
-              wrapperStyle: `margin-bottom: 1.05rem`,
+              wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
           `gatsby-remark-autolink-headers`,
@@ -73,6 +119,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-layout`,
     `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
@@ -94,7 +141,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-5`,
+        trackingId: GA.identifier,
+        anonymize: true,
       },
     },
     {
@@ -175,16 +223,5 @@ module.exports = {
       },
     },
     `gatsby-plugin-subfont`,
-    // {
-    // resolve: `gatsby-plugin-guess-js`,
-    // options: {
-    // GAViewID: `142357465`,
-    // // The "period" for fetching analytic data.
-    // period: {
-    // startDate: new Date(`2018-1-1`),
-    // endDate: new Date(),
-    // },
-    // },
-    // },
-  ],
+  ].concat(dynamicPlugins),
 }

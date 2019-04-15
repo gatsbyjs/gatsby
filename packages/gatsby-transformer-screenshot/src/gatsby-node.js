@@ -16,13 +16,11 @@ const screenshotQueue = new Queue(
 )
 
 exports.onPreBootstrap = (
-  { store, cache, actions, createNodeId, getNodes, createContentDigest },
+  { store, cache, actions, createNodeId, getNodesByType, createContentDigest },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
-  const screenshotNodes = getNodes().filter(
-    n => n.internal.type === `Screenshot`
-  )
+  const screenshotNodes = getNodesByType(`Screenshot`)
 
   if (screenshotNodes.length === 0) {
     return null
@@ -46,6 +44,7 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        parentNodeId: n.id,
         createContentDigest,
       })
     } else {
@@ -92,6 +91,7 @@ exports.onCreateNode = async (
           createNode,
           createNodeId,
           createContentDigest,
+          parentNodeId: node.id,
         })
         .on(`finish`, r => {
           resolve(r)
@@ -117,6 +117,7 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  parentNodeId,
   createContentDigest,
 }) => {
   try {
@@ -137,6 +138,7 @@ const createScreenshotNode = async ({
         cache,
         createNode,
         createNodeId,
+        parentNodeId,
       })
       expires = screenshotResponse.data.expires
 

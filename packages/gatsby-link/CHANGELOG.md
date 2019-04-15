@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.15...gatsby-link@2.0.16) (2019-03-12)
+
+### Features
+
+- **gatsby-link:** adds support for partiallyActive=true to Link ([#12495](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12495)) ([e0db681](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/e0db681))
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.14...gatsby-link@2.0.15) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.13...gatsby-link@2.0.14) (2019-03-04)
+
+### Features
+
+- **gatsby-link:** support RefObject ([#12174](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12174)) ([5ab7a87](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/5ab7a87)), closes [#12014](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12014)
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.12...gatsby-link@2.0.13) (2019-02-28)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.11...gatsby-link@2.0.12) (2019-02-22)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.10...gatsby-link@2.0.11) (2019-02-19)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.9...gatsby-link@2.0.10) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.9"></a>
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.8...gatsby-link@2.0.9) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.8"></a>
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.7...gatsby-link@2.0.8) (2019-01-10)
+
+### Bug Fixes
+
+- enable ref forwarding with forwardRef ([#9892](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/9892)) ([b6d9775](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/b6d9775))
+
+<a name="2.0.7"></a>
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.6...gatsby-link@2.0.7) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.6"></a>
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.5...gatsby-link@2.0.6) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-link
+
+<a name="2.0.5"></a>
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.4...gatsby-link@2.0.5) (2018-10-24)
+
+**Note:** Version bump only for package gatsby-link
+
 <a name="2.0.4"></a>
 
 ## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.3...gatsby-link@2.0.4) (2018-10-03)

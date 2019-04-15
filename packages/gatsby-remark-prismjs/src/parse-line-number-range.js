@@ -7,7 +7,7 @@ module.exports = language => {
   if (language.split(`{`).length > 1) {
     let [splitLanguage, ...options] = language.split(`{`)
     let highlightLines = [],
-      numberLines = false,
+      showLineNumbersLocal = false,
       numberLinesStartAt
     // Options can be given in any order and are optional
     options.forEach(option => {
@@ -26,7 +26,7 @@ module.exports = language => {
         (option[1].trim() === `true` ||
           Number.isInteger(parseInt(option[1].trim(), 10)))
       ) {
-        numberLines = true
+        showLineNumbersLocal = true
         numberLinesStartAt =
           option[1].trim() === `true` ? 1 : parseInt(option[1].trim(), 10)
       }
@@ -35,7 +35,7 @@ module.exports = language => {
     return {
       splitLanguage,
       highlightLines,
-      numberLines,
+      showLineNumbersLocal,
       numberLinesStartAt,
     }
   }

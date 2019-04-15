@@ -2,23 +2,19 @@
 title: Recipes
 ---
 
-<!-- Basic template:
-Task to accomplish.
+<!-- Basic template for a Gatsby recipe:
+
+## Task to accomplish.
+
 1-2 sentences about it.
-Relevant links out (tutorial, doc pages, plugin readmes, etc).
+Relevant links out (tutorial, doc pages, plugin readmes, etc). -->
 
-Links:
-* tutorial link
-* docs link
-* additional, if needed
-
-And yeah — those three things are exactly what we're thinking. A first step would be to just go through the tutorial and pull out all the basic things we teach there in a condensed form e.g. creating a site, creating a page, linking between pages, etc. -->
-
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](<(/tutorial/)>)? Here's a quick guiding reference for how to build things, Gatsby style.
+Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
 
 ## Table of Contents
 
-- [Using Unstructured Data](#using-unstructured-data)
+- [Using Gatsby without Graphql](#using-gatsby-without-graphql)
+- [Gatsby project structure](#gatsby-project-structure)
 - [Using a starter](#using-a-starter)
 - [Creating pages](#creating-pages)
 - [Linking between pages](#linking-between-pages)
@@ -28,13 +24,12 @@ Craving a happy medium between doing the [full tutorial](/tutorial/) and crawlin
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
-- [Gatsby project structure](#gatsby-project-structure)
 
-## Using Unstructured Data
+## Using Gatsby without GraphQL
 
-You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-- Learn how to pull unstructured data into Gatsby sites in [Using Unstructured Data](/docs/using-unstructured-data/)
+- Learn how to pull unstructured data into Gatsby sites in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - Learn when and how to use GraphQL and source plugins for more complex Gatsby sites in [Querying data with GraphQL](/docs/querying-with-graphql/)
 
 ## Gatsby project structure
@@ -46,7 +41,7 @@ Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a
 Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
 - Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
-- See a list of [official and community starters](/docs/gatsby-starters/)
+- Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ## Creating pages

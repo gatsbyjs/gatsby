@@ -3,38 +3,49 @@
 const url = require(`url`)
 const glob = require(`glob`)
 const fs = require(`fs`)
+const openurl = require(`better-opn`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
-const parsePath = require(`parse-filepath`)
+const graphqlPlayground = require(`graphql-playground-middleware-express`)
+  .default
+const { formatError } = require(`graphql`)
 const request = require(`request`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
-const developHtml = require(`./develop-html`)
+const { syncStaticDir } = require(`../utils/get-static-dir`)
+const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
+const telemetry = require(`gatsby-telemetry`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const onExit = require(`signal-exit`)
+const pageQueryRunner = require(`../query/page-query-runner`)
+const queryQueue = require(`../query/queue`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
-// changed. Wait 10 seconds so copying doesn't interfer with the regular
+// changed. Wait 10 seconds so copying doesn't interfere with the regular
 // bootstrap.
 setTimeout(() => {
-  copyStaticDirectory()
+  syncStaticDir()
 }, 10000)
 
 const rlInterface = rl.createInterface({
@@ -47,11 +58,21 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
+onExit(() => {
+  telemetry.trackCli(`DEVELOP_STOP`)
+})
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () =>
-    developHtml(program).catch(err => {
+  const createIndexHtml = async () => {
+    try {
+      await buildHTML.buildPages({
+        program,
+        stage: `develop-html`,
+        pagePaths: [`/`],
+      })
+    } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
         return
@@ -60,14 +81,19 @@ async function startServer(program) {
         report.stripIndent`
           There was an error compiling the html.js component for the development server.
 
-          See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
         err
       )
-    })
+    }
+  }
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  db.startAutosave()
+  pageQueryRunner.startListening(queryQueue.makeDevelop())
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -84,6 +110,7 @@ async function startServer(program) {
    * Set up the express app.
    **/
   const app = express()
+  app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
       log: false,
@@ -91,11 +118,33 @@ async function startServer(program) {
       heartbeat: 10 * 1000,
     })
   )
+
+  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
+    app.get(
+      `/___graphql`,
+      graphqlPlayground({
+        endpoint: `/___graphql`,
+      }),
+      () => {}
+    )
+  }
+
   app.use(
     `/___graphql`,
-    graphqlHTTP({
-      schema: store.getState().schema,
-      graphiql: true,
+    graphqlHTTP(() => {
+      const schema = store.getState().schema
+      return {
+        schema,
+        graphiql:
+          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        context: withResolverContext({}, schema),
+        formatError(err) {
+          return {
+            ...formatError(err),
+            stack: err.stack ? err.stack.split(`\n`) : [],
+          }
+        },
+      }
     })
   )
 
@@ -132,7 +181,11 @@ async function startServer(program) {
     res.end()
   })
 
-  app.use(express.static(`public`))
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(require(`./develop-static`)(`public`, { index: false }))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -155,7 +208,18 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      req.pipe(request(proxiedUrl)).pipe(res)
+      req
+        .pipe(
+          request(proxiedUrl).on(`error`, err => {
+            const message = `Error when trying to proxy request "${
+              req.originalUrl
+            }" to "${proxiedUrl}"`
+
+            report.error(message, err)
+            res.status(500).end()
+          })
+        )
+        .pipe(res)
     })
   }
 
@@ -163,20 +227,11 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.path)
-    if (
-      parsedPath.extname === `` ||
-      parsedPath.extname.startsWith(`.html`) ||
-      parsedPath.path.endsWith(`/`)
-    ) {
-      res.sendFile(directoryPath(`public/index.html`), err => {
-        if (err) {
-          res.status(500).end()
-        }
-      })
-    } else {
-      next()
-    }
+    res.sendFile(directoryPath(`public/index.html`), err => {
+      if (err) {
+        res.status(500).end()
+      }
+    })
   })
 
   /**
@@ -222,8 +277,9 @@ async function startServer(program) {
 
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
+  telemetry.trackCli(`DEVELOP_START`)
+  telemetry.startBackgroundUpdate()
 
-  const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
@@ -237,44 +293,19 @@ module.exports = async (program: any) => {
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
+  // Scoped names are converted from @npm/package-name to npm--package-name
   if (program.https) {
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name,
+      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detect(port, (err, _port) => {
-      if (err) {
-        report.panic(err)
-      }
+  program.port = await detectPortInUseAndPrompt(port, rlInterface)
 
-      if (port !== _port) {
-        // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-
-        rlInterface.question(question, answer => {
-          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-            program.port = _port // eslint-disable-line no-param-reassign
-          }
-
-          startServer(program).then(([c, l]) => {
-            compiler = c
-            resolve()
-          })
-        })
-      } else {
-        startServer(program).then(([c, l]) => {
-          compiler = c
-          resolve()
-        })
-      }
-    })
-  })
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -348,7 +379,11 @@ module.exports = async (program: any) => {
 
     console.log()
     console.log(
-      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+      `View ${
+        process.env.GATSBY_GRAPHQL_IDE === `playground`
+          ? `the GraphQL Playground`
+          : `GraphiQL`
+      }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
     console.log(`  ${urls.localUrlForTerminal}___graphql`)
@@ -356,7 +391,7 @@ module.exports = async (program: any) => {
     console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
-      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+      `To create a production build, use ` + `${chalk.cyan(`npm run build`)}`
     )
     console.log()
   }
@@ -366,11 +401,11 @@ module.exports = async (program: any) => {
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://gatsby.app/boundActionCreators`,
+        docsLink: `https://gatsby.dev/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://gatsby.app/pathContext`,
+        docsLink: `https://gatsby.dev/pathContext`,
       },
     }
     const deprecatedLocations = {}
@@ -428,7 +463,7 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        require(`opn`)(urls.localUrlForBrowser).catch(err =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`

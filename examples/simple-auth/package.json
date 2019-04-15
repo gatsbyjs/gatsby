@@ -19,6 +19,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
+    "start": "npm run develop",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

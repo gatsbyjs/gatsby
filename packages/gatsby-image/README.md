@@ -52,7 +52,7 @@ you need only:
 
 1. Import `gatsby-image` and use it in place of the built-in `img`
 2. Write a GraphQL query using one of the included GraphQL "fragments"
-    which specify the fields needed by `gatsby-image`.
+   which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
@@ -65,17 +65,13 @@ effect as well as lazy loading of images further down the screen.
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
 ```bash
-npm install --save gatsby-transformer-sharp
-npm install --save gatsby-plugin-sharp
+npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
 Then in your `gatsby-config.js`:
 
 ```js
-plugins: [
-  `gatsby-transformer-sharp`,
-  `gatsby-plugin-sharp`
-];
+plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`]
 ```
 
 Also, make sure you have set up a source plugin, so your images are available in `graphql` queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
@@ -104,6 +100,7 @@ This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
 export default ({ data }) => (
@@ -129,6 +126,31 @@ export const query = graphql`
 ```
 
 For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
+
+## Polyfilling object-fit/object-position for IE
+
+If you'd like to include a polyfill for the [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)/[`object-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) CSS properties (which [aren't supported](https://caniuse.com/#feat=object-fit) by default in Internet Explorer), import from `gatsby-image/withIEPolyfill` instead:
+
+```jsx
+// Other imports...
+import Img from "gatsby-image/withIEPolyfill"
+
+export default ({ data }) => (
+  <div>
+    <h1>Hello gatsby-image</h1>
+    <Img
+      fixed={data.file.childImageSharp.fixed}
+      objectFit="cover"
+      objectPosition="50% 50%"
+      alt=""
+    />
+  </div>
+)
+
+// GraphQL query...
+```
+
+Importing from `gatsby-image/withIEPolyfill` tells Gatsby to automatically apply the `object-fit-images` polyfill to your image. To make your `object-fit`/`object-position` values work in IE, be sure to use the `objectFit` and `objectPosition` props (rather than the `imgStyle` prop or a CSS or CSS-in-JS solution) so the polyfill will recognize them.
 
 ## Two types of responsive images
 
@@ -165,7 +187,7 @@ you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
 [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
-[gatsby-source-contentful](/packages/gatsby-source-contentful/) and [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms).
+[gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
 
 Their fragments are:
 
@@ -203,6 +225,13 @@ Their fragments are:
 - `GatsbyDatoCmsFixed_noBase64`
 - `GatsbyDatoCmsFluid`
 - `GatsbyDatoCmsFluid_noBase64`
+
+### gatsby-source-sanity
+
+- `GatsbySanityImageFixed`
+- `GatsbySanityImageFixed_noBase64`
+- `GatsbySanityImageFluid`
+- `GatsbySanityImageFluid_noBase64`
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -263,24 +292,68 @@ prop. e.g. `<Img fluid={fluid} />`
 }
 ```
 
+### Avoiding stretched images using the fluid type
+
+As mentioned previously, images using the _fluid_ type are stretched to
+match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
+
+To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
+
+```jsx
+const NonStretchedImage = props => {
+  let normalizedProps = props
+  if (props.fluid && props.fluid.presentationWidth) {
+    normalizedProps = {
+      ...props,
+      style: {
+        ...(props.style || {}),
+        maxWidth: props.fluid.presentationWidth,
+        margin: "0 auto", // Used to center the image
+      },
+    }
+  }
+
+  return <Img {...normalizedProps} />
+}
+```
+
+**Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
+You will need to add it in your graphql query as is shown in the following snippet:
+
+```graphql
+{
+  childImageSharp {
+    fluid(maxWidth: 500, quality: 100) {
+      ...GatsbyImageSharpFluid
+      presentationWidth
+    }
+  }
+}
+```
+
 ## `gatsby-image` props
 
-| Name               | Type                | Description                                                                                                                 |
-| ------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `fixed`            | `object`            | Data returned from the `fixed` query                                                                                        |
-| `fluid`            | `object`            | Data returned from the `fluid` query                                                                                        |
-| `fadeIn`           | `bool`              | Defaults to fading in the image on load                                                                                     |
-| `title`            | `string`            | Passed to the `img` element                                                                                                 |
-| `alt`              | `string`            | Passed to the `img` element                                                                                                 |
-| `className`        | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `style`            | `object`            | Spread into the default styles of the wrapper element                                                                       |
-| `imgStyle`         | `object`            | Spread into the default styles of the actual `img` element                                                                  |
-| `placeholderStyle` | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
-| `backgroundColor`  | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`           | `func`              | A callback that is called when the full-size image has loaded.                                                              |
-| `onError`          | `func`              | A callback that is called when the image fails to load.                                                                     |
-| `Tag`              | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
-| `critical`         | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
+| Name                   | Type                | Description                                                                                                                 |
+| ---------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
+| `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
+| `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `title`                | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
+| `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
+| `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
+| `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |
+| `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                  |
+| `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
+| `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
+| `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                              |
+| `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter { wasCached: boolean } provided.   |
+| `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
+| `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
+| `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
+| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.          |
+| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.        |
 
 ## Image processing arguments
 
@@ -303,3 +376,5 @@ prop. e.g. `<Img fluid={fluid} />`
 - Gifs can't be resized the same way as pngs and jpegs, unfortunately—if you try
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).
+- Lazy loading behavior is dependent on `IntersectionObserver` which is not available
+  in some fairly common browsers including Safari and IE. A polyfill is recommended.

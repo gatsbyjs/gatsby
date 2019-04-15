@@ -62,4 +62,3 @@ Finally, we have everything we need to construct our final Gatsby Type object (k
 #### 5. Create Connections for each type
 
 We've inferred all GraphQL Types, and the ability to query for a single node. But now we need to be able to query for collections of that type (e.g `allMarkdownRemark`). [Schema Connections](/docs/schema-connections/) takes care of that.
-

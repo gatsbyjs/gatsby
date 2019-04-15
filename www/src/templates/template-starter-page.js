@@ -1,10 +1,10 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 
-import presets from "../utils/presets"
+import { breakpoints } from "../utils/presets"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"
@@ -27,8 +27,8 @@ class StarterTemplate extends React.Component {
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
     const allDeps = [
-      ...gatsbyDependencies.map(([name, ver]) => name),
-      ...miscDependencies.map(([name, ver]) => name),
+      ...gatsbyDependencies.map(([name]) => name),
+      ...miscDependencies.map(([name]) => name),
     ]
     const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
     const showMore =
@@ -60,9 +60,10 @@ class StarterTemplate extends React.Component {
             <Helmet>
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
-                name="og:image"
+                property="og:image"
                 content={screenshotFile.childImageSharp.fluid.src}
               />
+              <meta property="og:image:alt" content="Gatsby Logo" />
               <meta
                 name="twitter:image"
                 content={screenshotFile.childImageSharp.fluid.src}
@@ -72,15 +73,16 @@ class StarterTemplate extends React.Component {
                 content={`Gatsby Starter: ${repoName}`}
               />
               <meta
-                name="og:description"
+                property="og:description"
                 content={`Gatsby Starter: ${repoName}`}
               />
               <meta
                 name="twitter:description"
                 content={`Gatsby Starter: ${repoName}`}
               />
-              <meta name="og:title" content={repoName} />
-              <meta name="og:type" content="article" />
+              <meta property="og:site_name" content={repoName} />
+              <meta property="og:title" content={repoName} />
+              <meta property="og:type" content="article" />
               <meta name="twitter.label1" content="Reading time" />
               <meta name="twitter:data1" content={`1 min read`} />
             </Helmet>
@@ -89,7 +91,7 @@ class StarterTemplate extends React.Component {
               css={{
                 display: `flex`,
                 flexDirection: `column-reverse`,
-                [presets.Phablet]: {
+                [breakpoints.sm]: {
                   flexDirection: `column`,
                 },
               }}

@@ -3,6 +3,126 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.7...gatsby-cli@2.5.8) (2019-04-15)
+
+### Features
+
+- **gatsby-cli:** validate rootPath to follow naming conventions as required ([#13158](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13158)) ([68ac45f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/68ac45f)), closes [#13153](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13153)
+
+## [2.5.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.6...gatsby-cli@2.5.7) (2019-04-11)
+
+### Bug Fixes
+
+- add tty helper to not ask for prompt in non tty/ci env ([#13290](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13290)) ([efae20e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/efae20e))
+
+### Features
+
+- **gatsby-cli:** Remove one of package-lock.json and yarn.lock on gatsby new ([#13225](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13225)) ([3510a46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/3510a46)), closes [#13210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13210)
+
+## [2.5.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.5...gatsby-cli@2.5.6) (2019-04-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.4...gatsby-cli@2.5.5) (2019-04-04)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.3...gatsby-cli@2.5.4) (2019-03-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.2...gatsby-cli@2.5.3) (2019-03-27)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.1...gatsby-cli@2.5.2) (2019-03-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.0...gatsby-cli@2.5.1) (2019-03-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.17...gatsby-cli@2.5.0) (2019-03-26)
+
+### Features
+
+- **gatsby:** add anonymous telemetry instrumentation to gatsby ([#12758](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12758)) ([da8ded9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/da8ded9))
+
+## [2.4.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.16...gatsby-cli@2.4.17) (2019-03-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.4.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.15...gatsby-cli@2.4.16) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** properly support --no-color for pretty-error ([#12531](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12531)) ([e493538](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/e493538))
+
+## [2.4.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.14...gatsby-cli@2.4.15) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.4.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.13...gatsby-cli@2.4.14) (2019-03-08)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fixed incorrect scriptname in gatsby-cli ([#12186](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12186)) ([3b116f6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/3b116f6))
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.12...gatsby-cli@2.4.13) (2019-03-05)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.4.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.11...gatsby-cli@2.4.12) (2019-02-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.4.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.10...gatsby-cli@2.4.11) (2019-02-19)
+
+### Features
+
+- **gatsby-cli:** add a clean command to wipe out local dirs ([#9126](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/9126)) ([5807936](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/5807936))
+
+## [2.4.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.9...gatsby-cli@2.4.10) (2019-02-12)
+
+### Features
+
+- **gatsby-cli:** Initialize the newly cloned repository as git ([#10868](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/10868)) ([ccd9dcd](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/ccd9dcd))
+
+## [2.4.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.8...gatsby-cli@2.4.9) (2019-02-04)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.4.8"></a>
+
+## [2.4.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.7...gatsby-cli@2.4.8) (2018-12-27)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.4.7"></a>
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.6...gatsby-cli@2.4.7) (2018-12-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.4.6"></a>
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.5...gatsby-cli@2.4.6) (2018-11-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.4.5"></a>
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.4...gatsby-cli@2.4.5) (2018-11-08)
+
+**Note:** Version bump only for package gatsby-cli
+
+<a name="2.4.4"></a>
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.3...gatsby-cli@2.4.4) (2018-10-29)
+
+**Note:** Version bump only for package gatsby-cli
+
 <a name="2.4.3"></a>
 
 ## [2.4.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.2...gatsby-cli@2.4.3) (2018-10-09)
