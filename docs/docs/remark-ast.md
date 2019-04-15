@@ -2,14 +2,14 @@
 title: Manipulating Remark ASTs
 ---
 
-gatsby-transformer-remark empowers developers to translate Markdown into HTML to be consumed throughout Gatsby pages. Blogs and other content based sites can highly benefit from this so the code and content is separated. With this, people who will write content for the site don't need to worry about how the the site was written, but rather can focus just on writing the Markdown.
+[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the the site is written or structured but can rather focus on writing engaging posts and content!
 
 In certain instances, a developer may want to customize certain Markdown nodes while being parsed. Examples could include [add syntax highlighting](/packages/gatsby-remark-prismjs/), [parse images](/packages/gatsby-remark-images), [embed videos](/packages/gatsby-remark-embed-video) and plenty of others. Throughout all of these instances, a plugin will examine the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
 
 ## What you will learn in this tutorial
 
-- How to learn how to understand the remark AST
-- How to integrate plugins with `gatsby-transformer-remark`
+- Further understanding of the remark Abstract Syntax Tree (AST)
+- How to create a plugin that is injected with an AST via `gatsby-transformer-remark`
 - How to manipulate the remark AST to add additional functionality
 
 ## Understanding the Abstract Syntax Tree
@@ -30,7 +30,7 @@ Remark would translate this into an AST that will be available to `gatsby-transf
 
 You are going to create a plugin that colors all top-level headings in the markdown with the color purple.
 
-First create a local plugin by adding a `plugins` folder in your site and generating a package.json file for it. As well, create an index.js file. In this file, it will export a single function.
+First create a local plugin by adding a `plugins` folder in your site and generating a package.json file for it. As well, create an index.js file. In this file, we export a function that will be invoked by `gatsby-transformer-remark`.
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
 module.exports = ({ markdownAST }, pluginOptions) => {
@@ -40,7 +40,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-The first parameter is all of the default properties that can be used in plugins (actions, store, getNodes, schema, etc.) plus a couple just for gatsby-transformer-remark plugins. The one to be focused on is the `markdownAST` field which is destructured in the code snippet above.
+The first parameter is all of the default properties that can be used in plugins (actions, store, getNodes, schema, etc.) plus a couple just for gatsby-transformer-remark plugins. The most relevant field for our purposes is the `markdownAST` field which is destructured in the code snippet above.
 
 As with other Gatsby plugins, the 2nd parameter is the `pluginOptions` which is obtained from the definition in `gatsby-config.js` file.
 
@@ -48,7 +48,7 @@ Finally, the function will return the `markdownAST` after the fields you wish to
 
 ## Adding the plugin to your site
 
-You likely will want to grab `gatsby-source-filesystem` to grab the file nodes initially. In this example it is assumed that the markdown files exist in a `src/data/` directory.
+You likely will want to grab `gatsby-source-filesystem` to inject the file nodes into Gatsby's GraphQL schema. In this example it is assumed that the Markdown files exist in a `src/data/` directory.
 
 The plugin is now initially set so you can add it as a sub-plugin inside `gatsby-transformer-remark`
 
@@ -87,7 +87,7 @@ If you want to add some options, you could switch to the object syntax:
 
 When modifying nodes, you'll want to walk the tree and then implement new functionality on specific nodes.
 
-A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist which stands for United Syntax Tree is a standard for markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
+A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
 
 As an example from `unist-util-visit`'s readme, it allows for an easy interface to visit particular nodes based on a particular type:
 
@@ -106,12 +106,13 @@ function visitor(node) {
 
 Here, it finds all text nodes and will `console.log` the nodes.
 
-Now with this, you can take the AST from your plugin and get working on adding functionality for headers:
+With this technique in mind, you can similarly traverse the AST from your plugin and add additional functionality, like so:
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
 
 module.exports = ({ markdownAST }, pluginOptions) => {
+  // highlight-next-line
   visit(markdownAST, "heading", node => {
     // Do stuff with heading nodes
   })
