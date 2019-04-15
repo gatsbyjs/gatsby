@@ -63,7 +63,7 @@ module.exports = ({ defaultLayouts = {} } = {}) => {
         // This will eventually be the default
         resolve: `gatsby-plugin-compile-es6-packages`,
         options: {
-          modules: [`gatsby-theme-mdx-blog`],
+          modules: [`gatsby-theme-mdx-blog`, `theme-ui`],
         },
       },
       `gatsby-transformer-yaml`,

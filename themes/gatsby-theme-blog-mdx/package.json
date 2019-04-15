@@ -23,6 +23,7 @@
     "gatsby-transformer-yaml": "^2.1.10",
     "lodash.kebabcase": "^4.1.1",
     "mkdirp": "^0.5.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "theme-ui": "^0.0.4"
   }
 }

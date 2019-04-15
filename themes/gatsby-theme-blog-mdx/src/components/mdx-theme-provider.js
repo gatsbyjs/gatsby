@@ -1,9 +1,11 @@
 import React from "react"
-import { MDXProvider } from "@mdx-js/react"
+import { ComponentProvider } from "theme-ui"
 
-// import theme from "../tokens"
+import theme from "../tokens"
 import mdxComponents from "./mdx"
 
 export default ({ children }) => (
-  <MDXProvider theme={mdxComponents}>{children}</MDXProvider>
+  <ComponentProvider components={mdxComponents} theme={theme}>
+    {children}
+  </ComponentProvider>
 )
