@@ -1,5 +1,3 @@
-"use strict"
-
 const asciidoc = require(`asciidoctor.js`)()
 
 async function onCreateNode(
