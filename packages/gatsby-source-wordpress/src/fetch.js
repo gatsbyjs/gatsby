@@ -275,7 +275,9 @@ async function fetchData({
   let entities = []
   if (routeResponse) {
     if (type.indexOf(`wordpress__menus_menus`) !== -1) {
-      routeResponse = routeResponse.map(r => ({ ...r, ID: r.term_id }))
+      routeResponse = routeResponse.map((r) => {
+        return { ...r, ID: r.term_id }
+      })
     }
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
