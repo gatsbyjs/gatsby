@@ -2,7 +2,7 @@
 title: "Importing Assets Directly Into Files"
 ---
 
-There are two major ways to import assets, such as images, fonts, and files, into a Gatsby site. The default path is import the file directly. The alternative path, which makes sense for some edge cases, is to use the [static folder](/docs/static-folder).
+There are two major ways to import assets, such as images, fonts, and files, into a Gatsby site. The default path is to import the file directly into a Gatsby template, page, or component. The alternative path, which makes sense for some edge cases, is to use the [static folder](/docs/static-folder).
 
 ## Importing assets with Webpack
 
@@ -29,7 +29,7 @@ export default Header
 
 This ensures that when the project is built, Webpack will correctly move the images into the public folder, and provide us with correct paths.
 
-You can reference files imported with Webpack in CSS, too:
+You can reference files in CSS to import them, too:
 
 ```css
 .Logo {
@@ -43,11 +43,9 @@ If you're using SCSS the imports are relative to the entry SCSS file.
 
 Please be advised that this is also a custom feature of Webpack.
 
-Two alternative ways of handling static assets are described in the next sections.
-
 ## Querying for a `File` in GraphQL using gatsby-source-filesystem
 
-You can query the `publicURL` field of `File` nodes found in your data layer to trigger copying those files to the public directory and get URLs to them.
+You can also import files using GraphQL by querying for them in your data layer, which will trigger copying of those files to the public directory. Querying for the `publicURL` field of `File` nodes will provide URLs you can use in your JavaScript components, pages and templates.
 
 ### Examples:
 
@@ -65,7 +63,48 @@ You can query the `publicURL` field of `File` nodes found in your data layer to 
 }
 ```
 
-2. Link to attachments in your Markdown files:
+Reference those PDF files in a page with useStaticQuery:
+
+```jsx
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+import Layout from "../components/layout"
+
+const DownloadsPage = () => {
+  const data = useStaticQuery(graphql`
+    {
+      allFile(filter: { extension: { eq: "pdf" } }) {
+        edges {
+          node {
+            publicURL
+            name
+          }
+        }
+      }
+    }
+  `)
+  return (
+    <Layout>
+      <h1>All PDF Downloads</h1>
+      <ul>
+        {data.allFile.edges.map((file, index) => {
+          return (
+            <li key={`pdf-${index}`}>
+              <a href={file.node.publicURL} download>
+                {file.node.name}
+              </a>
+            </li>
+          )
+        })}
+      </ul>
+    </Layout>
+  )
+}
+export default DownloadsPage
+```
+
+2. Link to attachments in the frontmatter of your Markdown files:
 
 ```markdown
 ---
@@ -78,7 +117,7 @@ attachments:
 Hi, this is a great article.
 ```
 
-In the article template component file, you can then query for the attachments:
+In an article template component file, you can then query for the attachments:
 
 ```graphql
 query($slug: String!) {

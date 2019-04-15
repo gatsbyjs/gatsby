@@ -17,25 +17,14 @@ You can create a folder named `static` at the root of your project. Every file y
 
 ### Referencing your static asset
 
-In order to reference assets from the `static` folder in your code, you'll need to [import the `withPrefix` helper function from `gatsby`](/docs/gatsby-link/#prefixed-paths-helper):
+You can reference assets from the `static` folder in your code without anything special required:
 
 ```js
-import { withPrefix } from 'gatsby'
-
 render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs
   // as described in the “Adding Images, Fonts, and Files” page.
-  return <img src={withPrefix('/img/logo.png')} alt="Logo" />;
-}
-```
-
-And make sure you [set `pathPrefix` in your gatsby-config.js](/docs/path-prefix/):
-
-```javascript:title=gatsby-config.js
-module.exports = {
-  // Note: it must *not* have a trailing slash.
-  pathPrefix: `/img`,
+  return <img src={'logo.png'} alt="Logo" />;
 }
 ```
 
