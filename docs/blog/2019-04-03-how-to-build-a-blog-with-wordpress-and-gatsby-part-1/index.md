@@ -113,7 +113,7 @@ Netlify has the ability to create webhooks that you can grab to say, "Hey, there
 
 Not to be too anti-climactic, but there's really not a ton more to do on the WordPress side other than create content. These plugins and theme will pretty much expose everything you need to build your Gatsby.js blog.
 
-That being said, if you are creating custom content types for your blog you will need a way to differentiate them in ACF. Creating a custom page template will serve this purpose so you can filter on the page template to show the custom fields. you can also use the page template to filter in your Gatsby project to make sure you are receiving the desired fields for a given page.
+That being said, if you are creating custom content types for your blog you will need a way to differentiate them in ACF. Creating a custom page template will serve this purpose so you can filter on the page template to show the custom fields. You can also use the page template to filter in your Gatsby project to make sure you are receiving the desired fields for a given page.
 
 <br /><br />
 

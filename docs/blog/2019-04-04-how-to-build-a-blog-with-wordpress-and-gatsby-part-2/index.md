@@ -139,7 +139,7 @@ Now that you know what's already installed and what it looks like to start, you 
 
 To do this, you can use this code in the terminal:
 ```shell
-yarn add gatsby-source-wordpress gatsby-plugin-sitemap
+npm install gatsby-source-wordpress gatsby-plugin-sitemap
 ```
 
 Looking at your `package.json` file will reveal that each of these packages have been added to the project, but this isn't enough to start using the gatsby-plugin files. You first need to add them to the `gatsby-config.js` file. Luckily, the docs for these plugins are awesome and do a good job explaining all of this. I'd recommend you take a look at them to find out what each of the settings does, but I'll provide the code for the `gatsby-config.js` file after adding all of these plugins to your site:
@@ -269,7 +269,7 @@ The gatsby-node.js file allows you to pull in a template file, then query your d
   <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4">
 </video>
 
-The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `yarn add path`.
+The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
 
 ```javascript
 // gatsby-node.js
