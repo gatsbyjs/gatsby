@@ -141,7 +141,7 @@ See: https://www.contentful.com/developers/docs/references/images-api/#/referenc
 
 ```jsx
 <div className="image-wrapper">
-  <img src={image.dataURI} alt="" role="presentation" />
+  <img src={image.sqip.dataURI} alt="" role="presentation" />
   <img src={image.src} alt="Useful description" className="image" />
 </div>
 ```
