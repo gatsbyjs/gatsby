@@ -44,7 +44,7 @@ These stages are:
 
 ### Step One: Building a Gatsby Integration
 
-If you haven’t yet integrated with Gatsby, [developer documentation](https://www.gatsbyjs.org/docs/create-source-plugin/) for creating a Gatsby "source plugin" is here.
+If you haven’t yet integrated with Gatsby, [developer documentation](https://www.gatsbyjs.org/docs/creating-a-source-plugin/) for creating a Gatsby "source plugin" is here.
 
 In addition, you’ll probably want to create an "example" application. We call this a “starter”.
 
