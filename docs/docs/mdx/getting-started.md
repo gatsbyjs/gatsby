@@ -40,6 +40,8 @@ can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) p
    yarn add gatsby-mdx @mdx-js/mdx @mdx-js/react
    ```
 
+   If you're upgrading from v0, [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
+
 1. **Update your `gatsby-config.js`** to use the `gatsby-mdx` plugin
 
    ```javascript:title=gatsby-config.js
