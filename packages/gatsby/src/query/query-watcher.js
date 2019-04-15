@@ -199,33 +199,6 @@ exports.extractQueries = () => {
   })
 }
 
-const queueQueriesForPageComponent = componentPath => {
-  const pages = getPagesForComponent(componentPath)
-  // Remove page data dependencies before re-running queries because
-  // the changing of the query could have changed the data dependencies.
-  // Re-running the queries will add back data dependencies.
-  boundActionCreators.deleteComponentsDependencies(
-    pages.map(p => p.path || p.id)
-  )
-  pages.forEach(page => queryUtil.enqueueExtractedQueryId(page.path))
-  queryUtil.runQueuedQueries()
-}
-
-const runQueryForPage = path => {
-  queryUtil.enqueueExtractedQueryId(path)
-  queryUtil.runQueuedQueries()
-}
-
-exports.queueQueriesForPageComponent = queueQueriesForPageComponent
-exports.runQueryForPage = runQueryForPage
-
-const getPagesForComponent = componentPath => {
-  const state = store.getState()
-  return [...state.pages.values()].filter(
-    p => p.componentPath === componentPath
-  )
-}
-
 const filesToWatch = new Set()
 let watcher
 const watchComponent = componentPath => {
@@ -247,9 +220,6 @@ const watchComponent = componentPath => {
 const debounceCompile = _.debounce(() => {
   updateStateAndRunQueries()
 }, 100)
-
-exports.watchComponent = watchComponent
-exports.debounceCompile = debounceCompile
 
 const watch = rootDir => {
   if (watcher) return
