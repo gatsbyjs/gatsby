@@ -5,6 +5,7 @@ const report = require(`./reporter`)
 const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
+const clipboardy = require(`clipboardy`)
 const {
   trackCli,
   setDefaultTags,
@@ -240,26 +241,30 @@ function buildLocalCommands(cli, isLocalSite) {
       }),
     handler: args => {
       try {
-        envinfo.run(
-          {
+        const copyToClipboard =
+          // Clipboard is not accessible when on a linux tty
+          process.platform === `linux` && !process.env.DISPLAY
+            ? false
+            : args.clipboard
+
+        envinfo
+          .run({
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
             Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
-          },
-          {
-            console: true,
-            // Clipboard is not accessible when on a linux tty
-            clipboard:
-              process.platform === `linux` && !process.env.DISPLAY
-                ? false
-                : args.clipboard,
-          }
-        )
+          })
+          .then(envinfoOutput => {
+            console.log(envinfoOutput)
+
+            if (copyToClipboard) {
+              clipboardy.writeSync(envinfoOutput)
+            }
+          })
       } catch (err) {
-        console.log(`Error: unable to print environment info`)
+        console.log(`Error: Unable to print environment info`)
         console.log(err)
       }
     },
