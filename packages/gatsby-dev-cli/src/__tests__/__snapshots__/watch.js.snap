@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dependency changs test 1`] = `[MockFunction]`;
+
+exports[`dependency changs test 2`] = `[MockFunction]`;

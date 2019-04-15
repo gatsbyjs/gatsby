@@ -1,79 +1,18 @@
-const startVerdaccio = require(`verdaccio`).default
-const path = require(`path`)
 const fs = require(`fs-extra`)
-const _ = require(`lodash`)
-const os = require(`os`)
+const path = require(`path`)
 
-const {
-  getMonorepoPackageJsonPath,
-} = require(`../utils/get-monorepo-package-json-path`)
 const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
-const { registerCleanupTask } = require(`./cleanup-tasks`)
+const { registryUrl } = require(`./verdaccio-config`)
 
-let VerdaccioInitPromise = null
-
-const verdaccioConfig = {
-  storage: path.join(os.tmpdir(), `verdaccio`, `storage`),
-  port: 4873, // default
-  web: {
-    enable: true,
-    title: `gatsby-dev`,
-  },
-  logs: [{ type: `stdout`, format: `pretty-timestamped`, level: `warn` }],
-  packages: {
-    "**": {
-      access: `$all`,
-      publish: `$all`,
-      proxy: `npmjs`,
-    },
-  },
-  uplinks: {
-    npmjs: {
-      url: `https://registry.npmjs.org/`,
-    },
-  },
-}
-
-const registryUrl = `http://localhost:${verdaccioConfig.port}`
 const NPMRCContent = `${registryUrl.replace(
   /https?:/g,
   ``
 )}/:_authToken="gatsby-dev"`
 
-exports.registryUrl = registryUrl
-
-const startServer = () => {
-  if (VerdaccioInitPromise) {
-    return VerdaccioInitPromise
-  }
-
-  console.log(`Starting local verdaccio server`)
-
-  // clear storage
-  fs.removeSync(verdaccioConfig.storage)
-
-  VerdaccioInitPromise = new Promise(resolve => {
-    startVerdaccio(
-      verdaccioConfig,
-      verdaccioConfig.port,
-      verdaccioConfig.storage,
-      `1.0.0`,
-      `gatsby-dev`,
-      (webServer, addr, pkgName, pkgVersion) => {
-        // console.log(webServer)
-        webServer.listen(addr.port || addr.path, addr.host, () => {
-          console.log(`Started local verdaccio server`)
-
-          resolve()
-        })
-      }
-    )
-  })
-
-  return VerdaccioInitPromise
-}
-
-exports.startVerdaccio = startServer
+const {
+  getMonorepoPackageJsonPath,
+} = require(`../utils/get-monorepo-package-json-path`)
+const { registerCleanupTask } = require(`./cleanup-tasks`)
 
 /**
  * Edit package.json to:
@@ -196,45 +135,4 @@ const publishPackage = async ({
   unadjustPackageJson()
 }
 
-exports.publishPackagesLocallyAndInstall = async ({
-  packagesToPublish,
-  packages,
-  root,
-  ignorePackageJSONChanges,
-}) => {
-  await startServer()
-
-  const versionPostFix = Date.now()
-
-  for (let packageName of packagesToPublish) {
-    await publishPackage({
-      packageName,
-      packagesToPublish,
-      root,
-      versionPostFix,
-      ignorePackageJSONChanges,
-    })
-  }
-
-  const packagesToInstall = _.intersection(packagesToPublish, packages).map(
-    packageName => `${packageName}@gatsby-dev`
-  )
-  const installCmd = [
-    `yarn`,
-    [`add`, ...packagesToInstall, `--registry=${registryUrl}`, `--exact`],
-  ]
-
-  console.log(
-    `Installing packages from local registry:\n${packagesToInstall
-      .map(packageAndVersion => ` - ${packageAndVersion}`)
-      .join(`\n`)}`
-  )
-
-  try {
-    await promisifiedSpawn(installCmd)
-
-    console.log(`Installation complete`)
-  } catch {
-    console.error(`Installation failed`)
-  }
-}
+exports.publishPackage = publishPackage

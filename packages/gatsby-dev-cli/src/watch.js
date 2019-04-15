@@ -3,9 +3,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const {
-  publishPackagesLocallyAndInstall,
-} = require(`./local-npm-registry/verdaccio`)
+const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
 const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
@@ -56,17 +54,20 @@ function watch(
     })
 
   const runQueuedCopies = () => {
+    console.log(`run queued copies`)
     afterPackageInstallation = true
     queuedCopies.forEach(argObj => realCopyPath(argObj))
     queuedCopies = []
   }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
-  const { seenPackages: allPackagesToWatch, depTree } = traversePackagesDeps({
+  const { seenPackages, depTree } = traversePackagesDeps({
     root,
     packages: _.uniq([...localPackages, ...packages]),
     monoRepoPackages,
   })
+
+  const allPackagesToWatch = packages || seenPackages
 
   // scenarios
   // - --packages gatsby-cli
@@ -85,30 +86,52 @@ function watch(
   // let allPackagesToWatch = [...packages]
   let packagesToInstall = []
 
-  const getTopMostPackage = pkg => {}
+  const getPackagesToInstall = packages =>
+    packages.forEach(pkg => {
+      if (localPackages.includes(pkg)) {
+        packagesToInstall.push(pkg)
+      }
+      if (depTree[pkg]) {
+        getPackagesToInstall([...depTree[pkg]])
+      }
+    })
+
+  getPackagesToInstall(allPackagesToWatch)
+
+  // let packagesToInstall = _.intersection(localPackages, seenPackages)
+
+  // const getTopMostPackage = pkg => {}
 
   // add all packages that depend on things we want to watch
-  packages.forEach(pkg => {
-    // while( )
+  // packages.forEach(pkg => {
+  //   // while( )
 
-    if (depTree[pkg]) {
-      getTopMostPackage(pkg)
-      // allPackagesToWatch = allPackagesToWatch.concat([...depTree[pkg]])
-    } else {
-      packagesToInstall.push(pkg)
-    }
-  })
+  //   if (depTree[pkg]) {
+  //     getTopMostPackage(pkg)
+  //     // allPackagesToWatch = allPackagesToWatch.concat([...depTree[pkg]])
+  //   } else {
+  //     packagesToInstall.push(pkg)
+  //   }
+  // })
   // allPackagesToWatch = _.uniq(allPackagesToWatch)
 
-  return {
-    allPackagesToWatch,
-    packagesToInstall,
-    packages,
-    depTree,
-    monoRepoPackages,
-  }
+  // gatsby-dev --packages gatsby-cli
+  //  - we should watch only gatsby-cli but install gatsby
+  // gatsby-dev
+  // -
 
-  process.exit()
+  // return {
+  //   packages,
+  //   allPackagesToWatch,
+  //   packagesToInstall,
+  //   localPackages,
+  //   depTree,
+  //   monoRepoPackages,
+  // }
+
+  // process.exit()
+
+  console.log(`watching`, { allPackagesToWatch })
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
@@ -235,7 +258,7 @@ function watch(
         return
       }
 
-      if (packagesToPublish.has(packageName)) {
+      if (isInitialScan && packagesToPublish.has(packageName)) {
         // we are in middle of publishing to localy registry,
         // so we don't need to copy files as yarn will handle this
         return
@@ -255,6 +278,13 @@ function watch(
       allCopies = allCopies.concat(localCopies)
     })
     .on(`ready`, async () => {
+      console.log({
+        packagesToPublish,
+        localPackages,
+        ignorePackageJSONChanges,
+      })
+      // return
+      // process.exit()
       // wait for all async work needed to be done
       // before publishing / installing
       await Promise.all(Array.from(waitFor))
@@ -262,14 +292,13 @@ function watch(
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
-          const publishAndInstallPromise = publishPackagesLocallyAndInstall({
+          await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
-            packages,
+            localPackages,
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
-          allCopies.push(publishAndInstallPromise)
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]

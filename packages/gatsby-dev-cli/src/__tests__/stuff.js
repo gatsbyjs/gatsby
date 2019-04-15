@@ -1,6 +1,8 @@
 const watch = require(`../watch`)
 const path = require(`path`)
-const monorepoPackages = [
+const _ = require(`lodash`)
+
+const monoRepoPackages = [
   `.DS_Store`,
   `babel-plugin-remove-graphql-queries`,
   `babel-preset-gatsby`,
@@ -105,13 +107,97 @@ const root = path.join(__dirname, `..`, `..`, `..`, `..`)
 
 console.log(root)
 
-it(`1`, () => {
+it(`watching gatsby-cli installs gatsby`, () => {
   const result = watch(root, [`gatsby-cli`], {
     scanOnce: true,
     quiet: true,
-    monorepoPackages,
+    monoRepoPackages,
+    localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+  })
+
+  const pickedResult = _.omit(result, [`monoRepoPackages`])
+
+  expect(pickedResult).toMatchInlineSnapshot(`Object {}`)
+
+  expect(result.packagesToInstall).toEqual(expect.arrayContaining([`gatsby`]))
+  expect(result.packagesToInstall).not.toContain(`gatsby-cli`)
+  expect(result.packagesToInstall).not.toContain(`gatsby-plugin-sharp`)
+})
+
+it(`watching gatsby-source-filesytem and having gatsby-source-wordpress installs gatsby-source-wordpress`, () => {
+  const result = watch(root, [`gatsby-source-filesystem`], {
+    scanOnce: true,
+    quiet: true,
+    monoRepoPackages,
+    localPackages: [`gatsby`, `gatsby-source-wordpress`],
+  })
+
+  const pickedResult = _.omit(result, [`monoRepoPackages`])
+
+  expect(pickedResult).toMatchInlineSnapshot(`Object {}`)
+
+  expect(result.packagesToInstall).toEqual(
+    expect.arrayContaining([`gatsby-source-wordpress`])
+  )
+  expect(result.packagesToInstall).not.toContain(`gatsby-source-filesystem`)
+  expect(result.packagesToInstall).not.toContain(`gatsby-plugin-sharp`)
+})
+
+it(`watching gatsby-source-filesytem and having gatsby-source-filesystem installs gatsby-source-filesystem`, () => {
+  const result = watch(root, [`gatsby-source-filesystem`], {
+    scanOnce: true,
+    quiet: true,
+    monoRepoPackages,
+    localPackages: [`gatsby`, `gatsby-source-filesystem`],
+  })
+
+  const pickedResult = _.omit(result, [`monoRepoPackages`])
+
+  expect(pickedResult).toMatchInlineSnapshot(`Object {}`)
+
+  expect(result.packagesToInstall).toEqual(
+    expect.arrayContaining([`gatsby-source-filesystem`])
+  )
+  expect(result.packagesToInstall).not.toContain(`gatsby-source-wordpress`)
+})
+
+it(`watching gatsby-source-filesytem and not having gatsby-source-filesystem or gatsby-source-wordpress, installs nothing - probably should throw`, () => {
+  const result = watch(root, [`gatsby-source-filesystem`], {
+    scanOnce: true,
+    quiet: true,
+    monoRepoPackages,
     localPackages: [`gatsby`],
   })
 
-  expect(result).toMatchSnapshot()
+  const pickedResult = _.omit(result, [`monoRepoPackages`])
+
+  expect(pickedResult).toMatchInlineSnapshot(`Object {}`)
+
+  expect(result.packagesToInstall).toEqual(expect.arrayContaining([]))
+  expect(result.packagesToInstall).not.toContain(`gatsby-source-wordpress`)
+  expect(result.packagesToInstall).not.toContain(`gatsby-source-filesystem`)
+})
+
+it(`watching gatsby-source-filesytem and both having gatsby-source-filesystem and gatsby-source-wordpress, should install both`, () => {
+  const result = watch(root, [`gatsby-source-filesystem`], {
+    scanOnce: true,
+    quiet: true,
+    monoRepoPackages,
+    localPackages: [
+      `gatsby`,
+      `gatsby-source-filesystem`,
+      `gatsby-source-wordpress`,
+    ],
+  })
+
+  const pickedResult = _.omit(result, [`monoRepoPackages`])
+
+  expect(pickedResult).toMatchInlineSnapshot(`Object {}`)
+
+  expect(result.packagesToInstall).toEqual(
+    expect.arrayContaining([
+      `gatsby-source-filesystem`,
+      `gatsby-source-wordpress`,
+    ])
+  )
 })
