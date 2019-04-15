@@ -1,1 +1,1 @@
-export { default } from "typography-theme-bootstrap"
+export default {}
