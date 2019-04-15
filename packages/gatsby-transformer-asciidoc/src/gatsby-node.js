@@ -20,7 +20,7 @@ async function onCreateNode(
   var supportedExtensions =
     typeof extensionsConfig != `undefined` && extensionsConfig instanceof Array
       ? extensionsConfig
-      : [`adoc`, `.asciidoc`]
+      : [`adoc`, `asciidoc`]
   var currentExtension = node.extension
   var isSupportedExtension = supportedExtensions.indexOf(currentExtension) > -1
 
