@@ -2244,15 +2244,12 @@
   description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
   tags:
     - Blog
-    - Landing Page
-    - Typescript & TSLint
-    - Mobx
-    - CSS-in-JS
-    - Material-UI
-    - Responsive Design
-    - Markdown Blog Posts
-    - PWA (Progressive Web App)
-    - Customizable
+    - Typescript
+    - Linting
+    - Styling:CSS-in-JS
+    - Styling:Material
+    - Markdown
+    - PWA
   features:
     - Landing Page
     - Portfolio section
@@ -2260,4 +2257,7 @@
       - Infinite scroll instead of next and previous buttons
     - Blog posts generated from Markdown files
     - About Page
+    - Responsive Design
     - PWA (Progressive Web App) support
+    - MobX
+    - Customizable
