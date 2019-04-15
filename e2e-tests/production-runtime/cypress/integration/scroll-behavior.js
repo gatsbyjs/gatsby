@@ -1,10 +1,10 @@
 describe(`Scroll behaviour`, () => {
   it(`should restore scroll position only when going back in history`, () => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`long-page`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.scrollTo(`bottom`)
 
@@ -15,22 +15,22 @@ describe(`Scroll behaviour`, () => {
 
     cy.getTestElement(`below-the-fold`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     // after going back we expect page will
     // be restore previous scroll position
-    cy.go(`back`).waitForAPI(`onRouteUpdate`)
+    cy.go(`back`).waitForRouteChange()
 
     cy.window().then(win => {
       expect(win.scrollY).not.to.eq(0, 0)
     })
 
-    cy.go(`forward`).waitForAPI(`onRouteUpdate`)
+    cy.go(`forward`).waitForRouteChange()
 
     // after clicking link we expect page will be scrolled to top
     cy.getTestElement(`long-page`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.window().then(win => {
       expect(win.scrollY).to.eq(0, 0)
@@ -39,15 +39,15 @@ describe(`Scroll behaviour`, () => {
     // reset to index page
     cy.getTestElement(`index-link`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
   })
 
   it(`should keep track of location.key`, () => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`long-page`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.getTestElement(`below-the-fold`)
       .scrollIntoView({
@@ -57,11 +57,11 @@ describe(`Scroll behaviour`, () => {
       .wait(500) // allow ScrollContext to update scroll position store
       .storeScrollPosition(`middle-of-the-page`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.getTestElement(`long-page`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.getTestElement(`even-more-below-the-fold`)
       .scrollIntoView({
@@ -71,9 +71,9 @@ describe(`Scroll behaviour`, () => {
       .wait(500) // allow ScrollContext to update scroll position store
       .storeScrollPosition(`bottom-of-the-page`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
-    cy.go(`back`).waitForAPI(`onRouteUpdate`)
+    cy.go(`back`).waitForRouteChange()
 
     cy.location(`pathname`)
       .should(`equal`, `/long-page/`)
@@ -82,8 +82,8 @@ describe(`Scroll behaviour`, () => {
       .shouldMatchScrollPosition(`bottom-of-the-page`)
       .shouldNotMatchScrollPosition(`middle-of-the-page`)
 
-    cy.go(`back`).waitForAPI(`onRouteUpdate`)
-    cy.go(`back`).waitForAPI(`onRouteUpdate`)
+    cy.go(`back`).waitForRouteChange()
+    cy.go(`back`).waitForRouteChange()
 
     cy.location(`pathname`)
       .should(`equal`, `/long-page/`)

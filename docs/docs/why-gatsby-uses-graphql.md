@@ -393,7 +393,7 @@ A few notes about this file:
 
 1. The result of the query is added to the template component as the `data` prop.
 2. The image path was automatically converted by the Sharp transformer into a “child node” that includes optimized versions of the image.
-3. The query uses a [GraphQL fragment](https://www.gatsbyjs.org/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
+3. The query uses a [GraphQL fragment](/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
 4. The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
 
 Save this file, run `gatsby develop`, then open `localhost:8000/gql/purple-hat/`:

@@ -16,7 +16,7 @@ import {
   colors,
   space,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
   fonts,
 } from "../../utils/presets"
@@ -61,7 +61,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${scale[4]};
+    font-size: ${fontSizes[4]};
     justify-content: center;
     line-height: ${lineHeights.dense};
     padding: ${space[7]};

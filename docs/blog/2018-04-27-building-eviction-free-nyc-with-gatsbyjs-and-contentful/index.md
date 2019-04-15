@@ -70,7 +70,7 @@ perfect fit for a number of reasons:
     could have achieved this level of optimization on our own in this timeframe.
 1.  A growing plugin library that allows for easy integrations that utilize Gatsby’s
     GraphQL data query system. With these we could easily use things like
-    [gatsby-source-contentful](https://www.gatsbyjs.org/packages/gatsby-source-contentful/?=conten)
+    [gatsby-source-contentful](/packages/gatsby-source-contentful/?=conten)
     and [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n).
 1.  A growing community of developers sharing resources and best practices. Credit
     is due to [mccrodp](https://github.com/mccrodp) for setting up
@@ -162,7 +162,7 @@ type, you can simply drag-n-drop things in Contentful!
 
 From there, we had to teach GatsbyJS how to properly render each page based on
 pathway. We did this by implementing the `createPages` function in the [Gatsby
-Node API](https://www.gatsbyjs.org/docs/node-apis/). For each Housing Court Page
+Node API](/docs/node-apis/). For each Housing Court Page
 (also per language!), Gatsby creates 6 different pages based on the pathways.
 While our solution had to account for some [limitations in
 GraphQL](https://github.com/facebook/graphql/issues/414), everything wound up
