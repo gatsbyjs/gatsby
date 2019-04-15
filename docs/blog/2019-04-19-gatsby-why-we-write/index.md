@@ -7,7 +7,7 @@ excerpt: "Why does the Gatsby team and community write so much? Six principles t
 
 If you're a Gatsby community member, you may have noticed something: we write _a lot_.
 
-Community members are often surprised by the comprehensiveness of our [documentation](/docs/), and we publish new article on this blog multiple times per week, from both the core team and the community.
+Community members are often surprised by the comprehensiveness of our [documentation](/docs/). We publish new articles on this blog multiple times per week, from both the core team and the community.
 
 https://twitter.com/mattconvente/status/1099706762897342465?s=19
 
@@ -15,7 +15,7 @@ Writing isn't something we just do because we love it (although we do). Writing 
 
 Writing is core to the success we've enjoyed so far, and it's core to our plans to become the default way to build on the web.
 
-### Principle 1: We write
+## Principle 1: We write
 
 Some Inkteam members who have been regularly writing (speaking, appearing on podcasts, streaming): [Jason](/contributors/jason-lengstorf/), [Marcy[(https://egghead.io/podcasts/heading-gatsby-s-learning-experience-and-bridging-gaps-with-marcy-sutton), [Amberley](/contributors/amberley-romo/), [Linda](/contributors/linda-watkins/), [Dustin](/contributors/dustin-schau/), [Shannon](/contributors/shannon-soper/), [Jim](/contributors/jim-ettig/), [Marisa](/contributors/marisa-morby/), [Preston](/contributors/preston-so/), [Mikhail](/contributors/mikhail-novikov/), [Sid](/contributors/sidhartha-chatterjee/), [Andrew](https://www.gatsbyjs.com/gatsby-days-preview-andrew/), [Mike](/contributors/mike-allanson/), [John](/docs/mdx/), [me](/contributors/sam-bhagwat/), and
 [Kyle](/contributors/kyle-mathews/),
@@ -28,7 +28,7 @@ Why do we write so much?
 
 The answer:
 
-### Principle 2: content acts as a guide unlocking the power of Gatsby.
+## Principle 2: content acts as a guide unlocking the power of Gatsby.
 
 Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, Webpack and Babel, the entire npm ecosystem, and modern Javascript in general.
 
@@ -40,13 +40,13 @@ _(2) know how to do it_
 
 Roughly speaking, there are two sides of content at Gatsby — marketing content which focuses on (1), and learning content which focuses on (2).
 
-An example of (1) might be Linda's [How To Talk About Gatsby To Your Clients and Team](https://www.gatsbyjs.org/blog/2019-03-07-sell-gatsby-to-clients/).
+An example of (1) might be Linda's [How To Talk About Gatsby To Your Clients and Team](/blog/2019-03-07-sell-gatsby-to-clients/).
 
 An example of (2) might be Jason's [Learn With Jason](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) series or really anything in the [docs](/docs/).
 
 There's tons of overlap - _why_ points to _how_, and *how *points to _why_. You could argue we've spent more time on (2) than (1), but the reality is that _we've only scratched the surface of what's possible_.
 
-### Principle 3: because Gatsby is so powerful, the ground to cover with writing is huge, yet essential
+## Principle 3: because Gatsby is so powerful, the ground to cover with writing is huge, yet essential
 
 - Marcy's Q2 2019 project is to catalogue the **[Top 25 Workflows](https://docs.google.com/presentation/d/1YJ_4NGwxPqtMo-kyWBmg7NBr_YYZezKZ1phXjl0abD4/edit#slide=id.gcb9a0b074_1_0)** people do with Gatsby and improve the experience for 5-10 of them. You'll notice that many of them are not exclusive to Gatsby, instead they're "what you need to do in order to build a website".
 
@@ -74,7 +74,7 @@ _"Gatsby can't do X"_ gets rebutted by _"Here's a case study of Gatsby doing X"_
 
 The challenge, is of course _how do we write all of that content?_
 
-### Principle 4: Leverage ourselves through collaboration.
+## Principle 4: Leverage ourselves through collaboration.
 
 Some examples:
 
@@ -84,13 +84,13 @@ Some examples:
 
 - Jason's livestreams are fundamentally collaborative — inviting one person who is an expert in a different technology for cross-pollination.
 
-- We maintain close relationships with educators who create comprehensive, complemenrary content, and provide encouragement to first-time users that _you can do this!_.
+- We maintain close relationships with educators who create comprehensive, complementary content, and provide encouragement to first-time users that _you can do this!_.
 
 If you're doing interesting, innovative things with Gatsby, especially in a professional context, we'd love you to write blog posts, tutorials, and documentation about what you're doing!
 
-### Principle 5: Content is not just individual pieces of work, it's compilations.
+## Principle 5: Content is not just individual pieces of work, it's compilations.
 
-If content were music, it isn't just "songs" -- it's "playlists", "albums", "discographies", "soundtracks", and "multi-box sets".
+If content were music, it wouldn't consist of just "songs" -- it would also include "playlists", "albums", "discographies", "soundtracks", and "multi-box sets".
 
 On the one hand, there is _so much left to write_. On the other hand, because we've already been writing so much for so long, we have SO MUCH CONTENT that in many ways we don't know what to do with it.
 
@@ -104,17 +104,16 @@ But there's [all sorts of other content types] — [using-\* example sites / gui
 
 _Why does this matter?_ We want to make it easy for the user, so that if and when they want to deep dive, it's easy for them to go read ten or twenty articles on their topic of choice.
 
-### Principle 6: make it easy for folks to become engrossed with Gatsby
+## Principle 6: make it easy for folks to become engrossed with Gatsby
 
 Gatsby is the future of the web. Our goal is to let people dive _as far deep into it as they want, and encourage them by providing them more and more to discover._
 
 We want everyone to build and keep building, read and keep reading.
 
-We want everyone to understand how[ deep the depths of Gatsby are](/docs/behind-the-scenes/), to hunger and thirst for knowledge, to tell all of their friends and coworkers and significant other all the cool things they are learning and doing with Gatsby until those folks check it out too.
+We want everyone to understand [the depths of Gatsby](/docs/behind-the-scenes/), to hunger and thirst for knowledge, to tell all of their friends and coworkers and significant other all the cool things they are learning and doing with Gatsby until those folks check it out too.
 
-We want folks who build their site with Gatsby, to want to build a plugin.
+We want folks who build their site with Gatsby; to build a plugin. We want folks who write documentation; to want to contribute code.
 
-We want folks who write documentation, to want to contribute code.
 
 We want folks who contribute code to dive deep into Gatsby's core, to the internal plugins where few other than [Michal](https://twitter.com/mipiechowiak) and [Kyle](https://twitter.com/kylemathews) dare to venture.
 
