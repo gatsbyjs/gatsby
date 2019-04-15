@@ -2239,3 +2239,25 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://gatsby-starter.haezl.at
+  repo: https://github.com/haezl/gatsby-starter-haezl
+  description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
+  tags:
+    - Blog
+    - TypeScript
+    - Linting
+    - Styling:CSS-in-JS
+    - Styling:Material
+    - Markdown
+    - PWA
+  features:
+    - Landing Page
+    - Portfolio section
+    - Blog post listing with a preview for each post
+      - Infinite scroll instead of next and previous buttons
+    - Blog posts generated from Markdown files
+    - About Page
+    - Responsive Design
+    - PWA (Progressive Web App) support
+    - MobX
+    - Customizable
