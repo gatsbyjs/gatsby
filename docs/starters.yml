@@ -2255,3 +2255,38 @@
     - Serverless functions interact with Stripe API
     - Shopping cart persisted in local storage
     - Responsive images with gatsby-image
+- url: https://www.jannikbuschke.de/gatsby-antd-docs/
+  repo: https://github.com/jannikbuschke/gatsby-antd-docs
+  description: A template for documenation websites
+  tags:
+    - Documentation
+    - TypeScript
+    - Ant Design
+    - Markdown
+  features:
+    - Markdown
+    - Anchors
+    - Menues
+    - Landingpage
+- url: https://gatsby-starter.haezl.at
+  repo: https://github.com/haezl/gatsby-starter-haezl
+  description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
+  tags:
+    - Blog
+    - TypeScript
+    - Linting
+    - Styling:CSS-in-JS
+    - Styling:Material
+    - Markdown
+    - PWA
+  features:
+    - Landing Page
+    - Portfolio section
+    - Blog post listing with a preview for each post
+      - Infinite scroll instead of next and previous buttons
+    - Blog posts generated from Markdown files
+    - About Page
+    - Responsive Design
+    - PWA (Progressive Web App) support
+    - MobX
+    - Customizable
