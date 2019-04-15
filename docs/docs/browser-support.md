@@ -21,6 +21,8 @@ supported by some of your targeted browsers, you won't have to worry about it
 breaking the older browsers as Babel will automatically add the needed polyfill
 `core-js/modules/es7.array.includes`.
 
+> Gatsby only automatically add polyfills for your code (and not for your project's dependencies in `node_modules`) at the moment. You can track work on this in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
+
 ## Specify what browsers your project supports using "Browserslist"
 
 You may customize your list of supported browser versions by declaring a
@@ -46,3 +48,9 @@ By default, Gatsby emulates the following config:
 
 If you only support newer browsers, make sure to specify this in your
 `package.json`. This will often enable you to ship smaller JavaScript files.
+
+## Note about IE < 11
+
+React depends on collection types `Map` and `Set`. While these are not used by Gatsby, Gatsby uses React and you will need to polyfill these if you support older browsers and devices including IE < 11.
+
+Read more about this in [https://reactjs.org/docs/javascript-environment-requirements.html](https://reactjs.org/docs/javascript-environment-requirements.html)
