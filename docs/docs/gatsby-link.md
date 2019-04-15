@@ -298,8 +298,9 @@ following may be a good starting point:
 ```jsx
 import { Link as GatsbyLink } from "gatsby"
 
-// Since DOM elements <a> cannot receive activeClassName and partiallyActive,
-// destructure the prop here and pass it only to GatsbyLink
+// Since DOM elements <a> cannot receive activeClassName
+// and partiallyActive, destructure the prop here and 
+// pass it only to GatsbyLink
 const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
