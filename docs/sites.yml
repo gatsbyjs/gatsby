@@ -5381,3 +5381,12 @@
   categories:
     - Beauty
     - Business
+- title: Prevue
+  main_url: https://www.prevue.io
+  url: https://www.prevue.io
+  featured: false
+  description: >
+    All in One Prototyping Tool For Vue Developers
+  categories:
+    - Open Source
+    - Web Development
