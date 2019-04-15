@@ -2244,7 +2244,7 @@
   description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
   tags:
     - Blog
-    - Typescript
+    - TypeScript
     - Linting
     - Styling:CSS-in-JS
     - Styling:Material
