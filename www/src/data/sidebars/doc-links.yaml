@@ -154,8 +154,8 @@
             - title: Creating Plugins
               link: /docs/creating-plugins/
               items:
-                - title: How Plugins Work
-                  link: /docs/how-plugins-work/
+                - title: Plugin Authoring 101
+                  link: /docs/plugin-authorin-101/
                 - title: Creating a Source Plugin
                   link: /docs/creating-a-source-plugin/
                 - title: Creating a Transformer Plugin
@@ -164,6 +164,8 @@
                   link: /contributing/submit-to-plugin-library/
                 - title: Source Plugin Tutorial
                   link: /docs/source-plugin-tutorial/
+                - title: Maintaining a Plugin
+                  link: /docs/maintaining-a-plugin/
         - title: Starters
           link: /docs/starters/
           items:

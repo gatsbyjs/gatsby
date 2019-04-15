@@ -1,22 +1,22 @@
 ---
-title: How Plugins Work
+title: Plugin Authoring 101
 ---
 
 You may be looking to build a plugin that doesn't exist yet, or you may just be curious to know more about the anatomy of a Gatsby plugin. We'll review:
 
-1.  the core concepts of what a Gatsby plugin is
-2.  naming conventions for the plugin title
-3.  expected files in a plugin package
-4.  defining a local (unpublished) plugin for your own use case
-5.  how to publish your plugin to the library
+1.  [the core concepts of what a Gatsby plugin is](#core-concepts)
+2.  [plugin title naming conventions](#plugin-title-naming-conventions)
+3.  [what files does Gatsby look for in a plugin?](#what-files-does-Gatsby-look-for-in-a-plugin)
+4.  [defining a local (unpublished) plugin for your own use case](#local-plugins)
+5.  [how to publish your plugin to the Gatsby Plugin Library](#publishing-a-plugin-to-the-library)
 
-## Core Concepts
+## Core concepts
 
 - Each Gatsby plugin can be created as an npm package or as a [local plugin](#local-plugins)
 - A `package.json` is required
 - Plugins implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
 
-## Plugin naming conventions
+## Plugin title naming conventions
 
 There are four standard plugin naming conventions for Gatsby:
 
