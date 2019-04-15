@@ -34,21 +34,21 @@ Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was offi
 
 [Strapi](https://strapi.io) is an _open source **Headless CMS Front-End Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
 
-![Gatsby Strapi](logo-strapi.png) 
+![Gatsby Strapi](logo-strapi.png)
 
 Thanks to its extensible plugin system, it provides a large set of built-in features: Admin Panel, Authentication & Permissions management, Content Management, API Generator, etc.
 
 Unlike other CMSs, **Strapi is 100% open-source**, which means:
 
- - **Strapi is completely free**.
- - You can **host it on your own servers**, so you own the data.
- - It is entirely **customisable and extensible**, thanks to the plugin system.
+- **Strapi is completely free**.
+- You can **host it on your own servers**, so you own the data.
+- It is entirely **customisable and extensible**, thanks to the plugin system.
 
 ### Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series
 
 Please follow along watching the videos below and reading the text. You can watch just the videos or read just the text, but you will get the most from this tutorial by watching and reading both. The videos are designed to be used together with this article.
 
-***The videos follow the exact sequence of this article. The videos contain additional information and additional configuration details for a few sections. However, for intermediate to advanced users this article will be sufficient to get oriented and started building Strapi powered Gatsby projects.***
+**_The videos follow the exact sequence of this article. The videos contain additional information and additional configuration details for a few sections. However, for intermediate to advanced users this article will be sufficient to get oriented and started building Strapi powered Gatsby projects._**
 
 #### Index of Tutorial
 
@@ -61,9 +61,9 @@ Please follow along watching the videos below and reading the text. You can watc
 7. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Create the Article page view](/blog/2019-03-19-strapi-and-gatsby/#7-create-the-article-page-view)
 8. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Gatsby Images & the Article page view](/blog/2019-03-19-strapi-and-gatsby/#8-gatsby-images-and-author-page)
 
-Note: Final tutorial and code is available at [the GitHub repo for the Strapi and Gatsby tutorial](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). In this repo, you can download and/or copy/paste the [example content](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial). 
+Note: Final tutorial and code is available at [the GitHub repo for the Strapi and Gatsby tutorial](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). In this repo, you can download and/or copy/paste the [example content](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
-Note: Within the content below we provide links that open a running *localhost* project. For either Strapi or Gatsby. These will not work if your server(s) have not been started.
+Note: Within the content below we provide links that open a running _localhost_ project. For either Strapi or Gatsby. These will not work if your server(s) have not been started.
 
 ### 1. Introduction
 
@@ -71,18 +71,18 @@ This video series will take you step by step through creating a blog in Gatsby a
 
 <iframe width="1206" height="678" src="https://www.youtube.com/embed/It4PRFJJaF0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [Strapi Official Website](https://strapi.io/)
 - [Gatsby JS Official Website](https://www.gatsbyjs.org/)
 - [Gatsby JS Starters](https://www.gatsbyjs.org/starters/?v=2)
 - [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.com/)
 
-### 2. Installation 
+### 2. Installation
 
 <iframe width="1206" height="678" src="https://www.youtube.com/embed/4QnDgxtWqOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [Node 10 Installation](https://nodejs.org/en/)
 - [Strapi Installation Documentation](https://strapi.io/documentation/3.x.x/getting-started/quick-start.html)
@@ -95,7 +95,7 @@ To make the magic happen, let's create a Strapi headless CMS and add some conten
 
 ##### Install Strapi
 
-*Requirements: please make sure [Node 10](https://nodejs.org/en/download/) (or higher) is installed and running on your machine.*
+_Requirements: please make sure [Node 10](https://nodejs.org/en/download/) (or higher) is installed and running on your machine._
 
 Install Strapi using npm:
 
@@ -103,7 +103,7 @@ Install Strapi using npm:
 npm i strapi@alpha -g
 ```
 
-*Note: Strapi v3 is still an alpha version, but it will be fine for this tutorial.*
+_Note: Strapi v3 is still an alpha version, but it will be fine for this tutorial._
 
 ##### Generate a Strapi project
 
@@ -122,20 +122,19 @@ strapi new cms --quickstart
 
 Using the `--quickstart` flag creates a full Strapi project and automatically starts the server and opens up a tab in your browser.
 
-(If you leave off `--quickstart`. Strapi allows you to configure the project according to your needs, Strapi will ask you some questions about your preferences. In this case, reply to each of them or press enter to keep the default values. If you choose a different database than *SQLite*, you will need to separately install that database onto your system.)
+(If you leave off `--quickstart`. Strapi allows you to configure the project according to your needs, Strapi will ask you some questions about your preferences. In this case, reply to each of them or press enter to keep the default values. If you choose a different database than _SQLite_, you will need to separately install that database onto your system.)
 
 Additional information can be found in the [Official Strapi documentation](https://strapi.io/documentation/3.x.x/getting-started/quick-start.html).
 
 #### Create your first User
 
-Add your first user from the [registration page](http://localhost:1337/admin/plugins/users-permissions/auth/register). This will be the ***root admin user***.
+Add your first user from the [registration page](http://localhost:1337/admin/plugins/users-permissions/auth/register). This will be the **_root admin user_**.
 
 ![Strapi Create First User](create-first-user.png)
 
-
 #### Restarting Strapi
 
-After installation, and initial use, you will often close your project and work on other things, reboot your computer, etc.  Therefore, you will need to restart Strapi and your project.  
+After installation, and initial use, you will often close your project and work on other things, reboot your computer, etc. Therefore, you will need to restart Strapi and your project.
 
 Enter inside your project folder, on the command line, (in this case `tutorial/`, :
 
@@ -149,13 +148,13 @@ From `cms/`, launch the Strapi server:
 strapi start
 ```
 
-Starting here, you should be able to visit the admin panel of your project: http://localhost:1337/admin. You will now be directed to a login screen. Login using your ***admin root user*** or other user you have already created.
+Starting here, you should be able to visit the admin panel of your project: http://localhost:1337/admin. You will now be directed to a login screen. Login using your **_admin root user_** or other user you have already created.
 
 ### 3. Content Types
 
 <iframe width="886" height="498" src="https://www.youtube.com/embed/cPEkpfik6X4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [Sample Content for Demo](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial)
 
@@ -165,10 +164,10 @@ Strapi CMS projects are based on a data structure called Content Types (equivale
 
 [Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with four fields:
 
- - `title` (type `string`)
- - `content` (type `text`)
- - `image` (type `media`)
- - `author` (type `relation`, many articles to one user)
+- `title` (type `string`)
+- `content` (type `text`)
+- `image` (type `media`)
+- `author` (type `relation`, many articles to one user)
 
 ![Define Relationship](define-relation.png)
 
@@ -180,10 +179,10 @@ After creating your fields, as above, save your new content type and wait for St
 
 Add some articles in the database. To do so, follow these instructions:
 
- 1. Visit the [articles list page](http://localhost:1337/admin/plugins/content-manager/article).
- 2. Click on `Add New Article`.
- 3. Insert values, link to an author and submit the form.
- 4. Create two other articles.
+1.  Visit the [articles list page](http://localhost:1337/admin/plugins/content-manager/article).
+2.  Click on `Add New Article`.
+3.  Insert values, link to an author and submit the form.
+4.  Create two other articles.
 
 Note: You can download the sample content from the video [here](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
@@ -207,7 +206,7 @@ Great job, our API is ready! We can start developing the static website.
 
 <iframe width="886" height="498" src="https://www.youtube.com/embed/SnrEEW1uTlU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [Official Gatsby Documentation](https://www.gatsbyjs.org/docs/)
 - [Gatsby PWA support](https://gatsby.app/offline)
@@ -265,12 +264,12 @@ This plugin needs to be configured. Replace the content of `gatsby-config.js` wi
 ```js:title=/blog/gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: 'My super blog',
-    description: 'Gatsby blog with Strapi',
-    author: 'Strapi team'
+    title: "My super blog",
+    description: "Gatsby blog with Strapi",
+    author: "Strapi team",
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
+    "gatsby-plugin-react-helmet",
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -279,37 +278,39 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-strapi',
+      resolve: "gatsby-source-strapi",
       options: {
-        apiURL: 'http://localhost:1337',
-        contentTypes: [ // List of the Content Types you want to be able to request from Gatsby.
-          'article',
-          'user'
+        apiURL: "http://localhost:1337",
+        contentTypes: [
+          // List of the Content Types you want to be able to request from Gatsby.
+          "article",
+          "user",
         ],
         queryLimit: 1000,
       },
     },
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-sharp',
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sharp",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
-        start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
-        display: 'minimal-ui',
-        icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+        name: "gatsby-starter-default",
+        short_name: "starter",
+        start_url: "/",
+        background_color: "#663399",
+        theme_color: "#663399",
+        display: "minimal-ui",
+        icon: "src/images/gatsby-icon.png", // This path is relative to the root of the site.
       },
     },
-    'gatsby-plugin-offline',
+    "gatsby-plugin-offline",
   ],
 }
 ```
+
 #### Allow access to User
 
-Remember, when we created the content type we created a relation between User and Articles.  
+Remember, when we created the content type we created a relation between User and Articles.
 
 Like `Article`,`User`, [link](http://localhost:1337/articles) is likewise, by default, restricted. But Gatsby needs access, so to allow access, visit the [Auth and Permissions section for Public role](http://localhost:1337/admin/plugins/users-permissions/roles), click on `Public`, select the `User - find` action and save. After saving; Gatsby will have access to all the necessary content types managed by Strapi (for this tutorial).
 
@@ -317,24 +318,22 @@ Restart Strapi from the command line, inside the `cms` folder - first by `Ctrl`+
 
 Next, restart the server to ensure Gatsby registers these updates.
 
-
 ### 6. Create our Index Page
 
 <iframe width="886" height="498" src="https://www.youtube.com/embed/UaFgCubwRD8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [The graphQL interface from your local host](http://localhost:8000/___graphql)
-
 
 #### Articles list
 
 First, we want to display the list of articles. To do so, add the following content in the existing home page file:
 
 ```js:title=/blog/src/pages/index.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Layout from '../components/layout'
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Layout from "../components/layout"
 
 const IndexPage = ({ data }) => (
   <Layout>
@@ -357,7 +356,7 @@ const IndexPage = ({ data }) => (
 
 export default IndexPage
 
-export const pageQuery = graphql`  
+export const pageQuery = graphql`
   query IndexQuery {
     allStrapiArticle {
       edges {
@@ -374,7 +373,7 @@ export const pageQuery = graphql`
 
 ##### What are we doing here?
 
-At the end of the file, we export `pageQuery`,  a GraphQL query which requests the entire list of articles. As you can see, we require only the `id`, `title` and `content` fields, thanks to the precise GraphQL query language.
+At the end of the file, we export `pageQuery`, a GraphQL query which requests the entire list of articles. As you can see, we require only the `id`, `title` and `content` fields, thanks to the precise GraphQL query language.
 
 Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and loop on its `allStrapiArticle` object to display the data.
 
@@ -388,12 +387,11 @@ Gatsby includes a useful GraphiQL interface. It makes GraphQL queries developmen
 
 To add images, we will need to import `Img` from package `gatsby-image` installed by default. Replace the content of `blog/src/pages/index.js` with the following :
 
-
 ```js:title=/blog/src/pages/index.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Img from 'gatsby-image'
-import Layout from '../components/layout'
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Img from "gatsby-image"
+import Layout from "../components/layout"
 
 const IndexPage = ({ data }) => (
   <Layout>
@@ -406,7 +404,7 @@ const IndexPage = ({ data }) => (
           <h2>
             <Link to={`/${document.node.id}`}>{document.node.title}</Link>
           </h2>
-          <Img fixed={document.node.image.childImageSharp.fixed}/>
+          <Img fixed={document.node.image.childImageSharp.fixed} />
           <p>{document.node.content}</p>
         </li>
       ))}
@@ -417,7 +415,7 @@ const IndexPage = ({ data }) => (
 
 export default IndexPage
 
-export const pageQuery = graphql`  
+export const pageQuery = graphql`
   query IndexQuery {
     allStrapiArticle {
       edges {
@@ -445,10 +443,9 @@ export const pageQuery = graphql`
 
 <iframe width="886" height="498" src="https://www.youtube.com/embed/ub-uB17ufe0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [Gatsby Project Structure](https://www.gatsbyjs.org/docs/gatsby-project-structure/#gatsby-project-structure)
-
 
 #### Article view
 
@@ -459,16 +456,21 @@ Let's create the template, containing a specific GraphQL request and defining th
 In order to do this, first create a folder called `templates` in your `src` directory. Then within `templates` create a file called `article.js`.
 
 ```js:title=/blog/src/templates/article.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Img from 'gatsby-image'
-import Layout from '../components/layout' 
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Img from "gatsby-image"
+import Layout from "../components/layout"
 
 const ArticleTemplate = ({ data }) => (
   <Layout>
     <h1>{data.strapiArticle.title}</h1>
-    <p>by <Link to={`/authors/User_${data.strapiArticle.author.id}`}>{data.strapiArticle.author.username}</Link></p>
-    <Img fixed={data.strapiArticle.image.childImageSharp.fixed}/>
+    <p>
+      by{" "}
+      <Link to={`/authors/User_${data.strapiArticle.author.id}`}>
+        {data.strapiArticle.author.username}
+      </Link>
+    </p>
+    <Img fixed={data.strapiArticle.image.childImageSharp.fixed} />
     <p>{data.strapiArticle.content}</p>
   </Layout>
 )
@@ -477,16 +479,16 @@ export default ArticleTemplate
 
 export const query = graphql`
   query ArticleTemplate($id: String!) {
-    strapiArticle(id: {eq: $id}) {
+    strapiArticle(id: { eq: $id }) {
       title
       content
       image {
-          childImageSharp {
-            fixed(width: 200, height: 125) {
-              ...GatsbyImageSharpFixed
-            }
+        childImageSharp {
+          fixed(width: 200, height: 125) {
+            ...GatsbyImageSharpFixed
           }
         }
+      }
       author {
         id
         username
@@ -500,29 +502,31 @@ That looks fine, but at this point, Gatsby does not know when this template shou
 
 First, we are going to code a new function called `makeRequest` to execute the GraphQL request. Then, we export a function named `createPages` in which we get the list of articles and create a page for each of them. Here is the result:
 
-
 ```js:title=/blog/gatsby-node.js
-const path = require(`path`);
+const path = require(`path`)
 
-const makeRequest = (graphql, request) => new Promise((resolve, reject) => {
-  // Query for nodes to use in creating pages.
-  resolve(
-    graphql(request).then(result => {
-      if (result.errors) {
-        reject(result.errors)
-      }
-      
-      return result;
-    })
-  )
-});
+const makeRequest = (graphql, request) =>
+  new Promise((resolve, reject) => {
+    // Query for nodes to use in creating pages.
+    resolve(
+      graphql(request).then(result => {
+        if (result.errors) {
+          reject(result.errors)
+        }
+
+        return result
+      })
+    )
+  })
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
-  
-  const getArticles = makeRequest(graphql, `
+  const { createPage } = boundActionCreators
+
+  const getArticles = makeRequest(
+    graphql,
+    `
     {
       allStrapiArticle {
         edges {
@@ -532,7 +536,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `).then(result => {
+    `
+  ).then(result => {
     // Create pages for each article.
     result.data.allStrapiArticle.edges.forEach(({ node }) => {
       createPage({
@@ -543,11 +548,11 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         },
       })
     })
-  });
-  
+  })
+
   // Query for articles nodes to use in creating pages.
-  return getArticles;
-};
+  return getArticles
+}
 ```
 
 Restart the Gatsby server.
@@ -556,11 +561,11 @@ From now on, you should be able to visit the detail page by clicking on URLs dis
 
 ![Static Page Result](static-page-result.png)
 
-### 8. Gatsby Images and author page 
+### 8. Gatsby Images and author page
 
 <iframe width="886" height="498" src="https://www.youtube.com/embed/mPyJrjD3oU0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-*Important links from Video:*
+_Important links from Video:_
 
 - [Gatsby Image Plugin](https://www.gatsbyjs.org/packages/gatsby-image/)
 - [Gatsby Image Demo](https://using-gatsby-image.gatsbyjs.org/)
@@ -573,26 +578,26 @@ Articles are written by authors. They deserve a dedicated page.
 The processes for creating author views and article pages are very similar. First, create a new file in our `templates` folder called, `author.js`. Add the code below to this file.
 
 ```js:title=/blog/src/templates/author.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Layout from '../components/layout'
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Layout from "../components/layout"
 
 const UserTemplate = ({ data }) => (
-    <Layout>
-      <h1>{data.strapiUser.username}</h1>
-      <ul>
-        {data.strapiUser.articles.map(article => (
-          <li key={article.id}>
-            <h2>
-              <Link to={`/Article_${article.id}`}>{article.title}</Link>
-            </h2>
-            <p>{article.content}</p>
-          </li>
-        ))}
-      </ul>
-    </Layout>
-  )
-  
+  <Layout>
+    <h1>{data.strapiUser.username}</h1>
+    <ul>
+      {data.strapiUser.articles.map(article => (
+        <li key={article.id}>
+          <h2>
+            <Link to={`/Article_${article.id}`}>{article.title}</Link>
+          </h2>
+          <p>{article.content}</p>
+        </li>
+      ))}
+    </ul>
+  </Layout>
+)
+
 export default UserTemplate
 
 export const query = graphql`
@@ -607,13 +612,10 @@ export const query = graphql`
       }
     }
   }
-` 
+`
 ```
 
-
-
 Second, we update the `gatsby-node.js` file to create the URLs (with the below code):
-
 
 ```js:title=/blog/gatsby-node.js
 /**
@@ -624,28 +626,30 @@ Second, we update the `gatsby-node.js` file to create the URLs (with the below c
 
 // You can delete this file if you're not using it
 
-const path = require(`path`);
+const path = require(`path`)
 
-const makeRequest = (graphql, request) => new Promise((resolve, reject) => {
-  // Query for article nodes to use in creating pages.
-  resolve(
-    graphql(request).then(result => {
-      if (result.errors) {
-        reject(result.errors)
-      }
+const makeRequest = (graphql, request) =>
+  new Promise((resolve, reject) => {
+    // Query for article nodes to use in creating pages.
+    resolve(
+      graphql(request).then(result => {
+        if (result.errors) {
+          reject(result.errors)
+        }
 
-      return result;
-    })
-  )
-});
-
+        return result
+      })
+    )
+  })
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators;
+  const { createPage } = boundActionCreators
 
-  const getArticles = makeRequest(graphql, `
+  const getArticles = makeRequest(
+    graphql,
+    `
     {
       allStrapiArticle {
         edges {
@@ -655,7 +659,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `).then(result => {
+    `
+  ).then(result => {
     // Create pages for each article.
     result.data.allStrapiArticle.edges.forEach(({ node }) => {
       createPage({
@@ -666,9 +671,11 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         },
       })
     })
-  });
+  })
 
-  const getAuthors = makeRequest(graphql, `
+  const getAuthors = makeRequest(
+    graphql,
+    `
     {
       allStrapiUser {
         edges {
@@ -678,7 +685,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `).then(result => {
+    `
+  ).then(result => {
     // Create pages for each user.
     result.data.allStrapiUser.edges.forEach(({ node }) => {
       createPage({
@@ -689,16 +697,12 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         },
       })
     })
-  });
+  })
 
   // Queries for articles and authors nodes to use in creating pages.
-  return Promise.all([
-    getArticles,
-    getAuthors,
-  ])
-};
+  return Promise.all([getArticles, getAuthors])
+}
 ```
-
 
 Finally, restart the server and visit the author page from the article view's links.
 
@@ -710,7 +714,7 @@ Congrats! You’ve successfully built a super fast and easy-to-maintain blog!
 
 Since the content is managed by Strapi, the authors can write articles through a nice UI and developers only have to rebuild the Gatsby blog in order to update the content.
 
-***Where to go next?***
+**_Where to go next?_**
 
 Feel free to continue this project to discover both Gatsby and Strapi advantages. Here are some features you can add: list of authors, article's categories, and comment system with the Strapi API or Disqus. You can also create other types of websites (e-commerce shop, corporate website, etc.).
 
