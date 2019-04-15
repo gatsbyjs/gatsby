@@ -11,11 +11,15 @@ tags:
 
 [Ritual](https://ritual.com/) is a health brand led by the belief that women should know exactly what’s in their vitamins. Ritual’s vitamins work smarter to fill the gaps in women’s diets with high quality nutrients. They’re on a mission to inspire women to feel their best, every day. Ritual’s clean, modern stack website, leads customers speedily through an educational purchase experience to learn more about the products, the ingredients, and overall benefits they can find by investing in their vitamin habits every day.
 
+![ritual homepage](./ritual_hp.png)
+
 We reached out to their Director of Engineering, Daniel Archer, to share ”Why Gatsby?” for their recent website rebuild. Here’s some of our conversation:
 
 ## The Gatsby answer: Better code, SEO, page load times, and integration
 
 Ritual chose a rebuild with Gatsby due to the restrictions they were running into with liquid templates and UI-based content changes. While static and fast, the issues were making it more difficult to bring code up to their modern engineering standards. They also needed to enable other teams to quickly and easily change copy, imagery and new concepts. Both of these led them to look for a new solution - Gatsby.
+
+![ritual product](./ritual_product.png)
 
 “We were looking for opportunities to combine a powerful CMS with React and Styled Components for maximum composability, while still maintaining a static-site for optimized SEO and page load times,” shared Daniel.
 

@@ -38,11 +38,9 @@ import StubList from "../stub-list"
 let location
 beforeEach(() => {
   useStaticQuery.mockReturnValueOnce({
-    data: {
-      site: {
-        siteMetadata: {
-          title: `GatsbyJS`,
-        },
+    site: {
+      siteMetadata: {
+        title: `GatsbyJS`,
       },
     },
   })

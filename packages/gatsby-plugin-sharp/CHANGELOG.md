@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.33...gatsby-plugin-sharp@2.0.34) (2019-04-11)
+
+### Features
+
+- add options fit and background to image sharp ([#13078](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/13078)) ([494ad07](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/494ad07)), closes [#12972](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12972)
+
 ## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.32...gatsby-plugin-sharp@2.0.33) (2019-04-09)
 
 ### Bug Fixes

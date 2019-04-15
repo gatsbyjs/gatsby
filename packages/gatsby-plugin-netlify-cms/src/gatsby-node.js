@@ -33,11 +33,12 @@ function deepMap(obj, fn) {
   return obj
 }
 
-exports.onCreateDevServer = ({ app, store }) => {
+exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
   const { program } = store.getState()
-  app.get(`/admin`, function(req, res) {
+  const publicPathClean = trim(publicPath, `/`)
+  app.get(`/${publicPathClean}`, function(req, res) {
     res.sendFile(
-      path.join(program.directory, `public/admin/index.html`),
+      path.join(program.directory, `public`, publicPathClean, `index.html`),
       err => {
         if (err) {
           res.status(500).end(err.message)
