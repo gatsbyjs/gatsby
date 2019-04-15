@@ -2239,6 +2239,22 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://gatsby-starter-stripe.netlify.com/
+  repo: https://github.com/brxck/gatsby-starter-stripe
+  description: A minimal starter to create a storefront with Gatsby, Stripe, & Netlify Functions.
+  tags:
+    - Stripe
+    - Netlify Functions
+    - Serverless
+    - eCommerce
+    - Styling:None
+  features:
+    - Statically generate based on Stripe inventory
+    - Dynamically update with live inventory & availability data
+    - Checkout powered by Stripe
+    - Serverless functions interact with Stripe API
+    - Shopping cart persisted in local storage
+    - Responsive images with gatsby-image
 - url: https://www.jannikbuschke.de/gatsby-antd-docs/
   repo: https://github.com/jannikbuschke/gatsby-antd-docs
   description: A template for documenation websites
