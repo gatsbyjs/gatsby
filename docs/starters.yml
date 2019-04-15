@@ -2239,6 +2239,19 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://www.jannikbuschke.de/gatsby-antd-docs/
+  repo: https://github.com/jannikbuschke/gatsby-antd-docs
+  description: A template for documenation websites
+  tags:
+    - Documentation
+    - TypeScript
+    - Ant Design
+    - Markdown
+  features:
+    - Markdown
+    - Anchors
+    - Menues
+    - Landingpage
 - url: https://gatsby-starter.haezl.at
   repo: https://github.com/haezl/gatsby-starter-haezl
   description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
