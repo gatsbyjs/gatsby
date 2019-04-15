@@ -59,7 +59,7 @@
   avatar: avatars/arden-de-raaij.jpg
   twitter: "@ardennl"
 - id: Shannon Soper
-  bio: UX researcher and educational psychology fan. Teaches piano and keeps up with her dog's Instagram fans @dgtrwatson.
+  bio: UX designer and educational psychology, music, & art fan. Keeps up with her dog's Instagram fans @dgtrwatson.
   avatar: avatars/shannon-soper.jpg
   twitter: "@shannonb_ux"
 - id: Sam Bhagwat
@@ -250,3 +250,19 @@
   bio: Designer, developer, writer. I build open source projects and write the missing instruction manuals of the web.
   avatar: avatars/tania-rascia.jpg
   twitter: "@taniarascia"
+- id: Kym Ellis
+  bio: Marketing lead @TryGhost. Traveler, photographer and aspiring sailor!
+  avatar: avatars/kym-ellis.jpg
+  twitter: "@kymellis"
+- id: Alex Moon
+  bio: Full-Stack developer. OSS Contributor @ GatsbyJS. Thru-hiker.
+  avatar: avatars/alex-moon.jpg
+  twitter: "@moon_meister"
+- id: Preston So
+  bio: Product strategist. Developer advocate. Book author. Off-the-beaten-path traveler. Language nerd. Transit lover. Fantasy mapmaker.
+  avatar: avatars/preston-so.png
+  twitter: "@prestonso"
+- id: Jim Ettig
+  bio: Loves learning how our customers benefit from our service. Wine Snob. Dog Owner. Music lover.
+  avatar: avatars/jim-ettig.jpg
+  twitter: "@unclejge"

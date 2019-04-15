@@ -20,8 +20,12 @@ This means an install of a starter will consist of demo content and a compact `g
 
 ### Related
 
+- [Why Themes?](/blog/2019-01-31-why-themes/)
+- [Themes Roadmap](/blog/2019-03-11-gatsby-themes-roadmap/)
+- [Getting Started with Gatsby Themes and MDX](/blog/2019-02-26-getting-started-with-gatsby-themes/)
+- [Watch Us Build a Theme Live](/blog/2019-02-11-gatsby-themes-livestream-and-example/)
 - [Introducing Gatsby Themes by Chris Biscardi at Gatsby Days](https://www.gatsbyjs.com/gatsby-days-themes-chris/)
-- [Blog posts on themes](https://www.gatsbyjs.org/blog/tags/themes)
+- [See all blog posts on themes](/blog/tags/themes)
 
 ## How Do They Work?
 
@@ -35,7 +39,7 @@ Themes benefit starter authors since they can be shipped as libraries. This mean
 
 Theming in Gatsby means you can now avoid the boilerplate required when setting up a new project that’s commonplace in the community. That means we can arrive at a shared convention for something like a blog, and not be required to write GraphQL or configure a plugin unless you want to. No longer do you have to reinvent the wheel for each new Gatsby site you want to build.
 
-It provides a foundation to build upon, and since themes can inherit from other themes you can you can focus on building out new abstractions or functionality. And by including [accessibility](./docs/themes/building-themes#accessibile-by-default) in your theme, you can contribute back to create a more accessible web!
+It provides a foundation to build upon, and since themes can inherit from other themes you can focus on building out new abstractions or functionality. And by including [accessibility](./docs/themes/building-themes#accessibile-by-default) in your theme, you can contribute back to create a more accessible web!
 
 ## How Do You Customize a Theme?
 

@@ -15,12 +15,12 @@ See the [Creating and Modifying Pages](/docs/creating-and-modifying-pages) for m
 
 ## Linking between routes
 
-You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](https://www.gatsbyjs.org/docs/gatsby-link/).
+You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](/docs/gatsby-link/).
 
 You can also use standard `<a>` links, but you won't get the benefit of prefetching in this case.
 
 ## Creating authentication-gated links
 
-If you don't want all of your content available on the public web, Gatsby lets you create ["client-only" routes](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes--user-authentication) that live behind an authentication gate.
+If you don't want all of your content available on the public web, Gatsby lets you create ["client-only" routes](/docs/building-apps-with-gatsby/#client-only-routes--user-authentication) that live behind an authentication gate.
 
 [[guidelist]]
