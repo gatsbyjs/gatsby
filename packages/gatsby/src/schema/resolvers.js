@@ -151,9 +151,7 @@ const fileByPath = (source, args, context, info) => {
     return fieldValue
   }
 
-  const isArray = getNullableType(info.returnType) instanceof GraphQLList
-
-  const findLinkedFileNode = async relativePath => {
+  const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
     const fileLinkPath = normalize(
@@ -162,7 +160,7 @@ const fileByPath = (source, args, context, info) => {
 
     // Use that path to find the linked File node.
     const linkedFileNode = _.find(
-      await context.nodeModel.getAllNodes({ type: `File` }),
+      context.nodeModel.getAllNodes({ type: `File` }),
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
@@ -175,13 +173,13 @@ const fileByPath = (source, args, context, info) => {
     node => node.internal && node.internal.type === `File`
   )
 
-  // Find the linked File node(s)
-  if (isArray) {
-    return Promise.all(fieldValue.map(findLinkedFileNode))
-  } else {
-    return findLinkedFileNode(fieldValue)
-  }
+  return resolveValue(findLinkedFileNode, fieldValue)
 }
+
+const resolveValue = (resolve, value) =>
+  Array.isArray(value)
+    ? value.map(v => resolveValue(resolve, v))
+    : resolve(value)
 
 module.exports = {
   findManyPaginated,
