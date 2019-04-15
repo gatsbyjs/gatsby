@@ -14,7 +14,7 @@ async function onCreateNode(
   },
   pluginOptions
 ) {
-  var extensionsConfig = pluginOptions.fileExtensions
+  const extensionsConfig = pluginOptions.fileExtensions
 
   // make extensions configurable and use adoc and asciidoc as default
   var supportedExtensions =
