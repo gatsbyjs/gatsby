@@ -27,11 +27,7 @@ async function onCreateNode(
   }
 
   // changes the incoming imagesdir option to take the
-  var changedImagesDir = resolveImagesDir(
-    pathPrefix,
-    pluginOptions.attributes.imagesdir
-  )
-  pluginOptions.attributes.imagesDir = changedImagesDir
+  updateImagesDir(pathPrefix, pluginOptions)
 
   const { createNode, createParentChildLink } = actions // Load Asciidoc contents
 
@@ -103,15 +99,24 @@ async function onCreateNode(
   }
 }
 
-const resolveImagesDir = (pathPrefix, optionImagesDir) => {
-  var defaultImagesDir = `/images`
-  var currentPathPrefix = pathPrefix || ``
+const updateImagesDir = (pathPrefix, pluginOptions) => {
+  const defaultImagesDir = `/images@`
+  const currentPathPrefix = pathPrefix || ``
 
-  if (optionImagesDir === undefined) {
-    return withPathPrefix(currentPathPrefix, defaultImagesDir)
+  if (pluginOptions.attributes === undefined) {
+    pluginOptions.attributes = {}
   }
 
-  return withPathPrefix(currentPathPrefix, optionImagesDir)
+  const attributes = pluginOptions.attributes
+  var imagesDir
+
+  if (attributes.imagesdir === undefined) {
+    imagesDir = withPathPrefix(currentPathPrefix, defaultImagesDir)
+  } else {
+    imagesDir = withPathPrefix(currentPathPrefix, attributes.imagesdir)
+  }
+
+  pluginOptions.attributes.imagesdir = imagesDir
 }
 
 const withPathPrefix = (pathPrefix, url) =>
