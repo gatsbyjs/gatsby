@@ -1,10 +1,10 @@
 import colors from "./colors"
-import typography from "./typography"
+import styles from "./styles"
 import theme from "../theme"
 
 const mergedTheme = {
   colors: { ...colors, ...(theme.colors || {}) },
-  ...{ ...typography, ...(theme.typography || {}) },
+  styles,
 }
 
 export default mergedTheme
