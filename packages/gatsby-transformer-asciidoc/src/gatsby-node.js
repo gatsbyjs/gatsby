@@ -113,7 +113,7 @@ const resolveImagesDir = (pathPrefix, optionImagesDir) => {
     return withPathPrefix(currentPathPrefix, defaultImagesDir)
   }
 
-  return withPathPrefix(currentPathPrefix, defaultImagesDir)
+  return withPathPrefix(currentPathPrefix, optionImagesDir)
 }
 
 const withPathPrefix = (pathPrefix, url) =>
