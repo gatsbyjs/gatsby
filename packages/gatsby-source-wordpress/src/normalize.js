@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 
-const { useApiUrl } = require('./fetch')
+const { useApiUrl } = require(`./fetch`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -371,8 +371,8 @@ exports.mapEntitiesToMedia = (entities, _siteURL) => {
     // Replace media URL if rely on localhost, when _siteURL isn't
     if (
       e.source_url &&
-      e.source_url.indexOf("localhost") !== -1 &&
-      _siteURL.indexOf("localhost") === -1
+      e.source_url.indexOf(`localhost`) !== -1 &&
+      _siteURL.indexOf(`localhost`) === -1
     ) {
       e.source_url = useApiUrl(_siteURL, e.source_url)
     }
