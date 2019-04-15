@@ -2244,11 +2244,33 @@
   description: A template for documenation websites
   tags:
     - Documentation
-    - Typescript
-    - Styling:AntDesign
+    - TypeScript
+    - Ant Design
     - Markdown
   features:
     - Markdown
     - Anchors
     - Menues
     - Landingpage
+- url: https://gatsby-starter.haezl.at
+  repo: https://github.com/haezl/gatsby-starter-haezl
+  description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
+  tags:
+    - Blog
+    - TypeScript
+    - Linting
+    - Styling:CSS-in-JS
+    - Styling:Material
+    - Markdown
+    - PWA
+  features:
+    - Landing Page
+    - Portfolio section
+    - Blog post listing with a preview for each post
+      - Infinite scroll instead of next and previous buttons
+    - Blog posts generated from Markdown files
+    - About Page
+    - Responsive Design
+    - PWA (Progressive Web App) support
+    - MobX
+    - Customizable
