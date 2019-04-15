@@ -115,8 +115,6 @@ Not to be too anti-climactic, but there's really not a ton more to do on the Wor
 
 That being said, if you are creating custom content types for your blog you will need a way to differentiate them in ACF. Creating a custom page template will serve this purpose so you can filter on the page template to show the custom fields. You can also use the page template to filter in your Gatsby project to make sure you are receiving the desired fields for a given page.
 
-<br /><br />
-
 If you have any questions, you can hit me up on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
 
 See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 2](/blog/2019-04-04-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!
