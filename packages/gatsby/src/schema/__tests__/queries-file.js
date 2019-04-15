@@ -95,6 +95,7 @@ const nodes = [
       },
     ],
     arrayOfArray: [[`./1.png`], [`./2.png`]],
+    arrayOfArrayOfObjects: [[{ nested: `./1.png` }], [{ nested: `./2.png` }]],
   },
   {
     id: `test2`,
@@ -142,6 +143,11 @@ describe(`Query fields of type File`, () => {
             files { name }
           }
           arrayOfArray { name }
+          arrayOfArrayOfObjects { 
+            nested {
+              name
+            }
+          }
         }
       }
     `
@@ -165,6 +171,10 @@ describe(`Query fields of type File`, () => {
           },
         ],
         arrayOfArray: [[{ name: `1.png` }], [{ name: `2.png` }]],
+        arrayOfArrayOfObjects: [
+          [{ nested: { name: `1.png` } }],
+          [{ nested: { name: `2.png` } }],
+        ],
       },
     }
     expect(results.errors).toBeUndefined()
