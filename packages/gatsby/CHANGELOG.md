@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.22...gatsby@2.3.23) (2019-04-15)
+
+### Bug Fixes
+
+- pageInfo.totalCount should be total number of results ([#13352](https://github.com/gatsbyjs/gatsby/issues/13352)) ([f77b053](https://github.com/gatsbyjs/gatsby/commit/f77b053)), closes [#13342](https://github.com/gatsbyjs/gatsby/issues/13342)
+- Pin graphql-compose version ([#13356](https://github.com/gatsbyjs/gatsby/issues/13356)) ([7a34c6d](https://github.com/gatsbyjs/gatsby/commit/7a34c6d))
+- **cpu-core-count:** fallback to generic Node.JS method if system specific call fails ([#13294](https://github.com/gatsbyjs/gatsby/issues/13294)) ([857e9e3](https://github.com/gatsbyjs/gatsby/commit/857e9e3)), closes [#12734](https://github.com/gatsbyjs/gatsby/issues/12734)
+- **gatsby:** bail early if pageResources are not available in public pageRenderer ([#13113](https://github.com/gatsbyjs/gatsby/issues/13113)) ([da1d5a6](https://github.com/gatsbyjs/gatsby/commit/da1d5a6))
+
+### Features
+
+- pathname in SSR APIs when in develop ([#12995](https://github.com/gatsbyjs/gatsby/issues/12995)) ([077a9c8](https://github.com/gatsbyjs/gatsby/commit/077a9c8))
+
 ## [2.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.21...gatsby@2.3.22) (2019-04-12)
 
 ### Bug Fixes
