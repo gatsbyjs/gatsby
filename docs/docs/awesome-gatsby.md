@@ -69,6 +69,7 @@ See the [library of official and community plugins](/plugins/)
 - [Why I used GatsbyJS](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
 - [Introducing Dashbored — Generate Static Dashboards Using Gatsby](https://medium.com/planes-agency/introducing-dashbored-62550a028fcc)
 - [12 Factor Applications with GatsbyJS](https://medium.com/@wonderboymusic/12-factor-applications-with-gatsbyjs-ef8a2b1f883a)
+- [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
 
 ### German
 
