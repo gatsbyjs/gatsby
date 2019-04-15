@@ -69,17 +69,17 @@
               link: /docs/eslint/
             - title: Proxying API Requests
               link: /docs/api-proxy/
-        - title: Images, Video, and Files
+        - title: Images, Files, and Video
           link: /docs/images-and-files/
           items:
-            - title: Importing Assets Into Files
+            - title: Importing Assets Directly Into Files
               link: /docs/importing-assets-into-files/
             - title: Using the Static Folder
               link: /docs/static-folder/
-            - title: Working with Images in Gatsby
-              link: /docs/working-with-images/
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
+            - title: Working with Images in Gatsby
+              link: /docs/working-with-images/
             - title: Preoptimizing your Images
               link: /docs/preoptimizing-images/
             - title: Working With Video
