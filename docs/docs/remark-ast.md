@@ -2,7 +2,7 @@
 title: Manipulating Remark ASTs
 ---
 
-gatsby-transformer-remark empowers developers to translate markdown into html to be consumed throughout Gatsby pages. Blogs and other content based sites can highly benefit from this so the code and content is separated and creators don't need.
+gatsby-transformer-remark empowers developers to translate Markdown into HTML to be consumed throughout Gatsby pages. Blogs and other content based sites can highly benefit from this so the code and content is separated. With this, people who will write content for the site don't need to worry about how the the site was written, but rather can focus just on writing the Markdown.
 
 In certain instances, a developer may want to customize certain Markdown nodes while being parsed. Examples could include [add syntax highlighting](/packages/gatsby-remark-prismjs/), [parse images](/packages/gatsby-remark-images), [embed videos](/packages/gatsby-remark-embed-video) and plenty of others. Throughout all of these instances, a plugin will examine the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
 
@@ -24,81 +24,7 @@ Starting out with a Markdown file as below:
 This is a [Real page](https://google.com)
 ```
 
-the generated `markdownAST` would be as appears:
-
-```JSON
-{
-  "type": "root",
-  "children": [
-    {
-      "type": "heading",
-      "depth": 1,
-      "children": [
-        {
-          "type": "text",
-          "value": "Hello World!",
-          "position": {
-            "start": { "line": 1, "column": 3, "offset": 2 },
-            "end": { "line": 1, "column": 15, "offset": 14 },
-            "indent": []
-          }
-        }
-      ],
-      "position": {
-        "start": { "line": 1, "column": 1, "offset": 0 },
-        "end": { "line": 1, "column": 15, "offset": 14 },
-        "indent": []
-      }
-    },
-    {
-      "type": "paragraph",
-      "children": [
-        {
-          "type": "text",
-          "value": "This is a ",
-          "position": {
-            "start": { "line": 3, "column": 1, "offset": 16 },
-            "end": { "line": 3, "column": 11, "offset": 26 },
-            "indent": []
-          }
-        },
-        {
-          "type": "link",
-          "title": null,
-          "url": "https://google.com",
-          "children": [
-            {
-              "type": "text",
-              "value": "Real page",
-              "position": {
-                "start": { "line": 3, "column": 12, "offset": 27 },
-                "end": { "line": 3, "column": 21, "offset": 36 },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": { "line": 3, "column": 11, "offset": 26 },
-            "end": { "line": 3, "column": 42, "offset": 57 },
-            "indent": []
-          }
-        }
-      ],
-      "position": {
-        "start": { "line": 3, "column": 1, "offset": 16 },
-        "end": { "line": 3, "column": 42, "offset": 57 },
-        "indent": []
-      }
-    }
-  ],
-  "position": {
-    "start": { "line": 1, "column": 1, "offset": 0 },
-    "end": { "line": 4, "column": 1, "offset": 58 }
-  }
-}
-```
-
-This is the syntax tree that will be parsed by remark into HTML by `gatsby-transformer-remark`.
+Remark would translate this into an AST that will be available to `gatsby-transformer-remark` plugins. [AST Explorer](https://astexplorer.net/#/gist/d9029a2e8827265fbb9b190083b59d4d/3384f3ce6a3084e50043d0c8ce34628ed7477603) is a site that gives you a side-by-side view of the markdown and the outputted AST.
 
 ## Setting up a plugin
 
@@ -194,7 +120,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-Now we will visit all heading nodes and pass it into a transformer function which we can do whatever we wish.
+Next, by visiting all heading nodes and passing them into a transformer function, you can manipulate the particular nodes to match your usecase.
 
 Looking again at the AST node for header:
 
@@ -226,27 +152,32 @@ You have context about the text as well as what depth the header is (for instanc
 With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
 ```js
+const visit = require("unist-util-visit")
 const toString = require("mdast-util-to-string")
 
-visit(markdownAST, "heading", node => {
-  let { depth } = node
+module.exports = ({ markdownAST }, pluginOptions) => {
+  visit(markdownAST, "heading", node => {
+    let { depth } = node
 
-  // Skip if not an h1
-  if (depth !== 1) return
+    // Skip if not an h1
+    if (depth !== 1) return
 
-  // Grab the innerText of the heading node
-  let text = toString(node)
+    // Grab the innerText of the heading node
+    let text = toString(node)
 
-  const html = `
-      <h1 style="color: rebeccapurple">
-        ${text}
-      </h1>
-    `
+    const html = `
+        <h1 style="color: rebeccapurple">
+          ${text}
+        </h1>
+      `
 
-  node.type = "html"
-  node.children = undefined
-  node.value = html
-})
+    node.type = "html"
+    node.children = undefined
+    node.value = html
+  })
+
+  return markdownAST
+}
 ```
 
 A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) which is also made by Unified was used to extract the plaintext of the inner nodes, so this would remove links or other types of nodes inside the header, but given you have full access to the markdown AST, you can modify it however you wish.
