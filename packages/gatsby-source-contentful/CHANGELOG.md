@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.49](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.48...gatsby-source-contentful@2.0.49) (2019-04-15)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** add missing "face" crop focus option ([#13364](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/13364)) ([68340bf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/68340bf))
+
 ## [2.0.48](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.47...gatsby-source-contentful@2.0.48) (2019-04-11)
 
 **Note:** Version bump only for package gatsby-source-contentful
