@@ -250,7 +250,7 @@ export default ({ children }) => (
 
 To import your styled components, go to _index.js_
 
-`javascript:title=packages/theme/index.js`
+`packages/theme/index.js`
 
 You will then export your component.
 
