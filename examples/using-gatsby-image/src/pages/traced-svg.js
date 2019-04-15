@@ -29,6 +29,7 @@ const TracedSVG = ({ data, location }) => (
     <Lorem />
     <h2>Unsplash</h2>
     <ImageGallery images={data.galleryImages.edges} />
+    <ImageGallery images={data.galleryImagesCropped.edges} />
     <Ipsum />
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
@@ -90,7 +91,10 @@ export const query = graphql`
         }
       }
     }
-    galleryImages: allUnsplashImagesYaml(filter: { gallery: { eq: true } }) {
+    galleryImages: allUnsplashImagesYaml(
+      filter: { gallery: { eq: true } }
+      limit: 10
+    ) {
       edges {
         node {
           credit
@@ -109,20 +113,24 @@ export const query = graphql`
         }
       }
     }
-    unsplashImagesCropped: allFile(
-      filter: { relativePath: { regex: "/unsplash/" } }
+    galleryImagesCropped: allUnsplashImagesYaml(
+      filter: { gallery: { eq: true } }
       skip: 10
     ) {
       edges {
         node {
-          childImageSharp {
-            fluid(
-              maxWidth: 430
-              maxHeight: 430
-              quality: 80
-              traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
-            ) {
-              ...GatsbyImageSharpFluid_tracedSVG
+          credit
+          title
+          localFile {
+            childImageSharp {
+              fluid(
+                maxWidth: 380
+                maxHeight: 380
+                quality: 70
+                traceSVG: { background: "#fbfafc", color: "#dbd4e2" }
+              ) {
+                ...GatsbyImageSharpFluid_tracedSVG
+              }
             }
           }
         }
