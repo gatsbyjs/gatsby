@@ -1,10 +1,8 @@
 const { interpret } = require(`xstate`)
 const machine = require(`../page-component`)
 
-jest.mock(`../../../internal-plugins/query-runner/query-watcher`)
-const {
-  runQueryForPage,
-} = require(`../../../internal-plugins/query-runner/query-watcher`)
+jest.mock(`../../../query/query-watcher`)
+const { runQueryForPage } = require(`../../../query/query-watcher`)
 
 const getService = (args = {}) =>
   interpret(

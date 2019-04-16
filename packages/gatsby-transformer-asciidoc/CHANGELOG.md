@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/compare/gatsby-transformer-asciidoc@1.0.2...gatsby-transformer-asciidoc@1.0.3) (2019-04-15)
+
+### Bug Fixes
+
+- **gatsby-transformer-asciidoc:** fix opal-runtime modifying fundamental prototypes ([#13368](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/issues/13368)) ([a7ff441](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/commit/a7ff441)), closes [/github.com/asciidoctor/asciidoctor.js/issues/651#issuecomment-483008364](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/issues/issuecomment-483008364) [#13087](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/issues/13087) [#13097](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/issues/13097)
+
 ## [1.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/compare/gatsby-transformer-asciidoc@1.0.1...gatsby-transformer-asciidoc@1.0.2) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-transformer-asciidoc

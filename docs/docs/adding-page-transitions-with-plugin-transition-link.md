@@ -165,5 +165,5 @@ As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerb
 - [Official documentation](https://transitionlink.tylerbarnes.ca/docs/)
 - [Source code for plugin](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
 - [Demo site](https://gatsby-plugin-transition-link.netlify.com/)
-- [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](https://www.gatsbyjs.org/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)
+- [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)
 - [Using transition-link with react-spring](https://github.com/TylerBarnes/gatsby-plugin-transition-link/issues/34)

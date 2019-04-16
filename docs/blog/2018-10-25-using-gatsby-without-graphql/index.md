@@ -27,7 +27,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 
 > _[Source plugins](/docs/source-plugin-tutorial/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
 
-We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh)).
+We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)).
 
 **However, you don't _need_ to use source plugins (or create Gatsby nodes) to pull data into a Gatsby site!** In this post we'll explore how to use Gatsby without GraphQL (using "unstructured data"), and some of the pros and cons of doing so.
 
@@ -52,7 +52,7 @@ That's it!
 
 #### 1. Use Gatsby's `createPages` API.
 
-`createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+`createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
 
 By [exporting `createPages`](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L21) from our example Gatsby site's `gatsby-node.js` file, we're saying, "at this point in the bootstrapping sequence, run this code".
 

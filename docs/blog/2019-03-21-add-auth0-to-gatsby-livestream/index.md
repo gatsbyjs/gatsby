@@ -36,12 +36,12 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/gatsby-
 
 ## Additional links and resources
 
-- [Building Apps With Gatsby](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/)
+- [Building Apps With Gatsby](/docs/building-apps-with-gatsby/)
 - [Auth0](https://auth0.com/)
 - [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/)
 - [Source code for the Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org), which uses Auth0 to authenticate users
 - [Source code for the Gatsby store API](https://github.com/gatsbyjs/api.gatsbyjs.org), which uses Auth0 to authenticate requests
-- [Docs for the `wrapRootElement` API](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement)
+- [Docs for the `wrapRootElement` API](/docs/browser-apis/#wrapRootElement)
 - [Ado Kukic on Twitter](https://twitter.com/KukicAdo)
 - [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
 

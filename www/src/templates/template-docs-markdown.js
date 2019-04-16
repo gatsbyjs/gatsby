@@ -32,10 +32,6 @@ const childItemsBySlug = (docsHierarchy, slug) => {
 }
 
 const getPageHTML = page => {
-  if (!page.frontmatter.overview) {
-    return page.html
-  }
-
   const subitemsForPage =
     childItemsBySlug(docsHierarchy, page.fields.slug) || []
   const subitemList = subitemsForPage
@@ -60,7 +56,7 @@ const getDocsData = location => {
     tutorial: itemListTutorial,
   }
 
-  return [urlSegment, itemListLookup[urlSegment] || itemListTutorial]
+  return [urlSegment, itemListLookup[urlSegment]]
 }
 
 function DocsTemplate({ data, location }) {
