@@ -25,6 +25,15 @@ if (process.env.NODE_ENV !== `production`) {
 // Cache for `cleanAndFindPath()`. In case `match-paths.json` is large
 const cleanAndFindPathCache = {}
 
+const findMatchPath = (matchPaths, trimmedPathname) => {
+  for (const { matchPath, path } of matchPaths) {
+    if (match(matchPath, trimmedPathname)) {
+      return path
+    }
+  }
+  return null
+}
+
 // Given a raw URL path, returns the cleaned version of it (trim off
 // `#` and query params), or if it matches an entry in
 // `match-paths.json`, its matched path is returned
@@ -56,21 +65,14 @@ const cleanAndFindPath = rawPathname => {
     return cleanAndFindPathCache[trimmedPathname]
   }
 
-  let foundPath
-  Object.keys(matchPaths).some(matchPath => {
-    if (match(matchPath, trimmedPathname)) {
-      foundPath = matchPaths[matchPath]
-      return foundPath
-    }
-    // Finally, try and match request with default document.
+  let foundPath = findMatchPath(matchPaths, trimmedPathname)
+  console.log(`matchPaths`, matchPaths, foundPath)
+  if (!foundPath) {
     if (trimmedPathname === `/index.html`) {
       foundPath = `/`
-      return foundPath
+    } else {
+      foundPath = trimmedPathname
     }
-    return false
-  })
-  if (!foundPath) {
-    foundPath = trimmedPathname
   }
   cleanAndFindPathCache[trimmedPathname] = foundPath
   return foundPath

@@ -36,7 +36,7 @@ const writePages = async () => {
     })
 
     if (matchPath) {
-      matchPaths[matchPath] = path
+      matchPaths.push({ matchPath, path })
     }
   })
 
