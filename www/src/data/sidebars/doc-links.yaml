@@ -305,7 +305,7 @@
               link: /docs/seo/
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
-        - title: Localizing Your Site*
+        - title: Localization and Internationalization with Gatsby
           link: /docs/localization-i18n/
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
