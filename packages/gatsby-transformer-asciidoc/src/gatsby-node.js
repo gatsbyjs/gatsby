@@ -1,4 +1,5 @@
 const asciidoc = require(`asciidoctor.js`)()
+const _ = require(`lodash`)
 
 async function onCreateNode(
   {
@@ -16,33 +17,30 @@ async function onCreateNode(
 
   // make extensions configurable and use adoc and asciidoc as default
   const supportedExtensions =
-    typeof extensionsConfig != `undefined` && extensionsConfig instanceof Array
+    typeof extensionsConfig !== `undefined` && extensionsConfig instanceof Array
       ? extensionsConfig
       : [`adoc`, `asciidoc`]
-  var currentExtension = node.extension
-  var isSupportedExtension = supportedExtensions.indexOf(currentExtension) > -1
 
-  if (!isSupportedExtension) {
+  if (!supportedExtensions.includes(node.extension)) {
     return
   }
 
   // changes the incoming imagesdir option to take the
-  updateImagesDir(pathPrefix, pluginOptions)
+  const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
 
-  const { createNode, createParentChildLink } = actions // Load Asciidoc contents
-
-  const content = await loadNodeContent(node) // Load Asciidoc file for extracting
+  const { createNode, createParentChildLink } = actions
+  // Load Asciidoc contents
+  const content = await loadNodeContent(node)
+  // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
   // We use a `let` here as a warning: some operations, like .convert() mutate the document
-
-  let doc = await asciidoc.load(content, pluginOptions)
+  let doc = await asciidoc.load(content, asciidocOptions)
 
   try {
-    const html = doc.convert() // Use "partition" option to be able to get title, subtitle, combined
+    const html = doc.convert()
+    // Use "partition" option to be able to get title, subtitle, combined
+    const title = doc.getDocumentTitle({ partition: true })
 
-    const title = doc.getDocumentTitle({
-      partition: true,
-    })
     let revision = null
     let author = null
 
@@ -83,59 +81,50 @@ async function onCreateNode(
       },
       revision,
       author,
-      pageAttributes: pageAttributes,
+      pageAttributes,
     }
+
     asciiNode.internal.contentDigest = createContentDigest(asciiNode)
+
     createNode(asciiNode)
-    createParentChildLink({
-      parent: node,
-      child: asciiNode,
-    })
+    createParentChildLink({ parent: node, child: asciiNode })
   } catch (err) {
-    reporter.panicOnBuild(`Error processing Asciidoc ${
-      node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
-    }:\n
-      ${err.message}`)
+    reporter.panicOnBuild(
+      `Error processing Asciidoc ${
+        node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
+      }:\n
+      ${err.message}`
+    )
   }
 }
 
-const updateImagesDir = (pathPrefix, pluginOptions) => {
+const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
   const defaultImagesDir = `/images@`
   const currentPathPrefix = pathPrefix || ``
 
-  if (pluginOptions.attributes === undefined) {
-    pluginOptions.attributes = {}
+  const clonedPluginOptions = _.cloneDeep(pluginOptions)
+
+  if (clonedPluginOptions.attributes === undefined) {
+    clonedPluginOptions.attributes = {}
   }
 
-  const attributes = pluginOptions.attributes
-  var imagesDir
+  clonedPluginOptions.attributes.imagesdir = withPathPrefix(
+    currentPathPrefix,
+    pluginOptions.attributes.imagesdir || defaultImagesDir
+  )
 
-  if (attributes.imagesdir === undefined) {
-    imagesDir = withPathPrefix(currentPathPrefix, defaultImagesDir)
-  } else {
-    imagesDir = withPathPrefix(currentPathPrefix, attributes.imagesdir)
-  }
-
-  pluginOptions.attributes.imagesdir = imagesDir
-}
+  return clonedPluginOptions
+})
 
 const withPathPrefix = (pathPrefix, url) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
-const extractPageAttributes = allAttributes => {
-  var allPageAttributes = Object.keys(allAttributes).filter(v =>
-    v.startsWith(`page-`)
-  )
-  var newAttributes = {}
-
-  for (const key in allPageAttributes) {
-    var currentKey = allPageAttributes[key]
-    var newKey = currentKey.replace(`page-`, ``)
-    var value = allAttributes[currentKey]
-    newAttributes[newKey] = value
-  }
-
-  return newAttributes
-}
+const extractPageAttributes = allAttributes =>
+  Object.entries(allAttributes).reduce((pageAttributes, [key, value]) => {
+    if (key.startsWith(`page-`)) {
+      pageAttributes[key.replace(/^page-/, ``)] = value
+    }
+    return pageAttributes
+  }, {})
 
 exports.onCreateNode = onCreateNode

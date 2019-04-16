@@ -41,33 +41,45 @@ It recognizes files with the following [extensions](https://asciidoctor.org/docs
 Additional extensions can be configured via the fileExtensions option:
 
 ```javascript
-resolve: `gatsby-transformer-asciidoc`,
-options: {
-  attributes: {
-    showtitle: true,
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      attributes: {
+        showtitle: true,
+      },
+      fileExtensions: [`ad`, `adoc`],
+    },
   },
-  fileExtensions: [`ad`, `adoc`],
-}
+]
 ```
 
 Each AsciiDoc file is parsed into a node of type `asciidoc`.
 
 ## Set imagesdir
+
 You also can define where the asciidoc file can find the images by setting the imagesdir attribute.
 
 ```javascript
-resolve: `gatsby-transformer-asciidoc`,
-options: {
-  attributes: {
-    imagesdir: `/images`,
-  }
-}
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      attributes: {
+        imagesdir: `/images`,
+      },
+    },
+  },
+]
 ```
 
 In the asciidoc file you can insert your image just by using:
 `image::myimage.png[]`
 
 **NOTE**
+
 - If no imagesdir is set the default value is `/images@`
 - Don't use relative images paths because the images might not be copied automatically to the location where the converted asciidoc html file will to located.
 - In case a pathPrefix is set it will altered the images location.
