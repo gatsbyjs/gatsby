@@ -12,14 +12,16 @@ const FooterList = styled.ul`
   width: 100%;
 
   li {
-    color: ${colors.gray.calm};
     display: inline-block;
 
-    &:first-of-type {
-      border-right: 1px solid;
-      border-color: ${colors.gray.bright};
+    &:first-of-type:after {
+      color: ${colors.gatsby};
+      content: "•";
+      padding-left: 1em;
       margin-right: 1em;
-      padding-right: 1em;
+    }
+    a {
+      color: ${colors.gray.calm};
     }
   }
 `

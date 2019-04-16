@@ -73,8 +73,8 @@ class ContributorPageTemplate extends React.Component {
                 return null
               })}
             </div>
+            <FooterLinks />
           </Container>
-          <FooterLinks />
         </main>
       </Layout>
     )

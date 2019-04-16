@@ -261,8 +261,8 @@ class CreatorTemplate extends Component {
               </MetaSection>
             )}
           </div>
-          <FooterLinks />
         </main>
+        <FooterLinks />
       </Layout>
     )
   }

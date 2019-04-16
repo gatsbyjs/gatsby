@@ -3,7 +3,6 @@ import { graphql } from "gatsby"
 
 import PackageReadme from "../components/package-readme"
 import Unbird from "../components/unbird"
-import FooterLinks from "../components/shared/footer-links"
 
 class DocsRemotePackagesTemplate extends React.Component {
   render() {
@@ -32,7 +31,6 @@ class DocsRemotePackagesTemplate extends React.Component {
           publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
           feedbackPrompt="Have feedback on the Plugin Library?"
         />
-        <FooterLinks />
       </>
     )
   }

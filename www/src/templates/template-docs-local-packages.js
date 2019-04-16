@@ -4,7 +4,6 @@ import _ from "lodash"
 
 import PackageReadme from "../components/package-readme"
 import Unbird from "../components/unbird"
-import FooterLinks from "../components/shared/footer-links"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
@@ -74,7 +73,6 @@ class DocsLocalPackagesTemplate extends React.Component {
           publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
           feedbackPrompt="Have feedback on the Plugin Library?"
         />
-        <FooterLinks />
       </>
     )
   }

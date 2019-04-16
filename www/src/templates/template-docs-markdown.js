@@ -103,9 +103,9 @@ function DocsTemplate({ data, location }) {
               </a>
             )}
             <MarkdownPageFooter page={page} />
+            <FooterLinks />
           </Container>
         </DocSearchContent>
-        <FooterLinks />
       </Layout>
     </>
   )

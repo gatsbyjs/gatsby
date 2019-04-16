@@ -55,9 +55,9 @@ class StubListRoute extends React.Component {
                 </li>
               ))}
             </ul>
+            <FooterLinks />
           </Container>
         </DocsearchContent>
-        <FooterLinks />
       </Layout>
     )
   }

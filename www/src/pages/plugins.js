@@ -16,6 +16,7 @@ class Plugins extends Component {
           overrideCSS={{
             alignItems: `center`,
             display: `flex`,
+            flexDirection: `column`,
             minHeight: `calc(100vh - (${sizes.headerHeight} + ${
               sizes.bannerHeight
             }))`,
@@ -120,8 +121,8 @@ class Plugins extends Component {
             publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
             feedbackPrompt="Have feedback on the Plugin Library?"
           />
+          <FooterLinks />
         </Container>
-        <FooterLinks />
       </>
     )
   }

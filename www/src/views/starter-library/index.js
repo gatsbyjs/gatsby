@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
 import Unbird from "../../components/unbird"
-import FooterLinks from "../../components/shared/footer-links"
 import RRSM from "../../utils/reach-router-state-manager"
 import queryString from "query-string"
 
@@ -62,7 +61,6 @@ class StarterLibraryPage extends Component {
           publicKey={process.env.GATSBY_FEEDBACK_KEY_STARTERLIB}
           feedbackPrompt="Have feedback on the Starter Library?"
         />
-        <FooterLinks />
       </Layout>
     )
   }

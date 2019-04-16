@@ -116,9 +116,9 @@ class StarterTemplate extends React.Component {
               showMore={showMore}
               showAllDeps={this.showAllDeps}
             />
+            <FooterLinks />
           </div>
         </div>
-        <FooterLinks />
       </Layout>
     )
   }

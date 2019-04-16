@@ -106,8 +106,8 @@ class BlogPostsIndex extends React.Component {
               </Button>
             </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
+            <FooterLinks />
           </Container>
-          <FooterLinks />
         </main>
       </Layout>
     )
