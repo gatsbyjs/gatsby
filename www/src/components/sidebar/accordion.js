@@ -92,9 +92,7 @@ class Accordion extends React.Component {
             isExpanded && isActive && item.level > 0
               ? presets.activeSectionBackground
               : false,
-          position: `relative`,
-          // marginTop:
-          //   level === 0 && isExpanded ? `${space[4]} !important` : false,
+          position: `relative`
         }}
       >
         <ItemWithSubitems
