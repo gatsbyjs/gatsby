@@ -188,8 +188,7 @@ const processStaticQueries = async (queryIds, { state, activity }) => {
   )
 }
 
-const makePageQueryJob = (state, queryId) => {
-  const page = state.pages.get(queryId)
+const makePageQueryJob = (state, page) => {
   const component = state.components.get(page.componentPath)
   const { path, jsonName, componentPath, context } = page
   const { query } = component
@@ -208,8 +207,13 @@ const makePageQueryJob = (state, queryId) => {
 
 const processPageQueries = async (queryIds, { state, activity }) => {
   state = state || store.getState()
+  // Make sure we filter out pages that don't exist. An example is
+  // /dev-404-page/, whose SitePage node is created via
+  // `internal-data-bridge`, but the actual page object is only
+  // created during `gatsby develop`.
+  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
-    queryIds.map(id => makePageQueryJob(state, id)),
+    pages.map(page => makePageQueryJob(state, page)),
     activity
   )
 }
@@ -230,9 +234,10 @@ const runQueuedQueries = () => {
     const { staticQueryIds, pageQueryIds } = groupQueryIds(
       calcDirtyQueryIds(state)
     )
+    const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
     const queryJobs = [
       ...staticQueryIds.map(id => makeStaticQueryJob(state, id)),
-      ...pageQueryIds.map(id => makePageQueryJob(state, id)),
+      ...pages.map(page => makePageQueryJob(state, page)),
     ]
     listenerQueue.push(queryJobs)
   }
