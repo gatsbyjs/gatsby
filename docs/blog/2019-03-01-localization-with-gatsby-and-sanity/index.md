@@ -7,7 +7,7 @@ image: "./images/gatsby-sanity-l10n.png"
 showImageInArticle: true
 ---
 
-Localization is a common problem and there are _many_ solutions, each with their own benifits and trade-offs. With Gatsby and Sanity.io its possible to achieve a solution that is easy to work with and extend. If you haven't already read about why Gatsby and Sanity.io pair so well check out the blog post by [Knut Melvær](/contributors/knut-melvaer/): [Blazing fast development with Gatsby and Sanity.io](/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io).
+Localization is a common problem and there are _many_ solutions, each with their own benefits and trade-offs. With Gatsby and Sanity.io its possible to achieve a solution that is easy to work with and extend. If you haven't already read about why Gatsby and Sanity.io pair so well check out the blog post by [Knut Melvær](/contributors/knut-melvaer/): [Blazing fast development with Gatsby and Sanity.io](/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io).
 
 I have completed two sites with Gatsby and Sanity that required localization. The first site needed to maintain every link from the original site without redirects: each language living in its own subdomain, `es.my-web-page.com` for example. The simplest solution at the time was to use multiple builds which always bothered me. The second site I vowed to do it the _right™_ way.
 

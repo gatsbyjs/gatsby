@@ -18,9 +18,8 @@ const { boundActionCreators } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const {
-  queueQueryForPathname,
-  runQueuedActions: runQueuedQueries,
-  runQueries,
+  enqueueExtractedQueryId,
+  runQueuedQueries,
 } = require(`./page-query-runner`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -90,7 +89,7 @@ const handleQuery = (
       )
 
       boundActionCreators.deleteComponentsDependencies([query.jsonName])
-      queueQueryForPathname(query.jsonName)
+      enqueueExtractedQueryId(query.jsonName)
     }
     return true
   }
@@ -211,13 +210,13 @@ const queueQueriesForPageComponent = componentPath => {
   boundActionCreators.deleteComponentsDependencies(
     pages.map(p => p.path || p.id)
   )
-  pages.forEach(page => queueQueryForPathname(page.path))
-  runQueries()
+  pages.forEach(page => enqueueExtractedQueryId(page.path))
+  runQueuedQueries()
 }
 
 const runQueryForPage = path => {
-  queueQueryForPathname(path)
-  runQueries()
+  enqueueExtractedQueryId(path)
+  runQueuedQueries()
 }
 
 exports.queueQueriesForPageComponent = queueQueriesForPageComponent
