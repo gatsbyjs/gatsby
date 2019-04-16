@@ -1,4 +1,4 @@
-const asciidoc = require(`asciidoctor.js`)()
+const asciidoc = require(`asciidoctor`)()
 
 async function onCreateNode(
   {

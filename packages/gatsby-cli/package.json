@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
@@ -13,6 +13,7 @@
     "@babel/code-frame": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
+    "clipboardy": "^1.2.3",
     "ci-info": "^2.0.0",
     "common-tags": "^1.4.0",
     "configstore": "^4.0.0",
