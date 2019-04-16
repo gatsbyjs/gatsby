@@ -5366,3 +5366,13 @@
   categories:
     - Open Source
     - Web Development
+- title: Gold Medal Flour
+  main_url: https://www.goldmedalflour.com
+  url: https://www.goldmedalflour.com
+  description: >
+    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from Wordpress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
+  categories:
+    - Food
+  built_by: General Mills Branded Sites Dev Team
+  built_by_url: https://www.generalmills.com
+  featured: false
