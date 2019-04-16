@@ -239,7 +239,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
   createRedirect({
     fromPath: `/docs/how-plugins-work/`,
-    toPath: `/docs/plugin-conventions/`,
+    toPath: `/docs/plugins/`,
     isPermanent: true,
   })
 

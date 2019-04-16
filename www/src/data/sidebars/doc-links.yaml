@@ -149,13 +149,25 @@
         - title: Plugins
           link: /docs/plugins/
           items:
+            - title: What is a Plugin?
+              link: /docs/what-is-a-plugin/
+            - title: Using a Plugin in Your Site
+              link: /docs/using-a-plugin-in-your-site/
+            - title: What You Don't Need Plugins For
+              link: /docs/what-you-dont-need-plugins-for/
+            - title: Loading Plugins from Your Local Plugins Folder
+              link: /docs/loading-plugins-from-your-local-plugins-folder/
             - title: Plugin Library
               link: /plugins/
             - title: Creating Plugins
               link: /docs/creating-plugins/
               items:
-                - title: Plugin Conventions
-                  link: /docs/plugin-conventions/
+                - title: Naming a Plugin
+                  link: /docs/naming-a-plugin/
+                - title: Files Gatsby Looks for in a Plugin
+                  link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Local Plugin
+                  link: /docs/creating-a-local-plugin/
                 - title: Creating a Source Plugin
                   link: /docs/creating-a-source-plugin/
                 - title: Creating a Transformer Plugin
