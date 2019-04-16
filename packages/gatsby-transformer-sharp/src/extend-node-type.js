@@ -158,6 +158,14 @@ const fixedNodeType = ({
         type: GraphQLInt,
         defaultValue: 0,
       },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
@@ -474,6 +482,14 @@ module.exports = ({
         rotate: {
           type: GraphQLInt,
           defaultValue: 0,
+        },
+        fit: {
+          type: ImageFitType,
+          defaultValue: sharp.fit.cover,
+        },
+        background: {
+          type: GraphQLString,
+          defaultValue: `rgba(0,0,0,1)`,
         },
       },
       resolve: (image, fieldArgs, context) => {
