@@ -36,8 +36,54 @@ plugins: [
 It recognizes files with the following [extensions](https://asciidoctor.org/docs/asciidoc-recommended-practices/#document-extension) as AsciiDoc:
 
 - `adoc`
+- `asciidoc`
+
+Additional extensions can be configured via the fileExtensions option:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      attributes: {
+        showtitle: true,
+      },
+      fileExtensions: [`ad`, `adoc`],
+    },
+  },
+]
+```
 
 Each AsciiDoc file is parsed into a node of type `asciidoc`.
+
+## Set imagesdir
+
+You also can define where the asciidoc file can find the images by setting the imagesdir attribute.
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      attributes: {
+        imagesdir: `/images`,
+      },
+    },
+  },
+]
+```
+
+In the asciidoc file you can insert your image just by using:
+`image::myimage.png[]`
+
+**NOTE**
+
+- If no `imagesdir` is set the default value is `/images@`
+- Don't use relative images paths because the images might not be copied automatically to the location where the converted asciidoc html file will to located.
+- In case a `pathPrefix` is set it will altered the images location.
+- In case you want to be able to override the defined imagesdir inside of your asciidoc file you have to end the path with a `@` (e.g. `/images@`).
 
 ## How to query
 
@@ -66,6 +112,41 @@ A sample GraphQL query to get AsciiDoc nodes:
           date
           number
           remark
+        }
+      }
+    }
+  }
+}
+```
+
+## Add new node attributes in the asciidoc file
+
+You can define in the asciidoc file your own data that will be automatically be attached to the node attributes.
+
+**Example**
+
+```asciidoc
+= AsciiDoc Article Title
+Firstname Lastname <author@example.org>
+1.0, July 29, 2018, Asciidoctor article template
+
+:page-title: Article
+:page-path: /my-blog-entry
+:page-category: My Category
+
+```
+
+Each attribute with the prefix page- will be automatically added under `pageAttributes` so it can be used with GraphQL.
+
+```graphql
+{
+  allAsciidoc {
+    edges {
+      node {
+        pageAttributes {
+          title
+          path
+          category
         }
       }
     }
