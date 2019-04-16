@@ -9,6 +9,7 @@ const glob = Promise.promisify(globCB)
 
 const createPath = require(`./create-path`)
 const validatePath = require(`./validate-path`)
+const ignorePath = require(`./ignore-path`)
 const slash = require(`slash`)
 
 // Path creator.
@@ -18,7 +19,7 @@ const slash = require(`slash`)
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
   { store, actions, reporter },
-  { path: pagesPath, pathCheck = true },
+  { path: pagesPath, pathCheck = true, ignore },
   doneCb
 ) => {
   const { createPage, deletePage } = actions
@@ -48,19 +49,20 @@ exports.createPagesStatefully = async (
     )
   }
 
-  const pagesDirectory = systemPath.posix.join(pagesPath)
-  const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
+  const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
+  const pagesGlob = `**/*.{${exts}}`
 
   // Get initial list of files.
-  let files = await glob(pagesGlob)
-  files.forEach(file => _createPage(file, pagesDirectory, createPage))
+  let files = await glob(pagesGlob, { cwd: pagesPath })
+  files.forEach(file => _createPage(file, pagesDirectory, createPage, ignore))
 
   // Listen for new component pages to be added or removed.
   chokidar
-    .watch(pagesGlob)
+    .watch(pagesGlob, { cwd: pagesPath })
     .on(`add`, path => {
+      path = slash(path)
       if (!_.includes(files, path)) {
-        _createPage(path, pagesDirectory, createPage)
+        _createPage(path, pagesDirectory, createPage, ignore)
         files.push(path)
       }
     })
@@ -68,10 +70,11 @@ exports.createPagesStatefully = async (
       path = slash(path)
       // Delete the page for the now deleted component.
       store.getState().pages.forEach(page => {
-        if (page.component === path) {
+        const componentPath = systemPath.join(pagesDirectory, path)
+        if (page.component === componentPath) {
           deletePage({
-            path: createPath(pagesDirectory, path),
-            component: path,
+            path: createPath(path),
+            component: componentPath,
           })
         }
       })
@@ -79,17 +82,23 @@ exports.createPagesStatefully = async (
     })
     .on(`ready`, () => doneCb())
 }
-const _createPage = (filePath, pagesDirectory, createPage) => {
+const _createPage = (filePath, pagesDirectory, createPage, ignore) => {
   // Filter out special components that shouldn't be made into
   // pages.
-  if (!validatePath(systemPath.posix.relative(pagesDirectory, filePath))) {
+  if (!validatePath(filePath)) {
+    return
+  }
+
+  // Filter out anything matching the given ignore patterns and options
+  if (ignorePath(filePath, ignore)) {
     return
   }
 
   // Create page object
+  const createdPath = createPath(filePath)
   const page = {
-    path: createPath(pagesDirectory, filePath),
-    component: filePath,
+    path: createdPath,
+    component: systemPath.join(pagesDirectory, filePath),
   }
 
   // Add page

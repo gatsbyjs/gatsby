@@ -52,6 +52,12 @@ class TagsPage extends React.Component {
         lookup[key] = Object.assign(tag, {
           slug: `/blog/tags/${key}`,
         })
+      } else {
+        lookup[key].totalCount += tag.totalCount
+      }
+      // Prefer spaced tag names (instead of hyphenated) for display
+      if (tag.fieldValue.includes(` `)) {
+        lookup[key].fieldValue = tag.fieldValue
       }
       return lookup
     }, {})

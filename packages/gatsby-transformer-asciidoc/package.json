@@ -1,14 +1,14 @@
 {
   "name": "gatsby-transformer-asciidoc",
   "description": "Gatsby transformer plugin for Asciidocs using the Asciidoctor.js library",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Daniel Oliver <danieloliversoftware@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "asciidoctor.js": "^1.5.9"
+    "asciidoctor": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

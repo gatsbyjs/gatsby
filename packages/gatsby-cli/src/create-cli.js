@@ -5,6 +5,12 @@ const report = require(`./reporter`)
 const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
+const clipboardy = require(`clipboardy`)
+const {
+  trackCli,
+  setDefaultTags,
+  setTelemetryEnabled,
+} = require(`gatsby-telemetry`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -40,6 +46,11 @@ function buildLocalCommands(cli, isLocalSite) {
         `gatsby`,
         `package.json`
       ))
+      try {
+        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
+      } catch (e) {
+        // ignore
+      }
       majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
     } catch (err) {
       /* ignore */
@@ -230,26 +241,30 @@ function buildLocalCommands(cli, isLocalSite) {
       }),
     handler: args => {
       try {
-        envinfo.run(
-          {
+        const copyToClipboard =
+          // Clipboard is not accessible when on a linux tty
+          process.platform === `linux` && !process.env.DISPLAY
+            ? false
+            : args.clipboard
+
+        envinfo
+          .run({
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
             Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
-          },
-          {
-            console: true,
-            // Clipboard is not accessible when on a linux tty
-            clipboard:
-              process.platform === `linux` && !process.env.DISPLAY
-                ? false
-                : args.clipboard,
-          }
-        )
+          })
+          .then(envinfoOutput => {
+            console.log(envinfoOutput)
+
+            if (copyToClipboard) {
+              clipboardy.writeSync(envinfoOutput)
+            }
+          })
       } catch (err) {
-        console.log(`Error: unable to print environment info`)
+        console.log(`Error: Unable to print environment info`)
         console.log(err)
       }
     },
@@ -311,6 +326,15 @@ module.exports = argv => {
 
   buildLocalCommands(cli, isLocalSite)
 
+  try {
+    const { version } = require(`../package.json`)
+    setDefaultTags({ gatsbyCliVersion: version })
+  } catch (e) {
+    // ignore
+  }
+
+  trackCli(argv)
+
   return cli
     .command({
       command: `new [rootPath] [starter]`,
@@ -321,6 +345,26 @@ module.exports = argv => {
           return initStarter(starter, { rootPath })
         }
       ),
+    })
+    .command({
+      command: `telemetry`,
+      desc: `Enable or disable Gatsby anonymous analytics collection.`,
+      builder: yargs =>
+        yargs
+          .option(`enable`, {
+            type: `boolean`,
+            description: `Enable telemetry (default)`,
+          })
+          .option(`disable`, {
+            type: `boolean`,
+            description: `Disable telemetry`,
+          }),
+
+      handler: handlerP(({ enable, disable }) => {
+        const enabled = enable || !disable
+        setTelemetryEnabled(enabled)
+        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)

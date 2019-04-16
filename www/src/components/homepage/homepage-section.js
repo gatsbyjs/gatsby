@@ -5,7 +5,13 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm } from "../../utils/typography"
-import { colors, space, breakpoints, scale, fonts } from "../../utils/presets"
+import {
+  colors,
+  space,
+  breakpoints,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 
 const ICON_SIZE = space[7]
 
@@ -38,7 +44,7 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: ${scale[2]};
+  font-size: ${fontSizes[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
@@ -66,13 +72,13 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: ${scale[6]};
+  font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
   font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};

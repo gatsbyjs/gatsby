@@ -1,7 +1,12 @@
 const remark = require(`remark`)
-const plugin = require(`../index`)
+let plugin
 
 describe(`remark prism plugin`, () => {
+  beforeEach(() => {
+    jest.resetModules()
+    plugin = require(`../index`)
+  })
+
   describe(`generates a <pre> tag`, () => {
     it(`with class="language-*" prefix by default`, () => {
       const code = `\`\`\`js\n// Fake\n\`\`\``
@@ -99,6 +104,30 @@ describe(`remark prism plugin`, () => {
       const markdownAST = remark.parse(code)
       plugin({ markdownAST })
       expect(markdownAST).toMatchSnapshot()
+    })
+  })
+
+  describe(`warnings`, () => {
+    it(`warns if the language is not specified for a code block`, () => {
+      spyOn(console, `warn`)
+      const code = `\`\`\`\n// Fake\n\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { noInlineHighlight: true })
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block language not specified in markdown.`,
+        `applying generic code block`
+      )
+    })
+
+    it(`gives a different warning if inline code can be highlighted`, () => {
+      spyOn(console, `warn`)
+      const code = `\`foo bar\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block or inline code language not specified in markdown.`,
+        `applying generic code block`
+      )
     })
   })
 })

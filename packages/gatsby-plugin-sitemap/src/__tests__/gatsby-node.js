@@ -5,6 +5,7 @@ const path = require(`path`)
 const { onPostBuild } = require(`../gatsby-node`)
 const internals = require(`../internals`)
 const pathPrefix = ``
+const sitemap = require(`sitemap`)
 
 describe(`Test plugin sitemap`, async () => {
   it(`default settings work properly`, async () => {
@@ -167,7 +168,7 @@ describe(`Test plugin sitemap`, async () => {
       expect(originalFile).toEqual(path.join(`public`, `sitemap-index.xml`))
       expect(newFile).toEqual(path.join(`public`, `sitemap.xml`))
     })
-    it(`set sitempa size and urls are less than it.`, async () => {
+    it(`set sitemap size and urls are less than it.`, async () => {
       const options = {
         sitemapSize: 100,
       }
@@ -175,6 +176,17 @@ describe(`Test plugin sitemap`, async () => {
       const [filePath, contents] = internals.writeFile.mock.calls[0]
       expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
       expect(contents).toMatchSnapshot()
+    })
+    it(`should include path prefix when creating creating index sitemap`, async () => {
+      const sitemapSpy = jest.spyOn(sitemap, `createSitemapIndex`)
+      const options = {
+        sitemapSize: 1,
+      }
+      const prefix = `/test`
+      await onPostBuild({ graphql, pathPrefix: prefix }, options)
+      expect(sitemapSpy.mock.calls[0][0].hostname).toEqual(
+        `${queryResult.data.site.siteMetadata.siteUrl}${prefix}`
+      )
     })
   })
 })

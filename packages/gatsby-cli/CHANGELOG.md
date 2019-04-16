@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.7...gatsby-cli@2.5.8) (2019-04-15)
+
+### Features
+
+- **gatsby-cli:** validate rootPath to follow naming conventions as required ([#13158](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13158)) ([68ac45f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/68ac45f)), closes [#13153](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13153)
+
+## [2.5.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.6...gatsby-cli@2.5.7) (2019-04-11)
+
+### Bug Fixes
+
+- add tty helper to not ask for prompt in non tty/ci env ([#13290](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13290)) ([efae20e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/efae20e))
+
+### Features
+
+- **gatsby-cli:** Remove one of package-lock.json and yarn.lock on gatsby new ([#13225](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13225)) ([3510a46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/3510a46)), closes [#13210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13210)
+
+## [2.5.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.5...gatsby-cli@2.5.6) (2019-04-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.4...gatsby-cli@2.5.5) (2019-04-04)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.3...gatsby-cli@2.5.4) (2019-03-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.2...gatsby-cli@2.5.3) (2019-03-27)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.1...gatsby-cli@2.5.2) (2019-03-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.0...gatsby-cli@2.5.1) (2019-03-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.17...gatsby-cli@2.5.0) (2019-03-26)
+
+### Features
+
+- **gatsby:** add anonymous telemetry instrumentation to gatsby ([#12758](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/12758)) ([da8ded9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/da8ded9))
+
 ## [2.4.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.4.16...gatsby-cli@2.4.17) (2019-03-21)
 
 **Note:** Version bump only for package gatsby-cli
