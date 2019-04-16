@@ -23,6 +23,48 @@ const fluidShapeMock = {
   base64: `string_of_base64`,
 }
 
+const fixedImagesShapeMock = [
+  {
+    width: 100,
+    height: 100,
+    src: `test_image.jpg`,
+    srcSet: `some srcSet`,
+    srcSetWebp: `some srcSetWebp`,
+    base64: `string_of_base64`,
+    media: `only screen and (max-width: 767px)`,
+  },
+  {
+    width: 100,
+    height: 100,
+    src: `test_image_2.jpg`,
+    srcSet: `some other srcSet`,
+    srcSetWebp: `some other srcSetWebp`,
+    base64: `other_string_of_base64`,
+    media: `only screen and (min-width: 768px)`,
+  },
+]
+
+const fluidImagesShapeMock = [
+  {
+    aspectRatio: 1.5,
+    src: `test_image.jpg`,
+    srcSet: `some srcSet`,
+    srcSetWebp: `some srcSetWebp`,
+    sizes: `(max-width: 600px) 100vw, 600px`,
+    base64: `string_of_base64`,
+    media: `only screen and (max-width: 767px)`,
+  },
+  {
+    aspectRatio: 2,
+    src: `test_image_2.jpg`,
+    srcSet: `some other srcSet`,
+    srcSetWebp: `some other srcSetWebp`,
+    sizes: `(max-width: 600px) 100vw, 600px`,
+    base64: `string_of_base64`,
+    media: `only screen and (min-width: 768px)`,
+  },
+]
+
 const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
   const { container } = render(
     <Image
@@ -45,6 +87,32 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
   return container
 }
 
+const setupImages = (
+  fluidImages = false,
+  onLoad = () => {},
+  onError = () => {}
+) => {
+  const { container } = render(
+    <Image
+      backgroundColor
+      className={`fixedImage`}
+      style={{ display: `inline` }}
+      title={`Title for the image`}
+      alt={`Alt text for the image`}
+      crossOrigin={`anonymous`}
+      {...fluidImages && { fluidImages: fluidImagesShapeMock }}
+      {...!fluidImages && { fixedImages: fixedImagesShapeMock }}
+      onLoad={onLoad}
+      onError={onError}
+      itemProp={`item-prop-for-the-image`}
+      placeholderStyle={{ color: `red` }}
+      placeholderClassName={`placeholder`}
+    />
+  )
+
+  return container
+}
+
 describe(`<Image />`, () => {
   it(`should render fixed size images`, () => {
     const component = setup()
@@ -53,6 +121,16 @@ describe(`<Image />`, () => {
 
   it(`should render fluid images`, () => {
     const component = setup(true)
+    expect(component).toMatchSnapshot()
+  })
+
+  it(`should render multiple fixed image variants`, () => {
+    const component = setupImages()
+    expect(component).toMatchSnapshot()
+  })
+
+  it(`should render multiple fluid image variants`, () => {
+    const component = setupImages(true)
     expect(component).toMatchSnapshot()
   })
 
