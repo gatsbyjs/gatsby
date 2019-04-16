@@ -154,8 +154,8 @@
             - title: Creating Plugins
               link: /docs/creating-plugins/
               items:
-                - title: Plugin Authoring 101
-                  link: /docs/plugin-authorin-101/
+                - title: Plugin Conventions
+                  link: /docs/plugin-conventions/
                 - title: Creating a Source Plugin
                   link: /docs/creating-a-source-plugin/
                 - title: Creating a Transformer Plugin
