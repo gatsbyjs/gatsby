@@ -140,10 +140,12 @@ const calcInitialDirtyQueryIds = state => {
  * groups queryIds by whether they are static or page queries.
  */
 const groupQueryIds = queryIds => {
-  const grouped = _.groupBy(queryIds, p => p.slice(0, 4) === `sq--`)
+  const grouped = _.groupBy(queryIds, p =>
+    p.slice(0, 4) === `sq--` ? `static` : `page`
+  )
   return {
-    staticQueryIds: grouped[true] || [],
-    pageQueryIds: grouped[false] || [],
+    staticQueryIds: grouped[`static`] || [],
+    pageQueryIds: grouped[`page`] || [],
   }
 }
 
