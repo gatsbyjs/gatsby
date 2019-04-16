@@ -461,7 +461,10 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await pageQueryRunner.processStaticQueries(staticQueryIds, { activity, state: store.getState() })
+  await pageQueryRunner.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
+  })
   activity.end()
 
   activity = report.activityTimer(`run page queries`)
