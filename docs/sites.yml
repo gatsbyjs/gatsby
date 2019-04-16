@@ -760,14 +760,6 @@
   featured: false
   categories:
     - Web Development
-- title: Nortcast
-  main_url: "https://nortcast.com/"
-  url: "https://nortcast.com/"
-  featured: false
-  categories:
-    - Technology
-    - Entertainment
-    - Podcast
 - title: Open FDA
   description: >
     Provides APIs and raw download access to a number of high-value, high
@@ -2853,22 +2845,6 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
-- title: "Dante Calderón"
-  description: >
-    Personal Website and Blog of Dante Calderón
-  main_url: https://dantecalderon.com/
-  url: https://dantecalderon.com/
-  source_url: https://github.com/dantehemerson/dantecalderon.com
-  featured: false
-  categories:
-    - Blog
-    - Portfolio
-    - Web Development
-    - Open Source
-    - Technology
-    - Education
-  built_by: Dante Calderón
-  built_by_url: https://github.com/dantehemerson
 - title: "The Noted Project"
   url: https://thenotedproject.org
   main_url: https://thenotedproject.org
