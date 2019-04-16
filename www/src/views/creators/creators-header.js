@@ -61,7 +61,7 @@ class CreatorsHeader extends Component {
             display: `flex`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            [breakpoints.sm]: {
+            [mediaQueries.sm]: {
               justifyContent: `flex-start`,
             },
           }}

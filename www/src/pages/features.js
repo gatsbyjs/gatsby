@@ -10,7 +10,7 @@ import Container from "../components/container"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   letterSpacings,
   fonts,
@@ -42,7 +42,7 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [breakpoints.sm]: {
+    [mediaQueries.sm]: {
       borderBottom: 0,
     },
   }
@@ -94,7 +94,7 @@ const LegendTable = () => {
           borderLeft: 0,
           fontFamily: fonts.header,
           display: `none`,
-          [breakpoints.sm]: {
+          [mediaQueries.sm]: {
             display: `table`,
           },
         }}
@@ -108,7 +108,7 @@ const LegendTable = () => {
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: fonts.header,
-          [breakpoints.sm]: {
+          [mediaQueries.sm]: {
             display: `none`,
           },
         }}

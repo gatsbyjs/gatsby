@@ -8,7 +8,7 @@ import { rhythm } from "../../utils/typography"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   fonts,
 } from "../../utils/presets"
@@ -21,21 +21,21 @@ const HomepageSectionRoot = styled(`section`)`
   padding: ${space[5]} ${space[6]};
   width: 100%;
 
-  ${breakpoints.xl} {
+  ${mediaQueries.xl} {
     margin: -1px 0;
     padding: ${space[5]} 5%;
   }
 
-  ${breakpoints.xxl} {
+  ${mediaQueries.xxl} {
     padding: ${space[7]} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     max-width: 30rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-left: ${space[9]};
   }
 `
@@ -50,7 +50,7 @@ export const Name = styled(`h3`)`
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -58,7 +58,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -93,7 +93,7 @@ const Actions = styled(`div`)`
     margin-right: ${space[1]};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: ${space[4]} 0 ${space[8]};
   }
 `
