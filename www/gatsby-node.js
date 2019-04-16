@@ -231,6 +231,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/source-plugin-tutorial/`,
+    toPath: `/docs/pixabay-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,

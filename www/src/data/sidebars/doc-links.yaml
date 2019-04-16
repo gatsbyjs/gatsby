@@ -162,8 +162,8 @@
                   link: /docs/creating-a-transformer-plugin/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
-                - title: Source Plugin Tutorial
-                  link: /docs/source-plugin-tutorial/
+                - title: Pixabay Source Plugin Tutorial
+                  link: /docs/pixabay-source-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Starters
