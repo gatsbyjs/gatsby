@@ -150,6 +150,8 @@ Possibility to limit how many locales/nodes are created in graphQL. This can lim
 
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
+List of locales and their codes can be found in Contentful app -> Settings -> Locales
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
