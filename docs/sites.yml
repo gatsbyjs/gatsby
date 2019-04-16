@@ -5366,16 +5366,13 @@
   categories:
     - Open Source
     - Web Development
-- title: Krashna Musika
-  url: https://www.krashna.nl
-  main_url: https://www.krashna.nl
-  source_url: https://github.com/krashnamusika/krashna-site
+- title: Gold Medal Flour
+  main_url: https://www.goldmedalflour.com
+  url: https://www.goldmedalflour.com
   description: >
-    The multi-lingual static site of the student orchestra and choir of Delft (The Netherlands), built with Gatsby!
+    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from Wordpress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
   categories:
-    - Music
-    - Multilingual
-    - Open Source
-  built_by: WebCie Krashna
-  built_by_url: https://github.com/krashnamusika
+    - Food
+  built_by: General Mills Branded Sites Dev Team
+  built_by_url: https://www.generalmills.com
   featured: false
