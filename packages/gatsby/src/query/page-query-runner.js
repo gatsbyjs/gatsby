@@ -144,8 +144,8 @@ const groupQueryIds = queryIds => {
     p.slice(0, 4) === `sq--` ? `static` : `page`
   )
   return {
-    staticQueryIds: grouped[`static`] || [],
-    pageQueryIds: grouped[`page`] || [],
+    staticQueryIds: grouped.static || [],
+    pageQueryIds: grouped.page || [],
   }
 }
 
