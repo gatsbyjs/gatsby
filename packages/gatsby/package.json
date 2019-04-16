@@ -24,6 +24,7 @@
     "autoprefixer": "^9.4.3",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
+    "babel-literal-to-ast": "^2.1.0",
     "babel-loader": "^8.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
