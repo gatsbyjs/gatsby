@@ -1445,7 +1445,7 @@
     - ESLint with Airbnb's config
     - Prettier integrated into ESLint
     - A few example components and pages with stories and simple site structure
-- url: https://devchico.com/gatsby-starter-cv/
+- url: https://santosfrancisco.github.io/gatsby-starter-cv/
   repo: https://github.com/santosfrancisco/gatsby-starter-cv
   description: A simple starter to get up and developing your digital curriculum with GatsbyJS'
   tags:
