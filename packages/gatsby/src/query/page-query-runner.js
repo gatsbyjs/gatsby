@@ -145,7 +145,7 @@ const groupQueryIds = queryIds => {
   )
   return {
     staticQueryIds: grouped.static || [],
-    pageQueryIds: grouped[`page`] || [],
+    pageQueryIds: grouped.page || [],
   }
 }
 
