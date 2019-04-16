@@ -29,7 +29,6 @@
     "gatsby-theme-blog-core": "*",
     "gatsby-transformer-remark": "^2.1.14",
     "gatsby-transformer-sharp": "^2.1.9",
-    "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
     "prismjs": "^1.15.0",
@@ -45,7 +44,6 @@
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.11.1",
-    "gh-pages": "^1.2.0",
     "prettier": "^1.14.2"
   },
   "homepage": "https://github.com/christopherbiscardi/gatsby-theme-examples#readme",
