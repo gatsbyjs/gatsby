@@ -124,7 +124,7 @@ class Accordion extends React.Component {
                 top: `auto`,
                 bottom: -1,
               },
-            })
+            }),
         }}
       >
         <ItemWithSubitems
