@@ -80,9 +80,9 @@ In the asciidoc file you can insert your image just by using:
 
 **NOTE**
 
-- If no imagesdir is set the default value is `/images@`
+- If no `imagesdir` is set the default value is `/images@`
 - Don't use relative images paths because the images might not be copied automatically to the location where the converted asciidoc html file will to located.
-- In case a pathPrefix is set it will altered the images location.
+- In case a `pathPrefix` is set it will altered the images location.
 - In case you want to be able to override the defined imagesdir inside of your asciidoc file you have to end the path with a `@` (e.g. `/images@`).
 
 ## How to query
@@ -125,7 +125,7 @@ You can define in the asciidoc file your own data that will be automatically be 
 
 **Example**
 
-```
+```asciidoc
 = AsciiDoc Article Title
 Firstname Lastname <author@example.org>
 1.0, July 29, 2018, Asciidoctor article template
@@ -143,7 +143,6 @@ Each attribute with the prefix page- will be automatically added under `pageAttr
   allAsciidoc {
     edges {
       node {
-        ...
         pageAttributes {
           title
           path
