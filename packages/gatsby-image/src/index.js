@@ -140,6 +140,31 @@ function generateBase64Sources(imageVariants) {
   ))
 }
 
+function generateNoscriptSources(imageVariants, sizes) {
+  const initialImage = imageVariants[0]
+
+  if (imageVariants.length === 1) {
+    return initialImage.srcSetWebp
+      ? `<source type='image/webp' srcset="${
+          initialImage.srcSetWebp
+        }" ${sizes}/>`
+      : ``
+  }
+
+  return imageVariants.map(variant => {
+    let sources = ``
+    const media = variant.media ? `media="${variant.media}"` : ``
+
+    if (variant.srcSetWebp) {
+      sources = `<source type='image/webp' srcSet="${
+        variant.srcSetWebp
+      }" ${media} ${sizes}/>`
+    }
+
+    return sources + `<source srcSet="${variant.srcSet}" ${media} ${sizes}/>`
+  })
+}
+
 const listenToIntersections = (el, cb) => {
   const observer = getIO()
 
@@ -155,13 +180,12 @@ const listenToIntersections = (el, cb) => {
 }
 
 const noscriptImg = props => {
+  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
+  const sources = generateNoscriptSources(props.imageVariants, sizes)
+
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
-  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
-  const srcSetWebp = props.srcSetWebp
-    ? `<source type='image/webp' srcset="${props.srcSetWebp}" ${sizes}/>`
-    : ``
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
@@ -171,7 +195,7 @@ const noscriptImg = props => {
     ? `crossorigin="${props.crossOrigin}" `
     : ``
 
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${sources}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -445,7 +469,7 @@ class Image extends React.Component {
           {this.state.hasNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image }),
+                __html: noscriptImg({ alt, title, ...image, imageVariants }),
               }}
             />
           )}
@@ -538,6 +562,7 @@ class Image extends React.Component {
                   alt,
                   title,
                   ...image,
+                  imageVariants,
                 }),
               }}
             />
