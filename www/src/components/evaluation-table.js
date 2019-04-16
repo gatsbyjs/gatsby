@@ -22,18 +22,7 @@ class EvaluationTable extends Component {
       const words = txt.split(` `)
       return [
         words.slice(0, words.length - 1).join(` `),
-        <span
-          css={
-            {
-              // WebkitHyphens: `auto`,
-              // MsHyphens: `auto`,
-              // hyphens: `auto`,
-              // wordBreak: `break-all`,
-              // display: `inline-block`,
-            }
-          }
-          key={`info-icon-${words[words.length - 1]}`}
-        >
+        <span key={`info-icon-${words[words.length - 1]}`}>
           {` `}
           {`${words[words.length - 1]} `}
           <img
