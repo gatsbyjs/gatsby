@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.54](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.53...gatsby-source-wordpress@3.0.54) (2019-04-15)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** fix WP-API-MENUS when reported endpoint url doesn't match base url ([#12859](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/12859)) ([a430202](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/a430202))
+
 ## [3.0.53](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.52...gatsby-source-wordpress@3.0.53) (2019-04-08)
 
 **Note:** Version bump only for package gatsby-source-wordpress

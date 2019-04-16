@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.7...gatsby-cli@2.5.8) (2019-04-15)
+
+### Features
+
+- **gatsby-cli:** validate rootPath to follow naming conventions as required ([#13158](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13158)) ([68ac45f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/68ac45f)), closes [#13153](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13153)
+
 ## [2.5.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.6...gatsby-cli@2.5.7) (2019-04-11)
 
 ### Bug Fixes

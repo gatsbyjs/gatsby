@@ -48,8 +48,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   loader.addPagesArray(pages)
   loader.addDevRequires(syncRequires)
-
-  loader.getResourcesForPathname(window.location.pathname).then(() => {
+  Promise.all([
+    loader.getResourcesForPathname(`/dev-404-page/`),
+    loader.getResourcesForPathname(`/404.html`),
+    loader.getResourcesForPathname(window.location.pathname),
+  ]).then(() => {
     const preferDefault = m => (m && m.default) || m
     let Root = preferDefault(require(`./root`))
     domReady(() => {

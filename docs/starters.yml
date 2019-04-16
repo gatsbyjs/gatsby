@@ -1445,7 +1445,7 @@
     - ESLint with Airbnb's config
     - Prettier integrated into ESLint
     - A few example components and pages with stories and simple site structure
-- url: https://devchico.com/gatsby-starter-cv/
+- url: https://santosfrancisco.github.io/gatsby-starter-cv/
   repo: https://github.com/santosfrancisco/gatsby-starter-cv
   description: A simple starter to get up and developing your digital curriculum with GatsbyJS'
   tags:
@@ -2239,3 +2239,54 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://gatsby-starter-stripe.netlify.com/
+  repo: https://github.com/brxck/gatsby-starter-stripe
+  description: A minimal starter to create a storefront with Gatsby, Stripe, & Netlify Functions.
+  tags:
+    - Stripe
+    - Netlify Functions
+    - Serverless
+    - eCommerce
+    - Styling:None
+  features:
+    - Statically generate based on Stripe inventory
+    - Dynamically update with live inventory & availability data
+    - Checkout powered by Stripe
+    - Serverless functions interact with Stripe API
+    - Shopping cart persisted in local storage
+    - Responsive images with gatsby-image
+- url: https://www.jannikbuschke.de/gatsby-antd-docs/
+  repo: https://github.com/jannikbuschke/gatsby-antd-docs
+  description: A template for documenation websites
+  tags:
+    - Documentation
+    - TypeScript
+    - Ant Design
+    - Markdown
+  features:
+    - Markdown
+    - Anchors
+    - Menues
+    - Landingpage
+- url: https://gatsby-starter.haezl.at
+  repo: https://github.com/haezl/gatsby-starter-haezl
+  description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
+  tags:
+    - Blog
+    - TypeScript
+    - Linting
+    - Styling:CSS-in-JS
+    - Styling:Material
+    - Markdown
+    - PWA
+  features:
+    - Landing Page
+    - Portfolio section
+    - Blog post listing with a preview for each post
+      - Infinite scroll instead of next and previous buttons
+    - Blog posts generated from Markdown files
+    - About Page
+    - Responsive Design
+    - PWA (Progressive Web App) support
+    - MobX
+    - Customizable
