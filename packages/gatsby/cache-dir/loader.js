@@ -80,14 +80,13 @@ const cleanAndFindPath = rawPathname => {
 const cachedFetch = (resourceName, fetchFn) => {
   if (resourceName in fetchPromiseStore) {
     return fetchPromiseStore[resourceName]
-  } else {
-    const promise = fetchFn(resourceName)
-    fetchPromiseStore[resourceName] = promise
-    return promise.catch(err => {
-      delete fetchPromiseStore[resourceName]
-      return err
-    })
   }
+  const promise = fetchFn(resourceName)
+  fetchPromiseStore[resourceName] = promise
+  return promise.catch(err => {
+    delete fetchPromiseStore[resourceName]
+    return err
+  })
 }
 
 const doFetch = url =>
