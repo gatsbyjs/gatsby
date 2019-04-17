@@ -760,14 +760,6 @@
   featured: false
   categories:
     - Web Development
-- title: Nortcast
-  main_url: "https://nortcast.com/"
-  url: "https://nortcast.com/"
-  featured: false
-  categories:
-    - Technology
-    - Entertainment
-    - Podcast
 - title: Open FDA
   description: >
     Provides APIs and raw download access to a number of high-value, high
@@ -2853,22 +2845,6 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
-- title: "Dante Calderón"
-  description: >
-    Personal Website and Blog of Dante Calderón
-  main_url: https://dantecalderon.com/
-  url: https://dantecalderon.com/
-  source_url: https://github.com/dantehemerson/dantecalderon.com
-  featured: false
-  categories:
-    - Blog
-    - Portfolio
-    - Web Development
-    - Open Source
-    - Technology
-    - Education
-  built_by: Dante Calderón
-  built_by_url: https://github.com/dantehemerson
 - title: "The Noted Project"
   url: https://thenotedproject.org
   main_url: https://thenotedproject.org
@@ -5266,6 +5242,30 @@
   built_by: RedCarpet Dev Team
   built_by_url: https://www.redcarpetup.com
   featured: false
+- title: talita traveler
+  url: https://talitatraveler.com/
+  main_url: https://talitatraveler.com/
+  source_url: https://github.com/afuh/talitatraveler
+  description: >
+    Talita Traveler's personal blog.
+  categories:
+    - Blog
+    - Personal Website
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+- title: Pastelería el Progreso
+  url: https://pasteleriaelprogreso.com/
+  main_url: https://pasteleriaelprogreso.com/
+  source_url: https://github.com/afuh/elprogreso
+  description: >
+    Famous bakery in Buenos Aires.
+  categories:
+    - Food
+    - Gallery
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
 - title: Maitrik's Portfolio
   url: https://www.maitrikpatel.com/
   main_url: https://www.maitrikpatel.com/
@@ -5325,3 +5325,67 @@
     - Education
   built_by: Alex Holachek
   built_by_url: "https://alex.holachek.com/"
+- title: Jeff Wolff – Portfolio
+  main_url: https://www.jeffwolff.net
+  url: https://www.jeffwolff.net
+  featured: false
+  description: >
+    A guy from San Diego who makes websites.
+  categories:
+    - Blog
+    - Portfolio
+    - Developer
+    - Frontend
+    - Personal Website
+    - Web Development
+- title: Jp Valery – Portfolio
+  main_url: https://jpvalery.photo
+  url: https://jpvalery.photo
+  featured: false
+  description: >
+    Self-taught photographer documenting spaces and people
+  categories:
+    - Portfolio
+    - Personal Website
+    - Photography
+- title: Pantene
+  main_url: https://pantene.com
+  url: https://pantene.com
+  featured: false
+  description: >
+    Pantene is a Swiss-created American brand of hair care products owned by Procter & Gamble
+  categories:
+    - Beauty
+    - Business
+- title: Prevue
+  main_url: https://www.prevue.io
+  url: https://www.prevue.io
+  featured: false
+  description: >
+    All in One Prototyping Tool For Vue Developers
+  categories:
+    - Open Source
+    - Web Development
+- title: Gold Medal Flour
+  main_url: https://www.goldmedalflour.com
+  url: https://www.goldmedalflour.com
+  description: >
+    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from Wordpress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
+  categories:
+    - Food
+  built_by: General Mills Branded Sites Dev Team
+  built_by_url: https://www.generalmills.com
+  featured: false
+- title: Fifth Gait Technologies
+  main_url: https://5thgait.com
+  url: https://5thgait.com
+  featured: false
+  description: >
+    Fifth Gait is a small business in the defense and space industry that is run and owned by physicists and engineers that have worked together for decades. The site was built using Gatsby V2.
+  categories:
+    - Government
+    - Science
+    - Technology
+    - Space
+  built_by: Jonathan Z. Fisher
+  built_by_url: "https://jonzfisher.com"
