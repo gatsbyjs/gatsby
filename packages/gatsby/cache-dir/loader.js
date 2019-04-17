@@ -331,6 +331,10 @@ const queue = {
     }
   },
 
+  // Deprecated April 2019. Query results used to be in a separate
+  // file, but are now included in the page-data.json, which is
+  // already loaded into the browser by the time this function is
+  // called. Use the resource URLs passed in `onPostPrefetch` instead.
   getResourceURLsForPathname: path => {
     const pageData = queue.getPage(path)
     if (pageData) {
@@ -343,9 +347,9 @@ const queue = {
   },
 }
 
-// Deprecated April 2019. Used to fetch the pages-manifest. Now it's a
-// noop
-export const postInitialRenderWork = () => {}
+export const postInitialRenderWork = () => {
+  console.warn(`Warning: postInitialRenderWork is deprecated. It is now a noop`)
+}
 
 export const setApiRunnerForLoader = runner => {
   apiRunner = runner
@@ -353,16 +357,29 @@ export const setApiRunnerForLoader = runner => {
 }
 
 export const publicLoader = {
-  // Deprecated April 2019. Use `loadPage` instead
-  getResourcesForPathname: queue.loadPage,
-  // Deprecated April 2019. Use `getPage` instead
-  getResourcesForPathnameSync: queue.getPage,
-  // Deprecated April 2019. Query results used to be in a separate
-  // file, but are now included in the page-data.json, which is
-  // already loaded into the browser by the time this function is
-  // called. Use the resource URLs passed in `onPostPrefetch` instead.
-  getResourceURLsForPathname: queue.getResourceURLsForPathname,
+  // Deprecated methods. As far as we're aware, these are only used by
+  // core gatsby and the offline plugin, however there's a very small
+  // chance they're called by others.
+  getResourcesForPathname: rawPath => {
+    console.warn(
+      `Warning: getResourcesForPathname is deprecated. Use loadPage instead`
+    )
+    return queue.loadPage(rawPath)
+  },
+  getResourcesForPathnameSync: rawPath => {
+    console.warn(
+      `Warning: getResourcesForPathnameSync is deprecated. Use getPage instead`
+    )
+    return queue.getPage(rawPath)
+  },
+  getResourceURLsForPathname: pathname => {
+    console.warn(
+      `Warning: getResourceURLsForPathname is deprecated. Use onPostPrefetch instead`
+    )
+    return queue.getResourceURLsForPathname
+  },
 
+  // Real methods
   loadPage: queue.loadPage,
   getPage: queue.getPage,
   getPageOr404: queue.getPageOr404,
