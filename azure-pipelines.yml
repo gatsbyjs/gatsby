@@ -7,14 +7,14 @@ pool:
   vmImage: "vs2017-win2016"
 
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: "8.x"
-    displayName: "Install Node.js"
+  - powershell: yarn bootstrap
+    displayName: "Install dependencies & compile packages"
 
-  - script: yarn bootstrap
+  - powershell: yarn lint
+    displayName: "Run code linters"
 
-  - script: yarn test
+  - powershell: yarn jest --runInBand
+    displayName: "Run tests"
     env:
       GENERATE_JEST_REPORT: true
 
