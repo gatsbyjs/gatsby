@@ -18,7 +18,7 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
 How to install or verify Homebrew on your computer:
 
 1. Open your Terminal
-1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number, if so.
+1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
 1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
 1. Once you've installed Homebrew, repeat step 2 to verify.
 
