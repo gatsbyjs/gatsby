@@ -104,7 +104,7 @@ Our goal is to make it easy for the user to gather relevant context, know where 
 
 ## Principle 6: make it easy for folks to become engrossed with Gatsby
 
-Gatsby is the future of the web. Our goal is to let people dive _as far deep into it as they want, and encourage them by providing them more and more to discover._
+Building sites with Gatsby is the way of the future. Our goal is to let people dive _as far deep into it as they want, and encourage them by providing them more and more to discover._
 
 We want everyone to build and keep building, read and keep reading.
 
