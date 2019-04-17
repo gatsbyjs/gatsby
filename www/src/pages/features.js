@@ -7,6 +7,7 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
@@ -240,6 +241,7 @@ class FeaturesPage extends Component {
             />
             <FeaturesFooter />
           </main>
+          <FooterLinks />
         </Container>
       </Layout>
     )

@@ -27,6 +27,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
 
@@ -269,6 +270,7 @@ export default class FilteredStarterLibrary extends Component {
               Load More
             </Button>
           )}
+          <FooterLinks />
         </ContentContainer>
       </section>
     )
