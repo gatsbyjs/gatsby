@@ -3,10 +3,9 @@ const _ = require(`lodash`)
 const normalize = require(`./normalize`)
 const { defaultOptions } = require(`./plugin-options`)
 const {
-  exitProcess,
   CONTENTFUL_CONNECTION_FAILED,
   CONTENTFUL_DATA_FETCHING_FAILED,
-} = require(`./utils`)
+} = require(`./constants`)
 
 module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
   // Fetch articles.
@@ -60,7 +59,7 @@ Used options:`
       options: pluginOptions,
       defaults: defaultOptions,
     })
-    exitProcess(CONTENTFUL_CONNECTION_FAILED)
+    process.exit(CONTENTFUL_CONNECTION_FAILED)
   }
 
   let currentSyncData
@@ -69,7 +68,7 @@ Used options:`
     currentSyncData = await client.sync(query)
   } catch (e) {
     console.log(`error fetching contentful data`, e)
-    exitProcess(CONTENTFUL_DATA_FETCHING_FAILED)
+    process.exit(CONTENTFUL_DATA_FETCHING_FAILED)
   }
 
   // We need to fetch content types with the non-sync API as the sync API

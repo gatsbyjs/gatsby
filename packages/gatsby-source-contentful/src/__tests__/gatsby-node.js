@@ -14,13 +14,13 @@ jest.mock(`../fetch`, () =>
     }
   })
 )
-jest.mock(`../utils`, () => {
-  return {
-    ...jest.requireActual(`../utils`),
-    exitProcess: jest.fn(),
-  }
-})
-const { exitProcess, OPTIONS_VALIDATION_FAILED } = require(`../utils`)
+// jest.mock(`../utils`, () => {
+//   return {
+//     ...jest.requireActual(`../utils`),
+//     exitProcess: jest.fn(),
+//   }
+// })
+const { OPTIONS_VALIDATION_FAILED } = require(`../constants`)
 const { sourceNodes } = require(`../gatsby-node`)
 
 const helperFns = {
@@ -79,6 +79,24 @@ describe(`Calls fetch data`, () => {
 })
 
 describe(`Options validation`, () => {
+  let realProcess
+  beforeAll(() => {
+    realProcess = global.process
+
+    global.process = {
+      ...realProcess,
+      exit: jest.fn(),
+    }
+  })
+
+  beforeEach(() => {
+    global.process.exit.mockClear()
+  })
+
+  afterAll(() => {
+    global.process = realProcess
+  })
+
   const reporter = {
     error: jest.fn(),
     optionsSummary: jest.fn(),
@@ -87,7 +105,7 @@ describe(`Options validation`, () => {
   beforeEach(() => {
     reporter.error.mockClear()
     reporter.optionsSummary.mockClear()
-    exitProcess.mockClear()
+    // exitProcess.mockClear()
   })
 
   it(`Passes with valid options`, async () => {
@@ -103,7 +121,7 @@ describe(`Options validation`, () => {
     )
 
     expect(reporter.error).not.toBeCalled()
-    expect(exitProcess).not.toBeCalled()
+    expect(process.exit).not.toBeCalled()
   })
 
   it(`Fails with missing options`, async () => {
@@ -118,7 +136,7 @@ describe(`Options validation`, () => {
     } finally {
       expect(reporter.error).toBeCalled()
       expect(reporter.optionsSummary).toMatchSnapshot()
-      expect(exitProcess).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
+      expect(process.exit).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
     }
   })
 
@@ -139,7 +157,7 @@ describe(`Options validation`, () => {
     } finally {
       expect(reporter.error).toBeCalled()
       expect(reporter.optionsSummary).toMatchSnapshot()
-      expect(exitProcess).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
+      expect(process.exit).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
     }
   })
 
@@ -160,7 +178,7 @@ describe(`Options validation`, () => {
     } finally {
       expect(reporter.error).toBeCalled()
       expect(reporter.optionsSummary).toMatchSnapshot()
-      expect(exitProcess).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
+      expect(process.exit).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
     }
   })
 })

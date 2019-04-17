@@ -6,7 +6,7 @@ const fs = require(`fs-extra`)
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { defaultOptions, validateOptions } = require(`./plugin-options`)
-const { exitProcess, OPTIONS_VALIDATION_FAILED } = require(`./utils`)
+const { OPTIONS_VALIDATION_FAILED } = require(`./constants`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -35,16 +35,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  {
-    actions,
-    getNode,
-    getNodes,
-    createNodeId,
-    hasNodeChanged,
-    store,
-    cache,
-    reporter,
-  },
+  { actions, getNode, getNodes, createNodeId, store, cache, reporter },
   options
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -70,7 +61,6 @@ exports.sourceNodes = async (
     return
   }
 
-  options = { ...defaultOptions, ...options }
   const validationErrors = validateOptions(options)
   if (validationErrors) {
     reporter.error(`Problems with plugin options in gatsby-config:`)
@@ -79,8 +69,10 @@ exports.sourceNodes = async (
       defaults: defaultOptions,
       errors: validationErrors,
     })
-    exitProcess(OPTIONS_VALIDATION_FAILED)
+    process.exit(OPTIONS_VALIDATION_FAILED)
   }
+
+  options = { ...defaultOptions, ...options }
 
   const createSyncToken = () =>
     `${options.spaceId}-${options.environment}-${options.host}`

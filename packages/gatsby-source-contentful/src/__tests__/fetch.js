@@ -1,25 +1,34 @@
-const mockGetLocaleReturn = {
-  items: [
-    {
-      code: `en-us`,
-      default: true,
-    },
-  ],
-}
+// const mockGetLocaleReturn = {
+//   items: [
+//     {
+//       code: `en-us`,
+//       default: true,
+//     },
+//   ],
+// }
 
-let mockGetLocale
-const defaultMockGetLocale = async () => mockGetLocaleReturn
-const resetGetLocaleMock = () => {
-  mockGetLocale = defaultMockGetLocale
-}
-const setGetLocaleMock = mockFn => {
-  mockGetLocale = mockFn
-}
+// let mockGetLocale
+// const defaultMockGetLocale = async () => mockGetLocaleReturn
+// const resetGetLocaleMock = () => {
+//   mockGetLocale = defaultMockGetLocale
+// }
+// const setGetLocaleMock = mockFn => {
+//   mockGetLocale = mockFn
+// }
 
-resetGetLocaleMock()
+// resetGetLocaleMock()
 
 const mockClient = {
-  getLocales: jest.fn(() => mockGetLocale()),
+  getLocales: jest.fn(() => {
+    return {
+      items: [
+        {
+          code: `en-us`,
+          default: true,
+        },
+      ],
+    }
+  }),
   sync: jest.fn(() => {
     return {
       entries: [],
@@ -42,13 +51,13 @@ jest.mock(`contentful`, () => {
   }
 })
 
-jest.mock(`../utils`, () => {
-  return {
-    ...jest.requireActual(`../utils`),
-    exitProcess: jest.fn(),
-  }
-})
-const { exitProcess, CONTENTFUL_CONNECTION_FAILED } = require(`../utils`)
+// jest.mock(`../utils`, () => {
+//   return {
+//     ...jest.requireActual(`../utils`),
+//     exitProcess: jest.fn(),
+//   }
+// })
+const { CONTENTFUL_CONNECTION_FAILED } = require(`../constants`)
 
 // jest so test output is not filled with contentful plugin logs
 global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
@@ -63,24 +72,40 @@ const options = {
   environment: `env`,
 }
 
+let realProcess
+beforeAll(() => {
+  realProcess = global.process
+
+  global.process = {
+    ...realProcess,
+    exit: jest.fn(),
+  }
+})
+
+const reporter = {
+  error: jest.fn(),
+  optionsSummary: jest.fn(),
+}
+
 beforeEach(() => {
-  exitProcess.mockClear()
+  global.process.exit.mockClear()
+  reporter.error.mockClear()
+})
+
+afterAll(() => {
+  global.process = realProcess
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  await fetchData(options)
-  expect(contentful.createClient.mock.calls[0]).toMatchSnapshot()
+  await fetchData({ ...options, reporter })
+  expect(reporter.error).not.toBeCalled()
+  expect(contentful.createClient).toMatchSnapshot()
 })
 
 it(`Displays detailed plugin options on contentful client error`, async () => {
-  setGetLocaleMock(() => {
-    throw new Error(`error`)
-  })
-
-  const reporter = {
-    error: jest.fn(),
-    optionsSummary: jest.fn(),
-  }
+  // setGetLocaleMock(() => {
+  //   throw new Error(`error`)
+  // })
 
   await fetchData({ ...options, reporter })
 
@@ -90,5 +115,5 @@ it(`Displays detailed plugin options on contentful client error`, async () => {
       options,
     })
   )
-  expect(exitProcess).toBeCalledWith(CONTENTFUL_CONNECTION_FAILED)
+  expect(process.exit).toBeCalledWith(CONTENTFUL_CONNECTION_FAILED)
 })

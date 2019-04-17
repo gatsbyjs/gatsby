@@ -14,15 +14,13 @@ const optionsSchema = Joi.object().keys({
   spaceId: Joi.string()
     .required()
     .empty(),
-  host: Joi.string()
-    .required()
-    .empty(),
-  environment: Joi.string()
-    .required()
-    .empty(),
+  host: Joi.string().empty(),
+  environment: Joi.string().empty(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
 })
+
+console.log(optionsSchema)
 
 const validateOptions = options => {
   const result = optionsSchema.validate(options, { abortEarly: false })

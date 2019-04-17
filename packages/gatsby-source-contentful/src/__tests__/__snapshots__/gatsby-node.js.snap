@@ -26,7 +26,7 @@ exports[`Options validation Fails with empty options 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -46,16 +46,13 @@ exports[`Options validation Fails with missing options 1`] = `
           "accessToken": "\\"accessToken\\" is required",
           "spaceId": "\\"spaceId\\" is required",
         },
-        "options": Object {
-          "environment": "master",
-          "host": "cdn.contentful.com",
-        },
+        "options": Object {},
       },
     ],
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -88,7 +85,7 @@ exports[`Options validation Fails with options of wrong types 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
