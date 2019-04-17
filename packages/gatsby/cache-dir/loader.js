@@ -320,6 +320,15 @@ const queue = {
       )
       .catch(() => null),
 
+  loadPageOr404: rawPath =>
+    queue
+      .loadPage(rawPath)
+      .then(result =>
+        result === null && rawPath !== `/404.html`
+          ? queue.loadPage(`/404.html`)
+          : null
+      ),
+
   getPage: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
   getPageOr404: rawPath => {
