@@ -5361,3 +5361,14 @@
     - Space
   built_by: Jonathan Z. Fisher
   built_by_url: "https://jonzfisher.com"
+- title: nikodemdeja.pl
+  main_url: https://nikodemdeja.pl
+  url: https://nikodemdeja.pl
+  description: >
+    Portfolio of Nikodem Deja
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Nikodem Deja
+  built_by_url: https://nikodemdeja.pl
+  featured: false
