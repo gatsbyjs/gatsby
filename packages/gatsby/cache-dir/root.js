@@ -52,26 +52,26 @@ class RouteHandler extends React.Component {
           )}
         </EnsureResources>
       )
-    } else {
-      const dev404PageResources = loader.getPage(`/dev-404-page/`)
-      const real404PageResources = loader.getPage(`/404.html`)
-      let custom404
-      if (real404PageResources) {
-        custom404 = (
-          <JSONStore {...this.props} pageResources={real404PageResources} />
-        )
-      }
+    }
 
-      return (
-        <RouteUpdates location={location}>
-          <JSONStore
-            location={location}
-            pageResources={dev404PageResources}
-            custom404={custom404}
-          />
-        </RouteUpdates>
+    const dev404PageResources = loader.getPage(`/dev-404-page/`)
+    const real404PageResources = loader.getPage(`/404.html`)
+    let custom404
+    if (real404PageResources) {
+      custom404 = (
+        <JSONStore {...this.props} pageResources={real404PageResources} />
       )
     }
+
+    return (
+      <RouteUpdates location={location}>
+        <JSONStore
+          location={location}
+          pageResources={dev404PageResources}
+          custom404={custom404}
+        />
+      </RouteUpdates>
+    )
   }
 }
 
