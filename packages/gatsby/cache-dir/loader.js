@@ -177,6 +177,14 @@ const onPostPrefetch = ({ path, resourceUrls }) => {
   }
 }
 
+const loadComponent = componentChunkName => {
+  if (process.env.NODE_ENV !== `production`) {
+    return Promise.resolve(syncRequires.components[componentChunkName])
+  } else {
+    return cachedFetch(componentChunkName, fetchComponent).then(preferDefault)
+  }
+}
+
 const queue = {
   addPageData: pageData => {
     pageDatas[pageData.path] = pageData
@@ -278,47 +286,41 @@ const queue = {
   loadPage: rawPath =>
     queue
       .loadPageData(rawPath)
-      .then(pageData => {
-        if (process.env.NODE_ENV !== `production`) {
-          const component = syncRequires.components[pageData.componentChunkName]
-          return [pageData, component]
-        } else {
-          return cachedFetch(pageData.componentChunkName, fetchComponent)
-            .then(preferDefault)
-            .then(component => [pageData, component])
-        }
-      })
-      .then(([pageData, component]) => {
-        const page = {
-          componentChunkName: pageData.componentChunkName,
-          path: pageData.path,
-        }
+      .then(pageData =>
+        loadComponent(pageData.componentChunkName).then(component => {
+          const page = {
+            componentChunkName: pageData.componentChunkName,
+            path: pageData.path,
+          }
 
-        const jsonData = pageData.result
+          const jsonData = pageData.result
 
-        const pageResources = {
-          component,
-          json: jsonData,
-          page,
-        }
+          const pageResources = {
+            component,
+            json: jsonData,
+            page,
+          }
 
-        pathScriptsCache[cleanAndFindPath(rawPath)] = pageResources
-        emitter.emit(`onPostLoadPageResources`, {
-          page: pageResources,
-          pageResources,
-        })
-        if (process.env.NODE_ENV === `production`) {
-          const pageDataUrl = createPageDataUrl(cleanAndFindPath(rawPath))
-          const componentUrls = createComponentUrls(pageData.componentChunkName)
-          const resourceUrls = [pageDataUrl].concat(componentUrls)
-          onPostPrefetch({
-            path: rawPath,
-            resourceUrls,
+          pathScriptsCache[cleanAndFindPath(rawPath)] = pageResources
+          emitter.emit(`onPostLoadPageResources`, {
+            page: pageResources,
+            pageResources,
           })
-        }
+          if (process.env.NODE_ENV === `production`) {
+            const pageDataUrl = createPageDataUrl(cleanAndFindPath(rawPath))
+            const componentUrls = createComponentUrls(
+              pageData.componentChunkName
+            )
+            const resourceUrls = [pageDataUrl].concat(componentUrls)
+            onPostPrefetch({
+              path: rawPath,
+              resourceUrls,
+            })
+          }
 
-        return pageResources
-      })
+          return pageResources
+        })
+      )
       .catch(() => null),
 
   getPage: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
