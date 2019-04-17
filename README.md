@@ -84,7 +84,6 @@ Gatsby is a modern framework for blazing fast websites.
 
 ## What’s In This Document
 
-- [Install the Gatsby CLI](#install-the-gatsby-cli)
 - [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
 - [Learning Gatsby](#-learning-gatsby)
 - [Migration Guides](#-migration-guides)
@@ -92,62 +91,14 @@ Gatsby is a modern framework for blazing fast websites.
 - [License](#memo-license)
 - [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
 
-## Install the Gatsby CLI.
-
-1. **Install the Gatsby CLI.**
-    ```shell
-    npm install -g gatsby-cli
-    ```
-2.  **Create a new site.**
-
-    ```shell
-    gatsby new gatsby-site
-    ```
-
-3.  **Change directories into site folder.**
-
-    ```shell
-    cd gatsby-site
-    ```
-
-4.  **Start development server.**
-
-    ```shell
-    gatsby develop
-    ```
-
-  Gatsby will start a hot-reloading development environment accessible by default at `localhost:8000`.
-
-  Try editing the JavaScript pages in `src/pages`. Saved changes will live reload in the browser.
-  
-5.  **Create a production build.**
-
-      ```shell
-        gatsby build
-      ```
-
-  Gatsby will perform an optimized production build for your site, generating static HTML and per-route JavaScript code bundles.
-  
-6. **Serve the production build locally.**
-
-      ```shell
-      gatsby serve
-      ```
-
-  Gatsby starts a local HTML server for testing your built site. Remember to build your site using `gatsby build` before using this command.
-
-**Access documentation for CLI commands.**
-
-To see detailed documentation for the CLI commands, run `gatsby --help` in the terminal.
-
-For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby new --help`.
-
-
 ## 🚀 Get Up and Running in 5 Minutes
 
 You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these three steps:
+1. **Install the Gatsby CLI.**
+    ```shell
+    npm install -g gatsby-cli
 
-1.  **Create a Gatsby site from a Gatsby starter.**
+2.  **Create a Gatsby site from a Gatsby starter.**
 
     Get your Gatsby blog set up in a single command:
 
@@ -156,7 +107,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     gatsby new my-blazing-fast-site
     ```
 
-2.  **Start the site in `develop` mode.**
+3.  **Start the site in `develop` mode.**
 
     Next, move into your new site’s directory and start it up:
 
@@ -165,7 +116,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
     gatsby develop
     ```
 
-3.  **Open the source code and start editing!**
+4.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
