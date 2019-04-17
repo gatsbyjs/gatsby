@@ -129,7 +129,7 @@ const handlePageDataResponse = (path, req) => {
 }
 
 const fetchPageData = path => {
-  const url = makePageDataUrl(path)
+  const url = createPageDataUrl(path)
   return cachedFetch(url, doFetch).then(req =>
     handlePageDataResponse(path, req)
   )
@@ -148,7 +148,7 @@ const stripSurroundingSlashes = s => {
   return s
 }
 
-const makePageDataUrl = path => {
+const createPageDataUrl = path => {
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
   return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
 }
@@ -231,7 +231,7 @@ const queue = {
     }
 
     if (process.env.NODE_ENV === `production`) {
-      const pageDataUrl = makePageDataUrl(realPath)
+      const pageDataUrl = createPageDataUrl(realPath)
       prefetchHelper(pageDataUrl)
         .then(() =>
           // This was just prefetched, so will return a response from
@@ -309,7 +309,7 @@ const queue = {
           pageResources,
         })
         if (process.env.NODE_ENV === `production`) {
-          const pageDataUrl = makePageDataUrl(cleanAndFindPath(rawPath))
+          const pageDataUrl = createPageDataUrl(cleanAndFindPath(rawPath))
           const componentUrls = createComponentUrls(pageData.componentChunkName)
           const resourceUrls = [pageDataUrl].concat(componentUrls)
           onPostPrefetch({
