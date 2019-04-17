@@ -3,6 +3,7 @@ const child = require(`child_process`)
 
 it(`Builds cache-dir with minimal config`, done => {
   const args = [
+    `--max-old-space-size=6000`,
     require.resolve(`@babel/cli/bin/babel.js`),
     path.join(__dirname, `..`),
     `--config-file`,
@@ -10,6 +11,7 @@ it(`Builds cache-dir with minimal config`, done => {
     `--ignore`,
     `**/__tests__`,
   ]
+  console.log(process.execPath, args)
 
   const spawn = child.spawn(process.execPath, args)
 
@@ -21,6 +23,7 @@ it(`Builds cache-dir with minimal config`, done => {
   })
 
   spawn.stdout.on(`data`, function(chunk) {
+    console.log(chunk)
     stdout += chunk
   })
 
