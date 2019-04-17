@@ -2290,3 +2290,24 @@
     - PWA (Progressive Web App) support
     - MobX
     - Customizable
+- url: https://compassionate-swirles-ce5a6a.netlify.com/
+  repo: https://github.com/hsiehweb/gatsby-starter-mdx
+  description: A Gatsby MDX starter with configuration for MDX in src/pages
+  tags:
+    - MDX
+  features:
+    - gatsby 
+    - gatsby-image
+    - gatsby-plugin-manifest
+    - gatsby-plugin-offline
+    - gatsby-plugin-react-helmet
+    - gatsby-plugin-sharp
+    - gatsby-source-filesystem
+    - gatsby-transformer-sharp
+    - prop-types 
+    - react 
+    - react-dom 
+    - react-helmet 
+    - gatsby-mdx 
+    - @mdx-js/mdx@next 
+    - @mdx-js/react@next
