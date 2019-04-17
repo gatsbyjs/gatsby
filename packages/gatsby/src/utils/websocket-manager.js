@@ -3,6 +3,7 @@
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
+const pageDataUtil = require(`../utils/page-data`)
 
 type QueryResult = {
   id: string,
@@ -32,26 +33,23 @@ const readCachedResults = (dataFileName: string, directory: string): object => {
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.
  */
-const getCachedPageData = (
+const getCachedPageData = async (
   pagePath: string,
   directory: string
 ): QueryResult => {
-  const { jsonDataPaths, pages } = store.getState()
-  const page = pages.get(pagePath)
-  if (!page) {
-    return null
-  }
-  const dataPath = jsonDataPaths[page.jsonName]
-  if (typeof dataPath === `undefined`) {
+  const { program } = store.getState()
+  const publicDir = path.join(program.directory, `public`)
+  try {
+    const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+    return {
+      result: pageData.result,
+      id: pagePath,
+    }
+  } catch (err) {
     console.log(
       `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
     )
     return undefined
-  }
-
-  return {
-    result: readCachedResults(dataPath, directory),
-    id: pagePath,
   }
 }
 
@@ -156,9 +154,9 @@ class WebsocketManager {
         }
       }
 
-      const getDataForPath = path => {
+      const getDataForPath = async path => {
         if (!this.pageResults.has(path)) {
-          const result = getCachedPageData(path, this.programDir)
+          const result = await getCachedPageData(path, this.programDir)
           if (result) {
             this.pageResults.set(path, result)
           } else {
