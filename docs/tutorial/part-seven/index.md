@@ -29,7 +29,7 @@ Creating new pages has two steps:
 
 _**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself like you do with markdown files._
 
-To create your markdown pages, you'll learn to use two Gatsby APIs
+To create your markdown pages, you'll learn to use two Gatsby APIs:
 [`onCreateNode`](/docs/node-apis/#onCreateNode) and
 [`createPages`](/docs/node-apis/#createPages). These are two workhorse APIs
 you'll see used in many sites and plugins.
@@ -37,7 +37,7 @@ you'll see used in many sites and plugins.
 We do our best to make Gatsby APIs simple to implement. To implement an API, you export a function
 with the name of the API from `gatsby-node.js`.
 
-So here's where you'll do that. In the root of your site, create a file named
+So, here's where you'll do that. In the root of your site, create a file named
 `gatsby-node.js`. Then add the following.
 
 ```javascript:title=gatsby-node.js
@@ -109,10 +109,10 @@ two slugs, one for each markdown file.
 
 Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 powerful, as any data you add to nodes is available to query later with GraphQL.
-So it'll be easy to get the slug when it comes time to create the pages.
+So, it'll be easy to get the slug when it comes time to create the pages.
 
 To do so, you'll use a function passed to our API implementation called
-[`createNodeField`](/docs/bound-action-creators/#createNodeField). This function
+[`createNodeField`](/docs/actions/#createNodeField). This function
 allows you to create additional fields on nodes created by other plugins. Only
 the original creator of a node can directly modify the node—all other plugins
 (including your `gatsby-node.js`) must use this function to create additional
@@ -120,9 +120,8 @@ fields.
 
 ```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
-
+// highlight-next-line
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  // highlight-line
   const { createNodeField } = actions // highlight-line
   if (node.internal.type === `MarkdownRemark`) {
     // highlight-start
@@ -217,7 +216,7 @@ You need one additional thing beyond a slug to create pages: a page template
 component. Like everything in Gatsby, programmatic pages are powered by React
 components. When creating a page, you need to specify which component to use.
 
-Create a directory at `src/templates` and then add the following in a file named
+Create a directory at `src/templates`, and then add the following in a file named
 `src/templates/blog-post.js`.
 
 ```jsx:title=src/templates/blog-post.js
@@ -286,7 +285,7 @@ exports.createPages = ({ graphql, actions }) => {
 Restart the development server and your pages will be created! An easy way to
 find new pages you create while developing is to go to a random path where
 Gatsby will helpfully show you a list of pages on the site. If you go to
-<http://localhost:8000/sdf> you'll see the new pages you created.
+<http://localhost:8000/sdf>, you'll see the new pages you created.
 
 ![new-pages](new-pages.png)
 
@@ -340,7 +339,7 @@ Sweet!
 
 The last step is to link to your new pages from the index page.
 
-Return to `src/pages/index.js` and query for your markdown slugs and create
+Return to `src/pages/index.js`, query for your markdown slugs, and create
 links.
 
 ```jsx:title=src/pages/index.js
@@ -431,15 +430,15 @@ frontpage or blog posts pages.
 
 In this part of the tutorial, you've learned the foundations of building with
 Gatsby's data layer. You've learned how to _source_ and _transform_ data using
-plugins. How to use GraphQL to _map_ data to pages. Then how to build _page
+plugins, how to use GraphQL to _map_ data to pages, and then how to build _page
 template components_ where you query for data for each page.
 
 ## What's coming next?
 
 Now that you've built a Gatsby site, where do you go next?
 
-- Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet, and include the hashtag #gatsbytutorial :)
+- Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet and include the hashtag #gatsbytutorial :)
 - You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
 - Explore more [plugins](/docs/plugins/)
 - See what [other people are building with Gatsby](/showcase/)
-- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/) or [GraphQL](/docs/graphql-reference/)
+- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/), or [GraphQL](/docs/graphql-reference/)

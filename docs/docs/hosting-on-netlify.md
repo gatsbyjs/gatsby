@@ -29,10 +29,10 @@ Note that the development build is not optimized.
 To create a production build, use Gatsby build
 ```
 
-For the production build, we will need to run `gatsby build` command and Gatsby will generate our production site under `public` folder, it will contain css, js, images and html files.
+For the production build, we will need to run the `npm run build` command and Gatsby will generate our production site under `public` folder, it will contain CSS, JavaScript, images and HTML files.
 
 ```shell
-gatsby build
+npm run build
 ```
 
 Once, the build is complete, we are ready to upload our site to Netlify. Go to [Netlify](https://app.netlify.com/) and login in/sign up using any method. We will see below message after successful login.
@@ -71,5 +71,5 @@ In Domain Settings, we can add our own domain and set `CNAME` record as our netl
 Below are some helpful resources
 
 - [A Step-by-Step Guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify/)
-- [Gatsby Netlify CMS](https://www.gatsbyjs.org/packages/gatsby-plugin-netlify-cms)
+- [Gatsby Netlify CMS](/packages/gatsby-plugin-netlify-cms)
 - [Gatsby + Netlify CMS Starter](https://github.com/netlify-templates/gatsby-starter-netlify-cms)

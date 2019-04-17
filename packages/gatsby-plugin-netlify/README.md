@@ -84,7 +84,7 @@ you.
 
 The Netlify `_headers` file does not inherit headers, and it will replace any
 matching headers it finds in more specific routes. For example, if you add a
-link to the the root wildcard path (`/*`), it will be replaced by any more
+link to the root wildcard path (`/*`), it will be replaced by any more
 specific path. If you want a resource to put linked across the site, you will
 have to add to every path. To make this easier, the plugin provides the
 `allPageHeaders` option to inject the same headers on every path.
@@ -111,14 +111,24 @@ You can validate the `_headers` config through the
 
 You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/actions/#createRedirect) action.
 
+In addition to the options provided by the Gatsby API, you can pass these options specific to this plugin:
+
+| Attribute    | Description                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `force`      | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration).                                                                                                                                                                                               |
+| `statusCode` | Overrides the HTTP status code which is set to `302` by default or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports custom status codes, you can set one here. For example, `200` for rewrites, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
+
 An example:
 
 ```javascript
 createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true })
 createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" })
+createRedirect({
+  fromPath: "/url_that_is/not_pretty",
+  toPath: "/pretty/url",
+  statusCode: 200,
+})
 ```
-
-> NOTE: You can pass the `force` option to override existing content in the path. This is particularly useful for domain alias redirects. See the Netlify documentation on this option [here](https://www.netlify.com/docs/redirects/#structured-configuration).
 
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
 

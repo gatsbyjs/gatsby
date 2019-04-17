@@ -6,16 +6,7 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-/**
- * Given a `require.resolve()` compatible path pointing to a JS module,
- * return an array listing the names of the module's exports.
- *
- * Returns [] for invalid paths and modules without exports.
- *
- * @param {string} modulePath
- * @param {function} resolver
- */
-module.exports = (modulePath, resolver = require.resolve) => {
+const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath
   const exportNames = []
 
@@ -70,6 +61,15 @@ module.exports = (modulePath, resolver = require.resolve) => {
       isES6 = true
       if (exportName) exportNames.push(exportName)
     },
+
+    // get foo from `export { foo } from 'bar'`
+    // get foo from `export { foo }`
+    ExportSpecifier: function ExportSpecifier(astPath) {
+      const exportName = get(astPath, `node.exported.name`)
+      isES6 = true
+      if (exportName) exportNames.push(exportName)
+    },
+
     AssignmentExpression: function AssignmentExpression(astPath) {
       const nodeLeft = astPath.node.left
 
@@ -103,9 +103,33 @@ You'll need to edit the file to use just one or the other.
 plugin: ${modulePath}.js
 
 This didn't cause a problem in Gatsby v1 so you might want to review the migration doc for this:
-https://gatsby.app/no-mixed-modules
+https://gatsby.dev/no-mixed-modules
       `
     )
   }
   return exportNames
+}
+
+/**
+ * Given a `require.resolve()` compatible path pointing to a JS module,
+ * return an array listing the names of the module's exports.
+ *
+ * Returns [] for invalid paths and modules without exports.
+ *
+ * @param {string} modulePath
+ * @param {string} mode
+ * @param {function} resolver
+ */
+module.exports = (modulePath, { mode = `analysis`, resolver } = {}) => {
+  if (mode === `require`) {
+    try {
+      return Object.keys(require(modulePath)).filter(
+        exportName => exportName !== `__esModule`
+      )
+    } catch {
+      return []
+    }
+  } else {
+    return staticallyAnalyzeExports(modulePath, resolver)
+  }
 }

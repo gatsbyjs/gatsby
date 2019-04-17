@@ -1,5 +1,4 @@
 const axios = require(`axios`)
-const crypto = require(`crypto`)
 
 const fetch = (username, limit = 100) => {
   const url = `https://medium.com/${username}/latest?format=json&limit=${limit}`
@@ -26,7 +25,7 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 const strip = payload => payload.replace(prefix, ``)
 
 exports.sourceNodes = async (
-  { actions, createNodeId },
+  { actions, createNodeId, createContentDigest },
   { username, limit }
 ) => {
   const { createNode } = actions
@@ -77,10 +76,7 @@ exports.sourceNodes = async (
     resources.map(resource => {
       convertTimestamps(resource)
 
-      const digest = crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(resource))
-        .digest(`hex`)
+      const contentDigest = createContentDigest(resource)
 
       const links =
         resource.type === `Post`
@@ -90,14 +86,14 @@ exports.sourceNodes = async (
               ),
             }
           : resource.type === `User`
-            ? {
-                posts___NODE: resources
-                  .filter(
-                    r => r.type === `Post` && r.creatorId === resource.userId
-                  )
-                  .map(r => r.id),
-              }
-            : {}
+          ? {
+              posts___NODE: resources
+                .filter(
+                  r => r.type === `Post` && r.creatorId === resource.userId
+                )
+                .map(r => r.id),
+            }
+          : {}
 
       const node = Object.assign(
         resource,
@@ -106,7 +102,7 @@ exports.sourceNodes = async (
           children: [],
           internal: {
             type: `Medium${resource.type}`,
-            contentDigest: digest,
+            contentDigest,
           },
         },
         links

@@ -3,7 +3,7 @@ title: Customizing html.js
 ---
 
 Gatsby uses a React component to server render the `<head>` and other parts of
-the HTML outside of the core Gatsby application.
+the HTML outside of the core Gatsby application. Gatsby also sets a default value for the `<noscript>` tag there.
 
 Most sites should use the default `html.js` shipped with Gatsby. But if you need
 to customize your site's html.js, copy the default one into your source
@@ -22,14 +22,14 @@ If you need to insert custom html into the `<head>` or `<footer>` of each page o
 Note: the various props that are rendered into pages _are_ required e.g.
 `headComponents`, `preBodyComponents`, `body`, and `postBodyComponents`.
 
-### Inserting html into the <head>
+### Inserting html into the `<head>`
 
 Anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
 [React Helmet](/packages/gatsby-plugin-react-helmet/)
 
-### Inserting html into the <footer>
+### Inserting html into the `<footer>`
 
 If you want to insert custom html into the footer, html.js is the preferred way of doing this. If you're writing a plugin, consider using the `setPostBodyComponents` prop in the [Gatsby SSR API](/docs/ssr-apis/).
 

@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.0...gatsby-transformer-react-docgen@4.0.1) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+# [4.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.7...gatsby-transformer-react-docgen@4.0.0) (2019-04-02)
+
+### Features
+
+- **gatsby-transformer-react-docgen:** use local babel config for react-docgen ([#12001](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/issues/12001)) ([4a2680b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/commit/4a2680b))
+
+### BREAKING CHANGES
+
+- **gatsby-transformer-react-docgen:** now uses the local babel config with a fallback
+
+- Update README.md
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.6...gatsby-transformer-react-docgen@3.0.7) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.5...gatsby-transformer-react-docgen@3.0.6) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.4...gatsby-transformer-react-docgen@3.0.5) (2019-02-06)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.3...gatsby-transformer-react-docgen@3.0.4) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.2...gatsby-transformer-react-docgen@3.0.3) (2019-01-29)
+
+### Features
+
+- **gatsby-transformer-react-docgen:** allow parsing typescript files ([#11265](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/issues/11265)) ([c9a8991](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/commit/c9a8991))
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.1...gatsby-transformer-react-docgen@3.0.2) (2019-01-25)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+<a name="3.0.1"></a>
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@3.0.0...gatsby-transformer-react-docgen@3.0.1) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
 <a name="3.0.0"></a>
 
 # [3.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@2.1.3...gatsby-transformer-react-docgen@3.0.0) (2018-12-31)

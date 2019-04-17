@@ -4,8 +4,15 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, rhythm } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  sizes,
+  fonts,
+} from "../../utils/presets"
 
 import styles from "../shared/styles"
 
@@ -84,7 +91,7 @@ export default class FilteredStarterLibrary extends Component {
       starters = starters.filter(starter =>
         JSON.stringify(starter.node)
           .toLowerCase()
-          .includes(urlState.s)
+          .includes(urlState.s.toLowerCase())
       )
     }
 
@@ -104,7 +111,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: `3.5rem` }}>
+            <div css={{ height: space[10] }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -158,10 +165,10 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${rhythm(3 / 4)}`,
-              [presets.Phablet]: {
-                height: presets.headerHeight,
-                paddingTop: `0px`,
+              paddingTop: `${space[6]}`,
+              [breakpoints.sm]: {
+                height: sizes.headerHeight,
+                paddingTop: 0,
               },
             }}
           >
@@ -177,11 +184,11 @@ export default class FilteredStarterLibrary extends Component {
               css={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: `.4rem`,
+                marginBottom: space[2],
                 width: `100%`,
-                [presets.Phablet]: {
+                [breakpoints.sm]: {
                   justifyContent: `flex-end`,
-                  marginBottom: `0rem`,
+                  marginBottom: 0,
                   width: `50%`,
                 },
               }}
@@ -190,14 +197,14 @@ export default class FilteredStarterLibrary extends Component {
               <label
                 css={{
                   display: `none`,
-                  [presets.Desktop]: {
+                  [breakpoints.lg]: {
                     border: 0,
-                    borderRadius: presets.radiusLg,
+                    borderRadius: radii[2],
                     color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
+                    fontFamily: fonts.header,
+                    paddingTop: space[1],
+                    paddingRight: space[1],
+                    paddingBottom: space[1],
                     width: rhythm(5),
                   },
                 }}
@@ -209,26 +216,9 @@ export default class FilteredStarterLibrary extends Component {
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   css={{
-                    border: 0,
-                    borderRadius: presets.radiusLg,
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    marginTop: rhythm(1 / 8),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(1),
+                    marginTop: space[1],
+                    ...styles.searchInput,
                     width: rhythm(6),
-                    ":focus": {
-                      outline: `${colors.wisteria} solid thin`,
-                      backgroundColor: colors.ui.light,
-                      borderRadius: presets.radiusLg,
-                      transition: `width ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }, background-color ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                    },
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}
@@ -238,18 +228,18 @@ export default class FilteredStarterLibrary extends Component {
                 <SearchIcon
                   overrideCSS={{
                     fill: colors.lilac,
-                    height: `16px`,
+                    height: space[4],
                     left: `5px`,
                     pointerEvents: `none`,
                     position: `absolute`,
                     top: `50%`,
                     transform: `translateY(-50%)`,
-                    width: `16px`,
+                    width: space[4],
                   }}
                 />
               </label>
               <Button
-                to="https://gatsbyjs.org/docs/submit-to-starter-library/"
+                to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
                 tag="href"
                 target="_blank"
                 rel="noopener noreferrer"

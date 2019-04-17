@@ -53,7 +53,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   createNode({
     ...page,
     id: createPageId(page.path),
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       type: `SitePage`,
@@ -68,7 +68,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       packageJson: transformPackageJson(
         require(`${plugin.resolve}/package.json`)
       ),
-      parent: `SOURCE`,
+      parent: null,
       children: [],
       internal: {
         contentDigest: createContentDigest(plugin),
@@ -98,7 +98,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     createNode({
       ...node,
       id: `Site`,
-      parent: `SOURCE`,
+      parent: null,
       children: [],
       internal: {
         contentDigest: createContentDigest(node),
@@ -138,7 +138,7 @@ exports.onCreatePage = ({ createContentDigest, page, actions }) => {
   createNode({
     ...pageWithoutUpdated,
     id: createPageId(page.path),
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       type: `SitePage`,

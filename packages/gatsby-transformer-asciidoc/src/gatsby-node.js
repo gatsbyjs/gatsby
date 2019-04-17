@@ -1,9 +1,11 @@
-const asciidoc = require(`asciidoctor.js`)()
+const asciidoc = require(`asciidoctor`)()
+const _ = require(`lodash`)
 
 async function onCreateNode(
   {
     node,
     actions,
+    pathPrefix,
     loadNodeContent,
     createNodeId,
     reporter,
@@ -11,20 +13,31 @@ async function onCreateNode(
   },
   pluginOptions
 ) {
-  // Filter out non-adoc content
-  if (!node.extension || node.extension !== `adoc`) {
+  const extensionsConfig = pluginOptions.fileExtensions
+
+  // make extensions configurable and use adoc and asciidoc as default
+  const supportedExtensions =
+    typeof extensionsConfig !== `undefined` && extensionsConfig instanceof Array
+      ? extensionsConfig
+      : [`adoc`, `asciidoc`]
+
+  if (!supportedExtensions.includes(node.extension)) {
     return
   }
+
+  // changes the incoming imagesdir option to take the
+  const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
 
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
   const content = await loadNodeContent(node)
   // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
-  const doc = await asciidoc.loadFile(node.absolutePath)
+  // We use a `let` here as a warning: some operations, like .convert() mutate the document
+  let doc = await asciidoc.load(content, asciidocOptions)
 
   try {
-    const html = asciidoc.convert(content, pluginOptions)
+    const html = doc.convert()
     // Use "partition" option to be able to get title, subtitle, combined
     const title = doc.getDocumentTitle({ partition: true })
 
@@ -50,6 +63,8 @@ async function onCreateNode(
       }
     }
 
+    let pageAttributes = extractPageAttributes(doc.getAttributes())
+
     const asciiNode = {
       id: createNodeId(`${node.id} >>> ASCIIDOC`),
       parent: node.id,
@@ -66,6 +81,7 @@ async function onCreateNode(
       },
       revision,
       author,
+      pageAttributes,
     }
 
     asciiNode.internal.contentDigest = createContentDigest(asciiNode)
@@ -81,5 +97,34 @@ async function onCreateNode(
     )
   }
 }
+
+const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
+  const defaultImagesDir = `/images@`
+  const currentPathPrefix = pathPrefix || ``
+
+  const clonedPluginOptions = _.cloneDeep(pluginOptions)
+
+  if (clonedPluginOptions.attributes === undefined) {
+    clonedPluginOptions.attributes = {}
+  }
+
+  clonedPluginOptions.attributes.imagesdir = withPathPrefix(
+    currentPathPrefix,
+    clonedPluginOptions.attributes.imagesdir || defaultImagesDir
+  )
+
+  return clonedPluginOptions
+})
+
+const withPathPrefix = (pathPrefix, url) =>
+  (pathPrefix + url).replace(/\/\//, `/`)
+
+const extractPageAttributes = allAttributes =>
+  Object.entries(allAttributes).reduce((pageAttributes, [key, value]) => {
+    if (key.startsWith(`page-`)) {
+      pageAttributes[key.replace(/^page-/, ``)] = value
+    }
+    return pageAttributes
+  }, {})
 
 exports.onCreateNode = onCreateNode
