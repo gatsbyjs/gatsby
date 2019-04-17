@@ -135,31 +135,32 @@ const FeaturesHeader = () => (
     </p>
     <ul>
       <li>
-        <b>Traditional static site generators</b> such as
+        <strong>JAMstack frameworks</strong> such as
         {` `}
-        <a href="http://jekyllrb.com/">Jekyll</a> let you put text or markdown
-        in a specific directory such as <code>pages/</code> in a
-        version-controlled codebase. They then build a specific kind of site,
-        usually a blog, as HTML files from the content you’ve added. These files
-        can be cached and served from a CDN.
+        <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">Next.js</a>,
+        {` `}
+        <a href="https://vuepress.vuejs.org/" target="_blank" rel="noopener noreferrer">VuePress</a>, and
+        {` `}
+        <a href="https://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a>
+        {` `}
+        let you put text or markdown in a specific directory such as
+        <code>pages/</code> in a version-controlled codebase. They then build a
+        specific kind of site, usually a blog, as HTML files from the content
+        you’ve added. These files can be cached and served from a CDN.
       </li>
       <li>
-        <b>Content Management Systems</b> (CMSs) like
+        <strong>Traditional content management systems</strong> (CMSs) like
         {` `}
-        <a href="http://wordpress.org/">WordPress</a> give you an online text
-        editor to create content. You customize the look and feel through
-        choosing themes and plugins, or writing custom PHP or JavaScript code.
-        Content is saved in a database, which is retrieved and sent to users
-        when they visit the website. Depending on your requirements you can
-        self-host your website, or use an official hosting provider.
-      </li>
-      <li>
-        <b>Site builders</b> like
+        <a href="https://wordpress.org/" target="_blank" rel="noopener noreferrer">WordPress</a> and
         {` `}
-        <a href="http://squarespace.com/">Squarespace</a> are a type of hosted
-        closed-source CMS. They focus on making it fast to build a website;
-        however, they don’t allow self-hosting or enable you to export your
-        website and customize it.
+        <a href="https://drupal.org/" target="_blank" rel="noopener noreferrer">Drupal</a>
+        {` `}
+        give you an online text editor to create content. You customize the look
+        and feel by choosing themes and plugins or by writing custom PHP or
+        JavaScript code. Content is saved in a database, which is retrieved and
+        sent to users when they visit the website. Depending on your
+        requirements you can self-host your website or use an official hosting
+        provider.
       </li>
     </ul>
     <p>
