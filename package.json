@@ -99,5 +99,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "weak": "^1.0.1"
+  }
 }
