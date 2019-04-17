@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/compare/gatsby-transformer-asciidoc@1.0.3...gatsby-transformer-asciidoc@1.0.4) (2019-04-17)
+
+### Features
+
+- **gatsby-transformer-asciidoc:** add pathPrefix handling for images, define supported file extensions and add "page-\*" attributes from asciidoc file to AsciiDoc node ([#13357](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/issues/13357)) ([9e547c8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/commit/9e547c8))
+
 ## [1.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/compare/gatsby-transformer-asciidoc@1.0.2...gatsby-transformer-asciidoc@1.0.3) (2019-04-15)
 
 ### Bug Fixes
