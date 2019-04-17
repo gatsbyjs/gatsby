@@ -19,7 +19,6 @@ window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
 
-loader.addPageData([window.pageData])
 loader.addProdRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)
 
@@ -59,23 +58,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  const { pageData, location: browserLoc } = window
+  const { pagePath, location: browserLoc } = window
   if (
     // Make sure the window.page object is defined
-    pageData &&
+    pagePath &&
     // The canonical path doesn't match the actual path (i.e. the address bar)
-    __PATH_PREFIX__ + pageData.path !== browserLoc.pathname &&
+    __PATH_PREFIX__ + pagePath !== browserLoc.pathname &&
     // Ignore 404 pages, since we want to keep the same URL
-    pageData.path !== `/404.html` &&
-    !pageData.path.match(/^\/404\/?$/) &&
+    pagePath !== `/404.html` &&
+    !pagePath.match(/^\/404\/?$/) &&
     // Also ignore the offline shell (since when using the offline plugin, all
     // pages have this canonical path)
-    !pageData.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+    !pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
-    navigate(
-      __PATH_PREFIX__ + pageData.path + browserLoc.search + browserLoc.hash,
-      { replace: true }
-    )
+    navigate(__PATH_PREFIX__ + pagePath + browserLoc.search + browserLoc.hash, {
+      replace: true,
+    })
   }
 
   loader.loadPage(browserLoc.pathname).then(() => {

@@ -186,9 +186,6 @@ const loadComponent = componentChunkName => {
 }
 
 const queue = {
-  addPageData: pageData => {
-    pageDatas[pageData.path] = pageData
-  },
   addDevRequires: devRequires => {
     syncRequires = devRequires
   },
