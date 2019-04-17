@@ -66,7 +66,6 @@ const cleanAndFindPath = rawPathname => {
   }
 
   let foundPath = findMatchPath(matchPaths, trimmedPathname)
-  console.log(`matchPaths`, matchPaths, foundPath)
   if (!foundPath) {
     if (trimmedPathname === `/index.html`) {
       foundPath = `/`
