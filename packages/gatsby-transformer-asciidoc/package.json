@@ -13,6 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "lodash": "^4.17.10",
     "babel-preset-gatsby-package": "^0.1.4",
     "cross-env": "^5.1.4"
   },
