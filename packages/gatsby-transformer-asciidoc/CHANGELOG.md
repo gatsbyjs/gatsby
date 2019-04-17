@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/compare/gatsby-transformer-asciidoc@1.0.4...gatsby-transformer-asciidoc@1.0.5) (2019-04-17)
+
+### Bug Fixes
+
+- usage of pluginOptions leads to TypeError: Cannot read property 'imagesdir' of undefined ([#13418](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/issues/13418)) ([cfb7af5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/commit/cfb7af5))
+
 ## [1.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-asciidoc/compare/gatsby-transformer-asciidoc@1.0.3...gatsby-transformer-asciidoc@1.0.4) (2019-04-17)
 
 ### Features
