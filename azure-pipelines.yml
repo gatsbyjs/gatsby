@@ -10,10 +10,10 @@ steps:
   - powershell: yarn bootstrap
     displayName: "Install dependencies & compile packages"
 
-  - powershell: yarn lint
-    displayName: "Run code linters"
+  # - powershell: yarn lint
+  #   displayName: "Run code linters"
 
-  - powershell: yarn jest --runInBand
+  - powershell: yarn jest --detectLeaks --runInBand
     displayName: "Run tests"
     env:
       GENERATE_JEST_REPORT: true
