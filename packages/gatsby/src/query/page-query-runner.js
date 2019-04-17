@@ -1,6 +1,5 @@
 // @flow
 
-import type { QueryJob } from "../query-runner"
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
 const convertHrtime = require(`convert-hrtime`)
@@ -137,57 +136,20 @@ const calcInitialDirtyQueryIds = state => {
   return _.union(extractedQueriesThatNeedRunning, nodeAndNoDepQueries)
 }
 
-const makeQueryJobs = pathnames => {
-  const staticQueries = pathnames.filter(p => p.slice(0, 4) === `sq--`)
-  const pageQueries = pathnames.filter(p => p.slice(0, 4) !== `sq--`)
-  const state = store.getState()
-  const queryJobs = []
-
-  staticQueries.forEach(id => {
-    const staticQueryComponent = store.getState().staticQueryComponents.get(id)
-    const queryJob: QueryJob = {
-      id: staticQueryComponent.hash,
-      hash: staticQueryComponent.hash,
-      jsonName: staticQueryComponent.jsonName,
-      query: staticQueryComponent.query,
-      componentPath: staticQueryComponent.componentPath,
-      context: { path: staticQueryComponent.jsonName },
-    }
-    queryJobs.push(queryJob)
-  })
-
-  const pages = state.pages
-  pageQueries.forEach(id => {
-    const page = pages.get(id)
-    if (page) {
-      queryJobs.push(
-        ({
-          id: page.path,
-          jsonName: page.jsonName,
-          query: store.getState().components.get(page.componentPath).query,
-          isPage: true,
-          componentPath: page.componentPath,
-          context: {
-            ...page,
-            ...page.context,
-          },
-        }: QueryJob)
-      )
-    }
-  })
-  return queryJobs
+/**
+ * groups queryIds by whether they are static or page queries.
+ */
+const groupQueryIds = queryIds => {
+  const grouped = _.groupBy(queryIds, p =>
+    p.slice(0, 4) === `sq--` ? `static` : `page`
+  )
+  return {
+    staticQueryIds: grouped.static || [],
+    pageQueryIds: grouped.page || [],
+  }
 }
 
-const runInitialQueries = async activity => {
-  const pathnamesToRun = calcInitialDirtyQueryIds(store.getState())
-  if (pathnamesToRun.length === 0) {
-    return
-  }
-
-  const queryJobs = makeQueryJobs(pathnamesToRun)
-
-  const queue = queryQueue.makeBuild()
-
+const reportStats = (queue, activity) => {
   const startQueries = process.hrtime()
   queue.on(`task_finish`, () => {
     const stats = queue.getStats()
@@ -197,7 +159,63 @@ const runInitialQueries = async activity => {
       ).toFixed(2)} queries/second`
     )
   })
+}
+
+const processQueries = async (queryJobs, activity) => {
+  const queue = queryQueue.createBuildQueue()
+  reportStats(queue, activity)
   await queryQueue.processBatch(queue, queryJobs)
+}
+
+const createStaticQueryJob = (state, queryId) => {
+  const component = state.staticQueryComponents.get(queryId)
+  const { hash, jsonName, query, componentPath } = component
+  return {
+    id: hash,
+    hash,
+    jsonName,
+    query,
+    componentPath,
+    context: { path: jsonName },
+  }
+}
+
+const processStaticQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  await processQueries(
+    queryIds.map(id => createStaticQueryJob(state, id)),
+    activity
+  )
+}
+
+const createPageQueryJob = (state, page) => {
+  const component = state.components.get(page.componentPath)
+  const { path, jsonName, componentPath, context } = page
+  const { query } = component
+  return {
+    id: path,
+    jsonName,
+    query,
+    isPage: true,
+    componentPath,
+    context: {
+      ...page,
+      ...context,
+    },
+  }
+}
+
+const processPageQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  // Make sure we filter out pages that don't exist. An example is
+  // /dev-404-page/, whose SitePage node is created via
+  // `internal-data-bridge`, but the actual page object is only
+  // created during `gatsby develop`.
+  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
+  await processQueries(
+    pages.map(page => createPageQueryJob(state, page)),
+    activity
+  )
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -212,7 +230,16 @@ let listenerQueue
  */
 const runQueuedQueries = () => {
   if (listenerQueue) {
-    listenerQueue.push(makeQueryJobs(calcDirtyQueryIds(store.getState())))
+    const state = store.getState()
+    const { staticQueryIds, pageQueryIds } = groupQueryIds(
+      calcDirtyQueryIds(state)
+    )
+    const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
+    const queryJobs = [
+      ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
+      ...pages.map(page => createPageQueryJob(state, page)),
+    ]
+    listenerQueue.push(queryJobs)
   }
 }
 
@@ -241,7 +268,10 @@ const startListening = queue => {
 }
 
 module.exports = {
-  runInitialQueries,
+  calcInitialDirtyQueryIds,
+  groupQueryIds,
+  processStaticQueries,
+  processPageQueries,
   startListening,
   runQueuedQueries,
   enqueueExtractedQueryId,

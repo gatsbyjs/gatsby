@@ -92,7 +92,7 @@ async function startServer(program) {
   await bootstrap(program)
 
   db.startAutosave()
-  pageQueryRunner.startListening(queryQueue.makeDevelop())
+  pageQueryRunner.startListening(queryQueue.createDevelopQueue())
   queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
