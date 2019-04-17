@@ -15,18 +15,22 @@ const readFile = file =>
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let loadNodeContent, actions, node, createdNodes, updatedNodes
   const createNodeId = jest.fn()
+
   createNodeId.mockReturnValue(`uuid-from-gatsby`)
-  let run = (node, opts = {}) =>
-    onCreateNode(
+  let run = (node, opts = {}) => {
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    return onCreateNode(
       {
         node,
         loadNodeContent,
         actions,
         createNodeId,
         reporter: { error: console.error },
+        createContentDigest,
       },
-      opts
+      { cwd: path.join(__dirname, `fixtures`), ...opts }
     )
+  }
 
   let consoleError
   beforeEach(() => {
@@ -39,6 +43,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       children: [],
       internal: {
         mediaType: `application/javascript`,
+      },
+      get absolutePath() {
+        return path.join(__dirname, `fixtures`, this.__fixture)
       },
       __fixture: `classes.js`,
     }
@@ -54,7 +61,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   })
 
   it(`should only process javascript, jsx, and typescript nodes`, async () => {
-    loadNodeContent = jest.fn().mockResolvedValue({})
+    loadNodeContent = jest.fn().mockResolvedValue(``)
 
     const unknown = [
       null,
@@ -114,10 +121,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   it(`should infer a name`, async () => {
     node.__fixture = `unnamed.js`
-    node.absolutePath = path.join(__dirname, `UnnamedExport`)
+
     await run(node)
 
-    expect(createdNodes[0].displayName).toEqual(`UnnamedExport`)
+    expect(createdNodes[0].displayName).toEqual(`Unnamed`)
   })
 
   it(`should extract all propTypes`, async () => {

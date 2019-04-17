@@ -7,11 +7,12 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
   breakpoints,
-  scale,
+  fontSizes,
   letterSpacings,
   fonts,
 } from "../utils/presets"
@@ -205,7 +206,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: scale[1], marginTop: space[8] }}>
+  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}
@@ -240,6 +241,7 @@ class FeaturesPage extends Component {
             />
             <FeaturesFooter />
           </main>
+          <FooterLinks />
         </Container>
       </Layout>
     )

@@ -176,6 +176,12 @@ plugins.
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
 
+- [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
+  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in wordpress.
+  - Will pull the `yoast_meta: { ... }` field's contents in entity.
+  - Work with Yoast premium :
+    - Will create Yoast redirects model base on Yoast redirect
+
 ## How to use Gatsby with Wordpress.com hosting
 
 Set `hostingWPCOM: true`.
@@ -594,6 +600,56 @@ Full example:
           template
           polylang_current_lang
         }
+      }
+    }
+  }
+}
+```
+
+### Query pages with the Yoast Fields Node
+
+```graphql
+{
+  allWordpressPage {
+    edges {
+      node {
+        yoast_meta {
+          yoast_wpseo_title
+          yoast_wpseo_metadesc
+          yoast_wpseo_canonical
+          yoast_wpseo_facebook_title
+          yoast_wpseo_facebook_description
+          yoast_wpseo_facebook_type
+          yoast_wpseo_facebook_image
+          yoast_wpseo_twitter_title
+          yoast_wpseo_twitter_description
+          yoast_wpseo_twitter_image
+          yoast_wpseo_social_url
+          yoast_wpseo_company_or_person
+          yoast_wpseo_person_name
+          yoast_wpseo_company_name
+          yoast_wpseo_company_logo
+          yoast_wpseo_website_name
+        }
+      }
+    }
+  }
+}
+```
+
+### Query Yoast Redirects
+
+**_only work with Yoast Premium_**
+
+```graphql
+{
+  allWordpressYoastRedirects {
+    edges {
+      node {
+        origin
+        url
+        type
+        format
       }
     }
   }

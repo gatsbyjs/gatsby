@@ -1,10 +1,5 @@
 const path = require(`path`)
-const {
-  defaultIcons,
-  doesIconExist,
-  createContentDigest,
-  addDigestToPath,
-} = require(`../common`)
+const { defaultIcons, doesIconExist, addDigestToPath } = require(`../common`)
 
 describe(`gatsby-plugin-manifest`, () => {
   describe(`defaultIcons`, () => {
@@ -22,15 +17,6 @@ describe(`gatsby-plugin-manifest`, () => {
     it(`returns false if image does not exist on filesystem`, () => {
       const iconSrc = path.resolve(__dirname, `./images/non-existent-logo.png`)
       expect(doesIconExist(iconSrc)).toBeFalsy()
-    })
-  })
-
-  describe(`createContentDigest`, () => {
-    it(`returns valid digest`, () => {
-      const iconSrc = `thisIsSomethingToHash`
-      expect(createContentDigest(iconSrc)).toBe(
-        `24ac9308d3adace282339005aff676bd1576f061`
-      )
     })
   })
 
