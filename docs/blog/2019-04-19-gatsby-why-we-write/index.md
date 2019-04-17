@@ -54,8 +54,6 @@ There's tons of overlap - _why_ points to _how_, and *how *points to _why_. You 
 
 Each of these 70-80 messages & workflows probably has ~10 sub-workflows/sub-messages/features — imagine for each of these we had 3-5 case studies, docs pages, dedicated tutorials, starters/themes with annotated open-source source code -- that's thousands, probably tens of thousands, of pieces of content. _That's why we've only scratched the surface of what's possible._
 
-_(Now imagine a UI on top and the ability to mix & match!)_
-
 Our ideal version of Gatsby is a hyperconnected city — connected to all of these somewhat disparate communities (Wordpress, Drupal, modern frontend, accessibility), and so on.
 
 People from each of the communities who have discovered Gatsby are the experts on delivering the message of "why Gatsby" to that community.
