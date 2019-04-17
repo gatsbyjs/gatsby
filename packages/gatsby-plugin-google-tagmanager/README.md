@@ -24,6 +24,11 @@ plugins: [
       gtmAuth: "YOUR_GOOGLE_TAGMANAGER_ENVIROMENT_AUTH_STRING",
       gtmPreview: "YOUR_GOOGLE_TAGMANAGER_ENVIROMENT_PREVIEW_NAME",
       dataLayerName: "YOUR_DATA_LAYER_NAME",
+
+      // Whether to put the GTM script into the <head> (as suggested by Google)
+      // or append it to the <body> (making it non-blocking).
+      // If you activate Google Optimize through Google Tag Manager leave it untouched.
+      placeInHead: true,
     },
   },
 ]
