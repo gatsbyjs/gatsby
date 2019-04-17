@@ -877,13 +877,6 @@
   featured: false
   categories:
     - Marketing
-- title: Beach Hut Poole
-  main_url: "https://www.beachhutpoole.co.uk/"
-  url: "https://www.beachhutpoole.co.uk/"
-  featured: false
-  categories:
-    - Travel
-    - Marketing
 - title: Bricolage.io
   main_url: "https://www.bricolage.io/"
   url: "https://www.bricolage.io/"
@@ -1073,13 +1066,6 @@
   categories:
     - Marketing
     - Education
-- title: ClearBrain
-  main_url: "https://clearbrain.com/"
-  url: "https://clearbrain.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: Lucid
   main_url: "https://www.golucid.co/"
   url: "https://www.golucid.co/"
@@ -2672,7 +2658,7 @@
   built_by_url: "https://www.ryanwiemer.com/"
   featured: false
 - title: developer.bitcoin.com
-  main_url: "https://www.bitcoin.com/"
+  main_url: "https://developer.bitcoin.com/"
   url: "https://developer.bitcoin.com/"
   description: >
     Bitbox based bitcoin.com developer platform and resources.
@@ -3698,20 +3684,6 @@
     - Security
   built_by: Jane Manchun Wong
   built_by_url: "https://twitter.com/wongmjane"
-  featured: false
-- title: PostPost
-  main_url: "https://postpost.design"
-  source_url: "https://github.com/postpostpdx/website"
-  url: "https://postpost.design"
-  description: >
-    PostPost is a small studio based in Portland, OR that is focused on product design, web design/development, branding, and strategy.
-  categories:
-    - Portfolio
-    - Design
-    - Agency
-    - Web Development
-  built_by: Jonathan Simcoe
-  built_by_url: "https://twitter.com/jdsimcoe"
   featured: false
 - title: Luca Crea's portfolio
   main_url: https://lcrea.github.io

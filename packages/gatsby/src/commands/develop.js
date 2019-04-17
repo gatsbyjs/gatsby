@@ -35,7 +35,7 @@ const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
-const pageQueryRunner = require(`../query/page-query-runner`)
+const queryUtil = require(`../query`)
 const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
 
@@ -92,7 +92,7 @@ async function startServer(program) {
   await bootstrap(program)
 
   db.startAutosave()
-  pageQueryRunner.startListening(queryQueue.createDevelopQueue())
+  queryUtil.startListening(queryQueue.createDevelopQueue())
   queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
