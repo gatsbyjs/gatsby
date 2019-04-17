@@ -31,7 +31,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 })
 
 const { extractQueries } = require(`../query/query-watcher`)
-const pageQueryRunner = require(`../query/page-query-runner`)
+const queryUtil = require(`../query`)
 const { writePages } = require(`../query/pages-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
 
@@ -452,16 +452,14 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  const queryIds = pageQueryRunner.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = pageQueryRunner.groupQueryIds(
-    queryIds
-  )
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
 
   activity = report.activityTimer(`run static queries`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await pageQueryRunner.processStaticQueries(staticQueryIds, {
+  await queryUtil.processStaticQueries(staticQueryIds, {
     activity,
     state: store.getState(),
   })
@@ -469,7 +467,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity = report.activityTimer(`run page queries`)
   activity.start()
-  await pageQueryRunner.processPageQueries(pageQueryIds, { activity })
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(

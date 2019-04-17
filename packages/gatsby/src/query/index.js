@@ -5,6 +5,7 @@ const Queue = require(`better-queue`)
 const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
 const queryQueue = require(`./queue`)
+const { boundActionCreators } = require(`../redux/actions`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
@@ -25,10 +26,6 @@ emitter.on(`CREATE_NODE`, action => {
 emitter.on(`DELETE_NODE`, action => {
   queuedDirtyActions.push({ payload: action.payload })
 })
-
-const enqueueExtractedQueryId = pathname => {
-  extractedQueryIds.add(pathname)
-}
 
 /////////////////////////////////////////////////////////////////////
 // Calculate dirty static/page queries
@@ -267,6 +264,29 @@ const startListening = queue => {
   emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
 }
 
+const enqueueExtractedQueryId = pathname => {
+  extractedQueryIds.add(pathname)
+}
+
+const getPagesForComponent = componentPath => {
+  const state = store.getState()
+  return [...state.pages.values()].filter(
+    p => p.componentPath === componentPath
+  )
+}
+
+const enqueueExtractedPageComponent = componentPath => {
+  const pages = getPagesForComponent(componentPath)
+  // Remove page data dependencies before re-running queries because
+  // the changing of the query could have changed the data dependencies.
+  // Re-running the queries will add back data dependencies.
+  boundActionCreators.deleteComponentsDependencies(
+    pages.map(p => p.path || p.id)
+  )
+  pages.forEach(page => enqueueExtractedQueryId(page.path))
+  runQueuedQueries()
+}
+
 module.exports = {
   calcInitialDirtyQueryIds,
   groupQueryIds,
@@ -275,4 +295,5 @@ module.exports = {
   startListening,
   runQueuedQueries,
   enqueueExtractedQueryId,
+  enqueueExtractedPageComponent,
 }
