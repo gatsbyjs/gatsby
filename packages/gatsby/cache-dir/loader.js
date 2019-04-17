@@ -107,6 +107,11 @@ const handlePageDataResponse = (path, req) => {
   fetchedPageData[path] = true
   if (req.status === 200) {
     const contentType = req.getResponseHeader(`content-type`)
+    // Since we don't know if a URL is a page or not until we make a
+    // request to the server, the response could be anything. E.g an
+    // index.html. So we have to double check that response is
+    // actually a proper JSON file. If it isn't, then it's not a page
+    // and we can infer that the requested page doesn't exist
     if (!contentType || !contentType.startsWith(`application/json`)) {
       pageNotFoundPaths.add(path)
       return null
