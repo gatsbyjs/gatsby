@@ -6,9 +6,11 @@ exports.onRouteUpdate = ({ location }, pluginOptions) => {
   if (existingValue && baseProtocol && baseHost) {
     var value = `${baseProtocol}//${baseHost}${location.pathname}`
 
-    if (pluginOptions.search === true) {
+    if (pluginOptions.search !== false) {
       value += location.search
     }
+
+    value += location.hash
 
     domElem.setAttribute(`href`, `${value}${location.hash}`)
   }

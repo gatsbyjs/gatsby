@@ -11,10 +11,10 @@ exports.onRenderBody = (
 
     let pageUrl = ``
 
-    if (pluginOptions.search === true) {
-      pageUrl = parsed.href
-    } else {
+    if (pluginOptions.search !== false) {
       pageUrl = `${parsed.protocol}//${parsed.host}${parsed.pathname}`
+    } else {
+      pageUrl = parsed.href
     }
 
     setHeadComponents([
