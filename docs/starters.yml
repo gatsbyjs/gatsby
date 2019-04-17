@@ -2309,5 +2309,5 @@
     - react-dom 
     - react-helmet 
     - gatsby-mdx 
-    - mdx-js/mdx@next 
+    - mdx-js/mdx-next 
     - mdx-js/react@next
