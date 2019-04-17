@@ -760,14 +760,6 @@
   featured: false
   categories:
     - Web Development
-- title: Nortcast
-  main_url: "https://nortcast.com/"
-  url: "https://nortcast.com/"
-  featured: false
-  categories:
-    - Technology
-    - Entertainment
-    - Podcast
 - title: Open FDA
   description: >
     Provides APIs and raw download access to a number of high-value, high
@@ -884,13 +876,6 @@
   url: "https://visitgemer.sk/"
   featured: false
   categories:
-    - Marketing
-- title: Beach Hut Poole
-  main_url: "https://www.beachhutpoole.co.uk/"
-  url: "https://www.beachhutpoole.co.uk/"
-  featured: false
-  categories:
-    - Travel
     - Marketing
 - title: Bricolage.io
   main_url: "https://www.bricolage.io/"
@@ -1081,13 +1066,6 @@
   categories:
     - Marketing
     - Education
-- title: ClearBrain
-  main_url: "https://clearbrain.com/"
-  url: "https://clearbrain.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: Lucid
   main_url: "https://www.golucid.co/"
   url: "https://www.golucid.co/"
@@ -2680,7 +2658,7 @@
   built_by_url: "https://www.ryanwiemer.com/"
   featured: false
 - title: developer.bitcoin.com
-  main_url: "https://www.bitcoin.com/"
+  main_url: "https://developer.bitcoin.com/"
   url: "https://developer.bitcoin.com/"
   description: >
     Bitbox based bitcoin.com developer platform and resources.
@@ -2853,22 +2831,6 @@
     - Web Development
   built_by: Maxence Poutord
   built_by_url: https://www.maxpou.fr
-- title: "Dante Calderón"
-  description: >
-    Personal Website and Blog of Dante Calderón
-  main_url: https://dantecalderon.com/
-  url: https://dantecalderon.com/
-  source_url: https://github.com/dantehemerson/dantecalderon.com
-  featured: false
-  categories:
-    - Blog
-    - Portfolio
-    - Web Development
-    - Open Source
-    - Technology
-    - Education
-  built_by: Dante Calderón
-  built_by_url: https://github.com/dantehemerson
 - title: "The Noted Project"
   url: https://thenotedproject.org
   main_url: https://thenotedproject.org
@@ -3722,20 +3684,6 @@
     - Security
   built_by: Jane Manchun Wong
   built_by_url: "https://twitter.com/wongmjane"
-  featured: false
-- title: PostPost
-  main_url: "https://postpost.design"
-  source_url: "https://github.com/postpostpdx/website"
-  url: "https://postpost.design"
-  description: >
-    PostPost is a small studio based in Portland, OR that is focused on product design, web design/development, branding, and strategy.
-  categories:
-    - Portfolio
-    - Design
-    - Agency
-    - Web Development
-  built_by: Jonathan Simcoe
-  built_by_url: "https://twitter.com/jdsimcoe"
   featured: false
 - title: Luca Crea's portfolio
   main_url: https://lcrea.github.io
@@ -5266,6 +5214,30 @@
   built_by: RedCarpet Dev Team
   built_by_url: https://www.redcarpetup.com
   featured: false
+- title: talita traveler
+  url: https://talitatraveler.com/
+  main_url: https://talitatraveler.com/
+  source_url: https://github.com/afuh/talitatraveler
+  description: >
+    Talita Traveler's personal blog.
+  categories:
+    - Blog
+    - Personal Website
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+- title: Pastelería el Progreso
+  url: https://pasteleriaelprogreso.com/
+  main_url: https://pasteleriaelprogreso.com/
+  source_url: https://github.com/afuh/elprogreso
+  description: >
+    Famous bakery in Buenos Aires.
+  categories:
+    - Food
+    - Gallery
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
 - title: Maitrik's Portfolio
   url: https://www.maitrikpatel.com/
   main_url: https://www.maitrikpatel.com/
@@ -5348,3 +5320,44 @@
     - Portfolio
     - Personal Website
     - Photography
+- title: Pantene
+  main_url: https://pantene.com
+  url: https://pantene.com
+  featured: false
+  description: >
+    Pantene is a Swiss-created American brand of hair care products owned by Procter & Gamble
+  categories:
+    - Beauty
+    - Business
+- title: Prevue
+  main_url: https://www.prevue.io
+  url: https://www.prevue.io
+  featured: false
+  description: >
+    All in One Prototyping Tool For Vue Developers
+  categories:
+    - Open Source
+    - Web Development
+- title: Gold Medal Flour
+  main_url: https://www.goldmedalflour.com
+  url: https://www.goldmedalflour.com
+  description: >
+    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from Wordpress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
+  categories:
+    - Food
+  built_by: General Mills Branded Sites Dev Team
+  built_by_url: https://www.generalmills.com
+  featured: false
+- title: Fifth Gait Technologies
+  main_url: https://5thgait.com
+  url: https://5thgait.com
+  featured: false
+  description: >
+    Fifth Gait is a small business in the defense and space industry that is run and owned by physicists and engineers that have worked together for decades. The site was built using Gatsby V2.
+  categories:
+    - Government
+    - Science
+    - Technology
+    - Space
+  built_by: Jonathan Z. Fisher
+  built_by_url: "https://jonzfisher.com"

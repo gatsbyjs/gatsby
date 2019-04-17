@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
+const isValid = require(`is-valid-path`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
 
@@ -172,6 +173,15 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
     trackError(`NEW_PROJECT_NAME_MISSING`)
     report.panic(
       `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
+    )
+    return
+  }
+
+  if (!isValid(rootPath)) {
+    report.panic(
+      `Could not create a project in "${sysPath.resolve(
+        rootPath
+      )}" because it's not a valid path`
     )
     return
   }

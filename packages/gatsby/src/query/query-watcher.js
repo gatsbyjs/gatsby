@@ -16,10 +16,7 @@ const slash = require(`slash`)
 const { store, emitter } = require(`../redux/`)
 const { actions } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
-const {
-  queueQueryForPathname,
-  runQueuedQueries,
-} = require(`./page-query-runner`)
+const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
 const { dispatch } = store
@@ -98,7 +95,7 @@ const handleQuery = (
       )
 
       dispatch(deleteComponentsDependencies([query.jsonName]))
-      queueQueryForPathname(query.jsonName)
+      queryUtil.enqueueExtractedQueryId(query.jsonName)
     }
     return true
   }
@@ -160,7 +157,7 @@ const updateStateAndRunQueries = isFirstRun => {
       dispatch(log({ message, type: `log` }))
     }
 
-    runQueuedQueries()
+    queryUtil.runQueuedQueries()
 
     return null
   })
@@ -209,31 +206,6 @@ exports.extractQueries = () => {
   })
 }
 
-const queueQueriesForPageComponent = componentPath => {
-  const pages = getPagesForComponent(componentPath)
-  // Remove page data dependencies before re-running queries because
-  // the changing of the query could have changed the data dependencies.
-  // Re-running the queries will add back data dependencies.
-  dispatch(deleteComponentsDependencies(pages.map(p => p.path || p.id)))
-  pages.forEach(page => queueQueryForPathname(page.path))
-  runQueuedQueries()
-}
-
-const runQueryForPage = path => {
-  queueQueryForPathname(path)
-  runQueuedQueries()
-}
-
-exports.queueQueriesForPageComponent = queueQueriesForPageComponent
-exports.runQueryForPage = runQueryForPage
-
-const getPagesForComponent = componentPath => {
-  const state = store.getState()
-  return [...state.pages.values()].filter(
-    p => p.componentPath === componentPath
-  )
-}
-
 const filesToWatch = new Set()
 let watcher
 const watchComponent = componentPath => {
@@ -255,9 +227,6 @@ const watchComponent = componentPath => {
 const debounceCompile = _.debounce(() => {
   updateStateAndRunQueries()
 }, 100)
-
-exports.watchComponent = watchComponent
-exports.debounceCompile = debounceCompile
 
 const watch = rootDir => {
   if (watcher) return

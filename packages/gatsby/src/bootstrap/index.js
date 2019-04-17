@@ -36,7 +36,7 @@ process.on(`unhandledRejection`, reason => {
 })
 
 const { extractQueries } = require(`../query/query-watcher`)
-const { runInitialQueries } = require(`../query/page-query-runner`)
+const queryUtil = require(`../query`)
 const { writePages } = require(`../query/pages-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
 
@@ -428,8 +428,18 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  await run(`run graphql queries`, async activity => {
-    await runInitialQueries(activity)
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  await run(`run static queries`, async activity => {
+    await queryUtil.processStaticQueries(staticQueryIds, {
+      activity,
+      state: store.getState(),
+    })
+  })
+
+  await run(`run page queries`, async activity => {
+    await queryUtil.processPageQueries(pageQueryIds, { activity })
     dispatch(setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
   })
 
