@@ -170,10 +170,10 @@ let prefetchTriggered = {}
 let prefetchCompleted = {}
 let disableCorePrefetching = false
 
-const onPostPrefetch = url => {
-  if (!prefetchCompleted[url]) {
-    apiRunner(`onPostPrefetch`, { url })
-    prefetchCompleted[url] = true
+const onPostPrefetch = ({ path, resourceUrls }) => {
+  if (!prefetchCompleted[path]) {
+    apiRunner(`onPostPrefetch`, { path, resourceUrls })
+    prefetchCompleted[path] = true
   }
 }
 
