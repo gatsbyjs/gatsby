@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.50](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.49...gatsby-source-contentful@2.0.50) (2019-04-17)
+
+### Features
+
+- **gatsby-source-contentful:** add locale filter ([#12939](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/12939)) ([6421c5b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/6421c5b))
+
 ## [2.0.49](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.48...gatsby-source-contentful@2.0.49) (2019-04-15)
 
 ### Bug Fixes

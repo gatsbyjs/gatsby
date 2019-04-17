@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.8...gatsby-cli@2.5.9) (2019-04-17)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix --clipboard on Windows ([#13212](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13212)) ([a7383c5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/a7383c5))
+
 ## [2.5.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.7...gatsby-cli@2.5.8) (2019-04-15)
 
 ### Features
