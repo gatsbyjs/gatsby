@@ -73,6 +73,6 @@ exports.onPostPrefetch = ({ path, resourceUrls }) => {
       navigator.serviceWorker.controller.state === `activated`
     )
   ) {
-    Array.prototype.push.apply(prefetchedResources, resourceUrls)
+    prefetchedResources.push(...resourceUrls)
   }
 }
