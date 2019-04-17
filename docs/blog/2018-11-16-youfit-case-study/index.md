@@ -7,7 +7,9 @@ tags:
 ---
 
 We talked with Zach Muha, Director of Digital Marketing at [Youfit Health Clubs][youfit-health-clubs], about his experience with Gatsby and why he decided to use it for a website rebuild. Zach is in charge of managing SEO, UX, SEM, display ads, social channels, email marketing, CRM and the Youfit app- not a small job!
-About Youfit Health Clubs
+
+## About Youfit Health Clubs
+
 Youfit Health Clubs are redefining how people approach health by creating an inclusive, affordable gym environment that welcomes everyone. Founded in 2008 by Rick Berks, Youfit has more than 100 locations across 14 states.
 
 As with many websites, Youfit depends on the site to attract new customers. But a slow site led to a 60% bounce rate on the initial page load, which meant Youfit was losing potential customers. When the website was slow or site visitors couldn’t find the gym closest to their location, they lost interest.
@@ -45,9 +47,9 @@ Prior to the website rebuild, Youfit viewed their website as an “add-on” bec
 
 Zach and the Youfit team were happy with the results, amazed by the fast page load times, and would use Gatsby again for future projects.
 
-> We are very happy with the results so far, especially the 60% increase in leads. The website went from a burden to a strategic tool we use to capture leads and generate ROI.
->
-> - Zach Muha
+<pullquote citation="Zach Muha">
+We are very happy with the results so far, especially the 60% increase in leads. The website went from a burden to a strategic tool we use to capture leads and generate ROI.
+</pullquote>
 
 By using Gatsby, Youfit significantly increased their organic traffic, lead capture and ROI. Youfit also laid the foundation for long-term success by improving their Google ranking and making their site mobile friendly. This enabled Youfit to focus on what it does best: making proactive wellness more accessible to all.
 

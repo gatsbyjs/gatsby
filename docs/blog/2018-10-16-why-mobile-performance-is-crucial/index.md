@@ -17,7 +17,9 @@ Why is that? Increased site complexity often distributes bottlenecks across mult
 
 As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy):
 
-> "All fast websites are alike, but all slow websites are slow in different ways."
+<pullquote>
+All fast websites are alike, but all slow websites are slow in different ways.
+</pullquote>
 
 Ultimately, we’ll argue, performance must be solved _at the framework level_ -- that is, in the content mesh.
 
@@ -132,7 +134,7 @@ Caching a traditional CMS website is another possibility -- though this often cr
 
 But if delivery optimization is _hard_, payload optimization can be _near impossible_ to deliver within time and budget for many agencies and enterprises.
 
-Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagazine.com/2018/01/front-end-performance-checklist-2018-pdf-pages/), including points like route-based code splitting, HTTP/2 asset serving, background prefetching, lazy-loading non-critical assets, service workers, dead code elimination, and server-side rendering. Each of these points is technically feasible but quite rare.
+Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages/), including points like route-based code splitting, HTTP/2 asset serving, background prefetching, lazy-loading non-critical assets, service workers, dead code elimination, and server-side rendering. Each of these points is technically feasible but quite rare.
 
 Among the many implementation challenges are:
 
@@ -148,7 +150,7 @@ Among the many implementation challenges are:
 
 Web performance is critical for retaining and engaging users, especially on mobile. If [every 100ms of latency costs 1% of sales](https://www.digitalrealty.com/blog/the-cost-of-latency/), reducing average page load times from 5 seconds to 1-2 seconds could generate 30-40% more sales.
 
-But just because performance is the *right *thing doesn’t make it the _easy_ thing. Implementing performance optimizations on a _per-site basis_ is often *difficult *and _costly_.
+But just because performance is the _right_ thing doesn’t make it the _easy_ thing. Implementing performance optimizations on a _per-site basis_ is often _difficult_ and _costly_.
 
 To overcome these obstacles, high-performing website teams should look to a content mesh that bakes in performance on a _framework_ level.
 

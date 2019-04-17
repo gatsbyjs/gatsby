@@ -10,7 +10,7 @@ const AllRecipes = ({ data }) => (
       <h1>Recipes</h1>
       <ul>
         {data.allRecipes.edges.map(({ node }) => (
-          <li>
+          <li key={node.fields.slug}>
             <Link to={node.fields.slug}>{node.title}</Link>
           </li>
         ))}

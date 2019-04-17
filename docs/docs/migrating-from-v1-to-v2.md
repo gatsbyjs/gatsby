@@ -90,7 +90,7 @@ You need update your `package.json` to use the latest version of Gatsby.
 
 Or run
 
-```bash
+```shell
 npm i gatsby@latest
 ```
 
@@ -98,13 +98,13 @@ npm i gatsby@latest
 
 Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
-```bash
+```shell
 npm outdated
 ```
 
 And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
 
-```bash
+```shell
 npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
@@ -114,15 +114,15 @@ npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-
 
 In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
 
-```bash
+```shell
 npm i react react-dom
 ```
 
 ### Manually install plugins' peer dependencies
 
-Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
+Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
 
-```bash
+```shell
 npm i typography react-typography
 ```
 
@@ -137,7 +137,7 @@ In Gatsby v2, the special layout component (`src/layouts/index.js`) that wrapped
 There are a number of implications to this change:
 
 - To render different layouts for different pages, just use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
-- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](https://www.gatsbyjs.org/packages/gatsby-plugin-layout/).
+- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
 - To learn more about the original decisions behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
@@ -160,7 +160,7 @@ export default ({ children }) => (
 
 #### 2. Move `layouts/index.js` to `src/components/layout.js` (optional, but recommended)
 
-```bash
+```shell
 git mv src/layouts/index.js src/components/layout.js
 ```
 
@@ -215,7 +215,7 @@ Replacing a layout's query with `StaticQuery`:
 
 ```diff:title=src/components/layout.js
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (
@@ -645,7 +645,7 @@ The GraphQL root type has been changed from `RootQueryType` to `Query`. This is 
 
 ### Typography.js Plugin Config Changes
 
-If you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
 ```diff:title=src/utils/typography.js
 - const typography = new Typography();
@@ -925,7 +925,7 @@ See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](h
 
 If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's babel docs for more details](/docs/babel).
 
-> Note: This works for your own code, but is not yet implemented for code imported from `node_modules`. Track progress of this feature at [bullet 5 of this issue](https://github.com/gatsbyjs/gatsby/issues/3870).
+> Note: This works for your own code, but is not yet implemented for code imported from `node_modules`. Track progress of this feature in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
 
 ## For Plugin Maintainers
 

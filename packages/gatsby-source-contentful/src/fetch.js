@@ -34,6 +34,7 @@ module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
     console.log(`Fetching default locale`)
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
+    locales = locales.filter(pluginOptions.localeFilter || (() => true))
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     let details

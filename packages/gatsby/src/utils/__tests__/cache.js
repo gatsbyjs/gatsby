@@ -1,10 +1,17 @@
+const mockErrorValue = jest.fn()
+const mockResultValue = jest.fn()
+
 jest.mock(`cache-manager`, () => {
   return {
     caching: jest.fn(),
-    multiCaching: jest.fn().mockImplementation(() => {
+    multiCaching: jest.fn(() => {
       return {
-        get: jest.fn(),
-        set: jest.fn(),
+        get: jest.fn((key, callback) => {
+          callback(mockErrorValue(), mockResultValue())
+        }),
+        set: jest.fn((key, value, args, callback) => {
+          callback(mockErrorValue())
+        }),
       }
     }),
   }
@@ -96,6 +103,40 @@ describe(`cache`, () => {
 
       containsThenMethod(cache.get(`a`))
       containsThenMethod(cache.set(`a`, `b`))
+    })
+  })
+
+  describe(`set`, () => {
+    it(`resolves to the value it cached`, () => {
+      const cache = getCache()
+
+      return expect(cache.set(`a`, `b`)).resolves.toBe(`b`)
+    })
+
+    it(`resolves to undefined on caching error`, () => {
+      const cache = getCache()
+
+      mockErrorValue.mockReturnValueOnce(true)
+
+      return expect(cache.set(`a`, `b`)).resolves.toBeUndefined()
+    })
+  })
+
+  describe(`get`, () => {
+    it(`resolves to the found value`, () => {
+      const cache = getCache()
+
+      mockResultValue.mockReturnValueOnce(`result`)
+
+      return expect(cache.get()).resolves.toBe(`result`)
+    })
+
+    it(`resolves to undefined on caching error`, () => {
+      const cache = getCache()
+
+      mockErrorValue.mockReturnValueOnce(true)
+
+      return expect(cache.get()).resolves.toBeUndefined()
     })
   })
 })

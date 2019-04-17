@@ -1,10 +1,17 @@
 const Joi = require(`joi`)
 
+const stripTrailingSlash = chain => chain.replace(/(\w)\/+$/, `$1`)
+
 export const gatsbyConfigSchema = Joi.object().keys({
   __experimentalThemes: Joi.array(),
   polyfill: Joi.boolean(),
-  siteMetadata: Joi.object(),
-  pathPrefix: Joi.string(),
+  siteMetadata: Joi.object({
+    siteUrl: stripTrailingSlash(Joi.string()).uri(),
+  }).unknown(),
+  pathPrefix: Joi.string().uri({
+    allowRelative: true,
+    relativeOnly: true,
+  }),
   mapping: Joi.object(),
   plugins: Joi.array(),
   proxy: Joi.object().keys({
@@ -22,7 +29,7 @@ export const pageSchema = Joi.object()
     componentChunkName: Joi.string().required(),
     context: Joi.object(),
     pluginCreator___NODE: Joi.string(),
-    pluginCreatorName: Joi.string(),
+    pluginCreatorId: Joi.string(),
   })
   .unknown()
 
@@ -38,7 +45,7 @@ export const nodeSchema = Joi.object()
         mediaType: Joi.string(),
         type: Joi.string().required(),
         owner: Joi.string().required(),
-        fieldOwners: Joi.array(),
+        fieldOwners: Joi.object(),
         content: Joi.string().allow(``),
         description: Joi.string(),
         ignoreType: Joi.boolean(),
