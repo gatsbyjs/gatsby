@@ -1,5 +1,5 @@
-import { oneLine, stripIndent } from "common-tags";
-import React from "react";
+import { oneLine, stripIndent } from "common-tags"
+import React from "react"
 
 exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents, setPostBodyComponents },
@@ -18,7 +18,10 @@ exports.onRenderBody = (
     `
         : ``
 
-    const setComponents = pluginOptions.placeInHead === false ? setPostBodyComponents : setHeadComponents;
+    const setComponents =
+      pluginOptions.placeInHead === false
+        ? setPostBodyComponents
+        : setHeadComponents
     setComponents([
       <script
         key="plugin-google-tagmanager"
