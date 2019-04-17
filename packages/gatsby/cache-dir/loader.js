@@ -264,6 +264,10 @@ const queue = {
   loadPageData: rawPath =>
     new Promise((resolve, reject) => {
       const realPath = cleanAndFindPath(rawPath)
+      if (queue.isPageNotFound(realPath)) {
+        resolve(null)
+        return
+      }
       if (!fetchedPageData[realPath]) {
         fetchPageData(realPath).then(pageData => {
           if (process.env.NODE_ENV !== `production`) {
@@ -271,20 +275,20 @@ const queue = {
           }
           resolve(queue.loadPageData(rawPath))
         })
-      } else {
-        if (pageDatas[realPath]) {
-          resolve(pageDatas[realPath])
-        } else {
-          reject(new Error(`page not found`))
-        }
       }
+      resolve(pageDatas[realPath])
     }),
 
   loadPage: rawPath =>
     queue
       .loadPageData(rawPath)
-      .then(pageData =>
-        loadComponent(pageData.componentChunkName).then(component => {
+      .then(pageData => {
+        // If no page was found, then preload the 404.html
+        if (pageData === null && rawPath !== `/404.html`) {
+          return queue.loadPage(`/404.html`).then(() => null)
+        }
+        // Otherwise go ahead and load the page's component
+        return loadComponent(pageData.componentChunkName).then(component => {
           const page = {
             componentChunkName: pageData.componentChunkName,
             path: pageData.path,
@@ -317,7 +321,7 @@ const queue = {
 
           return pageResources
         })
-      )
+      })
       .catch(() => null),
 
   loadPageOr404: rawPath =>
@@ -325,7 +329,7 @@ const queue = {
       .loadPage(rawPath)
       .then(result =>
         result === null && rawPath !== `/404.html`
-          ? queue.loadPage(`/404.html`)
+          ? queue.getPage(`/404.html`)
           : null
       ),
 
