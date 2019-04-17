@@ -162,12 +162,12 @@ const reportStats = (queue, activity) => {
 }
 
 const processQueries = async (queryJobs, activity) => {
-  const queue = queryQueue.makeBuild()
+  const queue = queryQueue.createBuildQueue()
   reportStats(queue, activity)
   await queryQueue.processBatch(queue, queryJobs)
 }
 
-const makeStaticQueryJob = (state, queryId) => {
+const createStaticQueryJob = (state, queryId) => {
   const component = state.staticQueryComponents.get(queryId)
   const { hash, jsonName, query, componentPath } = component
   return {
@@ -183,12 +183,12 @@ const makeStaticQueryJob = (state, queryId) => {
 const processStaticQueries = async (queryIds, { state, activity }) => {
   state = state || store.getState()
   await processQueries(
-    queryIds.map(id => makeStaticQueryJob(state, id)),
+    queryIds.map(id => createStaticQueryJob(state, id)),
     activity
   )
 }
 
-const makePageQueryJob = (state, page) => {
+const createPageQueryJob = (state, page) => {
   const component = state.components.get(page.componentPath)
   const { path, jsonName, componentPath, context } = page
   const { query } = component
@@ -213,7 +213,7 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   // created during `gatsby develop`.
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
-    pages.map(page => makePageQueryJob(state, page)),
+    pages.map(page => createPageQueryJob(state, page)),
     activity
   )
 }
@@ -236,8 +236,8 @@ const runQueuedQueries = () => {
     )
     const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
     const queryJobs = [
-      ...staticQueryIds.map(id => makeStaticQueryJob(state, id)),
-      ...pages.map(page => makePageQueryJob(state, page)),
+      ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
+      ...pages.map(page => createPageQueryJob(state, page)),
     ]
     listenerQueue.push(queryJobs)
   }
