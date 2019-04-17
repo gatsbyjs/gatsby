@@ -6,7 +6,8 @@ import { colors, space } from "../../utils/presets"
 const FooterList = styled.ul`
   border-top: 1px solid ${colors.ui.light};
   padding-top: ${space[9]};
-  margin: ${space[9]} 0;
+  margin: ${space[9]} 0
+    ${props => (props.bottomMargin ? props.bottomMargin : `0`)};
   list-style: none;
   text-align: center;
   width: 100%;
@@ -26,8 +27,8 @@ const FooterList = styled.ul`
   }
 `
 
-const FooterLinks = () => (
-  <FooterList>
+const FooterLinks = props => (
+  <FooterList bottomMargin={props.bottomMargin}>
     <li>
       <Link to="/accessibility-statement">Accessibility Statement</Link>
     </li>

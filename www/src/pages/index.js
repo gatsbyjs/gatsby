@@ -151,7 +151,7 @@ class IndexRoute extends React.Component {
               paddingBottom: `0 !important`,
             }}
           >
-            <FooterLinks />
+            <FooterLinks bottomMargin={space[9]} />
           </HomepageSection>
         </main>
       </Layout>
