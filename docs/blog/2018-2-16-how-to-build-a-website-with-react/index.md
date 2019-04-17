@@ -17,7 +17,7 @@ With React, you can create reusable components that will always render the same 
 
 React uses a virtual tree reconciliation method to _react_ to changes in input data. Whenever any data changes, instead of rebuilding the whole DOM tree (which would be slow) — it decides what changed in its virtual DOM and then makes the smallest number of DOM changes necessary. The virtual tree is in contrast to something like vanilla JS or jQuery where you are setting/updating DOM nodes directly.
 
-Almost all current JS frameworks (e.g. Angular, Vue, etc.) are approaching similar mechanisms. 
+Almost all current JS frameworks (e.g. Angular, Vue, etc.) are approaching similar mechanisms.
 
 ## Easy to add to the rest of your stack
 
