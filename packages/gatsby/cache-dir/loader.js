@@ -319,7 +319,7 @@ const queue = {
 
         return pageResources
       })
-      .catch(err => null),
+      .catch(() => null),
 
   getPage: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
