@@ -7,17 +7,17 @@ tags: ["React", "architecture"]
 
 # What is React?
 
-React is a fantastic and wildly popular tool for building websites and apps, and it creates a world where JavaScript and HTML live in happy harmony in the same files and efficiently renders your ever-changing data to the browser.
+React is a fantastic and wildly popular tool for building websites and apps. It creates a world where JavaScript and HTML live in happy harmony in the same files, and it efficiently renders your ever-changing data to the browser.
 
 ## Declarative
 
-With React, you can create reusable components that will always render the same data in the same way, which wasn't always the case pre-React. Let’s say you’re a huge Olympics fan and you build a React website for tracking scores. Users who visit your site won’t need to wait for the entire tree to deconstruct and reconstruct when they click a button on your site or when the newest data on the half-pipe is available. React components will efficiently update to accommodate the changing data.
+With React, you can create reusable components that will always render the same data in the same way, which wasn't always the case pre-React. Let’s say you’re a huge Olympics fan and you build a React website for tracking scores. Users who visit your site won’t need to wait for the entire tree to deconstruct and reconstruct when the newest data on the half-pipe is available. React components will efficiently update to accommodate the changing data.
 
 ## Reactive
 
-React uses a virtual tree reconciliation method to _react_ to changes in input data. Whenever any data changes, instead of rebuilding the whole DOM tree (which would be slow) — it decides what changed in its virtual DOM and then makes the smallest number of DOM changes necessary.
+React uses a virtual tree reconciliation method to _react_ to changes in input data. Whenever any data changes, instead of rebuilding the whole DOM tree (which would be slow) — it decides what changed in its virtual DOM and then makes the smallest number of DOM changes necessary. The virtual tree is in contrast to something like vanilla JS or jQuery where you are setting/updating DOM nodes directly.
 
-Almost all frameworks nowadays (e.g. Angular, Vue, etc.) are approaching similar mechanisms. The virtual tree is in contrast to something like vanilla JS or jQuery where you are setting/updating DOM nodes directly.
+Almost all current JS frameworks (e.g. Angular, Vue, etc.) are approaching similar mechanisms. 
 
 ## Easy to add to the rest of your stack
 
