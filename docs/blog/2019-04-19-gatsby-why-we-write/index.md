@@ -2,7 +2,7 @@
 title: Gatsby: Why We Write
 date: 2019-04-19
 author: Sam Bhagwat
-excerpt: "Why does the Gatsby team and community write so much? Six principles that explain our logorrhea."
+excerpt: "Why does the Gatsby team and community write so much? Six principles that explain our love for writing."
 ---
 
 If you're a Gatsby community member, you may have noticed something: we write _a lot_.
@@ -13,7 +13,7 @@ https://twitter.com/mattconvente/status/1099706762897342465?s=19
 
 Writing isn't something we just do because we love it (although we do). Writing is core to who we are as a project, a company, and a community.
 
-Writing is core to the success we've enjoyed so far, and it's core to our plans to become the default way to build on the web.
+Writing is core to the success we've enjoyed so far, and it's core to our strategy to become the default way to build on the web.
 
 ## Principle 1: We write
 
@@ -70,7 +70,7 @@ It's essential to our mission, though, because in order to become the default ch
 
 _"Gatsby can't do X"_ gets rebutted by _"Here's a case study of Gatsby doing X"_.
 
-(For more background on this concept, read about ["economies of scope"](https://www.ribbonfarm.com/2012/10/15/economies-of-scale-economies-of-scope/) or think about companies that have flourished by providing access to literally everything their customers needed — the 1897 Sears Roebuck catalogue with [73K items](https://wpengine.com/reduce-reuse-refresh/); today, Amazon (the "Everything Store") with [100s of millions of items](https://wpengine.com/reduce-reuse-refresh/).)
+(For more background on this concept, read about ["economies of scope"](https://www.ribbonfarm.com/2012/10/15/economies-of-scale-economies-of-scope/) or think about companies that have flourished by providing access to literally everything their customers needed — the 1897 Sears Roebuck catalogue had around 73K items; today, Amazon (the "Everything Store") has [100s of millions of items](https://wpengine.com/reduce-reuse-refresh/).)
 
 The challenge, is of course _how do we write all of that content?_
 
@@ -78,9 +78,9 @@ The challenge, is of course _how do we write all of that content?_
 
 Some examples:
 
-- As an Inkteam, we're prioritizing podcasts to conference talks, because they take way less time and build on an existing community/listener base. The exception is key events like JAMStack and DrupalCon that are landmark events for specific communities.
+- We strive to appear on podcasts, because of the huge reward / time effort, as well as because podcasts build on an existing community/listener base.
 
-- We encouraging the community to give conference talks, write on their own blogs, and on the Gatsby blog. Individuals can establish themselves publicly as talented developers and Gatsby experts, while companies using Gatsby
+- We encouraging the community to give conference talks, write on their own blogs, and on the Gatsby blog. Individuals can establish themselves publicly as talented developers and Gatsby experts, while companies using Gatsby can publicly showcase their efforts for both internal and recruiting benefit.
 
 - Jason's livestreams are fundamentally collaborative — inviting one person who is an expert in a different technology for cross-pollination.
 
@@ -92,17 +92,15 @@ If you're doing interesting, innovative things with Gatsby, especially in a prof
 
 If content were music, it wouldn't consist of just "songs" -- it would also include "playlists", "albums", "discographies", "soundtracks", and "multi-box sets".
 
-On the one hand, there is _so much left to write_. On the other hand, because we've already been writing so much for so long, we have SO MUCH CONTENT that in many ways we don't know what to do with it.
+On the one hand, there is _so much left to write_. On the other hand, because we've already been writing so much for so long, we have SO MUCH CONTENT that a key challenge becomes organizing that content in useful ways that provide comprehensive treatments of particular topics.
 
 In the docs, things are structured hierarchically, so usually content is mostly adjacent to related content on the left sidebar.
 
-But outside the docs, that's far from the case. We have [tags on the blog](https://www.gatsbyjs.org/blog/tags/), which we use occasionally, but not really very well.
+But outside the docs, that's far from the case. We have blog posts, [using-\* example sites / guides](https://github.com/gatsbyjs/gatsby/tree/master/examples), [starters](/starters/), conference talks, podcast appearances, tweets, and whatever Gatsby community members dream up and publish!
 
-But there's [all sorts of other content types] — [using-\* example sites / guides](https://github.com/gatsbyjs/gatsby/tree/master/examples), [starters](/starters/), conference talks, podcast appearances, tweets, and whatever Gatsby community members dream up and publish!
+**It's a constant challenge to organize these in ways that are useful and obvious for the end-user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs. 
 
-**It's a constant challenge to organize these in ways that are useful and obvious for the end-user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs...
-
-_Why does this matter?_ We want to make it easy for the user, so that if and when they want to deep dive, it's easy for them to go read ten or twenty articles on their topic of choice.
+Our goal is to make it easy for the user to gather relevant context, know where to look when they get stuck, and feel confident that they can make it if they keep on reading, learning, and trying.
 
 ## Principle 6: make it easy for folks to become engrossed with Gatsby
 
