@@ -2,7 +2,7 @@
 title: Manipulating Remark ASTs
 ---
 
-[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the the site is written or structured but can rather focus on writing engaging posts and content!
+[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the site is written or structured but can rather focus on writing engaging posts and content!
 
 In certain instances, a developer may want to customize certain Markdown nodes while being parsed. Examples could include [add syntax highlighting](/packages/gatsby-remark-prismjs/), [parse images](/packages/gatsby-remark-images), [embed videos](/packages/gatsby-remark-embed-video) and plenty of others. Throughout all of these instances, a plugin will examine the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
 
@@ -14,7 +14,7 @@ In certain instances, a developer may want to customize certain Markdown nodes w
 
 ## Understanding the Abstract Syntax Tree
 
-To get an understanding at what is available in the Markdown AST, take a look at the markdown ast spec that is used in remark and other unist projects: [syntax-tree/mdast](https://github.com/syntax-tree/mdast).
+To get an understanding at what is available in the Markdown AST, take a look at the Markdown AST spec that is used in remark and other unist projects: [syntax-tree/mdast](https://github.com/syntax-tree/mdast).
 
 Starting out with a Markdown file as below:
 
@@ -24,7 +24,7 @@ Starting out with a Markdown file as below:
 This is a [Real page](https://google.com)
 ```
 
-Remark would translate this into an AST that will be available to `gatsby-transformer-remark` plugins. [AST Explorer](https://astexplorer.net/#/gist/d9029a2e8827265fbb9b190083b59d4d/3384f3ce6a3084e50043d0c8ce34628ed7477603) is a site that gives you a side-by-side view of the markdown and the outputted AST.
+Remark would translate this into an AST made available to `gatsby-transformer-remark` plugins. [AST Explorer](https://astexplorer.net/#/gist/d9029a2e8827265fbb9b190083b59d4d/3384f3ce6a3084e50043d0c8ce34628ed7477603) is a site that gives you a side-by-side view of the markdown and the outputted AST.
 
 ## Setting up a plugin
 
@@ -89,7 +89,7 @@ When modifying nodes, you'll want to walk the tree and then implement new functi
 
 A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
 
-As an example from `unist-util-visit`'s readme, it allows for an easy interface to visit particular nodes based on a particular type:
+As an example from `unist-util-visit`'s README file, it allows for an easy interface to visit particular nodes based on a particular type:
 
 ```js
 var remark = require("remark")
@@ -121,9 +121,9 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-Next, by visiting all heading nodes and passing them into a transformer function, you can manipulate the particular nodes to match your usecase.
+Next, by visiting all heading nodes and passing them into a transformer function, you can manipulate the particular nodes to match your use case.
 
-Looking again at the AST node for header:
+Looking again at the AST node for heading:
 
 ```JSON
 {
@@ -148,7 +148,7 @@ Looking again at the AST node for header:
 },
 ```
 
-You have context about the text as well as what depth the header is (for instance here you have a depth of 1 which would equate to an `h1` element)
+You have context about the text as well as what depth the heading is (for instance here you have a depth of 1 which would equate to an `h1` element)
 
 With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
@@ -181,7 +181,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) which is also made by Unified was used to extract the plaintext of the inner nodes, so this would remove links or other types of nodes inside the header, but given you have full access to the markdown AST, you can modify it however you wish.
+A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) by Unified was used to extract the plain text of the inner nodes. This would remove links or other types of nodes inside the heading, but given you have full access to the markdown AST, you can modify it however you wish.
 
 ## Loading in changes and seeing effect
 
@@ -195,7 +195,7 @@ To be shared with others, you can extract the plugin to its own directory outsid
 
 ## Summary
 
-You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transformer-remark` that Manipulates the Remark AST and have a further understanding about the structure of Markdown Abstract Syntax Trees
+You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transformer-remark` that manipulates the Remark AST. You should now have a further understanding about the structure of Markdown Abstract Syntax Trees! Yay!
 
 ## What's next?
 
