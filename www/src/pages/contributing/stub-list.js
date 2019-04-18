@@ -9,6 +9,7 @@ import {
 } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import DocsearchContent from "../../components/docsearch-content"
+import FooterLinks from "../../components/shared/footer-links"
 
 const findStubs = pages =>
   pages.filter(
@@ -23,7 +24,9 @@ const flatten = pages =>
 
 class StubListRoute extends React.Component {
   render() {
-    const stubs = findStubs(flatten([...itemListContributing, ...itemListDocs]))
+    const stubs = findStubs(
+      flatten([...itemListContributing.items, ...itemListDocs.items])
+    )
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
@@ -45,13 +48,14 @@ class StubListRoute extends React.Component {
               {` `}
               to learn more.
             </p>
-            <ul>
+            <ul data-testid="list-of-stubs">
               {stubs.map(stub => (
                 <li key={stub.title}>
                   <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
                 </li>
               ))}
             </ul>
+            <FooterLinks />
           </Container>
         </DocsearchContent>
       </Layout>

@@ -78,8 +78,6 @@ module.exports = {
 }
 ```
 
-Note that plugin options will be stringified by Gatsby, so they cannot be functions.
-
 ## Loading plugins from your local plugins folder
 
 Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.

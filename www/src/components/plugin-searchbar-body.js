@@ -19,11 +19,11 @@ import unescape from "lodash/unescape"
 import {
   space,
   colors,
-  scale,
+  fontSizes,
   transition,
   radii,
   breakpoints,
-  dimensions,
+  sizes,
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -71,7 +71,7 @@ const searchBoxStyles = css`
     border-radius: ${radii[2]}px;
     color: ${colors.gatsby};
     display: inline-block;
-    font-size: ${scale[3]};
+    font-size: ${fontSizes[3]};
     font-family: ${fonts.header};
     height: ${searchInputHeight};
     padding: 0;
@@ -243,7 +243,7 @@ class Search extends Component {
               height: searchMetaHeight,
               paddingLeft: space[6],
               paddingRight: space[6],
-              fontSize: scale[1],
+              fontSize: fontSizes[1],
             }}
           >
             <Stats
@@ -261,8 +261,8 @@ class Search extends Component {
           <div
             css={{
               [breakpoints.md]: {
-                height: `calc(100vh - ${dimensions.headerHeight} - ${
-                  dimensions.bannerHeight
+                height: `calc(100vh - ${sizes.headerHeight} - ${
+                  sizes.bannerHeight
                 } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },
@@ -404,7 +404,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? colors.lilac : colors.gray.bright,
             display: `flex`,
-            fontSize: scale[0],
+            fontSize: fontSizes[0],
           }}
         >
           {hit.repository &&
@@ -445,7 +445,7 @@ const Result = ({ hit, pathname, query }) => {
       <div
         css={{
           color: selected ? `inherit` : colors.gray.calm,
-          fontSize: scale[1],
+          fontSize: fontSizes[1],
         }}
       >
         {removeMD(unescape(hit.description))}

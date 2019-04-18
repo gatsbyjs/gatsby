@@ -1,0 +1,15 @@
+{
+  "name": "benchmark-gatsby-plugin-manifest",
+  "version": "1.0.0",
+  "description": "Run manifest lots of times",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Alex Moon <alex.jared.moon@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "gatsby-plugin-manifest": "^2.0.25"
+  }
+}

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.16...gatsby-source-mongodb@2.0.17) (2019-04-08)
+
+### Features
+
+- **gatsby-source-mongodb:** accommodate relationships with MongoDB collections ([#12774](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/12774)) ([a9c1507](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/commit/a9c1507))
+
 ## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.15...gatsby-source-mongodb@2.0.16) (2019-03-22)
 
 ### Features

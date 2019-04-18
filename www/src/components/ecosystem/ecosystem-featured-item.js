@@ -16,7 +16,7 @@ import {
   radii,
   shadows,
   breakpoints,
-  scale,
+  fontSizes,
   fonts,
 } from "../../utils/presets"
 
@@ -63,7 +63,7 @@ const Header = styled(`header`)`
 
   h3 {
     color: ${colors.gatsbyDark};
-    font-size: ${scale[2]};
+    font-size: ${fontSizes[2]};
     margin: 0;
   }
 
@@ -71,7 +71,7 @@ const Header = styled(`header`)`
     align-items: center;
     color: ${colors.lilac};
     display: flex;
-    font-size: ${scale[1]};
+    font-size: ${fontSizes[1]};
     padding-left: ${space[3]};
 
     svg {
@@ -104,7 +104,7 @@ const Thumbnail = styled(`div`)`
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   margin: 0;
 `
 
