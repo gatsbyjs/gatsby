@@ -204,7 +204,6 @@ async function startServer(program) {
 
   // Set up API proxy.
   const { proxy } = store.getState().config
-  console.debug(proxy)
   if (proxy) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
