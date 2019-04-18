@@ -13,7 +13,7 @@ steps:
   # - powershell: yarn lint
   #   displayName: "Run code linters"
 
-  - powershell: yarn jest --detectLeaks --logHeapUsage --runInBand
+  - powershell: node --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage
     displayName: "Run tests"
     env:
       GENERATE_JEST_REPORT: true
