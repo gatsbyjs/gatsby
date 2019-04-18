@@ -1,5 +1,7 @@
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
+const { stripIndent } = require(`common-tags`)
+const chalk = require(`chalk`)
 
 const { log } = actions
 
@@ -18,5 +20,8 @@ const reporter = [
   acc[type] = message => store.dispatch(log({ message, type }))
   return acc
 }, {})
+
+reporter.stripIndent = stripIndent
+reporter.format = chalk
 
 module.exports = reporter
