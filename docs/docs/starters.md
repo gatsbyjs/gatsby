@@ -6,7 +6,7 @@ The Gatsby CLI tool lets you install “starters”. These are boilerplate Gatsb
 
 `gatsby new` helps you start your project by cloning the boilerplate, installing dependencies, and clearing Git history.
 
-When creating a new site, you can optionally specify a starter to base your new site on, eith er with the `[URL]` of the `[GIT_USER_NAME/REPO]` e.g.
+When creating a new site, you can optionally specify a starter to base your new site on, either with the `[URL]` of the `[GIT_USER_NAME/REPO]` e.g.
 
 `gatsby new [SITE_DIRECTORY] [URL_OF_STARTER_GITHUB_REPO]`
 or
