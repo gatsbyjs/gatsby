@@ -11,23 +11,31 @@ module.exports = function MDXRenderer({
   const mdxComponents = useMDXComponents(components);
   const mdxScope = useMDXScope(scope);
 
-  if (!children) {
-    return null;
-  }
+  // Memoize the compiled component
+  const End = React.useMemo(
+    () => {
+      if (!children) {
+        return null;
+      }
 
-  const fullScope = {
-    // React is here just in case the user doesn't pass them in
-    // in a manual usage of the renderer
-    React,
-    mdx,
-    ...mdxScope
-  };
+      const fullScope = {
+        // React is here just in case the user doesn't pass them in
+        // in a manual usage of the renderer
+        React,
+        mdx,
+        ...mdxScope
+      };
 
-  // children is pre-compiled mdx
-  const keys = Object.keys(fullScope);
-  const values = keys.map(key => fullScope[key]);
-  const fn = new Function("_fn", ...keys, `${children}`);
+      const keys = Object.keys(fullScope);
+      const values = keys.map(key => fullScope[key]);
+      const fn = new Function("_fn", ...keys, `${children}`);
 
-  const End = fn({}, ...values);
-  return React.createElement(End, { components: mdxComponents, ...props });
+      return fn({}, ...values);
+    },
+    [children, scope]
+  );
+
+  return (
+    React.createElement(End, { components: mdxComponents, ...props })
+  );
 };
