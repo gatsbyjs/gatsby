@@ -69,6 +69,10 @@ There are three modes in which icon generation can function: automatic, hybrid, 
   - Legacy icon support - yes
   - Cache busting - never
 
+- i18n - Generate separate versions for multiple languages
+
+  - Supports all 3 modes
+
 **_IMPORTANT:_** For best results, if you're providing an icon for generation it should be...
 
 - ...at least as big as the largest icon being generated (512x512 by default).
@@ -129,6 +133,79 @@ icons: [
 ```
 
 In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
+
+### i18n – Multilang configuration
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        manifests: [
+          {
+            name: `GatsbyJS`,
+            short_name: `GatsbyJS`,
+            start_url: `/de/`,
+            regex: `^/de/.*`,
+            language: `de`,
+            background_color: `#f7f0eb`,
+            theme_color: `#a2466c`,
+            display: `standalone`,
+          },
+          {
+            name: `GatsbyJS`,
+            short_name: `GatsbyJS`,
+            start_url: `/`,
+            regex: `.*`,
+            background_color: `#f7f0eb`,
+            theme_color: `#a2466c`,
+            display: `standalone`,
+          },
+        ],
+      },
+    },
+  ],
+}
+```
+
+You can add as many languages as you want, as well as mix and match auto, hybrid & manual icon modes.
+Use basic composition like `Object.assign` or `rest/spread` operator (if supported by your Node version) to merge in shared configs so you don't have to repeat yourself. The above example could be written as:
+
+```js
+// in gatsby-config.js
+const sharedManifestOptions = {
+  name: `GatsbyJS`,
+  short_name: `GatsbyJS`,
+  background_color: `#f7f0eb`,
+  theme_color: `#a2466c`,
+  display: `standalone`,
+}
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        manifests: [
+          Object.assign({}, sharedManifestOptions, {
+            start_url: `/de/`,
+            regex: `^/de/.*`,
+            language: `de`,
+          }),
+          Object.assign({}, sharedManifestOptions, {
+            start_url: `/`,
+            regex: `.*`,
+          }),
+        ],
+      },
+    },
+  ],
+}
+```
+
+Make sure the default language comes last.
+You don't have to specify a "default" language though, all pathes can start with a language, or you can tweak the regex to match whatever part of the `pathname` you like.
 
 ### Feature configuration - **Optional**
 
