@@ -5361,6 +5361,16 @@
     - Space
   built_by: Jonathan Z. Fisher
   built_by_url: "https://jonzfisher.com"
+- title: Zuyet Awarmatrip
+  main_url: https://www.zuyetawarmatrip.com
+  url: https://www.zuyetawarmatrip.com
+  featured: false
+  description: >
+    Zuyet Awarmatrip is a subsidiary identity within the personal ecosystem of Zuyet Awarmatik, focusing on travel and photography.
+  categories:
+    - Travel
+    - Photography
+  built_by: Zuyet Awarmatik
 - title: nikodemdeja.pl
   main_url: https://nikodemdeja.pl
   url: https://nikodemdeja.pl
