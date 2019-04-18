@@ -30,7 +30,7 @@ Remark would translate this into an AST made available to `gatsby-transformer-re
 
 You are going to create a plugin that colors all top-level headings in the markdown with the color purple.
 
-First create a local plugin by adding a `plugins` folder in your site and generating a package.json file for it. As well, create an index.js file. In this file, we export a function that will be invoked by `gatsby-transformer-remark`.
+First create a local plugin by adding a `plugins` folder in your site and generating a `package.json` file for it. As well, create an `index.js` file. In this file, we export a function that will be invoked by `gatsby-transformer-remark`:
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
 module.exports = ({ markdownAST }, pluginOptions) => {
