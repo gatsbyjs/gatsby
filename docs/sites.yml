@@ -5361,3 +5361,17 @@
     - Space
   built_by: Jonathan Z. Fisher
   built_by_url: "https://jonzfisher.com"
+  - title: TheTaged
+    main_url: https://thetaged.com
+    url: https://thetaged.com
+    description: >
+    TheTaged.com is a Technology based media website founded in 2019 by coders tinkerers and tech lover's alike.
+    categories:
+    - Tech
+    - How To
+    - Reviews
+    - News
+    - Deals
+    built_by: TheTaged
+    built_by_url: https://thetaged.com
+    featured: false
