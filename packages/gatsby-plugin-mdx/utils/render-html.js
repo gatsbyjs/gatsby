@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 const webpack = require("webpack");
 const path = require("path");
 const evaluate = require("eval");
 
 //const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 const { cloneDeep } = require("lodash");
-const { store } = require("gatsby/dist/redux");
+//const { store: ogStore} = require("gatsby/dist/redux");
 const DataLoader = require("dataloader");
 
 var findAsset = function(src, compilation, webpackStatsJson) {
@@ -100,8 +99,8 @@ class MdxHtmlBuilderWebpackPlugin {
   }
 }
 
-exports.mdxHTMLLoader = ({ cache, reporter }) =>
-  new DataLoader(
+exports.mdxHTMLLoader = ({ cache, reporter, store }) => {
+  return new DataLoader(
     async keys => {
       const webpackConfig = cloneDeep(store.getState().webpack);
       // something sets externals, which will cause React to be undefined
@@ -112,6 +111,7 @@ exports.mdxHTMLLoader = ({ cache, reporter }) =>
         path: path.join(cache.directory, "webpack"),
         libraryTarget: "commonjs"
       };
+      webpackConfig.plugins = webpackConfig.plugins || [];
       webpackConfig.plugins.push(new MdxHtmlBuilderWebpackPlugin());
       const compiler = webpack(webpackConfig);
 
@@ -119,9 +119,9 @@ exports.mdxHTMLLoader = ({ cache, reporter }) =>
         compiler.run((err, stats) => {
           // error handling bonanza
           if (err) {
-            console.error(err.stack || err);
+            reporter.error(err.stack || err);
             if (err.details) {
-              console.error(err.details);
+              reporter.error("gatsby-mdx\n" + err.details);
             }
             return;
           }
@@ -129,11 +129,11 @@ exports.mdxHTMLLoader = ({ cache, reporter }) =>
           const info = stats.toJson();
 
           if (stats.hasErrors()) {
-            console.error(info.errors);
+            reporter.error("gatsby-mdx\n" + info.errors);
           }
 
           if (stats.hasWarnings()) {
-            console.warn(info.warnings);
+            reporter.warn("gatsby-mdx\n" + info.warnings);
           }
 
           resolve(
@@ -152,3 +152,4 @@ exports.mdxHTMLLoader = ({ cache, reporter }) =>
     },
     { cacheKeyFn: ({ id }) => id }
   );
+};

@@ -1,11 +1,4 @@
-const {
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLEnumType,
-  GraphQLJSON
-} = require("gatsby/graphql");
+const { GraphQLObjectType, GraphQLInt } = require("gatsby/graphql");
 const _ = require("lodash");
 const remark = require("remark");
 const english = require("retext-english");
@@ -23,17 +16,74 @@ const defaultOptions = require("../utils/default-options");
 const genMDX = require("../utils/gen-mdx");
 const { mdxHTMLLoader: loader } = require("../utils/render-html");
 
+async function getCounts({ mdast }) {
+  let counts = {};
+
+  // convert the mdxast to back to mdast
+  remove(mdast, "import");
+  remove(mdast, "export");
+  visit(mdast, "jsx", node => {
+    node.type = "html";
+  });
+
+  await remark()
+    .use(
+      remark2retext,
+      unified()
+        .use(english)
+        .use(count)
+    )
+    .run(mdast);
+
+  function count() {
+    return counter;
+    function counter(tree) {
+      visit(tree, visitor);
+      function visitor(node) {
+        counts[node.type] = (counts[node.type] || 0) + 1;
+      }
+    }
+  }
+
+  return {
+    paragraphs: counts.ParagraphNode,
+    sentences: counts.SentenceNode,
+    words: counts.WordNode
+  };
+}
+
 module.exports = (
-  { type, pathPrefix, getNode, getNodes, cache, reporter },
+  { store, pathPrefix, getNode, getNodes, cache, reporter, actions, schema },
   pluginOptions
 ) => {
-  const mdxHTMLLoader = loader({ reporter, cache });
-  if (type.name !== `Mdx`) {
-    return {};
-  }
+  let mdxHTMLLoader;
+  const { createTypes } = actions;
 
   const options = defaultOptions(pluginOptions);
 
+  createTypes(`
+  type MdxFrontmatter {
+title: String!
+
+}
+  type MdxHeadingMdx {
+    value: String
+    depth: Int
+  }
+
+  enum HeadingsMdx {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6
+  }
+`);
+
+  /**
+   * Support gatsby-remark parser plugins
+   */
   for (let plugin of options.gatsbyRemarkPlugins) {
     debug("requiring", plugin.resolve);
     const requiredPlugin = require(plugin.resolve);
@@ -60,102 +110,26 @@ module.exports = (
 
   const processMDX = ({ node }) =>
     genMDX({ node, getNode, getNodes, reporter, cache, pathPrefix, options });
-  return new Promise((resolve /*, reject*/) => {
-    async function getCounts(mdxNode) {
-      let counts = {};
-      const { mdast } = await processMDX({ node: mdxNode });
 
-      // convert the mdxast to back to mdast
-      remove(mdast, "import");
-      remove(mdast, "export");
-      visit(mdast, "jsx", node => {
-        node.type = "html";
-      });
-
-      await remark()
-        .use(
-          remark2retext,
-          unified()
-            .use(english)
-            .use(count)
-        )
-        .run(mdast);
-
-      function count() {
-        return counter;
-        function counter(tree) {
-          visit(tree, visitor);
-          function visitor(node) {
-            counts[node.type] = (counts[node.type] || 0) + 1;
-          }
+  // New Code // Schema
+  const MdxType = schema.buildObjectType({
+    name: "Mdx",
+    fields: {
+      rawBody: { type: "String!" },
+      fileAbsolutePath: { type: "String!" },
+      frontmatter: { type: "MdxFrontmatter" },
+      body: {
+        type: `String!`,
+        async resolve(mdxNode) {
+          const { body } = await processMDX({ node: mdxNode });
+          return body;
         }
-      }
-
-      return {
-        paragraphs: counts.ParagraphNode,
-        sentences: counts.SentenceNode,
-        words: counts.WordNode
-      };
-    }
-
-    const HeadingType = new GraphQLObjectType({
-      name: `MdxHeadingMdx`,
-      fields: {
-        value: {
-          type: GraphQLString,
-          resolve(heading) {
-            return heading.value;
-          }
-        },
-        depth: {
-          type: GraphQLInt,
-          resolve(heading) {
-            return heading.depth;
-          }
-        }
-      }
-    });
-    const Headings = new GraphQLEnumType({
-      name: `HeadingsMdx`,
-      values: {
-        h1: { value: 1 },
-        h2: { value: 2 },
-        h3: { value: 3 },
-        h4: { value: 4 },
-        h5: { value: 5 },
-        h6: { value: 6 }
-      }
-    });
-
-    return resolve({
-      code: {
-        resolve(mdxNode) {
-          return mdxNode;
-        },
-        type: new GraphQLObjectType({
-          name: `MDXCodeMdx`,
-          fields: {
-            body: {
-              type: GraphQLString,
-              async resolve(mdxNode) {
-                const { body } = await processMDX({ node: mdxNode });
-                return body;
-              }
-            },
-            scope: {
-              type: GraphQLString,
-              async resolve() {
-                return "";
-              }
-            }
-          }
-        })
       },
       excerpt: {
-        type: GraphQLString,
+        type: `String!`,
         args: {
           pruneLength: {
-            type: GraphQLInt,
+            type: `Int`,
             defaultValue: 140
           }
         },
@@ -177,10 +151,10 @@ module.exports = (
         }
       },
       headings: {
-        type: new GraphQLList(HeadingType),
+        type: `[MdxHeadingMdx]`,
         args: {
           depth: {
-            type: Headings
+            type: `HeadingsMdx`
           }
         },
         async resolve(mdxNode, { depth }) {
@@ -200,19 +174,22 @@ module.exports = (
         }
       },
       html: {
-        type: GraphQLString,
+        type: `String`,
         async resolve(mdxNode) {
           if (mdxNode.html) {
             return Promise.resolve(mdxNode.html);
           }
           const { body } = await processMDX({ node: mdxNode });
           try {
+            if (!mdxHTMLLoader) {
+              mdxHTMLLoader = loader({ reporter, cache, store });
+            }
             const html = await mdxHTMLLoader.load({ ...mdxNode, body });
             return html;
           } catch (e) {
             reporter.error(
               `Error querying the \`html\` field. This field is intended for use with RSS feed generation.
-If you're trying to use it in application-level code, try querying for code.body instead.
+If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
 Original error:
 ${e}`
             );
@@ -227,10 +204,10 @@ ${e}`
         }
       },
       tableOfContents: {
-        type: GraphQLJSON,
+        type: `JSON`,
         args: {
           maxDepth: {
-            type: GraphQLInt,
+            type: `Int`,
             default: 6
           }
         },
@@ -242,9 +219,10 @@ ${e}`
         }
       },
       timeToRead: {
-        type: GraphQLInt,
+        type: `Int`,
         async resolve(mdxNode) {
-          const { words } = await getCounts(mdxNode);
+          const { mdast } = await processMDX({ node: mdxNode });
+          const { words } = await getCounts({ mdast });
           let timeToRead = 0;
           const avgWPM = 265;
           timeToRead = Math.round(words / avgWPM);
@@ -270,9 +248,12 @@ ${e}`
           }
         }),
         async resolve(mdxNode) {
-          return getCounts(mdxNode);
+          const { mdast } = await processMDX({ node: mdxNode });
+          return getCounts({ mdast });
         }
       }
-    });
+    },
+    interfaces: [`Node`]
   });
+  createTypes(MdxType);
 };

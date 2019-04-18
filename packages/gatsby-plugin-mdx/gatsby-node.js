@@ -5,14 +5,14 @@ const defaultOptions = require("./utils/default-options");
 const fs = require("fs");
 
 /**
+ * Create Mdx types and resolvers
+ */
+exports.sourceNodes = require("./gatsby/source-nodes");
+
+/**
  * Create Mdx nodes from MDX files.
  */
 exports.onCreateNode = require("./gatsby/on-create-node");
-
-/**
- * Add additional fields to MDX nodes
- */
-exports.setFieldsOnGraphQLNodeType = require("./gatsby/extend-node-type");
 
 /**
  * Add frontmatter as page context for MDX pages
