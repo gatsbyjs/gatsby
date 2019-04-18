@@ -71,6 +71,8 @@ See the [library of official and community plugins](/plugins/)
 - [12 Factor Applications with GatsbyJS](https://medium.com/@wonderboymusic/12-factor-applications-with-gatsbyjs-ef8a2b1f883a)
 - [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
 - [How to create a 100% FREE website with GatsbyJS and Gitpod.io](https://medium.com/devopslinks/how-to-create-a-100-free-website-with-gatsbyjs-and-gitpod-io-446124f2c137)
+- [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
+
 
 ### German
 
