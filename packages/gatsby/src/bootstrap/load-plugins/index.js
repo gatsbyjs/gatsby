@@ -48,7 +48,6 @@ module.exports = async (config = {}, rootDir = null) => {
   // valid Gatsby APIs, aka 'badExports'
   const x = collatePluginAPIs({ apis, flattenedPlugins })
   flattenedPlugins = x.flattenedPlugins
-  const apiToPlugins = x.apiToPlugins
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins
@@ -56,7 +55,6 @@ module.exports = async (config = {}, rootDir = null) => {
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({
-    apiToPlugins,
     flattenedPlugins,
   })
 
@@ -64,17 +62,6 @@ module.exports = async (config = {}, rootDir = null) => {
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
     payload: flattenedPlugins,
-  })
-
-  store.dispatch({
-    type: `SET_SITE_API_TO_PLUGINS`,
-    payload: apiToPlugins,
-  })
-
-  // TODO: Is this used? plugins and flattenedPlugins may be out of sync
-  store.dispatch({
-    type: `SET_SITE_PLUGINS`,
-    payload: plugins,
   })
 
   return flattenedPlugins

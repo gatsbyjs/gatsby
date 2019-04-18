@@ -2,6 +2,7 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
+const { getValueAt } = require(`./utils/get-value-at`)
 
 const findMany = typeName => ({ args, context, info }) =>
   context.nodeModel.runQuery(
@@ -32,7 +33,7 @@ const distinct = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const values = edges.reduce((acc, { node }) => {
-    const value = getValueAtSelector(node, field)
+    const value = getValueAt(node, field)
     return value != null
       ? acc.concat(value instanceof Date ? value.toISOString() : value)
       : acc
@@ -44,7 +45,7 @@ const group = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const groupedResults = edges.reduce((acc, { node }) => {
-    const value = getValueAtSelector(node, field)
+    const value = getValueAt(node, field)
     const values = Array.isArray(value) ? value : [value]
     values
       .filter(value => value != null)
@@ -77,7 +78,7 @@ const paginate = (results = [], { skip = 0, limit }) => {
   const hasNextPage = skip + limit < count
 
   return {
-    totalCount: items.length,
+    totalCount: count,
     edges: items.map((item, i, arr) => {
       return {
         node: item,
@@ -90,19 +91,6 @@ const paginate = (results = [], { skip = 0, limit }) => {
       hasNextPage,
     },
   }
-}
-
-const getValueAtSelector = (obj, selector) => {
-  const selectors = Array.isArray(selector) ? selector : selector.split(`.`)
-  return selectors.reduce((acc, key) => {
-    if (acc && typeof acc === `object`) {
-      if (Array.isArray(acc)) {
-        return acc.map(a => a[key]).filter(a => a !== undefined)
-      }
-      return acc[key]
-    }
-    return undefined
-  }, obj)
 }
 
 const link = ({ by, from }) => async (source, args, context, info) => {
@@ -153,15 +141,17 @@ const link = ({ by, from }) => async (source, args, context, info) => {
 }
 
 const fileByPath = (source, args, context, info) => {
-  let fieldValue = source[info.fieldName]
+  const fieldValue = source && source[info.fieldName]
 
-  const isArray = getNullableType(info.returnType) instanceof GraphQLList
-
-  if (!fieldValue) {
-    return null
+  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
+  if (
+    Array.isArray(fieldValue) &&
+    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
+  ) {
+    return fieldValue
   }
 
-  const findLinkedFileNode = async relativePath => {
+  const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
     const fileLinkPath = normalize(
@@ -170,7 +160,7 @@ const fileByPath = (source, args, context, info) => {
 
     // Use that path to find the linked File node.
     const linkedFileNode = _.find(
-      await context.nodeModel.getAllNodes({ type: `File` }),
+      context.nodeModel.getAllNodes({ type: `File` }),
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
@@ -178,15 +168,18 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the File node for this node (we assume the node is something
   // like markdown which would be a child node of a File node).
-  const parentFileNode = context.nodeModel.findRootNodeAncestor(source)
+  const parentFileNode = context.nodeModel.findRootNodeAncestor(
+    source,
+    node => node.internal && node.internal.type === `File`
+  )
 
-  // Find the linked File node(s)
-  if (isArray) {
-    return Promise.all(fieldValue.map(findLinkedFileNode))
-  } else {
-    return findLinkedFileNode(fieldValue)
-  }
+  return resolveValue(findLinkedFileNode, fieldValue)
 }
+
+const resolveValue = (resolve, value) =>
+  Array.isArray(value)
+    ? value.map(v => resolveValue(resolve, v))
+    : resolve(value)
 
 module.exports = {
   findManyPaginated,

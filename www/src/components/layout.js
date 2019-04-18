@@ -11,9 +11,8 @@ import {
   space,
   shadows,
   breakpoints,
-  dimensions,
+  sizes,
 } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -92,7 +91,7 @@ class DefaultLayout extends React.Component {
                 width: `750px`,
                 background: `none`,
                 border: `none`,
-                padding: `${rhythm(space[8])} 0`,
+                padding: `${space[8]} 0`,
                 overflow: `visible`,
               },
               overlay: {
@@ -161,13 +160,11 @@ class DefaultLayout extends React.Component {
           css={{
             paddingLeft: `env(safe-area-inset-left)`,
             paddingRight: `env(safe-area-inset-right)`,
-            paddingTop: dimensions.bannerHeight,
+            paddingTop: sizes.bannerHeight,
             // make room for the mobile navigation
-            paddingBottom: dimensions.headerHeight,
+            paddingBottom: sizes.headerHeight,
             [breakpoints.md]: {
-              paddingTop: `calc(${dimensions.bannerHeight} + ${
-                dimensions.headerHeight
-              })`,
+              paddingTop: `calc(${sizes.bannerHeight} + ${sizes.headerHeight})`,
               paddingBottom: 0,
             },
           }}

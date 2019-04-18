@@ -4,7 +4,7 @@ import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 
 import APIReference from "../../components/api-reference"
-import { rhythm, scale } from "../../utils/typography"
+import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -26,10 +26,9 @@ class NodeAPIHelperDocs extends React.Component {
           </h1>
           <p>
             The first argument passed to each of{` `}
-            <Link to="/docs/node-apis/">{`Gatsby's Node APIs`}</Link>
-            {` is an
-            object containing a set of helpers. Helpers shared by all Gatsby's
-            Node APIs are documented in `}
+            <Link to="/docs/node-apis/">Gatsby’s Node APIs</Link> is an object
+            containing a set of helpers. Helpers shared by all Gatsby’s Node
+            APIs are documented in{` `}
             <a href="#shared-helpers">Shared helpers</a> section.
           </p>
           <div className="gatsby-highlight">
@@ -73,10 +72,10 @@ exports.createPages = ({ actions, reporter }) => {
             Check documentation of specific APIs in{` `}
             <Link to="/docs/node-apis/">Gatsby Node APIs</Link> for details.
           </p>
-          <h2 id="shared-helpers" css={{ marginBottom: rhythm(1 / 2) }}>
+          <h2 id="shared-helpers" css={{ marginBottom: space[3] }}>
             Shared helpers
           </h2>
-          <ul css={{ ...scale(-1 / 5) }}>
+          <ul>
             {docs.map((node, i) => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>

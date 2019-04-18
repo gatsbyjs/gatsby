@@ -9,7 +9,7 @@ import {
   shadows,
   space,
   breakpoints,
-  dimensions,
+  sizes,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
@@ -122,17 +122,15 @@ const styles = {
     width: 320,
     zIndex: 10,
     [breakpoints.md]: {
-      height: `calc(100vh - ${dimensions.headerHeight} - ${
-        dimensions.bannerHeight
-      })`,
+      height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
       pointerEvents: `auto`,
-      top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
-      width: rhythm(dimensions.sidebarWidth.default),
+      top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
+      width: rhythm(sizes.sidebarWidth.default),
     },
     [breakpoints.lg]: {
-      width: rhythm(dimensions.sidebarWidth.large),
+      width: rhythm(sizes.sidebarWidth.large),
     },
   },
   sidebar: {
@@ -149,16 +147,16 @@ const styles = {
   sidebarToggleButton: {
     backgroundColor: colors.gatsby,
     borderRadius: `50%`,
-    bottom: rhythm(space[11]),
+    bottom: space[11],
     boxShadow: shadows.dialog,
     cursor: `pointer`,
     display: `flex`,
-    height: rhythm(space[10]),
+    height: space[10],
     justifyContent: `space-around`,
     position: `fixed`,
-    right: rhythm(space[6]),
+    right: space[6],
     visibility: `visible`,
-    width: rhythm(space[10]),
+    width: space[10],
     zIndex: 20,
     [breakpoints.md]: { display: `none` },
   },
@@ -167,8 +165,8 @@ const styles = {
     color: colors.white,
     display: `flex`,
     flexDirection: `column`,
-    height: rhythm(space[5]),
+    height: space[5],
     visibility: `visible`,
-    width: rhythm(space[5]),
+    width: space[5],
   },
 }

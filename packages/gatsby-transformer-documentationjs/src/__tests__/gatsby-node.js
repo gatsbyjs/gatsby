@@ -7,14 +7,16 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   const createNodeId = jest.fn(id => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
 
-  const node = {
-    id: `node_1`,
-    children: [],
-    absolutePath: path.join(__dirname, `fixtures`, `code.js`),
-    internal: {
-      mediaType: `application/javascript`,
-      type: `File`,
-    },
+  const getFileNode = fixture => {
+    return {
+      id: `node_1`,
+      children: [],
+      absolutePath: path.join(__dirname, `fixtures`, fixture),
+      internal: {
+        mediaType: `application/javascript`,
+        type: `File`,
+      },
+    }
   }
 
   const actions = {
@@ -44,11 +46,11 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     )
   }
 
-  beforeAll(async () => {
-    await run(node)
-  })
-
   describe(`Simple example`, () => {
+    beforeAll(async () => {
+      await run(getFileNode(`code.js`))
+    })
+
     it(`creates doc json apple node`, () => {
       const appleNode = createdNodes.find(node => node.name === `apple`)
       expect(appleNode).toBeDefined()
@@ -113,9 +115,20 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         })
       )
     })
+
+    it(`doesn't create multiple nodes with same id`, () => {
+      const groupedById = groupBy(createdNodes, `id`)
+      Object.keys(groupedById).forEach(id =>
+        expect(groupedById[id].length).toBe(1)
+      )
+    })
   })
 
   describe(`Complex example`, () => {
+    beforeAll(async () => {
+      await run(getFileNode(`complex-example.js`))
+    })
+
     let callbackNode, typedefNode
 
     it(`should create top-level node for callback`, () => {
@@ -232,6 +245,26 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect(typeElement.typeDef___NODE).toBe(typedefNode.id)
       })
     })
+
+    it(`doesn't create multiple nodes with same id`, () => {
+      const groupedById = groupBy(createdNodes, `id`)
+      Object.keys(groupedById).forEach(id =>
+        expect(groupedById[id].length).toBe(1)
+      )
+    })
+  })
+
+  describe(`Free floating comments`, () => {
+    beforeAll(async () => {
+      await run(getFileNode(`free-floating.js`))
+    })
+
+    it(`doesn't create multiple nodes with same id`, () => {
+      const groupedById = groupBy(createdNodes, `id`)
+      Object.keys(groupedById).forEach(id =>
+        expect(groupedById[id].length).toBe(1)
+      )
+    })
   })
 
   describe(`Sanity checks`, () => {
@@ -262,7 +295,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       await run({ internal: { mediaType: `application/javascript` } })
       expect(createdNodes.length).toBe(0)
 
-      await run(node)
+      await run(getFileNode(`code.js`))
       expect(createdNodes.length).toBeGreaterThan(0)
     })
   })

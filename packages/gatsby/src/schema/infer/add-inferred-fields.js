@@ -5,6 +5,7 @@ const {
   GraphQLObjectType,
   GraphQLList,
 } = require(`graphql`)
+const { ObjectTypeComposer } = require(`graphql-compose`)
 const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -77,7 +78,7 @@ const addInferredFieldsImpl = ({
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${
           field.key
         }\` - [${possibleFieldsNames}]. Gatsby will use \`${
           field.unsanitizedKey
@@ -101,25 +102,27 @@ const addInferredFieldsImpl = ({
       let lists = 0
       let namedFieldType = fieldType
       while (namedFieldType.ofType) {
-        namedFieldType = namedFieldType.ofType
         if (namedFieldType instanceof GraphQLList) {
           lists++
         }
+        namedFieldType = namedFieldType.ofType
       }
 
-      if (arrays === lists) {
+      const namedInferredTypeName =
+        typeof namedInferredType === `string`
+          ? namedInferredType
+          : namedInferredType.getTypeName()
+
+      if (arrays === lists && namedFieldType.name === namedInferredTypeName) {
         if (
           namedFieldType instanceof GraphQLObjectType &&
-          typeof namedInferredType !== `string` &&
-          namedFieldType.name === namedInferredType.getTypeName()
+          namedInferredType instanceof ObjectTypeComposer
         ) {
           const fieldTypeComposer = typeComposer.getFieldTC(key)
           const inferredFields = namedInferredType.getFields()
           fieldTypeComposer.addFields(inferredFields)
-        } else if (
-          addDefaultResolvers &&
-          namedFieldType.name === namedInferredType
-        ) {
+        }
+        if (addDefaultResolvers) {
           let field = typeComposer.getField(key)
           if (!field.type) {
             field = {
@@ -136,7 +139,7 @@ const addInferredFieldsImpl = ({
         }
       }
     } else if (addNewFields) {
-      if (namedInferredType instanceof schemaComposer.TypeComposer) {
+      if (namedInferredType instanceof ObjectTypeComposer) {
         schemaComposer.add(namedInferredType)
       }
       typeComposer.setField(key, fieldConfig)
@@ -292,7 +295,7 @@ const getFieldConfigFromFieldNameConvention = ({
     const typeName = linkedTypes.sort().join(``) + `Union`
     type = schemaComposer.getOrCreateUTC(typeName, utc => {
       const types = linkedTypes.map(typeName =>
-        schemaComposer.getOrCreateTC(typeName)
+        schemaComposer.getOrCreateOTC(typeName)
       )
       utc.setTypes(types)
       utc.setResolveType(node => node.internal.type)
@@ -358,8 +361,9 @@ const getSimpleFieldConfig = ({
             originalFieldTypeComposer.getTypeName()
           )
         } else {
-          fieldTypeComposer = schemaComposer.TypeComposer.createTemp(
-            createTypeName(selector)
+          fieldTypeComposer = ObjectTypeComposer.createTemp(
+            createTypeName(selector),
+            schemaComposer
           )
         }
 
@@ -381,12 +385,12 @@ const getSimpleFieldConfig = ({
 }
 
 const createTypeName = selector => {
-  const key = selector
-    .split(`.`)
+  const keys = selector.split(`.`)
+  const suffix = keys
+    .slice(1)
     .map(_.upperFirst)
     .join(``)
-
-  return key
+  return `${keys[0]}${suffix}`
 }
 
 const NON_ALPHA_NUMERIC_EXPR = new RegExp(`[^a-zA-Z0-9_]`, `g`)

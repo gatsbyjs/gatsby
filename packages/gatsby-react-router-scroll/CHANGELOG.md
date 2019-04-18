@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.6...gatsby-react-router-scroll@2.0.7) (2019-03-28)
+
+### Bug Fixes
+
+- **scroll:** use location.key for scroll behaviours ([#12403](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/issues/12403)) ([853ceb9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/commit/853ceb9)), closes [/github.com/taion/scroll-behavior/issues/135#issuecomment-468962628](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/issues/issuecomment-468962628) [#12390](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/issues/12390)
+
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-react-router-scroll/compare/gatsby-react-router-scroll@2.0.5...gatsby-react-router-scroll@2.0.6) (2019-03-16)
 
 ### Bug Fixes
