@@ -20,17 +20,21 @@ module.exports = (
         },
         {
           test: /\.js$/,
-          include: path.dirname(require.resolve("gatsby-mdx")),
+          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
           use: [loaders.js()]
         },
 
         {
           test: /mdx-components\.js$/,
-          include: path.dirname(require.resolve("gatsby-mdx")),
+          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-mdx", "loaders", "mdx-components"),
+              loader: path.join(
+                "gatsby-plugin-mdx",
+                "loaders",
+                "mdx-components"
+              ),
               options: {
                 plugins: options.mdxPlugins
               }
@@ -39,11 +43,11 @@ module.exports = (
         },
         {
           test: /mdx-scopes\.js$/,
-          include: path.dirname(require.resolve("gatsby-mdx")),
+          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-mdx", "loaders", "mdx-scopes"),
+              loader: path.join("gatsby-plugin-mdx", "loaders", "mdx-scopes"),
               options: {
                 cache: cache
               }
@@ -52,11 +56,11 @@ module.exports = (
         },
         {
           test: /mdx-wrappers\.js$/,
-          include: path.dirname(require.resolve("gatsby-mdx")),
+          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-mdx", "loaders", "mdx-wrappers"),
+              loader: path.join("gatsby-plugin-mdx", "loaders", "mdx-wrappers"),
               options: {
                 store: other.store
               }
@@ -68,7 +72,7 @@ module.exports = (
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-mdx", "loaders", "mdx-loader"),
+              loader: path.join("gatsby-plugin-mdx", "loaders", "mdx-loader"),
               options: {
                 cache: cache,
                 ...other,
