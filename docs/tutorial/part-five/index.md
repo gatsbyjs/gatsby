@@ -40,7 +40,7 @@ fetch data from the WordPress API.
 Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
 explore how it works.
 
-First install the plugin at the root of the project:
+First, install the plugin at the root of the project:
 
 ```shell
 npm install --save gatsby-source-filesystem
@@ -91,7 +91,7 @@ Space</kbd>).
 
 ![filesystem-autocomplete](filesystem-autocomplete.png)
 
-Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
+Try adding a number of fields to your query pressing <kbd>Ctrl + Enter</kbd>
 each time to re-run the query. You'll see something like this:
 
 ![allfile-query](allfile-query.png)
