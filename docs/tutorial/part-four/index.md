@@ -298,7 +298,7 @@ There are two ways to use StaticQuery:-
 1. The [StaticQuery component](/docs/static-query/)
 2. The newer [useStaticQuery hook](/docs/use-static-query/)
 
-You'll be using the newer hook method which is cleaner and more succinct, but you may wish to learn about the component version too.
+In this tutorial you'll be using the newer hook method which is cleaner and more succinct, but you may wish to learn about the component version too.
 
 You need to include hooks within the body of your function component. To facilitate this you change the `export` line to include `{` rather than `(`. Also, within the function you'll use `return()`. When you use `(` on your export line you're effectively using a shortcut to writing `return(` each time. But because you now need to run the hook before you return the component you will need to write it longhand this time.
 
