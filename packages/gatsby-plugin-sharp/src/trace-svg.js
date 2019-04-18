@@ -69,7 +69,22 @@ const optimize = svg => {
 }
 
 exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
-  const options = healOptions(getPluginOptions(), fileArgs, file.extension)
+  const options = healOptions(
+    getPluginOptions(),
+    {
+      // use maxWidth/maxHeight as width/height if available
+      // if width/height is used in fileArgs, the maxWidth/maxHeight
+      // values will be overritten
+      ...(fileArgs && fileArgs.maxWidth && fileArgs.maxHeight
+        ? {
+            height: fileArgs.maxHeight,
+            width: fileArgs.maxWidth,
+          }
+        : {}),
+      ...fileArgs,
+    },
+    file.extension
+  )
 
   const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${
     file.name

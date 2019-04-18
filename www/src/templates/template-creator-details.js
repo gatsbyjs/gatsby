@@ -6,6 +6,7 @@ import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
@@ -261,6 +262,7 @@ class CreatorTemplate extends Component {
             )}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }
