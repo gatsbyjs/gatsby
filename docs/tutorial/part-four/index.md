@@ -298,9 +298,9 @@ There are two ways to use StaticQuery:-
 1. The [StaticQuery component](/docs/static-query/)
 2. The newer [useStaticQuery hook](/docs/use-static-query/)
 
-We'll be using the newer hook method which is cleaner and more succinct, but you may wish to learn about the component version too.
+You'll be using the newer hook method which is cleaner and more succinct, but you may wish to learn about the component version too.
 
-With React, Hooks need to be within the body of the function component. So you will notice we change the `export` line to `{` rather than `(` and introduce `return()` which includes what was previously the only thing in our function. This allows us to do additional work before we render our component, in our case that means running our static query.
+With React, Hooks need to be within the body of the function component. Notice the change of the `export` line to `{` rather than `(` and the introduction of `return()`. This includes what was previously the only thing in our function. This allows you to do additional work before you render your component, in this case that means running our static query.
 
 Go ahead and make some changes to your `src/components/layout.js` file to run a `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
