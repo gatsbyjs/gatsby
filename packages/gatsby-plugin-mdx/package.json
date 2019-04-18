@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "1.0.2",
+  "version": "1.0.2-1",
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -28,6 +28,7 @@
     "mdast-util-to-string": "^1.0.4",
     "mdast-util-toc": "^3.0.0",
     "mime": "^2.3.1",
+    "p-queue": "^5.0.0",
     "pretty-bytes": "^5.1.0",
     "remark": "^10.0.0",
     "remark-retext": "^3.1.2",

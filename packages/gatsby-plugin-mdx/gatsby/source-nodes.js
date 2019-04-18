@@ -1,4 +1,8 @@
-const { GraphQLObjectType, GraphQLInt } = require("gatsby/graphql");
+const {
+  GraphQLObjectType,
+  GraphQLInt,
+  GraphQLJSON
+} = require("gatsby/graphql");
 const _ = require("lodash");
 const remark = require("remark");
 const english = require("retext-english");

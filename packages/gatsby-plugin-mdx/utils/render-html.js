@@ -1,11 +1,26 @@
 const webpack = require("webpack");
 const path = require("path");
 const evaluate = require("eval");
+const debug = require("debug")("gatsby-mdx:render-html");
+const PQueue = require("p-queue");
 
 //const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 const { cloneDeep } = require("lodash");
 //const { store: ogStore} = require("gatsby/dist/redux");
 const DataLoader = require("dataloader");
+
+const queue = new PQueue({
+  concurrency: process.env.GATSBY_MDX_CONCURRENCY || 4
+});
+
+let count = 0;
+queue.on("active", () => {
+  debug(
+    `Working on item #${++count}.  Size: ${queue.size}  Pending: ${
+      queue.pending
+    }`
+  );
+});
 
 var findAsset = function(src, compilation, webpackStatsJson) {
   if (!src) {
@@ -115,40 +130,43 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) => {
       webpackConfig.plugins.push(new MdxHtmlBuilderWebpackPlugin());
       const compiler = webpack(webpackConfig);
 
-      return new Promise(resolve => {
-        compiler.run((err, stats) => {
-          // error handling bonanza
-          if (err) {
-            reporter.error(err.stack || err);
-            if (err.details) {
-              reporter.error("gatsby-mdx\n" + err.details);
-            }
-            return;
-          }
+      return queue.add(
+        () =>
+          new Promise(resolve => {
+            compiler.run((err, stats) => {
+              // error handling bonanza
+              if (err) {
+                reporter.error(err.stack || err);
+                if (err.details) {
+                  reporter.error("gatsby-mdx\n" + err.details);
+                }
+                return;
+              }
 
-          const info = stats.toJson();
+              const info = stats.toJson();
 
-          if (stats.hasErrors()) {
-            reporter.error("gatsby-mdx\n" + info.errors);
-          }
+              if (stats.hasErrors()) {
+                reporter.error("gatsby-mdx\n" + info.errors);
+              }
 
-          if (stats.hasWarnings()) {
-            reporter.warn("gatsby-mdx\n" + info.warnings);
-          }
+              if (stats.hasWarnings()) {
+                reporter.warn("gatsby-mdx\n" + info.warnings);
+              }
 
-          resolve(
-            keys.map(
-              ({ body }) =>
-                renderMdxBody
-                  ? renderMdxBody(body)
-                  : reporter.error(
-                      `gatsby-mdx: renderMdxBody was unavailable when rendering html. 
+              resolve(
+                keys.map(
+                  ({ body }) =>
+                    renderMdxBody
+                      ? renderMdxBody(body)
+                      : reporter.error(
+                          `gatsby-mdx: renderMdxBody was unavailable when rendering html. 
 >> This is a bug.`
-                    )
-            )
-          );
-        });
-      });
+                        )
+                )
+              );
+            });
+          })
+      );
     },
     { cacheKeyFn: ({ id }) => id }
   );
