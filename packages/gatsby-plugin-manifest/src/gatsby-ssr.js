@@ -10,7 +10,17 @@ const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 let iconDigest = null
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+exports.onRenderBody = (
+  { setHeadComponents, pathname = `/` },
+  pluginOptions
+) => {
+  if (Array.isArray(pluginOptions.manifests)) {
+    pluginOptions = pluginOptions.manifests.find(x =>
+      RegExp(x.regex || `^/${x.language}/.*`).test(pathname)
+    )
+    if (!pluginOptions) return false
+  }
+
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
@@ -49,12 +59,14 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }
   }
 
+  const suffix = pluginOptions.language ? `_${pluginOptions.language}` : ``
+
   // Add manifest link tag.
   headComponents.push(
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`manifest.webmanifest`)}
+      href={withPrefix(`/manifest${suffix}.webmanifest`)}
       crossOrigin={pluginOptions.crossOrigin}
     />
   )
@@ -97,4 +109,5 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   }
 
   setHeadComponents(headComponents)
+  return true
 }

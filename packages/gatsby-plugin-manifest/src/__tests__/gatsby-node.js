@@ -275,4 +275,47 @@ describe(`Test plugin manifest options`, () => {
     expect(content.icons[0].purpose).toEqual(`all`)
     expect(content.icons[1].purpose).toEqual(`maskable`)
   })
+
+  it(`generates all language versions`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+    const pluginSpecificOptions = {
+      manifests: [
+        {
+          ...manifestOptions,
+          start_url: `/de/`,
+          regex: `^/de/.*`,
+          language: `de`,
+        },
+        {
+          ...manifestOptions,
+          start_url: `/es/`,
+          regex: `^/es/.*`,
+          language: `es`,
+        },
+        {
+          ...manifestOptions,
+          start_url: `/`,
+          regex: `.*`,
+        },
+      ],
+    }
+    const expectedResults = pluginSpecificOptions.manifests.map(
+      ({ regex, language, ...x }) => x
+    )
+
+    await onPostBootstrap(apiArgs, pluginSpecificOptions)
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[0])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[1])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[2])
+    )
+  })
 })

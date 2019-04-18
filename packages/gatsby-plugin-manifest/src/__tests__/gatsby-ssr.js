@@ -15,6 +15,7 @@ const setHeadComponents = args => (headComponents = headComponents.concat(args))
 
 const ssrArgs = {
   setHeadComponents,
+  pathname: `/`,
 }
 
 describe(`gatsby-plugin-manifest`, () => {
@@ -91,6 +92,43 @@ describe(`gatsby-plugin-manifest`, () => {
       })
       expect(headComponents).toMatchSnapshot()
     })
+
+    const i18nArgs = [
+      {
+        ...ssrArgs,
+        pathname: `/about-us`,
+        testName: `Adds correct (default) i18n "manifest" link to head`,
+      },
+      {
+        ...ssrArgs,
+        pathname: `/es/sobre-nosotros`,
+        testName: `Adds correct (es) i18n "manifest" link to head`,
+      },
+    ]
+
+    i18nArgs.forEach(({ testName, ...args }) =>
+      it(testName, () => {
+        onRenderBody(args, {
+          manifests: [
+            {
+              start_url: `/de/`,
+              regex: `^/de/.*`,
+              language: `de`,
+            },
+            {
+              start_url: `/es/`,
+              regex: `^/es/.*`,
+              language: `es`,
+            },
+            {
+              start_url: `/`,
+              regex: `.*`,
+            },
+          ],
+        })
+        expect(headComponents).toMatchSnapshot()
+      })
+    )
   })
 
   describe(`Legacy Icons`, () => {
