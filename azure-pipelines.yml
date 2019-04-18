@@ -13,7 +13,7 @@ steps:
   # - powershell: yarn lint
   #   displayName: "Run code linters"
 
-  - powershell: node --expose-gc ./node_modules/jest/bin/jest.js --runInBand --logHeapUsage
+  - powershell: node --expose-gc --max_old_space_size=4096 ./node_modules/jest/bin/jest.js --runInBand --logHeapUsage
     displayName: "Run tests"
     env:
       GENERATE_JEST_REPORT: true
