@@ -5,13 +5,13 @@ exports.onRenderBody = function onRenderBody(
   { appId }
 ) {
   if (!appId) {
-    reporter.warn(`An appId is required to use gatsby-plugin-firebase-perf`)
+    reporter.warn(`An appId is required to use gatsby-plugin-perf-metrics`)
     return
   }
 
   setPostBodyComponents([
     React.createElement(`script`, {
-      key: `gatsby-plugin-firebase-perf`,
+      key: `gatsby-plugin-perf-metrics`,
       dangerouslySetInnerHTML: {
         __html: `
           (function(sa,gai){function load(f,c){var a=document.createElement('script');

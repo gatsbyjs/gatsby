@@ -135,9 +135,9 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     {
-      resolve: `gatsby-plugin-firebase-perf`,
+      resolve: `gatsby-plugin-perf-metrics`,
       options: {
-        appId: process.env.FIREBASE_APP_ID,
+        appId: `1:216044356421:web:92185d5e24b3a2a1`,
       },
     },
     `gatsby-transformer-csv`,
