@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled, { css } from "react-emotion"
-import { MdLaunch } from "react-icons/md"
+import { MdLink } from "react-icons/md"
 
 import { scale, rhythm, options } from "../utils/typography"
 import { mq, elevation, gutter, colors, animation } from "../utils/presets"
@@ -154,7 +154,7 @@ const NavItem = ({ title, to }) => (
   </NavListItem>
 )
 
-const ExternalLinkIcon = styled(MdLaunch)`
+const ExternalLinkIcon = styled(MdLink)`
   background-image: none;
   bottom: -0.2em;
   color: ${colors.gatsby};
