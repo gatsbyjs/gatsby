@@ -57,7 +57,7 @@
           items:
             - title: Customizing Babel.js Config
               link: /docs/babel/
-            - title: USing Babel Plugin Macros
+            - title: Using Babel Plugin Macros
               link: /docs/babel-plugin-macros/
             - title: Customizing Webpack Config
               link: /docs/add-custom-webpack-config/
