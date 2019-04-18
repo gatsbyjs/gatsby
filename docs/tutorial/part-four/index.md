@@ -293,16 +293,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
 
-There are two ways to use StaticQuery:-
-
-1. The [StaticQuery component](/docs/static-query/)
-2. The newer [useStaticQuery hook](/docs/use-static-query/)
-
-In this tutorial you'll be using the newer hook method which is cleaner and more succinct, but you may wish to learn about the component version too.
-
-You need to include hooks within the body of your function component. To facilitate this you change the `export` line to include `{` rather than `(`. Also, within the function you'll use `return()`. When you use `(` on your export line you're effectively using a shortcut to writing `return(` each time. But because you now need to run the hook before you return the component you will need to define it.
-
-Go ahead and make some changes to your `src/components/layout.js` file to run a `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
+Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -362,6 +353,8 @@ export default ({ children }) => {
 }
 {/* highlight-end */}
 ```
+
+You've now added the query before you return the component by changing your function to use `{}` instead of `()` and wrapping what was there before with `return()`.
 
 Another success! 🎉
 
