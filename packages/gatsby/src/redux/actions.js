@@ -351,6 +351,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
+  const alternateSlashPath = page.path.endsWith(`/`)
+    ? page.path.slice(0, -1)
+    : page.path + `/`
+
+  if (store.getState().pages.has(alternateSlashPath)) {
+    report.warn(
+      `Attempting to create page "${
+        page.path
+      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+    )
+  }
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
