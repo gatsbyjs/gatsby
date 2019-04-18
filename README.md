@@ -93,7 +93,7 @@ Gatsby is a modern framework for blazing fast websites.
 
 ## 🚀 Get Up and Running in 5 Minutes
 
-You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these three steps:
+You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
 1. **Install the Gatsby CLI.**
     ```shell
     npm install -g gatsby-cli
