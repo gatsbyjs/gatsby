@@ -27,8 +27,8 @@ plugins: [
 
       // Whether to put the GTM script into the <head> (as suggested by Google)
       // or append it to the <body> (making it non-blocking).
-      // If you activate Google Optimize through Google Tag Manager leave it untouched.
-      placeInHead: true,
+      // Defaults to false meaning GTM will be added in the <head> (again, as suggested by Google).
+      addTagInBody: false,
     },
   },
 ]

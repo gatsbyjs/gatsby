@@ -18,10 +18,9 @@ exports.onRenderBody = (
     `
         : ``
 
-    const setComponents =
-      pluginOptions.placeInHead === false
-        ? setPostBodyComponents
-        : setHeadComponents
+    const setComponents = pluginOptions.addTagInBody
+      ? setPostBodyComponents
+      : setHeadComponents
     setComponents([
       <script
         key="plugin-google-tagmanager"
