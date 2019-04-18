@@ -31,7 +31,7 @@ Reserved for plugins who wish to extend other nodes.
 
 Digest "Hash" (for example `md5sum`) of the content of this node.
 
-The digest should be unique to the content of this node since it's used for cacheing. If the content changes, this digest should also change. There's a helper function to create an `md5` digest: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/create-content-digest.js
+The digest should be unique to the content of this node since it's used for caching. If the content changes, this digest should also change. There's a helper function to create an `md5` digest: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/create-content-digest.js
 
 ### `mediaType`
 
@@ -43,11 +43,11 @@ A globally unique node type chosen by the plugin owner.
 
 ### `owner`
 
-The plugin which created this node.
+The plugin which created this node. This field is added by gatsby itself (and not the plugin).
 
 ### `fieldOwners`
 
-Stores which plugins created which fields.
+Stores which plugins created which fields. This field is added by gatsby itself (and not the plugin).
 
 ### `content`
 
