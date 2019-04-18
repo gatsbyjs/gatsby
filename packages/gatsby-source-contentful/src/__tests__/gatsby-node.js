@@ -14,13 +14,7 @@ jest.mock(`../fetch`, () =>
     }
   })
 )
-// jest.mock(`../utils`, () => {
-//   return {
-//     ...jest.requireActual(`../utils`),
-//     exitProcess: jest.fn(),
-//   }
-// })
-const { OPTIONS_VALIDATION_FAILED } = require(`../constants`)
+
 const { sourceNodes } = require(`../gatsby-node`)
 
 const helperFns = {
@@ -75,110 +69,5 @@ describe(`Calls fetch data`, () => {
         ...options,
       })
     )
-  })
-})
-
-describe(`Options validation`, () => {
-  let realProcess
-  beforeAll(() => {
-    realProcess = global.process
-
-    global.process = {
-      ...realProcess,
-      exit: jest.fn(),
-    }
-  })
-
-  beforeEach(() => {
-    global.process.exit.mockClear()
-  })
-
-  afterAll(() => {
-    global.process = realProcess
-  })
-
-  const reporter = {
-    error: jest.fn(),
-    optionsSummary: jest.fn(),
-  }
-
-  beforeEach(() => {
-    reporter.error.mockClear()
-    reporter.optionsSummary.mockClear()
-    // exitProcess.mockClear()
-  })
-
-  it(`Passes with valid options`, async () => {
-    await sourceNodes(
-      {
-        ...helperFns,
-        reporter,
-      },
-      {
-        spaceId: `spaceId`,
-        accessToken: `accessToken`,
-      }
-    )
-
-    expect(reporter.error).not.toBeCalled()
-    expect(process.exit).not.toBeCalled()
-  })
-
-  it(`Fails with missing options`, async () => {
-    try {
-      await sourceNodes(
-        {
-          ...helperFns,
-          reporter,
-        },
-        {}
-      )
-    } finally {
-      expect(reporter.error).toBeCalled()
-      expect(reporter.optionsSummary).toMatchSnapshot()
-      expect(process.exit).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
-    }
-  })
-
-  it(`Fails with empty options`, async () => {
-    try {
-      await sourceNodes(
-        {
-          ...helperFns,
-          reporter,
-        },
-        {
-          environment: ``,
-          host: ``,
-          accessToken: ``,
-          spaceId: ``,
-        }
-      )
-    } finally {
-      expect(reporter.error).toBeCalled()
-      expect(reporter.optionsSummary).toMatchSnapshot()
-      expect(process.exit).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
-    }
-  })
-
-  it(`Fails with options of wrong types`, async () => {
-    try {
-      await sourceNodes(
-        {
-          ...helperFns,
-          reporter,
-        },
-        {
-          environment: 1,
-          host: [],
-          accessToken: true,
-          spaceId: {},
-        }
-      )
-    } finally {
-      expect(reporter.error).toBeCalled()
-      expect(reporter.optionsSummary).toMatchSnapshot()
-      expect(process.exit).toBeCalledWith(OPTIONS_VALIDATION_FAILED)
-    }
   })
 })

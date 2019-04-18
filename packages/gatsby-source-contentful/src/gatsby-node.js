@@ -6,7 +6,6 @@ const fs = require(`fs-extra`)
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { defaultOptions, validateOptions } = require(`./plugin-options`)
-const { OPTIONS_VALIDATION_FAILED } = require(`./constants`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -23,6 +22,7 @@ const restrictedNodeFields = [
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
+exports.onPreBootstrap = validateOptions
 /***
  * Localization algorithm
  *
@@ -59,17 +59,6 @@ exports.sourceNodes = async (
     )
 
     return
-  }
-
-  const validationErrors = validateOptions(options)
-  if (validationErrors) {
-    reporter.error(`Problems with plugin options in gatsby-config:`)
-    reporter.optionsSummary({
-      options,
-      defaults: defaultOptions,
-      errors: validationErrors,
-    })
-    process.exit(OPTIONS_VALIDATION_FAILED)
   }
 
   options = { ...defaultOptions, ...options }

@@ -114,37 +114,4 @@ module.exports = Object.assign(reporter, {
       span: span,
     }
   },
-
-  optionsSummary({ options, defaults = {}, errors = {} }) {
-    // process data - for only simplest 1-level object
-    const data = []
-    const optionKeys = new Set(
-      Object.keys(options)
-        .concat(Object.keys(defaults))
-        .concat(Object.keys(errors))
-    )
-
-    const head = [`Option name`, `Option value`]
-
-    optionKeys.forEach(key => {
-      if (key === `plugins`) {
-        // skip plugins field automatically added by gatsby
-        return
-      }
-
-      data.push([
-        // option name
-        key,
-
-        // option value
-        options[key] ? JSON.stringify(options[key]) : `Not defined`,
-
-        // additional information
-        errors[key] ||
-          (options[key] === defaults[key] ? `(default value)` : ``),
-      ])
-    })
-
-    base.table.call(this, head, data)
-  },
 })
