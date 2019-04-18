@@ -14,7 +14,8 @@ steps:
 
   - script: yarn bootstrap
 
-  - script: yarn test
+  - powershell: yarn jest --runInBand --logHeapUsage
+    displayName: "Run tests"
     env:
       GENERATE_JEST_REPORT: true
 
