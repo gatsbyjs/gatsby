@@ -11,15 +11,34 @@ The command line is a text-based interface used to run commands on your computer
 
 Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) or [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows).
 
-## Install Node.js
+## Install Homebrew for Node.js
+
+To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+
+How to install or verify Homebrew on your computer:
+
+1. Open your Terminal
+1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
+1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
+1. Once you've installed Homebrew, repeat step 2 to verify.
+
+### Mac Users: install XCode Command Line Tools
+
+1. Open your Terminal
+1. On a Mac, install XCode Command line tools by running `xcode-select --install`.
+1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+
+## ⌚ Install Node.js and npm
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
-### ⌚ Download Node.js
+1. Open your Terminal.
+1. Run `brew update` to make sure you have the latest version of Homebrew.
+1. Run this command to install Node and npm in one go: `brew install node`
 
-Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:
+Once you have followed the installation steps, make sure everything was installed properly:
 
 ### Check your Node.js installation
 
