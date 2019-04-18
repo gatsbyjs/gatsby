@@ -70,6 +70,7 @@ See the [library of official and community plugins](/plugins/)
 - [Introducing Dashbored — Generate Static Dashboards Using Gatsby](https://medium.com/planes-agency/introducing-dashbored-62550a028fcc)
 - [12 Factor Applications with GatsbyJS](https://medium.com/@wonderboymusic/12-factor-applications-with-gatsbyjs-ef8a2b1f883a)
 - [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
+- [How to create a 100% FREE website with GatsbyJS and Gitpod.io](https://medium.com/devopslinks/how-to-create-a-100-free-website-with-gatsbyjs-and-gitpod-io-446124f2c137)
 
 ### German
 
