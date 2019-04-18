@@ -325,7 +325,7 @@ export default ({ children }) => {
       }
     `
   )
-  
+
   return(
   {/* highlight-end */}
     <div
