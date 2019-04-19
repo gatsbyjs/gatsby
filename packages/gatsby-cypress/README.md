@@ -18,13 +18,13 @@ Once imported, the following additional commands are available:
 
 - `cy.getTestElement(selector)`: Selects elements where the `data-testid`
   attribute matches the value of `selector`. Example:
-  
+
   ```jsx
   <button data-testid="btn-to-test">click me</button>
   ```
 
   ```js
-  cy.getTestElement('btn-to-test').click()
+  cy.getTestElement("btn-to-test").click()
   ```
 
 - `cy.waitForRouteChange()`: Waits for Gatsby to finish the route change, in
@@ -62,7 +62,7 @@ Add tests by creating a spec file. We recommend starting with a `cypress/integra
 context("Homepage", () => {
   beforeEach(() => {
     cy.visit(`http://localhost:8000`)
-    
+
     // Wait for React to finish mounting all components before testing.
     cy.wait(100)
   })
