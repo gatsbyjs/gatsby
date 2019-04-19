@@ -29,17 +29,17 @@ The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitt
 
 A primary focus (no pun intended) of @reach/router is to manage focus in client-side routing, out of the box, lifting the onus from devs to manage it from scratch. From the @reach/router documentation:
 
-<pullquote>
+<Pullquote>
 Whenever the content of a page changes in response to a user interaction, the focus should be moved to that content; otherwise, users on assistive devices have to search around the page to find what changed–yuck! Without the help of a router, managing focus on route transitions requires a lot effort and knowledge on your part.
-</pullquote>
+</Pullquote>
 
-<pullquote>
+<Pullquote>
 Reach Router provides out-of-the-box focus management so your apps are significantly more accessible without you breaking a sweat.
-</pullquote>
+</Pullquote>
 
-<pullquote>
+<Pullquote>
 When the location changes, the top-most part of your application that changed is identified and focus is moved to it. Assistive devices then announce to the user the group of elements they are now focused on, similarly to how it works when they load up a page for the first time.
-</pullquote>
+</Pullquote>
 
 The video below demonstrates this focus management:
 
