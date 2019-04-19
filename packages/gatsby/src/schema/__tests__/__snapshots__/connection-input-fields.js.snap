@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`connection input fields can query object arrays 1`] = `
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "anObjectArray": Array [
+              Object {
+                "aBoolean": true,
+                "aNumber": 2,
+                "aString": "some string",
+              },
+              Object {
+                "aBoolean": null,
+                "aNumber": 2,
+                "aString": "some string",
+              },
+            ],
+          },
+        },
+        Object {
+          "node": Object {
+            "anObjectArray": null,
+          },
+        },
+        Object {
+          "node": Object {
+            "anObjectArray": null,
+          },
+        },
+      ],
+    },
+  },
+}
+`;

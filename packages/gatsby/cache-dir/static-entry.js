@@ -49,10 +49,24 @@ const getPage = path => pagesObjectMap.get(path)
 
 const createElement = React.createElement
 
+const sanitizeComponents = components => {
+  if (Array.isArray(components)) {
+    // remove falsy items
+    return components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
+  } else {
+    // we also accept single components, so we need to handle this case as well
+    return components ? [components] : []
+  }
+}
+
 export default (pagePath, callback) => {
   let bodyHtml = ``
   let headComponents = [
-    <meta name="generator" content={`Gatsby ${gatsbyVersion}`} />
+    <meta
+      name="generator"
+      content={`Gatsby ${gatsbyVersion}`}
+      key={`generator-${gatsbyVersion}`}
+    />,
   ]
   let htmlAttributes = {}
   let bodyAttributes = {}
@@ -65,7 +79,7 @@ export default (pagePath, callback) => {
   }
 
   const setHeadComponents = components => {
-    headComponents = headComponents.concat(components)
+    headComponents = headComponents.concat(sanitizeComponents(components))
   }
 
   const setHtmlAttributes = attributes => {
@@ -77,11 +91,13 @@ export default (pagePath, callback) => {
   }
 
   const setPreBodyComponents = components => {
-    preBodyComponents = preBodyComponents.concat(components)
+    preBodyComponents = preBodyComponents.concat(sanitizeComponents(components))
   }
 
   const setPostBodyComponents = components => {
-    postBodyComponents = postBodyComponents.concat(components)
+    postBodyComponents = postBodyComponents.concat(
+      sanitizeComponents(components)
+    )
   }
 
   const setBodyProps = props => {
@@ -91,32 +107,32 @@ export default (pagePath, callback) => {
   const getHeadComponents = () => headComponents
 
   const replaceHeadComponents = components => {
-    headComponents = components
+    headComponents = sanitizeComponents(components)
   }
 
   const getPreBodyComponents = () => preBodyComponents
 
   const replacePreBodyComponents = components => {
-    preBodyComponents = components
+    preBodyComponents = sanitizeComponents(components)
   }
 
   const getPostBodyComponents = () => postBodyComponents
 
   const replacePostBodyComponents = components => {
-    postBodyComponents = components
+    postBodyComponents = sanitizeComponents(components)
   }
 
   const page = getPage(pagePath)
 
   let dataAndContext = {}
   if (page.jsonName in dataPaths) {
-    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
+    const pathToJsonData = join(
+      process.cwd(),
+      `/public/static/d`,
+      `${dataPaths[page.jsonName]}.json`
+    )
     try {
-      dataAndContext = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
-        )
-      )
+      dataAndContext = JSON.parse(fs.readFileSync(pathToJsonData))
     } catch (e) {
       console.log(`error`, pathToJsonData, e)
       process.exit()
@@ -163,10 +179,10 @@ export default (pagePath, callback) => {
 
   const bodyComponent = apiRunner(
     `wrapRootElement`,
-    { element: routerElement },
+    { element: routerElement, pathname: pagePath },
     routerElement,
     ({ result }) => {
-      return { element: result }
+      return { element: result, pathname: pagePath }
     }
   ).pop()
 
@@ -180,6 +196,8 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   // If no one stepped up, we'll handle it.
@@ -275,10 +293,10 @@ export default (pagePath, callback) => {
     }.json`
     headComponents.push(
       <link
+        as="fetch"
         rel="preload"
         key={dataPath}
         href={dataPath}
-        as="fetch"
         crossOrigin="use-credentials"
       />
     )
@@ -349,13 +367,15 @@ export default (pagePath, callback) => {
 
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
-  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-      1,
-      -1
-    )}`
-    return <script key={scriptPath} src={scriptPath} async />
-  })
+  const bodyScripts = scripts
+    .filter(s => s.rel !== `prefetch`)
+    .map(s => {
+      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+        1,
+        -1
+      )}`
+      return <script key={scriptPath} src={scriptPath} async />
+    })
 
   postBodyComponents.push(...bodyScripts)
 
@@ -366,6 +386,8 @@ export default (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(

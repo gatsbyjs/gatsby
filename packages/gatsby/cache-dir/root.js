@@ -1,46 +1,32 @@
 import React, { createElement } from "react"
 import { Router } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
+
 import {
   shouldUpdateScroll,
   init as navigationInit,
   RouteUpdates,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
-import syncRequires from "./sync-requires"
-import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
 
-import * as ErrorOverlay from "react-error-overlay"
-
-// Report runtime errors
-ErrorOverlay.startReportingRuntimeErrors({
-  onError: () => {},
-  filename: `/commons.js`,
-})
-ErrorOverlay.setEditorHandler(errorLocation =>
-  window.fetch(
-    `/__open-stack-frame-in-editor?fileName=` +
-      window.encodeURIComponent(errorLocation.fileName) +
-      `&lineNumber=` +
-      window.encodeURIComponent(errorLocation.lineNumber || 1)
-  )
-)
+import { reportError, clearError } from "./error-overlay-handler"
 
 if (window.__webpack_hot_middleware_reporter__ !== undefined) {
+  const overlayErrorID = `webpack`
   // Report build errors
   window.__webpack_hot_middleware_reporter__.useCustomOverlay({
     showProblems(type, obj) {
       if (type !== `errors`) {
-        ErrorOverlay.dismissBuildError()
+        clearError(overlayErrorID)
         return
       }
-      ErrorOverlay.reportBuildError(obj[0])
+      reportError(overlayErrorID, obj[0])
     },
     clear() {
-      ErrorOverlay.dismissBuildError()
+      clearError(overlayErrorID)
     },
   })
 }
@@ -64,40 +50,34 @@ class RouteHandler extends React.Component {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <JSONStore
-                  pages={pages}
-                  {...this.props}
-                  {...locationAndPageResources}
-                />
+                <JSONStore {...this.props} {...locationAndPageResources} />
               </ScrollContext>
             </RouteUpdates>
           )}
         </EnsureResources>
       )
     } else {
-      const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
-      const custom404 = locationAndPageResources =>
-        loader.getPage(`/404.html`) ? (
-          <JSONStore
-            pages={pages}
-            {...this.props}
-            {...locationAndPageResources}
-          />
-        ) : null
+      const dev404PageResources = loader.getResourcesForPathnameSync(
+        `/dev-404-page/`
+      )
+      const real404PageResources = loader.getResourcesForPathnameSync(
+        `/404.html`
+      )
+      let custom404
+      if (real404PageResources) {
+        custom404 = (
+          <JSONStore {...this.props} pageResources={real404PageResources} />
+        )
+      }
 
       return (
-        <EnsureResources location={location}>
-          {locationAndPageResources =>
-            createElement(
-              syncRequires.components[dev404Page.componentChunkName],
-              {
-                pages,
-                custom404: custom404(locationAndPageResources),
-                ...this.props,
-              }
-            )
-          }
-        </EnsureResources>
+        <RouteUpdates location={location}>
+          <JSONStore
+            location={location}
+            pageResources={dev404PageResources}
+            custom404={custom404}
+          />
+        </RouteUpdates>
       )
     }
   }

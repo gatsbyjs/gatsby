@@ -1,0 +1,8 @@
+/* hide-range{2-3} */
+html {
+  height: 100%;
+  width: 100%;
+  padding: 50px;
+  /* hide-next-line */
+  background: red;
+}

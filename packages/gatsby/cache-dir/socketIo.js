@@ -1,3 +1,5 @@
+import { reportError, clearError } from "./error-overlay-handler"
+
 let socket = null
 
 let staticQueryData = {}
@@ -29,13 +31,18 @@ export default function socketIo() {
                 [msg.payload.id]: msg.payload.result,
               }
             }
-          }
-          if (msg.type === `pageQueryResult`) {
+          } else if (msg.type === `pageQueryResult`) {
             if (didDataChange(msg, pageQueryData)) {
               pageQueryData = {
                 ...pageQueryData,
                 [msg.payload.id]: msg.payload.result,
               }
+            }
+          } else if (msg.type === `overlayError`) {
+            if (msg.payload.message) {
+              reportError(msg.payload.id, msg.payload.message)
+            } else {
+              clearError(msg.payload.id)
             }
           }
           if (msg.type && msg.payload) {

@@ -1,67 +1,62 @@
-import React, { Component, Fragment } from "react"
+import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import { scrollbarStyles } from "../utils/styles"
+import { colors, breakpoints, sizes } from "../utils/presets"
 
-class PageWithPluginSearchBar extends Component {
-  render() {
-    return (
-      <Fragment>
-        <section
-          css={{
-            ...styles.sidebar,
-            // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
-            display: `${!this.props.isPluginsIndex && `none`}`,
-          }}
-        >
-          <PluginSearchBar location={this.props.location} />
-        </section>
-        <main
-          id={`reach-skip-nav`}
-          css={{
-            ...styles.content,
-            // mobile: hide README on gatsbyjs.org/plugins index page
-            display: `${this.props.isPluginsIndex && `none`}`,
-          }}
-        >
-          {this.props.children}
-        </main>
-      </Fragment>
-    )
-  }
-}
-
-export default PageWithPluginSearchBar
+const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
+  <Fragment>
+    <nav
+      css={{
+        ...styles.sidebar,
+        // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
+        display: !isPluginsIndex ? `none` : false,
+      }}
+      aria-label="Plugin navigation"
+    >
+      <PluginSearchBar location={location} />
+    </nav>
+    <main
+      id={`reach-skip-nav`}
+      css={{
+        ...styles.content,
+        // mobile: hide README on gatsbyjs.org/plugins index page
+        display: isPluginsIndex ? `none` : false,
+      }}
+    >
+      {children}
+    </main>
+  </Fragment>
+)
 
 const widthDefault = rhythm(14)
 const widthLarge = rhythm(16)
 
 const styles = {
   sidebar: {
-    height: `calc(100vh - ${presets.headerHeight})`,
-    width: `100vw`,
+    height: `calc(100vh - ${sizes.headerHeight})`,
+    width: `100%`,
     zIndex: 1,
-    top: `calc(${presets.headerHeight} + ${presets.bannerHeight} - 1px)`,
-    ...scrollbarStyles,
-    [presets.Tablet]: {
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
+    [breakpoints.md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
-      background: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
+      background: colors.white,
+      borderRight: `1px solid ${colors.gray.border}`,
     },
-    [presets.Desktop]: {
+    [breakpoints.lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [presets.Tablet]: {
+    [breakpoints.md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [presets.Desktop]: {
+    [breakpoints.lg]: {
       paddingLeft: widthLarge,
     },
   },
 }
+
+export default PageWithPluginSearchBar

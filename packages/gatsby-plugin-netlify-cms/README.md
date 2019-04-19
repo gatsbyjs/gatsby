@@ -39,7 +39,7 @@ docs](https://www.gatsbyjs.org/docs/plugins/#how-to-use-gatsby-plugins).
 
 ### `modulePath`
 
-(_optional_, default: `undefined`)
+(_optional_, type: `string | Array<string>`, default: `undefined`)
 
 If you need to customize Netlify CMS, e.g. registering [custom
 widgets](https://www.netlifycms.org/docs/custom-widgets/#registerwidget) or
@@ -73,7 +73,7 @@ The js module might look like this:
  * extension registration methods, such as `registerWidget` and
  * `registerPreviewTemplate`.
  */
-import CMS from `netlify-cms`
+import CMS from "netlify-cms"
 
 /**
  * Any imported styles will automatically be applied to the editor preview
@@ -81,16 +81,16 @@ import CMS from `netlify-cms`
  * All of the example imports below would result in styles being applied to the
  * preview pane.
  */
-import `module-that-imports-styles.js`
-import `styles.scss`
-import `../other-styles.css`
+import "module-that-imports-styles.js"
+import "styles.scss"
+import "../other-styles.css"
 
 /**
  * Let's say you've created widget and preview components for a custom image
  * gallery widget in separate files:
  */
-import ImageGalleryWidget from `./image-gallery-widget.js`
-import ImageGalleryPreview from `./image-gallery-preview.js`
+import ImageGalleryWidget from "./image-gallery-widget.js"
+import ImageGalleryPreview from "./image-gallery-preview.js"
 
 /**
  * Register the imported widget:
@@ -100,7 +100,7 @@ CMS.registerWidget(`image-gallery`, ImageGalleryWidget, ImageGalleryPreview)
 
 ### `manualInit`
 
-(_optional_, default: `false`)
+(_optional_, type: `boolean`, default: `false`)
 
 Set this to `true` If you need to [manually initialize](https://www.netlifycms.org/docs/beta-features/#manual-initialization) Netlify CMS. The plugin will take care of setting `window.CMS_MANUAL_INIT` to `true`:
 
@@ -118,7 +118,7 @@ plugins: [
 The js module might look like this:
 
 ```javascript
-import CMS, { init } from `netlify-cms`
+import CMS, { init } from "netlify-cms"
 
 /**
  * Optionally pass in a config object. This object will be merged into `config.yml` if it exists
@@ -127,7 +127,7 @@ import CMS, { init } from `netlify-cms`
 init({
   config: {
     backend: {
-      name: 'git-gateway',
+      name: "git-gateway",
     },
   },
 })
@@ -135,7 +135,7 @@ init({
 
 ### `enableIdentityWidget`
 
-(_optional_, default: `true`)
+(_optional_, type: `boolean`, default: `true`)
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
 Identity](https://www.netlify.com/docs/identity/) to be used without
@@ -156,13 +156,13 @@ plugins: [
 
 ### `publicPath`
 
-(_optional_, default: `"admin"`)
+(_optional_, type: `string`, default: `"admin"`)
 
 Customize the path to Netlify CMS on your Gatsby site.
 
 ### `htmlTitle`
 
-(_optional_, default: `Content Manager`)
+(_optional_, type: `string`, default: `Content Manager`)
 
 Customize the value of the `title` tag in your CMS HTML (shows in the browser
 bar).
@@ -178,8 +178,7 @@ plugins: [
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
       modulePath: `path/to/custom/script.js`, // default: undefined
-      stylesPath: `path/to/styles.sass`, // default: undefined
-      enableIdentityWidget: `true`,
+      enableIdentityWidget: true,
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
     },

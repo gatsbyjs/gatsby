@@ -19,6 +19,15 @@ const ImageFormatType = new GraphQLEnumType({
   },
 })
 
+const ImageFitType = new GraphQLEnumType({
+  name: `ImageFit`,
+  values: {
+    COVER: { value: sharp.fit.cover },
+    CONTAIN: { value: sharp.fit.contain },
+    FILL: { value: sharp.fit.fill },
+  },
+})
+
 const ImageCropFocusType = new GraphQLEnumType({
   name: `ImageCropFocus`,
   values: {
@@ -78,6 +87,7 @@ const PotraceType = new GraphQLInputObjectType({
 
 module.exports = {
   ImageFormatType,
+  ImageFitType,
   ImageCropFocusType,
   DuotoneGradientType,
   PotraceType,

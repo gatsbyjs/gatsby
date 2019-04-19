@@ -21,11 +21,13 @@ export const SECURITY_HEADERS = {
     `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
+    `Referrer-Policy: same-origin`,
   ],
 }
 
 export const CACHING_HEADERS = {
   "/static/*": [`Cache-Control: public, max-age=31536000, immutable`],
+  "/sw.js": [`Cache-Control: no-cache`],
 }
 
 export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/

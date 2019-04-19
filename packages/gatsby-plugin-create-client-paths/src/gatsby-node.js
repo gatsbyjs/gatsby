@@ -15,7 +15,7 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
   return new Promise(resolve => {
     // Don't set matchPath again if it's already been set.
     if (page.matchPath || page.path.match(/dev-404-page/)) {
-      resolve()
+      return resolve()
     }
 
     prefixes.some(prefix => {
