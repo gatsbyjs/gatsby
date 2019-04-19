@@ -33,8 +33,9 @@ const reporter = {
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
+    reporterInstance.setColors(isNoColor)
+
     if (isNoColor) {
-      reporterInstance.setColors()
       errorFormatter.withoutColors()
     }
   },
@@ -72,11 +73,11 @@ const reporter = {
   uptime(prefix) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
-  success: reporterInstance.success.bind(reporterInstance),
-  verbose: reporterInstance.verbose.bind(reporterInstance),
-  info: reporterInstance.info.bind(reporterInstance),
-  warn: reporterInstance.warn.bind(reporterInstance),
-  log: reporterInstance.log.bind(reporterInstance),
+  success: reporterInstance.success,
+  verbose: reporterInstance.verbose,
+  info: reporterInstance.info,
+  warn: reporterInstance.warn,
+  log: reporterInstance.log,
   /**
    * Time an activity.
    * @param {string} name - Name of activity.

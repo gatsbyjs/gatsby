@@ -16,7 +16,7 @@ module.exports = {
    * @param {boolean} [isVerbose=true]
    */
   setVerbose(isVerbose = true) {
-    this.isVerbose = !!isVerbose
+    reporter.isVerbose = !!isVerbose
   },
   /**
    * Turn off colors in error output.
