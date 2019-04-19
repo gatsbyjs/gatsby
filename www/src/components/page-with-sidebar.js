@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import presets from "../utils/presets"
+import { breakpoints, sizes } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 export default props => {
@@ -12,17 +12,23 @@ export default props => {
       <Fragment>
         <div
           css={{
-            [presets.Md]: {
-              paddingLeft: rhythm(presets.sidebar.width.default),
+            [breakpoints.md]: {
+              paddingLeft: rhythm(sizes.sidebarWidth.default),
             },
-            [presets.Lg]: { paddingLeft: rhythm(presets.sidebar.width.large) },
+            [breakpoints.lg]: {
+              paddingLeft: rhythm(sizes.sidebarWidth.large),
+            },
           }}
         >
           {props.renderContent()}
         </div>
         <StickyResponsiveSidebar
           enableScrollSync={props.enableScrollSync}
-          itemList={props.itemList}
+          itemList={props.itemList.items}
+          title={props.itemList.title}
+          sidebarKey={props.itemList.key}
+          disableExpandAll={props.itemList.disableExpandAll}
+          disableAccordions={props.itemList.disableAccordions}
           key={props.location.pathname}
           location={props.location}
         />

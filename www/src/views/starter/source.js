@@ -1,6 +1,5 @@
 import React from "react"
-import presets, { colors, space } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
+import { colors, space, breakpoints, fonts } from "../../utils/presets"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
@@ -10,13 +9,13 @@ const Source = ({ startersYaml, repoUrl }) => (
     css={{
       display: `flex`,
       borderTop: `1px solid ${colors.ui.light}`,
-      fontFamily: options.headerFontFamily.join(`,`),
-      margin: `0 ${rhythm(space[6])}`,
-      [presets.Sm]: {
+      fontFamily: fonts.header,
+      margin: `0 ${space[6]}`,
+      [breakpoints.sm]: {
         borderTop: 0,
       },
-      [presets.Lg]: {
-        margin: `0 ${rhythm(space[8])}`,
+      [breakpoints.lg]: {
+        margin: `0 ${space[8]}`,
       },
     }}
   >
@@ -60,7 +59,7 @@ const Source = ({ startersYaml, repoUrl }) => (
     <div
       css={{
         display: `none`,
-        [presets.Lg]: {
+        [breakpoints.lg]: {
           padding: 20,
           paddingLeft: 0,
           flex: 1,

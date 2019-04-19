@@ -7,7 +7,6 @@ import FaFacebook from "react-icons/lib/fa/facebook"
 import FaTwitter from "react-icons/lib/fa/twitter"
 
 import { colors, space, radii } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 
 const objectToParams = object =>
   `?` +
@@ -169,7 +168,7 @@ const styles = {
     gatsby: {
       width: 32,
       height: 32,
-      marginBottom: rhythm(space[2]),
+      marginBottom: space[2],
       "&&": {
         background: colors.gatsby,
         border: 0,
@@ -186,7 +185,7 @@ const styles = {
     accent: {
       width: 32,
       height: 32,
-      marginBottom: rhythm(space[2]),
+      marginBottom: space[2],
       "&&": {
         background: colors.accent,
         border: 0,

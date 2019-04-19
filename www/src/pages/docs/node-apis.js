@@ -1,10 +1,9 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
-import Functions from "../../components/function-list"
-import { rhythm } from "../../utils/typography"
+import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -48,18 +47,18 @@ class NodeAPIDocs extends React.Component {
               <code
                 className="language-javascript"
                 dangerouslySetInnerHTML={{
-                  __html: `// Promise API
-  exports.createPages = () => {
-    return new Promise((resolve, reject) => {
-      // do async work
-    })
-  }
+                  __html: `<span class="token comment">// Promise API</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">createPages</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// do async work</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-  // Callback API
-  exports.createPages = (_, pluginOptions, cb) => {
-    // do Async work
-    cb()
-  }`,
+<span class="token comment">// Callback API</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">createPages</span> <span class="token operator">=</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> pluginOptions<span class="token punctuation">,</span> cb<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// do Async work</span>
+  <span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>`,
                 }}
               />
             </pre>
@@ -68,14 +67,14 @@ class NodeAPIDocs extends React.Component {
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Usage</h2>
-          <p css={{ marginBottom: rhythm(space[5]) }}>
+          <h2 css={{ marginBottom: space[3] }}>Usage</h2>
+          <p css={{ marginBottom: space[5] }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>APIs</h2>
+          <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
@@ -86,7 +85,7 @@ class NodeAPIDocs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <Functions functions={funcs} />
+          <APIReference docs={funcs} />
         </Container>
       </Layout>
     )
@@ -100,7 +99,7 @@ export const pageQuery = graphql`
     file(relativePath: { regex: "/src.*api-node-docs.js/" }) {
       childrenDocumentationJs {
         name
-        ...FunctionList
+        ...DocumentationFragment
       }
     }
   }

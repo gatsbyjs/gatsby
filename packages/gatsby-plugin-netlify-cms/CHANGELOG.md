@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.17...gatsby-plugin-netlify-cms@3.0.18) (2019-04-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** fix hardcoded admin path for localhost ([#13324](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/13324)) ([1096514](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/1096514)), closes [#13291](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/13291)
+
+## [3.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.16...gatsby-plugin-netlify-cms@3.0.17) (2019-03-26)
+
+### Features
+
+- **gatsby-plugin-netlify-cms:** support multiple cms module paths ([#12672](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/12672)) ([a17df90](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/a17df90))
+
+## [3.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.15...gatsby-plugin-netlify-cms@3.0.16) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [3.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.14...gatsby-plugin-netlify-cms@3.0.15) (2019-03-14)
+
+### Bug Fixes
+
+- **gatsby:** properly support --no-color for pretty-error ([#12531](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/12531)) ([e493538](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/e493538))
+
 ## [3.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@3.0.13...gatsby-plugin-netlify-cms@3.0.14) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

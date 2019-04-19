@@ -6,18 +6,27 @@ import EmailCaptureForm from "../../components/email-capture-form"
 
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, radii } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  fontSizes,
+  letterSpacings,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 
-const stripedBorderHeight = `8px`
+const stripedBorderHeight = space[2]
 
 const Container = styled(`div`)`
   border: 1px solid ${colors.ui.light};
   border-radius: ${radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${rhythm(space[8])};
-  padding: ${rhythm(space[8] * 1.2)};
+  margin-bottom: ${space[8]};
+  padding: calc(${space[8]} * 1.2);
   padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
   position: relative;
 
@@ -43,7 +52,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -54,32 +63,33 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -4px;
+  left: -${space[1]};
   position: absolute;
-  top: -8px;
+  top: -${space[2]};
 `
 
 const Name = styled(`h3`)`
   color: ${colors.lilac};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: ${presets.scale[1]};
+  font-family: ${fonts.header};
+  font-size: ${fontSizes[1]};
   font-weight: normal;
+  letter-spacing: ${letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
 
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
-  font-size: ${presets.scale[4]};
-  line-height: ${presets.lineHeights.dense};
+  font-size: ${fontSizes[4]};
+  line-height: ${lineHeights.dense};
   margin: 0;
-  margin-top: ${rhythm(space[1])};
+  margin-top: ${space[1]};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: ${rhythm(space[5])};
+  margin-top: ${space[5]};
 
-  ${presets.Lg} {
+  ${breakpoints.lg} {
     margin-top: 0;
   }
 `
