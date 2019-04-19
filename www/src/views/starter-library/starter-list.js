@@ -8,7 +8,7 @@ import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "../../assets/v2icon.svg"
-import get from "lodash/get"
+import { get } from "lodash"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
