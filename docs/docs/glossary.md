@@ -30,7 +30,7 @@ The behind the scenes that the [public](#public) do not see. This often refers t
 
 A text-based interface to run commands on your computer. The default Command Line applications for Mac and Windows are `Terminal` and `Command Prompt` respectively.
 
-## Components
+### Components
 
 Components are independent and re-usable chunks of code powered by [React](#react) that when combined make up your website or app.
 
