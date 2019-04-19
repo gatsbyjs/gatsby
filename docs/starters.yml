@@ -2290,3 +2290,22 @@
     - PWA (Progressive Web App) support
     - MobX
     - Customizable
+- url: https://gatsby-starter-fine.netlify.com/
+  repo: https://github.com/toboko/gatsby-starter-fine
+  description: A mutli-response and light, mobile first blog starter with columns layout and Seo optimization.
+  tags:
+    - Blog
+    - Categories
+    - Tags
+    - Markdown
+    - Sitemap
+    - Portfolio
+    - SEO
+  features:
+    - Blog
+    - Portfolio section
+    - Customizable
+    - Markdown
+    - Optimized images
+    - Sitemap Page
+    - Seo Ready
