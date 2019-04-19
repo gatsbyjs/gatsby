@@ -3,7 +3,8 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -37,16 +38,22 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
-    const envFile = path.join(process.cwd(), `./.env.${env}`)
+    // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
+    // this variable is used inside webpack
+    const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+    // config env is depednant on the env that it's run, this can be anything from staging-production
+    // this allows you to set use different .env environments or conditions in gatsby files
+    const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
+    const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
     let parsed = {}
     try {
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
     } catch (err) {
       if (err.code !== `ENOENT`) {
-        report.error(`There was a problem processing the .env file`, err)
+        report.error(
+          `There was a problem processing the .env file (${envFile})`,
+          err
+        )
       }
     }
 
@@ -63,7 +70,7 @@ module.exports = async (
     }, {})
 
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-    envObject.NODE_ENV = JSON.stringify(env)
+    envObject.NODE_ENV = JSON.stringify(nodeEnv)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
@@ -332,6 +339,14 @@ module.exports = async (
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
+      plugins: [
+        // Those two folders are special and contain gatsby-generated files
+        // whose dependencies should be resolved through the `gatsby` package
+        PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
+        PnpWebpackPlugin.bind(directoryPath(`public`), module),
+        // Transparently resolve packages via PnP when needed; noop otherwise
+        PnpWebpackPlugin,
+      ],
     }
   }
 
@@ -350,6 +365,9 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
+      // Bare loaders should always be loaded via the user dependencies (loaders
+      // configured via third-party like gatsby use require.resolve)
+      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 

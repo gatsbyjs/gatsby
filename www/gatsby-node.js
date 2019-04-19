@@ -83,6 +83,16 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/docs/how-to-create-an-issue/`,
+    toPath: `/contributing/how-to-create-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-label-an-issue/`,
+    toPath: `/contributing/how-to-label-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/contributor-swag/`,
     toPath: `/contributing/contributor-swag/`,
     isPermanent: true,
@@ -186,6 +196,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/adding-images-fonts-files`,
+    toPath: `/docs/importing-assets-into-files`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2019-10-03-gatsby-perf`,
     toPath: `/blog/2018-10-03-gatsby-perf`,
     isPermanent: true,
@@ -200,6 +216,30 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/add-offline-support`,
     toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-source-plugin/`,
+    toPath: `/docs/creating-a-source-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-transformer-plugin/`,
+    toPath: `/docs/creating-a-transformer-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/plugin-authoring/`,
+    toPath: `/docs/how-plugins-work/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
+    toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
     isPermanent: true,
   })
 
@@ -386,16 +426,26 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         })
       })
 
-      const tagLists = releasedBlogPosts
-        .filter(post => _.get(post, `node.frontmatter.tags`))
-        .map(post => _.get(post, `node.frontmatter.tags`))
+      const makeSlugTag = tag => _.kebabCase(tag.toLowerCase())
 
-      _.uniq(_.flatten(tagLists)).forEach(tag => {
+      // Collect all tags and group them by their kebab-case so that
+      // hyphenated and spaced tags are treated the same. e.g
+      // `case-study` -> [`case-study`, `case study`]. The hyphenated
+      // version will be used for the slug, and the spaced version
+      // will be used for human readability (see templates/tags)
+      const tagGroups = _(releasedBlogPosts)
+        .map(post => _.get(post, `node.frontmatter.tags`))
+        .filter()
+        .flatten()
+        .uniq()
+        .groupBy(makeSlugTag)
+
+      tagGroups.forEach((tags, tagSlug) => {
         createPage({
-          path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
+          path: `/blog/tags/${tagSlug}/`,
           component: tagTemplate,
           context: {
-            tag,
+            tags,
           },
         })
       })
@@ -510,6 +560,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             },
           })
         }
+      })
+
+      // redirecting cypress-gatsby => gatsby-cypress
+      createRedirect({
+        fromPath: `/packages/cypress-gatsby/`,
+        toPath: `/packages/gatsby-cypress/`,
+        isPermanent: true,
       })
 
       // Read featured starters and plugins for Ecosystem
@@ -717,10 +774,8 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           )
         })
     }
-  }
-
-  // Creator pages
-  else if (node.internal.type === `CreatorsYaml`) {
+  } else if (node.internal.type === `CreatorsYaml`) {
+    // Creator pages
     const validTypes = {
       individual: `people`,
       agency: `agencies`,

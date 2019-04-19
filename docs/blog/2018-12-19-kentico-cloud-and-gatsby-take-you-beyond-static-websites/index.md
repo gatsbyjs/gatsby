@@ -57,7 +57,7 @@ Whenever I code with a new framework or plugin, I like to take inspiration from 
 
 ## Generating pages from dynamic content
 
-Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](https://www.gatsbyjs.org/tutorial/part-seven/) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
+Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](/tutorial/part-seven/) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
 
 ```jsx
 graphql(`

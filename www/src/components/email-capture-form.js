@@ -1,18 +1,24 @@
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  breakpoints,
+  fontSizes,
+  fonts,
+} from "../utils/presets"
 import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/form-styles"
+import { formInput } from "../utils/styles"
 import { buttonStyles } from "../utils/styles"
 
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${presets.Desktop} {
+  ${breakpoints.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -31,37 +37,37 @@ const SingleLineInput = styled(`input`)`
   :focus {
     border-color: ${colors.gatsby};
     outline: 0;
-    box-shadow: 0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)};
+    box-shadow: 0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)};
   }
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 1rem;
-  padding: 0.6rem;
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[2]};
+  padding: ${space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 0.875rem;
-  margin: calc(1.05rem / 2) 0;
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[1]};
+  margin: ${space[2]} 0;
 `
 
 const SuccesMessage = styled(`div`)`
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
 `
 
 const Submit = styled(`input`)`
   ${buttonStyles.default};
-  margin-top: 20px;
+  margin-top: ${space[3]};
 `
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: 1.125rem;
+  font-size: ${fontSizes[3]};
   width: 100%;
-  margin-top: 10px;
+  margin-top: ${space[3]};
 
   span {
     align-items: center;
@@ -70,10 +76,10 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${presets.Desktop} {
+  ${breakpoints.lg} {
     width: auto;
     margin-top: 0;
-    margin-left: 0.5rem;
+    margin-left: ${space[2]};
   }
 `
 
@@ -178,7 +184,7 @@ class Form extends React.Component {
           type="email"
           required
           autoComplete="email"
-          innerRef={input => {
+          ref={input => {
             this.email = input
           }}
           aria-label={isHomepage ? `Email` : ``}
@@ -234,7 +240,7 @@ class EmailCaptureForm extends React.Component {
     )
 
     return (
-      <React.Fragment>
+      <>
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
@@ -248,10 +254,10 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <div
             css={{
-              borderTop: `2px solid ${colors.lilac}`,
-              fontFamily: options.headerFontFamily.join(`,`),
-              marginTop: rhythm(3),
-              paddingTop: `${rhythm(1)}`,
+              borderTop: `1px solid ${colors.ui.light}`,
+              fontFamily: fonts.header,
+              marginTop: space[9],
+              paddingTop: space[5],
               ...overrideCSS,
             }}
           >
@@ -260,10 +266,10 @@ class EmailCaptureForm extends React.Component {
               <div
                 css={{
                   backgroundColor: colors.ui.light,
-                  borderRadius: presets.radius,
+                  borderRadius: radii[1],
                   color: colors.gatsby,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  padding: `15px`,
+                  fontFamily: fonts.header,
+                  padding: space[4],
                 }}
               >
                 {this.state.successMessage ? (
@@ -279,7 +285,7 @@ class EmailCaptureForm extends React.Component {
             </div>
           </div>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }
