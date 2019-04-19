@@ -354,7 +354,7 @@ module.exports = argv => {
 - Walk through the tutorial (https://www.gatsbyjs.org/docs/source-plugin-tutorial/)
 - Read requirements for Gatsby packages (file and naming conventions) (https://www.gatsbyjs.org/docs/how-plugins-work/)
 - Submit to plugin library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Join Discord #need-help channel to ask questions
+- Join Discord #plugin-authoring channel to ask questions
 
 Run \`gatsby plugin help\` anytime you'd like to see this help center again. Thank you!`,
       handler: handlerP(() => {
