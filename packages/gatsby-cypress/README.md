@@ -1,6 +1,10 @@
 # gatsby-cypress
 
-This package provides additional [Cypress](https://cypress.io/) commands for [testing Gatsby websites](/docs/end-to-end-testing/). To use these commands, first install the necessary packages:
+This package provides additional [Cypress](https://cypress.io/) commands for [testing Gatsby websites](/docs/end-to-end-testing/).
+
+> **NOTE:** This package is _not_ required to use Gatsby and Cypress together. It only exists to add extra commands for convenience.
+
+To use these commands, first install the necessary packages:
 
 ```bash
 npm install cypress gatsby-cypress start-server-and-test --save-dev
@@ -26,6 +30,8 @@ Once imported, the following additional commands are available:
   ```js
   cy.getTestElement("btn-to-test").click()
   ```
+  
+  > **NOTE:** It’s recommended not to use test IDs. Instead, consider using [`cypress-testing-library`](https://github.com/kentcdodds/cypress-testing-library) and relying on `getByText` instead.
 
 - `cy.waitForRouteChange()`: Waits for Gatsby to finish the route change, in
   order to ensure event handlers are properly setup. Example:
