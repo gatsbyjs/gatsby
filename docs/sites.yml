@@ -5383,3 +5383,87 @@
   built_by: Nikodem Deja
   built_by_url: https://nikodemdeja.pl
   featured: false
+- title: manuvel.be
+  url: https://www.manuvel.be
+  main_url: https://www.manuvel.be
+  description: >
+    Cycling themed café coming this april in Sint Niklaas, Belgium. Has funky css-grid trickery! 
+  categories:
+    - Café
+    - Instagram
+    - CSS Grid
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
+- title: WEB hart
+  url: https://www.web-hart.com
+  main_url: https://www.web-hart.com
+  description: >
+    Hi, I'm Rien (pronounced Reen) from Belgium but based in Girona, Spain. I'm an autodidact, committed to learning until the end of time.
+  categories:
+    - Portfolio
+    - Design
+    - Web Development
+    - Freelance
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
+- title: nicdougall.com
+  url: https://nicdougall.netlify.com/
+  main_url: https://nicdougall.netlify.com/
+  description: >
+    Athlete website with Netlify CMS for blog content.
+  categories:
+    - Athlete
+    - Blog
+    - Netlify CMS
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
+- title: het Groeiatelier
+  url: https://www.hetgroeiatelier.be/
+  main_url: https://www.hetgroeiatelier.be/
+  description: >
+    Workspace for talent development and logopedics. onepage site with basic info and small calendar CMS.
+  categories:
+    - logopedics
+    - One Page
+    - Netlify CMS
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
+- title: Lebuin D'Haese
+  url: https://www.lebuindhaese.be/
+  main_url: https://www.lebuindhaese.be/
+  description: >
+    Artist portfolio website. Powered by a super simple Netlify CMS to easily add blog posts or new art pieces.
+  categories:
+    - Portfolio
+    - Artist
+    - Blog
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
+- title: Iefke Molenstra
+  url: https://www.iefke.be/
+  main_url: https://www.iefke.be/
+  description: >
+    Artist portfolio website. Powered by a super simple Netlify CMS to easily add blog posts or new art pieces.
+  categories:
+    - Portfolio
+    - Artist
+    - Blog
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
+- title: The Broomwagon
+  url: https://www.thebroomwagongirona.com/
+  main_url: https://www.thebroomwagongirona.com/
+  description: >
+    foodtruck style coffee by pro cyclist Robert Gesink. The site has a webshop with merchandise and coffee beans.
+  categories:
+    - eCommerce
+    - Coffee
+  built_by: Web Hart
+  built_by_url: https://www.web-hart.com
+  featured: false
