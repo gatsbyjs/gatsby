@@ -163,6 +163,12 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
 
+### Free Swag for Gatsby Contributors!
+
+Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/contributing/how-to-contribute/).
+
+To show our appreciation, _**everyone who contributes to Gatsby is eligible to receive free swag!**_ For more information click [**here**](https://www.gatsbyjs.org/contributing/contributor-swag/).
+
 ## :memo: License
 
 Licensed under the [MIT License](./LICENSE).
