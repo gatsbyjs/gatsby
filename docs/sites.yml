@@ -5361,6 +5361,14 @@
     - Space
   built_by: Jonathan Z. Fisher
   built_by_url: "https://jonzfisher.com"
+- title: Sal's Pals
+  main_url: https://www.sals-pals.net
+  url: https://www.sals-pals.net
+  featured: false
+  description: >
+    Sal's Pals is a professional dog walking and pet sitting service based in Westfield, NJ. New site built with gatsby v2.
+  categories:
+    - Business
 - title: Zuyet Awarmatrip
   main_url: https://www.zuyetawarmatrip.com
   url: https://www.zuyetawarmatrip.com
