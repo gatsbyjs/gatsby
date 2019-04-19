@@ -126,7 +126,18 @@ module.exports = (modulePath, { mode = `analysis`, resolver } = {}) => {
       return Object.keys(require(modulePath)).filter(
         exportName => exportName !== `__esModule`
       )
-    } catch {
+    } catch (e) {
+      if (
+        e.toString().startsWith(`Error: Cannot find module`) &&
+        e.toString().includes(modulePath)
+      ) {
+        // if we can't find gatsby-node.js, that's OK. Some plugins
+        // don't implement it.
+        return []
+      }
+      // Otherwise report the error so it raises to the user
+      report.error(e)
+      // return [] so that the build continues anyway
       return []
     }
   } else {
