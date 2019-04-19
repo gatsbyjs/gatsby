@@ -10,8 +10,6 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
 
   console.log(`Starting to fetch data from Contentful`)
 
-  // it would be great to streamline plugin options to match contentful client options
-  // but for now need to keep current behaviour
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
