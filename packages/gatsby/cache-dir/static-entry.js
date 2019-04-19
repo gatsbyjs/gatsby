@@ -22,6 +22,16 @@ const chunkMapping = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
 )
 
+// Compare styles by names
+const compareStyleNames = ({ name: nameA }, { name: nameB }) => {
+  const [numberA, numberB] = [nameA, nameB].map(name =>
+    Number(name.replace(/^(\d+).*/, `$1`))
+  )
+
+  // do not swap if names don't start with number
+  return numberA - numberB || 0
+}
+
 // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
@@ -254,9 +264,9 @@ export default (pagePath, callback) => {
   const scripts = scriptsAndStyles.filter(
     script => script.name && script.name.endsWith(`.js`)
   )
-  const styles = scriptsAndStyles.filter(
-    style => style.name && style.name.endsWith(`.css`)
-  )
+  const styles = scriptsAndStyles
+    .filter(style => style.name && style.name.endsWith(`.css`))
+    .sort(compareStyleNames)
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
