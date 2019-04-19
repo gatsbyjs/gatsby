@@ -10,6 +10,15 @@ const defaultOptions = {
   localeFilter: () => true,
 }
 
+const createPluginConfig = pluginOptions => {
+  const conf = { ...defaultOptions, ...pluginOptions }
+
+  return {
+    get: key => conf[key],
+    getOriginalPluginOptions: () => pluginOptions,
+  }
+}
+
 const optionsSchema = Joi.object().keys({
   accessToken: Joi.string()
     .required()
@@ -34,7 +43,7 @@ const validateOptions = ({ reporter }, options) => {
     result.error.details.forEach(detail => {
       errors[detail.path[0]] = detail.message
     })
-    reporter.panic(`Problems with plugin options in gatsby-config:
+    reporter.panic(`Problems with gatsby-source-contentful plugin options:
 ${exports.formatPluginOptionsForCLI(options, errors)}`)
   }
 }
@@ -102,4 +111,10 @@ const maskText = input => {
   )}`
 }
 
-export { defaultOptions, validateOptions, formatPluginOptionsForCLI, maskText }
+export {
+  defaultOptions,
+  validateOptions,
+  formatPluginOptionsForCLI,
+  maskText,
+  createPluginConfig,
+}

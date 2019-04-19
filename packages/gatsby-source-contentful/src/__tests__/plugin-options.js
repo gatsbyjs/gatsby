@@ -36,36 +36,49 @@ describe(`Mask text`, () => {
   })
 })
 
-describe(`Formatting plugin options`, () => {
+describe(`Formatting plugin options for CLI`, () => {
   it(`kitchen sink`, () => {
-    const result = formatPluginOptionsForCLI(
-      {
-        accessToken: `abcdefghijklmnopqrstuvwxyz`,
-        host: `wat`,
-        localeFilter: locale => locale.code === `de`,
-        downloadLocal: false,
-      },
-      {
-        spaceID: `foo`,
-        environment: `bar`,
-      }
-    )
-    console.log(result)
+    const options = {
+      accessToken: `abcdefghijklmnopqrstuvwxyz`,
+      spaceId: `abcdefgh`,
+      host: `wat`,
+      localeFilter: locale => locale.code === `de`,
+    }
+    const annotations = {
+      spaceId: `foo`,
+      environment: `bar`,
+    }
+    const result = formatPluginOptionsForCLI(options, annotations)
 
-    expect(result).toMatchInlineSnapshot(`
-"accessToken: \\"**********************wxyz\\"
-host: \\"wat\\"
-localeFilter: [Function]
-downloadLocal: false
-environment (default value): \\"master\\" - bar
-spaceID: undefined - foo"
-`)
+    const lines = result.split(`\n`)
+
+    // doesn't leak secrets when listing plugin options
+    expect(result).toContain(`accessToken`)
+    expect(result).not.toContain(options.accessToken)
+    expect(result).toContain(`spaceId`)
+    expect(result).not.toContain(options.spaceId)
+
+    // mark if default value is used
+    expect(lines.find(line => line.includes(`downloadLocal`))).toContain(
+      `default value`
+    )
+    expect(lines.find(line => line.includes(`environment`))).toContain(
+      `default value`
+    )
+
+    // annotations are added
+    expect(lines.find(line => line.includes(`spaceId`))).toContain(
+      annotations.spaceId
+    )
+    expect(lines.find(line => line.includes(`environment`))).toContain(
+      annotations.environment
+    )
   })
 })
 
 describe(`Options validation`, () => {
   const reporter = {
-    panic: jest.fn((...args) => console.log(...args)),
+    panic: jest.fn(),
   }
 
   beforeEach(() => {
@@ -97,7 +110,9 @@ describe(`Options validation`, () => {
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Problems with plugin options`)
+      expect.stringContaining(
+        `Problems with gatsby-source-contentful plugin options`
+      )
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"accessToken" is required`)
@@ -121,7 +136,9 @@ describe(`Options validation`, () => {
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Problems with plugin options`)
+      expect.stringContaining(
+        `Problems with gatsby-source-contentful plugin options`
+      )
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"environment" is not allowed to be empty`)
@@ -153,7 +170,9 @@ describe(`Options validation`, () => {
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Problems with plugin options`)
+      expect.stringContaining(
+        `Problems with gatsby-source-contentful plugin options`
+      )
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"environment" must be a string`)
@@ -188,7 +207,9 @@ describe(`Options validation`, () => {
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Problems with plugin options`)
+      expect.stringContaining(
+        `Problems with gatsby-source-contentful plugin options`
+      )
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"wat" is not allowed`)

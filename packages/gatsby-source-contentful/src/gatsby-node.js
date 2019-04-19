@@ -5,7 +5,7 @@ const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const { defaultOptions, validateOptions } = require(`./plugin-options`)
+const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -36,7 +36,7 @@ exports.onPreBootstrap = validateOptions
 
 exports.sourceNodes = async (
   { actions, getNode, getNodes, createNodeId, store, cache, reporter },
-  options
+  pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
@@ -61,10 +61,12 @@ exports.sourceNodes = async (
     return
   }
 
-  options = { ...defaultOptions, ...options }
+  const pluginConfig = createPluginConfig(pluginOptions)
 
   const createSyncToken = () =>
-    `${options.spaceId}-${options.environment}-${options.host}`
+    `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+      `environment`
+    )}-${pluginConfig.get(`host`)}`
 
   // Get sync token if it exists.
   let syncToken
@@ -88,7 +90,7 @@ exports.sourceNodes = async (
   } = await fetchData({
     syncToken,
     reporter,
-    ...options,
+    pluginConfig,
   })
 
   const entryList = normalize.buildEntryList({
@@ -213,7 +215,7 @@ exports.sourceNodes = async (
     })
   })
 
-  if (options.downloadLocal) {
+  if (pluginConfig.get(`downloadLocal`)) {
     await downloadContentfulAssets({
       actions,
       createNodeId,

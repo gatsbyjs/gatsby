@@ -4,7 +4,7 @@ const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
-module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
+module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 
@@ -13,10 +13,11 @@ module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
   // it would be great to streamline plugin options to match contentful client options
   // but for now need to keep current behaviour
   const contentfulClientOptions = {
-    ...pluginOptions,
-    space: pluginOptions.spaceId,
+    space: pluginConfig.get(`spaceId`),
+    accessToken: pluginConfig.get(`accessToken`),
+    host: pluginConfig.get(`host`),
+    environment: pluginConfig.get(`environment`),
   }
-  delete contentfulClientOptions.spaceId
 
   const client = contentful.createClient(contentfulClientOptions)
 
@@ -30,7 +31,7 @@ module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
     console.log(`Fetching default locale`)
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
-    locales = locales.filter(pluginOptions.localeFilter)
+    locales = locales.filter(pluginConfig.get(`localeFilter`))
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     let details
@@ -63,8 +64,7 @@ module.exports = async ({ syncToken, reporter, ...pluginOptions }) => {
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
-
-${formatPluginOptionsForCLI(pluginOptions, errors)}`)
+${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   }
 
   let currentSyncData
