@@ -39,6 +39,9 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       expect(headConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
         `window.dataLayer`
       )
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
+        `undefined`
+      )
     })
 
     it(`should add a static object as defaultDatalayer`, () => {

@@ -41,7 +41,7 @@ exports.onRenderBody = (
     `
         : ``
 
-    let defaultDataLayerCode
+    let defaultDataLayerCode = ``
     if (defaultDataLayer) {
       defaultDataLayerCode = generateDefaultDataLayer(
         defaultDataLayer,
