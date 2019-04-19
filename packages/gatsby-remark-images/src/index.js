@@ -147,7 +147,7 @@ module.exports = (
       ? node.alt
       : defaultAlt
 
-    const title = getNodeTitle(node, alt)
+    const title = node.title ? node.title : ``
 
     const imageStyle = `
       width: 100%;
@@ -250,7 +250,7 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && title
+    const showCaptions = options.showCaptions && getNodeTitle(node, alt)
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
@@ -286,7 +286,10 @@ module.exports = (
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${title}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
+      node,
+      alt
+    )}</figcaption>
   </figure>
       `.trim()
     }
