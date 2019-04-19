@@ -3,7 +3,7 @@
 This package provides additional [Cypress](https://cypress.io/) commands for [testing Gatsby websites](/docs/end-to-end-testing/). To use these commands, first install the necessary packages:
 
 ```bash
-npm install cypress gatsby-cypress starter-server-and-test --save-dev
+npm install cypress gatsby-cypress start-server-and-test --save-dev
 ```
 
 ## Add custom Gatsby testing commands
