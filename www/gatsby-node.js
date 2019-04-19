@@ -238,6 +238,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/source-plugin-tutorial/`,
+    toPath: `/docs/pixabay-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/how-plugins-work/`,
+    toPath: `/docs/plugins/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
     toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
     isPermanent: true,

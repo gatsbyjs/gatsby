@@ -147,16 +147,35 @@
         - title: Plugins
           link: /docs/plugins/
           items:
-            - title: How Plugins Work
-              link: /docs/how-plugins-work/
-            - title: Creating a Transformer Plugin
-              link: /docs/creating-a-transformer-plugin/
-            - title: Creating a Source Plugin
-              link: /docs/creating-a-source-plugin/
-            - title: Source Plugin Tutorial
-              link: /docs/source-plugin-tutorial/
+            - title: What is a Plugin?
+              link: /docs/what-is-a-plugin/
+            - title: Using a Plugin in Your Site
+              link: /docs/using-a-plugin-in-your-site/
+            - title: What You Don't Need Plugins For
+              link: /docs/what-you-dont-need-plugins-for/
+            - title: Loading Plugins from Your Local Plugins Folder
+              link: /docs/loading-plugins-from-your-local-plugins-folder/
             - title: Plugin Library
               link: /plugins/
+            - title: Creating Plugins
+              link: /docs/creating-plugins/
+              items:
+                - title: Naming a Plugin
+                  link: /docs/naming-a-plugin/
+                - title: Files Gatsby Looks for in a Plugin
+                  link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Local Plugin
+                  link: /docs/creating-a-local-plugin/
+                - title: Creating a Source Plugin
+                  link: /docs/creating-a-source-plugin/
+                - title: Creating a Transformer Plugin
+                  link: /docs/creating-a-transformer-plugin/
+                - title: Submit to Plugin Library
+                  link: /contributing/submit-to-plugin-library/
+                - title: Pixabay Source Plugin Tutorial
+                  link: /docs/pixabay-source-plugin-tutorial/
+                - title: Maintaining a Plugin
+                  link: /docs/maintaining-a-plugin/
         - title: Starters
           link: /docs/starters/
           items:
