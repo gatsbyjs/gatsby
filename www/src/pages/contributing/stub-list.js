@@ -28,6 +28,26 @@ class StubListRoute extends React.Component {
       flatten([...itemListContributing.items, ...itemListDocs.items])
     )
 
+    let groupedStubs = {
+      Other: [],
+    }
+
+    stubs.forEach(stub => {
+      if (stub.parentTitle === undefined) {
+        groupedStubs[`Other`].push(stub)
+        return
+      }
+
+      if (groupedStubs[stub.parentTitle] === undefined) {
+        groupedStubs[stub.parentTitle] = []
+      }
+      groupedStubs[stub.parentTitle].push(stub)
+    })
+
+    let sortedCategories = Object.keys(groupedStubs).sort((a, b) =>
+      a.localeCompare(b)
+    )
+
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
         <DocsearchContent>
@@ -48,13 +68,24 @@ class StubListRoute extends React.Component {
               {` `}
               to learn more.
             </p>
-            <ul data-testid="list-of-stubs">
-              {stubs.map(stub => (
-                <li key={stub.title}>
-                  <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
-                </li>
-              ))}
-            </ul>
+            <section data-testid="list-of-stubs">
+              {sortedCategories.map(category => {
+                let categoryTitle =
+                  category.slice(-1) === `*` ? category.slice(0, -1) : category
+                return (
+                  <React.Fragment key={category}>
+                    <h2>{categoryTitle}</h2>
+                    <ul>
+                      {groupedStubs[category].map(stub => (
+                        <li key={stub.title}>
+                          <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </React.Fragment>
+                )
+              })}
+            </section>
             <FooterLinks />
           </Container>
         </DocsearchContent>
