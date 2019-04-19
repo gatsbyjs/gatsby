@@ -233,8 +233,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
-                    flexWrap: 'wrap',
-
+                    flexWrap: `wrap`,
                   }}
                 >
                   {sites.map(site => (
