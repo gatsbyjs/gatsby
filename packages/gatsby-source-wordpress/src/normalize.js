@@ -2,7 +2,7 @@ const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
-
+const retry = require(`async-retry`)
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
@@ -475,6 +475,7 @@ exports.downloadMediaFiles = async ({
   createNode,
   createNodeId,
   touchNode,
+  deleteNode,
   getNode,
   _auth,
 }) =>
@@ -503,15 +504,19 @@ exports.downloadMediaFiles = async ({
         // If we don't have cached data, download the file
         if (!fileNodeID) {
           try {
-            const fileNode = await createRemoteFileNode({
-              url: e.source_url,
-              store,
-              cache,
-              createNode,
-              createNodeId,
-              parentNodeId: e.id,
-              auth: _auth,
-            })
+            const fileNode = await retry(
+              () =>
+                createRemoteFileNode({
+                  url: e.source_url,
+                  store,
+                  cache,
+                  createNode,
+                  createNodeId,
+                  parentNodeId: e.id,
+                  auth: _auth,
+                }),
+              { retries: 2 }
+            )
 
             if (fileNode) {
               fileNodeID = fileNode.id
@@ -522,7 +527,12 @@ exports.downloadMediaFiles = async ({
               })
             }
           } catch (e) {
-            // Ignore
+            if (process.env.NODE_ENV === `production`) {
+              // fail the build due to the error
+              throw new Error(e)
+            }
+            // delete the parent node to try and allow continued development with one less node
+            deleteNode(e)
           }
         }
       }

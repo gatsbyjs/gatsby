@@ -9,6 +9,7 @@
   "bundledDependencies": [],
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "async-retry": "^1.2.3",
     "axios": "^0.18.0",
     "better-queue": "^3.8.6",
     "bluebird": "^3.5.0",
