@@ -8,11 +8,11 @@ const Container = ({ children, hasSideBar = true, overrideCSS }) => (
     css={{
       maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
       margin: `0 auto`,
-      padding: rhythm(space[6]),
+      padding: space[6],
       position: `relative`,
       [breakpoints.lg]: {
-        paddingTop: rhythm(space[9]),
-        paddingBottom: rhythm(space[9]),
+        paddingTop: space[9],
+        paddingBottom: space[9],
       },
       ...overrideCSS,
     }}

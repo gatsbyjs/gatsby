@@ -2,14 +2,13 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { graphql, Link } from "gatsby"
-import kebabCase from "lodash/kebabCase"
+import { kebabCase } from "lodash-es"
 
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import styles from "../../views/shared/styles"
 import { colors, space } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
 
 let currentLetter = ``
 
@@ -53,6 +52,12 @@ class TagsPage extends React.Component {
         lookup[key] = Object.assign(tag, {
           slug: `/blog/tags/${key}`,
         })
+      } else {
+        lookup[key].totalCount += tag.totalCount
+      }
+      // Prefer spaced tag names (instead of hyphenated) for display
+      if (tag.fieldValue.includes(` `)) {
+        lookup[key].fieldValue = tag.fieldValue
       }
       return lookup
     }, {})
@@ -71,9 +76,9 @@ class TagsPage extends React.Component {
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
                 alignItems: `center`,
-                paddingTop: rhythm(space[9]),
-                paddingBottom: rhythm(space[6]),
-                borderBottom: `1px solid ${colors.ui.border}`,
+                paddingTop: space[9],
+                paddingBottom: space[6],
+                borderBottom: `1px solid ${colors.ui.bright}`,
               }}
             >
               <h1 css={{ margin: 0 }}>
@@ -96,10 +101,10 @@ class TagsPage extends React.Component {
                     overrideCSS={{
                       fill: colors.lilac,
                       position: `absolute`,
-                      left: rhythm(space[1]),
+                      left: space[1],
                       top: `50%`,
-                      width: rhythm(space[4]),
-                      height: rhythm(space[4]),
+                      width: space[4],
+                      height: space[4],
                       pointerEvents: `none`,
                       transform: `translateY(-50%)`,
                     }}
@@ -124,8 +129,8 @@ class TagsPage extends React.Component {
                     <li
                       key={tag.fieldValue}
                       css={{
-                        padding: `${rhythm(space[3])} ${rhythm(space[1])}`,
-                        margin: rhythm(space[4]),
+                        padding: `${space[3]} ${space[1]}`,
+                        margin: space[4],
                         listStyleType: `none`,
                       }}
                     >

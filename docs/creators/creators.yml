@@ -96,7 +96,7 @@
   description: >-
     Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
   location: "Leeds, England"
-  website: "https://steoneill.me"
+  website: "https://steoneill.dev"
   github: "https://github.com/steoneill"
   image: images/ste-oneill.jpg
   for_hire: true
@@ -256,4 +256,12 @@
   website: "https://kaordica.design"
   for_hire: true
   hiring: false
+  portfolio: true
+- name: 3merge
+  type: agency
+  image: images/3merge.png
+  description: "We are a JavaScript development agency that builds native and progressive web applications."
+  location: Canada
+  website: "https://3merge.ca/"
+  for_hire: true
   portfolio: true

@@ -18,7 +18,7 @@ Design+Code started in 2015 when Meng To began with a digital book on designing 
 
 [Thomas Wang](https://twitter.com/thomaswangio "Thomas Wang on Twitter"), UI Developer at Design+Code, shared some of the important details of the rebuild, as well as the benefits their Gatsby-fueled site has provided their new offerings.
 
-<pullquote citation="Thomas Wang>
+<pullquote citation="Thomas Wang">
 We needed a new CMS to handle the amount of content we were creating and a more full website, transitioning from a digital book to an online learning platform. We also wanted to begin using more modern tooling and frameworks so that we could teach them in the future
 </pullquote>
 
@@ -44,4 +44,4 @@ The launch was a success and landed Design+Code at #1 on [Product Hunt](https://
 
 Gatsby ignited their Search Engine Optimization (SEO) with Lighthouse scores of SEO at 100, Best Practices at 93, and Performance at 97 out of 100. The site is far out-performing its predecessor and has become the content-driven, sales machine that was anticipated.
 
-Try out Gatsby to see how it can do the same for you. [Get started here](https://www.gatsbyjs.org/ "Gatsby get started").
+Try out Gatsby to see how it can do the same for you. [Get started here](/ "Gatsby get started").

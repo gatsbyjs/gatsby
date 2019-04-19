@@ -138,7 +138,19 @@ The base host for all the API requests, by default it's 'cdn.contentful.com', if
 
 The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).
 
+**`downloadLocal`** [boolean][optional] [default: `false`]
+
+Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to query a `ContentfulAsset`'s `localFile` field, which is not linked to Contentful's CDN. Useful for reducing data usage.
+
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
+
+**`localeFilter`** [function][optional] [default: `() => true`]
+
+Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amout of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+
+For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
+
+List of locales and their codes can be found in Contentful app -> Settings -> Locales
 
 ## Notes on Contentful Content Models
 

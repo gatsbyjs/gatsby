@@ -4,7 +4,7 @@ require(`dotenv`).config({
 
 const GA = {
   identifier: `UA-93349937-5`,
-  viewId: `142357465`,
+  viewId: `176383508`,
 }
 
 const dynamicPlugins = []
@@ -120,7 +120,6 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-layout`,
-    `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -134,6 +133,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-perf-metrics`,
+      options: {
+        appId: `1:216044356421:web:92185d5e24b3a2a1`,
+      },
+    },
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,

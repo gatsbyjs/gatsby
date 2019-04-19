@@ -212,7 +212,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 The above query will fetch all projects that have a `slug.current` field set, and generate pages for them, available as `/project/<project-slug>`. It will use the template defined in `src/templates/project.js` as the basis for these pages.
 
-Most [Gatsby starters](https://www.gatsbyjs.org/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
+Most [Gatsby starters](/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
 
 Remember to use the GraphiQL interface to help write the queries you need - it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
 
@@ -257,4 +257,4 @@ module.exports = {
 }
 ```
 
-This example is based off [Gatsby Docs' implementation](https://www.gatsbyjs.org/docs/environment-variables/).
+This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).

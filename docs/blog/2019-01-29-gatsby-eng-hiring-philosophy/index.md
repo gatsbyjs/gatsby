@@ -16,11 +16,11 @@ author: Sam Bhagwat
 
 ## Introduction
 
-Last year, several contributors to Gatsby.js [created a startup company](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/), Gatsby Inc, to make feature-rich and blazing-fast websites easier to build and run.
+Last year, several contributors to Gatsby.js [created a startup company](/blog/2018-05-24-launching-new-gatsby-company/), Gatsby Inc, to make feature-rich and blazing-fast websites easier to build and run.
 
 **At Gatsby Inc, we’re trying to build an _organization_ (the Gatsby Inkteam) that can execute on the Gatsby product roadmap and vision**. Our philosophy around recruiting and hiring, as well as team-building, in the product / engineering org is designed to achieve this goal.
 
-Because we [work in the open](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#work-in-the-open), we wanted to share that philosophy publicly.
+Because we [work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open), we wanted to share that philosophy publicly.
 
 ### Two Classes of Risk
 
@@ -46,7 +46,7 @@ One of Gatsby's goals is to provider users all the benefits of modern web out of
 
 Having GraphQL experts as we flesh out the Gatsby’s GraphQL integration via "schema stitching" 3rd-party-applications, and as our users continue to use GraphQL on a daily basis, is crucial.
 
-The same is true of accessibility, CSS-in-JS, and the CMS as we recreate CMS functionality in the [content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/).
+The same is true of accessibility, CSS-in-JS, and the CMS as we recreate CMS functionality in the [content mesh](/blog/2018-10-04-journey-to-the-content-mesh/).
 
 Several Gatsby Inkteam members have deep expertise on these topics, which is extremely helpful.
 
@@ -138,17 +138,17 @@ In general, it’s a huge bonus when engineers have skills or experience such as
 
 Team structure/compensation and skills are two pillars of creating an effective product/engineering organization. The final pillar is an environment of effective collaboration and trust.
 
-We have several [Gatsby core values](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values) that inform team collaboration philosophy. These include:
+We have several [Gatsby core values](/blog/2018-09-07-gatsby-values) that inform team collaboration philosophy. These include:
 
-- [Do the right thing when no one is looking](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#do-the-right-thing-when-no-one-is-looking)
+- [Do the right thing when no one is looking](/blog/2018-09-07-gatsby-values/#do-the-right-thing-when-no-one-is-looking)
 
-- [Work in the open](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#work-in-the-open)
+- [Work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open)
 
-- [Set and manage clear expectations](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#set-and-manage-clear-expectations)
+- [Set and manage clear expectations](/blog/2018-09-07-gatsby-values/#set-and-manage-clear-expectations)
 
-- [Embrace growth](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#embrace-growth)
+- [Embrace growth](/blog/2018-09-07-gatsby-values/#embrace-growth)
 
-- [You belong here](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#you-belong-here)
+- [You belong here](/blog/2018-09-07-gatsby-values/#you-belong-here)
 
 From company-wide retrospectives to vibrant Slack channels to every Gatsby team member who is stretched by working on something more popular and public than they’ve worked on before, and a myriad of other large and small ways, we try to live these values every day.
 

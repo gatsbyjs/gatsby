@@ -10,6 +10,7 @@ import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"
 import StarterSource from "../views/starter/source"
 import StarterDetails from "../views/starter/details"
+import FooterLinks from "../components/shared/footer-links"
 
 class StarterTemplate extends React.Component {
   state = {
@@ -27,8 +28,8 @@ class StarterTemplate extends React.Component {
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
     const allDeps = [
-      ...gatsbyDependencies.map(([name, ver]) => name),
-      ...miscDependencies.map(([name, ver]) => name),
+      ...gatsbyDependencies.map(([name]) => name),
+      ...miscDependencies.map(([name]) => name),
     ]
     const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
     const showMore =
@@ -115,6 +116,7 @@ class StarterTemplate extends React.Component {
               showMore={showMore}
               showAllDeps={this.showAllDeps}
             />
+            <FooterLinks />
           </div>
         </div>
       </Layout>
