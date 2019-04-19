@@ -102,7 +102,6 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
  */
 const maskText = input => {
   // show just 25% of string up to 4 characters
-  // const visibleCharactersLength = Math.min(4, Math.floor(input.length * 0.25))
   const hiddenCharactersLength =
     input.length - Math.min(4, Math.floor(input.length * 0.25))
 
