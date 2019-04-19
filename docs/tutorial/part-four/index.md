@@ -303,7 +303,7 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-{/* highlight-start */}
+// highlight-start
 export default ({ children }) => {
   const data = useStaticQuery(
     graphql`
@@ -316,9 +316,8 @@ export default ({ children }) => {
       }
     `
   )
-
-  return(
-  {/* highlight-end */}
+  return (
+    // highlight-end
     <div
       css={css`
         margin: 0 auto;
@@ -335,7 +334,7 @@ export default ({ children }) => {
             font-style: normal;
           `}
         >
-          {data.site.siteMetadata.title}{/* highlight-line */}
+          {data.site.siteMetadata.title} {/* highlight-line */}
         </h3>
       </Link>
       <Link
@@ -348,10 +347,10 @@ export default ({ children }) => {
       </Link>
       {children}
     </div>
-  {/* highlight-start */}
+    // highlight-start
   )
 }
-{/* highlight-end */}
+// highlight-end
 ```
 
 Another success! 🎉
