@@ -1,4 +1,5 @@
 const React = require(`react`)
+const wrapRoot = require(`./wrap-root-element`)
 
 exports.onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
@@ -14,3 +15,5 @@ exports.onRenderBody = ({ setHeadComponents }) => {
     />,
   ])
 }
+
+exports.wrapRootElement = wrapRoot

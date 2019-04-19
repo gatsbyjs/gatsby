@@ -11,4 +11,4 @@ To get started with Gatsby, you'll need to make sure you have the following soft
 
 For step-by-step installation instructions and detailed explanations of the required software, head on over to the [Gatsby tutorial](/tutorial/part-zero/).
 
-[[guidelist]]
+<GuideList slug={props.slug} />

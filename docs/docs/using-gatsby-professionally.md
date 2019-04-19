@@ -15,4 +15,4 @@ It also includes resources that help your teams develop more effectively at scal
 
 Finally, it includes resources for you about how Gatsby can help you advance professionally within your career -- whatever your goals and ambitions are.
 
-[[guidelist]]
+<GuideList slug={props.slug} />

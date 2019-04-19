@@ -4,7 +4,7 @@ title: Best Practices for Organizations
 
 When you have multiple teams building Gatsby sites, there are some best practices to ensure you're working well at scale. These docs explain those practices.
 
-[[guidelist]]
+<GuideList slug={props.slug} />
 
 --
 

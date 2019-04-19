@@ -12,4 +12,4 @@ For example, marketers typically care about increasing leads and conversion rate
 
 This section includes guides to explaining the benefits of Gatsby to the various types of stakeholders that you may work with.
 
-[[guidelist]]
+<GuideList slug={props.slug} />

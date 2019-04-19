@@ -6,6 +6,8 @@
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
+    "@mdx-js/mdx": "^1.0.10",
+    "@mdx-js/react": "^1.0.6",
     "@reach/skip-nav": "^0.1.1",
     "@reach/visually-hidden": "^0.1.2",
     "axios": "^0.18.0",
@@ -25,6 +27,7 @@
     "gatsby-plugin-layout": "^1.0.10",
     "gatsby-plugin-mailchimp": "^2.2.3",
     "gatsby-plugin-manifest": "^2.0.2",
+    "gatsby-plugin-mdx": "^1.0.2-1",
     "gatsby-plugin-netlify": "^2.0.0",
     "gatsby-plugin-netlify-cache": "^0.1.0",
     "gatsby-plugin-nprogress": "^2.0.5",

@@ -10,7 +10,7 @@ There are several strategies here.
 
 Alternately, teams can implement **systems for component discoverability**, such as Storybook or Styleguidist, on a per-site basis and simply copy-paste desired code across repositories.
 
-[[guidelist]]
+<GuideList slug={props.slug} />
 
 ---
 

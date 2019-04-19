@@ -173,7 +173,7 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Guides in this section
 
-[[guidelist]]
+<GuideList slug={props.slug} />
 
 ## Other resources
 
