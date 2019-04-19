@@ -81,6 +81,15 @@ module.exports = (
     }
   }
 
+  const getTitleOrDefault = (title, alt) => {
+    if (title) {
+      return title
+    } else if (alt && alt.length > 0) {
+      return alt
+    }
+    return ``
+  }
+
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = async function(
@@ -138,7 +147,7 @@ module.exports = (
       ? node.alt
       : defaultAlt
 
-    const title = node.title ? node.title : ``
+    const title = getTitleOrDefault(title, alt)
 
     const imageStyle = `
       width: 100%;
