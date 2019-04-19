@@ -120,7 +120,6 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-layout`,
-    `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
