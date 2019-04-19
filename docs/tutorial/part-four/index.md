@@ -354,8 +354,6 @@ export default ({ children }) => {
 {/* highlight-end */}
 ```
 
-You've now added the query before you return the component by changing your function to use `{}` instead of `()` and wrapping what was there before with `return()`.
-
 Another success! 🎉
 
 ![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
