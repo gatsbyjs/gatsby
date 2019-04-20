@@ -311,14 +311,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        {
-          node: getNode(`hi`),
-        },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode({
+        node: getNode(`hi`),
+      })
     )
     expect(getNode(`hi`)).toBeUndefined()
   })
