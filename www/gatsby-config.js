@@ -37,6 +37,7 @@ module.exports = {
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
+    "Mdx.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
     {
@@ -185,7 +186,7 @@ module.exports = {
           {
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] }
                   filter: {
                     frontmatter: { draft: { ne: true } }
@@ -226,8 +227,8 @@ module.exports = {
                 generator: `GatsbyJS`,
               }
             },
-            serialize: ({ query: { site, allMarkdownRemark } }) =>
-              allMarkdownRemark.edges.map(({ node }) => {
+            serialize: ({ query: { site, allMdx } }) =>
+              allMdx.edges.map(({ node }) => {
                 return {
                   title: node.frontmatter.title,
                   description: node.frontmatter.excerpt || node.excerpt,

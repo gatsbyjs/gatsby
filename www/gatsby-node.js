@@ -287,7 +287,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     // Query for markdown nodes to use in creating pages.
     graphql(`
       query {
-        allMarkdownRemark(
+        allMdx(
           sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
@@ -384,7 +384,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         return reject(result.errors)
       }
 
-      const blogPosts = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      const blogPosts = _.filter(result.data.allMdx.edges, edge => {
         const slug = _.get(edge, `node.fields.slug`)
         const draft = _.get(edge, `node.frontmatter.draft`)
         if (!slug) return undefined
@@ -531,7 +531,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create docs pages.
-      result.data.allMarkdownRemark.edges.forEach(edge => {
+      result.data.allMdx.edges.forEach(edge => {
         const slug = _.get(edge, `node.fields.slug`)
         if (!slug) return
 
@@ -608,7 +608,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (
-    node.internal.type === `MarkdownRemark` &&
+    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
