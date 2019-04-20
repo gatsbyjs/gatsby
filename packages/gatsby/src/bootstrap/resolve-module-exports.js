@@ -6,6 +6,8 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
 const report = require(`gatsby-cli/lib/reporter`)
 
+const testRequireError = require(`../utils/test-require-error`).default
+
 const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath
   const exportNames = []
@@ -120,25 +122,25 @@ https://gatsby.dev/no-mixed-modules
  * @param {string} mode
  * @param {function} resolver
  */
-module.exports = (modulePath, { mode = `analysis`, resolver } = {}) => {
+module.exports = (
+  modulePath,
+  { mode = `analysis`, resolver = require.resolve } = {}
+) => {
   if (mode === `require`) {
+    let absPath
     try {
+      absPath = resolver(modulePath)
       return Object.keys(require(modulePath)).filter(
         exportName => exportName !== `__esModule`
       )
     } catch (e) {
-      if (
-        e.toString().startsWith(`Error: Cannot find module`) &&
-        e.toString().includes(modulePath)
-      ) {
+      if (testRequireError(modulePath, e)) {
         // if we can't find gatsby-node.js, that's OK. Some plugins
         // don't implement it.
         return []
       }
       // Otherwise report the error so it raises to the user
-      report.error(e)
-      // return [] so that the build continues anyway
-      return []
+      report.panic(`Error in "${absPath}":`, e)
     }
   } else {
     return staticallyAnalyzeExports(modulePath, resolver)
