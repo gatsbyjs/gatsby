@@ -48,7 +48,7 @@ If you haven’t yet integrated with Gatsby, [developer documentation](https://w
 
 In addition, you’ll probably want to create an "example" application. We call this a “starter”.
 
-However development is most convenient, when you publish these, they should be in separate code repositories on Github.
+However development is most convenient, when you publish these, they should be in separate code repositories on GitHub.
 
 Current partners have reported development timelines of 2-3 days when the content schema is fully defined by their platform, around up to 2 weeks when their platforms allowing the user to completely define the content schema, for a team of 1-2 developers.
 
@@ -56,7 +56,7 @@ If you have a GraphQL-based API, you **may not need to build an integration at a
 
 If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](https://www.gatsbyjs.org/docs/plugin-authoring/) and [source plugin tutorial](https://www.gatsbyjs.org/docs/source-plugin-tutorial/).
 
-If you still have questions, please[ raise an issue on Github](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](https://www.gatsbyjs.org/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
+If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](https://www.gatsbyjs.org/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
 
 ### Step Two: Launching Your Gatsby Integration
 

@@ -2337,7 +2337,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Enhance API for multiple feeds #1548 @nicholaswyoung
 - Add new plugin to handle csv files #1496 @ssonal
 - Adds showcase segment for starters/websites built with Gatsby. #1535 @Vagr9K
-- Fancy Javascript Example #1492 @jbolda
+- Fancy JavaScript Example #1492 @jbolda
 - Add sitemap plugin to www #1541 @nicholaswyoung
 
 ### Fixed
@@ -2466,7 +2466,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Support NavLink in gatsby-link #1302 @abi
 - Add an example for using the sass plugin #1312 @danielfarrell
 - Add CSS Modules example site #1314 @kyleamathews
-- Add Typescript example #1319 @kyleamathews
+- Add TypeScript example #1319 @kyleamathews
 - Support using browserslist for setting per-site browser targeting for JS/CSS
   transformations #1336 @kyleamathews
 - Add gatsby-plugin-canonical-url #1337 @kyleamathews
