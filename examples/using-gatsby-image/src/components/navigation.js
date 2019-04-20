@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import styled, { css } from "react-emotion"
+import styled from "@emotion/styled"
+import { css } from "@emotion/core"
 import { MdLaunch } from "react-icons/md"
 
 import { scale, rhythm, options } from "../utils/typography"
@@ -131,9 +132,9 @@ const NavListItem = styled(`li`)`
 
 const NavItem = ({ title, to }) => (
   <NavListItem
-    css={`
+    css={css`
       &:after {
-        color: colors.gatsby;
+        color: ${colors.gatsby};
         content: " ╱ ";
         font-weight: 300;
         opacity: 0.5;
