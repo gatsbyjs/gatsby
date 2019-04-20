@@ -40,7 +40,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
 **Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! [https://www.gatsbyjs.org/docs/source-plugin-tutorial/](/docs/source-plugin-tutorial/ "Gatsby plugins")
 
-**Question:** How did you implement the Github PR test for lighthouse scoring?
+**Question:** How did you implement the GitHub PR test for lighthouse scoring?
 **Answer:** All available in this repo. I run Lighthouse from a CI container, and then parse the response: [https://github.com/dschau/gatsby-perf-audit](https://github.com/dschau/gatsby-perf-audit "https://github.com/dschau/gatsby-perf-audit")
 
 **Question:** Is it possible to dictate code splitting manually, e.g. component level code splitting?

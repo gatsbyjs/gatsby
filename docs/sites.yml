@@ -3830,7 +3830,7 @@
 - title: Logicwind
   main_url: "https://logicwind.com"
   url: "https://logicwind.com"
-  description: Website of Logicwind - Javascript experts, Technology development agency & consulting.
+  description: Website of Logicwind - JavaScript experts, Technology development agency & consulting.
   featured: false
   categories:
     - Portfolio
@@ -4628,7 +4628,7 @@
   url: https://www.szewczyk.cz/
   main_url: https://www.szewczyk.cz/
   description: >
-    Patrik Szewczyk – Javascript, Typescript, React, Node.js developer, Redux, Reason
+    Patrik Szewczyk – JavaScript, TypeScript, React, Node.js developer, Redux, Reason
   categories:
     - Portfolio
   built_by: Patrik Szewczyk
@@ -4900,7 +4900,7 @@
   main_url: https://www.agynamix.de/
   source_url: https://github.com/tuhlmann/agynamix.de
   description: >
-    Full Stack Java, Scala, Clojure, Typescript, React Developer in Thalheim, Germany
+    Full Stack Java, Scala, Clojure, TypeScript, React Developer in Thalheim, Germany
   categories:
     - Freelance
     - Web Development
