@@ -65,7 +65,7 @@ An example:
         "Basic-Auth: someuser:somepassword anotheruser:anotherpassword",
       ],
       "/my-page": [
-        // matching headers (by type) are replaced by netlify with more specific routes
+        // matching headers (by type) are replaced by Netlify with more specific routes
         "Basic-Auth: differentuser:differentpassword",
       ],
     },
