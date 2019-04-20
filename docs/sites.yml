@@ -5386,10 +5386,12 @@
 - title: manuvel.be
   url: https://www.manuvel.be
   main_url: https://www.manuvel.be
+  source_url: https://github.com/riencoertjens/manuvelsite
   description: >
-    Cycling themed café coming this april in Sint Niklaas, Belgium. Has funky css-grid trickery! 
+    Cycling themed café coming this april in Sint Niklaas, Belgium. One page with funky css-grid and gatsby-image trickery! 
   categories:
-    - Café
+    - Coffee
+    - Food
     - Instagram
     - CSS Grid
   built_by: WEBhart
@@ -5411,12 +5413,12 @@
 - title: nicdougall.com
   url: https://nicdougall.netlify.com/
   main_url: https://nicdougall.netlify.com/
+  source_url: https://github.com/riencoertjens/nicdougall.com
   description: >
     Athlete website with Netlify CMS for blog content.
   categories:
     - Athlete
     - Blog
-    - Netlify CMS
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
@@ -5424,9 +5426,9 @@
   url: https://www.hetgroeiatelier.be/
   main_url: https://www.hetgroeiatelier.be/
   description: >
-    Workspace for talent development and logopedics. onepage site with basic info and small calendar CMS.
+    Workspace for talent development and logopedics. One page site with basic info and small calendar CMS.
   categories:
-    - logopedics
+    - Personal Development
     - One Page
     - Netlify CMS
   built_by: WEBhart
