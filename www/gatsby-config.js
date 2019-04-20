@@ -213,7 +213,11 @@ module.exports = {
               }
             `,
             output: `/blog/rss.xml`,
-            setup: ({ query: { site: { siteMetadata } } }) => {
+            setup: ({
+              query: {
+                site: { siteMetadata },
+              },
+            }) => {
               return {
                 title: siteMetadata.title,
                 description: siteMetadata.description,
