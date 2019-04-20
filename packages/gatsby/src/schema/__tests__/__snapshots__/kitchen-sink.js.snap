@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Kichen sink schema test passes kitchen sink query 1`] = `
+exports[`Kitchen sink schema test passes kitchen sink query 1`] = `
 Object {
   "data": Object {
     "addResolvers": Array [

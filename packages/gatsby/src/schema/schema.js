@@ -415,7 +415,9 @@ const addThirdPartySchemas = ({
       if (
         type !== schemaQueryType &&
         !isSpecifiedScalarType(type) &&
-        !isIntrospectionType(type)
+        !isIntrospectionType(type) &&
+        type.name !== `Date` &&
+        type.name !== `JSON`
       ) {
         processThirdPartyType({ schemaComposer, type, schemaQueryType })
       }
