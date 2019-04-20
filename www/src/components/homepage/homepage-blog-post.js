@@ -255,7 +255,7 @@ HomepageBlogPost.propTypes = {
 }
 
 export const homepageBlogPostFragment = graphql`
-  fragment HomepageBlogPostData on MarkdownRemark {
+  fragment HomepageBlogPostData on Mdx {
     ...BlogPostPreview_item
   }
 `

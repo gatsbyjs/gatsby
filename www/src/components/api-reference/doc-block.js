@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import ExamplesBlock from "./examples"
 import ParamsBlock from "./params"
@@ -24,7 +25,7 @@ const Optional = styled.span`
 `
 
 const Deprecated = ({ definition }) => {
-  if (definition.deprecated && definition.deprecated.childMarkdownRemark) {
+  if (definition.deprecated && definition.deprecated.childMdx) {
     return (
       <div
         css={css`
@@ -34,10 +35,9 @@ const Deprecated = ({ definition }) => {
             font-family: ${fonts.header};
           }
         `}
-        dangerouslySetInnerHTML={{
-          __html: definition.deprecated.childMarkdownRemark.html,
-        }}
-      />
+      >
+        <MDXRenderer>{definition.deprecated.childMdx.body}</MDXRenderer>
+      </div>
     )
   }
 
@@ -51,10 +51,9 @@ const Description = ({ definition }) => {
         css={css`
           margin-top: 0.5em;
         `}
-        dangerouslySetInnerHTML={{
-          __html: definition.description.childMarkdownRemark.html,
-        }}
-      />
+      >
+        <MDXRenderer>{definition.description.childMdx.body}</MDXRenderer>
+      </div>
     )
   }
 

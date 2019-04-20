@@ -33,7 +33,7 @@ export default class MarkdownPageFooter extends React.Component {
 }
 
 export const fragment = graphql`
-  fragment MarkdownPageFooter on MarkdownRemark {
+  fragment MarkdownPageFooter on Mdx {
     parent {
       ... on File {
         relativePath

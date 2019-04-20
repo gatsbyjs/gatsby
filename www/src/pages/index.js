@@ -41,7 +41,7 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { edges: postsData },
+        allMdx: { edges: postsData },
         allStartersYaml: { edges: startersData },
         allNpmPackage: { edges: pluginsData },
       },
@@ -175,7 +175,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 4
       filter: {
