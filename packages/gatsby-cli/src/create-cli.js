@@ -348,7 +348,7 @@ module.exports = argv => {
     })
     .command({
       command: `plugin`,
-      desc: `Welcome to the Gatsby source plugin help center!
+      desc: `Welcome to the Gatsby plugin help center!
 
       Resources:
 - Walk through the tutorial (https://www.gatsbyjs.org/docs/source-plugin-tutorial/)
