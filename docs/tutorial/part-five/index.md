@@ -40,7 +40,7 @@ fetch data from the WordPress API.
 Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
 explore how it works.
 
-First install the plugin at the root of the project:
+First, install the plugin at the root of the project:
 
 ```shell
 npm install --save gatsby-source-filesystem
