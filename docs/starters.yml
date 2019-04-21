@@ -2257,16 +2257,20 @@
     - Responsive images with gatsby-image
 - url: https://www.jannikbuschke.de/gatsby-antd-docs/
   repo: https://github.com/jannikbuschke/gatsby-antd-docs
-  description: A template for documenation websites
+  description: A template for documentation websites
   tags:
     - Documentation
     - TypeScript
     - Ant Design
     - Markdown
+    - MDX
   features:
     - Markdown
+    - MDX with mdxjs
+    - Syntax highlighting with prismjs
     - Anchors
-    - Menues
+    - Sidebar
+    - Sitecontents
     - Landingpage
 - url: https://gatsby-starter.haezl.at
   repo: https://github.com/haezl/gatsby-starter-haezl
