@@ -406,6 +406,9 @@ const addThirdPartySchemas = ({
 }) => {
   thirdPartySchemas.forEach(schema => {
     const schemaQueryType = schema.getQueryType()
+    const queryTC = schemaComposer.createTempTC(schemaQueryType)
+    processThirdPartyTypeFields({ typeComposer: queryTC, schemaQueryType })
+    schemaComposer.Query.addFields(queryTC.getFields())
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `createResolvers` API.
@@ -419,84 +422,31 @@ const addThirdPartySchemas = ({
         type.name !== `Date` &&
         type.name !== `JSON`
       ) {
-        processThirdPartyType({ schemaComposer, type, schemaQueryType })
+        const typeComposer = schemaComposer.createTC(type)
+        if (
+          typeComposer instanceof ObjectTypeComposer ||
+          typeComposer instanceof InterfaceTypeComposer
+        ) {
+          processThirdPartyTypeFields({ typeComposer, schemaQueryType })
+        }
+        typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
+        schemaComposer.addSchemaMustHaveType(typeComposer)
       }
     })
-
-    const queryTC = ObjectTypeComposer.createTemp(
-      {
-        name: `TempQuery`,
-        fields: processThirdPartyTypeFields({
-          type: schemaQueryType,
-          schemaQueryType,
-        }),
-      },
-      schemaComposer
-    )
-    schemaComposer.Query.addFields(queryTC.getFields())
   })
 }
 
-const processThirdPartyType = ({ schemaComposer, type, schemaQueryType }) => {
-  let typeComposer
+const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
   // Fix for types that refer to Query. Thanks Relay Classic!
-  if (
-    type instanceof GraphQLObjectType ||
-    type instanceof GraphQLInterfaceType
-  ) {
-    const fields = processThirdPartyTypeFields({ type, schemaQueryType })
-    if (type instanceof GraphQLObjectType) {
-      typeComposer = ObjectTypeComposer.create(
-        {
-          name: type.name,
-          fields,
-          interfaces: () =>
-            type
-              .getInterfaces()
-              .map(iface => schemaComposer.getIFTC(iface.toString()).getType()),
-        },
-        schemaComposer
-      )
-    } else {
-      typeComposer = schemaComposer.getOrCreateIFTC(type.name)
-      typeComposer.setResolveType(type.resolveType)
-    }
-    typeComposer.setFields(fields)
-  } else if (type instanceof GraphQLUnionType) {
-    const types = type.getTypes()
-    typeComposer = schemaComposer.getOrCreateUTC(type.name)
-    typeComposer.setResolveType(type.resolveType)
-    typeComposer.setTypes(types.map(type => type.toString()))
-    schemaComposer.add(typeComposer)
-  } else {
-    schemaComposer.addAsComposer(type)
-    typeComposer = schemaComposer.get(type.name)
-  }
-  typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
-  schemaComposer.addSchemaMustHaveType(typeComposer)
-
-  return typeComposer
-}
-
-const processThirdPartyTypeFields = ({ type, schemaQueryType }) => {
-  const fields = {}
-  const typeFields = defineFieldMapToConfig(type.getFields())
-  Object.keys(typeFields).forEach(fieldName => {
-    const field = typeFields[fieldName]
-    const fieldType = field.type
-    if (getNamedType(fieldType) === schemaQueryType) {
-      fields[fieldName] = {
-        ...field,
-        type: fieldType.toString().replace(schemaQueryType.name, `Query`),
-      }
-    } else {
-      fields[fieldName] = {
-        ...field,
-        type: fieldType.toString(),
-      }
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const field = typeComposer.getField(fieldName)
+    const fieldType = field.type.toString()
+    if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
+      typeComposer.extendField(fieldName, {
+        type: fieldType.replace(schemaQueryType.name, `Query`),
+      })
     }
   })
-  return fields
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
