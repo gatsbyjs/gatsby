@@ -528,7 +528,7 @@ const finishBootstrap = async bootstrapSpan => {
   activity.end()
 
   report.log(``)
-  report.info(`bootstrap finished - ${process.uptime()} s`)
+  report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
   report.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(

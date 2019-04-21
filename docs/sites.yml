@@ -4637,7 +4637,7 @@
 - title: Patrik Arvidsson's portfolio
   url: https://www.patrikarvidsson.com
   main_url: https://www.patrikarvidsson.com
-  source_url: https://github.com/patrikarvidsson/patrikarvidsson.com
+  source_url: https://github.com/patrikarvidsson/portfolio-gatsby-contentful
   description: >
     Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
   categories:
@@ -5403,3 +5403,12 @@
   built_by: Nikodem Deja
   built_by_url: https://nikodemdeja.pl
   featured: false
+- title: Pella Windows and Doors
+  main_url: https://www.pella.com
+  url: https://www.pella.com
+  featured: false
+  description: >
+    The Pella Corporation is a privately held window and door manufacturing
+  categories:
+    - Construction
+    - Business
