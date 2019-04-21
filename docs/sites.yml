@@ -4637,7 +4637,7 @@
 - title: Patrik Arvidsson's portfolio
   url: https://www.patrikarvidsson.com
   main_url: https://www.patrikarvidsson.com
-  source_url: https://github.com/patrikarvidsson/patrikarvidsson.com
+  source_url: https://github.com/patrikarvidsson/portfolio-gatsby-contentful
   description: >
     Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
   categories:
