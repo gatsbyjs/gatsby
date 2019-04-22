@@ -2314,7 +2314,6 @@
   description: Automatically generate docs for React components using MDX, react-docgen, and GatsbyJS
   tags:
     - Documentation
-    - Markdown
     - MDX
     - SEO
   features:
