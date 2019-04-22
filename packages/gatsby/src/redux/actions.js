@@ -482,7 +482,7 @@ const typeOwners = {}
  * markdown transformers look for media types of
  * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
- * choosen by the plugin creating the node. Should be descriptive of the
+ * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
