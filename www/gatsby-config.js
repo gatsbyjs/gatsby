@@ -86,6 +86,9 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extendsions: [`.md`, `.mdx`],
+        shouldBlockNodeFromTransformation(node) {
+          return [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type)
+        },
         gatsbyRemarkPlugins: [
           `gatsby-remark-graphviz`,
           `gatsby-remark-embed-video`,
