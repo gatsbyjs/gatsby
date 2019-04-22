@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
-import { MdLaunch } from "react-icons/md"
 import { scale, rhythm, options } from "../utils/typography"
 import { mq, elevation, gutter, colors, animation } from "../utils/presets"
 
