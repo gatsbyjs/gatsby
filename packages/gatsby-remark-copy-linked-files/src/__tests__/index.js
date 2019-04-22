@@ -7,6 +7,7 @@ jest.mock(`fs-extra`, () => {
 })
 const Remark = require(`remark`)
 const fsExtra = require(`fs-extra`)
+const mdx = require(`remark-mdx`)
 const path = require(`path`)
 
 const plugin = require(`../`)
@@ -116,6 +117,18 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const path = `images/sample-image.gif`
 
     const markdownAST = remark.parse(`<img src="${path}">`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy JSX images`, async () => {
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark()
+      .use(mdx)
+      .parse(`<img src="${path}" />`)
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
