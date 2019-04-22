@@ -877,13 +877,6 @@
   featured: false
   categories:
     - Marketing
-- title: Beach Hut Poole
-  main_url: "https://www.beachhutpoole.co.uk/"
-  url: "https://www.beachhutpoole.co.uk/"
-  featured: false
-  categories:
-    - Travel
-    - Marketing
 - title: Bricolage.io
   main_url: "https://www.bricolage.io/"
   url: "https://www.bricolage.io/"
@@ -1073,13 +1066,6 @@
   categories:
     - Marketing
     - Education
-- title: ClearBrain
-  main_url: "https://clearbrain.com/"
-  url: "https://clearbrain.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Technology
 - title: Lucid
   main_url: "https://www.golucid.co/"
   url: "https://www.golucid.co/"
@@ -2515,7 +2501,7 @@
   description: >
     Mobius Labs landing page, a Start-up working on Computer Vision
   categories:
-    - Landing page
+    - Landing Page
     - Marketing
     - Technology
     - AI
@@ -2672,7 +2658,7 @@
   built_by_url: "https://www.ryanwiemer.com/"
   featured: false
 - title: developer.bitcoin.com
-  main_url: "https://www.bitcoin.com/"
+  main_url: "https://developer.bitcoin.com/"
   url: "https://developer.bitcoin.com/"
   description: >
     Bitbox based bitcoin.com developer platform and resources.
@@ -3537,7 +3523,7 @@
   description: >
     Birra Napoli official site
   categories:
-    - Landing page
+    - Landing Page
     - Business
     - Food
     - Beverage
@@ -3699,20 +3685,6 @@
   built_by: Jane Manchun Wong
   built_by_url: "https://twitter.com/wongmjane"
   featured: false
-- title: PostPost
-  main_url: "https://postpost.design"
-  source_url: "https://github.com/postpostpdx/website"
-  url: "https://postpost.design"
-  description: >
-    PostPost is a small studio based in Portland, OR that is focused on product design, web design/development, branding, and strategy.
-  categories:
-    - Portfolio
-    - Design
-    - Agency
-    - Web Development
-  built_by: Jonathan Simcoe
-  built_by_url: "https://twitter.com/jdsimcoe"
-  featured: false
 - title: Luca Crea's portfolio
   main_url: https://lcrea.github.io
   url: https://lcrea.github.io
@@ -3858,7 +3830,7 @@
 - title: Logicwind
   main_url: "https://logicwind.com"
   url: "https://logicwind.com"
-  description: Website of Logicwind - Javascript experts, Technology development agency & consulting.
+  description: Website of Logicwind - JavaScript experts, Technology development agency & consulting.
   featured: false
   categories:
     - Portfolio
@@ -3873,7 +3845,7 @@
   description: Seamlessly share Contacts with G Suite team members
   featured: false
   categories:
-    - Landing page
+    - Landing Page
     - Blog
   built_by: Logicwind
   built_by_url: "https://www.logicwind.com"
@@ -4656,7 +4628,7 @@
   url: https://www.szewczyk.cz/
   main_url: https://www.szewczyk.cz/
   description: >
-    Patrik Szewczyk – Javascript, Typescript, React, Node.js developer, Redux, Reason
+    Patrik Szewczyk – JavaScript, TypeScript, React, Node.js developer, Redux, Reason
   categories:
     - Portfolio
   built_by: Patrik Szewczyk
@@ -4665,7 +4637,7 @@
 - title: Patrik Arvidsson's portfolio
   url: https://www.patrikarvidsson.com
   main_url: https://www.patrikarvidsson.com
-  source_url: https://github.com/patrikarvidsson/patrikarvidsson.com
+  source_url: https://github.com/patrikarvidsson/portfolio-gatsby-contentful
   description: >
     Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
   categories:
@@ -4928,7 +4900,7 @@
   main_url: https://www.agynamix.de/
   source_url: https://github.com/tuhlmann/agynamix.de
   description: >
-    Full Stack Java, Scala, Clojure, Typescript, React Developer in Thalheim, Germany
+    Full Stack Java, Scala, Clojure, TypeScript, React Developer in Thalheim, Germany
   categories:
     - Freelance
     - Web Development
@@ -5375,4 +5347,81 @@
     - Food
   built_by: General Mills Branded Sites Dev Team
   built_by_url: https://www.generalmills.com
+  featured: false
+- title: Fifth Gait Technologies
+  main_url: https://5thgait.com
+  url: https://5thgait.com
+  featured: false
+  description: >
+    Fifth Gait is a small business in the defense and space industry that is run and owned by physicists and engineers that have worked together for decades. The site was built using Gatsby V2.
+  categories:
+    - Government
+    - Science
+    - Technology
+    - Space
+  built_by: Jonathan Z. Fisher
+  built_by_url: "https://jonzfisher.com"
+- title: Sal's Pals
+  main_url: https://www.sals-pals.net
+  url: https://www.sals-pals.net
+  featured: false
+  description: >
+    Sal's Pals is a professional dog walking and pet sitting service based in Westfield, NJ. New site built with gatsby v2.
+  categories:
+    - Business
+- title: Zuyet Awarmatrip
+  main_url: https://www.zuyetawarmatrip.com
+  url: https://www.zuyetawarmatrip.com
+  featured: false
+  description: >
+    Zuyet Awarmatrip is a subsidiary identity within the personal ecosystem of Zuyet Awarmatik, focusing on travel and photography.
+  categories:
+    - Travel
+    - Photography
+  built_by: Zuyet Awarmatik
+- title: nikodemdeja.pl
+  main_url: https://nikodemdeja.pl
+  url: https://nikodemdeja.pl
+  source_url: https://github.com/Norem80/nikodemdeja.pl
+  description: >
+    Portfolio of Nikodem Deja
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Nikodem Deja
+  built_by_url: https://nikodemdeja.pl
+  featured: false
+- title: blog.nikodemdeja.pl
+  main_url: https://blog.nikodemdeja.pl
+  url: https://blog.nikodemdeja.pl
+  source_url: https://github.com/Norem80/blog.nikodemdeja.pl
+  description: >
+    Personal blog of Nikodem Deja
+  categories:
+    - Blog
+    - Open Source
+  built_by: Nikodem Deja
+  built_by_url: https://nikodemdeja.pl
+  featured: false
+- title: Pella Windows and Doors
+  main_url: https://www.pella.com
+  url: https://www.pella.com
+  featured: false
+  description: >
+    The Pella Corporation is a privately held window and door manufacturing
+  categories:
+    - Construction
+    - Business
+- title: tinney.dev
+  url: https://tinney.dev
+  main_url: https://tinney.dev
+  source_url: https://github.com/cdtinney/tinney.dev
+  description: >
+    Personal portfolio/blog of Colin Tinney
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+  built_by: Colin Tinney
+  built_by_url: https://tinney.dev
   featured: false

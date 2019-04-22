@@ -110,7 +110,7 @@ const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
 
   clonedPluginOptions.attributes.imagesdir = withPathPrefix(
     currentPathPrefix,
-    pluginOptions.attributes.imagesdir || defaultImagesDir
+    clonedPluginOptions.attributes.imagesdir || defaultImagesDir
   )
 
   return clonedPluginOptions
