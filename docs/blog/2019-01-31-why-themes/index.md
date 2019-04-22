@@ -59,7 +59,7 @@ But for many other users, that want easy solutions to a common problems, they fi
 
 Some tweets to that effect:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I want to make a really basic docs website. Ideally I just want to write<br> markdown and CSS. Nothing fancy, everything static. Trying out <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> but feel intimidated with the usage of GraphQL in the boilerplate project and having to use JS to write everything up.</p>&mdash; Sebastian McKenzie (@sebmck) <a href="https://twitter.com/sebmck/status/1085279417151057920?ref_src=twsrc%5Etfw">January 15, 2019</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I want to make a really basic docs website. Ideally I just want to write<br/> markdown and CSS. Nothing fancy, everything static. Trying out <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> but feel intimidated with the usage of GraphQL in the boilerplate project and having to use JS to write everything up.</p>&mdash; Sebastian McKenzie (@sebmck) <a href="https://twitter.com/sebmck/status/1085279417151057920?ref_src=twsrc%5Etfw">January 15, 2019</a></blockquote>
 
 ---
 

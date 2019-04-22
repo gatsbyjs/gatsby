@@ -85,7 +85,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extendsions: [`.md`, `.mdx`],
+        extensions: [`.md`, `.mdx`],
         shouldBlockNodeFromTransformation(node) {
           return [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type)
         },
