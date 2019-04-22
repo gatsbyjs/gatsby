@@ -32,7 +32,6 @@
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sharp": "^2.0.5",
     "gatsby-plugin-sitemap": "^2.0.1",
-    "gatsby-plugin-subfont": "^1.0.1",
     "gatsby-plugin-twitter": "^2.0.5",
     "gatsby-plugin-typography": "^2.2.0",
     "gatsby-remark-autolink-headers": "^2.0.10",
