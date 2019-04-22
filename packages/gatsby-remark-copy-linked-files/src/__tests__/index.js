@@ -7,7 +7,6 @@ jest.mock(`fs-extra`, () => {
 })
 const Remark = require(`remark`)
 const fsExtra = require(`fs-extra`)
-const mdx = require(`remark-mdx`)
 const path = require(`path`)
 const semver = require(`semver`)
 
@@ -20,15 +19,6 @@ const remark = new Remark().data(`settings`, {
 })
 
 const imageURL = markdownAST => markdownAST.children[0].children[0].url
-
-const testInNode8OrHigher = (title, ...args) => {
-  const isNode8OrHigher = semver.satisfies(process.version, `>=8`)
-  if (isNode8OrHigher) {
-    it(title, ...args)
-  } else {
-    it.skip(`skipped on Node 7 or lower: ${title}`, ...args)
-  }
-}
 
 describe(`gatsby-remark-copy-linked-files`, () => {
   afterEach(() => {
@@ -133,22 +123,28 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
-  testInNode8OrHigher(`can copy JSX images`, async () => {
-    const path = `images/sample-image.gif`
+  const canCopyJSXTitle = `can copy JSX images`
+  if (semver.satisfies(process.version, `>=8`)) {
+    const mdx = require(`remark-mdx`)
+    it(canCopyJSXTitle, async () => {
+      const path = `images/sample-image.gif`
 
-    const markdownAST = remark()
-      .use(mdx)
-      .parse(`<img src="${path}" />`)
+      const markdownAST = remark()
+        .use(mdx)
+        .parse(`<img src="${path}" />`)
 
-    await plugin({
-      files: getFiles(path),
-      markdownAST,
-      markdownNode,
-      getNode,
+      await plugin({
+        files: getFiles(path),
+        markdownAST,
+        markdownNode,
+        getNode,
+      })
+
+      expect(fsExtra.copy).toHaveBeenCalled()
     })
-
-    expect(fsExtra.copy).toHaveBeenCalled()
-  })
+  } else {
+    it.skip(canCopyJSXTitle, () => {})
+  }
 
   it(`can copy HTML multiple images`, async () => {
     const path1 = `images/sample-image.gif`
