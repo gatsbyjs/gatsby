@@ -24,7 +24,6 @@ module.exports = {
   notify: true,
   verbose: true,
   roots: pkgs,
-  transformIgnorePatterns: [`node_modules/(?!remark-mdx)`],
   modulePathIgnorePatterns: ignoreDirs,
   coveragePathIgnorePatterns: ignoreDirs,
   testPathIgnorePatterns: [
