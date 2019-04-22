@@ -7,7 +7,6 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
-import FeedbackWidget from "../components/feedback-widget/feedback-widget"
 import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
@@ -241,7 +240,6 @@ class FeaturesPage extends Component {
               sectionHeaders={sectionHeaders}
             />
             <FeaturesFooter />
-            <FeedbackWidget />
           </main>
           <FooterLinks />
         </Container>
