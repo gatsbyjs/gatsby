@@ -1,3 +1,4 @@
+const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -87,7 +88,11 @@ module.exports = {
       options: {
         extensions: [`.md`, `.mdx`],
         shouldBlockNodeFromTransformation(node) {
-          return [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type)
+          return (
+            [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
+            (node.internal.type === `File` &&
+              path.parse(node.dir).dir.endsWith(`packages`))
+          )
         },
         gatsbyRemarkPlugins: [
           `gatsby-remark-graphviz`,
