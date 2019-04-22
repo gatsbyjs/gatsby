@@ -81,7 +81,7 @@ class Plugins extends Component {
                   pluginName: `gatsby-plugin-typography`,
                 },
                 {
-                  text: `Typescript?`,
+                  text: `TypeScript?`,
                   pluginName: `gatsby-plugin-typescript`,
                 },
                 {
