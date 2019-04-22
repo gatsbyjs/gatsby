@@ -5,11 +5,7 @@ const {
   isIntrospectionType,
   defaultFieldResolver,
   assertValidName,
-  getNamedType,
   Kind,
-  GraphQLObjectType,
-  GraphQLInterfaceType,
-  GraphQLUnionType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -18,9 +14,6 @@ const {
   InputTypeComposer,
   GraphQLJSON,
 } = require(`graphql-compose`)
-const {
-  defineFieldMapToConfig,
-} = require(`graphql-compose/lib/utils/configToDefine`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
