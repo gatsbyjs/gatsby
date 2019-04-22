@@ -20,6 +20,15 @@ const remark = new Remark().data(`settings`, {
 
 const imageURL = markdownAST => markdownAST.children[0].children[0].url
 
+const testInNode8OrHigher = (title, ...args) => {
+  const isNode8OrHigher = semver.satisfies(process.version, `>=8`)
+  if (isNode8OrHigher) {
+    it(title, ...args)
+  } else {
+    it.skip(`skipped on Node 7 or lower: ${title}`, ...args)
+  }
+}
+
 describe(`gatsby-remark-copy-linked-files`, () => {
   afterEach(() => {
     fsExtra.copy.mockReset()
@@ -123,28 +132,23 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
-  const canCopyJSXTitle = `can copy JSX images`
-  if (semver.satisfies(process.version, `>=8`)) {
+  testInNode8OrHigher(`can copy JSX images`, async () => {
     const mdx = require(`remark-mdx`)
-    it(canCopyJSXTitle, async () => {
-      const path = `images/sample-image.gif`
+    const path = `images/sample-image.gif`
 
-      const markdownAST = remark()
-        .use(mdx)
-        .parse(`<img src="${path}" />`)
+    const markdownAST = remark()
+      .use(mdx)
+      .parse(`<img src="${path}" />`)
 
-      await plugin({
-        files: getFiles(path),
-        markdownAST,
-        markdownNode,
-        getNode,
-      })
-
-      expect(fsExtra.copy).toHaveBeenCalled()
+    await plugin({
+      files: getFiles(path),
+      markdownAST,
+      markdownNode,
+      getNode,
     })
-  } else {
-    it.skip(canCopyJSXTitle, () => {})
-  }
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
 
   it(`can copy HTML multiple images`, async () => {
     const path1 = `images/sample-image.gif`
