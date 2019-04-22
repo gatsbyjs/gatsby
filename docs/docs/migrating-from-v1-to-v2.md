@@ -475,7 +475,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 #### Migrating React Router client routes to @reach/router
 
 - Use `<Location>` instead of `withRouter`
-- import `{ navigate }` from `@reach/router` for programmatic navigation instead of the history object
+- `import { navigate } from @reach/router` for programmatic navigation instead of the history object
 - There's no `Route` component any more. You add a `<Router>` component (a site can have as many routers as it wishes) and then the immediate children of `<Router>` must have a prop named `path`.
 
 A basic example of the `<Router>` component:
