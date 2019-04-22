@@ -227,6 +227,6 @@ module.exports = {
         nodeTypes: [`StartersYaml`],
       },
     },
-    `gatsby-plugin-subfont`,
+    // `gatsby-plugin-subfont`,
   ].concat(dynamicPlugins),
 }
