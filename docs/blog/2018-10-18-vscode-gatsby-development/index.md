@@ -11,7 +11,7 @@ VS Code is a truly great choice for your code editing needs. In this article, I'
 
 ![Lots of Available Options](./images/color-wall.jpeg)
 
-I know that there are as many choices for IDE editors and personal preferences as there are JS frameworks in existence (hint LOTS). I am not going to debate those here, this article will focus on [VS Code](https://code.visualstudio.com/). It's the editor I use and find it amazing for the Javascript and web development ecosystem. I was a long time holdout using Sublime Text, but once I gave VS Code a try I switched over within a day and haven't looked back.
+I know that there are as many choices for IDE editors and personal preferences as there are JS frameworks in existence (hint LOTS). I am not going to debate those here, this article will focus on [VS Code](https://code.visualstudio.com/). It's the editor I use and find it amazing for the JavaScript and web development ecosystem. I was a long time holdout using Sublime Text, but once I gave VS Code a try I switched over within a day and haven't looked back.
 
 ## Enough Talk, Let's get Started
 

@@ -3830,7 +3830,7 @@
 - title: Logicwind
   main_url: "https://logicwind.com"
   url: "https://logicwind.com"
-  description: Website of Logicwind - Javascript experts, Technology development agency & consulting.
+  description: Website of Logicwind - JavaScript experts, Technology development agency & consulting.
   featured: false
   categories:
     - Portfolio
@@ -4628,7 +4628,7 @@
   url: https://www.szewczyk.cz/
   main_url: https://www.szewczyk.cz/
   description: >
-    Patrik Szewczyk – Javascript, Typescript, React, Node.js developer, Redux, Reason
+    Patrik Szewczyk – JavaScript, TypeScript, React, Node.js developer, Redux, Reason
   categories:
     - Portfolio
   built_by: Patrik Szewczyk
@@ -4637,7 +4637,7 @@
 - title: Patrik Arvidsson's portfolio
   url: https://www.patrikarvidsson.com
   main_url: https://www.patrikarvidsson.com
-  source_url: https://github.com/patrikarvidsson/patrikarvidsson.com
+  source_url: https://github.com/patrikarvidsson/portfolio-gatsby-contentful
   description: >
     Personal portfolio site of Swedish interaction designer Patrik Arvidsson. Built with Gatsby, Tailwind CSS, Emotion JS and Contentful.
   categories:
@@ -4900,7 +4900,7 @@
   main_url: https://www.agynamix.de/
   source_url: https://github.com/tuhlmann/agynamix.de
   description: >
-    Full Stack Java, Scala, Clojure, Typescript, React Developer in Thalheim, Germany
+    Full Stack Java, Scala, Clojure, TypeScript, React Developer in Thalheim, Germany
   categories:
     - Freelance
     - Web Development
@@ -5390,4 +5390,38 @@
     - Open Source
   built_by: Nikodem Deja
   built_by_url: https://nikodemdeja.pl
+  featured: false
+- title: blog.nikodemdeja.pl
+  main_url: https://blog.nikodemdeja.pl
+  url: https://blog.nikodemdeja.pl
+  source_url: https://github.com/Norem80/blog.nikodemdeja.pl
+  description: >
+    Personal blog of Nikodem Deja
+  categories:
+    - Blog
+    - Open Source
+  built_by: Nikodem Deja
+  built_by_url: https://nikodemdeja.pl
+  featured: false
+- title: Pella Windows and Doors
+  main_url: https://www.pella.com
+  url: https://www.pella.com
+  featured: false
+  description: >
+    The Pella Corporation is a privately held window and door manufacturing
+  categories:
+    - Construction
+    - Business
+- title: tinney.dev
+  url: https://tinney.dev
+  main_url: https://tinney.dev
+  source_url: https://github.com/cdtinney/tinney.dev
+  description: >
+    Personal portfolio/blog of Colin Tinney
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+  built_by: Colin Tinney
+  built_by_url: https://tinney.dev
   featured: false
