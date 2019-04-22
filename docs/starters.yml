@@ -2313,3 +2313,18 @@
     - Optimized images
     - Sitemap Page
     - Seo Ready
+- url: https://gatsby-documentation-starter.netlify.com/
+  repo: https://github.com/whoisryosuke/gatsby-documentation-starter
+  description: Automatically generate docs for React components using MDX, react-docgen, and GatsbyJS
+  tags:
+    - Documentation
+    - MDX
+    - SEO
+  features:
+    - Parses all React components (functional, stateful, even stateless!) for JS Docblocks and Prop Types.
+    - MDX - Write your docs in Markdown and include React components using JSX!
+    - Lightweight (only what you need)
+    - Modular (easily fits in any React project!)
+    - Props table component
+    - Customizable sidebar navigation
+    - Includes SEO plugins Google Analytics, Offline, Manifest, Helmet.
