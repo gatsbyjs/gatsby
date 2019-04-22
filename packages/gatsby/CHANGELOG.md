@@ -2292,7 +2292,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- fix broken gatsby link definition for typescript 2.4.2 (#1628) @DominikGuzei
+- fix broken gatsby link definition for TypeScript 2.4.2 (#1628) @DominikGuzei
 - test: fix failing test due to missing argyle image (#1636) @DSchau
 - Revise part one of tutorial to use hello-world starter (#1630) @KyleAMathews
 - Fix passing createNode as argument (#1629) @sebastienfi
@@ -2337,7 +2337,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Enhance API for multiple feeds #1548 @nicholaswyoung
 - Add new plugin to handle csv files #1496 @ssonal
 - Adds showcase segment for starters/websites built with Gatsby. #1535 @Vagr9K
-- Fancy Javascript Example #1492 @jbolda
+- Fancy JavaScript Example #1492 @jbolda
 - Add sitemap plugin to www #1541 @nicholaswyoung
 
 ### Fixed
@@ -2422,7 +2422,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Removed `owner` assignation to prevent error #1454 @sebastienfi
 - Update gatsby-node.js #1452 @sebastienfi
 - Update README.md #1453 @sebastienfi
-- Improve typescript example #1466 @fabien0102
+- Improve TypeScript example #1466 @fabien0102
 - Remove react-helmet from src/html.js fixes #1443 #1474 @KyleAMathews
 - Updates add-custom-webpack-config.md to fix broken links #1420 @marcustisater
 - Fix source-wordpress npmignore #1476 @KyleAMathews
@@ -2466,7 +2466,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Support NavLink in gatsby-link #1302 @abi
 - Add an example for using the sass plugin #1312 @danielfarrell
 - Add CSS Modules example site #1314 @kyleamathews
-- Add Typescript example #1319 @kyleamathews
+- Add TypeScript example #1319 @kyleamathews
 - Support using browserslist for setting per-site browser targeting for JS/CSS
   transformations #1336 @kyleamathews
 - Add gatsby-plugin-canonical-url #1337 @kyleamathews
@@ -2613,7 +2613,7 @@ Our first beta!!! 🎉
 
 ### Fixed
 
-- Fix graphql compiler on typescript #949 @fabien0102
+- Fix graphql compiler on TypeScript #949 @fabien0102
 - Replace react.createClass with ES6 classes in examples html.js, add PropTypes
   #1169 @abachuk
 - Fix windows build issue #1158 @kyleamathews

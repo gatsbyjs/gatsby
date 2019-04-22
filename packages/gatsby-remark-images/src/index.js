@@ -81,6 +81,15 @@ module.exports = (
     }
   }
 
+  const getNodeTitle = (node, alt) => {
+    if (node.title) {
+      return node.title
+    } else if (alt && alt.length > 0) {
+      return alt
+    }
+    return ``
+  }
+
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = async function(
@@ -241,7 +250,7 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && node.title
+    const showCaptions = options.showCaptions && getNodeTitle(node, alt)
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
@@ -277,7 +286,10 @@ module.exports = (
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
+      node,
+      alt
+    )}</figcaption>
   </figure>
       `.trim()
     }

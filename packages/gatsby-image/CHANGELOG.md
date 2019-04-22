@@ -91,7 +91,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-image:** update typescript definitions - properly mark fields as optional ([#10419](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10419)) ([f2b1821](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/f2b1821))
+- **gatsby-image:** update TypeScript definitions - properly mark fields as optional ([#10419](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10419)) ([f2b1821](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/f2b1821))
 
 <a name="2.0.24"></a>
 
