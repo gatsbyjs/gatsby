@@ -59,7 +59,7 @@ const rebuildSchemaWithSitePage = async ({
 }) => {
   const typeComposer = addInferredType({
     schemaComposer,
-    typeName: `SitePage`,
+    typeComposer: schemaComposer.getOTC(`SitePage`),
     nodeStore,
     typeConflictReporter,
     typeMapping,
