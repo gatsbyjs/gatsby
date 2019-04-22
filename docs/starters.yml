@@ -2311,7 +2311,7 @@
     - Seo Ready
 - url: https://ugglr.github.io/gatsby-clean-portfolio/
   repo: https://github.com/ugglr/gatsby-clean-portfolio
-  description: A clean themed Software Engineer Portfolio site, showcasing soft skills on the front page, features project card showcases, about page. Responsive through react-bootstrap components together with custom CSS style sheets. SEO configured, just need to add google analytics tracking code. 
+  description: A clean themed Software Engineer Portfolio site, showcasing soft skills on the front page, features project card showcases, about page. Responsive through react-bootstrap components together with custom CSS style sheets. SEO configured, just need to add google analytics tracking code.
   tags:
     - Portfolio
     - SEO
