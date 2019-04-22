@@ -137,11 +137,11 @@ const FeaturesHeader = () => (
       <li>
         <strong>JAMstack frameworks</strong> such as
         {` `}
-        <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">Next.js</a>,
-        {` `}
-        <a href="https://vuepress.vuejs.org/" target="_blank" rel="noopener noreferrer">VuePress</a>, and
-        {` `}
         <a href="https://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a>
+        {` `}
+        <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">Next.js</a>, and
+        {` `}
+        <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer">Nuxt.js</a>
         {` `}
         let you put text or markdown in a specific directory such as
         <code>pages/</code> in a version-controlled codebase. They then build a
