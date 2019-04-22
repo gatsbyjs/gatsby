@@ -134,15 +134,15 @@ module.exports = (
         exportName => exportName !== `__esModule`
       )
     } catch (e) {
-      if (testRequireError(modulePath, e)) {
-        // if we can't find gatsby-node.js, that's OK. Some plugins
-        // don't implement it.
-        return []
+      if (!testRequireError(modulePath, e)) {
+        // if module exists, but requiring it cause errors,
+        // show the error to the user and terminate build
+        report.panic(`Error in "${absPath}":`, e)
       }
-      // Otherwise report the error so it raises to the user
-      report.panic(`Error in "${absPath}":`, e)
     }
   } else {
     return staticallyAnalyzeExports(modulePath, resolver)
   }
+
+  return []
 }
