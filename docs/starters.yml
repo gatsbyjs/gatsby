@@ -2313,3 +2313,10 @@
     - Optimized images
     - Sitemap Page
     - Seo Ready
+- url: https://gatsby-personal-starter-blog.netlify.com/
+  repo: https://github.com/thomaswangio/gatsby-personal-starter-blog
+  description: Like official gatsby-starter-blog, but blog is served at /blog
+  tags:
+    - Personal Blog
+  features:
+    - Same as official gatsby-starter-blog
