@@ -73,7 +73,7 @@ Additionally, you can specify a number of props and options on the `TransitionLi
 
 #### Using the trigger function
 
-You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libaries like [animejs](https://animejs.com/) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
+You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libraries like [animejs](https://animejs.com/) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
 
 ```javascript
 <TransitionLink
