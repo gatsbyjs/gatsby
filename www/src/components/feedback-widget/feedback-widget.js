@@ -70,13 +70,13 @@ const feedbackMachine = Machine({
       on: {
         OPEN: `opened`,
       },
-      onEntry: `focusSuccessTitle`,
+      onEntry: `focusErrorTitle`,
     },
     closed: {
       on: {
         OPEN: `opened`,
       },
-      onEntry: [`focusSuccessTitle`, assign({ comment: ``, rating: 2 })],
+      onEntry: [assign({ comment: ``, rating: 2 })],
     },
   },
   on: {
@@ -95,6 +95,7 @@ const FeedbackWidget = () => {
 
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
+  const errorTitle = useRef(null)
   const toggleButton = useRef(null)
   const [current, send] = useMachine(
     feedbackMachine.withConfig({
@@ -107,6 +108,11 @@ const FeedbackWidget = () => {
         focusSuccessTitle() {
           requestAnimationFrame(() => {
             successTitle.current.focus()
+          })
+        },
+        focusErrorTitle() {
+          requestAnimationFrame(() => {
+            errorTitle.current.focus()
           })
         },
         focusOpenButton() {
@@ -185,7 +191,11 @@ const FeedbackWidget = () => {
         />
       )}
       {current.matches(`failed`) && (
-        <SubmitError handleClose={handleClose} handleOpen={handleOpen} />
+        <SubmitError
+          handleClose={handleClose}
+          handleOpen={handleOpen}
+          titleRef={errorTitle}
+        />
       )}
       {current.matches(`success`) && (
         <SubmitSuccess handleClose={handleClose} titleRef={successTitle} />

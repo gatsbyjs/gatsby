@@ -84,7 +84,11 @@ const WidgetWrapper = ({ children, handleClose = () => {} }) => {
     }
   }
 
-  return <WrapperDiv onKeyDown={handleEscapeKey}>{children}</WrapperDiv>
+  return (
+    <WrapperDiv role="dialog" onKeyDown={handleEscapeKey}>
+      {children}
+    </WrapperDiv>
+  )
 }
 
 export default WidgetWrapper

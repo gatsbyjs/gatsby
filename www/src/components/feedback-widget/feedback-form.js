@@ -94,11 +94,11 @@ const FeedbackForm = ({
       onSubmit={handleSubmit}
       className={`${submitting ? `submitting` : ``}`}
     >
-      <Title>Was this doc helpful to you?</Title>
+      <Title ref={titleRef} tabIndex="-1">
+        Was this doc helpful to you?
+      </Title>
       <Fieldset className="ratings" disabled={submitting}>
-        <Legend ref={titleRef} tabIndex="-1">
-          Rate your experience
-        </Legend>
+        <Legend>Rate your experience</Legend>
         <Rating>
           <RatingOption
             iconLabel="frowning face"

@@ -5,10 +5,12 @@ import { Actions, ScreenReaderText, Title } from "./styled-elements"
 import { SubmitButton } from "./buttons"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 
-const SubmitError = ({ handleClose, handleOpen }) => (
+const SubmitError = ({ handleClose, handleOpen, titleRef }) => (
   <WidgetWrapper className="feedback-success" handleClose={handleClose}>
-    <Title>Oops!</Title>
-    <p>Something went wrong. Please try again.</p>
+    <Title ref={titleRef} tabIndex="-1">
+      Oops! Something went wrong.
+    </Title>
+    <p>Please try again.</p>
     <Actions>
       <CloseButton onClick={handleClose}>
         Cancel{` `}
