@@ -7,10 +7,12 @@ const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
+const db = require(`../db`)
 const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
+const { store } = require(`../redux`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -41,6 +43,8 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
+  await db.saveState()
+
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
@@ -65,7 +69,14 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-  await buildHTML(program, activity).catch(err => {
+  try {
+    await buildHTML.buildPages({
+      program,
+      stage: `build-html`,
+      pagePaths: [...store.getState().pages.keys()],
+      activity,
+    })
+  } catch (err) {
     reportFailure(
       report.stripIndent`
         Building static HTML failed${
@@ -78,7 +89,7 @@ module.exports = async function build(program: BuildArgs) {
       `,
       err
     )
-  })
+  }
   activity.end()
 
   await apiRunnerNode(`onPostBuild`, {
