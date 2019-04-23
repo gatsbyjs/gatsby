@@ -67,7 +67,8 @@ const bootstrapTest = (
   content,
   query,
   test,
-  { additionalParameters = {}, pluginOptions = {} } = {}
+  { additionalParameters = {}, pluginOptions = {} } = {},
+  only
 ) => {
   const node = {
     id: `whatever`,
@@ -80,7 +81,12 @@ const bootstrapTest = (
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(label, async done => {
+  let execTest = it
+  if (only) {
+    execTest = it.only
+  }
+
+  execTest(label, async done => {
     node.content = content
     const createNode = markdownNode => {
       queryResult([markdownNode], query, {
@@ -395,7 +401,8 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toMatch(`Where oh where is that pony?`)
-    }
+    },
+    {}
   )
 
   bootstrapTest(
