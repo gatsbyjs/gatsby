@@ -6,7 +6,6 @@ const {
   getNodeInterface,
 } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
-const { mergeInferredComposer } = require(`./merge-inferred-composer`)
 
 const addInferredTypes = ({
   schemaComposer,
@@ -20,25 +19,29 @@ const addInferredTypes = ({
   const typeNames = putFileFirst(nodeStore.getTypes())
   const noNodeInterfaceTypes = []
 
-  const nodeTypesToInfer = []
+  const typesToInfer = []
 
   typeNames.forEach(typeName => {
     let typeComposer
     if (schemaComposer.has(typeName)) {
       typeComposer = schemaComposer.getOTC(typeName)
-      // Infer if we have enabled infer or if it's "@dontInfer" but we have "addDefaultResolvers: true"
+      // Infer if we have enabled "@infer" or if it's "@dontInfer" but we
+      // have "addDefaultResolvers: true"
       const runInfer = typeComposer.hasExtension(`infer`)
         ? typeComposer.getExtension(`infer`) ||
           typeComposer.getExtension(`addDefaultResolvers`)
         : true
       if (runInfer) {
         if (!typeComposer.hasInterface(`Node`)) {
-          noNodeInterfaceTypes.push(typeComposer.getType())
+          noNodeInterfaceTypes.push(typeComposer)
         }
-        nodeTypesToInfer.push(typeName)
+        typesToInfer.push(typeComposer)
       }
     } else {
-      nodeTypesToInfer.push(typeName)
+      typeComposer = ObjectTypeComposer.create(typeName, schemaComposer)
+      addNodeInterface({ schemaComposer, typeComposer })
+      typeComposer.setExtension(`createdFrom`, `inference`)
+      typesToInfer.push(typeComposer)
     }
   })
 
@@ -58,14 +61,10 @@ const addInferredTypes = ({
     report.panic(`Building schema failed`)
   }
 
-  nodeTypesToInfer.forEach(typeName => {
-    schemaComposer.getOrCreateOTC(typeName)
-  })
-
-  return nodeTypesToInfer.map(typeName =>
+  return typesToInfer.map(typeComposer =>
     addInferredType({
       schemaComposer,
-      typeName,
+      typeComposer,
       nodeStore,
       typeConflictReporter,
       typeMapping,
@@ -76,38 +75,6 @@ const addInferredTypes = ({
 
 const addInferredType = ({
   schemaComposer,
-  typeName,
-  nodeStore,
-  typeConflictReporter,
-  typeMapping,
-  parentSpan,
-}) => {
-  const inferredComposer = ObjectTypeComposer.createTemp(
-    typeName,
-    schemaComposer
-  )
-  inferType({
-    schemaComposer,
-    nodeStore,
-    typeConflictReporter,
-    typeComposer: inferredComposer,
-    typeMapping,
-    parentSpan,
-  })
-  const definedComposer = schemaComposer.getOrCreateOTC(typeName)
-  addNodeInterface({ schemaComposer, typeComposer: definedComposer })
-
-  mergeInferredComposer({
-    schemaComposer,
-    definedComposer,
-    inferredComposer,
-  })
-
-  return definedComposer
-}
-
-const inferType = ({
-  schemaComposer,
   typeComposer,
   nodeStore,
   typeConflictReporter,
@@ -116,8 +83,11 @@ const inferType = ({
 }) => {
   const typeName = typeComposer.getTypeName()
   const nodes = nodeStore.getNodesByType(typeName)
-  typeComposer.setExtension(`createdFrom`, `infer`)
-  typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+  // TODO: Move this to where the type is created once we can get
+  // node type owner information directly from store
+  if (typeComposer.getExtension(`createdFrom`) === `inference`) {
+    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+  }
 
   const exampleValue = getExampleValue({
     nodes,
