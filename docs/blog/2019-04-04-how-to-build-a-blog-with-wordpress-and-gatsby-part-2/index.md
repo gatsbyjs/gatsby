@@ -135,7 +135,7 @@ The site provides a navbar with a link going back to the homepage. There is also
 
 ## Adding Gatsby.js plugins
 
-Now that you know what's already installed and what it looks like to start, you can add the stuff you need to use WordPress with your site. Fortunately, Gatsby has a page on their site where you can [see what plugins are available](https://www.gatsbyjs.org/plugins/). You will be adding the following plugins to your site: [Gatsby-Source-WordPress](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/) and [Gatsby-Plugin-Sitemap](https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/).
+Now that you know what's already installed and what it looks like to start, you can add the stuff you need to use WordPress with your site. Fortunately, Gatsby has a page on their site where you can [see what plugins are available](/plugins/). You will be adding the following plugins to your site: [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/) and [Gatsby-Plugin-Sitemap](/packages/gatsby-plugin-sitemap/).
 
 To do this, you can use this code in the terminal:
 ```shell
