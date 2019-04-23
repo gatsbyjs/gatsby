@@ -414,9 +414,6 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
         typeOwners[node.internal.type]
       }".
 
-          If you copy and pasted code from elsewhere, you'll need to pick a new type name
-          for your new node(s).
-
           The node object passed to "deleteNode":
 
           ${JSON.stringify(node, null, 4)}
