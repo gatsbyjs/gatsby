@@ -378,10 +378,10 @@ case) and you'll see your newly published site! Great work!
 
 In this section you:
 
-- Learned about Gatsby starters, and how to use them to create new projects.
-- Learned about JSX syntax.
-- Learned about components.
-- Learned about Gatsby page components and sub-components.
-- Learned about React “props” and reusing React components.
+- Learned about Gatsby starters, and how to use them to create new projects
+- Learned about JSX syntax
+- Learned about components
+- Learned about Gatsby page components and sub-components
+- Learned about React “props” and reusing React components
 
 Now, move on to [**adding styles to our site**](/tutorial/part-two/)!
