@@ -260,13 +260,9 @@ class Image extends React.Component {
       itemProp,
     } = convertProps(this.props)
 
-    const shouldReveal =
-      this.state.imgLoaded || Boolean(this.state.fadeIn) === false
-    const shouldFadeIn =
-      Boolean(this.state.fadeIn) === true && !this.state.imgCached
-    const durationFadeIn = Number.isInteger(this.state.fadeIn)
-      ? `${this.state.fadeIn}ms`
-      : `0.5s`
+    const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+    const durationFadeIn = `0.5s`
 
     const imageStyle = {
       opacity: shouldReveal ? 1 : 0,

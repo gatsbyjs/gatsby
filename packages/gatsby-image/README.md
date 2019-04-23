@@ -337,7 +337,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 | ---------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
 | `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
-| `fadeIn`               | `number`            | Defaults to fading in the image on load in 500ms                                                                            |
+| `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
 | `title`                | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
