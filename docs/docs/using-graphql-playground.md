@@ -12,12 +12,14 @@ GraphQL Playground is a way for you to interact with the data your sources and p
 
 ## Accessing the Playground
 
-To access GraphQL Playground, first require the dotenv package in your `gatsby-config.js` file (see [here](https://www.gatsbyjs.org/docs/environment-variables/)), add a development environmental variable file, and finally add `GATSBY_GRAPHQL_IDE` to your `develop` script in your `package.json`, like this:
+To access GraphQL Playground add `GATSBY_GRAPHQL_IDE` to your `develop` script in your `package.json`, like this:
 
 ```
 "develop": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
 ```
 
-You can then access it, when the development server is running on `https://localhost:8000/___graphql`
+Use `npm run develop` instead of `gatsby develop` and access it when the development server is running on `https://localhost:8000/___graphql`
+
+To still be able to use `gatsby develop` you would require the dotenv package to your gatsby-config.js file and add an environment variable file, typically called `.env.development`. Finally, add the same script above to `.env.development`.
 
 ![An image pointing out where to find the GraphQl schema](images/playground-schema.png)
