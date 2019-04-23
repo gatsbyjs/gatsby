@@ -20,7 +20,17 @@ import "gatsby-cypress/commands"
 
 Once imported, the following additional commands are available:
 
-- `cy.getTestElement(selector)`: Selects elements where the `data-testid`
+- `cy.waitForRouteChange()`: Waits for Gatsby to finish the route change, in
+  order to ensure event handlers are properly setup. Example:
+
+  ```js
+  // after navigating to another page via a link
+  cy.waitForRouteChange()
+    .get(`#element-with-event-handler`)
+    .click()
+  ```
+
+- [**no longer recommended**] `cy.getTestElement(selector)`: Selects elements where the `data-testid`
   attribute matches the value of `selector`. Example:
 
   ```jsx
@@ -32,16 +42,6 @@ Once imported, the following additional commands are available:
   ```
 
   > **NOTE:** It’s recommended not to use test IDs. Instead, consider using [`cypress-testing-library`](https://github.com/kentcdodds/cypress-testing-library) and relying on `getByText` instead.
-
-- `cy.waitForRouteChange()`: Waits for Gatsby to finish the route change, in
-  order to ensure event handlers are properly setup. Example:
-
-  ```js
-  // after navigating to another page via a link
-  cy.waitForRouteChange()
-    .get(`#element-with-event-handler`)
-    .click()
-  ```
 
 ## Running Cypress tests in Gatsby
 
@@ -68,13 +68,11 @@ Add tests by creating a spec file. We recommend starting with a `cypress/integra
 context("Homepage", () => {
   beforeEach(() => {
     cy.visit(`http://localhost:8000`)
-
-    // Wait for React to finish mounting all components before testing.
-    cy.wait(100)
+    cy.waitForRouteChange()
   })
 
   it("has focusable buttons", () => {
-    cy.getTestElement("btn-to-test").focus()
+    cy.getByText("click me").focus()
     cy.focused().should("have.text", "click me")
   })
 })
