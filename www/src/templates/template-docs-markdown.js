@@ -89,7 +89,7 @@ export const pageQuery = graphql`
         overview
         issue
       }
-      ...MarkdownPageFooter
+      ...MarkdownPageFooterMdx
     }
   }
 `
