@@ -66,7 +66,13 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
+To see the latest gatsby-cli version installed run `gatsby --version`.
+
+![Check gatsby version in terminal](05-gatsby-latest-version.png)
+
 To see the commands available to run `gatsby --help`.
+
+![Check gatsby commands in terminal](06-gatsby-help.png)
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
