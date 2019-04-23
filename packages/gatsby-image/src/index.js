@@ -274,7 +274,7 @@ class Image extends React.Component {
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHideStyle = {
-      transitionDelay: durationFadeIn,
+      transitionDelay: `${durationFadeIn}ms`,
     }
 
     const imagePlaceholderStyle = {
