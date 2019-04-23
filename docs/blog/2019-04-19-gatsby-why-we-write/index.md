@@ -34,9 +34,8 @@ Gatsby is so powerful, because of its core _and the ecosystem_ — not just plug
 
 You can do almost anything you want with Gatsby, you just have to:
 
-_(1) know why & that it's possible_
-
-_(2) know how to do it_
+1. _know why & that it's possible_
+2. _know how to do it_
 
 Roughly speaking, there are two sides of content at Gatsby — marketing content which focuses on (1), and learning content which focuses on (2).
 
