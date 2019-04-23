@@ -10,7 +10,7 @@ tags:
 
 Gatsby Themes introduce a concept called Component Shadowing. This feature allows
 users to override a component in order to customize its rendering. Component Shadowing
-is a powerful way to make one off changes to a theme without having to fully eject.
+is a powerful way to make one-off changes to a theme without having to fully eject.
 
 It's pretty common to end up with a theme where you're happy with 99% of the details
 but want to customize the color palette and perhaps the author bio. This is where Component
