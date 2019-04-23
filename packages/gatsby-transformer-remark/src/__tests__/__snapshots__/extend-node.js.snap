@@ -164,7 +164,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema excerpt does have missing words and extra spaces 1`] = `
 Object {
-  "excerpt": "Where oh  where   is   ?",
+  "excerpt": "Where oh where is that pony?",
   "excerptAst": Object {
     "children": Array [
       Object {
