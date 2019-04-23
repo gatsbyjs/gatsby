@@ -49,15 +49,15 @@ Repeat for every page and template that needs this layout.
 
 As mentioned earlier, Gatsby does not, by default, automatically wrap pages in a layout component. The "top level" component is the page itself. As a result, when the "top level" component changes between pages, React will re-render all children. This means that shared components like navigations will unmount and remount. This will break CSS transitions or React state within those shared components.
 
-If you need to set a wrapper component around page components that won't get unmounted on page changes, use the **`wrapPageElement`** [browser API](https://www.gatsbyjs.org/docs/browser-apis/#wrapPageElement) or the [SSR equivalent](https://www.gatsbyjs.org/docs/ssr-apis/#wrapPageElement).
+If you need to set a wrapper component around page components that won't get unmounted on page changes, use the **`wrapPageElement`** [browser API](/docs/browser-apis/#wrapPageElement) or the [SSR equivalent](/docs/ssr-apis/#wrapPageElement).
 
-Alternatively, you can prevent your layout component from unmounting by using [gatsby-plugin-layout](https://www.gatsbyjs.org/packages/gatsby-plugin-layout/), which implements the `wrapPageElement` APIs for you.
+Alternatively, you can prevent your layout component from unmounting by using [gatsby-plugin-layout](/packages/gatsby-plugin-layout/), which implements the `wrapPageElement` APIs for you.
 
 ### Other resources
 
-- [Creating nested layout components in Gatsby](https://www.gatsbyjs.org/tutorial/part-three/)
-- [Life after layouts in Gatsby V2](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/)
-- [Migrating from v1 to v2](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
-- [gatsby-plugin-layout](https://www.gatsbyjs.org/packages/gatsby-plugin-layout/)
-- [wrapPageElement Browser API](https://www.gatsbyjs.org/docs/browser-apis/#wrapPageElement)
-- [wrapPageElement SSR API](https://www.gatsbyjs.org/docs/ssr-apis/#wrapPageElement)
+- [Creating nested layout components in Gatsby](/tutorial/part-three/)
+- [Life after layouts in Gatsby V2](/blog/2018-06-08-life-after-layouts/)
+- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
+- [gatsby-plugin-layout](/packages/gatsby-plugin-layout/)
+- [wrapPageElement Browser API](/docs/browser-apis/#wrapPageElement)
+- [wrapPageElement SSR API](/docs/ssr-apis/#wrapPageElement)

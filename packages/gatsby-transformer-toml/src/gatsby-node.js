@@ -6,7 +6,7 @@ async function onCreateNode({
   actions,
   loadNodeContent,
   createNodeId,
-  createDigestContent,
+  createContentDigest,
 }) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-toml content
@@ -23,7 +23,7 @@ async function onCreateNode({
   // This version suffers from:
   // 1) More TOML files -> more types
   // 2) Different files with the same name creating conflicts
-  const contentDigest = createDigestContent(parsedContent)
+  const contentDigest = createContentDigest(parsedContent)
 
   const newNode = {
     ...parsedContent,

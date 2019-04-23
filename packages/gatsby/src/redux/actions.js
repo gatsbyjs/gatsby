@@ -351,6 +351,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
+  const alternateSlashPath = page.path.endsWith(`/`)
+    ? page.path.slice(0, -1)
+    : page.path + `/`
+
+  if (store.getState().pages.has(alternateSlashPath)) {
+    report.warn(
+      `Attempting to create page "${
+        page.path
+      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+    )
+  }
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
@@ -470,7 +482,7 @@ const typeOwners = {}
  * markdown transformers look for media types of
  * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
- * choosen by the plugin creating the node. Should be descriptive of the
+ * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
@@ -591,7 +603,7 @@ actions.createNode = (
     )
   }
 
-  trackInlineObjectsInRootNode(node)
+  node = trackInlineObjectsInRootNode(node, true)
 
   const oldNode = getNode(node.id)
 

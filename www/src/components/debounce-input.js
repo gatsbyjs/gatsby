@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import debounce from "lodash/debounce"
+import { debounce } from "lodash-es"
 import PropTypes from "prop-types"
 
 class DebounceInput extends Component {

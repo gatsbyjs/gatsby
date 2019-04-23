@@ -7,13 +7,13 @@ Welcome to part three!
 
 ## What's in this tutorial?
 
-In this part, you'll learn about Gatsby plugins, and creating "layout" components.
+In this part, you'll learn about Gatsby plugins and creating "layout" components.
 
 Gatsby plugins are JavaScript packages that help add functionality to a Gatsby site. Gatsby is designed to be extensible, which means plugins are able to extend and modify just about everything Gatsby does.
 
 Layout components are for sections of your site that you want to share across multiple pages. For example, sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and/or navigation menu. On this page for example, the header at the top is part of gatsbyjs.org's layout component.
 
-Let's dive in to part three.
+Let's dive into part three.
 
 ## Using plugins
 
@@ -31,7 +31,7 @@ For an initial introduction to using plugins, we'll install and implement the Ga
 
 ### ✋ Create a new Gatsby site
 
-As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then, open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
+As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -50,7 +50,7 @@ npm install --save gatsby-plugin-typography react-typography typography typograp
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
 
-2. Create a new file in the root of your project called `gatsby-config.js`, and copy the following into the file:
+2. Create a new file in the root of your project called `gatsby-config.js` and copy the following into the file:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -69,7 +69,7 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 
 > Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
 
-3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils`, and copy the following into the file:
+3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils` and copy the following into the file:
 
 ```javascript:title=src/utils/typography.js
 import Typography from "typography"
@@ -138,7 +138,7 @@ Sweet. You've installed and configured your very first Gatsby plugin!
 
 ## Creating layout components
 
-Now let's move on to learning about layout components. To get ready for this part, add a couple new pages to your project: an about page, and a contact page.
+Now let's move on to learning about layout components. To get ready for this part, add a couple new pages to your project: an about page and a contact page.
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -213,7 +213,7 @@ But try navigating to `/about/`, or `/contact/`. The content on those pages stil
 
 4. Import the layout component in `about.js` and `contact.js` (as you did for `index.js` in the previous step).
 
-The content of all three of your pages is centered, thanks to this single shared layout component!
+The content of all three of your pages is centered thanks to this single shared layout component!
 
 ### ✋ Add a site title.
 
@@ -230,7 +230,7 @@ export default ({ children }) => (
 )
 ```
 
-If you go to any of your three pages you'll see the same title added e.g. the `/about/` page:
+If you go to any of your three pages, you'll see the same title added, e.g. the `/about/` page:
 
 ![with-title](with-title.png)
 
@@ -271,7 +271,7 @@ export default ({ children }) => (
 
 ![with-navigation2](with-navigation2.png)
 
-And there you have it! A three page site with a basic global navigation.
+And there you have it! A three page site with basic global navigation.
 
 _Challenge:_ With your new "layout component" powers, trying adding headers, footers, global navigation, sidebars, etc. to your Gatsby sites!
 

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.38...gatsby-image@2.0.39) (2019-04-15)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.37...gatsby-image@2.0.38) (2019-04-11)
+
+### Bug Fixes
+
+- **gatsby-image:** ensure that currentSrc exists ([#13287](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/13287)) ([6059bce](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/6059bce))
+
 ## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.36...gatsby-image@2.0.37) (2019-04-02)
 
 ### Features
@@ -81,7 +91,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-image:** update typescript definitions - properly mark fields as optional ([#10419](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10419)) ([f2b1821](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/f2b1821))
+- **gatsby-image:** update TypeScript definitions - properly mark fields as optional ([#10419](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/10419)) ([f2b1821](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/f2b1821))
 
 <a name="2.0.24"></a>
 

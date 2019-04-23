@@ -38,17 +38,22 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env =
-      process.env.GATSBY_ACTIVE_ENV ||
-      process.env.NODE_ENV ||
-      `${defaultNodeEnv}`
-    const envFile = path.join(process.cwd(), `./.env.${env}`)
+    // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
+    // this variable is used inside webpack
+    const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+    // config env is depednant on the env that it's run, this can be anything from staging-production
+    // this allows you to set use different .env environments or conditions in gatsby files
+    const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
+    const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
     let parsed = {}
     try {
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
     } catch (err) {
       if (err.code !== `ENOENT`) {
-        report.error(`There was a problem processing the .env file`, err)
+        report.error(
+          `There was a problem processing the .env file (${envFile})`,
+          err
+        )
       }
     }
 
@@ -65,7 +70,7 @@ module.exports = async (
     }, {})
 
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-    envObject.NODE_ENV = JSON.stringify(env)
+    envObject.NODE_ENV = JSON.stringify(nodeEnv)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)

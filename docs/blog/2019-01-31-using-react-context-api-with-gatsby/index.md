@@ -14,7 +14,7 @@ One of the few types of alternative theme that adds real value to users is a low
 
 In considering the different ways to implement this a natural fit become apparent: React’s new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.
 
-After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
+After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
 
 Let's do a deep dive into how this feature was actually implemented step by step using React Context, Gatsby, and a Theme Provider to implement a dark mode UI!
 

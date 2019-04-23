@@ -3,8 +3,8 @@ import { Link } from "gatsby"
 import {
   colors,
   space,
-  dimensions,
-  scale,
+  sizes,
+  fontSizes,
   lineHeights,
   letterSpacings,
   fonts,
@@ -12,30 +12,6 @@ import {
 import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-
-// const CreatorsHeaderLink = ({ linkTo, children }) => (
-//   <li
-//     css={{
-//       display: `flex`,
-//       alignItems: `center`,
-//       margin: 0,
-//     }}
-//   >
-//     <Link
-//       to={linkTo}
-//       state={{ filter: `` }}
-//       activeStyle={{
-//         backgroundColor: colors.gatsby,
-//         color: colors.white,
-//       }}
-//       css={{
-//         ...styles.CreatorsHeaderLink,
-//       }}
-//     >
-//       {children}
-//     </Link>
-//   </li>
-// )
 
 class CreatorsHeader extends Component {
   render() {
@@ -55,28 +31,6 @@ class CreatorsHeader extends Component {
         >
           Creators
         </Link>
-        {/* <nav
-          role="navigation"
-          css={{
-            display: `flex`,
-            justifyContent: `space-between`,
-            alignItems: `center`,
-            [breakpoints.sm]: {
-              justifyContent: `flex-start`,
-            },
-          }}
-        >
-          <CreatorsHeaderLink linkTo="/creators/">All</CreatorsHeaderLink>
-          <CreatorsHeaderLink linkTo="/creators/people/">
-            People
-          </CreatorsHeaderLink>
-          <CreatorsHeaderLink linkTo="/creators/agencies/">
-            Agencies
-          </CreatorsHeaderLink>
-          <CreatorsHeaderLink linkTo="/creators/companies/">
-            Companies
-          </CreatorsHeaderLink>
-        </nav> */}
         <div
           className="creators--filters"
           css={{
@@ -84,38 +38,6 @@ class CreatorsHeader extends Component {
             flex: `2`,
           }}
         >
-          {/* <label
-            className="label"
-            css={[styles.filter, forHire && styles.activeFilter]}
-          >
-            <input
-              type="checkbox"
-              name="forHire"
-              css={{
-                ...styles.input,
-              }}
-              checked={forHire}
-              onChange={() => this.props.applyFilter(`for_hire`)}
-              disabled={hiring}
-            />
-            For Hire
-          </label>
-          <label
-            className="label"
-            css={[styles.filter, hiring && styles.activeFilter]}
-          >
-            <input
-              type="checkbox"
-              name="hiring"
-              css={{
-                ...styles.input,
-              }}
-              checked={hiring}
-              onChange={() => this.props.applyFilter(`hiring`)}
-              disabled={forHire}
-            />
-            Hiring
-          </label> */}
           <div
             css={{
               marginLeft: `auto`,
@@ -125,7 +47,7 @@ class CreatorsHeader extends Component {
           >
             <Button
               small
-              to="/docs/submit-to-creator-showcase/"
+              to="/contributing/submit-to-creator-showcase/"
               icon={<ArrowForwardIcon />}
             >
               {submissionText}
@@ -148,12 +70,12 @@ const styles = {
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${space[6]}`,
-    height: dimensions.headerHeight,
+    height: sizes.headerHeight,
     fontFamily: fonts.header,
   },
   creatorsLink: {
     "&&": {
-      fontSize: scale[4],
+      fontSize: fontSizes[4],
       color: colors.gatsby,
       borderBottom: `none`,
       marginRight: space[3],
@@ -164,7 +86,7 @@ const styles = {
   },
   CreatorsHeaderLink: {
     "&&": {
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
       lineHeight: lineHeights.solid,
       letterSpacing: letterSpacings.tracked,
       textTransform: `uppercase`,

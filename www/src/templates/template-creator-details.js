@@ -6,13 +6,14 @@ import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
   transition,
   radii,
   breakpoints,
-  scale,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -164,7 +165,7 @@ class CreatorTemplate extends Component {
                 <div
                   css={{
                     alignSelf: `flex-start`,
-                    fontSize: scale[1],
+                    fontSize: fontSizes[1],
                     marginRight: space[2],
                   }}
                 >
@@ -261,6 +262,7 @@ class CreatorTemplate extends Component {
             )}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }

@@ -120,7 +120,7 @@ npm i react react-dom
 
 ### Manually install plugins' peer dependencies
 
-Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to install:
+Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
 
 ```shell
 npm i typography react-typography
@@ -137,7 +137,7 @@ In Gatsby v2, the special layout component (`src/layouts/index.js`) that wrapped
 There are a number of implications to this change:
 
 - To render different layouts for different pages, just use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
-- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](https://www.gatsbyjs.org/packages/gatsby-plugin-layout/).
+- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
 - To learn more about the original decisions behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
@@ -645,7 +645,7 @@ The GraphQL root type has been changed from `RootQueryType` to `Query`. This is 
 
 ### Typography.js Plugin Config Changes
 
-If you use [`gatsby-plugin-typography`](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
 ```diff:title=src/utils/typography.js
 - const typography = new Typography();

@@ -35,8 +35,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
 }
 ```
 
-- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
-- The [`createPage` action](https://www.gatsbyjs.org/docs/actions/#createPage) is what actually creates the page.
+- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+- The [`createPage` action](/docs/actions/#createPage) is what actually creates the page.
 
 On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 

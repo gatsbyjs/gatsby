@@ -13,7 +13,7 @@ import {
   transition,
   breakpoints,
   lineHeights,
-  scale,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -24,6 +24,7 @@ import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
 import Avatar from "../components/avatar"
+import FooterLinks from "../components/shared/footer-links"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -169,7 +170,7 @@ class BlogPostTemplate extends React.Component {
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      fontSize: scale[3],
+                      fontSize: fontSizes[3],
                       marginBottom: space[1],
                       color: `${colors.gatsby}`,
                     }}
@@ -295,6 +296,7 @@ class BlogPostTemplate extends React.Component {
               </div>
             </div>
           </Container>
+          <FooterLinks />
         </div>
       </Layout>
     )

@@ -29,12 +29,16 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
       return page
     })
 
-    if (r.data.site.siteMetadata.siteUrl) {
-      // remove trailing slash of siteUrl
-      r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
-        r.data.site.siteMetadata.siteUrl
+    if (!r.data.site.siteMetadata.siteUrl) {
+      throw new Error(
+        `SiteMetaData 'siteUrl' property is required. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
       )
     }
+
+    // remove trailing slash of siteUrl
+    r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
+      r.data.site.siteMetadata.siteUrl
+    )
 
     return r.data
   })
