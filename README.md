@@ -82,8 +82,8 @@ become 'active'.
 
 ## The RFC life-cycle
 
-Once an RFC becomes active, then authors may implement it and submit the
-feature as a pull request to the Gatsby repo. Becoming 'active' is not a rubber
+Once an RFC becomes active, then authors may submit a finished implementation of it
+as a pull request to the Gatsby repo. Becoming 'active' is not a rubber
 stamp, and in particular still does not mean the feature will ultimately be
 merged; it does mean that the core team has agreed to it in principle and are
 amenable to merging it.
