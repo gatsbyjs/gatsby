@@ -47,6 +47,20 @@ plugins: [
 ]
 ```
 
+If you need to provide [Less plugins](https://github.com/less/less-docs/blob/master/content/usage/plugins.md), normally you would provide a `plugins` in the Less options, but this option attribute is already used by Gatsby. It has been remapped to `lessPlugins`
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-less`,
+    options: {
+      lessPlugins: [MyLessPlugin],
+    },
+  },
+]
+```
+
 ### With CSS Modules
 
 Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.less` -> `App.module.less`.
