@@ -121,7 +121,7 @@ might make sense to use a fork instead.
 
 ## Roadmap
 
-In the future we'll be introducing new tooling to around Component Shadowing that will
+In the future we'll be introducing new tooling around Component Shadowing that will
 list when shadowing occurs, what files are available to shadow, and the ability to eject
 from a theme.
 
