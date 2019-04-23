@@ -59,7 +59,7 @@ People from each of the communities who have discovered Gatsby are the experts o
 
 Our objective is **covering the ground** — or if you prefer, _breadth-first search_ rather than _depth-first search_ — making sure that each meaningful message has at least some basic material (both documentation of _how_ and the _why_ of case studies and success stories).
 
-In our content database, which lives in Airtable, we store an auto-updating column in the Messages table, which tracks the # of content pieces per message.
+In our content database, which lives in Airtable, we store an auto-updating column in the Messages table, which tracks the number of content pieces per message.
 
 But...there's a lot of ground to cover? **Yes, there is.**
 
