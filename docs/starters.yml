@@ -2350,3 +2350,14 @@
     - Props table component
     - Customizable sidebar navigation
     - Includes SEO plugins Google Analytics, Offline, Manifest, Helmet.
+- url: https://gatsby-starter-quiz.netlify.com/
+  repo: https://github.com/raphadeluca/gatsby-starter-quiz
+  description: Create rich quizzes with Gatsby & Mdx. No need of database or headless CMS. Manage your data directly in your Mdx file's frontmatter and write your content in the body. Customize your HTML tags, use react components from a library or write your owns. Navigation will be automatically created between each question.
+  tags:
+    - Quiz
+    - MDX
+  features:
+    - Data quiz in the frontmatter
+    - Rich customizable content with MDX
+    - Green / Red alert footer on user's answer
+    - Navigation generated based on the index of each question
