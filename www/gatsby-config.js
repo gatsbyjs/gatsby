@@ -2,6 +2,32 @@ require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+const GA = {
+  identifier: `UA-93349937-5`,
+  viewId: `176383508`,
+}
+
+const dynamicPlugins = []
+if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
+  // pick data from 3 months ago
+  const startDate = new Date()
+  startDate.setMonth(startDate.getMonth() - 3)
+  dynamicPlugins.push({
+    resolve: `gatsby-plugin-guess-js`,
+    options: {
+      GAViewID: GA.viewId,
+      jwt: {
+        client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
+        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
+      },
+      period: {
+        startDate,
+        endDate: new Date(),
+      },
+    },
+  })
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -94,7 +120,6 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-layout`,
-    `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -108,6 +133,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-perf-metrics`,
+      options: {
+        appId: `1:216044356421:web:92185d5e24b3a2a1`,
+      },
+    },
     `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
@@ -115,7 +146,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-5`,
+        trackingId: GA.identifier,
         anonymize: true,
       },
     },
@@ -196,17 +227,6 @@ module.exports = {
         nodeTypes: [`StartersYaml`],
       },
     },
-    `gatsby-plugin-subfont`,
-    // {
-    // resolve: `gatsby-plugin-guess-js`,
-    // options: {
-    // GAViewID: `142357465`,
-    // // The "period" for fetching analytic data.
-    // period: {
-    // startDate: new Date(`2018-1-1`),
-    // endDate: new Date(),
-    // },
-    // },
-    // },
-  ],
+    // `gatsby-plugin-subfont`,
+  ].concat(dynamicPlugins),
 }

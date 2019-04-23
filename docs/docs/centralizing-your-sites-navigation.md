@@ -240,14 +240,16 @@ import React from 'react'
 import { Link } from 'gatsby'
 
 const Header = ({ siteTitle, menuLinks }) => (
-+  <nav style={{ display: 'flex', flex: 1 }}>
-+    {
-+      menuLinks.map(link =>
-+        <li key={link.name} style={{ 'listStyleType': 'none' }}>
-+          <Link to={link.link}>{link.name}</Link>
-+        </li>)
-+    }
-+  </nav>
++		<nav>
++			<ul style={{ display: 'flex', flex: 1, listStyle: 'none' }}>
++				{menuLinks.map(link =>
++					<li key={link.link}>
++						<Link to={link.link}>{link.name}</Link>
++					</li>
++				)}
++			</ul>
++		</nav>
++	)
 )
 ```
 

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.34...gatsby-source-drupal@3.1.0) (2019-04-09)
+
+### Features
+
+- **gatsby-source-drupal:** added Request Headers and GET Request Params options ([#12180](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/12180)) ([239101e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/239101e))
+
+## [3.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.33...gatsby-source-drupal@3.0.34) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.32...gatsby-source-drupal@3.0.33) (2019-04-02)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.31...gatsby-source-drupal@3.0.32) (2019-03-22)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.30...gatsby-source-drupal@3.0.31) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 ## [3.0.30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.29...gatsby-source-drupal@3.0.30) (2019-03-14)
 
 **Note:** Version bump only for package gatsby-source-drupal
