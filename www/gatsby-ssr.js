@@ -1,5 +1,5 @@
 const React = require(`react`)
-const wrapRoot = require(`./wrap-root-element`)
+const wrapRoot = require(`./wrap-root-element`).default
 
 exports.onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
