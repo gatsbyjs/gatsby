@@ -27,10 +27,17 @@ const injectTwitterScript = () => {
 
 let injectedTwitterScript = false
 
+const embedClasses = [
+  `.twitter-tweet`,
+  `.twitter-timeline`,
+  `.twitter-follow-button`,
+  `.twitter-share-button`,
+].join(`,`)
+
 exports.onRouteUpdate = () => {
-  // If there's an embedded tweet, lazy-load the twitter script (if it hasn't
+  // If there's an embedded element, lazy-load the twitter script (if it hasn't
   // already been loaded), and then run the twitter load function.
-  if (document.querySelector(`.twitter-tweet`) !== null) {
+  if (document.querySelector(embedClasses) !== null) {
     if (!injectedTwitterScript) {
       injectTwitterScript()
       injectedTwitterScript = true

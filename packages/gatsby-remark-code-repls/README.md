@@ -163,6 +163,13 @@ specified examples directory. (This will avoid broken links at runtime.)
     // Note that if a target is specified, "noreferrer" will also be added.
     // eg <a href="..." target="_blank" rel="noreferrer">...</a>
     target: '_blank',
+
+    // Include CSS with matching name.
+    // This option only applies to REPLs that support it (eg Codepen).
+    // If set to `true`, when specifying `file1.js` as example file,
+    // it will try to inject the CSS in `file1.css` if the file exists,
+    // otherwise the default behaviour is preserved
+    includeMatchingCSS: false,
   },
 },
 ```

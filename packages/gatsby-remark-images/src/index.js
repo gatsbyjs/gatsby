@@ -81,6 +81,15 @@ module.exports = (
     }
   }
 
+  const getNodeTitle = (node, alt) => {
+    if (node.title) {
+      return node.title
+    } else if (alt && alt.length > 0) {
+      return alt
+    }
+    return ``
+  }
+
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = async function(
@@ -235,14 +244,19 @@ module.exports = (
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
+    const wrapperStyle =
+      typeof options.wrapperStyle === `function`
+        ? options.wrapperStyle(fluidResult)
+        : options.wrapperStyle
+
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && node.title
+    const showCaptions = options.showCaptions && getNodeTitle(node, alt)
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
-    style="position: relative; display: block; ${
-      showCaptions ? `` : options.wrapperStyle
-    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+      showCaptions ? `` : wrapperStyle
+    } max-width: ${presentationWidth}px;"
   >
     <span
       class="${imageBackgroundClass}"
@@ -270,9 +284,12 @@ module.exports = (
     // Wrap in figure and use title as caption
     if (showCaptions) {
       rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
+  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
+      node,
+      alt
+    )}</figcaption>
   </figure>
       `.trim()
     }

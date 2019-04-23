@@ -22,13 +22,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony?",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -42,13 +50,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -62,13 +78,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony? Lorem ipsum…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -82,13 +106,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony? Lorem ipsum dol…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dol…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -136,72 +168,80 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh ",
-      },
-      Object {
         "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh ",
+          },
           Object {
             "children": Array [
               Object {
-                "type": "text",
-                "value": "where",
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "where",
+                  },
+                ],
+                "properties": Object {},
+                "tagName": "em",
+                "type": "element",
               },
             ],
-            "properties": Object {},
-            "tagName": "em",
+            "properties": Object {
+              "href": "nick.com",
+            },
+            "tagName": "a",
             "type": "element",
           },
-        ],
-        "properties": Object {
-          "href": "nick.com",
-        },
-        "tagName": "a",
-        "type": "element",
-      },
-      Object {
-        "type": "text",
-        "value": " ",
-      },
-      Object {
-        "children": Array [
+          Object {
+            "type": "text",
+            "value": " ",
+          },
           Object {
             "children": Array [
               Object {
-                "type": "text",
-                "value": "is",
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "is",
+                  },
+                ],
+                "properties": Object {},
+                "tagName": "em",
+                "type": "element",
               },
             ],
             "properties": Object {},
-            "tagName": "em",
+            "tagName": "strong",
             "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " ",
+          },
+          Object {
+            "children": Array [],
+            "properties": Object {
+              "alt": "that pony",
+              "src": "pony.png",
+            },
+            "tagName": "img",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": "?",
           },
         ],
         "properties": Object {},
-        "tagName": "strong",
+        "tagName": "p",
         "type": "element",
-      },
-      Object {
-        "type": "text",
-        "value": " ",
-      },
-      Object {
-        "children": Array [],
-        "properties": Object {
-          "alt": "that pony",
-          "src": "pony.png",
-        },
-        "tagName": "img",
-        "type": "element",
-      },
-      Object {
-        "type": "text",
-        "value": "?",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -215,13 +255,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is that pony? Is he in the stable…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is that pony? Is he in the stable…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -284,28 +332,36 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where is my ",
-      },
-      Object {
         "children": Array [
           Object {
             "type": "text",
-            "value": "pony",
+            "value": "Where is my ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "pony",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "code",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " named leo?",
           },
         ],
         "properties": Object {},
-        "tagName": "code",
+        "tagName": "p",
         "type": "element",
       },
-      Object {
-        "type": "text",
-        "value": " named leo?",
-      },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",

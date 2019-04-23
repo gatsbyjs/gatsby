@@ -1,9 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
 import Layout from "../components/layout"
-import presets, { colors, space } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { colors, space, breakpoints } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -13,6 +14,8 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
+import HomepageSection from "../components/homepage/homepage-section"
+import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -89,7 +92,6 @@ class IndexRoute extends React.Component {
             content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
-        <MastheadContent />
         <main
           id={`reach-skip-nav`}
           css={{
@@ -99,16 +101,17 @@ class IndexRoute extends React.Component {
             justifyContent: `space-between`,
           }}
         >
+          <MastheadContent />
           <div
             css={{
-              padding: rhythm(space[6]),
+              padding: space[6],
               paddingTop: 0,
               width: `100%`,
               borderBottom: `1px solid ${colors.ui.light}`,
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
-              [presets.Xl]: {
-                padding: rhythm(space[8]),
+              [breakpoints.xl]: {
+                padding: space[8],
               },
             }}
           >
@@ -117,21 +120,18 @@ class IndexRoute extends React.Component {
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
-              <div
-                css={{
-                  textAlign: `center`,
-                  padding: `${rhythm(space[5])} 0 ${rhythm(1.5)}`,
-                }}
-              >
+              <div css={{ textAlign: `center` }}>
                 <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>
                 <Button
                   secondary
+                  large
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: `1rem` }}
+                  overrideCSS={{ marginTop: space[4] }}
+                  icon={<ArrowForwardIcon />}
                 >
                   Get Started
                 </Button>
@@ -144,6 +144,15 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
+
+          <HomepageSection
+            css={{
+              paddingTop: `0 !important`,
+              paddingBottom: `0 !important`,
+            }}
+          >
+            <FooterLinks bottomMargin={space[9]} />
+          </HomepageSection>
         </main>
       </Layout>
     )
