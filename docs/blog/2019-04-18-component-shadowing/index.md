@@ -81,7 +81,7 @@ of Component Shadowing.
 
 ## Changing Styling
 
-Component Shadowing isn't restricted to React components, you can override any
+Component Shadowing isn't restricted to React components; you can override any
 JavaScript/Markdown/MDX/CSS file. For example, `gatsby-theme-blog` has a
 [design tokens file](https://github.com/gatsbyjs/gatsby/blob/666a9bc3c8d91be8a3118b1128340a06e895735e/themes/gatsby-theme-blog/src/components/tokens/index.js)
 which is used to define font sizing, spacing, and colors. If you want to modify these
