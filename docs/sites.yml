@@ -5425,6 +5425,17 @@
   built_by: Colin Tinney
   built_by_url: https://tinney.dev
   featured: false
+- title: Monkeywrench Books
+  main_url: https://monkeywrenchbooks.org
+  url: https://monkeywrenchbooks.org
+  description: >
+    Monkeywrench Books is an all-volunteer, collectively-run bookstore and event space in Austin, TX
+  categories:
+    - Business
+    - Community
+    - Education
+  built_by: Monkeywrench Books
+  built_by_url: https://monkeywrenchbooks.org
 - title: DeepMay.io
   main_url: https://deepmay.io
   url: https://deepmay.io
