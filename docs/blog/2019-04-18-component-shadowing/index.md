@@ -48,7 +48,7 @@ gatsby-theme-blog
 ### Implementing a Shadow
 
 Component Shadowing uses a naming convention to determine which component will be rendered.
-So, in order to override the Bio component in `gatsby-theme-blog` you'd create a file named
+So, in order to override the `Bio` component in `gatsby-theme-blog` you'd create a file named
 `src/gatsby-theme-blog/components/bio.js`.
 
 Any file that lives in `src/gatsby-theme-blog/` of the user's site will be used _instead_ of a
