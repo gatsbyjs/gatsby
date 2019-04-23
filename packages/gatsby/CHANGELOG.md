@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.25...gatsby@2.3.26) (2019-04-23)
+
+### Bug Fixes
+
+- **docs:** Fix typo in Gatsby Browser APIs ([#13527](https://github.com/gatsbyjs/gatsby/issues/13527)) ([a60a909](https://github.com/gatsbyjs/gatsby/commit/a60a909))
+- raise Unexpected Errors in resolve-module-exports ([#13476](https://github.com/gatsbyjs/gatsby/issues/13476)) ([805a1dd](https://github.com/gatsbyjs/gatsby/commit/805a1dd))
+- **gatsby:** respect node type owner in deleteNode ([#13492](https://github.com/gatsbyjs/gatsby/issues/13492)) ([dffb74e](https://github.com/gatsbyjs/gatsby/commit/dffb74e))
+- **gatsby:** Set fixed precision for "bootstrap finished" timer ([#13528](https://github.com/gatsbyjs/gatsby/issues/13528)) ([74a60af](https://github.com/gatsbyjs/gatsby/commit/74a60af))
+
 ## [2.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.24...gatsby@2.3.25) (2019-04-18)
 
 **Note:** Version bump only for package gatsby
