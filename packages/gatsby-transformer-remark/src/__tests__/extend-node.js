@@ -66,8 +66,7 @@ const bootstrapTest = (
   content,
   query,
   test,
-  { additionalParameters = {}, pluginOptions = {} } = {},
-  only
+  { additionalParameters = {}, pluginOptions = {} } = {}
 ) => {
   const node = {
     id: `whatever`,
@@ -80,12 +79,7 @@ const bootstrapTest = (
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  let execTest = it
-  if (only) {
-    execTest = it.only
-  }
-
-  execTest(label, async done => {
+  it(label, async done => {
     node.content = content
     const createNode = markdownNode => {
       queryResult([markdownNode], query, {
