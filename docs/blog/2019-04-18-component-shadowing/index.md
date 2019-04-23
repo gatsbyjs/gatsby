@@ -20,7 +20,7 @@ Shadowing is an effective way to make changes quickly and intuitively.
 
 If you've installed `gatsby-theme-blog` you'll notice that it renders a
 [Bio component](https://github.com/gatsbyjs/gatsby/blob/666a9bc3c8d91be8a3118b1128340a06e895735e/themes/gatsby-theme-blog/src/components/bio.js)
-which is used in the BlogPost template. If you'd like to change the component you can do so
+which is used in the `BlogPost` template. If you'd like to change the component you can do so
 with Component Shadowing.
 
 ### Theme File Structure
