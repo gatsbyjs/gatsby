@@ -23,7 +23,12 @@ const fluidShapeMock = {
   base64: `string_of_base64`,
 }
 
-const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
+const setup = (
+  fluid = false,
+  props = {},
+  onLoad = () => {},
+  onError = () => {}
+) => {
   const { container } = render(
     <Image
       backgroundColor
@@ -39,6 +44,7 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
+      {...props}
     />
   )
 
@@ -78,10 +84,15 @@ describe(`<Image />`, () => {
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })
 
+  it(`should have a transition-delay of 1sec`, () => {
+    const component = setup(false, { durationFadeIn: `1000` })
+    expect(component).toMatchSnapshot()
+  })
+
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
-    const imageTag = setup(true, onLoadMock, onErrorMock).querySelector(
+    const imageTag = setup(true, {}, onLoadMock, onErrorMock).querySelector(
       `picture img`
     )
     fireEvent.load(imageTag)
