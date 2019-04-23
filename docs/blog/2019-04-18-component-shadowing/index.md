@@ -133,5 +133,5 @@ being used in production.
 
 ## Further Reading
 
-- [Component Shadowing Documentation](https://www.gatsbyjs.org/docs/themes/api-reference/#component-shadowing)
+- [Component Shadowing Documentation](/docs/themes/api-reference/#component-shadowing)
 - [Latent Component Shadowing](https://johno.com/latent-component-shadowing)
