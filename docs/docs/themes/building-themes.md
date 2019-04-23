@@ -9,7 +9,7 @@ title: Building Themes
 There's a Gatsby Theme Starter which you can use to get up and running quickly:
 
 ```sh
-npx gatsby new https://github.com/ChristopherBiscardi/gatsby-starter-theme
+npx gatsby new my-theme https://github.com/ChristopherBiscardi/gatsby-starter-theme
 ```
 
 This starter will set you up with a yarn workspace and example site which you can
