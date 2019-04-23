@@ -36,7 +36,7 @@ _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to us
 
 1. Open your Terminal.
 1. Run `brew update` to make sure you have the latest version of Homebrew.
-1. Run this command to install Node and npm in one go: `brew install node`.
+1. Run this command to install Node and npm in one go: `brew install node`
 
 Once you have followed the installation steps, make sure everything was installed properly:
 
@@ -66,7 +66,7 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
-To see the latest gatsby-cli version installed run `gatsby --version`.
+To check the installed `gatsby-cli` version, run: `gatsby --version`
 
 ![Check gatsby version in terminal](05-gatsby-latest-version.png)
 
