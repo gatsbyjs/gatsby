@@ -1,5 +1,5 @@
 ---
-title: Component Shadowing
+title: What is Component Shadowing?
 date: 2019-04-18
 author: John Otander
 excerpt: "Gatsby Themes introduce a concept called Component Shadowing. This feature allows
@@ -31,30 +31,27 @@ omitted for brevity):
 ```
 gatsby-theme-blog
 ├── package.json
-├── src
-│   ├── components
-│   │   ├── bio.js
-│   │   ├── layout.js
-│   │   ├── profile-pic.jpg
-│   │   └── tokens
-│   │       └── index.js
-│   ├── gatsby-theme-blog-core
-│   │   └── components
-│   │       └── blog-post.js
-│   └── utils
-│       └── typography.js
+└── src
+    ├── components
+    │   ├── bio.js
+    │   ├── layout.js
+    │   ├── profile-pic.jpg
+    │   └── tokens
+    │       └── index.js
+    └── utils
+        └── typography.js
 ```
 
 ### Implementing a Shadow
 
 Component Shadowing uses a naming convention to determine which component will be rendered.
 So, in order to override the `Bio` component in `gatsby-theme-blog` you'd create a file named
-`src/gatsby-theme-blog/components/bio.js`.
+`user-site/src/gatsby-theme-blog/components/bio.js`.
 
 Any file that lives in `src/gatsby-theme-blog/` of the user's site will be used _instead_ of a
 file with the same name in `gatsby-theme-blog/src`.
 
-This means that `src/gatsby-theme-blog/components/bio.js` will be rendered in place of
+This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of
 `gatsby-theme-blog/components/bio.js`:
 
 ```js:title=src/gatsby-theme-blog/components/bio.js
@@ -66,11 +63,11 @@ export default () => <h1>My new bio component!</h1>
 You'll result in the following directory tree:
 
 ```
-site
-  └── src
-      └── gatsby-theme-blog
-          └── components
-              └── bio.js
+user-site
+      └── src
+          └── gatsby-theme-blog
+              └── components
+                  └── bio.js
 ```
 
 Leveraging Component Shadowing is a powerful way to introduce small changes to a theme and
@@ -87,7 +84,8 @@ JavaScript/Markdown/MDX/CSS file. For example, `gatsby-theme-blog` has a
 which is used to define font sizing, spacing, and colors. If you want to modify these
 values you can shadow it.
 
-To do so, you can create a file named `src/gatsby-theme-blog/components/tokens/index.js`.
+To do so, you can create a file named
+`user-site/src/gatsby-theme-blog/components/tokens/index.js`.
 
 ```js:title=src/gatsby-theme-blog/components/tokens/index.js
 export default {
@@ -103,12 +101,12 @@ export default {
 You'll result in the following directory tree:
 
 ```
-site
-  └── src
-      └── gatsby-theme-blog
-          └── components
-              └── tokens
-                    └──index.js
+user-site
+      └── src
+          └── gatsby-theme-blog
+              └── components
+                  └── tokens
+                        └──index.js
 ```
 
 Now, blue and red will have your custom values and will be reflected in the theme wherever
