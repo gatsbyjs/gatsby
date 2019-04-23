@@ -5,7 +5,7 @@ import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import { colors, space, breakpoints, scale } from "../../utils/presets"
+import { colors, space, breakpoints, fontSizes } from "../../utils/presets"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -162,7 +162,7 @@ class CreatorsView extends Component {
                     <div
                       css={{
                         alignSelf: `flex-start`,
-                        fontSize: scale[0],
+                        fontSize: fontSizes[0],
                       }}
                     >
                       <Badge forHire={item.node.for_hire}>

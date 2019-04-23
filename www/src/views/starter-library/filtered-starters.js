@@ -10,7 +10,7 @@ import {
   space,
   radii,
   breakpoints,
-  dimensions,
+  sizes,
   fonts,
 } from "../../utils/presets"
 
@@ -27,6 +27,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
 
@@ -167,7 +168,7 @@ export default class FilteredStarterLibrary extends Component {
               height: `6rem`,
               paddingTop: `${space[6]}`,
               [breakpoints.sm]: {
-                height: dimensions.headerHeight,
+                height: sizes.headerHeight,
                 paddingTop: 0,
               },
             }}
@@ -269,6 +270,7 @@ export default class FilteredStarterLibrary extends Component {
               Load More
             </Button>
           )}
+          <FooterLinks />
         </ContentContainer>
       </section>
     )

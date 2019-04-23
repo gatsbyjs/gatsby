@@ -7,6 +7,7 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
+import FooterLinks from "../../components/shared/footer-links"
 
 class IndexRoute extends React.Component {
   render() {
@@ -25,18 +26,18 @@ class IndexRoute extends React.Component {
             <p>There are four main ways to get started with Gatsby:</p>
             <ol>
               <li>
-                <Link to="/tutorial/">Tutorial</Link>: The tutorial is written
-                to be as accessible as possible to people without much web
-                development experience.
+                <Link to="/tutorial/">Tutorial</Link>: Step-by-step instructions
+                on how to install Gatsby and start a project: written for people
+                without Gatsby or web development experience, though it has
+                helped developers of all skill levels.
               </li>
               <li>
-                <Link to="/docs/quick-start">Quick start</Link>: The quick start
-                is intended for intermediate to advanced developers who prefer
-                to dig straight in.
+                <Link to="/docs/quick-start">Quick start</Link>: One page
+                summary of how to install Gatsby and start a new project.
               </li>
               <li>
                 <Link to="/docs/recipes/">Recipes</Link>: A happy medium between
-                the tutorial and the quick start, find some quick answers for
+                the tutorial and the quick start. Find some quick answers for
                 how to accomplish some specific, common tasks with Gatsby.
               </li>
               <li>
@@ -79,6 +80,19 @@ class IndexRoute extends React.Component {
                     : Learn about topics that are too large for a doc and
                     warrant a tutorial.
                   </li>
+                  <li>
+                    <Link to="/docs/using-gatsby-professionally/">
+                      Using Gatsby Professionally
+                    </Link>
+                    : Learn tips and tricks for how to explain Gatsby to others
+                    at work, so that you have more opportunities to work with
+                    Gatsby professionally.
+                  </li>
+                  <li>
+                    <Link to="/contributing/">Contributing</Link>: Find guides
+                    on the Gatsby.js community, code of conduct, and how to get
+                    started contributing.
+                  </li>
                 </ul>
               </li>
             </ol>
@@ -88,6 +102,8 @@ class IndexRoute extends React.Component {
               get started contributing to Gatsby.
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
+
+            <FooterLinks />
           </Container>
         </DocSearchContent>
       </Layout>
