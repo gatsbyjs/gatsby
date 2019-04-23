@@ -14,7 +14,7 @@ This doc focuses on source plugins and uses `gatsby-source-filesystem` to explai
 
 # Table of Contents
 
-- [What do source plugin do?](#what-do-source-plugins-do)
+- [What do source plugins do?](#what-do-source-plugins-do)
 - [What fields are required?](#what-fields-are-required)
 - [`media type` is not required, yet necessary to work with transformer plugins](#media-type-is-not-required-yet-necessary-to-work-with-transformer-plugins)
 - [What does the code look like?](#what-does-the-code-look-like)
