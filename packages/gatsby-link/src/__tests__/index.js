@@ -74,6 +74,13 @@ describe(`<Link />`, () => {
     expect(container).toMatchSnapshot()
   })
 
+  it(`matches partially active snapshot`, () => {
+    const { container } = setup({
+      linkProps: { to: `/active/nested`, partiallyActive: true },
+    })
+    expect(container).toMatchSnapshot()
+  })
+
   it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
       getInstance({})
@@ -88,7 +95,6 @@ describe(`<Link />`, () => {
     it(`accepts to as a string`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location } })
-
       expect(link.getAttribute(`href`)).toEqual(location)
     })
 
@@ -97,6 +103,20 @@ describe(`<Link />`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location }, pathPrefix })
       expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
+    })
+
+    it(`does not warn when internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `/courses?sort=name`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`warns when not internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `https://gatsby.org`
+      setup({ linkProps: { to } })
+      expect(console.warn).toBeCalled()
     })
   })
 
@@ -163,5 +183,12 @@ describe(`ref forwarding`, () => {
 
     expect(innerRef).toHaveBeenCalledTimes(1)
     expect(innerRef).toHaveBeenCalledWith(expect.any(HTMLElement))
+  })
+
+  it(`handles a RefObject (React >=16.4)`, () => {
+    const ref = React.createRef(null)
+    setup({ linkProps: { ref } })
+
+    expect(ref.current).toEqual(expect.any(HTMLElement))
   })
 })

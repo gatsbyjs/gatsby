@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.7...gatsby-remark-prismjs@3.2.8) (2019-04-09)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** Update warnings to handle missing language ([#13159](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/13159)) ([422f91d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/422f91d))
+
+## [3.2.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.6...gatsby-remark-prismjs@3.2.7) (2019-04-04)
+
+### Features
+
+- **gatsby-remark-prismjs:** load languages when referred to by an alias ([#13127](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/13127)) ([de8f99b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/de8f99b))
+
+## [3.2.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.5...gatsby-remark-prismjs@3.2.6) (2019-03-18)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.2.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.4...gatsby-remark-prismjs@3.2.5) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.3...gatsby-remark-prismjs@3.2.4) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.2...gatsby-remark-prismjs@3.2.3) (2019-01-29)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** use aliased name for highlighters ([#11038](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/11038)) ([d2eba72](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/d2eba72))
+
+## [3.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.1...gatsby-remark-prismjs@3.2.2) (2019-01-24)
+
+### Features
+
+- **gatsby-remark-prismjs:** Add class when using highlighted lines ([#11218](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/11218)) ([e1d6622](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/e1d6622))
+
+<a name="3.2.1"></a>
+
+## [3.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.0...gatsby-remark-prismjs@3.2.1) (2019-01-23)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 <a name="3.2.0"></a>
 
 # [3.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.1.4...gatsby-remark-prismjs@3.2.0) (2018-12-31)

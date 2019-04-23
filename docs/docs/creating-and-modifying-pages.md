@@ -39,7 +39,11 @@ your sites development server at `HOST:PORT/___graphql` e.g.
 }
 ```
 
+The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+
 You can also query for any `context` data you or plugins added to pages.
+
+> **NOTE:** There are a few reserved names that _cannot_ be used in `context`. They are: `path`, `matchPath`, `component`, `componentChunkName`, `pluginCreator___NODE`, and `pluginCreatorId`.
 
 ## Creating pages in gatsby-node.js
 
@@ -113,6 +117,8 @@ To do this, in your site's `gatsby-node.js` add code similar to the following:
 _Note: There's also a plugin that will remove all trailing slashes from pages automatically:
 [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
+_Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
+
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
 const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
@@ -120,17 +126,15 @@ const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
-  return new Promise(resolve => {
-    const oldPage = Object.assign({}, page)
-    // Remove trailing slash unless page is /
-    page.path = replacePath(page.path)
-    if (page.path !== oldPage.path) {
-      // Replace new page with old page
-      deletePage(oldPage)
-      createPage(page)
-    }
-    resolve()
-  })
+
+  const oldPage = Object.assign({}, page)
+  // Remove trailing slash unless page is /
+  page.path = replacePath(page.path)
+  if (page.path !== oldPage.path) {
+    // Replace new page with old page
+    deletePage(oldPage)
+    createPage(page)
+  }
 }
 ```
 
@@ -147,8 +151,20 @@ exports.onCreatePage = ({ page, actions }) => {
   createPage({
     ...page,
     context: {
-      house: Gryffindor,
+      house: `Gryffindor`,
     },
   })
 }
+```
+
+On your pages and templates, you can access your context via the prop `pageContext` like this:
+
+```jsx
+import React from "react"
+
+const Page = ({ pageContext }) => {
+  return <div>{pageContext.house}</div>
+}
+
+export default Page
 ```

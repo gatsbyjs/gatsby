@@ -1,6 +1,6 @@
 ---
 title: Open Sourcing Gatsby Workshops
-date: "2018-05-31"
+date: 2018-05-31
 author: "Shannon Soper"
 ---
 
