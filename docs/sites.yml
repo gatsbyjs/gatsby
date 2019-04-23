@@ -5425,3 +5425,16 @@
   built_by: Colin Tinney
   built_by_url: https://tinney.dev
   featured: false
+- title: DeepMay.io
+  main_url: https://deepmay.io
+  url: https://deepmay.io
+  description: >
+    DeepMay is an experimental new tech bootcamp in the mountains of North Carolina.
+  categories:
+    - Event
+    - Community
+    - Technology
+    - Marketing
+  built_by: DeepMay
+  built_by_url: https://twitter.com/deepmay_io
+  featured: false
