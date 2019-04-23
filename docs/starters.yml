@@ -2350,3 +2350,14 @@
     - Props table component
     - Customizable sidebar navigation
     - Includes SEO plugins Google Analytics, Offline, Manifest, Helmet.
+- url: http://gatsby-absurd.surge.sh/
+  repo: https://github.com/ajayns/gatsby-absurd
+  description: A Gatsby starter using illustrations from https://absurd.design/
+  tags:
+    - Onepage
+    - Styling:CSS-in-JS
+  features:
+    - Uses surreal illustrations from absurd.design.
+    - Landing page structure split into sections
+    - Basic UX/UX elements ready. navbar, smooth scrolling, faqs, theming
+    - Convenient image handling and data separation

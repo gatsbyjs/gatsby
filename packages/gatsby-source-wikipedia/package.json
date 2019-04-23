@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wikipedia"
   },
   "license": "MIT",
   "dependencies": {
