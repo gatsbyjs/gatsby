@@ -49,7 +49,7 @@ So, in order to override the `Bio` component in `gatsby-theme-blog` you'd create
 `user-site/src/gatsby-theme-blog/components/bio.js`.
 
 Any file that lives in `src/gatsby-theme-blog/` of the user's site will be used _instead_ of a
-file with the same name in `gatsby-theme-blog/src`.
+file with the same name in the theme's src directory: `gatsby-theme-blog/src`.
 
 This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of
 `gatsby-theme-blog/components/bio.js`:
