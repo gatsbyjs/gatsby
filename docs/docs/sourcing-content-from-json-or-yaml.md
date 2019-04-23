@@ -1,6 +1,6 @@
 ---
-
-## title: "Sourcing Content from JSON or YAML"
+title: Sourcing Content from JSON or YAML
+---
 
 ## Table of Contents
 
@@ -12,17 +12,13 @@
 
 ## Introduction
 
-As you come across Gatsby and start discovering the extent of it's possibilities, sometimes you might wonder about the basic things.
-
-Things like importing a JSON file or a YAML file directly into a page.
-
-And that's what you'll build while following this small tutorial.
+As you come across Gatsby and start discovering the extent of its possibilities, sometimes you might wonder about basic things like importing a JSON file or a YAML file directly into a page. And that's what you'll build while following this small tutorial!
 
 ## Prerequisites
 
 Before we go through the details and code, you should be familiar with the basics of Gatsby.
 
-Check out the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/).
+Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/).
 In addition to this, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
 
 Otherwise just skip this part and move onto the next part.
@@ -49,7 +45,7 @@ This package is used to ensure uniqueness with React prop keys.
 
 ## YAML example
 
-Starting from YAML, if you want to see how to do it using JSON, instead jump to the [next section](#JSON-example).
+This tutorial starts with sourcing content from a YAML file. If you want to see how to do it using JSON instead, jump to the [next section](#JSON-example).
 
 ### Adding the YAML content
 
@@ -68,7 +64,6 @@ content:
       Spicy jalapeno bacon ipsum dolor amet t-bone burgdoggen short loin kevin flank.
       Filet mignon frankfurter spare ribs, sausage corned beef picanha beef ribs pork belly kevin cupim porchetta alcatra hamburger.
       Picanha brisket shankle buffalo tri-tip. Doner prosciutto meatloaf ribeye kevin kielbasa jowl beef ribs flank burgdoggen venison.
-      Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!
   - item: 192.33
   - item: 111111
 ```
@@ -97,7 +92,7 @@ const YAMLbuildtime = () => (
 export default YAMLbuildtime
 ```
 
-The above code imports YAML source data and renders it in a functional stateless React component, that when rendered by Gatsby, and without any extra configuration will display a page sourced from a YAML file.
+The above code imports YAML source data and renders it in a functional stateless React component with Gatsby. Without any extra configuration, it will display a page sourced from a YAML file.
 
 ## JSON example
 
@@ -156,7 +151,7 @@ export default JSONbuildtime
 
 The only thing different in this case, is the file import. Instead of the YAML file, this time you're importing directly a JSON file into the page component.
 
-Once again out of the box and without any extra configuration the page will show the content.
+Once again: out of the box and without any extra configuration, the page will show the content.
 
 ## Joining the pieces
 
@@ -169,14 +164,14 @@ After all these steps are complete, you should have the following file and folde
     |src
       |pages
         - index.js
-        - jsononclient.js or - ymlonclient.js
+        - json-at-buildtime.js or - yml-at-buildtime.js
         - 404.js
 ```
 
 Running `gatsby develop` in the terminal and opening a browser window to `http://localhost:8000/json-at-buildtime/` or `http://localhost:8000/yml-at-buildtime`, you'll see the results of this small tutorial.
 
-To make this work on your existing Gatsby site, you would need to:
+To make this work on your existing Gatsby site:
 
-- For JSON copy over the file contents of `json-at-buildtime.js` : https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/json-at-buildtime.js and corresponding JSON file https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/My-JSON-Content.json
+- For JSON, copy over the file contents of `json-at-buildtime.js` : https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/json-at-buildtime.js and corresponding JSON file https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/My-JSON-Content.json
 
-- For YAML copy over the file contents of `yml-at-buildtime.js`: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/yml-at-buildtime.js and corresponding YAML file https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/My-YAML-Content.yaml
+- For YAML, copy over the file contents of `yml-at-buildtime.js`: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/pages/yml-at-buildtime.js and corresponding YAML file https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/My-YAML-Content.yaml
