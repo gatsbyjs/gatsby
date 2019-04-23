@@ -403,6 +403,26 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id)
+  if (plugin) {
+    const pluginName = plugin.name
+
+    if (node && typeOwners[node.internal.type] !== pluginName)
+      throw new Error(stripIndent`
+          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
+
+          The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
+
+          The node object passed to "deleteNode":
+
+          ${JSON.stringify(node, null, 4)}
+
+          The plugin deleting the node:
+
+          ${JSON.stringify(plugin, null, 4)}
+        `)
+  }
 
   const createDeleteAction = node => {
     return {
