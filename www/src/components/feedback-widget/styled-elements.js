@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import { breakpoints } from "./presets"
+import { breakpoints } from "../../utils/presets"
 
 export const WidgetContainer = styled(`div`)`
   height: 2.5rem;
@@ -11,7 +11,7 @@ export const WidgetContainer = styled(`div`)`
     height: 26rem;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${breakpoints.lg} {
     &:not(.closed) {
       height: 26rem;
       width: 20rem;

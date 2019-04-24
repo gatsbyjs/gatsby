@@ -10,6 +10,8 @@ import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfie
 import MdSend from "react-icons/lib/md/send"
 import MdRefresh from "react-icons/lib/md/refresh"
 
+import { colors, fontSizes, radii } from "../../utils/presets"
+
 const Form = styled(`form`)`
   margin-bottom: 0;
 `
@@ -22,7 +24,7 @@ const Fieldset = styled(`fieldset`)`
 
 const Legend = styled(`legend`)`
   display: inline-block;
-  font-size: 0.875rem;
+  font-size: ${fontSizes[1]};
   margin-bottom: 1em;
   padding: 0.1em 0.5em;
   text-align: center;
@@ -30,8 +32,8 @@ const Legend = styled(`legend`)`
 
 const Rating = styled(`div`)`
   align-content: stretch;
-  border: 3px solid #8a4baf;
-  border-radius: 8px;
+  border: 3px solid ${colors.lilac};
+  border-radius: ${radii[3]}px;
   display: flex;
   flex: 1 1 auto;
   justify-content: stretch;
@@ -49,7 +51,7 @@ const Rating = styled(`div`)`
 `
 
 const TextareaLabel = styled(`label`)`
-  font-size: 0.875rem;
+  font-size: ${fontSizes[1]};
   font-weight: bold;
 
   span {
@@ -59,7 +61,7 @@ const TextareaLabel = styled(`label`)`
 
 const Textarea = styled(`textarea`)`
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: ${radii[2]}px;
   color: #333;
   display: block;
   font-weight: normal;

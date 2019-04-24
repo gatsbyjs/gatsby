@@ -1,7 +1,7 @@
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import { breakpoints } from "./presets"
+import { breakpoints, colors, fontSizes, radii } from "../../utils/presets"
 
 const rotation = keyframes`
   0% {
@@ -13,21 +13,20 @@ const rotation = keyframes`
 `
 
 export const focusStyle = css`
-  box-shadow: 0 0 0 0.12rem #ffb238;
+  box-shadow: 0 0 0 0.12rem ${colors.accent};
   outline: none;
 `
 
 const buttonStyles = css`
   -webkit-appearance: none;
   align-items: center;
-  background: rebeccapurple;
+  background: ${colors.gatsby};
   border: none;
-  border-radius: 2px;
+  border-radius: ${radii[1]}px;
   color: white;
   cursor: pointer;
   display: flex;
-  font-size: 0.875rem;
-  font-family: sans-serif;
+  font-size: ${fontSizes[1]};
   padding: 0.3rem 0.75rem;
   transition: 0.5s;
   z-index: 1;
@@ -48,7 +47,7 @@ const buttonStyles = css`
   }
 
   &:hover {
-    box-shadow: 0 0 0 0.12rem #ffb23888;
+    box-shadow: 0 0 0 0.12rem ${colors.accent}88;
   }
 `
 
@@ -72,14 +71,14 @@ export const SubmitButton = styled(`button`)`
 
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
-  background: #fff;
-  border: 1px solid rebeccapurple;
-  color: rebeccapurple;
+  background: ${colors.white};
+  border: 1px solid ${colors.gatsby};
+  color: ${colors.gatsby};
 `
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  background: white;
+  background: ${colors.white};
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   display: flex;
@@ -89,16 +88,16 @@ export const ToggleButtonLabel = styled(`span`)`
   white-space: nowrap;
   width: 100%;
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${breakpoints.lg} {
     width: auto;
   }
 `
 
 export const ToggleButtonIcon = styled(`span`)`
   align-items: center;
-  background: rebeccapurple;
+  background: ${colors.gatsby};
   border-radius: 50%;
-  color: #fff;
+  color: ${colors.white};
   display: flex;
   font-size: 1rem;
   height: 1.4rem;
@@ -110,13 +109,13 @@ export const ToggleButtonIcon = styled(`span`)`
   width: 1.4rem;
 
   svg {
-    fill: #fff;
+    fill: ${colors.white};
     height: 0.8rem;
     width: 0.8rem;
     transition: 0.5s;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${breakpoints.lg} {
     right: 0.75rem;
 
     .opened &,
@@ -126,7 +125,7 @@ export const ToggleButtonIcon = styled(`span`)`
       &:hover {
         svg {
           transform: rotate(90deg);
-          fill: #ffb238;
+          fill: ${colors.accent};
         }
       }
     }
@@ -150,7 +149,7 @@ export const ToggleButton = styled(`button`)`
 
   &:hover {
     ${ToggleButtonLabel} {
-      box-shadow: 0 0 0 0.12rem #ffb23888;
+      box-shadow: 0 0 0 0.12rem ${colors.accent}88;
     }
   }
 
@@ -169,7 +168,7 @@ export const ToggleButton = styled(`button`)`
     display: none;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${breakpoints.lg} {
     bottom: 0;
     position: absolute;
     right: 0;
@@ -183,12 +182,12 @@ export const ToggleButton = styled(`button`)`
       transform: translate(-0.5rem, -26rem);
 
       ${ToggleButtonIcon} {
-        background: #fff;
+        background: ${colors.white};
         border: 1px solid #eee;
         transform: scale(1.8);
 
         svg {
-          fill: rebeccapurple;
+          fill: ${colors.gatsby};
         }
       }
 

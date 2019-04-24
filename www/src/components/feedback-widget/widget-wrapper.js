@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import { breakpoints } from "./presets"
+import { breakpoints, colors, radii } from "../../utils/presets"
 
 const boldEntry = keyframes`
   100% {
@@ -23,10 +23,9 @@ const opacityEntry = keyframes`
 `
 
 const WrapperDiv = styled(`div`)`
-  background-color: white;
+  background-color: ${colors.white};
   border: 1px solid #eee;
-  border-radius: 0.3rem;
-  font-family: sans-serif;
+  border-radius: ${radii[2]}px;
   height: 100%;
   opacity: 0.5;
   overflow-y: auto;
@@ -67,7 +66,7 @@ const WrapperDiv = styled(`div`)`
     opacity: 1;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${breakpoints.lg} {
     box-shadow: rgba(46, 41, 51, 0.08) 0px 4px 8px,
       rgba(71, 63, 79, 0.16) 0px 8px 16px;
     height: 100%;
