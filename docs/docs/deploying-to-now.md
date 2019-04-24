@@ -8,7 +8,7 @@ This guide will show you how to get started in a few quick steps:
 
 ## Step 1: Getting Started with Gatsby
 
-If you haven't already [set up a Gatsby project](https://www.gatsbyjs.org/docs/quick-start) you can do so by first installing Gatsby globally:
+If you haven't already [set up a Gatsby project](/docs/quick-start) you can do so by first installing Gatsby globally:
 
 ```shell
 npm install --global gatsby-cli
@@ -52,7 +52,7 @@ This `now.json` file will allow us to do several things, specifically:
 
 - Use the [latest Now 2.0 version](https://zeit.co/blog/now-2) of [the platform](https://zeit.co/docs/v2/platform/overview/)
 - Set the project name to `my-gatsby-project`
-- Use the [@now/static-build builder](https://zeit.co/docs/v2/deployments/official-builders/static-build-now-static-build/) to take the `package.json` file as an entrypoint and use the `public` directory as the our content directory
+- Use the [@now/static-build builder](https://zeit.co/docs/v2/deployments/official-builders/static-build-now-static-build/) to take the `package.json` file as an entrypoint and use the `public` directory as our content directory
 
 The final step is to add a script to the `package.json` which will build our application:
 

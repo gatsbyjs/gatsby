@@ -1,11 +1,9 @@
 // @flow
 import parsePath from "parse-filepath"
 import path from "path"
-import slash from "slash"
 
-module.exports = (basePath: string, filePath: string): string => {
-  const relativePath = path.posix.relative(slash(basePath), slash(filePath))
-  const { dirname, name } = parsePath(relativePath)
+module.exports = (filePath: string): string => {
+  const { dirname, name } = parsePath(filePath)
   const parsedName = name === `index` ? `` : name
 
   return path.posix.join(`/`, dirname, parsedName, `/`)

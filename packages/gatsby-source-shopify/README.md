@@ -17,8 +17,15 @@ npm install --save gatsby-source-shopify
 
 ## How to use
 
+Ensure you have an access token for the [Shopify Storefront API][shopify-storefront-api]. The token should have the following permissions:
+
+- Read products, variants, and collections
+- Read product tags
+- Read content like articles, blogs, and comments
+
+Then in your `gatsby-config.js` add the following config to enable this plugin:
+
 ```js
-// In your gatsby-config.js
 plugins: [
   /*
    * Gatsby's data processing layer begins with “source”
@@ -113,7 +120,7 @@ provided on the `comments` field.
 ```graphql
 {
   allShopifyArticle {
-    edge {
+    edges {
       node {
         id
         author {
@@ -147,7 +154,7 @@ directly like the following:
 ```graphql
 {
   allShopifyBlog {
-    edge {
+    edges {
       node {
         id
         title
@@ -166,7 +173,7 @@ queried directly like the following:
 ```graphql
 {
   allShopifyComment {
-    edge {
+    edges {
       node {
         id
         author {
@@ -187,7 +194,7 @@ Products in the collection are provided on the `products` field.
 ```graphql
 {
   allShopifyCollection {
-    edge {
+    edges {
       node {
         id
         descriptionHtml
@@ -216,7 +223,7 @@ fields.
 ```graphql
 {
   allShopifyProduct {
-    edge {
+    edges {
       node {
         id
         descriptionHtml
@@ -253,7 +260,7 @@ be queried directly like the following:
 ```graphql
 {
   allShopifyProductOption {
-    edge {
+    edges {
       node {
         id
         name
@@ -272,7 +279,7 @@ can be queried directly like the following:
 ```graphql
 {
   allShopifyProductVariant {
-    edge {
+    edges {
       node {
         id
         availableForSale
@@ -306,7 +313,7 @@ like the following:
 ```graphql
 {
   allShopifyShopPolicy {
-    edge {
+    edges {
       node {
         body
         title

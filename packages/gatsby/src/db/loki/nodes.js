@@ -141,8 +141,16 @@ function getNodesByType(typeName) {
  * `getNodesByType` should be used instead. Or at least where possible
  */
 function getNodes() {
+  const nodeTypes = getTypes()
+  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType))
+}
+
+/**
+ * Returns the unique collection of all node types
+ */
+function getTypes() {
   const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
-  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType.type))
+  return nodeTypes.map(nodeType => nodeType.type)
 }
 
 /**
@@ -303,7 +311,9 @@ function reducer(state = new Map(), action) {
       return null
 
     case `DELETE_NODE`: {
-      deleteNode(action.payload)
+      if (action.payload) {
+        deleteNode(action.payload)
+      }
       return null
     }
 
@@ -327,6 +337,7 @@ module.exports = {
   getNodes,
   getNode,
   getNodesByType,
+  getTypes,
   hasNodeChanged,
   getNodeAndSavePathDependency,
 

@@ -2,8 +2,15 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
+const clipboardy = require(`clipboardy`)
+const {
+  trackCli,
+  setDefaultTags,
+  setTelemetryEnabled,
+} = require(`gatsby-telemetry`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -39,6 +46,11 @@ function buildLocalCommands(cli, isLocalSite) {
         `gatsby`,
         `package.json`
       ))
+      try {
+        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
+      } catch (e) {
+        // ignore
+      }
       majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
     } catch (err) {
       /* ignore */
@@ -82,6 +94,13 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      if (argv.noColor) {
+        // disables colors in popular terminal output coloring packages
+        //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
+        //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
+        process.env.FORCE_COLOR = `0`
+      }
+
       report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
@@ -91,7 +110,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, useYarn }
+      let args = { ...argv, ...siteInfo, report, useYarn }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -140,7 +159,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -170,7 +189,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
@@ -222,29 +241,39 @@ function buildLocalCommands(cli, isLocalSite) {
       }),
     handler: args => {
       try {
-        envinfo.run(
-          {
+        const copyToClipboard =
+          // Clipboard is not accessible when on a linux tty
+          process.platform === `linux` && !process.env.DISPLAY
+            ? false
+            : args.clipboard
+
+        envinfo
+          .run({
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
             Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
-          },
-          {
-            console: true,
-            // Clipboard is not accessible when on a linux tty
-            clipboard:
-              process.platform === `linux` && !process.env.DISPLAY
-                ? false
-                : args.clipboard,
-          }
-        )
+          })
+          .then(envinfoOutput => {
+            console.log(envinfoOutput)
+
+            if (copyToClipboard) {
+              clipboardy.writeSync(envinfoOutput)
+            }
+          })
       } catch (err) {
-        console.log(`Error: unable to print environment info`)
+        console.log(`Error: Unable to print environment info`)
         console.log(err)
       }
     },
+  })
+
+  cli.command({
+    command: `clean`,
+    desc: `Wipe the local gatsby environment including built assets and cache`,
+    handler: getCommandHandler(`clean`),
   })
 
   cli.command({
@@ -277,6 +306,7 @@ module.exports = argv => {
   let isLocalSite = isLocalGatsbySite()
 
   cli
+    .scriptName(`gatsby`)
     .usage(`Usage: $0 <command> [options]`)
     .alias(`h`, `help`)
     .alias(`v`, `version`)
@@ -287,6 +317,7 @@ module.exports = argv => {
       global: true,
     })
     .option(`no-color`, {
+      alias: `no-colors`,
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,
@@ -294,6 +325,15 @@ module.exports = argv => {
     })
 
   buildLocalCommands(cli, isLocalSite)
+
+  try {
+    const { version } = require(`../package.json`)
+    setDefaultTags({ gatsbyCliVersion: version })
+  } catch (e) {
+    // ignore
+  }
+
+  trackCli(argv)
 
   return cli
     .command({
@@ -306,10 +346,40 @@ module.exports = argv => {
         }
       ),
     })
+    .command({
+      command: `telemetry`,
+      desc: `Enable or disable Gatsby anonymous analytics collection.`,
+      builder: yargs =>
+        yargs
+          .option(`enable`, {
+            type: `boolean`,
+            description: `Enable telemetry (default)`,
+          })
+          .option(`disable`, {
+            type: `boolean`,
+            description: `Disable telemetry`,
+          }),
+
+      handler: handlerP(({ enable, disable }) => {
+        const enabled = enable || !disable
+        setTelemetryEnabled(enabled)
+        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
+    })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
-    .showHelpOnFail(true)
-    .recommendCommands()
+    .fail((msg, err, yargs) => {
+      const availableCommands = yargs.getCommands().map(commandDescription => {
+        const [command] = commandDescription
+        return command.split(` `)[0]
+      })
+      const arg = argv.slice(2)[0]
+      const suggestion = arg ? didYouMean(arg, availableCommands) : ``
+
+      cli.showHelp()
+      report.log(suggestion)
+      report.log(msg)
+    })
     .parse(argv.slice(2))
 }

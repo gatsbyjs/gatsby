@@ -15,20 +15,27 @@ const readFile = file =>
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let loadNodeContent, actions, node, createdNodes, updatedNodes
   const createNodeId = jest.fn()
+
   createNodeId.mockReturnValue(`uuid-from-gatsby`)
-  let run = (node, opts = {}) =>
-    onCreateNode(
+  let run = (node, opts = {}) => {
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    return onCreateNode(
       {
         node,
         loadNodeContent,
         actions,
         createNodeId,
         reporter: { error: console.error },
+        createContentDigest,
       },
-      opts
+      { cwd: path.join(__dirname, `fixtures`), ...opts }
     )
+  }
 
+  let consoleError
   beforeEach(() => {
+    consoleError = global.console.error
+    global.console.error = jest.fn()
     createdNodes = []
     updatedNodes = []
     node = {
@@ -36,6 +43,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       children: [],
       internal: {
         mediaType: `application/javascript`,
+      },
+      get absolutePath() {
+        return path.join(__dirname, `fixtures`, this.__fixture)
       },
       __fixture: `classes.js`,
     }
@@ -46,16 +56,35 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
   })
 
-  it(`should only process javascript and jsx nodes`, async () => {
-    loadNodeContent = jest.fn(() => new Promise(() => {}))
+  afterAll(() => {
+    global.console.error = consoleError
+  })
 
-    expect(await run({ internal: { mediaType: `text/x-foo` } })).toBeUndefined()
-    expect(
-      run({ internal: { mediaType: `application/javascript` } })
-    ).toBeDefined()
-    expect(run({ internal: { mediaType: `text/jsx` } })).toBeDefined()
+  it(`should only process javascript, jsx, and typescript nodes`, async () => {
+    loadNodeContent = jest.fn().mockResolvedValue(``)
 
-    expect(loadNodeContent.mock.calls).toHaveLength(2)
+    const unknown = [
+      null,
+      { internal: { mediaType: `text/x-foo` } },
+      { internal: { mediaType: `text/markdown` } },
+    ]
+
+    const expected = [
+      { internal: { mediaType: `application/javascript` } },
+      { internal: { mediaType: `text/jsx` } },
+      { internal: { mediaType: `text/tsx` } },
+      { internal: {}, extension: `tsx` },
+      { internal: {}, extension: `ts` },
+    ]
+
+    await Promise.all(
+      []
+        .concat(unknown)
+        .concat(expected)
+        .map(node => run(node))
+    )
+
+    expect(loadNodeContent).toHaveBeenCalledTimes(expected.length)
   })
 
   it(`should extract all components in a file`, async () => {
@@ -92,10 +121,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   it(`should infer a name`, async () => {
     node.__fixture = `unnamed.js`
-    node.absolutePath = path.join(__dirname, `UnnamedExport`)
+
     await run(node)
 
-    expect(createdNodes[0].displayName).toEqual(`UnnamedExport`)
+    expect(createdNodes[0].displayName).toEqual(`Unnamed`)
   })
 
   it(`should extract all propTypes`, async () => {

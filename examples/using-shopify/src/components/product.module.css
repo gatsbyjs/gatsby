@@ -1,0 +1,36 @@
+.product {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  padding-bottom: 2rem;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.125);
+  position: relative;
+}
+
+.title {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+}
+
+.detail {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  background-color: rebeccapurple;
+  color: white;
+  padding: 0.5rem 1rem;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration: none;
+}
+
+.detail > svg {
+  transition: 175ms ease-in-out;
+}
+
+.detail:hover > svg {
+  transform: translateX(5px);
+}

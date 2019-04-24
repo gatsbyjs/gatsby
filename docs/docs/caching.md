@@ -33,3 +33,4 @@ How you setup your caching depends on how you host your site. We encourage peopl
 The following plugins have been created:
 
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3)
