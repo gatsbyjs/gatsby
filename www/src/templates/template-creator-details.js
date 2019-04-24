@@ -28,9 +28,8 @@ const MetaTitle = ({ children }) => (
       margin: `0`,
       color: colors.gray.calm,
       marginBottom: space[1],
-      [mediaQueries.xs]: {
       flexShrink: 0,
-      [breakpoints.xs]: {
+      [mediaQueries.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
