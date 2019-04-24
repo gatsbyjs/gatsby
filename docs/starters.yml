@@ -2287,7 +2287,7 @@
     - Landing Page
     - Portfolio section
     - Blog post listing with a preview for each post
-      - Infinite scroll instead of next and previous buttons
+    - Infinite scroll instead of next and previous buttons
     - Blog posts generated from Markdown files
     - About Page
     - Responsive Design
@@ -2303,6 +2303,7 @@
     - Sitemap
     - Portfolio
     - SEO
+    - Grouping
   features:
     - Blog
     - Portfolio section
