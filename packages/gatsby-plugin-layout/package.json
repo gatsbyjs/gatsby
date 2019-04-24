@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-layout",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Reimplements the behavior of layout components in gatsby@1, which was removed in version 2.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-layout#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-layout"
   },
   "license": "MIT",
   "dependencies": {
