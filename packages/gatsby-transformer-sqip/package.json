@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-sqip",
   "description": "Generates geometric primitive version of images",
-  "version": "2.0.32",
+  "version": "2.0.33",
   "author": "Benedikt Rötsch <roetsch.beni@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

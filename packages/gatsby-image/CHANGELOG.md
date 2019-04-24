@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.40](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.39...gatsby-image@2.0.40) (2019-04-23)
+
+### Features
+
+- **gatsby-image:** Add durationFadeIn ([#13566](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/13566)) ([6f46aac](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/6f46aac))
+
 ## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.38...gatsby-image@2.0.39) (2019-04-15)
 
 **Note:** Version bump only for package gatsby-image
