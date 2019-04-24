@@ -6,6 +6,7 @@ import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
@@ -27,6 +28,7 @@ const MetaTitle = ({ children }) => (
       margin: `0`,
       color: colors.gray.calm,
       marginBottom: space[1],
+      flexShrink: 0,
       [breakpoints.xs]: {
         width: 150,
       },
@@ -231,6 +233,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
+                    flexWrap: `wrap`,
                   }}
                 >
                   {sites.map(site => (
@@ -239,7 +242,9 @@ class CreatorTemplate extends Component {
                       css={{
                         "&&": {
                           marginRight: space[6],
+                          marginBottom: space[6],
                           borderBottom: `none`,
+                          lineHeight: 0,
                           transition: `all ${transition.speed.default} ${
                             transition.curve.default
                           }`,
@@ -261,6 +266,7 @@ class CreatorTemplate extends Component {
             )}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }

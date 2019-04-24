@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress/compare/gatsby-cypress@0.1.7...gatsby-cypress@0.1.8) (2019-04-18)
+
+### Bug Fixes
+
+- **gatsby-cypress:** use correct links in package json ([#13458](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress/issues/13458)) ([f55cf46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress/commit/f55cf46)), closes [#13457](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress/issues/13457)
+
 ## [0.1.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress-commands/compare/gatsby-cypress@0.1.6...gatsby-cypress@0.1.7) (2019-03-18)
 
 **Note:** Version bump only for package gatsby-cypress

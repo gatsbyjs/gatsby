@@ -6,7 +6,7 @@
 
 const cpuCoreCount = (useEnvVar = false) => {
   try {
-    let coreCount = require(`physical-cpu-count`) || 1
+    let coreCount = require(`./physical-cpu-count`) || 1
 
     if (!useEnvVar) {
       // Return the physical CPU count,
