@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const onCreateNode = require(`../on-node-create`)
 const { graphql } = require(`gatsby/graphql`)
 
-const { createContentDigest } = require(`gatsby/utils`)
+const { createContentDigest } = require(`../fallback`)
 
 let node
 let actions

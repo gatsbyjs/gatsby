@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const { createContentDigest } = require(`gatsby/utils`)
+const { createContentDigest } = require(`./fallback`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
