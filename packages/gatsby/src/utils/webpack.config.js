@@ -156,6 +156,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
+            `react-hot-loader/patch`,
             `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
