@@ -10,6 +10,7 @@ import {
 } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
+import FooterLinks from "../components/shared/footer-links"
 
 import Container from "../components/container"
 
@@ -56,7 +57,7 @@ const getDocsData = location => {
     tutorial: itemListTutorial,
   }
 
-  return [urlSegment, itemListLookup[urlSegment] || itemListTutorial]
+  return [urlSegment, itemListLookup[urlSegment]]
 }
 
 function DocsTemplate({ data, location }) {
@@ -102,6 +103,7 @@ function DocsTemplate({ data, location }) {
               </a>
             )}
             <MarkdownPageFooter page={page} />
+            <FooterLinks />
           </Container>
         </DocSearchContent>
       </Layout>

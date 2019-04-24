@@ -12,7 +12,7 @@ The Playground is a way for you to interact with the data your sources and plugi
 
 ## Accessing the Playground
 
-As this is an experimental feature, you need to access it by adding an environmental variable, you need to add `GATSBY_GRAPHQL_IDE` to your `develop` script, like this:
+As this is an experimental feature, you need to access it by adding an environmental variable, you need to add `GATSBY_GRAPHQL_IDE` to your `develop` script in your `package.json`, like this:
 
 ```
 "develop": "GATSBY_GRAPHQL_IDE=playground gatsby develop",

@@ -28,6 +28,7 @@ const {
   ImageCropFocusType,
   DuotoneGradientType,
   PotraceType,
+  ImageFitType,
 } = require(`./types`)
 
 function toArray(buf) {
@@ -284,6 +285,14 @@ const fluidNodeType = ({
       cropFocus: {
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
+      },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
       },
       rotate: {
         type: GraphQLInt,
