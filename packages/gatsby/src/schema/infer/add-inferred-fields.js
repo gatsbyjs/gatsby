@@ -293,8 +293,8 @@ const getFieldConfigFromFieldNameConvention = ({
   }
 }
 
-const DATE_EXTENSION = { addResolver: { type: `date` } }
-const FILE_EXTENSION = { addResolver: { type: `relativeFile` } }
+const DATE_EXTENSION = { addResolver: { type: `dateformat` } }
+const FILE_EXTENSION = { addResolver: { type: `fileByRelativePath` } }
 
 const getSimpleFieldConfig = ({
   schemaComposer,

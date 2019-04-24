@@ -19,7 +19,7 @@ export const addFieldResolvers = ({
     ) {
       const options = extensions.addResolver.options || {}
       switch (extensions.addResolver.type) {
-        case `date`: {
+        case `dateformat`: {
           addDateResolver({
             typeComposer,
             fieldName,
@@ -33,7 +33,7 @@ export const addFieldResolvers = ({
           })
           break
         }
-        case `relativeFile`: {
+        case `fileByRelativePath`: {
           typeComposer.extendField(fieldName, {
             resolve: fileByPath({ from: options.from }),
           })
@@ -61,7 +61,7 @@ export const addFieldResolvers = ({
 const addDateResolver = ({
   typeComposer,
   fieldName,
-  options: { defaultFormat, defaultLocale },
+  options: { formatString, locale },
 }) => {
   const field = typeComposer.getField(fieldName)
 
@@ -72,11 +72,11 @@ const addDateResolver = ({
     fieldConfig.args = {
       ...dateResolver.args,
     }
-    if (defaultFormat) {
-      fieldConfig.args.formatString.defaultValue = defaultFormat
+    if (formatString) {
+      fieldConfig.args.formatString.defaultValue = formatString
     }
-    if (defaultLocale) {
-      fieldConfig.args.locale.defaultValue = defaultLocale
+    if (locale) {
+      fieldConfig.args.locale.defaultValue = locale
     }
   }
 

@@ -56,9 +56,9 @@ describe(`Kitchen sink schema test`, () => {
       payload: `
         type PostsJson implements Node @infer {
           id: String!
-          time: Date @addResolver(type: "date", options: { defaultLocale: "fi", defaultFormat: "DD MMMM"})
+          time: Date @addResolver(type: "dateformat", options: { locale: "fi", formatString: "DD MMMM"})
           code: String
-          image: File @addResolver(type: "relativeFile")
+          image: File @addResolver(type: "fileByRelativePath")
         }
       `,
     })

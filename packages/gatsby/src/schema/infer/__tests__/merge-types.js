@@ -528,7 +528,7 @@ describe(`merges explicit and inferred type definitions`, () => {
   it(`adds explicit resolvers through directives`, async () => {
     const typeDefs = `
       type Test implements Node @infer {
-        explicitDate: Date @addResolver(type: "date")
+        explicitDate: Date @addResolver(type: "dateformat")
       }
 
       type LinkTest implements Node @infer {
