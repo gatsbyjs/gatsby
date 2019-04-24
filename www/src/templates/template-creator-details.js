@@ -28,6 +28,7 @@ const MetaTitle = ({ children }) => (
       margin: `0`,
       color: colors.gray.calm,
       marginBottom: space[1],
+      flexShrink: 0,
       [breakpoints.xs]: {
         width: 150,
       },
@@ -232,6 +233,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
+                    flexWrap: `wrap`,
                   }}
                 >
                   {sites.map(site => (
@@ -240,7 +242,9 @@ class CreatorTemplate extends Component {
                       css={{
                         "&&": {
                           marginRight: space[6],
+                          marginBottom: space[6],
                           borderBottom: `none`,
+                          lineHeight: 0,
                           transition: `all ${transition.speed.default} ${
                             transition.curve.default
                           }`,
