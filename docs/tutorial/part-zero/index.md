@@ -66,7 +66,7 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
-To see the commands available to run `gatsby --help`.
+To see the commands available, run `gatsby --help`.
 
 ![Check gatsby commands in terminal](06-gatsby-help.png)
 
