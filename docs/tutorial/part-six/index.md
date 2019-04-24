@@ -41,7 +41,7 @@ Here's a video of a panda eating sweets.
 
 Once you save the file, look at `/my-files/` again—the new markdown file is in
 the table. This is a very powerful feature of Gatsby. Like the earlier
-`siteMetadata` example, source plugins can live reload data.
+`siteMetadata` example, source plugins can live-reload data.
 `gatsby-source-filesystem` is always scanning for new files to be added and when
 they are, re-runs your queries.
 
@@ -53,7 +53,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -66,7 +66,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-transformer-remark`,
+    `gatsby-transformer-remark`, // highlight-line
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -83,13 +83,13 @@ at the autocomplete:
 
 ![markdown-autocomplete](markdown-autocomplete.png)
 
-Select `allMarkdownRemark` again and run it like you did for `allFile`. You'll
+Select `allMarkdownRemark` again and run it as you did for `allFile`. You'll
 see there the markdown file you recently added. Explore the fields that are
 available on the `MarkdownRemark` node.
 
 ![markdown-query](markdown-query.png)
 
-Ok! Hopefully some basics are starting to fall into place. Source plugins bring
+Ok! Hopefully, some basics are starting to fall into place. Source plugins bring
 data _into_ Gatsby's data system and _transformer_ plugins transform raw content
 brought by source plugins. This pattern can handle all data sourcing and
 data transformation you might need when building a Gatsby site.
@@ -213,7 +213,7 @@ Try creating a new page containing a blog post and see what happens to the list 
 ## What's coming next?
 
 This is great! You've just created a nice index page where you're querying your markdown
-files and producing a list of blogpost titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
+files and producing a list of blog post titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
 
 You could continue to create pages by placing React components in `src/pages`. However, you'll
 next learn how to _programmatically_ create pages from _data_. Gatsby is _not_

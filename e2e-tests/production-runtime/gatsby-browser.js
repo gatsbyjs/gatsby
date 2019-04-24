@@ -1,3 +1,5 @@
+require(`./src/index.css`)
+
 if (typeof window !== `undefined`) {
   window.___PageComponentLifecycleCallsLog = []
 }
@@ -17,4 +19,8 @@ exports.onPreRouteUpdate = ({ location }) => {
 
 exports.onRouteUpdate = ({ location }) => {
   addLogEntry(`onRouteUpdate`, location)
+}
+
+exports.onPrefetchPathname = ({ pathname }) => {
+  addLogEntry(`onPrefetchPathname`, pathname)
 }

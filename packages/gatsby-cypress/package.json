@@ -1,0 +1,38 @@
+{
+  "name": "gatsby-cypress",
+  "version": "0.1.8",
+  "description": "Cypress tools for Gatsby projects",
+  "main": "index.js",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress#readme",
+  "author": "David Bailey <david.j.b@vivaldi.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.4",
+    "cross-env": "^5.1.4"
+  },
+  "keywords": [
+    "gatsby",
+    "cypress",
+    "cypress.io",
+    "integration"
+  ],
+  "peerDependencies": {
+    "cypress": "^3.1.0",
+    "gatsby": "^2.0.0-rc.13"
+  },
+  "readme": "README.md",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  }
+}

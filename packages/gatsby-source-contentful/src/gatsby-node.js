@@ -5,6 +5,7 @@ const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
+const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -32,7 +33,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  */
 
 exports.sourceNodes = async (
-  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store },
+  { actions, getNode, getNodes, createNodeId, hasNodeChanged, store, cache },
   options
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -165,7 +166,6 @@ exports.sourceNodes = async (
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
-  Object.keys(foreignReferenceMap)
   existingNodes
     .filter(n => _.includes(newOrUpdatedEntries, n.id))
     .forEach(n => {
@@ -209,6 +209,16 @@ exports.sourceNodes = async (
       locales,
     })
   })
+
+  if (options.downloadLocal) {
+    await downloadContentfulAssets({
+      actions,
+      createNodeId,
+      store,
+      cache,
+      getNodes,
+    })
+  }
 
   return
 }

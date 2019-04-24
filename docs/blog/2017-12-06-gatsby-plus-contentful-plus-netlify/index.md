@@ -1,6 +1,6 @@
 ---
 title: Gatsby + Contentful + Netlify (and Algolia)
-date: "2017-12-06"
+date: 2017-12-06
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."
@@ -96,18 +96,18 @@ repo.
 
 Contentful is a hosted headless CMS with a fantastic user experience. It’s
 similar to having a backend like Wordpress, but you are fully responsible for
-the front-end layer. The beauty of Contentful is threefold.
+the frontend layer. The beauty of Contentful is threefold.
 
 - Intuitive and attractive UI
 - Simple content modeling
 - [Free tier](https://www.contentful.com/pricing/)
 
-Dealing with the back-end of Contentful is refreshing and the content modeling
+Dealing with the backend of Contentful is refreshing and the content modeling
 really leads the pack when compared to other headless content management
 systems. It doesn’t feel like something that just gets the job done, it’s
 actually really nice to use. They also just pushed some
 [great new changes](https://www.contentful.com/blog/2017/11/28/work-smarter-with-our-new-search-features/)
-that made it even easier to search and filter our articles on the back-end.
+that made it even easier to search and filter our articles on the backend.
 
 Contentful also happens to offer a
 [generous free tier](https://www.contentful.com/pricing/) with useful features
@@ -286,7 +286,7 @@ And back to using it with Gatsby.
 
 After you link your Netlify site to a specific code repository, Netlify’s build
 bots take care of the rest. From that point on, when you push a change to your
-repo, the build bot says, “Hey look! a change! I need to run the `gatsby build`
+repo, the build bot says, “Hey look! a change! I need to run the `npm run build`
 command...”, then it follows the package.json (or yarn file) in the repo and
 downloads the necessary dependencies if they aren’t already cached, and then
 builds out the static site.

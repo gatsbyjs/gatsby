@@ -25,6 +25,7 @@ module.exports = async (
     linkImagesToOriginal: true,
     showCaptions: false,
     pathPrefix,
+    withWebp: false,
   }
 
   // This will only work for markdown syntax image tags
@@ -38,6 +39,11 @@ module.exports = async (
 
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
       return resolve()
+    }
+
+    let originalImg = node.url
+    if (!/^(http|https)?:\/\//i.test(node.url)) {
+      originalImg = `https:${node.url}`
     }
 
     const srcSplit = node.url.split(`/`)
@@ -59,7 +65,7 @@ module.exports = async (
 
     const response = await axios({
       method: `GET`,
-      url: `https:${node.url}`, // for some reason there is a './' prefix
+      url: originalImg, // for some reason there is a './' prefix
       responseType: `stream`,
     })
 
@@ -71,35 +77,23 @@ module.exports = async (
 
     const responsiveSizesResult = await buildResponsiveSizes({
       metadata,
-      imageUrl: `https:${node.url}`,
+      imageUrl: originalImg,
       options,
     })
+
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
 
-    const fallbackSrc = `https:${node.url}`
+    const fallbackSrc = originalImg
     const srcSet = responsiveSizesResult.srcSet
     const presentationWidth = responsiveSizesResult.presentationWidth
 
     // Generate default alt tag
-    const originalImg = node.url
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    // Construct new image node w/ aspect ratio placeholder
-    let rawHTML = `
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ${
-      options.wrapperStyle
-    }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      responsiveSizesResult.base64
-    }'); background-size: cover; display: block;"
-    >
+    // Create our base image tag
+    let imageTag = `
       <img
         class="gatsby-resp-image-image"
         style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
@@ -111,22 +105,66 @@ module.exports = async (
         srcset="${srcSet}"
         sizes="${responsiveSizesResult.sizes}"
       />
-    </span>
-  </span>
-  `
+   `.trim()
+
+    // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
+    if (options.withWebp) {
+      imageTag = `
+        <picture>
+          <source
+            srcset="${responsiveSizesResult.webpSrcSet}"
+            sizes="${responsiveSizesResult.sizes}"
+            type="image/webp"
+          />
+          <source
+            srcset="${srcSet}"
+            sizes="${responsiveSizesResult.sizes}"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
+              options.backgroundColor
+            };"
+            alt="${node.alt ? node.alt : defaultAlt}"
+            title="${node.title ? node.title : ``}"
+            src="${fallbackSrc}"
+          />
+        </picture>
+      `.trim()
+    }
+
+    // Construct new image node w/ aspect ratio placeholder
+    let rawHTML = `
+      <span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ${
+          options.wrapperStyle
+        }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
+      responsiveSizesResult.base64
+    }'); background-size: cover; display: block;"
+        >
+          ${imageTag}
+        </span>
+      </span>
+    `.trim()
+
     // Make linking to original image optional.
     if (options.linkImagesToOriginal) {
       rawHTML = `
-<a
-  class="gatsby-resp-image-link"
-  href="${originalImg}"
-  style="display: block"
-  target="_blank"
-  rel="noopener"
->
-${rawHTML}
-</a>
-  `
+        <a
+          class="gatsby-resp-image-link"
+          href="${originalImg}"
+          style="display: block"
+          target="_blank"
+          rel="noopener"
+        >
+          ${rawHTML}
+        </a>
+      `.trim()
     }
 
     // Wrap in figure and use title as caption

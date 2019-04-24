@@ -16,18 +16,19 @@ It will also be useful if you are familiar with [Graph_i_QL](/docs/introducing-g
 
 Install the plugin at the root of your Gatsby project:
 
-```sh
+```shell
 npm install --save gatsby-source-filesystem
 ```
 
 Then add it to your project's `gatsby-config.js` file:
 
-```javascript{6-12}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Your Site Name`,
   },
   plugins: [
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -35,6 +36,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
+    // highlight-end
   ],
 }
 ```
@@ -71,4 +73,4 @@ Once files have been sourced, various "transformer" plugins in the Gatsby ecosys
 
 ## Further reference and examples
 
-For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).
+For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).
