@@ -14,6 +14,8 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
+import HomepageSection from "../components/homepage/homepage-section"
+import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -142,6 +144,15 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
+
+          <HomepageSection
+            css={{
+              paddingTop: `0 !important`,
+              paddingBottom: `0 !important`,
+            }}
+          >
+            <FooterLinks bottomMargin={space[9]} />
+          </HomepageSection>
         </main>
       </Layout>
     )

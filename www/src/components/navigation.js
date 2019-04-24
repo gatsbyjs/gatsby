@@ -164,13 +164,6 @@ const Navigation = ({ pathname }) => {
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
           </div>
-          <SocialNavItem
-            href="https://www.gatsbyjs.com"
-            title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: fontSizes[2] }}
-          >
-            .com
-          </SocialNavItem>
         </div>
       </div>
     </header>

@@ -13,8 +13,7 @@ import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
 import AlgoliaLogo from "../assets/algolia.svg"
 import GatsbyIcon from "../monogram.svg"
-import debounce from "lodash/debounce"
-import unescape from "lodash/unescape"
+import { debounce, unescape } from "lodash-es"
 
 import {
   space,

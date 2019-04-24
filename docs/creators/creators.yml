@@ -265,3 +265,15 @@
   website: "https://3merge.ca/"
   for_hire: true
   portfolio: true
+- name: WEBhart
+  type: individual
+  description: >-
+    Hi, I'm Rien (pronounced Reen) from Belgium but based in Girona, Spain. I'm an autodidact, committed to learning until the end of time.
+
+    Dabbled in iOS (Objective-C) and worked as back-end/api (php) developer (2010-2013). After a break from programming, chasing a cyclist dream and working part-time mechanics jobs (yes, I'm a nerd who can do manual work!) I discovered Gatsby at the beginning of 2018. Since then I've been building sites and started freelancing as a developer/designer.
+  location: "Girona, Spain"
+  website: "https://www.web-hart.com"
+  github: "https://github.com/riencoertjens"
+  image: images/web-hart.jpg
+  for_hire: true
+  portfolio: true
