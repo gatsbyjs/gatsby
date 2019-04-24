@@ -1,8 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
-import styled, { css } from "react-emotion"
+import { css as cssClass } from "emotion"
+import styled from "@emotion/styled"
+import { css } from "@emotion/core"
 import { MdLink } from "react-icons/md"
-
 import { scale, rhythm, options } from "../utils/typography"
 import { mq, elevation, gutter, colors, animation } from "../utils/presets"
 
@@ -39,7 +40,7 @@ const linkStyle = css`
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
   isPartiallyCurrent
     ? {
-        className: css`
+        className: cssClass`
           ${linkStyle};
 
           && {
@@ -64,7 +65,7 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
         `,
       }
     : {
-        className: css`
+        className: cssClass`
           ${linkStyle};
         `,
       }
@@ -131,9 +132,9 @@ const NavListItem = styled(`li`)`
 
 const NavItem = ({ title, to }) => (
   <NavListItem
-    css={`
+    css={css`
       &:after {
-        color: colors.gatsby;
+        color: ${colors.gatsby};
         content: " ╱ ";
         font-weight: 300;
         opacity: 0.5;
@@ -189,7 +190,7 @@ const Navigation = () => (
         <NavListItem>
           <a
             href="https://www.gatsbyjs.org/packages/gatsby-image/"
-            css={`
+            css={css`
               ${linkStyle};
             `}
           >
