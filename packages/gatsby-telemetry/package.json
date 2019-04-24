@@ -35,7 +35,8 @@
   },
   "files": [
     "lib",
-    "src/postinstall.js"
+    "src/postinstall.js",
+    "src/showAnalyticsNotification.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry#readme",
   "keywords": [
