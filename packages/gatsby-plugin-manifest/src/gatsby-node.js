@@ -43,11 +43,12 @@ function generateIcons(icons, srcIcon) {
   )
 }
 
-exports.onPostBootstrap = async ({ reporter }, { manifests, ...manifest }) => {
+exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`)
   activity.start()
 
-  if (Array.isArray(manifests)) {
+  if (Array.isArray(localize)) {
+    const manifests = manifest.start_url ? localize.concat(manifest) : localize
     await Promise.all(
       manifests.map(_manifest =>
         makeManifest(reporter, { ...manifest, ..._manifest })
@@ -61,8 +62,8 @@ exports.onPostBootstrap = async ({ reporter }, { manifests, ...manifest }) => {
 }
 
 const makeManifest = async (reporter, pluginOptions) => {
-  const { icon, language, ...manifest } = pluginOptions
-  const suffix = language ? `_${language}` : ``
+  const { icon, ...manifest } = pluginOptions
+  const suffix = pluginOptions.lang ? `_${pluginOptions.lang}` : ``
 
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
@@ -72,7 +73,6 @@ const makeManifest = async (reporter, pluginOptions) => {
   delete manifest.crossOrigin
   delete manifest.icon_options
   delete manifest.include_favicon
-  delete manifest.regex
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {

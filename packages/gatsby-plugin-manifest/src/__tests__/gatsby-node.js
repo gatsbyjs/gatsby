@@ -279,29 +279,27 @@ describe(`Test plugin manifest options`, () => {
   it(`generates all language versions`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {
-      manifests: [
+      localize: [
         {
           ...manifestOptions,
           start_url: `/de/`,
-          regex: `^/de/.*`,
-          language: `de`,
+          lang: `de`,
         },
         {
           ...manifestOptions,
           start_url: `/es/`,
-          regex: `^/es/.*`,
-          language: `es`,
+          lang: `es`,
         },
         {
           ...manifestOptions,
           start_url: `/`,
-          regex: `.*`,
         },
       ],
     }
-    const expectedResults = pluginSpecificOptions.manifests.map(
-      ({ regex, language, ...x }) => x
-    )
+    const { localize, ...manifest } = pluginSpecificOptions
+    const expectedResults = localize.concat(manifest).map(x => {
+      return { ...manifest, ...x }
+    })
 
     await onPostBootstrap(apiArgs, pluginSpecificOptions)
 
@@ -323,31 +321,26 @@ describe(`Test plugin manifest options`, () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {
       ...manifestOptions,
-      manifests: [
+      localize: [
         {
           start_url: `/de/`,
-          regex: `^/de/.*`,
-          language: `de`,
+          lang: `de`,
         },
         {
           start_url: `/es/`,
-          regex: `^/es/.*`,
-          language: `es`,
-        },
-        {
-          start_url: `/`,
-          regex: `.*`,
+          lang: `es`,
         },
       ],
     }
-    const expectedResults = pluginSpecificOptions.manifests.map(
-      ({ regex, language, manifest }) => {
+    const { localize, ...manifest } = pluginSpecificOptions
+    const expectedResults = localize
+      .concat(manifest)
+      .map(({ language, manifest }) => {
         return {
           ...manifestOptions,
           ...manifest,
         }
-      }
-    )
+      })
 
     await onPostBootstrap(apiArgs, pluginSpecificOptions)
 

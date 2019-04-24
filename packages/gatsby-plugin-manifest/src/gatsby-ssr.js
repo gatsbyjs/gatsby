@@ -12,11 +12,14 @@ let iconDigest = null
 
 exports.onRenderBody = (
   { setHeadComponents, pathname = `/` },
-  { manifests, ...pluginOptions }
+  { localize, ...pluginOptions }
 ) => {
-  if (Array.isArray(manifests)) {
+  if (Array.isArray(localize)) {
+    const manifests = pluginOptions.start_url
+      ? localize.concat(pluginOptions)
+      : localize
     const manifest = manifests.find(manifest =>
-      RegExp(manifest.regex || `^/${manifest.language}/.*`).test(pathname)
+      RegExp(`^${manifest.start_url}.*`, `i`).test(pathname)
     )
     pluginOptions = {
       ...pluginOptions,
@@ -63,7 +66,7 @@ exports.onRenderBody = (
     }
   }
 
-  const suffix = pluginOptions.language ? `_${pluginOptions.language}` : ``
+  const suffix = pluginOptions.lang ? `_${pluginOptions.lang}` : ``
 
   // Add manifest link tag.
   headComponents.push(

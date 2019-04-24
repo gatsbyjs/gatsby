@@ -109,20 +109,15 @@ describe(`gatsby-plugin-manifest`, () => {
     i18nArgs.forEach(({ testName, ...args }) =>
       it(testName, () => {
         onRenderBody(args, {
-          manifests: [
+          start_url: `/`,
+          localize: [
             {
               start_url: `/de/`,
-              regex: `^/de/.*`,
-              language: `de`,
+              lang: `de`,
             },
             {
               start_url: `/es/`,
-              regex: `^/es/.*`,
-              language: `es`,
-            },
-            {
-              start_url: `/`,
-              regex: `.*`,
+              lang: `es`,
             },
           ],
         })

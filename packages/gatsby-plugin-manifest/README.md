@@ -145,19 +145,16 @@ module.exports = {
         name: `GatsbyJS`,
         short_name: `Gatsby`,
         display: `standalone`,
-        manifests: [
+        icon: `src/images/icon.png`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#fff`,
+        localize: [
           {
             start_url: `/de/`,
-            regex: `^/de/.*`,
-            language: `de`,
+            lang: `de`,
             background_color: `#f7f0eb`,
             theme_color: `#a2466c`,
-          },
-          {
-            start_url: `/`,
-            regex: `.*`,
-            background_color: `#663399`,
-            theme_color: `#fff`,
           },
         ],
       },
