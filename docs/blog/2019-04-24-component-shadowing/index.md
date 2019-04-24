@@ -1,6 +1,6 @@
 ---
 title: What is Component Shadowing?
-date: 2019-04-18
+date: 2019-04-24
 author: John Otander
 excerpt: "Gatsby Themes introduce a concept called Component Shadowing. This feature allows
 users to override a component in order to customize its rendering."
@@ -30,7 +30,6 @@ omitted for brevity):
 
 ```
 gatsby-theme-blog
-├── package.json
 └── src
     ├── components
     │   ├── bio.js
@@ -64,10 +63,10 @@ You'll result in the following directory tree:
 
 ```
 user-site
-      └── src
-          └── gatsby-theme-blog
-              └── components
-                  └── bio.js
+└── src
+    └── gatsby-theme-blog
+        └── components
+            └── bio.js
 ```
 
 Leveraging Component Shadowing is a powerful way to introduce small changes to a theme and
@@ -102,11 +101,11 @@ You'll result in the following directory tree:
 
 ```
 user-site
-      └── src
-          └── gatsby-theme-blog
-              └── components
-                  └── tokens
-                        └──index.js
+└── src
+    └── gatsby-theme-blog
+        └── components
+            └── tokens
+                  └──index.js
 ```
 
 Now, blue and red will have your custom values and will be reflected in the theme wherever
