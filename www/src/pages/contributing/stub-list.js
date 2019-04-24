@@ -10,6 +10,7 @@ import {
 import Container from "../../components/container"
 import DocsearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
+import { fontSizes, space } from "../../utils/presets"
 
 const findStubs = pages =>
   pages.filter(
@@ -28,25 +29,27 @@ class StubListRoute extends React.Component {
       flatten([...itemListContributing.items, ...itemListDocs.items])
     )
 
-    let groupedStubs = {
-      Other: [],
-    }
+    let groupedStubs = {}
 
     stubs.forEach(stub => {
-      if (stub.parentTitle === undefined) {
-        groupedStubs[`Other`].push(stub)
-        return
-      }
+      let categoryTitle = stub.parentTitle || `Top Level Documentation Pages`
 
-      if (groupedStubs[stub.parentTitle] === undefined) {
-        groupedStubs[stub.parentTitle] = []
+      if (groupedStubs[categoryTitle] === undefined) {
+        groupedStubs[categoryTitle] = []
       }
-      groupedStubs[stub.parentTitle].push(stub)
+      groupedStubs[categoryTitle].push(stub)
     })
 
     let sortedCategories = Object.keys(groupedStubs).sort((a, b) =>
       a.localeCompare(b)
     )
+
+    // Put top level at the front of the array
+    sortedCategories.splice(
+      sortedCategories.indexOf(`Top Level Documentation Pages`),
+      1
+    )
+    sortedCategories = [`Top Level Documentation Pages`, ...sortedCategories]
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
@@ -74,7 +77,11 @@ class StubListRoute extends React.Component {
                   category.slice(-1) === `*` ? category.slice(0, -1) : category
                 return (
                   <React.Fragment key={category}>
-                    <h2>{categoryTitle}</h2>
+                    <h2
+                      css={{ fontSize: fontSizes[4], marginBottom: space[3] }}
+                    >
+                      {categoryTitle}
+                    </h2>
                     <ul>
                       {groupedStubs[category].map(stub => (
                         <li key={stub.title}>
