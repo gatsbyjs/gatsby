@@ -1,5 +1,5 @@
 /**
- * This argument is empty. This is for consisntency so `pluginOptions` is always second argument.
+ * This argument is empty. This is for consistency so `pluginOptions` is always second argument.
  * @typedef {undefined} emptyArg
  */
 

@@ -952,7 +952,7 @@
     - Social sharing (Twitter, Facebook, Google, LinkedIn)
 - url: https://gatsby-starter-typescript-sass.netlify.com
   repo: https://github.com/tdharmon/gatsby-starter-typescript-sass
-  description: A basic starter with Typescript and Sass built in
+  description: A basic starter with TypeScript and Sass built in
   tags:
     - TypeScript
     - Styling:SCSS
@@ -994,7 +994,7 @@
     - Uses the Cosmic JS Gatsby source plugin
 - url: https://www.gatsby-typescript-template.com/
   repo: https://github.com/ikeryo1182/gatsby-typescript-template
-  description: This is a standard starter with Typescript, TSLint, Prettier, Lint-Staged(Husky) and Sass
+  description: This is a standard starter with TypeScript, TSLint, Prettier, Lint-Staged(Husky) and Sass
   tags:
     - TypeScript
     - Linting
@@ -1020,7 +1020,7 @@
     - Styling:CSS-in-JS
   features:
     - Emotion CSS-in-JS
-    - Typescript
+    - TypeScript
     - Author and tag pages
     - RSS
 - url: https://gatsby-universal.netlify.com
@@ -1166,7 +1166,7 @@
     - Netlify optimization
 - url: https://gatsby-starter-typescript-power-blog.majidhajian.com/
   repo: https://github.com/mhadaily/gatsby-starter-typescript-power-blog
-  description: Minimal Personal Blog with Gatsby and Typescript
+  description: Minimal Personal Blog with Gatsby and TypeScript
   tags:
     - PWA
     - Blog
@@ -1645,7 +1645,7 @@
     - Netlify integration ready to deploy
     - Material UI
     - styled-components
-    - Github markdown css support
+    - GitHub markdown css support
 - url: https://create-ueno-app.netlify.com
   repo: https://github.com/ueno-llc/ueno-gatsby-starter
   description: Opinionated Gatsby starter by Ueno.
@@ -2257,16 +2257,20 @@
     - Responsive images with gatsby-image
 - url: https://www.jannikbuschke.de/gatsby-antd-docs/
   repo: https://github.com/jannikbuschke/gatsby-antd-docs
-  description: A template for documenation websites
+  description: A template for documentation websites
   tags:
     - Documentation
     - TypeScript
     - Ant Design
     - Markdown
+    - MDX
   features:
     - Markdown
+    - MDX with mdxjs
+    - Syntax highlighting with prismjs
     - Anchors
-    - Menues
+    - Sidebar
+    - Sitecontents
     - Landingpage
 - url: https://gatsby-starter.haezl.at
   repo: https://github.com/haezl/gatsby-starter-haezl
@@ -2290,3 +2294,81 @@
     - PWA (Progressive Web App) support
     - MobX
     - Customizable
+- url: https://gatsby-starter-fine.netlify.com/
+  repo: https://github.com/toboko/gatsby-starter-fine
+  description: A mutli-response and light, mobile first blog starter with columns layout and Seo optimization.
+  tags:
+    - Blog
+    - Categories
+    - Tags
+    - Markdown
+    - Sitemap
+    - Portfolio
+    - SEO
+  features:
+    - Blog
+    - Portfolio section
+    - Customizable
+    - Markdown
+    - Optimized images
+    - Sitemap Page
+    - Seo Ready
+- url: https://ugglr.github.io/gatsby-clean-portfolio/
+  repo: https://github.com/ugglr/gatsby-clean-portfolio
+  description: A clean themed Software Engineer Portfolio site, showcasing soft skills on the front page, features project card showcases, about page. Responsive through react-bootstrap components together with custom CSS style sheets. SEO configured, just need to add google analytics tracking code.
+  tags:
+    - Portfolio
+    - SEO
+    - Styling:Bootstrap
+  features:
+    - Resume
+    - CV
+    - google analytics
+    - easy favicon swap
+    - Gatsby SEO plugin
+    - Clean layout
+    - White theme
+    - grid using react-bootstrap
+    - bootstrap4 classes available
+    - font-awesome Library for icons
+    - Portfolio site for developers
+    - custom project cards
+    - easily extendable to include blog page
+    - Responsive design
+- url: https://gatsby-documentation-starter.netlify.com/
+  repo: https://github.com/whoisryosuke/gatsby-documentation-starter
+  description: Automatically generate docs for React components using MDX, react-docgen, and GatsbyJS
+  tags:
+    - Documentation
+    - MDX
+    - SEO
+  features:
+    - Parses all React components (functional, stateful, even stateless!) for JS Docblocks and Prop Types.
+    - MDX - Write your docs in Markdown and include React components using JSX!
+    - Lightweight (only what you need)
+    - Modular (easily fits in any React project!)
+    - Props table component
+    - Customizable sidebar navigation
+    - Includes SEO plugins Google Analytics, Offline, Manifest, Helmet.
+- url: http://gatsby-absurd.surge.sh/
+  repo: https://github.com/ajayns/gatsby-absurd
+  description: A Gatsby starter using illustrations from https://absurd.design/
+  tags:
+    - Onepage
+    - Styling:CSS-in-JS
+  features:
+    - Uses surreal illustrations from absurd.design.
+    - Landing page structure split into sections
+    - Basic UX/UX elements ready. navbar, smooth scrolling, faqs, theming
+    - Convenient image handling and data separation
+- url: https://gatsby-starter-quiz.netlify.com/
+  repo: https://github.com/raphadeluca/gatsby-starter-quiz
+  description: Create rich quizzes with Gatsby & Mdx. No need of database or headless CMS. Manage your data directly in your Mdx file's frontmatter and write your content in the body. Customize your HTML tags, use react components from a library or write your owns. Navigation will be automatically created between each question.
+  tags:
+    - Quiz
+    - MDX
+  features:
+    - Data quiz in the frontmatter
+    - Rich customizable content with MDX
+    - Green / Red alert footer on user's answer
+    - Navigation generated based on the index of each question

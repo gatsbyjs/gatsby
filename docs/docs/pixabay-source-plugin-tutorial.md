@@ -1,5 +1,5 @@
 ---
-title: "Source Plugin Tutorial"
+title: "Pixabay Source Plugin Tutorial"
 ---
 
 Creating your own source plugin.
