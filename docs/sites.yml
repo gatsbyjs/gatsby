@@ -5526,3 +5526,16 @@
   built_by: Liferay Designers
   built_by_url: https://twitter.com/liferaydesign
   featured: false
+- title: Front End Remote Jobs
+  main_url: https://frontendremotejobs.com
+  url: https://frontendremotejobs.com
+  source_url: https://github.com/benjamingrobertson/remotefrontend
+  description: >
+    Front End Remote Jobs features fully remote jobs for front end developers.
+  categories:
+    - Job Board
+    - WordPress
+    - Web Development
+  built_by: Ben Robertson
+  built_by_url: https://benrobertson.io
+  featured: false
