@@ -16,7 +16,7 @@ exports.onRenderBody = (
 ) => {
   if (Array.isArray(pluginOptions.manifests)) {
     pluginOptions = pluginOptions.manifests.find(manifest =>
-      RegExp(x.regex || `^/${x.language}/.*`).test(pathname)
+      RegExp(manifest.regex || `^/${manifest.language}/.*`).test(pathname)
     )
     if (!pluginOptions) return false
   }
