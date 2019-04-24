@@ -68,7 +68,7 @@ The Gatsby CLI is available via npm and should be installed globally by running 
 
 To see the commands available, run `gatsby --help`.
 
-![Check gatsby commands in terminal](06-gatsby-help.png)
+![Check gatsby commands in terminal](05-gatsby-help.png)
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
