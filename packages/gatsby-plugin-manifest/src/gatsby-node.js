@@ -48,7 +48,7 @@ exports.onPostBootstrap = async ({ reporter }, { manifests, ...manifest }) => {
   activity.start()
 
   if (Array.isArray(manifests)) {
-    await Promise.all(manifests.map(x => makeManifest(reporter, x)))
+    await Promise.all(manifests.map(manifest => makeManifest(reporter, manifest)))
   } else {
     await makeManifest(reporter, manifest)
   }
