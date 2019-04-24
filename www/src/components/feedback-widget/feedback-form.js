@@ -65,7 +65,7 @@ const Textarea = styled(`textarea`)`
   color: #333;
   display: block;
   font-weight: normal;
-  height: 100px;
+  height: 5.5rem;
   margin: 0.25rem 0 1rem;
   padding: 0.25rem 0.5rem;
   transition: 0.5s;
