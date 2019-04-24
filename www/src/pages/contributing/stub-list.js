@@ -10,6 +10,7 @@ import {
 import Container from "../../components/container"
 import DocsearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
+import { fontSizes, space } from "../../utils/presets"
 
 const findStubs = pages =>
   pages.filter(
@@ -27,6 +28,28 @@ class StubListRoute extends React.Component {
     const stubs = findStubs(
       flatten([...itemListContributing.items, ...itemListDocs.items])
     )
+
+    let groupedStubs = {}
+
+    stubs.forEach(stub => {
+      let categoryTitle = stub.parentTitle || `Top Level Documentation Pages`
+
+      if (groupedStubs[categoryTitle] === undefined) {
+        groupedStubs[categoryTitle] = []
+      }
+      groupedStubs[categoryTitle].push(stub)
+    })
+
+    let sortedCategories = Object.keys(groupedStubs).sort((a, b) =>
+      a.localeCompare(b)
+    )
+
+    // Put top level at the front of the array
+    sortedCategories.splice(
+      sortedCategories.indexOf(`Top Level Documentation Pages`),
+      1
+    )
+    sortedCategories = [`Top Level Documentation Pages`, ...sortedCategories]
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>
@@ -48,13 +71,28 @@ class StubListRoute extends React.Component {
               {` `}
               to learn more.
             </p>
-            <ul data-testid="list-of-stubs">
-              {stubs.map(stub => (
-                <li key={stub.title}>
-                  <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
-                </li>
-              ))}
-            </ul>
+            <section data-testid="list-of-stubs">
+              {sortedCategories.map(category => {
+                let categoryTitle =
+                  category.slice(-1) === `*` ? category.slice(0, -1) : category
+                return (
+                  <React.Fragment key={category}>
+                    <h2
+                      css={{ fontSize: fontSizes[4], marginBottom: space[3] }}
+                    >
+                      {categoryTitle}
+                    </h2>
+                    <ul>
+                      {groupedStubs[category].map(stub => (
+                        <li key={stub.title}>
+                          <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </React.Fragment>
+                )
+              })}
+            </section>
             <FooterLinks />
           </Container>
         </DocsearchContent>
