@@ -56,7 +56,7 @@ I inserted random character sequences here but yours should be the same length. 
 
 ```env:title=.env.example
 # rename this file to .env and supply the listed values
-# also make sure they are available to the build tool (e.g. netlify)
+# also make sure they are available to the build tool (e.g. Netlify)
 # warning: variables prexifed with GATSBY_ will be made available to client-side code,
 #   be careful not to expose sensitive data (in this case your Algolia admin key)
 

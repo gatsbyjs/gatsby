@@ -8,7 +8,7 @@ import {
   transition,
   shadows,
   space,
-  breakpoints,
+  mediaQueries,
   sizes,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
@@ -121,7 +121,7 @@ const styles = {
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
     zIndex: 10,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight})`,
       maxWidth: `none`,
       opacity: `1 !important`,
@@ -129,7 +129,7 @@ const styles = {
       top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
       width: rhythm(sizes.sidebarWidth.default),
     },
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       width: rhythm(sizes.sidebarWidth.large),
     },
   },
@@ -139,7 +139,7 @@ const styles = {
       transition.curve.default
     }`,
     boxShadow: shadows.dialog,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       transform: `none !important`,
       boxShadow: `none`,
     },
@@ -158,7 +158,7 @@ const styles = {
     visibility: `visible`,
     width: space[10],
     zIndex: 20,
-    [breakpoints.md]: { display: `none` },
+    [mediaQueries.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
     alignSelf: `center`,

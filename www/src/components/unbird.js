@@ -7,7 +7,7 @@ import {
   space,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   fonts,
 } from "../utils/presets"
@@ -37,7 +37,7 @@ const FeedbackToggle = styled(`div`)`
     background-color: ${colors.gatsbyDark};
   }
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     bottom: ${space[6]};
   }
 `
@@ -83,7 +83,7 @@ const FeedbackForm = styled(`div`)`
   border-radius: ${radii[2]}px;
   font-family: ${fonts.system};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     width: 350px;
     right: 30px;
     bottom: 100px;

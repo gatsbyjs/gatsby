@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
+import { parse } from "path"
 import kebabHash from "kebab-hash"
 import { HEADER_COMMENT } from "./constants"
 
@@ -41,8 +42,18 @@ function createScriptHeaderGenerator(manifest, pathPrefix) {
       return null
     }
 
-    // Always add starting slash, as link entries start with slash as relative to deploy root
-    return linkTemplate(`${pathPrefix}/${chunk}`)
+    // convert to array if it's not already
+    const chunks = _.isArray(chunk) ? chunk : [chunk]
+
+    return chunks
+      .filter(script => {
+        const parsed = parse(script)
+        // handle only .js, .css content is inlined already
+        // and doesn't need to be pushed
+        return parsed.ext === `.js`
+      })
+      .map(script => linkTemplate(`${pathPrefix}/${script}`))
+      .join(`\n  `)
   }
 }
 
