@@ -1,5 +1,5 @@
 ---
-title: 'How To Build A Blog with Wordpress and Gatsby.js - Part 2'
+title: "How To Build A Blog with Wordpress and Gatsby.js - Part 2"
 date: 2019-04-04
 author: Tim Smith
 excerpt: "In the last post, you covered setting up WordPress for use with Gatsby. Today you will cover how to pull the data from WordPress into Gatsby and build pages."
@@ -87,9 +87,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
   "devDependencies": {
     "prettier": "^1.16.4"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
@@ -138,6 +136,7 @@ The site provides a navbar with a link going back to the homepage. There is also
 Now that you know what's already installed and what it looks like to start, you can add the stuff you need to use WordPress with your site. Fortunately, Gatsby has a page on their site where you can [see what plugins are available](/plugins/). You will be adding the following plugins to your site: [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/) and [Gatsby-Plugin-Sitemap](/packages/gatsby-plugin-sitemap/).
 
 To do this, you can use this code in the terminal:
+
 ```shell
 npm install gatsby-source-wordpress gatsby-plugin-sitemap
 ```
@@ -247,8 +246,8 @@ Below is the code I'm using for the template starter. This is just to make sure 
 
 ```javascript
 // src/templates/BlogPost.js
-import React from 'react'
-import Layout from '../components/layout'
+import React from "react"
+import Layout from "../components/layout"
 
 const BlogPostTemplate = () => (
   <Layout>

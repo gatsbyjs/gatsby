@@ -1,5 +1,5 @@
 ---
-title: 'How To Build A Blog with Wordpress and Gatsby.js - Part 3'
+title: "How To Build A Blog with Wordpress and Gatsby.js - Part 3"
 date: 2019-04-05
 author: Tim Smith
 excerpt: "In the third part of this series about WordPress and Gatsby.js, you will be creating pages using templates and components using data from WordPress."
@@ -32,8 +32,8 @@ I will go ahead and start off with a generic template again and then fill it out
 
 ```javascript
 // src/templates/Page.js
-import React from 'react'
-import Layout from '../components/layout'
+import React from "react"
+import Layout from "../components/layout"
 
 const PageTemplate = () => (
   <Layout>

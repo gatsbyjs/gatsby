@@ -1,5 +1,5 @@
 ---
-title: 'How To Build A Blog with Wordpress and Gatsby.js - Part 1'
+title: "How To Build A Blog with Wordpress and Gatsby.js - Part 1"
 date: 2019-04-03
 author: Tim Smith
 excerpt: "Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site."
