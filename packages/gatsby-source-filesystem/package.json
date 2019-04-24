@@ -36,7 +36,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.15"
+    "gatsby": "^2.0.0"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem",
   "scripts": {
