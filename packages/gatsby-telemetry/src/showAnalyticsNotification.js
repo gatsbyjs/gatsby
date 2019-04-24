@@ -18,8 +18,11 @@ const defaultMessage =
  * @param {Object} config - The configuration that boxen accepts. https://github.com/sindresorhus/boxen#api
  * @param {string} message - Message shown to the end-user
  */
-const notice = (config = defaultConfig, message = defaultMessage) => {
+const showAnalyticsNotification = (
+  config = defaultConfig,
+  message = defaultMessage
+) => {
   console.log(boxen(message, config))
 }
 
-module.exports = notice
+module.exports = showAnalyticsNotification

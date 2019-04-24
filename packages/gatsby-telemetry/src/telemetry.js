@@ -7,7 +7,7 @@ const os = require(`os`)
 const { basename, join, sep } = require(`path`)
 const { execSync } = require(`child_process`)
 const isDocker = require(`is-docker`)
-const notice = require(`./notice`)
+const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -148,7 +148,7 @@ module.exports = class AnalyticsTracker {
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
       if (!ci.isCI) {
-        notice()
+        showAnalyticsNotification()
       }
       enabled = true
       this.store.updateConfig(`telemetry.enabled`, enabled)

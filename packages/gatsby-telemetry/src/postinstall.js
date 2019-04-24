@@ -1,4 +1,4 @@
-const notice = require(`./notice`)
+const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 
 let enabled = false
 try {
@@ -7,7 +7,7 @@ try {
   const config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
   enabled = config.get(`telemetry.enabled`)
   if (enabled === undefined && !ci.isCI) {
-    notice()
+    showAnalyticsNotification()
   }
 } catch (e) {
   // ignore
