@@ -134,7 +134,7 @@ icons: [
 
 In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
 
-### i18n – Multilang configuration
+#### i18n – Multilang configuration
 
 ```js
 // in gatsby-config.js
