@@ -77,6 +77,13 @@ module.exports = async program => {
   const app = express()
   const router = express.Router()
 
+  // Expose access to app for advanced use cases
+  const { serveMiddleware } = config
+
+  if (serveMiddleware) {
+    serveMiddleware(app)
+  }
+
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())

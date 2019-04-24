@@ -19,6 +19,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
     url: Joi.string().required(),
   }),
   developMiddleware: Joi.func(),
+  serveMiddleware: Joi.func(),
 })
 
 export const pageSchema = Joi.object()
