@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.10...gatsby-transformer-remark@2.3.11) (2019-04-24)
+
+### Bug Fixes
+
+- Add fallback for createContentDigest ([#13584](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/13584)) ([093f1f2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/093f1f2))
+
 ## [2.3.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.9...gatsby-transformer-remark@2.3.10) (2019-04-23)
 
 **Note:** Version bump only for package gatsby-transformer-remark

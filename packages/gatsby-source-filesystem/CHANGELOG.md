@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.31...gatsby-source-filesystem@2.0.32) (2019-04-24)
+
+### Bug Fixes
+
+- Add fallback for createContentDigest ([#13584](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/13584)) ([093f1f2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/093f1f2))
+
 ## [2.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.30...gatsby-source-filesystem@2.0.31) (2019-04-23)
 
 **Note:** Version bump only for package gatsby-source-filesystem
