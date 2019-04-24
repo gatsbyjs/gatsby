@@ -88,11 +88,6 @@ const feedbackMachine = Machine({
 })
 
 const FeedbackWidget = () => {
-  // We’re not going to show this widget if JS is disabled
-  if (typeof window === `undefined`) {
-    return null
-  }
-
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
   const errorTitle = useRef(null)
