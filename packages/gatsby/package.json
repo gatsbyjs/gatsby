@@ -148,7 +148,8 @@
     "cache-dir",
     "dist",
     "graphql.js",
-    "index.d.ts"
+    "index.d.ts",
+    "utils.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
