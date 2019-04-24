@@ -56,22 +56,21 @@ There are three modes in which icon generation can function: automatic, hybrid, 
   - Favicon - yes
   - Legacy icon support - yes
   - Cache busting - yes
+  - internationalization - optional
 
 - Hybrid - Generate a manually configured set of icons from a single source icon.
 
   - Favicon - yes
   - Legacy icon support - yes
   - Cache busting - yes
+  - internationalization - optional
 
 - Manual - Don't generate or pre-configure any icons.
 
   - Favicon - never
   - Legacy icon support - yes
   - Cache busting - never
-
-- i18n - Generate separate versions for multiple languages
-
-  - Supports all 3 modes
+  - internationalization - optional
 
 **_IMPORTANT:_** For best results, if you're providing an icon for generation it should be...
 
@@ -143,25 +142,22 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
+        name: `GatsbyJS`,
+        short_name: `Gatsby`,
+        display: `standalone`,
         manifests: [
           {
-            name: `GatsbyJS`,
-            short_name: `GatsbyJS`,
             start_url: `/de/`,
             regex: `^/de/.*`,
             language: `de`,
             background_color: `#f7f0eb`,
             theme_color: `#a2466c`,
-            display: `standalone`,
           },
           {
-            name: `GatsbyJS`,
-            short_name: `GatsbyJS`,
             start_url: `/`,
             regex: `.*`,
-            background_color: `#f7f0eb`,
-            theme_color: `#a2466c`,
-            display: `standalone`,
+            background_color: `#663399`,
+            theme_color: `#fff`,
           },
         ],
       },
@@ -171,41 +167,9 @@ module.exports = {
 ```
 
 You can add as many languages as you want, as well as mix and match auto, hybrid & manual icon modes.
-Use basic composition like `Object.assign` or `rest/spread` operator (if supported by your Node version) to merge in shared configs so you don't have to repeat yourself. The above example could be written as:
+Shared values can be defined as root options, as in the example above.
 
-```js
-// in gatsby-config.js
-const sharedManifestOptions = {
-  name: `GatsbyJS`,
-  short_name: `GatsbyJS`,
-  background_color: `#f7f0eb`,
-  theme_color: `#a2466c`,
-  display: `standalone`,
-}
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        manifests: [
-          Object.assign({}, sharedManifestOptions, {
-            start_url: `/de/`,
-            regex: `^/de/.*`,
-            language: `de`,
-          }),
-          Object.assign({}, sharedManifestOptions, {
-            start_url: `/`,
-            regex: `.*`,
-          }),
-        ],
-      },
-    },
-  ],
-}
-```
-
-Make sure the default language comes last.
-You don't have to specify a "default" language though, all pathes can start with a language, or you can tweak the regex to match whatever part of the `pathname` you like.
+Make sure the default language comes last. You don't have to specify a "default" language though, all paths can start with a language, or you can tweak the regex to match whatever part of the `pathname` you like.
 
 ### Feature configuration - **Optional**
 

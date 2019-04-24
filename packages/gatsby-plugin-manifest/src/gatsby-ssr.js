@@ -12,12 +12,16 @@ let iconDigest = null
 
 exports.onRenderBody = (
   { setHeadComponents, pathname = `/` },
-  pluginOptions
+  { manifests, ...pluginOptions }
 ) => {
-  if (Array.isArray(pluginOptions.manifests)) {
-    pluginOptions = pluginOptions.manifests.find(manifest =>
+  if (Array.isArray(manifests)) {
+    const manifest = manifests.find(manifest =>
       RegExp(manifest.regex || `^/${manifest.language}/.*`).test(pathname)
     )
+    pluginOptions = {
+      ...pluginOptions,
+      ...manifest,
+    }
     if (!pluginOptions) return false
   }
 

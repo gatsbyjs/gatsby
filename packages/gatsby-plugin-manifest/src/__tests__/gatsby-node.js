@@ -318,4 +318,50 @@ describe(`Test plugin manifest options`, () => {
       JSON.stringify(expectedResults[2])
     )
   })
+
+  it(`merges default and language options`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+    const pluginSpecificOptions = {
+      ...manifestOptions,
+      manifests: [
+        {
+          start_url: `/de/`,
+          regex: `^/de/.*`,
+          language: `de`,
+        },
+        {
+          start_url: `/es/`,
+          regex: `^/es/.*`,
+          language: `es`,
+        },
+        {
+          start_url: `/`,
+          regex: `.*`,
+        },
+      ],
+    }
+    const expectedResults = pluginSpecificOptions.manifests.map(
+      ({ regex, language, manifest }) => {
+        return {
+          ...manifestOptions,
+          ...manifest,
+        }
+      }
+    )
+
+    await onPostBootstrap(apiArgs, pluginSpecificOptions)
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[0])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[1])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[2])
+    )
+  })
 })
