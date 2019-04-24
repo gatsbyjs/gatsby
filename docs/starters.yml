@@ -1127,7 +1127,7 @@
   repo: https://github.com/crstnio/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
-    - Ant Design
+    - Styling:Ant Design
     - Styling:Less
   features:
     - Fork of Gatsby's default starter
@@ -1931,7 +1931,7 @@
   tags:
     - Markdown
     - Redux
-    - Ant Design
+    - Styling:Ant Design
   features:
     - Responsive Web Design
     - Auto generated Sidebar
@@ -2261,7 +2261,7 @@
   tags:
     - Documentation
     - TypeScript
-    - Ant Design
+    - Styling:Ant Design
     - Markdown
     - MDX
   features:
@@ -2299,8 +2299,6 @@
   description: A mutli-response and light, mobile first blog starter with columns layout and Seo optimization.
   tags:
     - Blog
-    - Categories
-    - Tags
     - Markdown
     - Sitemap
     - Portfolio

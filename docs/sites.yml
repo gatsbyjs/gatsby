@@ -406,7 +406,7 @@
   source_url: "https://github.com/dvzrd/gatsby-sfiction"
   featured: false
   categories:
-    - Fiction
+    - Blog
 - title: Digital Psychology
   main_url: "http://digitalpsychology.io/"
   url: "http://digitalpsychology.io/"
@@ -1605,7 +1605,6 @@
   url: "https://www.creditloan.com/"
   categories:
     - Loans
-    - Credits
   featured: false
 - title: Financial Center
   description: >
@@ -2059,7 +2058,7 @@
     the blockchain.
   categories:
     - Technology
-    - Bank
+    - Banking
   built_by: Axel Fuhrmann
   built_by_url: "https://axelfuhrmann.com/"
   featured: false
@@ -2421,7 +2420,7 @@
   main_url: https://hawaiinational.bank
   description: Hawaii National Bank's highly personalized service has helped loyal customers & locally owned businesses achieve their financial dreams for over 50 years.
   categories:
-    - Bank
+    - Banking
   built_by: Wall-to-Wall Studios
   built_by_url: https://walltowall.com
   featured: false
@@ -2751,7 +2750,7 @@
   categories:
     - Conference
     - Design
-    - Frontend
+    - Web Development
   featured: false
 - title: Startarium
   main_url: https://www.startarium.ro
@@ -2850,13 +2849,12 @@
   featured: false
   categories:
     - Food
-    - Miscellaneous
 - title: People For Bikes
   url: "https://2017.peopleforbikes.org/"
   main_url: "https://2017.peopleforbikes.org/"
   categories:
     - Community
-    - Sport
+    - Sports
     - Gallery
     - Nonprofit
   built_by: PeopleForBikes
@@ -2924,7 +2922,7 @@
   categories:
     - Learning
     - Education
-    - Sport
+    - Sports
   built_by: Abamath LLC
   built_by_url: https://www.abamath.com
   featured: false
@@ -2973,7 +2971,7 @@
   main_url: https://www.disruptingnate.com/
   categories:
     - Technology
-    - Podcasts
+    - Podcast
   built_by: Nathan Olmstead
   built_by_url: https://twitter.com/disruptingnate
   featured: false
@@ -3384,7 +3382,7 @@
   description: Custom HR chatbot for better candidate experience
   categories:
     - App
-    - Chatbot
+    - Bot
     - HR
     - Technology
   featured: false
@@ -3862,8 +3860,6 @@
     - Open Source
     - Programming
     - Web Development
-    - Bookmarks
-    - Favorites
   built_by: cardiv
   built_by_url: https://github.com/cardiv/
   featured: false
@@ -4030,8 +4026,6 @@
     - Accessibility
     - Video
     - Photography
-    - Images
-    - CSS Grid
   built_by: Marcy Sutton
   built_by_url: https://marcysutton.com
   featured: true
@@ -4202,7 +4196,6 @@
   categories:
     - Node.js
     - Documentation
-    - Dev
     - Web Development
   built_by: Node.js Website Redesign Working Group
   built_by_url: https://github.com/nodejs/website-redesign
@@ -4442,7 +4435,6 @@
     Weingut Goeschl is a family winery located in Gols, Burgenland in Austria (Österreich)
   categories:
     - eCommerce
-    - Webshop
     - Beverage
     - Business
   built_by: Peter Kroyer
@@ -4524,7 +4516,6 @@
     - Blog
     - Portfolio
     - Web Development
-    - Personal Website
   built_by: Kirankumar Ambati
   built_by_url: https://github.com/kirankumarambati
   featured: false
@@ -4550,7 +4541,6 @@
     Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
   categories:
     - Portfolio
-    - Personal Website
   built_by: Rou Hun Fan Developer
   built_by_url: https://flowen.me
   featured: false
@@ -4645,7 +4635,6 @@
     - Design
     - Portfolio
     - Web Development
-    - UX/UI
     - Technology
   built_by: Patrik Arvidsson
   built_by_url: https://www.patrikarvidsson.com
@@ -4660,7 +4649,6 @@
   categories:
     - Blog
     - Portfolio
-    - Personal Website
 - title: re-geo
   description: >
     re-geo is react based geo cities style component.
@@ -4873,10 +4861,8 @@
   description: >
     (optional)
   categories:
-    - Developer
-    - Personal Website
-    - GitHub
     - Portfolio
+    - Web Development
   built_by: Herman Starikov
   built_by_url: https://github.com/Hermanya
   featured: false
@@ -4931,7 +4917,6 @@
     - Web Development
     - Programming
     - Documentation
-    - Deployment
     - Hosting
     - Technology
   built_by: Render Developers
@@ -5005,7 +4990,6 @@
   categories:
     - Portfolio
     - Freelance
-    - Frontend
     - Web Development
   built_by: Arctica
   built_by_url: https://arctica.io
@@ -5079,7 +5063,6 @@
     The Italian event dedicated to the digital workplace that focuses on planning, governance and company intranet management
   categories:
     - Event
-    - Intranet
     - Conference
   built_by: Ariadne Digital
   built_by_url: https://www.ariadnedigital.it
@@ -5222,7 +5205,6 @@
     Talita Traveler's personal blog.
   categories:
     - Blog
-    - Personal Website
   built_by: Axel Fuhrmann
   built_by_url: https://axelfuhrmann.com/
   featured: false
@@ -5283,7 +5265,6 @@
   source_url: "https://github.com/Safi1012/filipesantoscorrea.com"
   featured: false
   categories:
-    - Personal Website
     - Portfolio
 - title: Progressive Massachusetts Legislator Scorecard
   main_url: https://scorecard.progressivemass.com
@@ -5306,9 +5287,6 @@
   categories:
     - Blog
     - Portfolio
-    - Developer
-    - Frontend
-    - Personal Website
     - Web Development
 - title: Jp Valery – Portfolio
   main_url: https://jpvalery.photo
@@ -5318,7 +5296,6 @@
     Self-taught photographer documenting spaces and people
   categories:
     - Portfolio
-    - Personal Website
     - Photography
 - title: Pantene
   main_url: https://pantene.com
@@ -5401,7 +5378,6 @@
     - Coffee
     - Food
     - Instagram
-    - CSS Grid
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
