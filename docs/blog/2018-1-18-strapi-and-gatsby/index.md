@@ -1,6 +1,6 @@
 ---
 title: "Building a static blog using Gatsby and Strapi"
-date: 2019-03-20
+date: 2018-1-18
 author: "Pierre Burgy"
 canonicalLink: https://blog.strapi.io/building-a-static-website-using-gatsby-and-strapi/
 tags: ["strapi", "blog", "cms", "headless-cms", "open source", "tutorials"]
