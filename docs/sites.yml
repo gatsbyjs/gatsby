@@ -5533,3 +5533,20 @@
   built_by: DeepMay
   built_by_url: https://twitter.com/deepmay_io
   featured: false
+- title: Liferay.Design
+  main_url: https://liferay.design
+  url: https://liferay.design
+  source_url: https://github.com/liferay-design/liferay.design
+  description: >
+    Liferay.Design is home to some of the freshest open-source designers who love to share articles and other resources for the Design Community.
+  categories:
+    - Blog
+    - Community
+    - Design
+    - Marketing
+    - Open Source
+    - Technology
+    - User Experience
+  built_by: Liferay Designers
+  built_by_url: https://twitter.com/liferaydesign
+  featured: false
