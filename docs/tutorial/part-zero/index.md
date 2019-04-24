@@ -66,10 +66,6 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
-To check the installed `gatsby-cli` version, run: `gatsby --version`
-
-![Check gatsby version in terminal](05-gatsby-latest-version.png)
-
 To see the commands available to run `gatsby --help`.
 
 ![Check gatsby commands in terminal](06-gatsby-help.png)
@@ -150,12 +146,12 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 To summarize, in this section you:
 
-- Learned about the command line and how to use it.
-- Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool.
-- Generated a new Gatsby site using the Gatsby CLI tool.
-- Ran the Gatsby development server and visited your site locally.
-- Downloaded a code editor.
-- Installed a code formatter called Prettier.
+- Learned about the command line and how to use it
+- Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool
+- Generated a new Gatsby site using the Gatsby CLI tool
+- Ran the Gatsby development server and visited your site locally
+- Downloaded a code editor
+- Installed a code formatter called Prettier
 
 Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
 
