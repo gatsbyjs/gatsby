@@ -19,7 +19,8 @@ const findStubs = pages =>
 
 const flatten = pages =>
   pages.reduce(
-    (flat, item) => flat.concat(item.items ? flatten(item.items) : item),
+    (flat, item) =>
+      flat.concat(item.items ? flatten(item.items).concat(item) : item),
     []
   )
 
