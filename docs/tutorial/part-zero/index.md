@@ -17,14 +17,14 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
 
 How to install or verify Homebrew on your computer:
 
-1. Open your Terminal
+1. Open your Terminal.
 1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
 1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
 1. Once you've installed Homebrew, repeat step 2 to verify.
 
 ### Mac Users: install XCode Command Line Tools
 
-1. Open your Terminal
+1. Open your Terminal.
 1. On a Mac, install XCode Command line tools by running `xcode-select --install`.
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
@@ -66,7 +66,9 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
-To see the commands available to run `gatsby --help`.
+To see the commands available, run `gatsby --help`.
+
+![Check gatsby commands in terminal](05-gatsby-help.png)
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
