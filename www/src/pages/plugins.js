@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import Container from "../components/container"
 import Rotator from "../components/rotator"
-import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
