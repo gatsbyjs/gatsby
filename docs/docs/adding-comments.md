@@ -37,52 +37,51 @@ Here are the steps for adding Disqus comments to your own blog:
 1. [Sign-up to Disqus](https://disqus.com/profile/signup). During the process you'll have to choose a shortname for your site. This is how Disqus will identify comments coming from your site. Copy that for later.
 2. Install the Disqus React package
 
-   ```sh
-   npm install disqus-react
-   ```
+```sh
+npm install disqus-react
+```
 
 3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client-side code](https://www.gatsbyjs.org/docs/environment-variables/#client-side-javascript).)
-   ```:env:title=.env.example
-   ...
-   # enables Disqus comments for blog posts
-   GATSBY_DISQUS_NAME=insertValue
-   ```
-   ```:env:title=.env
-   ...
-   GATSBY_DISQUS_NAME=yourSiteShortname
-   ```
+
+```title=.env.example
+# enables Disqus comments for blog posts
+GATSBY_DISQUS_NAME=insertValue
+```
+
+```title=.env
+GATSBY_DISQUS_NAME=yourSiteShortname
+```
+
 4. In your blog post template (usually `src/templates/post.js`) import the `DiscussionEmbed` component.
 
-   ```js:title=src/templates/post.js
-   import React from "react"
-   import { graphql } from "gatsby"
-   // highlight-next-line
-   import { DiscussionEmbed } from "disqus-react"
-   ```
+```js:title=src/templates/post.js
+import React from "react"
+import { graphql } from "gatsby"
+// highlight-next-line
+import { DiscussionEmbed } from "disqus-react"
+```
 
-   Then define your Disqus configuration object
+Then define your Disqus configuration object
 
-   ```js
-   const disqusConfig = {
-     shortname: process.env.GATSBY_DISQUS_NAME,
-     config: { identifier: slug, title },
-   }
-   ```
+```js
+const disqusConfig = {
+  shortname: process.env.GATSBY_DISQUS_NAME,
+  config: { identifier: slug, title },
+}
+```
 
-   where `identifier` must be a string or number that uniquely identifies the post. It could be the post's slug, title or some ID. Finally, add `DiscussionEmbed` to the JSX of your post template.
+Where `identifier` must be a string or number that uniquely identifies the post. It could be the post's slug, title or some ID. Finally, add `DiscussionEmbed` to the JSX of your post template.
 
-   ```jsx:title=src/templates/post.js
-   return (
-     <Global>
-       ...
-       <PageBody>
-         ...
-         {/* highlight-next-line */}
-         <DiscussionEmbed {...disqusConfig} />
-       </PageBody>
-     </Global>
-   )
-   ```
+```js:title=src/templates/post.js
+return (
+  <Global>
+    <PageBody>
+      {/* highlight-next-line */}
+      <DiscussionEmbed {...disqusConfig} />
+    </PageBody>
+  </Global>
+)
+```
 
 And you're done. You should now see the Disqus comment form appear beneath your blog post [looking like this](https://janosh.io/blog/disqus-comments#disqus_thread). Happy blogging!
 

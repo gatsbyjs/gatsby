@@ -145,10 +145,10 @@ exports.replaceComponentRenderer = true
  * @param {pluginOptions} pluginOptions
  * @returns {ReactNode} Wrapped element
  * @example
- * import React from "react"
- * import Layout from "./src/components/layout"
+ * const React = require("react")
+ * const Layout = require("./src/components/layout")
  *
- * export const wrapPageElement = ({ element, props }) => {
+ * exports.wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get
  *   // including location, data, etc - you don't need to pass it
  *   return <Layout {...props}>{element}</Layout>
@@ -168,13 +168,13 @@ exports.wrapPageElement = true
  * @param {pluginOptions} pluginOptions
  * @returns {ReactNode} Wrapped element
  * @example
- * import React from "react"
- * import { Provider } from "react-redux"
+ * const React = require("react")
+ * const { Provider } = require("react-redux")
  *
- * import createStore from "./src/state/createStore"
+ * const createStore = require("./src/state/createStore")
  * const store = createStore()
  *
- * export const wrapRootElement = ({ element }) => {
+ * exports.wrapRootElement = ({ element }) => {
  *   return (
  *     <Provider store={store}>
  *       {element}

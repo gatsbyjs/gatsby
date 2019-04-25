@@ -31,9 +31,9 @@
             - title: Preparing your Site for Deployment*
               link: /docs/preparing-for-deployment/
             - title: Deploying to AWS Amplify
-              link: /docs/deploying-to-aws-amplify
+              link: /docs/deploying-to-aws-amplify/
             - title: Deploying to S3 and CloudFront
-              link: /docs/deploying-to-s3-cloudfront
+              link: /docs/deploying-to-s3-cloudfront/
             - title: Deploying to Aerobatic
               link: /docs/deploying-to-aerobatic/
             - title: Deploying to Heroku
@@ -43,7 +43,7 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
             - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify
+              link: /docs/hosting-on-netlify/
             - title: Deploying to Render
               link: /docs/deploying-to-render/
             - title: Adding a Path Prefix
@@ -317,7 +317,7 @@
             - title: Adding a Manifest File
               link: /docs/add-a-manifest-file/
             - title: Adding Offline Support with a Service Worker
-              link: /docs/add-offline-support-with-a-service-worker
+              link: /docs/add-offline-support-with-a-service-worker/
             - title: Adding Page Metadata
               link: /docs/add-page-metadata/
             - title: Search Engine Optimization (SEO)
