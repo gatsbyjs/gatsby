@@ -304,7 +304,7 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => {
-// highlight-start
+  // highlight-start
   const data = useStaticQuery(
     graphql`
       query {
