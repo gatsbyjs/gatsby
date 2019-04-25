@@ -292,21 +292,21 @@ Page queries live outside of the component definition -- by convention at the en
 ### Use a StaticQuery
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
-
-Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
+Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/)
+Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
 import { css } from "@emotion/core"
 // highlight-next-line
-import { StaticQuery, Link, graphql } from "gatsby"
+import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-export default ({ children }) => (
-  {/* highlight-start */}
-  <StaticQuery
-    query={graphql`
+export default ({ children }) => {
+  // highlight-start
+  const data = useStaticQuery(
+    graphql`
       query {
         site {
           siteMetadata {
@@ -314,43 +314,41 @@ export default ({ children }) => (
           }
         }
       }
-    `}
-    render={data => (
-      {/* highlight-end */}
-      <div
-        css={css`
-          margin: 0 auto;
-          max-width: 700px;
-          padding: ${rhythm(2)};
-          padding-top: ${rhythm(1.5)};
-        `}
-      >
-        <Link to={`/`}>
-          <h3
-            css={css`
-              margin-bottom: ${rhythm(2)};
-              display: inline-block;
-              font-style: normal;
-            `}
-          >
-            {data.site.siteMetadata.title}{/* highlight-line */}
-          </h3>
-        </Link>
-        <Link
-          to={`/about/`}
+    `
+  )
+  // highlight-end
+  return (
+    <div
+      css={css`
+        margin: 0 auto;
+        max-width: 700px;
+        padding: ${rhythm(2)};
+        padding-top: ${rhythm(1.5)};
+      `}
+    >
+      <Link to={`/`}>
+        <h3
           css={css`
-            float: right;
+            margin-bottom: ${rhythm(2)};
+            display: inline-block;
+            font-style: normal;
           `}
         >
-          About
-        </Link>
-        {children}
-      </div>
-      {/* highlight-start */}
-    )}
-  />
-  {/* highlight-end */}
-)
+          {data.site.siteMetadata.title} {/* highlight-line */}
+        </h3>
+      </Link>
+      <Link
+        to={`/about/`}
+        css={css`
+          float: right;
+        `}
+      >
+        About
+      </Link>
+      {children}
+    </div>
+  )
+}
 ```
 
 Another success! 🎉
