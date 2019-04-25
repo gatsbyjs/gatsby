@@ -224,7 +224,7 @@ exports.sourceNodes = (
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
-// highlight-start
+  // highlight-start
   // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
 
@@ -242,10 +242,11 @@ exports.sourceNodes = (
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
           console.log("Photo data is:", photo)
-          // highlight-end
+          
         })
       })
   )
+  // highlight-end
 }
 ```
 
@@ -304,10 +305,10 @@ exports.sourceNodes = (
         contentDigest: createContentDigest(photo),
       },
     })
-    // highlight-end
 
     return nodeData
   }
+  // highlight-end
 
   // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
