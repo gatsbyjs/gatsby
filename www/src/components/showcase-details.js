@@ -10,7 +10,7 @@ import {
   fontSizes,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fonts,
 } from "../utils/presets"
 import sharedStyles from "../views/shared/styles"
@@ -271,7 +271,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 css={{
                   padding: gutter,
                   paddingBottom: space[2],
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     padding: gutterDesktop,
                     paddingBottom: space[6],
                   },
@@ -320,7 +320,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   borderTop: `1px solid ${colors.ui.light}`,
                   fontFamily: fonts.header,
                   margin: `0 ${gutter}`,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -422,7 +422,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                           color: colors.white,
                           borderBottom: `none`,
                         },
-                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
+                        [shouldShowVisitButtonOnMobile && mediaQueries.sm]: {
                           display: `block`,
                         },
                       }}
@@ -465,7 +465,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     padding: gutterDesktop,
                   },
                 }}

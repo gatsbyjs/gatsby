@@ -3,6 +3,8 @@ const _ = require(`lodash`)
 const onCreateNode = require(`../on-node-create`)
 const { graphql } = require(`gatsby/graphql`)
 
+const { createContentDigest } = require(`gatsby/utils`)
+
 let node
 let actions
 let createNodeId
@@ -38,6 +40,7 @@ Where oh where is my little pony?
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       }).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
@@ -75,6 +78,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
           loadNodeContent,
           actions,
           createNodeId,
+          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       ).then(() => {
@@ -106,6 +110,7 @@ yadda yadda
         actions,
         createNodeId,
         loadNodeContent,
+        createContentDigest,
       })
 
       expect(parsed.frontmatter.date).toEqual(new Date(date).toJSON())
@@ -207,6 +212,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           loadNodeContent,
           actions,
           createNodeId,
+          createContentDigest,
         },
         { excerpt_separator: `<!-- end -->` }
       )
@@ -261,6 +267,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       })
     })
   })

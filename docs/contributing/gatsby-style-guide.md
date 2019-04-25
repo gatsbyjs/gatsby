@@ -70,7 +70,7 @@ examples:
 - [plugin README](/packages/gatsby-source-filesystem/)
 - [starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
