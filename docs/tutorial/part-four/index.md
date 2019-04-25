@@ -292,7 +292,7 @@ Page queries live outside of the component definition -- by convention at the en
 ### Use a StaticQuery
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
-
+Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/)
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
 ```jsx:title=src/components/layout.js
@@ -303,8 +303,8 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-// highlight-start
 export default ({ children }) => {
+// highlight-start
   const data = useStaticQuery(
     graphql`
       query {
@@ -316,8 +316,8 @@ export default ({ children }) => {
       }
     `
   )
+  // highlight-end
   return (
-    // highlight-end
     <div
       css={css`
         margin: 0 auto;
@@ -347,10 +347,8 @@ export default ({ children }) => {
       </Link>
       {children}
     </div>
-    // highlight-start
   )
 }
-// highlight-end
 ```
 
 Another success! 🎉
