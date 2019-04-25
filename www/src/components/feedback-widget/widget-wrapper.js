@@ -2,7 +2,13 @@
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import { breakpoints, colors, radii, shadows, space } from "../../utils/presets"
+import {
+  mediaQueries,
+  colors,
+  radii,
+  shadows,
+  space,
+} from "../../utils/presets"
 
 const boldEntry = keyframes`
   100% {
@@ -64,7 +70,7 @@ const WrapperDiv = styled(`div`)`
     opacity: 1;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     box-shadow: ${shadows.overlay};
     border: 1px solid ${colors.gray.border};
     border-radius: ${radii[2]}px;

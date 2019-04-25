@@ -2,7 +2,7 @@ import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
 import {
-  breakpoints,
+  mediaQueries,
   colors,
   fontSizes,
   radii,
@@ -95,7 +95,7 @@ export const ToggleButtonLabel = styled(`span`)`
   white-space: nowrap;
   width: 100%;
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     box-shadow: ${shadows.floating};
     width: auto;
   }
@@ -123,7 +123,7 @@ export const ToggleButtonIcon = styled(`span`)`
     transition: 0.5s;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     .opened &,
     .failed &,
     .success &,
@@ -175,7 +175,7 @@ export const ToggleButton = styled(`button`)`
     display: none;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     bottom: 0;
     position: absolute;
     right: 0;

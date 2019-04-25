@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import {
-  breakpoints,
+  mediaQueries,
   fontSizes,
   letterSpacings,
   lineHeights,
@@ -13,11 +13,11 @@ export const WidgetContainer = styled(`div`)`
   padding: 0 ${space[6]} ${space[9]};
   max-width: ${rhythm(28)};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     padding-bottom: 0;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     &:not(.closed) {
       height: 26rem;
       width: 20rem;
