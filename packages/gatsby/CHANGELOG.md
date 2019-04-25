@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.29...gatsby@2.3.30) (2019-04-25)
+
+### Features
+
+- **gatsby:** Add details to pagination info ([#13625](https://github.com/gatsbyjs/gatsby/issues/13625)) ([f115994](https://github.com/gatsbyjs/gatsby/commit/f115994))
+
 ## [2.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.28...gatsby@2.3.29) (2019-04-24)
 
 **Note:** Version bump only for package gatsby
