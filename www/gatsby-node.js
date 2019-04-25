@@ -847,8 +847,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       What_type_of_event_is_this_: String
       Organizer_s_Last_Name: String
       Gatsby_Speaker_Approved: Boolean
-      Do_you_want_this_event_listed_on_the_gatsbyjs_org_events_page___public_page_: Boolean
-      Approved_for_Mktg_Support: Boolean
+      Approved_for_posting_on_event_page: Boolean
     }
   `
 
