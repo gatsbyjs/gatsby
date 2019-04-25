@@ -103,8 +103,8 @@ class WebsocketManager {
     this.pageResults = new Map()
     this.staticQueryResults = new Map()
     this.errors = new Map()
-    this.websocket
-    this.programDir
+    // this.websocket
+    // this.programDir
 
     this.init = this.init.bind(this)
     this.getSocket = this.getSocket.bind(this)

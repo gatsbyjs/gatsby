@@ -96,7 +96,7 @@
   description: >-
     Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
   location: "Leeds, England"
-  website: "https://steoneill.me"
+  website: "https://steoneill.dev"
   github: "https://github.com/steoneill"
   image: images/ste-oneill.jpg
   for_hire: true
@@ -233,4 +233,47 @@
   image: images/thijs-koerselman.jpg
   for_hire: true
   hiring: false
+  portfolio: true
+- name: Origen Studio
+  type: agency
+  description: >-
+    We are a dev agency who specializes in JS. We have built different projects with GatsbyJS and we love working on it.
+  location: Barcelona, Spain
+  website: "https://origen.studio"
+  github: https://github.com/OrigenStudio
+  image: images/origen-studio.jpg
+  for_hire: true
+  hiring: false
+  portfolio: false
+- name: Kaordica
+  type: agency
+  image: images/kaordica.jpg
+  description:
+    "Reach your business goals with our unique, performant and beautiful websites. Starting with a Design Sprint, we get to the end content and structure together with our clients, create the visual design and test it with real people, and develop with quality code and Gatsby's awesomeness - have everything ready in 2 - 3 weeks, from start to finish!\n
+
+    Kaordica's currently based in Brazil, but we work remotely and are available for tavelling ;)"
+  location: Brazil
+  website: "https://kaordica.design"
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: 3merge
+  type: agency
+  image: images/3merge.png
+  description: "We are a JavaScript development agency that builds native and progressive web applications."
+  location: Canada
+  website: "https://3merge.ca/"
+  for_hire: true
+  portfolio: true
+- name: WEBhart
+  type: individual
+  description: >-
+    Hi, I'm Rien (pronounced Reen) from Belgium but based in Girona, Spain. I'm an autodidact, committed to learning until the end of time.
+
+    Dabbled in iOS (Objective-C) and worked as back-end/api (php) developer (2010-2013). After a break from programming, chasing a cyclist dream and working part-time mechanics jobs (yes, I'm a nerd who can do manual work!) I discovered Gatsby at the beginning of 2018. Since then I've been building sites and started freelancing as a developer/designer.
+  location: "Girona, Spain"
+  website: "https://www.web-hart.com"
+  github: "https://github.com/riencoertjens"
+  image: images/web-hart.jpg
+  for_hire: true
   portfolio: true

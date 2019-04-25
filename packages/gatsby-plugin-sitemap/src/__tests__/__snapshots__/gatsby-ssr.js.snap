@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Adds <Link> for site to head creates Link href with path prefix when __PATH_PREFIX__ sets 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/hogwarts/sitemap.xml"
+          rel="sitemap"
+          type="application/xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for site to head creates Link if createLinkInHead is true 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/sitemap.xml"
+          rel="sitemap"
+          type="application/xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`Adds <Link> for site to head does not create Link if createLinkInHead is false 1`] = `[MockFunction]`;

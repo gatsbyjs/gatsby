@@ -1,8 +1,15 @@
-const _ = require(`lodash`),
-  crypto = require(`crypto`)
+const camelCase = require(`lodash.camelcase`)
+const isString = require(`lodash.isstring`)
 
-module.exports = function(node, key, text, mediaType, createNode) {
-  const str = _.isString(text) ? text : ` `
+module.exports = function(
+  node,
+  key,
+  text,
+  mediaType,
+  createContentDigest,
+  createNode
+) {
+  const str = isString(text) ? text : ` `
   const id = `${node.id}${key}MappingNode`
   const mappingNode = {
     id: id,
@@ -10,13 +17,10 @@ module.exports = function(node, key, text, mediaType, createNode) {
     [key]: str,
     children: [],
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} MappingNode`),
+      type: camelCase(`${node.internal.type} ${key} MappingNode`),
       mediaType: mediaType,
       content: str,
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(str))
-        .digest(`hex`),
+      contentDigest: createContentDigest(str),
     },
   }
 

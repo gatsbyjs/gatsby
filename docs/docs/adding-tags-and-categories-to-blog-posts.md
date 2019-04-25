@@ -54,8 +54,10 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
   ) {
     edges {
       node {
+        fields {
+          slug
+        }
         frontmatter {
-          path
           tags
         }
       }
@@ -64,7 +66,7 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
 }
 ```
 
-The resulting data includes the `path` and `tags` frontmatter for each post, which is all the data we'll need to create pages for each tag which contain a list of posts under that tag. Let's make the tag page template now:
+The resulting data includes the `slug` field and `tags` frontmatter for each post, which is all the data we'll need to create pages for each tag which contain a list of posts under that tag. Let's make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
@@ -91,10 +93,11 @@ const Tags = ({ pageContext, data }) => {
       <h1>{tagHeader}</h1>
       <ul>
         {edges.map(({ node }) => {
-          const { path, title } = node.frontmatter
+          const { slug } = node.fields
+          const { title } = node.frontmatter
           return (
-            <li key={path}>
-              <Link to={path}>{title}</Link>
+            <li key={slug}>
+              <Link to={slug}>{title}</Link>
             </li>
           )
         })}
@@ -119,8 +122,10 @@ Tags.propTypes = {
         PropTypes.shape({
           node: PropTypes.shape({
             frontmatter: PropTypes.shape({
-              path: PropTypes.string.isRequired,
               title: PropTypes.string.isRequired,
+            }),
+            fields: PropTypes.shape({
+              slug: PropTypes.string.isRequired,
             }),
           }),
         }).isRequired
@@ -141,9 +146,11 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
+          fields {
+            slug
+          }
           frontmatter {
             title
-            path
           }
         }
       }
@@ -176,8 +183,10 @@ exports.createPages = ({ actions, graphql }) => {
       ) {
         edges {
           node {
+            fields {
+              slug
+            }
             frontmatter {
-              path
               tags
             }
           }
@@ -296,10 +305,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      limit: 2000
-      filter: { frontmatter: { published: { ne: false } } }
-    ) {
+    allMarkdownRemark(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
         totalCount

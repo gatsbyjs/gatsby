@@ -101,7 +101,7 @@ import React from "react"
 const defaultContextValue = {
   data: {
     // set your initial data shape here
-    showMenu: false,
+    menuOpen: false,
   },
   set: () => {},
 }
@@ -192,8 +192,8 @@ In `gatsby-node.js`:
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage } = actions
 
-  if(page.path.match(/special-page/) {
-    page.context.layout = 'special'
+  if (page.path.match(/special-page/)) {
+    page.context.layout = "special"
     createPage(page)
   }
 }

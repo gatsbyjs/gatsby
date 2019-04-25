@@ -13,6 +13,8 @@ const isUnitlessNumber = n => {
 const isUnitlessOrPixelNumber = n =>
   n && (isUnitlessNumber(n) || isPixelNumber(n))
 
+const needsSemicolon = str => !str.endsWith(`;`)
+
 // Aspect ratio can only be determined if both width and height are unitless or
 // pixel values. Any other values mean the responsive wrapper is not applied.
 const acceptedDimensions = (width, height) =>
@@ -32,9 +34,20 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
         const height = iframe.attr(`height`)
 
         if (acceptedDimensions(width, height)) {
+          const existingStyle = $(`iframe`).attr(`style`) // Other plugins might set border: 0
+          // so we make sure that we maintain those existing styles. If other styles like height or
+          // width are already defined they will be overridden anyway.
+
+          let fullStyle = ``
+          if (existingStyle && needsSemicolon(existingStyle)) {
+            fullStyle = `${existingStyle};`
+          } else if (existingStyle) {
+            fullStyle = existingStyle
+          }
+
           $(`iframe, object`).attr(
             `style`,
-            `
+            `${fullStyle}
             position: absolute;
             top: 0;
             left: 0;
@@ -61,17 +74,8 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
           </div>
           `
 
-          node.data = {
-            hChildren: [{ type: `raw`, value: rawHTML }],
-          }
-          // Set type to unknown so mdast-util-to-hast will treat this node as a
-          // div not an iframe — it gets quite confused otherwise.
-          node.type = `unknown`
-
-          // Also apparently, for html node types, you have to delete the value
-          // in order for mdast-util-to-hast to use hChildren. If even if
-          // you change the node type to unknown...
-          delete node.value
+          node.type = `html`
+          node.value = rawHTML
         }
       }
     })

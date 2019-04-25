@@ -75,7 +75,7 @@ _Not super accurate!_
 
 ![image of gatsbyjs.org homepage above the fold](gatsby-days-dot-org-homepage.png)
 
-When looking at the image above, users had a lot of unanswered questions about Gatsby. We found that the diagram below the fold (see image below) and [the READme file in GitHub](https://github.com/gatsbyjs/gatsby#--gatsby-v2) gave the most accurate impressions of Gatsby, and those aren’t super visible.
+When looking at the image above, users had a lot of unanswered questions about Gatsby. We found that the diagram below the fold (see image below) and [the README file in GitHub](https://github.com/gatsbyjs/gatsby#--gatsby-v2) gave the most accurate impressions of Gatsby, and those aren’t super visible.
 
 ![image of diagram below the fold on gatsbyjs.org homepage](gatsby-days-dot-org-diagram.png)
 
@@ -143,4 +143,4 @@ Sign up for a 15, 30, or 60 minute interview to tell me your experiences with Ga
 
 ## Know someone who has never used Gatsby before?
 
-If you know someone who might like to get an Amazon gift card for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewfor)
+If you know someone who might like to get an Amazon gift card for participating in a usability test for first-time visitors to Gatsby, [submit your contact info and your friend’s contact info here!](https://docs.google.com/forms/d/e/1FAIpQLSeP4Z-7OnBeR2gyaLOu-N9GHQ59EFhIPqvzdp0UU70Fj4Bw2w/viewform)
