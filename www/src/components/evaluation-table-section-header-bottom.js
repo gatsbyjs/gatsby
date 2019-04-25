@@ -7,7 +7,7 @@ import squarespace from "../assets/squarespace-compressed.png"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   lineHeights,
   fonts,
 } from "../utils/presets"
@@ -18,7 +18,7 @@ const subHeaderTitleStyles = {
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [breakpoints.xs]: {
+  [mediaQueries.xs]: {
     height: rhythm(5 / 4),
   },
 }

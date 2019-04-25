@@ -1,25 +1,32 @@
 import styled from "@emotion/styled"
-import { breakpoints } from "./presets"
+import {
+  mediaQueries,
+  fontSizes,
+  letterSpacings,
+  lineHeights,
+  space,
+} from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 export const WidgetContainer = styled(`div`)`
-  height: 2.5rem;
-  margin: 2rem 0;
-  position: inline;
-  width: 100%;
+  margin: ${space[7]} auto;
+  padding: 0 ${space[6]} ${space[9]};
+  max-width: ${rhythm(28)};
 
-  &:not(.closed) {
-    height: 26rem;
+  ${mediaQueries.md} {
+    padding-bottom: 0;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${mediaQueries.lg} {
     &:not(.closed) {
       height: 26rem;
       width: 20rem;
     }
 
-    bottom: 1.5rem;
+    bottom: ${space[6]};
+    padding: 0;
     position: fixed;
-    right: 1.5rem;
+    right: ${space[6]};
     margin: 0;
     width: auto;
   }
@@ -27,11 +34,11 @@ export const WidgetContainer = styled(`div`)`
 
 export const Title = styled(`h2`)`
   display: block;
-  font-size: 1.2rem;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  font-size: ${fontSizes[4]};
+  letter-spacing: ${letterSpacings.tight};
+  line-height: ${lineHeights.dense};
   margin: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: ${space[2]};
   text-align: center;
 `
 

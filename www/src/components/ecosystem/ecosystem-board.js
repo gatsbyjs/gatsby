@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 
 import EcosystemSection from "./ecosystem-section"
 
-import { space, breakpoints, sizes } from "../../utils/presets"
+import { space, mediaQueries, sizes } from "../../utils/presets"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -14,7 +14,7 @@ const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     flex-direction: row;
     flex-wrap: wrap;
     height: calc(100vh - (${sizes.bannerHeight} + ${sizes.headerHeight} + 1px));

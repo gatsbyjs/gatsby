@@ -2,13 +2,22 @@ const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const path = require(`path`)
 
-async function onCreateNode({
-  node,
-  actions,
-  loadNodeContent,
-  createNodeId,
-  createContentDigest,
-}) {
+async function onCreateNode(
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
+  pluginOptions
+) {
+  function getType({ node, object, isArray }) {
+    if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
+      return pluginOptions.typeName({ node, object, isArray })
+    } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
+      return pluginOptions.typeName
+    } else if (isArray) {
+      return _.upperFirst(_.camelCase(`${node.name} Yaml`))
+    } else {
+      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
+    }
+  }
+
   function transformObject(obj, id, type) {
     const yamlNode = {
       ...obj,
@@ -38,14 +47,14 @@ async function onCreateNode({
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
-        _.upperFirst(_.camelCase(`${node.name} Yaml`))
+        getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
-      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
+      getType({ node, object: parsedContent, isArray: false })
     )
   }
 }

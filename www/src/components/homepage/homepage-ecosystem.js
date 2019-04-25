@@ -23,7 +23,7 @@ import {
   space,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   letterSpacings,
   fonts,
@@ -35,7 +35,7 @@ const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     flex-direction: row;
     margin: 0 -${space[2]};
   }
@@ -47,7 +47,7 @@ const Section = styled(EcosystemSection)`
   margin-bottom: ${space[6]};
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     margin: 0 ${space[2]} 0;
     padding: ${space[6]};
 
@@ -63,7 +63,7 @@ const SubTitle = styled(`h3`)`
   margin-bottom: ${space[1]};
   margin-top: ${space[7]};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-left: ${space[9]};
     margin-bottom: ${space[4]};
   }
@@ -72,14 +72,14 @@ const SubTitle = styled(`h3`)`
 const FeaturedItems = styled(HorizontalScroller)`
   margin: 0 -${space[6]};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: 0;
     overflow-x: visible;
   }
 `
 
 const FeaturedItemsList = styled(HorizontalScrollerContent)`
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -90,7 +90,7 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 const FeaturedItem = styled(EcosystemFeaturedItem)`
   margin-right: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-bottom: none;
     margin: ${space[6]};
     margin-top: 0;
@@ -98,7 +98,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     width: 20rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-basis: 28%;
 
     :nth-of-type(4) {
@@ -112,11 +112,11 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
     border: 0;
     box-shadow: ${shadows.raised};
 
-    ${breakpoints.md} {
+    ${mediaQueries.md} {
       border-radius: ${radii[2]}px;
     }
 
-    ${breakpoints.lg} {
+    ${mediaQueries.lg} {
       :hover {
         background: ${colors.ui.whisper};
       }

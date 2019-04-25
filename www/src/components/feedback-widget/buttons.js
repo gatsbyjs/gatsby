@@ -1,41 +1,47 @@
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import { breakpoints } from "./presets"
+import {
+  mediaQueries,
+  colors,
+  fontSizes,
+  radii,
+  shadows,
+  space,
+} from "../../utils/presets"
 
 const rotation = keyframes`
   0% {
-    transform: translateX(0.25rem) rotate(0deg);
+    transform: translateX(${space[1]}) rotate(0deg);
   }
   100% {
-    transform: translateX(0.25rem) rotate(360deg);
+    transform: translateX(${space[1]}) rotate(360deg);
   }
 `
 
 export const focusStyle = css`
-  box-shadow: 0 0 0 0.12rem #ffb238;
+  box-shadow: 0 0 0 0.12rem ${colors.accent};
   outline: none;
 `
 
 const buttonStyles = css`
   -webkit-appearance: none;
   align-items: center;
-  background: rebeccapurple;
+  background: ${colors.gatsby};
   border: none;
-  border-radius: 2px;
-  color: white;
+  border-radius: ${radii[2]}px;
+  color: ${colors.white};
   cursor: pointer;
   display: flex;
-  font-size: 0.875rem;
-  font-family: sans-serif;
-  padding: 0.3rem 0.75rem;
+  font-size: ${fontSizes[1]};
+  padding: ${space[2]} ${space[3]};
   transition: 0.5s;
   z-index: 1;
 
   svg {
-    height: 1.1rem;
-    transform: translateX(0.25rem);
-    width: 1.1rem;
+    height: ${space[4]};
+    transform: translateX(${space[1]});
+    width: ${space[4]};
   }
 
   &:focus {
@@ -48,7 +54,7 @@ const buttonStyles = css`
   }
 
   &:hover {
-    box-shadow: 0 0 0 0.12rem #ffb23888;
+    box-shadow: 0 0 0 0.12rem ${colors.accent}88;
   }
 `
 
@@ -72,53 +78,52 @@ export const SubmitButton = styled(`button`)`
 
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
-  background: #fff;
-  border: 1px solid rebeccapurple;
-  color: rebeccapurple;
+  background: ${colors.white};
+  border: 1px solid ${colors.gray.border};
+  color: ${colors.gatsby};
 `
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
+  background: ${colors.white};
+  border: 1px solid ${colors.gray.border};
+  border-radius: ${radii[2]}px;
   display: flex;
   height: 2.5rem;
-  padding: 0 2.5rem 0 0.75rem;
+  padding: 0 ${space[8]} 0 ${space[3]};
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${mediaQueries.lg} {
+    box-shadow: ${shadows.floating};
     width: auto;
   }
 `
 
 export const ToggleButtonIcon = styled(`span`)`
   align-items: center;
-  background: rebeccapurple;
-  border-radius: 50%;
-  color: #fff;
+  background: ${colors.lilac};
+  border-radius: ${radii[6]};
+  color: ${colors.white};
   display: flex;
-  font-size: 1rem;
-  height: 1.4rem;
+  font-size: ${fontSizes[1]};
+  height: ${space[6]};
   justify-content: center;
   position: absolute;
-  right: 2rem;
+  right: ${space[3]};
   transform: scale(1);
   transition: 0.5s;
-  width: 1.4rem;
+  width: ${space[6]};
 
   svg {
-    fill: #fff;
-    height: 0.8rem;
-    width: 0.8rem;
+    fill: ${colors.white};
+    height: ${space[3]};
+    width: ${space[3]};
     transition: 0.5s;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
-    right: 0.75rem;
-
+  ${mediaQueries.lg} {
     .opened &,
     .failed &,
     .success &,
@@ -126,7 +131,7 @@ export const ToggleButtonIcon = styled(`span`)`
       &:hover {
         svg {
           transform: rotate(90deg);
-          fill: #ffb238;
+          fill: ${colors.accent};
         }
       }
     }
@@ -144,13 +149,14 @@ export const ToggleButton = styled(`button`)`
   cursor: pointer;
   display: flex;
   padding: 0;
+  position: relative;
   transition: 0.6s ease;
   width: 100%;
   z-index: 3;
 
   &:hover {
     ${ToggleButtonLabel} {
-      box-shadow: 0 0 0 0.12rem #ffb23888;
+      box-shadow: 0 0 0 0.12rem ${colors.accent}88;
     }
   }
 
@@ -169,7 +175,7 @@ export const ToggleButton = styled(`button`)`
     display: none;
   }
 
-  @media (min-width: ${breakpoints.desktop}) {
+  ${mediaQueries.lg} {
     bottom: 0;
     position: absolute;
     right: 0;
@@ -180,15 +186,15 @@ export const ToggleButton = styled(`button`)`
     .success &,
     .submitting & {
       display: flex;
-      transform: translate(-0.5rem, -26rem);
+      transform: translate(-${space[2]}, -26rem);
 
       ${ToggleButtonIcon} {
-        background: #fff;
-        border: 1px solid #eee;
+        background: ${colors.white};
+        border: 1px solid ${colors.gray.border};
         transform: scale(1.8);
 
         svg {
-          fill: rebeccapurple;
+          fill: ${colors.gatsby};
         }
       }
 

@@ -2,6 +2,8 @@ import React from "react"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
 
+import { colors, fontSizes, space } from "../../utils/presets"
+
 const animA = keyframes`
   from  {
     transform: translate3d(0,0,0);
@@ -46,12 +48,12 @@ const animC = keyframes`
 
 const IconWrapper = styled(`span`)`
   display: block;
-  height: 3rem;
+  height: ${space[9]};
   transition: 0.5s;
-  width: 3rem;
+  width: ${space[9]};
 
   svg {
-    color: #8a4baf;
+    color: ${colors.lilac};
     height: 100%;
     width: 100%;
   }
@@ -59,17 +61,16 @@ const IconWrapper = styled(`span`)`
 
 const RatingText = styled(`span`)`
   display: block;
-  font-family: sans-serif;
-  font-size: 0.75rem;
+  font-size: ${fontSizes[0]};
   font-weight: bold;
   transition: 0.5s;
   line-height: 1;
-  margin-top: 0.25em;
+  margin-top: ${space[1]};
 `
 
 const Label = styled(`label`)`
   align-items: center;
-  background: #f6edfa;
+  background: ${colors.ui.light};
   cursor: pointer;
   display: flex;
   flex-basis: 33.33%;
@@ -80,12 +81,12 @@ const Label = styled(`label`)`
   transition: background 0.25s;
 
   &.focused {
-    background: #8a4baf;
-    color: white;
+    background: ${colors.lilac};
+    color: ${colors.white};
 
     ${IconWrapper} {
       svg {
-        color: #ffb238;
+        color: ${colors.accent};
       }
     }
   }
