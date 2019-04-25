@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import Container from "../components/container"
 import Rotator from "../components/rotator"
-import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
@@ -116,11 +115,6 @@ class Plugins extends Component {
               <Link to="/docs/plugins">plugins doc page</Link>.
             </p>
           </div>
-          <Unbird
-            dataSetId="5c1ac24b4a828a169b6c235c"
-            publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
-            feedbackPrompt="Have feedback on the Plugin Library?"
-          />
           <FooterLinks />
         </Container>
       </>
