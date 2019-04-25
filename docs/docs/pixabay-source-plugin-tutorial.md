@@ -220,7 +220,7 @@ exports.sourceNodes = (
   configOptions
 ) => {
   const { createNode } = actions
-  
+
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
@@ -242,7 +242,6 @@ exports.sourceNodes = (
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
           console.log("Photo data is:", photo)
-          
         })
       })
   )
@@ -287,7 +286,7 @@ exports.sourceNodes = (
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
-  
+
   delete configOptions.plugins
   // highlight-start
   // Helper function that processes a photo to match Gatsby's node structure
