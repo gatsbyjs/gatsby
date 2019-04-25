@@ -6,7 +6,7 @@ typora-copy-images-to: ./
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
 to feel pretty comfortable 😀
 
-## Recap of first half of the tutorial
+## Recap of the first half of the tutorial
 
 So far, you've been learning how to use React.js—how powerful it is to be able to
 create your _own_ components to act as custom building blocks for websites.
@@ -83,7 +83,7 @@ Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Create a new example site
 
-Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
+Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way, you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
 
 Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`. Then navigate to the new directory:
 

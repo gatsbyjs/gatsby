@@ -48,7 +48,7 @@ If you haven’t yet integrated with Gatsby, [developer documentation](https://w
 
 In addition, you’ll probably want to create an "example" application. We call this a “starter”.
 
-However development is most convenient, when you publish these, they should be in separate code repositories on Github.
+However development is most convenient, when you publish these, they should be in separate code repositories on GitHub.
 
 Current partners have reported development timelines of 2-3 days when the content schema is fully defined by their platform, around up to 2 weeks when their platforms allowing the user to completely define the content schema, for a team of 1-2 developers.
 
@@ -56,7 +56,7 @@ If you have a GraphQL-based API, you **may not need to build an integration at a
 
 If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](https://www.gatsbyjs.org/docs/plugin-authoring/) and [source plugin tutorial](https://www.gatsbyjs.org/docs/source-plugin-tutorial/).
 
-If you still have questions, please[ raise an issue on Github](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](https://www.gatsbyjs.org/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
+If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](https://www.gatsbyjs.org/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
 
 ### Step Two: Launching Your Gatsby Integration
 
@@ -94,7 +94,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - A staging environment accessible by API. Some examples: [Contentful’s Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/), [DatoCMS staging environment](https://www.datocms.com/changelog/multiple-deployment-environments), etc
 
-- A way to alert Gatsby Prevew about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
+- A way to alert Gatsby Preview about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
 
 - A button in the CMS editor where users can click through to Preview
 

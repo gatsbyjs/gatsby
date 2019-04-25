@@ -57,7 +57,7 @@
           items:
             - title: Customizing Babel.js Config
               link: /docs/babel/
-            - title: USing Babel Plugin Macros
+            - title: Using Babel Plugin Macros
               link: /docs/babel-plugin-macros/
             - title: Customizing Webpack Config
               link: /docs/add-custom-webpack-config/
@@ -69,25 +69,23 @@
               link: /docs/eslint/
             - title: Proxying API Requests
               link: /docs/api-proxy/
-        - title: Images, Video, and Files
+        - title: Images, Files, and Video
           link: /docs/images-and-files/
           items:
-            - title: Adding Images, Fonts, and Files
-              link: /docs/adding-images-fonts-files/
-            - title: Working With Video
-              link: /docs/working-with-video/
+            - title: Importing Assets Directly Into Files
+              link: /docs/importing-assets-into-files/
             - title: Using the Static Folder
               link: /docs/static-folder/
-            - title: Importing Media Content
-              link: /docs/importing-media-content/
-            - title: gatsby-source-filesystem Programmatic Import*
-              link: /docs/gatsby-source-filesystem-programmatic-import/
-            - title: Working with Images in Gatsby
-              link: /docs/working-with-images/
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
+            - title: Working with Images in Gatsby
+              link: /docs/working-with-images/
             - title: Preoptimizing your Images
               link: /docs/preoptimizing-images/
+            - title: Working With Video
+              link: /docs/working-with-video/
+            - title: Importing Media Content
+              link: /docs/importing-media-content/
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
@@ -149,16 +147,35 @@
         - title: Plugins
           link: /docs/plugins/
           items:
-            - title: How Plugins Work
-              link: /docs/how-plugins-work/
-            - title: Creating a Transformer Plugin
-              link: /docs/creating-a-transformer-plugin/
-            - title: Creating a Source Plugin
-              link: /docs/creating-a-source-plugin/
-            - title: Source Plugin Tutorial
-              link: /docs/source-plugin-tutorial/
+            - title: What is a Plugin?
+              link: /docs/what-is-a-plugin/
+            - title: Using a Plugin in Your Site
+              link: /docs/using-a-plugin-in-your-site/
+            - title: What You Don't Need Plugins For
+              link: /docs/what-you-dont-need-plugins-for/
+            - title: Loading Plugins from Your Local Plugins Folder
+              link: /docs/loading-plugins-from-your-local-plugins-folder/
             - title: Plugin Library
               link: /plugins/
+            - title: Creating Plugins
+              link: /docs/creating-plugins/
+              items:
+                - title: Naming a Plugin
+                  link: /docs/naming-a-plugin/
+                - title: Files Gatsby Looks for in a Plugin
+                  link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Local Plugin
+                  link: /docs/creating-a-local-plugin/
+                - title: Creating a Source Plugin
+                  link: /docs/creating-a-source-plugin/
+                - title: Creating a Transformer Plugin
+                  link: /docs/creating-a-transformer-plugin/
+                - title: Submit to Plugin Library
+                  link: /contributing/submit-to-plugin-library/
+                - title: Pixabay Source Plugin Tutorial
+                  link: /docs/pixabay-source-plugin-tutorial/
+                - title: Maintaining a Plugin
+                  link: /docs/maintaining-a-plugin/
         - title: Starters
           link: /docs/starters/
           items:
@@ -258,6 +275,8 @@
               link: /docs/adding-tags-and-categories-to-blog-posts/
             - title: Adding Pagination
               link: /docs/adding-pagination/
+            - title: Adding Comments
+              link: /docs/adding-comments/
             - title: Creating a Sitemap
               link: /docs/creating-a-sitemap/
             - title: Adding an RSS Feed
@@ -305,7 +324,7 @@
               link: /docs/seo/
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
-        - title: Localizing Your Site*
+        - title: Localization and Internationalization with Gatsby
           link: /docs/localization-i18n/
           items:
             - title: Creating Prefixed 404 Pages for Different Languages

@@ -77,13 +77,11 @@ module.exports = Machine(
     },
     actions: {
       runPageComponentQueries: (context, event) => {
-        const {
-          queueQueriesForPageComponent,
-        } = require(`../../query/query-watcher`)
+        const queryUtil = require(`../../query`)
         // Wait a bit as calling this function immediately triggers
         // an Action call which Redux squawks about.
         setTimeout(() => {
-          queueQueriesForPageComponent(context.componentPath)
+          queryUtil.enqueueExtractedPageComponent(context.componentPath)
         }, 0)
       },
       setQuery: assign({
@@ -98,12 +96,13 @@ module.exports = Machine(
       setPage: assign({
         pages: (ctx, event) => {
           if (event.path) {
-            const { runQueryForPage } = require(`../../query/query-watcher`)
+            const queryUtil = require(`../../query`)
             // Wait a bit as calling this function immediately triggers
             // an Action call which Redux squawks about.
             setTimeout(() => {
               if (!ctx.isInBootstrap) {
-                runQueryForPage(event.path)
+                queryUtil.enqueueExtractedQueryId(event.path)
+                queryUtil.runQueuedQueries(event.path)
               }
             }, 0)
 
