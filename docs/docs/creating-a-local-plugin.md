@@ -1,5 +1,5 @@
 ---
-Title: Creating a Local Plugin
+title: Creating a Local Plugin
 ---
 
 If a plugin is only relevant to your specific use-case, or if you’re developing a plugin and want a simpler workflow, a locally defined plugin is a convenient way to create and manage your plugin code.
