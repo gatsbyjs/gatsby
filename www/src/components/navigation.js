@@ -11,7 +11,7 @@ import {
   space,
   fontSizes,
   transition,
-  breakpoints,
+  mediaQueries,
   sizes,
   fonts,
 } from "../utils/presets"
@@ -80,7 +80,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [breakpoints.md]: {
+        [mediaQueries.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.gray.whisper : false,
         },
@@ -154,7 +154,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [breakpoints.lg]: { display: `flex` },
+              [mediaQueries.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -179,7 +179,7 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       marginLeft: space[6],
@@ -189,7 +189,7 @@ const styles = {
   },
   ulContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
