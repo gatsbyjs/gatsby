@@ -13,6 +13,7 @@
     "@babel/code-frame": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
+    "chalk": "^2.4.2",
     "ci-info": "^2.0.0",
     "clipboardy": "^1.2.3",
     "common-tags": "^1.4.0",
