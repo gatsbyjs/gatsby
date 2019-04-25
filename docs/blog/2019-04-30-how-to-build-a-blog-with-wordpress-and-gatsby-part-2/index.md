@@ -1,6 +1,6 @@
 ---
 title: "How To Build A Blog with Wordpress and Gatsby.js - Part 2"
-date: 2019-04-04
+date: 2019-04-30
 author: Tim Smith
 excerpt: "In the last post, you covered setting up WordPress for use with Gatsby. Today you will cover how to pull the data from WordPress into Gatsby and build pages."
 tags:
@@ -12,9 +12,9 @@ tags:
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-2/
 ---
 
-> Note: This is part two in a series of posts about Gatsby.js and WordPress. You can find [Part One Here](/blog/2019-04-03-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Three Here](/blog/2019-04-05-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
+> Note: This is part two in a series of posts about Gatsby.js and WordPress. You can find [Part One Here](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Three Here](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
 
-In the last post, I covered setting up [WordPress for use with Gatsby](/blog/2019-04-03-how-to-build-a-blog-with-wordpress-and-gatsby-part-1). Today I will cover how to pull the data from WordPress into Gatsby and build pages.
+In the last post, I covered setting up [WordPress for use with Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1). Today I will cover how to pull the data from WordPress into Gatsby and build pages.
 
 I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
@@ -416,4 +416,4 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 
-See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 3](/blog/2019-04-05-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!
+See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

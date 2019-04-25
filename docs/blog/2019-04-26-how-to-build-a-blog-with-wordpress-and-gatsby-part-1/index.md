@@ -1,6 +1,6 @@
 ---
 title: "How To Build A Blog with Wordpress and Gatsby.js - Part 1"
-date: 2019-04-03
+date: 2019-04-26
 author: Tim Smith
 excerpt: "Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site."
 tags:
@@ -12,7 +12,7 @@ tags:
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-1/
 ---
 
-> Note: This is part one in a series of posts about Gatsby.js and WordPress. You can find [Part Two here](/blog/2019-04-04-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), and [Part Three here](/blog/2019-04-05-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
+> Note: This is part one in a series of posts about Gatsby.js and WordPress. You can find [Part Two here](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), and [Part Three here](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
 
 Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site.
 
@@ -132,4 +132,4 @@ That being said, if you are creating custom content types for your blog you will
 
 If you have any questions, you can hit me up on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
 
-See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 2](/blog/2019-04-04-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!
+See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!

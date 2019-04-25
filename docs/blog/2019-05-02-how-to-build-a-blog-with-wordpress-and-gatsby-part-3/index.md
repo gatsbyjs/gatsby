@@ -1,6 +1,6 @@
 ---
 title: "How To Build A Blog with Wordpress and Gatsby.js - Part 3"
-date: 2019-04-05
+date: 2019-05-02
 author: Tim Smith
 excerpt: "In the third part of this series about WordPress and Gatsby.js, you will be creating pages using templates and components using data from WordPress."
 tags:
@@ -12,7 +12,7 @@ tags:
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-3/
 ---
 
-> Note: This is part two in a series of posts about Gatsby.js and WordPress. You can find [Part One here](/blog/2019-04-03-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Two here](/blog/2019-04-04-how-to-build-a-blog-with-wordpress-and-gatsby-part-2).
+> Note: This is part two in a series of posts about Gatsby.js and WordPress. You can find [Part One here](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Two here](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2).
 
 In the third part of this series about WordPress and Gatsby.js, you will be creating pages using templates and components with data from WordPress.
 
@@ -156,7 +156,7 @@ export const query = graphql`
 `
 ```
 
-I mentioned at the end of [part two](/blog/2019-04-04-how-to-build-a-blog-with-wordpress-and-gatsby-part-2) that configuring the gatsby-node.js file is probably the most difficult part of this whole thing. Since you worked your way through that already and understand how it works, setting up another content type was cake, right?
+I mentioned at the end of [part two](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2) that configuring the gatsby-node.js file is probably the most difficult part of this whole thing. Since you worked your way through that already and understand how it works, setting up another content type was cake, right?
 
 <figure>
 <video autoplay muted loop width="400">
@@ -425,9 +425,9 @@ The header component above looks a little different than it originally did, but 
 
 ### Adding a Menu to the Header
 
-Let's take it a step further and say your user wants a menu in the header that he or she can update from WordPress. If you'll recall in the [first part of this series](/blog/2019-04-03-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), I mentioned a plugin called WP API Menus which will make your menus available in the Rest API.
+Let's take it a step further and say your user wants a menu in the header that he or she can update from WordPress. If you'll recall in the [first part of this series](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), I mentioned a plugin called WP API Menus which will make your menus available in the Rest API.
 
-When you were setting your gatsby-config.js file in the [second part of the series](/blog/2019-04-04-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), you just stuck with the default routes provided in the gatsby-source-wordpress docs. The WP API Menus plugin creates a few new routes for those endpoints, so the first thing you need to do is add these endpoints to the gatsby-config.js file.
+When you were setting your gatsby-config.js file in the [second part of the series](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), you just stuck with the default routes provided in the gatsby-source-wordpress docs. The WP API Menus plugin creates a few new routes for those endpoints, so the first thing you need to do is add these endpoints to the gatsby-config.js file.
 
 ```javascript
 // gatsby-config.js
