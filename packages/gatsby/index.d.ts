@@ -712,41 +712,6 @@ export interface Tracing {
   startSpan: Function;
 }
 
-export interface Node {
-  path?: string;
-  id: string;
-  parent: string;
-  children: Node[];
-  internal: {
-    type: string;
-    contentDigest: string;
-    owner: string;
-    description?: string;
-  };
-  resolve?: string;
-  name?: string;
-  version?: string;
-  pluginOptions?: PluginOptions;
-  nodeAPIs?: any[];
-  browserAPIs?: any[];
-  ssrAPIs?: any[];
-  pluginFilepath?: string;
-  packageJson?: PackageJson;
-  siteMetadata?: Record<string, unknown>;
-  port?: string;
-  host?: string;
-  pathPrefix?: string;
-  polyfill?: boolean;
-  buildTime?: string;
-  jsonName?: string;
-  internalComponentName?: string;
-  matchPath?: unknown;
-  component?: string;
-  componentChunkName?: string;
-  context?: object;
-  pluginCreatorId?: string;
-  componentPath?: string;
-}
 
 export interface PackageJson {
   name?: string;
@@ -895,5 +860,45 @@ export interface BrowserPluginArgs {
   getResourcesForPathnameSync: Function;
   getResourcesForPathname: Function;
   getResourceURLsForPathname: Function;
+  [key: string]: unknown;
+}
+
+export interface Node {
+  path?: string;
+  id: string;
+  parent: string;
+  children: Node[];
+  fields?: Record<string, string>;
+  internal: {
+    type: string;
+    mediaType: string;
+    content: string;
+    contentDigest: string;
+    owner: string;
+    description?: string;
+  };
+  resolve?: string;
+  name?: string;
+  version?: string;
+  pluginOptions?: PluginOptions;
+  nodeAPIs?: any[];
+  browserAPIs?: any[];
+  ssrAPIs?: any[];
+  pluginFilepath?: string;
+  packageJson?: PackageJson;
+  siteMetadata?: Record<string, any>;
+  port?: string;
+  host?: string;
+  pathPrefix?: string;
+  polyfill?: boolean;
+  buildTime?: string;
+  jsonName?: string;
+  internalComponentName?: string;
+  matchPath?: unknown;
+  component?: string;
+  componentChunkName?: string;
+  context?: Record<string, any>;
+  pluginCreatorId?: string;
+  componentPath?: string;
   [key: string]: unknown;
 }
