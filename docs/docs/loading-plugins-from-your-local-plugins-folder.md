@@ -1,5 +1,5 @@
 ---
-Title: Loading Plugins from Your Local Plugins Folder
+title: Loading Plugins from Your Local Plugins Folder
 ---
 
 Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.
