@@ -116,11 +116,6 @@ class Plugins extends Component {
               <Link to="/docs/plugins">plugins doc page</Link>.
             </p>
           </div>
-          <Unbird
-            dataSetId="5c1ac24b4a828a169b6c235c"
-            publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
-            feedbackPrompt="Have feedback on the Plugin Library?"
-          />
           <FooterLinks />
         </Container>
       </>
