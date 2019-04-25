@@ -317,8 +317,8 @@ more about all of the cool stuff you can do with `gatsby-mdx`.
 ## Bonus: Make a Blog Index
 
 ```javascript:title=src/pages/index.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
+import React from "react"
+import { Link, graphql } from "gatsby"
 
 const BlogIndex = ({ data }) => {
   const { edges: posts } = data.allMdx
