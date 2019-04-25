@@ -853,10 +853,6 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
    * lazy to make upstream fixes...
    */
   const typeDefs = `
-    type AirtableConnection {
-      nodes: [Airtable!]!
-    }
-
     type Airtable implements Node {
       id: ID!
       data: AirtableData
