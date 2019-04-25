@@ -11,6 +11,11 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/babel-preset-gatsby-package"
+  },
   "license": "MIT",
   "main": "index.js"
 }

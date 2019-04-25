@@ -3,6 +3,11 @@
   "version": "2.0.12",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-page-creator"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "watch": "babel -w src --out-dir . --ignore **/__tests__",
@@ -17,7 +22,6 @@
     "Steven Natera <tektekpush@gmail.com> (https://twitter.com/stevennatera)"
   ],
   "license": "MIT",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
