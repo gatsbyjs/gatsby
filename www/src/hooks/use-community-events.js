@@ -5,7 +5,9 @@ const useCommunityEvents = () => {
     allAirtable: { nodes },
   } = useStaticQuery(graphql`
     {
-      allAirtable {
+      allAirtable(
+        filter: { data: { Approved_for_posting_on_event_page: { eq: true } } }
+      ) {
         nodes {
           id
           data {
@@ -17,7 +19,6 @@ const useCommunityEvents = () => {
             url: Event_URL__if_applicable_
             type: What_type_of_event_is_this_
             hasGatsbyTeamSpeaker: Gatsby_Speaker_Approved
-            approved: Approved_for_posting_on_event_page
           }
         }
       }
@@ -25,7 +26,6 @@ const useCommunityEvents = () => {
   `)
 
   const events = nodes
-    .filter(event => event.data.approved)
     .sort((a, b) => new Date(a.data.date) - new Date(b.data.date))
     .map(event => {
       return {
