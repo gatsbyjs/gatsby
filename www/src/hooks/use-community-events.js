@@ -17,15 +17,27 @@ const useCommunityEvents = () => {
             url: Event_URL__if_applicable_
             type: What_type_of_event_is_this_
             hasGatsbyTeamSpeaker: Gatsby_Speaker_Approved
-            visible: Do_you_want_this_event_listed_on_the_gatsbyjs_org_events_page___public_page_
-            approved: Approved_for_Mktg_Support
+            approved: Approved_for_posting_on_event_page
           }
         }
       }
     }
   `)
 
-  const events = nodes.filter(node => node.data.visible)
+  const events = nodes
+    .filter(event => event.data.approved)
+    .sort((a, b) => new Date(a.data.date) - new Date(b.data.date))
+    .map(event => {
+      return {
+        id: event.id,
+        ...event.data,
+        date: new Date(event.data.date).toLocaleDateString(`en-US`, {
+          year: `numeric`,
+          month: `long`,
+          day: `numeric`,
+        }),
+      }
+    })
 
   return events
 }
