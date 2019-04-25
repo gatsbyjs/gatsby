@@ -196,6 +196,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/adding-images-fonts-files`,
+    toPath: `/docs/importing-assets-into-files`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2019-10-03-gatsby-perf`,
     toPath: `/blog/2018-10-03-gatsby-perf`,
     isPermanent: true,
@@ -228,6 +234,24 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/plugin-authoring/`,
     toPath: `/docs/how-plugins-work/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/source-plugin-tutorial/`,
+    toPath: `/docs/pixabay-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/how-plugins-work/`,
+    toPath: `/docs/plugins/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
+    toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
     isPermanent: true,
   })
 

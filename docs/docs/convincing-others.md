@@ -10,6 +10,6 @@ Explaining Gatsby well to others, and helping convince them to use it (or to let
 
 It requires understanding what things those around you value, and helping them understand how Gatsby meets _their_ needs, rather than simply how Gatsby meets yours.
 
-Gatsby is a transformative technology, and teams using Gatsby have the change to radically improve the way they design, develop, and deploy websites. As you help others around you understand how Gatsby meets their needs, you facilitate their growth.
+Gatsby is a transformative technology, and teams using Gatsby have the chance to radically improve the way they design, develop, and deploy websites. As you help others around you understand how Gatsby meets their needs, you facilitate their growth.
 
 https://twitter.com/ryanflorence/status/1104060348363988992

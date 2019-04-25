@@ -5,20 +5,20 @@ import styled from "@emotion/styled"
 import {
   colors,
   space,
-  breakpoints,
-  dimensions,
+  mediaQueries,
+  sizes,
   lineHeights,
-  scale,
+  fontSizes,
 } from "../../utils/presets"
 
 const PageHeadingContainer = styled(`header`)`
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     left: 0;
     position: fixed;
     padding: 0;
-    top: ${`calc(${dimensions.bannerHeight} + ${dimensions.headerHeight})`};
+    top: ${`calc(${sizes.bannerHeight} + ${sizes.headerHeight})`};
   }
 `
 
@@ -26,13 +26,13 @@ const H1 = styled(`h1`)`
   align-items: center;
   color: ${colors.lilac};
   display: flex;
-  font-size: ${scale[5]};
+  font-size: ${fontSizes[5]};
   line-height: ${lineHeights.solid};
   margin: 0;
   position: relative;
   width: 100%;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     transform: rotate(-90deg) translate(calc(-100% - ${space[7]}), ${space[4]});
     transform-origin: top left;
   }
@@ -47,7 +47,7 @@ const H1 = styled(`h1`)`
     z-index: -1;
     color: ${colors.ui.whisper};
 
-    ${breakpoints.md} {
+    ${mediaQueries.md} {
       display: block;
     }
   }

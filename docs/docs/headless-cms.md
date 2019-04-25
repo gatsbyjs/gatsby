@@ -16,7 +16,7 @@ The guides in this section will walk through the process of setting up content s
 [[guidelist]]
 
 <!--
-  Ordering in this section is driven by Gatsby plugin downloads (https://www.gatsbyjs.org/plugins/?=gatsby-source-) & CMS vendor size/adoption.
+  Ordering in this section is driven by Gatsby plugin downloads (/plugins/?=gatsby-source-) & CMS vendor size/adoption.
 -->
 
 Other CMS systems you can connect to include:

@@ -16,8 +16,8 @@ import {
   radii,
   transition,
   shadows,
-  scale,
-  breakpoints,
+  fontSizes,
+  mediaQueries,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
@@ -38,11 +38,11 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     width: 20rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-shrink: 0;
     margin-right: 0;
     margin-bottom: ${space[8]};
@@ -72,14 +72,14 @@ const Cover = styled(Img)`
 
 const Header = styled(`h1`)`
   color: ${colors.gatsbyDarker};
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
   font-weight: bold;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${breakpoints.lg} {
-    font-size: ${props => (props.first ? scale[6] : scale[5])};
+  ${mediaQueries.lg} {
+    font-size: ${props => (props.first ? fontSizes[6] : fontSizes[5])};
     padding: ${space[7]};
     padding-bottom: 0;
   }
@@ -90,7 +90,7 @@ const Meta = styled(`div`)`
   color: ${colors.gray.calm};
   display: flex;
   flex-wrap: wrap;
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   margin-top: ${space[4]};
   padding: 0 ${rhythm(4 / 5)};
 
@@ -98,7 +98,7 @@ const Meta = styled(`div`)`
     flex-shrink: 0;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-top: ${space[6]};
     padding: 0 ${space[7]};
   }
@@ -118,7 +118,7 @@ const Author = styled(Link)`
     font-weight: normal;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     :hover {
       span {
         background: ${colors.ui.bright};
@@ -131,7 +131,7 @@ const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
   padding: 0 ${rhythm(4 / 5)};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: 0;
     margin-top: ${space[6]};
     padding: 0 ${space[7]};
@@ -145,7 +145,7 @@ const ReadMore = styled(Link)`
   color: ${colors.gatsby};
   display: flex;
   flex-grow: 1;
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   left: 0;
   padding: ${rhythm(4 / 5)};
   position: absolute;
@@ -169,7 +169,7 @@ const ReadMore = styled(Link)`
     margin-right: ${space[1]};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     padding: ${space[7]};
 
     span {

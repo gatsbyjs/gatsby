@@ -6,20 +6,21 @@ import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
   transition,
   radii,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
-const breakpoint2Columns = breakpoints.md
+const breakpoint2Columns = mediaQueries.md
 
 const MetaTitle = ({ children }) => (
   <p
@@ -27,7 +28,8 @@ const MetaTitle = ({ children }) => (
       margin: `0`,
       color: colors.gray.calm,
       marginBottom: space[1],
-      [breakpoints.xs]: {
+      flexShrink: 0,
+      [mediaQueries.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
@@ -57,7 +59,7 @@ const MetaSection = ({ children, background, last, first }) => (
         marginLeft: 0,
         marginRight: 0,
       },
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         display: `flex`,
       },
     }}
@@ -113,7 +115,7 @@ class CreatorTemplate extends Component {
                 width: `auto`,
                 maxWidth: 480,
               },
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 maxWidth: 560,
               },
             }}
@@ -129,7 +131,7 @@ class CreatorTemplate extends Component {
               margin: space[6],
               flex: `1`,
               width: `100%`,
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 width: `auto`,
                 maxWidth: 640,
               },
@@ -164,7 +166,7 @@ class CreatorTemplate extends Component {
                 <div
                   css={{
                     alignSelf: `flex-start`,
-                    fontSize: scale[1],
+                    fontSize: fontSizes[1],
                     marginRight: space[2],
                   }}
                 >
@@ -231,6 +233,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
+                    flexWrap: `wrap`,
                   }}
                 >
                   {sites.map(site => (
@@ -239,7 +242,9 @@ class CreatorTemplate extends Component {
                       css={{
                         "&&": {
                           marginRight: space[6],
+                          marginBottom: space[6],
                           borderBottom: `none`,
+                          lineHeight: 0,
                           transition: `all ${transition.speed.default} ${
                             transition.curve.default
                           }`,
@@ -261,6 +266,7 @@ class CreatorTemplate extends Component {
             )}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }

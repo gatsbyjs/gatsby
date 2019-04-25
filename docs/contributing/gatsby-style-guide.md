@@ -67,10 +67,10 @@ examples:
 - [guides](/docs/add-404-page/)
 - [guide overviews](/docs/styling/)
 - [tutorials](/tutorial/part-one/)
-- [plugin READme](/packages/gatsby-source-filesystem/)
-- [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
+- [plugin README](/packages/gatsby-source-filesystem/)
+- [starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 

@@ -64,12 +64,12 @@ Now that your site is connected to your repository, Netlify will auto-deploy the
 
 ### Domain Setup
 
-In Domain Settings, we can add our own domain and set `CNAME` record as our netlify project URL in your DNS provider settings. Now we should be able to see our netlify project at our domain URL.
+In Domain Settings, we can add our own domain and set `CNAME` record as our Netlify project URL in your DNS provider settings. Now we should be able to see our Netlify project at our domain URL.
 
 ### Other resources
 
 Below are some helpful resources
 
 - [A Step-by-Step Guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify/)
-- [Gatsby Netlify CMS](https://www.gatsbyjs.org/packages/gatsby-plugin-netlify-cms)
+- [Gatsby Netlify CMS](/packages/gatsby-plugin-netlify-cms)
 - [Gatsby + Netlify CMS Starter](https://github.com/netlify-templates/gatsby-starter-netlify-cms)
