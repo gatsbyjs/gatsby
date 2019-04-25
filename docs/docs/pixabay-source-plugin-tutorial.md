@@ -220,11 +220,11 @@ exports.sourceNodes = (
   configOptions
 ) => {
   const { createNode } = actions
-
-  // highlight-start
+  
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
+// highlight-start
   // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
 
@@ -286,9 +286,9 @@ exports.sourceNodes = (
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
-  // highlight-start
+  
   delete configOptions.plugins
-
+  // highlight-start
   // Helper function that processes a photo to match Gatsby's node structure
   const processPhoto = photo => {
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
