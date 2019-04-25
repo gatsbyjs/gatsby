@@ -273,7 +273,7 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 ### Use `createNode` function
 
-You're adding a helper function on lines 11 to 27 and processing the data into a node on lines 44 to 47:
+You're adding a helper function on lines 13 to 28 and processing the data into a node on lines 46 to 49:
 
 ```js:title=gatsby-node.js
 const fetch = require("node-fetch")
@@ -325,10 +325,12 @@ exports.sourceNodes = (
       .then(data => {
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
+          // highlight-start
           // Process the photo data to match the structure of a Gatsby node
           const nodeData = processPhoto(photo)
           // Use Gatsby's createNode helper to create a node from the node data
           createNode(nodeData)
+          // highlight-end
         })
       })
   )
