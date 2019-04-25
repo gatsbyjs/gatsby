@@ -99,6 +99,10 @@ const bootstrapTest = (
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+
+    // Used to verify that console.warn is called when field not found
+    jest.spyOn(global.console, `warn`)
+
     await onCreateNode(
       {
         node,
@@ -626,9 +630,6 @@ date: "2017-09-18T23:19:51.246Z"
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {
-  // Used to verify that console.warn is called when field not found
-  jest.spyOn(global.console, `warn`)
-
   bootstrapTest(
     `returns null on non existing table of contents field`,
     `---
