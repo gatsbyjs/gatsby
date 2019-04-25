@@ -24,12 +24,10 @@ const opacityEntry = keyframes`
 
 const WrapperDiv = styled(`div`)`
   background-color: ${colors.white};
-  border: 1px solid ${colors.gray.border};
-  border-radius: ${radii[2]}px;
+  border-top: 1px solid ${colors.gray.border};
   height: 100%;
   opacity: 0.5;
-  overflow-y: auto;
-  padding: ${space[6]} ${space[4]};
+  padding: ${space[6]} 0;
   width: 100%;
   z-index: 2;
 
@@ -68,6 +66,8 @@ const WrapperDiv = styled(`div`)`
 
   ${breakpoints.lg} {
     box-shadow: ${shadows.overlay};
+    border: 1px solid ${colors.gray.border};
+    border-radius: ${radii[2]}px;
     height: 100%;
     padding: ${space[7]} ${space[6]};
     transform: scale(0);

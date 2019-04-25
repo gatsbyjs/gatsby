@@ -90,7 +90,6 @@ export const ToggleButtonLabel = styled(`span`)`
   border-radius: ${radii[2]}px;
   display: flex;
   height: 2.5rem;
-  margin: 0 ${space[6]};
   padding: 0 ${space[8]} 0 ${space[3]};
   transition: 0.5s;
   white-space: nowrap;
@@ -98,7 +97,6 @@ export const ToggleButtonLabel = styled(`span`)`
 
   ${breakpoints.lg} {
     box-shadow: ${shadows.floating};
-    margin: 0;
     width: auto;
   }
 `
@@ -113,7 +111,7 @@ export const ToggleButtonIcon = styled(`span`)`
   height: ${space[6]};
   justify-content: center;
   position: absolute;
-  right: ${space[8]};
+  right: ${space[3]};
   transform: scale(1);
   transition: 0.5s;
   width: ${space[6]};
@@ -126,8 +124,6 @@ export const ToggleButtonIcon = styled(`span`)`
   }
 
   ${breakpoints.lg} {
-    right: ${space[3]};
-
     .opened &,
     .failed &,
     .success &,
@@ -153,6 +149,7 @@ export const ToggleButton = styled(`button`)`
   cursor: pointer;
   display: flex;
   padding: 0;
+  position: relative;
   transition: 0.6s ease;
   width: 100%;
   z-index: 3;

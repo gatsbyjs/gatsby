@@ -68,7 +68,7 @@ const Textarea = styled(`textarea`)`
   margin: ${space[1]} 0 ${space[4]};
   padding: ${space[1]} ${space[2]};
   transition: 0.5s;
-  width: 99%;
+  width: 100%;
 
   &:focus {
     ${focusStyle}

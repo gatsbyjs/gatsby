@@ -6,15 +6,15 @@ import {
   lineHeights,
   space,
 } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 export const WidgetContainer = styled(`div`)`
-  height: ${space[8]};
-  margin: ${space[7]} 0;
-  position: inline;
-  width: 100%;
+  margin: ${space[7]} auto;
+  padding: 0 ${space[6]} ${space[9]};
+  max-width: ${rhythm(28)};
 
-  &:not(.closed) {
-    height: 26rem;
+  ${breakpoints.md} {
+    padding-bottom: 0;
   }
 
   ${breakpoints.lg} {
@@ -24,6 +24,7 @@ export const WidgetContainer = styled(`div`)`
     }
 
     bottom: ${space[6]};
+    padding: 0;
     position: fixed;
     right: ${space[6]};
     margin: 0;
