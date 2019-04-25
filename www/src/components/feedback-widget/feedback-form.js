@@ -10,7 +10,7 @@ import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfie
 import MdSend from "react-icons/lib/md/send"
 import MdRefresh from "react-icons/lib/md/refresh"
 
-import { colors, fontSizes, radii } from "../../utils/presets"
+import { colors, fontSizes, radii, space } from "../../utils/presets"
 
 const Form = styled(`form`)`
   margin-bottom: 0;
@@ -18,21 +18,21 @@ const Form = styled(`form`)`
 
 const Fieldset = styled(`fieldset`)`
   border: 0;
-  margin: 0 0 1rem;
+  margin: 0 0 ${space[4]};
   padding: 0;
 `
 
 const Legend = styled(`legend`)`
   display: inline-block;
   font-size: ${fontSizes[1]};
-  margin-bottom: 1em;
-  padding: 0.1em 0.5em;
+  margin-bottom: ${space[4]};
+  padding: 0 ${space[2]};
   text-align: center;
 `
 
 const Rating = styled(`div`)`
   align-content: stretch;
-  border: 3px solid ${colors.lilac};
+  border: 1px solid ${colors.lilac};
   border-radius: ${radii[3]}px;
   display: flex;
   flex: 1 1 auto;
@@ -60,14 +60,13 @@ const TextareaLabel = styled(`label`)`
 `
 
 const Textarea = styled(`textarea`)`
-  border: 1px solid #ccc;
+  border: 1px solid ${colors.gray.light};
   border-radius: ${radii[2]}px;
-  color: #333;
   display: block;
   font-weight: normal;
   height: 5.5rem;
-  margin: 0.25rem 0 1rem;
-  padding: 0.25rem 0.5rem;
+  margin: ${space[1]} 0 ${space[4]};
+  padding: ${space[1]} ${space[2]};
   transition: 0.5s;
   width: 99%;
 

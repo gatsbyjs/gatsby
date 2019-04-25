@@ -1,14 +1,21 @@
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import { breakpoints, colors, fontSizes, radii } from "../../utils/presets"
+import {
+  breakpoints,
+  colors,
+  fontSizes,
+  radii,
+  shadows,
+  space,
+} from "../../utils/presets"
 
 const rotation = keyframes`
   0% {
-    transform: translateX(0.25rem) rotate(0deg);
+    transform: translateX(${space[1]}) rotate(0deg);
   }
   100% {
-    transform: translateX(0.25rem) rotate(360deg);
+    transform: translateX(${space[1]}) rotate(360deg);
   }
 `
 
@@ -22,19 +29,19 @@ const buttonStyles = css`
   align-items: center;
   background: ${colors.gatsby};
   border: none;
-  border-radius: ${radii[1]}px;
-  color: white;
+  border-radius: ${radii[2]}px;
+  color: ${colors.white};
   cursor: pointer;
   display: flex;
   font-size: ${fontSizes[1]};
-  padding: 0.3rem 0.75rem;
+  padding: ${space[2]} ${space[3]};
   transition: 0.5s;
   z-index: 1;
 
   svg {
-    height: 1.1rem;
-    transform: translateX(0.25rem);
-    width: 1.1rem;
+    height: ${space[4]};
+    transform: translateX(${space[1]});
+    width: ${space[4]};
   }
 
   &:focus {
@@ -72,51 +79,54 @@ export const SubmitButton = styled(`button`)`
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
   background: ${colors.white};
-  border: 1px solid ${colors.gatsby};
+  border: 1px solid ${colors.gray.border};
   color: ${colors.gatsby};
 `
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
   background: ${colors.white};
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
+  border: 1px solid ${colors.gray.border};
+  border-radius: ${radii[2]}px;
   display: flex;
   height: 2.5rem;
-  padding: 0 2.5rem 0 0.75rem;
+  margin: 0 ${space[6]};
+  padding: 0 ${space[8]} 0 ${space[3]};
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
 
   ${breakpoints.lg} {
+    box-shadow: ${shadows.floating};
+    margin: 0;
     width: auto;
   }
 `
 
 export const ToggleButtonIcon = styled(`span`)`
   align-items: center;
-  background: ${colors.gatsby};
-  border-radius: 50%;
+  background: ${colors.lilac};
+  border-radius: ${radii[6]};
   color: ${colors.white};
   display: flex;
-  font-size: 1rem;
-  height: 1.4rem;
+  font-size: ${fontSizes[1]};
+  height: ${space[6]};
   justify-content: center;
   position: absolute;
-  right: 2rem;
+  right: ${space[8]};
   transform: scale(1);
   transition: 0.5s;
-  width: 1.4rem;
+  width: ${space[6]};
 
   svg {
     fill: ${colors.white};
-    height: 0.8rem;
-    width: 0.8rem;
+    height: ${space[3]};
+    width: ${space[3]};
     transition: 0.5s;
   }
 
   ${breakpoints.lg} {
-    right: 0.75rem;
+    right: ${space[3]};
 
     .opened &,
     .failed &,
@@ -179,11 +189,11 @@ export const ToggleButton = styled(`button`)`
     .success &,
     .submitting & {
       display: flex;
-      transform: translate(-0.5rem, -26rem);
+      transform: translate(-${space[2]}, -26rem);
 
       ${ToggleButtonIcon} {
         background: ${colors.white};
-        border: 1px solid #eee;
+        border: 1px solid ${colors.gray.border};
         transform: scale(1.8);
 
         svg {

@@ -2,7 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
 
-import { colors, fontSizes } from "../../utils/presets"
+import { colors, fontSizes, space } from "../../utils/presets"
 
 const animA = keyframes`
   from  {
@@ -48,9 +48,9 @@ const animC = keyframes`
 
 const IconWrapper = styled(`span`)`
   display: block;
-  height: 3rem;
+  height: ${space[9]};
   transition: 0.5s;
-  width: 3rem;
+  width: ${space[9]};
 
   svg {
     color: ${colors.lilac};
@@ -65,7 +65,7 @@ const RatingText = styled(`span`)`
   font-weight: bold;
   transition: 0.5s;
   line-height: 1;
-  margin-top: 0.25em;
+  margin-top: ${space[1]};
 `
 
 const Label = styled(`label`)`

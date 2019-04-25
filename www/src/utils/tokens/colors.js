@@ -8,7 +8,7 @@ export default {
   gatsbyDarker: `#221133`,
   lemon: `#ffdf37`,
   mint: `#73fff7`,
-  lilac: `#8c65b3`,
+  lilac: `#8A4BAF`,
   lavender: `#b190d5`,
   wisteria: `#ccb2e5`,
   // accent color from the "bolder palette" by @ArchieHicklin
