@@ -1,15 +1,18 @@
-import React, { useRef, Fragment } from "react"
+import React, { useRef, useEffect, Fragment } from "react"
 import { post } from "axios"
 import { Machine, assign } from "xstate"
 import { useMachine } from "@xstate/react"
 
-import { ToggleButton, ToggleButtonIcon, ToggleButtonLabel } from "./buttons"
+import {
+  ToggleButton,
+  ToggleButtonIcon,
+  OpenFeedbackWidgetButtonContent,
+} from "./buttons"
 import FeedbackForm from "./feedback-form"
 import SubmitSuccess from "./submit-success"
 import SubmitError from "./submit-error"
 import { ScreenReaderText, WidgetContainer } from "./styled-elements"
 import MdClose from "react-icons/lib/md/close"
-import MdQuestionMark from "./question-mark-icon"
 
 const postFeedback = ({ rating, comment }) => {
   const payload = {
@@ -87,11 +90,11 @@ const feedbackMachine = Machine({
   },
 })
 
-const FeedbackWidget = () => {
+const FeedbackWidget = ({ initialOpen, toggleButton }) => {
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
   const errorTitle = useRef(null)
-  const toggleButton = useRef(null)
+
   const [current, send] = useMachine(
     feedbackMachine.withConfig({
       actions: {
@@ -118,6 +121,15 @@ const FeedbackWidget = () => {
       },
     })
   )
+
+  useEffect(() => {
+    // if button was toggle before
+    // full feedback widget was loaded,
+    // make sure widget will be opened
+    if (initialOpen) {
+      send(`OPEN`)
+    }
+  }, [])
 
   const { rating, comment } = current.context
 
@@ -162,15 +174,7 @@ const FeedbackWidget = () => {
             </ToggleButtonIcon>
           </Fragment>
         ) : (
-          <Fragment>
-            <ToggleButtonLabel>
-              Was this doc helpful to you
-              <ScreenReaderText>?</ScreenReaderText>
-            </ToggleButtonLabel>
-            <ToggleButtonIcon>
-              <MdQuestionMark />
-            </ToggleButtonIcon>
-          </Fragment>
+          <OpenFeedbackWidgetButtonContent />
         )}
       </ToggleButton>
       {(current.matches(`opened`) || current.matches(`submitting`)) && (

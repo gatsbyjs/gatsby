@@ -1,6 +1,9 @@
+import React, { Fragment } from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
+import { ScreenReaderText } from "./styled-elements"
+import MdQuestionMark from "./question-mark-icon"
 import {
   mediaQueries,
   colors,
@@ -210,3 +213,16 @@ export const ToggleButton = styled(`button`)`
     transition: 0;
   }
 `
+
+export const OpenFeedbackWidgetButtonContent = ({ loading }) => (
+  <Fragment>
+    <ToggleButtonLabel>
+      Was this doc helpful to you
+      {loading && `loading`}
+      <ScreenReaderText>?</ScreenReaderText>
+    </ToggleButtonLabel>
+    <ToggleButtonIcon>
+      <MdQuestionMark />
+    </ToggleButtonIcon>
+  </Fragment>
+)
