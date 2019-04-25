@@ -111,9 +111,7 @@ export interface GatsbyNode {
    * 
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
-  createPages?(args: CreatePagesArgs, options: PluginOptions): any;
-  createPages?(args: CreatePagesArgs, options: PluginOptions): Promise<any>;
-  createPages?(args: CreatePagesArgs, options: PluginOptions, callback: PluginCallback): void;
+  createPages?(args: CreatePagesArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /**
    * Like `createPages` but for plugins who want to manage creating and removing
@@ -129,9 +127,7 @@ export interface GatsbyNode {
    * Gatsby, it needs to keep its own state about its world to know when to
    * add and remove pages.
    */
-  createPagesStatefully?(args: CreatePagesArgs, options: PluginOptions): any;
-  createPagesStatefully?(args: CreatePagesArgs, options: PluginOptions): Promise<any>;
-  createPagesStatefully?(args: CreatePagesArgs, options: PluginOptions, callback: PluginCallback): void;
+  createPagesStatefully?(args: CreatePagesArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
 
   /**
@@ -139,18 +135,14 @@ export interface GatsbyNode {
    * those now. This is a soon-to-be-replaced API only currently in use by
    * `gatsby-plugin-sharp`.
    */
-  generateSideEffects?(args: NodePluginArgs, options: PluginOptions): any;
-  generateSideEffects?(args: NodePluginArgs, options: PluginOptions): Promise<any>;
-  generateSideEffects?(args: NodePluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  generateSideEffects?(args: NodePluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /**
    * Let plugins extend/mutate the site's Babel configuration.
    * This API will change before 2.0 as it needs still to be converted to use
    * Redux actions.
    */
-  onCreateBabelConfig?(args: CreateBabelConfigArgs, options: PluginOptions): any;
-  onCreateBabelConfig?(args: CreateBabelConfigArgs, options: PluginOptions): Promise<any>;
-  onCreateBabelConfig?(args: CreateBabelConfigArgs, options: PluginOptions, callback: PluginCallback): void;
+  onCreateBabelConfig?(args: CreateBabelConfigArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
 
   /**
@@ -167,9 +159,7 @@ export interface GatsbyNode {
    *   })
    * }
    */
-  onCreateDevServer?(args: CreateDevServerArgs, options: PluginOptions): any;
-  onCreateDevServer?(args: CreateDevServerArgs, options: PluginOptions): Promise<any>;
-  onCreateDevServer?(args: CreateDevServerArgs, options: PluginOptions, callback: PluginCallback): void;
+  onCreateDevServer?(args: CreateDevServerArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /**
   * Called when a new node is created. Plugins wishing to extend or
@@ -184,9 +174,7 @@ export interface GatsbyNode {
   *   // create a new node field.
   * }
   */
-  onCreateNode?(args: CreateNodeArgs, options: PluginOptions): any;
-  onCreateNode?(args: CreateNodeArgs, options: PluginOptions): Promise<any>;
-  onCreateNode?(args: CreateNodeArgs, options: PluginOptions, callback: PluginCallback): void;
+  onCreateNode?(args: CreateNodeArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /**
    * Called when a new page is created. This extension API is useful
@@ -196,62 +184,42 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?(args: CreatePageArgs, options: PluginOptions): any;
-  onCreatePage?(args: CreatePageArgs, options: PluginOptions): Promise<any>;
-  onCreatePage?(args: CreatePageArgs, options: PluginOptions, callback: PluginCallback): void;
+  onCreatePage?(args: CreatePageArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** 
    * Let plugins extend/mutate the site's webpack configuration.
    * @see https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
    */
-  onCreateWebpackConfig?(args: CreateWebpackConfigArgs, options: PluginOptions): any;
-  onCreateWebpackConfig?(args: CreateWebpackConfigArgs, options: PluginOptions): Promise<any>;
-  onCreateWebpackConfig?(args: CreateWebpackConfigArgs, options: PluginOptions, callback: PluginCallback): void;
+  onCreateWebpackConfig?(args: CreateWebpackConfigArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
-  onPostBootstrap?(args: ParentSpanPluginArgs, options: PluginOptions): any;
-  onPostBootstrap?(args: ParentSpanPluginArgs, options: PluginOptions): Promise<any>;
-  onPostBootstrap?(args: ParentSpanPluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  onPostBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** The last extension point called after all other parts of the build process are complete. */
-  onPostBuild?(args: NodePluginArgs, options: PluginOptions): any;
-  onPostBuild?(args: NodePluginArgs, options: PluginOptions): Promise<any>;
-  onPostBuild?(args: NodePluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  onPostBuild?(args: NodePluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
-  onPreBootstrap?(args: ParentSpanPluginArgs, options: PluginOptions): any;
-  onPreBootstrap?(args: ParentSpanPluginArgs, options: PluginOptions): Promise<any>;
-  onPreBootstrap?(args: ParentSpanPluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  onPreBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
-  onPreBuild?(args: NodePluginArgs, options: PluginOptions): any;
-  onPreBuild?(args: NodePluginArgs, options: PluginOptions): Promise<any>;
-  onPreBuild?(args: NodePluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  onPreBuild?(args: NodePluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
-  onPreExtractQueries?(args: ParentSpanPluginArgs, options: PluginOptions): any;
-  onPreExtractQueries?(args: ParentSpanPluginArgs, options: PluginOptions): Promise<any>;
-  onPreExtractQueries?(args: ParentSpanPluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  onPreExtractQueries?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. */
-  onPreInit?(args: ParentSpanPluginArgs, options: PluginOptions): any;
-  onPreInit?(args: ParentSpanPluginArgs, options: PluginOptions): Promise<any>;
-  onPreInit?(args: ParentSpanPluginArgs, options: PluginOptions, callback: PluginCallback): void;
+  onPreInit?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** 
    * Ask compile-to-js plugins to process source to JavaScript so the query
    * runner can extract out GraphQL queries for running.
    */
-  preprocessSource?(args: PreprocessSourceArgs, options: PluginOptions): any;
-  preprocessSource?(args: PreprocessSourceArgs, options: PluginOptions): Promise<any>;
-  preprocessSource?(args: PreprocessSourceArgs, options: PluginOptions, callback: PluginCallback): void;
+  preprocessSource?(args: PreprocessSourceArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
    */
-  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions): array[];
-  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions): Promise<array[]>;
-  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions, callback: PluginCallback): void;
+  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions, callback: PluginCallback): array[] | Promise<array[]>;
 
   /**
    * Called during the creation of the GraphQL schema. Allows plugins
