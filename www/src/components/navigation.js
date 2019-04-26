@@ -128,15 +128,6 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <li css={styles.li}>
-                <Link
-                  to="/community/"
-                  css={styles.navItem}
-                  state={{ filter: `` }}
-                >
-                  Community
-                </Link>
-              </li> */}
           </ul>
         </nav>
         <div css={styles.searchAndSocialContainer}>
@@ -189,9 +180,7 @@ const styles = {
     [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
-      marginLeft: space[6],
-      // marginLeft: isHomepage ? false : `auto`,
-      // marginRight: `auto`,
+      marginLeft: space[6]
     },
   },
   ulContainer: {
