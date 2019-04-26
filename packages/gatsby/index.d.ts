@@ -111,7 +111,7 @@ export interface GatsbyNode {
    * 
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
-  createPages?(args: CreatePagesArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  createPages?(args: CreatePagesArgs & { traceId: "initial-createPages" }, options?: PluginOptions, callback?: PluginCallback): void;
 
   /**
    * Like `createPages` but for plugins who want to manage creating and removing
@@ -127,7 +127,7 @@ export interface GatsbyNode {
    * Gatsby, it needs to keep its own state about its world to know when to
    * add and remove pages.
    */
-  createPagesStatefully?(args: CreatePagesArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  createPagesStatefully?(args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" }, options?: PluginOptions, callback?: PluginCallback): void;
 
 
   /**
@@ -202,7 +202,7 @@ export interface GatsbyNode {
   onPreBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
-  onPreBuild?(args: NodePluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPreBuild?(args: BuildArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
   onPreExtractQueries?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
@@ -268,15 +268,15 @@ export interface GatsbyBrowser {
   disableCorePrefetching?(args: BrowserPluginArgs, options: PluginOptions): any;
   onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): any;
   onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onPostPrefetchPathname?(args: PostPrefetchPathnameArgs, options: PluginOptions): any;
+  onPostPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): any;
   onPreRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any;
-  onPrefetchPathname?(args: BrowserPluginArgs, options: PluginOptions): any;
+  onPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): any;
   onRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any;
-  onRouteUpdateDelayed?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onServiceWorkerActive?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onServiceWorkerInstalled?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onServiceWorkerRedundant?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onServiceWorkerUpdateFound?(args: BrowserPluginArgs, options: PluginOptions): any;
+  onRouteUpdateDelayed?(args: RouteUpdateDelayedArgs, options: PluginOptions): any;
+  onServiceWorkerActive?(args: ServiceWorkerArgs, options: PluginOptions): any;
+  onServiceWorkerInstalled?(args: ServiceWorkerArgs, options: PluginOptions): any;
+  onServiceWorkerRedundant?(args: ServiceWorkerArgs, options: PluginOptions): any;
+  onServiceWorkerUpdateFound?(args: ServiceWorkerArgs, options: PluginOptions): any;
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any;
   replaceComponentRenderer?(args: ReplaceComponentRendererArgs, options: PluginOptions): any;
   replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any;
@@ -427,8 +427,6 @@ export interface GatsbySSR {
 
 export interface PluginOptions {
   plugins: unknown[];
-  path?: string;
-  pathCheck?: boolean;
   [key: string]: unknown;
 }
 
@@ -476,7 +474,7 @@ export interface PreprocessSourceArgs extends ParentSpanPluginArgs {
 }
 
 export interface ResolvableExtensionsArgs extends ParentSpanPluginArgs {
-  traceId: string;
+  traceId: "initial-resolvableExtensions"
 }
 
 export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
@@ -484,11 +482,11 @@ export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
     name: string;
     nodes: any[];
   };
-  traceId: string;
+  traceId: "initial-setFieldsOnGraphQLNodeType";
 }
 
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
-  traceId: string;
+  traceId: "initial-sourceNodes";
   waitForCascadingActions: boolean;
 }
 
@@ -560,22 +558,22 @@ export interface Actions {
   deletePage: Function;
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
-  createPage(args: CreatePageArgs, option?: ActionOptions): void;
+  createPage(args: {path: string, component: string, context: Record<string, unknown>}, plugin?: ActionPlugin, option?: ActionOptions): void;
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
-  deleteNode(args: DeleteNodeArgs, option?: ActionOptions): void;
+  deleteNode(options: { node: Node }, plugin?: ActionPlugin, option?: ActionOptions): void;
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deleteNodes */
   deleteNodes: Function;
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(node: Node, options?: ActionOptions): void;
+  createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void;
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
   touchNode: Function;
   
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
-  createNodeField(args: CreateNodeFieldArgs, options?: ActionOptions): void;
+  createNodeField(args: {node: Node, fieldName?: string, fieldValue?: string, name?: string, value: any}, plugin?: ActionPlugin, options?: ActionOptions): void;
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
   createParentChildLink: Function;
@@ -783,7 +781,7 @@ export interface WebpackPlugins {
   [key: string]: Function;
 }
 
-export interface PostPrefetchPathnameArgs extends BrowserPluginArgs {
+export interface PrefetchPathnameArgs extends BrowserPluginArgs {
   pathname: string;
 }
 
@@ -807,7 +805,9 @@ export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
 }
 
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
-  prevRouterProps: null;
+  prevRouterProps?: {
+    location: Location
+  }
   pathname: string;
   routerProps: {
     location: Location;
@@ -822,6 +822,7 @@ export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
   element: object;
+  pathname: string;
 }
 
 export interface BrowserPluginArgs {
