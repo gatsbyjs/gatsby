@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, Fragment } from "react"
+import React, { useRef, useEffect, useState, Fragment } from "react"
 import { post } from "axios"
 import { Machine, assign } from "xstate"
 import { useMachine } from "@xstate/react"
@@ -90,10 +90,14 @@ const feedbackMachine = Machine({
   },
 })
 
-const FeedbackWidget = ({ initialOpen, toggleButton }) => {
+const FeedbackWidget = ({ initialOpened, initialFocused }) => {
+  const toggleButton = useRef(null)
   const widgetTitle = useRef(null)
   const successTitle = useRef(null)
   const errorTitle = useRef(null)
+  const [supressFocusAnimation, setSupressFocusAnimation] = useState(
+    initialFocused
+  )
 
   const [current, send] = useMachine(
     feedbackMachine.withConfig({
@@ -126,9 +130,18 @@ const FeedbackWidget = ({ initialOpen, toggleButton }) => {
     // if button was toggle before
     // full feedback widget was loaded,
     // make sure widget will be opened
-    if (initialOpen) {
+    if (initialOpened) {
       send(`OPEN`)
     }
+    // requestAnimationFrame(() => {
+    if (initialFocused) {
+      toggleButton.current.focus()
+      // hacky: don't animate initial focus
+      if (supressFocusAnimation) {
+        setSupressFocusAnimation(false)
+      }
+    }
+    // })
   }, [])
 
   const { rating, comment } = current.context
@@ -165,6 +178,7 @@ const FeedbackWidget = ({ initialOpen, toggleButton }) => {
         className="feedback-trigger"
         aria-haspopup="true"
         onClick={handleToggle}
+        supressFocusAnimation={supressFocusAnimation}
       >
         {!current.matches(`closed`) ? (
           <Fragment>

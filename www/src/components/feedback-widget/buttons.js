@@ -171,6 +171,14 @@ export const ToggleButton = styled(`button`)`
     }
   }
 
+  ${props =>
+    props.supressFocusAnimation &&
+    css`
+      ${ToggleButtonLabel} {
+        transition: 0s;
+      }
+    `}
+
   .opened &,
   .failed &,
   .success &,
@@ -217,8 +225,7 @@ export const ToggleButton = styled(`button`)`
 export const OpenFeedbackWidgetButtonContent = ({ loading }) => (
   <Fragment>
     <ToggleButtonLabel>
-      Was this doc helpful to you
-      {loading && `loading`}
+      {loading ? `Loading ...` : `Was this doc helpful to you`}
       <ScreenReaderText>?</ScreenReaderText>
     </ToggleButtonLabel>
     <ToggleButtonIcon>
