@@ -98,7 +98,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Content Management Systems (CMS)
 
 **Question:** Will Gatsby compile/export static files using the theme from a Ghost installation or will Gatsby compile/export based on another Gatsby theme?
-**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [/https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/](/blog/2019-01-14-modern-publications-with-gatsby-ghost/ "https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/")
+**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/](/blog/2019-01-14-modern-publications-with-gatsby-ghost/ "https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/")
 
 **Question:** Should I stop using Wordpress altogether? Does Wordpress play well with Gatsby or is Contentful better? Looks like JAMstack is a Wordpress killer.
 **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
