@@ -12,6 +12,13 @@ In certain instances, a developer may want to customize certain Markdown nodes w
 - How to create a plugin that is injected with an AST via `gatsby-transformer-remark`
 - How to manipulate the remark AST to add additional functionality
 
+## Prerequisites
+
+There a few things that you should have some understanding with:
+
+- How to work with Remark in Gatsby as described in [Part Six](https://www.gatsbyjs.org/tutorial/part-six/) and [Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) of the Gatsby Tutorial.
+- Understanding of the Markdown Syntax.
+
 ## Understanding the Abstract Syntax Tree
 
 To get an understanding at what is available in the Markdown AST, take a look at the Markdown AST spec that is used in remark and other unist projects: [syntax-tree/mdast](https://github.com/syntax-tree/mdast).
@@ -24,7 +31,81 @@ Starting out with a Markdown file as below:
 This is a [Real page](https://google.com)
 ```
 
-Remark would translate this into an AST made available to `gatsby-transformer-remark` plugins. [AST Explorer](https://astexplorer.net/#/gist/d9029a2e8827265fbb9b190083b59d4d/3384f3ce6a3084e50043d0c8ce34628ed7477603) is a site that gives you a side-by-side view of the markdown and the outputted AST.
+Remark would translate this into an AST made available to `gatsby-transformer-remark` plugins. The AST would appear as the following:
+
+```JSON
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "Hello World!",
+          "position": {
+            "start": { "line": 1, "column": 3, "offset": 2 },
+            "end": { "line": 1, "column": 15, "offset": 14 },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 1, "column": 1, "offset": 0 },
+        "end": { "line": 1, "column": 15, "offset": 14 },
+        "indent": []
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This is a ",
+          "position": {
+            "start": { "line": 3, "column": 1, "offset": 16 },
+            "end": { "line": 3, "column": 11, "offset": 26 },
+            "indent": []
+          }
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "https://google.com",
+          "children": [
+            {
+              "type": "text",
+              "value": "Real page",
+              "position": {
+                "start": { "line": 3, "column": 12, "offset": 27 },
+                "end": { "line": 3, "column": 21, "offset": 36 },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 3, "column": 11, "offset": 26 },
+            "end": { "line": 3, "column": 42, "offset": 57 },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 3, "column": 1, "offset": 16 },
+        "end": { "line": 3, "column": 42, "offset": 57 },
+        "indent": []
+      }
+    }
+  ],
+  "position": {
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 4, "column": 1, "offset": 58 }
+  }
+}
+```
+
+As well, [AST Explorer](https://astexplorer.net/#/gist/d9029a2e8827265fbb9b190083b59d4d/3384f3ce6a3084e50043d0c8ce34628ed7477603) is a site that gives you a side-by-side view of the markdown and the outputted AST.
 
 ## Setting up a plugin
 
