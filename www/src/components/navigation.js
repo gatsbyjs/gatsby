@@ -180,7 +180,7 @@ const styles = {
     [breakpoints.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
-      marginLeft: space[6]
+      marginLeft: space[6],
     },
   },
   ulContainer: {

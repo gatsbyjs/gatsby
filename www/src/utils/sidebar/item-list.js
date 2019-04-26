@@ -10,11 +10,7 @@ const createHash = link => {
 }
 
 const extendItem = (items, parentTitle, level) => {
-<<<<<<< HEAD
-  items.forEach((item) => {
-=======
   items.forEach(item => {
->>>>>>> 0e96bd60712447064f61107fbe2c3c9786769ca4
     item.hash = createHash(item.link)
     item.parentTitle = parentTitle
     item.level = level || 1
