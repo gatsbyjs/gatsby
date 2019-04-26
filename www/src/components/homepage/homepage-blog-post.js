@@ -16,7 +16,7 @@ import {
   radii,
   transition,
   shadows,
-  scale,
+  fontSizes,
   breakpoints,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
@@ -72,14 +72,14 @@ const Cover = styled(Img)`
 
 const Header = styled(`h1`)`
   color: ${colors.gatsbyDarker};
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
   font-weight: bold;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
   ${breakpoints.lg} {
-    font-size: ${props => (props.first ? scale[6] : scale[5])};
+    font-size: ${props => (props.first ? fontSizes[6] : fontSizes[5])};
     padding: ${space[7]};
     padding-bottom: 0;
   }
@@ -90,7 +90,7 @@ const Meta = styled(`div`)`
   color: ${colors.gray.calm};
   display: flex;
   flex-wrap: wrap;
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   margin-top: ${space[4]};
   padding: 0 ${rhythm(4 / 5)};
 
@@ -145,7 +145,7 @@ const ReadMore = styled(Link)`
   color: ${colors.gatsby};
   display: flex;
   flex-grow: 1;
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   left: 0;
   padding: ${rhythm(4 / 5)};
   position: absolute;

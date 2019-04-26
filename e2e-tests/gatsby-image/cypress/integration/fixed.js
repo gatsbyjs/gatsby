@@ -2,7 +2,7 @@ const fixedTestId = `image-fixed`
 
 describe(`fixed`, () => {
   beforeEach(() => {
-    cy.visit(`/fixed`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/fixed`).waitForRouteChange()
   })
 
   it(`does not render a spacer div`, () => {

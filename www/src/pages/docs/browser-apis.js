@@ -12,7 +12,9 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 class BrowserAPIDocs extends React.Component {
   render() {
     const funcs = sortBy(
-      this.props.data.file.childrenDocumentationJs,
+      this.props.data.file.childrenDocumentationJs.filter(
+        doc => doc.kind !== `typedef`
+      ),
       func => func.name
     )
 
@@ -43,7 +45,7 @@ class BrowserAPIDocs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} />
+          <APIReference docs={funcs} showTopLevelSignatures={true} />
         </Container>
       </Layout>
     )

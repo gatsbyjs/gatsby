@@ -9,6 +9,7 @@ const {
   OPTION_DEFAULT_LINK_TEXT,
   OPTION_DEFAULT_HTML,
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
+  OPTION_DEFAULT_INCLUDE_MATCHING_CSS,
 } = require(`./constants`)
 
 exports.createPages = async (
@@ -18,6 +19,7 @@ exports.createPages = async (
     externals = [],
     html = OPTION_DEFAULT_HTML,
     redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
+    includeMatchingCSS = OPTION_DEFAULT_INCLUDE_MATCHING_CSS,
   } = {}
 ) => {
   if (!directory.endsWith(`/`)) {
@@ -51,6 +53,18 @@ exports.createPages = async (
           .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
         const code = fs.readFileSync(file, `utf8`)
 
+        let css
+        if (includeMatchingCSS === true) {
+          try {
+            css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
+          } catch (err) {
+            // If the file doesn't exist, we gracefully ignore the error
+            if (err.code !== `ENOENT`) {
+              throw err
+            }
+          }
+        }
+
         // Codepen configuration.
         // https://blog.codepen.io/documentation/api/prefill/
         const action = `https://codepen.io/pen/define`
@@ -61,6 +75,7 @@ exports.createPages = async (
           js_external: externals.join(`;`),
           js_pre_processor: `babel`,
           layout: `left`,
+          css,
         })
 
         createPage({

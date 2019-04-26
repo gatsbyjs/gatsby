@@ -84,6 +84,7 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
   })
 
   apiRunner(`onPreRenderHTML`, {
@@ -93,6 +94,7 @@ export default (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    pathname: pagePath,
   })
 
   const htmlElement = React.createElement(Html, {

@@ -5,7 +5,7 @@ const IDS = {
 
 describe(`hot-reloading anonymous arrow functions`, () => {
   beforeEach(() => {
-    cy.visit(`/arrows`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/arrows`).waitForRouteChange()
   })
   it(`displays placeholders on launch`, () => {
     cy.getTestElement(IDS.title)
