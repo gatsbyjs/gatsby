@@ -24,7 +24,7 @@ let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId },
+  { actions, getNode, store, cache, createNodeId, createContentDigest },
   {
     baseUrl,
     protocol,
@@ -74,6 +74,9 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
+  // Create fake wordpressId form element who done have any in the database
+  entities = normalize.generateFakeWordpressId(entities)
+
   // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
 
@@ -96,7 +99,7 @@ exports.sourceNodes = async (
   entities = normalize.excludeUnknownEntities(entities)
 
   // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(createNodeId, entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL)
 
   // Creates links between authors and user entities
   entities = normalize.mapAuthorsToUsers(entities)
@@ -118,6 +121,7 @@ exports.sourceNodes = async (
     createNode,
     createNodeId,
     touchNode,
+    getNode,
     _auth,
   })
 
@@ -131,6 +135,8 @@ exports.sourceNodes = async (
   })
 
   entities = normalize.mapPolylangTranslations(entities)
+
+  entities = normalize.createUrlPathsFromLinks(entities)
 
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
@@ -160,7 +166,11 @@ exports.sourceNodes = async (
   }
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({ entities, createNode })
+  normalize.createNodesFromEntities({
+    entities,
+    createNode,
+    createContentDigest,
+  })
 
   return
 }

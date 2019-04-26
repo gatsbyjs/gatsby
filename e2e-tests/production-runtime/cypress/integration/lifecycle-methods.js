@@ -1,10 +1,10 @@
 describe(`Production build tests`, () => {
   it(`should remount when navigating to different template`, () => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`page2`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     // we expect 2 `componentDidMount` calls - 1 for initial page and 1 for second page
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 2)
@@ -12,11 +12,11 @@ describe(`Production build tests`, () => {
   })
 
   it(`should remount when navigating to different page using same template`, () => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`duplicated`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     // we expect 2 `componentDidMount` calls - 1 for initial page and 1 for duplicated page
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 2)
@@ -24,15 +24,15 @@ describe(`Production build tests`, () => {
   })
 
   it(`should NOT remount when navigating within client only paths`, () => {
-    cy.visit(`/client-only-paths`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/client-only-paths`).waitForRouteChange()
 
     cy.getTestElement(`/profile`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.getTestElement(`/dashboard`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     // we expect just 1 `componentDidMount` call, when navigating inside matchPath
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 1)

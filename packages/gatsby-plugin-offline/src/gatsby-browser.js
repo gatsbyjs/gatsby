@@ -7,6 +7,13 @@ exports.onServiceWorkerActive = ({
   getResourceURLsForPathname,
   serviceWorker,
 }) => {
+  // if the SW has just updated then reset whitelisted paths and don't cache
+  // stuff, since we're on the old revision until we navigate to another page
+  if (window.___swUpdated) {
+    serviceWorker.active.postMessage({ gatsbyApi: `resetWhitelist` })
+    return
+  }
+
   // grab nodes from head of document
   const nodes = document.querySelectorAll(`
     head > script[src],
@@ -63,6 +70,10 @@ function whitelistPathname(pathname, includesPrefix) {
 }
 
 exports.onPostPrefetchPathname = ({ pathname }) => {
+  // do nothing if the SW has just updated, since we still have old pages in
+  // memory which we don't want to be whitelisted
+  if (window.___swUpdated) return
+
   whitelistPathname(pathname, false)
 
   // if SW is not installed, we need to record any prefetches

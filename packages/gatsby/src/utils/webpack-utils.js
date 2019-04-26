@@ -5,6 +5,9 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
+const isWsl = require(`is-wsl`)
+
+const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
@@ -91,6 +94,7 @@ export type PluginUtils = BuiltinPlugins & {
   extractText: PluginFactory,
   uglify: PluginFactory,
   moment: PluginFactory,
+  extractStats: PluginFactory,
 }
 
 /**
@@ -386,7 +390,7 @@ module.exports = async ({
         loaders.css({ ...options, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR) use.unshift(loaders.miniCssExtract())
+      if (!isSSR) use.unshift(loaders.miniCssExtract({ hmr: !options.modules }))
 
       return {
         use,
@@ -441,7 +445,9 @@ module.exports = async ({
   plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
     new TerserPlugin({
       cache: true,
-      parallel: true,
+      // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
+      // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
+      parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {
@@ -477,6 +483,8 @@ module.exports = async ({
     })
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
+
+  plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
 
   return {
     loaders,

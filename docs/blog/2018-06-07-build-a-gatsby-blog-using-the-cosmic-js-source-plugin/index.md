@@ -1,6 +1,6 @@
 ---
 title: Build a Gatsby Blog using the Cosmic JS source plugin
-date: "2018-06-07"
+date: 2018-06-07
 author: "Tony Spiro"
 canonicalLink: https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45
 publishedAt: "Cosmic JS"
@@ -51,7 +51,7 @@ cd gatsby-blog-cosmicjs
 Start the server:
 
 ```bash
-gatsby develop
+npm run develop
 ```
 
 At this point, you can access your Gatsby website by visiting [http://localhost:8000](http://localhost:8000).
@@ -62,7 +62,7 @@ In a static website, data can be consumed from multiple different sources, for e
 
 To make consuming data simpler, Gatsby implements a data layer powered by GraphQL. Very exciting stuff!
 
-To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/create-source-plugin/) if necessary.
+To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/source-plugin-tutorial/) if necessary.
 
 In our case, we are using [Cosmic JS](https://cosmicjs.com). We need a source plugin to connect data from Cosmic JS to our Gatsby site. Good news: there's already a [source plugin for Cosmic JS](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
 
@@ -124,7 +124,7 @@ import { Link } from "gatsby"
 import get from "lodash/get"
 import { Helmet } from "react-helmet"
 
-import Bio from "../components/Bio"
+import Bio from "../components/bio"
 import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
@@ -215,7 +215,7 @@ import { Helmet } from "react-helmet"
 import { Link } from "gatsby"
 import get from "lodash/get"
 
-import Bio from "../components/Bio"
+import Bio from "../components/bio"
 import { rhythm, scale } from "../utils/typography"
 import { relative } from "path"
 
@@ -356,7 +356,7 @@ export const pageQuery = graphql`
 `
 ```
 
-That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
+That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](/docs/node-apis/#createPages).
 
 Path: `gatsby-node.js`
 
@@ -427,7 +427,7 @@ Restart the Gatsby server, then visit the detail page by clicking on URLs displa
 
 ### Extra Stuff!
 
-In addition to the code covered in this tutorial, we also implemented `src/components/Bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog.
+In addition to the code covered in this tutorial, we also implemented `src/components/bio.js` to display author information & `src/layouts/index.js` to [create a generic layout](/tutorial/part-three/#our-first-layout-component) for the blog.
 
 The source code for this tutorial is available [on GitHub](https://github.com/cosmicjs/gatsby-blog-cosmicjs). To see it live, clone the repository, and run (`cd gatsby-blog-cosmicjs && npm i && npm run develop`) or check out the [demo on Netlify](https://gatsby-blog-cosmicjs.netlify.com/).
 

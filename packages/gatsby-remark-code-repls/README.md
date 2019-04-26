@@ -58,7 +58,8 @@ to HTML links that open the embedded code examples in a REPL. For example:
 </a>
 
 <!-- before -->
-[Try it on CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
+[Try it on
+CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
 
 <!-- after -->
 <a href="https://codesandbox.io/api/v1/sandboxes/define?parameters=...">
@@ -80,7 +81,8 @@ Sometimes a larger code example would require more than a single file, with vari
 CodeSandbox supports code example with multiple files. With this plugin, you can do:
 
 ```html
-[Try it on CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
+[Try it on
+CodeSandbox](codesandbox://my-example/index.js,my-example/util.js,my-example/index.css)
 ```
 
 > Caveat
@@ -161,6 +163,13 @@ specified examples directory. (This will avoid broken links at runtime.)
     // Note that if a target is specified, "noreferrer" will also be added.
     // eg <a href="..." target="_blank" rel="noreferrer">...</a>
     target: '_blank',
+
+    // Include CSS with matching name.
+    // This option only applies to REPLs that support it (eg Codepen).
+    // If set to `true`, when specifying `file1.js` as example file,
+    // it will try to inject the CSS in `file1.css` if the file exists,
+    // otherwise the default behaviour is preserved
+    includeMatchingCSS: false,
   },
 },
 ```

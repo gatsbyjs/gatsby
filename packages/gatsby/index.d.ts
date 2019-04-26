@@ -1,6 +1,7 @@
 import * as React from "react"
 import { EventEmitter } from "events"
 import { Application } from "express"
+import { WindowLocation } from "@reach/router"
 
 export {
   default as Link,
@@ -21,6 +22,8 @@ export interface StaticQueryProps {
 }
 
 export class StaticQuery extends React.Component<StaticQueryProps> {}
+
+export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const graphql: (query: TemplateStringsArray) => void
 
@@ -572,3 +575,10 @@ export interface BrowserPluginArgs {
   getResourceURLsForPathname: Function;
   [key: string]: unknown;
 }
+export const parsePath: (path: string) => WindowLocation
+
+export interface PageRendererProps {
+  location: WindowLocation
+}
+
+export class PageRenderer extends React.Component<PageRendererProps> {}

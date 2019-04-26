@@ -85,6 +85,13 @@ describe(`contentful extend node type`, () => {
       })
       expect(resp).toBe(null)
     })
+    it(`filters out sizes larger than the image's width`, async () => {
+      const resp = await resolveFixed(image, {
+        width: 2250,
+      })
+      expect(resp.srcSet.split(`,`).length).toBe(3)
+      expect(resp).toMatchSnapshot()
+    })
   })
   describe(`resolveFluid`, () => {
     it(`generates responsive size data for images`, async () => {
@@ -107,6 +114,13 @@ describe(`contentful extend node type`, () => {
         maxWidth: 400,
       })
       expect(resp).toBe(null)
+    })
+    it(`filters out sizes larger than the image's width`, async () => {
+      const resp = await resolveFluid(image, {
+        maxWidth: 2250,
+      })
+      expect(resp.srcSet.split(`,`).length).toBe(5)
+      expect(resp).toMatchSnapshot()
     })
   })
   describe(`resolveResize`, () => {
