@@ -52,6 +52,9 @@ export interface GatsbyConfig {
 // alias for our api runner returns
 type AnyOrPromiseAny = any | Promise<any>
 
+// all available gatsby stages
+type GatsbyStages = "develop" | "develop-html" | "build-javascript" | "build-html"
+
 /**
  * Gatsby API for Node.js.
  *
@@ -314,7 +317,7 @@ export interface CreatePagesArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateBabelConfigArgs extends ParentSpanPluginArgs {
-  stage: string
+  stage: GatsbyStages
 }
 
 export interface CreateDevServerArgs extends ParentSpanPluginArgs {
@@ -337,7 +340,7 @@ export interface CreatePageArgs extends ParentSpanPluginArgs {
 
 export interface CreateWebpackConfigArgs extends ParentSpanPluginArgs {
   getConfig: Function
-  stage: string
+  stage: GatsbyStages
   rules: WebpackRules
   loaders: WebpackLoaders
   plugins: WebpackPlugins
