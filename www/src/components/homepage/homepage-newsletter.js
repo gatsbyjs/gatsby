@@ -11,7 +11,7 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   letterSpacings,
   lineHeights,
@@ -52,7 +52,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -89,7 +89,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: ${space[5]};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-top: 0;
   }
 `

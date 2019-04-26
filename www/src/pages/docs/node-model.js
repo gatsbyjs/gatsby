@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { rhythm } from "../../utils/typography"
