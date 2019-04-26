@@ -129,14 +129,6 @@ export interface GatsbyNode {
    */
   createPagesStatefully?(args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" }, options?: PluginOptions, callback?: PluginCallback): void;
 
-
-  /**
-   * Tell plugins with expensive "side effects" from queries to start running
-   * those now. This is a soon-to-be-replaced API only currently in use by
-   * `gatsby-plugin-sharp`.
-   */
-  generateSideEffects?(args: NodePluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
-
   /**
    * Let plugins extend/mutate the site's Babel configuration.
    * This API will change before 2.0 as it needs still to be converted to use
@@ -196,7 +188,7 @@ export interface GatsbyNode {
   onPostBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** The last extension point called after all other parts of the build process are complete. */
-  onPostBuild?(args: NodePluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPostBuild?(args: BuildArgs, options?: PluginOptions, callback?: PluginCallback): void;
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
   onPreBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
@@ -219,7 +211,7 @@ export interface GatsbyNode {
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
    */
-  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions, callback: PluginCallback): array[] | Promise<array[]>;
+  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions, callback: PluginCallback): any[] | Promise<any[]>;
 
   /**
    * Called during the creation of the GraphQL schema. Allows plugins
@@ -438,8 +430,10 @@ export interface CreatePagesArgs extends ParentSpanPluginArgs {
   waitForCascadingActions: boolean;
 }
 
+type GatsbyStages = "develop" | "develop-html" | "build-javascript" | "build-html"
+
 export interface CreateBabelConfigArgs extends ParentSpanPluginArgs {
-  stage: string;
+  stage: GatsbyStages;
 }
 
 export interface CreateDevServerArgs extends ParentSpanPluginArgs {
@@ -462,7 +456,7 @@ export interface CreatePageArgs extends ParentSpanPluginArgs {
 
 export interface CreateWebpackConfigArgs extends ParentSpanPluginArgs {
   getConfig: Function;
-  stage: string;
+  stage: GatsbyStages;
   rules: WebpackRules;
   loaders: WebpackLoaders;
   plugins: WebpackPlugins;
@@ -553,6 +547,38 @@ export interface NodePluginArgs {
   [key: string]: unknown;
 }
 
+interface ActionPlugin {
+  name: string;
+}
+
+interface DeleteNodeArgs {
+  node: Node;
+}
+
+interface CreateNodeFieldArgs {
+  node: Node;
+  name: string;
+  value: string;
+
+  /**
+   * @deprecated
+   */
+  fieldName?: string;
+
+  /**
+   * @deprecated
+   */
+  fieldValue?: string;
+}
+
+interface ActionOptions {
+  [key: string]: unknown;
+}
+
+export interface BuildArgs extends ParentSpanPluginArgs {
+  graphql: Function
+}
+
 export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
   deletePage: Function;
@@ -631,28 +657,24 @@ export interface Store {
   replaceReducer: Function;
 }
 
+type logMessageType = (format: string, ...args: any[]) => void
+
 export interface Reporter {
-  language: string;
-  stdout: WritableStream;
-  stderr: WritableStream;
-  stdin: ReadableStream;
-  emoji: boolean;
-  nonInteractive: boolean;
-  noProgress: boolean;
-  isVerbose: boolean;
-  isTTY: undefined;
-  peakMemory: number;
-  startTime: number;
-  format: Function;
-  isSilent: boolean;
   stripIndent: Function;
-  setVerbose: Function;
-  setNoColor: Function;
-  panic: Function;
-  panicOnBuild: Function;
-  error: Function;
-  uptime: Function;
-  activityTimer: Function;
+  format: object;
+  setVerbose(isVerbose: boolean): void;
+  setNoColor(isNoColor: boolean): void;
+  panic(...args: any[]): void;
+  panicOnBuild(...args: any[]): void;
+  error(message: string, error: Error): void;
+  uptime(prefix: string): void;
+  success: logMessageType;
+  verbose: logMessageType;
+  info: logMessageType;
+  warn: logMessageType;
+  log: logMessageType;
+  activityTimer(name: string, activityArgs: { parentSpan: object }): { start: () => void, 
+  status(status: string): void, end: () => void, span: object}
 }
 
 export interface Cache {
@@ -830,6 +852,14 @@ export interface BrowserPluginArgs {
   getResourcesForPathname: Function;
   getResourceURLsForPathname: Function;
   [key: string]: unknown;
+}
+
+export interface RouteUpdateDelayedArgs extends BrowserPluginArgs {
+  location: Location
+}
+
+export interface ServiceWorkerArgs extends BrowserPluginArgs {
+  serviceWorker: ServiceWorkerRegistration
 }
 
 export interface Node {
