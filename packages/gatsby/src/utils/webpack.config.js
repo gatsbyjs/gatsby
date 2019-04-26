@@ -259,6 +259,17 @@ module.exports = async (
       rules.media(),
       rules.miscAssets(),
     ]
+    if (store.getState().themes.themes._experimentalThemes) {
+      configRules.concat(
+        store.getState().themes.themes._experimentalThemes.map(theme => {
+          return {
+            test: /\.jsx?$/,
+            includes: theme.themeDir,
+            use: [loaders.js()],
+          }
+        })
+      )
+    }
     switch (stage) {
       case `develop`: {
         // get schema to pass to eslint config and program for directory
