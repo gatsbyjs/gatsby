@@ -198,7 +198,7 @@ class Application extends React.Component {
 
 ## Keep making it better
 
-In this section we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
+In this section, we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
 
 Lighthouse is a great tool for site improvements and learning -- Continue looking through the detailed feedback it provides and keep making your site better!
 

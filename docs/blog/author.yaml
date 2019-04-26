@@ -266,3 +266,15 @@
   bio: Loves learning how our customers benefit from our service. Wine Snob. Dog Owner. Music lover.
   avatar: avatars/jim-ettig.jpg
   twitter: "@unclejge"
+- id: Marcy Sutton
+  bio: Head of Learning at Gatsby, cyclist, animal lover, pie baker.
+  avatar: avatars/marcy-sutton.jpg
+  twitter: "@marcysutton"
+- id: Allan Pooley
+  bio: Big half of Little & Big. Frontend Developer. Also makes stuff with wood.
+  avatar: avatars/allan-pooley.jpg
+  twitter: "@PooleyAllan"
+- id: Tim Smith
+  bio: Programmer Analyst @HonCompany. Freelance Web Developer. Person.
+  avatar: avatars/tim-smith.jpg
+  twitter: "@iam_timsmith"

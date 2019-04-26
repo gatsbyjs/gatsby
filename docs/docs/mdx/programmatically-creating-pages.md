@@ -30,9 +30,9 @@ You'll need to use `gatsby-source-filesystem` and tell it to source
 "posts" from a folder called `content/posts` located in the project's
 root.
 
-> _NOTE: `gatsby-mdx` uses `.mdx` by default as a file extension to
+> **NOTE**: `gatsby-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](api-reference/options/extensions) if you want._
+> extension](api-reference/options/extensions) if you want.
 
 ```javascript=gatsby-config.js
 module.exports = {
@@ -72,9 +72,9 @@ mkdir -p content/posts
 touch content/posts/blog-{1,2}.mdx
 ```
 
-> _NOTE:
+> **NOTE**:
 > `mkdir -p path/to/a/directory` will create every folder in the path if
-> it does not exist._
+> it does not exist.
 >
 > _`touch <filename>` will create an empty file named `<filename>`. The
 > brackets (`{}`) are [an
@@ -154,8 +154,8 @@ In order to create pages from the sourced MDX files, you need
 to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
-> \_NOTE: you can open up a GraphiQL console for query testing
-> in your browser at <https://localhost:8000/\_\_\_graphql>
+> **NOTE**: You can open up a GraphiQL console for query testing
+> in your browser at <http://localhost:8000/___graphql>
 
 ```graphql
 query {
@@ -317,8 +317,8 @@ more about all of the cool stuff you can do with `gatsby-mdx`.
 ## Bonus: Make a Blog Index
 
 ```javascript:title=src/pages/index.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
+import React from "react"
+import { Link, graphql } from "gatsby"
 
 const BlogIndex = ({ data }) => {
   const { edges: posts } = data.allMdx
@@ -335,7 +335,7 @@ const BlogIndex = ({ data }) => {
             </Link>
             <p>{post.excerpt}</p>
           </li>
-        ))
+        ))}
       </ul>
     </div>
   )

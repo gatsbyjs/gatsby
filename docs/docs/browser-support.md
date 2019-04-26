@@ -21,7 +21,7 @@ supported by some of your targeted browsers, you won't have to worry about it
 breaking the older browsers as Babel will automatically add the needed polyfill
 `core-js/modules/es7.array.includes`.
 
-> Gatsby only automatically add polyfills for your code (and not for your project's dependencies in `node_modules`) at the moment. You can track work on this in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
+> Gatsby only automatically adds polyfills for your code (and not for your project's dependencies in `node_modules`) at the moment. You can track work on this in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
 
 ## Specify what browsers your project supports using "Browserslist"
 

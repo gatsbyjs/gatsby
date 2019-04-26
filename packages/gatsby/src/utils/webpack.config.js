@@ -275,6 +275,16 @@ module.exports = async (
           },
         ])
 
+        // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
+        // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
+        configRules.push({
+          include: /node_modules/,
+          test: /\.jsx?$/,
+          use: {
+            loader: `react-hot-loader/webpack`,
+          },
+        })
+
         break
       }
       case `build-html`:

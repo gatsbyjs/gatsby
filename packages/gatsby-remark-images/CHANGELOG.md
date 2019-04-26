@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.10...gatsby-remark-images@3.0.11) (2019-04-23)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** update to accept alt as title when no title present ([#13489](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/13489)) ([80c7023](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/80c7023)), closes [#13448](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/13448)
+
 ## [3.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.9...gatsby-remark-images@3.0.10) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-remark-images
