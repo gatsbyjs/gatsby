@@ -98,7 +98,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Content Management Systems (CMS)
 
 **Question:** Will Gatsby compile/export static files using the theme from a Ghost installation or will Gatsby compile/export based on another Gatsby theme?
-**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [/https://www.gatsbyjs.orgblog/2019-01-14-modern-publications-with-gatsby-ghost/](/blog/2019-01-14-modern-publications-with-gatsby-ghost/ "https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/")
+**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [/https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/](/blog/2019-01-14-modern-publications-with-gatsby-ghost/ "https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/")
 
 **Question:** Should I stop using Wordpress altogether? Does Wordpress play well with Gatsby or is Contentful better? Looks like JAMstack is a Wordpress killer.
 **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
@@ -273,7 +273,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** You can configure it that way -- send webhooks to have your CI server rebuild.
 
 **Question:** Can you talk more about Themes & how to create custom themes for V2?
-**Answer:** Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](/blog/2018-11-11-introducing-gatsby-themes/ "/blog/2018-11-11-introducing-gatsby-themes/") and [https://www.gatsbyjs.com/gatsby-days-themes-chris/](https://www.gatsbyjs.com/gatsby-days-themes-chris/ "https://www.gatsbyjs.com/gatsby-days-themes-chris/") and stay tuned for more posts in next week!
+**Answer:** Look at [https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/](/blog/2018-11-11-introducing-gatsby-themes/ "https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/") and [https://www.gatsbyjs.com/gatsby-days-themes-chris/](https://www.gatsbyjs.com/gatsby-days-themes-chris/ "https://www.gatsbyjs.com/gatsby-days-themes-chris/") and stay tuned for more posts in next week!
 
 **Question:** Does Gatsby also have a solution for optimizing the experience of videos out of the box? Like gatsby-image for videos?
 **Answer:** Not at the moment. Video is harder to work with than images as video processing is very CPU intensive. We'd love to find a solution that works with video providers like YouTube, Vimeo, etc.
