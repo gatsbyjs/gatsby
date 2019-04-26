@@ -2371,3 +2371,15 @@
     - Rich customizable content with MDX
     - Green / Red alert footer on user's answer
     - Navigation generated based on the index of each question
+- url: https://gatsby-theme-ggt-material-ui-blog.netlify.com/
+  repo: https://github.com/greatgatsbyjsthemes/gatsby-starter-ggt-material-ui-blog
+  description: Starter material-ui blog utilizing a Gatsby theme!
+  tags:
+    - Blog
+    - Theme
+    - Mdx
+    - Markdown
+  features:
+    - Uses MDX with Gatsby theme for quick and easy set up
+    - Material-ui design with optional config passed into the theme options
+    - Gradient background with sitemap, rss feed, and offline capabilities
