@@ -18,7 +18,7 @@ const extenditemList = itemList => {
 }
 
 const extendItem = (items, parentTitle, level) => {
-  items.forEach((item, index) => {
+  items.forEach((item) => {
     item.hash = createHash(item.link)
     item.parentTitle = parentTitle
     item.level = level || 1
