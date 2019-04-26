@@ -64,7 +64,7 @@ If your theme provides pages for things like the blog post index and a homepage,
 Gatsby will only look in the relative `src/pages` directory when `gatsby develop` is run.
 You will need to use the [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/).
 
-```sh
+```shell
 npm install --save gatsby-plugin-page-creator
 ```
 
@@ -88,7 +88,7 @@ This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
 
 You will need to install the package:
 
-```sh
+```shell
 yarn add gatsby-plugin-compile-es6-packages
 ```
 
@@ -118,6 +118,6 @@ From the root of your newly created theme run `npm publish`.
 
 Once you've published, you can install the theme in your starter.
 
-```sh
+```shell
 npm install --save gatsby-theme-NAME
 ```

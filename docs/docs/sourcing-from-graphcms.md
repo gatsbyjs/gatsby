@@ -16,7 +16,7 @@ In this guide we'll walk you through creating a complete project capable of quer
 
 To begin, let's create a Gatsby starter site.
 
-```bash
+```shell
 gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
@@ -28,7 +28,7 @@ Additionally, you need the the `gatsby-source-graphql` library. Because GraphCMS
 
 You can install this component with:
 
-```bash
+```shell
   # Optionally with `npm install`
   npm install --save gatsby-source-graphql
 ```
