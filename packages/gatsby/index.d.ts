@@ -34,9 +34,7 @@ export const graphql: (query: TemplateStringsArray) => void
  */
 export interface GatsbyConfig {
   siteMetadata?: Record<string, unknown>
-  plugins?: Array<
-    | string
-    | {
+  plugins?: Array<string | {
         resolve: string
         options: Record<string, unknown>
       }
@@ -55,11 +53,7 @@ export interface GatsbyConfig {
 type AnyOrPromiseAny = any | Promise<any>
 
 // all available gatsby stages
-type GatsbyStages =
-  | "develop"
-  | "develop-html"
-  | "build-javascript"
-  | "build-html"
+type GatsbyStages = "develop" | "develop-html" | "build-javascript" | "build-html"
 
 /**
  * Gatsby API for Node.js.
@@ -67,156 +61,157 @@ type GatsbyStages =
  * @see https://www.gatsbyjs.org/docs/node-apis/
  */
 export interface GatsbyNode {
-  createPages?:
-    | ((
-        args: CreatePagesArgs & { traceId: "initial-createPages" },
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: CreatePagesArgs & { traceId: "initial-createPages" },
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  createPages?: (
+    args: CreatePagesArgs & { traceId: "initial-createPages" },
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  createPages?: (
+    args: CreatePagesArgs & { traceId: "initial-createPages" },
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  createPagesStatefully?:
-    | ((
-        args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  createPagesStatefully?: (
+    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  createPagesStatefully?: (
+    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onCreateBabelConfig?:
-    | ((args: CreateBabelConfigArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: CreateBabelConfigArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onCreateBabelConfig?: (
+    args: CreateBabelConfigArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  onCreateBabelConfig?: (
+    args: CreateBabelConfigArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onCreateDevServer?:
-    | ((args: CreateDevServerArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: CreateDevServerArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onCreateDevServer?: (
+    args: CreateDevServerArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  onCreateDevServer?: (
+    args: CreateDevServerArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onCreateNode?:
-    | ((args: CreateNodeArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: CreateNodeArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onCreateNode?: (args: CreateNodeArgs, options: PluginOptions) => AnyOrPromiseAny
+  onCreateNode?: (
+    args: CreateNodeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onCreatePage?:
-    | ((args: CreatePageArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: CreatePageArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onCreatePage?: (args: CreatePageArgs, options: PluginOptions) => AnyOrPromiseAny
+  onCreatePage?: (
+    args: CreatePageArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onCreateWebpackConfig?:
-    | ((
-        args: CreateWebpackConfigArgs,
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: CreateWebpackConfigArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onCreateWebpackConfig?: (
+    args: CreateWebpackConfigArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  onCreateWebpackConfig?: (
+    args: CreateWebpackConfigArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onPostBootstrap?:
-    | ((args: ParentSpanPluginArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: ParentSpanPluginArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPostBootstrap?: (args: ParentSpanPluginArgs, options: PluginOptions) => AnyOrPromiseAny
+  onPostBootstrap?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onPostBuild?:
-    | ((args: BuildArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: BuildArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPostBuild?: (args: BuildArgs, options: PluginOptions) => AnyOrPromiseAny
+  onPostBuild?: (
+    args: BuildArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onPreBootstrap?:
-    | ((args: ParentSpanPluginArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: ParentSpanPluginArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPreBootstrap?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  onPreBootstrap?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onPreBuild?:
-    | ((args: BuildArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: BuildArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPreBuild?: (args: BuildArgs, options: PluginOptions) => AnyOrPromiseAny
+  onPreBuild?: (
+    args: BuildArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onPreExtractQueries?:
-    | ((args: ParentSpanPluginArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: ParentSpanPluginArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPreExtractQueries?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  onPreExtractQueries?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onPreInit?:
-    | ((args: ParentSpanPluginArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: ParentSpanPluginArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPreInit?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  onPreInit?: (
+    args: ParentSpanPluginArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  preprocessSource?:
-    | ((args: PreprocessSourceArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: PreprocessSourceArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  preprocessSource?: (
+    args: PreprocessSourceArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  preprocessSource?: (
+    args: PreprocessSourceArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  resolvableExtensions?:
-    | ((
-        args: ResolvableExtensionsArgs,
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: ResolvableExtensionsArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  resolvableExtensions?: (
+    args: ResolvableExtensionsArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  resolvableExtensions?: (
+    args: ResolvableExtensionsArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  setFieldsOnGraphQLNodeType?:
-    | ((
-        args: SetFieldsOnGraphQLNodeTypeArgs,
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: SetFieldsOnGraphQLNodeTypeArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  setFieldsOnGraphQLNodeType?: (
+    args: SetFieldsOnGraphQLNodeTypeArgs,
+    options: PluginOptions
+  ) => AnyOrPromiseAny
+  setFieldsOnGraphQLNodeType?: (
+    args: SetFieldsOnGraphQLNodeTypeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  sourceNodes?:
-    | ((args: SourceNodesArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: SourceNodesArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  sourceNodes?: (args: SourceNodesArgs, options: PluginOptions) => AnyOrPromiseAny
+  sourceNodes?: (
+    args: SourceNodesArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 }
 
 /**
@@ -225,38 +220,23 @@ export interface GatsbyNode {
  * @see https://www.gatsbyjs.org/docs/browser-apis/
  */
 export interface GatsbyBrowser {
-  disableCorePrefetching?: (
-    args: BrowserPluginArgs,
-    options: PluginOptions
-  ) => any
+  disableCorePrefetching?: (args: BrowserPluginArgs, options: PluginOptions) => any
   onClientEntry?: (args: BrowserPluginArgs, options: PluginOptions) => any
-  onInitialClientRender?: (
-    args: BrowserPluginArgs,
-    options: PluginOptions
-  ) => any
+  onInitialClientRender?: (args: BrowserPluginArgs, options: PluginOptions) => any
   onPostPrefetchPathname?: (
     args: PrefetchPathnameArgs,
     options: PluginOptions
   ) => any
   onPreRouteUpdate?: (args: RouteUpdateArgs, options: PluginOptions) => any
-  onPrefetchPathname?: (
-    args: PrefetchPathnameArgs,
-    options: PluginOptions
-  ) => any
+  onPrefetchPathname?: (args: PrefetchPathnameArgs, options: PluginOptions) => any
   onRouteUpdate?: (args: RouteUpdateArgs, options: PluginOptions) => any
-  onRouteUpdateDelayed?: (
-    args: RouteUpdateDelayedArgs,
-    options: PluginOptions
-  ) => any
-  onServiceWorkerActive?: (
-    args: ServiceWorkerArgs,
-    options: PluginOptions
-  ) => any
+  onRouteUpdateDelayed?: (args: RouteUpdateDelayedArgs, options: PluginOptions) => any
+  onServiceWorkerActive?: (args: ServiceWorkerArgs, options: PluginOptions) => any
   onServiceWorkerInstalled?: (
     args: ServiceWorkerArgs,
     options: PluginOptions
   ) => any
-  onServiceWorkerRedundant?: (
+  onServiceWorkerRedundant?:(
     args: ServiceWorkerArgs,
     options: PluginOptions
   ) => any
@@ -264,27 +244,18 @@ export interface GatsbyBrowser {
     args: ServiceWorkerArgs,
     options: PluginOptions
   ) => any
-  registerServiceWorker?: (
-    args: BrowserPluginArgs,
-    options: PluginOptions
-  ) => any
+  registerServiceWorker?: (args: BrowserPluginArgs, options: PluginOptions) => any
   replaceComponentRenderer?: (
     args: ReplaceComponentRendererArgs,
     options: PluginOptions
   ) => any
-  replaceHydrateFunction?: (
-    args: BrowserPluginArgs,
-    options: PluginOptions
-  ) => any
-  shouldUpdateScroll?: (
-    args: ShouldUpdateScrollArgs,
-    options: PluginOptions
-  ) => any
+  replaceHydrateFunction?: (args: BrowserPluginArgs, options: PluginOptions) => any
+  shouldUpdateScroll?: (args: ShouldUpdateScrollArgs, options: PluginOptions) => any
   wrapPageElement?: (
     args: WrapPageElementBrowserArgs,
     options: PluginOptions
   ) => any
-  wrapRootElement?: (
+  wrapRootElement: ?(
     args: WrapRootElementBrowserArgs,
     options: PluginOptions
   ) => any
@@ -296,51 +267,40 @@ export interface GatsbyBrowser {
  * @see https://www.gatsbyjs.org/docs/ssr-apis/
  */
 export interface GatsbySSR {
-  onPreRenderHTML?:
-    | ((args: PreRenderHTMLArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: PreRenderHTMLArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onPreRenderHTML?: (args: PreRenderHTMLArgs, options: PluginOptions) => AnyOrPromiseAny
+  onPreRenderHTML?: (
+    args: PreRenderHTMLArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  onRenderBody?:
-    | ((args: RenderBodyArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: RenderBodyArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  onRenderBody?: (args: RenderBodyArgs, options: PluginOptions) => AnyOrPromiseAny
+  onRenderBody?: (
+    args: RenderBodyArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  replaceRenderer?:
-    | ((args: ReplaceRendererArgs, options: PluginOptions) => AnyOrPromiseAny)
-    | ((
-        args: ReplaceRendererArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  replaceRenderer?: (args: ReplaceRendererArgs, options: PluginOptions) => AnyOrPromiseAny
+  replaceRenderer?: (
+    args: ReplaceRendererArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  wrapPageElement?:
-    | ((
-        args: WrapPageElementNodeArgs,
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: WrapPageElementNodeArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  wrapPageElement?: (args: WrapPageElementNodeArgs, options: PluginOptions) => AnyOrPromiseAny
+  wrapPageElement?: (
+    args: WrapPageElementNodeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 
-  wrapRootElement?:
-    | ((
-        args: WrapRootElementNodeArgs,
-        options: PluginOptions
-      ) => AnyOrPromiseAny)
-    | ((
-        args: WrapRootElementNodeArgs,
-        options: PluginOptions,
-        callback: PluginCallback
-      ) => void)
+  wrapRootElement?: (args: WrapRootElementNodeArgs, options: PluginOptions) => AnyOrPromiseAny
+  wrapRootElement?: (
+    args: WrapRootElementNodeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ) => void
 }
 
 export interface PluginOptions {
@@ -431,8 +391,8 @@ export interface RenderBodyArgs extends NodePluginArgs {
   setPostBodyComponents: Function
   setBodyProps: Function
   bodyHtml: string
-  scripts: { rel: `preload`; name: string }[]
-  styles: { rel: `preload`; name: string }[]
+  scripts: {rel: `preload`, name: chunk}[]
+  styles: {rel: `preload`, name: chunk}[]
   pathPrefix: string
 }
 
