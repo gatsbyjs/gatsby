@@ -59,9 +59,26 @@ A related RFC is the [Error surveying & improvement RFC](https://github.com/gats
 ## List of first hypotheses to test
 - [ ]  If we clear the Gatsby CLI screen to only display success messages or error messages, people will save time in finding the right thing
 - [ ]  If people use a Gatsby CLI quiet mode, people will find and fix errors faster (quiet mode would make errors more discoverable)
-- [ ] If the Gatsby CLI suggests the correct spellings for misspelled Gatsby commands, people will agree and let the corrected command run
+- [ ] If the Gatsby CLI suggests the correct spellings for misspelled Gatsby commands, people will save time and be happier. For example, when people need help, we could make it more easily discoverable so they don’t have to type multiple commands (e.g. `gatsby --help` then `gatsby build  --help`). Possible solution: provide help information for a variety of inputs `gatsby h`, `gatsby`, `gatsby help`, etc. and update our did-you-mean file to dogfood the correct commands
 - [ ] If we prevent same error message over and over again, people will be less confused and fix the error faster
-- [ ] If we make the localhost and GraphiQL address easier to find after more output, and easier to find in the browser, people will find them faster and be happier
+- [ ] Including createPages page count in output can help users optimize for speed and catch errors faster
+- [ ] When people type the wrong thing in the browser (e.g. “localhost:8000/_ _ graphiql), we could either redirect to "correct" one or just support multiple different cases. This will help them spend less time looking for the right link.
+- [ ] Make sure that links to development site / graphiql are easily discoverable, which will also help make sure users can find the links without much scrolling. The problem is that errors / recompiling notices are getting appended endlessly so users need to scroll very far sometimes to get to those links. Possible solutions: If we would clear older errors / notices so the links are few lines away would fix it as well. Another option is for `gatsby develop` to be interactive (like `jest --watch`) where you can use commands while it's running and we could have command to open browser with development site / graphiql as part of the available commands. With ink we can make sure we don't add too much info at the bottom.
+- [ ] Offering suggestions for those who want to customize CLI commands, such as `gd` for `gatsby develop` could help people stick with gatsby because they can customize it, make it theirs, and get stuff done faster.
+- [ ] If we shorten the effort needed to input a starter URL into the `gatsby new` command,, people will be happy because it’s easier. One idea is to link to starter library or give options of starter in the CLI.
+Shortening the input needed is nice: you can take away the https://www before the starter name and it still worked
+- [ ] Get rid of babel stack traces for errors and no one will miss them and will have an easier time finding errors that matter to them
+- [ ] If we implement a new format for common errors, with page, line:column, error description, a suggestion of how to resolve the error, and invitation “if you’re unable to resolve this error, here’s how to file an issue. Here are forums in Discord and Spectrum where you can chat with other Gatsby users.” People will be able to resolve errors faster and we’ll get fewer issues on Github about those errors.
+- [ ] Consider a new “job to be done” = user wants to speed up their build times. Helping them identify where things are slowing down helps them reach their goal. "It’d be nice to get more context on what certain output means so that if I have a long-running build, I can target where things are slowing down"
+- [ ] If we garbage collect and warn for certain situations, e.g. “we just got rid of every single node of this type,” the user can determine if that action was correct and may find the root cause of some errors that are hard to trace 
+
+
+
+Things to keep doing well:
+- `gatsby new [project-name]` is easy!
+- Keep develop and build output easy to find
+- Keep list of all CLI information on docs site because it’s one click and searchable there
+
 
 There will be many more proposed changes based off of the CLI style guide.
 
