@@ -46,6 +46,8 @@
               link: /docs/hosting-on-netlify/
             - title: Deploying to Render
               link: /docs/deploying-to-render/
+            - title: Deploying to Surge
+              link: /docs/deploying-to-surge/
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
