@@ -38,7 +38,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
 
 **Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
-**Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! [https://www.gatsbyjs.org/docs/source-plugin-tutorial/](/docs/source-plugin-tutorial/ "Gatsby plugins")
+**Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! [/docs/creating-a-source-plugin/](/docs/creating-a-source-plugin/ "Gatsby plugins")
 
 **Question:** How did you implement the GitHub PR test for lighthouse scoring?
 **Answer:** All available in this repo. I run Lighthouse from a CI container, and then parse the response: [https://github.com/dschau/gatsby-perf-audit](https://github.com/dschau/gatsby-perf-audit "https://github.com/dschau/gatsby-perf-audit")
