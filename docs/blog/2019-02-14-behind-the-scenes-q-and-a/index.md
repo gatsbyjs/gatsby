@@ -29,10 +29,10 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Functional Questions (How do I do X with Gatsby?)
 
 **Question:** Can I serialize an api to be stored and accessed client-side only?
-**Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [https://www.gatsbyjs.org/packages/gatsby-source-graphql/](/packages/gatsby-source-graphql/ "/packages/gatsby-source-graphql/") to invoke that API at _build time_
+**Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [https://www.gatsbyjs.org/packages/gatsby-source-graphql/](/packages/gatsby-source-graphql/ "https://www.gatsbyjs.org/packages/gatsby-source-graphql/") to invoke that API at _build time_
 
 **Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
-**Answer:** Check out [https://www.gatsbyjs.org/docs/environment-variables/](/docs/environment-variables/ "/docs/environment-variables/") for env variables.
+**Answer:** Check out [https://www.gatsbyjs.org/docs/environment-variables/](/docs/environment-variables/ "https://www.gatsbyjs.org/docs/environment-variables/") for env variables.
 
 **Question:** Is it possible to have the gatsby-\*.js files be rewritten in TypeScript?
 **Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
@@ -47,7 +47,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Yup! React. Lazy is great + standard async imports.
 
 **Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our ssr generated html to match the final rendered DOM.
-**Answer:** Check out this docs page [https://www.gatsbyjs.org/docs/environment-variables/#environment-variables](/docs/environment-variables/#environment-variables "/docs/environment-variables/#environment-variables")
+**Answer:** Check out this docs page [https://www.gatsbyjs.org/docs/environment-variables/#environment-variables](/docs/environment-variables/#environment-variables "https://www.gatsbyjs.org/docs/environment-variables/#environment-variables")
 
 **Question:** Is there a way to enable SSR on run time to things like a post preview?
 **Answer:** If you mean a screenshot of the built site, you could deploy to a staged URL, and then use a plugin like [https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot") and then query for your page preview (we do this on gatsbyjs.org!). Additionally, something like using a screenshot service ([https://screenshot-v2.now.sh/blog.dustinschau.com?type=png](https://screenshot-v2.now.sh/blog.dustinschau.com?type=png "Screenshot")) would work, as well. We're working on a service for this: [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](/blog/2018-07-17-announcing-gatsby-preview/ "Gatsby Preview")
@@ -62,23 +62,23 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Yes, build-times do go up with image processing as it's very CPU intensive.
 
 **Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin javascript should not include in Frontend and vice versa?
-**Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out this page for details about how to build the admin section [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](/docs/building-apps-with-gatsby/ "/docs/building-apps-with-gatsby/")
+**Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out this page for details about how to build the admin section [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](/docs/building-apps-with-gatsby/ "https://www.gatsbyjs.org/docs/building-apps-with-gatsby/")
 
 ### GraphQL / Data Layer
 
 **Question:** How does Gatsby work with GraphQL APIs? Create static pages with the content or only when it renders the page?
-**Answer:** With third party graphql APIs — [https://www.gatsbyjs.org/blog/2018-09-25-announcing-graphql-stitching-support/](/blog/2018-09-25-announcing-graphql-stitching-support/ "/blog/2018-09-25-announcing-graphql-stitching-support/")
+**Answer:** With third party graphql APIs — [https://www.gatsbyjs.org/blog/2018-09-25-announcing-graphql-stitching-support/](/blog/2018-09-25-announcing-graphql-stitching-support/ "https://www.gatsbyjs.org/blog/2018-09-25-announcing-graphql-stitching-support/")
 
 **Question:** Is it necessary to use GraphQL for work with Gatsby?
 **Answer:** Nope! [https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/](/docs/using-gatsby-without-graphql/ "GraphQL")
 
 **Question:** I'm new to GraphQL and probably haven't dug deep enough yet, but it's not clear to me how to add new properties and surface them in GraphQL, so my components can consume it.
-**Answer:** You can start with [https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/](/docs/using-gatsby-without-graphql/ "/docs/using-gatsby-without-graphql/") and go from there!
+**Answer:** You can start with [https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/](/docs/using-gatsby-without-graphql/ "https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/") and go from there!
 
 ### Best Practices with Gatsby
 
 **Question:** How are static assets handled with Gatsby? What is the best approach when using larger amount of SVG icons (think emojis) which may increase the bundle size by more than 100kb's?
-**Answer:** There's a few ways you can handle it. See this docs section which talks about the various options [https://www.gatsbyjs.org/docs/images-and-files/](/docs/images-and-files/ "/docs/images-and-files/")
+**Answer:** There's a few ways you can handle it. See this docs section which talks about the various options [https://www.gatsbyjs.org/docs/images-and-files/](/docs/images-and-files/ "https://www.gatsbyjs.org/docs/images-and-files/")
 
 **Question:** The question asked about search—how would you implement a site search in Gatsby?
 **Answer:** One of the best things about Gatsby is that it's pretty agnostic on tech stack(s). So you're free to use what you want. I've used Algolia in the past and loved it, but you're free to implement this however you'd like! [https://www.gatsbyjs.org/docs/adding-search/](/docs/adding-search/ "Gatsby Docs")
@@ -87,7 +87,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** A CI can do a build and then run the lighthouse test on the built site.
 
 **Question:** Regarding Environment Variables and security- how do we keep secure endpoints using env vars like process.env to handle authorization keys and secrets? Does this mean Node would be required in prod environment?
-**Answer:** Yes, process.env is recommended for secret management. [https://www.gatsbyjs.org/docs/environment-variables/](/docs/environment-variables/ "/docs/environment-variables/"), Generally you'd add these to gatsby-config.js — so would be used for the build but wouldn't be sent to users, so the keys wouldn't leak.
+**Answer:** Yes, process.env is recommended for secret management. [https://www.gatsbyjs.org/docs/environment-variables/](/docs/environment-variables/ "https://www.gatsbyjs.org/docs/environment-variables/"), Generally you'd add these to gatsby-config.js — so would be used for the build but wouldn't be sent to users, so the keys wouldn't leak.
 
 **Question:** What is your opinion on using CSS, ie Styled Components, Emotion or BEM?
 **Answer:** We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[https://css-tricks.com/video-screencasts/168-css-in-js/](https://css-tricks.com/video-screencasts/168-css-in-js/ "https://css-tricks.com/video-screencasts/168-css-in-js/")
@@ -98,13 +98,13 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Content Management Systems (CMS)
 
 **Question:** Will Gatsby compile/export static files using the theme from a Ghost installation or will Gatsby compile/export based on another Gatsby theme?
-**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [/https://www.gatsbyjs.orgblog/2019-01-14-modern-publications-with-gatsby-ghost/](/blog/2019-01-14-modern-publications-with-gatsby-ghost/ "/blog/2019-01-14-modern-publications-with-gatsby-ghost/")
+**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [/https://www.gatsbyjs.orgblog/2019-01-14-modern-publications-with-gatsby-ghost/](/blog/2019-01-14-modern-publications-with-gatsby-ghost/ "https://www.gatsbyjs.org/blog/2019-01-14-modern-publications-with-gatsby-ghost/")
 
 **Question:** Should I stop using Wordpress altogether? Does Wordpress play well with Gatsby or is Contentful better? Looks like JAMstack is a Wordpress killer.
 **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
 
 **Question:** How do content managers preview their changes?
-**Answer:** We have some tooling planned for this :) Stay tuned! [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](/blog/2018-07-17-announcing-gatsby-preview/ "/blog/2018-07-17-announcing-gatsby-preview/")
+**Answer:** We have some tooling planned for this :) Stay tuned! [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](/blog/2018-07-17-announcing-gatsby-preview/ "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/")
 
 **Question:** Is there a good starting point to compare building sites with Gatsby that developers would have built on platforms like WordPress or Craft, etc previously?
 **Answer:** There are blog posts people have written about their experience on our blog at [https://www.gatsbyjs.org/blog/tags/wordpress](/blog/tags/wordpress "Gatsby Blog")
@@ -113,7 +113,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** You can use a DB as your backend -- [https://www.gatsbyjs.org/docs/sourcing-from-databases/](/docs/sourcing-from-databases/ "Gatsby Docs"). Posting to a database can be done with AJAX requests.
 
 **Question:** What are your thoughts on sanity.io?
-**Answer:** Seems great :) Check out this blog post for more info -> [https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/](/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/ "/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/")
+**Answer:** Seems great :) Check out this blog post for more info -> [https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/](/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/ "https://www.gatsbyjs.org/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/")
 
 **Question:** What are some best practices around aligning (dynamic) CMS content schema with code changes in Gatsby?
 **Answer:** Great question - and we have some thoughts here. We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSs have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
@@ -122,7 +122,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** That would be a great idea! We've talked to some folks doing this.
 
 **Question:** If a company had numerous content managers (let's say 30), and they all needed to be able to create and publish content to a blog (which could be multiple on the same site) or a page, each update would require a new build? Is that an accurate understanding?
-**Answer:** We're building a service for Preview that'll instantly update a staging version of the site and that can handle as many content updaters as you throw at it [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](/blog/2018-07-17-announcing-gatsby-preview/ "/blog/2018-07-17-announcing-gatsby-preview/")
+**Answer:** We're building a service for Preview that'll instantly update a staging version of the site and that can handle as many content updaters as you throw at it [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](/blog/2018-07-17-announcing-gatsby-preview/ "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/")
 
 **Question:** The Preview feature is awesome. But I'm thinking like a 24 hours news channel, which our company has, and a manager needing to post content at 2 am, or even more, stories being posted multiple times an hour at all hours. Will each update require a new build?
 **Answer:** Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
@@ -145,13 +145,13 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Gatsby for Dynamic Web Apps
 
 **Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time?
-**Answer:** Check out [https://www.gatsbyjs.org/docs/building-a-site-with-authentication/](/docs/building-a-site-with-authentication/ "/docs/building-a-site-with-authentication/") and [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](/docs/building-apps-with-gatsby/ "/docs/building-apps-with-gatsby/")
+**Answer:** Check out [https://www.gatsbyjs.org/docs/building-a-site-with-authentication/](/docs/building-a-site-with-authentication/ "https://www.gatsbyjs.org/docs/building-a-site-with-authentication/") and [https://www.gatsbyjs.org/docs/building-apps-with-gatsby/](/docs/building-apps-with-gatsby/ "https://www.gatsbyjs.org/docs/building-apps-with-gatsby/")
 
 **Question:** How to do SSR loading for Dynamic content- for example, a blog, as it uses build time SSR technique?
 **Answer:** Gatsby's data layer and source plugins can fetch data dynamically at build time to grab your data. Then whenever your data changes, you rebuild your site with the updated content. Builds are fast so you can update the site every few minutes if necessary.
 
 **Question:** Is Dynamic content SEO Friendly when we use data layer ?
-**Answer:** Yep! Check out [https://www.gatsbyjs.org/docs/seo/](/docs/seo/ "/docs/seo/")
+**Answer:** Yep! Check out [https://www.gatsbyjs.org/docs/seo/](/docs/seo/ "https://www.gatsbyjs.org/docs/seo/")
 
 **Question:** How do you keep on top of things like price changes and stock availability with a static generated site?
 **Answer:** We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful: [https://github.com/gatsbyjs/store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org "Gatsby Swag Store")
@@ -179,7 +179,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Scaling Gatsby (Gatsby for Large Apps)
 
 **Question:** I'm working for a e-Commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time?
-**Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [https://www.gatsbyjs.org/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/ "/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/")
+**Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [https://www.gatsbyjs.org/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/ "https://www.gatsbyjs.org/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/")
 
 **Question:** How do you suggest to setup delta builds? Say I have 10 pages and am changing only one. Is it possible to build just the one and not all 10?
 **Answer:** This is incremental builds! We're thinking on it and certainly want to deliver this feature--it'd be a great one!
@@ -188,7 +188,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** We don't yet have incremental builds, but 1000 page sites should build relatively quickly (a couple of minutes). Stay tuned on incremental builds!
 
 **Question:** You mentioned 'Incremental builds' on another question, can you point me to where I can read more about the ideas and status?
-**Answer:** Some prior art here: [https://github.com/gatsbyjs/gatsby/issues/5002](https://github.com/gatsbyjs/gatsby/issues/5002 "https://github.com/gatsbyjs/gatsby/issues/5002") and [https://github.com/gatsbyjs/gatsby/issues/9083](https://github.com/gatsbyjs/gatsby/issues/9083 "https://github.com/gatsbyjs/gatsby/issues/9083") Once we're ready to start implementing, we'll most likely create an RFC and solicit community feedback for the functionality. We haven't talked too much about it publicly, but you can read a general overview in our company launch post which talks about our long-term vision [https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing](/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing "/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing")
+**Answer:** Some prior art here: [https://github.com/gatsbyjs/gatsby/issues/5002](https://github.com/gatsbyjs/gatsby/issues/5002 "https://github.com/gatsbyjs/gatsby/issues/5002") and [https://github.com/gatsbyjs/gatsby/issues/9083](https://github.com/gatsbyjs/gatsby/issues/9083 "https://github.com/gatsbyjs/gatsby/issues/9083") Once we're ready to start implementing, we'll most likely create an RFC and solicit community feedback for the functionality. We haven't talked too much about it publicly, but you can read a general overview in our company launch post which talks about our long-term vision [https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing](/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing "https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/#distributed-computing--event-sourcing")
 
 **Question:** It was mentioned Gatsby has an upper limit of 50K pages, is that before you need to increase nodes memory or an upper limit written into Gatsby's build process?
 **Answer:** Not a strict upper limit, more of a rough one that we've seen in the wild.
@@ -225,7 +225,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Basically a URL, eg `/blog/{post-name}`
 
 **Question:** Should i know React before starting to learn Gatsby?
-**Answer:** You don't need to! Gatsby is a great playground for learning React. Check out this post: [https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/](/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/ "/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/")
+**Answer:** You don't need to! Gatsby is a great playground for learning React. Check out this post: [https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/](/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/ "https://www.gatsbyjs.org/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/")
 
 **Question:** You mention not having to worry about the web server, but what about the APIs that handle the order flow? Are those just separate API servers?
 **Answer:** Exactly, yep. You'll almost certainly have to worry about some servers, but it's incredibly freeing to not have to worry about your UI going down! Nice thing of going static/build-time SSR is that you're isolated from your API going down if you are able to generate static content from your API.
@@ -252,7 +252,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Not by default as it's rather heavy. There's docs on how to do this though if you want to support it. It's a progressive enhancement so things will all still work in older browsers. They just won't be as efficient.
 
 **Question:** Is there a good upgrade path for new versions of Gatsby?
-**Answer:** Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2: [https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/](/docs/migrating-from-v1-to-v2/ "/docs/migrating-from-v1-to-v2/").
+**Answer:** Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2: [https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/](/docs/migrating-from-v1-to-v2/ "https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/").
 
 **Question:** Following up on upgrade path question—how would you upgrade between version of 2.\~?
 **Answer:** You can bump the version # in your package.json and then you're done.
