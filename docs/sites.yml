@@ -5552,6 +5552,19 @@
   built_by: Ben Robertson
   built_by_url: https://benrobertson.io
   featured: false
+- title: Penrose Grand Del Mar
+  main_url: https://penroseatthegrand.com
+  url: https://penroseatthegrand.com
+  description: >
+    Penrose Grand Del Mar is a luxury housing project coming soon.
+  categories:
+    - Real Estate
+    - Contentful
+    - Netlify
+    - Design
+    - Animation
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
 - title: JustGraphQL
   url: https://www.justgraphql.com/
   main_url: https://www.justgraphql.com/
