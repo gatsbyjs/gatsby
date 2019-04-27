@@ -67,10 +67,10 @@ examples:
 - [guides](/docs/add-404-page/)
 - [guide overviews](/docs/styling/)
 - [tutorials](/tutorial/part-one/)
-- [plugin READme](/packages/gatsby-source-filesystem/)
-- [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
+- [plugin README](/packages/gatsby-source-filesystem/)
+- [starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -205,7 +205,7 @@ Here are some folder name examples:
 - querying-data-with-graphql
 
 Note: Just to clarify, you can include special characters in the article title
-but _not_ in the `.md` file name or folder name (e.g. Title: What is GraphQL? and Folder Name:
+but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name:
 what-is-graphql).
 
 ## Grammar and formatting

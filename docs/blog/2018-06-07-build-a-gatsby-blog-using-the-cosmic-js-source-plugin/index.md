@@ -356,7 +356,7 @@ export const pageQuery = graphql`
 `
 ```
 
-That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
+That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](/docs/node-apis/#createPages).
 
 Path: `gatsby-node.js`
 

@@ -351,6 +351,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
+  const alternateSlashPath = page.path.endsWith(`/`)
+    ? page.path.slice(0, -1)
+    : page.path + `/`
+
+  if (store.getState().pages.has(alternateSlashPath)) {
+    report.warn(
+      `Attempting to create page "${
+        page.path
+      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+    )
+  }
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
@@ -391,6 +403,26 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id)
+  if (plugin) {
+    const pluginName = plugin.name
+
+    if (node && typeOwners[node.internal.type] !== pluginName)
+      throw new Error(stripIndent`
+          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
+
+          The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
+
+          The node object passed to "deleteNode":
+
+          ${JSON.stringify(node, null, 4)}
+
+          The plugin deleting the node:
+
+          ${JSON.stringify(plugin, null, 4)}
+        `)
+  }
 
   const createDeleteAction = node => {
     return {
@@ -470,13 +502,24 @@ const typeOwners = {}
  * markdown transformers look for media types of
  * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
- * choosen by the plugin creating the node. Should be descriptive of the
+ * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
- * @param {string} node.internal.content An optional field. The raw content
- * of the node. Can be excluded if it'd require a lot of memory to load in
- * which case you must define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.content An optional field. This is rarely
+ * used. It is used when a source plugin sources data it doesn't know how
+ * to transform e.g. a markdown string pulled from an API. The source plugin
+ * can defer the transformation to a specialized transformer plugin like
+ * gatsby-transformer-remark. This `content` field holds the raw content
+ * (so for the markdown case, the markdown string).
+ *
+ * Data that's already structured should be added to the top-level of the node
+ * object and _not_ added here. You should not `JSON.stringify` your node's
+ * data here.
+ *
+ * If the content is very large and can be lazy-loaded, e.g. a file on disk,
+ * you can define a `loadNodeContent` function for this node and the node
+ * content will be lazy loaded when it's needed.
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
@@ -580,7 +623,7 @@ actions.createNode = (
     )
   }
 
-  trackInlineObjectsInRootNode(node)
+  node = trackInlineObjectsInRootNode(node, true)
 
   const oldNode = getNode(node.id)
 

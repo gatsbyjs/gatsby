@@ -16,7 +16,8 @@ import {
   colors,
   space,
   breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   lineHeights,
   fonts,
 } from "../../utils/presets"
@@ -61,7 +62,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${scale[4]};
+    font-size: ${fontSizes[4]};
     justify-content: center;
     line-height: ${lineHeights.dense};
     padding: ${space[7]};
@@ -79,7 +80,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     background: ${colors.gatsby};
     color: ${colors.white};
     flex-shrink: 0;
@@ -100,7 +101,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${breakpoints.xl} {
+  ${mediaQueries.xl} {
     width: 160px;
   }
 `
@@ -130,7 +131,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(breakpoints.Lg)
+    this.desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints.lg}`)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }

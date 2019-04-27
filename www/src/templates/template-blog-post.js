@@ -11,9 +11,9 @@ import {
   colors,
   space,
   transition,
-  breakpoints,
+  mediaQueries,
   lineHeights,
-  scale,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -24,6 +24,7 @@ import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"
 import Chart from "../components/chart"
 import Avatar from "../components/avatar"
+import FooterLinks from "../components/shared/footer-links"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -149,7 +150,7 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginBottom: space[5],
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   marginTop: space[3],
                   marginBottom: space[9],
                 },
@@ -169,7 +170,7 @@ class BlogPostTemplate extends React.Component {
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      fontSize: scale[3],
+                      fontSize: fontSizes[3],
                       marginBottom: space[1],
                       color: `${colors.gatsby}`,
                     }}
@@ -207,7 +208,7 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
+                [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
               {this.props.data.markdownRemark.frontmatter.title}
@@ -241,25 +242,27 @@ class BlogPostTemplate extends React.Component {
           css={{
             borderTop: `1px solid ${colors.ui.light}`,
             marginTop: space[9],
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               paddingBottom: space[5],
               paddingTop: space[5],
             },
-            [breakpoints.lg]: {
+            [mediaQueries.lg]: {
               paddingBottom: space[9],
               paddingTop: space[9],
             },
           }}
         >
           <Container>
-            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
-              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
+            <div
+              css={{ [mediaQueries.sm]: { display: `flex`, width: `100%` } }}
+            >
+              <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [breakpoints.md]: {
+                        [mediaQueries.md]: {
                           marginLeft: `-${space[4]}`,
                         },
                       }}
@@ -274,7 +277,7 @@ class BlogPostTemplate extends React.Component {
                 css={{
                   textAlign: `right`,
                   marginTop: space[5],
-                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
+                  [mediaQueries.sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -282,7 +285,7 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [breakpoints.md]: {
+                        [mediaQueries.md]: {
                           marginRight: `-${space[4]}`,
                         },
                       }}
@@ -295,6 +298,7 @@ class BlogPostTemplate extends React.Component {
               </div>
             </div>
           </Container>
+          <FooterLinks />
         </div>
       </Layout>
     )
