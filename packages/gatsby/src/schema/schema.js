@@ -5,7 +5,6 @@ const {
   isIntrospectionType,
   defaultFieldResolver,
   assertValidName,
-  Kind,
   parse,
 } = require(`graphql`)
 const {
