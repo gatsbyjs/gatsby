@@ -8,7 +8,7 @@ title: Building Themes
 
 There's a Gatsby Theme Starter which you can use to get up and running quickly:
 
-```sh
+```shell
 npx gatsby new my-theme https://github.com/ChristopherBiscardi/gatsby-starter-theme
 ```
 
@@ -28,7 +28,7 @@ You will likely want to replace `developer` with your own theme name.
 To get started, create a directory for your project, initialize npm and install the
 required dependencies.
 
-```sh
+```shell
 mkdir gatsby-theme-developer
 cd gatsby-theme-developer
 git init
@@ -75,7 +75,7 @@ Next, create an `index.js` entrypoint that serves as a noop (an empty function):
 
 Then create a `src/pages/index.js`:
 
-```sh
+```shell
 mkdir -p src/pages
 ```
 
@@ -87,7 +87,7 @@ export default () => <h1>Hello from gatsby-theme-developer</h1>
 
 You'll need to install two packages and create a `gatsby-config.js` that sources `pages`:
 
-```sh
+```shell
 npm i --save gatsby-plugin-page-creator
 ```
 
@@ -122,7 +122,7 @@ From the root of your `gatsby-theme-developer` you can run `npm publish`.
 
 ## Create Your Starter
 
-```sh
+```shell
 cd ..
 mkdir gatsby-starter-developer
 git init
