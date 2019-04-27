@@ -11,6 +11,7 @@ On this page:
 - [Modifying markdown files](#modifying-markdown-files)
   - [Converting a document from a stub](#converting-a-document-from-a-stub)
 - [Docs site setup instructions](#docs-site-setup-instructions)
+- [Docs renaming instructions](#docs-renaming-instructions)
 - [Claim your swag](#claim-your-swag)
 - [Want more?](#want-more)
 
@@ -73,6 +74,22 @@ After going through the development setup instructions above, there are a few ad
 - Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
 - View the changes in your browser at `http://localhost:8000`.
 - Commit your changes and submit a pull request!
+
+## Docs renaming instructions
+
+Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
+
+- Run proposed structure changes by the Gatsby docs team in [a Github issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
+- Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
+- For SEO purposes, add a redirect to the `createPages` function in [`www/gatsby-node.js`](https://github.com/gatsbyjs/gatsby/tree/master/www/gatsby-node.js). Here's an example:
+
+```js:title=www/gatsby-node.js
+createRedirect({
+  fromPath: `/docs/source-plugin-tutorial/`,
+  toPath: `/docs/pixabay-source-plugin-tutorial/`,
+  isPermanent: true,
+})
+```
 
 ## Claim your swag
 

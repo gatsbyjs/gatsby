@@ -38,7 +38,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
 
 **Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
-**Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! [https://www.gatsbyjs.org/docs/source-plugin-tutorial/](/docs/source-plugin-tutorial/ "Gatsby plugins")
+**Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! [https://www.gatsbyjs.org/docs/creating-a-source-plugin/](/docs/creating-a-source-plugin/ "Gatsby plugins")
 
 **Question:** How did you implement the GitHub PR test for lighthouse scoring?
 **Answer:** All available in this repo. I run Lighthouse from a CI container, and then parse the response: [https://github.com/dschau/gatsby-perf-audit](https://github.com/dschau/gatsby-perf-audit "https://github.com/dschau/gatsby-perf-audit")
@@ -78,7 +78,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Best Practices with Gatsby
 
 **Question:** How are static assets handled with Gatsby? What is the best approach when using larger amount of SVG icons (think emojis) which may increase the bundle size by more than 100kb's?
-**Answer:** There's a few ways you can handle it. See this docs page which talks about the various options [https://www.gatsbyjs.org/docs/adding-images-fonts-files/](/docs/adding-images-fonts-files/ "https://www.gatsbyjs.org/docs/adding-images-fonts-files/")
+**Answer:** There's a few ways you can handle it. See this docs section which talks about the various options [https://www.gatsbyjs.org/docs/images-and-files/](/docs/images-and-files/ "https://www.gatsbyjs.org/docs/images-and-files/")
 
 **Question:** The question asked about search—how would you implement a site search in Gatsby?
 **Answer:** One of the best things about Gatsby is that it's pretty agnostic on tech stack(s). So you're free to use what you want. I've used Algolia in the past and loved it, but you're free to implement this however you'd like! [https://www.gatsbyjs.org/docs/adding-search/](/docs/adding-search/ "Gatsby Docs")
@@ -122,7 +122,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** That would be a great idea! We've talked to some folks doing this.
 
 **Question:** If a company had numerous content managers (let's say 30), and they all needed to be able to create and publish content to a blog (which could be multiple on the same site) or a page, each update would require a new build? Is that an accurate understanding?
-**Answer:** We're building a service for Preview that'll instantly update a staging version of the site and that can handle as many content updaters as you throw at it [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/#reach-skip-nav](/blog/2018-07-17-announcing-gatsby-preview/#reach-skip-nav "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/#reach-skip-nav")
+**Answer:** We're building a service for Preview that'll instantly update a staging version of the site and that can handle as many content updaters as you throw at it [https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/](/blog/2018-07-17-announcing-gatsby-preview/ "https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/")
 
 **Question:** The Preview feature is awesome. But I'm thinking like a 24 hours news channel, which our company has, and a manager needing to post content at 2 am, or even more, stories being posted multiple times an hour at all hours. Will each update require a new build?
 **Answer:** Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
@@ -282,7 +282,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Yes- they're all posted on our website here: [https://www.gatsbyjs.com/resources/webinars/](https://www.gatsbyjs.com/resources/webinars/ "Gatsby Webinars")
 
 **Question:** What's the best way to get involved with contributing to Gatsby? Do you have regular calls for contributors or a preferred async channel e.g. Slack / Discord?
-**Answer:** We do have Discord, and highly recommend it! Check out our Community page -> [https://www.gatsbyjs.org/docs/community/](/docs/community/ "Gatsby Community")
+**Answer:** We do have Discord, and highly recommend it! Check out our Community page -> [https://www.gatsbyjs.org/contributing/community/](/contributing/community/ "Gatsby Community")
 
 ---
 
