@@ -6,7 +6,7 @@ You may be looking to build and perhaps publish a plugin that doesn't exist yet,
 
 ## Core concepts
 
-- Each Gatsby plugin can be created as an npm package or as a [local plugin](#local-plugins)
+- Each Gatsby plugin can be created as an npm package or as a [local plugin](/docs/creating-a-local-plugin/)
 - A `package.json` is required
 - Plugins implement the Gatsby APIs for [Node](/docs/node-apis/), [server-side rendering](/docs/ssr-apis/), and the [browser](/docs/browser-apis/)
 
