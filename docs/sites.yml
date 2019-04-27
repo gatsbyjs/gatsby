@@ -5565,3 +5565,14 @@
   built_by: Novvum
   built_by_url: https://www.novvum.io/
   featured: false
+- title: Peter Macinkovic Personal Blog
+  url: https://peter.macinkovic.id.au/
+  main_url: https://peter.macinkovic.id.au/
+  source_url: https://github.com/inkovic/peter-macinkovic-static-site
+  description: >
+    Personal Website and Blog of eCommerce SEO Specilaist and Digital Marketer Peter Macinkovic.
+  categories:
+    - SEO
+    - Marketing
+    - Blog
+  featured: false
