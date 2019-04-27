@@ -5067,6 +5067,19 @@
   built_by: Ariadne Digital
   built_by_url: https://www.ariadnedigital.it
   featured: false
+- title: Textually Stylo
+  main_url: https://www.textually.net
+  url: https://www.textually.net
+  description: >
+    Stylo Markdown writing App marketing/documentation website by Textually Inc.
+  categories:
+    - Marketing
+    - Technology
+    - Blog
+    - Documentation
+  built_by: Sébastien Hamel
+  built_by_url: https://www.textually.net
+  featured: false
 - title: OneDeck
   main_url: https://www.onedeck.co
   url: https://www.onedeck.co
