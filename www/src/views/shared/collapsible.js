@@ -27,7 +27,7 @@ class Collapsible extends Component {
           minHeight: fixed ? `${fixed}px` : `initial`,
           maxHeight: fixed ? `${fixed}px` : `initial`,
           flexBasis: 0,
-          overflowY: `auto`,
+          overflowY: collapsed ? false : `auto`,
         }}
       >
         <div
