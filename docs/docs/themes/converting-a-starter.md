@@ -2,7 +2,7 @@
 title: Converting a Starter to a Theme
 ---
 
-Gatsby themes are designed to be easy to create from an existing starter. Here we will walk you through the main steps of converting your theme to a starter.
+Gatsby themes are designed to be easy to create from an existing starter. Here we will walk you through the main steps of converting your starter to a theme.
 
 ## Prepare Your `package.json`
 

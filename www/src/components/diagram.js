@@ -8,10 +8,10 @@ import {
   space,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   letterSpacings,
   lineHeights,
-  scale,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import logo from "../monogram.svg"
@@ -64,7 +64,7 @@ const SegmentTitle = ({ children }) => (
       padding: `${space[2]} ${space[3]}`,
       fontWeight: `normal`,
       letterSpacing: letterSpacings.tracked,
-      fontSize: scale[1],
+      fontSize: fontSizes[1],
       lineHeight: lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
@@ -130,10 +130,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${space[4]} ${space[5]}`,
       display: `flex`,
-      [breakpoints.xs]: {
+      [mediaQueries.xs]: {
         flex: `1 1 50%`,
       },
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -158,7 +158,7 @@ const ItemTitle = ({ children }) => (
       color: colors.gray.dark,
       margin: 0,
       fontStyle: `normal`,
-      fontSize: scale[2],
+      fontSize: fontSizes[2],
     }}
   >
     {children}
@@ -171,7 +171,7 @@ const ItemDescription = ({ children }) => (
       lineHeight: lineHeights.dense,
       display: `block`,
       color: colors.gray.calm,
-      fontSize: scale[1],
+      fontSize: fontSizes[1],
       fontFamily: fonts.system,
     }}
   >
@@ -200,7 +200,7 @@ const Gatsby = () => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -214,7 +214,7 @@ const Gatsby = () => (
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
-        [breakpoints.lg]: {
+        [mediaQueries.lg]: {
           height: space[9],
         },
       }}
@@ -264,7 +264,7 @@ const Diagram = () => (
           css={{
             marginTop: 0,
             marginBottom: space[6],
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               marginTop: space[6],
             },
           }}
