@@ -5539,3 +5539,16 @@
   built_by: Ben Robertson
   built_by_url: https://benrobertson.io
   featured: false
+- title: JustGraphQL
+  url: https://www.justgraphql.com/
+  main_url: https://www.justgraphql.com/
+  source_url: https://github.com/Novvum/justgraphql
+  description: >
+    JustGraphQL helps developers quickly search and filter through GraphQL resources, tools, and articles.
+  categories:
+    - Open Source
+    - Web Development
+    - Technology
+  built_by: Novvum
+  built_by_url: https://www.novvum.io/
+  featured: false
