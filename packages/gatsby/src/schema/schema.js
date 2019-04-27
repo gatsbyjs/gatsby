@@ -13,7 +13,6 @@ const {
   InterfaceTypeComposer,
   UnionTypeComposer,
   InputTypeComposer,
-  GraphQLJSON,
 } = require(`graphql-compose`)
 
 const apiRunner = require(`../utils/api-runner-node`)
@@ -312,19 +311,6 @@ const addExtensions = ({ typeComposer, plugin, createdFrom }) => {
       `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, defined fields won't get resolvers, unless "addResolver" directive/extension is used.`
     )
   }
-}
-
-const getNoDefaultResolvers = directive => {
-  const noDefaultResolvers = directive.arguments.find(
-    ({ name }) => name.value === `noDefaultResolvers`
-  )
-  if (noDefaultResolvers) {
-    if (noDefaultResolvers.value.kind === Kind.BOOLEAN) {
-      return !noDefaultResolvers.value.value
-    }
-  }
-
-  return null
 }
 
 const checkIsAllowedTypeName = name => {
