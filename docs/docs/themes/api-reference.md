@@ -98,7 +98,7 @@ This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
 
 You will need to install the package:
 
-```sh
+```shell
 npm install --save gatsby-plugin-compile-es6-packages
 ```
 
