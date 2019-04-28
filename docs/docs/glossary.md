@@ -34,7 +34,7 @@ A text-based interface to run commands on your computer. The default Command Lin
 
 Components are independent and re-usable chunks of code powered by [React](#react) that when combined make up your website or app.
 
-A component can include components within it. In fact, [pages](#page) and [templates](#templates) are examples of a component.
+A component can include components within it. In fact, [pages](#page) and [templates](#templates) are examples of components.
 
 ### CLI
 
