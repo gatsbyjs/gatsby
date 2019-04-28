@@ -82,7 +82,7 @@ Gatsby supports two environments by default, the [development environment](#deve
 
 ### Environment Variables
 
-Allows you to customise the behavior of your app depending on its [environment](#environment).
+[Environment Variables](/docs/environment-variables/) allow you to customise the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment. 
 
 ## F
 
