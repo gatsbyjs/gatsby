@@ -22,7 +22,7 @@ The process of taking your code and content and packaging it into a website that
 
 ### Babel
 
-A tool that lets you write the most modern [JavaScript](#javascript), and on [build](#build) it gets converted to code that most web browsers can understand.
+A tool that lets you write the most modern [JavaScript](#javascript), and on [build](#build) it gets [compiled](#compiler) to code that most web browsers can understand.
 
 ### Back-End
 
@@ -33,6 +33,10 @@ The behind the scenes that the [public](#public) do not see. This often refers t
 ### Command Line
 
 A text-based interface to run commands on your computer. The default Command Line applications for Mac and Windows are `Terminal` and `Command Prompt` respectively.
+
+### Compiler
+
+A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files.
 
 ### Components
 
@@ -75,7 +79,7 @@ The process of [building](#build) your website or app and uploading onto a [host
 ## E
 
 ### ECMAScript
-ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to compile the latest ECMAScript code into more widely supported JavaScript.
+ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to [compile](#compiler) the latest ECMAScript code into more widely supported JavaScript.
 
 ### Environment
 
