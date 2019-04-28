@@ -44,7 +44,7 @@ Gatsby has two command line interfaces. One, `gatsby`, for day-to-day developmen
 
 ### CMS
 
-Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later.
+Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later. Examples of Content Management Systems include Wordpress, Drupal, Contentful, and Netlify CMS.
 
 ### Config
 
