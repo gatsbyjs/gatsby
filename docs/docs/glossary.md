@@ -237,5 +237,3 @@ A [JavaScript](#javascript) application that Gatsby uses to bundle your website'
 A package manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
 ## Z
-
-## 0-9
