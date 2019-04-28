@@ -94,7 +94,7 @@ The [public-facing](#public) interface for your website or app, delivered using 
 
 ### Gatsby
 
-This project. A framework based on [React](#react) that helps you build blazing fast websites and apps.
+This project. A framework based on [React](#react) that helps you build blazing fast websites and apps. Its [feature set](/features/) can make it a good choice over other ways to build websites.
 
 ### GraphQL
 
