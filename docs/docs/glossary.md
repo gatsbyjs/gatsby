@@ -186,7 +186,7 @@ A package usually describes a [JavaScript](#javascript) program that has additio
 
 An [HTML](#html) page.
 
-This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by Gatsby.], as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
+This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
 
 ### Plugin
 
