@@ -38,7 +38,7 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 ### CLI
 
-Command Line Interface: An application that runs on your computer and is run through the [command line](#command-line) and interacted with your keyboard.
+Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
 Gatsby has two command line interfaces. One, `gatsby`, for day-to-day development with Gatsby and another, `gatsby-dev`, for those who contribute to the Gatsby project.
 
