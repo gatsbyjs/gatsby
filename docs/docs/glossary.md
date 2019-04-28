@@ -6,19 +6,15 @@ When you're new to Gatsby there can be a lot of words that seem alien. This glos
 
 ## A
 
-### Accessibility
-
-The inclusive practice of removing barriers that prevent interaction with, or access to websites, by people with disabilities. When sites are correctly designed, developed and edited for accessibility, generally all users have equal access to information and functionality. Read about [Gatsby's Commitment to Accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/).
-
 ### API
 
 Application Programming Interface: A method for one application to communicate with another. For example, a [source plugin](#source-plugin) will often use an API to get its data.
 
+### Accessibility
+
+The inclusive practice of removing barriers that prevent interaction with, or access to websites, by people with disabilities. When sites are correctly designed, developed and edited for accessibility, generally all users have equal access to information and functionality. Read about [Gatsby's Commitment to Accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/).
+
 ## B
-
-### Build
-
-The process of taking your code and content and packaging it into a website that can be hosted and accessed.
 
 ### Babel
 
@@ -28,7 +24,21 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 The behind the scenes that the [public](#public) do not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as PHP or ASP.net.
 
+### Build
+
+The process of taking your code and content and packaging it into a website that can be hosted and accessed.
+
 ## C
+
+### CLI
+
+Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
+
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
+
+### CMS
+
+Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later. Examples of Content Management Systems include Wordpress, Drupal, Contentful, and Netlify CMS.
 
 ### Command Line
 
@@ -44,41 +54,32 @@ Components are independent and re-usable chunks of code powered by [React](#reac
 
 A component can include components within it. In fact, [pages](#page) and [templates](#templates) are examples of components.
 
-### CLI
-
-Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
-
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
-
-### CMS
-
-Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later. Examples of Content Management Systems include Wordpress, Drupal, Contentful, and Netlify CMS.
-
 ### Config
 
 The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites meta data that can power your SEO meta tags.
 
 ## D
 
-### Database
-
-A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database using [back-end technologies](#back-end). They're often accessed in Gatsby via a [source plugin](#source-plugin)
-
 ### Data Source
 
 A source of data that usually gets fed into Gatsby using [source plugins](#source-plugin). A data source is often a [Headless CMS](#headless-cms), but it could also include Markdown, JSON, or YAML files.
 
-### Development Environment
+### Database
 
-The [environment](#environment) when you're developing your code. It's accessed through the [CLI](#cli) using `gatsby develop`, and provides extra error reporting and things to help you debug before building for [production](#production-environment).
+A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database using [back-end technologies](#back-end). They're often accessed in Gatsby via a [source plugin](#source-plugin)
 
 ### Deploy
 
 The process of [building](#build) your website or app and uploading onto a [hosting provider](#hosting).
 
+### Development Environment
+
+The [environment](#environment) when you're developing your code. It's accessed through the [CLI](#cli) using `gatsby develop`, and provides extra error reporting and things to help you debug before building for [production](#production-environment).
+
 ## E
 
 ### ECMAScript
+
 ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to [compile](#compiler) the latest ECMAScript code into more widely supported JavaScript.
 
 ### Environment
@@ -89,7 +90,7 @@ Gatsby supports two environments by default, the [development environment](#deve
 
 ### Environment Variables
 
-[Environment Variables](/docs/environment-variables/) allow you to customise the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment. 
+[Environment Variables](/docs/environment-variables/) allow you to customise the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
 
 ## F
 
@@ -113,10 +114,6 @@ A [query](#query) language that allows you to pull data into your website or app
 
 ## H
 
-### Hosting
-
-A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
-
 ### HTML
 
 A markup language that every web browser is able to understand. It stands for HyperText Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
@@ -125,6 +122,10 @@ A markup language that every web browser is able to understand. It stands for Hy
 
 A [CMS](#cms) that only handles the [back-end](#back-end) content management instead of handling both the back-end and [front-end](#front-end). This type of setup is also referred to as [Decoupled](#decoupled).
 
+### Hosting
+
+A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
+
 ### Hydration
 
 Once a page that has been generated by Gatsby is loaded in a web browser, it is re-hydrated into a full React application that can manipulate the DOM.
@@ -132,7 +133,9 @@ Once a page that has been generated by Gatsby is loaded in a web browser, it is 
 ## I
 
 ## J
+
 ### JAMStack
+
 JAMStack refers to a modern web architecture using [JavaScript](#javascript), [APIs](#api), and ([HTML](#html)) markup. From [JAMStack.org](https://jamstack.org): "It’s a new way of building websites and apps that delivers better performance, higher security, lower cost of scaling, and a better developer experience."
 
 ### JavaScript
@@ -145,54 +148,57 @@ A programming language that helps us make the web dynamic and interactive. [Java
 
 ## M
 
-### Markdown
-
-A way of writing content in plain text, using special characters such as underscores and asterisks to format content.
-
 ### MDX
 
 Extends [Markdown](#markdown) to support [React](#react) [components](#components) within your content.
 
+### Markdown
+
+A way of writing content in plain text, using special characters such as underscores and asterisks to format content.
+
 ## N
-
-### Node
-Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
-
-
-### Node.js
-A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
 ### NPM
 
 [Node](#node) [Package](#package) Manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
 
+### Node
+
+Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
+
+### Node.js
+
+A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
+
 ## O
 
 ## P
+
 ### Package
+
 A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [NPM](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
 
 ### Page
 
 An [HTML](#html) page.
 
-This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by Gatsby.], as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file. 
+This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by Gatsby.], as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
 
 ### Plugin
 
 Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugins) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
 
-### Public
+### Production Environment
 
-This usually refers to either a member of the public (as opposed to your team) or the folder `/public` in which your [built](#build) website or app is saved.
+The [environment](#environment) for the [built](#build) website or app that users will experience when [deployed](#deploy). It can be accessed through the [CLI](#cli) using `gatsby build` or `gatsby serve`.
 
 ### Programmatically
 
 Something that automatically happens based on your code and configuration. For example, you might [configure](#config) your project to create a [page](#page) for every blog post written, or read and display the current year as part of a copyright in your site footer.
 
-### Production Environment
+### Public
 
-The [environment](#environment) for the [built](#build) website or app that users will experience when [deployed](#deploy). It can be accessed through the [CLI](#cli) using `gatsby build` or `gatsby serve`.
+This usually refers to either a member of the public (as opposed to your team) or the folder `/public` in which your [built](#build) website or app is saved.
 
 ## Q
 
