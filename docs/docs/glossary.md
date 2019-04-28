@@ -48,21 +48,21 @@ Content Management System: an application where you can manage your content and 
 
 ### Config
 
-The config file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites meta data that can power your SEO meta tags.
+The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites meta data that can power your SEO meta tags.
 
 ## D
 
 ### Database
 
-A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database. They're often accessed in Gatsby via a [source plugin](#source-plugin)
+A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database using [back-end technologies](#back-end). They're often accessed in Gatsby via a [source plugin](#source-plugin)
 
 ### Data Source
 
-A source of data that usually gets fed into Gatsby using [source plugins](#source-plugin). A data source is often a [CMS](#cms).
+A source of data that usually gets fed into Gatsby using [source plugins](#source-plugin). A data source is often a [Headless CMS](#headless-cms), but it could also include Markdown, JSON, or YAML files.
 
 ### Development Environment
 
-The [environment](#environment) for when you're developing your code. It's accessed through the [CLI](#cli) using `gatsby develop`.
+The [environment](#environment) when you're developing your code. It's accessed through the [CLI](#cli) using `gatsby develop`, and provides extra error reporting and things to help you debug before building for [production](#production-environment).
 
 ### Deploy
 
@@ -72,7 +72,7 @@ The process of [building](#build) your website or app and uploading onto a [host
 
 ### Environment
 
-The environment that Gatsby runs in. For example when you are writing your code you probably want as much debugging as possible, but that's undesirable on the live website or app. As such, Gatsby can change its behaviour depending on the environment it's in.
+The environment that Gatsby runs in. For example, when you are writing your code you probably want as much debugging as possible, but that's undesirable on the live website or app. As such, Gatsby can change its behavior depending on the environment it's in.
 
 Gatsby supports two environments by default, the [development environment](#development-environment) and the [production environment](#production-environment).
 
@@ -84,11 +84,11 @@ Allows you to customise the behavior of your app depending on its [environment](
 
 ### Filesystem
 
-The way files are organized. But with Gatsby it means having files in the same place as your website's or app's code instead of having data from an external [source](#source)
+The way files are organized. With Gatsby, it means having files in the same place as your website's or app's code instead of pulling data from an external [source](#source)
 
 ### Front-End
 
-The [public-facing](#public) interface for your website or app.
+The [public-facing](#public) interface for your website or app, delivered using web technologies: HTML, CSS, and JavaScript.
 
 ## G
 
@@ -104,15 +104,15 @@ A [query](#query) language that allows you to pull data into your website or app
 
 ### Hosting
 
-A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public).
+A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
 
 ### HTML
 
-A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
+A markup language that every web browser is able to understand. It stands for HyperText Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
 
 ### Headless CMS
 
-A [CMS](#cms) that only handles the [back-end](#back-end) content management instead of handling both the back-end and [front-end](#frontend).
+A [CMS](#cms) that only handles the [back-end](#back-end) content management instead of handling both the back-end and [front-end](#front-end). This type of setup is also referred to as [Decoupled](#decoupled).
 
 ### Hydration
 
@@ -126,7 +126,7 @@ JAMStack refers to a modern web architecture using [JavaScript](#javascript), [A
 
 ### JavaScript
 
-A programming language that helps us make the web dynamic and interactive.
+A programming language that helps us make the web dynamic and interactive. [JavaScript](https://developer.mozilla.org/en-US/docs/Web/Javascript) is a widely deployed web technology in browsers. It is also used on the server-side with [Node.js](#node).
 
 ## K
 
@@ -148,7 +148,7 @@ Extends [Markdown](#markdown) to support [React](#react) [components](#component
 
 This might refer to Node.js - a program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
-In Gatsby it may also refer to a data node. A single piece of data. A [data source](#data-source) will create multiple nodes.
+In Gatsby, it may also refer to a [data node](/docs/node-interface/). A single piece of data. A [data source](#data-source) will create multiple nodes.
 
 ### NPM
 
@@ -162,11 +162,11 @@ In Gatsby it may also refer to a data node. A single piece of data. A [data sour
 
 An [HTML](#html) page.
 
-This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by Gatsby.
+This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by Gatsby.], as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file. 
 
 ### Plugin
 
-Additional code that adds functionality to Gatsby that wasn't included out-of-the-box.
+Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugins) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
 
 ### Public
 
@@ -174,11 +174,11 @@ This usually refers to either a member of the public (as opposed to your team) o
 
 ### Programmatically
 
-Something that automatically happens based on your code and configuration. For example, you might [configure](#config) your project to create a [page](#page) for every blog post written.
+Something that automatically happens based on your code and configuration. For example, you might [configure](#config) your project to create a [page](#page) for every blog post written, or read and display the current year as part of a copyright in your site footer.
 
 ### Production Environment
 
-The [environment](#environment) for the [built](#build) website or app. It's accessed through the [CLI](#cli) using `gatsby build` or `gatsby serve`.
+The [environment](#environment) for the [built](#build) website or app that users will experience when [deployed](#deploy). It can be accessed through the [CLI](#cli) using `gatsby build` or `gatsby serve`.
 
 ## Q
 
@@ -190,7 +190,7 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 ### React
 
-A code library (built with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
+A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
 ## S
 
@@ -206,7 +206,7 @@ A [plugin](#plugin) that adds additional [data sources](#data-source) to Gatsby 
 
 ### Starter
 
-A pre-configured Gatsby project that can be used as a starting point for your project. They can be discovered using the [Gatsby Starter Library](/starters/).
+A pre-configured Gatsby project that can be used as a starting point for your project. They can be discovered using the [Gatsby Starter Library](/starters/) and installed using the [Gatsby CLI](/docs/starters/).
 
 ### Static
 
