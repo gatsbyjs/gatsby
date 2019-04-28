@@ -157,11 +157,13 @@ A program that lets you run [JavaScript](#javascript) on your computer. Gatsby i
 
 ### NPM
 
-[Node](#node) Package Manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
+[Node](#node) [Package](#package) Manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
 
 ## O
 
 ## P
+### Package
+A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [NPM](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
 
 ### Page
 
@@ -245,6 +247,6 @@ A [JavaScript](#javascript) application that Gatsby uses to bundle your website'
 
 ### Yarn
 
-A package manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
+A [package](#package) manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
 ## Z
