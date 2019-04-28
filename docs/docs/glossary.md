@@ -6,6 +6,10 @@ When you're new to Gatsby there can be a lot of words that seem alien. This glos
 
 ## A
 
+### Accessibility
+
+The inclusive practice of removing barriers that prevent interaction with, or access to websites, by people with disabilities. When sites are correctly designed, developed and edited for accessibility, generally all users have equal access to information and functionality. Read about [Gatsby's Commitment to Accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/).
+
 ### API
 
 Application Programming Interface: A method for one application to communicate with another. For example, a [source plugin](#source-plugin) will often use an API to get its data.
