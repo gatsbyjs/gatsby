@@ -98,7 +98,7 @@ This project. A framework based on [React](#react) that helps you build blazing 
 
 ### GraphQL
 
-A [query](#query) language that allows you to pull data into your website or app. It’s the interface that Gatsby uses for managing site data.
+A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql/) for managing site data.
 
 ## H
 
