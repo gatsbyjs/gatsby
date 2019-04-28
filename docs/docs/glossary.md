@@ -74,6 +74,9 @@ The process of [building](#build) your website or app and uploading onto a [host
 
 ## E
 
+### ECMAScript
+ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to compile the latest ECMAScript code into more widely supported JavaScript.
+
 ### Environment
 
 The environment that Gatsby runs in. For example, when you are writing your code you probably want as much debugging as possible, but that's undesirable on the live website or app. As such, Gatsby can change its behavior depending on the environment it's in.
@@ -130,7 +133,7 @@ JAMStack refers to a modern web architecture using [JavaScript](#javascript), [A
 
 ### JavaScript
 
-A programming language that helps us make the web dynamic and interactive. [JavaScript](https://developer.mozilla.org/en-US/docs/Web/Javascript) is a widely deployed web technology in browsers. It is also used on the server-side with [Node.js](#node).
+A programming language that helps us make the web dynamic and interactive. [JavaScript](https://developer.mozilla.org/en-US/docs/Web/Javascript) is a widely deployed web technology in browsers. It is also used on the server-side with [Node.js](#node). It is an implementation of the [ECMAScript](#ECMAScript) specification.
 
 ## K
 
