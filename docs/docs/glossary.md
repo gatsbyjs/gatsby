@@ -145,10 +145,11 @@ Extends [Markdown](#markdown) to support [React](#react) [components](#component
 ## N
 
 ### Node
+Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
-This might refer to Node.js - a program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
-In Gatsby, it may also refer to a [data node](/docs/node-interface/). A single piece of data. A [data source](#data-source) will create multiple nodes.
+### Node.js
+A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
 ### NPM
 
