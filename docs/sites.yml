@@ -5589,3 +5589,52 @@
     - Marketing
     - Blog
   featured: false
+- title: NH Hydraulikzylinder
+  main_url: https://nh-hydraulikzylinder.com
+  url: https://nh-hydraulikzylinder.com
+  description: >
+    High quality & high performance hydraulic cylinders manufactured in Austria based on the clients requirements
+  categories:
+    - Business
+    - Responsive Design
+  built_by: MangoART
+  builb_by_url: https://www.mangoart.at
+  featured: false
+
+- title: Frauennetzwerk Linz-Land
+  main_url: https://frauennetzwerk-linzland.net
+  url: https://nh-hydraulikzylinder.com
+  description: >
+    Homepage for the local women's association providing support to people in need offline and online (Livechat integration)
+  categories:
+    - Nonprofit
+    - Accessibility
+    - Responsive Design
+  built_by: MangoART
+  builb_by_url: https://www.mangoart.at
+  featured: false
+
+- title: Mein Traktor
+  main_url: http://www.mein-traktor.at/
+  url: http://www.mein-traktor.at/
+  description: >
+    Homepage of a the main importer of SAME and Lamborghini Tractors in Austria with customer support area
+  categories:
+    - Agriculture
+    - Business
+    - App
+  built_by: MangoART
+  builb_by_url: https://www.mangoart.at
+  featured: false
+
+- title: Lamborghini Traktoren
+  main_url: https://lamborghini-traktor.at
+  url: https://lamborghini-traktor.at
+  description: >
+    Lamborghini Tractors - Landing page for the brand in Austria
+  categories:
+    - Agriculture
+    - Business
+  built_by: MangoART
+  builb_by_url: https://www.mangoart.at
+  featured: false
