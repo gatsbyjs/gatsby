@@ -68,6 +68,10 @@ A source of data that usually gets fed into Gatsby using [source plugins](#sourc
 
 A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database using [back-end technologies](#back-end). They're often accessed in Gatsby via a [source plugin](#source-plugin)
 
+### Decoupled
+
+Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [Front-End](#front-end) from the [Back-End](#back-end)
+
 ### Deploy
 
 The process of [building](#build) your website or app and uploading onto a [hosting provider](#hosting).
