@@ -26,7 +26,7 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 ### Back-End
 
-The behind the scenes that the [public](#public) do not see. This often refers to the control panel of your [CMS](#cms).
+The behind the scenes that the [public](#public) do not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as PHP or ASP.net.
 
 ## C
 
