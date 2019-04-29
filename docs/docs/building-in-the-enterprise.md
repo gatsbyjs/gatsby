@@ -22,7 +22,7 @@ One of the key challenges that enterprises face is keeping their tech stack up t
 
 A related challenge is how to continue to attract and retain top engineering talent.
 
-Surveys at enterprises adopting Gatsby has found that developers there highlight benefits such as:
+Surveys at enterprises adopting Gatsby have found that developers there highlight benefits such as:
 
 **1. The ability to build with modern tools such as React, Webpack, and GraphQL.** Adopting more common frameworks, rather than custom in-house tooling, tends to increases developer satisfaction, developer productivity, and the ability to recruit developers. 
 
