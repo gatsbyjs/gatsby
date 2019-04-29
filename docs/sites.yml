@@ -5067,6 +5067,19 @@
   built_by: Ariadne Digital
   built_by_url: https://www.ariadnedigital.it
   featured: false
+- title: Textually Stylo
+  main_url: https://www.textually.net
+  url: https://www.textually.net
+  description: >
+    Stylo Markdown writing App marketing/documentation website by Textually Inc.
+  categories:
+    - Marketing
+    - Technology
+    - Blog
+    - Documentation
+  built_by: Sébastien Hamel
+  built_by_url: https://www.textually.net
+  featured: false
 - title: OneDeck
   main_url: https://www.onedeck.co
   url: https://www.onedeck.co
@@ -5538,4 +5551,41 @@
     - Web Development
   built_by: Ben Robertson
   built_by_url: https://benrobertson.io
+  featured: false
+- title: Penrose Grand Del Mar
+  main_url: https://penroseatthegrand.com
+  url: https://penroseatthegrand.com
+  description: >
+    Penrose Grand Del Mar is a luxury housing project coming soon.
+  categories:
+    - Real Estate
+    - Contentful
+    - Netlify
+    - Design
+    - Animation
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+- title: JustGraphQL
+  url: https://www.justgraphql.com/
+  main_url: https://www.justgraphql.com/
+  source_url: https://github.com/Novvum/justgraphql
+  description: >
+    JustGraphQL helps developers quickly search and filter through GraphQL resources, tools, and articles.
+  categories:
+    - Open Source
+    - Web Development
+    - Technology
+  built_by: Novvum
+  built_by_url: https://www.novvum.io/
+  featured: false
+- title: Peter Macinkovic Personal Blog
+  url: https://peter.macinkovic.id.au/
+  main_url: https://peter.macinkovic.id.au/
+  source_url: https://github.com/inkovic/peter-macinkovic-static-site
+  description: >
+    Personal Website and Blog of eCommerce SEO Specilaist and Digital Marketer Peter Macinkovic.
+  categories:
+    - SEO
+    - Marketing
+    - Blog
   featured: false

@@ -109,7 +109,7 @@ class Plugins extends Component {
               blazing fast site even more awesome. If you
               {`'`}d like to create your own plugin, see the
               {` `}
-              <Link to="/docs/how-plugins-work/">Plugin Authoring</Link> page in
+              <Link to="/docs/creating-plugins/">Plugin Authoring</Link> page in
               the docs! To learn more about Gatsby plugins, visit the
               {` `}
               <Link to="/docs/plugins">plugins doc page</Link>.

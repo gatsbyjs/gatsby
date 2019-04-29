@@ -442,7 +442,7 @@
         - title: Making an e-commerce Gatsby Site
           link: /docs/ecommerce-tutorial/
         - title: Creating a Source Plugin
-          link: /docs/source-plugin-tutorial/
+          link: /docs/pixabay-source-plugin-tutorial/
         - title: Using the WordPress Source Plugin
           link: /docs/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site

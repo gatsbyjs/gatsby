@@ -16,7 +16,7 @@ The full code and documentation for this library is [available on GitHub](https:
 
 You'll start by creating a new Gatsby site based on the official _hello world_ starter. Open up a terminal and run the following command:
 
-```bash
+```shell
 gatsby new js-search-example https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
@@ -24,13 +24,13 @@ After the process is complete, some additional packages are needed.
 
 Change directories to the `js-search-example` folder and issue the following command:
 
-```bash
+```shell
 npm install --save js-search axios
 ```
 
 Or if Yarn is being used:
 
-```bash
+```shell
 yarn add js-search axios
 ```
 

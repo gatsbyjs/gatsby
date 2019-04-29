@@ -12,7 +12,7 @@ In this tutorial you'll create your own source plugin. Your plugin will source d
 
 Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/source-plugin-tutorial/)
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin/)
 
 ## Why create a source plugin?
 
@@ -383,7 +383,7 @@ Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugi
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 
-Check out Gatsby's docs on [plugin authoring](/docs/how-plugins-work/) and [creating a source plugin](/docs/source-plugin-tutorial/).
+Check out Gatsby's docs on [plugin authoring](/docs/creating-plugins/) and [creating a source plugin](/docs/creating-a-source-plugin/).
 
 ### A note on JavaScript versions
 
