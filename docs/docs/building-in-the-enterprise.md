@@ -62,7 +62,7 @@ One key strategy can be to align yourself to organization-wide “digital transf
 
 Often, there are key individuals at agencies that are excited for personal and professional reasons to spearhead these kinds of projects. Identifying these individuals and working closely with them can unlock key doors and generate momentum to move your Gatsby project forward. 
 
-One key to moving a Gatsby project is having a pre-existing relationship of trust between the enterprise and its agency partners. When this isn’t true — perhaps because of past behavior on the part of one or both parties, any sort of change becomes difficult. 
+One key to successfully completing a Gatsby project is having a pre-existing relationship of trust between the enterprise and its agency partners. When this isn’t true — perhaps because of past behavior on the part of one or both parties — any sort of change becomes difficult. 
 
 ### Conclusion
 
