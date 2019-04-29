@@ -5613,3 +5613,15 @@
     - Open Source
     - Portfolio
   featured: false
+- title: Gareth Weaver
+  url: https://www.garethweaver.com/
+  main_url: https://www.garethweaver.com/
+  source_url: https://github.com/garethweaver/public-site-react
+  description: >
+    A personal portofolio of a London based frontend developer built with Gatsby 2, Redux and Sass
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Gareth Weaver
+  built_by_url: https://twitter.com/garethdweaver
+  featured: false
