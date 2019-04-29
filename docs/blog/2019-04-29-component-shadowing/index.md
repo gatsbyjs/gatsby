@@ -19,7 +19,7 @@ to make one-off changes to a theme.
 For example, imagine you want to customize the author bio to add more social handles but
 the theme only offers support for Twitter and LinkedIn. The workflow for adding this new
 functionality will typically require using a fork on the theme which results in a difficult
-upgrade path.
+upgrade path and a maintenance burden.
 
 With Gatsby Themes you can use Component Shadowing to customize nearly every aspect of a
 theme quickly and intuitively by _overridding_ a theme's source files.
