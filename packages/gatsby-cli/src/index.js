@@ -4,8 +4,14 @@
 // use require() with backtick strings so use the es6 syntax
 import "@babel/polyfill"
 
+const updateNotifier = require(`@gatsbyjs/update-notifier`)
+
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
+const pkg = require(`../package.json`)
+
+// Check if update is available
+updateNotifier({ pkg }).notify()
 
 const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])

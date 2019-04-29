@@ -12,12 +12,6 @@ const {
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
 
-const updateNotifier = require(`@gatsbyjs/update-notifier`)
-const pkg = require(`../package.json`)
-
-// Check if update is available
-updateNotifier({ pkg }).notify()
-
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
