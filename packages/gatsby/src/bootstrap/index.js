@@ -32,7 +32,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 
 const { extractQueries } = require(`../query/query-watcher`)
 const queryUtil = require(`../query`)
-const { writePages } = require(`../query/pages-writer`)
+const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
@@ -480,7 +480,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   try {
-    await writePages()
+    await requiresWriter.writeAll(store.getState())
   } catch (err) {
     report.panic(`Failed to write out page data`, err)
   }
