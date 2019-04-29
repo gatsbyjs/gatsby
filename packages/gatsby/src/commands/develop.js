@@ -40,6 +40,7 @@ const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
 const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
+const requiresWriter = require(`../bootstrap/requires-writer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -95,6 +96,7 @@ async function startServer(program) {
 
   db.startAutosave()
   queryUtil.startListening(queryQueue.createDevelopQueue())
+  requiresWriter.startListener()
   queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
