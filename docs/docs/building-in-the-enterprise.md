@@ -36,7 +36,7 @@ Depending on your type of your organization, not all of these challenges may app
 
 **Challenge 1: Requirements to integrate with in-house tooling.** Some enterprises require integration with concerns such as those listed above. 
 
-A somewhat complete list of potential areas that may have in-house, standard solutions: auth, SSO, error logging, deployments, staging, hosting, security, CDN, middleware (data fetching), analytics, and internationalization/localization.
+A somewhat complete list of potential areas that may have in-house, standard solutions: authentication, SSO, error logging, deployments, staging, hosting, security, CDN, middleware (data fetching), analytics, and internationalization/localization.
     
 These requirements tend to be in place to enable enable marketing, security, analytics, and operations teams to function effectively. 
 
