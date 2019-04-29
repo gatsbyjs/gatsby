@@ -12,7 +12,8 @@ title: "Gatsby E-Commerce Tutorial"
 - [Installing the StripeJS plugin](#installing-the-stripejs-plugin)
   - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
   - [How does the StripeJS plugin work?](#how-does-the-stripejs-plugin-work)
-  - [Getting your Stripe test keys](#getting-your-stripe-test-keys)
+  - [Getting your Stripe 
+  keys](#getting-your-stripe-test-keys)
 - [Examples](#examples)
   - [Easy: One Button](#easy-one-button)
   - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
@@ -101,7 +102,7 @@ You have 2 keys in both test mode and production mode:
 - a publishable key
 - a secret key
 
-While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
+While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in the code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
 # Examples
 
@@ -109,7 +110,7 @@ You can find an implementation of these examples [on GitHub](https://github.com/
 
 ## Easy: One Button
 
-If you're selling a simple product, like an eBook for example, you can create a single button that will perform a redirect to the Stripe Checkout page:
+If you're selling a simple product, like an eBook, for example, you can create a single button that will perform a redirect to the Stripe Checkout page:
 
 ### Create a product and SKU
 
@@ -220,7 +221,7 @@ The `render()` function applies our styles to the button and binds the `redirect
 
 ### Importing the checkout component into the homepage
 
-Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
+Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look similar to this:
 
 ```js:title=src/pages/index.js
 import React from "react"
@@ -285,7 +286,7 @@ module.exports = {
 }
 ```
 
-To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to kept secret and must never be shared on the frontend or on GitHub. Therefore we need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to kept secret and must never be shared on the frontend or on GitHub. Therefore, we need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
 
 In the root directory of your project add a `.env.development` file:
 
@@ -514,7 +515,7 @@ export default Skus
 
 ### Adding a cart component
 
-You can call `redirectToCheckout()` providing an array of SKUs and their quantities to charge for multiple items at the same time. Instead of each "BUY ME" button redirecting to the checkout page, you can therefore provide a central "GO TO CHECKOUT" button that uses the state of a cart component. You can see the necessary changes for this example [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial/tree/cart-example).
+You can call `redirectToCheckout()` providing an array of SKUs and their quantities to charge for multiple items at the same time. Instead of each "BUY ME" button redirecting to the checkout page, you can, therefore, provide a central "GO TO CHECKOUT" button that uses the state of a cart component. You can see the necessary changes for this example [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial/tree/cart-example).
 
 ## Custom: Fully custom checkout flow (requires backend component)
 
