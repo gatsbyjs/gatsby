@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.3.22",
+  "version": "2.3.33",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -65,14 +65,15 @@
     "flat": "^4.0.0",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
-    "gatsby-cli": "^2.5.7",
+    "gatsby-cli": "^2.5.12",
     "gatsby-link": "^2.0.16",
     "gatsby-plugin-page-creator": "^2.0.12",
     "gatsby-react-router-scroll": "^2.0.7",
-    "gatsby-telemetry": "^1.0.7",
+    "gatsby-telemetry": "^1.0.9",
     "glob": "^7.1.1",
+    "got": "8.0.0",
     "graphql": "^14.1.1",
-    "graphql-compose": "^6.0.3",
+    "graphql-compose": "6.0.3",
     "graphql-playground-middleware-express": "^1.7.10",
     "hash-mod": "^0.0.5",
     "invariant": "^2.2.4",
@@ -109,7 +110,6 @@
     "react-hot-loader": "^4.6.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "request": "^2.85.0",
     "semver": "^5.6.0",
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
@@ -149,7 +149,8 @@
     "cache-dir",
     "dist",
     "graphql.js",
-    "index.d.ts"
+    "index.d.ts",
+    "utils.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
@@ -180,7 +181,7 @@
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore **/__tests__",
-    "build:src": "babel src --out-dir dist --source-maps --ignore **/gatsby-cli.js,**/raw_*,**/__tests__",
+    "build:src": "babel src --out-dir dist --source-maps --verbose --ignore **/gatsby-cli.js,src/internal-plugins/dev-404-page/raw_dev-404-page.js,**/__tests__",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "prepare": "cross-env NODE_ENV=production npm run build",

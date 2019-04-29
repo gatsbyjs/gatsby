@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const crypto = require(`crypto`)
+const { createContentDigest } = require(`./fallback`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
@@ -52,24 +52,6 @@ const bar = new ProgressBar(
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
  */
-
-/*********
- * utils *
- *********/
-
-/**
- * createHash
- * --
- *
- * Create an md5 hash of the given str
- * @param  {Stringq} str
- * @return {String}
- */
-const createHash = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
@@ -215,7 +197,7 @@ async function processRemoteNode({
   }
 
   // Create the temp and permanent file names for the url.
-  const digest = createHash(url)
+  const digest = createContentDigest(url)
   if (!name) {
     name = getRemoteFileName(url)
   }

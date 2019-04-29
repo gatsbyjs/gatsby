@@ -7,19 +7,38 @@ Before you start building your first Gatsby site, you’ll need to familiarize y
 
 ## Familiarize yourself with the command line
 
-The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
+The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial, we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
-Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) or [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows).
+Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
-## Install Node.js
+## Install Homebrew for Node.js
+
+To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+
+How to install or verify Homebrew on your computer:
+
+1. Open your Terminal.
+1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
+1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
+1. Once you've installed Homebrew, repeat step 2 to verify.
+
+### Mac Users: install XCode Command Line Tools
+
+1. Open your Terminal.
+1. On a Mac, install XCode Command line tools by running `xcode-select --install`.
+1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+
+## ⌚ Install Node.js and npm
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
-### ⌚ Download Node.js
+1. Open your Terminal.
+1. Run `brew update` to make sure you have the latest version of Homebrew.
+1. Run this command to install Node and npm in one go: `brew install node`
 
-Visit the [**Node.js site**](https://nodejs.org/) and follow the instructions to download and install the recommended version for your operating system. Once you have followed the installation steps, make sure everything was installed properly:
+Once you have followed the installation steps, make sure everything was installed properly:
 
 ### Check your Node.js installation
 
@@ -47,7 +66,9 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
-To see the commands available to run `gatsby --help`.
+To see the commands available, run `gatsby --help`.
+
+![Check gatsby commands in terminal](05-gatsby-help.png)
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -144,7 +165,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 - **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
 - **JavaScript**: A programming language that helps us make the web dynamic and interactive.
 - **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
-- **GraphQL**: A query language. A programming language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
+- **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
 
 ## What is a website?
 

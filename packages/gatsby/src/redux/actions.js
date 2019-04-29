@@ -352,6 +352,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
+  const alternateSlashPath = page.path.endsWith(`/`)
+    ? page.path.slice(0, -1)
+    : page.path + `/`
+
+  if (store.getState().pages.has(alternateSlashPath)) {
+    report.warn(
+      `Attempting to create page "${
+        page.path
+      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+    )
+  }
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
@@ -392,6 +404,26 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id)
+  if (plugin) {
+    const pluginName = plugin.name
+
+    if (node && typeOwners[node.internal.type] !== pluginName)
+      throw new Error(stripIndent`
+          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
+
+          The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
+
+          The node object passed to "deleteNode":
+
+          ${JSON.stringify(node, null, 4)}
+
+          The plugin deleting the node:
+
+          ${JSON.stringify(plugin, null, 4)}
+        `)
+  }
 
   const createDeleteAction = node => {
     return {
@@ -471,7 +503,7 @@ const typeOwners = {}
  * markdown transformers look for media types of
  * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
- * choosen by the plugin creating the node. Should be descriptive of the
+ * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.

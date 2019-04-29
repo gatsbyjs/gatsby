@@ -8,8 +8,6 @@ import {
   RouteUpdates,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
-import syncRequires from "./sync-requires"
-import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
@@ -52,46 +50,34 @@ class RouteHandler extends React.Component {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <JSONStore
-                  pages={pages}
-                  {...this.props}
-                  {...locationAndPageResources}
-                />
+                <JSONStore {...this.props} {...locationAndPageResources} />
               </ScrollContext>
             </RouteUpdates>
           )}
         </EnsureResources>
       )
     } else {
-      const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
-      const Dev404Page = syncRequires.components[dev404Page.componentChunkName]
-
-      if (!loader.getPage(`/404.html`)) {
-        return (
-          <RouteUpdates location={location}>
-            <Dev404Page pages={pages} {...this.props} />
-          </RouteUpdates>
+      const dev404PageResources = loader.getResourcesForPathnameSync(
+        `/dev-404-page/`
+      )
+      const real404PageResources = loader.getResourcesForPathnameSync(
+        `/404.html`
+      )
+      let custom404
+      if (real404PageResources) {
+        custom404 = (
+          <JSONStore {...this.props} pageResources={real404PageResources} />
         )
       }
 
       return (
-        <EnsureResources location={location}>
-          {locationAndPageResources => (
-            <RouteUpdates location={location}>
-              <Dev404Page
-                pages={pages}
-                custom404={
-                  <JSONStore
-                    pages={pages}
-                    {...this.props}
-                    {...locationAndPageResources}
-                  />
-                }
-                {...this.props}
-              />
-            </RouteUpdates>
-          )}
-        </EnsureResources>
+        <RouteUpdates location={location}>
+          <JSONStore
+            location={location}
+            pageResources={dev404PageResources}
+            custom404={custom404}
+          />
+        </RouteUpdates>
       )
     }
   }

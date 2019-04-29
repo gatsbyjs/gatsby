@@ -246,7 +246,7 @@ exports.setFieldsOnGraphQLNodeType = true
  *     },
  *     Query: {
  *       allRecentPosts: {
- *         type: [`BlogPost`]
+ *         type: [`BlogPost`],
  *         resolve: (source, args, context, info) => {
  *           const posts = context.nodeModel.getAllNodes({ type: `BlogPost` })
  *           const recentPosts = posts.filter(
