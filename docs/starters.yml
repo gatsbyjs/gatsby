@@ -2389,7 +2389,7 @@
   tags:
     - Blog
     - Typescript
-    - Styled Components
+    - Styling:CSS-in-JS
   features:
     - Includes all features that come with gatsby's official starter blog
     - Typescript for type-safety out of the box
