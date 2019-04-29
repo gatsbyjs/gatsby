@@ -55,6 +55,18 @@ const getPageDataFile = pagePath => {
   return join(process.cwd(), `public`, pageDataPath)
 }
 
+const loadPageDataSync = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  const pageDataFile = join(process.cwd(), `public`, pageDataPath)
+  try {
+    const pageDataJson = fs.readFileSync(pageDataFile)
+    return JSON.parse(pageDataJson)
+  } catch (error) {
+    // not an error if file is not found. There's just no page data
+    return null
+  }
+}
+
 const createElement = React.createElement
 
 const sanitizeComponents = components => {
@@ -261,6 +273,7 @@ export default (pagePath, callback) => {
     setPostBodyComponents,
     setBodyProps,
     pathname: pagePath,
+    loadPageDataSync,
     bodyHtml,
     scripts,
     styles,
