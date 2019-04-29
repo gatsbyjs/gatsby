@@ -464,7 +464,10 @@ class PluginSearchBar extends Component {
   urlToSearch = () => {
     if (this.props.location.search) {
       // ignore this automatically added query parameter
-      return this.props.location.search.replace(`no-cache=1`, ``).slice(2)
+      const search = this.props.location.search
+        .replace(`no-cache=1`, ``)
+        .slice(2)
+      return decodeURIComponent(search)
     }
     return ``
   }
