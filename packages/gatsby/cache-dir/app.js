@@ -32,11 +32,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
    */
   if (`serviceWorker` in navigator) {
     navigator.serviceWorker.getRegistrations().then(registrations => {
-      console.warn(
-        `Warning: found one or more service workers present.`,
-        `If your site isn't behaving as expected, you might want to remove these.`,
-        registrations
-      )
+      if (registrations.length > 0)
+        console.warn(
+          `Warning: found one or more service workers present.`,
+          `If your site isn't behaving as expected, you might want to remove these.`,
+          registrations
+        )
     })
   }
 
