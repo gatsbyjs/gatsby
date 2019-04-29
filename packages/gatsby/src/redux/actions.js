@@ -1274,7 +1274,7 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     Author information
  *     """
  *     # Does not include automatically inferred fields
- *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *     type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
  *       name: String!
  *       birthday: Date! # no default resolvers for Date formatting added
  *     }
