@@ -48,11 +48,9 @@ exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
   activity.start()
 
   if (Array.isArray(localize)) {
-    const manifests = manifest.start_url ? localize.concat(manifest) : localize
+    const locales = manifest.start_url ? localize.concat(manifest) : localize
     await Promise.all(
-      manifests.map(_manifest =>
-        makeManifest(reporter, { ...manifest, ..._manifest })
-      )
+      locales.map(locale => makeManifest(reporter, { ...manifest, ...locale }))
     )
   } else {
     await makeManifest(reporter, manifest)

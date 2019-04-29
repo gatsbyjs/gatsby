@@ -15,11 +15,11 @@ exports.onRenderBody = (
   { localize, ...pluginOptions }
 ) => {
   if (Array.isArray(localize)) {
-    const manifests = pluginOptions.start_url
+    const locales = pluginOptions.start_url
       ? localize.concat(pluginOptions)
       : localize
-    const manifest = manifests.find(manifest =>
-      RegExp(`^${manifest.start_url}.*`, `i`).test(pathname)
+    const manifest = locales.find(locale =>
+      RegExp(`^${locale.start_url}.*`, `i`).test(pathname)
     )
     pluginOptions = {
       ...pluginOptions,
