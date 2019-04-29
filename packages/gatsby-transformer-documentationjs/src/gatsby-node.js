@@ -66,7 +66,7 @@ exports.sourceNodes = ({ actions }) => {
       type: DoctrineType
       default: JSON
       augments: [DocumentationJs]
-      examples: [JSON]
+      examples: [DocumentationJsExample]
       implements: [DocumentationJs]
       params: [DocumentationJs]
       properties: [DocumentationJs]
@@ -75,6 +75,11 @@ exports.sourceNodes = ({ actions }) => {
       todos: [DocumentationJs]
       yields: [DocumentationJs]
       members: DocumentationJsMembers
+    }
+
+    type DocumentationJsExample {
+      caption: String
+      description: String
     }
 
     type DocumentationJsMembers {
