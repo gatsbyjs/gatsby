@@ -2383,7 +2383,7 @@
     - Uses MDX with Gatsby theme for quick and easy set up
     - Material-ui design with optional config passed into the theme options
     - Gradient background with sitemap, rss feed, and offline capabilities
-- url: https://github.com/gperl27/Gatsby-Starter-Blog-Typescript
+- url: https://gatsby-starter-blog-typescript.netlify.com/
   repo: https://github.com/gperl27/Gatsby-Starter-Blog-Typescript
   description: Gatsby starter blog with typescript
   tags:
