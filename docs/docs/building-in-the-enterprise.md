@@ -60,7 +60,7 @@ One key strategy can be to align yourself to organization-wide “digital transf
 
 **Solution 3: Work closely with agency partners to ensure adopting Gatsby helps them, too.** It’s often a benefit to agencies to be familiar with cutting-edge technologies such as Gatsby (and the whole Gatsby stack: React, GraphQL, webpack, etc). It allows them to share their expertise with other client organizations. In addition, it helps them distinguish themselves from their competitors (other agencies). 
 
-Often, there are key individuals at agencies that are excited for personal and professional reasons to spearhead these kinds of projects. Identifying these individuals are working closely with them can unlock key doors and generate momentum to move your Gatsby project forward. 
+Often, there are key individuals at agencies that are excited for personal and professional reasons to spearhead these kinds of projects. Identifying these individuals and working closely with them can unlock key doors and generate momentum to move your Gatsby project forward. 
 
 One key to moving a Gatsby project is having a pre-existing relationship of trust between the enterprise and its agency partners. When this isn’t true — perhaps because of past behavior on the part of one or both parties, any sort of change becomes difficult. 
 
