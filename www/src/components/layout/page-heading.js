@@ -5,7 +5,7 @@ import styled from "@emotion/styled"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   sizes,
   lineHeights,
   fontSizes,
@@ -14,7 +14,7 @@ import {
 const PageHeadingContainer = styled(`header`)`
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     left: 0;
     position: fixed;
     padding: 0;
@@ -32,7 +32,7 @@ const H1 = styled(`h1`)`
   position: relative;
   width: 100%;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     transform: rotate(-90deg) translate(calc(-100% - ${space[7]}), ${space[4]});
     transform-origin: top left;
   }
@@ -47,7 +47,7 @@ const H1 = styled(`h1`)`
     z-index: -1;
     color: ${colors.ui.whisper};
 
-    ${breakpoints.md} {
+    ${mediaQueries.md} {
       display: block;
     }
   }

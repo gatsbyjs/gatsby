@@ -18,7 +18,7 @@ Gatsbyjs.com is the business website for Gatsby, Inc. the startup building Gatsb
 
 We strive to make these websites and the Gatsby framework itself as accessible as possible. Our goal is to meet [WCAG 2.0 AA](https://www.w3.org/TR/WCAG20/), with which we are partially compliant. We’ll be the first to admit the Gatsby ecosystem is a work in progress, and we are open to all feedback to make things better.
 
-To contact the core team with your accessibility feedback or challenges, please [file an issue on Github](https://github.com/gatsbyjs/gatsby/issues/new/choose).
+To contact the core team with your accessibility feedback or challenges, please [file an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues/new/choose).
 
 Alternatively, we welcome you to reach out directly to Marcy Sutton, Head of Learning at Gatsby: [marcy@gatsbyjs.com](mailto:marcy@gatsbyjs.com)
 
