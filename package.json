@@ -84,7 +84,7 @@
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
     "plop": "plop",
     "prebootstrap": "yarn",
-    "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
+    "prettier": "prettier \"**/*.{md,css,scss,yaml,yml,ts}\"",
     "publish": "node scripts/check-publish-access && lerna publish",
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next --bump=prerelease",

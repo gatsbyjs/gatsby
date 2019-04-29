@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { EventEmitter } from "events"
 import { Application } from "express"
@@ -13,7 +12,6 @@ export {
   replace,
   withPrefix,
 } from "gatsby-link"
-
 
 export interface StaticQueryProps {
   query: any
@@ -75,27 +73,30 @@ export const graphql: (query: TemplateStringsArray) => void
  */
 export interface GatsbyConfig {
   /** When you want to reuse common pieces of data across the site (for example, your site title), you can store that here. */
-  siteMetadata?: Record<string, unknown>;
+  siteMetadata?: Record<string, unknown>
   /** Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options. */
-  plugins?: Array<string | {
-    resolve: string;
-    options: Record<string, unknown>;
-  }>;
+  plugins?: Array<
+    | string
+    | {
+        resolve: string
+        options: Record<string, unknown>
+      }
+  >
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
-  pathPrefix?: string;
+  pathPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
-  polyfill?: boolean;
-  mapping?: Record<string, string>;
+  polyfill?: boolean
+  mapping?: Record<string, string>
   /**
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.org/docs/api-proxy/
    * */
   proxy?: {
-    prefix: string;
-    url: string;
-  };
+    prefix: string
+    url: string
+  }
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
-  developMiddleware?(app: Application): void;
+  developMiddleware?(app: Application): void
 }
 
 /**
@@ -111,7 +112,11 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
-  createPages?(args: CreatePagesArgs & { traceId: "initial-createPages" }, options?: PluginOptions, callback?: PluginCallback): void;
+  createPages?(
+    args: CreatePagesArgs & { traceId: "initial-createPages" },
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Like `createPages` but for plugins who want to manage creating and removing
@@ -127,15 +132,22 @@ export interface GatsbyNode {
    * Gatsby, it needs to keep its own state about its world to know when to
    * add and remove pages.
    */
-  createPagesStatefully?(args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" }, options?: PluginOptions, callback?: PluginCallback): void;
+  createPagesStatefully?(
+    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Let plugins extend/mutate the site's Babel configuration.
    * This API will change before 2.0 as it needs still to be converted to use
    * Redux actions.
    */
-  onCreateBabelConfig?(args: CreateBabelConfigArgs, options?: PluginOptions, callback?: PluginCallback): void;
-
+  onCreateBabelConfig?(
+    args: CreateBabelConfigArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Run when gatsby develop server is started, its useful to add proxy and middleware
@@ -151,22 +163,30 @@ export interface GatsbyNode {
    *   })
    * }
    */
-  onCreateDevServer?(args: CreateDevServerArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onCreateDevServer?(
+    args: CreateDevServerArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
-  * Called when a new node is created. Plugins wishing to extend or
-  * transform nodes created by other plugins should implement this API.
-  *
-  * See also the documentation for `createNode`
-  * and [`createNodeField`](https://www.gatsbyjs.org/docs/actions/#createNodeField)
-  * @example
-  * exports.onCreateNode = ({ node, actions }) => {
-  *   const { createNode, createNodeField } = actions
-  *   // Transform the new node here and create a new node or
-  *   // create a new node field.
-  * }
-  */
-  onCreateNode?(args: CreateNodeArgs, options?: PluginOptions, callback?: PluginCallback): void;
+   * Called when a new node is created. Plugins wishing to extend or
+   * transform nodes created by other plugins should implement this API.
+   *
+   * See also the documentation for `createNode`
+   * and [`createNodeField`](https://www.gatsbyjs.org/docs/actions/#createNodeField)
+   * @example
+   * exports.onCreateNode = ({ node, actions }) => {
+   *   const { createNode, createNodeField } = actions
+   *   // Transform the new node here and create a new node or
+   *   // create a new node field.
+   * }
+   */
+  onCreateNode?(
+    args: CreateNodeArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Called when a new page is created. This extension API is useful
@@ -176,42 +196,82 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?(args: CreatePageArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onCreatePage?(
+    args: CreatePageArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Let plugins extend/mutate the site's webpack configuration.
    * @see https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
    */
-  onCreateWebpackConfig?(args: CreateWebpackConfigArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onCreateWebpackConfig?(
+    args: CreateWebpackConfigArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
-  onPostBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPostBootstrap?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /** The last extension point called after all other parts of the build process are complete. */
-  onPostBuild?(args: BuildArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPostBuild?(
+    args: BuildArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
-  onPreBootstrap?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPreBootstrap?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
-  onPreBuild?(args: BuildArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPreBuild?(
+    args: BuildArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
-  onPreExtractQueries?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPreExtractQueries?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. */
-  onPreInit?(args: ParentSpanPluginArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  onPreInit?(
+    args: ParentSpanPluginArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Ask compile-to-js plugins to process source to JavaScript so the query
    * runner can extract out GraphQL queries for running.
    */
-  preprocessSource?(args: PreprocessSourceArgs, options?: PluginOptions, callback?: PluginCallback): void;
+  preprocessSource?(
+    args: PreprocessSourceArgs,
+    options?: PluginOptions,
+    callback?: PluginCallback
+  ): void
 
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
    */
-  resolvableExtensions?(args: ResolvableExtensionsArgs, options: PluginOptions, callback: PluginCallback): any[] | Promise<any[]>;
+  resolvableExtensions?(
+    args: ResolvableExtensionsArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): any[] | Promise<any[]>
 
   /**
    * Called during the creation of the GraphQL schema. Allows plugins
@@ -232,9 +292,19 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType
    */
-  setFieldsOnGraphQLNodeType?(args: SetFieldsOnGraphQLNodeTypeArgs, options: PluginOptions): any;
-  setFieldsOnGraphQLNodeType?(args: SetFieldsOnGraphQLNodeTypeArgs, options: PluginOptions): Promise<any>;
-  setFieldsOnGraphQLNodeType?(args: SetFieldsOnGraphQLNodeTypeArgs, options: PluginOptions, callback: PluginCallback): void;
+  setFieldsOnGraphQLNodeType?(
+    args: SetFieldsOnGraphQLNodeTypeArgs,
+    options: PluginOptions
+  ): any
+  setFieldsOnGraphQLNodeType?(
+    args: SetFieldsOnGraphQLNodeTypeArgs,
+    options: PluginOptions
+  ): Promise<any>
+  setFieldsOnGraphQLNodeType?(
+    args: SetFieldsOnGraphQLNodeTypeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 
   /**
    * Extension point to tell plugins to source nodes. This API is called during
@@ -246,9 +316,13 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#sourceNodes
    */
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): any;
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): Promise<any>;
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions, callback: PluginCallback): void;
+  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): any
+  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): Promise<any>
+  sourceNodes?(
+    args: SourceNodesArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 
   /**
    * Add custom field resolvers to the GraphQL schema.
@@ -287,9 +361,16 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#createResolvers
    */
-  createResolvers?(args: CreateResolversArgs, options: PluginOptions): any;
-  createResolvers?(args: CreateResolversArgs, options: PluginOptions): Promise<any>;
-  createResolvers?(args: CreateResolversArgs, options: PluginOptions, callback: PluginCallback): void;
+  createResolvers?(args: CreateResolversArgs, options: PluginOptions): any
+  createResolvers?(
+    args: CreateResolversArgs,
+    options: PluginOptions
+  ): Promise<any>
+  createResolvers?(
+    args: CreateResolversArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 }
 
 /**
@@ -298,24 +379,48 @@ export interface GatsbyNode {
  * @see https://www.gatsbyjs.org/docs/browser-apis/
  */
 export interface GatsbyBrowser {
-  disableCorePrefetching?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): any;
-  onPostPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): any;
-  onPreRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any;
-  onPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): any;
-  onRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any;
-  onRouteUpdateDelayed?(args: RouteUpdateDelayedArgs, options: PluginOptions): any;
-  onServiceWorkerActive?(args: ServiceWorkerArgs, options: PluginOptions): any;
-  onServiceWorkerInstalled?(args: ServiceWorkerArgs, options: PluginOptions): any;
-  onServiceWorkerRedundant?(args: ServiceWorkerArgs, options: PluginOptions): any;
-  onServiceWorkerUpdateFound?(args: ServiceWorkerArgs, options: PluginOptions): any;
-  registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any;
-  replaceComponentRenderer?(args: ReplaceComponentRendererArgs, options: PluginOptions): any;
-  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any;
-  shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any;
-  wrapPageElement?(args: WrapPageElementBrowserArgs, options: PluginOptions): any;
-  wrapRootElement?(args: WrapRootElementBrowserArgs, options: PluginOptions): any;
+  disableCorePrefetching?(args: BrowserPluginArgs, options: PluginOptions): any
+  onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): any
+  onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): any
+  onPostPrefetchPathname?(
+    args: PrefetchPathnameArgs,
+    options: PluginOptions
+  ): any
+  onPreRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any
+  onPrefetchPathname?(args: PrefetchPathnameArgs, options: PluginOptions): any
+  onRouteUpdate?(args: RouteUpdateArgs, options: PluginOptions): any
+  onRouteUpdateDelayed?(
+    args: RouteUpdateDelayedArgs,
+    options: PluginOptions
+  ): any
+  onServiceWorkerActive?(args: ServiceWorkerArgs, options: PluginOptions): any
+  onServiceWorkerInstalled?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
+  onServiceWorkerRedundant?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
+  onServiceWorkerUpdateFound?(
+    args: ServiceWorkerArgs,
+    options: PluginOptions
+  ): any
+  registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
+  replaceComponentRenderer?(
+    args: ReplaceComponentRendererArgs,
+    options: PluginOptions
+  ): any
+  replaceHydrateFunction?(args: BrowserPluginArgs, options: PluginOptions): any
+  shouldUpdateScroll?(args: ShouldUpdateScrollArgs, options: PluginOptions): any
+  wrapPageElement?(
+    args: WrapPageElementBrowserArgs,
+    options: PluginOptions
+  ): any
+  wrapRootElement?(
+    args: WrapRootElementBrowserArgs,
+    options: PluginOptions
+  ): any
 }
 
 /**
@@ -324,7 +429,6 @@ export interface GatsbyBrowser {
  * @see https://www.gatsbyjs.org/docs/ssr-apis/
  */
 export interface GatsbySSR {
-
   /**
    * Called after every page Gatsby server renders while building HTML so you can
    * replace head components to be rendered in your `html.js`. This is useful if
@@ -344,10 +448,16 @@ export interface GatsbySSR {
    *   replaceHeadComponents(headComponents)
    * }
    */
-  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): any;
-  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): Promise<any>;
-  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions, callback: PluginCallback): void;
-
+  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): any
+  onPreRenderHTML?(
+    args: PreRenderHTMLArgs,
+    options: PluginOptions
+  ): Promise<any>
+  onPreRenderHTML?(
+    args: PreRenderHTMLArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 
   /**
    * Called after every page Gatsby server renders while building HTML so you can
@@ -386,9 +496,13 @@ export interface GatsbySSR {
    *   ])
    * }
    */
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): any;
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): Promise<any>;
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions, callback: PluginCallback): void;
+  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): any
+  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): Promise<any>
+  onRenderBody?(
+    args: RenderBodyArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 
   /**
    * Replace the default server renderer. This is useful for integration with
@@ -406,10 +520,16 @@ export interface GatsbySSR {
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): any;
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): Promise<any>;
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions, callback: PluginCallback): void;
-
+  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): any
+  replaceRenderer?(
+    args: ReplaceRendererArgs,
+    options: PluginOptions
+  ): Promise<any>
+  replaceRenderer?(
+    args: ReplaceRendererArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 
   /**
    * Allow a plugin to wrap the page element.
@@ -428,9 +548,16 @@ export interface GatsbySSR {
    *   return <Layout {...props}>{element}</Layout>
    * }
    */
-  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): any;
-  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): Promise<any>;
-  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions, callback: PluginCallback): void;
+  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): any
+  wrapPageElement?(
+    args: WrapPageElementNodeArgs,
+    options: PluginOptions
+  ): Promise<any>
+  wrapPageElement?(
+    args: WrapPageElementNodeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
   /**
    * Allow a plugin to wrap the root element.
    *
@@ -453,59 +580,70 @@ export interface GatsbySSR {
    *   )
    * }
    */
-  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): any;
-  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): Promise<any>;
-  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions, callback: PluginCallback): void;
+  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): any
+  wrapRootElement?(
+    args: WrapRootElementNodeArgs,
+    options: PluginOptions
+  ): Promise<any>
+  wrapRootElement?(
+    args: WrapRootElementNodeArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 }
 
 export interface PluginOptions {
-  plugins: unknown[];
-  [key: string]: unknown;
+  plugins: unknown[]
+  [key: string]: unknown
 }
 
-export type PluginCallback = (err: Error | null, result?: any) => void;
+export type PluginCallback = (err: Error | null, result?: any) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
-  graphql: Function;
-  traceId: string;
-  waitForCascadingActions: boolean;
+  graphql: Function
+  traceId: string
+  waitForCascadingActions: boolean
 }
 
-type GatsbyStages = "develop" | "develop-html" | "build-javascript" | "build-html"
+type GatsbyStages =
+  | "develop"
+  | "develop-html"
+  | "build-javascript"
+  | "build-html"
 
 export interface CreateBabelConfigArgs extends ParentSpanPluginArgs {
-  stage: GatsbyStages;
+  stage: GatsbyStages
 }
 
 export interface CreateDevServerArgs extends ParentSpanPluginArgs {
-  app: Application;
+  app: Application
 }
 
 export interface CreateNodeArgs extends ParentSpanPluginArgs {
-  node: Node;
-  traceId: string;
+  node: Node
+  traceId: string
   traceTags: {
-    nodeId: string;
-    nodeType: string;
-  };
+    nodeId: string
+    nodeType: string
+  }
 }
 
 export interface CreatePageArgs extends ParentSpanPluginArgs {
-  page: Node;
-  traceId: string;
+  page: Node
+  traceId: string
 }
 
 export interface CreateWebpackConfigArgs extends ParentSpanPluginArgs {
-  getConfig: Function;
-  stage: GatsbyStages;
-  rules: WebpackRules;
-  loaders: WebpackLoaders;
-  plugins: WebpackPlugins;
+  getConfig: Function
+  stage: GatsbyStages
+  rules: WebpackRules
+  loaders: WebpackLoaders
+  plugins: WebpackPlugins
 }
 
 export interface PreprocessSourceArgs extends ParentSpanPluginArgs {
-  filename: string;
-  contents: string;
+  filename: string
+  contents: string
 }
 
 export interface ResolvableExtensionsArgs extends ParentSpanPluginArgs {
@@ -514,112 +652,112 @@ export interface ResolvableExtensionsArgs extends ParentSpanPluginArgs {
 
 export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   type: {
-    name: string;
-    nodes: any[];
-  };
-  traceId: "initial-setFieldsOnGraphQLNodeType";
+    name: string
+    nodes: any[]
+  }
+  traceId: "initial-setFieldsOnGraphQLNodeType"
 }
 
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
-  traceId: "initial-sourceNodes";
-  waitForCascadingActions: boolean;
+  traceId: "initial-sourceNodes"
+  waitForCascadingActions: boolean
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
-  schema: object,
-  createResolvers: Function,
-  traceId: `initial-createResolvers`,
+  schema: object
+  createResolvers: Function
+  traceId: `initial-createResolvers`
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
-  getHeadComponents: any[];
-  replaceHeadComponents: Function;
-  getPreBodyComponents: any[];
-  replacePreBodyComponents: Function;
-  getPostBodyComponents: any[];
-  replacePostBodyComponents: Function;
+  getHeadComponents: any[]
+  replaceHeadComponents: Function
+  getPreBodyComponents: any[]
+  replacePreBodyComponents: Function
+  getPostBodyComponents: any[]
+  replacePostBodyComponents: Function
 }
 
 export interface RenderBodyArgs extends NodePluginArgs {
-  pathname: string;
-  setHeadComponents: Function;
-  setHtmlAttributes: Function;
-  setBodyAttributes: Function;
-  setPreBodyComponents: Function;
-  setPostBodyComponents: Function;
-  setBodyProps: Function;
+  pathname: string
+  setHeadComponents: Function
+  setHtmlAttributes: Function
+  setBodyAttributes: Function
+  setPreBodyComponents: Function
+  setPostBodyComponents: Function
+  setBodyProps: Function
 }
 
 export interface ReplaceRendererArgs extends NodePluginArgs {
-  replaceBodyHTMLString: Function;
-  setHeadComponents: Function;
-  setHtmlAttributes: Function;
-  setBodyAttributes: Function;
-  setPreBodyComponents: Function;
-  setPostBodyComponents: Function;
-  setBodyProps: Function;
+  replaceBodyHTMLString: Function
+  setHeadComponents: Function
+  setHtmlAttributes: Function
+  setBodyAttributes: Function
+  setPreBodyComponents: Function
+  setPostBodyComponents: Function
+  setBodyProps: Function
 }
 
 export interface WrapPageElementNodeArgs extends NodePluginArgs {
-  element: object;
-  props: object;
-  pathname: string;
+  element: object
+  props: object
+  pathname: string
 }
 
 export interface WrapRootElementNodeArgs extends NodePluginArgs {
-  element: object;
+  element: object
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {
-  parentSpan: object;
+  parentSpan: object
 }
 
 export interface NodePluginArgs {
-  pathPrefix: string;
-  boundActionCreators: Actions;
-  actions: Actions;
-  loadNodeContent: Function;
-  store: Store;
-  emitter: EventEmitter;
-  getNodes: Function;
-  getNode: Function;
-  getNodesByType: Function;
-  hasNodeChanged: Function;
-  reporter: Reporter;
-  getNodeAndSavePathDependency: Function;
-  cache: Cache;
-  createNodeId: Function;
-  createContentDigest: Function;
-  tracing: Tracing;
-  [key: string]: unknown;
+  pathPrefix: string
+  boundActionCreators: Actions
+  actions: Actions
+  loadNodeContent: Function
+  store: Store
+  emitter: EventEmitter
+  getNodes: Function
+  getNode: Function
+  getNodesByType: Function
+  hasNodeChanged: Function
+  reporter: Reporter
+  getNodeAndSavePathDependency: Function
+  cache: Cache
+  createNodeId: Function
+  createContentDigest: Function
+  tracing: Tracing
+  [key: string]: unknown
 }
 
 interface ActionPlugin {
-  name: string;
+  name: string
 }
 
 interface DeleteNodeArgs {
-  node: Node;
+  node: Node
 }
 
 interface CreateNodeFieldArgs {
-  node: Node;
-  name: string;
-  value: string;
+  node: Node
+  name: string
+  value: string
 
   /**
    * @deprecated
    */
-  fieldName?: string;
+  fieldName?: string
 
   /**
    * @deprecated
    */
-  fieldValue?: string;
+  fieldValue?: string
 }
 
 interface ActionOptions {
-  [key: string]: unknown;
+  [key: string]: unknown
 }
 
 export interface BuildArgs extends ParentSpanPluginArgs {
@@ -628,271 +766,330 @@ export interface BuildArgs extends ParentSpanPluginArgs {
 
 export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
-  deletePage(args: { path: string, component: string }): void;
+  deletePage(args: { path: string; component: string }): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
-  createPage(args: {path: string, component: string, context: Record<string, unknown>}, plugin?: ActionPlugin, option?: ActionOptions): void;
+  createPage(
+    args: { path: string; component: string; context: Record<string, unknown> },
+    plugin?: ActionPlugin,
+    option?: ActionOptions
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
-  deleteNode(options: { node: Node }, plugin?: ActionPlugin, option?: ActionOptions): void;
+  deleteNode(
+    options: { node: Node },
+    plugin?: ActionPlugin,
+    option?: ActionOptions
+  ): void
 
   /**
    * @deprecated
    * @see https://www.gatsbyjs.org/docs/actions/#deleteNodes
    */
-  deleteNodes(nodes: string[], plugin?: ActionPlugin): void;
+  deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void;
+  createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string, plugin?: ActionPlugin }): void;
+  touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
-  createNodeField(args: {node: Node, fieldName?: string, fieldValue?: string, name?: string, value: any}, plugin?: ActionPlugin, options?: ActionOptions): void;
+  createNodeField(
+    args: {
+      node: Node
+      fieldName?: string
+      fieldValue?: string
+      name?: string
+      value: any
+    },
+    plugin?: ActionPlugin,
+    options?: ActionOptions
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
-  createParentChildLink({ parent: Node, child: Node }, plugin?: ActionPlugin): void;
+  createParentChildLink(
+    { parent: Node, child: Node },
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
-  setWebpackConfig(config: object, plugin?: ActionPlugin): void;
+  setWebpackConfig(config: object, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#replaceWebpackConfig */
-  replaceWebpackConfig(config: object, plugin?: ActionPlugin): void;
+  replaceWebpackConfig(config: object, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#setBabelOptions */
-  setBabelOptions(options: object, plugin?: ActionPlugin): void;
+  setBabelOptions(options: object, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#setBabelPlugin */
-  setBabelPlugin(config: { name: string, options: object }, plugin?: ActionPlugin): void;
+  setBabelPlugin(
+    config: { name: string; options: object },
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#setBabelPreset */
-  setBabelPreset(config: { name: string, options: object }, plugin?: ActionPlugin): void;
+  setBabelPreset(
+    config: { name: string; options: object },
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createJob */
-  createJob(job: Record<string, unknown> & { id: string }, plugin?: ActionPlugin): void;
+  createJob(
+    job: Record<string, unknown> & { id: string },
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#setJob */
-  setJob(job: Record<string, unknown> & { id: string }, plugin?: ActionPlugin): void;
+  setJob(
+    job: Record<string, unknown> & { id: string },
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#endJob */
-  endJob(job: { id: string }, plugin?: ActionPlugin): void;
+  endJob(job: { id: string }, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#setPluginStatus */
-  setPluginStatus(status: Record<string, unknown>, plugin?: ActionPlugin): void;
+  setPluginStatus(status: Record<string, unknown>, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createRedirect */
-  createRedirect(redirect: { fromPath: string, isPermanent: boolean, toPath: string, redirectInBrowser: boolean, force: boolean, statusCode: number }, plugin?: ActionPlugin): void;
+  createRedirect(
+    redirect: {
+      fromPath: string
+      isPermanent: boolean
+      toPath: string
+      redirectInBrowser: boolean
+      force: boolean
+      statusCode: number
+    },
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
-  addThirdPartySchema(args: { schema: object }, plugin?: ActionPlugin, traceId: string);
+  addThirdPartySchema(
+    args: { schema: object },
+    plugin?: ActionPlugin,
+    traceId: string
+  )
 
   /** TODO create jsdoc on gatsbyjs.org */
-  createTypes(types: string | object | Array<string|object>, plugin?: ActionPlugin, traceId: string);
+  createTypes(
+    types: string | object | Array<string | object>,
+    plugin?: ActionPlugin,
+    traceId: string
+  )
 }
 
 export interface Store {
-  dispatch: Function;
-  subscribe: Function;
-  getState: Function;
-  replaceReducer: Function;
+  dispatch: Function
+  subscribe: Function
+  getState: Function
+  replaceReducer: Function
 }
 
 type logMessageType = (format: string, ...args: any[]) => void
 
 export interface Reporter {
-  stripIndent: Function;
-  format: object;
-  setVerbose(isVerbose: boolean): void;
-  setNoColor(isNoColor: boolean): void;
-  panic(...args: any[]): void;
-  panicOnBuild(...args: any[]): void;
-  error(message: string, error: Error): void;
-  uptime(prefix: string): void;
-  success: logMessageType;
-  verbose: logMessageType;
-  info: logMessageType;
-  warn: logMessageType;
-  log: logMessageType;
-  activityTimer(name: string, activityArgs: { parentSpan: object }): { start: () => void,
-  status(status: string): void, end: () => void, span: object}
+  stripIndent: Function
+  format: object
+  setVerbose(isVerbose: boolean): void
+  setNoColor(isNoColor: boolean): void
+  panic(...args: any[]): void
+  panicOnBuild(...args: any[]): void
+  error(message: string, error: Error): void
+  uptime(prefix: string): void
+  success: logMessageType
+  verbose: logMessageType
+  info: logMessageType
+  warn: logMessageType
+  log: logMessageType
+  activityTimer(
+    name: string,
+    activityArgs: { parentSpan: object }
+  ): {
+    start: () => void
+    status(status: string): void
+    end: () => void
+    span: object
+  }
 }
 
 export interface Cache {
-  name: string;
+  name: string
   store: {
-    create: Function;
-  };
+    create: Function
+  }
   cache: {
-    getAndPassUp: Function;
-    wrap: Function;
-    set: Function;
-    mset: Function;
-    get: Function;
-    mget: Function;
-    del: Function;
-    reset: Function;
+    getAndPassUp: Function
+    wrap: Function
+    set: Function
+    mset: Function
+    get: Function
+    mget: Function
+    del: Function
+    reset: Function
   }
 }
 
 export interface Tracing {
-  tracer: object;
-  parentSpan: object;
-  startSpan: Function;
+  tracer: object
+  parentSpan: object
+  startSpan: Function
 }
 
-
 export interface PackageJson {
-  name?: string;
-  description?: string;
-  version?: string;
-  main?: string;
-  author?: string | {
-    name: string;
-    email: string;
-  };
-  license?: string;
-  dependencies?: Array<Record<string, string>>;
-  devDependencies?: Array<Record<string, string>>;
-  peerDependencies?: Array<Record<string, string>>;
-  optionalDependecies?: Array<Record<string, string>>;
-  bundledDependecies?: Array<Record<string, string>>;
-  keywords?: string[];
+  name?: string
+  description?: string
+  version?: string
+  main?: string
+  author?:
+    | string
+    | {
+        name: string
+        email: string
+      }
+  license?: string
+  dependencies?: Array<Record<string, string>>
+  devDependencies?: Array<Record<string, string>>
+  peerDependencies?: Array<Record<string, string>>
+  optionalDependecies?: Array<Record<string, string>>
+  bundledDependecies?: Array<Record<string, string>>
+  keywords?: string[]
 }
 
 export interface WebpackRules {
-  js: Function;
-  mjs: Function;
-  eslint: Function;
-  yaml: Function;
-  fonts: Function;
-  images: Function;
-  media: Function;
-  miscAssets: Function;
-  css: Function;
-  cssModules: Function;
-  postcss: Function;
-  [key: string]: Function;
+  js: Function
+  mjs: Function
+  eslint: Function
+  yaml: Function
+  fonts: Function
+  images: Function
+  media: Function
+  miscAssets: Function
+  css: Function
+  cssModules: Function
+  postcss: Function
+  [key: string]: Function
 }
 
 export interface WebpackLoaders {
-  json: Function;
-  yaml: Function;
-  null: Function;
-  raw: Function;
-  style: Function;
-  miniCssExtract: Function;
-  css: Function;
-  postcss: Function;
-  file: Function;
-  url: Function;
-  js: Function;
-  eslint: Function;
-  imports: Function;
-  exports: Function;
-  [key: string]: Function;
+  json: Function
+  yaml: Function
+  null: Function
+  raw: Function
+  style: Function
+  miniCssExtract: Function
+  css: Function
+  postcss: Function
+  file: Function
+  url: Function
+  js: Function
+  eslint: Function
+  imports: Function
+  exports: Function
+  [key: string]: Function
 }
 
 export interface WebpackPlugins {
-  normalModuleReplacement: Function;
-  contextReplacement: Function;
-  ignore: Function;
-  watchIgnore: Function;
-  banner: Function;
-  prefetch: Function;
-  automaticPrefetch: Function;
-  define: Function;
-  provide: Function;
-  hotModuleReplacement: Function;
-  sourceMapDevTool: Function;
-  evalSourceMapDevTool: Function;
-  evalDevToolModule: Function;
-  cache: Function;
-  extendedAPI: Function;
-  externals: Function;
-  jsonpTemplate: Function;
-  libraryTemplate: Function;
-  loaderTarget: Function;
-  memoryOutputFile: Function;
-  progress: Function;
-  setVarMainTemplate: Function;
-  umdMainTemplate: Function;
-  noErrors: Function;
-  noEmitOnErrors: Function;
-  newWatching: Function;
-  environment: Function;
-  dll: Function;
-  dllReference: Function;
-  loaderOptions: Function;
-  namedModules: Function;
-  namedChunks: Function;
-  hashedModuleIds: Function;
-  moduleFilenameH: Function;
-  aggressiveMerging: Function;
-  aggressiveSplitting: Function;
-  splitChunks: Function;
-  chunkModuleIdRange: Function;
-  dedupe: Function;
-  limitChunkCount: Function;
-  minChunkSize: Function;
-  occurrenceOrder: Function;
-  moduleConcatenation: Function;
-  minifyJs: Function;
-  minifyCss: Function;
-  extractText: Function;
-  moment: Function;
-  [key: string]: Function;
+  normalModuleReplacement: Function
+  contextReplacement: Function
+  ignore: Function
+  watchIgnore: Function
+  banner: Function
+  prefetch: Function
+  automaticPrefetch: Function
+  define: Function
+  provide: Function
+  hotModuleReplacement: Function
+  sourceMapDevTool: Function
+  evalSourceMapDevTool: Function
+  evalDevToolModule: Function
+  cache: Function
+  extendedAPI: Function
+  externals: Function
+  jsonpTemplate: Function
+  libraryTemplate: Function
+  loaderTarget: Function
+  memoryOutputFile: Function
+  progress: Function
+  setVarMainTemplate: Function
+  umdMainTemplate: Function
+  noErrors: Function
+  noEmitOnErrors: Function
+  newWatching: Function
+  environment: Function
+  dll: Function
+  dllReference: Function
+  loaderOptions: Function
+  namedModules: Function
+  namedChunks: Function
+  hashedModuleIds: Function
+  moduleFilenameH: Function
+  aggressiveMerging: Function
+  aggressiveSplitting: Function
+  splitChunks: Function
+  chunkModuleIdRange: Function
+  dedupe: Function
+  limitChunkCount: Function
+  minChunkSize: Function
+  occurrenceOrder: Function
+  moduleConcatenation: Function
+  minifyJs: Function
+  minifyCss: Function
+  extractText: Function
+  moment: Function
+  [key: string]: Function
 }
 
 export interface PrefetchPathnameArgs extends BrowserPluginArgs {
-  pathname: string;
+  pathname: string
 }
 
 export interface RouteUpdateArgs extends BrowserPluginArgs {
-  location: Location;
+  location: Location
 }
 
 export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
   props: {
-    path: string;
-    "*": string;
-    uri: string;
-    location: object;
-    navigate: Function;
-    children: undefined;
-    pageResources: object;
-    data: object;
-    pageContext: object;
-  };
-  loader: object;
+    path: string
+    "*": string
+    uri: string
+    location: object
+    navigate: Function
+    children: undefined
+    pageResources: object
+    data: object
+    pageContext: object
+  }
+  loader: object
 }
 
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   prevRouterProps?: {
     location: Location
   }
-  pathname: string;
+  pathname: string
   routerProps: {
-    location: Location;
-  };
-  getSavedScrollPosition: Function;
+    location: Location
+  }
+  getSavedScrollPosition: Function
 }
 
 export interface WrapPageElementBrowserArgs extends BrowserPluginArgs {
-  element: object;
-  props: object;
+  element: object
+  props: object
 }
 
 export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
-  element: object;
-  pathname: string;
+  element: object
+  pathname: string
 }
 
 export interface BrowserPluginArgs {
-  getResourcesForPathnameSync: Function;
-  getResourcesForPathname: Function;
-  getResourceURLsForPathname: Function;
-  [key: string]: unknown;
+  getResourcesForPathnameSync: Function
+  getResourcesForPathname: Function
+  getResourceURLsForPathname: Function
+  [key: string]: unknown
 }
 
 export interface RouteUpdateDelayedArgs extends BrowserPluginArgs {
@@ -904,41 +1101,41 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
 }
 
 export interface Node {
-  path?: string;
-  id: string;
-  parent: string;
-  children: Node[];
-  fields?: Record<string, string>;
+  path?: string
+  id: string
+  parent: string
+  children: Node[]
+  fields?: Record<string, string>
   internal: {
-    type: string;
-    mediaType: string;
-    content: string;
-    contentDigest: string;
-    owner: string;
-    description?: string;
-  };
-  resolve?: string;
-  name?: string;
-  version?: string;
-  pluginOptions?: PluginOptions;
-  nodeAPIs?: any[];
-  browserAPIs?: any[];
-  ssrAPIs?: any[];
-  pluginFilepath?: string;
-  packageJson?: PackageJson;
-  siteMetadata?: Record<string, any>;
-  port?: string;
-  host?: string;
-  pathPrefix?: string;
-  polyfill?: boolean;
-  buildTime?: string;
-  jsonName?: string;
-  internalComponentName?: string;
-  matchPath?: unknown;
-  component?: string;
-  componentChunkName?: string;
-  context?: Record<string, any>;
-  pluginCreatorId?: string;
-  componentPath?: string;
-  [key: string]: unknown;
+    type: string
+    mediaType: string
+    content: string
+    contentDigest: string
+    owner: string
+    description?: string
+  }
+  resolve?: string
+  name?: string
+  version?: string
+  pluginOptions?: PluginOptions
+  nodeAPIs?: any[]
+  browserAPIs?: any[]
+  ssrAPIs?: any[]
+  pluginFilepath?: string
+  packageJson?: PackageJson
+  siteMetadata?: Record<string, any>
+  port?: string
+  host?: string
+  pathPrefix?: string
+  polyfill?: boolean
+  buildTime?: string
+  jsonName?: string
+  internalComponentName?: string
+  matchPath?: unknown
+  component?: string
+  componentChunkName?: string
+  context?: Record<string, any>
+  pluginCreatorId?: string
+  componentPath?: string
+  [key: string]: unknown
 }
