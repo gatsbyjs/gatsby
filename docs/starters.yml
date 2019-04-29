@@ -2387,11 +2387,7 @@
   repo: https://github.com/colbyfayock/gatsby-starter-sass
   description: A Gatsby starter with Sass and no assumptions!
   tags:
-    - Sass
-    - SCSS
-    - CSS
-    - Styles
-    - Styling
+    - Styling:SCSS
   features:
     - Sass stylesheets to manage your CSS (SCSS flavored)
     - Simple, minimal base setup to get started
