@@ -1,0 +1,107 @@
+From 7379ac1dec0a4fd31a6528d59064d30870dcb29c Mon Sep 17 00:00:00 2001
+From: Alex Moon <alex.jared.moon@gmail.com>
+Date: Mon, 29 Apr 2019 05:14:52 +0000
+Subject: [PATCH] docs: did some reorganization to make more consistent with
+ existing docs and added some exeternal refereces.
+
+---
+ packages/gatsby-plugin-manifest/README.md | 37 ++++++++++++++---------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
+
+diff --git a/packages/gatsby-plugin-manifest/README.md b/packages/gatsby-plugin-manifest/README.md
+index fe92be4d6..3c25d155b 100644
+--- a/packages/gatsby-plugin-manifest/README.md
++++ b/packages/gatsby-plugin-manifest/README.md
+@@ -9,6 +9,7 @@ This plugin provides several features beyond manifest configuration to make your
+ - [Favicon support](https://www.w3.org/2005/10/howto-favicon)
+ - Legacy icon support (iOS)[^1]
+ - [Cache busting](https://www.keycdn.com/support/what-is-cache-busting)
++- Localization - Provides unqiue manifests for path-based localization
+
+ Each of these features has extensive configuration available so you're always in control.
+
+@@ -56,21 +57,21 @@ There are three modes in which icon generation can function: automatic, hybrid,
+   - Favicon - yes
+   - Legacy icon support - yes
+   - Cache busting - yes
+-  - internationalization - optional
++  - Localization - optional
+
+ - Hybrid - Generate a manually configured set of icons from a single source icon.
+
+   - Favicon - yes
+   - Legacy icon support - yes
+   - Cache busting - yes
+-  - internationalization - optional
++  - Localization - optional
+
+ - Manual - Don't generate or pre-configure any icons.
+
+   - Favicon - never
+   - Legacy icon support - yes
+   - Cache busting - never
+-  - internationalization - optional
++  - Localization - optional
+
+ **_IMPORTANT:_** For best results, if you're providing an icon for generation it should be...
+
+@@ -133,7 +134,17 @@ icons: [
+
+ In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
+
+-#### i18n – Multilang configuration
++### Feature configuration - **Optional**
++
++#### Localization configuration
++
++Localization allows you to crete unique manifests for each localized version of your site. As many languages as you want are supported. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the german(`de`) version would be `/de/about`)
++
++The default site language should be configured in your root plugin options. Any additional languages should be defined in the `localize` array. The root settings will be used as defaults if not overridden in a locale. Any configuration option available in the root is also available in the `localize` array.
++
++`lang` and `start_url` are the only _required_ options in the array objects. `name`, `short_name`, and `description` are [recommended](https://www.w3.org/TR/appmanifest/#dfn-directionality-capable-members) to be translated if being used in the default language. All other config options are optional. This is helpful if you want to provide unique icons for each locale.
++
++The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+
+ ```js
+ // in gatsby-config.js
+@@ -142,8 +153,10 @@ module.exports = {
+     {
+       resolve: `gatsby-plugin-manifest`,
+       options: {
+-        name: `GatsbyJS`,
+-        short_name: `Gatsby`,
++        name: `The Cool Application`,
++        short_name: `Cool App`,
++        description: `The application does cool things and makes your life better.`,
++        lang: `en`,
+         display: `standalone`,
+         icon: `src/images/icon.png`,
+         start_url: `/`,
+@@ -153,8 +166,9 @@ module.exports = {
+           {
+             start_url: `/de/`,
+             lang: `de`,
+-            background_color: `#f7f0eb`,
+-            theme_color: `#a2466c`,
++            name: `Die coole Anwendung`,
++            short_name: `Coole Anwendung`,
++            description: `Die Anwendung macht coole Dinge und macht Ihr Leben besser.`,
+           },
+         ],
+       },
+@@ -163,13 +177,6 @@ module.exports = {
+ }
+ ```
+
+-You can add as many languages as you want, as well as mix and match auto, hybrid & manual icon modes.
+-Shared values can be defined as root options, as in the example above.
+-
+-Make sure the default language comes last. You don't have to specify a "default" language though, all paths can start with a language, or you can tweak the regex to match whatever part of the `pathname` you like.
+-
+-### Feature configuration - **Optional**
+-
+ #### Iterative icon options
+
+ The `icon_options` object may be used to iteratively add configuration items to the `icons` array. Any options included in this object will be merged with each object of the `icons` array (custom or default). Key value pairs already in the `icons` array will take precedence over duplicate items in the `icon_options` array.
+--
+2.21.0
