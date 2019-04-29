@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.0.0",
     "@babel/runtime": "^7.0.0",
-    "@gatsbyjs/update-notifier": "^2.5.0-rc.2",
+    "@gatsbyjs/update-notifier": "^2.5.0",
     "bluebird": "^3.5.0",
     "chalk": "^2.4.2",
     "ci-info": "^2.0.0",

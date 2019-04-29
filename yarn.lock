@@ -1997,10 +1997,10 @@
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-"@gatsbyjs/update-notifier@^2.5.0-rc.2":
-  version "2.5.0-rc.2"
-  resolved "https://registry.yarnpkg.com/@gatsbyjs/update-notifier/-/update-notifier-2.5.0-rc.2.tgz#a34180c3ba6190e0de8a901c389089d4f7599d4b"
-  integrity sha512-QXozwL4x+Fe7Eh/LZfLBi+EFehqxs9Fa5YqeMTzJOanuee8Gp7gtYoUCtKGMbngNssomj4a4a7PMUibrmaOF5w==
+"@gatsbyjs/update-notifier@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@gatsbyjs/update-notifier/-/update-notifier-2.5.0.tgz#7c576dd00cb663f31398db4cbd5eeeefafa7dea1"
+  integrity sha512-XcyrOH871u8+F9zMnXS5tBqwP3ycCTm6kgUIGJB3vs8+Z5mMvrU/8GSgR+TXAw1PoV0mGTC7x+WkboxNtmXV6Q==
   dependencies:
     boxen "^3.0.0"
     chalk "^2.0.1"
