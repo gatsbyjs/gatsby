@@ -1,6 +1,6 @@
 ---
 title: What is Component Shadowing?
-date: 2019-04-24
+date: 2019-04-29
 author: John Otander
 excerpt: "Gatsby Themes introduce a concept called Component Shadowing. This feature allows
 users to override a component in order to customize its rendering."
