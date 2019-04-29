@@ -15,8 +15,8 @@ We interviewed 6 authors of and/or contributors to popular plugins:
 - [Orestis Ioannou](https://github.com/oorestisime), who created [`gatsby-source-instagram`](https://www.gatsbyjs.org/packages/gatsby-source-instagram/?=gatsby-source-instagram), [`gatsby-source-dropbox`](https://www.gatsbyjs.org/packages/gatsby-source-dropbox/?=gatsby-source-dropbox), [`gatsby-remark-rehype-images`](https://www.gatsbyjs.org/packages/gatsby-remark-rehype-images/?=gatsby-remark-reh), [`gatsby-source-marvel`](https://www.gatsbyjs.org/packages/gatsby-source-marvel/?=gatsby-source-marvel), and has worked on [`gatsby-source-pilon`](https://www.gatsbyjs.org/packages/gatsby-source-pilon/?=gatsby-source-pilo)
 - [Tyler Barnes](https://github.com/TylerBarnes), who created [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/packages/gatsby-plugin-transition-link/?=transition-link) and is working on an alternative WordPress source plugin
 - [Christopher Biscardi](https://github.com/ChristopherBiscardi), who created [`gatsby-mdx`](https://github.com/ChristopherBiscardi/gatsby-mdx)
-- [Mike Allanson](https://github.com/m-allanson), who built proprietary plugins to pull data from a custom CMS for the [http://2018.stateofeuropeantech.com/](http://2018.stateofeuropeantech.com/) and
-  [ http://2017.stateofeuropeantech.com](http://2017.stateofeuropeantech.com) sites
+- [Mike Allanson](https://github.com/m-allanson), who built proprietary plugins to pull data from a custom CMS for the [The State of European Tech 2018](http://2018.stateofeuropeantech.com/) and
+  [The State of European Tech 2017](http://2017.stateofeuropeantech.com) sites
 - [Michal Piechowiak](https://github.com/pieh), who contributed to the [`gatsby-source-wordpress`](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=gatsby-source-wordpress) plugin
 - [Ali Mahmoud](https://github.com/babbins) who is well-acquainted with the challenges and joys of maintaining the [`gatsby-plugin-pointer-events`](https://www.gatsbyjs.org/packages/gatsby-plugin-pointer-events/?=gatsby-plugin-pointer) plugin, which was created by [Tim Brown](https://github.com/brimtown)
 
