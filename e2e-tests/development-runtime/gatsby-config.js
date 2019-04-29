@@ -1,3 +1,5 @@
+require(`isomorphic-fetch`)
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
