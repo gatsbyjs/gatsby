@@ -47,7 +47,7 @@ class CreatorsHeader extends Component {
           >
             <Button
               small
-              to="/docs/submit-to-creator-showcase/"
+              to="/contributing/submit-to-creator-showcase/"
               icon={<ArrowForwardIcon />}
             >
               {submissionText}

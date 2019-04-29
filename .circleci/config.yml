@@ -6,15 +6,11 @@ executors:
         default: "10"
     docker:
       - image: circleci/node:<< parameters.image >>
-        environment:
-          SHARP_DIST_BASE_URL: https://s3-us-west-2.amazonaws.com/sharp-distro/
 
 aliases:
   e2e-executor: &e2e-executor
     docker:
       - image: cypress/browsers:chrome69
-        environment:
-          SHARP_DIST_BASE_URL: https://s3-us-west-2.amazonaws.com/sharp-distro/
 
   restore_cache: &restore_cache
     restore_cache:
@@ -134,6 +130,12 @@ jobs:
     executor: node
     <<: *test_template
 
+  unit_tests_node12:
+    executor:
+      name: node
+      image: "12"
+    <<: *test_template
+
   unit_tests_www:
     executor: node
     steps:
@@ -223,6 +225,10 @@ workflows:
           requires:
             - bootstrap
       - unit_tests_node10:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - bootstrap

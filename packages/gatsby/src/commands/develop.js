@@ -10,7 +10,7 @@ const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
 const { formatError } = require(`graphql`)
-const request = require(`request`)
+const got = require(`got`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
@@ -208,9 +208,10 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
+      const { headers, method } = req
       req
         .pipe(
-          request(proxiedUrl).on(`error`, err => {
+          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
             const message = `Error when trying to proxy request "${
               req.originalUrl
             }" to "${proxiedUrl}"`
