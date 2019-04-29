@@ -9,7 +9,7 @@ import {
   radii,
   transition,
   shadows,
-  breakpoints,
+  mediaQueries,
   sizes,
   fontSizes,
 } from "../utils/presets"
@@ -191,7 +191,7 @@ const algoliaStyles = css`
     margin-right: ${space[3]} !important;
   }
 
-  ${breakpoints.sm} {
+  ${mediaQueries.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -240,7 +240,7 @@ const algoliaStyles = css`
     }
   }
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -263,7 +263,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${breakpoints.Lg} {
+  ${mediaQueries.lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -412,7 +412,7 @@ class SearchForm extends Component {
                 outline: 0,
                 width: rhythm(5),
               },
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
@@ -443,7 +443,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               transform: `translateY(-55%)`,
-              [breakpoints.sm]: {
+              [mediaQueries.sm]: {
                 fill: focussed ? colors.gatsby : false,
               },
             }}
