@@ -17,8 +17,7 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
 }
 
 /**
- * 
- * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other 
+ * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
  * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
  */
 export default class GatsbyLink<TState> extends React.Component<
@@ -27,23 +26,32 @@ export default class GatsbyLink<TState> extends React.Component<
 > {}
 
 /**
- * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these 
+ * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
  * cases, `Link` won’t work.
  */
 export const navigate: NavigateFn
 
 /**
- * It is common to host sites in a sub-directory of a site. Gatsby lets you set the path prefix for your site. 
+ * It is common to host sites in a sub-directory of a site. Gatsby lets you set the path prefix for your site.
  * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
  * development and production
  */
 export const withPrefix: (path: string) => string
 
-// TODO: Remove navigateTo, push & replace for Gatsby v3
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
 export const push: (to: string) => void
+
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
 export const replace: (to: string) => void
 
 /**
  * @deprecated
+ * TODO: Remove for Gatsby v3
  */
 export const navigateTo: (to: string) => void

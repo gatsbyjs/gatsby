@@ -1,4 +1,4 @@
-import { Node } from "gatsby";
+import { Node, Store, Cache } from "gatsby";
 
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
@@ -8,52 +8,64 @@ export function createFilePath(args: CreateFilePathArgs): string;
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createremotefilenode
  */
-export function createRemoteFileNode(args: CreateRemoteFileNodeArgs): Node;
+export function createRemoteFileNode(
+  args: CreateRemoteFileNodeArgs
+): FileSystemNode;
 
 export interface CreateFilePathArgs {
   node: Node;
   getNode: Function;
   basePath?: string;
-  trailingSlash?:boolean;
+  trailingSlash?: boolean;
 }
 
 export interface CreateRemoteFileNodeArgs {
   url: string;
-  store: object;
-  cache: object;
+  store: Store;
+  cache: Cache;
   createNode: Function;
   createNodeId: Function;
-  auth?: object;
+  parentNodeId?: string;
+  auth?: {
+    htaccess_user: string;
+    htaccess_pass: string;
+  };
+  httpHeaders?: object;
   ext?: string;
+  name?: string;
 }
 
 export interface FileSystemNode extends Node {
-  sourceInstanceName: string;
   absolutePath: string;
-  relativePath: string;
-  relativeDirectory: string;
-  root: string;
-  dir: string;
-  base: string;
-  name: string;
-  ext: string;
-  extension: string;
-  size: number;
-  prettySize: string;
-  birthtime: string;
-  birthtimeMs: number;
-  birthTime: string;
-  atime: string;
-  atimeMs: number;
   accessTime: string;
-  ctime: string;
-  ctimeMs: number;
+  birthTime: Date;
   changeTime: string;
-  mtime: string;
-  mtimeMs: number;
+  extension: string;
   modifiedTime: string;
-  mode: number;
+  prettySize: string;
+  relativeDirectory: string;
+  relativePath: string;
+  sourceInstanceName: string;
+
+  // parsed path typings
+  base: string;
+  dir: string;
+  ext: string;
+  name: string;
+  root: string;
+
+  // stats
+  atime: Date;
+  atimeMs: number;
+  birthtime: Date;
+  birthtimeMs: number;
+  ctime: Date;
+  ctimeMs: number;
   gid: number;
+  mode: number;
+  mtime: Date;
+  mtimeMs: number;
+  size: number;
   uid: number;
 }
 
@@ -65,7 +77,7 @@ export interface FileSystemConfig {
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=filesy#options
  */
-export interface FileSystemOptions {
+interface FileSystemOptions {
   name: string;
   path: string;
   ignore?: string[];
