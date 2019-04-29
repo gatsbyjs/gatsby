@@ -85,7 +85,7 @@ import React from "react"
 export default () => <h1>Hello from gatsby-theme-developer</h1>
 ```
 
-You'll need to install two packages and create a `gatsby-config.js` that sources `pages`:
+You'll need to install the `gatsby-plugin-page-creator` package and create a `gatsby-config.js` that sources `pages`:
 
 ```shell
 npm i --save gatsby-plugin-page-creator

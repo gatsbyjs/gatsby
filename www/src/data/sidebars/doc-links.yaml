@@ -46,6 +46,8 @@
               link: /docs/hosting-on-netlify/
             - title: Deploying to Render
               link: /docs/deploying-to-render/
+            - title: Deploying to Surge
+              link: /docs/deploying-to-surge/
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -487,6 +489,8 @@
                   link: /docs/going-gatsby-only/
             - title: Inside a Company
               link: /docs/gatsby-for-companies/
+            - title: Inside an Enterprise (Large Company)
+              link: /docs/gatsby-in-the-enterprise/
               items:
                 - title: Answering IT/Security Questions*
                   link: /docs/answering-it-security/
