@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.0.0",
     "@babel/runtime": "^7.0.0",
+    "@gatsbyjs/update-notifier": "^2.5.0-rc.2",
     "bluebird": "^3.5.0",
     "common-tags": "^1.4.0",
     "convert-hrtime": "^2.0.0",
@@ -42,7 +43,8 @@
     "cross-env": "^5.1.4"
   },
   "files": [
-    "dist"
+    "dist",
+    "lib"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
