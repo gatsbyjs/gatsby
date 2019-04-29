@@ -1,7 +1,7 @@
 /* global importScripts, workbox, idbKeyval */
 
 importScripts(`idb-keyval-iife.min.js`)
-const { NavigationRoute, registerRoute } = workbox.routing
+const { NavigationRoute } = workbox.routing
 
 const navigationRoute = new NavigationRoute(async ({ event }) => {
   let { pathname } = new URL(event.request.url)
@@ -24,15 +24,15 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   return await caches.match(offlineShell)
 })
 
-registerRoute(navigationRoute)
+workbox.routing.registerRoute(navigationRoute)
 
 const messageApi = {
-  setPathResources({ waitUntil }, { path, resources }) {
-    waitUntil(idbKeyval.set(`resources:${path}`, resources))
+  setPathResources(event, { path, resources }) {
+    event.waitUntil(idbKeyval.set(`resources:${path}`, resources))
   },
 
-  clearPathResources({ waitUntil }) {
-    waitUntil(idbKeyval.clear())
+  clearPathResources(event) {
+    event.waitUntil(idbKeyval.clear())
   },
 }
 
