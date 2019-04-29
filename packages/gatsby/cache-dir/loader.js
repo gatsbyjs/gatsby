@@ -1,6 +1,7 @@
 import emitter from "./emitter"
 import prefetchHelper from "./prefetch"
 import { match } from "@reach/router/lib/utils"
+import normalizePagePath from "./normalize-page-path"
 import stripPrefix from "./strip-prefix"
 // Generated during bootstrap
 import matchPaths from "./match-paths.json"
@@ -73,6 +74,7 @@ const cleanAndFindPath = rawPathname => {
       foundPath = trimmedPathname
     }
   }
+  foundPath = normalizePagePath(foundPath)
   cleanAndFindPathCache[trimmedPathname] = foundPath
   return foundPath
 }
@@ -259,25 +261,23 @@ const queue = {
     return true
   },
 
-  isPageNotFound: pathname => pageNotFoundPaths.has(pathname),
+  isPageNotFound: pathname => pageNotFoundPaths.has(cleanAndFindPath(pathname)),
 
-  loadPageData: rawPath =>
-    new Promise((resolve, reject) => {
-      const realPath = cleanAndFindPath(rawPath)
-      if (queue.isPageNotFound(realPath)) {
-        resolve(null)
-        return
-      }
-      if (!fetchedPageData[realPath]) {
-        fetchPageData(realPath).then(pageData => {
-          if (process.env.NODE_ENV !== `production`) {
-            devGetPageData(realPath)
-          }
-          resolve(queue.loadPageData(rawPath))
-        })
-      }
-      resolve(pageDatas[realPath])
-    }),
+  loadPageData: rawPath => {
+    const realPath = cleanAndFindPath(rawPath)
+    if (queue.isPageNotFound(realPath)) {
+      return Promise.resolve(null)
+    }
+    if (!fetchedPageData[realPath]) {
+      return fetchPageData(realPath).then(pageData => {
+        if (process.env.NODE_ENV !== `production`) {
+          devGetPageData(realPath)
+        }
+        return queue.loadPageData(rawPath)
+      })
+    }
+    return Promise.resolve(pageDatas[realPath])
+  },
 
   loadPage: rawPath =>
     queue
