@@ -151,7 +151,6 @@ export const ToggleButton = styled(`button`)`
   border: none;
   cursor: pointer;
   display: flex;
-  padding: 0;
   position: relative;
   transition: 0.6s ease;
   width: 100%;
