@@ -12,9 +12,17 @@ Gatsby Themes introduce a concept called Component Shadowing. This feature allow
 users to override a component in order to customize its rendering. Component Shadowing
 is a powerful way to make one-off changes to a theme without having to fully eject.
 
-It's pretty common to end up with a theme where you're happy with 99% of the details
-but want to customize the color palette and perhaps the author bio. This is where Component
-Shadowing is an effective way to make changes quickly and intuitively.
+In some theme ecosystems it's impossible to override aspects of a theme if an API hasn't
+been implemented by the theme author. This makes it difficult, and often times impossible,
+to make one-off changes to a theme.
+
+For example, imagine you want to customize the author bio to add more social handles but
+the theme only offers support for Twitter and LinkedIn. The workflow for adding this new
+functionality will typically require using a fork on the theme which results in a difficult
+upgrade path.
+
+With Gatsby Themes you can use Component Shadowing to customize nearly every aspect of a
+theme quickly and intuitively by _overridding_ a theme's source files.
 
 ## Shadowing Example
 
