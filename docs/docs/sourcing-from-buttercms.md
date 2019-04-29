@@ -12,7 +12,7 @@ ButterCMS is different from a traditional CMS like Drupal or Wordpress in that t
 
 For example, if you wanted to enable a non-technical person to be able to add customer case study pages to your marketing site, you might create a Case Study Page Type to represent these pages. The non-technical person would be able to manage these pages from their dashboard and the JSON API output would look something like this:
 
-```
+```json
 {
   "data": {
     "slug": "acme-co-case-study",
@@ -43,9 +43,7 @@ Run this in your terminal:
 Here you'll specify the config that will be needed to pull down data from butter.
 make sure to add your **API_TOKEN** from your dashboard, in this guide we would be creating `faq_items`, `faq_headline`, `homepage` , `customer_case_study` as stated in the config below. Do well to change it if you named it something differently.
 
-`gatsby-config.js`
-
-```javascript
+```javascript:title=gatsby-config.js
 module.exports = {
 {
       resolve: `gatsby-source-buttercms`,
@@ -137,7 +135,7 @@ Then populate our new page with content. In the next step, we'll call the Butter
 
 With your homepage defined, the ButterCMS our graphql query will return some data that looks like this:
 
-```
+```json
 {
   "data": {
     "slug": "homepage",
@@ -159,13 +157,13 @@ With your homepage defined, the ButterCMS our graphql query will return some dat
 }
 ```
 
-Now lets create the home page `src/pages/index.js`
+Now lets create the home page:
 
-```
-import React from 'react'
-import { graphql, Link } from 'gatsby'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+```jsx:title=src/pages/index.js
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 const IndexPage = ({ data }) => {
   const home = data.home.edges[0].node
@@ -259,8 +257,8 @@ export default IndexPage
 
 in your terminal, run
 
-```
-> gatsby develop
+```shell
+gatsby develop
 ```
 
 Now open up [localhost:8000/home](http://localhost:8000/home) to see the home page populated with the content you created on butter.
@@ -295,8 +293,8 @@ Then populate our new page with content. In the next step, we'll call the Butter
 
 To Pull down content into gatsby run:
 
-```
-> gatsby develop
+```shell
+gatsby develop
 ```
 
 ### Testing with GrapiQl
@@ -305,9 +303,9 @@ You can test out your Graphql queries with GrahiQl( A graphql debugger) fire up 
 
 Once graphiql is opened paste the query below :
 
-```
+```graphql
 {
-  allButterPage(filter: {page_type: {eq: "customer_case_study"}}) {
+  allButterPage(filter: { page_type: { eq: "customer_case_study" } }) {
     edges {
       node {
         id
@@ -326,13 +324,11 @@ Once graphiql is opened paste the query below :
 
 Now lets refactor our home page to display link(s) to each customer case study page
 
-`src/pages/index.js`
-
-```
-import React from 'react'
-import { graphql, Link } from 'gatsby'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+```jsx:title=src/pages/index.js
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 const IndexPage = ({ data }) => {
   console.log(data)
@@ -447,24 +443,18 @@ export default IndexPage
 
 Next we'll refactor `gatsby-node-js` to programatically create customer case study pages with gatsby create pages API. First we need to define a customer case study template
 
-`src/templates/customer-case-study.js`
-
-```
-import React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
-
+```jsx:title=src/templates/customer-case-study.js
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 function CustomerCaseStudy({ data }) {
   const page = data.allButterPage.edges[0].node
 
   return (
     <Layout>
-      <SEO
-        title={page.facebook_open_graph_title}
-        description={page.headline}
-      />
+      <SEO title={page.facebook_open_graph_title} description={page.headline} />
       <div>
         <h1>{page.seo_title}</h1>
         <p>{page.headline}</p>
@@ -498,15 +488,13 @@ export default CustomerCaseStudy
 
 Now Let's programatically Create customer case study pages based on the template we defined in `src/template/customer-case-study.js`
 
-`gatsby-node.js`
-
-```
+```javascript:title=gatsby-node.js
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
- // Blog post template
+  // Blog post template
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
 
   //customer case study template
@@ -545,7 +533,7 @@ exports.createPages = async ({ graphql, actions }) => {
     console.log(`Error Running Querying Posts`, error)
   }
 
-  posts = posts.data.allButterPost.edges;
+  posts = posts.data.allButterPost.edges
 
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
@@ -602,8 +590,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
 That's it! now stop the server and run:
 
-```
-> gatsby develop
+```shell
+gatsby develop
 ```
 
 Now the home page should contain links to customer case study pages, Click around
@@ -642,14 +630,12 @@ Now go back to your workspace and update your heading and FAQ items.
 
 ## Integrate into your application
 
-`/src/pages/faq.js`
+```javascript:title=src/pages/faq.js
+import React from "react"
+import { graphql } from "gatsby"
 
-```
-import React from 'react'
-import { graphql } from 'gatsby'
-
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 const Faq = ({ data }) => {
   const FAQs = data.allButterCollection.edges[0].node.value
@@ -684,7 +670,7 @@ const Faq = ({ data }) => {
             }}
           >
             <h2 style={{ color: `#213b55` }}>{faq.question}</h2>
-            <p style={{ fontSize: `1.5rem`}}>{faq.answer} </p>
+            <p style={{ fontSize: `1.5rem` }}>{faq.answer} </p>
           </div>
         ))}
       </div>
@@ -729,13 +715,11 @@ Butter CMS is also a great feat if you want to spin up a blog, it's pretty easy 
 
 Now we would create a home page for our blog posts. It basically lists all blog posts.
 
-`src/pages/blog.js`
-
-```
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Layout from '../components/Layout'
-import SEO from '../components/seo'
+```jsx:title=src/pages/blog.js
+import React from "react"
+import { Link, graphql } from "gatsby"
+import Layout from "../components/Layout"
+import SEO from "../components/seo"
 
 class BlogIndex extends React.Component {
   render() {
@@ -768,10 +752,13 @@ class BlogIndex extends React.Component {
               return (
                 <div
                   key={node.slug}
-                  style={{ margin: `10px`, padding:`10px` }}
+                  style={{ margin: `10px`, padding: `10px` }}
                 >
                   <h3>
-                    <Link style={{ boxShadow: `none` }} to={`/blog/${node.slug}`}>
+                    <Link
+                      style={{ boxShadow: `none` }}
+                      to={`/blog/${node.slug}`}
+                    >
                       {title}
                     </Link>
                   </h3>
@@ -835,15 +822,13 @@ export const pageQuery = graphql`
 
 Now we've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/node-apis/#createPages) API we would generate blog post pages using a template:
 
-`src/pages/template/blog-post.js`
+```jsx:title=src/pages/template/blog-post.js
+import React from "react"
+import { Link, graphql } from "gatsby"
 
-```
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-
-import Bio from '../components/Bio'
-import Layout from '../components/Layout'
-import SEO from '../components/seo'
+import Bio from "../components/Bio"
+import Layout from "../components/Layout"
+import SEO from "../components/seo"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -936,9 +921,7 @@ export const pageQuery = graphql`
 
 Now we'll use the blog template defined in `src/templates/blog-post.js` to generate blog pages.
 
-`gatsby-node.js`
-
-```
+```javascript:title=gatsby-node.js
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions }) => {
