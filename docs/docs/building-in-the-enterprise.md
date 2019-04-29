@@ -14,7 +14,7 @@ People mean different things when they say “enterprise”. Some mean 500-perso
 
 When we say “enterprise” we mean large companies with established infrastructural setups -- in-house layers of code, frameworks, processes, and preferred vendors to handle concerns such as hosting, deployments, CDN, etc.
 
-Other common characteristics include specified procurement processes, standardization on particular technology stacks, changeover at eg 5-year intervals, and frequent security audits. Often, enterprises are heavily invested in maintaining and improving existing web properties (“brownfield”) as opposed to creating new ones (“greenfield”).
+Other common characteristics include specified procurement processes, standardization on particular technology stacks, changeover at e.g. 5-year intervals, and frequent security audits. Often, enterprises are heavily invested in maintaining and improving existing web properties (“brownfield”) as opposed to creating new ones (“greenfield”).
 
 ### Key benefits of Gatsby for enterprises
 
@@ -26,7 +26,7 @@ Surveys at enterprises adopting Gatsby have found that developers there highligh
 
 **1. The ability to build with modern tools such as React, Webpack, and GraphQL.** Adopting more common frameworks, rather than custom in-house tooling, tends to increases developer satisfaction, developer productivity, and the ability to recruit developers. 
 
-**2. The ability to be productive from the start.** Reduced time on dev and build tolling setup / configuration helps developers get going right away. The burden of maintaining high-quality tooling setups is offloaded from internal tooling teams (and managers) to the Gatsby maintainer team.
+**2. The ability to be productive from the start.** Reduced time on dev and build tooling setup / configuration helps developers get going right away. The burden of maintaining high-quality tooling setups is offloaded from internal tooling teams (and managers) to the Gatsby maintainer team.
 
 ### Overcoming obstacles to adoption
 
