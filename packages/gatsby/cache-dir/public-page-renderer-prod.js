@@ -5,11 +5,10 @@ import InternalPageRenderer from "./page-renderer"
 import loader from "./loader"
 
 const ProdPageRenderer = ({ location }) => {
-  const pageResources = loader.getResourcesForPathnameSync(location.pathname)
+  const pageResources = loader.getPageOr404(location.pathname)
   if (!pageResources) {
     return null
   }
-
   return React.createElement(InternalPageRenderer, {
     location,
     pageResources,
