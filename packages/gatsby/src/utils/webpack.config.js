@@ -259,7 +259,10 @@ module.exports = async (
       rules.media(),
       rules.miscAssets(),
     ]
-    if (store.getState().config._experimentalThemes) {
+    if (
+      store.getState().config._experimentalThemes &&
+      store.getState().config._experimentalThemes.length
+    ) {
       configRules.concat(
         store.getState().themes.themes.map(theme => {
           return {
