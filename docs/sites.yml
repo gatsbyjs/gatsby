@@ -5589,6 +5589,19 @@
     - Marketing
     - Blog
   featured: false
+- title: Holly Lodge Community Centre - Highgate, London
+  main_url: https://www.hlcchl.org/
+  url: https://www.hlcchl.org/
+  source_url: https://github.com/eugelogic/hlcchl-gatsby
+  description: >
+    The Holly Lodge Community Centre - Highgate, London has a shiny new website built with Gatsby v2 that makes important contributions towards a faster, more secure and environmentally friendly web for everyone.
+  categories:
+    - Charity
+    - Community
+    - Event
+    - Nonprofit
+  built_by: Eugene Molari Developer
+  built_by_url: https://twitter.com/EugeneMolari
 - title: blackcater's blog
   url: https://www.blackcater.win
   main_url: https://www.blackcater.win
