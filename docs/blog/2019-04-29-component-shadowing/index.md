@@ -13,24 +13,25 @@ users to override a component in order to customize its rendering.
 
 With other theming approaches it's impossible to change aspects of a theme if a
 configuration option hasn't been built in. Component Shadowing provides a powerful
-way to let users make quick, one-off changes by overriding a theme's source files.
+escape hatch to let users make quick, one-off changes that might not make sense to
+support in the theme itself.
 
 For example, imagine you've installed `gastby-theme-blog` and want to customize the
-author bio component to add a link to their personal website. Before Component
+author `Bio` component to add a link to their personal website. Before Component
 Shadowing, this new functionality would require configuration at the theme level
 or using a fork of the codebase. These approaches result in a difficult upgrade path
 and a maintenance burden.
 
-With Component Shadowing you can replace the theme's original file,
+Component Shadowing let's you replace the theme's original file,
 `gastby-theme-blog/src/components/bio.js`, with your own to implement any changes you
 need.
 
 ## Shadowing Example
 
 If you've installed `gatsby-theme-blog` you'll notice that it renders a
-[Bio component](https://github.com/gatsbyjs/gatsby/blob/666a9bc3c8d91be8a3118b1128340a06e895735e/themes/gatsby-theme-blog/src/components/bio.js)
-which is used in the `BlogPost` template. If you'd like to change the component you can do so
-with Component Shadowing.
+[`Bio` component](https://github.com/gatsbyjs/gatsby/blob/666a9bc3c8d91be8a3118b1128340a06e895735e/themes/gatsby-theme-blog/src/components/bio.js)
+which is used in the `BlogPost` template. If you'd like to change the `Bio` component
+you can do so with Component Shadowing.
 
 ### Theme File Structure
 
@@ -50,14 +51,15 @@ gatsby-theme-blog
         └── typography.js
 ```
 
-### Implementing a Shadow
+### Customizing the `Bio` Component
 
 Component Shadowing uses a naming convention to determine which component will be rendered.
-So, in order to override the `Bio` component in `gatsby-theme-blog` you'd create a file named
+In order to override the `Bio` component in `gatsby-theme-blog`, create a file named
 `user-site/src/gatsby-theme-blog/components/bio.js`.
 
-Any file that lives in `src/gatsby-theme-blog/` of the user's site will be used _instead_ of a
-file with the same name in the theme's src directory: `gatsby-theme-blog/src`.
+Any file that lives in the `src/gatsby-theme-blog` directory of the user's site will be
+used _instead_ of a file with the same name in the theme's `src` directory:
+`gatsby-theme-blog/src`.
 
 This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of
 `gatsby-theme-blog/src/components/bio.js`:
@@ -68,7 +70,8 @@ import React from "react"
 export default () => <h1>My new bio component!</h1>
 ```
 
-You'll result in the following directory tree:
+With a successful shadow of the `Bio` component you'll result in the following directory
+tree:
 
 ```
 user-site
@@ -78,7 +81,7 @@ user-site
             └── bio.js
 ```
 
-Leveraging Component Shadowing is a powerful way to introduce small changes to a theme and
+Leveraging Component Shadowing is a great way to introduce small changes to a theme and
 even layer in new functionality.
 
 **Note**: In the future we'll publish a technical post that will dive into the internals
@@ -87,12 +90,12 @@ of Component Shadowing.
 ## Changing Styling
 
 Component Shadowing isn't restricted to React components; you can override any
-JavaScript/Markdown/MDX/CSS file. For example, `gatsby-theme-blog` has a
+JavaScript, Markdown, MDX, or CSS file. For example, `gatsby-theme-blog` has a
 [design tokens file](https://github.com/gatsbyjs/gatsby/blob/666a9bc3c8d91be8a3118b1128340a06e895735e/themes/gatsby-theme-blog/src/components/tokens/index.js)
 which is used to define font sizing, spacing, and colors. If you want to modify these
-values you can shadow it.
+values, you can shadow it.
 
-To do so, you can create a file named
+To do so, create a file named
 `user-site/src/gatsby-theme-blog/components/tokens/index.js`.
 
 ```js:title=src/gatsby-theme-blog/components/tokens/index.js
