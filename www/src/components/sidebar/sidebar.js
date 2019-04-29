@@ -9,7 +9,7 @@ import {
   space,
   fontSizes,
   transition,
-  breakpoints,
+  mediaQueries,
   sizes,
   letterSpacings,
 } from "../../utils/presets"
@@ -235,7 +235,7 @@ class SidebarBody extends Component {
             height: this.props.disableExpandAll
               ? `100%`
               : `calc(100% - ${sizes.sidebarUtilityHeight})`,
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}
@@ -251,7 +251,7 @@ class SidebarBody extends Component {
               fontWeight: `normal`,
               textTransform: `uppercase`,
               letterSpacing: letterSpacings.tracked,
-              // [breakpoints.md]: {
+              // [mediaQueries.md]: {
               //   display: `none`,
               // },
             }}

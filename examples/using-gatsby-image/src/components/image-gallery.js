@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 import numeral from "numeral"
 
 import { mq, gutter, offset, offsetXxl } from "../utils/presets"

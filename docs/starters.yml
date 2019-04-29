@@ -1127,7 +1127,7 @@
   repo: https://github.com/crstnio/gatsby-starter-antd
   description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
   tags:
-    - Ant Design
+    - Styling:Ant Design
     - Styling:Less
   features:
     - Fork of Gatsby's default starter
@@ -1931,7 +1931,7 @@
   tags:
     - Markdown
     - Redux
-    - Ant Design
+    - Styling:Ant Design
   features:
     - Responsive Web Design
     - Auto generated Sidebar
@@ -2261,7 +2261,7 @@
   tags:
     - Documentation
     - TypeScript
-    - Ant Design
+    - Styling:Ant Design
     - Markdown
     - MDX
   features:
@@ -2287,7 +2287,7 @@
     - Landing Page
     - Portfolio section
     - Blog post listing with a preview for each post
-      - Infinite scroll instead of next and previous buttons
+    - Infinite scroll instead of next and previous buttons
     - Blog posts generated from Markdown files
     - About Page
     - Responsive Design
@@ -2299,12 +2299,11 @@
   description: A mutli-response and light, mobile first blog starter with columns layout and Seo optimization.
   tags:
     - Blog
-    - Categories
-    - Tags
     - Markdown
     - Sitemap
     - Portfolio
     - SEO
+    - Grouping
   features:
     - Blog
     - Portfolio section
@@ -2361,3 +2360,39 @@
     - Landing page structure split into sections
     - Basic UX/UX elements ready. navbar, smooth scrolling, faqs, theming
     - Convenient image handling and data separation
+- url: https://gatsby-starter-quiz.netlify.com/
+  repo: https://github.com/raphadeluca/gatsby-starter-quiz
+  description: Create rich quizzes with Gatsby & Mdx. No need of database or headless CMS. Manage your data directly in your Mdx file's frontmatter and write your content in the body. Customize your HTML tags, use react components from a library or write your owns. Navigation will be automatically created between each question.
+  tags:
+    - Quiz
+    - MDX
+  features:
+    - Data quiz in the frontmatter
+    - Rich customizable content with MDX
+    - Green / Red alert footer on user's answer
+    - Navigation generated based on the index of each question
+- url: https://gatsby-theme-ggt-material-ui-blog.netlify.com/
+  repo: https://github.com/greatgatsbyjsthemes/gatsby-starter-ggt-material-ui-blog
+  description: Starter material-ui blog utilizing a Gatsby theme!
+  tags:
+    - Blog
+    - Theme
+    - Mdx
+    - Markdown
+  features:
+    - Uses MDX with Gatsby theme for quick and easy set up
+    - Material-ui design with optional config passed into the theme options
+    - Gradient background with sitemap, rss feed, and offline capabilities
+- url: https://gatsby-starter-blog-typescript.netlify.com/
+  repo: https://github.com/gperl27/Gatsby-Starter-Blog-Typescript
+  description: Gatsby starter blog with typescript
+  tags:
+    - Blog
+    - Typescript
+    - Styling:CSS-in-JS
+  features:
+    - Includes all features that come with gatsby's official starter blog
+    - Typescript for type-safety out of the box
+    - Styled components in favor of inline styles
+    - Transition Link for nice page transitions
+    - Type definitions from grapql schema (with code generation)

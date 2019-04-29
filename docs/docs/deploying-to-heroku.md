@@ -21,7 +21,7 @@ Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your applic
 
 Sometimes specifying buildpacks via the `app.json` file doesn’t work. If this is your case, try to add them in the Heroku dashboard or via the CLI with the following commands:
 
-```sh
+```shell
 $ heroku buildpacks:set heroku/nodejs
 $ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git
 ```
