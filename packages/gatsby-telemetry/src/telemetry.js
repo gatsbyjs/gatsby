@@ -4,9 +4,10 @@ const EventStorage = require(`./event-storage`)
 const { sanitizeErrors } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
-const { basename } = require(`path`)
+const { basename, join, sep } = require(`path`)
 const { execSync } = require(`child_process`)
 const isDocker = require(`is-docker`)
+const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -20,11 +21,45 @@ module.exports = class AnalyticsTracker {
   constructor() {
     try {
       this.componentVersion = require(`../package.json`).version
+      this.installedGatsbyVersion = this.getGatsbyVersion()
+      this.gatsbyCliVersion = this.getGatsbyCliVersion()
     } catch (e) {
       // ignore
     }
   }
 
+  getGatsbyVersion() {
+    const packageInfo = require(join(
+      process.cwd(),
+      `node_modules`,
+      `gatsby`,
+      `package.json`
+    ))
+    try {
+      return packageInfo.version
+    } catch (e) {
+      // ignore
+    }
+    return undefined
+  }
+
+  getGatsbyCliVersion() {
+    try {
+      const jsonfile = join(
+        require
+          .resolve(`gatsby-cli`) // Resolve where current gatsby-cli would be loaded from.
+          .split(sep)
+          .slice(0, -2) // drop lib/index.js
+          .join(sep),
+        `package.json`
+      )
+      const { version } = require(jsonfile).version
+      return version
+    } catch (e) {
+      // ignore
+    }
+    return undefined
+  }
   captureEvent(type = ``, tags = {}) {
     if (!this.isTrackingEnabled()) {
       return
@@ -75,6 +110,8 @@ module.exports = class AnalyticsTracker {
 
   buildAndStoreEvent(eventType, tags) {
     const event = {
+      installedGatsbyVersion: this.installedGatsbyVersion,
+      gatsbyCliVersion: this.gatsbyCliVersion,
       ...this.defaultTags,
       ...tags, // The schema must include these
       eventType,
@@ -111,11 +148,7 @@ module.exports = class AnalyticsTracker {
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
       if (!ci.isCI) {
-        console.log(
-          `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
-            `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
-            `To learn more, checkout http://gatsby.dev/telemetry`
-        )
+        showAnalyticsNotification()
       }
       enabled = true
       this.store.updateConfig(`telemetry.enabled`, enabled)

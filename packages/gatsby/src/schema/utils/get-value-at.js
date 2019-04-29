@@ -1,16 +1,23 @@
 const getValueAt = (obj, selector) => {
-  const selectors = Array.isArray(selector) ? selector : selector.split(`.`)
-  return selectors.reduce((acc, key) => {
-    if (acc && typeof acc === `object`) {
-      if (Array.isArray(acc)) {
-        return acc
-          .map(a => (a && typeof a === `object` ? a[key] : undefined))
-          .filter(a => a !== undefined)
-      }
-      return acc[key]
-    }
-    return undefined
-  }, obj)
+  const selectors =
+    typeof selector === `string` ? selector.split(`.`) : selector
+  return get(obj, selectors)
 }
+
+const get = (obj, selectors) => {
+  const [key, ...rest] = selectors
+  const value = obj[key]
+  if (!rest.length) return value
+  if (Array.isArray(value)) return getArray(value, rest)
+  if (value && typeof value === `object`) return get(value, rest)
+  return undefined
+}
+
+const getArray = (arr, selectors) =>
+  arr
+    .map(value =>
+      Array.isArray(value) ? getArray(value, selectors) : get(value, selectors)
+    )
+    .filter(v => v !== undefined)
 
 module.exports = { getValueAt }

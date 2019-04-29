@@ -7,7 +7,6 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
-const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
@@ -32,8 +31,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 })
 
 const { extractQueries } = require(`../query/query-watcher`)
-const { runInitialQueries } = require(`../query/page-query-runner`)
-const queryQueue = require(`../query/query-queue`)
+const queryUtil = require(`../query`)
 const { writePages } = require(`../query/pages-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
 
@@ -454,25 +452,22 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  // Run queries
-  activity = report.activityTimer(`run graphql queries`, {
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  activity = report.activityTimer(`run static queries`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  const startQueries = process.hrtime()
-  queryQueue.on(`task_finish`, () => {
-    const stats = queryQueue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
   })
-  // HACKY!!! TODO: REMOVE IN NEXT REFACTOR
-  emitter.emit(`START_QUERY_QUEUE`)
-  // END HACKY
-  runInitialQueries(activity)
-  await new Promise(resolve => queryQueue.on(`drain`, resolve))
+  activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
@@ -533,7 +528,7 @@ const finishBootstrap = async bootstrapSpan => {
   activity.end()
 
   report.log(``)
-  report.info(`bootstrap finished - ${process.uptime()} s`)
+  report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
   report.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(

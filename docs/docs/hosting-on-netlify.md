@@ -64,7 +64,7 @@ Now that your site is connected to your repository, Netlify will auto-deploy the
 
 ### Domain Setup
 
-In Domain Settings, we can add our own domain and set `CNAME` record as our netlify project URL in your DNS provider settings. Now we should be able to see our netlify project at our domain URL.
+In Domain Settings, we can add our own domain and set `CNAME` record as our Netlify project URL in your DNS provider settings. Now we should be able to see our Netlify project at our domain URL.
 
 ### Other resources
 
