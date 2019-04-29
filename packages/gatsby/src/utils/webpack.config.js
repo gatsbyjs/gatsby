@@ -259,9 +259,9 @@ module.exports = async (
       rules.media(),
       rules.miscAssets(),
     ]
-    if (store.getState().themes.themes._experimentalThemes) {
+    if (store.getState().config._experimentalThemes) {
       configRules.concat(
-        store.getState().themes.themes._experimentalThemes.map(theme => {
+        store.getState().themes.themes.map(theme => {
           return {
             test: /\.jsx?$/,
             includes: theme.themeDir,
