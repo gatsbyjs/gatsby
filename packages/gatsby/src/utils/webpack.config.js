@@ -281,7 +281,7 @@ module.exports = async (
           include: /node_modules/,
           test: /\.jsx?$/,
           use: {
-            loader: `react-hot-loader/webpack`,
+            loader: require.resolve(`./webpack-hmr-hooks-patch`),
           },
         })
 
