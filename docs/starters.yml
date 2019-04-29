@@ -2383,3 +2383,16 @@
     - Uses MDX with Gatsby theme for quick and easy set up
     - Material-ui design with optional config passed into the theme options
     - Gradient background with sitemap, rss feed, and offline capabilities
+- url: https://github.com/gperl27/Gatsby-Starter-Blog-Typescript
+  repo: https://github.com/gperl27/Gatsby-Starter-Blog-Typescript
+  description: Gatsby starter blog with typescript
+  tags:
+    - Blog
+    - Typescript
+    - Styling:CSS-in-JS
+  features:
+    - Includes all features that come with gatsby's official starter blog
+    - Typescript for type-safety out of the box
+    - Styled components in favor of inline styles
+    - Transition Link for nice page transitions
+    - Type definitions from grapql schema (with code generation)
