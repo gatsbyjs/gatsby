@@ -9,20 +9,21 @@ tags:
 ---
 
 Gatsby Themes introduce a concept called Component Shadowing. This feature allows
-users to override a component in order to customize its rendering. Component Shadowing
-is a powerful way to make one-off changes to a theme without having to fully eject.
+users to override a component in order to customize its rendering.
 
-In some theme ecosystems it's impossible to override aspects of a theme if an API hasn't
-been implemented by the theme author. This makes it difficult, and often times impossible,
-to make one-off changes to a theme.
+With other theming approaches it's impossible to change aspects of a theme if a
+configuration option hasn't been built in. Component Shadowing provides a powerful
+way to let users make quick, one-off changes by overriding a theme's source files.
 
-For example, imagine you want to customize the author bio to add more social handles but
-the theme only offers support for Twitter and LinkedIn. The workflow for adding this new
-functionality will typically require using a fork on the theme which results in a difficult
-upgrade path and a maintenance burden.
+For example, imagine you've installed `gastby-theme-blog` and want to customize the
+author bio component to add a link to their personal website. Before Component
+Shadowing, this new functionality would require configuration at the theme level
+or using a fork of the codebase. These approaches result in a difficult upgrade path
+and a maintenance burden.
 
-With Gatsby Themes you can use Component Shadowing to customize nearly every aspect of a
-theme quickly and intuitively by _overridding_ a theme's source files.
+With Component Shadowing you can replace the theme's original file,
+`gastby-theme-blog/src/components/bio.js`, with your own to implement any changes you
+need.
 
 ## Shadowing Example
 
@@ -33,8 +34,8 @@ with Component Shadowing.
 
 ### Theme File Structure
 
-`gatsby-theme-blog` has the following file structure (note that some files are
-omitted for brevity):
+`gatsby-theme-blog` has the following file structure (some files have been omitted for
+brevity):
 
 ```
 gatsby-theme-blog
@@ -59,7 +60,7 @@ Any file that lives in `src/gatsby-theme-blog/` of the user's site will be used 
 file with the same name in the theme's src directory: `gatsby-theme-blog/src`.
 
 This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of
-`gatsby-theme-blog/components/bio.js`:
+`gatsby-theme-blog/src/components/bio.js`:
 
 ```js:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
@@ -132,9 +133,9 @@ from a theme.
 
 ## Conclusion
 
-Component Shadowing is a powerful feature for making small changes to a theme without the
-need for complex configuration. It's a stable feature in Gatsby Themes and is currently
-being used in production.
+Component Shadowing is a powerful feature for making one-off changes to a theme without the
+need for complex configuration or maintaining a fork of the code. It's a stable feature in
+Gatsby Themes and is currently being used in production.
 
 ## Further Reading
 
