@@ -153,7 +153,17 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+
+```markdown
+<!-- Good -->
+
+[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+
+<!-- Bad -->
+
+[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
