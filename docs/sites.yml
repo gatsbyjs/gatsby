@@ -5589,6 +5589,18 @@
     - Marketing
     - Blog
   featured: false
+- title: blackcater's blog
+  url: https://www.blackcater.win
+  main_url: https://www.blackcater.win
+  source_url: https://github.com/blackcater/blog
+  description: >
+    Blog like Medium, for person and team.
+  categories:
+    - Blog
+    - Web Development
+  built_by: blackcater
+  built_by_url: https://github.com/blackcater
+  featured: false
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
