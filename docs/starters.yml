@@ -2396,3 +2396,12 @@
     - Styled components in favor of inline styles
     - Transition Link for nice page transitions
     - Type definitions from grapql schema (with code generation)
+- url: https://gatsby-starter-sass.netlify.com/
+  repo: https://github.com/colbyfayock/gatsby-starter-sass
+  description: A Gatsby starter with Sass and no assumptions!
+  tags:
+    - Styling:SCSS
+  features:
+    - Sass stylesheets to manage your CSS (SCSS flavored)
+    - Simple, minimal base setup to get started
+    - No baked in configurations or assumptions
