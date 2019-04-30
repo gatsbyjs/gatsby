@@ -36,7 +36,7 @@ interface GatsbyImageProps {
   alt?: string
   className?: string | object
   critical?: boolean
-  crossOrigin?: string | boolean;
+  crossOrigin?: string | boolean
   style?: object
   imgStyle?: object
   placeholderStyle?: object

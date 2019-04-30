@@ -169,7 +169,7 @@ const AreYouSureLink = () => (
 
 Video hosted on [egghead.io][egghead].
 
-Sometimes you need to navigate to pages programatically, such as during form submissions. In these cases, `Link` won’t work.
+Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
 
 _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
 

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
 } from "../utils/presets"
@@ -161,7 +161,7 @@ class EvaluationTable extends Component {
                           css={{
                             paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
-                              [breakpoints.xs]: {
+                              [mediaQueries.xs]: {
                                 paddingRight: `${space[3]}`,
                                 paddingLeft: `${space[3]}`,
                               },

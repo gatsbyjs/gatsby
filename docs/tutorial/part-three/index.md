@@ -13,7 +13,7 @@ Gatsby plugins are JavaScript packages that help add functionality to a Gatsby s
 
 Layout components are for sections of your site that you want to share across multiple pages. For example, sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and/or navigation menu. On this page for example, the header at the top is part of gatsbyjs.org's layout component.
 
-Let's dive in to part three.
+Let's dive into part three.
 
 ## Using plugins
 
@@ -271,7 +271,7 @@ export default ({ children }) => (
 
 ![with-navigation2](with-navigation2.png)
 
-And there you have it! A three page site with a basic global navigation.
+And there you have it! A three page site with basic global navigation.
 
 _Challenge:_ With your new "layout component" powers, trying adding headers, footers, global navigation, sidebars, etc. to your Gatsby sites!
 

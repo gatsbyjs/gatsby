@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.33...gatsby@2.3.34) (2019-04-30)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.32...gatsby@2.3.33) (2019-04-29)
+
+### Bug Fixes
+
+- **gatsby:** development proxy should proceed request headers and method ([#13685](https://github.com/gatsbyjs/gatsby/issues/13685)) ([842d9ce](https://github.com/gatsbyjs/gatsby/commit/842d9ce))
+- **typo:** fix typos in error message ([#13683](https://github.com/gatsbyjs/gatsby/issues/13683)) ([f472a08](https://github.com/gatsbyjs/gatsby/commit/f472a08))
+
+## [2.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.31...gatsby@2.3.32) (2019-04-27)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.30...gatsby@2.3.31) (2019-04-25)
+
+### Bug Fixes
+
+- **gatsby:** fixes react-hot-reloader for new react features ([#13610](https://github.com/gatsbyjs/gatsby/issues/13610)) ([213da5a](https://github.com/gatsbyjs/gatsby/commit/213da5a))
+
+## [2.3.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.29...gatsby@2.3.30) (2019-04-25)
+
+### Features
+
+- **gatsby:** Add details to pagination info ([#13625](https://github.com/gatsbyjs/gatsby/issues/13625)) ([f115994](https://github.com/gatsbyjs/gatsby/commit/f115994))
+
+## [2.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.28...gatsby@2.3.29) (2019-04-24)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.27...gatsby@2.3.28) (2019-04-24)
+
+### Bug Fixes
+
+- Add fallback for createContentDigest ([#13584](https://github.com/gatsbyjs/gatsby/issues/13584)) ([093f1f2](https://github.com/gatsbyjs/gatsby/commit/093f1f2))
+
+## [2.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.26...gatsby@2.3.27) (2019-04-23)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.25...gatsby@2.3.26) (2019-04-23)
+
+### Bug Fixes
+
+- **docs:** Fix typo in Gatsby Browser APIs ([#13527](https://github.com/gatsbyjs/gatsby/issues/13527)) ([a60a909](https://github.com/gatsbyjs/gatsby/commit/a60a909))
+- raise Unexpected Errors in resolve-module-exports ([#13476](https://github.com/gatsbyjs/gatsby/issues/13476)) ([805a1dd](https://github.com/gatsbyjs/gatsby/commit/805a1dd))
+- **gatsby:** respect node type owner in deleteNode ([#13492](https://github.com/gatsbyjs/gatsby/issues/13492)) ([dffb74e](https://github.com/gatsbyjs/gatsby/commit/dffb74e))
+- **gatsby:** Set fixed precision for "bootstrap finished" timer ([#13528](https://github.com/gatsbyjs/gatsby/issues/13528)) ([74a60af](https://github.com/gatsbyjs/gatsby/commit/74a60af))
+
+## [2.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.24...gatsby@2.3.25) (2019-04-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.3.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.23...gatsby@2.3.24) (2019-04-17)
+
+### Bug Fixes
+
+- Handle links to array of array of File nodes ([#13295](https://github.com/gatsbyjs/gatsby/issues/13295)) ([ed74ec0](https://github.com/gatsbyjs/gatsby/commit/ed74ec0)), closes [#13272](https://github.com/gatsbyjs/gatsby/issues/13272)
+
 ## [2.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.22...gatsby@2.3.23) (2019-04-15)
 
 ### Bug Fixes
@@ -2282,7 +2342,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- fix broken gatsby link definition for typescript 2.4.2 (#1628) @DominikGuzei
+- fix broken gatsby link definition for TypeScript 2.4.2 (#1628) @DominikGuzei
 - test: fix failing test due to missing argyle image (#1636) @DSchau
 - Revise part one of tutorial to use hello-world starter (#1630) @KyleAMathews
 - Fix passing createNode as argument (#1629) @sebastienfi
@@ -2327,7 +2387,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Enhance API for multiple feeds #1548 @nicholaswyoung
 - Add new plugin to handle csv files #1496 @ssonal
 - Adds showcase segment for starters/websites built with Gatsby. #1535 @Vagr9K
-- Fancy Javascript Example #1492 @jbolda
+- Fancy JavaScript Example #1492 @jbolda
 - Add sitemap plugin to www #1541 @nicholaswyoung
 
 ### Fixed
@@ -2412,7 +2472,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Removed `owner` assignation to prevent error #1454 @sebastienfi
 - Update gatsby-node.js #1452 @sebastienfi
 - Update README.md #1453 @sebastienfi
-- Improve typescript example #1466 @fabien0102
+- Improve TypeScript example #1466 @fabien0102
 - Remove react-helmet from src/html.js fixes #1443 #1474 @KyleAMathews
 - Updates add-custom-webpack-config.md to fix broken links #1420 @marcustisater
 - Fix source-wordpress npmignore #1476 @KyleAMathews
@@ -2456,7 +2516,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Support NavLink in gatsby-link #1302 @abi
 - Add an example for using the sass plugin #1312 @danielfarrell
 - Add CSS Modules example site #1314 @kyleamathews
-- Add Typescript example #1319 @kyleamathews
+- Add TypeScript example #1319 @kyleamathews
 - Support using browserslist for setting per-site browser targeting for JS/CSS
   transformations #1336 @kyleamathews
 - Add gatsby-plugin-canonical-url #1337 @kyleamathews
@@ -2603,7 +2663,7 @@ Our first beta!!! 🎉
 
 ### Fixed
 
-- Fix graphql compiler on typescript #949 @fabien0102
+- Fix graphql compiler on TypeScript #949 @fabien0102
 - Replace react.createClass with ES6 classes in examples html.js, add PropTypes
   #1169 @abachuk
 - Fix windows build issue #1158 @kyleamathews

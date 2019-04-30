@@ -65,7 +65,12 @@ const fluidImagesShapeMock = [
   },
 ]
 
-const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
+const setup = (
+  fluid = false,
+  props = {},
+  onLoad = () => {},
+  onError = () => {}
+) => {
   const { container } = render(
     <Image
       backgroundColor
@@ -81,6 +86,7 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
+      {...props}
     />
   )
 
@@ -151,15 +157,20 @@ describe(`<Image />`, () => {
     )
     // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 0.5s; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;`
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
+  })
+
+  it(`should have a transition-delay of 1sec`, () => {
+    const component = setup(false, { durationFadeIn: `1000` })
+    expect(component).toMatchSnapshot()
   })
 
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
-    const imageTag = setup(true, onLoadMock, onErrorMock).querySelectorAll(
+    const imageTag = setup(true, {}, onLoadMock, onErrorMock).querySelectorAll(
       `picture img`
     )[1]
     fireEvent.load(imageTag)

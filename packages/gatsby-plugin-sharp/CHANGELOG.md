@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.34...gatsby-plugin-sharp@2.0.35) (2019-04-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** tracedSVG for `fluid` images should respect forced aspect ratio ([#9337](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9337)) ([2fed2c7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/2fed2c7)), closes [#9204](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/9204)
+
 ## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.33...gatsby-plugin-sharp@2.0.34) (2019-04-11)
 
 ### Features

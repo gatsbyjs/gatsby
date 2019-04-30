@@ -2,8 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
-import Lorem from "../components/lorem"
-import Ipsum from "../components/ipsum"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import ImageGallery from "../components/image-gallery"
@@ -26,11 +24,24 @@ const TracedSVG = ({ data, location }) => (
         data.floatingImage.credit
       } (via unsplash.com)`}
     />
-    <Lorem />
-    <h2>Unsplash</h2>
-    <ImageGallery images={data.galleryImages.edges} />
+    <p>
+      Generates a{` `}
+      <a href="https://github.com/gatsbyjs/gatsby/issues/2435">traced SVG</a> of
+      the image and returns the SVG source as an ”optimized URL-encoded” data:
+      URI. This provides an alternative to the default inline base64 placeholder
+      image.
+    </p>
+    <p>
+      To make use of this technique, you can apply processing to an image with a
+      GraphQL query by applying a <code>traceSVG</code> argument and the
+      appropriate{` `}
+      <a href="https://www.gatsbyjs.org/packages/gatsby-image/#gatsby-transformer-sharp">
+        fragment applied
+      </a>
+      .
+    </p>
+    <h2>Unsplash SVG Image Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
-    <Ipsum />
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       title={`“${data.fullWidthImage.title}” by ${
