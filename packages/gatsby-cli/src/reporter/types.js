@@ -3,7 +3,7 @@
 export type ActivityTracker = {
   start(): Function,
   end(): Function,
-  setStatus(s: string): Function,
+  setStatus(status: string): Function,
   span: Object,
 }
 
@@ -11,19 +11,21 @@ export type ActivityArgs = {
   parentSpan?: Object,
 }
 
+type LogMessageType = (format: string, ...args: Array<any>) => void
+
 export interface Reporter {
-  stripIndent: any;
-  format: any;
-  setVerbose(isVerbose: boolean): mixed;
-  setNoColor(isNoColor: boolean): mixed;
-  panic(...args: any): mixed;
-  panicOnBuild(...args: any): mixed;
-  error(message: any, error?: any): mixed;
-  uptime(prefix: string): any;
-  success(s: string): Function;
-  verbose(s: string): Function;
-  info(s: string): Function;
-  warn(s: string): Function;
-  log(s: string): Function;
+  stripIndent: Function;
+  format: Object;
+  setVerbose(isVerbose: boolean): void;
+  setNoColor(isNoColor: boolean): void;
+  panic(...args: Array<any>): void;
+  panicOnBuild(...args: Array<any>): void;
+  error(message: string, error?: Object): void;
+  uptime(prefix: string): void;
+  success: LogMessageType;
+  verbose: LogMessageType;
+  info: LogMessageType;
+  warn: LogMessageType;
+  log: LogMessageType;
   activityTimer(name: string, activityArgs: ActivityArgs): ActivityTracker;
 }
