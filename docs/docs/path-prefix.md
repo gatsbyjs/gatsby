@@ -56,7 +56,7 @@ function Index() {
 
 Without doing _anything_ and merely using the `Link` component, this link will be prefixed with our specified `pathPrefix` in `gatsby-config.js`. Woo hoo!
 
-If we want to do programattic/dynamic navigation, totally possible too! We expose a `navigate` helper, and this too automatically handles path prefixing.
+If we want to do programatic/dynamic navigation, totally possible too! We expose a `navigate` helper, and this too automatically handles path prefixing.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
