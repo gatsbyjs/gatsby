@@ -1,6 +1,7 @@
 const { graphql } = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
 const extendNodeType = require(`../extend-node-type`)
+const { createContentDigest } = require(`gatsby/utils`)
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
@@ -108,6 +109,7 @@ const bootstrapTest = (
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       },
       { ...additionalParameters, ...pluginOptions }
     )
@@ -378,6 +380,25 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
         type: `root`,
       })
     }
+  )
+
+  bootstrapTest(
+    `excerpt does have missing words and extra spaces`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
+    `excerpt
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node.excerpt).toMatch(`Where oh where is that pony?`)
+    },
+    {}
   )
 
   bootstrapTest(

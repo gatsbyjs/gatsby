@@ -6,7 +6,7 @@ import {
   colors,
   transition,
   radii,
-  breakpoints,
+  mediaQueries,
   lineHeights,
   letterSpacings,
   fonts,
@@ -268,7 +268,7 @@ const _options = {
           borderRight: 0,
         },
       },
-      [`${breakpoints.md} and (max-width:980px)`]: {
+      [`${mediaQueries.md} and (max-width:980px)`]: {
         ".gatsby-highlight, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
@@ -284,7 +284,7 @@ const _options = {
       ".egghead-video": {
         border: `none`,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-space[7]),
           marginRight: rhythm(-space[7]),
@@ -314,7 +314,7 @@ const _options = {
           right: rhythm(space[7]),
         },
       },
-      [breakpoints.xxl]: {
+      [mediaQueries.xxl]: {
         html: {
           fontSize: `${(18 / 16) * 100}%`,
         },

@@ -1,13 +1,11 @@
 // @flow
-// loads Object.entries polyfill on node 6
-// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-require(`object.entries/auto`)
 const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
+const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const inkReporter = require(`./ink`).default
+const reporterInstance = require(`./reporters/yurnalist`)
 
 const errorFormatter = getErrorFormatter()
 
@@ -15,7 +13,8 @@ type ActivityArgs = {
   parentSpan: Object,
 }
 
-/* Reporter module.
+/**
+ * Reporter module.
  * @module reporter
  */
 const reporter = {
@@ -28,13 +27,13 @@ const reporter = {
    * Toggle verbosity.
    * @param {boolean} [isVerbose=true]
    */
-  setVerbose: (...args) => inkReporter.setVerbose(...args),
+  setVerbose: (isVerbose = true) => reporterInstance.setVerbose(isVerbose),
   /**
    * Turn off colors in error output.
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
-    inkReporter.setColors(isNoColor)
+    reporterInstance.setColors(isNoColor)
 
     if (isNoColor) {
       errorFormatter.withoutColors()
@@ -42,7 +41,7 @@ const reporter = {
   },
   /**
    * Log arguments and exit process with status 1.
-   * @param {*} [arguments]
+   * @param {*} args
    */
   panic(...args) {
     this.error(...args)
@@ -51,7 +50,8 @@ const reporter = {
   },
 
   panicOnBuild(...args) {
-    this.error(...args)
+    const [message, error] = args
+    this.error(message, error)
     trackError(`BUILD_PANIC`, { error: args })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
@@ -63,21 +63,24 @@ const reporter = {
       error = message
       message = error.message
     }
-    inkReporter.onError(message)
+
+    reporterInstance.error(message)
     if (error) this.log(errorFormatter.render(error))
   },
   /**
    * Set prefix on uptime.
    * @param {string} prefix - A string to prefix uptime with.
    */
-  uptime(prefix: string) {
+  uptime(prefix) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
-  success: (...args) => inkReporter.onSuccess(...args),
-  verbose: (...args) => inkReporter.onVerbose(...args),
-  info: (...args) => inkReporter.onInfo(...args),
-  warn: (...args) => inkReporter.onWarn(...args),
-  log: (...args) => inkReporter.onLog(...args),
+
+  success: reporterInstance.success,
+  verbose: reporterInstance.verbose,
+  info: reporterInstance.info,
+  warn: reporterInstance.warn,
+  log: reporterInstance.log,
+
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
@@ -85,7 +88,20 @@ const reporter = {
    * @returns {string} The elapsed time of activity.
    */
   activityTimer(name, activityArgs: ActivityArgs = {}) {
-    return inkReporter.createActivity(name, activityArgs)
+    const { parentSpan } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    const span = tracer.startSpan(name, spanArgs)
+
+    const activity = reporterInstance.createActivity(name)
+
+    return {
+      ...activity,
+      end() {
+        span.finish()
+        activity.end()
+      },
+      span,
+    }
   },
 }
 
