@@ -152,6 +152,7 @@ const runAPI = (plugin, api, args) => {
     const apiCallArgs = [
       {
         ...args,
+        basePath: config.pathPrefix || ``,
         pathPrefix: publicPath,
         boundActionCreators: actions,
         actions,
