@@ -62,7 +62,7 @@ The configuration file, `gatsby-config.js` tells Gatsby information about your w
 
 ### Data Source
 
-A source of data that usually gets fed into Gatsby using [source plugins](#source-plugin). A data source is often a [Headless CMS](#headless-cms), but it could also include Markdown, JSON, or YAML files.
+Content and data's origin point, typically integrated into Gatsby with [source plugins](#source-plugin). A data source is often a [Headless CMS](#headless-cms), but it could also include Markdown, JSON, or YAML files.
 
 ### Database
 
