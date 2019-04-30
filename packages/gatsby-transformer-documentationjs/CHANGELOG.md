@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@3.0.1...gatsby-transformer-documentationjs@4.0.0) (2019-04-30)
+
+### Features
+
+- **gatsby-plugin-documentationjs:** Ensure a consistent schema for gatsby-plugin-documentationjs and add TypeScript support ([#13692](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/issues/13692)) ([950b9d6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/commit/950b9d6))
+
 ## [3.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@3.0.0...gatsby-transformer-documentationjs@3.0.1) (2019-04-04)
 
 ### Bug Fixes
