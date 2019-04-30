@@ -2,25 +2,126 @@
 title: Global CSS files
 ---
 
-### Styling React components
+Traditionally, websites are styled using global CSS files.
 
-Global CSS files are the traditional approach to styling websites.
+Globally-scoped CSS rules are declared in external `.css` stylesheets, and [CSS specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) determines which styles are applied.
 
-CSS rules are declared in separate `.css` files, and referenced in HTML with classes.
+### Adding global styles with a layout component
 
-```css
-.primary {
-  background: orangered;
+The best way to add global styles is with a [shared layout component](/tutorial/part-three/#your-first-layout-component). This layout component is used for things that are shared throughout the site, including styles, header components, and other common items.
+
+> **NOTE:** This pattern is implemented by default in [the default starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/02324e5b04ea0a66d91c7fe7408b46d0a7eac868/src/layouts/index.js#L6).
+
+To create a shared layout with global styles, start by creating a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
+
+```shell
+gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
+Open your new site in your code editor and create a new directory at `/src/components`. Inside, create two new files:
+
+```diff
+  global-styles/
+  └───src/
+      └───components/
++     │   │─  layout.js
++     │   └─  layout.css
+      │
+      └───pages/
+          └─  index.js
+```
+
+Inside `src/components/layout.css`, add some global styles:
+
+```css:title=src/components/layout.css
+div {
+  background: red;
   color: white;
 }
 ```
 
-```html
-<button class="primary">Click me</button>
+In `src/components/layout.js`, include the stylesheet and export a layout component:
+
+```jsx:title=src/components/layout.js
+import React from "react"
+import "./layout.css"
+
+export default ({ children }) => <div>{children}</div>
 ```
 
-There is only one difference in JSX: since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead.
+Finally, update `src/pages/index.js` to use the new layout component:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => <Layout>Hello world!</Layout>
+```
+
+Run `npm run develop` and you’ll see the global styles applied.
+
+![Global styles](./images/global-styles.png)
+
+## Adding global styles without layout component
+
+In some cases, using a shared layout component is not desirable. In these cases, you can include a global stylesheet using `gatsby-browser.js`.
+
+> **NOTE:** This approach does _not_ work with CSS-in-JS. Use shared components to share styles in CSS-in-JS.
+
+First, open a new terminal window and run the following commands to create a new default Gatsby site and start the development server:
+
+```shell
+gatsby new global-style-tutorial https://github.com/gatsbyjs/gatsby-starter-default
+cd global-style-tutorial
+npm run develop
+```
+
+Second, create a css file and define any styles you wish. An arbitrary example:
+
+```css:title=src/styles/global.css
+html {
+  background-color: lavenderblush;
+}
+
+a {
+  color: rebeccapurple;
+}
+```
+
+Then, include the stylesheet in your site's `gatsby-browser.js` file.
+
+> **NOTE:** This solution works when including css as those styles are extracted when building the JavaScript but not for css-in-js.
+> Including styles in a layout component or a global-styles.js is your best bet for that.
+
+```javascript:title=gatsby-browser.js
+import "./src/styles/global.css"
+
+// or:
+// require('./src/styles/global.css')
+```
+
+> _Note: You can use Node.js require or import syntax. Additionally, the placement of the example css file in a `src/styles` folder is arbitrary._
+
+You should see your global styles taking effect across your site:
+
+![Global styles example site](./images/global-styles-example.png)
+
+### Adding classes to components
+
+Since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead.
 
 ```jsx
 <button className="primary">Click me</button>
 ```
+
+```css
+.primary {
+  background: orangered;
+}
+```
+
+### Limitations
+
+The biggest problem with global CSS files is the risk of name conflicts and side effects like unintended inheritance.
+
+CSS methodologies like BEM can help solve this, but a more modern solution is to write locally-scoped CSS using [CSS Modules](/docs/css-modules/) or [CSS-in-JS](/docs/css-in-js/).
