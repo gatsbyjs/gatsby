@@ -812,7 +812,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
   createParentChildLink(
-    { parent: Node, child: Node },
+    args: { parent: GatsbyNode; child: GatsbyNode },
     plugin?: ActionPlugin
   ): void
 
