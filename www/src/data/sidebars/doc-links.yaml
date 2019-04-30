@@ -489,6 +489,8 @@
                   link: /docs/going-gatsby-only/
             - title: Inside a Company
               link: /docs/gatsby-for-companies/
+            - title: Inside an Enterprise (Large Company)
+              link: /docs/gatsby-in-the-enterprise/
               items:
                 - title: Answering IT/Security Questions*
                   link: /docs/answering-it-security/
