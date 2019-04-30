@@ -3,8 +3,9 @@ import { withPathPrefix, withAssetPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
 
 // TODO: remove for v3
-if (!withAssetPrefix) {
-  withAssetPrefix = withPathPrefix
+let withPrefix = withAssetPrefix
+if (!withPrefix) {
+  withPrefix = withPathPrefix
 }
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
@@ -23,7 +24,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       key={`gatsby-plugin-sitemap`}
       rel="sitemap"
       type="application/xml"
-      href={withAssetPrefix(output)}
+      href={withPrefix(output)}
     />,
   ])
 }

@@ -6,8 +6,9 @@ import createContentDigest from "gatsby/dist/utils/create-content-digest"
 import { defaultIcons, addDigestToPath } from "./common.js"
 
 // TODO: remove for v3
-if (!withAssetPrefix) {
-  withAssetPrefix = withPathPrefix
+let withPrefix = withAssetPrefix
+if (!withPrefix) {
+  withPrefix = withPathPrefix
 }
 
 let iconDigest = null
@@ -45,9 +46,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         <link
           key={`gatsby-plugin-manifest-icon-link`}
           rel="shortcut icon"
-          href={withAssetPrefix(
-            addDigestToPath(favicon, iconDigest, cacheBusting)
-          )}
+          href={withPrefix(addDigestToPath(favicon, iconDigest, cacheBusting))}
         />
       )
     }
@@ -58,7 +57,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withAssetPrefix(`manifest.webmanifest`)}
+      href={withPrefix(`manifest.webmanifest`)}
       crossOrigin={pluginOptions.crossOrigin}
     />
   )
@@ -87,7 +86,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
         rel="apple-touch-icon"
         sizes={icon.sizes}
-        href={withAssetPrefix(
+        href={withPrefix(
           addDigestToPath(
             icon.src,
             iconDigest,
