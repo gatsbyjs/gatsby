@@ -70,7 +70,7 @@ export const graphql: (query: TemplateStringsArray) => void
  *
  * @see https://www.gatsbyjs.org/docs/gatsby-config/
  */
-export interface GatsbyConfig {
+export interface GatsbyConfigAPI {
   /** When you want to reuse common pieces of data across the site (for example, your site title), you can store that here. */
   siteMetadata?: Record<string, unknown>
   /** Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options. */
@@ -103,7 +103,7 @@ export interface GatsbyConfig {
  *
  * @see https://www.gatsbyjs.org/docs/node-apis/
  */
-export interface GatsbyNode {
+export interface GatsbyNodeAPI {
   /**
    * Tell plugins to add pages. This extension point is called only after the initial
    * sourcing and transformation of nodes plus creation of the GraphQL schema are
@@ -377,7 +377,7 @@ export interface GatsbyNode {
  *
  * @see https://www.gatsbyjs.org/docs/browser-apis/
  */
-export interface GatsbyBrowser {
+export interface GatsbyBrowserAPI {
   disableCorePrefetching?(args: BrowserPluginArgs, options: PluginOptions): any
   onClientEntry?(args: BrowserPluginArgs, options: PluginOptions): any
   onInitialClientRender?(args: BrowserPluginArgs, options: PluginOptions): any
@@ -427,7 +427,7 @@ export interface GatsbyBrowser {
  *
  * @see https://www.gatsbyjs.org/docs/ssr-apis/
  */
-export interface GatsbySSR {
+export interface GatsbySSRAPI {
   /**
    * Called after every page Gatsby server renders while building HTML so you can
    * replace head components to be rendered in your `html.js`. This is useful if
@@ -619,7 +619,7 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateNodeArgs extends ParentSpanPluginArgs {
-  node: Node
+  node: GatsbyNode
   traceId: string
   traceTags: {
     nodeId: string
@@ -628,7 +628,7 @@ export interface CreateNodeArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreatePageArgs extends ParentSpanPluginArgs {
-  page: Node
+  page: GatsbyNode
   traceId: string
 }
 
@@ -736,11 +736,11 @@ interface ActionPlugin {
 }
 
 interface DeleteNodeArgs {
-  node: Node
+  node: GatsbyNode
 }
 
 interface CreateNodeFieldArgs {
-  node: Node
+  node: GatsbyNode
   name: string
   value: string
 
@@ -776,7 +776,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
   deleteNode(
-    options: { node: Node },
+    options: { node: GatsbyNode },
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -788,7 +788,11 @@ export interface Actions {
   deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
+  createNode(
+    node: GatsbyNode,
+    plugin?: ActionPlugin,
+    options?: ActionOptions
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
   touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
@@ -796,7 +800,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
     args: {
-      node: Node
+      node: GatsbyNode
       fieldName?: string
       fieldValue?: string
       name?: string
@@ -1099,11 +1103,11 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
   serviceWorker: ServiceWorkerRegistration
 }
 
-export interface Node {
+export interface GatsbyNode {
   path?: string
   id: string
   parent: string
-  children: Node[]
+  children: GatsbyNode[]
   fields?: Record<string, string>
   internal: {
     type: string
