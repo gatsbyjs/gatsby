@@ -158,7 +158,7 @@ Extends [Markdown](#markdown) to support [React](#react) [components](#component
 
 ### Markdown
 
-A way of writing content in plain text, using special characters such as underscores and asterisks to format content.
+A way of writing HTML content with plain text, using special characters to denote content types such as hash symbols for [headings](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements), and underscores and asterisks for text emphasis.
 
 ## N
 
