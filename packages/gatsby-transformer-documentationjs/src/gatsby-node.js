@@ -80,6 +80,8 @@ exports.sourceNodes = ({ actions }) => {
     type DocumentationJsExample {
       caption: String
       description: String
+      highlighted: String
+      raw: String
     }
 
     type DocumentationJsMembers {
@@ -344,6 +346,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       if (docsJson.examples) {
         picked.examples = docsJson.examples.map(example => {
           return {
+            ...example,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,
