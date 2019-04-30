@@ -185,30 +185,39 @@
               link: /starters/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
-        # restructure docs styling section
         - title: Styling Your Site
           link: /docs/styling/
           items:
-            - title: Using Layout Components
-              link: /docs/layout-components/
-            - title: Using CSS Modules
-              link: /docs/css-modules/
-            - title: Using Typography.js
-              link: /docs/typography-js/
-            - title: Using CSS-in-JS Library Emotion
-              link: /docs/emotion/
-            - title: Using CSS-in-JS Library Glamor
-              link: /docs/glamor/
-            - title: Using CSS-in-JS Library Styled Components
-              link: /docs/styled-components/
-            - title: Creating Global Styles
-              link: /docs/creating-global-styles/
-            - title: Writing Component CSS
-              link: /docs/component-css/
-            - title: Using PostCSS
-              link: /docs/post-css/
-            - title: Using TailwindCSS
-              link: /docs/tailwind-css/
+            - title: Cascading Styles
+              link: /docs/cascading-styles/
+              items:
+                - title: Plain CSS
+                  link: /docs/plain-css/
+                - title: Using SASS
+                  link: /docs/using-sass/
+            - title: Scoped Styles
+              link: /docs/scoped-styles/
+              items:
+                - title: CSS Modules
+                  link: /docs/css-modules/
+                - title: CSS-in-JS
+                  link: /docs/css-in-js/
+                  items:
+                    - title: Emotion
+                      link: /docs/emotion/
+                    - title: Styled-Components
+                      link: /docs/styled-components/
+            - title: Frameworks and Libraries
+              link: /docs/frameworks-and-libraries/
+              items:
+                - title: Typography.js
+                  link: /docs/typography-js/
+                - title: Using PostCSS
+                  link: /docs/post-css/
+                - title: Using TailwindCSS
+                  link: /docs/tailwind-css/
+                - title: Using Layout Components
+                  link: /docs/layout-components/
         - title: Adding Components to Content with MDX
           link: /docs/mdx/
           items:
