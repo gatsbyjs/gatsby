@@ -15,11 +15,6 @@ const setHeadComponents = args => (headComponents = headComponents.concat(args))
 
 const ssrArgs = {
   setHeadComponents,
-  withAssetPrefix: jest.fn(prefix => 
-    [global.__PATH_PREFIX__ || ``, prefix]
-      .join('/')
-      .replace(/^\/+/, '/')
-  )
 }
 
 describe(`gatsby-plugin-manifest`, () => {

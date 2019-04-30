@@ -12,7 +12,7 @@ export function withPrefix(path) {
 }
 
 export function withAssetPrefix(path) {
-  return `${__PATH_PREFIX__}/${path}`
+  return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
 function normalizePath(path) {

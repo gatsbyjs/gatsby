@@ -4,6 +4,7 @@ describe(`Adds <Link> for feed to head`, () => {
   const prefix = global.__BASE_PATH__
   beforeEach(() => {
     global.__BASE_PATH__ = ``
+    global.__PATH_PREFIX__ = ``
   })
 
   afterAll(() => {
@@ -54,7 +55,7 @@ describe(`Adds <Link> for feed to head`, () => {
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
   it(`creates Link href with path prefix when __PATH_PREFIX__ sets`, async () => {
-    global.__BASE_PATH__ = `/hogwarts`
+    global.__PATH_PREFIX__ = `/hogwarts`
 
     const pluginOptions = {
       feeds: [

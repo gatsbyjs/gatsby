@@ -1,13 +1,13 @@
 import React from "react"
-import fs from "fs"
 import { withAssetPrefix } from "gatsby"
+import fs from "fs"
 import createContentDigest from "gatsby/dist/utils/create-content-digest"
 
 import { defaultIcons, addDigestToPath } from "./common.js"
 
 let iconDigest = null
 
-exports.onRenderBody = ({ setHeadComponents, withAssetPrefix }, pluginOptions) => {
+exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
