@@ -13,7 +13,7 @@
     "dotenv": "^6.0.0",
     "email-validator": "^1.1.1",
     "fuse.js": "^3.2.0",
-    "gatsby": "^2.3.0",
+    "gatsby": "^2.3.33",
     "gatsby-image": "^2.0.5",
     "gatsby-plugin-canonical-urls": "^2.0.5",
     "gatsby-plugin-catch-links": "^2.0.2",
