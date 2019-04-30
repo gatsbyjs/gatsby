@@ -1,8 +1,26 @@
 ---
-title: Styling with plain CSS
+title: Global CSS files
 ---
 
-This is a stub. Help our community expand it.
+### Styling React components
 
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+Global CSS files are the traditional approach to styling websites.
+
+CSS rules are declared in separate `.css` files, and referenced in HTML with classes.
+
+```css
+.primary {
+  background: orangered;
+  color: white;
+}
+```
+
+```html
+<button class="primary">Click me</button>
+```
+
+There is only one difference in JSX: since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead.
+
+```jsx
+<button className="primary">Click me</button>
+```
