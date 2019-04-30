@@ -13,15 +13,20 @@ const convertProps = props => {
     delete convertedProps.sizes
   }
 
-  if (convertedProps.fixedImages) {
-    convertedProps.fixed = convertedProps.fixedImages[0]
-  }
-  if (convertedProps.fluidImages) {
-    convertedProps.fluid = convertedProps.fluidImages[0]
-  }
-
   return convertedProps
 }
+
+// Find the source of an image to use as a key in the image cache.
+// Use `fixed` or `fluid` if specified, or the first image in
+// either `fixedImages` or `fluidImages`
+const getImageSrc = props =>
+  props.fluid
+    ? props.fluid.src
+    : props.fixed
+    ? props.fixed.src
+    : props.fluidImages
+    ? props.fluidImages[0].src
+    : props.fixedImages[0].src
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
@@ -29,20 +34,14 @@ const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
-  const src = convertedProps.fluid
-    ? convertedProps.fluid.src
-    : convertedProps.fixed.src
-
+  const src = getImageSrc(convertedProps)
   return imageCache[src] || false
 }
 
 const activateCacheForImage = props => {
   const convertedProps = convertProps(props)
   // Find src
-  const src = convertedProps.fluid
-    ? convertedProps.fluid.src
-    : convertedProps.fixed.src
-
+  const src = getImageSrc(convertedProps)
   imageCache[src] = true
 }
 
@@ -77,50 +76,22 @@ function getIO() {
 }
 
 function generateImageSources(imageVariants) {
-  const initialImage = imageVariants[0]
-
-  if (imageVariants.length === 1) {
-    return initialImage.srcSetWebp ? (
-      <source
-        type={`image/webp`}
-        media={initialImage.media}
-        srcSet={initialImage.srcSetWebp}
-        sizes={initialImage.sizes}
-      />
-    ) : null
-  }
-
-  return imageVariants.map(variant => {
-    const webPSource = variant.srcSetWebp ? (
-      <source
-        key={`${variant.src}-webp`}
-        type="image/webp"
-        media={variant.media}
-        srcSet={variant.srcSetWebp}
-        sizes={variant.sizes}
-      />
-    ) : (
-      undefined
-    )
-
-    const nonWebPSource = (
-      <source
-        key={variant.src}
-        media={variant.media}
-        srcSet={variant.srcSet}
-        sizes={variant.sizes}
-      />
-    )
-
-    return [webPSource, nonWebPSource]
-  })
+  return imageVariants.map(({ src, srcSet, srcSetWebp, media, sizes }) => (
+    <React.Fragment key={src}>
+      {srcSetWebp && (
+        <source
+          type="image/webp"
+          media={media}
+          srcSet={srcSetWebp}
+          sizes={sizes}
+        />
+      )}
+      <source media={media} srcSet={srcSet} sizes={sizes} />
+    </React.Fragment>
+  ))
 }
 
 function generateTracedSVGSources(imageVariants) {
-  if (imageVariants.length === 1) {
-    return null
-  }
-
   return imageVariants.map(variant => (
     <source
       key={variant.src}
@@ -131,38 +102,26 @@ function generateTracedSVGSources(imageVariants) {
 }
 
 function generateBase64Sources(imageVariants) {
-  if (imageVariants.length === 1) {
-    return null
-  }
-
   return imageVariants.map(variant => (
     <source key={variant.src} media={variant.media} srcSet={variant.base64} />
   ))
 }
 
-function generateNoscriptSources(imageVariants, sizes) {
-  const initialImage = imageVariants[0]
+function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
+  const src = isWebp ? srcSetWebp : srcSet
+  const mediaAttr = media ? `media="${media}" ` : ``
+  const typeAttr = isWebp ? `type='image/webp' ` : ``
+  const sizesAttr = sizes ? `sizes="${sizes}" ` : ``
 
-  if (imageVariants.length === 1) {
-    return initialImage.srcSetWebp
-      ? `<source type='image/webp' srcset="${
-          initialImage.srcSetWebp
-        }" ${sizes}/>`
-      : ``
-  }
+  return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
+}
 
-  return imageVariants.map(variant => {
-    let sources = ``
-    const media = variant.media ? `media="${variant.media}"` : ``
-
-    if (variant.srcSetWebp) {
-      sources = `<source type='image/webp' srcSet="${
-        variant.srcSetWebp
-      }" ${media} ${sizes}/>`
-    }
-
-    return sources + `<source srcSet="${variant.srcSet}" ${media} ${sizes}/>`
-  })
+function generateNoscriptSources(imageVariants) {
+  return imageVariants.map(
+    variant =>
+      (variant.srcSetWebp ? generateNoscriptSource(variant, true) : ``) +
+      generateNoscriptSource(variant)
+  )
 }
 
 const listenToIntersections = (el, cb) => {
@@ -180,12 +139,10 @@ const listenToIntersections = (el, cb) => {
 }
 
 const noscriptImg = props => {
-  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
-  const sources = generateNoscriptSources(props.imageVariants, sizes)
-
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
+  const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
@@ -195,7 +152,20 @@ const noscriptImg = props => {
     ? `crossorigin="${props.crossOrigin}" `
     : ``
 
-  return `<picture>${sources}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  let initialSources = ``
+  if (props.srcSetWebp) {
+    initialSources += generateNoscriptSource(props, true)
+  }
+  if (props.media) {
+    initialSources += generateNoscriptSource(props)
+  }
+
+  const variantSources =
+    props.imageVariants.length > 0
+      ? generateNoscriptSources(props.imageVariants)
+      : ``
+
+  return `<picture>${initialSources}${variantSources}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -388,9 +358,9 @@ class Image extends React.Component {
       className: placeholderClassName,
     }
 
-    if (fluid) {
-      const image = fluid
-      const imageVariants = fluidImages || [fluid]
+    if (fluid || fluidImages) {
+      // First image data is supplied to `image`, if an array the rest will go to `variants`
+      const [image, ...imageVariants] = fluidImages ? fluidImages : [fluid]
 
       return (
         <Tag
@@ -431,7 +401,8 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <picture>
-              {generateBase64Sources(imageVariants)}
+              <source media={image.media} srcSet={image.base64} />
+              {imageVariants && generateBase64Sources(imageVariants)}
               <Img src={image.base64} {...placeholderImageProps} />
             </picture>
           )}
@@ -439,7 +410,8 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <picture>
-              {generateTracedSVGSources(imageVariants)}
+              <source media={image.media} srcSet={image.tracedSVG} />
+              {imageVariants && generateTracedSVGSources(imageVariants)}
               <Img src={image.tracedSVG} {...placeholderImageProps} />
             </picture>
           )}
@@ -447,8 +419,20 @@ class Image extends React.Component {
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {generateImageSources(imageVariants)}
-
+              {image.srcSetWebp && (
+                <source
+                  type={`image/webp`}
+                  media={image.media}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />
+              )}
+              <source
+                media={image.media}
+                srcSet={image.srcSet}
+                sizes={image.sizes}
+              />
+              {imageVariants && generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
@@ -477,10 +461,8 @@ class Image extends React.Component {
       )
     }
 
-    if (fixed) {
-      const image = fixed
-      const imageVariants = fixedImages || [fixed]
-
+    if (fixed || fixedImages) {
+      const [image, ...imageVariants] = fixedImages ? fixedImages : [fixed]
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
@@ -518,7 +500,8 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <picture>
-              {generateBase64Sources(imageVariants)}
+              <source media={image.media} srcSet={image.base64} />
+              {imageVariants && generateBase64Sources(imageVariants)}
               <Img src={image.base64} {...placeholderImageProps} />
             </picture>
           )}
@@ -526,7 +509,8 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <picture>
-              {generateTracedSVGSources(imageVariants)}
+              <source media={image.media} srcSet={image.tracedSVG} />
+              {imageVariants && generateTracedSVGSources(imageVariants)}
               <Img src={image.tracedSVG} {...placeholderImageProps} />
             </picture>
           )}
@@ -534,7 +518,20 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {generateImageSources(imageVariants)}
+              {image.srcSetWebp && (
+                <source
+                  type={`image/webp`}
+                  media={image.media}
+                  srcSet={image.srcSetWebp}
+                  sizes={image.sizes}
+                />
+              )}
+              <source
+                media={image.media}
+                srcSet={image.srcSet}
+                sizes={image.sizes}
+              />
+              {imageVariants && generateImageSources(imageVariants)}
 
               <Img
                 alt={alt}
