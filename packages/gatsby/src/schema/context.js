@@ -1,5 +1,4 @@
 const { LocalNodeModel } = require(`./node-model`)
-const { fieldExtensions } = require(`./extensions`)
 
 const withResolverContext = (context, schema) => {
   const nodeStore = require(`../db/nodes`)
@@ -7,7 +6,6 @@ const withResolverContext = (context, schema) => {
 
   return {
     ...context,
-    fieldExtensions,
     nodeModel: new LocalNodeModel({
       nodeStore,
       schema,
