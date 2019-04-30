@@ -33,7 +33,7 @@ const readState = () => {
 
 /**
  * Redux middleware handling array of actions
- /*
+ */
 const multi = ({ dispatch }) => next => action =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
