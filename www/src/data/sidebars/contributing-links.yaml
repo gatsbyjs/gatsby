@@ -1,4 +1,5 @@
 - title: Contributing
+  key: contributing
   items:
     - title: Introduction
       link: /contributing/
@@ -11,8 +12,12 @@
           link: /contributing/contributor-swag/
         - title: Pair Programming Sessions
           link: /contributing/pair-programming/
+        - title: Gatsby Community Events
+          link: /contributing/events/
         - title: Where to Participate in the Community
           link: /contributing/where-to-participate/
+        - title: Organize a Gatsby Event
+          link: /contributing/organize-a-gatsby-event/
         - title: How to Run a Gatsby Workshop
           link: /contributing/how-to-run-a-gatsby-workshop/
         - title: How to Pitch Gatsby

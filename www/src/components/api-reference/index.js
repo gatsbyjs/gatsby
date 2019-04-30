@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
 
-import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 
 export default ({
   docs,
@@ -15,7 +15,7 @@ export default ({
       <div
         id={definition.name}
         key={`reference list ${definition.name}`}
-        css={{ marginBottom: rhythm(1) }}
+        css={{ marginBottom: space[6] }}
       >
         {i !== 0 && <hr />}
         <DocBlock
@@ -46,6 +46,7 @@ export const pageQuery = graphql`
   }
 
   fragment DocumentationFragment on DocumentationJs {
+    kind
     ...DocumentationDescriptionFragment
     ...DocumentationExampleFragment
     ...DocumentationParamsFragment

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/compare/gatsby-remark-copy-linked-files@2.0.11...gatsby-remark-copy-linked-files@2.0.12) (2019-04-23)
+
+### Bug Fixes
+
+- **gatsby-remark-copy-linked-files:** Support MDX by visiting JSX nodes ([#13552](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/issues/13552)) ([0b1c9f2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/commit/0b1c9f2))
+
 ## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/compare/gatsby-remark-copy-linked-files@2.0.10...gatsby-remark-copy-linked-files@2.0.11) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files
