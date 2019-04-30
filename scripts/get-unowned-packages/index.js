@@ -42,7 +42,6 @@ module.exports = async function getUnownedPackages({
       [],
       false
     )
-    console.log(publicGatsbyPackages.length)
 
     const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
 
