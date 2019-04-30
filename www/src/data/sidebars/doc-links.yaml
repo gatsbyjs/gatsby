@@ -188,25 +188,17 @@
         - title: Styling Your Site
           link: /docs/styling/
           items:
-            - title: Cascading Styles
-              link: /docs/cascading-styles/
+            - title: Global CSS Files
+              link: /docs/global-css/
+            - title: Scope your styles with CSS Modules
+              link: /docs/css-modules/
+            - title: Enhance your styles with CSS-in-JS
+              link: /docs/css-in-js/
               items:
-                - title: Plain CSS
-                  link: /docs/plain-css/
-                - title: Using SASS
-                  link: /docs/sass/
-            - title: Scoped Styles
-              link: /docs/scoped-styles/
-              items:
-                - title: CSS Modules
-                  link: /docs/css-modules/
-                - title: CSS-in-JS
-                  link: /docs/css-in-js/
-                  items:
-                    - title: Emotion
-                      link: /docs/emotion/
-                    - title: Styled-Components
-                      link: /docs/styled-components/
+                - title: Emotion
+                  link: /docs/emotion/
+                - title: Styled-Components
+                  link: /docs/styled-components/
             - title: CSS Frameworks and Libraries
               link: /docs/css-frameworks-and-libraries/
               items:
