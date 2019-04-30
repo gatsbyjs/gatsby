@@ -5,12 +5,14 @@ const {
   isIntrospectionType,
   defaultFieldResolver,
   assertValidName,
+  Kind,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
   InterfaceTypeComposer,
   UnionTypeComposer,
   InputTypeComposer,
+  GraphQLJSON,
 } = require(`graphql-compose`)
 
 const apiRunner = require(`../utils/api-runner-node`)
@@ -18,10 +20,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
-const {
-  processFieldExtensions,
-  registerFieldExtension,
-} = require(`./extensions`)
+const { addFieldResolvers } = require(`./add-field-resolvers`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -89,7 +88,6 @@ const updateSchemaComposer = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  await registerExtensions({ parentSpan })
   await addTypes({ schemaComposer, parentSpan, types })
   await addInferredTypes({
     schemaComposer,
@@ -123,28 +121,24 @@ const processTypeComposer = async ({
   nodeStore,
   parentSpan,
 }) => {
-  if (typeComposer instanceof ObjectTypeComposer) {
-    await processFieldExtensions({ schemaComposer, typeComposer, parentSpan })
-    if (typeComposer.hasInterface(`Node`)) {
-      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
-      await addResolvers({ schemaComposer, typeComposer, parentSpan })
-      await addConvenienceChildrenFields({
-        schemaComposer,
-        typeComposer,
-        nodeStore,
-        parentSpan,
-      })
-      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
-    }
+  if (
+    typeComposer instanceof ObjectTypeComposer &&
+    typeComposer.hasInterface(`Node`)
+  ) {
+    await addFieldResolvers({ schemaComposer, typeComposer, parentSpan })
+    await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+    await addResolvers({ schemaComposer, typeComposer, parentSpan })
+    await addConvenienceChildrenFields({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      parentSpan,
+    })
+    await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+  } else if (typeComposer instanceof ObjectTypeComposer) {
+    await addFieldResolvers({ schemaComposer, typeComposer, parentSpan })
   }
 }
-
-const registerExtensions = ({ parentSpan }) =>
-  apiRunner(`registerFieldExtension`, {
-    registerFieldExtension,
-    traceId: `initial-registerFieldExtensions`,
-    parentSpan: parentSpan,
-  })
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
@@ -216,22 +210,30 @@ const processAddedType = ({
   typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
 
   if (createdFrom === `sdl`) {
-    const directives = typeComposer.getDirectives()
-    directives.forEach(({ name, args }) => {
-      switch (name) {
-        case `infer`:
-        case `dontInfer`:
-          typeComposer.setExtension(`infer`, name === `infer`)
-          if (args.noDefaultResolvers != null) {
+    const ast = typeComposer.getType().astNode
+    if (ast && ast.directives) {
+      ast.directives.forEach(directive => {
+        if (directive.name.value === `infer`) {
+          typeComposer.setExtension(`infer`, true)
+          const addDefaultResolvers = getNoDefaultResolvers(directive)
+          if (addDefaultResolvers != null) {
             typeComposer.setExtension(
               `addDefaultResolvers`,
-              !args.noDefaultResolvers
+              addDefaultResolvers
             )
           }
-          break
-        default:
-      }
-    })
+        } else if (directive.name.value === `dontInfer`) {
+          typeComposer.setExtension(`infer`, false)
+          const addDefaultResolvers = getNoDefaultResolvers(directive)
+          if (addDefaultResolvers != null) {
+            typeComposer.setExtension(
+              `addDefaultResolvers`,
+              addDefaultResolvers
+            )
+          }
+        }
+      })
+    }
   }
 
   if (
@@ -247,23 +249,44 @@ const processAddedType = ({
       )
 
       if (createdFrom === `sdl`) {
-        const directives = typeComposer.getFieldDirectives(fieldName)
-        directives.forEach(({ name, args }) => {
-          typeComposer.setFieldExtension(fieldName, name, args)
-        })
+        const field = typeComposer.getField(fieldName)
+        if (field.astNode && field.astNode.directives) {
+          field.astNode.directives.forEach(directive => {
+            if (directive.name.value === `addResolver`) {
+              const options = {}
+              directive.arguments.forEach(argument => {
+                options[argument.name.value] = GraphQLJSON.parseLiteral(
+                  argument.value
+                )
+              })
+              typeComposer.setFieldExtension(fieldName, `addResolver`, options)
+            }
+          })
+        }
       }
     })
   }
 
   if (typeComposer.hasExtension(`addDefaultResolvers`)) {
     report.warn(
-      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, ` +
-        `defined fields won't get resolvers, unless \`addResolver\` ` +
-        `directive/extension is used.`
+      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, defined fields won't get resolvers, unless "addResolver" directive/extension is used.`
     )
   }
 
   return typeComposer
+}
+
+const getNoDefaultResolvers = directive => {
+  const noDefaultResolvers = directive.arguments.find(
+    ({ name }) => name.value === `noDefaultResolvers`
+  )
+  if (noDefaultResolvers) {
+    if (noDefaultResolvers.value.kind === Kind.BOOLEAN) {
+      return !noDefaultResolvers.value.value
+    }
+  }
+
+  return null
 }
 
 const checkIsAllowedTypeName = name => {
@@ -520,6 +543,8 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
       sort: sortInputTC,
       skip: `Int`,
       limit: `Int`,
+      // page: `Int`,
+      // perPage: { type: `Int`, defaultValue: 20 },
     },
     resolve: findManyPaginated(typeName),
   })
