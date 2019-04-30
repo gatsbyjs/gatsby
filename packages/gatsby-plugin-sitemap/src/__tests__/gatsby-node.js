@@ -2,10 +2,15 @@ jest.mock(`fs`)
 
 const fs = require(`fs`)
 const path = require(`path`)
+const sitemap = require(`sitemap`)
+
 const { onPostBuild } = require(`../gatsby-node`)
 const internals = require(`../internals`)
 const pathPrefix = ``
-const sitemap = require(`sitemap`)
+
+beforeEach(() => {
+  global.__PATH_PREFIX__ = ``
+})
 
 describe(`Test plugin sitemap`, async () => {
   it(`default settings work properly`, async () => {
@@ -35,7 +40,7 @@ describe(`Test plugin sitemap`, async () => {
         },
       },
     })
-    await onPostBuild({ graphql, pathPrefix }, {})
+    await onPostBuild({ graphql }, {})
     const [filePath, contents] = internals.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
     expect(contents).toMatchSnapshot()

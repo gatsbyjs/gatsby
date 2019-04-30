@@ -1,7 +1,12 @@
+const { withAssetPrefix } = require(`gatsby`)
 const {
   runQuery,
   defaultOptions: { serialize },
 } = require(`../internals`)
+
+beforeEach(() => {
+  global.__PATH_PREFIX__ = ``
+})
 
 describe(`results using default settings`, () => {
   const generateQueryResultsMock = (
@@ -37,9 +42,13 @@ describe(`results using default settings`, () => {
   }
 
   const runTests = (pathPrefix = ``) => {
+    beforeEach(() => {
+      global.__PATH_PREFIX__ = pathPrefix
+    })
+
     it(`prepares all urls correctly`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const queryRecords = await runQuery(graphql, ``, [], pathPrefix)
+      const queryRecords = await runQuery(graphql, ``, [], withAssetPrefix)
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [
@@ -53,7 +62,7 @@ describe(`results using default settings`, () => {
         Promise.resolve(
           generateQueryResultsMock({ siteUrl: `http://dummy.url/` })
         )
-      const queryRecords = await runQuery(graphql, ``, [], pathPrefix)
+      const queryRecords = await runQuery(graphql, ``, [], withAssetPrefix)
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [
@@ -64,7 +73,12 @@ describe(`results using default settings`, () => {
 
     it(`excludes pages`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const queryRecords = await runQuery(graphql, ``, [`/page-2`], pathPrefix)
+      const queryRecords = await runQuery(
+        graphql,
+        ``,
+        [`/page-2`],
+        withAssetPrefix
+      )
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
@@ -76,7 +90,7 @@ describe(`results using default settings`, () => {
       expect.assertions(1)
 
       try {
-        await runQuery(graphql, ``, [], pathPrefix)
+        await runQuery(graphql, ``, [], withAssetPrefix)
       } catch (err) {
         expect(err.message).toEqual(
           expect.stringContaining(`SiteMetaData 'siteUrl' property is required`)
