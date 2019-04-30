@@ -5,6 +5,10 @@ import Image from "../"
 
 afterAll(cleanup)
 
+// The index of the image <picture> tag, as opposed
+// to the base64 <picture> tag
+const IMAGE_TAG_INDEX = 1
+
 const fixedShapeMock = {
   width: 100,
   height: 100,
@@ -141,7 +145,7 @@ describe(`<Image />`, () => {
   })
 
   it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
-    const imageTag = setup().querySelectorAll(`picture img`)[1]
+    const imageTag = setup().querySelectorAll(`picture img`)[IMAGE_TAG_INDEX]
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
     expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
@@ -172,7 +176,7 @@ describe(`<Image />`, () => {
     const onErrorMock = jest.fn()
     const imageTag = setup(true, {}, onLoadMock, onErrorMock).querySelectorAll(
       `picture img`
-    )[1]
+    )[IMAGE_TAG_INDEX]
     fireEvent.load(imageTag)
     fireEvent.error(imageTag)
 
