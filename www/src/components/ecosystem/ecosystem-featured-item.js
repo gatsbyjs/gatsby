@@ -15,8 +15,8 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   fonts,
 } from "../../utils/presets"
 
@@ -25,7 +25,7 @@ const MAX_DESCRIPTION_LENGTH = 100
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
   margin-right: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-bottom: 1px solid ${colors.gray.superLight};
     box-shadow: none;
     margin: 0;
@@ -43,13 +43,13 @@ export const BlockLink = styled(Link)`
   height: 100%;
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
     transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     :hover {
       background: ${colors.ui.whisper};
     }
@@ -63,7 +63,7 @@ const Header = styled(`header`)`
 
   h3 {
     color: ${colors.gatsbyDark};
-    font-size: ${scale[2]};
+    font-size: ${fontSizes[2]};
     margin: 0;
   }
 
@@ -71,7 +71,7 @@ const Header = styled(`header`)`
     align-items: center;
     color: ${colors.lilac};
     display: flex;
-    font-size: ${scale[1]};
+    font-size: ${fontSizes[1]};
     padding-left: ${space[3]};
 
     svg {
@@ -104,7 +104,7 @@ const Thumbnail = styled(`div`)`
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
   flex-grow: 1;
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   margin: 0;
 `
 

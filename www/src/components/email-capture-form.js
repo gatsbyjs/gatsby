@@ -7,8 +7,8 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   fonts,
 } from "../utils/presets"
 import hex2rgba from "hex2rgba"
@@ -18,7 +18,7 @@ import { buttonStyles } from "../utils/styles"
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -43,14 +43,14 @@ const SingleLineInput = styled(`input`)`
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
   font-family: ${fonts.system};
-  font-size: ${scale[2]};
+  font-size: ${fontSizes[2]};
   padding: ${space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
   font-family: ${fonts.system};
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   margin: ${space[2]} 0;
 `
 
@@ -65,7 +65,7 @@ const Submit = styled(`input`)`
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
   width: 100%;
   margin-top: ${space[3]};
 
@@ -76,7 +76,7 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     width: auto;
     margin-top: 0;
     margin-left: ${space[2]};

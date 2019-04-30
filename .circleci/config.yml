@@ -130,6 +130,23 @@ jobs:
     executor: node
     <<: *test_template
 
+  unit_tests_node12:
+    executor:
+      name: node
+      image: "12"
+    <<: *test_template
+
+  unit_tests_www:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          command: yarn test
+          working_directory: ~/project/www
+
   integration_tests_long_term_caching:
     executor: node
     steps:
@@ -209,6 +226,13 @@ workflows:
             - bootstrap
       - unit_tests_node10:
           <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_node12:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_www:
           requires:
             - bootstrap
       - integration_tests_long_term_caching:

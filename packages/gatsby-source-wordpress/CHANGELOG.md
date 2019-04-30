@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.58](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.57...gatsby-source-wordpress@3.0.58) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.57](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.56...gatsby-source-wordpress@3.0.57) (2019-04-24)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.56](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.55...gatsby-source-wordpress@3.0.56) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.55](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.54...gatsby-source-wordpress@3.0.55) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.54](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.53...gatsby-source-wordpress@3.0.54) (2019-04-15)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** fix WP-API-MENUS when reported endpoint url doesn't match base url ([#12859](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/12859)) ([a430202](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/a430202))
+
+## [3.0.53](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.52...gatsby-source-wordpress@3.0.53) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.0.52](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.51...gatsby-source-wordpress@3.0.52) (2019-04-05)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** fix local files being nulles after unpublishing and republishing posts ([#13140](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/13140)) ([378f863](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/378f863))
+
+### Features
+
+- **gatsby-source-wordpress:** Add yoast premium redirects support ([#11595](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/11595)) ([e01f080](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/e01f080))
+
+## [3.0.51](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.50...gatsby-source-wordpress@3.0.51) (2019-03-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [3.0.50](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.0.49...gatsby-source-wordpress@3.0.50) (2019-03-27)
 
 ### Bug Fixes

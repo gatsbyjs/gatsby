@@ -4,7 +4,7 @@ import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
 import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import domReady from "domready"
+import domReady from "@mikaelkristiansson/domready"
 import {
   shouldUpdateScroll,
   init as navigationInit,
