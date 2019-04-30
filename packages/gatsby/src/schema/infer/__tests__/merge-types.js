@@ -551,7 +551,7 @@ describe(`merges explicit and inferred type definitions`, () => {
     expect(inferDate.resolve).toBeDefined()
   })
 
-  it(`adds explicit resolvers through extensions`, async () => {})
+  it.todo(`adds explicit resolvers through extensions`)
 
   it(`honors array depth when merging types`, async () => {
     const typeDefs = `

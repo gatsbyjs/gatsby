@@ -33,7 +33,7 @@ const addInferredTypes = ({
         : true
       if (runInfer) {
         if (!typeComposer.hasInterface(`Node`)) {
-          noNodeInterfaceTypes.push(typeComposer)
+          noNodeInterfaceTypes.push(typeName)
         }
         typesToInfer.push(typeComposer)
       }
@@ -46,16 +46,16 @@ const addInferredTypes = ({
   })
 
   if (noNodeInterfaceTypes.length > 0) {
-    noNodeInterfaceTypes.forEach(type => {
+    noNodeInterfaceTypes.forEach(typeName => {
       report.warn(
-        `Type \`${type}\` declared in \`createTypes\` looks like a node, ` +
+        `Type \`${typeName}\` declared in \`createTypes\` looks like a node, ` +
           `but doesn't implement a \`Node\` interface. It's likely that you should ` +
           `add the \`Node\` interface to your type def:\n\n` +
-          `\`type ${type} implements Node { ... }\`\n\n` +
+          `\`type ${typeName} implements Node { ... }\`\n\n` +
           `If you know that you don't want it to be a node (which would mean no ` +
           `root queries to retrieve it), you can explicitly disable inference ` +
           `for it:\n\n` +
-          `\`type ${type} @dontInfer { ... }\``
+          `\`type ${typeName} @dontInfer { ... }\``
       )
     })
     report.panic(`Building schema failed`)
