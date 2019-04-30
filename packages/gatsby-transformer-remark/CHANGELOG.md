@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.11...gatsby-transformer-remark@2.3.12) (2019-04-25)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** fix excerpt generation - strip excessive white spaces, extract alt from images ([#12878](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12878)) ([ceb0d72](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/ceb0d72))
+
 ## [2.3.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.10...gatsby-transformer-remark@2.3.11) (2019-04-24)
 
 ### Bug Fixes
