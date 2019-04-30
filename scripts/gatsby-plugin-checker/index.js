@@ -64,6 +64,37 @@ const filterNotNotified = (packages, plugins) => {
   return packages.filter(pkg => notified.indexOf(pkg.name) < 0)
 }
 
+const removePackagesWithoutRepository = packages =>
+  packages.filter(pkg => !!pkg.links.repository)
+
+const removeBadNameFormats = packages => packages.filter(p => hasGoodName(p))
+
+const hasGoodName = pkg => {
+  const name = pkg.name
+  const isScopedPackage = name.startsWith(`@`)
+  if (!isScopedPackage) {
+    return startsWithAllowedPrefix(name)
+  }
+
+  const nameWithoutScope = name.slice(0, name.indexOf(`/`))
+  return startsWithAllowedPrefix(nameWithoutScope)
+}
+
+const startsWithAllowedPrefix = name =>
+  keywords.some(keyword => name.startsWith(keyword))
+
+const removePackagesWithoutReadme = packages =>
+  packages.filter(pkg => hasReadMe(pkg))
+
+const hasReadMe = pkg => {
+  if (pkg.links.homepage || pkg.readme) return true
+  if (pkg.links.repository) {
+    return got(pkg.links.repository + `/blob/master/README.md`)
+      .then(response => response.statusCode === 200)
+      .catch(_ => false)
+  } else return false
+}
+
 const updatePlugins = (updates, plugins) => {
   let res = plugins.map(p => Object.assign({}, p))
   updates.forEach(u => {
@@ -84,11 +115,15 @@ const main = () => {
         .then(transformResults)
         .then(packages => filterNotBlacklisted(packages, plugins))
         .then(packages => filterNotNotified(packages, plugins))
+        .then(packages => removePackagesWithoutRepository(packages))
+        .then(packages => removeBadNameFormats(packages))
+        .then(packages => removePackagesWithoutReadme(packages))
         .then(packages =>
           packages.map(p => {
             // TODO: notify / comment on github
             console.info(`Notify package "${p.name}"`)
             // return update status
+            // will turn notified to true once notifications are created
             return { name: p.name, blacklist: false, notified: false }
           })
         )

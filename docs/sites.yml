@@ -5067,6 +5067,19 @@
   built_by: Ariadne Digital
   built_by_url: https://www.ariadnedigital.it
   featured: false
+- title: Textually Stylo
+  main_url: https://www.textually.net
+  url: https://www.textually.net
+  description: >
+    Stylo Markdown writing App marketing/documentation website by Textually Inc.
+  categories:
+    - Marketing
+    - Technology
+    - Blog
+    - Documentation
+  built_by: Sébastien Hamel
+  built_by_url: https://www.textually.net
+  featured: false
 - title: OneDeck
   main_url: https://www.onedeck.co
   url: https://www.onedeck.co
@@ -5538,4 +5551,99 @@
     - Web Development
   built_by: Ben Robertson
   built_by_url: https://benrobertson.io
+  featured: false
+- title: Penrose Grand Del Mar
+  main_url: https://penroseatthegrand.com
+  url: https://penroseatthegrand.com
+  description: >
+    Penrose Grand Del Mar is a luxury housing project coming soon.
+  categories:
+    - Real Estate
+    - Contentful
+    - Netlify
+    - Design
+    - Animation
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+- title: JustGraphQL
+  url: https://www.justgraphql.com/
+  main_url: https://www.justgraphql.com/
+  source_url: https://github.com/Novvum/justgraphql
+  description: >
+    JustGraphQL helps developers quickly search and filter through GraphQL resources, tools, and articles.
+  categories:
+    - Open Source
+    - Web Development
+    - Technology
+  built_by: Novvum
+  built_by_url: https://www.novvum.io/
+  featured: false
+- title: Peter Macinkovic Personal Blog
+  url: https://peter.macinkovic.id.au/
+  main_url: https://peter.macinkovic.id.au/
+  source_url: https://github.com/inkovic/peter-macinkovic-static-site
+  description: >
+    Personal Website and Blog of eCommerce SEO Specilaist and Digital Marketer Peter Macinkovic.
+  categories:
+    - SEO
+    - Marketing
+    - Blog
+  featured: false
+- title: Holly Lodge Community Centre - Highgate, London
+  main_url: https://www.hlcchl.org/
+  url: https://www.hlcchl.org/
+  source_url: https://github.com/eugelogic/hlcchl-gatsby
+  description: >
+    The Holly Lodge Community Centre - Highgate, London has a shiny new website built with Gatsby v2 that makes important contributions towards a faster, more secure and environmentally friendly web for everyone.
+  categories:
+    - Charity
+    - Community
+    - Event
+    - Nonprofit
+  built_by: Eugene Molari Developer
+  built_by_url: https://twitter.com/EugeneMolari
+- title: blackcater's blog
+  url: https://www.blackcater.win
+  main_url: https://www.blackcater.win
+  source_url: https://github.com/blackcater/blog
+  description: >
+    Blog like Medium, for person and team.
+  categories:
+    - Blog
+    - Web Development
+  built_by: blackcater
+  built_by_url: https://github.com/blackcater
+  featured: false
+- title: Kenneth Kwakye-Gyamfi Portfolio Site
+  url: https://www.kwakye-gyamfi.com
+  main_url: https://www.kwakye-gyamfi.com
+  source_url: https://github.com/cr05s19xx/cross-site
+  description: >
+    Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
+  categories:
+    - SEO
+    - Web Development
+    - Open Source
+    - Portfolio
+  featured: false
+- title: Gareth Weaver
+  url: https://www.garethweaver.com/
+  main_url: https://www.garethweaver.com/
+  source_url: https://github.com/garethweaver/public-site-react
+  description: >
+    A personal portofolio of a London based frontend developer built with Gatsby 2, Redux and Sass
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Gareth Weaver
+  built_by_url: https://twitter.com/garethdweaver
+  featured: false
+- title: Mailjet
+  url: https://dev.mailjet.com/
+  main_url: https://dev.mailjet.com/
+  description: >
+    Mailjet is an easy-to-use all-in-one e-mail platform.
+  categories:
+    - API
+    - Documentation
   featured: false
