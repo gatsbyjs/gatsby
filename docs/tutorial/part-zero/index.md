@@ -161,11 +161,11 @@ Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/
 
 It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
 
-- **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
-- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
-- **JavaScript**: A programming language that helps us make the web dynamic and interactive.
-- **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
-- **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
+- [**HTML**](https://en.wikipedia.org/wiki/HTML): A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
+- [ **CSS**](https://en.wikipedia.org/wiki/Cascading_Style_Sheets): A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
+- [**JavaScript**](https://en.wikipedia.org/wiki/JavaScript): A programming language that helps us make the web dynamic and interactive.
+- [ **React**](https://en.wikipedia.org/wiki/React_(JavaScript_library)): A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
+- [**GraphQL**](https://en.wikipedia.org/wiki/GraphQL): A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
 
 ## What is a website?
 
