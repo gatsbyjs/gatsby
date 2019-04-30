@@ -1,12 +1,10 @@
 import React from "react"
 import { Static, Box } from "ink"
-import { globalTracer } from "opentracing"
 import { isCI } from "ci-info"
 import chalk from "chalk"
 import Activity, { calcElapsedTime } from "./components/activity"
 import { Message } from "./components/messages"
 
-const tracer = globalTracer()
 const showProgress = process.stdout.isTTY && !isCI
 
 const generateActivityFinishedText = (name, activity) => {
@@ -28,11 +26,7 @@ export default class GatsbyReporter extends React.Component {
 
   format = chalk
 
-  createActivity = (name, activityArgs) => {
-    const { parentSpan } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const span = tracer.startSpan(name, spanArgs)
-
+  createActivity = name => {
     return {
       start: () => {
         this.setState(state => {
@@ -63,10 +57,9 @@ export default class GatsbyReporter extends React.Component {
         })
       },
       end: () => {
-        span.finish()
         const activity = this.state.activities[name]
 
-        this.onSuccess(generateActivityFinishedText(name, activity))
+        this.success(generateActivityFinishedText(name, activity))
 
         this.setState(state => {
           const activities = { ...state.activities }
@@ -77,7 +70,6 @@ export default class GatsbyReporter extends React.Component {
           }
         })
       },
-      span,
     }
   }
 
@@ -110,12 +102,12 @@ export default class GatsbyReporter extends React.Component {
     })
   }
 
-  onLog = this._addMessage.bind(this, null)
-  onInfo = this._addMessage.bind(this, `info`)
-  onSuccess = this._addMessage.bind(this, `success`)
-  onWarn = this._addMessage.bind(this, `warn`)
-  onError = this._addMessage.bind(this, `error`)
-  onVerbose = str => {
+  log = this._addMessage.bind(this, null)
+  info = this._addMessage.bind(this, `info`)
+  success = this._addMessage.bind(this, `success`)
+  warn = this._addMessage.bind(this, `warn`)
+  error = this._addMessage.bind(this, `error`)
+  verbose = str => {
     if (!this.verbose) {
       return
     }

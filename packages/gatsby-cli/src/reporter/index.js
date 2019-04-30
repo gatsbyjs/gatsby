@@ -5,7 +5,7 @@ const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const reporterInstance = require(`./reporters/yurnalist`)
+const reporterInstance = require(`./reporters`)
 
 const errorFormatter = getErrorFormatter()
 
