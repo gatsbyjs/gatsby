@@ -8,7 +8,7 @@ export const withoutTrailingSlash = path =>
 export const writeFile = pify(fs.writeFile)
 export const renameFile = pify(fs.rename)
 
-export const runQuery = (handler, query, excludes, withAssetPrefix) =>
+export const runQuery = (handler, query, excludes, pathPrefix) =>
   handler(query).then(r => {
     if (r.errors) {
       throw new Error(r.errors.join(`, `))
@@ -24,7 +24,7 @@ export const runQuery = (handler, query, excludes, withAssetPrefix) =>
 
     // Add path prefix
     r.data.allSitePage.edges = r.data.allSitePage.edges.map(page => {
-      page.node.path = withAssetPrefix(page.node.path)
+      page.node.path = (pathPrefix + page.node.path).replace(/^\/\//g, `/`)
       return page
     })
 

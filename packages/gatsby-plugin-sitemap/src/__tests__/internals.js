@@ -1,4 +1,3 @@
-const { withAssetPrefix } = require(`gatsby`)
 const {
   runQuery,
   defaultOptions: { serialize },
@@ -48,7 +47,7 @@ describe(`results using default settings`, () => {
 
     it(`prepares all urls correctly`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const queryRecords = await runQuery(graphql, ``, [], withAssetPrefix)
+      const queryRecords = await runQuery(graphql, ``, [], pathPrefix)
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [
@@ -62,7 +61,7 @@ describe(`results using default settings`, () => {
         Promise.resolve(
           generateQueryResultsMock({ siteUrl: `http://dummy.url/` })
         )
-      const queryRecords = await runQuery(graphql, ``, [], withAssetPrefix)
+      const queryRecords = await runQuery(graphql, ``, [], pathPrefix)
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [
@@ -73,12 +72,7 @@ describe(`results using default settings`, () => {
 
     it(`excludes pages`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
-      const queryRecords = await runQuery(
-        graphql,
-        ``,
-        [`/page-2`],
-        withAssetPrefix
-      )
+      const queryRecords = await runQuery(graphql, ``, [`/page-2`], pathPrefix)
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
@@ -90,7 +84,7 @@ describe(`results using default settings`, () => {
       expect.assertions(1)
 
       try {
-        await runQuery(graphql, ``, [], withAssetPrefix)
+        await runQuery(graphql, ``, [], pathPrefix)
       } catch (err) {
         expect(err.message).toEqual(
           expect.stringContaining(`SiteMetaData 'siteUrl' property is required`)

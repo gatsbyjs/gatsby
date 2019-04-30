@@ -1,5 +1,4 @@
 import path from "path"
-import { withAssetPrefix } from "gatsby"
 import sitemap from "sitemap"
 import {
   defaultOptions,
@@ -30,7 +29,7 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     graphql,
     query,
     excludeOptions,
-    withAssetPrefix
+    pathPrefix
   )
   const urls = serialize(queryRecords)
 

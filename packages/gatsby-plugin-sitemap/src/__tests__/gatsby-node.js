@@ -40,7 +40,7 @@ describe(`Test plugin sitemap`, async () => {
         },
       },
     })
-    await onPostBuild({ graphql }, {})
+    await onPostBuild({ graphql, pathPrefix }, {})
     const [filePath, contents] = internals.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `sitemap.xml`))
     expect(contents).toMatchSnapshot()
