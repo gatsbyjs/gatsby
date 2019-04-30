@@ -9,7 +9,7 @@ const reporterInstance = require(`./reporters/yurnalist`)
 
 const errorFormatter = getErrorFormatter()
 
-import { type ActivityTracker, type ActivityArgs, interface Reporter } from "./types"
+import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
 /**
  * Reporter module.
