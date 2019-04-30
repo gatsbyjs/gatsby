@@ -1,9 +1,14 @@
 import React from "react"
-import { withAssetPrefix } from "gatsby"
+import { withPathPrefix, withAssetPrefix } from "gatsby"
 import fs from "fs"
 import createContentDigest from "gatsby/dist/utils/create-content-digest"
 
 import { defaultIcons, addDigestToPath } from "./common.js"
+
+// TODO: remove for v3
+if (!withAssetPrefix) {
+  withAssetPrefix = withPathPrefix
+}
 
 let iconDigest = null
 

@@ -1,6 +1,11 @@
 import React from "react"
-import { withAssetPrefix } from "gatsby"
+import { withPathPrefix, withAssetPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
+
+// TODO: remove for v3
+if (!withAssetPrefix) {
+  withAssetPrefix = withPathPrefix
+}
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const { feeds } = {
