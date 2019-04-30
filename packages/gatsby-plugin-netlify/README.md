@@ -20,7 +20,7 @@ config.
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  `gatsby-plugin-netlify`, // make sure to put last in the array
+  `gatsby-plugin-netlify`,
 ]
 ```
 
