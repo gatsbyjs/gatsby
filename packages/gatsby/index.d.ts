@@ -1,6 +1,5 @@
 import * as React from "react"
 import { EventEmitter } from "events"
-import { Application } from "express"
 import { WindowLocation } from "@reach/router"
 
 export {
@@ -96,7 +95,7 @@ export interface GatsbyConfig {
     url: string
   }
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
-  developMiddleware?(app: Application): void
+  developMiddleware?(app: any): void
 }
 
 /**
@@ -616,7 +615,7 @@ export interface CreateBabelConfigArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateDevServerArgs extends ParentSpanPluginArgs {
-  app: Application
+  app: any
 }
 
 export interface CreateNodeArgs extends ParentSpanPluginArgs {
