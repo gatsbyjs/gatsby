@@ -185,7 +185,7 @@ function visitor(node) {
 }
 ```
 
-Here, it finds all text nodes and will `console.log` the nodes.
+Here, it finds all text nodes and will `console.log` the nodes. The second argument can be replaced with any type described in Unist's [Markdown AST (mdast) specification](https://github.com/syntax-tree/mdast#nodes) including types such as `paragraph`, `blockquote`, `link`, `image` or in our usecase, `heading`.
 
 With this technique in mind, you can similarly traverse the AST from your plugin and add additional functionality, like so:
 
