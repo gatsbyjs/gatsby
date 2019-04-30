@@ -12,7 +12,8 @@ const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
+const queryUtil = require(`../query`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -26,6 +27,18 @@ type BuildArgs = {
   noUglify: boolean,
   openTracingConfigFile: string,
 }
+
+const waitJobsFinished = () =>
+  new Promise((resolve, reject) => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
 
 module.exports = async function build(program: BuildArgs) {
   initTracer(program.openTracingConfigFile)
@@ -43,7 +56,18 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
-  await db.saveState()
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  let activity = report.activityTimer(`run static queries`, {
+    parentSpan: buildSpan,
+  })
+  activity.start()
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
+  })
+  activity.end()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -54,7 +78,6 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  let activity
   activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
@@ -64,6 +87,19 @@ module.exports = async function build(program: BuildArgs) {
     reportFailure(`Generating JavaScript bundles failed`, err)
   })
   activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+
+  await waitJobsFinished()
+
+  await db.saveState()
 
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
