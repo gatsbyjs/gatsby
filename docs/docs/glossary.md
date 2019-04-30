@@ -216,6 +216,10 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
+### Routing
+
+Routing is the mechanism for loading the correct content in a website or app based on a network request - usually a URL. For example, it allows for routing URLs like `/about-us` to the appropriate [page](#page), [template](#template), or [component](#component).
+
 ## S
 
 ### Source Code
