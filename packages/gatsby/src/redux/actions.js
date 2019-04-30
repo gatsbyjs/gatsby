@@ -528,6 +528,8 @@ const typeOwners = {}
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @returns {Promise} The returned Promise resolves when all cascading
+ * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example
  * createNode({
  *   // Data for the node.
