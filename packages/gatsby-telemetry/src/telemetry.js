@@ -153,6 +153,12 @@ module.exports = class AnalyticsTracker {
       enabled = true
       this.store.updateConfig(`telemetry.enabled`, enabled)
     }
+
+    // `GATSBY_TELEMETRY_DISABLED` overrides config value
+    if (this.store.disabled) {
+      enabled = false
+    }
+
     this.trackingEnabled = enabled
     return enabled
   }
