@@ -32,7 +32,7 @@ describe(`gatsby config`, () => {
   it(`allows relative paths for url fields`, () => {
     const config = {
       pathPrefix: `/blog`,
-      assetPrefix: `/assets`,
+      assetPrefix: `https://cdn.example.com`,
     }
 
     expect(gatsbyConfigSchema.validate(config)).resolves.toEqual(config)
@@ -41,6 +41,17 @@ describe(`gatsby config`, () => {
   it(`does not allow pathPrefix to be full URL`, () => {
     const config = {
       pathPrefix: `https://google.com`,
+    }
+
+    expect(
+      gatsbyConfigSchema.validate(config)
+    ).rejects.toThrowErrorMatchingSnapshot()
+  })
+
+  it(`throws when relative path used for both assetPrefix and pathPrefix`, () => {
+    const config = {
+      assetPrefix: `/assets`,
+      pathPrefix: `/blog`,
     }
 
     expect(
