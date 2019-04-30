@@ -2385,16 +2385,17 @@
     - Gradient background with sitemap, rss feed, and offline capabilities
 - url: https://gatsby-starter-blog-typescript.netlify.com/
   repo: https://github.com/gperl27/Gatsby-Starter-Blog-Typescript
-  description: Gatsby starter blog with typescript
+  description: Gatsby starter blog with TypeScript
   tags:
     - Blog
-    - Typescript
+    - TypeScript
     - Styling:CSS-in-JS
   features:
-    - Includes all features that come with gatsby's official starter blog
-    - Typescript for type-safety out of the box
+    - Includes all features that come with Gatsby's official starter blog
+    - TypeScript for type-safety out of the box
     - Styled components in favor of inline styles
     - Transition Link for nice page transitions
+    - Type definitions from GraphQL schema (with code generation)
     - Type definitions from grapql schema (with code generation)
 - url: https://gatsby-starter-sass.netlify.com/
   repo: https://github.com/colbyfayock/gatsby-starter-sass
