@@ -3,10 +3,11 @@ title: Styling
 overview: true
 ---
 
-There are so many ways to add styles to your website -- and Gatsby supports almost every possible option, through official and community plugins. (_If there isn’t a plugin yet for your favorite option, consider [contributing one](/docs/creating-plugins/)!_)
+There are many ways to style your website, that can be grouped in two main approaches:
 
-In this section you'll find guides on different styling methods supported by Gatsby plugins.
+- **Cascading styles**: styles _cascade_ according to the CSS priority scheme. The rules with the highest priority control the content rendering.
+- **Scoped styles**: CSS rules are scoped locally by default, to avoid unintended side-effects elsewhere. Scoped CSS comes in different flavors, from CSS Modules to CSS-in-JS libraries.
 
-Gatsby doesn't prescribe or dictate any single styling approach. Choose what works best for you!
+Gatsby doesn't have an opinion about which styling approach you choose. In doubt, a good starting point is to use traditional CSS files, as they'll seem familiar and don't require any third-party libraries.
 
 [[guidelist]]
