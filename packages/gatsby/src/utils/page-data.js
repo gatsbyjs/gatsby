@@ -12,11 +12,12 @@ const read = async ({ publicDir }, pagePath) => {
   return JSON.parse(rawPageData)
 }
 
-const write = async ({ publicDir }, page, result) => {
+const write = async ({ publicDir }, page, result, webpackCompilationHash) => {
   const filePath = getFilePath({ publicDir }, page.path)
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
+    compilationHash: webpackCompilationHash,
     result,
   }
   await fs.outputFile(filePath, JSON.stringify(body))
