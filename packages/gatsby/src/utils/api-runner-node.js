@@ -95,6 +95,7 @@ const runAPI = (plugin, api, args) => {
 
     const { config, program } = store.getState()
 
+    const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
     const publicPath = getPublicPath({ ...config, ...program }, ``)
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
@@ -152,7 +153,7 @@ const runAPI = (plugin, api, args) => {
     const apiCallArgs = [
       {
         ...args,
-        basePath: config.pathPrefix || ``,
+        basePath: pathPrefix,
         pathPrefix: publicPath,
         boundActionCreators: actions,
         actions,
