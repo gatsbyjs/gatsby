@@ -867,16 +867,16 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     args: { schema: object },
-    plugin?: ActionPlugin,
-    traceId: string
-  )
+    plugin: ActionPlugin,
+    traceId?: string
+  ): void
 
   /** TODO create jsdoc on gatsbyjs.org */
   createTypes(
     types: string | object | Array<string | object>,
-    plugin?: ActionPlugin,
-    traceId: string
-  )
+    plugin: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {
