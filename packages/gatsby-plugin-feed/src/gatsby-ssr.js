@@ -1,11 +1,11 @@
 import React from "react"
-import { withPathPrefix, withAssetPrefix } from "gatsby"
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
 
 // TODO: remove for v3
 let withPrefix = withAssetPrefix
 if (!withPrefix) {
-  withPrefix = withPathPrefix
+  withPrefix = fallbackWithPrefix
 }
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {

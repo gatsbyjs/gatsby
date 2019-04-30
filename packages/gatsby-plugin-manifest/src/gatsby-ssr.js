@@ -1,5 +1,5 @@
 import React from "react"
-import { withPathPrefix, withAssetPrefix } from "gatsby"
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import fs from "fs"
 import createContentDigest from "gatsby/dist/utils/create-content-digest"
 
@@ -8,7 +8,7 @@ import { defaultIcons, addDigestToPath } from "./common.js"
 // TODO: remove for v3
 let withPrefix = withAssetPrefix
 if (!withPrefix) {
-  withPrefix = withPathPrefix
+  withPrefix = fallbackWithPrefix
 }
 
 let iconDigest = null
