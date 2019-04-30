@@ -19,9 +19,9 @@ Welcome to part two of the Gatsby tutorial!
 
 In this part, you're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
-## Using global styles
+## What are Cascading Style Sheets (CSS)?
 
-Every site has some sort of global style. This includes things like the site's typography and background colors. These styles set the overall feel of the site — much like the color and texture of a wall sets the overall feel of a room.
+Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language like HTML. Every site has some sort of global style. This includes things like the site's typography and background colors. These styles set the overall feel of the site — much like the color and texture of a wall sets the overall feel of a room.
 
 ### Creating global styles with standard CSS files
 
