@@ -2,7 +2,7 @@
 title: Adding an Asset Prefix
 ---
 
-Gatsby produces static content that can be hosted _anywhere_ at scale in a cost-effective manner. This static content is comprised of HTML files, JavaScript, CSS, images, and more that power your great, Gatsby application.
+Gatsby produces static content that can be hosted _anywhere_ at scale in a cost-effective manner. This static content is comprised of HTML files, JavaScript, CSS, images, and more that power your great Gatsby application.
 
 There are scenarios in which it may be advantageous or necessary to deploy _assets_ (where an asset is a non-HTML resource, e.g. JavaScript, CSS, etc.) to a separate domain. This can oftentimes be used to enable functionality like a CDN or a particular hosting strategy that your company may employ where assets need to be separate from the core application.
 
