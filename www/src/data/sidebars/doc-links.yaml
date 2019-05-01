@@ -176,6 +176,8 @@
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Source Plugin Tutorial
                   link: /docs/pixabay-source-plugin-tutorial/
+                - title: Remark Plugin Tutorial
+                  link: /docs/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Starters
