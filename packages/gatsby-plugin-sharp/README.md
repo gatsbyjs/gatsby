@@ -299,6 +299,37 @@ limited to the latitude/longitude information of where the picture was taken
 can either leave `stripMetadata` to its default of `true`, or manually
 pre-process your images with a tool such as [ExifTool][17].
 
+## Troubleshooting
+
+### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
+
+This means there are incompatible version of `sharp` package installed in your `node_modules`. Full error can look something like this:
+
+```
+Something went wrong installing the "sharp" module
+
+dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
+  Referenced from: /Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node
+  Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
+```
+
+To solve this, update all Gatsby plugins that depend on `sharp` package. Here's list of official packages that you might need to update if you use them:
+
+- `gatsby-plugin-sharp`
+- `gatsby-plugin-manifest`
+- `gatsby-remark-images-contentful`
+- `gatsby-source-contentful`
+- `gatsby-transformer-sharp`
+- `gatsby-transformer-sqip`
+
+To update them run (in this example we use only some of the packages):
+
+```sh
+npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-transformer-sharp
+```
+
+If updating official plugins didn't fix the issue, it's possible that you use community plugins that depend on different version of `sharp`. Try running `npm list sharp` (or `yarn why sharp` if you are `yarn` user) to see what other packages use `sharp` and try updating them as well.
+
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
 [3]: https://ines.io/blog/dynamic-duotone-svg-jade
