@@ -35,7 +35,7 @@ If this flag is not passed, Gatsby will ignore your `pathPrefix` and build out y
 
 As a developer using this feature, it should be seamless. We provide APIs and libraries to make using this functionality a breeze. Specifically, the [`Link`](/docs/gatsby-link/) component has built-in functionality to handle path prefixing.
 
-For example, if we want to link to our `/page-2` link (but the actual link will be prefixed, e.g. `/blog/page-2`) we don't want to hard code this path prefix in all of our links. We have your back! Merely by using the `Link` component, we will automatically prefix your paths for you. If you later migrate off of `pathPrefix` your links will _still_ work seamlessly.
+For example, if we want to link to our `/page-2` link (but the actual link will be prefixed, e.g. `/blog/page-2`) we don't want to hard code this path prefix in all of our links. We have your back! By using the `Link` component, we will automatically prefix your paths for you. If you later migrate off of `pathPrefix` your links will _still_ work seamlessly.
 
 Let's look at a quick example.
 
