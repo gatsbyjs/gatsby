@@ -27,6 +27,24 @@ const shouldUseYarn = () => {
   }
 }
 
+const isAlreadyGitRepository = async () => {
+  try{
+    return await spawn(`git rev-parse --is-inside-work-tree`)
+    .then( (output) => {
+      if(output.failed){
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .catch(() =>{
+      return false;
+    })
+  } catch(err){
+    return false
+  }
+}
+
 // Initialize newly cloned directory as a git repo
 const gitInit = async rootPath => {
   report.info(`Initialising git in ${rootPath}`)
