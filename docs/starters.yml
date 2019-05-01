@@ -2414,6 +2414,6 @@
     - SASS
     - react-bootstrap
   features:
-    - SASS stylesheets to make styling components easy.
-    - Sample navbar that sticks to the top of the page on scroll.
-    - Includes react-icons to make adding icons to your app super simple.
+    - SASS stylesheets to make styling components easy
+    - Sample navbar that sticks to the top of the page on scroll
+    - Includes react-icons to make adding icons to your app super simple
