@@ -1,5 +1,5 @@
 ---
-title: CSS Modules
+title: Locally-scoped styles with CSS Modules
 ---
 
 ## CSS modules and Gatsby
