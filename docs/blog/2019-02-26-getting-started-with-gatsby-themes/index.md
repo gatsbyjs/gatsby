@@ -162,7 +162,7 @@ module.exports = {
 }
 ```
 
-### Setting up Site `package.json
+### Setting up Site `package.json`
 
 You will need to add `gatsby` CLI scripts and specify your newly created `theme` as a dependency.
 
