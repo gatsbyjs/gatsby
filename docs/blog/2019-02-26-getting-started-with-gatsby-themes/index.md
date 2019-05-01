@@ -191,6 +191,8 @@ You will need to add `gatsby` CLI scripts and specify your newly created `theme`
 
 ### Run the Site
 
+Now that we've set up the site's _package.json_ we can run the workspace:
+
 ```sh
 yarn workspace site develop
 ```
