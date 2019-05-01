@@ -1,4 +1,4 @@
-import { GatsbyNode, Store, Cache } from "gatsby"
+import { Node, Store, Cache } from "gatsby"
 
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
@@ -13,7 +13,7 @@ export function createRemoteFileNode(
 ): FileSystemNode
 
 export interface CreateFilePathArgs {
-  node: GatsbyNode
+  node: Node
   getNode: Function
   basePath?: string
   trailingSlash?: boolean
@@ -35,7 +35,7 @@ export interface CreateRemoteFileNodeArgs {
   name?: string
 }
 
-export interface FileSystemNode extends GatsbyNode {
+export interface FileSystemNode extends Node {
   absolutePath: string
   accessTime: string
   birthTime: Date
