@@ -25,7 +25,7 @@ Create a _package.json_ file
 
 Tidy up your _package.json_ file and create workspaces which includes the project name, site, and your packages. Both of these directories will include their own _package.json_ files.
 
-```json
+```json:title=package.json
 {
   "name": "gatsby-site",
   "private": true,
@@ -36,7 +36,7 @@ Tidy up your _package.json_ file and create workspaces which includes the projec
 
 Next, you want to create your _site_ directory and your _packages_ directory within your _gatsby-theme_ project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it _theme_. Then you will want to `yarn init` the _theme_ directory and the _site_ directory.
 
-```
+```sh
 mkdir site
 mkdir packages
 cd packages
@@ -72,7 +72,7 @@ Then you will navigate out of the _site_ directory and add Gatsby, React, and Re
 
 You will want to make Gatsby, React, and ReactDom peer dependencies in the _theme_ directory.
 
-```json
+```json:title=packages/theme/package.json
  "devDependencies": {
     "gatsby": "^2.0.118",
     "react": "^16.8.1",
@@ -132,14 +132,14 @@ module.exports = {
 
 Now, you can make sure _site_ is linked to _theme_.
 
-```
+```sh
 yarn
 yarn workspaces info
 ```
 
 Your workspace info should look similar to this:
 
-```shell
+```json
 {
   "site": {
     "location": "site",
