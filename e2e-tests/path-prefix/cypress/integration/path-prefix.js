@@ -35,7 +35,7 @@ describe(`Production pathPrefix`, () => {
       cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
     })
 
-    it.only(`can go back`, () => {
+    it(`can go back`, () => {
       cy.getTestElement(`page-2-link`)
         .click()
         .waitForRouteChange()
