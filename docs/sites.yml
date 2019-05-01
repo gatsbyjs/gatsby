@@ -5641,3 +5641,15 @@
     - API
     - Documentation
   featured: false
+- title: Peintagone
+  url: https://www.peintagone.be/
+  main_url: https://www.peintagone.be/
+  description: >
+    Peintagone is a superior quality paint brand with Belgian tones.
+  categories:
+    - Portfolio
+    - Gallery
+    - Landing
+  built_by: Sebastien Crepin
+  built_by_url: https://github.com/opeah
+  featured: false
