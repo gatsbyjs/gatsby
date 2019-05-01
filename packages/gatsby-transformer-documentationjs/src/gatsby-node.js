@@ -75,6 +75,18 @@ exports.sourceNodes = ({ actions }) => {
       todos: [DocumentationJs]
       yields: [DocumentationJs]
       members: DocumentationJsMembers
+      codeLocation: DocumenationJSLocationRange
+      docsLocation: DocumenationJSLocationRange
+    }
+
+    type DocumentationJSLocation {
+      line: Int
+      column: Int
+    }
+
+    type DocumenationJSLocationRange {
+      start: DocumentationJSLocation
+      end: DocumentationJSLocation
     }
 
     type DocumentationJsExample {
@@ -93,7 +105,7 @@ exports.sourceNodes = ({ actions }) => {
     }
 
     type DoctrineType {
-      type: String!
+      type: String
       name: String
       elements: [JSON]
       expression: JSON
