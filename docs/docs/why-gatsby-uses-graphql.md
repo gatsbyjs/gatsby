@@ -240,7 +240,7 @@ In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image/
 
 Install these packages using the command line:
 
-```bash
+```shell
 npm install --save gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-image
 ```
 
@@ -264,7 +264,7 @@ module.exports = {
 
 To check that this worked, let’s use the GraphQL Playground, which is available during development, by running:
 
-```
+```shell
 GATSBY_GRAPHQL_IDE=playground gatsby develop
 ```
 

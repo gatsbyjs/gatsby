@@ -31,9 +31,9 @@
             - title: Preparing your Site for Deployment*
               link: /docs/preparing-for-deployment/
             - title: Deploying to AWS Amplify
-              link: /docs/deploying-to-aws-amplify
+              link: /docs/deploying-to-aws-amplify/
             - title: Deploying to S3 and CloudFront
-              link: /docs/deploying-to-s3-cloudfront
+              link: /docs/deploying-to-s3-cloudfront/
             - title: Deploying to Aerobatic
               link: /docs/deploying-to-aerobatic/
             - title: Deploying to Heroku
@@ -43,9 +43,11 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
             - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify
+              link: /docs/hosting-on-netlify/
             - title: Deploying to Render
               link: /docs/deploying-to-render/
+            - title: Deploying to Surge
+              link: /docs/deploying-to-surge/
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -174,6 +176,8 @@
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Source Plugin Tutorial
                   link: /docs/pixabay-source-plugin-tutorial/
+                - title: Remark Plugin Tutorial
+                  link: /docs/remark-plugin-tutorial/
                 - title: Maintaining a Plugin
                   link: /docs/maintaining-a-plugin/
         - title: Starters
@@ -317,7 +321,7 @@
             - title: Adding a Manifest File
               link: /docs/add-a-manifest-file/
             - title: Adding Offline Support with a Service Worker
-              link: /docs/add-offline-support-with-a-service-worker
+              link: /docs/add-offline-support-with-a-service-worker/
             - title: Adding Page Metadata
               link: /docs/add-page-metadata/
             - title: Search Engine Optimization (SEO)
@@ -442,7 +446,7 @@
         - title: Making an e-commerce Gatsby Site
           link: /docs/ecommerce-tutorial/
         - title: Creating a Source Plugin
-          link: /docs/source-plugin-tutorial/
+          link: /docs/pixabay-source-plugin-tutorial/
         - title: Using the WordPress Source Plugin
           link: /docs/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site
@@ -487,6 +491,8 @@
                   link: /docs/going-gatsby-only/
             - title: Inside a Company
               link: /docs/gatsby-for-companies/
+            - title: Inside an Enterprise (Large Company)
+              link: /docs/gatsby-in-the-enterprise/
               items:
                 - title: Answering IT/Security Questions*
                   link: /docs/answering-it-security/
@@ -520,7 +526,7 @@
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
       link: /docs/cheat-sheet/
-    - title: Glossary*
+    - title: Glossary
       link: /docs/glossary/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/

@@ -99,6 +99,10 @@ const bootstrapTest = (
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+
+    // Used to verify that console.warn is called when field not found
+    jest.spyOn(global.console, `warn`)
+
     await onCreateNode(
       {
         node,
@@ -379,6 +383,25 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
   )
 
   bootstrapTest(
+    `excerpt does have missing words and extra spaces`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
+    `excerpt
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node.excerpt).toMatch(`Where oh where is that pony?`)
+    },
+    {}
+  )
+
+  bootstrapTest(
     `given raw html in the text body, this html is not escaped`,
     `---
 title: "my little pony"
@@ -607,9 +630,6 @@ date: "2017-09-18T23:19:51.246Z"
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {
-  // Used to verify that console.warn is called when field not found
-  jest.spyOn(global.console, `warn`)
-
   bootstrapTest(
     `returns null on non existing table of contents field`,
     `---
