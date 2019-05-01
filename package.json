@@ -20,6 +20,7 @@
     "fs-extra": "^7.0.0",
     "glob": "^7.1.1",
     "husky": "1.1.1",
+    "imagemin-lint-staged": "^0.4.0",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
@@ -55,6 +56,10 @@
     ],
     "*.svg": [
       "svgo --pretty --indent=2 --config=svgo.yml --multipass",
+      "git add"
+    ],
+    "*.{png,jpeg,jpg,gif}": [
+      "imagemin-lint-staged",
       "git add"
     ]
   },
