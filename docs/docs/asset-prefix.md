@@ -18,7 +18,7 @@ module.exports = {
 }
 ```
 
-That was easy! One more step - when we build out this application, we need to add a flag so that Gatsby picks up this option.
+One more step - when we build out this application, we need to add a flag so that Gatsby picks up this option.
 
 ### The `--prefix-paths` flag
 
