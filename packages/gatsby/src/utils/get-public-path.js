@@ -1,7 +1,7 @@
 const trimSlashes = part => part.replace(/(^\/)|(\/$)/g, ``)
 
 const isURL = possibleUrl =>
-  [`http`, `//`].some(expr => possibleUrl.startsWith(expr))
+  [`http://`, `https://`, `//`].some(expr => possibleUrl.startsWith(expr))
 
 module.exports = function getPublicPath({
   assetPrefix,

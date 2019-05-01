@@ -21,7 +21,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rm -rf assets && mkdir -p assets/blog",
-    "build": "CYPRESS_SUPPORT=y gatsby build --prefix-paths",
+    "build": "gatsby build --prefix-paths",
     "postbuild": "cp -r public/. assets/blog",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
@@ -29,8 +29,8 @@
     "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
     "serve": "gatsby serve --prefix-paths & npm run serve:assets",
     "serve:assets": "node scripts/serve.js",
-    "cy:open": "CYPRESS_SUPPORT=y cypress open",
-    "cy:run": "CYPRESS_SUPPORT=y cypress run --browser chrome"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
     "gatsby-cypress": "^0.1.7",
