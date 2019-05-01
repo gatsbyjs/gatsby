@@ -107,6 +107,68 @@ exports.sourceNodes = ({ actions }) => {
   createTypes(typeDefs)
 }
 
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    DocumentationJs: {
+      type: {
+        // resolve `typeDef___NODE` recursively
+        resolve: (source, _, context) => {
+          if (!source.type) {
+            return null
+          }
+
+          const fieldsToVisit = [
+            `elements`,
+            `expression`,
+            `applications`,
+            `params`,
+            `fields`,
+            `result`,
+          ]
+
+          const resolve = obj => {
+            if (!obj.typeDef___NODE) {
+              return obj
+            }
+
+            return {
+              ...obj,
+              typeDef: context.nodeModel.getNodeById(
+                { id: obj.typeDef___NODE, type: `DocumentationJs` },
+                { path: context.path }
+              ),
+            }
+          }
+
+          const visit = obj => {
+            if (!obj) {
+              return null
+            }
+
+            const ret = { ...obj }
+
+            fieldsToVisit.forEach(fieldName => {
+              const v = obj[fieldName]
+              if (!v) {
+                return
+              }
+
+              if (Array.isArray(v)) {
+                ret[fieldName] = v.map(t => visit(resolve(t)))
+              } else {
+                ret[fieldName] = visit(resolve(v))
+              }
+            })
+            return ret
+          }
+
+          return visit(resolve(source.type))
+        },
+      },
+    },
+  })
+}
+
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
