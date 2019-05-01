@@ -1001,12 +1001,6 @@
   featured: false
   categories:
     - Web Development
-- title: Whittle School
-  main_url: "https://www.whittleschool.org/en/"
-  url: "https://www.whittleschool.org/en/"
-  featured: false
-  categories:
-    - Education
 - title: Yisela
   main_url: "https://www.yisela.com/"
   url: "https://www.yisela.com/tetris-against-trauma-gaming-as-therapy/"
@@ -5642,8 +5636,20 @@
   url: https://dev.mailjet.com/
   main_url: https://dev.mailjet.com/
   description: >
-    Miljeta is an easy-to-use all-in-one e-mail platform.
+    Mailjet is an easy-to-use all-in-one e-mail platform.
   categories:
     - API
     - Documentation
+  featured: false
+- title: Peintagone
+  url: https://www.peintagone.be/
+  main_url: https://www.peintagone.be/
+  description: >
+    Peintagone is a superior quality paint brand with Belgian tones.
+  categories:
+    - Portfolio
+    - Gallery
+    - Landing
+  built_by: Sebastien Crepin
+  built_by_url: https://github.com/opeah
   featured: false
