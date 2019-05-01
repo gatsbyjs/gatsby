@@ -41,6 +41,38 @@ plugins: [
       // See: https://github.com/isaacs/minimatch
       // The example below will exclude the single `path/to/page` and all routes beginning with `category`
       exclude: ["/category/*", `/path/to/page`],
+      // Create a conditional statement to automate a better SEO sitemap
+      serialize: function serialize(_ref) {
+          const site = _ref.site;
+          let allSitePage = _ref.allSitePage;
+          return allSitePage.edges.map(edge => {
+            if (edge.node.path.includes("/features/")) {
+              return{ 
+                url: site.siteMetadata.siteUrl + edge.node.path,
+                changefreq: `weekly`, 
+                priority: 0.8,
+              };
+            } else if (edge.node.path.includes("/concepts/")) {
+              return{
+                url: site.siteMetadata.siteUrl + edge.node.path, 
+                changefreq: `weekly`, 
+                priority: 0.9,
+              };
+            } else if (edge.node.path == "/") {
+              return{
+                url: site.siteMetadata.siteUrl + edge.node.path, 
+                changefreq: `daily`,
+                priority: 1,
+              };
+            } else {
+                return{
+                  url: site.siteMetadata.siteUrl + edge.node.path, 
+                  changefreq: `monthly`,
+                  priority: 0.7,
+                };
+            }
+         });
+      },
       query: `
         {
           site {
