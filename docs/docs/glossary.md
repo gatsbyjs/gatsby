@@ -8,7 +8,7 @@ When you're new to Gatsby there can be a lot of words that seem alien. This glos
 
 ### AST
 
-Abstract Syntax Tree: A tree representation of the source code that is found during a [compiliation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/packages/gatsby-transformer-remark/) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure and then further generate [HTML](#html) using that tree using the [Remark](#remark) parser.
+Abstract Syntax Tree: A tree representation of the source code that is found during a [compilation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/packages/gatsby-transformer-remark/) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure using the [Remark](#remark) parser.
 
 ### API
 
