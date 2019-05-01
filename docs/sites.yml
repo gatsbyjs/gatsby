@@ -1001,12 +1001,6 @@
   featured: false
   categories:
     - Web Development
-- title: Whittle School
-  main_url: "https://www.whittleschool.org/en/"
-  url: "https://www.whittleschool.org/en/"
-  featured: false
-  categories:
-    - Education
 - title: Yisela
   main_url: "https://www.yisela.com/"
   url: "https://www.yisela.com/tetris-against-trauma-gaming-as-therapy/"
