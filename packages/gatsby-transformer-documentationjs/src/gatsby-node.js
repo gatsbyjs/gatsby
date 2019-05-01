@@ -129,14 +129,7 @@ exports.createResolvers = ({ createResolvers }) => {
             return null
           }
 
-          const fieldsToVisit = [
-            `elements`,
-            `expression`,
-            `applications`,
-            `params`,
-            `fields`,
-            `result`,
-          ]
+          const fieldsToVisit = [`elements`, `expression`, `applications`]
 
           const resolve = obj => {
             if (!obj.typeDef___NODE) {
