@@ -68,7 +68,7 @@ In this example, I'll use the `aws-cli` and `s3` to sync the `public` folder (co
 }
 ```
 
-Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild` script will be invoked _after_ the build completes, therefore making our assets available on a _separate_ domain after we have finished building out our appliacation with prefixed assets.
+Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild` script will be invoked _after_ the build completes, therefore making our assets available on a _separate_ domain after we have finished building out our application with prefixed assets.
 
 ## Additional Considerations
 
