@@ -222,7 +222,7 @@ A code library (written with [JavaScript](#javascript)) for building user interf
 
 ### Remark
 
-A markdown parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
+A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
 
 ### Routing
 
