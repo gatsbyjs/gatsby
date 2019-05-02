@@ -110,7 +110,7 @@ const handleMessage = msg => {
 
     msg = msg.concat([
       ``,
-      `If after updating packages, older version of "sharp" is still showing up, please contact package maintainer and request updating "sharp" dependency.`,
+      `If an older version of "sharp" still persists and this error is displayed after updating your packages, open an issue in the package's repository and request them to update the "sharp" dependency.`,
     ])
 
     console.error(msg.join(`\n`))
