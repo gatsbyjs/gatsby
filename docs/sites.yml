@@ -5657,11 +5657,12 @@
   main_url: "https://www.athulcyriac.me/"
   url: "https://athulcyriac.me/"
   source_url: "https://github.com/Athul-CA/.me"
-  featured: false
+  description: >
+          Landing Page of Athul Cyriac Ajay made with Cara. Still a WIP with a Blog
   categories:
           - Web Development
           - Landing Page
           - Portfolio
-  description: >
-          Landing Page of Athul Cyriac Ajay made with Cara. Still a WIP with a Blog
   built_by: Athul Cyriac Ajay
+  built_by_url: https://github.com/Athul-CA
+  featured: false
