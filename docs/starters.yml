@@ -2406,3 +2406,14 @@
     - Sass stylesheets to manage your CSS (SCSS flavored)
     - Simple, minimal base setup to get started
     - No baked in configurations or assumptions
+- url: https://billyjacoby.github.io/gatsby-react-bootstrap-starter/
+  repo: https://github.com/billyjacoby/gatsby-react-bootstrap-starter
+  description: GatsbyJS starter with react-bootstrap and react-icons
+  tags:
+    - Bootstrap
+    - SASS
+    - react-bootstrap
+  features:
+    - SASS stylesheets to make styling components easy
+    - Sample navbar that sticks to the top of the page on scroll
+    - Includes react-icons to make adding icons to your app super simple
