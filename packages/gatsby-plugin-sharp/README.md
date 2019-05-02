@@ -303,7 +303,7 @@ pre-process your images with a tool such as [ExifTool][17].
 
 ### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
 
-This means there are incompatible version of `sharp` package installed in your `node_modules`. Full error can look something like this:
+This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
 ```
 Something went wrong installing the "sharp" module
