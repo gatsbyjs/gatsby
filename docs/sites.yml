@@ -1001,12 +1001,6 @@
   featured: false
   categories:
     - Web Development
-- title: Whittle School
-  main_url: "https://www.whittleschool.org/en/"
-  url: "https://www.whittleschool.org/en/"
-  featured: false
-  categories:
-    - Education
 - title: Yisela
   main_url: "https://www.yisela.com/"
   url: "https://www.yisela.com/tetris-against-trauma-gaming-as-therapy/"
@@ -5600,7 +5594,6 @@
   built_by: MangoART
   built_by_url: https://www.mangoart.at
   featured: false
-
 - title: Frauennetzwerk Linz-Land
   main_url: https://frauennetzwerk-linzland.net
   url: https://frauennetzwerk-linzland.net
@@ -5613,7 +5606,6 @@
   built_by: MangoART
   built_by_url: https://www.mangoart.at
   featured: false
-
 - title: Mein Traktor
   main_url: http://www.mein-traktor.at/
   url: http://www.mein-traktor.at/
@@ -5626,7 +5618,6 @@
   built_by: MangoART
   built_by_url: https://www.mangoart.at
   featured: false
-
 - title: Lamborghini Traktoren
   main_url: https://lamborghini-traktor.at
   url: https://lamborghini-traktor.at
@@ -5637,4 +5628,75 @@
     - Business
   built_by: MangoART
   built_by_url: https://www.mangoart.at
+  featured: false
+- title: Holly Lodge Community Centre - Highgate, London
+  main_url: https://www.hlcchl.org/
+  url: https://www.hlcchl.org/
+  source_url: https://github.com/eugelogic/hlcchl-gatsby
+  description: >
+    The Holly Lodge Community Centre - Highgate, London has a shiny new website built with Gatsby v2 that makes important contributions towards a faster, more secure and environmentally friendly web for everyone.
+  categories:
+    - Charity
+    - Community
+    - Event
+    - Nonprofit
+  built_by: Eugene Molari Developer
+  built_by_url: https://twitter.com/EugeneMolari
+  featured: false
+- title: blackcater's blog
+  url: https://www.blackcater.win
+  main_url: https://www.blackcater.win
+  source_url: https://github.com/blackcater/blog
+  description: >
+    Blog like Medium, for person and team.
+  categories:
+    - Blog
+    - Web Development
+  built_by: blackcater
+  built_by_url: https://github.com/blackcater
+  featured: false
+- title: Kenneth Kwakye-Gyamfi Portfolio Site
+  url: https://www.kwakye-gyamfi.com
+  main_url: https://www.kwakye-gyamfi.com
+  source_url: https://github.com/cr05s19xx/cross-site
+  description: >
+    Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
+  categories:
+    - SEO
+    - Web Development
+    - Open Source
+    - Portfolio
+  featured: false
+- title: Gareth Weaver
+  url: https://www.garethweaver.com/
+  main_url: https://www.garethweaver.com/
+  source_url: https://github.com/garethweaver/public-site-react
+  description: >
+    A personal portofolio of a London based frontend developer built with Gatsby 2, Redux and Sass
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Gareth Weaver
+  built_by_url: https://twitter.com/garethdweaver
+  featured: false
+- title: Mailjet
+  url: https://dev.mailjet.com/
+  main_url: https://dev.mailjet.com/
+  description: >
+    Mailjet is an easy-to-use all-in-one e-mail platform.
+  categories:
+    - API
+    - Documentation
+  featured: false
+- title: Peintagone
+  url: https://www.peintagone.be/
+  main_url: https://www.peintagone.be/
+  description: >
+    Peintagone is a superior quality paint brand with Belgian tones.
+  categories:
+    - Portfolio
+    - Gallery
+    - Landing
+  built_by: Sebastien Crepin
+  built_by_url: https://github.com/opeah
   featured: false
