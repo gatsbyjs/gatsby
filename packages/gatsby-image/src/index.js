@@ -42,7 +42,7 @@ const activateCacheForImage = props => {
 let io
 const listeners = new WeakMap()
 
-function getIO() {
+function getIO(rootMargin) {
   if (
     typeof io === `undefined` &&
     typeof window !== `undefined` &&
@@ -62,15 +62,15 @@ function getIO() {
           }
         })
       },
-      { rootMargin: `200px` }
+      { rootMargin }
     )
   }
 
   return io
 }
 
-const listenToIntersections = (el, cb) => {
-  const observer = getIO()
+const listenToIntersections = (el, rootMargin, cb) => {
+  const observer = getIO(rootMargin)
 
   if (observer) {
     observer.observe(el)
@@ -208,7 +208,8 @@ class Image extends React.Component {
 
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
-      this.cleanUpListeners = listenToIntersections(ref, () => {
+      const rootMargin = this.props.rootMargin || `200px`
+      this.cleanUpListeners = listenToIntersections(ref, rootMargin, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
@@ -510,6 +511,7 @@ Image.propTypes = {
   fixed: fixedObject,
   fluid: fluidObject,
   fadeIn: PropTypes.bool,
+  rootMargin: PropTypes.string,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,
   alt: PropTypes.string,
