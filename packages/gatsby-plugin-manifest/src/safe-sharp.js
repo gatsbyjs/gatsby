@@ -14,7 +14,7 @@ const handleMessage = msg => {
 
     let msg = [
       `It looks like there are multiple versions of "sharp" module installed.`,
-      `Please update packages that depend on "sharp".`,
+      `Please update any packages that depend on "sharp".`,
       ``,
     ]
 
