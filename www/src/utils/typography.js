@@ -258,7 +258,7 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        padding: `${rhythm(space[6])} ${rhythm(space[6])} ${rhythm(space[3])}`,
+        padding: `${rhythm(space[5])} ${rhythm(space[6])} ${rhythm(space[4])}`,
         fontSize: `74%`,
       },
       "@media (max-width:634px)": {
@@ -286,32 +286,20 @@ const _options = {
       },
       [mediaQueries.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
-          marginLeft: rhythm(-space[7]),
-          marginRight: rhythm(-space[7]),
+          marginLeft: rhythm(-space[6]),
+          marginRight: rhythm(-space[6]),
+          borderRadius: `${radii[2]}px`,
         },
         ".gatsby-highlight pre": {
-          padding: `${rhythm(space[7])} 0`,
-          marginBottom: rhythm(space[7]),
+          padding: `${rhythm(space[6])} 0`,
+          marginBottom: rhythm(space[6]),
         },
-        ".gatsby-highlight pre code": {
-          padding: `0 ${rhythm(space[7])}`,
-        },
-        ".gatsby-highlight-code-line": {
-          marginRight: rhythm(-space[7]),
-          marginLeft: rhythm(-space[7]),
-          paddingRight: rhythm(space[7]),
+        ".gatsby-highlight pre code, .gatsby-code-title": {
           paddingLeft: rhythm(space[6]),
-          borderLeftWidth: rhythm(space[2]),
-        },
-        ".gatsby-code-title": {
-          marginRight: rhythm(-space[7]),
-          marginLeft: rhythm(-space[7]),
-          padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            space[3]
-          )}`,
+          paddingRight: rhythm(space[6]),
         },
         ".gatsby-highlight pre[class*='language-']::before": {
-          right: rhythm(space[7]),
+          right: rhythm(space[6]),
         },
       },
       [mediaQueries.xxl]: {
