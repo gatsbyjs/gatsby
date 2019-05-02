@@ -6,10 +6,10 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix } from "../"
+import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
 
 afterEach(() => {
-  global.__PATH_PREFIX__ = ``
+  global.__BASE_PATH__ = ``
   cleanup()
 })
 
@@ -34,12 +34,17 @@ const getReplace = () => {
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  global.__PATH_PREFIX__ = pathPrefix
+  global.__BASE_PATH__ = pathPrefix
   return withPrefix
 }
 
+const getWithAssetPrefix = (prefix = ``) => {
+  global.__PATH_PREFIX__ = prefix
+  return withAssetPrefix
+}
+
 const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
-  global.__PATH_PREFIX__ = pathPrefix
+  global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
 
@@ -148,6 +153,28 @@ describe(`withPrefix`, () => {
   })
 })
 
+describe(`withAssetPrefix`, () => {
+  it(`default prefix does not return "//"`, () => {
+    const to = `/`
+    const root = getWithAssetPrefix()(to)
+    expect(root).toEqual(to)
+  })
+
+  it(`respects pathPrefix`, () => {
+    const to = `/abc/`
+    const pathPrefix = `/blog`
+    const root = getWithAssetPrefix(pathPrefix)(to)
+    expect(root).toEqual(`${pathPrefix}${to}`)
+  })
+
+  it(`respects joined assetPrefix + pathPrefix`, () => {
+    const to = `/itsdatboi/`
+    const pathPrefix = `https://cdn.example.com/blog`
+    const root = getWithAssetPrefix(pathPrefix)(to)
+    expect(root).toEqual(`${pathPrefix}${to}`)
+  })
+})
+
 describe(`navigate`, () => {
   it(`navigates to correct path`, () => {
     const to = `/some-path`
@@ -158,11 +185,11 @@ describe(`navigate`, () => {
 
   it(`respects pathPrefix`, () => {
     const to = `/some-path`
-    global.__PATH_PREFIX__ = `/blog`
+    global.__BASE_PATH__ = `/blog`
     getNavigate()(to)
 
     expect(global.___navigate).toHaveBeenCalledWith(
-      `${global.__PATH_PREFIX__}${to}`,
+      `${global.__BASE_PATH__}${to}`,
       undefined
     )
   })
