@@ -94,5 +94,5 @@ With these improvements we hope we'll solve most of the issues that people are h
 
 Useful links:
 
-- [Documentation]()
+- [createTypes Documentation](https://www.gatsbyjs.org/docs/actions/#createTypes)
 - [Umbrella issue for schema customization bug reports](https://github.com/gatsbyjs/gatsby/issues/12272)
