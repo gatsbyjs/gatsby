@@ -2387,9 +2387,7 @@
   description: Starter material-ui blog utilizing a Gatsby theme!
   tags:
     - Blog
-    - Theme
-    - Mdx
-    - Markdown
+    - MDX
   features:
     - Uses MDX with Gatsby theme for quick and easy set up
     - Material-ui design with optional config passed into the theme options
@@ -2421,9 +2419,8 @@
   repo: https://github.com/billyjacoby/gatsby-react-bootstrap-starter
   description: GatsbyJS starter with react-bootstrap and react-icons
   tags:
-    - Bootstrap
-    - SASS
-    - react-bootstrap
+    - Styling:Bootstrap
+    - Styling:SCSS
   features:
     - SASS stylesheets to make styling components easy
     - Sample navbar that sticks to the top of the page on scroll
