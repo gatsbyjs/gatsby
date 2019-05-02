@@ -4,7 +4,7 @@ title: Getting Started
 
 Scaffolding out a project that uses themes requires you to use a starter that's implemented with theming.
 
-```sh
+```shell
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ```
 

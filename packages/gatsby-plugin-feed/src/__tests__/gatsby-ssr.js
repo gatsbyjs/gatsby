@@ -1,14 +1,14 @@
 const { onRenderBody } = require(`../gatsby-ssr`)
 
-const defaultPathPrefix = global.__PATH_PREFIX__
-
 describe(`Adds <Link> for feed to head`, () => {
+  const prefix = global.__BASE_PATH__
   beforeEach(() => {
+    global.__BASE_PATH__ = ``
     global.__PATH_PREFIX__ = ``
   })
 
-  afterEach(() => {
-    global.__PATH_PREFIX__ = defaultPathPrefix
+  afterAll(() => {
+    global.__BASE_PATH__ = prefix
   })
 
   it(`creates Link if feeds does exist`, async () => {
