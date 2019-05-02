@@ -10,7 +10,7 @@ Their free tier includes unlimited personal and commercial projects, HTTPS, cont
 
 ## Prerequisites
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](docs/quick-start) , then come back.
 
 ### Hosting Setup
 
