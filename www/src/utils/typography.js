@@ -73,7 +73,6 @@ const _options = {
       // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        borderRadius: `${radii[1]}px`,
         position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
@@ -189,7 +188,6 @@ const _options = {
       },
       ".gatsby-highlight pre::-webkit-scrollbar-track": {
         background: colors.code.border,
-        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
@@ -261,17 +259,17 @@ const _options = {
         padding: `${rhythm(space[5])} ${rhythm(space[6])} ${rhythm(space[4])}`,
         fontSize: `74%`,
       },
-      "@media (max-width:634px)": {
-        ".gatsby-highlight, .gatsby-code-title, .gatsby-resp-image-link": {
-          borderRadius: 0,
-          borderLeft: 0,
-          borderRight: 0,
-        },
-      },
-      [`${mediaQueries.md} and (max-width:980px)`]: {
-        ".gatsby-highlight, .gatsby-code-title": {
+      [mediaQueries.md]: {
+        ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
+          borderRadius: `${radii[2]}px`,
+        },
+        ".gatsby-code-title": {
+          borderRadius: `${radii[2]}px ${radii[2]}px 0 0`,
+        },
+        ".gatsby-code-title + .gatsby-highlight": {
+          borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         },
       },
       video: {
@@ -288,7 +286,6 @@ const _options = {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: rhythm(-space[6]),
           marginRight: rhythm(-space[6]),
-          borderRadius: `${radii[2]}px`,
         },
         ".gatsby-highlight pre": {
           padding: `${rhythm(space[6])} 0`,
