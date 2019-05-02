@@ -322,7 +322,7 @@ To solve this, update all Gatsby plugins that depend on `sharp` package. Here's 
 - `gatsby-transformer-sharp`
 - `gatsby-transformer-sqip`
 
-To update them run (in this example we use only some of the packages):
+To update these packages, run:
 
 ```sh
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
