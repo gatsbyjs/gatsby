@@ -53,7 +53,7 @@ The `-y` in `yarn init` automatically adds defaults to your `package.json`. If y
 ```json:title=packages/theme/package.json
 {
   "name": "theme",
-   "version": "1.0.0",
+  "version": "1.0.0",
   "description": "Practicing making a Gatsby theme",
   "main": "index.js",
   "license": "MIT"
