@@ -1248,10 +1248,24 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *   customised with `@infer`, `@dontInfer` and `@addResolvers` directives.
  *
  *
- * `@infer` - run inference on the type and add fields that don't exist on the
+ * Schema customization controls:
+ * * `@infer` - run inference on the type and add fields that don't exist on the
  * defined type to it.
- * `@dontInfer` - don't run any inference on the type
- * `@addResolver` - add resolver options to a field
+ * * `@dontInfer` - don't run any inference on the type
+ * * `@addResolver` - add resolver options to a field. Args are `type` and
+ *   `options`. Type can be `dateformat`, `link` and `fileByRelativePath`.
+ *
+ * Resolver types:
+ * * `dateformat` - add date formatting arguments. Accepts `formatString` and
+ *   `locale` options that sets the defaults for this field
+ * * `link` - connect to a different Node. Arguments `by` and `from`, which
+ *   define which field to compare to on a remote node and which field to use on
+ *   the source node
+ * * `fileByRelativePath` - connect to a File node. Same arguments. The
+ *   difference from link is that this normalizes the relative path to be
+ *   relative from the path where source node is found.
+ *
+ *
  *
  * @example
  * exports.sourceNodes = ({ actions }) => {
