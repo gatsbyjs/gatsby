@@ -5653,3 +5653,15 @@
   built_by: Sebastien Crepin
   built_by_url: https://github.com/opeah
   featured: false
+- title: Athul Cyriac Ajay
+  main_url: "www.athulcyriac.me"
+  url: "athulcyriac.me"
+  source_url: "github.com/Athul-CA/.me"
+  featured: false
+  categories:
+          - Web Development
+          - Landing Page
+          - Portfolio
+  description: >
+          Landing Page of Athul Cyriac Ajay made with Cara. Still a WIP with a Blog
+  built_by: Athul Cyriac Ajay
