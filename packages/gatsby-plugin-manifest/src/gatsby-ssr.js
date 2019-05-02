@@ -6,7 +6,6 @@ import createContentDigest from "gatsby/dist/utils/create-content-digest"
 import { defaultIcons, addDigestToPath } from "./common.js"
 
 // TODO: remove for v3
-// TODO: remove for v3
 const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 let iconDigest = null
