@@ -5695,3 +5695,13 @@
   built_by: Sebastien Crepin
   built_by_url: https://github.com/opeah
   featured: false
+- title: Let's Do Dish!
+  url: https://letsdodish.com
+  main_url: https://letsdodish.com
+  description: >
+    A new recipe site for people who enjoy cooking great food in their home kitchen. Find some great meal ideas! Let's do dish!
+  categories:
+    - Blog
+    - Food
+  built_by: Connerra
+  featured: false
