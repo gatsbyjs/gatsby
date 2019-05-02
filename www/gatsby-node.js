@@ -283,6 +283,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     const creatorPageTemplate = path.resolve(
       `src/templates/template-creator-details.js`
     )
+    const featureComparisonPageTemplate = path.resolve(
+      `src/templates/template-feature-comparison.js`
+    )
 
     // Query for markdown nodes to use in creating pages.
     graphql(`
@@ -573,6 +576,55 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           })
         }
       })
+
+      // Create feature comparison pages
+      const cmsComparisonOptions = [`wordpress`, `drupal`]
+      const jamstackComparisonOptions = [`nextjs`, `jekyll`, `hugo`, `nuxtjs`]
+
+      // create power sets of all possible feature comparison options:
+      // adapted from https://github.com/acarl005/generatorics
+      function* generatePowerSet(arr) {
+        const length = arr.length
+        let options = []
+
+        yield* powerUtil(0, 0)
+        function* powerUtil(start, index) {
+          options.length = index
+          yield options
+          if (index === length) return
+          for (let i = start; i < length; i++) {
+            options[index] = arr[i]
+            yield* powerUtil(i + 1, index + 1)
+          }
+        }
+        return options
+      }
+
+      for (const value of generatePowerSet(cmsComparisonOptions)) {
+        if (value.length > 0) {
+          const optionSet = [...value]
+          console.log(optionSet)
+          createPage({
+            path: `/features/cms/gatsby-vs-${value.join(`-vs-`)}`,
+            component: slash(featureComparisonPageTemplate),
+            context: {
+              optionSet,
+            },
+          })
+        }
+      }
+      for (const value of generatePowerSet(jamstackComparisonOptions)) {
+        if (value.length > 0) {
+          const optionSet = [...value]
+          createPage({
+            path: `/features/jamstack/gatsby-vs-${value.join(`-vs-`)}`,
+            component: slash(featureComparisonPageTemplate),
+            context: {
+              optionSet,
+            },
+          })
+        }
+      }
 
       // redirecting cypress-gatsby => gatsby-cypress
       createRedirect({
