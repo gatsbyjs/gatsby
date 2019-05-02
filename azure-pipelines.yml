@@ -7,14 +7,14 @@ pool:
   vmImage: "vs2017-win2016"
 
 steps:
-  - powershell: yarn bootstrap
-    displayName: "Install dependencies & compile packages"
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "8.x"
+    displayName: "Install Node.js"
 
-  # - powershell: yarn lint
-  #   displayName: "Run code linters"
+  - script: yarn bootstrap
 
-  - powershell: node --expose-gc --max_old_space_size=4096 ./node_modules/jest/bin/jest.js --runInBand --logHeapUsage
-    displayName: "Run tests"
+  - script: yarn test
     env:
       GENERATE_JEST_REPORT: true
 

@@ -51,5 +51,4 @@ module.exports = {
   collectCoverageFrom: coverageDirs,
   reporters: [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
-  setupFilesAfterEnv: [`<rootDir>/jest.setup.js`],
 }
