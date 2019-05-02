@@ -55,7 +55,7 @@ Hooray! Gatsby should now be added to your site directory if you look in your _p
 ```json:title=packages/theme/package.json
 {
   "name": "theme",
-  "version": "0.0.1",
+   "version": "1.0.0",
   "description": "Practicing making a Gatsby theme",
   "main": "index.js",
   "license": "MIT"
