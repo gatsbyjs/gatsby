@@ -257,7 +257,7 @@ const _options = {
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
         padding: `${rhythm(space[5])} ${rhythm(space[6])} ${rhythm(space[4])}`,
-        fontSize: `74%`,
+        fontSize: fontSizes[0],
       },
       [mediaQueries.md]: {
         ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
