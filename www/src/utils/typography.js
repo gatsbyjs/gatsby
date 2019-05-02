@@ -287,17 +287,6 @@ const _options = {
           marginLeft: rhythm(-space[6]),
           marginRight: rhythm(-space[6]),
         },
-        ".gatsby-highlight pre": {
-          padding: `${rhythm(space[6])} 0`,
-          marginBottom: rhythm(space[6]),
-        },
-        ".gatsby-highlight pre code, .gatsby-code-title": {
-          paddingLeft: rhythm(space[6]),
-          paddingRight: rhythm(space[6]),
-        },
-        ".gatsby-highlight pre[class*='language-']::before": {
-          right: rhythm(space[6]),
-        },
       },
       [mediaQueries.xxl]: {
         html: {
