@@ -361,6 +361,14 @@ You will need to add it in your graphql query as is shown in the following snipp
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
 `quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
 
+## Image rootMargin override
+
+When using the `<Image />` component, the default rootMargin is 200px, you can override this default by passing a rootMargin prop.
+
+```javascript
+<Image rootMargin="20px" />
+```
+
 ## Some other stuff to be aware of
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
