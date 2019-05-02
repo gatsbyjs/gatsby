@@ -363,6 +363,8 @@ You will need to add it in your graphql query as is shown in the following snipp
 
 ## Image rootMargin override
 
+rootMargin is a property that tells the observe how far from the viewport the image should start loading. More information on this property is available on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin)
+
 When using the `<Img />` component, the default rootMargin is 200px, you can override this default by passing a rootMargin prop.
 
 ```javascript
