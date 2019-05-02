@@ -328,7 +328,7 @@ To update them run (in this example we use only some of the packages):
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-transformer-sharp
 ```
 
-If updating official plugins didn't fix the issue, it's possible that you use community plugins that depend on different version of `sharp`. Try running `npm list sharp` (or `yarn why sharp` if you are `yarn` user) to see what other packages use `sharp` and try updating them as well.
+If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
