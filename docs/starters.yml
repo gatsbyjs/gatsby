@@ -2376,7 +2376,6 @@
   description: The default Gatsby starter with powerful accessibility tools built-in.
   tags:
     - Storybook
-    - Accessibility
     - Linting
   features:
     - 🔍 eslint-plugin-jsx-a11y for catching accessibility issues while authoring code
