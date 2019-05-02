@@ -14,7 +14,7 @@ import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
-import EnsureResources from "./ensure-resources"
+import EnsureResources, { ResourceError } from "./ensure-resources"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -111,16 +111,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )[0]
 
     domReady(() => {
-      renderer(
-        <NewRoot />,
-        typeof window !== `undefined`
-          ? document.getElementById(`___gatsby`)
-          : void 0,
-        () => {
-          postInitialRenderWork()
-          apiRunner(`onInitialClientRender`)
-        }
-      )
+      try {
+        renderer(
+          <NewRoot />,
+          typeof window !== `undefined`
+            ? document.getElementById(`___gatsby`)
+            : void 0,
+          () => {
+            postInitialRenderWork()
+            apiRunner(`onInitialClientRender`)
+          }
+        )
+      } catch (e) {
+        // Catch ResourceErrors:
+        // React uses console.error() to display this anyway,
+        // but we can catch it to prevent Cypress breaking.
+        if (e.constructor !== ResourceError) throw e
+      }
     })
   })
 })

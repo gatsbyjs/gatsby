@@ -132,7 +132,8 @@ class EnsureResources extends React.Component {
       window.___failedResources = true
 
       // prevent hydrating
-      throw new Error(`Missing resources for ${this.state.location.pathname}`)
+      const { pathname } = this.state.location
+      throw new ResourceError(`Missing resources for ${pathname}`)
     }
 
     isInitialRender = false
@@ -145,4 +146,5 @@ EnsureResources.propTypes = {
   pageResources: PropTypes.object,
 }
 
+export class ResourceError extends Error {}
 export default EnsureResources
