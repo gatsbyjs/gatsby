@@ -101,7 +101,7 @@ const handleMessage = msg => {
       msg = msg.concat(tmpMsg)
     } catch {
       msg = msg.concat([
-        `To get list of installed packages that depend on sharp try running:`,
+        `To get a list of installed packages that depend on "sharp" try running:`,
         ` - npm list sharp (if you use npm)`,
         ` - yarn why sharp (if you use yarn)`,
         ` and update packages that depend on version older than latest listed in output of above command.`,
