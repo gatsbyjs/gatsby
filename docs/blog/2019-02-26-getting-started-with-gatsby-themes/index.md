@@ -48,9 +48,7 @@ cd ../../site/
 yarn init -y
 ```
 
-After using `yarn init` you will be asked a few questions. The main thing you will want to pay attention to is the entry point (index.js). For the _theme_ directory, you can leave the entry point as _index.js_ (just make sure you have an _index.js_ file) and for the _site_ directory, you can make entry point _gatsby-config.js_. Next, you will want to go into your _site_ directory and do `yarn workspace site add gatsby`.
-
-Hooray! Gatsby should now be added to your site directory if you look in your _package.json_ file. Adjustments you make to your file is adding "scripts" and adding the name of your Gatsby theme, in this case, _theme_, to your dependencies.
+The `-y` in `yarn init` automatically adds defaults to your `package.json`. If you opt to run `yarn init` without `-y` you will be asked a few questions. The main thing you will want to pay attention to is the entry point (index.js). For the _theme_ directory, you can leave the entry point as _index.js_ (just make sure you have an _index.js_ file).
 
 ```json:title=packages/theme/package.json
 {
@@ -130,30 +128,6 @@ module.exports = {
 }
 ```
 
-Now, you can make sure _site_ is linked to _theme_.
-
-```sh
-yarn
-yarn workspaces info
-```
-
-Your workspace info should look similar to this:
-
-```json
-{
-  "site": {
-    "location": "site",
-    "workspaceDependencies": ["theme"],
-    "mismatchedWorkspaceDependencies": []
-  },
-  "theme": {
-    "location": "packages/theme",
-    "workspaceDependencies": [],
-    "mismatchedWorkspaceDependencies": []
-  }
-}
-```
-
 Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ directory.
 
 ```javascript:title=site/gatsby-config.js
@@ -185,6 +159,30 @@ You will need to add `gatsby` CLI scripts and specify your newly created `theme`
     // highlight-start
     "theme": "*"
     // highlight-end
+  }
+}
+```
+
+Now, you can make sure _site_ is linked to _theme_.
+
+```sh
+yarn
+yarn workspaces info
+```
+
+Your workspace info should look similar to this:
+
+```json
+{
+  "site": {
+    "location": "site",
+    "workspaceDependencies": ["theme"],
+    "mismatchedWorkspaceDependencies": []
+  },
+  "theme": {
+    "location": "packages/theme",
+    "workspaceDependencies": [],
+    "mismatchedWorkspaceDependencies": []
   }
 }
 ```
