@@ -2371,6 +2371,17 @@
     - Rich customizable content with MDX
     - Green / Red alert footer on user's answer
     - Navigation generated based on the index of each question
+- url: https://gatsby-starter-accessibility.netlify.com/
+  repo: https://github.com/benjamingrobertson/gatsby-starter-accessibility
+  description: The default Gatsby starter with powerful accessibility tools built-in.
+  tags:
+    - Storybook
+    - Linting
+  features:
+    - 🔍 eslint-plugin-jsx-a11y for catching accessibility issues while authoring code
+    - ✅ lint:staged for adding a pre-commit hook to catch accessibility linting errors
+    - 📣 react-axe for console reporting of accessibility errors in the DOM during development
+    - 📖 storybook setup for accessibility reporting on individual components
 - url: https://gatsby-theme-ggt-material-ui-blog.netlify.com/
   repo: https://github.com/greatgatsbyjsthemes/gatsby-starter-ggt-material-ui-blog
   description: Starter material-ui blog utilizing a Gatsby theme!
