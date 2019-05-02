@@ -1,20 +1,8 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 
-import Layout from "../../components/layout"
-import EvaluationTable from "../../components/evaluation-table"
-import EvaluationCell from "../../components/evaluation-cell"
-import { itemListFeatures } from "../../utils/sidebar/item-list"
-import Container from "../../components/container"
-import FooterLinks from "../../components/shared/footer-links"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  fonts,
-} from "../../utils/presets"
+import EvaluationCell from "./evaluation-cell"
+import { colors, mediaQueries, fonts } from "../../utils/presets"
 
 const legendBorderColor = colors.ui.light
 

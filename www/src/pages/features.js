@@ -2,12 +2,13 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import EvaluationTable from "../components/evaluation-table"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
-import { space, fontSizes, letterSpacings } from "../utils/presets"
+import FeaturesFooter from "../components/features/features-footer"
+import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
+import { letterSpacings } from "../utils/presets"
 
 const FeaturesHeader = () => (
   <section>
@@ -15,10 +16,10 @@ const FeaturesHeader = () => (
       Features
     </h1>
     <p>
-      Coming from the CMS world? See{" "}
+      Coming from the CMS world? See{` `}
       <Link to="/features/cms">Gatsby versus traditional CMS</Link>
       <br />
-      Coming from the JAMstack world? See{" "}
+      Coming from the JAMstack world? See{` `}
       <Link to="/features/jamstack">Gatsby versus JAMstack frameworks</Link>
     </p>
     <p>
@@ -60,7 +61,8 @@ const FeaturesHeader = () => (
           rel="noopener noreferrer"
         >
           WordPress
-        </a>{" "}
+        </a>
+        {` `}
         and
         {` `}
         <a href="https://drupal.org/" target="_blank" rel="noopener noreferrer">
@@ -94,50 +96,8 @@ const FeaturesHeader = () => (
   </section>
 )
 
-const getFeaturesData = function(data) {
-  const sections = (data || [])
-    .map((row, i) => (row.node.Category ? i : -1))
-    .filter(rowNum => rowNum !== -1)
-    .map((rowNum, i, arr) => {
-      if (i < arr.length - 1) {
-        return [rowNum, arr[i + 1]]
-      }
-
-      return [rowNum, data.length]
-    })
-    .map(bounds => data.slice(bounds[0], bounds[1]))
-
-  const sectionHeaders = (data || [])
-    .filter(row => row.node.Category)
-    .map(row => row.node.Category)
-
-  return {
-    sectionHeaders,
-    sections,
-  }
-}
-
-const FeaturesFooter = () => (
-  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
-    Want to help keep this information complete, accurate, and up-to-date?
-    Please comment
-    {` `}
-    <a
-      href="https://github.com/gatsbyjs/gatsby/issues/2444"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      here.
-    </a>
-  </p>
-)
-
-class JamstackFeaturesPage extends Component {
+class FeaturesPage extends Component {
   render() {
-    const { sections, sectionHeaders } = getFeaturesData(
-      this.props.data.allGatsbySpecsCsv.edges
-    )
-
     return (
       <Layout
         location={this.props.location}
@@ -147,23 +107,22 @@ class JamstackFeaturesPage extends Component {
         <Container>
           <main id={`reach-skip-nav`}>
             <FeaturesHeader />
-            <EvaluationTable
-              columnHeaders={[
-                `Feature`,
-                `Gatsby`,
-                `Static site gens`,
-                `CMS`,
-                `Site builders`,
+            <SimpleEvaluationTable
+              title="Feature Comparison"
+              headers={[
+                { display: `Category`, nodeFieldProperty: `Category` },
+                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+                {
+                  display: `React DIY + CMS`,
+                  nodeFieldProperty: `ReactDiyCms`,
+                },
+                {
+                  display: `JAMstack frameworks`,
+                  nodeFieldProperty: `Jamstack`,
+                },
+                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
               ]}
-              nodeFieldProperties={[
-                `Feature`,
-                `Gatsby`,
-                `Jekyll`,
-                `WordPress`,
-                `Squarespace`,
-              ]}
-              sections={sections}
-              sectionHeaders={sectionHeaders}
+              data={this.props.data.allGatsbyFeaturesSpecsCsv.edges}
             />
             <FeaturesFooter />
           </main>
@@ -174,20 +133,18 @@ class JamstackFeaturesPage extends Component {
   }
 }
 
-export default JamstackFeaturesPage
+export default FeaturesPage
 
 export const pageQuery = graphql`
   query {
-    allGatsbySpecsCsv {
+    allGatsbyFeaturesSpecsCsv {
       edges {
         node {
           Category
-          Subcategory
-          Feature
           Gatsby
-          WordPress
-          Squarespace
-          Jekyll
+          ReactDiyCms
+          Jamstack
+          Cms
           Description
         }
       }

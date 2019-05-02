@@ -2,12 +2,13 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../../components/layout"
-import EvaluationTable from "../../components/evaluation-table"
+import EvaluationTable from "../../components/features/evaluation-table"
 import { itemListFeatures } from "../../utils/sidebar/item-list"
+import { getFeaturesData } from "../../utils/get-csv-features-data"
 import Container from "../../components/container"
 import FooterLinks from "../../components/shared/footer-links"
+import FeaturesFooter from "../../components/features/features-footer"
 import LegendTable from "../../components/features/legend-table"
-import { space, fontSizes } from "../../utils/presets"
 
 const FeaturesHeader = () => (
   <section>
@@ -17,44 +18,6 @@ const FeaturesHeader = () => (
     <p>Looking for a specific technology? Find it on this page.</p>
     <LegendTable />
   </section>
-)
-
-const getFeaturesData = function(data) {
-  const sections = (data || [])
-    .map((row, i) => (row.node.Category ? i : -1))
-    .filter(rowNum => rowNum !== -1)
-    .map((rowNum, i, arr) => {
-      if (i < arr.length - 1) {
-        return [rowNum, arr[i + 1]]
-      }
-
-      return [rowNum, data.length]
-    })
-    .map(bounds => data.slice(bounds[0], bounds[1]))
-
-  const sectionHeaders = (data || [])
-    .filter(row => row.node.Category)
-    .map(row => row.node.Category)
-
-  return {
-    sectionHeaders,
-    sections,
-  }
-}
-
-const FeaturesFooter = () => (
-  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
-    Want to help keep this information complete, accurate, and up-to-date?
-    Please comment
-    {` `}
-    <a
-      href="https://github.com/gatsbyjs/gatsby/issues/2444"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      here.
-    </a>
-  </p>
 )
 
 class CmsFeaturesPage extends Component {

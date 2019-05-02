@@ -5,9 +5,8 @@ import {
   mediaQueries,
   fontSizes,
   lineHeights,
-} from "../utils/presets"
-import EvaluationCell from "./evaluation-cell"
-import infoIcon from "../assets/info-icon.svg"
+} from "../../utils/presets"
+import { renderCell } from "./evaluation-cell"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
@@ -18,70 +17,6 @@ class EvaluationTable extends Component {
     this.state = {}
   }
   render() {
-    const renderText = txt => {
-      const words = txt.split(` `)
-      return [
-        words.slice(0, words.length - 1).join(` `),
-        <span key={`info-icon-${words[words.length - 1]}`}>
-          {` `}
-          {`${words[words.length - 1]} `}
-          <img
-            src={infoIcon}
-            css={{
-              height: space[3],
-              marginBottom: space[1],
-              verticalAlign: `baseline`,
-            }}
-            alt={`Info Icon`}
-          />
-        </span>,
-      ]
-    }
-
-    const renderCell = (text, column) => {
-      switch (column) {
-        case 0: {
-          return (
-            <div
-              css={{
-                verticalAlign: `middle`,
-                textAlign: `left`,
-                display: `inline-block`,
-                marginLeft: `auto`,
-                marginRight: `auto`,
-              }}
-            >
-              <button
-                css={{
-                  background: `none`,
-                  border: 0,
-                  cursor: `inherit`,
-                  padding: 0,
-                  textAlign: `left`,
-                }}
-                onClick={e => {
-                  e.preventDefault()
-                }}
-              >
-                {renderText(text)}
-              </button>
-              {/* eslint-enable */}
-            </div>
-          )
-        }
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5: {
-          return <EvaluationCell num={text} />
-        }
-        default: {
-          return null
-        }
-      }
-    }
-
     const showTooltip = (section, row) => this.state[`${section},${row}`]
 
     const {

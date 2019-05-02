@@ -1,21 +1,21 @@
 import React from "react"
 
-import logo from "../monogram.svg"
-import jekyll from "../assets/jekyll.svg"
-import wordpress from "../assets/wordpress.png"
-import squarespace from "../assets/squarespace-compressed.png"
-import nextjs from "../assets/nextjs.svg"
-import hugo from "../assets/hugo.png"
-import nuxtjs from "../assets/nuxtjs.png"
-import drupal from "../assets/drupal.png"
+import logo from "../../monogram.svg"
+import jekyll from "../../assets/jekyll.svg"
+import wordpress from "../../assets/wordpress.png"
+import squarespace from "../../assets/squarespace-compressed.png"
+import nextjs from "../../assets/nextjs.svg"
+import hugo from "../../assets/hugo.png"
+import nuxtjs from "../../assets/nuxtjs.png"
+import drupal from "../../assets/drupal.png"
 import {
   colors,
   space,
   mediaQueries,
   lineHeights,
   fonts,
-} from "../utils/presets"
-import { rhythm } from "../utils/typography"
+} from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 const subHeaderTitleStyles = {
   height: space[6],
