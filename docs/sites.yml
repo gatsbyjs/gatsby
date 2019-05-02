@@ -5654,9 +5654,9 @@
   built_by_url: https://github.com/opeah
   featured: false
 - title: Athul Cyriac Ajay
-  main_url: "www.athulcyriac.me"
-  url: "athulcyriac.me"
-  source_url: "github.com/Athul-CA/.me"
+  main_url: "https://www.athulcyriac.me/"
+  url: "https://athulcyriac.me/"
+  source_url: "https://github.com/Athul-CA/.me"
   featured: false
   categories:
           - Web Development
