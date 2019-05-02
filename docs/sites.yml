@@ -5705,3 +5705,17 @@
     - Food
   built_by: Connerra
   featured: false
+- title: AWS Amplify Community
+  url: https://amplify.aws/community/
+  main_url: https://amplify.aws/community/
+  source_url: https://github.com/aws-amplify/community
+  description: >
+    Amplify Community is a hub for developers building fullstack serverless applications with Amplify to easily access content (such as events, blog posts, videos, sample projects, and tutorials) created by other members of the Amplify community.
+  categories:
+    - Blog
+    - Directory
+    - Education
+    - Technology
+  built_by: Nikhil Swaminathan
+  built_by_url: https://github.com/swaminator
+  featured: false
