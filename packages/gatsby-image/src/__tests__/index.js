@@ -101,4 +101,14 @@ describe(`<Image />`, () => {
     expect(onLoadMock).toHaveBeenCalledTimes(1)
     expect(onErrorMock).toHaveBeenCalledTimes(1)
   })
+
+  it(`should accept a number for rootMargin`, () => {
+    const component = setup(false, { rootMargin: 20 })
+    expect(component).toMatchSnapshot()
+  })
+
+  it(`should accept a string for rootMargin`, () => {
+    const component = setup(false, { rootMargin: `20px` })
+    expect(component).toMatchSnapshot()
+  })
 })
