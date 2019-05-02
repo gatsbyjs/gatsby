@@ -74,107 +74,108 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   }
 }
 
-test(`it returns empty array when 0 images`, async () => {
-  const content = `
+describe(`gatsby-remark-images`, () => {
+  it(`returns empty array when 0 images`, async () => {
+    const content = `
 # hello world
 
 Look ma, no images
   `.trim()
 
-  const result = await plugin(createPluginOptions(content))
+    const result = await plugin(createPluginOptions(content))
 
-  expect(result).toEqual([])
-})
+    expect(result).toEqual([])
+  })
 
-test(`it leaves non-relative images alone`, async () => {
-  const imagePath = `https://google.com/images/an-image.jpeg`
-  const content = `
+  it(`leaves non-relative images alone`, async () => {
+    const imagePath = `https://google.com/images/an-image.jpeg`
+    const content = `
 ![asdf](${imagePath})
   `.trim()
 
-  const result = await plugin(createPluginOptions(content, imagePath))
+    const result = await plugin(createPluginOptions(content, imagePath))
 
-  expect(result).toEqual([])
-})
+    expect(result).toEqual([])
+  })
 
-test(`it transforms images in markdown`, async () => {
-  const imagePath = `images/my-image.jpeg`
-  const content = `
+  it(`transforms images in markdown`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `
 
 ![image](./${imagePath})
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
+    const nodes = await plugin(createPluginOptions(content, imagePath))
 
-  expect(nodes.length).toBe(1)
+    expect(nodes.length).toBe(1)
 
-  const node = nodes.pop()
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it transforms multiple images in markdown`, async () => {
-  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+  it(`transforms multiple images in markdown`, async () => {
+    const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
 
-  const content = `
+    const content = `
 ![image 1](./${imagePaths[0]})
 ![image 2](./${imagePaths[1]})
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePaths))
+    const nodes = await plugin(createPluginOptions(content, imagePaths))
 
-  expect(nodes.length).toBe(imagePaths.length)
-})
+    expect(nodes.length).toBe(imagePaths.length)
+  })
 
-test(`it transforms image references in markdown`, async () => {
-  const imagePath = `images/my-image.jpeg`
-  const content = `
+  it(`transforms image references in markdown`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `
 [refImage1]: ./${imagePath} "Ref Image Title"
 ![alt text][refImage1]
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
+    const nodes = await plugin(createPluginOptions(content, imagePath))
 
-  expect(nodes.length).toBe(1)
+    expect(nodes.length).toBe(1)
 
-  const node = nodes.pop()
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it leaves orphan image references alone`, async () => {
-  const imagePath = `images/my-image.jpeg`
-  const content = `
+  it(`leaves orphan image references alone`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `
 [refImage1]: ./${imagePath} "Ref Image Title"
 ![image][refImage2]
   `.trim()
 
-  const result = await plugin(createPluginOptions(content, imagePath))
+    const result = await plugin(createPluginOptions(content, imagePath))
 
-  expect(result).toEqual([])
-})
+    expect(result).toEqual([])
+  })
 
-test(`it transforms multiple image references in markdown`, async () => {
-  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+  it(`transforms multiple image references in markdown`, async () => {
+    const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
 
-  const content = `
+    const content = `
 [refImage1]: ./${imagePaths[0]} "Ref1 Image Title"
 [refImage2]: ./${imagePaths[1]} "Ref2 Image Title"
 ![image 1][refImage1]
 ![image 2][refImage2]
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePaths))
+    const nodes = await plugin(createPluginOptions(content, imagePaths))
 
-  expect(nodes.length).toBe(imagePaths.length)
-})
+    expect(nodes.length).toBe(imagePaths.length)
+  })
 
-test(`it transforms multiple image links and image references in markdown`, async () => {
-  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+  it(`transforms multiple image links and image references in markdown`, async () => {
+    const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
 
-  const content = `
+    const content = `
 [refImage1]: ./${imagePaths[0]} "Ref1 Image Title"
 [refImage2]: ./${imagePaths[1]} "Ref2 Image Title"
 ![image 1][refImage1]
@@ -183,160 +184,166 @@ test(`it transforms multiple image links and image references in markdown`, asyn
 ![image 2](./${imagePaths[1]})
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePaths))
+    const nodes = await plugin(createPluginOptions(content, imagePaths))
 
-  expect(nodes.length).toBe(imagePaths.length * 2)
-})
+    expect(nodes.length).toBe(imagePaths.length * 2)
+  })
 
-test(`it transforms HTML img tags`, async () => {
-  const imagePath = `image/my-image.jpeg`
+  it(`transforms HTML img tags`, async () => {
+    const imagePath = `image/my-image.jpeg`
 
-  const content = `
+    const content = `
 <img src="./${imagePath}">
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
+    const nodes = await plugin(createPluginOptions(content, imagePath))
 
-  expect(nodes.length).toBe(1)
+    expect(nodes.length).toBe(1)
 
-  const node = nodes.pop()
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it leaves non-relative HTML img tags alone`, async () => {
-  const imagePath = `https://google.com/images/this-was-an-image.jpeg`
+  it(`leaves non-relative HTML img tags alone`, async () => {
+    const imagePath = `https://google.com/images/this-was-an-image.jpeg`
 
-  const content = `
+    const content = `
 <img src="${imagePath}">
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
-  expect(nodes[0].value).toBe(content)
-})
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes[0].value).toBe(content)
+  })
 
-test(`it leaves images that are already linked alone`, async () => {
-  const imagePath = `image/my-image.jpg`
-  const content = `
+  it(`leaves images that are already linked alone`, async () => {
+    const imagePath = `image/my-image.jpg`
+    const content = `
 [![img](./${imagePath})](https://google.com)
 `
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    const node = nodes.pop()
 
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it leaves linked HTML img tags alone`, async () => {
-  const imagePath = `images/this-image-already-has-a-link.jpeg`
+  it(`leaves linked HTML img tags alone`, async () => {
+    const imagePath = `images/this-image-already-has-a-link.jpeg`
 
-  const content = `
+    const content = `
 <a href="https://example.org">
   <img src="./${imagePath}">
 </a>
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    const node = nodes.pop()
 
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it leaves single-line linked HTML img tags alone`, async () => {
-  const imagePath = `images/this-image-already-has-a-link.jpeg`
+  it(`leaves single-line linked HTML img tags alone`, async () => {
+    const imagePath = `images/this-image-already-has-a-link.jpeg`
 
-  const content = `
+    const content = `
 <a href="https://example.org"><img src="./${imagePath}"></a>
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    const node = nodes.pop()
 
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it handles goofy nesting properly`, async () => {
-  const imagePath = `images/this-image-already-has-a-link.jpeg`
+  it(`handles goofy nesting properly`, async () => {
+    const imagePath = `images/this-image-already-has-a-link.jpeg`
 
-  const content = `
+    const content = `
   <a href="https://google.com">**![test](./${imagePath})**</a>
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
-  const node = nodes.pop()
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    const node = nodes.pop()
 
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
 
-test(`it transforms HTML img tags with query strings`, async () => {
-  const imagePath = `image/my-image.jpeg?query=string`
+  it(`transforms HTML img tags with query strings`, async () => {
+    const imagePath = `image/my-image.jpeg?query=string`
 
-  const content = `
+    const content = `
 <img src="./${imagePath}">
   `.trim()
 
-  const nodes = await plugin(createPluginOptions(content, imagePath))
+    const nodes = await plugin(createPluginOptions(content, imagePath))
 
-  expect(nodes.length).toBe(1)
+    expect(nodes.length).toBe(1)
 
-  const node = nodes.pop()
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
-
-test(`it transforms images in markdown with query strings`, async () => {
-  const imagePath = `images/my-image.jpeg?query=string`
-  const content = `
-
-![image](./${imagePath})
-  `.trim()
-
-  const nodes = await plugin(createPluginOptions(content, imagePath))
-
-  expect(nodes.length).toBe(1)
-
-  const node = nodes.pop()
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-})
-
-test(`it uses tracedSVG placeholder when enabled`, async () => {
-  const imagePath = `images/my-image.jpeg`
-  const content = `
-![image](./${imagePath})
-  `.trim()
-
-  const nodes = await plugin(createPluginOptions(content, imagePath), {
-    tracedSVG: { color: `COLOR_AUTO`, turnPolicy: `TURNPOLICY_LEFT` },
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
   })
 
-  expect(nodes.length).toBe(1)
+  it(`transforms images in markdown with query strings`, async () => {
+    const imagePath = `images/my-image.jpeg?query=string`
+    const content = `
 
-  const node = nodes.pop()
-  expect(node.type).toBe(`html`)
-  expect(node.value).toMatchSnapshot()
-  expect(node.value).not.toMatch(`<html>`)
-  expect(mockTraceSVG).toBeCalledTimes(1)
+![image](./${imagePath})
+  `.trim()
 
-  expect(mockTraceSVG).toBeCalledWith(
-    expect.objectContaining({
-      // fileArgs cannot be left undefined or traceSVG errors
-      fileArgs: expect.any(Object),
-      // args containing Potrace constants should be translated to their values
-      args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+  })
+
+  it(`uses tracedSVG placeholder when enabled`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `
+![image](./${imagePath})
+  `.trim()
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      tracedSVG: { color: `COLOR_AUTO`, turnPolicy: `TURNPOLICY_LEFT` },
     })
-  )
+
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+    expect(node.value).not.toMatch(`<html>`)
+    expect(mockTraceSVG).toBeCalledTimes(1)
+
+    expect(mockTraceSVG).toBeCalledWith(
+      expect.objectContaining({
+        // fileArgs cannot be left undefined or traceSVG errors
+        fileArgs: expect.any(Object),
+        // args containing Potrace constants should be translated to their values
+        args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
+      })
+    )
+  })
+
+})
+
+test('it passes through the srcSetBreakPoints to gatsby-plugin-sharp', () => {
+  const spy = jest.spyOn(gatsby - plugin - sharp, 'play');
 })
 
 describe(`showCaptions`, () => {
