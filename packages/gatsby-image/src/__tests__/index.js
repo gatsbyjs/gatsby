@@ -79,13 +79,13 @@ describe(`<Image />`, () => {
     )
     // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1; color: red;`
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })
 
   it(`should have a transition-delay of 1sec`, () => {
-    const component = setup(false, { durationFadeIn: `1000` })
+    const component = setup(false, { durationFadeIn: 1000 })
     expect(component).toMatchSnapshot()
   })
 

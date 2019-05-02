@@ -37,6 +37,7 @@ interface GatsbyImageProps {
   imgStyle?: object
   placeholderStyle?: object
   backgroundColor?: string | boolean
+  rootMargin?: string | number
   onLoad?: () => void
   onStartLoad?: (param: { wasCached: boolean }) => void
   onError?: (event: any) => void
