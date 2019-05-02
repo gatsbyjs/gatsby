@@ -1245,8 +1245,13 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *   with inferred field types, and default field resolvers for `Date` (which
  *   adds formatting options) and `File` (which resolves the field value as
  *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer` and `@dontInfer` directives, and their
- *   `noDefaultResolvers` argument.
+ *   customised with `@infer`, `@dontInfer` and `@addResolvers` directives.
+ *
+ *
+ * `@infer` - run inference on the type and add fields that don't exist on the
+ * defined type to it.
+ * `@dontInfer` - don't run any inference on the type
+ * `@addResolver` - add resolver options to a field
  *
  * @example
  * exports.sourceNodes = ({ actions }) => {
@@ -1255,17 +1260,17 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     """
  *     Markdown Node
  *     """
- *     type MarkdownRemark implements Node {
+ *     type MarkdownRemark implements Node @infer {
  *       frontmatter: Frontmatter!
  *     }
  *
  *     """
  *     Markdown Frontmatter
  *     """
- *     type Frontmatter {
+ *     type Frontmatter @infer {
  *       title: String!
- *       author: AuthorJson!
- *       date: Date!
+ *       author: AuthorJson! @addResolver(type: "link")
+ *       date: Date! @addResolver(type: "dateformat")
  *       published: Boolean!
  *       tags: [String!]!
  *     }
@@ -1274,9 +1279,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     Author information
  *     """
  *     # Does not include automatically inferred fields
- *     type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
+ *     type AuthorJson implements Node @dontInfer {
  *       name: String!
- *       birthday: Date! # no default resolvers for Date formatting added
+ *       birthday: Date! @addResolver(type: "dateformat")
  *     }
  *   `
  *   createTypes(typeDefs)
@@ -1292,6 +1297,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *         frontmatter: 'Frontmatter!'
  *       },
  *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: true,
+ *       },
  *     }),
  *     schema.buildObjectType({
  *       name: 'Frontmatter',
@@ -1302,12 +1310,44 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *             return parent.title || '(Untitled)'
  *           }
  *         },
- *         author: 'AuthorJson!',
- *         date: 'Date!',
+ *         author: {
+ *           type: 'AuthorJson'
+ *           extensions: {
+ *             addResolver: {
+ *               type: 'link',
+ *             },
+ *           },
+ *         }
+ *         date: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             addResolver: {
+ *               type: 'date',
+ *             },
+ *           },
+ *         },
  *         published: 'Boolean!',
  *         tags: '[String!]!',
  *       }
- *     })
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'AuthorJson',
+ *       fields: {
+ *         name: 'String!'
+ *         birthday: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             addResolver: {
+ *               type: 'date',
+ *             },
+ *           },
+ *         },
+ *       },
+ *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: false,
+ *       },
+ *     }),
  *   ]
  *   createTypes(typeDefs)
  * }
