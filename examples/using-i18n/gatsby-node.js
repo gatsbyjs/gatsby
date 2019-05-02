@@ -30,6 +30,7 @@ exports.onCreatePage = ({ page, actions }) => {
       // This context also gets passed to the src/components/layout file
       // This should ensure that the locale is available on every page
       context: {
+        ...page.context,
         locale: lang,
         dateFormat: locales[lang].dateFormat,
       },
