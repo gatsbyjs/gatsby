@@ -1,8 +1,7 @@
 const semver = require(`semver`)
 
 if (semver.satisfies(process.version, `>=8`)) {
-  console.info(`loading ink =====================`)
-  module.exports = require(`./yurnalist`)
+  module.exports = require(`./ink`).default
 } else {
   module.exports = require(`./yurnalist`)
 }
