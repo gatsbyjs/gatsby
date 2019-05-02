@@ -103,7 +103,7 @@ export interface GatsbyConfig {
  *
  * @see https://www.gatsbyjs.org/docs/node-apis/
  */
-export interface Node {
+export interface GatsbyNode {
   /**
    * Tell plugins to add pages. This extension point is called only after the initial
    * sourcing and transformation of nodes plus creation of the GraphQL schema are
