@@ -37,7 +37,7 @@ class EvaluationTable extends Component {
         </span>,
       ]
     }
-    const headers = [`Feature`, `Gatsby`, `Jekyll`, `WordPress`, `Squarespace`]
+
     const renderCell = (text, column) => {
       switch (column) {
         case 0: {
@@ -72,7 +72,8 @@ class EvaluationTable extends Component {
         case 1:
         case 2:
         case 3:
-        case 4: {
+        case 4:
+        case 5: {
           return <EvaluationCell num={text} />
         }
         default: {
@@ -83,7 +84,12 @@ class EvaluationTable extends Component {
 
     const showTooltip = (section, row) => this.state[`${section},${row}`]
 
-    const { sections, sectionHeaders } = this.props
+    const {
+      columnHeaders,
+      nodeFieldProperties,
+      sections,
+      sectionHeaders,
+    } = this.props
     const flatten = arrays => [].concat.apply([], arrays)
 
     return (
@@ -104,18 +110,22 @@ class EvaluationTable extends Component {
                   text={sectionHeaders[s]}
                   key={`section-title-${s}`}
                 />,
-                <SectionHeaderTop key={`section-header-${s}`} />,
+                <SectionHeaderTop
+                  key={`section-header-${s}`}
+                  columnHeaders={columnHeaders}
+                />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
                     [].concat([
                       <SectionHeaderBottom
+                        nodeFieldProperties={nodeFieldProperties}
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
                         key={`section-header-${s}-bottom-${i}`}
                       />,
                       <tr key={`section-${s}-first-row-${i}`}>
-                        {headers.map((header, j) => (
+                        {nodeFieldProperties.map((nodeProperty, j) => (
                           <td
                             key={j}
                             css={{
@@ -147,7 +157,7 @@ class EvaluationTable extends Component {
                               })
                             }}
                           >
-                            {renderCell(row.node[header], j)}
+                            {renderCell(row.node[nodeProperty], j)}
                           </td>
                         ))}
                       </tr>,

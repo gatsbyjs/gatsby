@@ -4,6 +4,10 @@ import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
+import nextjs from "../assets/nextjs.svg"
+import hugo from "../assets/hugo.png"
+import nuxtjs from "../assets/nuxtjs.png"
+import drupal from "../assets/drupal.png"
 import {
   colors,
   space,
@@ -23,23 +27,25 @@ const subHeaderTitleStyles = {
   },
 }
 
-const subHeaderTitles = [
-  ``,
-  <img src={logo} key="0" css={subHeaderTitleStyles} alt={`Gatsby Logo`} />,
-  <img src={jekyll} key="1" css={subHeaderTitleStyles} alt={`Jekyll Logo`} />,
-  <img
-    src={wordpress}
-    key="2"
-    css={subHeaderTitleStyles}
-    alt={`WordPress Logo`}
-  />,
-  <img
-    src={squarespace}
-    key="3"
-    css={subHeaderTitleStyles}
-    alt={`Squarespace Logo`}
-  />,
-]
+const subHeaderTitles = {
+  Category: ``,
+  Gatsby: <img src={logo} css={subHeaderTitleStyles} alt={`Gatsby Logo`} />,
+  Jekyll: <img src={jekyll} css={subHeaderTitleStyles} alt={`Jekyll Logo`} />,
+  WordPress: (
+    <img src={wordpress} css={subHeaderTitleStyles} alt={`WordPress Logo`} />
+  ),
+  Squarespace: (
+    <img
+      src={squarespace}
+      css={subHeaderTitleStyles}
+      alt={`Squarespace Logo`}
+    />
+  ),
+  Nextjs: <img src={nextjs} css={subHeaderTitleStyles} alt={`Next.js Logo`} />,
+  Hugo: <img src={hugo} css={subHeaderTitleStyles} alt={`Next.js Logo`} />,
+  Nuxtjs: <img src={nuxtjs} css={subHeaderTitleStyles} alt={`Nuxt.js Logo`} />,
+  Drupal: <img src={drupal} css={subHeaderTitleStyles} alt={`Nuxt.js Logo`} />,
+}
 
 const renderSubHeader = props => (
   <tr
@@ -48,7 +54,7 @@ const renderSubHeader = props => (
       display: !props.display ? `none` : `table-row`,
     }}
   >
-    {subHeaderTitles.map((header, i) => (
+    {props.nodeFieldProperties.map((nodeProperty, i) => (
       <td
         key={i}
         css={{
@@ -63,7 +69,7 @@ const renderSubHeader = props => (
           padding: space[3],
         }}
       >
-        {header || props.category || `Feature`}
+        {subHeaderTitles[nodeProperty] || props.category || `Feature`}
       </td>
     ))}
   </tr>

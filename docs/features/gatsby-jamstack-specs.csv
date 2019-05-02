@@ -1,0 +1,36 @@
+Category,Subcategory,Feature,Gatsby,Nextjs,Jekyll,Hugo,Nuxtjs,Description
+Performance,Delivery Optimization,Static content,3,2,3,1,2,"Can you build your site as 'static' files which can be deployed without a server, cached on CDN distributed throughout the globe?
+<ul>
+<li>Gatsby, like Jekyll and other static site generators, is built for this.</li>
+<li>Squarespace allows static content but <a href=""https://developers.squarespace.com/static-pages/"">doesn't allow it</a> to be edited with the CMS.</li>
+<li>WordPress allows it with <a href=""https://www.itsupportguides.com/knowledge-base/wordpress/wordpress-how-to-serve-static-content-from-a-cookieless-domain/"">some customization</a>.</li>
+</ul>"
+,,CDN,2,2,2,2,3,"<ul>
+<li>CDN-providing hosts like <a href=""https://www.netlify.com"" target=""_blank"">Netlify</a> support sites built on Gatsby and other static frameworks</li>
+<li>WordPress allows this through <a href=""https://wordpress.org/plugins/cdn-enabler/"" target=""_blank"">plugins</a>.</li>
+<li>Site builders like Squarespace usually come with a CDN out of the box.</li>
+</ul>"
+,,AMP support,2,2,2,2,3,"Google's <a href=""https://www.ampproject.org/"" target=""_blank"">AMP format</a> is a specific type of static page format enabling faster loads. AMP pages are privileged in Google search results.
+
+<ul>
+<li><a href=""https://github.com/chiedo/gatsby-amp-starter-blog"" target=""_blank"">Gatsby</a>, <a href=""https://github.com/juusaw/amp-jekyll"">Jekyll</a>, and <a href=""https://wordpress.org/plugins/amp/"">WordPress</a> all support this through plugins and starter kits.</li>
+<li>Squarespace <a href=""https://blog.squarespace.com/blog/now-supporting-accelerated-mobile-pages"" target=""_blank"">supports this</a>.
+</ul>"
+,Faster time to interaction,Progressive image loading,3,2,1,2,0,"<p>Progressive image loading means displaying a blurry placeholder image before loading the full heavyweight asset. This prevents the display from ""bouncing around"" as images load in addition to making the page feel complete before they have.</p>
+
+<p>The most well-known implementation of this is on Medium-hosted blogs. Gatsby comes with this feature out of the box (demo at <a href=""https://using-gatsby-image.gatsbyjs.org/"">using-gatsby-image.gatsbyjs.org</a>); it takes custom per-page code on other code-based platforms.</p>"
+,,Responsive image loading,3,2,2,3,3,"<p>Responsive images enable modern browsers to load the right size of image assets given browser size -- that way users with high-resolution, large-screen devices can get a high-quality image while users on low-resolution or small-screen devices don't spend extra time waiting for the page to load when a low-resolution asset would suffice. Gatsby comes with this feature out of the box (demo at <a href=""https://using-gatsby-image.gatsbyjs.org/"">using-gatsby-image.gatsbyjs.org</a>).</p>
+
+<p>WordPress and Squarespace supports this out-of-the-box automatically, while Jekyll requires <a href=""https://github.com/wildlyinaccurate/jekyll-responsive-image"" target =""_blank"">some customization</a>.</p> "
+,,Inlines critical CSS,3,2,1,1,1,"<p>There's two ways to get CSS on your web page -- inline it with your html, or load it on a separate page referenced in your html. If you reference CSS in a separate page, your client's browser will block page loading until it receives the CSS file. This can delay interactivity by 500ms (on a fast connection), to 3+ seconds on a slow connection.</p>
+
+<p>Gatsby offers this out of the box; in other frameworks it is usually possible but requires a lot of custom code, often written on a per-page basis.</p>"
+,,Font self-hosting,3,2,3,3,0,"<p>Google Fonts and other open-source font libraries are helpful in building beautiful sites. The hard part is what you don't see -- a page load blocking request to Google's servers. While this request is pretty fast, even faster is hosting fonts on your own server, so you can just load them from your local filesystem. </p>
+
+<p>This is doable with WordPress and Jekyll; Gatsby <a href=""https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/"">open-sourced a library enabling this</a> for Gatsby and other JavaScript-based apps; it's baked into the framework.</p>"
+Developer Experience,Maintenance & Extensibility,Serverless,3,2,3,2,2,"<p>Serverless means not having to worry about security and framework upgrades. It means reduced ops -- you don't have to ssh into a live production server and see what's going on.</p>
+
+<p>Hosted is not quite as good as serverless -- they still have a server you just don't see it.</p>"
+,,Export as Code,3,2,3,3,0,"<p>If your site is built on open-source software, you can change your hosting provider; and customize to your heart's content.</p>
+
+<p>If you use a site-builder, you're locked into a specific platform and a specific provider. If they don't offer a feature you need, your only option is to rebuild your site on a different platform. You also assume additional business risk that the platform goes out of business or moves in a direction different than you had hoped.</p>"

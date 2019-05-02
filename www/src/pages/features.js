@@ -1,135 +1,26 @@
 import React, { Component } from "react"
-import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
+import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
-import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  fonts,
-} from "../utils/presets"
-
-const legendBorderColor = colors.ui.light
-
-const LegendTable = () => {
-  const legendBallStyle = {
-    float: `none`,
-    marginLeft: 0,
-    marginRight: 0,
-    display: `inline-block`,
-  }
-
-  const legendBallCellStyle = {
-    display: `table-cell`,
-    verticalAlign: `middle`,
-    textAlign: `center`,
-    padding: 10,
-    borderLeft: `1px solid ${legendBorderColor}`,
-    borderBottom: `1px solid ${legendBorderColor}`,
-  }
-
-  const legendExplanationCellStyle = {
-    display: `table-cell`,
-    verticalAlign: `middle`,
-    textAlign: `center`,
-    padding: 10,
-    borderLeft: `1px solid ${legendBorderColor}`,
-    borderBottom: `1px solid ${legendBorderColor}`,
-    [mediaQueries.sm]: {
-      borderBottom: 0,
-    },
-  }
-
-  const balls = [
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
-      <h4 style={{ margin: 0 }}>Icon</h4>
-    </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
-      <EvaluationCell num="3" style={legendBallStyle} />
-    </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
-      <EvaluationCell num="2" style={legendBallStyle} />
-    </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
-      <EvaluationCell num="1" style={legendBallStyle} />
-    </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
-      <EvaluationCell num="0" style={legendBallStyle} />
-    </div>,
-  ]
-
-  const legendText = [
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
-      <h5 style={{ margin: 0 }}>Feature Availability</h5>
-    </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
-      Out of the box
-    </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
-      Plugins available
-    </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
-      Needs customization
-    </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
-      Not possible
-    </div>,
-  ]
-
-  return (
-    <div>
-      <Helmet>
-        <title>Features</title>
-      </Helmet>
-      <div
-        css={{
-          border: `1px solid ${legendBorderColor}`,
-          borderLeft: 0,
-          fontFamily: fonts.header,
-          display: `none`,
-          [mediaQueries.sm]: {
-            display: `table`,
-          },
-        }}
-      >
-        <div css={{ display: `table-row` }}>{balls}</div>
-        <div css={{ display: `table-row` }}>{legendText}</div>
-      </div>
-      <div
-        css={{
-          display: `table`,
-          border: `1px solid ${legendBorderColor}`,
-          borderLeft: 0,
-          fontFamily: fonts.header,
-          [mediaQueries.sm]: {
-            display: `none`,
-          },
-        }}
-      >
-        {[0, 1, 2, 3, 4].map(i => (
-          <div css={{ display: `table-row` }} key={i}>
-            {balls[i]}
-            {legendText[i]}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+import LegendTable from "../components/features/legend-table"
+import { space, fontSizes, letterSpacings } from "../utils/presets"
 
 const FeaturesHeader = () => (
   <section>
     <h1 id="introduction" style={{ marginTop: 0 }}>
       Features
     </h1>
+    <p>
+      Coming from the CMS world? See{" "}
+      <Link to="/features/cms">Gatsby versus traditional CMS</Link>
+      <br />
+      Coming from the JAMstack world? See{" "}
+      <Link to="/features/jamstack">Gatsby versus JAMstack frameworks</Link>
+    </p>
     <p>
       There are many ways to build a website. If you’re considering Gatsby, you
       may also be looking at some alternatives:
@@ -138,11 +29,22 @@ const FeaturesHeader = () => (
       <li>
         <strong>JAMstack frameworks</strong> such as
         {` `}
-        <a href="https://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a>
+        <a
+          href="https://jekyllrb.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Jekyll
+        </a>
         {` `}
-        <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">Next.js</a>, and
+        <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">
+          Next.js
+        </a>
+        , and
         {` `}
-        <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer">Nuxt.js</a>
+        <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer">
+          Nuxt.js
+        </a>
         {` `}
         let you put text or markdown in a specific directory such as
         <code>pages/</code> in a version-controlled codebase. They then build a
@@ -152,9 +54,18 @@ const FeaturesHeader = () => (
       <li>
         <strong>Traditional content management systems</strong> (CMSs) like
         {` `}
-        <a href="https://wordpress.org/" target="_blank" rel="noopener noreferrer">WordPress</a> and
+        <a
+          href="https://wordpress.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WordPress
+        </a>{" "}
+        and
         {` `}
-        <a href="https://drupal.org/" target="_blank" rel="noopener noreferrer">Drupal</a>
+        <a href="https://drupal.org/" target="_blank" rel="noopener noreferrer">
+          Drupal
+        </a>
         {` `}
         give you an online text editor to create content. You customize the look
         and feel by choosing themes and plugins or by writing custom PHP or
@@ -221,7 +132,7 @@ const FeaturesFooter = () => (
   </p>
 )
 
-class FeaturesPage extends Component {
+class JamstackFeaturesPage extends Component {
   render() {
     const { sections, sectionHeaders } = getFeaturesData(
       this.props.data.allGatsbySpecsCsv.edges
@@ -237,6 +148,20 @@ class FeaturesPage extends Component {
           <main id={`reach-skip-nav`}>
             <FeaturesHeader />
             <EvaluationTable
+              columnHeaders={[
+                `Feature`,
+                `Gatsby`,
+                `Static site gens`,
+                `CMS`,
+                `Site builders`,
+              ]}
+              nodeFieldProperties={[
+                `Feature`,
+                `Gatsby`,
+                `Jekyll`,
+                `WordPress`,
+                `Squarespace`,
+              ]}
               sections={sections}
               sectionHeaders={sectionHeaders}
             />
@@ -249,7 +174,7 @@ class FeaturesPage extends Component {
   }
 }
 
-export default FeaturesPage
+export default JamstackFeaturesPage
 
 export const pageQuery = graphql`
   query {
