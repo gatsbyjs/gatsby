@@ -253,7 +253,7 @@
               link: /docs/performance-tracing/
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
-        - title: Adding Website Functionality
+        - title: Adding Website Functionality*
           link: /docs/adding-website-functionality/
           items:
             - title: Adding Search
