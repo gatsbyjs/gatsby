@@ -313,7 +313,7 @@ dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sh
   Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
 ```
 
-To solve this, update all Gatsby plugins that depend on `sharp` package. Here's list of official packages that you might need to update if you use them:
+To fix this, you'll need to update all Gatsby plugins in the current project that depend on the `sharp` package. Here's a list of official plugins that you might need to update in case your projects uses them:
 
 - `gatsby-plugin-sharp`
 - `gatsby-plugin-manifest`
