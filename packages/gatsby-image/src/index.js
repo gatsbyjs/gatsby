@@ -208,7 +208,10 @@ class Image extends React.Component {
 
   handleRef(ref) {
     if (this.state.IOSupported && ref) {
-      const rootMargin = this.props.rootMargin || `200px`
+      const rootMargin =
+        typeof this.props.rootMargin === `number`
+          ? `${this.props.rootMargin}px`
+          : this.props.rootMargin
       this.cleanUpListeners = listenToIntersections(ref, rootMargin, () => {
         const imageInCache = inImageCache(this.props)
         if (
@@ -481,6 +484,7 @@ Image.defaultProps = {
   durationFadeIn: 500,
   alt: ``,
   Tag: `div`,
+  rootMargin: `200px`,
 }
 
 const fixedObject = PropTypes.shape({
@@ -511,7 +515,7 @@ Image.propTypes = {
   fixed: fixedObject,
   fluid: fluidObject,
   fadeIn: PropTypes.bool,
-  rootMargin: PropTypes.string,
+  rootMargin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,
   alt: PropTypes.string,

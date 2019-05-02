@@ -363,10 +363,11 @@ You will need to add it in your graphql query as is shown in the following snipp
 
 ## Image rootMargin override
 
-When using the `<Image />` component, the default rootMargin is 200px, you can override this default by passing a rootMargin prop.
+When using the `<Img />` component, the default rootMargin is 200px, you can override this default by passing a rootMargin prop.
 
 ```javascript
-<Image rootMargin="20px" />
+<Img rootMargin="20px" />
+<Img rootMargin={20} />
 ```
 
 ## Some other stuff to be aware of
