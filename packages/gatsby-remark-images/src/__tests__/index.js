@@ -1,23 +1,4 @@
-const mockTraceSVG = jest.fn(
-  async () => `data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e`
-)
 
-jest.mock(`gatsby-plugin-sharp`, () => {
-  return {
-    fluid({ file, args }) {
-      return Promise.resolve({
-        aspectRatio: 0.75,
-        presentationWidth: 300,
-        originalImg: file.absolutePath,
-        src: file.absolutePath,
-        srcSet: `${file.absolutePath}, ${file.absolutePath}`,
-        sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
-        base64: `data:image/png;base64,iVBORw`,
-      })
-    },
-    traceSVG: mockTraceSVG,
-  }
-})
 
 const Remark = require(`remark`)
 const { Potrace } = require(`potrace`)
@@ -75,6 +56,33 @@ const createPluginOptions = (content, imagePaths = `/`) => {
 }
 
 describe(`gatsby-remark-images`, () => {
+
+  let mockTraceSVG
+  let mockFluid
+
+  beforeAll(() => {
+    mockTraceSVG = jest.fn(
+      async () => `data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e`
+    )
+
+    mockFluid = jest.mock(`gatsby-plugin-sharp`, () => {
+      return {
+        fluid({ file, args }) {
+          return Promise.resolve({
+            aspectRatio: 0.75,
+            presentationWidth: 300,
+            originalImg: file.absolutePath,
+            src: file.absolutePath,
+            srcSet: `${file.absolutePath}, ${file.absolutePath}`,
+            sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
+            base64: `data:image/png;base64,iVBORw`,
+          })
+        },
+        traceSVG: mockTraceSVG,
+      }
+    })
+  })
+
   it(`returns empty array when 0 images`, async () => {
     const content = `
 # hello world
@@ -338,6 +346,11 @@ Look ma, no images
         args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
       })
     )
+  })
+
+  afterAll(() => {
+    mockFluid.mockRestore()
+    mockTraceSVG.mockRestore()
   })
 
 })
