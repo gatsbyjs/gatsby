@@ -3,10 +3,7 @@ import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
 
 // TODO: remove for v3
-let withPrefix = withAssetPrefix
-if (!withPrefix) {
-  withPrefix = fallbackWithPrefix
-}
+const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const { feeds } = {
