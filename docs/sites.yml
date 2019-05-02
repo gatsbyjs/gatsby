@@ -5583,6 +5583,47 @@
     - Marketing
     - Blog
   featured: false
+- title: NH Hydraulikzylinder
+  main_url: https://nh-hydraulikzylinder.com
+  url: https://nh-hydraulikzylinder.com
+  description: >
+    High quality & high performance hydraulic cylinders manufactured in Austria based on the clients requirements
+  categories:
+    - Business
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: Frauennetzwerk Linz-Land
+  main_url: https://frauennetzwerk-linzland.net
+  url: https://frauennetzwerk-linzland.net
+  description: >
+    Homepage for the local women's association providing support to people in need offline and online (Livechat integration)
+  categories:
+    - Nonprofit
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: Mein Traktor
+  main_url: http://www.mein-traktor.at/
+  url: http://www.mein-traktor.at/
+  description: >
+    Homepage of a the main importer of SAME and Lamborghini Tractors in Austria with customer support area
+  categories:
+    - Business
+    - App
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: Lamborghini Traktoren
+  main_url: https://lamborghini-traktor.at
+  url: https://lamborghini-traktor.at
+  description: >
+    Lamborghini Tractors - Landing page for the brand in Austria
+  categories:
+    - Business
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
 - title: Holly Lodge Community Centre - Highgate, London
   main_url: https://www.hlcchl.org/
   url: https://www.hlcchl.org/
@@ -5596,6 +5637,7 @@
     - Nonprofit
   built_by: Eugene Molari Developer
   built_by_url: https://twitter.com/EugeneMolari
+  featured: false
 - title: blackcater's blog
   url: https://www.blackcater.win
   main_url: https://www.blackcater.win
