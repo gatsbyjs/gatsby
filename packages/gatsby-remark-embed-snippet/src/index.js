@@ -13,6 +13,12 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   md: `markup`,
   sh: `bash`,
   rb: `ruby`,
+  py: `python`,
+  ps1: `powershell`,
+  psm1: `powershell`,
+  bat: `batch`,
+  h: `c`,
+  tex: `latex`,
 }
 
 const getLanguage = file => {
