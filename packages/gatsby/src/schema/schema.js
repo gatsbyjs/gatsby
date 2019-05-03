@@ -140,7 +140,7 @@ const processTypeComposer = async ({
 }
 
 const registerExtensions = ({ parentSpan }) =>
-  apiRunner(`registerFieldExtension`, {
+  apiRunner(`createFieldExtension`, {
     registerFieldExtension,
     traceId: `initial-registerFieldExtensions`,
     parentSpan: parentSpan,
