@@ -4,8 +4,8 @@ const exec = util.promisify(require(`child_process`).exec)
 const argv = require(`yargs`)
   .command(`$0`, `Add new owner to gatsby packages`, {
     user: {
-      default: `@gatsbyjs:ink-team`
-    }
+      default: `@gatsbyjs:ink-team`,
+    },
   })
   .help().argv
 const getUnownedPackages = require(`../get-unowned-packages`)
