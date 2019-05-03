@@ -20,6 +20,11 @@ const SecondPage = () => (
           To non-existent page
         </Link>
       </li>
+      <li>
+        <Link to="/deep-link-page/" data-testid="deep-link-page">
+          To deeply linked page
+        </Link>
+      </li>
     </ul>
   </Layout>
 )
