@@ -102,7 +102,7 @@ type AuthorJson implements Node {
 
 ## Automatic type inference
 
-It's maybe obvious but nevertheless important to note, that the data in
+It's important to note that the data in
 `author.json` does not provide type information of the Author fields by itself.
 In order to translate the data shape into GraphQL type definitions, Gatsby has
 to inspect the contents of every field and check its type. In many cases this
