@@ -199,7 +199,7 @@ Note that you don't need to explicitly provide the Node interface fields (`id`,
 
 So far we have only been dealing with scalar values (`String` and `Date`;
 GraphQL also knows `ID`, `Int`, `Float`, `Boolean` and `JSON`). Fields can
-however also contain complex object values. To target those fields in SDL, you
+however also contain complex object values. To target those fields in GraphQL SDL, you
 can provide a full type definition for the nested type, which can be arbitrarily
 named (as long as the name is unique in the schema). In our example project, the
 `frontmatter` field on the `MarkdownRemark` node type is a good example. Say we
