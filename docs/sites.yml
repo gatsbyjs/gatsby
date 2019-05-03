@@ -1001,12 +1001,6 @@
   featured: false
   categories:
     - Web Development
-- title: Whittle School
-  main_url: "https://www.whittleschool.org/en/"
-  url: "https://www.whittleschool.org/en/"
-  featured: false
-  categories:
-    - Education
 - title: Yisela
   main_url: "https://www.yisela.com/"
   url: "https://www.yisela.com/tetris-against-trauma-gaming-as-therapy/"
@@ -1291,9 +1285,9 @@
     - Technology
   built_by: Thrive
   built_by_url: "https://thriveweb.com.au/"
-- title: Localgov.fyi
-  main_url: "https://localgov.fyi/"
-  url: "https://localgov.fyi/"
+- title: Evergov
+  main_url: "https://evergov.com/"
+  url: "https://evergov.com/"
   featured: false
   description: Finding local government services made easier.
   categories:
@@ -1301,8 +1295,8 @@
     - Government
     - Technology
   source_url: "https://github.com/WeOpenly/localgov.fyi"
-  built_by: Openly
-  built_by_url: "https://weopenly.com/"
+  built_by: Evergov
+  built_by_url: "https://evergov.com/about/"
 - title: Kata.ai Documentation
   main_url: "https://docs.kata.ai/"
   url: "https://docs.kata.ai/"
@@ -5589,6 +5583,47 @@
     - Marketing
     - Blog
   featured: false
+- title: NH Hydraulikzylinder
+  main_url: https://nh-hydraulikzylinder.com
+  url: https://nh-hydraulikzylinder.com
+  description: >
+    High quality & high performance hydraulic cylinders manufactured in Austria based on the clients requirements
+  categories:
+    - Business
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: Frauennetzwerk Linz-Land
+  main_url: https://frauennetzwerk-linzland.net
+  url: https://frauennetzwerk-linzland.net
+  description: >
+    Homepage for the local women's association providing support to people in need offline and online (Livechat integration)
+  categories:
+    - Nonprofit
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: Mein Traktor
+  main_url: http://www.mein-traktor.at/
+  url: http://www.mein-traktor.at/
+  description: >
+    Homepage of a the main importer of SAME and Lamborghini Tractors in Austria with customer support area
+  categories:
+    - Business
+    - App
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
+- title: Lamborghini Traktoren
+  main_url: https://lamborghini-traktor.at
+  url: https://lamborghini-traktor.at
+  description: >
+    Lamborghini Tractors - Landing page for the brand in Austria
+  categories:
+    - Business
+  built_by: MangoART
+  built_by_url: https://www.mangoart.at
+  featured: false
 - title: Holly Lodge Community Centre - Highgate, London
   main_url: https://www.hlcchl.org/
   url: https://www.hlcchl.org/
@@ -5602,6 +5637,7 @@
     - Nonprofit
   built_by: Eugene Molari Developer
   built_by_url: https://twitter.com/EugeneMolari
+  featured: false
 - title: blackcater's blog
   url: https://www.blackcater.win
   main_url: https://www.blackcater.win
@@ -5642,8 +5678,44 @@
   url: https://dev.mailjet.com/
   main_url: https://dev.mailjet.com/
   description: >
-    Miljeta is an easy-to-use all-in-one e-mail platform.
+    Mailjet is an easy-to-use all-in-one e-mail platform.
   categories:
     - API
     - Documentation
+  featured: false
+- title: Peintagone
+  url: https://www.peintagone.be/
+  main_url: https://www.peintagone.be/
+  description: >
+    Peintagone is a superior quality paint brand with Belgian tones.
+  categories:
+    - Portfolio
+    - Gallery
+    - Landing
+  built_by: Sebastien Crepin
+  built_by_url: https://github.com/opeah
+  featured: false
+- title: Let's Do Dish!
+  url: https://letsdodish.com
+  main_url: https://letsdodish.com
+  description: >
+    A new recipe site for people who enjoy cooking great food in their home kitchen. Find some great meal ideas! Let's do dish!
+  categories:
+    - Blog
+    - Food
+  built_by: Connerra
+  featured: false
+- title: AWS Amplify Community
+  url: https://amplify.aws/community/
+  main_url: https://amplify.aws/community/
+  source_url: https://github.com/aws-amplify/community
+  description: >
+    Amplify Community is a hub for developers building fullstack serverless applications with Amplify to easily access content (such as events, blog posts, videos, sample projects, and tutorials) created by other members of the Amplify community.
+  categories:
+    - Blog
+    - Directory
+    - Education
+    - Technology
+  built_by: Nikhil Swaminathan
+  built_by_url: https://github.com/swaminator
   featured: false
