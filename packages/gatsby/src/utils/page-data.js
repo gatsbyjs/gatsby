@@ -17,7 +17,7 @@ const write = async ({ publicDir }, page, result, webpackCompilationHash) => {
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
-    compilationHash: webpackCompilationHash,
+    webpackCompilationHash,
     result,
   }
   await fs.outputFile(filePath, JSON.stringify(body))

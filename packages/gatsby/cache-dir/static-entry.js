@@ -338,15 +338,17 @@ export default (pagePath, callback) => {
       }
     })
 
+  const webpackCompilationHash = pageData.webpackCompilationHash
+
   // Add page metadata for the current page
-  const windowPagePath = `/*<![CDATA[*/window.pagePath="${pagePath}";/*]]>*/`
+  const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";window.webpackCompilationHash="${webpackCompilationHash}";/*]]>*/`
 
   postBodyComponents.push(
     <script
       key={`script-loader`}
       id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
-        __html: windowPagePath,
+        __html: windowPageData,
       }}
     />
   )
