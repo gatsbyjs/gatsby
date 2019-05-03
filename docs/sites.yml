@@ -5719,3 +5719,15 @@
   built_by: Nikhil Swaminathan
   built_by_url: https://github.com/swaminator
   featured: false
+- title: Cal State Monterey Bay
+  url: https://csumb.edu
+  main_url: https://csumb.edu
+  source_url: https://github.com/csumb/csumb-gatsby
+  description: >
+    A website for the entire campus of California State University, Monterey Bay.
+  categories:
+    - Education
+    - Government
+  built_by: CSUMB Web Team
+  built_by_url: https://csumb.edu/web/team
+  featured: false
