@@ -46,7 +46,12 @@ describe(`assetPrefix`, () => {
 
   describe(`gatsby-plugin-feed`, () => {
     it(`prefixes RSS feed`, () => {
-      assetPrefixMatcher(cy.get(`head link[type="application/rss+xml"]`))
+      assetPrefixMatcher(cy.get(`head link[type="application/rss+xml"]:first`))
+    })
+    it(`keeps RSS feedUrl intact`, () => {
+      cy.get(`head link[type="application/rss+xml"]:last`)
+        .should(`have.attr`, `href`)
+        .and(`not.matches`, assetPrefixExpression)
     })
   })
 })
