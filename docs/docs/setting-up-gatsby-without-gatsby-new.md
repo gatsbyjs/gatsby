@@ -5,9 +5,10 @@ There are many Enterprise level companies that maintain an internal clone of the
 ## Preparing your environment
 To get started with Gatsby, you’ll need to make sure you have the following software tools installed:
 
-1.[Node.js](https://www.gatsbyjs.org/tutorial/part-zero/#install-nodejs)
-1.[npm CLI](https://www.gatsbyjs.org/tutorial/part-zero/#familiarize-with-npm)
-1.[Gatsby CLI](https://www.gatsbyjs.org/tutorial/part-zero/#install-the-gatsby-cli)
+1. [Node.js](https://www.gatsbyjs.org/tutorial/part-zero/#install-nodejs)
+1. [npm CLI](https://www.gatsbyjs.org/tutorial/part-zero/#familiarize-with-npm)
+1. [Gatsby CLI](https://www.gatsbyjs.org/tutorial/part-zero/#install-the-gatsby-cli)
+
 For step-by-step installation instructions and detailed explanations of the required software, head on over to the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/).
 
 After your developer environment is set up, you'll want to set up a new project folder.
