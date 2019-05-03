@@ -3,6 +3,7 @@ import Joi from "joi"
 // TODO: make serialize required in next major version bump
 const feed = Joi.object({
   output: Joi.string().required(),
+  feedUrl: Joi.string(),
   query: Joi.string().required(),
   title: Joi.string(),
   serialize: Joi.func(),

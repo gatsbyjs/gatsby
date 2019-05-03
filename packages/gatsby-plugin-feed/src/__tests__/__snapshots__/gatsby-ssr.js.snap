@@ -1,5 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Adds <Link> for feed to head creates Link href with feedUrl, ignoring __PATH_PREFIX__ 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="https://example.org/gryffindor/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+        <link
+          href="https://example.org/ravenclaw/feed.xml"
+          rel="alternate"
+          type="application/rss+xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`Adds <Link> for feed to head creates Link href with path prefix when __PATH_PREFIX__ sets 1`] = `
 [MockFunction] {
   "calls": Array [

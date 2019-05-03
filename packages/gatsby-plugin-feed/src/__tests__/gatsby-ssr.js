@@ -79,7 +79,33 @@ describe(`Adds <Link> for feed to head`, () => {
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
+  it(`creates Link href with feedUrl, ignoring __PATH_PREFIX__`, async () => {
+    global.__PATH_PREFIX__ = `/hogwarts`
 
+    const pluginOptions = {
+      feeds: [
+        {
+          output: `/gryffindor/feed.xml`,
+          feedUrl: `https://example.org/gryffindor/feed.xml`,
+        },
+        {
+          output: `/ravenclaw/feed.xml`,
+          feedUrl: `https://example.org/ravenclaw/feed.xml`,
+        },
+      ],
+    }
+    const setHeadComponents = jest.fn()
+
+    await onRenderBody(
+      {
+        setHeadComponents,
+      },
+      pluginOptions
+    )
+
+    expect(setHeadComponents).toMatchSnapshot()
+    expect(setHeadComponents).toHaveBeenCalledTimes(1)
+  })
   it(`creates Link with a title if it does exist`, async () => {
     const pluginOptions = {
       feeds: [
