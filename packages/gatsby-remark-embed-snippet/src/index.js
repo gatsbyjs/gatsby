@@ -4,7 +4,7 @@ const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
 
-const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
+// const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
 
 // Language defaults to extension.toLowerCase();
 // This map tracks languages that don't match their extension.
@@ -13,12 +13,12 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   md: `markup`,
   sh: `bash`,
   rb: `ruby`,
-  py: 'python',
-  ps1: 'powershell',
-  psm1: 'powershell',
-  bat: 'batch',
-  h: 'c',
-  tex: 'latex'
+  py: `python`,
+  ps1: `powershell`,
+  psm1: `powershell`,
+  bat: `batch`,
+  h: `c`,
+  tex: `latex`,
 }
 
 const getLanguage = file => {
