@@ -603,7 +603,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       for (const value of generatePowerSet(cmsComparisonOptions)) {
         if (value.length > 0) {
           const optionSet = [...value]
-          console.log(optionSet)
           createPage({
             path: `/features/cms/gatsby-vs-${value.join(`-vs-`)}`,
             component: slash(featureComparisonPageTemplate),
