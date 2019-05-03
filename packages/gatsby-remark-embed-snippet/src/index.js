@@ -51,6 +51,16 @@ module.exports = ({ markdownAST }, { directory } = {}) => {
         throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
+      const code = fs.readFileSync(path, `utf8`).trim()
+
+      // PrismJS's theme styles are targeting pre[class*="language-"]
+      // to apply its styles. We do the same here so that users
+      // can apply a PrismJS theme and get the expected, ready-to-use
+      // outcome without any additional CSS.
+      //
+      // @see https://github.com/PrismJS/prism/blob/1d5047df37aacc900f8270b1c6215028f6988eb1/themes/prism.css#L49-L54
+      const language = getLanguage(file)
+
       // Change the node type to code, insert our file as value and set language.
       try {
         node.type = `code`
