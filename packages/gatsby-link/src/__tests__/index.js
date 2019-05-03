@@ -96,7 +96,8 @@ describe(`<Link />`, () => {
 
   it(`does not fail with missing __BASE_PATH__`, () => {
     global.__PATH_PREFIX__ = ``
-    delete global.__BASE_PATH__
+    global.__BASE_PATH__ = undefined
+
     const source = createMemorySource(`/active`)
 
     expect(() =>
@@ -176,7 +177,7 @@ describe(`withPrefix`, () => {
     })
 
     it(`falls back to __PATH_PREFIX__ if __BASE_PATH__ is undefined`, () => {
-      delete global.__BASE_PATH__
+      global.__BASE_PATH__ = undefined
       global.__PATH_PREFIX__ = `/blog`
 
       const to = `/abc/`
