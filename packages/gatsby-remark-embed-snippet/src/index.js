@@ -13,12 +13,12 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   md: `markup`,
   sh: `bash`,
   rb: `ruby`,
-  py: `python`,
-  ps1: `powershell`,
-  psm1: `powershell`,
-  bat: `batch`,
-  h: `c`,
-  tex: `latex`,
+  py: 'python',
+  ps1: 'powershell',
+  psm1: 'powershell',
+  bat: 'batch',
+  h: 'c',
+  tex: 'latex'
 }
 
 const getLanguage = file => {
@@ -71,20 +71,16 @@ module.exports = (
       // This supports custom user styling without causing Prism to
       // re-process our already-highlighted markup.
       // @see https://github.com/gatsbyjs/gatsby/issues/1486
-      const className = language
-        .split(` `)
-        .map(token => `${classPrefix}${token}`)
-        .join(` `)
+      // const className = language
+      //   .split(` `)
+      //   .map(token => `${classPrefix}${token}`)
+      //   .join(` `)
 
-      // Replace the node with the markup we need to make 100% width highlighted code lines work
+      // Change the node type to code, insert our file as value and set language.
       try {
-        node.value = `<div class="gatsby-highlight">
-        <pre class="${className}"><code>${highlightCode(
-          language,
-          code
-        ).trim()}</code></pre>
-        </div>`
-        node.type = `html`
+        node.type = `code`
+        node.value = code
+        node.lang = language
       } catch (e) {
         // rethrow error pointing to a file
         throw Error(`${e.message}\nFile: ${file}`)
