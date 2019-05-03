@@ -33,10 +33,7 @@ const getLanguage = file => {
     : extension.toLowerCase()
 }
 
-module.exports = (
-  { markdownAST },
-  { classPrefix = `language-`, directory } = {}
-) => {
+module.exports = ({ markdownAST }, { directory } = {}) => {
   if (!directory) {
     throw Error(`Required option "directory" not specified`)
   } else if (!fs.existsSync(directory)) {
