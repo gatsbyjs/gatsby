@@ -31,11 +31,14 @@ const useCommunityEvents = () => {
       return {
         id: event.id,
         ...event.data,
-        date: new Date(event.data.date).toLocaleDateString(`en-US`, {
-          year: `numeric`,
-          month: `long`,
-          day: `numeric`,
-        }),
+        date: new Date(`${event.data.date} 00:00:00`).toLocaleDateString(
+          `en-US`,
+          {
+            year: `numeric`,
+            month: `long`,
+            day: `numeric`,
+          }
+        ),
       }
     })
 

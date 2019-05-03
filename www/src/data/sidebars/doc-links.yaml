@@ -176,7 +176,9 @@
                   link: /contributing/submit-to-plugin-library/
                 - title: Pixabay Source Plugin Tutorial
                   link: /docs/pixabay-source-plugin-tutorial/
-                - title: Maintaining a Plugin
+                - title: Remark Plugin Tutorial
+                  link: /docs/remark-plugin-tutorial/
+                - title: Maintaining a Plugin*
                   link: /docs/maintaining-a-plugin/
         - title: Starters
           link: /docs/starters/
@@ -489,6 +491,8 @@
                   link: /docs/going-gatsby-only/
             - title: Inside a Company
               link: /docs/gatsby-for-companies/
+            - title: Inside an Enterprise (Large Company)
+              link: /docs/gatsby-in-the-enterprise/
               items:
                 - title: Answering IT/Security Questions*
                   link: /docs/answering-it-security/
@@ -522,7 +526,7 @@
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
       link: /docs/cheat-sheet/
-    - title: Glossary*
+    - title: Glossary
       link: /docs/glossary/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/
