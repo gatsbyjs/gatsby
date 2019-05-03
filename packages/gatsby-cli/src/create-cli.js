@@ -346,21 +346,39 @@ module.exports = argv => {
         }
       ),
     })
-    .command({
-      command: `plugin`,
-      desc: `Welcome to the Gatsby plugin help center!
+    .command(`plugin`, `run commands pertaining to gatsby plugins`, yargs =>
+      yargs
+        .command({
+          command: `docs`,
+          desc: `Directs you to docs about using and creating plugins`,
+          handler: handlerP(() =>
+            console.log(`
+Resources:
+Using a plugin:
+- What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
+- Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
+- What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for/)
+- Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)
+- Plugin Library (https://www.gatsbyjs.org/plugins/)
 
-      Resources:
-- Walk through the tutorial (https://www.gatsbyjs.org/docs/source-plugin-tutorial/)
-- Read requirements for Gatsby packages (file and naming conventions) (https://www.gatsbyjs.org/docs/how-plugins-work/)
-- Submit to plugin library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Join Discord #plugin-authoring channel to ask questions
-
-Run \`gatsby plugin help\` anytime you'd like to see this help center again. Thank you!`,
-      handler: handlerP(() => {
-        cli.showHelp()
-      }),
-    })
+Creating a plugin:
+- Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
+- Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
+- Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
+- Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
+- Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
+- Join Discord #plugin-authoring channel to ask questions!
+          `)
+          ),
+        })
+        .demandCommand(
+          1,
+          `Pass --help to see all available commands and options.`
+        )
+    )
     .command({
       command: `telemetry`,
       desc: `Enable or disable Gatsby anonymous analytics collection.`,
