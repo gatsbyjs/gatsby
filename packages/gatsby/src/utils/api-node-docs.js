@@ -292,7 +292,7 @@ exports.createResolvers = true
  *   })
  * }
  */
-exports.registerFieldExtension = true
+exports.createFieldExtension = true
 
 /**
  * Ask compile-to-js plugins to process source to JavaScript so the query
