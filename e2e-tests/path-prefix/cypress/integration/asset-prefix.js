@@ -50,7 +50,7 @@ describe(`assetPrefix`, () => {
     })
     it(`keeps RSS feedUrl intact`, () => {
       cy.get(`head link[type="application/rss+xml"]:last`)
-        .should(`have.attr`, `href`)
+        .should(`have.attr`, `href`, `http://localhost:9000/rss-2.xml`)
         .and(`not.matches`, assetPrefixExpression)
     })
   })
