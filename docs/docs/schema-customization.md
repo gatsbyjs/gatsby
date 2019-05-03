@@ -239,7 +239,7 @@ exports.sourceNodes = ({ actions }) => {
 ```
 
 It is useful to think about your data, and the corresponding GraphQL schema, by
-alwas starting from the Node types created by source and transformer plugins.
+always starting from the Node types created by source and transformer plugins.
 
 > Note that the `Frontmatter` type must not implement the Node interface since
 > it is not a top-level type created by source or transformer plugins: it has no
