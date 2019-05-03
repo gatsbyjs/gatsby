@@ -37,7 +37,7 @@ class BlogPostsIndex extends React.Component {
           }}
         >
           <Helmet>
-            <title>Blog</title>
+            <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
             <h1
