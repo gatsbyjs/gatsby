@@ -315,7 +315,7 @@ describe(`Build schema`, () => {
       )
     })
 
-    it(`merges user-defined type with plugin-defined type (Gatsby type-builder)`, async () => {
+    it(`merges user-defined type (Gatsby type-builder) with plugin-defined type`, async () => {
       createTypes(
         `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
@@ -328,6 +328,9 @@ describe(`Build schema`, () => {
           buildObjectType({
             name: `PluginDefined`,
             interfaces: [`Node`],
+            extensions: {
+              infer: false,
+            },
             fields: {
               bar: `Int`,
               qux: `PluginDefinedNested`,
@@ -363,6 +366,239 @@ describe(`Build schema`, () => {
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `typeBuilder`,
+          plugin: `default-site-plugin`,
+          infer: false,
+        })
+      )
+    })
+
+    it(`merges user-defined type with plugin-defined type (Gatsby type-builder)`, async () => {
+      createTypes(
+        [
+          buildObjectType({
+            name: `PluginDefined`,
+            interfaces: [`Node`],
+            extensions: {
+              infer: true,
+            },
+            fields: {
+              foo: `Int`,
+              baz: `PluginDefinedNested`,
+            },
+          }),
+          buildObjectType({
+            name: `PluginDefinedNested`,
+            fields: {
+              foo: `Int`,
+            },
+          }),
+        ],
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node @dontInfer {
+           bar: Int
+           qux: PluginDefinedNested
+         }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `sdl`,
+          plugin: `default-site-plugin`,
+          infer: false,
+        })
+      )
+    })
+
+    it(`merges user-defined type (Gatsby type-builder) with plugin-defined type (Gatsby type-builder)`, async () => {
+      createTypes(
+        [
+          buildObjectType({
+            name: `PluginDefined`,
+            interfaces: [`Node`],
+            extensions: {
+              infer: true,
+            },
+            fields: {
+              foo: `Int`,
+              baz: `PluginDefinedNested`,
+            },
+          }),
+          buildObjectType({
+            name: `PluginDefinedNested`,
+            fields: {
+              foo: `Int`,
+            },
+          }),
+        ],
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      createTypes(
+        [
+          buildObjectType({
+            name: `PluginDefined`,
+            interfaces: [`Node`],
+            extensions: {
+              infer: false,
+            },
+            fields: {
+              bar: `Int`,
+              qux: `PluginDefinedNested`,
+            },
+          }),
+          buildObjectType({
+            name: `PluginDefinedNested`,
+            fields: {
+              bar: `Int`,
+            },
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `typeBuilder`,
+          plugin: `default-site-plugin`,
+          infer: false,
+        })
+      )
+    })
+
+    // FIXME:
+    it(`merges user-defined type (graphql-js) with plugin-defined type`, async () => {
+      createTypes(
+        `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
+         type PluginDefinedNested { foo: Int }`,
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      const PluginDefinedNestedType = new GraphQLObjectType({
+        name: `PluginDefinedNested`,
+        fields: {
+          bar: { type: GraphQLString },
+        },
+      })
+      const PluginDefinedType = new GraphQLObjectType({
+        name: `PluginDefined`,
+        fields: {
+          bar: { type: GraphQLString },
+          // qux: { type: PluginDefinedNestedType },
+        },
+      })
+      createTypes([PluginDefinedType, PluginDefinedNestedType], {
+        name: `default-site-plugin`,
+      })
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        // `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `graphql-js`,
+          plugin: `default-site-plugin`,
+          infer: true,
+        })
+      )
+    })
+
+    it(`merges user-defined type with plugin-defined type (graphql-js)`, async () => {
+      const PluginDefinedNestedType = new GraphQLObjectType({
+        name: `PluginDefinedNested`,
+        fields: {
+          foo: { type: GraphQLString },
+        },
+      })
+      const PluginDefinedType = new GraphQLObjectType({
+        name: `PluginDefined`,
+        fields: {
+          foo: { type: GraphQLString },
+          baz: { type: PluginDefinedNestedType },
+        },
+      })
+      createTypes([PluginDefinedType, PluginDefinedNestedType], {
+        name: `some-gatsby-plugin`,
+      })
+      createTypes(
+        `type PluginDefined implements Node @infer { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `sdl`,
           plugin: `default-site-plugin`,
           infer: true,
         })
