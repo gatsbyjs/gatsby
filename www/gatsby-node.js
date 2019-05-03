@@ -11,6 +11,7 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const featureComparisonOptions = require(`./src/data/features/comparison-options.json`)
 
 let ecosystemFeaturedItems
 
@@ -578,8 +579,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create feature comparison pages
-      const cmsComparisonOptions = [`wordpress`, `drupal`]
-      const jamstackComparisonOptions = [`nextjs`, `jekyll`, `hugo`, `nuxtjs`]
 
       // create power sets of all possible feature comparison options:
       // adapted from https://github.com/acarl005/generatorics
@@ -600,7 +599,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         return options
       }
 
-      for (const value of generatePowerSet(cmsComparisonOptions)) {
+      for (const value of generatePowerSet(featureComparisonOptions.cms)) {
         if (value.length > 0) {
           const optionSet = [...value]
           createPage({
@@ -612,7 +611,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           })
         }
       }
-      for (const value of generatePowerSet(jamstackComparisonOptions)) {
+      for (const value of generatePowerSet(featureComparisonOptions.jamstack)) {
         if (value.length > 0) {
           const optionSet = [...value]
           createPage({

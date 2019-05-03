@@ -1,0 +1,4 @@
+{
+  "jamstack": ["nextjs", "jekyll", "hugo", "nuxtjs"],
+  "cms": ["wordpress", "drupal"]
+}
