@@ -85,7 +85,7 @@ class CreatorTemplate extends Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{creator.name}</title>
+          <title>{`${creator.name} - Creator`}</title>
         </Helmet>
         <CreatorsHeader submissionText="Add Yourself" />
         <main

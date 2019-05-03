@@ -1,4 +1,5 @@
 import React from "react"
+import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
@@ -15,6 +16,7 @@ class ContributorPageTemplate extends React.Component {
     const allMarkdownRemark = this.props.data.allMarkdownRemark
     return (
       <Layout location={this.props.location}>
+        <Helmet title={`${contributor.id} - Contributor`} />
         <main>
           <Container>
             <div
