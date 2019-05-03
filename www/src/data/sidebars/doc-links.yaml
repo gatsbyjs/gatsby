@@ -146,6 +146,8 @@
               link: /docs/adding-markdown-pages/
             - title: Adding a List of Markdown Blog Posts
               link: /docs/adding-a-list-of-markdown-blog-posts/
+        - title: Customizing the GraphQL Schema
+          link: /docs/schema-customization/
         - title: Plugins
           link: /docs/plugins/
           items:
