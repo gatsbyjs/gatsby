@@ -62,14 +62,14 @@ module.exports = ({ markdownAST }, { directory } = {}) => {
       const language = getLanguage(file)
 
       // Change the node type to code, insert our file as value and set language.
-      try {
-        node.type = `code`
-        node.value = code
-        node.lang = language
-      } catch (e) {
-        // rethrow error pointing to a file
-        throw Error(`${e.message}\nFile: ${file}`)
-      }
+      // try {
+      node.type = `code`
+      node.value = code
+      node.lang = language
+      // } catch (e) {
+      //   // rethrow error pointing to a file
+      //   throw Error(`${e.message}\nFile: ${file}`)
+      // }
     }
   })
 
