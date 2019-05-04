@@ -142,24 +142,7 @@ const processFieldExtensions = ({
   })
 }
 
-const createFieldExtension = (name, extension) => {
-  if (internalExtensionNames.includes(name)) {
-    report.error(`The extension ${name} is reserved for internal use.`)
-    return
-  }
-  if (fieldExtensions[name]) {
-    report.error(
-      `A field extension with the name ${name} is already registered.`
-    )
-    return
-  }
-
-  fieldExtensions[name] = extension
-}
-
 module.exports = {
   addDirectives,
-  createFieldExtension,
-  fieldExtensions,
   processFieldExtensions,
 }

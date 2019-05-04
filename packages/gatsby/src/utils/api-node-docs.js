@@ -263,38 +263,6 @@ exports.setFieldsOnGraphQLNodeType = true
 exports.createResolvers = true
 
 /**
- * Register a GraphQL schema extension that can be used on field definitions.
- *
- * @param {object} $0
- * @param {function} $0.createFieldExtension Register field extension
- * @example
- * exports.createFieldExtension = ({ createFieldExtension }) => {
- *   createFieldExtension(`volume`, {
- *     description: `Adjust the volume.`,
- *     args: {
- *       loud: { type: `Boolean` }
- *     },
- *     // Return a new partial field config to extend the previous field config with.
- *     // Receives extension `args` and the current field config as parameters.
- *     process(defaults, prevFieldConfig) {
- *       return {
- *         type: `String`,
- *         args: {
- *           loud: { type: `Boolean` }
- *         },
- *         resolve(source, args, context, info) {
- *           const fieldValue = source[info.fieldName]
- *           const shouldUpperCase = args.loud != null ? args.loud : defaults.loud
- *           return shouldUpperCase ? fieldValue.toUpperCase() : fieldValue
- *         }
- *       }
- *     }
- *   })
- * }
- */
-exports.createFieldExtension = true
-
-/**
  * Ask compile-to-js plugins to process source to JavaScript so the query
  * runner can extract out GraphQL queries for running.
  */

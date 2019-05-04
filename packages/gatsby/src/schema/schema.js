@@ -18,7 +18,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
-const { processFieldExtensions, createFieldExtension } = require(`./extensions`)
+const { processFieldExtensions } = require(`./extensions`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -86,7 +86,6 @@ const updateSchemaComposer = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  await registerExtensions({ parentSpan })
   await addTypes({ schemaComposer, parentSpan, types })
   await addInferredTypes({
     schemaComposer,
@@ -135,13 +134,6 @@ const processTypeComposer = async ({
     }
   }
 }
-
-const registerExtensions = ({ parentSpan }) =>
-  apiRunner(`createFieldExtension`, {
-    createFieldExtension,
-    traceId: `initial-registerExtensions`,
-    parentSpan: parentSpan,
-  })
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
