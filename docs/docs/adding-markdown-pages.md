@@ -9,7 +9,7 @@ Here are the steps Gatsby follows for making this happen.
 
 1.  Read files into Gatsby from the filesystem
 2.  Transform markdown to HTML and frontmatter to data
-3.  Add a markdown file 
+3.  Add a markdown file
 4.  Create a page component for the markdown files
 5.  Create static pages using Gatsby's Node.js `createPage` API
 
@@ -20,7 +20,7 @@ Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#
 #### Install
 
 `npm install --save gatsby-source-filesystem`
-or 
+or
 `yarn add gatsby-source-filesystem`
 
 #### Add plugin
@@ -29,14 +29,12 @@ or
 
 Open `gatsby-config.js` to add `gatsby-source-filesystem` plugin. Now pass the object from the next block to the `plugins` array. By passing an object that includes the key `path` we set file system path.
 
-
-
 ```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      name: "markdown-pages",
+      name: `markdown-pages`,
       path: `${__dirname}/src/markdown-pages`,
     },
   },
@@ -52,7 +50,7 @@ We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-
 #### Install
 
 `npm install --save gatsby-transformer-remark`
-or 
+or
 `yarn add gatsby-transformer-remark`
 
 #### Add plugin
@@ -65,7 +63,7 @@ plugins: [
     resolve: `gatsby-source-filesystem`,
     options: {
       path: `${__dirname}/src/markdown-pages`,
-      name: "markdown-pages",
+      name: `markdown-pages`,
     },
   },
   `gatsby-transformer-remark`,
@@ -74,11 +72,10 @@ plugins: [
 
 ### Add a markdown file
 
-Create a folder in the `/src` directory of your Gatsby application called `markdown-pages`. 
+Create a folder in the `/src` directory of your Gatsby application called `markdown-pages`.
 Now create a Markdown file inside it with the name `post-1.md`.
 
 When you create a Markdown file, at the top of the file, add the block below. You can have different key value pairs that are relevant to your website. This block will be parsed by `gatsby-transformer-remark` as `frontmatter`. The GraphQL API will provide this data in our React components.
-
 
 ```markdown:title=src/markdown-pages/post-1.md
 ---
@@ -89,7 +86,6 @@ title: "My first blog post"
 ```
 
 What is important in this step is the key pair `path`. The value that is assgined to the key `path` is used in order to navigate to our post.
-
 
 ### Create a page component for the markdown files
 
@@ -145,12 +141,10 @@ Gatsby exposes a powerful Node.js API, which allows for functionality such as cr
 
 Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
 
-
-**NOTE:** Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`. 
-
+**NOTE:** Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`.
 
 ```javascript:title=gatsby-node.js
-const path = require("path")
+const path = require(`path`)
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -177,7 +171,7 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors)
     }
 
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    return result.data.allMarkdownRemark.edges.forEach(({ node }) => {
       createPage({
         path: node.frontmatter.path,
         component: blogPostTemplate,
