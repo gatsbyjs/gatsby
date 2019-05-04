@@ -387,7 +387,7 @@ the `createTypes` action.
 
 As mentioned above, Gatsby's internal data store and query capabilities are
 available to custom field resolvers on the `context.nodeModel` argument passed
-to every resolver. Accessing node(s) by `id` (and optional type) is possible
+to every resolver. Accessing node(s) by `id` (and optional `type`) is possible
 with `getNodeById` and `getNodesByIds`. To get all nodes, or all nodes of a
 certain type, use `getAllNodes`. And running a query from inside your resolver
 functions can be accomplished with `runQuery`, which accepts `filter`, `sort`,
