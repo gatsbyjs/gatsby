@@ -4,6 +4,7 @@
   "description": "mdx integration for gatsby",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://github.com/ChristopherBiscardi/gatsby-mdx/tree/master/packages/gatsby-mdx#readme",
   "scripts": {
     "test": "jest"
   },
