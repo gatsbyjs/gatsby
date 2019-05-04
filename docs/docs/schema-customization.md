@@ -160,7 +160,7 @@ provided, they will still be handled by Gatsby's type inference.
 
 > Although the `createTypes` action is passed to all `gatsby-node` APIs,
 > it has to be called before schema generation. We recommend to use the
-> `sourceNodes` API.
+> [`sourceNodes` API](https://gatsby.dev/api/#sourceNodes).
 
 ### Opting out of type inference
 
