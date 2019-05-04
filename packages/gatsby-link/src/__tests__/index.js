@@ -8,10 +8,12 @@ import {
 } from "@reach/router"
 import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
 
-afterEach(() => {
+beforeEach(() => {
   global.__BASE_PATH__ = ``
-  cleanup()
+  global.__PATH_PREFIX__ = ``
 })
+
+afterEach(cleanup)
 
 const getInstance = (props, pathPrefix = ``) => {
   getWithPrefix()(pathPrefix)
@@ -92,6 +94,29 @@ describe(`<Link />`, () => {
     }).not.toThrow()
   })
 
+  it(`does not fail with missing __BASE_PATH__`, () => {
+    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = undefined
+
+    const source = createMemorySource(`/active`)
+
+    expect(() =>
+      render(
+        <LocationProvider history={createHistory(source)}>
+          <Link
+            to="/"
+            className="link"
+            style={{ color: `black` }}
+            activeClassName="is-active"
+            activeStyle={{ textDecoration: `underline` }}
+          >
+            link
+          </Link>
+        </LocationProvider>
+      )
+    ).not.toThrow()
+  })
+
   describe(`the location to link to`, () => {
     global.___loader = {
       enqueue: jest.fn(),
@@ -149,6 +174,15 @@ describe(`withPrefix`, () => {
       const pathPrefix = `/blog`
       const root = getWithPrefix(pathPrefix)(to)
       expect(root).toEqual(`${pathPrefix}${to}`)
+    })
+
+    it(`falls back to __PATH_PREFIX__ if __BASE_PATH__ is undefined`, () => {
+      global.__BASE_PATH__ = undefined
+      global.__PATH_PREFIX__ = `/blog`
+
+      const to = `/abc/`
+
+      expect(withPrefix(to)).toBe(`${global.__PATH_PREFIX__}${to}`)
     })
   })
 })

@@ -4,10 +4,9 @@ import Event from "./event"
 
 const Events = () => {
   const events = useCommunityEvents()
-  const upcoming = events.filter(event => new Date(event.date) >= Date.now())
-  const past = events
-    .filter(event => new Date(event.date) < Date.now())
-    .reverse()
+
+  const upcoming = events.filter(event => event.date >= Date.now())
+  const past = events.filter(event => event.date < Date.now()).reverse()
 
   return events.length > 0 ? (
     <>

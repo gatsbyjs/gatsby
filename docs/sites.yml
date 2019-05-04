@@ -3789,6 +3789,16 @@
     - Web Development
   built_by: Cole Walker
   built_by_url: "https://www.walkermakes.com"
+- title: Standing By Company
+  main_url: "https://standingby.company"
+  url: "https://standingby.company"
+  description: A brand experience design company led by Scott Mackenzie and Trent Barton.
+  featured: false
+  categories:
+    - Design
+    - Web Development
+  built_by: Standing By Company
+  built_by_url: "https://standingby.company"
 - title: Ashley Thouret
   main_url: "https://www.ashleythouret.com"
   url: "https://www.ashleythouret.com"
@@ -5730,4 +5740,21 @@
     - Government
   built_by: CSUMB Web Team
   built_by_url: https://csumb.edu/web/team
+  featured: false
+- title: BestPricingPages.com
+  url: https://bestpricingpages.com
+  main_url: https://bestpricingpages.com
+  source_url: https://github.com/jpvalery/pricingpages/
+  description: >
+    A repository of the best pricing pages by the best companies. Built in less than a week.
+    Inspired by RGE and since pricingpages.xyz no longer exists, I felt such a resource was missing and could be helpful to many people.
+  categories:
+    - Business
+    - Community
+    - Entrepreneurship
+    - Open Source
+    - Technology
+    - Resource
+  built_by: Jp Valery
+  built_by_url: https://jpvalery.me
   featured: false
