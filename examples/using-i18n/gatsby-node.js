@@ -101,7 +101,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const postList = result.data.blog.edges
 
-  postList.forEach(({ node: post }) => {
+  postList.filter(({node: post}) => post.childMdx !== null).forEach(({ node: post }) => {
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
     const slug = post.relativeDirectory
