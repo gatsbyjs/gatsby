@@ -1,10 +1,10 @@
 describe(`navigation`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`displays content from other pages`, () => {
-    cy.visit(`/page-2`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/page-2`).waitForRouteChange()
 
     cy.getTestElement(`page-2-message`)
       .invoke(`text`)
@@ -25,11 +25,21 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
+  it(`can navigate back using history`, () => {
+    cy.getTestElement(`page-two`)
+      .click()
+      .waitForRouteChange()
+
+    cy.go(`back`).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/`)
+  })
+
   describe(`non-existant route`, () => {
     beforeEach(() => {
       cy.getTestElement(`broken-link`)
         .click()
-        .waitForAPI(`onRouteUpdate`)
+        .waitForRouteChange()
     })
 
     it(`displays 404 page on broken link`, () => {

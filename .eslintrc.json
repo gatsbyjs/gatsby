@@ -9,7 +9,7 @@
     "prettier/flowtype",
     "prettier/react"
   ],
-  "plugins": ["flowtype", "prettier", "react"],
+  "plugins": ["flowtype", "prettier", "react", "filenames"],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -26,7 +26,9 @@
   "globals": {
     "before": true,
     "spyOn": true,
-    "__PATH_PREFIX__": true
+    "__PATH_PREFIX__": true,
+    "__BASE_PATH__": true,
+    "__ASSET_PREFIX__": true
   },
   "rules": {
     "arrow-body-style": [
@@ -34,14 +36,21 @@
       "as-needed",
       { "requireReturnForObjectLiteral": true }
     ],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTaggedTemplates": true
+      }
+    ],
     "consistent-return": ["error"],
+    "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
     "no-console": "off",
     "no-inner-declarations": "off",
     "prettier/prettier": "error",
     "quotes": ["error", "backtick"],
     "react/display-name": "off",
     "react/jsx-key": "warn",
-    "react/no-unescaped-entities": "warn",
+    "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off"

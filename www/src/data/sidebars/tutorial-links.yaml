@@ -1,4 +1,5 @@
 - title: Tutorial (step-by-step)
+  key: tutorial
   items:
     - title: Introduction
       link: /tutorial/
@@ -16,8 +17,8 @@
           link: /tutorial/part-zero/#familiarize-yourself-with-npm
         - title: Install Git
           link: /tutorial/part-zero/#install-git
-        - title: Install Gatsby CLI
-          link: /tutorial/part-zero/#install-gatsby-cli
+        - title: Using the Gatsby CLI
+          link: /tutorial/part-zero/#using-the-gatsby-cli
         - title: Create a Gatsby site
           link: /tutorial/part-zero/#create-a-gatsby-site
         - title: Set up a code editor

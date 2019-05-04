@@ -1,0 +1,69 @@
+{
+  "name": "gatsby-theme-blog",
+  "description": "Gatsby Blog Theme",
+  "version": "0.0.6",
+  "author": "Chris Biscardi <chris@christopherbiscardi.com>",
+  "bugs": {
+    "url": "https://github.com/christopherbiscardi/gatsby-theme-examples/issues"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.7",
+    "debug": "^4.1.0",
+    "emotion-theming": "^10.0.7",
+    "eslint": "^5.16.0",
+    "gatsby": "^2.0.59",
+    "gatsby-plugin-emotion": "^4.0.6",
+    "gatsby-plugin-feed": "^2.0.10",
+    "gatsby-plugin-google-analytics": "^2.0.8",
+    "gatsby-plugin-manifest": "^2.0.11",
+    "gatsby-plugin-offline": "^2.0.18",
+    "gatsby-plugin-react-helmet": "^3.0.3",
+    "gatsby-plugin-sharp": "^2.0.14",
+    "gatsby-plugin-typography": "^2.2.2",
+    "gatsby-remark-copy-linked-files": "^2.0.7",
+    "gatsby-remark-images": "^3.0.1",
+    "gatsby-remark-prismjs": "^3.1.1",
+    "gatsby-remark-responsive-iframe": "^2.0.7",
+    "gatsby-remark-smartypants": "^2.0.7",
+    "gatsby-source-filesystem": "^2.0.10",
+    "gatsby-theme-blog-core": "*",
+    "gatsby-transformer-remark": "^2.1.14",
+    "gatsby-transformer-sharp": "^2.1.9",
+    "lodash": "^4.17.11",
+    "mkdirp": "^0.5.1",
+    "prismjs": "^1.15.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-helmet": "^5.2.0",
+    "react-typography": "^0.16.13",
+    "typeface-merriweather": "^0.0.72",
+    "typeface-montserrat": "0.0.54",
+    "typography": "^0.16.17",
+    "typography-theme-wordpress-2016": "^0.16.19"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.2"
+  },
+  "homepage": "https://github.com/christopherbiscardi/gatsby-theme-examples#readme",
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christopherbiscardi/gatsby-theme-examples.git"
+  },
+  "scripts": {
+    "dev": "gatsby develop",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
+  }
+}

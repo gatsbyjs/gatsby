@@ -84,12 +84,12 @@ Possible solutions:
 
 Common obstacle no.2
 
-- People expect to find more information in Getting Started and the READme file than currently exist. They are looking to evaluate how easy Gatsby is to use through a set of basic tasks.
+- People expect to find more information in Getting Started and the README file than currently exist. They are looking to evaluate how easy Gatsby is to use through a set of basic tasks.
 
 Possible solutions:
 
-- Add a [Recipes doc](https://github.com/gatsbyjs/gatsby/issues/6572) to both the Getting Started and READme file with a list of how to do basic tasks very quickly.
-- [Revise READme](https://github.com/gatsbyjs/gatsby/issues/6569).
+- Add a [Recipes doc](https://github.com/gatsbyjs/gatsby/issues/6572) to both the Getting Started and README file with a list of how to do basic tasks very quickly.
+- [Revise README](https://github.com/gatsbyjs/gatsby/issues/6569).
 
 Common obstacle no.3
 We have about 60 stub articles now that are topics people care about and we need people to write them!
@@ -105,7 +105,7 @@ Want to volunteer to write one? Check out all the stub articles (titles in _ital
 
 Want to sign up for a 45 minute usability test of the new structure? (It will likely take 20-30 minutes, and I blocked out 45 minutes in case you have questions and more commentary. I'll close the sign-up link once I get 5 people who sign up.
 
-- Sign up here: [https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
+- [Sign up here](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
 
 ### Issues to be resolved
 

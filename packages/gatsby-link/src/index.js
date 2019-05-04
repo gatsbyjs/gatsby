@@ -1,11 +1,22 @@
-/*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "@reach/router"
-import { parsePath } from "gatsby"
+
+import { parsePath } from "./parse-path"
+
+export { parsePath }
 
 export function withPrefix(path) {
-  return normalizePath(`${__PATH_PREFIX__}/${path}`)
+  return normalizePath(
+    [
+      typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
+      path,
+    ].join(`/`)
+  )
+}
+
+export function withAssetPrefix(path) {
+  return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
 function normalizePath(path) {
@@ -15,6 +26,7 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
+  partiallyActive: PropTypes.bool,
 }
 
 // Set up IntersectionObserver
@@ -66,7 +78,11 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
-    this.props.innerRef && this.props.innerRef(ref)
+    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
+      this.props.innerRef.current = ref
+    } else if (this.props.innerRef) {
+      this.props.innerRef(ref)
+    }
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
@@ -76,8 +92,8 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isCurrent }) => {
-    if (isCurrent) {
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+    if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
           .filter(Boolean)
@@ -98,6 +114,7 @@ class GatsbyLink extends React.Component {
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
       innerRef: $innerRef,
+      partiallyActive,
       state,
       replace,
       /* eslint-enable no-unused-vars */
@@ -107,7 +124,7 @@ class GatsbyLink extends React.Component {
     const LOCAL_URL = /^\/(?!\/)/
     if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
       console.warn(
-        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.app/internal-links`
+        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
     }
 
@@ -120,13 +137,15 @@ class GatsbyLink extends React.Component {
         getProps={getProps}
         innerRef={this.handleRef}
         onMouseEnter={e => {
-          // eslint-disable-line
-          onMouseEnter && onMouseEnter(e)
+          if (onMouseEnter) {
+            onMouseEnter(e)
+          }
           ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
-          // eslint-disable-line
-          onClick && onClick(e)
+          if (onClick) {
+            onClick(e)
+          }
 
           if (
             e.button === 0 && // ignore right clicks
@@ -154,7 +173,6 @@ class GatsbyLink extends React.Component {
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
-  innerRef: PropTypes.func,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,

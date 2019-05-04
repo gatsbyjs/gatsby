@@ -17,7 +17,9 @@ Why is that? Increased site complexity often distributes bottlenecks across mult
 
 As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy):
 
-> "All fast websites are alike, but all slow websites are slow in different ways."
+<pullquote>
+All fast websites are alike, but all slow websites are slow in different ways.
+</pullquote>
 
 Ultimately, we’ll argue, performance must be solved _at the framework level_ -- that is, in the content mesh.
 
@@ -107,7 +109,7 @@ CDNs are globally available, so they’ll be closer to your customer than your s
 
 Payload optimization and delivery optimization are complementary approaches. That’s both good news -- you _can_ do both -- and bad news -- you often _need_ to do both.
 
-For example, if you use a CDN to serve 3MB Javascript bundles, your site is still going to be slow, especially on medium- and low-end mobile devices.
+For example, if you use a CDN to serve 3MB JavaScript bundles, your site is still going to be slow, especially on medium- and low-end mobile devices.
 
 <figure>
   <img alt="" src="./network-requests-adobe-com.png" />

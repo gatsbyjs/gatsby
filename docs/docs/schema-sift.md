@@ -8,7 +8,7 @@ Gatsby stores all data loaded during the source-nodes phase in Redux. And it all
 
 The answer is that it uses the [sift.js](https://github.com/crcn/sift.js/tree/master) library. It is a port of the MongoDB query language that works over plain JavaScript objects. It turns out that mongo's query language is very compatible with GraphQL.
 
-Most of the logic below is in the [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js) file, which is called from the [ProcessedNodeType `resolve()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L191) function.
+Most of the logic below is in the [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/run-sift.js) file, which is called from the [ProcessedNodeType `resolve()`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L191) function.
 
 ## ProcessedNodeType Resolve Function
 
@@ -55,7 +55,7 @@ This file converts GraphQL Arguments into sift queries and applies them to the c
 
 ### 1. Convert query args to sift args
 
-Sift expects all field names to be prepended by a `$`. The [siftify-args](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L58) function takes care of this. It descends the args tree, performing the following transformations for each field key/value scenario.
+Sift expects all field names to be prepended by a `$`. The [siftifyArgs](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L39) function takes care of this. It descends the args tree, performing the following transformations for each field key/value scenario.
 
 - field key is`elemMatch`? Change to `$elemMatch`. Recurse on value object
 - field value is regex? Apply regex cleaning
@@ -76,7 +76,7 @@ So, the above query would become:
 
 ### 2. Drop leaves (e.g `{eq: 4}`) from args
 
-To assist in step 3, we create a version of the siftified args called `fieldsToSift` that has all leaves of the args tree replaced with boolean `true`. This is handled by the [extractFieldsToSift](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L84) function. `fieldsToSift` would look like this after the function is applied:
+To assist in step 3, we create a version of the siftified args called `fieldsToSift` that has all leaves of the args tree replaced with boolean `true`. This is handled by the [extractFieldsToSift](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L65) function. `fieldsToSift` would look like this after the function is applied:
 
 ```javascript
 {
@@ -90,7 +90,7 @@ To assist in step 3, we create a version of the siftified args called `fieldsToS
 
 Step 4 will perform the actual sift query over all the nodes, returning the first one that matches the query. But we must remember that the nodes that are in redux only include data that was explicitly created by their source or transform plugins. If instead of creating a data field, a plugin used `setFieldsOnGraphQLNodeType` to define a custom field, then we have to manually call that field's resolver on each node. The args in step 2 is a great example. The `wordcount` field is defined by the [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/extend-node-type.js#L416) plugin, rather than created during the creation of the remark node.
 
-The [nodesPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L168) function iterates over all nodes of this type. Then, for each node, [resolveRecursive](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L112) descends the `siftToFields` tree, getting the field name, and then finding its gqlType, and then calling that type's `resolve` function manually. E.g, for the above example, we would find the gqlField for `wordcount` and call its resolve field:
+The [nodesPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/run-sift.js#L168) function iterates over all nodes of this type. Then, for each node, [resolveRecursive](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L135) descends the `siftToFields` tree, getting the field name, and then finding its gqlType, and then calling that type's `resolve` function manually. E.g, for the above example, we would find the gqlField for `wordcount` and call its resolve field:
 
 ```javascript
 markdownRemarkGqlType.resolve(node, {}, {}, { fieldName: `wordcount` })
@@ -108,7 +108,7 @@ Since new fields on the node may have been created in this process, we call `tra
 
 ### 5. Run sift query on all nodes
 
-Now that we've realized all fields that need to be queried, on all nodes of this type, we are finally ready to apply the sift query. This step is handled by [tempPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L214). It simply concatenates all the top level objects in the args tree together with a sift `$and` expression, and then iterates over all nodes returning the first one that satisfies the sift expression.
+Now that we've realized all fields that need to be queried, on all nodes of this type, we are finally ready to apply the sift query. This step is handled by [tempPromise](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/run-sift.js#L214). It simply concatenates all the top level objects in the args tree together with a sift `$and` expression, and then iterates over all nodes returning the first one that satisfies the sift expression.
 
 In the case that `connection === true` (argument passed to run-sift), then instead of just choosing the first argument, we will select ALL nodes that match the sift query. If the GraphQL query specified `sort`, `skip`, or `limit` fields, then we use the [graphql-skip-limit](https://www.npmjs.com/package/graphql-skip-limit) library to filter down to the appropriate results. See [Schema Connections](/docs/schema-connections) for more info.
 
