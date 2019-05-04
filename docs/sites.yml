@@ -5731,3 +5731,20 @@
   built_by: CSUMB Web Team
   built_by_url: https://csumb.edu/web/team
   featured: false
+- title: BestPricingPages.com
+  url: https://bestpricingpages.com
+  main_url: https://bestpricingpages.com
+  source_url: https://github.com/jpvalery/pricingpages/
+  description: >
+    A repository of the best pricing pages by the best companies. Built in less than a week.
+    Inspired by RGE and since pricingpages.xyz no longer exists, I felt such a resource was missing and could be helpful to many people.
+  categories:
+    - Business
+    - Community
+    - Entrepreneurship
+    - Open Source
+    - Technology
+    - Resource
+  built_by: Jp Valery
+  built_by_url: https://jpvalery.me
+  featured: false
