@@ -512,7 +512,7 @@ Finally, let's say we want to have a page on our example blog that lists all
 team members (authors and contributors). What we could do is have two queries,
 one for `allAuthorJson` and one for `allContributorJson` and manually merge
 those. GraphQL however provides a more elegant solution to these kinds of
-problems with "abstract types" (Interfaces amd Unions). Since authors and
+problems with "abstract types" (Interfaces and Unions). Since authors and
 contributors actually share most of the fields, we can abstract those up into
 a `TeamMember` interface and add a custom query field for all team members
 (as well as a custom resolver for full names):
