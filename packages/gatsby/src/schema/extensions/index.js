@@ -6,7 +6,6 @@ const {
   DirectiveLocation,
   defaultFieldResolver,
 } = require(`graphql`)
-const report = require(`gatsby-cli/lib/reporter`)
 
 const { link, fileByPath } = require(`../resolvers`)
 const { getDateResolver } = require(`../types/date`)
