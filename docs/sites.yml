@@ -3789,6 +3789,16 @@
     - Web Development
   built_by: Cole Walker
   built_by_url: "https://www.walkermakes.com"
+- title: Standing By Company
+  main_url: "https://standingby.company"
+  url: "https://standingby.company"
+  description: A brand experience design company led by Scott Mackenzie and Trent Barton.
+  featured: false
+  categories:
+    - Design
+    - Web Development
+  built_by: Standing By Company
+  built_by_url: "https://standingby.company"
 - title: Ashley Thouret
   main_url: "https://www.ashleythouret.com"
   url: "https://www.ashleythouret.com"
