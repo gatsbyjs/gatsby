@@ -88,7 +88,7 @@ title: "My first blog post"
 ---
 ```
 
-What is important in this step is the key pair `path`. We will later use the value that is assgined to the key `path` in order navigate to our post.
+What is important in this step is the key pair `path`. The value that is assgined to the key `path` is used in order to navigate to our post.
 
 
 ### Create a page component for the markdown files
