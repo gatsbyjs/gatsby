@@ -1,5 +1,7 @@
 /* @flow */
 
+const _ = require(`lodash`)
+const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
@@ -14,6 +16,7 @@ const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
+const pageDataUtil = require(`../utils/page-data`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -41,6 +44,7 @@ const waitJobsFinished = () =>
   })
 
 module.exports = async function build(program: BuildArgs) {
+  const publicDir = path.join(store.getState().program.directory, `public`)
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
@@ -89,11 +93,35 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   const webpackCompilationHash = stats.hash
+  if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
+    store.dispatch({
+      type: `SET_WEBPACK_COMPILATION_HASH`,
+      payload: webpackCompilationHash,
+    })
 
-  store.dispatch({
-    type: `SET_WEBPACK_COMPILATION_HASH`,
-    payload: webpackCompilationHash,
-  })
+    activity = report.activityTimer(`Rewriting compilation hashes`, {
+      parentSpan: buildSpan,
+    })
+    activity.start()
+
+    // We need to update all page-data.json files with the new
+    // compilation hash. As a performance optimization however, we
+    // don't update the files for `pageQueryIds` (dirty queries),
+    // since they'll be written after query execution.
+    const cleanPagePaths = _.difference(
+      [...store.getState().pages.keys()],
+      pageQueryIds
+    )
+    console.log(`clean paths`, cleanPagePaths)
+    console.log(`all paths`, [...store.getState().pages.keys()])
+    await pageDataUtil.updateCompilationHashes(
+      { publicDir },
+      cleanPagePaths,
+      webpackCompilationHash
+    )
+
+    activity.end()
+  }
 
   activity = report.activityTimer(`run page queries`)
   activity.start()
