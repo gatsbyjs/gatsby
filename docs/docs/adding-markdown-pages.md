@@ -9,41 +9,53 @@ Here are the steps Gatsby follows for making this happen.
 
 1.  Read files into Gatsby from the filesystem
 2.  Transform markdown to HTML and frontmatter to data
-3.  Create a page component for the markdown files
-4.  Programmatically create pages using Gatsby's Node.js `createPage` API
+3.  Add a markdown file 
+4.  Create a page component for the markdown files
+5.  Create static pages using Gatsby's Node.js `createPage` API
 
-### Read files into Gatsby from the filesystem - `gatsby-source-filesystem`
+### Read files into Gatsby from the filesystem — `gatsby-source-filesystem`
 
 Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#gatsby-source-filesystem) to read files.
 
 #### Install
 
 `npm install --save gatsby-source-filesystem`
+or 
+`yarn add gatsby-source-filesystem`
 
-Now open `gatsby-config.js` to add this plugin to the plugin array.
+#### Add plugin
 
-To add a plugin, add either a string (the plugin name) or to pass options, an object.
-For `gatsby-source-filesystem` we pass an object so we can set the file system path:
+**NOTE:** There are two ways to add a plugin in `gatsby-config.js`. Either we can pass a string with the plugin name or in case we want to pass options, we pass an object.
+
+Open `gatsby-config.js` to add `gatsby-source-filesystem` plugin. Now pass the object from the next block to the `plugins` array. By passing an object that includes the key `path` we set file system path.
+
+
 
 ```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      path: `${__dirname}/path/to/markdown/files`,
       name: "markdown-pages",
+      path: `${__dirname}/src/markdown-pages`,
     },
   },
 ]
 ```
 
-Now that we've "sourced" the markdown files from the filesystem, we can now "transform" the markdown to HTML and the YAML frontmatter to JSON.
+Completing the above step means that we've "sourced" the markdown files from the filesystem. We can now "transform" the markdown to HTML and the YAML frontmatter to JSON.
 
-### Transforming markdown — `gatsby-transformer-remark`
+### Transform markdown to HTML and frontmatter to data — `gatsby-transformer-remark`
 
 We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognise files which are markdown and read its content. It will convert the frontmatter metadata part of your markdown file as `frontmatter` and the content part as HTML.
 
+#### Install
+
 `npm install --save gatsby-transformer-remark`
+or 
+`yarn add gatsby-transformer-remark`
+
+#### Add plugin
 
 Add this to `gatsby-config.js` after the previously added `gatsby-source-filesystem`.
 
@@ -52,7 +64,7 @@ plugins: [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      path: `${__dirname}/path/to/markdown/files`,
+      path: `${__dirname}/src/markdown-pages`,
       name: "markdown-pages",
     },
   },
@@ -60,19 +72,26 @@ plugins: [
 ]
 ```
 
-#### Note on creating markdown files.
+### Add a markdown file
+
+Create a folder in the `/src` directory of your Gatsby application called `markdown-pages`. 
+Now create a Markdown file inside it with the name `post-1.md`.
 
 When you create a Markdown file, at the top of the file, add the block below. You can have different key value pairs that are relevant to your website. This block will be parsed by `gatsby-transformer-remark` as `frontmatter`. The GraphQL API will provide this data in our React components.
 
-```
+
+```markdown:title=src/markdown-pages/post-1.md
 ---
 path: "/blog/my-first-post"
-date: "2017-11-07"
+date: "2019-05-04"
 title: "My first blog post"
 ---
 ```
 
-### Create a page template for the markdown data.
+What is important in this step is the key pair `path`. We will later use the value that is assgined to the key `path` in order navigate to our post.
+
+
+### Create a page component for the markdown files
 
 Create a folder in the `/src` directory of your Gatsby application called `templates`.
 Now create a `blogTemplate.js` inside it with the following content.
@@ -120,11 +139,15 @@ Two things are important in the file above.
     **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that we find has all the details of the Markdown file. We can use that to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
 
-### Create static pages using Gatsby's Node API.
+### Create static pages using Gatsby’s Node.js `createPage` API
 
 Gatsby exposes a powerful Node.js API, which allows for functionality such as creating dynamic pages. This API is available in the `gatsby-node.js` file in the root directory of your project, at the same level as `gatsby-config.js`. Each export found in this file will be run by Gatsby, as detailed in its [Node API specification](/docs/node-apis/). However, we only care about one particular API in this instance, `createPages`.
 
-Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
+Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
+
+
+**NOTE:** Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`. 
+
 
 ```javascript:title=gatsby-node.js
 const path = require("path")
@@ -166,6 +189,8 @@ exports.createPages = ({ actions, graphql }) => {
 ```
 
 This should get you started on some basic markdown power in your Gatsby site. You can further customise the `frontmatter` and the template file to get desired effects!
+
+For more information please have a look in the working example `using-markdown-pages` . You can find it in the [Gatsby example's section](https://github.com/gatsbyjs/gatsby/tree/master/examples).
 
 ## Other tutorials
 
