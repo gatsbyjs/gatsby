@@ -551,7 +551,59 @@ describe(`merges explicit and inferred type definitions`, () => {
     expect(inferDate.resolve).toBeDefined()
   })
 
-  it.todo(`adds explicit resolvers through extensions`)
+  it(`adds explicit resolvers through extensions`, async () => {
+    const typeDefs = [
+      buildObjectType({
+        name: `Test`,
+        interfaces: [`Node`],
+        extensions: {
+          infer: true,
+        },
+        fields: {
+          explicitDate: {
+            type: `Date`,
+            extensions: {
+              dateformat: {},
+            },
+          },
+        },
+      }),
+      buildObjectType({
+        name: `LinkTest`,
+        interfaces: [`Node`],
+        extensions: {
+          infer: true,
+        },
+        fields: {
+          link: {
+            type: `Test!`,
+            extensions: {
+              link: {},
+            },
+          },
+          links: {
+            type: `[Test!]!`,
+            extensions: {
+              link: true,
+            },
+          },
+        },
+      }),
+    ]
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    await build({})
+    const { schema } = store.getState()
+
+    const { link, links } = schema.getType(`LinkTest`).getFields()
+    expect(link.type.toString()).toBe(`Test!`)
+    expect(links.type.toString()).toBe(`[Test!]!`)
+    expect(link.resolve).toBeDefined()
+    expect(links.resolve).toBeDefined()
+
+    const { explicitDate, inferDate } = schema.getType(`Test`).getFields()
+    expect(explicitDate.resolve).toBeDefined()
+    expect(inferDate.resolve).toBeDefined()
+  })
 
   it(`honors array depth when merging types`, async () => {
     const typeDefs = `
