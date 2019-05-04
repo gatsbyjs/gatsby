@@ -277,7 +277,7 @@ exports.sourceNodes = ({ actions, schema }) => {
 ```
 
 Gatsby Type Builders allow referencing types as simple strings, and accept full
-field configs ('type', 'args', 'resolve').
+field configs (`type`, `args`, `resolve`).
 
 > Type Builders also exist for Input, Interface and Union types:
 > `buildInputType`, `buildInterfaceType`, and `buildUnionType`.
