@@ -20,11 +20,9 @@ const addInferredFields = ({
     typeComposer,
     defaults: {
       shouldAddFields: true,
-      // FIXME: This is a behavioral change
       shouldAddDefaultResolvers: typeComposer.hasExtension(`infer`)
         ? false
         : true,
-      // shouldAddDefaultResolvers: true,
     },
   })
   addInferredFieldsImpl({
@@ -107,21 +105,30 @@ const addInferredFieldsImpl = ({
         // and the field has neither args nor resolver explicitly defined.
         const field = typeComposer.getField(key)
         if (
-          !typeComposer.hasFieldExtension(key, `addResolver`) &&
           field.type.toString().replace(/[[\]!]/g, ``) ===
             fieldConfig.type.toString() &&
           _.isEmpty(field.args) &&
           !field.resolve
         ) {
-          const extension =
-            fieldConfig.extensions && fieldConfig.extensions.addResolver
-          if (extension) {
-            typeComposer.setFieldExtension(key, `addResolver`, extension)
-            report.warn(
-              `Deprecation warning - adding inferred resolver for field ` +
-                `${typeComposer}.${key}. In Gatsby v3, only fields with a ` +
-                `\`addResolver\` extension/directive will get a resolver.`
-            )
+          const { extensions } = fieldConfig
+          if (extensions) {
+            Object.keys(extensions)
+              .filter(name =>
+                // It is okay to list allowed extensions explicitly here,
+                // since this is deprecated anyway and won't change.
+                [`dateformat`, `fileByRelativePath`, `link`].includes(name)
+              )
+              .forEach(name => {
+                if (!typeComposer.hasFieldExtension(key, name)) {
+                  typeComposer.setFieldExtension(key, name, extensions[name])
+                  report.warn(
+                    `Deprecation warning - adding inferred resolver for field ` +
+                      `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
+                      `only fields with an explicit directive/extension will ` +
+                      `get a resolver.`
+                  )
+                }
+              })
           }
         }
       }
@@ -228,7 +235,7 @@ const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
   return {
     type,
     extensions: {
-      addResolver: { type: `link`, options: { by: path.join(`.`) || `id` } },
+      link: { by: path.join(`.`) || `id` },
     },
   }
 }
@@ -282,19 +289,10 @@ const getFieldConfigFromFieldNameConvention = ({
   return {
     type,
     extensions: {
-      addResolver: {
-        type: `link`,
-        options: {
-          by: foreignKey || `id`,
-          from: key,
-        },
-      },
+      link: { by: foreignKey || `id`, from: key },
     },
   }
 }
-
-const DATE_EXTENSION = { addResolver: { type: `dateformat` } }
-const FILE_EXTENSION = { addResolver: { type: `fileByRelativePath` } }
 
 const getSimpleFieldConfig = ({
   schemaComposer,
@@ -314,19 +312,19 @@ const getSimpleFieldConfig = ({
       return { type: is32BitInteger(value) ? `Int` : `Float` }
     case `string`:
       if (isDate(value)) {
-        return { type: `Date`, extensions: DATE_EXTENSION }
+        return { type: `Date`, extensions: { dateformat: {} } }
       }
       if (isFile(nodeStore, selector, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
         // the first entry (which could point to an existing file or not).
-        return { type: `File`, extensions: FILE_EXTENSION }
+        return { type: `File`, extensions: { fileByRelativePath: {} } }
       }
       return { type: `String` }
     case `object`:
       if (value instanceof Date) {
-        return { type: `Date`, extensions: DATE_EXTENSION }
+        return { type: `Date`, extensions: { dateformat: {} } }
       }
       if (value instanceof String) {
         return { type: `String` }

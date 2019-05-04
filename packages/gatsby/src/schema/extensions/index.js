@@ -6,20 +6,13 @@ const {
   DirectiveLocation,
   defaultFieldResolver,
 } = require(`graphql`)
-const { GraphQLJSON } = require(`graphql-compose`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const { link, fileByPath } = require(`../resolvers`)
 const { getDateResolver } = require(`../types/date`)
 
 // Reserved for internal use
-const internalExtensionNames = [
-  `addDefaultResolvers`,
-  `createdFrom`,
-  `directives`,
-  `infer`,
-  `plugin`,
-]
+const internalExtensionNames = [`createdFrom`, `directives`, `infer`, `plugin`]
 
 const typeExtensions = {
   infer: {
@@ -45,41 +38,6 @@ const typeExtensions = {
 }
 
 const fieldExtensions = {
-  add: {
-    description: `Generic directive to add field extension.`,
-    args: {
-      extension: {
-        type: new GraphQLNonNull(GraphQLString),
-      },
-      options: {
-        type: GraphQLJSON,
-      },
-    },
-  },
-
-  addResolver: {
-    description: `Add a resolver specified by "type" to field.`,
-    args: {
-      type: {
-        type: new GraphQLNonNull(GraphQLString),
-        description:
-          `Type of the resolver. Types available by default are: ` +
-          `"dateformat", "link" and "fileByRelativePath".`,
-      },
-      options: {
-        type: GraphQLJSON,
-        description: `Resolver options. Vary based on resolver type.`,
-      },
-    },
-    process(args, fieldConfig) {
-      const { process } = fieldExtensions[args.type] || {}
-      if (typeof process === `function`) {
-        return process(args.options || {}, fieldConfig)
-      }
-      return {}
-    },
-  },
-
   dateformat: {
     description: `Add date formating options.`,
     args: {
@@ -122,12 +80,6 @@ const fieldExtensions = {
       }
     },
   },
-
-  // projection: {
-  //   description: `Automatically add fields to selection set.`,
-  //   args: {},
-  //   process(args, fieldConfig) {},
-  // },
 
   proxyFrom: {
     description: `Proxy resolver from another field.`,
