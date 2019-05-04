@@ -167,7 +167,7 @@ function App() {
 **Important**: This module must appear before `gatsby-remark-prismjs` in your
 plugins array, or the markup will have already been transformed into a code
 block and this plugin will fail to detect it and inline the file.
-For further information about it's options, visit `gatsby-remark-prismjs`'s
+For further information about its options, visit `gatsby-remark-prismjs`'s
 [README](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/).
 
 ```js
