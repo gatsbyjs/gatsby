@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "test": "jest"
+    "test": "echo \"Write tests!\""
   },
   "dependencies": {
     "actions-toolkit": "^2.0.0",
@@ -12,8 +12,5 @@
     "array-to-sentence": "^2.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0"
-  },
-  "devDependencies": {
-    "jest": "^24.5.0"
   }
 }
