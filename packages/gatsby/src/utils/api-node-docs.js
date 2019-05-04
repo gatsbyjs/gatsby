@@ -266,10 +266,10 @@ exports.createResolvers = true
  * Register a GraphQL schema extension that can be used on field definitions.
  *
  * @param {object} $0
- * @param {function} $0.registerFieldExtension Register field extension
+ * @param {function} $0.createFieldExtension Register field extension
  * @example
- * exports.registerFieldExtension = ({ registerFieldExtension }) => {
- *   registerFieldExtension(`volume`, {
+ * exports.createFieldExtension = ({ createFieldExtension }) => {
+ *   createFieldExtension(`volume`, {
  *     description: `Adjust the volume.`,
  *     args: {
  *       loud: { type: `Boolean` }

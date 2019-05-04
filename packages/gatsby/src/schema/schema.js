@@ -18,10 +18,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
-const {
-  processFieldExtensions,
-  registerFieldExtension,
-} = require(`./extensions`)
+const { processFieldExtensions, createFieldExtension } = require(`./extensions`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -141,8 +138,8 @@ const processTypeComposer = async ({
 
 const registerExtensions = ({ parentSpan }) =>
   apiRunner(`createFieldExtension`, {
-    registerFieldExtension,
-    traceId: `initial-registerFieldExtensions`,
+    createFieldExtension,
+    traceId: `initial-registerExtensions`,
     parentSpan: parentSpan,
   })
 

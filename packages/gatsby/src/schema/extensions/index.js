@@ -190,7 +190,7 @@ const processFieldExtensions = ({
   })
 }
 
-const registerFieldExtension = (name, extension) => {
+const createFieldExtension = (name, extension) => {
   if (internalExtensionNames.includes(name)) {
     report.error(`The extension ${name} is reserved for internal use.`)
   } else if (!fieldExtensions[name]) {
@@ -204,7 +204,7 @@ const registerFieldExtension = (name, extension) => {
 
 module.exports = {
   addDirectives,
+  createFieldExtension,
   fieldExtensions,
   processFieldExtensions,
-  registerFieldExtension,
 }
