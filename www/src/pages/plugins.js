@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet"
 import Container from "../components/container"
 import Rotator from "../components/rotator"
 import { Link } from "gatsby"
