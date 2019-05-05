@@ -15,7 +15,7 @@ const {
   traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
@@ -28,6 +28,7 @@ const {
   ImageCropFocusType,
   DuotoneGradientType,
   PotraceType,
+  ImageFitType,
 } = require(`./types`)
 
 function toArray(buf) {
@@ -115,6 +116,9 @@ const fixedNodeType = ({
       height: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -139,6 +143,10 @@ const fixedNodeType = ({
         type: GraphQLInt,
       },
       toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
       },
@@ -240,6 +248,9 @@ const fluidNodeType = ({
       maxHeight: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       grayscale: {
         type: GraphQLBoolean,
         defaultValue: false,
@@ -267,9 +278,21 @@ const fluidNodeType = ({
         type: ImageFormatType,
         defaultValue: ``,
       },
+      toFormatBase64: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
       cropFocus: {
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
+      },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
       },
       rotate: {
         type: GraphQLInt,

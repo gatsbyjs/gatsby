@@ -1,26 +1,14 @@
-const {
-  graphql,
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLSchema,
-} = require(`gatsby/graphql`)
+const { graphql } = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
-const {
-  inferObjectStructureFromNodes,
-} = require(`../../../gatsby/src/schema/infer-graphql-type`)
 const extendNodeType = require(`../extend-node-type`)
+const { createContentDigest } = require(`gatsby/utils`)
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
   nodes,
   fragment,
-  { types = [] } = {},
   { additionalParameters = {}, pluginOptions = {} }
 ) {
-  const inferredFields = inferObjectStructureFromNodes({
-    nodes,
-    types: [...types],
-  })
   const extendNodeTypeFields = await extendNodeType(
     {
       type: { name: `MarkdownRemark` },
@@ -37,32 +25,30 @@ async function queryResult(
     }
   )
 
-  const markdownRemarkFields = {
-    ...inferredFields,
-    ...extendNodeTypeFields,
-  }
+  const {
+    createSchemaComposer,
+  } = require(`../../../gatsby/src/schema/schema-composer`)
 
-  const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: () => {
-        return {
-          listNode: {
-            name: `LISTNODE`,
-            type: new GraphQLList(
-              new GraphQLObjectType({
-                name: `MarkdownRemark`,
-                fields: markdownRemarkFields,
-              })
-            ),
-            resolve() {
-              return nodes
-            },
-          },
-        }
-      },
-    }),
+  const {
+    addInferredFields,
+  } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
+  const {
+    getExampleValue,
+  } = require(`../../../gatsby/src/schema/infer/example-value`)
+
+  const typeName = `MarkdownRemark`
+  const sc = createSchemaComposer()
+  const tc = sc.createObjectTC(typeName)
+  addInferredFields({
+    schemaComposer: sc,
+    typeComposer: tc,
+    exampleValue: getExampleValue({ nodes, typeName }),
   })
+  tc.addFields(extendNodeTypeFields)
+  sc.Query.addFields({
+    listNode: { type: [tc], resolve: () => nodes },
+  })
+  const schema = sc.buildSchema()
 
   const result = await graphql(
     schema,
@@ -97,14 +83,10 @@ const bootstrapTest = (
   it(label, async done => {
     node.content = content
     const createNode = markdownNode => {
-      queryResult(
-        [markdownNode],
-        query,
-        {
-          types: [{ name: `MarkdownRemark` }],
-        },
-        { additionalParameters, pluginOptions }
-      ).then(result => {
+      queryResult([markdownNode], query, {
+        additionalParameters,
+        pluginOptions,
+      }).then(result => {
         try {
           test(result.data.listNode[0])
           done()
@@ -117,12 +99,17 @@ const bootstrapTest = (
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+
+    // Used to verify that console.warn is called when field not found
+    jest.spyOn(global.console, `warn`)
+
     await onCreateNode(
       {
         node,
         loadNodeContent,
         actions,
         createNodeId,
+        createContentDigest,
       },
       { ...additionalParameters, ...pluginOptions }
     )
@@ -149,13 +136,19 @@ Where oh where is my little pony?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where oh where is my little pony?`,
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is my little pony?`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
           },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     }
   )
@@ -177,9 +170,7 @@ date: "2017-09-18T23:19:51.246Z"
       expect(node.excerpt).toMatch(``)
       expect(node.excerptAst).toMatchObject({
         children: [],
-        data: {
-          quirksMode: false,
-        },
+        data: { quirksMode: false },
         type: `root`,
       })
     }
@@ -224,9 +215,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
             value: `\n`,
           },
         ],
-        data: {
-          quirksMode: false,
-        },
+        data: { quirksMode: false },
         type: `root`,
       })
     },
@@ -254,7 +243,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
       expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].value.length).toBe(139)
+      expect(node.excerptAst.children[0].children.length).toBe(1)
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(139)
     }
   )
 
@@ -271,7 +261,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(46)
       expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].value.length).toBe(46)
+      expect(node.excerptAst.children[0].children.length).toBe(1)
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(46)
     }
   )
 
@@ -288,7 +279,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(50)
       expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].value.length).toBe(50)
+      expect(node.excerptAst.children[0].children.length).toBe(1)
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(50)
     }
   )
 
@@ -314,74 +306,99 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where oh `,
-          },
-          {
             children: [
+              {
+                type: `text`,
+                value: `Where oh `,
+              },
               {
                 children: [
                   {
-                    type: `text`,
-                    value: `where`,
+                    children: [
+                      {
+                        type: `text`,
+                        value: `where`,
+                      },
+                    ],
+                    properties: {},
+                    tagName: `em`,
+                    type: `element`,
                   },
                 ],
-                properties: {},
-                tagName: `em`,
+                properties: {
+                  href: `nick.com`,
+                },
+                tagName: `a`,
                 type: `element`,
               },
-            ],
-            properties: {
-              href: `nick.com`,
-            },
-            tagName: `a`,
-            type: `element`,
-          },
-          {
-            type: `text`,
-            value: ` `,
-          },
-          {
-            children: [
+              {
+                type: `text`,
+                value: ` `,
+              },
               {
                 children: [
                   {
-                    type: `text`,
-                    value: `is`,
+                    children: [
+                      {
+                        type: `text`,
+                        value: `is`,
+                      },
+                    ],
+                    properties: {},
+                    tagName: `em`,
+                    type: `element`,
                   },
                 ],
                 properties: {},
-                tagName: `em`,
+                tagName: `strong`,
                 type: `element`,
+              },
+              {
+                type: `text`,
+                value: ` `,
+              },
+              {
+                children: [],
+                properties: {
+                  alt: `that pony`,
+                  src: `pony.png`,
+                },
+                tagName: `img`,
+                type: `element`,
+              },
+              {
+                type: `text`,
+                value: `?`,
               },
             ],
             properties: {},
-            tagName: `strong`,
+            tagName: `p`,
             type: `element`,
-          },
-          {
-            type: `text`,
-            value: ` `,
-          },
-          {
-            children: [],
-            properties: {
-              alt: `that pony`,
-              src: `pony.png`,
-            },
-            tagName: `img`,
-            type: `element`,
-          },
-          {
-            type: `text`,
-            value: `?`,
           },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     }
+  )
+
+  bootstrapTest(
+    `excerpt does have missing words and extra spaces`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
+    `excerpt
+      frontmatter {
+          title
+      }
+      `,
+    node => {
+      expect(node.excerpt).toMatch(`Where oh where is that pony?`)
+    },
+    {}
   )
 
   bootstrapTest(
@@ -406,28 +423,34 @@ Where is my <code>pony</code> named leo?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where is my `,
-          },
-          {
             children: [
               {
                 type: `text`,
-                value: `pony`,
+                value: `Where is my `,
+              },
+              {
+                children: [
+                  {
+                    type: `text`,
+                    value: `pony`,
+                  },
+                ],
+                properties: {},
+                tagName: `code`,
+                type: `element`,
+              },
+              {
+                type: `text`,
+                value: ` named leo?`,
               },
             ],
             properties: {},
-            tagName: `code`,
+            tagName: `p`,
             type: `element`,
           },
-          {
-            type: `text`,
-            value: ` named leo?`,
-          },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -455,13 +478,19 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
       expect(node.excerptAst).toMatchObject({
         children: [
           {
-            type: `text`,
-            value: `Where oh where is that pony? Is he in the stable…`,
+            children: [
+              {
+                type: `text`,
+                value: `Where oh where is that pony? Is he in the stable…`,
+              },
+            ],
+            properties: {},
+            tagName: `p`,
+            type: `element`,
           },
         ],
-        properties: {},
-        tagName: `p`,
-        type: `element`,
+        data: { quirksMode: false },
+        type: `root`,
       })
     }
   )
@@ -522,9 +551,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
             value: `\n`,
           },
         ],
-        data: {
-          quirksMode: false,
-        },
+        data: { quirksMode: false },
         type: `root`,
       })
     },
@@ -603,9 +630,6 @@ date: "2017-09-18T23:19:51.246Z"
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {
-  // Used to verify that console.warn is called when field not found
-  jest.spyOn(global.console, `warn`)
-
   bootstrapTest(
     `returns null on non existing table of contents field`,
     `---

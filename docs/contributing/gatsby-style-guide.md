@@ -37,14 +37,14 @@ The community plans, writes, and maintains these Docs on GitHub.
   - [Support software versions](#software-versions)
   - [Share best practices whenever possible](#share-best-practices-whenever-possible)
 - [The difference between tutorials and docs](#the-difference-between-tutorials-and-docs)
-  - [Tutorial](#tutorial)
-    - [Tutorial Audience](#tutorial-audience)
-    - [Tutorial Purpose](#tutorial-purpose)
-    - [Tutorial Tone and style](#tutorial-tone-and-style)
-  - [Docs](#docs)
-    - [Docs Audience](#docs-audience)
-    - [Docs Purpose](#docs-purpose)
-    - [Docs Tone and style](#docs-tone-and-style)
+- [Tutorial](#tutorial)
+  - [Tutorial Audience](#tutorial-audience)
+  - [Tutorial Purpose](#tutorial-purpose)
+  - [Tutorial Tone and style](#tutorial-tone-and-style)
+- [Docs](#docs)
+  - [Docs Audience](#docs-audience)
+  - [Docs Purpose](#docs-purpose)
+  - [Docs Tone and style](#docs-tone-and-style)
 
 ## Welcome!
 
@@ -67,10 +67,10 @@ examples:
 - [guides](/docs/add-404-page/)
 - [guide overviews](/docs/styling/)
 - [tutorials](/tutorial/part-one/)
-- [plugin READme](/packages/gatsby-source-filesystem/)
-- [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
+- [plugin README](/packages/gatsby-source-filesystem/)
+- [starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -153,7 +153,17 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+
+```markdown
+<!-- Good -->
+
+[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+
+<!-- Bad -->
+
+[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
@@ -205,7 +215,7 @@ Here are some folder name examples:
 - querying-data-with-graphql
 
 Note: Just to clarify, you can include special characters in the article title
-but _not_ in the `.md` file name or folder name (e.g. Title: What is GraphQL? and Folder Name:
+but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name:
 what-is-graphql).
 
 ## Grammar and formatting
@@ -405,7 +415,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
@@ -486,7 +496,7 @@ The main tutorial ought to use the same personal “you” like the rest of the 
 
 > Why not use "yay" in the docs as well? Since the tutorial's goal is to help users complete a series of steps, it is possible and helpful to congratulate them on successfully completing each step. Guides in the docs act as reference guides that users can browse at will rather than read from top to bottom. It doesn't make sense to congratulate someone on finishing a guide, since it's not a series of steps.
 
-#### Don't make users think more than is necessary
+### Don't make users think more than is necessary
 
 Because the audience of the tutorial is people who do not consider themselves experts in React, it's important to reduce the amount of new information to bare minimum. The goal: give people only the information necessary to complete a task and to know how to repeat the task again, outside of the context of the tutorial.
 
@@ -545,7 +555,7 @@ The tone and style of the docs should effectively help the audience reach their 
 
 The docs use the personal “you” to address the user.
 
-#### Give experts as much relevant info to get the task done as quickly as possible
+### Give experts as much relevant info to get the task done as quickly as possible
 
 Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references, and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
 

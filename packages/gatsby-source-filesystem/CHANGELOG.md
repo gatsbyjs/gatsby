@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.32...gatsby-source-filesystem@2.0.33) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.31...gatsby-source-filesystem@2.0.32) (2019-04-24)
+
+### Bug Fixes
+
+- Add fallback for createContentDigest ([#13584](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/13584)) ([093f1f2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/093f1f2))
+
+## [2.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.30...gatsby-source-filesystem@2.0.31) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.29...gatsby-source-filesystem@2.0.30) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.28...gatsby-source-filesystem@2.0.29) (2019-04-08)
+
+### Features
+
+- **createRemoteFileNode:** allow passing headers to request ([#11682](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/11682)) ([7a8e41a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/7a8e41a))
+
+## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.27...gatsby-source-filesystem@2.0.28) (2019-03-22)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** pin chokidar@2.1.2 to fix unix issues ([#12759](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/12759)) ([0ea1505](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/0ea1505))
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.26...gatsby-source-filesystem@2.0.27) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.25...gatsby-source-filesystem@2.0.26) (2019-03-14)
+
+### Features
+
+- **create-remote-file-node:** add `url` field to downloaded file nodes ([#12582](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/12582)) ([cac37a9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/cac37a9)), closes [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/1234)
+
+## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.24...gatsby-source-filesystem@2.0.25) (2019-03-13)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.23...gatsby-source-filesystem@2.0.24) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.22...gatsby-source-filesystem@2.0.23) (2019-02-25)
 
 ### Bug Fixes

@@ -59,10 +59,21 @@ describe(`watching`, () => {
       expect(fs.copy).not.toHaveBeenCalled()
     })
 
-    it(`copies files on watch event`, () => {
+    it(`it doesn't copy files before ready event`, async () => {
       const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
       watch(...args)
-      callEventCallback(`add`, filePath)
+      await callEventCallback(`add`, filePath)
+
+      expect(fs.copy).toHaveBeenCalledTimes(0)
+    })
+
+    it(`copies files after ready event`, async () => {
+      const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
+      watch(...args)
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      // console.log(`checking`)
 
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
@@ -72,14 +83,15 @@ describe(`watching`, () => {
       )
     })
 
-    it(`copies cache-dir files`, () => {
+    it(`copies cache-dir files`, async () => {
       watch(...args)
 
       const filePath = path.join(
         process.cwd(),
         `packages/gatsby/cache-dir/register-service-worker.js`
       )
-      callEventCallback(`add`, filePath)
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
 
       expect(fs.copy).toHaveBeenCalledTimes(2)
       expect(fs.copy).toHaveBeenLastCalledWith(
@@ -122,9 +134,9 @@ describe(`watching`, () => {
       global.process = realProcess
     })
 
-    it(`does not exit if scanOnce is not defined`, () => {
+    it(`does not exit if scanOnce is not defined`, async () => {
       watch(...args)
-      callReadyCallback()
+      await callReadyCallback()
 
       expect(process.exit).not.toHaveBeenCalled()
     })

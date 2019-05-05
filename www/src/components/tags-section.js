@@ -3,16 +3,17 @@ import { Link } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
 
 import Button from "./button"
-import { rhythm, scale } from "../utils/typography"
-const _ = require(`lodash`)
+import { rhythm } from "../utils/typography"
+import { space, fontSizes } from "../utils/presets"
+const { kebabCase } = require(`lodash-es`)
 
 const TagsSection = ({ tags }) => {
   if (!tags) return null
   const tagLinks = tags.map((tag, i) => {
-    const divider = i < tags.length - 1 && <span>{` | `}</span>
+    const divider = i < tags.length - 1 && <span>{`, `}</span>
     return (
       <span key={tag}>
-        <Link to={`/blog/tags/${_.kebabCase(tag.toLowerCase())}`}>{tag}</Link>
+        <Link to={`/blog/tags/${kebabCase(tag.toLowerCase())}`}>{tag}</Link>
         {divider}
       </span>
     )
@@ -21,21 +22,31 @@ const TagsSection = ({ tags }) => {
     <div
       css={{
         display: `flex`,
-        flexFlow: `row nowrap`,
+        flexFlow: `row wrap`,
         justifyContent: `space-between`,
         alignItems: `baseline`,
       }}
     >
       <em
-        style={{
-          ...scale(-1 / 5),
+        css={{
+          fontSize: fontSizes[1],
           display: `block`,
-          marginBottom: rhythm(1),
+          flexBasis: `60%`,
+          flexGrow: 1,
+          fontStyle: `normal`,
+          marginBottom: space[5],
+          marginRight: space[9],
+          marginTop: rhythm(3),
         }}
       >
         Tagged with {tagLinks}
       </em>
-      <Button tiny key="blog-post-view-all-tags-button" to="/blog/tags">
+      <Button
+        css={{ flexShrink: 0 }}
+        small
+        key="blog-post-view-all-tags-button"
+        to="/blog/tags"
+      >
         View All Tags <TagsIcon />
       </Button>
     </div>

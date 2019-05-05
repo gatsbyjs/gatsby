@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.1.0...gatsby-link@2.1.1) (2019-05-03)
+
+### Bug Fixes
+
+- **gatsby-link:** provide fallback for **BASE_PATH** being missing ([#13839](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/13839)) ([dc554bf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/dc554bf))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.17...gatsby-link@2.1.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/8291044))
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.16...gatsby-link@2.0.17) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.15...gatsby-link@2.0.16) (2019-03-12)
+
+### Features
+
+- **gatsby-link:** adds support for partiallyActive=true to Link ([#12495](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12495)) ([e0db681](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/e0db681))
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.14...gatsby-link@2.0.15) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.13...gatsby-link@2.0.14) (2019-03-04)
+
+### Features
+
+- **gatsby-link:** support RefObject ([#12174](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12174)) ([5ab7a87](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/5ab7a87)), closes [#12014](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12014)
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.12...gatsby-link@2.0.13) (2019-02-28)
 
 **Note:** Version bump only for package gatsby-link

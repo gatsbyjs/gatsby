@@ -150,8 +150,8 @@ module.exports = (
       } else {
         const ASTGenerationPromise = getMarkdownAST(markdownNode)
         ASTGenerationPromise.then(markdownAST => {
-          cache.set(cacheKey, markdownAST)
           ASTPromiseMap.delete(cacheKey)
+          return cache.set(cacheKey, markdownAST)
         }).catch(err => {
           ASTPromiseMap.delete(cacheKey)
           return err
@@ -430,17 +430,21 @@ module.exports = (
       }
 
       const text = await getAST(markdownNode).then(ast => {
-        const excerptNodes = []
+        let excerptNodes = []
         visit(ast, node => {
           if (node.type === `text` || node.type === `inlineCode`) {
             excerptNodes.push(node.value)
           }
+          if (node.type === `image`) {
+            excerptNodes.push(node.alt)
+          }
           return
         })
+
         if (!truncate) {
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
+          return prune(excerptNodes.join(``), pruneLength, `…`)
         }
-        return _.truncate(excerptNodes.join(` `), {
+        return _.truncate(excerptNodes.join(``), {
           length: pruneLength,
           omission: `…`,
         })
@@ -483,6 +487,21 @@ module.exports = (
       values: {
         PLAIN: { value: `plain` },
         HTML: { value: `html` },
+      },
+    })
+
+    const WordCountType = new GraphQLObjectType({
+      name: `wordCount`,
+      fields: {
+        paragraphs: {
+          type: GraphQLInt,
+        },
+        sentences: {
+          type: GraphQLInt,
+        },
+        words: {
+          type: GraphQLInt,
+        },
       },
     })
 
@@ -602,20 +621,7 @@ module.exports = (
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCount`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt,
-            },
-            sentences: {
-              type: GraphQLInt,
-            },
-            words: {
-              type: GraphQLInt,
-            },
-          },
-        }),
+        type: WordCountType,
         resolve(markdownNode) {
           let counts = {}
 

@@ -34,7 +34,7 @@ class ScrollContainer extends React.Component {
 
     // Only keep around the current DOM node in development, as this is only
     // for emitting the appropriate warning.
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== `production`) {
       this.domNode = ReactDOM.findDOMNode(this) // eslint-disable-line react/no-find-dom-node
     }
   }
@@ -44,7 +44,7 @@ class ScrollContainer extends React.Component {
       prevProps.scrollKey === this.props.scrollKey,
       `<ScrollContainer> does not support changing scrollKey.`
     )
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== `production`) {
       const prevDomNode = this.domNode
       this.domNode = ReactDOM.findDOMNode(this) // eslint-disable-line react/no-find-dom-node
 

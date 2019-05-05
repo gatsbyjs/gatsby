@@ -127,6 +127,31 @@ export const query = graphql`
 
 For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
 
+## Polyfilling object-fit/object-position for IE
+
+If you'd like to include a polyfill for the [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)/[`object-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) CSS properties (which [aren't supported](https://caniuse.com/#feat=object-fit) by default in Internet Explorer), import from `gatsby-image/withIEPolyfill` instead:
+
+```jsx
+// Other imports...
+import Img from "gatsby-image/withIEPolyfill"
+
+export default ({ data }) => (
+  <div>
+    <h1>Hello gatsby-image</h1>
+    <Img
+      fixed={data.file.childImageSharp.fixed}
+      objectFit="cover"
+      objectPosition="50% 50%"
+      alt=""
+    />
+  </div>
+)
+
+// GraphQL query...
+```
+
+Importing from `gatsby-image/withIEPolyfill` tells Gatsby to automatically apply the `object-fit-images` polyfill to your image. To make your `object-fit`/`object-position` values work in IE, be sure to use the `objectFit` and `objectPosition` props (rather than the `imgStyle` prop or a CSS or CSS-in-JS solution) so the polyfill will recognize them.
+
 ## Two types of responsive images
 
 There are two types of responsive images supported by gatsby-image.
@@ -313,8 +338,10 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
 | `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                               |
 | `title`                | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
+| `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
 | `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |
 | `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                  |
@@ -326,6 +353,8 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
 | `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
+| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.          |
+| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.        |
 
 ## Image processing arguments
 

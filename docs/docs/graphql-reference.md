@@ -8,6 +8,8 @@ This page will walk you through a series of GraphQL queries, each designed to de
 
 You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/tutorial/part-five/#introducing-graphiql).
 
+For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+
 ## Basic query
 
 Let's start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetaData`. Here the query is on the left and the results are on the right.
