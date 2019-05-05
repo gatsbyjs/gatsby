@@ -261,7 +261,6 @@ module.exports = async (
     ]
     if (
       store.getState().themes.themes
-      store.getState().config._experimentalThemes.length
     ) {
       configRules.concat(
         store.getState().themes.themes.map(theme => {
