@@ -260,7 +260,7 @@ module.exports = async (
       rules.miscAssets(),
     ]
     if (
-      store.getState().config._experimentalThemes &&
+      store.getState().themes.themes
       store.getState().config._experimentalThemes.length
     ) {
       configRules.concat(
