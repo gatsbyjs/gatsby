@@ -1,5 +1,5 @@
 const path = require(`path`)
-const slash = require(`slash`)
+const slash = require(`slash2`)
 
 function findFileNode({ node, getNode }) {
   // Find the file node.
