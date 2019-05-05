@@ -44,7 +44,7 @@ const waitJobsFinished = () =>
   })
 
 module.exports = async function build(program: BuildArgs) {
-  const publicDir = path.join(store.getState().program.directory, `public`)
+  const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
@@ -112,8 +112,6 @@ module.exports = async function build(program: BuildArgs) {
       [...store.getState().pages.keys()],
       pageQueryIds
     )
-    console.log(`clean paths`, cleanPagePaths)
-    console.log(`all paths`, [...store.getState().pages.keys()])
     await pageDataUtil.updateCompilationHashes(
       { publicDir },
       cleanPagePaths,

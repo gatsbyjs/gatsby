@@ -33,7 +33,7 @@ describe(`Webpack Compilation Hash tests`, () => {
 
     cy.window().then(window => {
       const oldHash = window.___webpackCompilationHash
-      expect(oldHash).to.exist
+      expect(oldHash).to.not.eq(undefined)
 
       const mockHash = createMockCompilationHash()
 
