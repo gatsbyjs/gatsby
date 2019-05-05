@@ -46,7 +46,7 @@ const findMatchPath = (matchPaths, trimmedPathname) => {
 const cleanAndFindPath = rawPathname => {
   let pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  let trimmedPathname = stripPrefix(pathname, __PATH_PREFIX__)
+  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
   // Remove any hashfragment
   if (trimmedPathname.split(`#`).length > 1) {
     trimmedPathname = trimmedPathname
@@ -137,9 +137,7 @@ const fetchPageData = path => {
 }
 
 const createComponentUrls = componentChunkName =>
-  window.___chunkMapping[componentChunkName].map(
-    chunk => __PATH_PREFIX__ + chunk
-  )
+  window.___chunkMapping[componentChunkName].map(chunk => __BASE_PATH__ + chunk)
 
 const fetchComponent = chunkName => asyncRequires.components[chunkName]()
 
@@ -151,7 +149,7 @@ const stripSurroundingSlashes = s => {
 
 const createPageDataUrl = path => {
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
-  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
+  return `${__BASE_PATH__}/page-data/${fixedPath}/page-data.json`
 }
 
 const onPrefetchPathname = pathname => {

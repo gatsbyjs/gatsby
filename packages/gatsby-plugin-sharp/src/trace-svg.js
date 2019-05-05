@@ -2,7 +2,7 @@ const { promisify } = require(`bluebird`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)

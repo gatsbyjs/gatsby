@@ -7,7 +7,7 @@ custom implementation. This allows you to use a set of design system components
 when rendering.
 
 ```javascript:title=src/components/layout.js
-import { MDXProvider } from "@mdx-js/tag"
+import { MDXProvider } from "@mdx-js/react"
 import * as DesignSystem from "your-design-system"
 
 export default function Layout({ children }) {

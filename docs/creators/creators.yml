@@ -277,3 +277,13 @@
   image: images/web-hart.jpg
   for_hire: true
   portfolio: true
+- name: MangoART
+  type: agency
+  description: >-
+    MangoART is a digital agency specializing in developing highly performant, reliable, responsive & engaging websites & web-apps. While we do not focus on any particular technology stack but pick based on project requirements, Gatsby gained a special place in our heart since the first time we used it and we've already created a couple of pages as well as Gatsby plugins.
+  location: Enns, Austria
+  website: https://www.mangoart.at
+  github: https://github.com/MangoArt
+  image: images/mangoart.png
+  for_hire: true
+  portfolio: true

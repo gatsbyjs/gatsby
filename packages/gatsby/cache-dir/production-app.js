@@ -2,6 +2,7 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
+import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import {
@@ -14,6 +15,7 @@ import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import loader, { setApiRunnerForLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
+import matchPaths from "./match-paths.json"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -23,6 +25,15 @@ loader.addProdRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)
 
 navigationInit()
+
+const matchesPath = pathname => {
+  for (const { matchPath } of matchPaths) {
+    if (match(__BASE_PATH__ + matchPath, pathname)) {
+      return true
+    }
+  }
+  return false
+}
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -63,7 +74,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // Make sure the window.page object is defined
     pagePath &&
     // The canonical path doesn't match the actual path (i.e. the address bar)
-    __PATH_PREFIX__ + pagePath !== browserLoc.pathname &&
+    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
+    // ...and if matchPage is specified, it also doesn't match the actual path
+    !matchesPath(browserLoc.pathname) &&
     // Ignore 404 pages, since we want to keep the same URL
     pagePath !== `/404.html` &&
     !pagePath.match(/^\/404\/?$/) &&
@@ -71,7 +84,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // pages have this canonical path)
     !pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
-    navigate(__PATH_PREFIX__ + pagePath + browserLoc.search + browserLoc.hash, {
+    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
       replace: true,
     })
   }
@@ -81,7 +94,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       createElement(
         Router,
         {
-          basepath: __PATH_PREFIX__,
+          basepath: __BASE_PATH__,
         },
         createElement(RouteHandler, { path: `/*` })
       )

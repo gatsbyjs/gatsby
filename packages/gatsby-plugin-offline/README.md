@@ -89,6 +89,8 @@ outdated version registered in users' browsers.
 
 ## Notes
 
+### Empty View Source and SEO
+
 Gatsby offers great SEO capabilities and that is no different with `gatsby-plugin-offline`. However, you shouldn't think that Gatsby doesn't serve HTML tags anymore when looking at your source code in the browser (with `Right click` => `View source`). `View source` doesn't represent the actual HTML data since `gatsby-plugin-offline` registers and loads a service worker that will cache and handle this differently. Your site is loaded from the service worker, not from its actual source (check your `Network` tab in the DevTools for that).
 
 To see the HTML data that crawlers will receive, run this in your terminal:

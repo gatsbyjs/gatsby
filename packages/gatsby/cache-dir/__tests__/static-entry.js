@@ -166,6 +166,7 @@ describe(`develop-static-entry`, () => {
 describe(`static-entry sanity checks`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
   })
 
   const methodsToCheck = [
@@ -219,6 +220,7 @@ describe(`static-entry sanity checks`, () => {
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
