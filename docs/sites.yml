@@ -5769,3 +5769,12 @@
     - Loans
   built_by: Lendo developers
   featured: false
+- title: IDEO
+  url: https://www.ideo.com
+  main_url: https://www.ideo.com/
+  description: >
+    A Global design company committed to creating positive impact.
+  categories:
+    - Community
+    - Technology
+  featured: true
