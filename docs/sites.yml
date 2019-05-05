@@ -5758,3 +5758,14 @@
   built_by: Jp Valery
   built_by_url: https://jpvalery.me
   featured: false
+- title: Lendo Austria
+  url: https://lendo.at
+  main_url: https://lendo.at
+  description: >
+    A Comparsion site for best private loan offer from banks in Austria.
+  categories:
+    - Business
+    - Finance
+    - Loans
+  built_by: Lendo developers
+  featured: false
