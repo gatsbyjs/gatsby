@@ -9,15 +9,13 @@ const reporterInstance = require(`./reporters/yurnalist`)
 
 const errorFormatter = getErrorFormatter()
 
-type ActivityArgs = {
-  parentSpan: Object,
-}
+import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
 /**
  * Reporter module.
  * @module reporter
  */
-const reporter = {
+const reporter: Reporter = {
   /**
    * Strip initial indentation template function.
    */
@@ -81,10 +79,13 @@ const reporter = {
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
-   * @param {activityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {string} The elapsed time of activity.
+   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
+   * @returns {ActivityTracker} The activity tracker.
    */
-  activityTimer(name, activityArgs: ActivityArgs = {}) {
+  activityTimer(
+    name: string,
+    activityArgs: ActivityArgs = {}
+  ): ActivityTracker {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
