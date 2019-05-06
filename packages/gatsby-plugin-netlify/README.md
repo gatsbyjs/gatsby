@@ -19,9 +19,7 @@ config.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-plugin-netlify`, // make sure to put last in the array
-]
+plugins: [`gatsby-plugin-netlify`]
 ```
 
 ## Configuration
@@ -32,7 +30,6 @@ transform the given headers, you can use the following configuration options.
 
 ```javascript
 plugins: [
-  // make sure to put last in the array
   {
     resolve: `gatsby-plugin-netlify`,
     options: {
@@ -65,7 +62,7 @@ An example:
         "Basic-Auth: someuser:somepassword anotheruser:anotherpassword",
       ],
       "/my-page": [
-        // matching headers (by type) are replaced by netlify with more specific routes
+        // matching headers (by type) are replaced by Netlify with more specific routes
         "Basic-Auth: differentuser:differentpassword",
       ],
     },
@@ -84,7 +81,7 @@ you.
 
 The Netlify `_headers` file does not inherit headers, and it will replace any
 matching headers it finds in more specific routes. For example, if you add a
-link to the the root wildcard path (`/*`), it will be replaced by any more
+link to the root wildcard path (`/*`), it will be replaced by any more
 specific path. If you want a resource to put linked across the site, you will
 have to add to every path. To make this easier, the plugin provides the
 `allPageHeaders` option to inject the same headers on every path.

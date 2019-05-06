@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.17...gatsby-source-graphql@2.0.18) (2019-04-12)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** fix data refetching ([#13280](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/issues/13280)) ([a61d002](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/commit/a61d002))
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.16...gatsby-source-graphql@2.0.17) (2019-04-08)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** Destructure createContentDigest from first parameter ([#13214](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/issues/13214)) ([382fbe1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/commit/382fbe1))
+
+## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.15...gatsby-source-graphql@2.0.16) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.14...gatsby-source-graphql@2.0.15) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.13...gatsby-source-graphql@2.0.14) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.12...gatsby-source-graphql@2.0.13) (2019-03-08)
+
+### Bug Fixes
+
+- **gatsby): Revert "chore(gatsby:** Update more dependencies to support graphql@14" ([#12408](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/issues/12408)) ([b040b44](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/commit/b040b44)), closes [gatsbyjs/gatsby#11512](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/issues/11512)
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.11...gatsby-source-graphql@2.0.12) (2019-03-08)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.10...gatsby-source-graphql@2.0.11) (2019-02-28)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
 ## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.9...gatsby-source-graphql@2.0.10) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-source-graphql

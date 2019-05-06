@@ -34,7 +34,7 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a fuller description and sample usage in [Gatsby.js Tutorial Part Four](/tutorial/part-four/#data-in-gatsby).
+See a full description and sample usage in [Gatsby.js Tutorial Part Four](/tutorial/part-four/#data-in-gatsby).
 
 ## Plugins
 
@@ -63,7 +63,6 @@ It's common for sites to be hosted somewhere other than the root of their domain
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
 }
 ```

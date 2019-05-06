@@ -16,7 +16,7 @@ const resolveTheme = async themeSpec => {
   if (_.isFunction(theme)) {
     themeConfig = theme(themeSpec.options || {})
   }
-  return { themeName, themeConfig, themeSpec }
+  return { themeName, themeConfig, themeSpec, themeDir }
 }
 
 // single iteration of a recursive function that resolve parent themes
@@ -26,7 +26,7 @@ const resolveTheme = async themeSpec => {
 // Theoretically, there could be an infinite loop here but in practice there is
 // no use case for a loop so I expect that to only happen if someone is very
 // off track and creating their own set of themes
-const processTheme = ({ themeName, themeConfig, themeSpec }) => {
+const processTheme = ({ themeName, themeConfig, themeSpec, themeDir }) => {
   // gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarentee which files theme creators create first
@@ -36,10 +36,12 @@ const processTheme = ({ themeName, themeConfig, themeSpec }) => {
     return Promise.mapSeries(themeConfig.__experimentalThemes, async spec => {
       const themeObj = await resolveTheme(spec)
       return processTheme(themeObj)
-    }).then(arr => arr.concat([{ themeName, themeConfig, themeSpec }]))
+    }).then(arr =>
+      arr.concat([{ themeName, themeConfig, themeSpec, themeDir }])
+    )
   } else {
     // if a theme doesn't define additional themes, return the original theme
-    return [{ themeName, themeConfig, themeSpec }]
+    return [{ themeName, themeConfig, themeSpec, themeDir }]
   }
 }
 

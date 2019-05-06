@@ -231,7 +231,7 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 ```
 
-The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
+The `siteTitle` and `menuLinks` arguments are de-structured es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
 
 You can now access the header component's props and map the `menuLinks` array into elements that can be rendered in the document:
 
@@ -240,13 +240,14 @@ import React from 'react'
 import { Link } from 'gatsby'
 
 const Header = ({ siteTitle, menuLinks }) => (
-+  <nav style={{ display: 'flex', flex: 1 }}>
-+    {
-+      menuLinks.map(link =>
-+        <li key={link.name} style={{ 'listStyleType': 'none' }}>
++  <nav>
++    <ul style={{ display: 'flex', flex: 1, listStyle: 'none' }}>
++      {menuLinks.map(link =>
++        <li key={link.link}>
 +          <Link to={link.link}>{link.name}</Link>
-+        </li>)
-+    }
++        </li>
++      )}
++    </ul>
 +  </nav>
 )
 ```

@@ -5,7 +5,7 @@ Object {
   "aspectRatio": 1,
   "height": 20,
   "originalName": undefined,
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "width": 20,
 }
 `;
@@ -15,15 +15,16 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABAklEQVQoz61R7WrCQBDM+7+Cv1qhlIogoUWMoH8KrfgOLVXRKDV4d7kkl6/pbsxpqBIo9mBuZ7N3k51bB7TKsrwZVsexyS2rKerwFhYFVI1DnkMQOHIuCaLB+ayuwXlMaApXgvMoxjTU8MIQE4rMx8SnNffUkU/qM/bbiPAeRfgw5n8tB+QgO1kmUvwROdm0kYHmUNoe+NoU2wZTdVjQH7Isg9YRpFIXor8vpGmKjb/FQQgslit8fi3wvQ/OHXLhxRvDHY7Qd5+x3e2udmNzTUN4fZvhoddH566L+8cn9AZuVcvpLR3e9kEAISWEkDAmbRXkGCcJ1r4PRRNPEkPu9Kn2Azs0CqJYU3JKAAAAAElFTkSuQmCC",
   "density": 144,
-  "originalImg": "/static/1234/a3030/test.png",
+  "originalImg": "/static/1234/e681d/test.png",
   "originalName": undefined,
   "presentationHeight": 68,
   "presentationWidth": 141,
   "sizes": "(max-width: 141px) 100vw, 141px",
-  "src": "/static/1234/a3030/test.png",
-  "srcSet": "/static/1234/56b42/test.png 200w,
-/static/1234/a3030/test.png 281w",
+  "src": "/static/1234/e681d/test.png",
+  "srcSet": "/static/1234/9ec3c/test.png 200w,
+/static/1234/e681d/test.png 281w",
   "srcSetType": "image/png",
+  "tracedSVG": undefined,
 }
 `;
 
@@ -32,31 +33,33 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABAklEQVQoz61R7WrCQBDM+7+Cv1qhlIogoUWMoH8KrfgOLVXRKDV4d7kkl6/pbsxpqBIo9mBuZ7N3k51bB7TKsrwZVsexyS2rKerwFhYFVI1DnkMQOHIuCaLB+ayuwXlMaApXgvMoxjTU8MIQE4rMx8SnNffUkU/qM/bbiPAeRfgw5n8tB+QgO1kmUvwROdm0kYHmUNoe+NoU2wZTdVjQH7Isg9YRpFIXor8vpGmKjb/FQQgslit8fi3wvQ/OHXLhxRvDHY7Qd5+x3e2udmNzTUN4fZvhoddH566L+8cn9AZuVcvpLR3e9kEAISWEkDAmbRXkGCcJ1r4PRRNPEkPu9Kn2Azs0CqJYU3JKAAAAAElFTkSuQmCC",
   "density": 144,
-  "originalImg": "/static/1234/67b29/test.png",
+  "originalImg": "/static/1234/e681d/test.png",
   "originalName": undefined,
   "presentationHeight": 136,
   "presentationWidth": 281,
   "sizes": "(max-width: 281px) 100vw, 281px",
-  "src": "/static/1234/67b29/test.png",
-  "srcSet": "/static/1234/4df82/test.png 200w,
-/static/1234/67b29/test.png 281w",
+  "src": "/static/1234/e681d/test.png",
+  "srcSet": "/static/1234/9ec3c/test.png 200w,
+/static/1234/e681d/test.png 281w",
   "srcSetType": "image/png",
+  "tracedSVG": undefined,
 }
 `;
 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
-  "originalImg": "/static/1234/4ce1a/test.png",
+  "originalImg": "/static/1234/c0399/test.png",
   "originalName": undefined,
-  "presentationHeight": 1,
-  "presentationWidth": 1,
-  "sizes": "(max-width: 1px) 100vw, 1px",
-  "src": "/static/1234/4ce1a/test.png",
-  "srcSet": "/static/1234/4ce1a/test.png 1w",
+  "presentationHeight": 100,
+  "presentationWidth": 100,
+  "sizes": "(max-width: 100px) 100vw, 100px",
+  "src": "/static/1234/c0399/test.png",
+  "srcSet": "/static/1234/c0399/test.png 100w",
   "srcSetType": "image/png",
+  "tracedSVG": undefined,
 }
 `;
 
@@ -68,5 +71,101 @@ Object {
   "type": "jpg",
   "wUnits": "px",
   "width": 746,
+}
+`;
+
+exports[`gatsby-plugin-sharp queueImageResizing should process immediately when asked 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "base64": true,
+          "duotone": false,
+          "grayscale": false,
+          "jpegProgressive": true,
+          "maxWidth": 800,
+          "pathPrefix": "",
+          "pngCompressionLevel": 9,
+          "pngCompressionSpeed": 4,
+          "quality": 50,
+          "sizeByPixelDensity": false,
+          "toFormat": "png",
+          "width": 3,
+        },
+        "inputPath": "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        "outputPath": "<PROJECT_ROOT>/public/static/1234/39ca0/test.png",
+      },
+      Object {
+        "addThirdPartySchema": [Function],
+        "createJob": [Function],
+        "createNode": [Function],
+        "createNodeField": [Function],
+        "createPage": [Function],
+        "createPageDependency": [Function],
+        "createParentChildLink": [Function],
+        "createRedirect": [Function],
+        "deleteComponentsDependencies": [Function],
+        "deleteNode": [Function],
+        "deleteNodes": [Function],
+        "deletePage": [Function],
+        "endJob": [Function],
+        "replaceComponentQuery": [Function],
+        "replaceStaticQuery": [Function],
+        "replaceWebpackConfig": [Function],
+        "setBabelOptions": [Function],
+        "setBabelPlugin": [Function],
+        "setBabelPreset": [Function],
+        "setJob": [Function],
+        "setPluginStatus": [Function],
+        "setWebpackConfig": [Function],
+        "touchNode": [Function],
+      },
+      Object {
+        "defaultQuality": 50,
+        "lazyImageGeneration": true,
+        "stripMetadata": true,
+        "useMozJpeg": false,
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": undefined,
+  "height": 100,
+  "originalName": undefined,
+  "src": "/static/1234/c0399/test.png",
+  "srcSet": "/static/1234/c0399/test.png 1x",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3e%3cpath d='M41 24c-18 7-24 29-11 43 15 17 44 8 46-15 1-19-17-34-35-28' fill='red' fill-rule='evenodd'/%3e%3c/svg%3e",
+  "width": 100,
+}
+`;
+
+exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": undefined,
+  "density": 72,
+  "originalImg": "/static/1234/c0399/test.png",
+  "originalName": undefined,
+  "presentationHeight": 100,
+  "presentationWidth": 100,
+  "sizes": "(max-width: 100px) 100vw, 100px",
+  "src": "/static/1234/c0399/test.png",
+  "srcSet": "/static/1234/0f0dc/test.png 25w,
+/static/1234/bc08f/test.png 50w,
+/static/1234/c0399/test.png 100w",
+  "srcSetType": "image/png",
+  "tracedSVG": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3e%3cpath d='M41 24c-18 7-24 29-11 43 15 17 44 8 46-15 1-19-17-34-35-28' fill='red' fill-rule='evenodd'/%3e%3c/svg%3e",
 }
 `;

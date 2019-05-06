@@ -23,7 +23,7 @@ gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s READme file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install --save gatsby-source-wordpress
@@ -48,7 +48,7 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
          */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
@@ -95,7 +95,7 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
-         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
          */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
@@ -126,7 +126,7 @@ Now you are ready to create a GraphQL query to pull in some images from the Word
 Run:
 
 ```shell
-gatsby develop
+npm run develop
 ```
 
 Open localhost:8000 and localhost:8000/\_\_\_graphql.

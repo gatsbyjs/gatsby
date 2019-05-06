@@ -63,4 +63,4 @@ If you'd like to contribute, look through this list of options and pick one that
 
 - Go to [Issue #4175](https://github.com/gatsbyjs/gatsby/issues/4175) to help enhance the tutorials.
 - If you’d like to contribute to and/or follow other documentation projects, go here to find the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3).
-- And, as always, if you have time to give us feedback on what you like about Gatsby and what can be improved in the docs/tutorials, schedule a time to chat with me here! [https://calendly.com/shannon-soper](https://calendly.com/shannon-soper)
+- And, as always, if you have time to give us feedback on what you like about Gatsby and what can be improved in the docs/tutorials, [schedule a time to chat with me here](https://calendly.com/shannon-soper)!

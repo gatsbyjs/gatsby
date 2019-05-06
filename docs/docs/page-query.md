@@ -2,9 +2,11 @@
 title: Querying data in pages with GraphQL
 ---
 
-Gatsby's `graphql` tag enables page components to retrieve data via GraphQL query.
+Gatsby's `graphql` tag enables page components to retrieve data via a GraphQL query.
 
 In this guide, you will learn [how to use the `graphql` tag](/docs/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/page-query#how-does-the-graphql-tag-work).
+
+If you’re curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
 
 ## How to use the `graphql` tag in pages
 
@@ -133,6 +135,6 @@ During the Gatsby build process, GraphQL queries are pulled out of the original 
 ### The longer answer
 
 The longer answer is a little more involved: Gatsby borrows a technique from
-[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
+[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
 
 This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.

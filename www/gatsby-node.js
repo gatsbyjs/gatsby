@@ -66,9 +66,90 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  // Redirects for new top-level Contributing section
   createRedirect({
-    fromPath: `/community/`, // Moved "Community" page from /community to /docs/community
-    toPath: `/docs/community/`,
+    fromPath: `/community/`, // Moved "Community" page from /community to /contributing/community
+    toPath: `/contributing/community/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/community/`, // Moved "Community" page from /docs/community to /contributing/community
+    toPath: `/contributing/community/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/pair-programming/`,
+    toPath: `/contributing/pair-programming/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-create-an-issue/`,
+    toPath: `/contributing/how-to-create-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-label-an-issue/`,
+    toPath: `/contributing/how-to-label-an-issue/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/contributor-swag/`,
+    toPath: `/contributing/contributor-swag/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-run-a-gatsby-workshop/`,
+    toPath: `/contributing/how-to-run-a-gatsby-workshop/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-pitch-gatsby/`,
+    toPath: `/contributing/how-to-pitch-gatsby/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/code-of-conduct/`,
+    toPath: `/contributing/code-of-conduct/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/gatsby-style-guide/`,
+    toPath: `/contributing/gatsby-style-guide/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/how-to-contribute/`,
+    toPath: `/contributing/how-to-contribute/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/templates/`,
+    toPath: `/contributing/docs-templates/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/site-showcase-submissions/`,
+    toPath: `/contributing/site-showcase-submissions/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/submit-to-creator-showcase/`,
+    toPath: `/contributing/submit-to-creator-showcase/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/submit-to-starter-library/`,
+    toPath: `/contributing/submit-to-starter-library/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/submit-to-plugin-library/`,
+    toPath: `/contributing/submit-to-plugin-library/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/rfc-process/`,
+    toPath: `/contributing/rfc-process/`,
     isPermanent: true,
   })
 
@@ -115,6 +196,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/adding-images-fonts-files`,
+    toPath: `/docs/importing-assets-into-files`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2019-10-03-gatsby-perf`,
     toPath: `/blog/2018-10-03-gatsby-perf`,
     isPermanent: true,
@@ -129,6 +216,42 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/add-offline-support`,
     toPath: `/docs/add-offline-support-with-a-service-worker`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-source-plugin/`,
+    toPath: `/docs/creating-a-source-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/create-transformer-plugin/`,
+    toPath: `/docs/creating-a-transformer-plugin/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/plugin-authoring/`,
+    toPath: `/docs/how-plugins-work/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/source-plugin-tutorial/`,
+    toPath: `/docs/pixabay-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/how-plugins-work/`,
+    toPath: `/docs/plugins/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
+    toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
     isPermanent: true,
   })
 
@@ -315,16 +438,26 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         })
       })
 
-      const tagLists = releasedBlogPosts
-        .filter(post => _.get(post, `node.frontmatter.tags`))
-        .map(post => _.get(post, `node.frontmatter.tags`))
+      const makeSlugTag = tag => _.kebabCase(tag.toLowerCase())
 
-      _.uniq(_.flatten(tagLists)).forEach(tag => {
+      // Collect all tags and group them by their kebab-case so that
+      // hyphenated and spaced tags are treated the same. e.g
+      // `case-study` -> [`case-study`, `case study`]. The hyphenated
+      // version will be used for the slug, and the spaced version
+      // will be used for human readability (see templates/tags)
+      const tagGroups = _(releasedBlogPosts)
+        .map(post => _.get(post, `node.frontmatter.tags`))
+        .filter()
+        .flatten()
+        .uniq()
+        .groupBy(makeSlugTag)
+
+      tagGroups.forEach((tags, tagSlug) => {
         createPage({
-          path: `/blog/tags/${_.kebabCase(tag.toLowerCase())}/`,
+          path: `/blog/tags/${tagSlug}/`,
           component: tagTemplate,
           context: {
-            tag,
+            tags,
           },
         })
       })
@@ -441,6 +574,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         }
       })
 
+      // redirecting cypress-gatsby => gatsby-cypress
+      createRedirect({
+        fromPath: `/packages/cypress-gatsby/`,
+        toPath: `/packages/gatsby-cypress/`,
+        isPermanent: true,
+      })
+
       // Read featured starters and plugins for Ecosystem
       ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 
@@ -488,7 +628,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         let released = false
         const date = _.get(node, `frontmatter.date`)
         if (date) {
-          released = moment().isSameOrAfter(moment.utc(date))
+          released = moment.utc().isSameOrAfter(moment.utc(date))
         }
         createNodeField({ node, name: `released`, value: released })
 
@@ -646,10 +786,8 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           )
         })
     }
-  }
-
-  // Creator pages
-  else if (node.internal.type === `CreatorsYaml`) {
+  } else if (node.internal.type === `CreatorsYaml`) {
+    // Creator pages
     const validTypes = {
       individual: `people`,
       agency: `agencies`,
@@ -700,4 +838,38 @@ exports.onPostBuild = () => {
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
   )
+}
+
+// XXX this should probably be a plugin or something.
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  /*
+   * NOTE: This _only_ defines the schema we currently query for. If anything in
+   * the query at `src/pages/contributing/events.js` changes, we need to make
+   * sure these types are updated as well.
+   *
+   * But why?! Why would I do something this fragile?
+   *
+   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
+   * lazy to make upstream fixes...
+   */
+  const typeDefs = `
+    type Airtable implements Node {
+      id: ID!
+      data: AirtableData
+    }
+
+    type AirtableData {
+      Name_of_Event: String
+      Organizer_Name: String
+      Date_of_Event: Date
+      Location_of_Event: String
+      Event_URL__if_applicable_: String
+      What_type_of_event_is_this_: String
+      Organizer_s_Last_Name: String
+      Gatsby_Speaker_Approved: Boolean
+      Approved_for_posting_on_event_page: Boolean
+    }
+  `
+
+  createTypes(typeDefs)
 }

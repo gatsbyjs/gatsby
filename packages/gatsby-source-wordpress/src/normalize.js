@@ -1,23 +1,12 @@
-const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { URL } = require(`url`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
-
-/**
- * Encrypts a String using md5 hash of hexadecimal digest.
- *
- * @param {any} str
- */
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 /**
  * Validate the GraphQL naming convetions & protect specific fields.
@@ -94,6 +83,15 @@ exports.combineACF = function(entities) {
 
   return entities
 }
+
+// Create wordpress_id if the entity don't have one
+exports.generateFakeWordpressId = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__yoast_redirects`) {
+      e.wordpress_id = `${e.origin}-${e.url}-${e.type}`
+    }
+    return e
+  })
 
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
@@ -178,12 +176,14 @@ exports.excludeUnknownEntities = entities =>
 // Create node ID from known entities
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
 // we create the node ID based upon type if the wordpress_id doesn't exist
-exports.createGatsbyIds = (createNodeId, entities) =>
+exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
   entities.map(e => {
     if (e.wordpress_id) {
-      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+      e.id = createNodeId(
+        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`
+      )
     } else {
-      e.id = createNodeId(e.__type)
+      e.id = createNodeId(`${e.__type}-${_siteURL}`)
     }
     return e
   })
@@ -475,6 +475,7 @@ exports.downloadMediaFiles = async ({
   createNode,
   createNodeId,
   touchNode,
+  getNode,
   _auth,
 }) =>
   Promise.all(
@@ -487,8 +488,16 @@ exports.downloadMediaFiles = async ({
         // If we have cached media data and it wasn't modified, reuse
         // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
-          fileNodeID = cacheMediaData.fileNodeID
-          touchNode({ nodeId: cacheMediaData.fileNodeID })
+          const fileNode = getNode(cacheMediaData.fileNodeID)
+
+          // check if node still exists in cache
+          // it could be removed if image was made private
+          if (fileNode) {
+            fileNodeID = cacheMediaData.fileNodeID
+            touchNode({
+              nodeId: fileNodeID,
+            })
+          }
         }
 
         // If we don't have cached data, download the file
@@ -500,6 +509,7 @@ exports.downloadMediaFiles = async ({
               cache,
               createNode,
               createNodeId,
+              parentNodeId: e.id,
               auth: _auth,
             })
 
@@ -532,7 +542,8 @@ const prepareACFChildNodes = (
   topLevelIndex,
   type,
   children,
-  childrenNodes
+  childrenNodes,
+  createContentDigest
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
@@ -545,7 +556,8 @@ const prepareACFChildNodes = (
             topLevelIndex,
             type + key,
             children,
-            childrenNodes
+            childrenNodes,
+            createContentDigest
           ).id
       )
       delete obj[key]
@@ -557,7 +569,7 @@ const prepareACFChildNodes = (
     id: entityId + topLevelIndex + type,
     parent: entityId,
     children: [],
-    internal: { type, contentDigest: digest(JSON.stringify(obj)) },
+    internal: { type, contentDigest: createContentDigest(obj) },
   }
 
   children.push(acfChildNode.id)
@@ -570,7 +582,11 @@ const prepareACFChildNodes = (
   return acfChildNode
 }
 
-exports.createNodesFromEntities = ({ entities, createNode }) => {
+exports.createNodesFromEntities = ({
+  entities,
+  createNode,
+  createContentDigest,
+}) => {
   entities.forEach(e => {
     // Create subnodes for ACF Flexible layouts
     let { __type, ...entity } = e // eslint-disable-line no-unused-vars
@@ -590,7 +606,8 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
                 key,
                 type,
                 children,
-                childrenNodes
+                childrenNodes,
+                createContentDigest
               )
 
               return acfChildNode.id
@@ -608,7 +625,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       parent: null,
       internal: {
         type: e.__type,
-        contentDigest: digest(JSON.stringify(entity)),
+        contentDigest: createContentDigest(entity),
       },
     }
     createNode(node)
@@ -617,3 +634,16 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     })
   })
 }
+
+exports.createUrlPathsFromLinks = entities =>
+  entities.map(e => {
+    if (e.link && !e.path) {
+      try {
+        const link = new URL(e.link)
+        e.path = link.pathname
+      } catch (error) {
+        e.path = e.link
+      }
+    }
+    return e
+  })

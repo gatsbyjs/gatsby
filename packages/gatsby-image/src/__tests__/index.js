@@ -1,7 +1,7 @@
 import "@babel/polyfill"
 import React from "react"
 import { render, cleanup, fireEvent } from "react-testing-library"
-import Img from "../"
+import Image from "../"
 
 afterAll(cleanup)
 
@@ -23,14 +23,20 @@ const fluidShapeMock = {
   base64: `string_of_base64`,
 }
 
-const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
+const setup = (
+  fluid = false,
+  props = {},
+  onLoad = () => {},
+  onError = () => {}
+) => {
   const { container } = render(
-    <Img
+    <Image
       backgroundColor
       className={`fixedImage`}
       style={{ display: `inline` }}
       title={`Title for the image`}
       alt={`Alt text for the image`}
+      crossOrigin={`anonymous`}
       {...fluid && { fluid: fluidShapeMock }}
       {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
@@ -38,13 +44,14 @@ const setup = (fluid = false, onLoad = () => {}, onError = () => {}) => {
       itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
+      {...props}
     />
   )
 
   return container
 }
 
-describe(`<Img />`, () => {
+describe(`<Image />`, () => {
   it(`should render fixed size images`, () => {
     const component = setup()
     expect(component).toMatchSnapshot()
@@ -55,11 +62,13 @@ describe(`<Img />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have correct src, title and alt attributes`, () => {
+  it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
     const imageTag = setup().querySelector(`picture img`)
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
+    expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
+    expect(imageTag.getAttribute(`crossOrigin`)).toEqual(`anonymous`)
   })
 
   it(`should have correct placeholder src, title, style and class attributes`, () => {
@@ -70,15 +79,20 @@ describe(`<Img />`, () => {
     )
     // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 1; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;`
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
+  })
+
+  it(`should have a transition-delay of 1sec`, () => {
+    const component = setup(false, { durationFadeIn: `1000` })
+    expect(component).toMatchSnapshot()
   })
 
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
-    const imageTag = setup(true, onLoadMock, onErrorMock).querySelector(
+    const imageTag = setup(true, {}, onLoadMock, onErrorMock).querySelector(
       `picture img`
     )
     fireEvent.load(imageTag)

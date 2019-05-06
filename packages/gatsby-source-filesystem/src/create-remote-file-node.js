@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const crypto = require(`crypto`)
+const { createContentDigest } = require(`./fallback`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
@@ -52,24 +52,6 @@ const bar = new ProgressBar(
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
  */
-
-/*********
- * utils *
- *********/
-
-/**
- * createHash
- * --
- *
- * Create an md5 hash of the given str
- * @param  {Stringq} str
- * @return {String}
- */
-const createHash = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
@@ -140,14 +122,15 @@ async function pushToQueue(task, cb) {
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
+ * @param  {Object}   httpOpts
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename) =>
+const requestRemoteNode = (url, headers, tmpFilename, httpOpts) =>
   new Promise((resolve, reject) => {
+    const opts = Object.assign({}, { timeout: 30000, retries: 5 }, httpOpts)
     const responseStream = got.stream(url, {
-      ...headers,
-      timeout: 30000,
-      retries: 5,
+      headers,
+      ...opts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
@@ -183,7 +166,9 @@ async function processRemoteNode({
   store,
   cache,
   createNode,
+  parentNodeId,
   auth = {},
+  httpHeaders = {},
   createNodeId,
   ext,
   name,
@@ -199,20 +184,20 @@ async function processRemoteNode({
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
-  const headers = {}
-
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-  }
-
+  const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
   }
 
+  // Add htaccess authentication if passed in. This isn't particularly
+  // extensible. We should define a proper API that we validate.
+  const httpOpts = {}
+  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
+    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+  }
+
   // Create the temp and permanent file names for the url.
-  const digest = createHash(url)
+  const digest = createContentDigest(url)
   if (!name) {
     name = getRemoteFileName(url)
   }
@@ -223,9 +208,12 @@ async function processRemoteNode({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename)
-  // Save the response headers for future requests.
-  await cache.set(cacheId(url), response.headers)
+  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+
+  if (response.statusCode == 200) {
+    // Save the response headers for future requests.
+    await cache.set(cacheId(url), response.headers)
+  }
 
   // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
   if (ext === ``) {
@@ -248,6 +236,8 @@ async function processRemoteNode({
   // Create the file node.
   const fileNode = await createFileNode(filename, createNodeId, {})
   fileNode.internal.description = `File "${url}"`
+  fileNode.url = url
+  fileNode.parent = parentNodeId
   // Override the default plugin as gatsby-source-filesystem needs to
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
@@ -305,7 +295,9 @@ module.exports = ({
   store,
   cache,
   createNode,
+  parentNodeId = null,
   auth = {},
+  httpHeaders = {},
   createNodeId,
   ext = null,
   name = null,
@@ -348,8 +340,10 @@ module.exports = ({
     store,
     cache,
     createNode,
+    parentNodeId,
     createNodeId,
     auth,
+    httpHeaders,
     ext,
     name,
   })
