@@ -39,7 +39,7 @@ Next, install the [Kentico Cloud source plugin](https://github.com/Kentico/gatsb
 npm install --save gatsby-source-kentico-cloud
 ```
 
-Once that's done, you need to add the plugin to `gatsby-config.js`:
+Once that's done, you need to add the plugin to `gatsby-config.js` (note this uses the language codename from the Sample Project, which would be `default` in a blank project):
 
 ```javascript
 module.exports = {
