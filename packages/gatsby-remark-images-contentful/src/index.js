@@ -1,6 +1,6 @@
 const crypto = require(`crypto`)
 const select = require(`unist-util-select`)
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)

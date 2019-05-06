@@ -10,14 +10,14 @@ const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
 const { formatError } = require(`graphql`)
-const request = require(`request`)
+const got = require(`got`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
 const { store } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
-const developHtml = require(`./develop-html`)
+const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const launchEditor = require(`react-dev-utils/launchEditor`)
@@ -31,9 +31,13 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const queryUtil = require(`../query`)
+const queryQueue = require(`../query/queue`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -61,8 +65,14 @@ onExit(() => {
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () =>
-    developHtml(program).catch(err => {
+  const createIndexHtml = async () => {
+    try {
+      await buildHTML.buildPages({
+        program,
+        stage: `develop-html`,
+        pagePaths: [`/`],
+      })
+    } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
         return
@@ -75,10 +85,15 @@ async function startServer(program) {
         `,
         err
       )
-    })
+    }
+  }
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  db.startAutosave()
+  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -193,9 +208,10 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
+      const { headers, method } = req
       req
         .pipe(
-          request(proxiedUrl).on(`error`, err => {
+          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
             const message = `Error when trying to proxy request "${
               req.originalUrl
             }" to "${proxiedUrl}"`
@@ -288,16 +304,9 @@ module.exports = async (program: any) => {
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detectPortInUseAndPrompt(port, rlInterface, newPort => {
-      program.port = newPort
-      startServer(program).then(([c, l]) => {
-        compiler = c
-        resolve()
-      })
-    })
-  })
+  program.port = await detectPortInUseAndPrompt(port, rlInterface)
+
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>

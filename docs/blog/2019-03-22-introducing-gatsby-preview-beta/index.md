@@ -11,7 +11,7 @@ tags:
 
 ## What we’ve been up to
 
-Back in July we announced [our alpha release of Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/). The team has been hard at work since getting your feedback and incorporating it into Gatsby Preview product.
+Back in July we announced [our alpha release of Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/). The team has been hard at work since getting your feedback and incorporating it into Gatsby Preview product.
 
 We’re excited to announce Gatsby Preview is now in beta! To the many people that have signed up to try Preview, we'll be inviting more and more of you over the coming weeks. Gatsby Preview will continue to be invite-only until we've worked with enough customers that we're confident of the usability, reliability, and scalability of our platform.
 

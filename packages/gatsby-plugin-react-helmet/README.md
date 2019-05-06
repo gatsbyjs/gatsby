@@ -31,6 +31,14 @@ If you're using `gatsby-plugin-offline`, you might notice that when opening a li
 <Helmet title="foo bar" defer={false} />
 ```
 
+## Compatibility with React 16.8 useEffect hook
+
+If you are using this plugin with React hooks, you may notice some errors like `maximum call stack size exceeded`. To ensure everything is running smoothly when using these technologies together, make sure to validate the following:
+
+- You have updated to the latest version of `gatsby-plugin-react-helmet`
+- You are using version 6.0.0-beta or later of `react-helmet`
+- You are importing React Helmet using `import { Helmet } from 'react-helmet'` rather than the old `import Helmet from 'react-helmet'`
+
 ## Examples
 
 - [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/site-metadata.js)

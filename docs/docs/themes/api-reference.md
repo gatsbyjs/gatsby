@@ -98,7 +98,7 @@ This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
 
 You will need to install the package:
 
-```sh
+```shell
 npm install --save gatsby-plugin-compile-es6-packages
 ```
 
@@ -118,6 +118,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-compile-es6-packages",
       options: {
+        // replace with the name of your theme
+        // highlight-next-line
         modules: ["gatsby-theme-developer"],
       },
     },

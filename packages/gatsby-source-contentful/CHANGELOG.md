@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.55](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.54...gatsby-source-contentful@2.0.55) (2019-05-03)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.54](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.53...gatsby-source-contentful@2.0.54) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.53](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.52...gatsby-source-contentful@2.0.53) (2019-04-24)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.52](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.51...gatsby-source-contentful@2.0.52) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.51](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.50...gatsby-source-contentful@2.0.51) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.50](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.49...gatsby-source-contentful@2.0.50) (2019-04-17)
+
+### Features
+
+- **gatsby-source-contentful:** add locale filter ([#12939](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/12939)) ([6421c5b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/6421c5b))
+
+## [2.0.49](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.48...gatsby-source-contentful@2.0.49) (2019-04-15)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** add missing "face" crop focus option ([#13364](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/13364)) ([68340bf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/68340bf))
+
+## [2.0.48](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.47...gatsby-source-contentful@2.0.48) (2019-04-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.47](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.46...gatsby-source-contentful@2.0.47) (2019-04-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.46](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.45...gatsby-source-contentful@2.0.46) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.0.45](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.44...gatsby-source-contentful@2.0.45) (2019-03-27)
 
 **Note:** Version bump only for package gatsby-source-contentful

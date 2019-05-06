@@ -3,6 +3,10 @@ const {
   defaultOptions: { serialize },
 } = require(`../internals`)
 
+beforeEach(() => {
+  global.__PATH_PREFIX__ = ``
+})
+
 describe(`results using default settings`, () => {
   const generateQueryResultsMock = (
     { siteUrl } = { siteUrl: `http://dummy.url` }
@@ -37,6 +41,10 @@ describe(`results using default settings`, () => {
   }
 
   const runTests = (pathPrefix = ``) => {
+    beforeEach(() => {
+      global.__PATH_PREFIX__ = pathPrefix
+    })
+
     it(`prepares all urls correctly`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
       const queryRecords = await runQuery(graphql, ``, [], pathPrefix)
@@ -68,6 +76,20 @@ describe(`results using default settings`, () => {
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
+    })
+
+    it(`should fail when siteUrl is not set`, async () => {
+      const graphql = () =>
+        Promise.resolve(generateQueryResultsMock({ siteUrl: null }))
+      expect.assertions(1)
+
+      try {
+        await runQuery(graphql, ``, [], pathPrefix)
+      } catch (err) {
+        expect(err.message).toEqual(
+          expect.stringContaining(`SiteMetaData 'siteUrl' property is required`)
+        )
+      }
     })
   }
 

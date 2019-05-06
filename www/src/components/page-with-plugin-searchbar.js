@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import { colors, breakpoints, dimensions } from "../utils/presets"
+import { colors, mediaQueries, sizes } from "../utils/presets"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
@@ -33,27 +33,27 @@ const widthLarge = rhythm(16)
 
 const styles = {
   sidebar: {
-    height: `calc(100vh - ${dimensions.headerHeight})`,
+    height: `calc(100vh - ${sizes.headerHeight})`,
     width: `100%`,
     zIndex: 1,
-    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight} - 1px)`,
-    [breakpoints.md]: {
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
+    [mediaQueries.md]: {
       display: `block`,
       width: widthDefault,
       position: `fixed`,
       background: colors.white,
       borderRight: `1px solid ${colors.gray.border}`,
     },
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       width: widthLarge,
     },
   },
   content: {
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       display: `block`,
       paddingLeft: widthDefault,
     },
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       paddingLeft: widthLarge,
     },
   },

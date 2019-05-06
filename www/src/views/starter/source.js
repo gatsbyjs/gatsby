@@ -1,5 +1,5 @@
 import React from "react"
-import { colors, space, breakpoints, fonts } from "../../utils/presets"
+import { colors, space, mediaQueries, fonts } from "../../utils/presets"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
@@ -11,10 +11,10 @@ const Source = ({ startersYaml, repoUrl }) => (
       borderTop: `1px solid ${colors.ui.light}`,
       fontFamily: fonts.header,
       margin: `0 ${space[6]}`,
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         borderTop: 0,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         margin: `0 ${space[8]}`,
       },
     }}
@@ -59,7 +59,7 @@ const Source = ({ startersYaml, repoUrl }) => (
     <div
       css={{
         display: `none`,
-        [breakpoints.lg]: {
+        [mediaQueries.lg]: {
           padding: 20,
           paddingLeft: 0,
           flex: 1,

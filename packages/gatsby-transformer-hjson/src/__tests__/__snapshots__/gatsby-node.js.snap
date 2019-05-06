@@ -9,7 +9,7 @@ Array [
       "funny": "yup",
       "id": "foo",
       "internal": Object {
-        "contentDigest": "8838e569ae02d98806532310fb2a577a",
+        "contentDigest": "contentDigest",
         "type": "FooHJson",
       },
       "parent": "whatever",
@@ -28,7 +28,7 @@ Array [
         "funny": "yup",
         "id": "foo",
         "internal": Object {
-          "contentDigest": "8838e569ae02d98806532310fb2a577a",
+          "contentDigest": "contentDigest",
           "type": "FooHJson",
         },
         "parent": "whatever",
@@ -64,7 +64,7 @@ Array [
       "funny": "yup",
       "id": "foo",
       "internal": Object {
-        "contentDigest": "8838e569ae02d98806532310fb2a577a",
+        "contentDigest": "contentDigest",
         "type": "NodeNameHJson",
       },
       "parent": "whatever",
@@ -77,7 +77,7 @@ Array [
       "funny": "nope",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+        "contentDigest": "contentDigest",
         "type": "NodeNameHJson",
       },
       "parent": "whatever",
@@ -96,7 +96,7 @@ Array [
         "funny": "yup",
         "id": "foo",
         "internal": Object {
-          "contentDigest": "8838e569ae02d98806532310fb2a577a",
+          "contentDigest": "contentDigest",
           "type": "NodeNameHJson",
         },
         "parent": "whatever",
@@ -133,7 +133,7 @@ Array [
         "funny": "nope",
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+          "contentDigest": "contentDigest",
           "type": "NodeNameHJson",
         },
         "parent": "whatever",

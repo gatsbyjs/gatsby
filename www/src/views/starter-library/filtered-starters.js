@@ -9,8 +9,8 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
-  dimensions,
+  mediaQueries,
+  sizes,
   fonts,
 } from "../../utils/presets"
 
@@ -27,6 +27,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
 
@@ -166,8 +167,8 @@ export default class FilteredStarterLibrary extends Component {
             cssOverrides={{
               height: `6rem`,
               paddingTop: `${space[6]}`,
-              [breakpoints.sm]: {
-                height: dimensions.headerHeight,
+              [mediaQueries.sm]: {
+                height: sizes.headerHeight,
                 paddingTop: 0,
               },
             }}
@@ -186,7 +187,7 @@ export default class FilteredStarterLibrary extends Component {
                 justifyContent: `space-between`,
                 marginBottom: space[2],
                 width: `100%`,
-                [breakpoints.sm]: {
+                [mediaQueries.sm]: {
                   justifyContent: `flex-end`,
                   marginBottom: 0,
                   width: `50%`,
@@ -197,7 +198,7 @@ export default class FilteredStarterLibrary extends Component {
               <label
                 css={{
                   display: `none`,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     border: 0,
                     borderRadius: radii[2],
                     color: colors.gatsby,
@@ -269,6 +270,7 @@ export default class FilteredStarterLibrary extends Component {
               Load More
             </Button>
           )}
+          <FooterLinks />
         </ContentContainer>
       </section>
     )

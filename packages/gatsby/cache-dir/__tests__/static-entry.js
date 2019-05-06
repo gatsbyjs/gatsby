@@ -1,7 +1,15 @@
 import React from "react"
+import fs from "fs"
+
 import DevelopStaticEntry from "../develop-static-entry"
 
-jest.mock(`fs`)
+jest.mock(`fs`, () => {
+  const fs = jest.requireActual(`fs`)
+  return {
+    ...fs,
+    readFileSync: jest.fn(),
+  }
+})
 jest.mock(`gatsby/package.json`, () => {
   return {
     version: `2.0.0`,
@@ -50,10 +58,11 @@ const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
 }
 
-require(`fs`).__setMockFiles(MOCK_FILE_INFO)
-
-// Needs to be imported after __setMockFiles is called, and imports get hoisted.
-const StaticEntry = require(`../static-entry`).default
+let StaticEntry
+beforeEach(() => {
+  fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
+  StaticEntry = require(`../static-entry`).default
+})
 
 const reverseHeadersPlugin = {
   plugin: {
@@ -175,6 +184,7 @@ describe(`develop-static-entry`, () => {
 describe(`static-entry sanity checks`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
   })
 
   const methodsToCheck = [
@@ -228,6 +238,7 @@ describe(`static-entry sanity checks`, () => {
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {

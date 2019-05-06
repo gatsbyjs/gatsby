@@ -3,8 +3,8 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -28,7 +28,7 @@ const superHeader = () => (
           },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: scale[0],
+          fontSize: fontSizes[0],
           lineHeight: lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,
@@ -44,14 +44,14 @@ const superHeader = () => (
           "&:last-child": {
             borderTopRightRadius: radii[2],
           },
-          [breakpoints.xs]: {
+          [mediaQueries.xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [breakpoints.md]: {
+          [mediaQueries.md]: {
             width: 150,
           },
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             width: 175,
           },
         }}

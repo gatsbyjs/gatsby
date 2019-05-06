@@ -1,4 +1,3 @@
-/*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "@reach/router"
@@ -8,7 +7,16 @@ import { parsePath } from "./parse-path"
 export { parsePath }
 
 export function withPrefix(path) {
-  return normalizePath(`${__PATH_PREFIX__}/${path}`)
+  return normalizePath(
+    [
+      typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
+      path,
+    ].join(`/`)
+  )
+}
+
+export function withAssetPrefix(path) {
+  return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
 function normalizePath(path) {
