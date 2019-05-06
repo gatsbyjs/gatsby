@@ -5781,3 +5781,14 @@
     - Loans
   built_by: Lendo developers
   featured: false
+- title: Visual Cloud FX
+  url: https://visualcloudfx.com
+  main_url: https://visualcloudfx.com
+  source_url: https://github.com/jjcav84/visualcloudfx
+  description: >
+    Basic static site built with MDBootstrap, React, and Gatsby
+  categories:
+    - IT Consulting Business
+  built_by: Jacob Cavazos
+  built_by_url: https://jacobcavazos.com
+  featured: false
