@@ -1,4 +1,4 @@
-/* global Cypress, cy */
+/* global cy */
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(min)
