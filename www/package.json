@@ -69,7 +69,7 @@
     "react-helmet": "^5.2.0",
     "react-highcharts": "^16.0.2",
     "react-icons": "^2.2.7",
-    "react-instantsearch": "^4.5.1",
+    "react-instantsearch": "^5.5.0",
     "react-modal": "^3.4.4",
     "react-typography": "^1.0.0-alpha.4",
     "rehype-react": "^3.0.3",

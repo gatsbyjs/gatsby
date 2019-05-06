@@ -73,7 +73,6 @@ const _options = {
       // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        borderRadius: `${radii[1]}px`,
         position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
@@ -189,7 +188,6 @@ const _options = {
       },
       ".gatsby-highlight pre::-webkit-scrollbar-track": {
         background: colors.code.border,
-        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
@@ -258,20 +256,20 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        padding: `${rhythm(space[6])} ${rhythm(space[6])} ${rhythm(space[3])}`,
-        fontSize: `74%`,
+        padding: `${rhythm(space[5])} ${rhythm(space[6])} ${rhythm(space[4])}`,
+        fontSize: fontSizes[0],
       },
-      "@media (max-width:634px)": {
-        ".gatsby-highlight, .gatsby-code-title, .gatsby-resp-image-link": {
-          borderRadius: 0,
-          borderLeft: 0,
-          borderRight: 0,
-        },
-      },
-      [`${mediaQueries.md} and (max-width:980px)`]: {
-        ".gatsby-highlight, .gatsby-code-title": {
+      [mediaQueries.md]: {
+        ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
+          borderRadius: `${radii[2]}px`,
+        },
+        ".gatsby-code-title": {
+          borderRadius: `${radii[2]}px ${radii[2]}px 0 0`,
+        },
+        ".gatsby-code-title + .gatsby-highlight": {
+          borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         },
       },
       video: {
@@ -286,32 +284,8 @@ const _options = {
       },
       [mediaQueries.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
-          marginLeft: rhythm(-space[7]),
-          marginRight: rhythm(-space[7]),
-        },
-        ".gatsby-highlight pre": {
-          padding: `${rhythm(space[7])} 0`,
-          marginBottom: rhythm(space[7]),
-        },
-        ".gatsby-highlight pre code": {
-          padding: `0 ${rhythm(space[7])}`,
-        },
-        ".gatsby-highlight-code-line": {
-          marginRight: rhythm(-space[7]),
-          marginLeft: rhythm(-space[7]),
-          paddingRight: rhythm(space[7]),
-          paddingLeft: rhythm(space[6]),
-          borderLeftWidth: rhythm(space[2]),
-        },
-        ".gatsby-code-title": {
-          marginRight: rhythm(-space[7]),
-          marginLeft: rhythm(-space[7]),
-          padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            space[3]
-          )}`,
-        },
-        ".gatsby-highlight pre[class*='language-']::before": {
-          right: rhythm(space[7]),
+          marginLeft: rhythm(-space[6]),
+          marginRight: rhythm(-space[6]),
         },
       },
       [mediaQueries.xxl]: {

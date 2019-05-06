@@ -20,14 +20,19 @@ const IndexRoute = props => (
           Gatsby Community Events
         </h1>
         <p>
-          These events feature Gatsby team members and people from the Gatsby
-          community.
+          Interested in connecting with the Gatsby community in person? Take a
+          look at the events below to see community organized Gatsby events,
+          places the Gatsby team members are speaking, and conferences that
+          Gatsby is sponsoring. We hope to see you at these events soon!
         </p>
         <p>
-          Want to see your event featured here?{` `}
-          <a href="https://airtable.com/shrpwc99yogJm9sfI">
-            Submit your event!
+          Want to see your event featured here?
+          {` `}
+          <a href="https://www.gatsbyjs.org/contributing/organize-a-gatsby-event/">
+            Learn more about submitting your event for Gatsby support
           </a>
+          {`. `}
+          (Support can include free swag, $ for food, and more!)
         </p>
         <Events />
         <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />

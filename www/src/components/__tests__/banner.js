@@ -6,7 +6,7 @@ import Banner from "../banner"
 test(`it renders an external link`, () => {
   const { getByText } = render(<Banner />)
 
-  const link = getByText(`Register now`)
+  const link = getByText(`Watch now`)
 
   expect(link.getAttribute(`href`)).toContain(`https://`)
 })

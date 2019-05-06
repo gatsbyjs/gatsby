@@ -21,11 +21,11 @@ Navigate to the directory
 
 Create a _package.json_ file
 
-`yarn init`
+`yarn init -y`
 
 Tidy up your _package.json_ file and create workspaces which includes the project name, site, and your packages. Both of these directories will include their own _package.json_ files.
 
-```json
+```json:title=package.json
 {
   "name": "gatsby-site",
   "private": true,
@@ -36,50 +36,33 @@ Tidy up your _package.json_ file and create workspaces which includes the projec
 
 Next, you want to create your _site_ directory and your _packages_ directory within your _gatsby-theme_ project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it _theme_. Then you will want to `yarn init` the _theme_ directory and the _site_ directory.
 
-```
+```sh
 mkdir site
 mkdir packages
 cd packages
 mkdir theme
 cd theme
-yarn init
+yarn init -y
+touch index.js
 cd ../../site/
-yarn init
+yarn init -y
 ```
 
-After using `yarn init` you will be asked a few questions. The main thing you will want to pay attention to is the entry point (index.js). For the _theme_ directory, you can leave the entry point as _index.js_ (just make sure you have an _index.js_ file) and for the _site_ directory, you can make entry point _gatsby-config.js_. Next, you will want to go into your _site_ directory and do `yarn workspace site add gatsby`.
+The `-y` in `yarn init` automatically adds defaults to your `package.json`. If you opt to run `yarn init` without `-y` you will be asked a few questions. The main thing you will want to pay attention to is the entry point (index.js). For the _theme_ directory, you can leave the entry point as _index.js_ (just make sure you have an _index.js_ file).
 
-Hooray! Gatsby should now be added to your site directory if you look in your _package.json_ file. Adjustments you make to your file is adding "scripts" and adding the name of your Gatsby theme, in this case, _theme_, to your dependencies.
-
-```json
+```json:title=packages/theme/package.json
 {
   "name": "theme",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Practicing making a Gatsby theme",
   "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "gatsby": "^2.0.118",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
-  },
-  "peerDependencies": {
-    "gatsby": "^2.0.118",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
-  },
-  "dependencies": {
-    "@mdx-js/mdx": "^0.17.0",
-    "@mdx-js/tag": "^0.17.0",
-    "gatsby-mdx": "^0.3.6",
-    "gatsby-plugin-page-creator": "^2.0.6"
-  }
+  "license": "MIT"
 }
 ```
 
 You will want to add Gatsby, React, and ReactDOM to as dev dependencies for _site_.
 
-`yarn workspace site add gatsby react react-dom -D`
+`yarn workspace site add gatsby react react-dom`
 
 Then you will navigate out of the _site_ directory and add Gatsby, React, and ReactDOM as dev dependencies for _theme_.
 
@@ -87,7 +70,7 @@ Then you will navigate out of the _site_ directory and add Gatsby, React, and Re
 
 You will want to make Gatsby, React, and ReactDom peer dependencies in the _theme_ directory.
 
-```json
+```json:title=packages/theme/package.json
  "devDependencies": {
     "gatsby": "^2.0.118",
     "react": "^16.8.1",
@@ -112,7 +95,7 @@ In your _theme_ directory, add src/pages/index.mdx
 
 Then you need to add gatsby-mdx and MDX as dependencies.
 
-`yarn workspace theme add gatsby-mdx @mdx-js/mdx @mdx-js/tag`
+`yarn workspace theme add gatsby-mdx @mdx-js/mdx @mdx-js/react`
 
 Next, you will want to add gatsby-plugin-page-creator
 
@@ -126,37 +109,70 @@ Read more about the page-creator plugin [here.](/packages/gatsby-plugin-page-cre
 
 Next, you will want to create your _gatsby-config.js_ file under your _theme_ directory. Make sure to include 'gatsby-mdx' and 'gatsby-plugin-page-creator.'
 
-```javascript:title=gatsby-config.js
+```javascript:title=packages/theme/gatsby-config.js
+const path = require(`path`)
+
 module.exports = {
   plugins: [
     {
       resolve: `gatsby-mdx`,
-      options: {
-        defaultLayouts: {
-          default: require.resolve("./src/components/layout.js"),
-        },
-      },
+      options: {},
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `${__dirname}/src/pages`,
+        path: path.join(__dirname, `src/pages`),
       },
     },
   ],
 }
 ```
 
+Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ directory.
+
+```javascript:title=site/gatsby-config.js
+module.exports = {
+  __experimentalThemes: [`theme`],
+}
+```
+
+### Setting up Site `package.json`
+
+You will need to add `gatsby` CLI scripts and specify your newly created `theme` as a dependency.
+
+```json:title=site/package.json
+{
+  "name": "site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    // highlight-start
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+    // highlight-end
+  },
+  "dependencies": {
+    "gatsby": "^2.3.34",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    // highlight-start
+    "theme": "*"
+    // highlight-end
+  }
+}
+```
+
 Now, you can make sure _site_ is linked to _theme_.
 
-```
+```sh
 yarn
 yarn workspaces info
 ```
 
 Your workspace info should look similar to this:
 
-```shell
+```json
 {
   "site": {
     "location": "site",
@@ -171,19 +187,28 @@ Your workspace info should look similar to this:
 }
 ```
 
-Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ directory.
+### Run the Site
 
-```javascript:title=gatsby-config.js
-module.exports = {
-  __experimentalThemes: ["theme"],
-}
+Now that we've set up the site's _package.json_ we can run the workspace:
+
+```sh
+yarn workspace site develop
 ```
 
-While you're still in the _site_ directory, you are going to create an _index.mdx_ file in the pages folder.
+### Customizing the Index Page
+
+You can override the index page from your theme by creating one in site. To do so, change directory into
+the _site_ directory, and create an _index.mdx_ file in the pages folder.
 
 `site/src/pages/index.mdx`
 
 Your website content goes in _index.mdx_.
+
+Now, rerun the development server and see your new content:
+
+```sh
+yarn workspace site develop
+```
 
 ## Styling Layout and Components
 
@@ -193,13 +218,13 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 
 Inside of your _layout.js_ file, you can add your styling.
 
-```javascript:title=layout.js
+```javascript:title=packages/theme/src/components/layout.js
 export default ({ children }) => (
   <div
     style={{
-      //Layout styling //
-      margin: "10%",
-      backgroundColor: "#000000",
+      // Layout styling
+      margin: `10%`,
+      backgroundColor: `#fafafa`,
     }}
   >
     {children}
@@ -209,21 +234,25 @@ export default ({ children }) => (
 
 To make sure your _layout.js_ file is connected to your theme you will navigate to your _gatsby-config.js_ file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
 
-```javascript:title=gatsby-config.js
+```javascript:title=packages/theme/gatsby-config.js
+const path = require(`path`)
+
 module.exports = {
   plugins: [
     {
       resolve: `gatsby-mdx`,
       options: {
+        // highlight-start
         defaultLayouts: {
-          default: require.resolve("./src/components/layout.js"),
+          default: require.resolve(`./src/components/layout.js`),
         },
+        // highlight-end
       },
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `${__dirname}/src/pages`,
+        path: path.join(__dirname, `src/pages`),
       },
     },
   ],
@@ -248,13 +277,7 @@ export default ({ children }) => (
 )
 ```
 
-To import your styled components, go to _index.js_
-
-```js:title=packages/theme/index.js
-packages / theme / index.js
-```
-
-You will then export your component.
+To import your styled components, go to _index.js_ and export your component.
 
 ```javascript:title=packages/theme/index.js
 export { default as Header } from "./src/components/header"

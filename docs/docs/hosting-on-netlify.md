@@ -10,7 +10,7 @@ Their free tier includes unlimited personal and commercial projects, HTTPS, cont
 
 ## Prerequisites
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs/quick-start) , then come back.
 
 ### Hosting Setup
 
@@ -55,6 +55,7 @@ Now, login to Netlify and we will see a `New site from git` button at the top ri
 - Branch to deploy: We can specify the branch, when we push to that particular branch, then only Netlify will build and deploy our site. The default is `master`.
 - Build Command: We can specify the command we want Netlify to run when we push to above branch. The default is `npm run build`.
 - Publish directory: We can specify which folder should Netlify use to host our website. eg. public, dist, build. The default is `public`.
+- Advanced build settings: If our site needs enviromnent variables to build, we can spectify them by clicking on `Show advanced` and then the `New Variable` button.
 
 Click on `Deploy site` button and Netlify will start to build and deploy process we specified. In a few moments, it will give us our site URL like `random-name.netlify.com`. We can go to the `Deploys` tab and see what is actually happening.
 
