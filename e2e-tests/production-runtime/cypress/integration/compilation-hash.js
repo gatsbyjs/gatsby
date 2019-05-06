@@ -1,3 +1,5 @@
+/* global Cypress, cy */
+
 const getRandomInt = (min, max) => {
   min = Math.ceil(min)
   max = Math.floor(max)
@@ -11,6 +13,10 @@ const createMockCompilationHash = () =>
     .join(``)
 
 describe(`Webpack Compilation Hash tests`, () => {
+  it(`should render properly`, () => {
+    cy.visit(`/`).waitForRouteChange()
+  })
+
   // This covers the case where a user loads a gatsby site and then
   // the site is changed resulting in a webpack recompile and a
   // redeploy. This could result in a mismatch between the page-data
@@ -29,8 +35,6 @@ describe(`Webpack Compilation Hash tests`, () => {
   // running. See ../plugins/compilation-hash.js for the
   // implementation
   it(`should reload page if build occurs in background`, () => {
-    cy.visit(`/`).waitForRouteChange()
-
     cy.window().then(window => {
       const oldHash = window.___webpackCompilationHash
       expect(oldHash).to.not.eq(undefined)
@@ -41,14 +45,10 @@ describe(`Webpack Compilation Hash tests`, () => {
       cy.task(`overwriteWebpackCompilationHash`, mockHash).then(() => {
         cy.getTestElement(`page2`).click()
         cy.waitForAPIorTimeout(`onRouteUpdate`, { timeout: 3000 })
-          .location(`pathname`)
-          .should(`equal`, `/page-2/`)
 
         // Navigate into a non-prefetched page
         cy.getTestElement(`deep-link-page`).click()
         cy.waitForAPIorTimeout(`onRouteUpdate`, { timeout: 3000 })
-          .location(`pathname`)
-          .should(`equal`, `/deep-link-page/`)
 
         // If the window compilation hash has changed, we know the
         // page was refreshed

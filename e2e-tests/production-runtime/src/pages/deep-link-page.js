@@ -5,11 +5,11 @@ import InstrumentPage from '../utils/instrument-page'
 
 const DeepLinkPage = () => (
   <Layout>
-    <h1>
-      Hi from a deeply linked page (need to click twice to get here from index).
+    <h1>Hi from a deeply linked page</h1>
+    <p>
       Used to navigate to a non prefetched page by
       integrations/compilation-hash.js tests
-    </h1>
+    </p>
   </Layout>
 )
 

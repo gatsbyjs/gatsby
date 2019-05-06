@@ -89,6 +89,17 @@ const navigate = (to, options = {}) => {
         pageResources.page.webpackCompilationHash !==
         window.___webpackCompilationHash
       ) {
+        // Purge plugin-offline cache
+        if (
+          `serviceWorker` in navigator &&
+          navigator.serviceWorker.controller !== null &&
+          navigator.serviceWorker.controller.state === `activated`
+        ) {
+          navigator.serviceWorker.controller.postMessage({
+            gatsbyApi: `resetWhitelist`,
+          })
+        }
+
         console.log(`Site has changed on server. Reloading browser`)
         window.location = pathname
       }
