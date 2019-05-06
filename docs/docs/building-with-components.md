@@ -54,16 +54,14 @@ otherwise your build will fail.
 Example:
 
 ```jsx:title=src/pages/about.jsx
-import React, { Component } from "react"
+import React from "react"
 
-class AboutPage extends Component {
-  render() {
-    return (
-      <div className="about-container">
-        <p>About me.</p>
-      </div>
-    )
-  }
+function AboutPage(props) {
+  return (
+    <div className="about-container">
+      <p>About me.</p>
+    </div>
+  )
 }
 
 export default AboutPage
@@ -77,7 +75,7 @@ pages are React components but very often these components are just wrappers aro
 `src/templates/post.jsx` is an example of a page component. It queries GraphQL
 for markdown data and then renders the page using this data.
 
-See [part four](/tutorial/part-four/) of the tutorial for a detailed
+See [part seven](/tutorial/part-seven/) of the tutorial for a detailed
 introduction to programmatically creating pages.
 
 Example:
@@ -86,17 +84,14 @@ Example:
 import React from "react"
 import { graphql } from "gatsby"
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-
-    return (
-      <div>
-        <h1>{post.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      </div>
-    )
-  }
+function BlogPostTemplate(props) {
+  const post = props.data.markdownRemark
+  return (
+    <div>
+      <h1>{post.frontmatter.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+    </div>
+  )
 }
 
 export default BlogPostTemplate
@@ -140,39 +135,31 @@ if (process.env.NODE_ENV === "production") {
   }
 }
 
-export default class HTML extends React.Component {
-  render() {
-    let css
-    if (process.env.NODE_ENV === "production") {
-      css = (
-        <style
-          id="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: inlinedStyles }}
-        />
-      )
-    }
-    return (
-      <html lang="en">
-        <head>
-          <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          {this.props.headComponents}
-          <link rel="shortcut icon" href={favicon} />
-          {css}
-        </head>
-        <body>
-          <div
-            id="___gatsby"
-            dangerouslySetInnerHTML={{ __html: this.props.body }}
-          />
-          {this.props.postBodyComponents}
-        </body>
-      </html>
+function HTML(props) {
+  let css
+  if (process.env.NODE_ENV === "production") {
+    css = (
+      <style
+        id="gatsby-inlined-css"
+        dangerouslySetInnerHTML={{ __html: inlinedStyles }}
+      />
     )
   }
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {props.headComponents}
+        <link rel="shortcut icon" href={favicon} />
+        {css}
+      </head>
+      <body>
+        <div id="___gatsby" dangerouslySetInnerHTML={{ __html: props.body }} />
+        {props.postBodyComponents}
+      </body>
+    </html>
+  )
 }
 ```
 

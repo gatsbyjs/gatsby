@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import cxs from "cxs"
 
 // Create a Title component that'll render an <h1> tag with some styles

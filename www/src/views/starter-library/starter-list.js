@@ -3,13 +3,12 @@ import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
-import { options, rhythm } from "../../utils/typography"
-import { colors } from "../../utils/presets"
+import { colors, space, fontSizes } from "../../utils/presets"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "../../assets/v2icon.svg"
-import get from "lodash/get"
+import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
@@ -18,8 +17,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       urlState.s !== ``
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `matching` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `matching` // if no search term or single dependency
     return (
       <div
         css={{
@@ -36,7 +35,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Maybe you should write one and
               {` `}
-              <Link to="/docs/submit-to-starter-library/">submit it</Link>?
+              <Link to="/contributing/submit-to-starter-library/">
+                submit it
+              </Link>
+              ?
             </small>
           </div>
         </h1>
@@ -48,7 +50,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
     return (
       <div
         css={{
-          fontFamily: options.headerFontFamily.join(`,`),
           ...styles.showcaseList,
         }}
       >
@@ -62,7 +63,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             owner,
             slug,
             stars,
-            stub,
           } = starter.fields.starterShowcase
           const { url: demoUrl } = starter
 
@@ -78,7 +78,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 <ThumbnailLink
                   slug={`/starters${slug}`}
                   image={starter.childScreenshot}
-                  title={starter.name}
+                  title={`${owner}/${name}`}
                 />
                 <div
                   css={{
@@ -94,7 +94,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         <img
                           src={V2Icon}
                           alt="Gatsby v2"
-                          css={{ marginBottom: 0, marginRight: rhythm(2 / 8) }}
+                          css={{
+                            marginBottom: 0,
+                            marginRight: space[2],
+                          }}
                         />
                       )}
                       <div css={{ display: `inline-block` }}>
@@ -109,22 +112,18 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                     </span>
                   </div>
                   <div>
-                    <Link to={`/starters/${stub}`}>
-                      <h5 css={{ margin: 0 }}>
+                    <Link to={`/starters${slug}`}>
+                      <h5 css={{ margin: 0, fontSize: fontSizes[2] }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
-                    {/* {isGatsbyVersionWarning ?
-                        <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
-                        <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                      } */}
                   </div>
                   <div
                     css={{
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: rhythm(1 / 8),
+                      marginBottom: space[1],
                     }}
                   >
                     {description || `No description`}
@@ -175,7 +174,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 
 export default StartersList
 
-function sortingFunction(sortRecent) {
+function sortingFunction() {
   return function({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)

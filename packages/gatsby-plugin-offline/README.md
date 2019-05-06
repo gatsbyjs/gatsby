@@ -68,7 +68,14 @@ const options = {
 
 If you want to remove `gatsby-plugin-offline` from your site at a later point,
 substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
-to safely remove the service worker:
+to safely remove the service worker. First, install the new package:
+
+```bash
+npm install gatsby-plugin-remove-serviceworker
+npm uninstall gatsby-plugin-offline
+```
+
+Then, update your `gatsby-config.js`:
 
 ```diff:title=gatsby-config.js
  plugins: [
@@ -79,3 +86,17 @@ to safely remove the service worker:
 
 This will ensure that the worker is properly unregistered, instead of leaving an
 outdated version registered in users' browsers.
+
+## Notes
+
+### Empty View Source and SEO
+
+Gatsby offers great SEO capabilities and that is no different with `gatsby-plugin-offline`. However, you shouldn't think that Gatsby doesn't serve HTML tags anymore when looking at your source code in the browser (with `Right click` => `View source`). `View source` doesn't represent the actual HTML data since `gatsby-plugin-offline` registers and loads a service worker that will cache and handle this differently. Your site is loaded from the service worker, not from its actual source (check your `Network` tab in the DevTools for that).
+
+To see the HTML data that crawlers will receive, run this in your terminal:
+
+```bash
+curl https://www.yourdomain.tld
+```
+
+Alternatively you can have a look at the `/public/index.html` file in your project folder.

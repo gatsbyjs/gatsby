@@ -3,12 +3,14 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
+const getPublicPath = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath } = require(`./path`)
+const { withBasePath, withTrailingSlash } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -20,12 +22,7 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (
-  program,
-  directory,
-  suppliedStage,
-  webpackPort = 1500
-) => {
+module.exports = async (program, directory, suppliedStage) => {
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -35,18 +32,28 @@ module.exports = async (
   const stage = suppliedStage
   const { rules, loaders, plugins } = await createUtils({ stage, program })
 
+  const { assetPrefix, pathPrefix } = store.getState().config
+
+  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
-    const envFile = path.join(process.cwd(), `./.env.${env}`)
+    // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
+    // this variable is used inside webpack
+    const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+    // config env is depednant on the env that it's run, this can be anything from staging-production
+    // this allows you to set use different .env environments or conditions in gatsby files
+    const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
+    const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
     let parsed = {}
     try {
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
     } catch (err) {
       if (err.code !== `ENOENT`) {
-        report.error(`There was a problem processing the .env file`, err)
+        report.error(
+          `There was a problem processing the .env file (${envFile})`,
+          err
+        )
       }
     }
 
@@ -63,9 +70,10 @@ module.exports = async (
     }, {})
 
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-    envObject.NODE_ENV = JSON.stringify(env)
+    envObject.NODE_ENV = JSON.stringify(nodeEnv)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
+    envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
@@ -90,7 +98,7 @@ module.exports = async (
       if (pubPath.substr(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
-        hmrBasePath = `${pubPath}/`
+        hmrBasePath = withTrailingSlash(pubPath)
       }
     }
 
@@ -107,11 +115,7 @@ module.exports = async (
           // Add /* filename */ comments to generated require()s in the output.
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
-          publicPath:
-            process.env.GATSBY_WEBPACK_PUBLICPATH ||
-            `${program.ssl ? `https` : `http`}://${
-              program.host
-            }:${webpackPort}/`,
+          publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
@@ -129,18 +133,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath: withTrailingSlash(publicPath),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -152,6 +152,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
+            `event-source-polyfill`,
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -183,8 +184,10 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
-        __PATH_PREFIX__: JSON.stringify(
-          program.prefixPaths ? store.getState().config.pathPrefix : ``
+        __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
+        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
+        __ASSET_PREFIX__: JSON.stringify(
+          program.prefixPaths ? assetPrefix : ``
         ),
       }),
     ]
@@ -205,53 +208,7 @@ module.exports = async (
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
-          {
-            apply: function(compiler) {
-              compiler.hooks.done.tapAsync(
-                `gatsby-webpack-stats-extractor`,
-                (stats, done) => {
-                  let assets = {}
-                  let assetsMap = {}
-                  for (let chunkGroup of stats.compilation.chunkGroups) {
-                    if (chunkGroup.name) {
-                      let files = []
-                      for (let chunk of chunkGroup.chunks) {
-                        files.push(...chunk.files)
-                      }
-                      assets[chunkGroup.name] = files.filter(
-                        f => f.slice(-4) !== `.map`
-                      )
-                      assetsMap[chunkGroup.name] = files
-                        .filter(
-                          f =>
-                            f.slice(-4) !== `.map` &&
-                            f.slice(0, chunkGroup.name.length) ===
-                              chunkGroup.name
-                        )
-                        .map(filename => `/${filename}`)
-                    }
-                  }
-
-                  const webpackStats = {
-                    ...stats.toJson({ all: false, chunkGroups: true }),
-                    assetsByChunkName: assets,
-                  }
-
-                  fs.writeFile(
-                    path.join(`public`, `chunk-map.json`),
-                    JSON.stringify(assetsMap),
-                    () => {
-                      fs.writeFile(
-                        path.join(`public`, `webpack.stats.json`),
-                        JSON.stringify(webpackStats),
-                        done
-                      )
-                    }
-                  )
-                }
-              )
-            },
-          },
+          plugins.extractStats(),
         ])
         break
       }
@@ -363,11 +320,6 @@ module.exports = async (
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
-      // Default to using the site's node_modules directory to look for
-      // modules. But also make it possible to install modules within the src
-      // directory if you need to install a specific version of a module for a
-      // part of your site.
-      modules: [directoryPath(path.join(`node_modules`)), `node_modules`],
       alias: {
         gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
         // Using directories for module resolution is mandatory because
@@ -385,6 +337,14 @@ module.exports = async (
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
       },
+      plugins: [
+        // Those two folders are special and contain gatsby-generated files
+        // whose dependencies should be resolved through the `gatsby` package
+        PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
+        PnpWebpackPlugin.bind(directoryPath(`public`), module),
+        // Transparently resolve packages via PnP when needed; noop otherwise
+        PnpWebpackPlugin,
+      ],
     }
   }
 
@@ -403,6 +363,9 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
+      // Bare loaders should always be loaded via the user dependencies (loaders
+      // configured via third-party like gatsby use require.resolve)
+      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 
@@ -444,6 +407,19 @@ module.exports = async (
       },
       splitChunks: {
         name: false,
+        cacheGroups: {
+          // Only create one CSS file to avoid
+          // problems with code-split CSS loading in different orders
+          // causing inconsistent/non-determanistic styling
+          // See https://github.com/gatsbyjs/gatsby/issues/11072
+          styles: {
+            name: `styles`,
+            // This should cover all our types of CSS.
+            test: /\.(css|scss|sass|less|styl)$/,
+            chunks: `all`,
+            enforce: true,
+          },
+        },
       },
       minimizer: [
         // TODO: maybe this option should be noMinimize?

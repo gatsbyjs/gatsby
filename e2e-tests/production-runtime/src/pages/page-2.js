@@ -9,7 +9,18 @@ const SecondPage = () => (
     <h1>Hi from the second page</h1>
     <p>Welcome to page 2</p>
     <pre data-testid="dom-marker">page-2</pre>
-    <Link to="/">Go back to the homepage</Link>
+    <ul>
+      <li>
+        <Link to="/" data-testid="index">
+          Go to Index
+        </Link>
+      </li>
+      <li>
+        <Link to="/page-3/" data-testid="404">
+          To non-existent page
+        </Link>
+      </li>
+    </ul>
   </Layout>
 )
 
