@@ -5781,3 +5781,15 @@
     - Loans
   built_by: Lendo developers
   featured: false
+- title: Matthew Miller (Me4502)
+  url: https://matthewmiller.dev
+  main_url: https://matthewmiller.dev
+  description: >
+    The personal site, blog and portfolio of Matthew Miller (Me4502)
+  categories:
+    - Blog
+    - Programming
+    - Technology
+    - Portfolio
+  built_by: Matthew Miller
+  featured: false
