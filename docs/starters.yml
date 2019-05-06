@@ -2425,3 +2425,13 @@
     - SASS stylesheets to make styling components easy
     - Sample navbar that sticks to the top of the page on scroll
     - Includes react-icons to make adding icons to your app super simple
+- url: https://gatsbystartermdb.netlify.com
+  repo: https://github.com/jjcav84/mdbreact-gatsby-starter
+  description: GatsbyJS starter built with MDBootstrap React free version
+  tags:
+    - Styling:Bootstrap
+  features:
+    - Material Design, Bootstrap, and React
+    - Contact form and Google Map components
+    - Animation
+    - documentation and component library can be found at mdboostrap's website
