@@ -59,7 +59,12 @@ plugins: [
                 language: "superscript",
                 extend: "javascript",
                 definition: {
-                  superscript_keywords: /(superif|superelse)/,
+                  superscript_types: /(SuperType)/
+                }
+                insertBefore: {
+                  function: {
+                    superscript_keywords: /(superif|superelse)/,
+                  }
                 },
               },
             ],
@@ -367,7 +372,12 @@ languageExtensions: [
     language: "superscript",
     extend: "javascript",
     definition: {
-      superscript_keywords: /(superif|superelse)/,
+      superscript_types: /(SuperType)/
+    }
+    insertBefore: {
+      function: {
+        superscript_keywords: /(superif|superelse)/,
+      }
     },
   },
 ]
@@ -375,8 +385,9 @@ languageExtensions: [
 
 'language' - (optional) The name of the new language.
 'extend' - (optional) The language you wish to extend.
-'definition' - (mandatory) This is the Prism language definition. More
-information of the format can be found here:
+'definition' - (optional) This is the Prism language definition.
+'insertBefore' - (optional) Is used to define where in the language definition we want to insert our extension.
+More information of the format can be found here:
 https://prismjs.com/extending.html
 
 One of the parameters 'language' and 'extend' is needed. If only 'language'
@@ -388,6 +399,10 @@ be defined.
 In case a language is extended, note that the definitions will not be merged.
 If the extended language defintion and the given definition contains the same
 token, the original pattern will be overwritten.
+
+One of the parameters 'definition' and 'insertBefore' needs to be defined.
+'insertBefore' needs to be combined with 'definition' or 'extend' (otherwise
+there will not be any language definition tokens to insert before).
 
 In addition to this extension parameters the css also needs to be updated to
 get a style for the new tokens. Prism will wrap the matched tokens with a
