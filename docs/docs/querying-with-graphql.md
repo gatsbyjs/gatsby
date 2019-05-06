@@ -147,13 +147,28 @@ GraphQL enables another unique feature of Gatsby — it lets you control data tr
 
 ### Formatting dates
 
-People often store dates like "2018-01-05" but want to display the date in some other form like "January 5th, 2018". One way of doing this is to load a date-formatting JavaScript library into the browser. Or, with Gatsby's GraphQL layer, you can do the formatting at query-time like:
+People often store dates like "2019-05-04" but want to display the date in some other form like "May 4th, 2019". One way of doing this is to load a date-formatting JavaScript library into the browser. Or, with Gatsby's GraphQL layer, you can do the formatting at query-time like:
 
 ```graphql
 {
-  date(formatString: "MMMM Do, YYYY")
+  date(formatString: "MMMM Do, YYYY") // May 4th, 2019
 }
 ```
+Or maybe add the time:
+
+```graphql
+{
+  date(formatString: "MMMM Do YYYY, h:mm:ss a") // May 4th 2019, 5:00:00 am
+}
+```
+You could even display a machine readible format, which is great for the `<time>` [HTML tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time).
+```graphql
+{
+  date(formatString: "YYYY-MM-DDTHH:mmZ") // 2019-05-04T05:00+00:00
+}
+```
+
+See the full list of formatting options by viewing [the source](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/date.js).
 
 ### Markdown
 
