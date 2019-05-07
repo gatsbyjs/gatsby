@@ -35,7 +35,7 @@ touch gatsby-config.js
 touch gatsby-browser.js
 ```
 
-Next, you'll add a `src` directory and a `pages` directory inside of that. 
+Next, you'll add a `src` directory and a `pages` directory inside your project.
 ```shell
 mkdir src
 cd src
