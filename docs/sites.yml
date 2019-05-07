@@ -16,6 +16,18 @@
     - Beauty
     - Featured
   featured: true
+- title: IDEO
+  url: https://www.ideo.com
+  main_url: https://www.ideo.com/
+  description: >
+    A Global design company committed to creating positive impact.
+  categories:
+    - Agency
+    - Technology
+    - Featured
+    - Consulting
+    - User Experience
+  featured: true
 - title: Airbnb Engineering & Data Science
   description: >
     Creative engineers and data scientists building a world where you can belong
@@ -5757,4 +5769,38 @@
     - Resource
   built_by: Jp Valery
   built_by_url: https://jpvalery.me
+  featured: false
+- title: Lendo Austria
+  url: https://lendo.at
+  main_url: https://lendo.at
+  description: >
+    A Comparsion site for best private loan offer from banks in Austria.
+  categories:
+    - Business
+    - Finance
+    - Loans
+  built_by: Lendo developers
+  featured: false
+- title: Visual Cloud FX
+  url: https://visualcloudfx.com
+  main_url: https://visualcloudfx.com
+  source_url: https://github.com/jjcav84/visualcloudfx
+  description: >
+    Basic static site built with MDBootstrap, React, and Gatsby
+  categories:
+    - Consulting
+    - Portfolio
+  built_by: Jacob Cavazos
+  built_by_url: https://jacobcavazos.com
+- title: Matthew Miller (Me4502)
+  url: https://matthewmiller.dev
+  main_url: https://matthewmiller.dev
+  description: >
+    The personal site, blog and portfolio of Matthew Miller (Me4502)
+  categories:
+    - Blog
+    - Programming
+    - Technology
+    - Portfolio
+  built_by: Matthew Miller
   featured: false

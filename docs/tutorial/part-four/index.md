@@ -317,7 +317,9 @@ export default ({ children }) => {
     `
   )
   // highlight-end
+  // highlight-start
   return (
+    // highlight-end
     <div
       css={css`
         margin: 0 auto;
@@ -347,7 +349,9 @@ export default ({ children }) => {
       </Link>
       {children}
     </div>
+    // highlight-start
   )
+  // highlight-end
 }
 ```
 

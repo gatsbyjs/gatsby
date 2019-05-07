@@ -11,16 +11,12 @@
     "gatsby-plugin-offline": "^2.0.21",
     "gatsby-plugin-react-helmet": "^3.0.5",
     "gatsby-plugin-styled-components": "^3.0.4",
-    "gatsby-plugin-typography": "^2.2.5",
     "lodash": "^4.17.11",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-helmet": "^5.2.0",
-    "react-typography": "^0.16.18",
     "slash": "^2.0.0",
-    "styled-components": "^4.1.3",
-    "typography": "^0.16.18",
-    "typography-breakpoint-constants": "^0.16.18"
+    "styled-components": "^4.1.3"
   },
   "keywords": [
     "gatsby"
