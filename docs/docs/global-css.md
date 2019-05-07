@@ -1,10 +1,10 @@
 ---
-title: Standard styling with global CSS files
+title: Standard styling with CSS files
 ---
 
 Traditionally, websites are styled using global CSS files.
 
-Globally-scoped CSS rules are declared in external `.css` stylesheets, and [CSS specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) determines which styles are applied.
+Globally-scoped CSS rules are declared in external `.css` stylesheets, and [CSS specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) and [the Cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade) determine how styles are applied.
 
 ### Adding global styles with a layout component
 
@@ -76,7 +76,7 @@ cd global-style-tutorial
 npm run develop
 ```
 
-Second, create a css file and define any styles you wish. An arbitrary example:
+Second, create a CSS file and define any styles you wish. An example:
 
 ```css:title=src/styles/global.css
 html {
@@ -108,7 +108,7 @@ You should see your global styles taking effect across your site:
 
 ### Adding classes to components
 
-Since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead.
+Since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead, which will render as the browser-supported `class` attribute in your HTML output.
 
 ```jsx
 <button className="primary">Click me</button>
