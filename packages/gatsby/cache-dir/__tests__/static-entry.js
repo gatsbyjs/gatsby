@@ -36,7 +36,6 @@ const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/page-data/about/page-data.json`]: JSON.stringify({
     componentChunkName: `page-component---src-pages-test-js`,
     path: `/about/`,
-    jsonName: `about.json`,
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
 }

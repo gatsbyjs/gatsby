@@ -354,8 +354,6 @@ const queue = {
   getResourceURLsForPathname: path => {
     const pageData = queue.getPage(path)
     if (pageData) {
-      // Original implementation also concatenated the jsonDataPath
-      // for the page
       return createComponentUrls(pageData.componentChunkName)
     } else {
       return null
