@@ -199,8 +199,8 @@
                   link: /docs/emotion/
                 - title: Styled-Components
                   link: /docs/styled-components/
-            - title: CSS Frameworks and Libraries
-              link: /docs/css-frameworks-and-libraries/
+            - title: CSS Libraries and Frameworks
+              link: /docs/css-libraries-and-frameworks/
               items:
                 - title: Typography.js
                   link: /docs/typography-js/
