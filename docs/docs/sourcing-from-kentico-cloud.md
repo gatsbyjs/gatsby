@@ -39,7 +39,7 @@ Next, install the [Kentico Cloud source plugin](https://github.com/Kentico/gatsb
 npm install --save gatsby-source-kentico-cloud
 ```
 
-Once that's done, you need to add the plugin to `gatsby-config.js` (note this uses the language codename from the Sample Project, which would be `default` in a blank project):
+Once that's done, you need to add the plugin to `gatsby-config.js`:
 
 ```javascript
 module.exports = {
@@ -53,8 +53,9 @@ module.exports = {
           deliveryClientConfig: {
             projectId: `<YourProjectID>` // Fill in your Project ID
           },
+          // Please note that with the Sample Project generated above, `en-US` is the default language for the project and this config. For a blank project, this needs to be `default`.
           languageCodenames: [
-                    `en-US` // Or whatever languages you have installed in your project (Project settings -> Localization)
+                    `en-US` // Or the languages in your project (Project settings -> Localization)
           ]
       }
     },
