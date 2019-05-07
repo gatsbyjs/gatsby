@@ -328,6 +328,7 @@ module.exports = argv => {
 
   try {
     const { version } = require(`../package.json`)
+    cli.version(`version`, version)
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
     // ignore
