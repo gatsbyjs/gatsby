@@ -2439,10 +2439,9 @@
   repo: https://github.com/thomaswangio/gatsby-starter-primer
   description: A Gatsby starter featuring GitHub Primer Design System and React components
   tags:
-    - Primer
-    - Design System
+    - Styling:Primer
+    - Styling:CSS-in-JS
     - SEO
-    - Portfolio
     - Landing Page
   features:
     - Primer React Components
