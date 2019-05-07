@@ -21,7 +21,7 @@ const updateCompilationHashes = (
   Promise.map(pagePaths, pagePath =>
     updateJsonFileField(
       getFilePath({ publicDir }, pagePath),
-      `webpackCompilationhash`,
+      `webpackCompilationHash`,
       webpackCompilationHash
     )
   )
