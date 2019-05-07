@@ -43,7 +43,7 @@ describe(`Webpack Compilation Hash tests`, () => {
 
       // Simulate a new webpack build
       cy.task(`overwriteWebpackCompilationHash`, mockHash).then(() => {
-        cy.getTestElement(`page2`).click()
+        cy.getTestElement(`compilation-hash`).click()
         cy.waitForAPIorTimeout(`onRouteUpdate`, { timeout: 3000 })
 
         // Navigate into a non-prefetched page
