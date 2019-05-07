@@ -14,9 +14,9 @@ Quoting from
 > A **CSS Module** is a CSS file in which all class names and animation names
 > are scoped locally by default.
 
-CSS Modules are very popular as they let you write CSS like normal but with a lot
-more safety. The tool automatically makes class and animation names unique so
-you don't have to worry about selector name collisions.
+CSS Modules let you write styles in CSS files but consume them as JavaScript objects for additional processing and safety. CSS Modules are very popular because they automatically make class and animation names unique so you don't have to worry about selector name collisions.
+
+_Note_: adding a stable CSS class to your JSX markup along with your CSS Modules can make it easier to users to include [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
 ## When to use CSS modules
 
