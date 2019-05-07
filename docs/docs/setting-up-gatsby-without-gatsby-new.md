@@ -29,12 +29,6 @@ Now, you'll need to install the neccessary packages that Gatsby relies on to wor
 npm install --save gatsby react react-dom
 ```
 
-Once your packages have installed, you'll likely want to add some of the Gatsby specific files at the root of your project.
-```shell
-touch gatsby-config.js
-touch gatsby-browser.js
-```
-
 Next, you'll add a `src` directory and a `pages` directory inside your project.
 ```shell
 mkdir src
