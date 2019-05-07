@@ -2435,3 +2435,16 @@
     - Contact form and Google Map components
     - Animation
     - documentation and component library can be found at mdboostrap's website
+- url: https://gatsby-starter-primer.netlify.com/
+  repo: https://github.com/thomaswangio/gatsby-starter-primer
+  description: A Gatsby starter featuring GitHub Primer Design System and React components
+  tags:
+    - Styling:Primer
+    - Styling:CSS-in-JS
+    - SEO
+    - Landing Page
+  features:
+    - Primer React Components
+    - Styled Components
+    - Gatsby Image
+    - Better SEO component with appropriate OG image and appropriate fallback meta tags
