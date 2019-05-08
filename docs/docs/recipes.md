@@ -103,7 +103,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [source plugin tutorial](/docs/source-plugin-tutorial/)
+- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
 
 ## Transforming data
 

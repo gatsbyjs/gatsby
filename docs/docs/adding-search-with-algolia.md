@@ -13,7 +13,7 @@ Two things before we begin:
 
 First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia), [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) and [`algoliasearch`](https://github.com/algolia/algoliasearch-client-javascript) to your project. With `react-instantsearch` Algolia provides an extensive library of off-the-shelf React components that we can import to save ourselves a lot of work. `algoliasearch` provides the actual search client which we'll simply pass into `react-instantsearch`. If you're not using it already, also install [`dotenv`](https://github.com/motdotla/dotenv) while you're at it. We're going to need it to specify your Algolia app ID and both the search and admin API keys without committing them to version control.
 
-```sh
+```shell
 yarn add gatsby-plugin-algolia react-instantsearch-dom algoliasearch dotenv
 ```
 
