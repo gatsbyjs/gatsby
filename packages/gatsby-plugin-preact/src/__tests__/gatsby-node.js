@@ -10,9 +10,8 @@ describe(`gatsby-plugin-preact`, () => {
     expect(actions.setWebpackConfig).toHaveBeenCalledWith({
       resolve: {
         alias: {
-          react: `preact-compat`,
-          "react-dom": `preact-compat`,
-          "create-react-class": `preact-compat/lib/create-react-class`,
+          react: `preact/compat`,
+          "react-dom": `preact/compat`,
         },
       },
     })
