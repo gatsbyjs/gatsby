@@ -44,7 +44,9 @@ module.exports = async args => {
 
 async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   const program = store.getState().program
-  const cacheDir = resolve(`${program.directory}/.cache/sqip/`)
+  const cacheDir = resolve(
+    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
+  )
 
   await ensureDir(cacheDir)
 
