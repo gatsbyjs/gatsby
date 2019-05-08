@@ -44,7 +44,7 @@ So if your project has a `books.xml` with
 </catalog>
 ```
 
-The pluging uses [xml-parser](https://www.npmjs.com/package/xml-parser) to convert it to json
+The plugin uses [xml-parser](https://www.npmjs.com/package/xml-parser) to convert it to json
 
 ```json
 {
@@ -153,7 +153,7 @@ The pluging uses [xml-parser](https://www.npmjs.com/package/xml-parser) to conve
 }
 ```
 
-which then is used to create the nodes.
+Which then is used to create the nodes.
 
 ## How to query
 
