@@ -108,18 +108,18 @@ export const ToggleButtonIcon = styled(`span`)`
   color: ${colors.white};
   display: flex;
   font-size: ${fontSizes[1]};
-  height: ${space[6]};
+  height: ${space[8]};
   justify-content: center;
   position: absolute;
-  right: ${space[3]};
-  transform: scale(1);
+  right: ${space[1]};
+  transform: scale(0.6);
   transition: 0.5s;
-  width: ${space[6]};
+  width: ${space[8]};
 
   svg {
     fill: ${colors.white};
-    height: ${space[3]};
-    width: ${space[3]};
+    height: ${space[5]};
+    width: ${space[5]};
     transition: 0.5s;
   }
 
@@ -128,6 +128,11 @@ export const ToggleButtonIcon = styled(`span`)`
     .failed &,
     .success &,
     .submitting & {
+      svg {
+        height: ${space[6]};
+        width: ${space[6]};
+      }
+
       &:hover {
         svg {
           transform: rotate(90deg);
@@ -191,7 +196,7 @@ export const ToggleButton = styled(`button`)`
       ${ToggleButtonIcon} {
         background: ${colors.white};
         border: 1px solid ${colors.gray.border};
-        transform: scale(1.8);
+        transform: scale(1);
 
         svg {
           fill: ${colors.gatsby};
