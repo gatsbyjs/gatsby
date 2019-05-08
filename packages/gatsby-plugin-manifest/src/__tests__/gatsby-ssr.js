@@ -19,7 +19,6 @@ const ssrArgs = {
 
 describe(`gatsby-plugin-manifest`, () => {
   beforeEach(() => {
-    global.__BASE_PATH__ = ``
     global.__PATH_PREFIX__ = ``
     headComponents = []
   })

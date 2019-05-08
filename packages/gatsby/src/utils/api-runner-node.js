@@ -15,7 +15,6 @@ const {
   buildInputObjectType,
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
-const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 
@@ -75,6 +74,7 @@ const runAPI = (plugin, api, args) => {
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
 
+    let pathPrefix = ``
     const { store, emitter } = require(`../redux`)
     const {
       loadNodeContent,
@@ -93,10 +93,9 @@ const runAPI = (plugin, api, args) => {
       { ...args, parentSpan: pluginSpan }
     )
 
-    const { config, program } = store.getState()
-
-    const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
-    const publicPath = getPublicPath({ ...config, ...program }, ``)
+    if (store.getState().program.prefixPaths) {
+      pathPrefix = store.getState().config.pathPrefix
+    }
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
@@ -153,8 +152,7 @@ const runAPI = (plugin, api, args) => {
     const apiCallArgs = [
       {
         ...args,
-        basePath: pathPrefix,
-        pathPrefix: publicPath,
+        pathPrefix,
         boundActionCreators: actions,
         actions,
         loadNodeContent,

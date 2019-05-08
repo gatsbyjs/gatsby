@@ -8,3 +8,4 @@ export class OutboundLink extends React.Component<
   OutboundLinkProps & React.HTMLProps<HTMLAnchorElement>,
   any
 > {}
+

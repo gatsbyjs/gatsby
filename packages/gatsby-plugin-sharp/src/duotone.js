@@ -1,4 +1,4 @@
-const sharp = require(`./safe-sharp`)
+const sharp = require(`sharp`)
 
 module.exports = async function duotone(duotone, format, pipeline) {
   const duotoneGradient = createDuotoneGradient(

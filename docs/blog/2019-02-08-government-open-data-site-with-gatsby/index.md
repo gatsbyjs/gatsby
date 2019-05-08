@@ -223,7 +223,8 @@ We set a `BASEURL` environment variable in `gatsby-config.js` that resolves the 
 const BASEURL = process.env.BASEURL || ""
 
 module.exports = {
-  // This is currently the relative path in our Jekyll deployment. This path points to our Gatsby pages.
+  // Note: it must *not* have a trailing slash.
+  // This is currently the realtive path in our Jekyll deployment. This path points to our Gatsby pages.
   // This prefix is prepended to load all our related images, code, and pages.
   pathPrefix: `${BASEURL}/gatsby-public`,
 }

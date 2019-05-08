@@ -45,15 +45,12 @@ class StubListRoute extends React.Component {
       a.localeCompare(b)
     )
 
-    // Put top level at the front of the array if it isn't empty
+    // Put top level at the front of the array
     sortedCategories.splice(
       sortedCategories.indexOf(`Top Level Documentation Pages`),
       1
     )
-
-    if (groupedStubs[`Top Level Documentation Pages`]) {
-      sortedCategories = [`Top Level Documentation Pages`, ...sortedCategories]
-    }
+    sortedCategories = [`Top Level Documentation Pages`, ...sortedCategories]
 
     return (
       <Layout location={this.props.location} itemList={itemListContributing}>

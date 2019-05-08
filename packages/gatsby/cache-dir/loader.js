@@ -203,7 +203,7 @@ let disableCorePrefetching = false
 
 const queue = {
   addPagesArray: newPages => {
-    findPage = pageFinderFactory(newPages, __BASE_PATH__)
+    findPage = pageFinderFactory(newPages, __PATH_PREFIX__)
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires

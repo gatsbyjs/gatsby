@@ -49,7 +49,7 @@ const Banner = () => (
     <InnerContainer>
       <Content>
         <OutboundLink href="https://www.gatsbyjs.com/gatsby-themes/">
-          Watch now
+          Register now
         </OutboundLink>
         {`: "Making Gatsby Even Greater With Themes — Better, Faster, Flexible-er".`}
       </Content>

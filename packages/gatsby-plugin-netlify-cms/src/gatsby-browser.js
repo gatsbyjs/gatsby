@@ -13,7 +13,9 @@ exports.onInitialClientRender = (
 
   if (
     enableIdentityWidget &&
-    (routes.test(hash) || errorRoute.test(hash) || accessTokenRoute.test(hash))
+    (hash.match(routes) ||
+      hash.match(errorRoute) ||
+      hash.match(accessTokenRoute))
   ) {
     import(`netlify-identity-widget`).then(
       ({ default: netlifyIdentityWidget }) => {

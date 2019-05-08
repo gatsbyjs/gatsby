@@ -3,10 +3,6 @@ const {
   defaultOptions: { serialize },
 } = require(`../internals`)
 
-beforeEach(() => {
-  global.__PATH_PREFIX__ = ``
-})
-
 describe(`results using default settings`, () => {
   const generateQueryResultsMock = (
     { siteUrl } = { siteUrl: `http://dummy.url` }
@@ -41,10 +37,6 @@ describe(`results using default settings`, () => {
   }
 
   const runTests = (pathPrefix = ``) => {
-    beforeEach(() => {
-      global.__PATH_PREFIX__ = pathPrefix
-    })
-
     it(`prepares all urls correctly`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
       const queryRecords = await runQuery(graphql, ``, [], pathPrefix)

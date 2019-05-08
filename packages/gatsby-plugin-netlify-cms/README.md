@@ -1,10 +1,8 @@
 # gatsby-plugin-netlify-cms
 
-**Gatsby v1 and Netlify CMS 1.x require [`gatsby-plugin-netlify-cms@^2.0.0`][1].**
+**Gatsby v1 and Netlify CMS 1.x require [`gatsby-plugin-netlify-cms@^2.0.0`](https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md).**
 
-**Gatsby v2 and Netlify CMS 2.x require [`gatsby-plugin-netlify-cms@^3.0.0`][2].**
-
-**Gatsby v2 and Netlify CMS (netlify-cms-app) 2.9.x required `gatsby-plugin-netlify-cms@^4.0.0`, which is documented below.**
+**Gatsby v2 and Netlify CMS 2.x require `gatsby-plugin-netlify-cms@^3.0.0`, which is documented below.**
 
 ## Overview
 
@@ -15,12 +13,10 @@ Its built for non-technical and technical editors alike, and its super easy to
 install and configure. For more details, check out the [docs
 site](https://netlifycms.org).
 
-**Note:** `gatsby-plugin-netlify-cms@^4.0.0` changes the requirement for Netlify CMS to use a new library published `netlify-cms-app@^2.9.x` and is a **breaking change**.
-
 ## Install
 
 ```shell
-npm install --save netlify-cms-app gatsby-plugin-netlify-cms
+npm install --save netlify-cms gatsby-plugin-netlify-cms
 ```
 
 ## How to use
@@ -73,11 +69,11 @@ The js module might look like this:
 
 ```javascript
 /**
- * The default export of `netlify-cms-app` is an object with all of the Netlify CMS
+ * The default export of `netlify-cms` is an object with all of the Netlify CMS
  * extension registration methods, such as `registerWidget` and
  * `registerPreviewTemplate`.
  */
-import CMS from "netlify-cms-app"
+import CMS from "netlify-cms"
 
 /**
  * Any imported styles will automatically be applied to the editor preview
@@ -122,13 +118,13 @@ plugins: [
 The js module might look like this:
 
 ```javascript
-import CMS from "netlify-cms-app"
+import CMS, { init } from "netlify-cms"
 
 /**
  * Optionally pass in a config object. This object will be merged into `config.yml` if it exists
  */
 
-CMS.init({
+init({
   config: {
     backend: {
       name: "git-gateway",
@@ -194,6 +190,3 @@ plugins: [
 
 For help with integrating Netlify CMS with Gatsby, check out the community
 [Gitter](https://gitter.im/netlify/netlifycms).
-
-[1]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md
-[2]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@3.0.18/packages/gatsby-plugin-netlify-cms/README.md

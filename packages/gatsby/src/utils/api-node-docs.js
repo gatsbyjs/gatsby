@@ -20,20 +20,19 @@ exports.resolvableExtensions = true
  *   // Query for markdown nodes to use in creating pages.
  *   // You can query for whatever data you want to create pages for e.g.
  *   // products, portfolio items, landing pages, etc.
- *   // Variables can be added as the second function parameter
  *   return graphql(`
- *     query loadPagesQuery ($limit: Int!) {
- *       allMarkdownRemark(limit: $limit) {
+ *     {
+ *       allMarkdownRemark(limit: 1000) {
  *         edges {
  *           node {
- *             frontmatter {
+ *             fields {
  *               slug
  *             }
  *           }
  *         }
  *       }
  *     }
- *   `, { limit: 1000 }).then(result => {
+ *   `).then(result => {
  *     if (result.errors) {
  *       throw result.errors
  *     }
@@ -42,7 +41,7 @@ exports.resolvableExtensions = true
  *     result.data.allMarkdownRemark.edges.forEach(edge => {
  *       createPage({
  *         // Path for this page — required
- *         path: `${edge.node.frontmatter.slug}`,
+ *         path: `${edge.node.fields.slug}`,
  *         component: blogPostTemplate,
  *         context: {
  *           // Add optional context data to be inserted
@@ -247,7 +246,7 @@ exports.setFieldsOnGraphQLNodeType = true
  *     },
  *     Query: {
  *       allRecentPosts: {
- *         type: [`BlogPost`],
+ *         type: [`BlogPost`]
  *         resolve: (source, args, context, info) => {
  *           const posts = context.nodeModel.getAllNodes({ type: `BlogPost` })
  *           const recentPosts = posts.filter(

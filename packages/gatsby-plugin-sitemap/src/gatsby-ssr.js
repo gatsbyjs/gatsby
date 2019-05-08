@@ -1,9 +1,6 @@
 import React from "react"
-import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
+import { withPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
-
-// TODO: remove for v3
-const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   let { output, createLinkInHead } = { ...defaultOptions, ...pluginOptions }

@@ -1,6 +1,7 @@
 const path = require(`path`)
 
 module.exports = {
+  pathPrefix: `/blog`,
   siteMetadata: {
     title: `Gatsby Image e2e`,
   },

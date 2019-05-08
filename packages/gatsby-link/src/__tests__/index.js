@@ -6,14 +6,12 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, { navigate, push, replace, withPrefix } from "../"
 
-beforeEach(() => {
-  global.__BASE_PATH__ = ``
+afterEach(() => {
   global.__PATH_PREFIX__ = ``
+  cleanup()
 })
-
-afterEach(cleanup)
 
 const getInstance = (props, pathPrefix = ``) => {
   getWithPrefix()(pathPrefix)
@@ -36,17 +34,12 @@ const getReplace = () => {
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  global.__BASE_PATH__ = pathPrefix
+  global.__PATH_PREFIX__ = pathPrefix
   return withPrefix
 }
 
-const getWithAssetPrefix = (prefix = ``) => {
-  global.__PATH_PREFIX__ = prefix
-  return withAssetPrefix
-}
-
 const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
-  global.__BASE_PATH__ = pathPrefix
+  global.__PATH_PREFIX__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
 
@@ -92,29 +85,6 @@ describe(`<Link />`, () => {
     expect(() => {
       getInstance({})
     }).not.toThrow()
-  })
-
-  it(`does not fail with missing __BASE_PATH__`, () => {
-    global.__PATH_PREFIX__ = ``
-    global.__BASE_PATH__ = undefined
-
-    const source = createMemorySource(`/active`)
-
-    expect(() =>
-      render(
-        <LocationProvider history={createHistory(source)}>
-          <Link
-            to="/"
-            className="link"
-            style={{ color: `black` }}
-            activeClassName="is-active"
-            activeStyle={{ textDecoration: `underline` }}
-          >
-            link
-          </Link>
-        </LocationProvider>
-      )
-    ).not.toThrow()
   })
 
   describe(`the location to link to`, () => {
@@ -175,37 +145,6 @@ describe(`withPrefix`, () => {
       const root = getWithPrefix(pathPrefix)(to)
       expect(root).toEqual(`${pathPrefix}${to}`)
     })
-
-    it(`falls back to __PATH_PREFIX__ if __BASE_PATH__ is undefined`, () => {
-      global.__BASE_PATH__ = undefined
-      global.__PATH_PREFIX__ = `/blog`
-
-      const to = `/abc/`
-
-      expect(withPrefix(to)).toBe(`${global.__PATH_PREFIX__}${to}`)
-    })
-  })
-})
-
-describe(`withAssetPrefix`, () => {
-  it(`default prefix does not return "//"`, () => {
-    const to = `/`
-    const root = getWithAssetPrefix()(to)
-    expect(root).toEqual(to)
-  })
-
-  it(`respects pathPrefix`, () => {
-    const to = `/abc/`
-    const pathPrefix = `/blog`
-    const root = getWithAssetPrefix(pathPrefix)(to)
-    expect(root).toEqual(`${pathPrefix}${to}`)
-  })
-
-  it(`respects joined assetPrefix + pathPrefix`, () => {
-    const to = `/itsdatboi/`
-    const pathPrefix = `https://cdn.example.com/blog`
-    const root = getWithAssetPrefix(pathPrefix)(to)
-    expect(root).toEqual(`${pathPrefix}${to}`)
   })
 })
 
@@ -219,11 +158,11 @@ describe(`navigate`, () => {
 
   it(`respects pathPrefix`, () => {
     const to = `/some-path`
-    global.__BASE_PATH__ = `/blog`
+    global.__PATH_PREFIX__ = `/blog`
     getNavigate()(to)
 
     expect(global.___navigate).toHaveBeenCalledWith(
-      `${global.__BASE_PATH__}${to}`,
+      `${global.__PATH_PREFIX__}${to}`,
       undefined
     )
   })

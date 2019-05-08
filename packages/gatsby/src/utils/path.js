@@ -13,7 +13,3 @@ export function joinPath(...paths) {
 export function withBasePath(basePath) {
   return (...paths) => joinPath(basePath, ...paths)
 }
-
-export function withTrailingSlash(basePath) {
-  return `${basePath}/`
-}

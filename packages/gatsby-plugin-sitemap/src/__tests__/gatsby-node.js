@@ -2,15 +2,10 @@ jest.mock(`fs`)
 
 const fs = require(`fs`)
 const path = require(`path`)
-const sitemap = require(`sitemap`)
-
 const { onPostBuild } = require(`../gatsby-node`)
 const internals = require(`../internals`)
 const pathPrefix = ``
-
-beforeEach(() => {
-  global.__PATH_PREFIX__ = ``
-})
+const sitemap = require(`sitemap`)
 
 describe(`Test plugin sitemap`, async () => {
   it(`default settings work properly`, async () => {

@@ -63,6 +63,7 @@ It's common for sites to be hosted somewhere other than the root of their domain
 
 ```javascript:title=gatsby-config.js
 module.exports = {
+  // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
 }
 ```

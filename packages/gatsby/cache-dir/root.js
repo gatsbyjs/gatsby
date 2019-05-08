@@ -87,7 +87,7 @@ const Root = () =>
   createElement(
     Router,
     {
-      basepath: __BASE_PATH__,
+      basepath: __PATH_PREFIX__,
     },
     createElement(RouteHandler, { path: `/*` })
   )

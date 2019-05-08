@@ -19,7 +19,9 @@ config.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-netlify`]
+plugins: [
+  `gatsby-plugin-netlify`, // make sure to put last in the array
+]
 ```
 
 ## Configuration
@@ -30,6 +32,7 @@ transform the given headers, you can use the following configuration options.
 
 ```javascript
 plugins: [
+  // make sure to put last in the array
   {
     resolve: `gatsby-plugin-netlify`,
     options: {

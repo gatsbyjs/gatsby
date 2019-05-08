@@ -117,6 +117,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
+                    {/* {isGatsbyVersionWarning ?
+                        <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
+                        <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
+                      } */}
                   </div>
                   <div
                     css={{
@@ -174,7 +178,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 
 export default StartersList
 
-function sortingFunction() {
+function sortingFunction(sortRecent) {
   return function({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)

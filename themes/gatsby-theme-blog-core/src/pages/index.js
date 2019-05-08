@@ -31,7 +31,7 @@ export default class Create extends React.Component {
 }
 export const query = graphql`
   query HomePage {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark {
       edges {
         node {
           id
@@ -40,9 +40,8 @@ export const query = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
             title
-            description
+            date(formatString: "MMMM DD, YYYY")
           }
         }
       }

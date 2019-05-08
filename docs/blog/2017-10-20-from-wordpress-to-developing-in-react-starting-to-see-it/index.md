@@ -8,20 +8,20 @@ tags: ["React", "getting-started", "wordpress"]
 As a frontend designer I've always prided myself on being a HTML and CSS
 specialist. My use of JavaScript has been limited to animations and DOM
 manipulation. However, at
-[Indigo Tree](https://indigotree.co.uk)
+[Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites")
 we're branching out from our staple of WordPress and trying different methods of
 creating websites with functionality that our clients require, whilst maximising
 their budget.
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of
-[Gutenberg](https://wordpress.org/plugins/gutenberg/)
+[Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg WordPress plugins")
 for our WordPress projects. Once it's included in the WordPress Core, writing
 components in JavaScript for the Gutenberg editor will be necessary for every
 developer on a project.
 
 So I decided to dive into learning React with a few courses and some
 experimentation. I had the aim of building a site in
-[Gatsby.js](/)
+[Gatsby.js](/ "Blazing-fast static site generator for React")
 as a test for doing projects built entirely in React.
 
 ## Letting Go
@@ -88,7 +88,7 @@ Beautiful.
 ## GraphQL: SQL-like data queries
 
 One thing I particularly love about Gatsby.js is its inclusion of
-[GraphQL](http://graphql.org/). Like SQL, you
+[GraphQL](http://graphql.org/ "A query language for your API"). Like SQL, you
 use GraphQL to query your data, whether from the WordPress API, Contentful or
 Markdown, and extract a dataset to display in your template.
 
@@ -133,7 +133,7 @@ focus on context without having to grok SCSS again, reducing mental friction.
 Following the [tutorial on Gatsbyjs](/tutorial/) I built
 up my project from scratch, breaking things profusely at first, but it honestly
 didn’t take long to gain confidence enough so that I launched my first site at
-[https://freebabylon5.com](https://freebabylon5.com)
+[freebabylon5.com](https://freebabylon5.com "Our last, best hope of getting back on the air")
 recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
@@ -154,17 +154,17 @@ and others) for a faster, more efficient development experience.
 I'm glad to say I'm sold on the idea and methods of developing with JavaScript,
 and React in particular. The site I've re-built from WordPress into Gatsby.js is
 now live at
-[https://freebabylon5.com](https://freebabylon5.com).
+[https://freebabylon5.com](https://freebabylon5.com "Our last, best hope of getting back on the air").
 
 Together with my colleagues at
-[Indigo Tree](https://indigotree.co.uk)
+[Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites")
 we’re now looking at using WordPress as a backend, where clients can edit their
 content without the worries of insecure plugins or other methods of being
 hacked.
 
 Using GatsbyJS with its “Bring Your Own Data” strategy makes perfect sense, and
 we’re about to start building our first Gatsby client site using the plugin
-[`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/)
+[`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/ "WordPress content into Gatsby")
 to pull in our data and build a totally secure website with some pretty
 impressive gains on loading time. We’ll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.

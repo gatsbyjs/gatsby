@@ -6,7 +6,7 @@ const {
   GraphQLFloat,
   GraphQLEnumType,
 } = require(`gatsby/graphql`)
-const sharp = require(`./safe-sharp`)
+const sharp = require(`sharp`)
 const { Potrace } = require(`potrace`)
 
 const ImageFormatType = new GraphQLEnumType({

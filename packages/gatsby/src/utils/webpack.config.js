@@ -7,10 +7,9 @@ const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugi
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
-const getPublicPath = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath, withTrailingSlash } = require(`./path`)
+const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -22,7 +21,12 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (program, directory, suppliedStage) => {
+module.exports = async (
+  program,
+  directory,
+  suppliedStage,
+  webpackPort = 1500
+) => {
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -31,10 +35,6 @@ module.exports = async (program, directory, suppliedStage) => {
   // webpack config.
   const stage = suppliedStage
   const { rules, loaders, plugins } = await createUtils({ stage, program })
-
-  const { assetPrefix, pathPrefix } = store.getState().config
-
-  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -98,7 +98,7 @@ module.exports = async (program, directory, suppliedStage) => {
       if (pubPath.substr(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
-        hmrBasePath = withTrailingSlash(pubPath)
+        hmrBasePath = `${pubPath}/`
       }
     }
 
@@ -133,14 +133,18 @@ module.exports = async (program, directory, suppliedStage) => {
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: withTrailingSlash(publicPath),
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
+            : `/`,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath: withTrailingSlash(publicPath),
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
+            : `/`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -184,10 +188,8 @@ module.exports = async (program, directory, suppliedStage) => {
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
-        __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
-        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
-        __ASSET_PREFIX__: JSON.stringify(
-          program.prefixPaths ? assetPrefix : ``
+        __PATH_PREFIX__: JSON.stringify(
+          program.prefixPaths ? store.getState().config.pathPrefix : ``
         ),
       }),
     ]
