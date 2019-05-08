@@ -9,7 +9,7 @@ import SubmitSuccess from "./submit-success"
 import SubmitError from "./submit-error"
 import { ScreenReaderText, WidgetContainer } from "./styled-elements"
 import MdClose from "react-icons/lib/md/close"
-import MdQuestionMark from "./question-mark-icon"
+import MdChatBubbleOutline from "react-icons/lib/md/chat-bubble-outline"
 
 const postFeedback = ({ rating, comment }) => {
   const payload = {
@@ -168,12 +168,9 @@ const FeedbackWidget = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <ToggleButtonLabel>
-              Was this doc helpful to you
-              <ScreenReaderText>?</ScreenReaderText>
-            </ToggleButtonLabel>
+            <ToggleButtonLabel>Was this doc helpful to you?</ToggleButtonLabel>
             <ToggleButtonIcon>
-              <MdQuestionMark />
+              <MdChatBubbleOutline />
             </ToggleButtonIcon>
           </Fragment>
         )}
