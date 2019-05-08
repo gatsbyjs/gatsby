@@ -5804,3 +5804,14 @@
     - Portfolio
   built_by: Matthew Miller
   featured: false
+- title: Årets Kontor
+  url: https://aretskontor.newst.se
+  main_url: https://aretskontor.newst.se
+  description: >
+    A swedish competition for "office of the year" in sweden with a focus on design. Built with MDBootstrap and Gatsby.
+  categories:
+    - Real Estate
+    - Marketing
+  built_by: Victor Björklund
+  built_by_url: https://victorbjorklund.com
+  featured: false
