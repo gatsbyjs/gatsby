@@ -160,6 +160,7 @@ Which then is used to create the nodes.
 You'd be able to query your books like:
 
 ```graphql
+{
   allBooksXml {
     edges {
       node {
