@@ -1,5 +1,5 @@
 import React from "react"
-import { colors, space, radii, breakpoints, fonts } from "../../utils/presets"
+import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
@@ -16,12 +16,12 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       flexDirection: `column-reverse`,
       padding: space[6],
       paddingTop: 0,
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
         paddingBottom: 0,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         padding: space[8],
         paddingTop: 0,
         paddingBottom: 0,
@@ -36,7 +36,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexWrap: `wrap`,
         justifyContent: `space-between`,
         flexShrink: 0,
-        [breakpoints.sm]: {
+        [mediaQueries.sm]: {
           justifyContent: `flex-start`,
         },
       }}
@@ -77,7 +77,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexGrow: 1,
         borderBottom: `1px solid ${colors.ui.light}`,
         paddingBottom: space[3],
-        [breakpoints.sm]: {
+        [mediaQueries.sm]: {
           borderBottom: 0,
         },
       }}

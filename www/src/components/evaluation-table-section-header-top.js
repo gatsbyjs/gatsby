@@ -3,7 +3,7 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
 } from "../utils/presets"
@@ -44,14 +44,14 @@ const superHeader = () => (
           "&:last-child": {
             borderTopRightRadius: radii[2],
           },
-          [breakpoints.xs]: {
+          [mediaQueries.xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [breakpoints.md]: {
+          [mediaQueries.md]: {
             width: 150,
           },
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             width: 175,
           },
         }}
