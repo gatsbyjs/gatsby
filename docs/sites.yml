@@ -5816,8 +5816,8 @@
   built_by_url: https://victorbjorklund.com
   featured: false
 - title: Kyma
-  url: http://kyma-project.io
-  main_url: http://kyma-project.io
+  url: https://kyma-project.io
+  main_url: https://kyma-project.io
   source_url: https://github.com/kyma-project/website
   description: >
     This website holds overview, blog and documentation for Kyma open source project that is a Kubernates based application extensibility framework.
