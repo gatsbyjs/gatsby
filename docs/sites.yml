@@ -5815,6 +5815,20 @@
   built_by: Victor Björklund
   built_by_url: https://victorbjorklund.com
   featured: false
+- title: Kyma
+  url: https://kyma-project.io
+  main_url: https://kyma-project.io
+  source_url: https://github.com/kyma-project/website
+  description: >
+    This website holds overview, blog and documentation for Kyma open source project that is a Kubernates based application extensibility framework.
+  categories:
+    - Documentation
+    - Blog
+    - Technology
+    - Open Source
+  built_by: Kyma developers
+  built_by_url: https://twitter.com/kymaproject
+  featured: false
 - title: Verso
   main_url: https://verso.digital
   url: https://verso.digital
