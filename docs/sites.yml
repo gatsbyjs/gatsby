@@ -5815,6 +5815,19 @@
   built_by: Victor Björklund
   built_by_url: https://victorbjorklund.com
   featured: false
+- title: Camilo Holguin
+  url: https://camiloholguin.me
+  main_url: https://camiloholguin.me
+  source_url: https://github.com/camiloholguin/gatsby-portfolio
+  description: >
+    Portfolio site using GatsbyJS and Wordpress REST API.
+  categories:
+    - WordPress
+    - Portfolio
+    - Web Development
+  built_by: Camilo Holguin
+  built_by_url: https://camiloholguin.me
+  featured: false
 - title: Bennett Hardwick
   url: https://bennetthardwick.com
   main_url: https://bennetthardwick.com
