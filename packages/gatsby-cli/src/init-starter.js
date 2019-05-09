@@ -148,9 +148,10 @@ const clone = async (hostInfo: any, rootPath: string) => {
   await fs.remove(sysPath.join(rootPath, `.git`))
 
   await install(rootPath)
-  await gitInit(rootPath)
+  const isGit = await isAlreadyGitRepository()
+  if(!isGit) await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
-  await createInitialGitCommit(rootPath, url)
+  if(!isGit) await createInitialGitCommit(rootPath, url)
 }
 
 type InitOptions = {
