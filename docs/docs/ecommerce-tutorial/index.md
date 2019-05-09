@@ -134,17 +134,15 @@ const buttonStyles = {
   letterSpacing: "1.5px",
 }
 
-const Checkout = class extends React.Component {
+class Checkout extends React.Component {
   // Initialise Stripe.js with your publishable key.
   // You can find your key in the Dashboard:
   // https://dashboard.stripe.com/account/apikeys
   componentDidMount() {
-    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd", {
-      betas: ["checkout_beta_4"],
-    })
+    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
   }
 
-  async redirectToCheckout(event) {
+  redirectToCheckout = async (event) => {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
       items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
@@ -178,16 +176,14 @@ You imported React, added a button with some styles, and introduced some React f
 
 ```js:title=src/components/checkout.js
   componentDidMount() {
-    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd', {
-      betas: ['checkout_beta_4'],
-    })
+    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
   }
 ```
 
 This identifies you with the Stripe platform, validates the checkout request against your products and security settings, and processes the payment on your Stripe account.
 
 ```js:title=src/components/checkout.js
-  async redirectToCheckout(event) {
+  redirectToCheckout = async (event) => {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
       items: [{ sku: 'sku_DjQJN2HJ1kkvI3', quantity: 1 }],
