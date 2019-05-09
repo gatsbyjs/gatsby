@@ -28,7 +28,7 @@ This module currently pulls the following entities from WordPress:
 - [x] Custom post types (any type you could have declared using WordPress'
       `functions.php`)
 
-Note that all entities and fields must be available via the REST API. This means that if you want to retrieve post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`.  You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see  https://developer.wordpress.org/reference/functions/register_meta/.
+Note that all entities and fields must be available via the REST API. This means that if you want to retrieve post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see https://developer.wordpress.org/reference/functions/register_meta/.
 
 We welcome PRs adding support for data from other plugins.
 
