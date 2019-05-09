@@ -3863,10 +3863,10 @@
     - Blog
   built_by: Logicwind
   built_by_url: "https://www.logicwind.com"
-- title: npm.cardiv.de
-  url: https://npm.cardiv.de
-  main_url: https://npm.cardiv.de
-  source_url: https://github.com/cardiv/npm.cardiv.de
+- title: npm-bookmarks
+  url: https://npm-bookmarks.netlify.com
+  main_url: https://npm-bookmarks.netlify.com
+  source_url: https://github.com/crstnio/npm-bookmarks
   description: >
     A site to collect personal favorites of NPM packages – sorted by downloads count with a tags filter and search by title. Fork it and bookmark your favorite packages!
   categories:
@@ -3876,8 +3876,8 @@
     - Open Source
     - Programming
     - Web Development
-  built_by: cardiv
-  built_by_url: https://github.com/cardiv/
+  built_by: crstnio
+  built_by_url: https://github.com/crstnio/
   featured: false
 - title: Waterscapes
   main_url: "https://waterscap.es"
