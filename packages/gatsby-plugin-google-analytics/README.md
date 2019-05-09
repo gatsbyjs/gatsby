@@ -16,7 +16,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
-        // Puts tracking script in the head instead of the body
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: false,
         // Setting this parameter is optional
         anonymize: true,
@@ -63,6 +63,14 @@ export default () => {
   </div>
 }
 ```
+
+## The "trackingId" option
+
+Here you place your Google Analytics tracking id.
+
+## The "head" option
+
+Here you can define where to place the tracking script. With `head:true` it will placed in the header, with `head:false` it will placed in the body.
 
 ## The "anonymize" option
 
