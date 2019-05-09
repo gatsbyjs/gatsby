@@ -1,3 +1,4 @@
+const report = require(`gatsby-cli/lib/reporter`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
@@ -9,6 +10,8 @@ exports.sourceNodes = async (
   { baseUrl, apiBase, basicAuth, filters, headers, params }
 ) => {
   const { createNode } = actions
+  const drupalFetchActivity = report.activityTimer(`Fetch data from Drupal`)
+  const downloadingFilesActivity = report.activityTimer(`Remote file download`)
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
@@ -20,7 +23,7 @@ exports.sourceNodes = async (
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
-  console.log(`Starting to fetch data from Drupal`)
+  console.info(`Starting to fetch data from Drupal`)
 
   // TODO restore this
   // let lastFetched
@@ -31,6 +34,8 @@ exports.sourceNodes = async (
   // lastFetched = store.getState().status.plugins[`gatsby-source-drupal`].status
   // .lastFetched
   // }
+
+  drupalFetchActivity.start()
 
   const data = await axios.get(`${baseUrl}/${apiBase}`, {
     auth: basicAuth,
@@ -93,6 +98,8 @@ exports.sourceNodes = async (
       return result
     })
   )
+
+  drupalFetchActivity.end()
 
   // Make list of all IDs so we can check against that when creating
   // relationships.
@@ -187,30 +194,42 @@ exports.sourceNodes = async (
     })
   })
 
+  console.info(`Downloading remote files`)
+  downloadingFilesActivity.start()
+
   // Download all files.
-  await Promise.all(
-    nodes.map(async node => {
-      let fileNode
+  for (const i in nodes) {
+    if (nodes[i]) {
+      const node = nodes[i]
+      // If we have basicAuth credentials, add them to the request.
+      const auth =
+        typeof basicAuth === `object`
+          ? {
+              htaccess_user: basicAuth.username,
+              htaccess_pass: basicAuth.password,
+            }
+          : {}
+      let fileNode = null
+      let fileUrl = ``
+      let url = {}
+
       if (
         node.internal.type === `files` ||
         node.internal.type === `file__file`
       ) {
+        fileUrl = node.url
+
+        // If node.uri is an object
+        if (typeof node.uri === `object`) {
+          // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+          fileUrl = node.uri.url
+        }
+
+        // Resolve w/ baseUrl if node.uri isn't absolute.
+        url = new URL(fileUrl, baseUrl)
+
+        // Create the remote file from the given node
         try {
-          let fileUrl = node.url
-          if (typeof node.uri === `object`) {
-            // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-            fileUrl = node.uri.url
-          }
-          // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(fileUrl, baseUrl)
-          // If we have basicAuth credentials, add them to the request.
-          const auth =
-            typeof basicAuth === `object`
-              ? {
-                  htaccess_user: basicAuth.username,
-                  htaccess_pass: basicAuth.password,
-                }
-              : {}
           fileNode = await createRemoteFileNode({
             url: url.href,
             store,
@@ -220,15 +239,23 @@ exports.sourceNodes = async (
             parentNodeId: node.id,
             auth,
           })
-        } catch (e) {
+        } catch (err) {
           // Ignore
+          console.error(err)
         }
-        if (fileNode) {
+
+        // If the fileNode exists set the node ID of the local file
+        if (fileNode && typeof fileNode === `object`) {
           node.localFile___NODE = fileNode.id
         }
       }
-    })
-  )
+    }
+  }
 
-  nodes.forEach(n => createNode(n))
+  downloadingFilesActivity.end()
+
+  // Create each node
+  for (const node of nodes) {
+    createNode(node)
+  }
 }
