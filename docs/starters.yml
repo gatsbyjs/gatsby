@@ -2448,3 +2448,17 @@
     - Styled Components
     - Gatsby Image
     - Better SEO component with appropriate OG image and appropriate fallback meta tags
+- url: https://pranshuchittora.github.io/gatsby-material-boilerplate
+  repo: https://github.com/pranshuchittora/gatsby-material-boilerplate
+  description: A simple starter to get up and developing quickly with Gatsby in material design
+  tags:
+    - Styling:Material
+  features:
+    - Material design
+    - Sass/SCSS
+    - Tags
+    - Categories
+    - Google Analytics
+    - Offline support
+    - Web App Manifest
+    - SEO
