@@ -5828,3 +5828,16 @@
   built_by: Camilo Holguin
   built_by_url: https://camiloholguin.me
   featured: false
+- title: Bennett Hardwick
+  url: https://bennetthardwick.com
+  main_url: https://bennetthardwick.com
+  description: >
+    The personal website and blog of Bennett Hardwick, an Australian software developer and human being.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  source_url: https://github.com/bennetthardwick/website
+  built_by: Bennett Hardwick
+  built_by_url: https://bennetthardwick.com
+  featured: false
