@@ -8,7 +8,7 @@ tags: ["strapi", "blog", "cms", "headless-cms", "open source", "tutorials"]
 
 (Article updated on 20 March 2019. This updates the tutorial code examples. We added videos with additional explanations to each section.)
 
-![Gatsby Strapi](gatsby-strapi.png)
+![Showing the idea of using Gatsby with Strapi ](gatsby-strapi.png)
 
 A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any back-end programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
@@ -22,19 +22,19 @@ Both static websites and PWAs have strong advantages which make us crave for a w
 
 #### What is Gatsby?
 
-[Gatsby](https://www.gatsbyjs.org) is a _blazing-fast **website framework** for React_. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
+[Gatsby](/) is a _blazing-fast **website framework** for React_. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
 
-![Gatsby Strapi](logo-gatsby.jpg)
+![The Gatsby Logo](logo-gatsby.jpg)
 
-Because it is based on React, the website pages are never reloaded which makes the generated website super fast. A large set of plugins is available allowing developers to save time coding. For example, plugins exist to get data from any source (Markdown files, CMS, etc.). Gatsby is strongly based on the ["node" interface](https://www.gatsbyjs.org/docs/node-interface/), which is the center of Gatsby's data system.
+Because it is based on React, the website pages are never reloaded which makes the generated website super fast. A large set of plugins is available allowing developers to save time coding. For example, plugins exist to get data from any source (Markdown files, CMS, etc.). Gatsby is strongly based on the ["node" interface](/docs/node-interface/), which is the center of Gatsby's data system.
 
-Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was officially [released in July 2017](https://www.gatsbyjs.org/blog/gatsby-v1/). (As of February 2109,[Gatsby is in Gatsby v2](https://github.com/gatsbyjs/gatsby/blob/master/README.md) and is now [used by many companies and for hundreds of websites](https://www.gatsbyjs.org/showcase/).
+Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was officially [released in July 2017](/blog/gatsby-v1/). (As of February 2109,[Gatsby is in Gatsby v2](https://github.com/gatsbyjs/gatsby/blob/master/README.md) and is now [used by many companies and for hundreds of websites](/showcase/).
 
 #### What is Strapi?
 
 [Strapi](https://strapi.io) is an _open source **Headless CMS Front-End Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
 
-![Gatsby Strapi](logo-strapi.png)
+![The Strapi Logo](logo-strapi.png)
 
 Thanks to its extensible plugin system, it provides a large set of built-in features: Admin Panel, Authentication & Permissions management, Content Management, API Generator, etc.
 
@@ -74,8 +74,8 @@ This video series will take you step by step through creating a blog in Gatsby a
 _Important links from Video:_
 
 - [Strapi Official Website](https://strapi.io/)
-- [Gatsby JS Official Website](https://www.gatsbyjs.org/)
-- [Gatsby JS Starters](https://www.gatsbyjs.org/starters/?v=2)
+- [Gatsby JS Official Website](/)
+- [Gatsby JS Starters](/starters/?v=2)
 - [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.com/)
 
 ### 2. Installation
@@ -99,7 +99,7 @@ _Requirements: please make sure [Node 10](https://nodejs.org/en/download/) (or h
 
 Install Strapi using npm:
 
-```BASH
+```bash
 npm i strapi@alpha -g
 ```
 
@@ -109,13 +109,13 @@ _Note: Strapi v3 is still an alpha version, but it will be fine for this tutoria
 
 Create a directory named `tutorial`:
 
-```BASH
+```bash
 mkdir tutorial
 ```
 
 Navigate into `tutorial`and then, using a single command, set-up and start your project inside your `tutorial` folder:
 
-```BASH
+```bash
 cd tutorial
 strapi new cms --quickstart
 ```
@@ -130,7 +130,7 @@ Additional information can be found in the [Official Strapi documentation](https
 
 Add your first user from the [registration page](http://localhost:1337/admin/plugins/users-permissions/auth/register). This will be the **_root admin user_**.
 
-![Strapi Create First User](create-first-user.png)
+![Strapi registration page](create-first-user.png)
 
 #### Restarting Strapi
 
@@ -138,13 +138,13 @@ After installation, and initial use, you will often close your project and work 
 
 Enter inside your project folder, on the command line, (in this case `tutorial/`, :
 
-```BASH
+```bash
 cd cms
 ```
 
 From `cms/`, launch the Strapi server:
 
-```BASH
+```bash
 strapi start
 ```
 
@@ -156,7 +156,7 @@ Starting here, you should be able to visit the admin panel of your project: http
 
 _Important links from Video:_
 
-- [Sample Content for Demo](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial)
+- [Sample Content for Demo](https://github.com/strapi/strapi-heroku-cms-demo/tree/master/content-for-tutorial)
 
 #### Create a Content Type
 
@@ -169,9 +169,9 @@ Strapi CMS projects are based on a data structure called Content Types (equivale
 - `image` (type `media`)
 - `author` (type `relation`, many articles to one user)
 
-![Define Relationship](define-relation.png)
+![Define Relationship User has many Articles](define-relation.png)
 
-![Tutorial](strapi-new-type.png)
+![Strapi Administration Panel](strapi-new-type.png)
 
 After creating your fields, as above, save your new content type and wait for Strapi to restart.
 
@@ -186,7 +186,7 @@ Add some articles in the database. To do so, follow these instructions:
 
 Note: You can download the sample content from the video [here](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
-![Article Entries](article-entries.png)
+![Strapi Article Administration View](article-entries.png)
 
 ### 4. Roles and Permissions
 
@@ -196,7 +196,7 @@ Note: You can download the sample content from the video [here](https://github.c
 
 For security reasons, [API access](http://localhost:1337/articles) is, by default, restricted. To allow access, visit the [Auth and Permissions section for Public role](http://localhost:1337/admin/plugins/users-permissions/roles), click on `Public`, select the `Article - find` action and save. At this point, you should be able to [request the list of articles](http://localhost:1337/articles).
 
-![Roles and Permissions](roles-and-permissions.png)
+![Strapi Roles and Permissions View](roles-and-permissions.png)
 
 #### Static website development
 
@@ -208,14 +208,14 @@ Great job, our API is ready! We can start developing the static website.
 
 _Important links from Video:_
 
-- [Official Gatsby Documentation](https://www.gatsbyjs.org/docs/)
-- [Gatsby PWA support](https://gatsby.app/offline)
+- [Official Gatsby Documentation](/docs/)
+- [Gatsby PWA support](/offline)
 
 #### Install Gatsby
 
 First, install Gatsby CLI:
 
-```BASH
+```bash
 npm install --global gatsby-cli
 ```
 
@@ -223,7 +223,7 @@ npm install --global gatsby-cli
 
 In the folder `tutorial` that you previously created, generate your brand new blog:
 
-```BASH
+```bash
 gatsby new blog
 ```
 
@@ -231,7 +231,7 @@ gatsby new blog
 
 Enter in your project's folder:
 
-```BASH
+```bash
 cd blog
 ```
 
@@ -249,7 +249,7 @@ When you manage a static website, your data can come from different sources: Mar
 
 Gatsby understands this pretty well. So its creators decided to build a specific and independent layer: the data layer. This entire system is strongly powered by [GraphQL](http://graphql.org).
 
-To connect Gatsby to a new source of data, you have to [develop a new source plugin](https://www.gatsbyjs.org/docs/create-source-plugin). Fortunately, [several source plugins already exist](https://www.gatsbyjs.org/docs/plugins), so one of them should fill your needs.
+To connect Gatsby to a new source of data, you have to [develop a new source plugin](/docs/create-source-plugin). Fortunately, [several source plugins already exist](/docs/plugins), so one of them should fill your needs.
 
 In this example, we are using Strapi. Obviously, we are going to need a source plugin for Strapi APIs. Good news: [we built it for you](https://github.com/strapi/gatsby-source-strapi)!
 
@@ -377,7 +377,7 @@ At the end of the file, we export `pageQuery`, a GraphQL query which requests th
 
 Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and loop on its `allStrapiArticle` object to display the data.
 
-![A list of Articles](what-we-are-doing.png)
+![Gatsby demo project home page view](what-we-are-doing.png)
 
 ##### Tip: generate your GraphQL query in seconds!
 
@@ -437,15 +437,15 @@ export const pageQuery = graphql`
 `
 ```
 
-![Adding Images](adding-images.png)
+![Blogroll view with images added](adding-images.png)
 
 ### 7. Create the Article page view
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/ub-uB17ufe0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" src="https://www.youtube.com/embed/UaFgCubwRD8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
-- [Gatsby Project Structure](https://www.gatsbyjs.org/docs/gatsby-project-structure/#gatsby-project-structure)
+- [Gatsby Project Structure](/docs/gatsby-project-structure/#gatsby-project-structure)
 
 #### Article view
 
@@ -498,7 +498,7 @@ export const query = graphql`
 `
 ```
 
-That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each article needs a specific URL. So, we are going to inform Gatsby about the new URLs we need thanks to the [`createPage` function](https://www.gatsbyjs.org/docs/creating-and-modifying-pages).
+That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each article needs a specific URL. So, we are going to inform Gatsby about the new URLs we need thanks to the [`createPage` function](/docs/creating-and-modifying-pages).
 
 First, we are going to code a new function called `makeRequest` to execute the GraphQL request. Then, we export a function named `createPages` in which we get the list of articles and create a page for each of them. Here is the result:
 
@@ -559,7 +559,7 @@ Restart the Gatsby server.
 
 From now on, you should be able to visit the detail page by clicking on URLs displayed on the homepage.
 
-![Static Page Result](static-page-result.png)
+![Single blog post view](static-page-result.png)
 
 ### 8. Gatsby Images and author page
 
@@ -567,7 +567,7 @@ From now on, you should be able to visit the detail page by clicking on URLs dis
 
 _Important links from Video:_
 
-- [Gatsby Image Plugin](https://www.gatsbyjs.org/packages/gatsby-image/)
+- [Gatsby Image Plugin](/packages/gatsby-image/)
 - [Gatsby Image Demo](https://using-gatsby-image.gatsbyjs.org/)
 - [Gatsby Code examples for Image Plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image/src/pages)
 
@@ -706,7 +706,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
 Finally, restart the server and visit the author page from the article view's links.
 
-![Restart Server](restart-server.png)
+![Page view showing all articles by Author](restart-server.png)
 
 ### Conclusion
 
@@ -718,7 +718,7 @@ Since the content is managed by Strapi, the authors can write articles through a
 
 Feel free to continue this project to discover both Gatsby and Strapi advantages. Here are some features you can add: list of authors, article's categories, and comment system with the Strapi API or Disqus. You can also create other types of websites (e-commerce shop, corporate website, etc.).
 
-When your project is achieved, you will probably want to deploy it. The static website generated by Gatsby can [easily be published on storage providers](https://www.gatsbyjs.org/docs/deploying-and-hosting/): Netlify, S3/Cloudfront, GitHub pages, GitLab pages, Heroku, etc. The Strapi API is a headless CMS, so it can be hosted on Heroku or any Linux instance that has Node.js installed.
+When your project is achieved, you will probably want to deploy it. The static website generated by Gatsby can [easily be published on storage providers](/docs/deploying-and-hosting/): Netlify, S3/Cloudfront, GitHub pages, GitLab pages, Heroku, etc. The Strapi API is a headless CMS, so it can be hosted on Heroku or any Linux instance that has Node.js installed.
 
 The [code source of this tutorial is available on GitHub](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). To see it live, clone the repository, run `npm run setup`, start the Strapi server (`cd cms && strapi start`) and the Gatsby server (`cd blog && gatsby develop`).
 
