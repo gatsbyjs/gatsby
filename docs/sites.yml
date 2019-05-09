@@ -5815,3 +5815,15 @@
   built_by: Victor Björklund
   built_by_url: https://victorbjorklund.com
   featured: false
+- title: Verso
+  main_url: https://verso.digital
+  url: https://verso.digital
+  description: >
+    Verso is a creative technology studio based in Singapore. Site built with Gatsby and Netlify.
+  categories:
+    - Agency
+    - Consulting
+    - Design
+    - Technology
+  built_by: Verso
+  built_by_url: https://verso.digital
