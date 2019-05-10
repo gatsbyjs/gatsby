@@ -25,7 +25,7 @@ Next, you'll need to set up NPM within your project.
 npm init
 ```
 
-Fill out the prompts for the package.json file that is generated. If you'd like to skip that, you can run `npm init -y` and a pre-filled package.json will be generated for you.
+Fill out the prompts for the `package.json` file that is generated. If you'd like to skip that, you can run `npm init -y` and a pre-filled `package.json` will be generated for you.
 
 Now, you'll need to install the neccessary packages that Gatsby relies on to work its magic.
 
