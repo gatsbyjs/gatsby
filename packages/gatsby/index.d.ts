@@ -10,6 +10,7 @@ export {
   push,
   replace,
   withPrefix,
+  withAssetPrefix,
 } from "gatsby-link"
 
 export interface StaticQueryProps {

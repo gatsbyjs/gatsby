@@ -15,7 +15,7 @@ const {
   traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
