@@ -5868,3 +5868,18 @@
   built_by: Bennett Hardwick
   built_by_url: https://bennetthardwick.com
   featured: false
+- title: Sindhuka
+  url: https://sindhuka.org/ne
+  main_url: https://sindhuka.org/ne
+  description: >
+    Official website of the Sindhuka initiative, a sustainable farmers' network in Nepal.
+  categories:
+    - Business
+    - Community
+    - Government
+    - Landing
+    - Marketing
+  source_url: https://github.com/Polcius/sindhuka-serif
+  built_by: Pol Milian
+  built_by_url: https://github.com/Polcius/
+  featured: false
