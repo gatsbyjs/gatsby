@@ -1,7 +1,7 @@
 {
   "name": "using-typescript",
   "version": "1.0.0",
-  "description": "Gatsby example site demonstrating how to use Typescript with Gatsby",
+  "description": "Gatsby example site demonstrating how to use TypeScript with Gatsby",
   "author": "fabien0102 <fabien0102@gmail.com>",
   "license": "MIT",
   "scripts": {

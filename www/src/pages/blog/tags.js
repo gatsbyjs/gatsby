@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { graphql, Link } from "gatsby"
-import kebabCase from "lodash/kebabCase"
+import { kebabCase } from "lodash-es"
 
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -52,6 +52,12 @@ class TagsPage extends React.Component {
         lookup[key] = Object.assign(tag, {
           slug: `/blog/tags/${key}`,
         })
+      } else {
+        lookup[key].totalCount += tag.totalCount
+      }
+      // Prefer spaced tag names (instead of hyphenated) for display
+      if (tag.fieldValue.includes(` `)) {
+        lookup[key].fieldValue = tag.fieldValue
       }
       return lookup
     }, {})

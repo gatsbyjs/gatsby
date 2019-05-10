@@ -13,7 +13,7 @@ Some of the benefits such agencies list include:
 - ability to build projects across CMS-es
 - a more cohesive team.
 
-One example of this is [Narative.co](https://www.narative.co/), based in Montreal. Narative [wrote a blog post](https://www.gatsbyjs.org/blog/2018-06-18-why-narative-loves-gatsby/) laying out some of these benefits:
+One example of this is [Narative.co](https://www.narative.co/), based in Montreal. Narative [wrote a blog post](/blog/2018-06-18-why-narative-loves-gatsby/) laying out some of these benefits:
 
 > Gatsby allows our team to use the powerful React API when creating page based websites with almost no drawbacks. All the principles and techniques we’ve learned from using React for the last few years can be leveraged with Gatsby. This has enabled us to create a team that is extremely dynamic and cohesive without the worry of creating silos or losing knowledge across teams. Our team is able to learn once, write everywhere. With an engineering team that’s familiar with React and Gatsby we’re able to tackle more problems faster, which is highly beneficial to our partners and the services we offer.
 

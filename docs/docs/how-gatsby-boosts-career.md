@@ -10,6 +10,8 @@ As you ship Gatsby sites and get [other developers](/docs/winning-over-developer
 
 https://twitter.com/ryanflorence/status/1104060348363988992
 
+In general, great engineering career opportunities often lie in developing expertise in new, rapidly emerging systems and technologies -- there are fewer established domain experts in these fields, room to carve out a personal brand as an expert, and an ever-growing demand for expertise.
+
 --
 
 This is a stub. Help our community expand it.

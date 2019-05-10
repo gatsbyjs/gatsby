@@ -141,6 +141,21 @@ describe(`gatsby-remark-code-repls`, () => {
         }
       })
 
+      it(`supports includeMatchingCSS`, () => {
+        const markdownAST = remark.parse(
+          `[](${protocol}path/to/nested/file.js)`
+        )
+        const runPlugin = () =>
+          plugin(
+            { markdownAST },
+            {
+              directory: `examples`,
+              includeMatchingCSS: true,
+            }
+          )
+        expect(runPlugin).not.toThrow()
+      })
+
       if (protocol === PROTOCOL_CODE_SANDBOX) {
         it(`supports custom html config option for index html`, () => {
           const markdownAST = remark.parse(

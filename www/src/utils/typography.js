@@ -2,11 +2,11 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import {
   space,
-  scale as scaleTokens,
+  fontSizes,
   colors,
   transition,
   radii,
-  breakpoints,
+  mediaQueries,
   lineHeights,
   letterSpacings,
   fonts,
@@ -45,6 +45,9 @@ const _options = {
       hr: {
         backgroundColor: colors.ui.light,
       },
+      iframe: {
+        border: 0,
+      },
       "tt, code, kbd, samp": {
         // reset line-height set by
         // https://github.com/KyleAMathews/typography.js/blob/3c99e905414d19cda124a7baabeb7a99295fec79/packages/typography/src/utils/createStyles.js#L198
@@ -70,28 +73,20 @@ const _options = {
       // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        borderRadius: `${radii[1]}px`,
-        marginBottom: rhythm(space[6]),
-        overflow: `auto`,
-        padding: rhythm(space[6]),
         position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']": {
         backgroundColor: `transparent`,
         border: 0,
-        float: `left`,
-        padding: 0,
-        marginTop: 0,
-        marginBottom: 0,
-        minWidth: `100%`,
-        overflow: `initial`,
+        padding: `${rhythm(space[6])} 0`,
+        WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']::before": {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.gray.dark,
-        fontSize: scaleTokens[0],
+        fontSize: fontSizes[0],
         fontFamily: fonts.monospace.join(`,`),
         letterSpacing: letterSpacings.tracked,
         lineHeight: lineHeights.solid,
@@ -167,8 +162,11 @@ const _options = {
       ".gatsby-highlight pre code": {
         display: `block`,
         fontSize: `100%`,
+        lineHeight: 1.5,
+        float: `left`,
+        minWidth: `100%`,
         // reset code vertical padding declared earlier
-        padding: 0,
+        padding: `0 ${rhythm(space[6])}`,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
@@ -181,21 +179,20 @@ const _options = {
         }`,
         display: `block`,
       },
-      ".gatsby-highlight::-webkit-scrollbar": {
+      ".gatsby-highlight pre::-webkit-scrollbar": {
         width: rhythm(space[2]),
         height: rhythm(space[2]),
       },
-      ".gatsby-highlight::-webkit-scrollbar-thumb": {
+      ".gatsby-highlight pre::-webkit-scrollbar-thumb": {
         background: colors.code.scrollbarThumb,
       },
-      ".gatsby-highlight::-webkit-scrollbar-track": {
+      ".gatsby-highlight pre::-webkit-scrollbar-track": {
         background: colors.code.border,
-        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
       },
       // Target image captions.
       // This is kind of a fragile selector...
       ".gatsby-resp-image-link + em, .gatsby-resp-image-wrapper + em": {
-        fontSize: scaleTokens[1],
+        fontSize: fontSizes[1],
         lineHeight: lineHeights.dense,
         paddingTop: rhythm(3 / 8),
         marginBottom: rhythm(space[9]),
@@ -259,20 +256,20 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        padding: `${rhythm(space[6])} ${rhythm(space[6])} ${rhythm(space[3])}`,
-        fontSize: `74%`,
+        padding: `${rhythm(space[5])} ${rhythm(space[6])} ${rhythm(space[4])}`,
+        fontSize: fontSizes[0],
       },
-      "@media (max-width:634px)": {
-        ".gatsby-highlight, .gatsby-code-title, .gatsby-resp-image-link": {
-          borderRadius: 0,
-          borderLeft: 0,
-          borderRight: 0,
-        },
-      },
-      [`${breakpoints.md} and (max-width:980px)`]: {
-        ".gatsby-highlight, .gatsby-code-title": {
+      [mediaQueries.md]: {
+        ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
           marginLeft: 0,
           marginRight: 0,
+          borderRadius: `${radii[2]}px`,
+        },
+        ".gatsby-code-title": {
+          borderRadius: `${radii[2]}px ${radii[2]}px 0 0`,
+        },
+        ".gatsby-code-title + .gatsby-highlight": {
+          borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         },
       },
       video: {
@@ -285,34 +282,13 @@ const _options = {
       ".egghead-video": {
         border: `none`,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
-          marginLeft: rhythm(-space[7]),
-          marginRight: rhythm(-space[7]),
-        },
-        ".gatsby-highlight": {
-          padding: rhythm(space[7]),
-          marginBottom: rhythm(space[7]),
-        },
-        ".gatsby-highlight-code-line": {
-          marginRight: rhythm(-space[7]),
-          marginLeft: rhythm(-space[7]),
-          paddingRight: rhythm(space[7]),
-          paddingLeft: rhythm(space[6]),
-          borderLeftWidth: rhythm(space[2]),
-        },
-        ".gatsby-code-title": {
-          marginRight: rhythm(-space[7]),
-          marginLeft: rhythm(-space[7]),
-          padding: `${rhythm(space[6])} ${rhythm(space[7])} ${rhythm(
-            rhythm(space[3])
-          )}`,
-        },
-        ".gatsby-highlight pre[class*='language-']::before": {
-          right: rhythm(space[7]),
+          marginLeft: rhythm(-space[6]),
+          marginRight: rhythm(-space[6]),
         },
       },
-      [breakpoints.xxl]: {
+      [mediaQueries.xxl]: {
         html: {
           fontSize: `${(18 / 16) * 100}%`,
         },

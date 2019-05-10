@@ -1,5 +1,9 @@
+const os = require(`os`)
+const path = require(`path`)
 const Store = require(`./store`)
 const fetch = require(`node-fetch`)
+const Configstore = require(`configstore`)
+const { ensureDirSync } = require(`fs-extra`)
 
 const isTruthy = require(`./is-truthy`)
 
@@ -10,20 +14,52 @@ const isTruthy = require(`./is-truthy`)
  * to continue even when working offline.
  */
 module.exports = class EventStorage {
-  store = new Store()
-  debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
-  disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  constructor() {
+    try {
+      this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+    } catch (e) {
+      // This should never happen
+      this.config = {
+        get: key => this.config[key],
+        set: (key, value) => (this.config[key] = value),
+        all: this.config,
+        path: path.join(os.tmpdir(), `gatsby`),
+        "telemetry.enabled": true,
+        "telemetry.machineId": `not-a-machine-id`,
+      }
+    }
+
+    const baseDir = path.dirname(this.config.path)
+
+    try {
+      ensureDirSync(baseDir)
+    } catch (e) {
+      // TODO: Log this event
+    }
+
+    this.store = new Store(baseDir)
+    this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
+    this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
+    this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  }
 
   addEvent(event) {
     if (this.disabled) {
       return
     }
 
-    if (this.debugEvents) {
-      console.error(`Captured event:`, JSON.stringify(event))
-    } else {
-      this.store.appendToBuffer(JSON.stringify(event) + `\n`)
+    const eventString = JSON.stringify(event)
+
+    if (this.debugEvents || this.verbose) {
+      console.error(`Captured event:`, eventString)
+
+      if (this.debugEvents) {
+        // Bail because we don't want to send debug events
+        return
+      }
     }
+
+    this.store.appendToBuffer(eventString + `\n`)
   }
 
   async sendEvents() {
@@ -52,12 +88,12 @@ module.exports = class EventStorage {
 
   getConfig(key) {
     if (key) {
-      return this.store.getConfig(key)
+      return this.config.get(key)
     }
-    return this.store.getConfig()
+    return this.config.all
   }
 
-  updateConfig(...conf) {
-    return this.store.updateConfig(...conf)
+  updateConfig(key, value) {
+    return this.config.set(key, value)
   }
 }

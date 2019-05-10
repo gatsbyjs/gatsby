@@ -61,18 +61,6 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
-    "name": "query-runner",
-    "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
     "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
     "name": "webpack-theme-component-shadowing",
     "nodeAPIs": Array [
@@ -168,18 +156,6 @@ Array [
     "nodeAPIs": Array [
       "onCreatePage",
     ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
-    "name": "query-runner",
-    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },

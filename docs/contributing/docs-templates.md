@@ -9,8 +9,8 @@ title: Docs Templates
     - [Guide overview template](#guide-overview-template)
 4.  [Tutorial](#tutorial)
     - [Tutorial template](#tutorial-template)
-5.  [Plugin READme template](#plugin-readme-template)
-6.  [Starter READme template](#starter-readme-template)
+5.  [Plugin README template](#plugin-readme-template)
+6.  [Starter README template](#starter-readme-template)
 
 ## The Gatsby Way(TM) of writing guides
 
@@ -292,9 +292,9 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ---
 
-## Plugin READme template
+## Plugin README template
 
-### Near-perfect example of a plugin READme
+### Near-perfect example of a plugin README
 
 `[gatsby-source-filesystem]`(/packages/gatsby-source-filesystem/)
 
@@ -333,7 +333,7 @@ This section could also include before-and-after examples of data when the plugi
 
 ## How to query for data (source plugins only)
 
-If this is a source plugin READme, source plugins ought to allow people to query for data within their Gatsby site. Please include code examples to show how to query for data using your source plugin.
+If this is a source plugin README, source plugins ought to allow people to query for data within their Gatsby site. Please include code examples to show how to query for data using your source plugin.
 
 ## How to run tests
 
@@ -346,11 +346,11 @@ If you have unanswered questions, would like help with enhancing or debugging th
 
 ---
 
-## Starter READme template
+## Starter README template
 
-### Near-perfect example of a starter READme
+### Near-perfect example of a starter README
 
-[Default Starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
+[Default Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ```markdown
 ## Name of starter

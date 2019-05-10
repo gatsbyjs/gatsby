@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.1.0...gatsby-plugin-manifest@2.1.1) (2019-05-03)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.29...gatsby-plugin-manifest@2.1.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/8291044))
+
+## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.28...gatsby-plugin-manifest@2.0.29) (2019-04-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** fix regression with sharp failing to load ([#13271](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13271)) ([c264a85](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/c264a85)), closes [#13055](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13264)
+
+## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.27...gatsby-plugin-manifest@2.0.28) (2019-04-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** allow multiple icon paths ([#13059](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13059)) ([5dcde0d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/5dcde0d)), closes [#13055](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13055)
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.26...gatsby-plugin-manifest@2.0.27) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.25...gatsby-plugin-manifest@2.0.26) (2019-03-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** ensure icon_options is stripped ([#12907](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/12907)) ([201a4f5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/201a4f5))
+
 ## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.0.24...gatsby-plugin-manifest@2.0.25) (2019-03-27)
 
 ### Bug Fixes

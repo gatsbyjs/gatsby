@@ -67,10 +67,10 @@ examples:
 - [guides](/docs/add-404-page/)
 - [guide overviews](/docs/styling/)
 - [tutorials](/tutorial/part-one/)
-- [plugin READme](/packages/gatsby-source-filesystem/)
-- [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
+- [plugin README](/packages/gatsby-source-filesystem/)
+- [starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -153,7 +153,17 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+
+```markdown
+<!-- Good -->
+
+[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+
+<!-- Bad -->
+
+[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
@@ -205,7 +215,7 @@ Here are some folder name examples:
 - querying-data-with-graphql
 
 Note: Just to clarify, you can include special characters in the article title
-but _not_ in the `.md` file name or folder name (e.g. Title: What is GraphQL? and Folder Name:
+but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name:
 what-is-graphql).
 
 ## Grammar and formatting
@@ -405,7 +415,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 

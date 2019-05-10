@@ -11,25 +11,47 @@ The basic node data structure is as follows:
 id: String,
 children: Array[String],
 parent: String,
-// Reserved for plugins who wish to extend other nodes.
 fields: Object,
 internal: {
   contentDigest: String,
-  // Optional media type (https://en.wikipedia.org/wiki/Media_type) to indicate
-  // to transformer plugins this node has data they can further process.
   mediaType: String,
-  // A globally unique node type chosen by the plugin owner.
   type: String,
-  // The plugin which created this node.
   owner: String,
-  // Stores which plugins created which fields.
   fieldOwners: Object,
-  // Optional field exposing the raw content for this node
-  // that transformer plugins can take and further process.
   content: String,
 }
 ...other fields specific to this type of node
 ```
+
+### `parent`
+
+Reserved for plugins who wish to extend other nodes.
+
+### `contentDigest`
+
+Digest "Hash" (for example `md5sum`) of the content of this node.
+
+The digest should be unique to the content of this node since it's used for caching. If the content changes, this digest should also change. There's a helper function called [createContentDigest](/packages/gatsby/src/utils/create-content-digest.js) to create an `md5` digest.
+
+### `mediaType`
+
+Optional [media type](https://en.wikipedia.org/wiki/Media_type) to indicate to transformer plugins this node has data they can further process.
+
+### `type`
+
+A globally unique node type chosen by the plugin owner.
+
+### `owner`
+
+The plugin which created this node. This field is added by gatsby itself (and not the plugin).
+
+### `fieldOwners`
+
+Stores which plugins created which fields. This field is added by gatsby itself (and not the plugin).
+
+### `content`
+
+Optional field exposing the raw content for this node that transformer plugins can take and further process.
 
 ## Source plugins
 

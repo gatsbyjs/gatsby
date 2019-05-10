@@ -596,7 +596,7 @@ describe(`Query schema`, () => {
               },
             ],
           },
-          skiplimit: { totalCount: 1, edges: [{ node: { id: `md2` } }] },
+          skiplimit: { totalCount: 2, edges: [{ node: { id: `md2` } }] },
         }
         expect(results.errors).toBeUndefined()
         expect(results.data).toEqual(expected)
@@ -646,7 +646,7 @@ Object {
         const results = await runQuery(query)
         const expected = {
           allMarkdown: {
-            totalCount: 1,
+            totalCount: 2,
             nodes: [{ id: `md2` }],
           },
         }

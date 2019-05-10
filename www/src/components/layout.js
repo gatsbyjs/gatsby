@@ -10,8 +10,8 @@ import {
   radii,
   space,
   shadows,
-  breakpoints,
-  dimensions,
+  mediaQueries,
+  sizes,
 } from "../utils/presets"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
@@ -160,13 +160,11 @@ class DefaultLayout extends React.Component {
           css={{
             paddingLeft: `env(safe-area-inset-left)`,
             paddingRight: `env(safe-area-inset-right)`,
-            paddingTop: dimensions.bannerHeight,
+            paddingTop: sizes.bannerHeight,
             // make room for the mobile navigation
-            paddingBottom: dimensions.headerHeight,
-            [breakpoints.md]: {
-              paddingTop: `calc(${dimensions.bannerHeight} + ${
-                dimensions.headerHeight
-              })`,
+            paddingBottom: sizes.headerHeight,
+            [mediaQueries.md]: {
+              paddingTop: `calc(${sizes.bannerHeight} + ${sizes.headerHeight})`,
               paddingBottom: 0,
             },
           }}

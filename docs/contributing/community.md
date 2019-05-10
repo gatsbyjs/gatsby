@@ -2,6 +2,14 @@
 title: Community
 ---
 
+As of March 2019, the Gatsby community is comprised of over 1,800 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+
+Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
+
+We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through helping you contribute to the Gatsby ecosystem, offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
+
+One of our community's values is that ["you belong here"](/blog/2018-09-07-gatsby-values/#you-belong-here).
+
 ## Gatsby Contributor Covenant Code of Conduct
 
 In the interest of fostering an open and welcoming environment, we as

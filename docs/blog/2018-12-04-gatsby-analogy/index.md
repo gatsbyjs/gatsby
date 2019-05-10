@@ -18,7 +18,7 @@ In this post, I'll aim for the latter -- an approachable explanation of what Gat
 
 ## 1. Start off with a pre-configured development environment and build process
 
-Gatsby uses [React](https://reactjs.org/) for its UI layer. It can be notoriously difficult for newcomers to get started with React, or even for experienced React devs to configure a new React project from the ground up every time. (See: [Javascript Fatigue](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4)).
+Gatsby uses [React](https://reactjs.org/) for its UI layer. It can be notoriously difficult for newcomers to get started with React, or even for experienced React devs to configure a new React project from the ground up every time. (See: [JavaScript Fatigue](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4)).
 
 Is it possible to learn every fine-grained detail to optimize a development environment and build process for React? Sure. Is it necessary to get up and going on a project? No, not anymore.
 
@@ -76,7 +76,7 @@ Say you order delivery for dinner. It arrives, you eat. Later, you look at the m
 
 ## 5. Consolidate data sourcing and transformations
 
-With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)”:
+With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](/blog/2018-10-04-journey-to-the-content-mesh/)”:
 
 <pullquote>
   [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.

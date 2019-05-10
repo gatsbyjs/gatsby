@@ -1,35 +1,37 @@
 import {
   breakpoints,
+  mediaQueries,
   colors,
-  dimensions,
+  sizes,
   letterSpacings,
   lineHeights,
   radii,
   shadows,
   space as spaceTokens,
-  scale,
+  fontSizes,
   transition,
   fonts as fontTokens,
 } from "./tokens"
 import { rhythm } from "./typography"
 
 const space = spaceTokens.map(token => rhythm(token))
-let fonts = {}
 
+let fonts = {}
 for (let fontFamily in fontTokens) {
   fonts[fontFamily] = fontTokens[fontFamily].join(`,`)
 }
 
 export {
   breakpoints,
+  mediaQueries,
   colors,
-  dimensions,
+  sizes,
   transition,
   radii,
   shadows,
   letterSpacings,
   lineHeights,
   space,
-  scale,
+  fontSizes,
   fonts,
 }

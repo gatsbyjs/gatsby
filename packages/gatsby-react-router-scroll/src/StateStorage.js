@@ -50,7 +50,8 @@ export default class SessionStorage {
   }
 
   getStateKey(location, key) {
-    const stateKeyBase = `${STATE_KEY_PREFIX}${location.pathname}`
+    const locationKey = location.key || location.pathname
+    const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
     return key === null || typeof key === `undefined`
       ? stateKeyBase
       : `${stateKeyBase}|${key}`

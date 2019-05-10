@@ -35,4 +35,6 @@ We’ll have a lot more features and benefits coming soon. Future additions to t
 
 Fill out the form below to let us know your interest in the Gatsby Partner Program!
 
+### Partner application form:
+
 <hubspot-form portal-id="4731712" form-id="bbad5044-d31d-4473-bd57-62cb64fdc811" sfdc-campaign-id="701f4000000VDrYAAW"></hubspot-form>
