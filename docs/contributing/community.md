@@ -64,3 +64,12 @@ Many members of the community also use Hashnode to ask questions and share their
 the [existing questions and posts](https://hashnode.com/n/gatsby)
 tagged with **gatsby** or
 [ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
+
+## Learn More About Gatsby:
+- [Why Contribute to Gatsby?](https://www.gatsbyjs.org/contributing/why-contribute-to-gatsby/)
+- [Gatsby Community Events](https://www.gatsbyjs.org/contributing/events/)
+- [Where to Participate in the Community?](https://www.gatsbyjs.org/contributing/where-to-participate/)
+- [Organize a Gatsby Event](https://www.gatsbyjs.org/contributing/organize-a-gatsby-event/)
+- [How to Run a Gatsby Workshop](https://www.gatsbyjs.org/contributing/how-to-run-a-gatsby-workshop/)
+- [How to Pitch Gatsby](https://www.gatsbyjs.org/contributing/how-to-pitch-gatsby/)
+
