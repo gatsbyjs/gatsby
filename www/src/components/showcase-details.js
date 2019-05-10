@@ -436,7 +436,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       {` `}
                     </a>
                     <ShareMenu
-                      css={{ display: `flex`, minWidth: 32, minHeight: 32 }}
+                      css={{
+                        display: `flex`,
+                        alignItems: `center`,
+                        minWidth: 32,
+                        minHeight: 32,
+                      }}
                       url={data.sitesYaml.main_url}
                       title={data.sitesYaml.title}
                       image={`https://www.gatsbyjs.org${
