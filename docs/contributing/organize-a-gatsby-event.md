@@ -36,4 +36,4 @@ To request support and submit your event to the Gatsby events page, apply at the
 
 ## Related Links:
 
-- [Gatsby's Community Events](https://www.gatsbyjs.org/contributing/events/)
+- [Gatsby's Community Events](/contributing/events/)
