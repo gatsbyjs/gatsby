@@ -25,8 +25,8 @@ exports.sourceNodes = async (
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
 
-  // Default concurrentFileRequests to `40`
-  concurrentFileRequests = concurrentFileRequests || 40
+  // Default concurrentFileRequests to `20`
+  concurrentFileRequests = concurrentFileRequests || 20
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
