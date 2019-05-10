@@ -1,5 +1,4 @@
 const { Client, Server } = require(`styletron-engine-atomic`)
-const { driver } = require(`styletron-standard`)
 
 let memoizedValue
 
@@ -15,7 +14,6 @@ module.exports = (() => options => {
       instance = new Server(options)
     }
     memoizedValue = {
-      css: json => driver(json, instance),
       instance,
     }
   }
