@@ -261,11 +261,11 @@ module.exports = async (program, directory, suppliedStage) => {
       store.getState().config._experimentalThemes &&
       store.getState().config._experimentalThemes.length
     ) {
-      configRules.concat(
+      configRules = configRules.concat(
         store.getState().themes.themes.map(theme => {
           return {
             test: /\.jsx?$/,
-            includes: theme.themeDir,
+            include: theme.themeDir,
             use: [loaders.js()],
           }
         })
