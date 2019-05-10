@@ -258,8 +258,7 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.miscAssets(),
     ]
     if (
-      store.getState().config._experimentalThemes &&
-      store.getState().config._experimentalThemes.length
+      store.getState().themes.themes
     ) {
       configRules = configRules.concat(
         store.getState().themes.themes.map(theme => {
