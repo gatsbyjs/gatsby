@@ -6,7 +6,12 @@ Gatsby's core philosophy can be divided into three parts.
 
 **First, our vision.** Our vision is to create better building blocks for the web, and unify the emerging content wesh. 
 
-**Second, our tooling philosophy.** We want to make the right thing the easy thing and progressively disclose complexity. 
+**Second, our tooling philosophy.** We build our tooling with certain goals in mind. These include:
+
+* reducing waste in website development
+* giving creators an immediate connection to their work
+* making the right thing the easy thing
+* progressively disclosure of complexity
 
 **Third, our community philosophy.** We're striving to create the most inclusive community on the web -- we believe in *working in the open*, and we believe that *you belong here*. 
 
@@ -43,6 +48,18 @@ Gatsby's goal is to unify the content mesh; empowering developers while preservi
 [Read more here](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh).
 
 ## Gatsby's tooling philosophy
+
+### Reduce waste in website development
+
+Gatsby's goal is to eliminate all non-value-added-work in website development, such as operations, hosting, and database management, migrations, and so forth. 
+
+### Give creators an immediate connection to their work
+
+Website teams -- designers, developers, marketers, copywriters  -- should have tools that allow them to focus on areas that add value, such as content creation, design, user interactions, business logic, and data structures.   
+
+To do their best work, as Bret Victor says, “creators need an immediate connection to what they're making.” 
+
+When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately. 
 
 ### Make the right thing the easy thing
 
