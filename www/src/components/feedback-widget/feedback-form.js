@@ -136,7 +136,7 @@ const FeedbackForm = ({
         />
       </TextareaLabel>
       <Actions>
-        <CloseButton onClick={handleClose} disabled={submitting}>
+        <CloseButton onClick={handleClose} disabled={submitting} type="button">
           Cancel{` `}
           <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
         </CloseButton>
