@@ -67,7 +67,7 @@ Make a folder called `content/posts` and create two files in it called
 a terminal by using the following commands from the root of your
 project.
 
-```sh
+```shell
 mkdir -p content/posts
 touch content/posts/blog-{1,2}.mdx
 ```
