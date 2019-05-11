@@ -797,6 +797,7 @@ describe(`Headings are generated correctly from schema`, () => {
     `headings {
       value
       depth
+      slug
     }`,
     node => {
       expect(node).toMatchSnapshot()
@@ -804,10 +805,12 @@ describe(`Headings are generated correctly from schema`, () => {
         {
           value: `first title`,
           depth: 1,
+          slug: `/#first-title`,
         },
         {
           value: `second title`,
           depth: 2,
+          slug: `/#second-title`,
         },
       ])
     }
@@ -858,4 +861,30 @@ describe(`Headings are generated correctly from schema`, () => {
       ])
     }
   )
+
+  describe(`Headings handle arguments correctly`, () => {
+    bootstrapTest(
+      `returns value`,
+      `
+  # first title
+  
+  ## second title
+  `,
+      `headings(slugPrefix: "/blog", depth: h2) {
+        value
+        depth
+        slug
+      }`,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.headings).toEqual([
+          {
+            value: `second title`,
+            depth: 2,
+            slug: `/blog/#second-title`,
+          },
+        ])
+      }
+    )
+  })
 })
