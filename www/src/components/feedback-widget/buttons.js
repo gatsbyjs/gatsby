@@ -20,8 +20,8 @@ const rotation = keyframes`
 `
 
 export const focusStyle = css`
-  box-shadow: 0 0 0 0.12rem ${colors.accent};
-  outline: none;
+  outline: 2px solid ${colors.accent};
+  outline-offset: -2px;
 `
 
 const buttonStyles = css`
