@@ -46,10 +46,10 @@ const htmlAstCacheKey = node =>
   `transformer-remark-markdown-html-ast-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const headingsCacheKey = node =>
+const headingsCacheKey = (node, headingsOptions) =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  }-${pluginsCacheStr}-${JSON.stringify(headingsOptions)}-${pathPrefixCacheStr}`
 const tableOfContentsCacheKey = (node, appliedTocOptions) =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
@@ -261,20 +261,40 @@ module.exports = (
       return markdownAST
     }
 
-    async function getHeadings(markdownNode) {
-      const cachedHeadings = await cache.get(headingsCacheKey(markdownNode))
+    async function getHeadings(markdownNode, args) {
+      const cachedHeadings = await cache.get(
+        headingsCacheKey(markdownNode, args)
+      )
       if (cachedHeadings) {
         return cachedHeadings
       } else {
+        const { pathToSlugField, slugPrefix } = args
+        if (
+          pathToSlugField &&
+          _.get(markdownNode, pathToSlugField) === undefined
+        ) {
+          console.warn(
+            `Skipping heading. Field '${pathToSlugField}' (passed by pathToSlugField) missing from markdown node`
+          )
+          return null
+        }
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
+          const slug = [
+            slugPrefix,
+            _.get(markdownNode, pathToSlugField),
+            heading.children[0].url,
+          ]
+            .join(`/`)
+            .replace(/\/\//g, `/`)
           return {
             value: mdastToString(heading),
             depth: heading.depth,
+            slug,
           }
         })
 
-        cache.set(headingsCacheKey(markdownNode), headings)
+        cache.set(headingsCacheKey(markdownNode, args), headings)
         return headings
       }
     }
@@ -467,6 +487,12 @@ module.exports = (
             return heading.depth
           },
         },
+        slug: {
+          type: GraphQLString,
+          resolve(heading) {
+            return heading.slug
+          },
+        },
       },
     })
 
@@ -575,82 +601,92 @@ module.exports = (
           depth: {
             type: HeadingLevels,
           },
-        },
-        resolve(markdownNode, { depth }) {
-          return getHeadings(markdownNode).then(headings => {
-            if (typeof depth === `number`) {
-              headings = headings.filter(heading => heading.depth === depth)
-            }
-            return headings
-          })
-        },
-      },
-      timeToRead: {
-        type: GraphQLInt,
-        resolve(markdownNode) {
-          return getHTML(markdownNode).then(html => {
-            let timeToRead = 0
-            const pureText = sanitizeHTML(html, { allowTags: [] })
-            const avgWPM = 265
-            const wordCount = _.words(pureText).length
-            timeToRead = Math.round(wordCount / avgWPM)
-            if (timeToRead === 0) {
-              timeToRead = 1
-            }
-            return timeToRead
-          })
-        },
-      },
-      tableOfContents: {
-        type: GraphQLString,
-        args: {
           pathToSlugField: {
             type: GraphQLString,
-            defaultValue: `fields.slug`,
+            defaultValue: ``,
           },
-          maxDepth: {
-            type: GraphQLInt,
-          },
-          heading: {
+          slugPrefix: {
             type: GraphQLString,
+            defaultValue: ``,
+          },
+          resolve(markdownNode, { depth, ...rest }) {
+            return getHeadings(markdownNode, {
+              ...rest,
+            }).then(headings => {
+              if (typeof depth === `number`) {
+                headings = headings.filter(heading => heading.depth === depth)
+              }
+              return headings
+            })
           },
         },
-        resolve(markdownNode, args) {
-          return getTableOfContents(markdownNode, args)
+        timeToRead: {
+          type: GraphQLInt,
+          resolve(markdownNode) {
+            return getHTML(markdownNode).then(html => {
+              let timeToRead = 0
+              const pureText = sanitizeHTML(html, { allowTags: [] })
+              const avgWPM = 265
+              const wordCount = _.words(pureText).length
+              timeToRead = Math.round(wordCount / avgWPM)
+              if (timeToRead === 0) {
+                timeToRead = 1
+              }
+              return timeToRead
+            })
+          },
         },
-      },
-      // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
-      wordCount: {
-        type: WordCountType,
-        resolve(markdownNode) {
-          let counts = {}
+        tableOfContents: {
+          type: GraphQLString,
+          args: {
+            pathToSlugField: {
+              type: GraphQLString,
+              defaultValue: `fields.slug`,
+            },
+            maxDepth: {
+              type: GraphQLInt,
+            },
+            heading: {
+              type: GraphQLString,
+            },
+          },
+          resolve(markdownNode, args) {
+            return getTableOfContents(markdownNode, args)
+          },
+        },
+        // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
+        wordCount: {
+          type: WordCountType,
+          resolve(markdownNode) {
+            let counts = {}
 
-          unified()
-            .use(parse)
-            .use(
-              remark2retext,
-              unified()
-                .use(english)
-                .use(count)
-            )
-            .use(stringify)
-            .processSync(markdownNode.internal.content)
+            unified()
+              .use(parse)
+              .use(
+                remark2retext,
+                unified()
+                  .use(english)
+                  .use(count)
+              )
+              .use(stringify)
+              .processSync(markdownNode.internal.content)
 
-          return {
-            paragraphs: counts.ParagraphNode,
-            sentences: counts.SentenceNode,
-            words: counts.WordNode,
-          }
+            return {
+              paragraphs: counts.ParagraphNode,
+              sentences: counts.SentenceNode,
+              words: counts.WordNode,
+            }
 
-          function count() {
-            return counter
-            function counter(tree) {
-              visit(tree, visitor)
-              function visitor(node) {
-                counts[node.type] = (counts[node.type] || 0) + 1
+            function count() {
+              return counter
+              function counter(tree) {
+                visit(tree, visitor)
+                function visitor(node) {
+                  counts[node.type] = (counts[node.type] || 0) + 1
+                }
               }
             }
-          }
+          },
         },
       },
     })
