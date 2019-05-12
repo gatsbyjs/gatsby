@@ -49,9 +49,9 @@ const shouldUseYarn = async () => {
 const gitInit = async rootPath => {
   report.info(`Initialising git in ${rootPath}`)
 
-  let curDir = sysPath.normalize(rootPath);
+  let curDir = sysPath.normalize(rootPath)
 
-  while (curDir !== "/" && curDir !== "C:\\") {
+  while (curDir !== `/` && curDir !== `C:\\`) {
     if (existsSync(sysPath.join(curDir, `.git`))) {
       return
     }
@@ -212,4 +212,3 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starter, rootPath)
 }
-
