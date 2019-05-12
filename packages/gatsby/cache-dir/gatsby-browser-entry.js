@@ -10,6 +10,7 @@ import Link, {
   parsePath,
 } from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
+import { enqueue as prefetchPathname } from "./loader"
 
 const StaticQueryContext = React.createContext({})
 
@@ -82,4 +83,5 @@ export {
   StaticQuery,
   PageRenderer,
   useStaticQuery,
+  prefetchPathname,
 }
