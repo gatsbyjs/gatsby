@@ -182,4 +182,23 @@ describe(`gatsby-remark-autolink-headers`, () => {
       expect(node.data.id).toEqual(expect.stringMatching(/^heading/))
     })
   })
+
+  it(`extracts custom id`, () => {
+    const markdownAST = remark.parse(`
+# Heading One {#cusom_h1}
+
+## Heading Two {#custom-heading-two}
+
+# With *Bold* {#cusgom-withbold}
+    `)
+    const enableCustomId = true
+
+    const transformed = plugin({ markdownAST }, { enableCustomId })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
 })
