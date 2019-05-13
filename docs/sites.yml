@@ -5891,10 +5891,9 @@
     Learn how to build inclusive web applications and Single Page Apps in modern JavaScript frameworks. This project collects strategies, links, patterns and plugins for React, Vue and Angular.
   categories:
     - Accessibility
-    - Web-app
-    - React
-    - Vue
-    - Angular
+    - Web Development
+    - Tutorial
+    - JavaScript
   built_by: Marcus Herrmann
   built_by_url: https://marcus.io
   featured: false
