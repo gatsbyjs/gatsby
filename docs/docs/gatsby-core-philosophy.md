@@ -2,16 +2,16 @@
 title: Gatsby core philosophy
 ---
 
-Gatsby's core philosophy can be divided into three parts. 
+Gatsby's core philosophy can be divided into three parts.
 
-**First, our vision.** Our vision is to *create better building blocks for the web*, and *build a cohesive "content mesh system"*, in order to *make building websites fun*. 
+**First, our vision.** Our vision is to _create better building blocks for the web_, and _build a cohesive "content mesh system"_, in order to _make building websites fun_.
 
 **Second, our tooling philosophy.** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
-* making the right thing the easy thing
-* progressively disclosure of complexity
+- making the right thing the easy thing
+- progressively disclosure of complexity
 
-**Third, our community philosophy.** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we *work in the open*. At all times, we believe, and strive to communicate, that *you belong here*. 
+**Third, our community philosophy.** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _work in the open_. At all times, we believe, and strive to communicate, that _you belong here_.
 
 ## The Gatsby Vision
 
@@ -19,7 +19,7 @@ Gatsby's core philosophy can be divided into three parts.
 
 Today's building blocks for the web are HTML, CSS, and Javascript; `<img>` and `<a href>` and so on.
 
-We believe that in 20 or 25 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in. 
+We believe that in 20 or 25 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in.
 
 Using abstractions like React components, `gatsby-image`, and `gatsby-link`, we've begun to craft this higher-level language. But we're just getting started. Gatsby is a playground for discovering new building blocks for the web.
 
@@ -31,9 +31,9 @@ To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
 ### Build a cohesive "content mesh system"
 
-Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh". Their key challenge: integrating all these pieces together. 
+Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh". Their key challenge: integrating all these pieces together.
 
-Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modelling, authentication, search, analytics, payments, UI frameworks, and so on -- into a unified, high-quality whole. 
+Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modelling, authentication, search, analytics, payments, UI frameworks, and so on -- into a unified, high-quality whole.
 
 [Read more here](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh).
 
@@ -51,15 +51,15 @@ When this incantation is simple and takes seconds, we can easily get lost for ho
 
 Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this this -- with proper tooling.
 
-Each creator needs, as Bret Victor put it, "an immediate connection to what they're making.” 
+Each creator needs, as Bret Victor put it, "an immediate connection to what they're making.”
 
 These instant feedback loops are often felt near the beginning of projects. But they can quickly be drowned by project complexity.
 
-Developers can spend hours waiting for deploys, tracking down phantom "tooling" bugs, and so on. 
+Developers can spend hours waiting for deploys, tracking down phantom "tooling" bugs, and so on.
 
-We believe that with the right building blocks, and an integrated "content mesh system", website projects should continue to feel "fun" no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole. 
+We believe that with the right building blocks, and an integrated "content mesh system", website projects should continue to feel "fun" no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole.
 
-When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately. 
+When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately.
 
 ## Gatsby's tooling philosophy
 
@@ -67,7 +67,7 @@ When a copywriter edits a headline in their CMS, a designer draws a button in th
 
 As developers, we want to build great websites for our users.
 
-However, we face constraints. Clients and employers usually have finite budgets and concrete deadlines. 
+However, we face constraints. Clients and employers usually have finite budgets and concrete deadlines.
 
 These constraints results in our sites being less performant, secure, scalable, maintainable, accessible, beautiful, than they would be if we had more time and resources.
 
@@ -75,14 +75,13 @@ Gatsby's approach is to create a website tool so that the laziest, shortcuttiest
 
 This includes:
 
-* *great developer experience without sacrificing UX or performance*. Gatsby focuses heavily on reducing the barrier for developers to make good UX decisions by removing the difficulty in implementing them. Things that are typically pretty challenging to set up — such as bundle splitting, asset prefetching, offline support, image optimization, or server side rendering — are all done by default with Gatsby.
+- _great developer experience without sacrificing UX or performance_. Gatsby focuses heavily on reducing the barrier for developers to make good UX decisions by removing the difficulty in implementing them. Things that are typically pretty challenging to set up — such as bundle splitting, asset prefetching, offline support, image optimization, or server side rendering — are all done by default with Gatsby.
 
 For example, our default starter gets a perfect score on webpagetest.org, so developers don’t have to think about the underlying setup at all. They can just build a website and know that the UX was already paid for by Gatsby’s underlying code.
 
 Design decisions in Gatsby’s core are framed by a discussion of the trade-offs both for the developers working with the tools (i.e. the DX: is this pleasant to build with?) and the people who will actually use the sites that are built with it (i.e. the UX: does this improve the experience for the end user?). By taking both UX and DX into consideration, we’re able to avoid forcing a situation where the developers’ experience is at odds with the users’.
 
-* *cheap, secure, and maintainable by default*. Built Gatsby sites are just files living on a CDN. This reduces risk by removing the CMS as an attack surface, drastically reduces cost to serve your site at scale, and reduces the need to keep running servers. 
-
+- _cheap, secure, and maintainable by default_. Built Gatsby sites are just files living on a CDN. This reduces risk by removing the CMS as an attack surface, drastically reduces cost to serve your site at scale, and reduces the need to keep running servers.
 
 ### Progressive disclosure of complexity
 
@@ -110,11 +109,9 @@ One of Gatsby's key roles is to bundle modern Javascript build tools. These incl
 
 These systems are incredibly powerful. At the same time, they are quite complex. Users shouldn't _need_ to know these systems exist.
 
-Instead, their ES6 code should seamlessly transpile into a form accessible by modern browsers. If they want to use Typescript or Reason, they should be able to. If they want to upgrade (or downgrade!) from specific versions of React, they should be able to. 
+Instead, their ES6 code should seamlessly transpile into a form accessible by modern browsers. If they want to use Typescript or Reason, they should be able to. If they want to upgrade (or downgrade!) from specific versions of React, they should be able to.
 
-Some "zero-config" frameworks bundle complexity together that is only configurable by "ejecting". The challenge with ejecting is that it takes you from simple to complex as soon as you move out of the happy path. 
-
-
+Some "zero-config" frameworks bundle complexity together that is only configurable by "ejecting". The challenge with ejecting is that it takes you from simple to complex as soon as you move out of the happy path.
 
 ## Gatsby's community philosophy
 
@@ -122,9 +119,9 @@ Some "zero-config" frameworks bundle complexity together that is only configurab
 
 Open source is at the core of Gatsby’s success, and one of the central tenets of open source is that things are done in the open and without smoke and mirrors.
 
-One of Gatsby’s core strengths are the strength of its community and ecosystem. 
+One of Gatsby’s core strengths are the strength of its community and ecosystem.
 
-We’re convinced that the right path forward is to continue working in the open. 
+We’re convinced that the right path forward is to continue working in the open.
 
 Anyone can open an issue and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can submit an RFC to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
@@ -134,9 +131,9 @@ Many of Gatsby's key features emerged from conversation between contributors. If
 
 Open source is great for developers. It lets you:
 
-* create a body of work that looks great on a resume or CV
-* build a referral network for paid work
-* turn it into a sustainable source of income
+- create a body of work that looks great on a resume or CV
+- build a referral network for paid work
+- turn it into a sustainable source of income
 
 #### Barriers to contributing to open source
 
@@ -152,15 +149,15 @@ Third, many people don’t see themselves represented in open source.
 
 We believe that that these barriers aren't simply obstacles to contributing, they're also obstacles to creating thriving projects. When these barriers persist:
 
-* projects lose so many brilliant people who have so much to contribute
-* projects lose an opportunity to add more maintainers
-* existing maintainers lose the opportunity to build support networks
+- projects lose so many brilliant people who have so much to contribute
+- projects lose an opportunity to add more maintainers
+- existing maintainers lose the opportunity to build support networks
 
 Our approach is to be proactive in creating community:
 
-* actively reaching out and welcome new contributors
-* remembering how steep the learning curve can be
-* invest in community as a primary measure of success
+- actively reaching out and welcome new contributors
+- remembering how steep the learning curve can be
+- invest in community as a primary measure of success
 
 #### Community is everything
 
@@ -170,12 +167,12 @@ To accomplish this, we follow a guiding core value: you belong here.
 
 Some things we do in order to create an inclusive, welcoming community include:
 
-* Code of conduct
-* Commitment to accessibility
-* Extensive docs
-* Friendlier robots
-* Implicit trust
-* Active gratitude
-* Active mentorship
+- Code of conduct
+- Commitment to accessibility
+- Extensive docs
+- Friendlier robots
+- Implicit trust
+- Active gratitude
+- Active mentorship
 
 We’ve built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
