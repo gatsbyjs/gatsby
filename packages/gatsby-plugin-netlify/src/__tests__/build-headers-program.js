@@ -2,13 +2,14 @@ import buildHeadersProgram from "../build-headers-program"
 import path from "path"
 import os from "os"
 import { promises as fs } from "fs"
+import { DEFAULT_OPTIONS } from "../constants"
 
-test(`snapshot`, async () => {
+const createPluginData = async () => {
   const tmpDir = await fs.mkdtemp(
     path.join(os.tmpdir(), `gatsby-plugin-netlify-`)
   )
 
-  const pluginData = {
+  return {
     pages: new Map(
       Object.entries({
         "/offline-plugin-app-shell-fallback/": {
@@ -126,15 +127,29 @@ test(`snapshot`, async () => {
     pathPrefix: ``,
     publicFolder: fileName => path.join(tmpDir, fileName),
   }
+}
+
+test(`with caching headers`, async () => {
+  const pluginData = await createPluginData()
 
   const pluginOptions = {
-    headers: {},
-    mergeSecurityHeaders: true,
-    mergeLinkHeaders: true,
+    ...DEFAULT_OPTIONS,
     mergeCachingHeaders: true,
-    transformHeaders: x => x,
-    generateMatchPathRewrites: true,
-    plugins: [],
+  }
+
+  await buildHeadersProgram(pluginData, pluginOptions)
+
+  expect(
+    await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
+  ).toMatchSnapshot()
+})
+
+test(`without caching headers`, async () => {
+  const pluginData = await createPluginData()
+
+  const pluginOptions = {
+    ...DEFAULT_OPTIONS,
+    mergeCachingHeaders: false,
   }
 
   await buildHeadersProgram(pluginData, pluginOptions)
