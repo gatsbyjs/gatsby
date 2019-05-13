@@ -130,6 +130,12 @@ jobs:
     executor: node
     <<: *test_template
 
+  unit_tests_node12:
+    executor:
+      name: node
+      image: "12"
+    <<: *test_template
+
   unit_tests_www:
     executor: node
     steps:
@@ -219,6 +225,10 @@ workflows:
           requires:
             - bootstrap
       - unit_tests_node10:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - bootstrap

@@ -25,6 +25,16 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
+  it(`can navigate back using history`, () => {
+    cy.getTestElement(`page-two`)
+      .click()
+      .waitForRouteChange()
+
+    cy.go(`back`).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/`)
+  })
+
   describe(`non-existant route`, () => {
     beforeEach(() => {
       cy.getTestElement(`broken-link`)

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.1.0...gatsby-link@2.1.1) (2019-05-03)
+
+### Bug Fixes
+
+- **gatsby-link:** provide fallback for **BASE_PATH** being missing ([#13839](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/13839)) ([dc554bf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/dc554bf))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.17...gatsby-link@2.1.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/commit/8291044))
+
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link/compare/gatsby-link@2.0.16...gatsby-link@2.0.17) (2019-04-30)
 
 **Note:** Version bump only for package gatsby-link

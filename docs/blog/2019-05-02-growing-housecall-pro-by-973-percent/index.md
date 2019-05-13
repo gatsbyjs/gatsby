@@ -57,7 +57,7 @@ This has dramatically decreased developer time and rocketed the speed of page cr
 Below is an example of one of our live industry pages (in this case Heating/Air
 Conditioning). Each industry page follows the same template, and content authors can build out new industries, complete with whatever copy, icons, images, and animations they need to allow each to stand out as its own work of art.
 
-![Housecall Pro Website Example(./images/website-example.png)
+![Housecall Pro Website Example](./images/website-example.png)
 
 ## Developer Love
 
