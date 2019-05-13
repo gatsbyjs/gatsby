@@ -154,6 +154,7 @@ People often store dates like "2018-01-05" but want to display the date in some 
   date(formatString: "MMMM Do, YYYY")
 }
 ```
+See the full list of formatting options by viewing our [GraphQL Reference page](/docs/graphql-reference/#dates).
 
 ### Markdown
 
