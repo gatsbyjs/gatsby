@@ -367,7 +367,7 @@ describe(`navigation is routed through browser if resources have failed and the 
 
   afterAll(() => {
     eventDestroyer()
-    delete global.___failedResources
+    global.___failedResources = false
   })
 
   it(`shares the same origin and top path`, done => {
