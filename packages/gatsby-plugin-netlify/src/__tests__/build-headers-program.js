@@ -10,9 +10,10 @@ const createPluginData = async () => {
   )
 
   return {
-    pages: new Map(
-      Object.entries({
-        "/offline-plugin-app-shell-fallback/": {
+    pages: new Map([
+      [
+        `/offline-plugin-app-shell-fallback/`,
+        {
           jsonName: `offline-plugin-app-shell-fallback-a30`,
           internalComponentName: `ComponentOfflinePluginAppShellFallback`,
           path: `/offline-plugin-app-shell-fallback/`,
@@ -24,7 +25,10 @@ const createPluginData = async () => {
           pluginCreator___NODE: `63e5f7ff-e5f1-58f7-8e2c-55872ac42281`,
           pluginCreatorId: `63e5f7ff-e5f1-58f7-8e2c-55872ac42281`,
         },
-        "/hi-folks/": {
+      ],
+      [
+        `/hi-folks/`,
+        {
           jsonName: `hi-folks-a2b`,
           internalComponentName: `ComponentHiFolks`,
           path: `/hi-folks/`,
@@ -36,7 +40,10 @@ const createPluginData = async () => {
           pluginCreator___NODE: `7374ebf2-d961-52ee-92a2-c25e7cb387a9`,
           pluginCreatorId: `7374ebf2-d961-52ee-92a2-c25e7cb387a9`,
         },
-        "/my-second-post/": {
+      ],
+      [
+        `/my-second-post/`,
+        {
           jsonName: `my-second-post-2aa`,
           internalComponentName: `ComponentMySecondPost`,
           path: `/my-second-post/`,
@@ -48,7 +55,10 @@ const createPluginData = async () => {
           pluginCreator___NODE: `7374ebf2-d961-52ee-92a2-c25e7cb387a9`,
           pluginCreatorId: `7374ebf2-d961-52ee-92a2-c25e7cb387a9`,
         },
-        "/hello-world/": {
+      ],
+      [
+        `/hello-world/`,
+        {
           jsonName: `hello-world-8bc`,
           internalComponentName: `ComponentHelloWorld`,
           path: `/hello-world/`,
@@ -60,7 +70,10 @@ const createPluginData = async () => {
           pluginCreator___NODE: `7374ebf2-d961-52ee-92a2-c25e7cb387a9`,
           pluginCreatorId: `7374ebf2-d961-52ee-92a2-c25e7cb387a9`,
         },
-        "/404/": {
+      ],
+      [
+        `/404/`,
+        {
           jsonName: `404-22d`,
           internalComponentName: `Component404`,
           path: `/404/`,
@@ -72,7 +85,10 @@ const createPluginData = async () => {
           pluginCreator___NODE: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
           pluginCreatorId: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
         },
-        "/": {
+      ],
+      [
+        `/`,
+        {
           jsonName: `index`,
           internalComponentName: `ComponentIndex`,
           path: `/`,
@@ -84,7 +100,10 @@ const createPluginData = async () => {
           pluginCreator___NODE: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
           pluginCreatorId: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
         },
-        "/404.html": {
+      ],
+      [
+        `/404.html`,
+        {
           jsonName: `404-html-516`,
           internalComponentName: `Component404Html`,
           path: `/404.html`,
@@ -96,8 +115,8 @@ const createPluginData = async () => {
           pluginCreator___NODE: `f795702c-a3b8-5a88-88ee-5d06019d44fa`,
           pluginCreatorId: `f795702c-a3b8-5a88-88ee-5d06019d44fa`,
         },
-      })
-    ),
+      ],
+    ]),
     manifest: {
       "main.js": `render-page.js`,
       "main.js.map": `render-page.js.map`,
