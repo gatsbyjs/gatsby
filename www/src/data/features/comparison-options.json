@@ -1,4 +1,12 @@
 {
-  "jamstack": ["nextjs", "jekyll", "hugo", "nuxtjs"],
-  "cms": ["wordpress", "drupal"]
+  "jamstack": [
+    { "key": "nextjs", "display": "NextJS" },
+    { "key": "jekyll", "display": "Jekyll" },
+    { "key": "hugo", "display": "Hugo" },
+    { "key": "nuxtjs", "display": "NuxtJS" }
+  ],
+  "cms": [
+    { "key": "wordpress", "display": "WordPress" },
+    { "key": "drupal", "display": "Drupal" }
+  ]
 }

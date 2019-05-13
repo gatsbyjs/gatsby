@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 
+import Button from "../components/button"
 import Layout from "../components/layout"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
@@ -8,20 +9,13 @@ import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
-import { letterSpacings } from "../utils/presets"
+import { letterSpacings, space } from "../utils/presets"
 
 const FeaturesHeader = () => (
   <section>
     <h1 id="introduction" style={{ marginTop: 0 }}>
       Features
     </h1>
-    <p>
-      Coming from the CMS world? See{` `}
-      <Link to="/features/cms">Gatsby versus traditional CMS</Link>
-      <br />
-      Coming from the JAMstack world? See{` `}
-      <Link to="/features/jamstack">Gatsby versus JAMstack frameworks</Link>
-    </p>
     <p>
       There are many ways to build a website. If you’re considering Gatsby, you
       may also be looking at some alternatives:
@@ -51,6 +45,11 @@ const FeaturesHeader = () => (
         <code>pages/</code> in a version-controlled codebase. They then build a
         specific kind of site, usually a blog, as HTML files from the content
         you’ve added. These files can be cached and served from a CDN.
+        <br />
+        <p css={{marginTop: space[2]}} >
+          Coming from the JAMstack world?
+        </p>
+        <Button to="/features/jamstack" secondary>Compare Gatsby vs JAMstack</Button>
       </li>
       <li>
         <strong>Traditional content management systems</strong> (CMSs) like
@@ -75,6 +74,11 @@ const FeaturesHeader = () => (
         sent to users when they visit the website. Depending on your
         requirements you can self-host your website or use an official hosting
         provider.
+        <br />
+        <p css={{marginTop: space[2]}}>
+          Coming from the CMS world?
+        </p>
+        <Button to="/features/cms" secondary>Compare Gatsby vs CMS</Button>
       </li>
     </ul>
     <p>

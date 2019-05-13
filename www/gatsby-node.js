@@ -599,7 +599,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         return options
       }
 
-      for (const value of generatePowerSet(featureComparisonOptions.cms)) {
+      for (const value of generatePowerSet(
+        featureComparisonOptions.cms.map(option => option.key)
+      )) {
         if (value.length > 0) {
           const optionSet = [...value]
           createPage({
@@ -611,7 +613,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           })
         }
       }
-      for (const value of generatePowerSet(featureComparisonOptions.jamstack)) {
+      for (const value of generatePowerSet(
+        featureComparisonOptions.jamstack.map(option => option.key)
+      )) {
         if (value.length > 0) {
           const optionSet = [...value]
           createPage({

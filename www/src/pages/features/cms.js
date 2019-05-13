@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Button from "../../components/button"
@@ -10,20 +10,9 @@ import Container from "../../components/container"
 import FooterLinks from "../../components/shared/footer-links"
 import FeaturesFooter from "../../components/features/features-footer"
 import LegendTable from "../../components/features/legend-table"
+import CompareButton from "../../components/features/compare-button"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
-import { fontSizes, colors, space } from "../../utils/presets"
-
-const controlButtonStyles = {
-  color: colors.gray.calm,
-  fontWeight: 700,
-  background: `transparent`,
-  fontSize: fontSizes[5],
-  textAlign: `center`,
-  "&:hover": {
-    cursor: `pointer`,
-  },
-  "&:active": { background: colors.ui.light },
-}
+import { space } from "../../utils/presets"
 
 const FeaturesHeader = () => (
   <section>
@@ -36,16 +25,19 @@ const FeaturesHeader = () => (
 )
 
 const CmsFeaturesPage = ({ data, location }) => {
-  const [selected, setSelected] = React.useState({})
+  const setSelected = (state, selected) => ({ ...state, ...selected })
+  const [selected, dispatch] = React.useReducer(setSelected, {"wordpress": false, "drupal": false})
 
   const { sections, sectionHeaders } = getFeaturesData(
     data.allGatsbyCmsSpecsCsv.edges
   )
 
   let comparators = []
+  let hasSelected = false
   for (const [key, value] of Object.entries(selected)) {
     if (value) {
       comparators.push(key)
+      hasSelected = true
     }
   }
 
@@ -59,26 +51,34 @@ const CmsFeaturesPage = ({ data, location }) => {
         <main id={`reach-skip-nav`}>
           <FeaturesHeader />
           <h3>Comparison</h3>
-          {featureComparisonOptions.cms.map(option => (
-            <button
-              key={option}
-              css={{
-                ...controlButtonStyles,
-                borderColor: selected[option]
-                  ? colors.whisteria
-                  : colors.ui.whisper,
-                background: selected[option] ? colors.lavender : `inherit`,
-              }}
-              onClick={e =>
-                setSelected({ ...selected, [option]: !selected[option] })
+          <div
+            css={{
+              display: `grid`,
+              gridTemplateColumns: `repeat(${featureComparisonOptions.cms
+                .length + 1}, 1fr)`,
+              gridGap: space[2],
+            }}
+          >
+            {featureComparisonOptions.cms.map(({ key: optionKey, display }) => (
+              <CompareButton
+                key={optionKey}
+                optionKey={optionKey}
+                selected={selected[optionKey]}
+                setSelected={dispatch}
+              >
+                {display}
+              </CompareButton>
+            ))}
+            <Button
+              to={
+                hasSelected
+                  ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`
+                  : location.pathname
               }
             >
-              {option}
-            </button>
-          ))}
-          <Button to={`/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`}>
-            Compare
-          </Button>
+              Compare
+            </Button>
+          </div>
           <EvaluationTable
             columnHeaders={[`Category`, `Gatsby`, `WordPress`, `Drupal`]}
             nodeFieldProperties={[`Feature`, `Gatsby`, `WordPress`, `Drupal`]}
