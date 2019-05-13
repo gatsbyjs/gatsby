@@ -1,4 +1,4 @@
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
@@ -19,8 +19,10 @@ exports.sourceNodes = async (
   }
 ) => {
   const { createNode } = actions
-  const drupalFetchActivity = report.activityTimer(`Fetch data from Drupal`)
-  const downloadingFilesActivity = report.activityTimer(`Remote file download`)
+  const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
+  const downloadingFilesActivity = reporter.activityTimer(
+    `Remote file download`
+  )
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
@@ -35,7 +37,7 @@ exports.sourceNodes = async (
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
-  console.info(`Starting to fetch data from Drupal`)
+  reporter.info(`Starting to fetch data from Drupal`)
 
   // TODO restore this
   // let lastFetched
@@ -206,7 +208,7 @@ exports.sourceNodes = async (
     })
   })
 
-  console.info(`Downloading remote files from Drupal`)
+  reporter.info(`Downloading remote files from Drupal`)
   downloadingFilesActivity.start()
 
   // Download all files (await for each pool to complete to fix concurrency issues)
@@ -247,8 +249,7 @@ exports.sourceNodes = async (
           auth,
         })
       } catch (err) {
-        // Ignore
-        console.error(err)
+        reporter.error(err)
       }
 
       // If the fileNode exists set the node ID of the local file
