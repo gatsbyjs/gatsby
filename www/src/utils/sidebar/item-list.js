@@ -9,16 +9,8 @@ const createHash = link => {
   return index >= 0 ? link.substr(index + 1) : false
 }
 
-const extenditemList = itemList => {
-  itemList.forEach(section => {
-    section.level = 0
-    if (section.items) extendItem(section.items, section.title)
-  })
-  return itemList
-}
-
 const extendItem = (items, parentTitle, level) => {
-  items.forEach((item, index) => {
+  items.forEach(item => {
     item.hash = createHash(item.link)
     item.parentTitle = parentTitle
     item.level = level || 1
@@ -27,30 +19,32 @@ const extendItem = (items, parentTitle, level) => {
   })
 }
 
-const itemListDocs = extenditemList(docsSidebar).map(item => {
-  return { ...item, key: `docs` }
-})
+const extendItemList = itemList => {
+  itemList.forEach(section => {
+    section.level = 0
+    if (section.items) extendItem(section.items, section.title)
+  })
+  return itemList
+}
 
-const itemListFeatures = extenditemList(featuresSidebar).map(item => {
+const extendSidebarData = item => {
   return {
-    ...item,
-    key: `features`,
-    disableAccordions: true,
-    disableExpandAll: true,
+    title: item[0].title,
+    key: item[0].key,
+    disableExpandAll: item[0].disableExpandAll,
+    disableAccordions: item[0].disableAccordions,
+    items: extendItemList(item[0].items),
   }
-})
+}
 
-const itemListTutorial = extenditemList(tutorialSidebar).map(item => {
-  return { ...item, key: `tutorial`, disableAccordions: true }
-})
-
-const itemListContributing = extenditemList(contributingSidebar).map(item => {
-  return { ...item, key: `contributing`, disableAccordions: true }
-})
+const itemListDocs = extendSidebarData(docsSidebar)
+const itemListTutorial = extendSidebarData(tutorialSidebar)
+const itemListContributing = extendSidebarData(contributingSidebar)
+const itemListFeatures = extendSidebarData(featuresSidebar)
 
 export {
   itemListDocs,
-  itemListFeatures,
   itemListTutorial,
   itemListContributing,
+  itemListFeatures,
 }

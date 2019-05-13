@@ -12,7 +12,7 @@ We welcome all contributions from you in the community, and would be thrilled to
 - Blog posts and case studies
 - Talk and lecture videos
 - Workshop materials
-- Github issues and pull requests
+- GitHub issues and pull requests
 
 ...and anything else you can think of. Our showcase and library contribution docs are a great place to start:
 

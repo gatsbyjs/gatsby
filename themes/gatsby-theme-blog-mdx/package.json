@@ -11,9 +11,11 @@
     "gatsby-theme"
   ],
   "dependencies": {
-    "@mdx-js/mdx": "^0.20.3",
-    "@mdx-js/tag": "^0.20.3",
-    "gatsby-mdx": "^0.4.3",
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.10",
+    "@mdx-js/mdx": "^1.0.5",
+    "@mdx-js/react": "^1.0.2",
+    "gatsby-mdx": "^0.6.2",
     "gatsby-plugin-compile-es6-packages": "^1.0.6",
     "gatsby-plugin-emotion": "^4.0.6",
     "gatsby-plugin-meta-redirect": "^1.1.1",
@@ -23,7 +25,6 @@
     "lodash.kebabcase": "^4.1.1",
     "mkdirp": "^0.5.1",
     "prop-types": "^15.7.2",
-    "typography-system": "^0.0.6",
-    "typography-theme-bootstrap": "^0.16.19"
+    "theme-ui": "^0.0.5"
   }
 }

@@ -169,7 +169,7 @@ const AreYouSureLink = () => (
 
 Video hosted on [egghead.io][egghead].
 
-Sometimes you need to navigate to pages programatically, such as during form submissions. In these cases, `Link` won’t work.
+Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
 
 _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
 
@@ -298,9 +298,10 @@ following may be a good starting point:
 ```jsx
 import { Link as GatsbyLink } from "gatsby"
 
-// Since DOM elements <a> cannot receive activeClassName,
-// destructure the prop here and pass it only to GatsbyLink
-const Link = ({ children, to, activeClassName, ...other }) => {
+// Since DOM elements <a> cannot receive activeClassName
+// and partiallyActive, destructure the prop here and
+// pass it only to GatsbyLink
+const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
@@ -309,7 +310,12 @@ const Link = ({ children, to, activeClassName, ...other }) => {
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <GatsbyLink to={to} activeClassName={activeClassName} {...other}>
+      <GatsbyLink
+        to={to}
+        activeClassName={activeClassName}
+        partiallyActive={partiallyActive}
+        {...other}
+      >
         {children}
       </GatsbyLink>
     )

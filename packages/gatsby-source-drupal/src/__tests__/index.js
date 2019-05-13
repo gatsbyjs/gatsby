@@ -25,10 +25,13 @@ describe(`gatsby-source-drupal`, () => {
   const nodes = {}
   const createNodeId = id => `generated-id-${id}`
   const baseUrl = `http://fixture`
+  const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+  const { objectContaining } = expect
 
   beforeAll(async () => {
     const args = {
       createNodeId,
+      createContentDigest,
       actions: {
         createNode: jest.fn(node => (nodes[node.id] = node)),
       },
@@ -46,6 +49,24 @@ describe(`gatsby-source-drupal`, () => {
     expect(nodes[createNodeId(`article-1`)]).toBeDefined()
     expect(nodes[createNodeId(`article-2`)]).toBeDefined()
     expect(nodes[createNodeId(`article-3`)]).toBeDefined()
+  })
+
+  it(`Nodes contain contentDigest`, () => {
+    expect(nodes[createNodeId(`file-1`)]).toEqual(
+      objectContaining({
+        internal: objectContaining({ contentDigest: `contentDigest` }),
+      })
+    )
+    expect(nodes[createNodeId(`article-2`)]).toEqual(
+      objectContaining({
+        internal: objectContaining({ contentDigest: `contentDigest` }),
+      })
+    )
+    expect(nodes[createNodeId(`tag-1`)]).toEqual(
+      objectContaining({
+        internal: objectContaining({ contentDigest: `contentDigest` }),
+      })
+    )
   })
 
   it(`Nodes contain attributes data`, () => {

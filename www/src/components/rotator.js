@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Slider from "./slider"
 import { options } from "../utils/typography"
-import { scale, colors, space, radii } from "../utils/presets"
+import { fontSizes, colors, space, radii } from "../utils/presets"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
@@ -18,7 +18,7 @@ const controlButtonStyles = {
   bottom: 0,
   left: 0,
   padding: 0,
-  fontSize: scale[5],
+  fontSize: fontSizes[5],
   width: space[8],
   textAlign: `center`,
   "&:hover": {
@@ -129,7 +129,7 @@ class Rotator extends Component {
           <p
             css={{
               color: colors.gray.copy,
-              fontSize: scale[4],
+              fontSize: fontSizes[4],
               fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
               marginBottom: 0,
@@ -165,7 +165,7 @@ class Rotator extends Component {
             css={{
               color: colors.gray.calm,
               margin: 0,
-              fontSize: scale[3],
+              fontSize: fontSizes[3],
               textAlign: `center`,
             }}
           >

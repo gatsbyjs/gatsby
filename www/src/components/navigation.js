@@ -9,10 +9,10 @@ import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
-  scale,
+  fontSizes,
   transition,
-  breakpoints,
-  dimensions,
+  mediaQueries,
+  sizes,
   fonts,
 } from "../utils/presets"
 
@@ -49,7 +49,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
-        fontSize: scale[2],
+        fontSize: fontSizes[2],
         ...overrideCSS,
       }}
     >
@@ -62,10 +62,10 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: dimensions.headerHeight,
+        height: sizes.headerHeight,
         left: 0,
         right: 0,
-        top: dimensions.bannerHeight,
+        top: sizes.bannerHeight,
         zIndex: 2,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
@@ -80,7 +80,7 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [breakpoints.md]: {
+        [mediaQueries.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
           backgroundColor: isBlog ? colors.gray.whisper : false,
         },
@@ -128,15 +128,6 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <li css={styles.li}>
-                <Link
-                  to="/community/"
-                  css={styles.navItem}
-                  state={{ filter: `` }}
-                >
-                  Community
-                </Link>
-              </li> */}
           </ul>
         </nav>
         <div css={styles.searchAndSocialContainer}>
@@ -154,7 +145,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [breakpoints.lg]: { display: `flex` },
+              [mediaQueries.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -164,13 +155,6 @@ const Navigation = ({ pathname }) => {
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
           </div>
-          <SocialNavItem
-            href="https://www.gatsbyjs.com"
-            title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0, fontSize: scale[2] }}
-          >
-            .com
-          </SocialNavItem>
         </div>
       </div>
     </header>
@@ -186,17 +170,15 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       marginLeft: space[6],
-      // marginLeft: isHomepage ? false : `auto`,
-      // marginRight: `auto`,
     },
   },
   ulContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
@@ -220,12 +202,12 @@ const styles = {
     position: `relative`,
   },
   navItem: {
-    fontSize: scale[3],
+    fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
-    color: colors.gray.calm,
+    color: colors.gray.copy,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${dimensions.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
     top: 0,

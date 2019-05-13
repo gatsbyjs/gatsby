@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import {
   colors,
   space,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
@@ -22,18 +22,7 @@ class EvaluationTable extends Component {
       const words = txt.split(` `)
       return [
         words.slice(0, words.length - 1).join(` `),
-        <span
-          css={
-            {
-              // WebkitHyphens: `auto`,
-              // MsHyphens: `auto`,
-              // hyphens: `auto`,
-              // wordBreak: `break-all`,
-              // display: `inline-block`,
-            }
-          }
-          key={`info-icon-${words[words.length - 1]}`}
-        >
+        <span key={`info-icon-${words[words.length - 1]}`}>
           {` `}
           {`${words[words.length - 1]} `}
           <img
@@ -64,7 +53,9 @@ class EvaluationTable extends Component {
             >
               <button
                 css={{
+                  background: `none`,
                   border: 0,
+                  cursor: `inherit`,
                   padding: 0,
                   textAlign: `left`,
                 }}
@@ -140,7 +131,7 @@ class EvaluationTable extends Component {
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: scale[1],
+                              fontSize: fontSizes[1],
                               lineHeight: lineHeights.solid,
                             }}
                             id={
@@ -170,7 +161,7 @@ class EvaluationTable extends Component {
                           css={{
                             paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
-                              [breakpoints.xs]: {
+                              [mediaQueries.xs]: {
                                 paddingRight: `${space[3]}`,
                                 paddingLeft: `${space[3]}`,
                               },

@@ -109,7 +109,7 @@ CDNs are globally available, so they’ll be closer to your customer than your s
 
 Payload optimization and delivery optimization are complementary approaches. That’s both good news -- you _can_ do both -- and bad news -- you often _need_ to do both.
 
-For example, if you use a CDN to serve 3MB Javascript bundles, your site is still going to be slow, especially on medium- and low-end mobile devices.
+For example, if you use a CDN to serve 3MB JavaScript bundles, your site is still going to be slow, especially on medium- and low-end mobile devices.
 
 <figure>
   <img alt="" src="./network-requests-adobe-com.png" />

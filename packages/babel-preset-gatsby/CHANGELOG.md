@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.11](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.10...babel-preset-gatsby@0.1.11) (2019-04-02)
+
+### Features
+
+- **gatsby-dev-cli:** add verdaccio support ([#11525](https://github.com/gatsbyjs/gatsby/issues/11525)) ([a4f7e77](https://github.com/gatsbyjs/gatsby/commit/a4f7e77))
+
 ## [0.1.10](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.9...babel-preset-gatsby@0.1.10) (2019-03-23)
 
 ### Bug Fixes

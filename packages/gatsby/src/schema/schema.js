@@ -6,6 +6,7 @@ const {
   defaultFieldResolver,
   assertValidName,
   getNamedType,
+  Kind,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -135,7 +136,7 @@ const processTypeComposer = async ({
 }
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
-  types.forEach(typeOrTypeDef => {
+  types.forEach(({ typeOrTypeDef, plugin }) => {
     if (typeof typeOrTypeDef === `string`) {
       let addedTypes
       try {
@@ -143,25 +144,50 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
       } catch (error) {
         reportParsingError(error)
       }
-      addedTypes.forEach(type =>
-        processAddedType({ schemaComposer, type, parentSpan })
-      )
+      addedTypes.forEach(type => {
+        processAddedType({
+          schemaComposer,
+          type,
+          parentSpan,
+          createdFrom: `sdl`,
+          plugin,
+        })
+      })
     } else if (isGatsbyType(typeOrTypeDef)) {
       const type = createTypeComposerFromGatsbyType({
         schemaComposer,
         type: typeOrTypeDef,
         parentSpan,
       })
+
       if (type) {
-        processAddedType({ schemaComposer, type, parentSpan })
+        processAddedType({
+          schemaComposer,
+          type,
+          parentSpan,
+          createdFrom: `typeBuilder`,
+          plugin,
+        })
       }
     } else {
-      processAddedType({ schemaComposer, type: typeOrTypeDef, parentSpan })
+      processAddedType({
+        schemaComposer,
+        type: typeOrTypeDef,
+        parentSpan,
+        createdFrom: `graphql-js`,
+        plugin,
+      })
     }
   })
 }
 
-const processAddedType = ({ schemaComposer, type, parentSpan }) => {
+const processAddedType = ({
+  schemaComposer,
+  type,
+  parentSpan,
+  createdFrom,
+  plugin,
+}) => {
   const typeName = schemaComposer.addAsComposer(type)
   checkIsAllowedTypeName(typeName)
   const typeComposer = schemaComposer.get(typeName)
@@ -174,6 +200,44 @@ const processAddedType = ({ schemaComposer, type, parentSpan }) => {
     }
   }
   schemaComposer.addSchemaMustHaveType(typeComposer)
+
+  typeComposer.setExtension(`createdFrom`, createdFrom)
+  typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
+
+  if (createdFrom === `sdl`) {
+    if (type.astNode && type.astNode.directives) {
+      type.astNode.directives.forEach(directive => {
+        if (directive.name.value === `infer`) {
+          typeComposer.setExtension(`infer`, true)
+          typeComposer.setExtension(
+            `addDefaultResolvers`,
+            getNoDefaultResolvers(directive)
+          )
+        } else if (directive.name.value === `dontInfer`) {
+          typeComposer.setExtension(`infer`, false)
+          typeComposer.setExtension(
+            `addDefaultResolvers`,
+            getNoDefaultResolvers(directive)
+          )
+        }
+      })
+    }
+  }
+
+  return typeComposer
+}
+
+const getNoDefaultResolvers = directive => {
+  const noDefaultResolvers = directive.arguments.find(
+    ({ name }) => name.value === `noDefaultResolvers`
+  )
+  if (noDefaultResolvers) {
+    if (noDefaultResolvers.value.kind === Kind.BOOLEAN) {
+      return !noDefaultResolvers.value.value
+    }
+  }
+
+  return null
 }
 
 const checkIsAllowedTypeName = name => {

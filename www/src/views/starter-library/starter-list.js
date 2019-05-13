@@ -3,12 +3,12 @@ import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
-import { colors, space, scale } from "../../utils/presets"
+import { colors, space, fontSizes } from "../../utils/presets"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "../../assets/v2icon.svg"
-import get from "lodash/get"
+import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
@@ -113,14 +113,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   </div>
                   <div>
                     <Link to={`/starters${slug}`}>
-                      <h5 css={{ margin: 0, fontSize: scale[2] }}>
+                      <h5 css={{ margin: 0, fontSize: fontSizes[2] }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
-                    {/* {isGatsbyVersionWarning ?
-                        <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
-                        <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                      } */}
                   </div>
                   <div
                     css={{
@@ -178,7 +174,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 
 export default StartersList
 
-function sortingFunction(sortRecent) {
+function sortingFunction() {
   return function({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)

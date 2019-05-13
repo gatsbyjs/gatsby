@@ -174,6 +174,23 @@ describe(`create-remote-file-node`, () => {
           })
         )
       })
+
+      it(`passes custom http heades, if defined`, async () => {
+        await setup({
+          httpHeaders: {
+            Authorization: `Bearer foobar`,
+          },
+        })
+
+        expect(got.stream).toHaveBeenCalledWith(
+          expect.any(String),
+          expect.objectContaining({
+            headers: expect.objectContaining({
+              Authorization: `Bearer foobar`,
+            }),
+          })
+        )
+      })
     })
   })
 

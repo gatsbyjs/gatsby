@@ -1,11 +1,11 @@
 const MongoClient = require(`mongodb`).MongoClient
-const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
+const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged },
+  { actions, getNode, createNodeId, hasNodeChanged, createContentDigest },
   pluginOptions
 ) => {
   const { createNode } = actions
@@ -40,7 +40,15 @@ exports.sourceNodes = (
 
       return Promise.all(
         collection.map(col =>
-          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
+          createNodes(
+            db,
+            pluginOptions,
+            dbName,
+            createNode,
+            createNodeId,
+            col,
+            createContentDigest
+          )
         )
       )
         .then(() => {
@@ -64,8 +72,10 @@ function createNodes(
   dbName,
   createNode,
   createNodeId,
-  collectionName
+  collectionName,
+  createContentDigest
 ) {
+  const { preserveObjectIds = false } = pluginOptions
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
     let cursor = collection.find()
@@ -76,11 +86,17 @@ function createNodes(
         reject(err)
       }
 
-      documents.forEach(item => {
-        var id = item._id.toString()
-        delete item._id
+      documents.forEach(({ _id, ...item }) => {
+        const id = _id.toHexString()
 
-        var node = {
+        // only call recursive function to preserve relations represented by objectids if pluginoption set.
+        if (preserveObjectIds) {
+          for (let key in item) {
+            item[key] = stringifyObjectIds(item[key])
+          }
+        }
+
+        const node = {
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
@@ -92,10 +108,7 @@ function createNodes(
               collectionName
             )}`,
             content: JSON.stringify(item),
-            contentDigest: crypto
-              .createHash(`md5`)
-              .update(JSON.stringify(item))
-              .digest(`hex`),
+            contentDigest: createContentDigest(item),
           },
         }
         const childrenNodes = []
