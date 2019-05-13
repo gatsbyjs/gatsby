@@ -41,7 +41,7 @@ export const ContentTitle = ({
   // todo smooth that out ("Starters" uses "size")
   what = `length`,
 }) => (
-  <h2 css={styles.contentTitle}>
+  <h1 css={styles.contentTitle}>
     {search.length === 0 ? (
       filters[what] === 0 ? (
         // no search or filters
@@ -66,5 +66,5 @@ export const ContentTitle = ({
         {items.length !== 1 && `s`}
       </span>
     )}
-  </h2>
+  </h1>
 )
