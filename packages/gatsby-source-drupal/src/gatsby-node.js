@@ -206,7 +206,7 @@ exports.sourceNodes = async (
     })
   })
 
-  console.info(`Downloading remote files`)
+  console.info(`Downloading remote files from Drupal`)
   downloadingFilesActivity.start()
 
   // Download all files (await for each pool to complete to fix concurrency issues)
