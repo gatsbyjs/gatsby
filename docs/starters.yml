@@ -2479,3 +2479,21 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-identity
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-identity
+  description: Single page starter based on the Identity site template by HTML5 up, suitable for one page portfolio.
+  tags:
+    - Portfolio
+    - HTML5UP
+    - Styling:SCSS
+    - Onepage
+    - LandingPage
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Simple one page personal portfolio
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
