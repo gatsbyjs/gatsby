@@ -5883,3 +5883,16 @@
   built_by: Pol Milian
   built_by_url: https://github.com/Polcius/
   featured: false
+- title: Sandbox
+  url: https://www.sandboxneu.com/
+  main_url: https://www.sandboxneu.com/
+  source_url: https://github.com/sandboxneu/sandboxneu.com
+  description: >
+    Official website of Sandbox, a Northeastern University student group that builds software for researchers.
+  categories:
+    - Marketing
+    - Research
+    - Student
+  built_by: Sandbox at Northeastern
+  built_by_url: https://github.com/sandboxneu/
+  featured: false
