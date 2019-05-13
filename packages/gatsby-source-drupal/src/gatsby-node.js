@@ -252,7 +252,7 @@ exports.sourceNodes = async (
       }
 
       // If the fileNode exists set the node ID of the local file
-      if (fileNode && typeof fileNode === `object`) {
+      if (fileNode) {
         node.localFile___NODE = fileNode.id
       }
     }
