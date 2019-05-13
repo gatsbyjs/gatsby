@@ -46,19 +46,17 @@ const shouldUseYarn = async () => {
 }
 
 const isAlreadyGitRepository = async () => {
-  try{
+  try {
     return await spawn(`git rev-parse --is-inside-work-tree`)
-    .then( (output) => {
-      if(output.failed){
-        return false;
-      } else {
-        return true;
-      }
-    })
-    .catch(() =>{
-      return false;
-    })
-  } catch(err){
+      .then(output => {
+        if (output.failed) {
+          return false
+        } else {
+          return true
+        }
+      })
+      .catch(() => false)
+  } catch (err) {
     return false
   }
 }
@@ -172,9 +170,9 @@ const clone = async (hostInfo: any, rootPath: string) => {
 
   await install(rootPath)
   const isGit = await isAlreadyGitRepository()
-  if(!isGit) await gitInit(rootPath)
+  if (!isGit) await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
-  if(!isGit) await createInitialGitCommit(rootPath, url)
+  if (!isGit) await createInitialGitCommit(rootPath, url)
 }
 
 type InitOptions = {
