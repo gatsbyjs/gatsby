@@ -2462,3 +2462,20 @@
     - Offline support
     - Web App Manifest
     - SEO
+- url: https://anubhavsrivastava.github.io/gatsby-starter-hyperspace
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-hyperspace
+  description: Single page starter based on the Hyperspace site template, with landing, custom and Elements(Component) page
+  tags:
+    - Portfolio
+    - HTML5UP
+    - Styling:SCSS
+    - Onepage
+    - LandingPage
+    - Portfolio
+  features:
+    - Designed by HTML5 UP
+    - Simple one page site that’s perfect for personal portfolios
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
