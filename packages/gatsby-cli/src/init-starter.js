@@ -67,20 +67,6 @@ const isAlreadyGitRepository = async () => {
 const gitInit = async rootPath => {
   report.info(`Initialising git in ${rootPath}`)
 
-  let curDir = sysPath.normalize(rootPath)
-
-  while (curDir !== `/` && curDir !== `C:\\`) {
-    if (existsSync(sysPath.join(curDir, `.git`))) {
-      return
-    }
-
-    curDir = sysPath.resolve(curDir, `..`)
-  }
-
-  if (existsSync(sysPath.join(`.git`))) {
-    return
-  }
-
   return await spawn(`git init`, { cwd: rootPath })
 }
 
