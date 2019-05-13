@@ -46,10 +46,10 @@ const FeaturesHeader = () => (
         specific kind of site, usually a blog, as HTML files from the content
         you’ve added. These files can be cached and served from a CDN.
         <br />
-        <p css={{marginTop: space[2]}} >
-          Coming from the JAMstack world?
-        </p>
-        <Button to="/features/jamstack" secondary>Compare Gatsby vs JAMstack</Button>
+        <p css={{ marginTop: space[2] }}>Coming from the JAMstack world?</p>
+        <Button to="/features/jamstack" secondary>
+          Compare Gatsby vs JAMstack
+        </Button>
       </li>
       <li>
         <strong>Traditional content management systems</strong> (CMSs) like
@@ -75,10 +75,10 @@ const FeaturesHeader = () => (
         requirements you can self-host your website or use an official hosting
         provider.
         <br />
-        <p css={{marginTop: space[2]}}>
-          Coming from the CMS world?
-        </p>
-        <Button to="/features/cms" secondary>Compare Gatsby vs CMS</Button>
+        <p css={{ marginTop: space[2] }}>Coming from the CMS world?</p>
+        <Button to="/features/cms" secondary>
+          Compare Gatsby vs CMS
+        </Button>
       </li>
     </ul>
     <p>

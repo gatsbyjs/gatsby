@@ -25,8 +25,15 @@ const FeaturesHeader = () => (
 )
 
 const JamstackFeaturesPage = ({ data, location }) => {
-  const setSelected = (state, selected) => ({ ...state, ...selected })
-  const [selected, dispatch] = React.useReducer(setSelected, {"nextjs": false, "jekyll": false, "hugo": false, "nuxtjs": false})
+  const setSelected = (state, selected) => {
+    return { ...state, ...selected }
+  }
+  const [selected, dispatch] = React.useReducer(setSelected, {
+    nextjs: false,
+    jekyll: false,
+    hugo: false,
+    nuxtjs: false,
+  })
 
   const { sections, sectionHeaders } = getFeaturesData(
     data.allGatsbyJamstackSpecsCsv.edges
@@ -54,22 +61,23 @@ const JamstackFeaturesPage = ({ data, location }) => {
           <div
             css={{
               display: `grid`,
-              gridTemplateColumns: `repeat(${featureComparisonOptions.jamstack
-                .length + 1}, 1fr)`,
-              gridTemplateRows: `1fr 1fr`,
+              gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
+              gridAutoRows: `1fr`,
               gridGap: space[2],
             }}
           >
-            {featureComparisonOptions.jamstack.map(({ key: optionKey, display }) => (
-              <CompareButton
-                key={optionKey}
-                optionKey={optionKey}
-                selected={selected[optionKey]}
-                setSelected={dispatch}
-              >
-                {display}
-              </CompareButton>
-            ))}
+            {featureComparisonOptions.jamstack.map(
+              ({ key: optionKey, display }) => (
+                <CompareButton
+                  key={optionKey}
+                  optionKey={optionKey}
+                  selected={selected[optionKey]}
+                  setSelected={dispatch}
+                >
+                  {display}
+                </CompareButton>
+              )
+            )}
             <Button
               to={
                 hasSelected

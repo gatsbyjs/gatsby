@@ -18,9 +18,8 @@ const compareButtonStyles = {
   alignItems: `center`,
   justifyContent: `center`,
   borderRadius: radii[1],
-  borderWidth: 2,
+  borderWidth: 1,
   borderStyle: `solid`,
-  color: colors.gray.calm,
   padding: space[2],
   ":hover": {
     borderColor: colors.gatsby,
@@ -46,7 +45,7 @@ const CompareButton = ({ children, optionKey, selected, setSelected }) => (
   <button
     css={{
       ...compareButtonStyles,
-      color: selected ? colors.white : colors.gray.calm,
+      color: selected ? colors.white : colors.gray.bright,
       backgroundColor: selected ? colors.lavender : colors.white,
       borderColor: selected ? colors.gatsby : colors.gray.light,
     }}

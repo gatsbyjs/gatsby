@@ -5,7 +5,7 @@
   items:
     - title: Introduction
       link: /features/#introduction
-    - title: Gatsby vs Traditional CMS
-      link: /features/cms
     - title: Gatsby vs JAMstack frameworks
       link: /features/jamstack
+    - title: Gatsby vs Traditional CMS
+      link: /features/cms

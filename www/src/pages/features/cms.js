@@ -25,8 +25,13 @@ const FeaturesHeader = () => (
 )
 
 const CmsFeaturesPage = ({ data, location }) => {
-  const setSelected = (state, selected) => ({ ...state, ...selected })
-  const [selected, dispatch] = React.useReducer(setSelected, {"wordpress": false, "drupal": false})
+  const setSelected = (state, selected) => {
+    return { ...state, ...selected }
+  }
+  const [selected, dispatch] = React.useReducer(setSelected, {
+    wordpress: false,
+    drupal: false,
+  })
 
   const { sections, sectionHeaders } = getFeaturesData(
     data.allGatsbyCmsSpecsCsv.edges
@@ -54,8 +59,7 @@ const CmsFeaturesPage = ({ data, location }) => {
           <div
             css={{
               display: `grid`,
-              gridTemplateColumns: `repeat(${featureComparisonOptions.cms
-                .length + 1}, 1fr)`,
+              gridTemplateColumns: `repeat(auto-fit, minmax(75px, 120px))`,
               gridGap: space[2],
             }}
           >
