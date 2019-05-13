@@ -1,7 +1,7 @@
 import buildHeadersProgram from "../build-headers-program"
 import path from "path"
 import os from "os"
-import { promises as fs } from "fs"
+import fs from "fs-extra"
 import { DEFAULT_OPTIONS } from "../constants"
 
 const createPluginData = async () => {
