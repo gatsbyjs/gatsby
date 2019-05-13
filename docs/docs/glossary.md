@@ -254,7 +254,7 @@ It also refers to the `/static` folder which is automatically copied into `/publ
 
 ### Template
 
-A [component](#component) that is [programatically](#programatically) turned into a page by Gatsby.
+A [component](#component) that is [programmatically](#programmatically) turned into a page by Gatsby.
 
 ### Transformer
 
