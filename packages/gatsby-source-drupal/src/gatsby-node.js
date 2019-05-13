@@ -1,4 +1,3 @@
-const reporter = require(`gatsby-cli/lib/reporter`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
@@ -7,7 +6,7 @@ const { nodeFromData } = require(`./normalize`)
 const asyncPool = require(`tiny-async-pool`)
 
 exports.sourceNodes = async (
-  { actions, store, cache, createNodeId, createContentDigest },
+  { actions, store, cache, createNodeId, createContentDigest, reporter },
   {
     baseUrl,
     apiBase,
