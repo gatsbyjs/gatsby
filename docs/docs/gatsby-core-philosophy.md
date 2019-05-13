@@ -4,26 +4,18 @@ title: Gatsby core philosophy
 
 Gatsby's core philosophy can be divided into three parts. 
 
-**First, our vision.** Our vision is to create better building blocks for the web, and unify the emerging content wesh. 
+**First, our vision.** Our vision is to *create better building blocks for the web*, and *build a cohesive "content mesh system"*, in order to *make building websites fun*. 
 
-**Second, our tooling philosophy.** We build our tooling with certain goals in mind. These include:
+**Second, our tooling philosophy.** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
-* reducing waste in website development
-* giving creators an immediate connection to their work
 * making the right thing the easy thing
 * progressively disclosure of complexity
 
-**Third, our community philosophy.** We're striving to create the most inclusive community on the web -- we believe in *working in the open*, and we believe that *you belong here*. 
+**Third, our community philosophy.** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we *work in the open*. At all times, we believe, and strive to communicate, that *you belong here*. 
 
 ## The Gatsby Vision
 
-### Create better building blocks for the web
-
-Gatsby's goal is to make website building easier by creating better building blocks for the web.
-
-To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
-
-> “You get simplicity by finding slightly more sophisticated building blocks“.
+### Create new, higher-level web building blocks
 
 Today's building blocks for the web are HTML, CSS, and Javascript; `<img>` and `<a href>` and so on.
 
@@ -31,35 +23,45 @@ We believe that in 20 or 25 years, we'll look back at many of these blocks like 
 
 Using abstractions like React components, `gatsby-image`, and `gatsby-link`, we've begun to craft this higher-level language. But we're just getting started. Gatsby is a playground for discovering new building blocks for the web.
 
+To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
+
+> “You get simplicity by finding slightly more sophisticated building blocks“.
+
 [https://www.gatsbyjs.org/blog/2017-10-16-making-website-building-fun/](Read more here).
 
-### Unify the content mesh
+### Build a cohesive "content mesh system"
 
-The CMS was born to make content sites possible. Now, it’s being reimagined to make them incredible.
+Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh". Their key challenge: integrating all these pieces together. 
 
-In the early 2000s, publishing on the web was difficult. The CMS emerged as a single application to store content, build sites, and deliver them to users.
-
-Over time, the feature landscape broadened — key areas like search, analytics, payments, personalization, and e-commerce emerged. In each category, specialized tools improved rapidly, while the quality of monolithic enterprise CMS applications has stayed roughly the same.
-
-Today, there’s a multitude of vendors, frameworks, and approaches for content modelling, authentication, search, analytics, payments, development environment, performance, and so on.
-
-Gatsby's goal is to unify the content mesh; empowering developers while preserving content creators’ workflows. Gatsby gives you access to best-of-breed services without the pain of manual integration.
+Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modelling, authentication, search, analytics, payments, UI frameworks, and so on -- into a unified, high-quality whole. 
 
 [Read more here](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh).
 
-## Gatsby's tooling philosophy
+### Make building websites fun
 
-### Reduce waste in website development
+Gatsby's vision is to make website development fun by making it simple.
 
-Gatsby's goal is to eliminate all non-value-added-work in website development, such as operations, hosting, and database management, migrations, and so forth. 
+Fred Brooks wrote in _The Mythical Man-Month_:
 
-### Give creators an immediate connection to their work
+> The programmer, like the poet, works only slightly removed from pure thought-stuff. He builds his castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
 
-Website teams -- designers, developers, marketers, copywriters  -- should have tools that allow them to focus on areas that add value, such as content creation, design, user interactions, business logic, and data structures.   
+Technology is incredibly fun when we, like the wizard of fantasy, can type an incantation on our computer and a new creation comes to life.
 
-To do their best work, as Bret Victor says, “creators need an immediate connection to what they're making.” 
+When this incantation is simple and takes seconds, we can easily get lost for hours in the rush of creation trying one thing after another improvising our way to an eventual design.
+
+Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this this -- with proper tooling.
+
+Each creator needs, as Bret Victor put it, "an immediate connection to what they're making.” 
+
+These instant feedback loops are often felt near the beginning of projects. But they can quickly be drowned by project complexity.
+
+Developers can spend hours waiting for deploys, tracking down phantom "tooling" bugs, and so on. 
+
+We believe that with the right building blocks, and an integrated "content mesh system", website projects should continue to feel "fun" no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole. 
 
 When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately. 
+
+## Gatsby's tooling philosophy
 
 ### Make the right thing the easy thing
 
@@ -116,6 +118,18 @@ Some "zero-config" frameworks bundle complexity together that is only configurab
 
 ## Gatsby's community philosophy
 
+### Work in the open
+
+Open source is at the core of Gatsby’s success, and one of the central tenets of open source is that things are done in the open and without smoke and mirrors.
+
+One of Gatsby’s core strengths are the strength of its community and ecosystem. 
+
+We’re convinced that the right path forward is to continue working in the open. 
+
+Anyone can open an issue and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can submit an RFC to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
+
+Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's ols issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system, performance optimizations, and so on.
+
 ### You belong here.
 
 Open source is great for developers. It lets you:
@@ -165,11 +179,3 @@ Some things we do in order to create an inclusive, welcoming community include:
 * Active mentorship
 
 We’ve built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
-
-### Work in the open
-
-Open source is at the core of Gatsby’s success, and one of the central tenets of open source is that things are done in the open and without smoke, mirrors, pomp, circumstance, cloaks, or daggers.
-
-Gatsby’s competitive advantage is the strength of its community and ecosystem, and we’re convinced that the right path forward is to continue working in the open, sharing our plans, ideas, struggles, and successes as transparently as possible.
-
-Whenever we're considering an important change, we'll create an RFC in order to  
