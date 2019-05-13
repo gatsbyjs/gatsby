@@ -5896,3 +5896,17 @@
   built_by: Sandbox at Northeastern
   built_by_url: https://github.com/sandboxneu/
   featured: false
+- title: Accessible App
+  main_url: https://accessible-app.com
+  url: https://accessible-app.com
+  source_url: https://github.com/accessible-app/accessible-app_com
+  description: >
+    Learn how to build inclusive web applications and Single Page Apps in modern JavaScript frameworks. This project collects strategies, links, patterns and plugins for React, Vue and Angular.
+  categories:
+    - Accessibility
+    - Web Development
+    - Tutorial
+    - JavaScript
+  built_by: Marcus Herrmann
+  built_by_url: https://marcus.io
+  featured: false
