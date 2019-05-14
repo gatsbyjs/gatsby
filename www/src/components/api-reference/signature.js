@@ -104,7 +104,7 @@ const FunctionSignature = ({ definition, block, ignoreParams }) => {
         .map((param, index) => (
           <React.Fragment key={param.name}>
             {index > 0 && <Punctuation>, </Punctuation>}
-            {param.name}
+            {param.name === `$0` ? `apiCallbackContext` : param.name}
             {param.type && (
               <React.Fragment>
                 <Punctuation>{param.optional && `?`}:</Punctuation>
@@ -125,7 +125,7 @@ const FunctionSignature = ({ definition, block, ignoreParams }) => {
       {definition.returns && definition.returns.length ? (
         <TypeExpression type={definition.returns[0].type} />
       ) : (
-        <TypeComponent>null</TypeComponent>
+        <TypeComponent>undefined</TypeComponent>
       )}
     </Wrapper>
   )

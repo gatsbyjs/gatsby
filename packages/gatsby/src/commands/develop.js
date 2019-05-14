@@ -10,7 +10,7 @@ const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
 const { formatError } = require(`graphql`)
-const request = require(`request`)
+const got = require(`got`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
@@ -31,9 +31,13 @@ const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
 const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const queryUtil = require(`../query`)
+const queryQueue = require(`../query/queue`)
+const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -86,6 +90,10 @@ async function startServer(program) {
 
   // Start bootstrap process.
   await bootstrap(program)
+
+  db.startAutosave()
+  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -200,9 +208,10 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
+      const { headers, method } = req
       req
         .pipe(
-          request(proxiedUrl).on(`error`, err => {
+          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
             const message = `Error when trying to proxy request "${
               req.originalUrl
             }" to "${proxiedUrl}"`

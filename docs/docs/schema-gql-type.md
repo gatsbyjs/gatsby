@@ -96,7 +96,7 @@ Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which 
 
 #### Foreign Key reference (`___NODE`)
 
-If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out [Create a Source Plugin](/docs/source-plugin-tutorial/#create-source-plugin) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
+If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/docs/pixabay-source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
 This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 
@@ -154,7 +154,7 @@ query {
 
 To resolve `file.childMarkdownRemark`, we take the node we're resolving, and filter over all of its `children` until we find one of type `markdownRemark`, which is returned. Remember that `children` is a collection of IDs. So as part of this, we lookup the node by ID in redux too.
 
-But before we return from the resolve function, remember that we might be running this query within the context of a page. If that's the case, then whenever the node changes, the page will need to be rerendered. To record that fact, we call call [createPageDependency](/docs/page-node-dependencies/) with the node ID and the page, which is a field in the `context` object in the resolve function signature.
+But before we return from the resolve function, remember that we might be running this query within the context of a page. If that's the case, then whenever the node changes, the page will need to be rerendered. To record that fact, we call [createPageDependency](/docs/page-node-dependencies/) with the node ID and the page, which is a field in the `context` object in the resolve function signature.
 
 #### parent field
 

@@ -2,14 +2,14 @@ import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import { colors, space, dimensions, fonts } from "../utils/presets"
+import { colors, space, sizes, fonts } from "../utils/presets"
 
 const horizontalPadding = space[6]
 const backgroundColor = colors.gatsby
 
 const BannerContainer = styled(`aside`)`
   background-color: ${backgroundColor};
-  height: ${dimensions.bannerHeight};
+  height: ${sizes.bannerHeight};
   position: fixed;
   width: 100%;
   z-index: 3;
@@ -20,7 +20,7 @@ const BannerContainer = styled(`aside`)`
 const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
-  height: ${dimensions.bannerHeight};
+  height: ${sizes.bannerHeight};
   overflow-x: auto;
   mask-image: ${`linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`};
 `
@@ -48,10 +48,10 @@ const Banner = () => (
   <BannerContainer className="banner">
     <InnerContainer>
       <Content>
-        <OutboundLink href="https://www.gatsbyjs.com/gatsby-for-agencies/">
-          Register now
+        <OutboundLink href="https://www.gatsbyjs.com/gatsby-themes/">
+          Watch now
         </OutboundLink>
-        {`: “Gatsby for Agencies and Teams: Better, Faster, Smarter”.`}
+        {`: "Making Gatsby Even Greater With Themes — Better, Faster, Flexible-er".`}
       </Content>
     </InnerContainer>
   </BannerContainer>

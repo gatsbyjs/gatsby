@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import HubspotForm from "./react-hubspot-form"
 import hex2rgba from "hex2rgba"
 
-import { colors, radii, space, scale } from "../utils/presets"
+import { colors, radii, space, fontSizes } from "../utils/presets"
 import { formInput, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
@@ -34,7 +34,7 @@ export default class GatsbyHubspotForm extends Component {
             listStyleType: `none`,
             margin: 0,
             color: colors.warning,
-            fontSize: scale[1],
+            fontSize: fontSizes[1],
           },
           "& .hs-form-required": {
             color: colors.warning,

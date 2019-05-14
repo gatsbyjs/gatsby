@@ -7,7 +7,7 @@ import {
   space,
   radii,
   transition,
-  scale,
+  fontSizes,
   lineHeights,
 } from "../../utils/presets"
 
@@ -15,7 +15,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
   <button
     onClick={onClick}
     css={{
-      fontSize: scale[0],
+      fontSize: fontSizes[0],
       lineHeight: lineHeights.solid,
       background: `transparent`,
       border: `none`,

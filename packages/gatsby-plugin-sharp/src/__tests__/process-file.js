@@ -12,6 +12,8 @@ describe(`createArgsDigest`, () => {
     grayscale: false,
     rotate: 0,
     duotone: null,
+    fit: `COVER`,
+    background: `rgb(0,0,0,1)`,
   }
 
   describe(`changes hash if used args are different`, () => {
@@ -47,12 +49,14 @@ describe(`createArgsDigest`, () => {
     testHashDifferent(`rotate change`, {
       rotate: defaultArgsBaseline.rotate + 1,
     })
-    testHashDifferent(`dutone change`, {
+    testHashDifferent(`duotone change`, {
       duotone: {
         highlight: `#ff0000`,
         shadow: `#000000`,
       },
     })
+    testHashDifferent(`fit change`, { fit: `CONTAIN` })
+    testHashDifferent(`background change`, { background: `#fff0` })
   })
 
   describe(`doesn't change hash if not used options are different`, () => {

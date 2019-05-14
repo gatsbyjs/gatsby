@@ -14,8 +14,8 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   fonts,
 } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
@@ -39,7 +39,7 @@ class FeaturedSites extends Component {
           margin: `${space[6]} ${space[6]} 0`,
           position: `relative`,
           display: `none`,
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             display: `block`,
           },
         }}
@@ -73,7 +73,7 @@ class FeaturedSites extends Component {
           />
           <h1
             css={{
-              fontSize: scale[4],
+              fontSize: fontSizes[4],
               color: colors.gray.dark,
               fontFamily: fonts.header,
               fontWeight: `bold`,
@@ -90,8 +90,8 @@ class FeaturedSites extends Component {
             css={{
               ...styles.withTitleHover,
               display: `none`,
-              fontSize: scale[1],
-              [breakpoints.sm]: {
+              fontSize: fontSizes[1],
+              [mediaQueries.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -118,10 +118,10 @@ class FeaturedSites extends Component {
             <div
               css={{
                 color: colors.gray.calm,
-                fontSize: scale[1],
+                fontSize: fontSizes[1],
                 marginRight: 15,
                 display: `none`,
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   display: `block`,
                 },
               }}
@@ -167,7 +167,7 @@ class FeaturedSites extends Component {
                   css={{
                     "&&": {
                       borderBottom: `none`,
-                      fontSize: scale[3],
+                      fontSize: fontSizes[3],
                       fontWeight: `bold`,
                       color: colors.gray.dark,
                       fontFamily: fonts.header,
@@ -196,10 +196,10 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   css={{
-                    fontSize: scale[1],
+                    fontSize: fontSizes[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [breakpoints.lg]: {
+                    [mediaQueries.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -268,10 +268,10 @@ class FeaturedSites extends Component {
                         width: `auto`,
                         display: `block`,
                         margin: `0 auto ${space[6]}`,
-                        [breakpoints.md]: {
+                        [mediaQueries.md]: {
                           height: 64,
                         },
-                        [breakpoints.xl]: {
+                        [mediaQueries.xl]: {
                           height: 72,
                         },
 

@@ -1,4 +1,4 @@
-import { injectGlobal } from "react-emotion"
+import { injectGlobal } from "emotion"
 
 const colors = {
   dark: `#282c34`,
@@ -44,7 +44,8 @@ injectGlobal`
   }
   code {
   font-size: 1em;
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'Source Code Pro',
+  ;
   }
   .gatsby-highlight + .gatsby-highlight {
     margin-top: 1.250em;

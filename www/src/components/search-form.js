@@ -9,9 +9,9 @@ import {
   radii,
   transition,
   shadows,
-  breakpoints,
-  dimensions,
-  scale,
+  mediaQueries,
+  sizes,
+  fontSizes,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
 
@@ -26,9 +26,7 @@ const searchDropdownOffsetTop = space[9]
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
     position: fixed !important;
-    top: calc(${searchDropdownOffsetTop} + ${
-  dimensions.bannerHeight
-}) !important;
+    top: calc(${searchDropdownOffsetTop} + ${sizes.bannerHeight}) !important;
     left: ${space[3]} !important;
     right: ${space[3]} !important;
     min-width: calc(100vw - ${space[5]}) !important;
@@ -57,7 +55,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
     color: ${colors.gray.calm} !important;
-    font-size: ${scale[1]} !important;
+    font-size: ${fontSizes[1]} !important;
     font-weight: normal !important;
     padding: ${space[1]} ${space[3]} !important;
   }
@@ -84,16 +82,16 @@ const algoliaStyles = css`
 
   /* Caret */
   .algolia-autocomplete .ds-dropdown-menu::before {
-    border-top-color: ${colors.ui.bright} !important;
-    border-right-color: ${colors.ui.bright} !important;
+    border-top-color: ${colors.gray.border} !important;
+    border-right-color: ${colors.gray.border} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     max-height: calc(
-      100vh - ${dimensions.headerHeight} - ${dimensions.bannerHeight}
+      100vh - ${sizes.headerHeight} - ${sizes.bannerHeight}
     ) !important;
     padding: 0 !important;
-    border-color: ${colors.ui.bright} !important;
+    border-color: ${colors.gray.border} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
@@ -161,8 +159,8 @@ const algoliaStyles = css`
   .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
     padding: ${space[1]} ${space[3]} !important;
     margin-top: 0 !important;
-    font-size: ${scale[1]} !important;
-    border-color: ${colors.ui.light} !important;
+    font-size: ${fontSizes[1]} !important;
+    border-color: ${colors.gray.border} !important;
     color: ${colors.gatsby} !important;
     font-weight: bold !important;
   }
@@ -183,7 +181,7 @@ const algoliaStyles = css`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px solid ${colors.ui.light} !important;
+    border-top: 1px solid ${colors.gray.border} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
@@ -193,7 +191,7 @@ const algoliaStyles = css`
     margin-right: ${space[3]} !important;
   }
 
-  ${breakpoints.sm} {
+  ${mediaQueries.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
       color: inherit !important;
       font-weight: normal !important;
@@ -242,7 +240,7 @@ const algoliaStyles = css`
     }
   }
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
@@ -265,7 +263,7 @@ const algoliaStyles = css`
     }
   }
 
-  @media ${breakpoints.Lg} {
+  ${mediaQueries.lg} {
     .algolia-autocomplete .ds-dropdown-menu {
       max-width: 600px !important;
       min-width: 540px !important;
@@ -414,7 +412,7 @@ class SearchForm extends Component {
                 outline: 0,
                 width: rhythm(5),
               },
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
@@ -445,7 +443,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               transform: `translateY(-55%)`,
-              [breakpoints.sm]: {
+              [mediaQueries.sm]: {
                 fill: focussed ? colors.gatsby : false,
               },
             }}

@@ -6,6 +6,7 @@ import { Link } from "gatsby"
 import { space } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
+import FooterLinks from "../components/shared/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import GatsbyIcon from "../monogram.svg"
 import { linkStyles } from "../utils/styles"
@@ -85,6 +86,7 @@ const PackageReadMe = props => {
         dangerouslySetInnerHTML={{ __html: html }}
       />
       <MarkdownPageFooter page={page} packagePage />
+      <FooterLinks />
     </Container>
   )
 }

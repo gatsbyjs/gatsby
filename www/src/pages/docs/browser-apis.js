@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
@@ -12,7 +12,9 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 class BrowserAPIDocs extends React.Component {
   render() {
     const funcs = sortBy(
-      this.props.data.file.childrenDocumentationJs,
+      this.props.data.file.childrenDocumentationJs.filter(
+        doc => doc.kind !== `typedef`
+      ),
       func => func.name
     )
 
@@ -34,7 +36,7 @@ class BrowserAPIDocs extends React.Component {
           <hr />
           <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
-            {funcs.map((node, i) => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>
@@ -43,7 +45,7 @@ class BrowserAPIDocs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} />
+          <APIReference docs={funcs} showTopLevelSignatures={true} />
         </Container>
       </Layout>
     )

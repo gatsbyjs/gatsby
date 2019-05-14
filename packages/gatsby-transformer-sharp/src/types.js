@@ -6,7 +6,7 @@ const {
   GraphQLFloat,
   GraphQLEnumType,
 } = require(`gatsby/graphql`)
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const { Potrace } = require(`potrace`)
 
 const ImageFormatType = new GraphQLEnumType({
@@ -16,6 +16,15 @@ const ImageFormatType = new GraphQLEnumType({
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
+  },
+})
+
+const ImageFitType = new GraphQLEnumType({
+  name: `ImageFit`,
+  values: {
+    COVER: { value: sharp.fit.cover },
+    CONTAIN: { value: sharp.fit.contain },
+    FILL: { value: sharp.fit.fill },
   },
 })
 
@@ -78,6 +87,7 @@ const PotraceType = new GraphQLInputObjectType({
 
 module.exports = {
   ImageFormatType,
+  ImageFitType,
   ImageCropFocusType,
   DuotoneGradientType,
   PotraceType,

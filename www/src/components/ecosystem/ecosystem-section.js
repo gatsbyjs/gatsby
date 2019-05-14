@@ -13,8 +13,8 @@ import {
   lineHeights,
   radii,
   shadows,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
@@ -22,7 +22,7 @@ const EcosystemSectionRoot = styled(`section`)`
   padding: 0 ${space[6]};
   margin-bottom: ${space[3]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
@@ -39,7 +39,7 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-basis: calc(33.33% - ${space[5]});
     max-height: 100%;
 
@@ -62,7 +62,7 @@ const Title = styled(`h1`)`
   align-items: center;
   color: ${colors.gatsby};
   display: flex;
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
   line-height: ${lineHeights.solid};
   margin: 0;
   margin-bottom: ${space[1]};
@@ -81,7 +81,7 @@ const Icon = styled(`span`)`
 
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   font-weight: normal;
   letter-spacing: ${letterSpacings.tracked};
   margin: 0;
@@ -91,7 +91,7 @@ const SubTitle = styled(`h2`)`
 
 const Description = styled(`p`)`
   color: ${colors.gray.lightCopy};
-  font-size: ${scale[2]};
+  font-size: ${fontSizes[2]};
 `
 
 const Actions = styled(`div`)`

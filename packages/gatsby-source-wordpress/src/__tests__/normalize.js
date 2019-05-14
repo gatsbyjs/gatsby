@@ -116,7 +116,12 @@ describe(`Process WordPress data`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    normalize.createNodesFromEntities({ entities, createNode })
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    normalize.createNodesFromEntities({
+      entities,
+      createNode,
+      createContentDigest,
+    })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 })

@@ -4,9 +4,10 @@ import ChevronSvg from "./chevron-svg"
 import {
   colors,
   transition,
-  scale,
+  fontSizes,
   letterSpacings,
   space,
+  fonts,
 } from "../../utils/presets"
 import indention from "../../utils/sidebar/indention"
 import presets from "../../utils/sidebar/presets"
@@ -118,17 +119,16 @@ const SplitButton = ({
         onLinkClick,
         level: item.level,
         customCSS: {
-          ...(item.level === 0 && {
-            "&&": {
-              ...styles.level0,
-              color:
-                (isParentOfActiveItem && isExpanded) || isActive
-                  ? colors.gatsby
-                  : colors.gray.copy,
-              // fontWeight: isActive ? `bold` : `normal`,
-              // fontWeight: `bold`,
-            },
-          }),
+          ...(item.level === 0 &&
+            item.ui !== `steps` && {
+              "&&": {
+                ...styles.level0,
+                color:
+                  (isParentOfActiveItem && isExpanded) || isActive
+                    ? colors.gatsby
+                    : colors.gray.copy,
+              },
+            }),
           paddingRight: presets.itemMinHeight,
         },
       })}
@@ -180,7 +180,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
     css={{
       alignItems: `center`,
       display: `flex`,
-      fontSize: scale[1],
+      fontSize: fontSizes[1],
       // fontFamily: fonts.system,
       // fontWeight: isActive ? `bold` : `normal`,
       fontWeight: `normal`,
@@ -228,10 +228,9 @@ const styles = {
     left: space[6],
   },
   level0: {
-    // fontFamily: fonts.header,
-    // letterSpacing: letterSpacings.tracked,
-    // textTransform: `uppercase`,
-    fontSize: scale[1],
-    // fontWeight: `bold !important`,
+    fontFamily: fonts.header,
+    letterSpacing: letterSpacings.tracked,
+    textTransform: `uppercase`,
+    fontSize: fontSizes[1],
   },
 }

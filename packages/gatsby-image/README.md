@@ -338,6 +338,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
 | `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                               |
 | `title`                | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
@@ -353,10 +354,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
 | `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.          |
-
-|
-| `objectPosition` | `string` | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.
-|
+| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.        |
 
 ## Image processing arguments
 

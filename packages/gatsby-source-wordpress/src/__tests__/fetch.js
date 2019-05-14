@@ -38,4 +38,22 @@ describe(`Fetching`, () => {
       `http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts`
     )
   })
+
+  it(`properly use api URL if self uses same domain`, () => {
+    expect(
+      fetch.useApiUrl(
+        `http://example.com/wp-json`,
+        `http://example.com/wp-json/wp-api-menus/v2/menus/2`
+      )
+    ).toEqual(`http://example.com/wp-json/wp-api-menus/v2/menus/2`)
+  })
+
+  it(`properly use api URL if self route uses different domain`, () => {
+    expect(
+      fetch.useApiUrl(
+        `http://example.com/wp-json`,
+        `http://localhost:8080/wp-json/wp-api-menus/v2/menus/2`
+      )
+    ).toEqual(`http://example.com/wp-json/wp-api-menus/v2/menus/2`)
+  })
 })

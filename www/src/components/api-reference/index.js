@@ -46,6 +46,7 @@ export const pageQuery = graphql`
   }
 
   fragment DocumentationFragment on DocumentationJs {
+    kind
     ...DocumentationDescriptionFragment
     ...DocumentationExampleFragment
     ...DocumentationParamsFragment
