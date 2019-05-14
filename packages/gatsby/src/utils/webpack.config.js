@@ -257,9 +257,7 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.media(),
       rules.miscAssets(),
     ]
-    if (
-      store.getState().themes.themes
-    ) {
+    if (store.getState().themes.themes) {
       configRules = configRules.concat(
         store.getState().themes.themes.map(theme => {
           return {
