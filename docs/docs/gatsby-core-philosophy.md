@@ -141,7 +141,7 @@ We believe that that these barriers aren't simply obstacles to contributing, the
 - projects lose an opportunity to add more maintainers
 - existing maintainers lose the opportunity to build support networks
 
-Our approach is to be proactive in creating community:
+Our approach is to be proactive in creating community by:
 
 - actively reaching out and welcome new contributors
 - remembering how steep the learning curve can be
