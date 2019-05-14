@@ -35,7 +35,7 @@ Over the last few years, teams have begun moving from monolithic, integrated CMS
 
 Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modeling, authentication, search, analytics, payments, UI frameworks, and so on -- into a unified, high-quality whole.
 
-[Read more here](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh).
+Read more on a [journey to the content mesh](/blog/2018-10-04-journey-to-the-content-mesh).
 
 ### Make building websites fun
 
