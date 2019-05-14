@@ -242,7 +242,7 @@ async function processRemoteNode({
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
   // gatsby-source-filesystem.
-  createNode(fileNode, { name: `gatsby-source-filesystem` })
+  await createNode(fileNode, { name: `gatsby-source-filesystem` })
 
   return fileNode
 }
