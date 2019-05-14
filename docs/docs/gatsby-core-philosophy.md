@@ -107,7 +107,7 @@ We progressively disclose complexity by making features such as modifying webpac
 
 Open source is at the core of Gatsby’s success, and one of the central tenets of open source is that things are done in the open and without smoke and mirrors.
 
-One of Gatsby’s core strengths are the strength of its community and ecosystem.
+Two of Gatsby’s core strengths are its community and ecosystem.
 
 We’re convinced that the right path forward is to continue working in the open.
 
