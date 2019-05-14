@@ -3863,10 +3863,10 @@
     - Blog
   built_by: Logicwind
   built_by_url: "https://www.logicwind.com"
-- title: npm.cardiv.de
-  url: https://npm.cardiv.de
-  main_url: https://npm.cardiv.de
-  source_url: https://github.com/cardiv/npm.cardiv.de
+- title: npm-bookmarks
+  url: https://npm-bookmarks.netlify.com
+  main_url: https://npm-bookmarks.netlify.com
+  source_url: https://github.com/crstnio/npm-bookmarks
   description: >
     A site to collect personal favorites of NPM packages – sorted by downloads count with a tags filter and search by title. Fork it and bookmark your favorite packages!
   categories:
@@ -3876,8 +3876,8 @@
     - Open Source
     - Programming
     - Web Development
-  built_by: cardiv
-  built_by_url: https://github.com/cardiv/
+  built_by: crstnio
+  built_by_url: https://github.com/crstnio/
   featured: false
 - title: Waterscapes
   main_url: "https://waterscap.es"
@@ -5803,4 +5803,110 @@
     - Technology
     - Portfolio
   built_by: Matthew Miller
+  featured: false
+- title: Årets Kontor
+  url: https://aretskontor.newst.se
+  main_url: https://aretskontor.newst.se
+  description: >
+    A swedish competition for "office of the year" in sweden with a focus on design. Built with MDBootstrap and Gatsby.
+  categories:
+    - Real Estate
+    - Marketing
+  built_by: Victor Björklund
+  built_by_url: https://victorbjorklund.com
+  featured: false
+- title: Kyma
+  url: https://kyma-project.io
+  main_url: https://kyma-project.io
+  source_url: https://github.com/kyma-project/website
+  description: >
+    This website holds overview, blog and documentation for Kyma open source project that is a Kubernates based application extensibility framework.
+  categories:
+    - Documentation
+    - Blog
+    - Technology
+    - Open Source
+  built_by: Kyma developers
+  built_by_url: https://twitter.com/kymaproject
+  featured: false
+- title: Verso
+  main_url: https://verso.digital
+  url: https://verso.digital
+  description: >
+    Verso is a creative technology studio based in Singapore. Site built with Gatsby and Netlify.
+  categories:
+    - Agency
+    - Consulting
+    - Design
+    - Technology
+  built_by: Verso
+  built_by_url: https://verso.digital
+  featured: false
+- title: Camilo Holguin
+  url: https://camiloholguin.me
+  main_url: https://camiloholguin.me
+  source_url: https://github.com/camiloholguin/gatsby-portfolio
+  description: >
+    Portfolio site using GatsbyJS and Wordpress REST API.
+  categories:
+    - WordPress
+    - Portfolio
+    - Web Development
+  built_by: Camilo Holguin
+  built_by_url: https://camiloholguin.me
+  featured: false
+- title: Bennett Hardwick
+  url: https://bennetthardwick.com
+  main_url: https://bennetthardwick.com
+  description: >
+    The personal website and blog of Bennett Hardwick, an Australian software developer and human being.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  source_url: https://github.com/bennetthardwick/website
+  built_by: Bennett Hardwick
+  built_by_url: https://bennetthardwick.com
+  featured: false
+- title: Sindhuka
+  url: https://sindhuka.org/
+  main_url: https://sindhuka.org/
+  description: >
+    Official website of the Sindhuka initiative, a sustainable farmers' network in Nepal.
+  categories:
+    - Business
+    - Community
+    - Government
+    - Landing
+    - Marketing
+  source_url: https://github.com/Polcius/sindhuka-serif
+  built_by: Pol Milian
+  built_by_url: https://github.com/Polcius/
+  featured: false
+- title: Sandbox
+  url: https://www.sandboxneu.com/
+  main_url: https://www.sandboxneu.com/
+  source_url: https://github.com/sandboxneu/sandboxneu.com
+  description: >
+    Official website of Sandbox, a Northeastern University student group that builds software for researchers.
+  categories:
+    - Marketing
+    - Research
+    - Student
+  built_by: Sandbox at Northeastern
+  built_by_url: https://github.com/sandboxneu/
+  featured: false
+- title: Accessible App
+  main_url: https://accessible-app.com
+  url: https://accessible-app.com
+  source_url: https://github.com/accessible-app/accessible-app_com
+  description: >
+    Learn how to build inclusive web applications and Single Page Apps in modern JavaScript frameworks. This project collects strategies, links, patterns and plugins for React, Vue and Angular.
+  categories:
+    - Accessibility
+    - Web Development
+    - Tutorial
+    - JavaScript
+  built_by: Marcus Herrmann
+  built_by_url: https://marcus.io
   featured: false
