@@ -109,7 +109,7 @@ Open source is at the core of Gatsby’s success, and one of the central tenets 
 
 Two of Gatsby’s core strengths are its community and ecosystem.
 
-We’re convinced that the right path forward is to continue working in the open.
+We’re convinced that the right path forward is to continue working in the open with both trust and support of our community.
 
 Anyone can open an issue and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can submit an RFC to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
