@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
+import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
 import Layout from "../components/layout"
@@ -108,6 +109,13 @@ class FeaturesPage extends Component {
         itemList={itemListFeatures}
         enableScrollSync={true}
       >
+        <Helmet>
+          <title>Features</title>
+          <meta
+            name="description"
+            content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+          />
+        </Helmet>
         <Container>
           <main id={`reach-skip-nav`}>
             <FeaturesHeader />

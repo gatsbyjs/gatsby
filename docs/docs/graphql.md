@@ -1,5 +1,5 @@
 ---
-title: Querying data with GraphQL
+title: GraphQL and Gatsby
 overview: true
 ---
 

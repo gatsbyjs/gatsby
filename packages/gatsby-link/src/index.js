@@ -7,7 +7,12 @@ import { parsePath } from "./parse-path"
 export { parsePath }
 
 export function withPrefix(path) {
-  return normalizePath(`${__BASE_PATH__}/${path}`)
+  return normalizePath(
+    [
+      typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
+      path,
+    ].join(`/`)
+  )
 }
 
 export function withAssetPrefix(path) {

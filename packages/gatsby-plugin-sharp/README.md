@@ -107,10 +107,11 @@ fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned t
 - `maxWidth` (int, default: 800)
 - `maxHeight` (int)
 - `quality` (int, default: 50)
-- `sizeByPixelDensity` (bool, default: false)
 - `srcSetBreakpoints` (array of int, default: [])
 - `fit` (string, default: '[sharp.fit.cover][6]')
 - `background` (string, default: 'rgba(0,0,0,1)')
+- [deprecated] `sizeByPixelDensity` (bool, default: false)
+  - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
 
 #### Returns
 
@@ -298,6 +299,37 @@ limited to the latitude/longitude information of where the picture was taken
 (if present). If you wish to strip this information from the source file, you
 can either leave `stripMetadata` to its default of `true`, or manually
 pre-process your images with a tool such as [ExifTool][17].
+
+## Troubleshooting
+
+### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
+
+This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
+
+```
+Something went wrong installing the "sharp" module
+
+dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
+  Referenced from: /Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node
+  Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
+```
+
+To fix this, you'll need to update all Gatsby plugins in the current project that depend on the `sharp` package. Here's a list of official plugins that you might need to update in case your projects uses them:
+
+- `gatsby-plugin-sharp`
+- `gatsby-plugin-manifest`
+- `gatsby-remark-images-contentful`
+- `gatsby-source-contentful`
+- `gatsby-transformer-sharp`
+- `gatsby-transformer-sqip`
+
+To update these packages, run:
+
+```sh
+npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
+```
+
+If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js

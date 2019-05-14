@@ -69,7 +69,7 @@ module.exports = async program => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
-  const { pathPrefix: configPathPrefix } = config
+  const { pathPrefix: configPathPrefix } = config || {}
 
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
