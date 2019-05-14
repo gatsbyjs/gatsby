@@ -67,11 +67,11 @@ When a copywriter edits a headline in their CMS, a designer draws a button in th
 
 Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and fun to work on (or not).
 
-We believe that these qualities should be baked into frameworks, so they are delivered _by default_ rather than implemented on a per-site basis. 
+We believe that these qualities should be baked into frameworks, so they are delivered _by default_ rather than implemented on a per-site basis.
 
 When features and qualities are only available if you implement them, that makes them a luxury -- available only to a few websites.
 
-By contrast, by baking in qualities such as performance and security by default, Gatsby makes the right thing the easy thing. 
+By contrast, by baking in qualities such as performance and security by default, Gatsby makes the right thing the easy thing.
 
 We believe the most high-impact way to make the web better is to make it high-quality by default.
 
@@ -91,13 +91,13 @@ For more on this, look at [the features Gatsby bundles together](/features).
 
 ### Progressively disclose complexity
 
-One concept UX designers use to make applications easier to learn and less error-prone is called “progressive disclosure". 
+One concept UX designers use to make applications easier to learn and less error-prone is called “progressive disclosure".
 
 If you were designing a user interface, you might move advanced or rarely-used features to a secondary screen, such as "advanced settings".
 
 Progressive disclosure simplifies the experience for most people without limiting the abilities of more advanced users.
 
-We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image` and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (eg, dependencies) yourself. 
+We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image` and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (eg, dependencies) yourself.
 
 [Read more here](https://lengstorf.com/progressive-disclosure-of-complexity/).
 
