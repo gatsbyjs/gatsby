@@ -40,6 +40,29 @@ class ContributorPageTemplate extends React.Component {
           )}
         </Helmet>
         <main>
+          <Helmet>
+            <title>{contributor.id}</title>
+            <meta name="description" content={contributor.bio} />
+            <meta property="og:description" content={contributor.bio} />
+            <meta name="twitter:description" content={contributor.bio} />
+            <meta property="og:title" content={contributor.id} />
+            {contributor.avatar && (
+              <meta
+                property="og:image"
+                content={`https://gatsbyjs.org${
+                  contributor.avatar.childImageSharp.fixed.src
+                }`}
+              />
+            )}
+            {contributor.avatar && (
+              <meta
+                name="twitter:image"
+                content={`https://gatsbyjs.org${
+                  contributor.avatar.childImageSharp.fixed.src
+                }`}
+              />
+            )}
+          </Helmet>
           <Container>
             <div
               css={{
