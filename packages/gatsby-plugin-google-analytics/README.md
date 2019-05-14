@@ -16,7 +16,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
-        // Puts tracking script in the head instead of the body
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: false,
         // Setting this parameter is optional
         anonymize: true,
@@ -64,7 +64,16 @@ export default () => {
 }
 ```
 
-## The "anonymize" option
+## Options
+### `trackingId`
+
+Here you place your Google Analytics tracking id.
+
+### `head`
+
+Here you can define where to place the tracking script. With `head:true` it will placed in the header, with `head:false` it will placed in the body. Defaults to `false`.
+
+### `anonymize`
 
 Some countries (such as Germany) require you to use the
 [\_anonymizeIP](https://support.google.com/analytics/answer/2763052) function for
@@ -84,23 +93,23 @@ you can set a link e.g. in your imprint as follows:
 
 `<a href="javascript:gaOptout();">Deactivate Google Analytics</a>`
 
-## The "respectDNT" option
+### `respectDNT`
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
 
-## The "exclude" option
+### `exclude`
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
 
-## The "optimizeId" option
+### `optimizeId`
 
 If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
 
-## The "experimentId" option
+### `experimentId`
 
 If you need to set up SERVER_SIDE Google Optimize experiment, you can add the experiment ID. The experiment ID is shown on the right-hand panel on the experiment details page. [Server-side Experiments](https://developers.google.com/optimize/devguides/experiments)
 
-## The "variationId" option
+### `variationId`
 
 Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
 
