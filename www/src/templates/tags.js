@@ -30,7 +30,15 @@ const Tags = ({ pageContext, data, location }) => {
 
   return (
     <Layout location={location}>
-      <Helmet title={`${preferSpacedTag(tags)} Tag`} />
+      <Helmet>
+        <title>{`${preferSpacedTag(tags)} Tag`}</title>
+        <meta
+          name="description"
+          content={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
+            tags
+          )}`}
+        />
+      </Helmet>
       <Container>
         <h1>{tagHeader}</h1>
         <Button small key="blog-post-view-all-tags-button" to="/blog/tags">

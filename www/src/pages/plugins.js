@@ -15,6 +15,10 @@ class Plugins extends Component {
       <>
         <Helmet>
           <title>Plugins</title>
+          <meta
+            name="description"
+            content="The library for searching and exploring Gatsby's vast plugin ecosystem to implement Node.js packages using Gatsby APIs"
+          />
         </Helmet>
         <Container
           overrideCSS={{
