@@ -23,6 +23,8 @@ export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
 
+export const prefetchPathname: (path: string) => void
+
 export interface PageRendererProps {
   location: WindowLocation
 }
