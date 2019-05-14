@@ -35,14 +35,10 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             <small>
               Why not write one and
               {` `}
-              <Link to="/contributing/submit-to-starter-library/">
-                submit it
-              </Link>
+              <Link to="/contributing/submit-to-starter-library/">submit it</Link>
               ? Or learn more
               {` `}
-              <Link to="/docs/starters">
-                about starters
-              </Link>
+              <Link to="/docs/starters">about starters</Link>
               .
             </small>
           </div>
