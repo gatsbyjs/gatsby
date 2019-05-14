@@ -93,7 +93,7 @@
   "scripts": {
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "develop": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
+    "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "jest",
@@ -104,6 +104,7 @@
   "devDependencies": {
     "babel-jest": "^24.3.1",
     "babel-preset-gatsby": "^0.1.8",
+    "cross-env": "^5.2.0",
     "front-matter": "^2.3.0",
     "get-package-json-from-github": "^1.2.1",
     "github-api": "^3.0.0",
