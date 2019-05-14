@@ -2466,15 +2466,29 @@
   repo: https://github.com/anubhavsrivastava/gatsby-starter-hyperspace
   description: Single page starter based on the Hyperspace site template, with landing, custom and Elements(Component) page
   tags:
-    - Portfolio
     - HTML5UP
     - Styling:SCSS
     - Onepage
-    - LandingPage
-    - Portfolio
+    - Landing Page
   features:
     - Designed by HTML5 UP
     - Simple one page site that’s perfect for personal portfolios
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-identity
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-identity
+  description: Single page starter based on the Identity site template by HTML5 up, suitable for one page portfolio.
+  tags:
+    - HTML5UP
+    - Styling:SCSS
+    - Onepage
+    - Landing Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Simple one page personal portfolio
     - Fully Responsive
     - Styling with SCSS
     - Offline support
