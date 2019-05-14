@@ -156,7 +156,7 @@ To accomplish this, we follow a guiding core value: you belong here.
 Some things we do in order to create an inclusive, welcoming community include:
 
 - An enforced [Code of conduct](/contributing/code-of-conduct/)
-- Commitment to accessibility
+- [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
 - Extensive docs
 - Friendlier robots
 - Implicit trust
