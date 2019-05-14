@@ -131,7 +131,7 @@ First, **getting started in open source is daunting**. OSS projects can be intim
 
 Second, **open source is an expense not everyone can afford**. Potential contributors may not have free time to work on open source, and their jobs may not support contributing as part of our workload
 
-Third, many people don’t see themselves represented in open source.
+Third, **many people don’t see themselves represented in open source.**
 
 #### Overcoming these obstacles
 
