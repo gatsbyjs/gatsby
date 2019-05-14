@@ -43,7 +43,7 @@ Gatsby's vision is to make website development fun by making it simple.
 
 Fred Brooks wrote in _The Mythical Man-Month_:
 
-> The programmer, like the poet, works only slightly removed from pure thought-stuff. [They] builds [their] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
+> The programmer, like the poet, works only slightly removed from pure thought-stuff. [They] build [their] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
 
 Technology is incredibly fun when we, like the wizard of fantasy, can type an incantation on our computer and a new creation comes to life.
 
