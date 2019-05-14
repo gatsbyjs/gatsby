@@ -47,15 +47,9 @@ const shouldUseYarn = async () => {
 
 const isAlreadyGitRepository = async () => {
   try {
-    return await spawn(`git rev-parse --is-inside-work-tree`)
-      .then(output => {
-        if (output.failed) {
-          return false
-        } else {
-          return true
-        }
-      })
-      .catch(() => false)
+    return await spawn(`git rev-parse --is-inside-work-tree`, {
+      stdio: `pipe`,
+    }).then(output => output.stdout === `true`)
   } catch (err) {
     return false
   }
