@@ -157,7 +157,7 @@ Some things we do in order to create an inclusive, welcoming community include:
 
 - An enforced [Code of conduct](/contributing/code-of-conduct/)
 - [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
-- Extensive docs
+- [Extensive docs](/docs)
 - Friendlier robots
 - Implicit trust
 - Active gratitude
