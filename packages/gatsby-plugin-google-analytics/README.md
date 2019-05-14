@@ -65,6 +65,7 @@ export default () => {
 ```
 
 ## Options
+
 ### `trackingId`
 
 Here you place your Google Analytics tracking id.
