@@ -219,6 +219,13 @@ ${e}`
           }
         }
       },
+      mdxAST: {
+        type: GraphQLJSON,
+        async resolve(mdxNode) {
+          const { mdast } = await processMDX({ node: mdxNode });
+          return mdast;
+        }
+      },
       tableOfContents: {
         type: GraphQLJSON,
         args: {
