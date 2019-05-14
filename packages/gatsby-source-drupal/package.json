@@ -11,7 +11,8 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
     "gatsby-source-filesystem": "^2.0.33",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "tiny-async-pool": "^1.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
