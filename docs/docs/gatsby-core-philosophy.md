@@ -4,20 +4,20 @@ title: Gatsby Core Philosophy
 
 Gatsby's core philosophy can be divided into three parts.
 
-**First, our vision.** Our vision is to _create higher-level building blocks for the web_, and _build a cohesive "content mesh system"_, in order to _make building websites fun_ and _build a better web_.
+**First, our vision.** Our vision is to _construct higher-level web building blocks_, and _create a cohesive "content mesh system"_, in order to _make building websites fun_ and _build a better web_.
 
 **Second, our tooling philosophy.** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
-- making the right thing the easy thing
-- progressively disclosure of complexity
+- bundling the modern Javascript ecosystem
+- progressive disclosure of complexity
 
 **Third, our community philosophy.** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _work in the open_. At all times, we believe, and strive to communicate, that _you belong here_.
 
 ## The Gatsby Vision
 
-### Create new, higher-level web building blocks
+### Construct new, higher-level web building blocks
 
-Today's building blocks for the web are HTML, CSS, and Javascript; `<img>` and `<a href>` and so on.
+Today's building blocks for the web are components of HTML, CSS, and Javascript.
 
 We believe that in 5 or 10 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in.
 
@@ -29,7 +29,7 @@ To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
 [Read more here](/blog/2017-10-16-making-website-building-fun/#find-the-right-building-blocks).
 
-### Build a cohesive "content mesh system"
+### Create a cohesive "content mesh system"
 
 Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh" pulling content and functionality from multiple sources and APIs. Their key challenge: pragmatically integrating all these pieces together.
 
@@ -43,7 +43,7 @@ Gatsby's vision is to make website development fun by making it simple.
 
 Fred Brooks wrote in _The Mythical Man-Month_:
 
-> The programmer, like the poet, works only slightly removed from pure thought-stuff. He builds his castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
+> The programmer, like the poet, works only slightly removed from pure thought-stuff. [They] builds [their] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
 
 Technology is incredibly fun when we, like the wizard of fantasy, can type an incantation on our computer and a new creation comes to life.
 
@@ -63,7 +63,7 @@ When a copywriter edits a headline in their CMS, a designer draws a button in th
 
 [Read more here](/blog/2017-10-16-making-website-building-fun/).
 
-### Make a better web with better defaults
+### Build a better web
 
 Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and fun to work on (or not).
 
@@ -85,9 +85,9 @@ Traditional CMS development [presents many challenges](https://www.gatsbyjs.org/
 
 Modern web development [bundles advances](https://www.gatsbyjs.org/blog/2018-10-11-rise-of-modern-web-development/#modern-frameworks-offer-stability-and-faster-development) in **performance** (bundle splitting, asset prefetching, offline support, image optimization, or server side rendering), **developer experience** (componentization via React, transpilation via Babel, webpack, hot reloading), **accessibility**, and **security** together.
 
-Gatsby's goal is to bundle these advances in an easy to use package. 
+Gatsby's goal is to bundle these advances in an easy to use package. We're open to any and all advances being made in the modern Javascript world and would love to incorporate them into Gatsby!
 
-See some features Gatsby bundles together here.
+For more on this, look at [the features Gatsby bundles together](/features).
 
 ### Progressively disclose complexity
 
@@ -113,9 +113,9 @@ We’re convinced that the right path forward is to continue working in the open
 
 Anyone can [open an issue](/contributing/how-to-file-an-issue/) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can [submit an RFC](/contributing/rfc-process/) to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
-Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system, performance optimizations, and so on.
+Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system to performance optimizations and so on.
 
-### You belong here.
+### You belong here
 
 Open source is great for developers. It lets you:
 
