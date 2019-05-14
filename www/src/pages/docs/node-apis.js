@@ -20,6 +20,10 @@ class NodeAPIDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Node APIs</title>
+            <meta
+              name="description"
+              content="Documentation on Node APIs used in Gatsby build process for common uses like creating pages"
+            />
           </Helmet>
           <h1 id="gatsby-node-apis" css={{ marginTop: 0 }}>
             Gatsby Node APIs

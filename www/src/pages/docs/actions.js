@@ -21,6 +21,10 @@ class ActionCreatorsDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Actions</title>
+            <meta
+              name="description"
+              content="Documentation on actions and how they help you manipulate state within Gatsby"
+            />
           </Helmet>
           <h1 css={{ marginTop: 0 }}>Actions</h1>
           <p>

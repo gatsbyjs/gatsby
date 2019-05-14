@@ -1,3 +1,7 @@
+---
+title: Sourcing from ButterCMS
+---
+
 ## Overview
 
 In this guide we'll be setting up a CMS powered Gatsby site that uses [ButterCMS](https://buttercms.com/) as its content management system.
