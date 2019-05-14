@@ -143,7 +143,7 @@ We believe that that these barriers aren't simply obstacles to contributing, the
 
 Our approach is to be proactive in creating community by:
 
-- actively reaching out and welcome new contributors
+- actively reaching out and welcoming new contributors
 - remembering how steep the learning curve can be
 - investing in community as a primary measure of success
 
