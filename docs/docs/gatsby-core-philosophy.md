@@ -129,7 +129,7 @@ However, there are significant barriers to getting started in open source.
 
 First, **getting started in open source is daunting**. OSS projects can be intimidating. They often have thousands of lines of code and tons of required context and history. Navigating Github can be confusing. And there can be awkward social dynamics: imposter syndrome and lack of support.
 
-Second, **open source is an expense not everyone can afford**. Potential contributors may not have free time to work on open source, and their jobs may not support contributing as part of our workload
+Second, **open source is an expense not everyone can afford**. Potential contributors may not have free time to work on open source, and their jobs may not support contributing as part of our workload.
 
 Third, **many people don’t see themselves represented in open source.**
 
