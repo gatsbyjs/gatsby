@@ -1,5 +1,6 @@
 ---
 title: Sharing Components Across Websites
+issue: https://github.com/gatsbyjs/gatsby/issues/14042
 ---
 
 One of the benefits of multiple teams using Gatsby within your organization is the ability to share React components across different websites.
