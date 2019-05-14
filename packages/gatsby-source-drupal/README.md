@@ -142,6 +142,26 @@ module.exports = {
 }
 ```
 
+## Concurrent File Requests
+
+You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however to many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        concurrentFileRequests: 60, // optional, defaults to `20`
+      },
+    },
+  ],
+}
+```
+
 ## How to query
 
 You can query nodes created from Drupal like the following:
