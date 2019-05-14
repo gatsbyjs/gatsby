@@ -30,7 +30,7 @@ describe(`Gatsby Preview (Updating)`, () => {
     cy.queryByText(`1`).should(`exist`)
   })
 
-  it(`updates and hot-reloads new content`, () => {
+  it.skip(`updates and hot-reloads new content`, () => {
     update()
 
     cy.get(`li`)
