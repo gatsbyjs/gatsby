@@ -1,5 +1,5 @@
 ---
-title: Gatsby core philosophy
+title: Gatsby Core Philosophy
 ---
 
 Gatsby's core philosophy can be divided into three parts.
