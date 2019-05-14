@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import { breakpoints, sizes } from "../utils/presets"
+import { mediaQueries, sizes } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 export default props => {
@@ -12,10 +12,10 @@ export default props => {
       <Fragment>
         <div
           css={{
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               paddingLeft: rhythm(sizes.sidebarWidth.default),
             },
-            [breakpoints.lg]: {
+            [mediaQueries.lg]: {
               paddingLeft: rhythm(sizes.sidebarWidth.large),
             },
           }}

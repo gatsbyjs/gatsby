@@ -42,6 +42,69 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
   return descriptionNode
 }
 
+exports.sourceNodes = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type DocumentationJs implements Node {
+      name: String
+      kind: String
+      memberof: String
+      scope: String
+      access: String
+      readonly: Boolean
+      abstract: Boolean
+      generator: Boolean
+      async: Boolean
+      override: Boolean
+      hideconstructor: Boolean
+      alias: String
+      copyright: String
+      author: String
+      license: String
+      since: String
+      lends: String
+      type: DoctrineType
+      default: JSON
+      augments: [DocumentationJs]
+      examples: [DocumentationJsExample]
+      implements: [DocumentationJs]
+      params: [DocumentationJs]
+      properties: [DocumentationJs]
+      returns: [DocumentationJs]
+      throws: [DocumentationJs]
+      todos: [DocumentationJs]
+      yields: [DocumentationJs]
+      members: DocumentationJsMembers
+    }
+
+    type DocumentationJsExample {
+      caption: String
+      description: String
+    }
+
+    type DocumentationJsMembers {
+      static: [DocumentationJs]
+      instance: [DocumentationJs]
+      events: [DocumentationJs]
+      global: [DocumentationJs]
+      inner: [DocumentationJs]
+    }
+
+    type DoctrineType {
+      type: String!
+      name: String
+      elements: [JSON]
+      expression: JSON
+      applications: [JSON]
+      params: [JSON]
+      fields: [JSON]
+      result: JSON
+      typeDef: DocumentationJs
+    }
+  `
+  createTypes(typeDefs)
+}
+
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
@@ -51,8 +114,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
   const { createNode, createParentChildLink } = actions
 
   if (
-    node.internal.mediaType !== `application/javascript` ||
-    node.internal.type !== `File`
+    node.internal.type !== `File` ||
+    !(
+      node.internal.mediaType === `application/javascript` ||
+      node.extension === `tsx` ||
+      node.extension === `ts`
+    )
   ) {
     return null
   }
@@ -150,6 +217,20 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `scope`,
         `type`,
         `default`,
+        `readonly`,
+        `access`,
+        `abstract`,
+        `generator`,
+        `async`,
+        `override`,
+        `hideconstructor`,
+        `alias`,
+        `copyright`,
+        `author`,
+        `license`,
+        `since`,
+        `lends`,
+        `examples`,
       ])
 
       picked.optional = false
@@ -190,7 +271,16 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         }
       })
 
-      const docsSubfields = [`params`, `properties`, `returns`]
+      const docsSubfields = [
+        `augments`,
+        `implements`,
+        `params`,
+        `properties`,
+        `returns`,
+        `throws`,
+        `todos`,
+        `yields`,
+      ]
       docsSubfields.forEach(fieldName => {
         if (docsJson[fieldName] && docsJson[fieldName].length > 0) {
           picked[`${fieldName}___NODE`] = docsJson[fieldName].map(

@@ -5,7 +5,7 @@ import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import { colors, space, breakpoints, fontSizes } from "../../utils/presets"
+import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -110,7 +110,7 @@ class CreatorsView extends Component {
           css={{
             padding: space[6],
             paddingBottom: `10vh`,
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               paddingBottom: space[6],
             },
           }}
@@ -120,7 +120,7 @@ class CreatorsView extends Component {
               display: `flex`,
               flexWrap: `wrap`,
               justifyContent: `center`,
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 justifyContent: `flex-start`,
               },
             }}

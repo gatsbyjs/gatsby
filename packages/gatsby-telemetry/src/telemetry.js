@@ -7,6 +7,7 @@ const os = require(`os`)
 const { basename, join, sep } = require(`path`)
 const { execSync } = require(`child_process`)
 const isDocker = require(`is-docker`)
+const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -147,11 +148,7 @@ module.exports = class AnalyticsTracker {
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
       if (!ci.isCI) {
-        console.log(
-          `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
-            `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
-            `To learn more, checkout http://gatsby.dev/telemetry`
-        )
+        showAnalyticsNotification()
       }
       enabled = true
       this.store.updateConfig(`telemetry.enabled`, enabled)

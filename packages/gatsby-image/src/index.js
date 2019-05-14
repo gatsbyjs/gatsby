@@ -256,17 +256,17 @@ class Image extends React.Component {
       fluid,
       fixed,
       backgroundColor,
+      durationFadeIn,
       Tag,
       itemProp,
     } = convertProps(this.props)
 
     const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
-    const durationFadeIn = `0.5s`
 
     const imageStyle = {
       opacity: shouldReveal ? 1 : 0,
-      transition: shouldFadeIn ? `opacity ${durationFadeIn}` : `none`,
+      transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
       ...imgStyle,
     }
 
@@ -274,7 +274,7 @@ class Image extends React.Component {
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHideStyle = {
-      transitionDelay: durationFadeIn,
+      transitionDelay: `${durationFadeIn}ms`,
     }
 
     const imagePlaceholderStyle = {
@@ -477,6 +477,7 @@ class Image extends React.Component {
 Image.defaultProps = {
   critical: false,
   fadeIn: true,
+  durationFadeIn: 500,
   alt: ``,
   Tag: `div`,
 }
@@ -509,6 +510,7 @@ Image.propTypes = {
   fixed: fixedObject,
   fluid: fluidObject,
   fadeIn: PropTypes.bool,
+  durationFadeIn: PropTypes.number,
   title: PropTypes.string,
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.

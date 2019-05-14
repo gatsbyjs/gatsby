@@ -5,7 +5,7 @@ import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
   letterSpacings,
@@ -23,7 +23,7 @@ const MastheadContent = () => (
       paddingLeft: space[8],
       paddingRight: space[8],
       textAlign: `center`,
-      [breakpoints.md]: {
+      [mediaQueries.md]: {
         paddingBottom: rhythm(3),
         paddingTop: rhythm(3),
       },
@@ -50,10 +50,10 @@ const MastheadContent = () => (
         maxWidth: rhythm(30),
         margin: `0 auto ${space[7]}`,
         WebkitFontSmoothing: `antialiased`,
-        [breakpoints.sm]: {
+        [mediaQueries.sm]: {
           fontSize: fontSizes[5],
         },
-        [breakpoints.lg]: {
+        [mediaQueries.lg]: {
           fontSize: fontSizes[6],
         },
       }}

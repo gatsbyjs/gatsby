@@ -338,6 +338,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
 | `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
+| `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                               |
 | `title`                | `string`            | Passed to the `img` element                                                                                                 |
 | `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |

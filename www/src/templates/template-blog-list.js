@@ -17,7 +17,7 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
 } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
@@ -30,7 +30,7 @@ class BlogPostsIndex extends React.Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               background: colors.gray.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
@@ -43,7 +43,7 @@ class BlogPostsIndex extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -64,7 +64,7 @@ class BlogPostsIndex extends React.Component {
                 key={node.fields.slug}
                 css={{
                   marginBottom: space[6],
-                  [breakpoints.md]: {
+                  [mediaQueries.md]: {
                     boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],

@@ -6,7 +6,7 @@ import {
   space,
   transition,
   radii,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
   fonts,
@@ -92,14 +92,14 @@ export const buttonStyles = {
   small: {
     fontSize: fontSizes[1],
     padding: `${space[2]} ${space[3]}`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       fontSize: fontSizes[2],
     },
   },
   tiny: {
     fontSize: fontSizes[1],
     padding: `${space[1]} ${space[2]}`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       fontSize: fontSizes[2],
     },
   },
