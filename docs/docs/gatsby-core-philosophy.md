@@ -145,7 +145,7 @@ Our approach is to be proactive in creating community:
 
 - actively reaching out and welcome new contributors
 - remembering how steep the learning curve can be
-- invest in community as a primary measure of success
+- investing in community as a primary measure of success
 
 #### Community is everything
 
