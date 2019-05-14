@@ -6,6 +6,7 @@ const useCommunityEvents = () => {
   } = useStaticQuery(graphql`
     {
       allAirtable(
+        sort: { order: ASC, fields: [data___Date_of_Event] }
         filter: { data: { Approved_for_posting_on_event_page: { eq: true } } }
       ) {
         nodes {
@@ -25,19 +26,13 @@ const useCommunityEvents = () => {
     }
   `)
 
-  const events = nodes
-    .sort((a, b) => new Date(a.data.date) - new Date(b.data.date))
-    .map(event => {
-      return {
-        id: event.id,
-        ...event.data,
-        date: new Date(event.data.date).toLocaleDateString(`en-US`, {
-          year: `numeric`,
-          month: `long`,
-          day: `numeric`,
-        }),
-      }
-    })
+  const events = nodes.map(event => {
+    return {
+      id: event.id,
+      ...event.data,
+      date: new Date(`${event.data.date}T23:59:59.999Z`),
+    }
+  })
 
   return events
 }
