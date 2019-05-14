@@ -2017,16 +2017,6 @@
   built_by: Mahipat Jadav
   built_by_url: "https://mojaave.com/"
   featured: false
-- title: Cmsbased
-  main_url: "https://www.cmsbased.net"
-  url: "https://www.cmsbased.net"
-  description: >
-    Cmsbased is providing automation tools and design resources for Web Hosting
-    and IT services industry.
-  categories:
-    - Technology
-    - Design
-  featured: false
 - title: Insights
   main_url: "https://justaskusers.com/"
   url: "https://justaskusers.com/"
@@ -5354,19 +5344,6 @@
   built_by: General Mills Branded Sites Dev Team
   built_by_url: https://www.generalmills.com
   featured: false
-- title: Fifth Gait Technologies
-  main_url: https://5thgait.com
-  url: https://5thgait.com
-  featured: false
-  description: >
-    Fifth Gait is a small business in the defense and space industry that is run and owned by physicists and engineers that have worked together for decades. The site was built using Gatsby V2.
-  categories:
-    - Government
-    - Science
-    - Technology
-    - Space
-  built_by: Jonathan Z. Fisher
-  built_by_url: "https://jonzfisher.com"
 - title: Sal's Pals
   main_url: https://www.sals-pals.net
   url: https://www.sals-pals.net
