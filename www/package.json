@@ -8,6 +8,7 @@
     "@emotion/styled": "^10.0.7",
     "@reach/skip-nav": "^0.1.1",
     "@reach/visually-hidden": "^0.1.2",
+    "@xstate/react": "^0.2.1",
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "dotenv": "^6.0.0",
@@ -78,6 +79,7 @@
     "slugify": "^1.3.0",
     "typography": "^1.0.0-alpha.4",
     "typography-plugin-code": "^1.0.0-alpha.0",
+    "xstate": "^4.5.0",
     "zipkin": "^0.14.2",
     "zipkin-javascript-opentracing": "^2.0.0",
     "zipkin-transport-http": "^0.14.2"
