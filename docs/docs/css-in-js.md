@@ -18,6 +18,6 @@ CSS-in-JS, while not required in Gatsby, is very popular among JavaScript develo
 
 _Note that this functionality is not a part of React or Gatsby, and requires using any of the many [third-party CSS-in-JS libraries](https://github.com/MicheleBertoli/css-in-js#css-in-js)._
 
-This section contains guides for styling your site with some of the most popular CSS-in-JS libraries.
+This section contains guides for styling your site with some of the most popular CSS-in-JS libraries, including how to set up global styles using each library.
 
 [[guidelist]]
