@@ -4,7 +4,7 @@ title: Gatsby core philosophy
 
 Gatsby's core philosophy can be divided into three parts.
 
-**First, our vision.** Our vision is to _create better building blocks for the web_, and _build a cohesive "content mesh system"_, in order to _make building websites fun_.
+**First, our vision.** Our vision is to _create higher-level building blocks for the web_, and _build a cohesive "content mesh system"_, in order to _make building websites fun_ and _build a better web_.
 
 **Second, our tooling philosophy.** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
@@ -19,7 +19,7 @@ Gatsby's core philosophy can be divided into three parts.
 
 Today's building blocks for the web are HTML, CSS, and Javascript; `<img>` and `<a href>` and so on.
 
-We believe that in 20 or 25 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in.
+We believe that in 5 or 10 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in.
 
 Using abstractions like React components, `gatsby-image`, and `gatsby-link`, we've begun to craft this higher-level language. But we're just getting started. Gatsby is a playground for discovering new building blocks for the web.
 
@@ -27,7 +27,7 @@ To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
 > “You get simplicity by finding slightly more sophisticated building blocks“.
 
-[https://www.gatsbyjs.org/blog/2017-10-16-making-website-building-fun/](Read more here).
+[Read more here](/blog/2017-10-16-making-website-building-fun/#find-the-right-building-blocks).
 
 ### Build a cohesive "content mesh system"
 
@@ -61,57 +61,45 @@ We believe that with the right building blocks, and an integrated "content mesh 
 
 When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately.
 
+[Read more here](/blog/2017-10-16-making-website-building-fun/).
+
+### Make a better web with better defaults
+
+Websites can have, or lack, many qualities. They can be fast, secure, maintainable, beautiful, accessible, and cheap (or not). They can be easy to build and iterate on, have great SEO, and fun to work on (or not).
+
+We believe that these qualities should be baked into frameworks, so they are delivered _by default_ rather than implemented on a per-site basis. 
+
+When features and qualities are only available if you implement them, that makes them a luxury -- available only to a few websites.
+
+By contrast, by baking in qualities such as performance and security by default, Gatsby makes the right thing the easy thing. 
+
+We believe the most high-impact way to make the web better is to make it high-quality by default.
+
 ## Gatsby's tooling philosophy
 
-### Make the right thing the easy thing
+### Bundle the modern Javascript ecosystem for the content web
 
-As developers, we want to build great websites for our users.
+One key way Gatsby makes the content web high-quality by default is to neatly bundle the modern Javascript ecosystem.
 
-However, we face constraints. Clients and employers usually have finite budgets and concrete deadlines.
+Traditional CMS development [presents many challenges](https://www.gatsbyjs.org/blog/2018-10-11-rise-of-modern-web-development/#traditional-cms-development-presents-challenges) such as walled-garden development, difficult-to-maintain local environments, and a challenging target environment.
 
-These constraints results in our sites being less performant, secure, scalable, maintainable, accessible, beautiful, than they would be if we had more time and resources.
+Modern web development [bundles advances](https://www.gatsbyjs.org/blog/2018-10-11-rise-of-modern-web-development/#modern-frameworks-offer-stability-and-faster-development) in **performance** (bundle splitting, asset prefetching, offline support, image optimization, or server side rendering), **developer experience** (componentization via React, transpilation via Babel, webpack, hot reloading), **accessibility**, and **security** together.
 
-Gatsby's approach is to create a website tool so that the laziest, shortcuttiest, under-the-gunniest decisions a developer can make will still result in an excellent user experience.
+Gatsby's goal is to bundle these advances in an easy to use package. 
 
-This includes:
+See some features Gatsby bundles together here.
 
-- _great developer experience without sacrificing UX or performance_. Gatsby focuses heavily on reducing the barrier for developers to make good UX decisions by removing the difficulty in implementing them. Things that are typically pretty challenging to set up — such as bundle splitting, asset prefetching, offline support, image optimization, or server side rendering — are all done by default with Gatsby.
+### Progressively disclose complexity
 
-For example, our default starter gets a perfect score on webpagetest.org, so developers don’t have to think about the underlying setup at all. They can just build a website and know that the UX was already paid for by Gatsby’s underlying code.
+One concept UX designers use to make applications easier to learn and less error-prone is called “progressive disclosure". 
 
-Design decisions in Gatsby’s core are framed by a discussion of the trade-offs both for the developers working with the tools (i.e. the DX: is this pleasant to build with?) and the people who will actually use the sites that are built with it (i.e. the UX: does this improve the experience for the end user?). By taking both UX and DX into consideration, we’re able to avoid forcing a situation where the developers’ experience is at odds with the users’.
+If you were designing a user interface, you might move advanced or rarely-used features to a secondary screen, such as "advanced settings".
 
-- _cheap, secure, and maintainable by default_. Built Gatsby sites are just files living on a CDN. This reduces risk by removing the CMS as an attack surface, drastically reduces cost to serve your site at scale, and reduces the need to keep running servers.
+Progressive disclosure simplifies the experience for most people without limiting the abilities of more advanced users.
 
-### Progressive disclosure of complexity
+We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image` and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (eg, dependencies) yourself. 
 
-In user experience, there’s a concept from the Nielsen Norman Group called “progressive disclosure", which is an approach to designing better user interfaces (UIs).
-
-From their summary:
-
-> Progressive disclosure defers advanced or rarely used features to a secondary screen, making applications easier to learn and less error-prone.
-
-A common use of this pattern is on user profiles. If you’ve ever seen a page that has a link to “advanced settings”, that’s progressive disclosure: most people don’t care about or need to touch the advanced settings, so those are moved to a secondary screen where only power users will bother to go. This simplifies the experience for most people without limiting the abilities of more advanced users.
-
-What’s powerful about this approach is that it gives the UI the ability to “react” to feedback. An advanced learner can ask for more, and the “teacher” (the UI) can turn up the complexity to meet the learner’s needs.
-
-#### Abstractions
-
-The most important concept of progressive disclosure is abstraction.
-
-Put simply, abstractions are a set of default decisions that allow someone to accomplish something while remaining blissfully unaware that any decisions were made at all. When done well, good abstractions are how we make the right thing the easy thing.
-
-If someone wants to change the defaults, they opt out of the abstraction and make those decisions on their own — and this is where things get tricky. To make sure we have progressive disclosure of complexity, we need to avoid a scenario where the abstraction becomes all-or-nothing.
-
-#### How this applies to Gatsby
-
-One of Gatsby's key roles is to bundle modern Javascript build tools. These include React, Babel, webpack, react-hot-loader, and so on.
-
-These systems are incredibly powerful. At the same time, they are quite complex. Users shouldn't _need_ to know these systems exist.
-
-Instead, their ES6 code should seamlessly transpile into a form accessible by modern browsers. If they want to use Typescript or Reason, they should be able to. If they want to upgrade (or downgrade!) from specific versions of React, they should be able to.
-
-Some "zero-config" frameworks bundle complexity together that is only configurable by "ejecting". The challenge with ejecting is that it takes you from simple to complex as soon as you move out of the happy path.
+[Read more here](https://lengstorf.com/progressive-disclosure-of-complexity/).
 
 ## Gatsby's community philosophy
 
@@ -125,7 +113,7 @@ We’re convinced that the right path forward is to continue working in the open
 
 Anyone can open an issue and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can submit an RFC to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
-Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's ols issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system, performance optimizations, and so on.
+Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system, performance optimizations, and so on.
 
 ### You belong here.
 
