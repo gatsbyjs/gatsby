@@ -51,7 +51,7 @@ When this incantation is simple and takes seconds, we can easily get lost for ho
 
 Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this this -- with proper tooling.
 
-Each creator needs, as Bret Victor put it, "an immediate connection to what they're making.”
+As Bret Victor suggested in _Inventing on Principle_, each creator needs "an immediate connection to what they're making.”
 
 These instant feedback loops are often felt near the beginning of projects. But they can quickly be drowned by project complexity.
 
