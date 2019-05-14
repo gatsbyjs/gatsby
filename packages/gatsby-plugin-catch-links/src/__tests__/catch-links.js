@@ -286,7 +286,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    setTimeout(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${sameOriginAndTopPath.pathname}`
       )
@@ -313,7 +314,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    setTimeout(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${withAnchor.pathname}${withAnchor.hash}`
       )
@@ -340,7 +342,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    setTimeout(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${withSearch.pathname}${withSearch.search}${withSearch.hash}`
       )
@@ -385,7 +388,8 @@ describe(`navigation is routed through browser if resources have failed and the 
       view: window,
     })
 
-    setTimeout(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).not.toHaveBeenCalled()
 
       sameOriginAndTopPath.remove()
