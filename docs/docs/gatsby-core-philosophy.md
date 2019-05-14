@@ -31,7 +31,7 @@ To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
 ### Build a cohesive "content mesh system"
 
-Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh". Their key challenge: integrating all these pieces together.
+Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh" pulling content and functionality from multiple sources and APIs. Their key challenge: pragmatically integrating all these pieces together.
 
 Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modelling, authentication, search, analytics, payments, UI frameworks, and so on -- into a unified, high-quality whole.
 
