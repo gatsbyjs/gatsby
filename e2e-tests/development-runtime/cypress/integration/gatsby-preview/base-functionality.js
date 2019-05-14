@@ -1,4 +1,5 @@
 beforeEach(() => {
+  cy.exec(`npm run reset:preview`)
   cy.visit(`/preview`).waitForRouteChange()
 })
 

@@ -1,20 +1,69 @@
+const fs = require(`fs`)
+const util = require(`util`)
+const path = require(`path`)
+
+const NODE_TYPE = `FakeData`
+
+const readFile = file =>
+  util
+    .promisify(fs.readFile)(file, `utf8`)
+    .then(contents => JSON.parse(contents))
+    .catch(() => [])
+
+const writeFile = (file, contents) =>
+  util
+    .promisify(fs.writeFile)(file, JSON.stringify(contents), `utf8`)
+    .catch(() => null)
+
+const difference = (updated, existing) => {
+  const lookup = updated.reduce((merged, node) => {
+    merged[node.uuid] = node
+    return merged
+  }, {})
+  return existing.filter(node => !lookup[node.uuid])
+}
+
+const getNode = (data, { createNodeId, createContentDigest }) => {
+  const nodeContent = JSON.stringify(data)
+
+  const meta = {
+    id: createNodeId(`fake-data-${data.uuid}`),
+    parent: null,
+    children: [],
+    internal: {
+      type: NODE_TYPE,
+      content: nodeContent,
+      contentDigest: createContentDigest(data),
+    },
+  }
+
+  return Object.assign({}, data, meta)
+}
+
+const max = nodes =>
+  nodes.reduce((maxValue, node) => {
+    if (node.uuid > maxValue) {
+      return node.uuid
+    }
+    return maxValue
+  }, 0)
+
 module.exports = {
-  uuid: 0,
+  dbFilePath: path.join(__dirname, `db.json`),
+  nodeType: NODE_TYPE,
   nodes: [],
-  get() {
-    this.uuid += 1
+  async sync(helpers) {
+    // empty array
+    const nodes = await readFile(this.dbFilePath)
 
-    this.nodes = this.nodes.map(node =>
-      Object.assign({}, node, {
-        updates: node.updates + 1,
-      })
-    )
+    const uuid = max(nodes) + 1
 
-    const node = {
-      updates: 0,
-      uuid: this.uuid,
-      title: `Hello World (${this.uuid})`,
-      message: `
+    const node = getNode(
+      {
+        updates: 0,
+        uuid,
+        title: `Hello World (${uuid})`,
+        message: `
 This is fake data to test Gatsby Preview.
 What are you doing here, anyways? Be gone!
 
@@ -26,21 +75,29 @@ OK cool, I appreciate you. Thanks for checking deep into the underlying stuff, y
 
 We welcome any and all contributions! 💪
       `.trim(),
-    }
+      },
+      helpers
+    )
 
-    this.nodes.push(node)
+    const existing = this.nodes.slice(0)
 
-    return this.nodes
+    const updated = (this.nodes = nodes
+      .slice(0)
+      .map(node =>
+        getNode(
+          Object.assign({}, node, {
+            updates: node.updates + 1,
+          }),
+          helpers
+        )
+      )
+      .concat(node))
+
+    await writeFile(this.dbFilePath, updated, `utf8`)
+
+    return [updated, difference(updated, existing)]
   },
-  reset() {
-    this.nodes = []
-    this.uuid = 0
-
-    return this
-  },
-  update(uuid, newNode) {
-    const index = this.nodes.findIndex(node => node.uuid === uuid)
-    this.nodes.splice(index, 1, newNode)
-    return newNode
+  async reset() {
+    return writeFile(this.dbFilePath, [])
   },
 }

@@ -33,7 +33,7 @@
     "test": "CYPRESS_SUPPORT=y npm run start-server-and-test || (npm run reset && exit 1)",
     "posttest": "npm run reset",
     "reset": "node scripts/reset.js",
-    "reset:preview": "node plugins/gatsby-source-fake-data/reset.js",
+    "reset:preview": "node plugins/gatsby-source-fake-data/reset.js && npm run update:preview",
     "update": "node scripts/update.js",
     "update:preview": "curl -X POST http://localhost:8000/__refresh",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",

@@ -1,9 +1,7 @@
 const api = require(`./api`)
 
-const NODE_TYPE = `FakeData`
-
 exports.onCreateNode = function onCreateNode({ actions, node }) {
-  if (node.internal.type === NODE_TYPE) {
+  if (node.internal.type === api.nodeType) {
     actions.createNodeField({
       name: `slug`,
       value: `/preview/${node.uuid}`,
@@ -12,32 +10,26 @@ exports.onCreateNode = function onCreateNode({ actions, node }) {
   }
 }
 
-const getNode = (data, { createNodeId, createContentDigest }) => {
-  const nodeContent = JSON.stringify(data)
-
-  const meta = {
-    id: createNodeId(`fake-data-${data.uuid}`),
-    parent: null,
-    children: null,
-    internal: {
-      type: NODE_TYPE,
-      content: nodeContent,
-      contentDigest: createContentDigest(data),
-    },
-  }
-
-  return Object.assign({}, data, meta)
-}
-
-exports.sourceNodes = function sourceNodes({
+exports.sourceNodes = async function sourceNodes({
   actions,
   createNodeId,
   createContentDigest,
+  getNode,
 }) {
-  const { createNode } = actions
-  const helpers = { createNodeId, createContentDigest }
+  const { createNode, deleteNode } = actions
 
-  const nodes = api.get()
+  const [updated, deleted = []] = await api.sync({
+    createNodeId,
+    createContentDigest,
+  })
 
-  nodes.forEach(node => createNode(getNode(node, helpers)))
+  updated.forEach(node => createNode(node))
+  deleted.forEach(node => {
+    const existing = getNode(node.id)
+    if (existing) {
+      deleteNode({
+        node: existing,
+      })
+    }
+  })
 }
