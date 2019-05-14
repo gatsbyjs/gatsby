@@ -115,7 +115,7 @@ const filterArchived = plugins => {
     const url = `https://api.github.com/repos/${username}/${packageName}`
     return got(url, {
       headers: {
-        Authorization: `token ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
+        Authorization: `token ${process.env.GITHUB_API_TOKEN}`,
       },
     })
       .then(response => JSON.parse(response.body))
