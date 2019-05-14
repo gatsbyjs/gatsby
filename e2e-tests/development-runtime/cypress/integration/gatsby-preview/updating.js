@@ -30,20 +30,17 @@ describe(`Gatsby Preview (Updating)`, () => {
     cy.queryByText(`1`).should(`exist`)
   })
 
-  it.skip(`updates and hot-reloads new content`, () => {
-    update()
+  it(`updates and hot-reloads new content`, () => {
+    const count = 5
+    update(count)
 
     cy.get(`li`)
       .its(`length`)
-      .should(`be`, 2)
-
-    cy.queryByText(`Hello World (2)`)
-      .click()
-      .waitForRouteChange()
+      .should(`be`, count + 1)
   })
 
   it(`updates when content is deleted`, () => {
-    update(10)
+    update(5)
 
     reset()
 
