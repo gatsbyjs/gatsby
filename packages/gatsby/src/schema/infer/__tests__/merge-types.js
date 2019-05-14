@@ -528,12 +528,12 @@ describe(`merges explicit and inferred type definitions`, () => {
   it(`adds explicit resolvers through directives`, async () => {
     const typeDefs = `
       type Test implements Node @infer {
-        explicitDate: Date @addResolver(type: "dateformat")
+        explicitDate: Date @dateformat
       }
 
       type LinkTest implements Node @infer {
-        link: Test! @addResolver(type: "link")
-        links: [Test!]! @addResolver(type: "link")
+        link: Test! @link
+        links: [Test!]! @link
       }
     `
     store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
@@ -551,7 +551,59 @@ describe(`merges explicit and inferred type definitions`, () => {
     expect(inferDate.resolve).toBeDefined()
   })
 
-  it(`adds explicit resolvers through extensions`, async () => {})
+  it(`adds explicit resolvers through extensions`, async () => {
+    const typeDefs = [
+      buildObjectType({
+        name: `Test`,
+        interfaces: [`Node`],
+        extensions: {
+          infer: true,
+        },
+        fields: {
+          explicitDate: {
+            type: `Date`,
+            extensions: {
+              dateformat: {},
+            },
+          },
+        },
+      }),
+      buildObjectType({
+        name: `LinkTest`,
+        interfaces: [`Node`],
+        extensions: {
+          infer: true,
+        },
+        fields: {
+          link: {
+            type: `Test!`,
+            extensions: {
+              link: {},
+            },
+          },
+          links: {
+            type: `[Test!]!`,
+            extensions: {
+              link: true,
+            },
+          },
+        },
+      }),
+    ]
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    await build({})
+    const { schema } = store.getState()
+
+    const { link, links } = schema.getType(`LinkTest`).getFields()
+    expect(link.type.toString()).toBe(`Test!`)
+    expect(links.type.toString()).toBe(`[Test!]!`)
+    expect(link.resolve).toBeDefined()
+    expect(links.resolve).toBeDefined()
+
+    const { explicitDate, inferDate } = schema.getType(`Test`).getFields()
+    expect(explicitDate.resolve).toBeDefined()
+    expect(inferDate.resolve).toBeDefined()
+  })
 
   it(`honors array depth when merging types`, async () => {
     const typeDefs = `

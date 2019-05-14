@@ -320,7 +320,7 @@ describe(`GraphQL type inference`, () => {
       `
         with_space
         with_hyphen
-        with_resolver(formatString:"DD.MM.YYYY")
+        with_resolver(formatString: "DD.MM.YYYY")
         _123
         _456 {
           testingTypeNameCreation
