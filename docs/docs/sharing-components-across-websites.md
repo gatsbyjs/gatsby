@@ -12,9 +12,6 @@ Alternately, teams can implement **systems for component discoverability**, such
 
 [[guidelist]]
 
----
+--
 
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+**Note:** do you have additional ideas on sharing components across websites? We welcome contributions to the Gatsby docs. Find out [how to contribute](/contributing/docs-contributions/).
