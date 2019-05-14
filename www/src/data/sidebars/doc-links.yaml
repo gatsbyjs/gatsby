@@ -384,6 +384,8 @@
           link: /docs/prpl-pattern/
         - title: Querying Data with GraphQL
           link: /docs/querying-with-graphql/
+        - title: Security in Gatsby*
+          link: /docs/security-in-gatsby/
     - title: Behind the Scenes
       link: /docs/behind-the-scenes/
       items:
