@@ -88,6 +88,10 @@ const LegendTable = () => {
     <div>
       <Helmet>
         <title>Features</title>
+        <meta
+          name="description"
+          content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+        />
       </Helmet>
       <div
         css={{
