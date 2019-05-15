@@ -2508,3 +2508,19 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-aerial
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-aerial
+  description: Single page starter based on the Aerial site template by HTML5 up, suitable for one page personal page.
+  tags:
+    - HTML5UP
+    - Styling:SCSS
+    - Onepage
+    - Landing Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Simple one page personal portfolio
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
