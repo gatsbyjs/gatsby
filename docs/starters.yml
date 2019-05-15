@@ -1,3 +1,18 @@
+- url: https://gatsby-advanced-blog-system.danilowoz.now.sh/blog
+  repo: https://github.com/danilowoz/gatsby-advanced-blog-system
+  description: Create a complete blog from scratch with pagination, categories, featured posts, author, SEO and navigation.
+  tags:
+    - Pagination
+    - Markdown
+    - SEO
+  features:
+    - Pagination;
+    - Category and tag pages (with pagination);
+    - Category list (with navigation);
+    - Featured post;
+    - Author page;
+    - Next and prev post;
+    - SEO component.
 - url: https://graphcms.github.io/gatsby-graphcms-tailwindcss-example/
   repo: https://github.com/GraphCMS/gatsby-graphcms-tailwindcss-example
   description: The default Gatsby starter blog with the addition of the gatsby-source-graphql and tailwind dependencies.
