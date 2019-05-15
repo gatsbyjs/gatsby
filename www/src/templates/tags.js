@@ -31,7 +31,13 @@ const Tags = ({ pageContext, data, location }) => {
   return (
     <Layout location={location}>
       <Helmet>
-        <title>{tags}</title>
+        <title>{`${preferSpacedTag(tags)} Tag`}</title>
+        <meta
+          name="description"
+          content={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
+            tags
+          )}`}
+        />
       </Helmet>
       <Container>
         <h1>{tagHeader}</h1>

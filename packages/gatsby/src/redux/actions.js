@@ -17,6 +17,7 @@ const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 const actions = {}
 
@@ -527,6 +528,8 @@ const typeOwners = {}
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @returns {Promise} The returned Promise resolves when all cascading
+ * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example
  * createNode({
  *   // Data for the node.
@@ -551,7 +554,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (
+const createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
@@ -714,6 +717,26 @@ actions.createNode = (
   } else {
     return updateNodeAction
   }
+}
+
+actions.createNode = (...args) => dispatch => {
+  const actions = createNode(...args)
+  dispatch(actions)
+  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
+    action => action.type === `CREATE_NODE`
+  )
+
+  if (!createNodeAction) {
+    return undefined
+  }
+
+  const { payload: node, traceId, parentSpan } = createNodeAction
+  return apiRunnerNode(`onCreateNode`, {
+    node,
+    traceId,
+    parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  })
 }
 
 /**
