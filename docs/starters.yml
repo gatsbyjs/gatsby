@@ -2508,6 +2508,22 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://hopeful-ptolemy-cd840b.netlify.com/
+  repo: https://github.com/tonydiaz/gatsby-landing-page-starter
+  description: A simple landing page starter for idea validation using material-ui. Includes email signup form and pricing section.
+  tags:
+    - Styling:Material
+    - Landing Page
+  features:
+    - SEO
+    - Mailchimp integration
+    - Material-UI compoentns
+    - Responsive
+    - Pricing section
+    - Benefits section
+    - Email signup form
+    - Easily configurable
+    - Includes standard gatsby starter features
 - url: https://anubhavsrivastava.github.io/gatsby-starter-aerial
   repo: https://github.com/anubhavsrivastava/gatsby-starter-aerial
   description: Single page starter based on the Aerial site template by HTML5 up, suitable for one page personal page.
