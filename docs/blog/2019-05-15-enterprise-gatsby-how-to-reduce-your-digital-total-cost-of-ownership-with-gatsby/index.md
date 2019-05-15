@@ -1,8 +1,8 @@
 ---
-title: Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby
+title: "Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby"
 date: 2019-05-15
 author: Preston So
-excerpt: "Ahmed Alahmady left medical school to pursue a career in coding. Learn how the Gatsby stack is solely responsible for the career Ahmed has now."
+excerpt: "At Gatsby, we’ve heard many questions about whether Gatsby is truly ready for the enterprise. The short answer is yes or very soon, depending on your requirements."
 tags:
   - accessibility
   - ecommerce
