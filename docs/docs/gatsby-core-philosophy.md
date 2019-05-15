@@ -57,7 +57,7 @@ These instant feedback loops are often felt near the beginning of projects. But 
 
 Developers can spend hours waiting for deploys, tracking down phantom "tooling" bugs, and so on.
 
-We believe that with the right building blocks, and an integrated "content mesh system", website projects should continue to feel "fun" no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole.
+We believe that with the right building blocks, and an integrated content mesh system, website projects should continue to feel fun no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole.
 
 When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately.
 
