@@ -1316,7 +1316,7 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     # Does not include automatically inferred fields
  *     type AuthorJson implements Node @dontInfer {
  *       name: String!
- *       birthday: Date! @date(locale: "ru")
+ *       birthday: Date! @dateformat(locale: "ru")
  *     }
  *   `
  *   createTypes(typeDefs)
