@@ -1,4 +1,7 @@
-exports.onRouteUpdate = ({ location }, pluginOptions) => {
+exports.onRouteUpdate = (
+  { location },
+  pluginOptions = { stripSearchParam: false }
+) => {
   const domElem = document.querySelector(`link[rel='canonical']`)
   const existingValue = domElem.getAttribute(`href`)
   const baseProtocol = domElem.getAttribute(`data-baseProtocol`)
@@ -6,12 +9,14 @@ exports.onRouteUpdate = ({ location }, pluginOptions) => {
   if (existingValue && baseProtocol && baseHost) {
     let value = `${baseProtocol}//${baseHost}${location.pathname}`
 
-    if (pluginOptions.stripSearchParam !== false) {
+    const { stripSearchParam } = pluginOptions
+
+    if (!stripSearchParam) {
       value += location.search
     }
 
     value += location.hash
 
-    domElem.setAttribute(`href`, `${value}${location.hash}`)
+    domElem.setAttribute(`href`, `${value}`)
   }
 }
