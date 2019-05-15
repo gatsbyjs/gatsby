@@ -370,7 +370,7 @@
     - title: Conceptual Guide
       link: /docs/conceptual-guide/
       items:
-        - title: The Gatsby Core Philosophy*
+        - title: The Gatsby Core Philosophy
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
