@@ -2513,7 +2513,6 @@
   description: A simple landing page starter for idea validation using material-ui. Includes email signup form and pricing section.
   tags:
     - Styling:Material
-    - eCommerce
     - Landing Page
   features:
     - SEO
