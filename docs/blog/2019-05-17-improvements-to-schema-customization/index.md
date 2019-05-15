@@ -52,9 +52,18 @@ Applies with `@dontInfer(noDefaultResolvers: false)`
 
 Inferrence will run, but fields won't be added. If type has defined fields of types `Date`, `File` and any other node, and we inferred that they should have resolvers/args, resolvers/args will be added to type with a warning.
 
-## `addResolver`
+## Resolver extensions
 
-Add resolver and resolver options (such as arguments) to the given field.
+Add resolver and resolver options (such as arguments) to the given field. There are currently 3 extensions available.
+
+- `@dateformat` - add date formatting arguments. Accepts `formatString` and
+  `locale` options that sets the defaults for this field
+- `@link` - connect to a different Node. Arguments `by` and `from`, which
+  define which field to compare to on a remote node and which field to use on
+  the source node
+- `@fileByRelativePath` - connect to a File node. Same arguments. The
+  difference from link is that this normalizes the relative path to be
+  relative from the path where source node is found.
 
 ```graphql
 type MyType @infer {
