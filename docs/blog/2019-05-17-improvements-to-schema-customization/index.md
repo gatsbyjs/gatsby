@@ -1,5 +1,5 @@
 ---
-title: Improvements to Schema Customization API - Available in Gatsby 2.4.0
+title: Improvements to Schema Customization API - Available in Gatsby 2.5.0
 date: 2019-05-17
 author: Mikhail Novikov
 tags:
@@ -13,14 +13,16 @@ It is now possible to indicate to Gatsby, that you want to add a resolver to an 
 
 ## Summary
 
-After about a month of testing schema customization both here and in pre-release we determined a couple of issues. We set up to do this because we wanted to remove uncertainty in people's schemas, when the data changes. However, the original design allowed some uncertainties anyway. In addition, we have made inferrence a more heavy process, trading performance for consistency and didn't really provide a way to opt out of it completely. To summarize:
+After about a month of testing schema customization both here and in pre-release we determined a couple of issues. The original aim of our schema customisation work was to remove uncertainty in people's schemas when their data changes. 
+
+However, the original design allowed some uncertainties anyway. In addition, it made inference a more heavy process, trading performance for consistency without providing a way to opt out completely. To summarize, the schema customization work released in Gatsby 2.2.0 had the following issues:
 
 - Resolvers and arguments of fields like Date and File was determined by inferred data
 - There was no easy way to use arguments/resolvers to override the above
 - Inferrence was run even when `@dontInfer` flag was on
 - There was no way to control inference outside of SDL, eg in Type Builders
 
-Therefore we have some changes to the way we do inferrence. In addition, we are deprecating some of the features introduced is 2.2.0 and will remove them in Gatsby 3.
+Therefore we have some changes to the way we do inferrence. In addition, we are deprecating some of the features introduced in 2.2.0 and will remove them in Gatsby 3.
 
 ## noDefaultResolvers and inferrence modes
 
