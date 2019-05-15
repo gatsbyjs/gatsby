@@ -1368,7 +1368,7 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *         birthday: {
  *           type: 'Date!'
  *           extensions: {
- *             date: {
+ *             dateformat: {
  *               locale: 'ru',
  *             },
  *           },
