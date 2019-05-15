@@ -110,7 +110,7 @@ describe(`Kitchen sink schema test`, () => {
             idWithDecoration
             likes
           }
-          addResolvers: likedEnough {
+          createResolvers: likedEnough {
             id
             likes
             code

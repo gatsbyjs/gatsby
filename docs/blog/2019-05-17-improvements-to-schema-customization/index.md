@@ -1,6 +1,6 @@
 ---
 title: Improvements to Schema Customization API - Available in Gatsby 2.4.0
-date: 2019-04-23
+date: 2019-05-17
 author: Mikhail Novikov
 tags:
   - schema
@@ -9,7 +9,7 @@ tags:
 
 Today we are releasing further improvements to the schema customization that [we've released in version 2.2.0](/blog/2019-03-18-releasing-new-schema-customization). You can use them with Gatsby 2.4.0.
 
-It is now possible to indicate to Gatsby, that you want to add a resolver to an explicitly defined fields. Use `addResolver` to add default arguments or/and resolvers to fields. In addition, when `@dontInfer` is set, Gatsby will no longer run inference for marked type, allowing one to improve performance for large data sets.
+It is now possible to indicate to Gatsby, that you want to add a resolver to an explicitly defined fields. Use extensions like `@link` and `@dateformat` to add default arguments or/and resolvers to fields. In addition, when `@dontInfer` is set, Gatsby will no longer run inference for marked type, allowing one to improve performance for large data sets.
 
 ## Summary
 
@@ -26,7 +26,7 @@ Therefore we have some changes to the way we do inferrence. In addition, we are 
 
 First of all, we are deprecating `noDefaultResolvers`. It was an argument of `infer` and `dontInfer`. We feel it was confusing and in some cases it didn't even actually add resolvers :). We will support `noDefaultResolvers` until version 3, after which `@infer` behaviour (see below) will become a default and `noDefaultResolvers` will be removed.
 
-We didn't want to break things, so we keep old default behaviour, even though we think it's not optimal. Add explicit `@infer` and `@addResolver` to fields to be future proof.
+We didn't want to break things, so we keep old default behaviour, even though we think it's not optimal. Add explicit `@infer` and resolver extensions (like `@link`) to fields to be future proof.
 
 ### Default (deprecated, removed in v3)
 
@@ -38,13 +38,13 @@ Type gets all inferred fields added. If type has defined fields of types `Date`,
 
 Applies with `@infer` or `@infer(noDefaultResolvers: true)`.
 
-Type gets all inferred fields added. Existing fields won't automatically get resolvers (use `@addResolver` directive).
+Type gets all inferred fields added. Existing fields won't automatically get resolvers (use resolver extensions).
 
 ### No inferrence
 
 Applies with `@dontInfer` or `@dontInfer(noDefaultResolvers: true)`.
 
-Inferrence won't run at all. Existing fields won't automatically get resolvers (use @addResolver directive).
+Inferrence won't run at all. Existing fields won't automatically get resolvers (use resolver extensions).
 
 ### No new fields with default resolvers (deprecated, removed in v3)
 
@@ -58,9 +58,9 @@ Add resolver and resolver options (such as arguments) to the given field.
 
 ```graphql
 type MyType @infer {
-  date: Date @addResolver(type: "dateformat", options: { formatString: "DD MMM", locale: "fi" })
-  image: File @addResolver(type: "fileByRelativePath")
-  authorByEmail: Author @addResolver(type: "link", { by: "email" })
+  date: Date @dateformat(formatString: "DD MMM", locale: "fi")
+  image: File @fileByRelativePath
+  authorByEmail: Author @link(by: "email")
 }
 ```
 
@@ -78,9 +78,9 @@ schema.createObjectType({
     date: {
       type: "Date",
       extensions: {
-        addResolver: {
-          type: "dateformat",
-          options: { formatString: "DD MMM", locale: "fi" },
+        dateformat: {
+          formatString: "DD MMM",
+          locale: "fi",
         },
       },
     },

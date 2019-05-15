@@ -1265,23 +1265,24 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *   with inferred field types, and default field resolvers for `Date` (which
  *   adds formatting options) and `File` (which resolves the field value as
  *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer`, `@dontInfer` and `@addResolvers` directives.
+ *   customised with `@infer`, `@dontInfer` directives or extensions. Fields
+ *   may be assigned resolver (and other option like args) with additional
+ *   directives. Currently `@dateformat`, `@link` and `@fileByRelativePath` are
+ *   available.
  *
  *
  * Schema customization controls:
  * * `@infer` - run inference on the type and add fields that don't exist on the
  * defined type to it.
  * * `@dontInfer` - don't run any inference on the type
- * * `@addResolver` - add resolver options to a field. Args are `type` and
- *   `options`. Type can be `dateformat`, `link` and `fileByRelativePath`.
  *
- * Resolver types:
- * * `dateformat` - add date formatting arguments. Accepts `formatString` and
+ * Extensions to add resolver options:
+ * * `@dateformat` - add date formatting arguments. Accepts `formatString` and
  *   `locale` options that sets the defaults for this field
- * * `link` - connect to a different Node. Arguments `by` and `from`, which
+ * * `@link` - connect to a different Node. Arguments `by` and `from`, which
  *   define which field to compare to on a remote node and which field to use on
  *   the source node
- * * `fileByRelativePath` - connect to a File node. Same arguments. The
+ * * `@fileByRelativePath` - connect to a File node. Same arguments. The
  *   difference from link is that this normalizes the relative path to be
  *   relative from the path where source node is found.
  *
@@ -1303,8 +1304,8 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     """
  *     type Frontmatter @infer {
  *       title: String!
- *       author: AuthorJson! @addResolver(type: "link")
- *       date: Date! @addResolver(type: "dateformat")
+ *       author: AuthorJson! @link
+ *       date: Date! @dateformat
  *       published: Boolean!
  *       tags: [String!]!
  *     }
@@ -1315,7 +1316,7 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     # Does not include automatically inferred fields
  *     type AuthorJson implements Node @dontInfer {
  *       name: String!
- *       birthday: Date! @addResolver(type: "dateformat")
+ *       birthday: Date! @date(locale: "ru")
  *     }
  *   `
  *   createTypes(typeDefs)
@@ -1347,17 +1348,13 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *         author: {
  *           type: 'AuthorJson'
  *           extensions: {
- *             addResolver: {
- *               type: 'link',
- *             },
+ *             link: {},
  *           },
  *         }
  *         date: {
  *           type: 'Date!'
  *           extensions: {
- *             addResolver: {
- *               type: 'date',
- *             },
+ *             dateformat: {},
  *           },
  *         },
  *         published: 'Boolean!',
@@ -1371,8 +1368,8 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *         birthday: {
  *           type: 'Date!'
  *           extensions: {
- *             addResolver: {
- *               type: 'date',
+ *             date: {
+ *               locale: 'ru',
  *             },
  *           },
  *         },
