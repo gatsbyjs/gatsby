@@ -49,7 +49,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   shouldUpdateScroll={shouldUpdateScroll}
                 >
                   <Router
-                    basepath={__PATH_PREFIX__}
+                    basepath={__BASE_PATH__}
                     location={location}
                     id="gatsby-focus-wrapper"
                   >
