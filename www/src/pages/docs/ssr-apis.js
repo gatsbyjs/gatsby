@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
@@ -22,6 +22,10 @@ class SSRAPIs extends React.Component {
         <Container>
           <Helmet>
             <title>SSR APIs</title>
+            <meta
+              name="description"
+              content="Documentation on APIs related to server side rendering during Gatsby's build process"
+            />
           </Helmet>
           <h1 id="gatsby-server-rendering-apis" css={{ marginTop: 0 }}>
             Gatsby Server Rendering APIs

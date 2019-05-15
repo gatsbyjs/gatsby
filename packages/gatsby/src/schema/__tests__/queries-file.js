@@ -94,6 +94,8 @@ const nodes = [
         files: [`./2.png`],
       },
     ],
+    arrayOfArray: [[`./1.png`], [`./2.png`]],
+    arrayOfArrayOfObjects: [[{ nested: `./1.png` }], [{ nested: `./2.png` }]],
   },
   {
     id: `test2`,
@@ -140,6 +142,12 @@ describe(`Query fields of type File`, () => {
             file { name }
             files { name }
           }
+          arrayOfArray { name }
+          arrayOfArrayOfObjects { 
+            nested {
+              name
+            }
+          }
         }
       }
     `
@@ -161,6 +169,11 @@ describe(`Query fields of type File`, () => {
             file: { name: `2.png` },
             files: [{ name: `2.png` }],
           },
+        ],
+        arrayOfArray: [[{ name: `1.png` }], [{ name: `2.png` }]],
+        arrayOfArrayOfObjects: [
+          [{ nested: { name: `1.png` } }],
+          [{ nested: { name: `2.png` } }],
         ],
       },
     }

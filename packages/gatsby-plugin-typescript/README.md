@@ -46,7 +46,7 @@ For more detailed documentation on the available options, visit https://babeljs.
 ## Caveats
 
 This plugin uses [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript.html)
-to transpile typescript. It does _not do type checking_. Also since the TypeScript
+to transpile TypeScript. It does _not do type checking_. Also since the TypeScript
 compiler is not involved, the following applies:
 
 > Does not support namespaces.

@@ -5,7 +5,7 @@ import TagsIcon from "react-icons/lib/ti/tags"
 import Button from "./button"
 import { rhythm } from "../utils/typography"
 import { space, fontSizes } from "../utils/presets"
-const _ = require(`lodash`)
+const { kebabCase } = require(`lodash-es`)
 
 const TagsSection = ({ tags }) => {
   if (!tags) return null
@@ -13,7 +13,7 @@ const TagsSection = ({ tags }) => {
     const divider = i < tags.length - 1 && <span>{`, `}</span>
     return (
       <span key={tag}>
-        <Link to={`/blog/tags/${_.kebabCase(tag.toLowerCase())}`}>{tag}</Link>
+        <Link to={`/blog/tags/${kebabCase(tag.toLowerCase())}`}>{tag}</Link>
         {divider}
       </span>
     )

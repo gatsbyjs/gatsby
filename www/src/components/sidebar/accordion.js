@@ -125,8 +125,6 @@ class Accordion extends React.Component {
                 bottom: -1,
               },
             }),
-          // marginTop:
-          //   level === 0 && isExpanded ? `${space[4]} !important` : false,
         }}
       >
         <ItemWithSubitems
