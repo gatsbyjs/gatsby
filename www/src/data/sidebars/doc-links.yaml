@@ -188,11 +188,13 @@
         - title: Styling Your Site
           link: /docs/styling/
           items:
-            - title: Standard styling with global CSS files
+            - title: Using Layout Components
+              link: /docs/layout-components/
+            - title: Standard, Global CSS Files
               link: /docs/global-css/
-            - title: Locally-scoped styles with CSS Modules
+            - title: Component-Scoped CSS Modules
               link: /docs/css-modules/
-            - title: Enhance your styles with CSS-in-JS
+            - title: Enhancing with CSS-in-JS
               link: /docs/css-in-js/
               items:
                 - title: Emotion

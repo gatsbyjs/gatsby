@@ -1,5 +1,5 @@
 ---
-title: Standard styling with CSS files
+title: Standard Styling with Global CSS Files
 ---
 
 Traditionally, websites are styled using global CSS files.
