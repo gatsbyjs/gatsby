@@ -30,12 +30,7 @@ What these million-dollar platform subscriptions have in common is the upward pr
 
 Static hosts such as [Netlify](https://www.netlify.com/) have found success in recent months due to their emphasis on painless builds and deployments, seamless integrations with tools like Gatsby, and hosting for mere pennies on the dollar thanks to a built-in content delivery network (CDN). Now that Netlify and others offer features such as free SSL, deploy previews, and AWS Lambda integration, they have become compelling rivals to traditional stalwarts like Acquia, Pantheon, and WordPress VIP.
 
-<<<<<<< HEAD
 As an anecdotal example, I was pleasantly surprised that I was able to set up an architecture consisting of a Drupal site and Gatsby site in less than an hour thanks to Netlify’s free tier. Since I don’t need custom DNS for my Drupal site, I used Pantheon’s free tier for my Drupal hosting and found that configuring Pantheon took longer than on Netlify. Within less than an hour, I had free Drupal and Gatsby hosting and a custom domain for my Gatsby site, all at an unbeatable price of _zero dollars_.
-=======
-As an anecdotal example, I was pleasantly surprised that I was able to set up an architecture consisting of a Drupal site and Gatsby site in less than an hour thanks to Netlify’s free tier. Since I don’t need custom DNS for my Drupal site, I used Pantheon’s free tier for my Drupal hosting and found that configuring Pantheon took longer than on Netlify. Within less than an hour, I had free Drupal and Gatsby hosting and a custom domain for my Gatsby site, all at an unbeatable price of _zero dollars_.
-
-> > > > > > > origin/blog/enterprise-gatsby
 
 Enterprise users seeking a quick way to limit their TCO may look to hosting products such as Netlify and capabilities we are introducing to Gatsby Cloud for more affordable hosting. By decoupling monolithic CMS architectures like Drupal and WordPress, enterprise users can easily reduce their monthly hosting bill by multiple orders of magnitude, especially for less mission-critical web properties like brochureware and microsites.
 
