@@ -13,6 +13,7 @@ import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import { space } from "../../utils/presets"
+import useComparisonState from "../../hooks/use-comparison-state"
 
 const FeaturesHeader = () => (
   <section>
@@ -25,10 +26,7 @@ const FeaturesHeader = () => (
 )
 
 const CmsFeaturesPage = ({ data, location }) => {
-  const setSelected = (state, selected) => {
-    return { ...state, ...selected }
-  }
-  const [selected, dispatch] = React.useReducer(setSelected, {
+  const [selected, setSelected, comparators, hasSelected] = useComparisonState({
     wordpress: false,
     drupal: false,
   })
@@ -36,15 +34,6 @@ const CmsFeaturesPage = ({ data, location }) => {
   const { sections, sectionHeaders } = getFeaturesData(
     data.allGatsbyCmsSpecsCsv.edges
   )
-
-  let comparators = []
-  let hasSelected = false
-  for (const [key, value] of Object.entries(selected)) {
-    if (value) {
-      comparators.push(key)
-      hasSelected = true
-    }
-  }
 
   return (
     <Layout
@@ -56,6 +45,10 @@ const CmsFeaturesPage = ({ data, location }) => {
         <main id={`reach-skip-nav`}>
           <FeaturesHeader />
           <h3>Comparison</h3>
+          <p>
+            To see a filtered view choose CMS technologies to compare to Gatsby
+            and then press Compare:
+          </p>
           <div
             css={{
               display: `grid`,
@@ -68,7 +61,7 @@ const CmsFeaturesPage = ({ data, location }) => {
                 key={optionKey}
                 optionKey={optionKey}
                 selected={selected[optionKey]}
-                setSelected={dispatch}
+                setSelected={setSelected}
               >
                 {display}
               </CompareButton>

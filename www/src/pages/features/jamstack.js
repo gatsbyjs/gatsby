@@ -13,6 +13,7 @@ import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import { space } from "../../utils/presets"
+import useComparisonState from "../../hooks/use-comparison-state"
 
 const FeaturesHeader = () => (
   <section>
@@ -25,10 +26,7 @@ const FeaturesHeader = () => (
 )
 
 const JamstackFeaturesPage = ({ data, location }) => {
-  const setSelected = (state, selected) => {
-    return { ...state, ...selected }
-  }
-  const [selected, dispatch] = React.useReducer(setSelected, {
+  const [selected, setSelected, comparators, hasSelected] = useComparisonState({
     nextjs: false,
     jekyll: false,
     hugo: false,
@@ -38,15 +36,6 @@ const JamstackFeaturesPage = ({ data, location }) => {
   const { sections, sectionHeaders } = getFeaturesData(
     data.allGatsbyJamstackSpecsCsv.edges
   )
-
-  let comparators = []
-  let hasSelected = false
-  for (const [key, value] of Object.entries(selected)) {
-    if (value) {
-      comparators.push(key)
-      hasSelected = true
-    }
-  }
 
   return (
     <Layout
@@ -58,6 +47,10 @@ const JamstackFeaturesPage = ({ data, location }) => {
         <main id={`reach-skip-nav`}>
           <FeaturesHeader />
           <h3>Comparison</h3>
+          <p>
+            To see a filtered view choose JAMstack technologies to compare to
+            Gatsby and then press Compare:
+          </p>
           <div
             css={{
               display: `grid`,
@@ -72,7 +65,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
                   key={optionKey}
                   optionKey={optionKey}
                   selected={selected[optionKey]}
-                  setSelected={dispatch}
+                  setSelected={setSelected}
                 >
                   {display}
                 </CompareButton>
