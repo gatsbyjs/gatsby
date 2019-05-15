@@ -36,7 +36,9 @@ import React from "react"
 
 export default () => (
   <div>
-    <a href="https://example.com" target="_blank" rel="noopener noreferrer">External link</a>
+    <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+      External link
+    </a>
   </div>
 )
 ```
