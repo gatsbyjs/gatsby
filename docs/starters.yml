@@ -2540,6 +2540,20 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-eventually
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-eventually
+  description: Single page starter based on the Eventually site template by HTML5 up, suitable for upcoming product page.
+  tags:
+    - HTML5UP
+    - Styling:SCSS
+    - Landing Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
 - url: https://jovial-jones-806326.netlify.com/
   repo: https://github.com/GabeAtWork/gatsby-elm-starter
   description: An Elm-in-Gatsby integration, based on gatsby-plugin-elm
