@@ -12,9 +12,8 @@ If security engineers are interested in your project, some talking points that c
 
 It's helpful to emphasize to security personnel that these benefits were a factor in why Gatsby was selected for the project. You chose Gatsby, in part, because it is _more_ secure.
 
+Read about security in Gatsby: [https://www.gatsbyjs.org/blog/2019-04-06-security-for-modern-web-frameworks/](/blog/2019-04-06-security-for-modern-web-frameworks/)
+
 --
 
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+**Note:** do you have additional ideas on how to answer IT and security questions for Gatsby projects? We welcome contributions to the Gatsby docs. Find out [how to contribute](/contributing/docs-contributions/).

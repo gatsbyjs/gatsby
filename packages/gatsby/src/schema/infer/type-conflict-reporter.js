@@ -134,7 +134,14 @@ class TypeConflictReporter {
   printConflicts() {
     if (this.entries.size > 0) {
       report.warn(
-        `There are conflicting field types in your data. GraphQL schema will omit those fields.`
+        `There are conflicting field types in your data.\n\n` +
+          `If you have explicitly defined a type for those fields, you can ` +
+          `safely ignore this warning message.\n` +
+          `Otherwise, Gatsby will omit those fields from the GraphQL schema.\n\n` +
+          `If you know all field types in advance, the best strategy is to ` +
+          `explicitly define them with the \`createTypes\` action, and skip ` +
+          `inference with the \`@dontInfer\` directive.\n` +
+          `See https://www.gatsbyjs.org/docs/actions/#createTypes`
       )
       this.entries.forEach(entry => entry.printEntry())
     }
