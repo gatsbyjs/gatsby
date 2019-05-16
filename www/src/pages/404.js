@@ -2,6 +2,7 @@ import React from "react"
 import Container from "../components/container"
 import Layout from "../components/layout"
 import { Link } from "gatsby"
+import FooterLinks from "../components/shared/footer-links"
 
 class FourOhFour extends React.Component {
   render() {
@@ -15,6 +16,7 @@ class FourOhFour extends React.Component {
           <Link to="/">
             <p>Go Back</p>
           </Link>
+          <FooterLinks />
         </Container>
       </Layout>
     )

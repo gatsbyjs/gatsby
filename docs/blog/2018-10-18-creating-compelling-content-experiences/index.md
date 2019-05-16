@@ -120,7 +120,7 @@ Today, the CMS is being reimagined.
 
 With maturity comes growing functionality and complexity; a shift from monolithic to modular architectures.
 
-Today, there's a multitude of vendors, frameworks, and approaches for content modelling, authentication, search, analytics, payments, development environemnt, performance, and so on.
+Today, there's a multitude of vendors, frameworks, and approaches for content modelling, authentication, search, analytics, payments, development environment, performance, and so on.
 
 The key question becomes: how to bring these pieces into a unified whole?
 

@@ -27,19 +27,6 @@ To develop on the starter library, you'll need to supply a GitHub personal acces
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
-### Working with feedback widgets
-
-Several areas of the site include feedback widgets (currently starter library and plugin library). These aren't configured to work in development, unless you have set the public keys (as environment variables) for each widget.
-
-If you have access to the keys, add them like so:
-
-```
-GATSBY_FEEDBACK_KEY_PLUGINLIB=ADD_KEY
-GATSBY_FEEDBACK_KEY_STARTERLIB=ADD_KEY
-```
-
-If there's a problem with the feedback widgets, please open an issue in the repo.
-
 ### Enabling guess.js
 
 Guess.js is disabled by default and can be enabled by setting `ANALYTICS_SERVICE_ACCOUNT` and `ANALYTICS_SERVICE_ACCOUNT_KEY` env variables. These variables need to have access to the gatsbyjs.org analytics.

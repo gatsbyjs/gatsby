@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
-const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
@@ -196,6 +195,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/adding-images-fonts-files`,
+    toPath: `/docs/importing-assets-into-files`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2019-10-03-gatsby-perf`,
     toPath: `/blog/2018-10-03-gatsby-perf`,
     isPermanent: true,
@@ -228,6 +233,30 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/plugin-authoring/`,
     toPath: `/docs/how-plugins-work/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/source-plugin-tutorial/`,
+    toPath: `/docs/pixabay-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/how-plugins-work/`,
+    toPath: `/docs/plugins/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
+    toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/gatsby-in-the-enterprise/`,
+    toPath: `/docs/building-in-the-enterprise/`,
     isPermanent: true,
   })
 
@@ -570,7 +599,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
-    const parsedFilePath = parseFilepath(node.relativePath)
+    const parsedFilePath = path.parse(node.relativePath)
     if (node.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
@@ -588,7 +617,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
-    const parsedFilePath = parseFilepath(fileNode.relativePath)
+    const parsedFilePath = path.parse(fileNode.relativePath)
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
@@ -814,4 +843,38 @@ exports.onPostBuild = () => {
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
   )
+}
+
+// XXX this should probably be a plugin or something.
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  /*
+   * NOTE: This _only_ defines the schema we currently query for. If anything in
+   * the query at `src/pages/contributing/events.js` changes, we need to make
+   * sure these types are updated as well.
+   *
+   * But why?! Why would I do something this fragile?
+   *
+   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
+   * lazy to make upstream fixes...
+   */
+  const typeDefs = `
+    type Airtable implements Node {
+      id: ID!
+      data: AirtableData
+    }
+
+    type AirtableData {
+      Name_of_Event: String
+      Organizer_Name: String
+      Date_of_Event: Date
+      Location_of_Event: String
+      Event_URL__if_applicable_: String
+      What_type_of_event_is_this_: String
+      Organizer_s_Last_Name: String
+      Gatsby_Speaker_Approved: Boolean
+      Approved_for_posting_on_event_page: Boolean
+    }
+  `
+
+  createTypes(typeDefs)
 }

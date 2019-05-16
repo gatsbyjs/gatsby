@@ -23,6 +23,7 @@ module.exports = {
         path: `${__dirname}/content`,
       },
     },
+    `gatsby-source-fake-data`,
     `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-transformer-remark`,

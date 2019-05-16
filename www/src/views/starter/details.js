@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { colors, space, radii, breakpoints, fonts } from "../../utils/presets"
+import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -15,7 +15,7 @@ const Details = ({
   <div
     css={{
       padding: space[6],
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         padding: space[8],
         display: `grid`,
         gridTemplateColumns: `auto 1fr`,
@@ -49,7 +49,7 @@ const Details = ({
         css={{
           display: `grid`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
             gridGap: space[5],
           },

@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { graphql, Link } from "gatsby"
-import kebabCase from "lodash/kebabCase"
+import { kebabCase } from "lodash-es"
 
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -68,7 +68,13 @@ class TagsPage extends React.Component {
     return (
       <Layout location={location}>
         <Container>
-          <Helmet title="Tags" />
+          <Helmet>
+            <title>Tags</title>
+            <meta
+              name="description"
+              content="Find case studies, tutorials, and more about Gatsby related topics by tag"
+            />
+          </Helmet>
           <div>
             <div
               css={{

@@ -7,10 +7,11 @@ import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
+import FooterLinks from "../components/shared/footer-links"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   letterSpacings,
   fonts,
@@ -42,7 +43,7 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [breakpoints.sm]: {
+    [mediaQueries.sm]: {
       borderBottom: 0,
     },
   }
@@ -87,6 +88,10 @@ const LegendTable = () => {
     <div>
       <Helmet>
         <title>Features</title>
+        <meta
+          name="description"
+          content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+        />
       </Helmet>
       <div
         css={{
@@ -94,7 +99,7 @@ const LegendTable = () => {
           borderLeft: 0,
           fontFamily: fonts.header,
           display: `none`,
-          [breakpoints.sm]: {
+          [mediaQueries.sm]: {
             display: `table`,
           },
         }}
@@ -108,7 +113,7 @@ const LegendTable = () => {
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: fonts.header,
-          [breakpoints.sm]: {
+          [mediaQueries.sm]: {
             display: `none`,
           },
         }}
@@ -240,6 +245,7 @@ class FeaturesPage extends Component {
             />
             <FeaturesFooter />
           </main>
+          <FooterLinks />
         </Container>
       </Layout>
     )

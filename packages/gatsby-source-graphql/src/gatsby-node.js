@@ -9,13 +9,14 @@ const {
 const { createHttpLink } = require(`apollo-link-http`)
 const fetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+
 const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
-  { actions, createNodeId, cache, store },
+  { actions, createNodeId, cache, createContentDigest },
   options
 ) => {
   const { addThirdPartySchema, createPageDependency, createNode } = actions
@@ -28,7 +29,6 @@ exports.sourceNodes = async (
     createLink,
     createSchema,
     refetchInterval,
-    createContentDigest,
   } = options
 
   invariant(
@@ -109,7 +109,14 @@ exports.sourceNodes = async (
     if (refetchInterval) {
       const msRefetchInterval = refetchInterval * 1000
       const refetcher = () => {
-        createNode(createSchemaNode({ id: nodeId, typeName, fieldName }))
+        createNode(
+          createSchemaNode({
+            id: nodeId,
+            typeName,
+            fieldName,
+            createContentDigest,
+          })
+        )
         setTimeout(refetcher, msRefetchInterval)
       }
       setTimeout(refetcher, msRefetchInterval)

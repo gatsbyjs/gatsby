@@ -1,4 +1,5 @@
 import breakpoints from "./breakpoints"
+import mediaQueries from "./media-queries"
 import colors from "./colors"
 import sizes from "./sizes"
 import letterSpacings from "./letter-spacings"
@@ -12,6 +13,7 @@ import fonts from "./fonts"
 
 export {
   breakpoints,
+  mediaQueries,
   colors,
   sizes,
   letterSpacings,

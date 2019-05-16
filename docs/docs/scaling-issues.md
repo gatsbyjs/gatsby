@@ -76,7 +76,7 @@ This will prevent caching, so it's recommended to only use this alongside the `g
 
 ### `GATSBY_DB_NODES`
 
-In preparation for future versions of Gatsby, we've enabled **experimental** support for a different mechanism for the persistence of nodes: [Loki](https://www.npmjs.com/package/loki). It's challenging to assess whether this could lead to unforeseen issues without breaking changes, so we've exposed it behind a flag while we continue to assess the impact to Gatsby applications.
+In preparation for future versions of Gatsby, we've enabled **experimental** support for a different mechanism for the persistence of nodes: [Loki](https://www.npmjs.com/package/lokijs). It's challenging to assess whether this could lead to unforeseen issues without breaking changes, so we've exposed it behind a flag while we continue to assess the impact to Gatsby applications.
 
 Loki allows us to opt-in to possibly more performant internal operations and it _may_ resolve your scaling issues. If it does--please let us know! To opt-in to this experimental feature:
 
