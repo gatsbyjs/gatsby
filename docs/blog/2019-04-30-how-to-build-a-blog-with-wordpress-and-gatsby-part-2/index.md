@@ -274,7 +274,7 @@ The gatsby-node.js file allows you to pull in a template file, then query your d
   <video autoplay muted loop>
     <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
   </video>
-  <figcaption>Yes!!!<figcaption>
+  <figcaption>Yes!!!</figcaption>
 </figure>
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
