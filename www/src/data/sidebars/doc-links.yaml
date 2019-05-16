@@ -384,6 +384,8 @@
           link: /docs/prpl-pattern/
         - title: Querying Data with GraphQL
           link: /docs/querying-with-graphql/
+        - title: Security in Gatsby*
+          link: /docs/security-in-gatsby/
     - title: Behind the Scenes
       link: /docs/behind-the-scenes/
       items:
@@ -475,7 +477,7 @@
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
-        - title: Spreading Gatsby In Different Types of Organizations*
+        - title: Spreading Gatsby In Different Types of Organizations
           link: /docs/different-organization-types/
           items:
             - title: As a Freelancer*
@@ -496,19 +498,19 @@
             - title: Inside an Enterprise (Large Company)
               link: /docs/gatsby-in-the-enterprise/
               items:
-                - title: Answering IT/Security Questions*
+                - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:
-            - title: Sharing Components Across Websites*
+            - title: Sharing Components Across Websites
               link: /docs/sharing-components-across-websites/
               items:
                 - title: Component Libraries
                   link: /docs/component-libraries/
                 - title: Making Components Discoverable*
                   link: /docs/making-components-discoverable/
-        - title: How Gatsby Boosts Your Career*
+        - title: How Gatsby Boosts Your Career
           link: /docs/how-gatsby-boosts-career/
     - title: Contributing
       link: /contributing/
