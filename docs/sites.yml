@@ -5927,3 +5927,10 @@
   built_by: Miguel Mayo
   built_by_url: https://www.miguelmayo.com
   featured: false
+- title: Preethi Kasireddy's Blog
+  main_url: https://www.preethikasireddy.com/
+  url: https://www.preethikasireddy.com/
+  featured: false
+  categories:
+    - Blog
+    - Web Development
