@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.13...gatsby-plugin-catch-links@2.0.14) (2019-05-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-catch-links:** Fall back to default browser link handling when resources fail to fetch ([#13904](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/13904)) ([d4b60f2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/commit/d4b60f2))
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/commit/8291044))
+
+### BREAKING CHANGES
+
+- **gatsby:** this is a breaking change (as currently authored) for a
+  few plugins (specified in this commit). I'll work on a fallback--but I
+  think it might make sense to just fail here. We can specify a
+  peerDependency in the package.json of each of these packages, too.
+
+- test: get tests passing
+
+- test: add a test for assetPrefix with nesting
+
+- Update docs/docs/path-prefix.md
+
+Co-Authored-By: DSchau <DSchau@users.noreply.github.com>
+
+- chore: fix up merge conflicts/get tests passing
+
+- chore: tweak version
+
+- fix(gatsby-plugin-sitemap): work with asset prefix
+
+- fix(gatsby): disallow both relative assetPrefix and pathPrefix
+
+- chore: fallback to withPathPrefix, bump peerDep
+
+- chore: remove caveat re: trailing slash
+
+- fix: gatsby-plugin-sitemap regression
+
+- chore: revert peer dep
+
+- chore: use basePath if it's defined
+
+- chore: remove eslint global comment
+
+- chore: ensure prefixPaths is set to enable pathPrefix
+
+- chore: fix read-only error (can't reassign imports ya dingus)
+
+- chore: actually fallback
+
+- Update docs/docs/asset-prefix.md
+
+Co-Authored-By: DSchau <DSchau@users.noreply.github.com>
+
+- Update docs/docs/path-prefix.md
+
+Co-Authored-By: DSchau <DSchau@users.noreply.github.com>
+
+- Update docs/docs/asset-prefix.md
+
+Co-Authored-By: DSchau <DSchau@users.noreply.github.com>
+
+- chore: simply/merely remove the easy term ;)
+
+- Update docs/docs/asset-prefix.md
+
+Co-Authored-By: DSchau <DSchau@users.noreply.github.com>
+
+- test: write e2e test for asset prefix
+
+Note: this very well may fail
+
+- chore: fix package json and make isURL test stricter
+
+- chore: fix yarn and stuff hopefully
+
+- chore: minor clean up
+
+- fix(gatsby): fix initial navigation not registering in history
+
+- chore: remove unneccessary dep
+
+- fix: use **BASE_PATH** in development runtime too; add a test
+
+- chore: fix @pieh nit before he finds it
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-catch-links/compare/gatsby-plugin-catch-links@2.0.12...gatsby-plugin-catch-links@2.0.13) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-catch-links

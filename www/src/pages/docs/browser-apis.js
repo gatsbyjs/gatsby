@@ -23,6 +23,10 @@ class BrowserAPIDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Browser APIs</title>
+            <meta
+              name="description"
+              content="Documentation about leveraging standard browser APIs within Gatsby"
+            />
           </Helmet>
           <h1 id="browser-apis" css={{ marginTop: 0 }}>
             Gatsby Browser APIs
