@@ -165,11 +165,34 @@ const noscriptImg = props => {
       ? generateNoscriptSources(props.imageVariants)
       : ``
 
-  return `<picture>${initialSources}${variantSources}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  // Since we're in the noscript block for this image (which is rendered during SSR or when js is disabled),
+  // we have no way to "detect" if native lazy loading is supported by the user's browser
+  // Since this attribute is a progressive enhancement, it won't break a browser with no support
+  // Therefore setting it by default is a good idea.
+
+  const loading = props.loading ? `loading="${props.loading}" ` : ``
+
+  return `<picture>${initialSources}${variantSources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
-  const { sizes, srcSet, src, style, onLoad, onError, ...otherProps } = props
+  const {
+    sizes,
+    srcSet,
+    src,
+    style,
+    onLoad,
+    onError,
+    nativeLazyLoadSupported,
+    loading,
+    ...otherProps
+  } = props
+
+  let loadingAttribute = {}
+
+  if (nativeLazyLoadSupported) {
+    loadingAttribute.loading = loading
+  }
 
   return (
     <img
@@ -180,6 +203,7 @@ const Img = React.forwardRef((props, ref) => {
       onLoad={onLoad}
       onError={onError}
       ref={ref}
+      {...loadingAttribute}
       style={{
         position: `absolute`,
         top: 0,
@@ -210,6 +234,7 @@ class Image extends React.Component {
     let imgCached = false
     let IOSupported = false
     let fadeIn = props.fadeIn
+    let nativeLazyLoadSupported = false
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
@@ -223,6 +248,17 @@ class Image extends React.Component {
     ) {
       isVisible = false
       IOSupported = true
+    }
+
+    // Chrome Canary 75 added native lazy loading support!
+    // https://addyosmani.com/blog/lazy-loading/
+    if (
+      typeof HTMLImageElement !== `undefined` &&
+      `loading` in HTMLImageElement.prototype
+    ) {
+      // Setting isVisible to true to short circuit our IO code and let the browser do its magic
+      isVisible = true
+      nativeLazyLoadSupported = true
     }
 
     // Never render image during SSR
@@ -246,6 +282,7 @@ class Image extends React.Component {
       fadeIn,
       hasNoScript,
       seenBefore,
+      nativeLazyLoadSupported,
     }
 
     this.imageRef = React.createRef()
@@ -272,6 +309,10 @@ class Image extends React.Component {
   }
 
   handleRef(ref) {
+    if (this.state.nativeLazyLoadSupported) {
+      // Bail because the browser natively supports lazy loading
+      return
+    }
     if (this.state.IOSupported && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
@@ -326,7 +367,29 @@ class Image extends React.Component {
       durationFadeIn,
       Tag,
       itemProp,
+      critical,
     } = convertProps(this.props)
+
+    let { loading } = convertProps(this.props)
+
+    if (
+      typeof critical === `boolean` &&
+      process.env.NODE_ENV !== `production`
+    ) {
+      console.log(
+        `
+        The "critical" prop is now deprecated and will be removed in the next major version 
+        of "gatsby-image"
+
+        Please use the native "loading" attribute instead of "critical" 
+        `
+      )
+      // We want to continue supporting critical and in case it is passed in
+      // we map its value to loading
+      loading = critical ? `eager` : `lazy`
+    }
+
+    const { nativeLazyLoadSupported } = this.state
 
     const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
@@ -445,6 +508,8 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
+                nativeLazyLoadSupported={nativeLazyLoadSupported}
+                loading={loading}
               />
             </picture>
           )}
@@ -453,7 +518,13 @@ class Image extends React.Component {
           {this.state.hasNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image, imageVariants }),
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  loading,
+                  ...image,
+                  imageVariants,
+                }),
               }}
             />
           )}
@@ -547,6 +618,8 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
+                nativeLazyLoadSupported={nativeLazyLoadSupported}
+                loading={loading}
               />
             </picture>
           )}
@@ -558,6 +631,7 @@ class Image extends React.Component {
                 __html: noscriptImg({
                   alt,
                   title,
+                  loading,
                   ...image,
                   imageVariants,
                 }),
@@ -573,11 +647,13 @@ class Image extends React.Component {
 }
 
 Image.defaultProps = {
-  critical: false,
   fadeIn: true,
   durationFadeIn: 500,
   alt: ``,
   Tag: `div`,
+  // We set it to `lazy` by default because it's best to default to a performant
+  // setting and let the user "opt out" to `eager`
+  loading: `lazy`,
 }
 
 const fixedObject = PropTypes.shape({
@@ -628,6 +704,7 @@ Image.propTypes = {
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
+  loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
 }
 
 export default Image
