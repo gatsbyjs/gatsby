@@ -98,6 +98,10 @@ class CreatorsView extends Component {
       <Layout location={location}>
         <Helmet>
           <title>{title}</title>
+          <meta
+            name="description"
+            content="Discover developers skilled in working on Gatsby applications available for hire"
+          />
         </Helmet>
         <CreatorsHeader
           applyFilter={filter => applyFilter(filter)}

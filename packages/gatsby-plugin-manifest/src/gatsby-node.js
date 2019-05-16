@@ -1,6 +1,6 @@
 import fs from "fs"
 import path from "path"
-import sharp from "sharp"
+import sharp from "./safe-sharp"
 import createContentDigest from "gatsby/dist/utils/create-content-digest"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 

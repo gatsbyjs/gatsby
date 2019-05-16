@@ -1,0 +1,16 @@
+{
+  "name": "high-priority-prs-action",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "echo \"Write tests!\""
+  },
+  "dependencies": {
+    "actions-toolkit": "^2.0.0",
+    "@slack/web-api": "^5.0.1",
+    "array-to-sentence": "^2.0.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0"
+  }
+}

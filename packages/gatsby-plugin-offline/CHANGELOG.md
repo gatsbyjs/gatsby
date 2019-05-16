@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.25...gatsby-plugin-offline@2.1.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/8291044))
+
 ## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.24...gatsby-plugin-offline@2.0.25) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-offline
