@@ -309,10 +309,10 @@ class Image extends React.Component {
     if (typeof critical === `boolean`) {
       console.log(
         `
-        The "critical" option is now deprecated and will be removed in a later version 
+        The "critical" prop is now deprecated and will be removed the next major version 
         of "gatsby-image"
 
-        Please use the native "loading" attribute instead of critical. 
+        Please use the native "loading" attribute instead of "critical" 
         `
       )
       // We want to continue supporting critical and in case it is passed in
