@@ -154,7 +154,7 @@ Keep in mind that drafts do not have to conform to any validation rules, so your
 
 While developing, it can often be beneficial to get updates without having to manually restart the build process. By setting `watchMode` to true, this plugin will set up a listener which watches for changes. When it detects a change, the document in question is updated in real-time and will be reflected immediately.
 
-If you add an [environement token](#using-env-variables) and set `overlayDrafts` to true, each small change to the draft will immediately be applied.
+If you add an [environment token](#using-env-variables) and set `overlayDrafts` to true, each small change to the draft will immediately be applied.
 
 ## Generating pages
 
