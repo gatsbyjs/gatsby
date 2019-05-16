@@ -24,6 +24,9 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const cors = require(`cors`)
+const telemetry = require(`gatsby-telemetry`)
+
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
@@ -32,7 +35,6 @@ const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const db = require(`../db`)
-const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
@@ -119,6 +121,8 @@ async function startServer(program) {
     })
   )
 
+  app.use(cors())
+
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
       `/___graphql`,
@@ -147,16 +151,6 @@ async function startServer(program) {
       }
     })
   )
-
-  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
-  app.use((req, res, next) => {
-    res.header(`Access-Control-Allow-Origin`, `*`)
-    res.header(
-      `Access-Control-Allow-Headers`,
-      `Origin, X-Requested-With, Content-Type, Accept`
-    )
-    next()
-  })
 
   /**
    * Refresh external data sources.
