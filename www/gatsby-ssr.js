@@ -1,7 +1,7 @@
-const React = require(`react`)
-const wrapRoot = require(`./wrap-root-element`).default
+import React from "react"
+import wrapRoot from "./wrap-root-element"
 
-exports.onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
     <link
       rel="dns-prefetch"
@@ -16,4 +16,4 @@ exports.onRenderBody = ({ setHeadComponents }) => {
   ])
 }
 
-exports.wrapRootElement = wrapRoot
+export const wrapRootElement = wrapRoot
