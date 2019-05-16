@@ -48,8 +48,9 @@ const JamstackFeaturesPage = ({ data, location }) => {
           <FeaturesHeader />
           <h3>Comparison</h3>
           <p>
-            To see a filtered view choose JAMstack technologies to compare to
-            Gatsby and then press Compare:
+            To see a filtered view of Gatsby with specific JAMstack
+            technologies, choose the technologies to compare and then press
+            Compare:
           </p>
           <div
             css={{

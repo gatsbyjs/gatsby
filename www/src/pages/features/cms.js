@@ -21,7 +21,6 @@ const FeaturesHeader = () => (
       <Link to="features">Features</Link> > CMS
     </h1>
     <p>Looking for a specific technology? Find it on this page.</p>
-    <LegendTable />
   </section>
 )
 
@@ -46,8 +45,8 @@ const CmsFeaturesPage = ({ data, location }) => {
           <FeaturesHeader />
           <h3>Comparison</h3>
           <p>
-            To see a filtered view choose CMS technologies to compare to Gatsby
-            and then press Compare:
+            To see a filtered view of Gatsby with specific CMS technologies,
+            choose the technologies to compare and then press Compare:
           </p>
           <div
             css={{
@@ -76,6 +75,7 @@ const CmsFeaturesPage = ({ data, location }) => {
               Compare
             </Button>
           </div>
+          <LegendTable />
           <EvaluationTable
             columnHeaders={[`Category`, `Gatsby`, `WordPress`, `Drupal`]}
             nodeFieldProperties={[`Feature`, `Gatsby`, `WordPress`, `Drupal`]}
