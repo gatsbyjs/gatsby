@@ -5900,6 +5900,21 @@
   built_by: Marcus Herrmann
   built_by_url: https://marcus.io
   featured: false
+- title: PygmalionPolymorph
+  url: https://pygmalionpolymorph.com
+  main_url: https://pygmalionpolymorph.com
+  source_url: https://github.com/PygmalionPolymorph/portfolio
+  description: >
+    Portfolio of artist, musician and developer PygmalionPolymorph.
+  categories:
+    - Portfolio
+    - Gallery
+    - Music
+    - Photography
+    - Web Development
+  built_by: PygmalionPolymorph
+  built_by_url: https://pygmalionpolymorph.com
+  featured: false
 - title: Gonzalo Nuñez Photographer
   main_url: https://www.gonzalonunez.com
   url: https://www.gonzalonunez.com

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.34...gatsby-source-filesystem@2.0.35) (2019-05-15)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** createRemoteFileNode rejects promise instead resolving on failure ([#12348](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/12348)) ([c2c5cea](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/c2c5cea))
+
 ## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.33...gatsby-source-filesystem@2.0.34) (2019-05-14)
 
 ### Features
