@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Kichen sink schema test passes kitchen sink query 1`] = `
+exports[`Kitchen sink schema test passes kitchen sink query 1`] = `
 Object {
   "data": Object {
-    "addResolvers": Array [
+    "createResolvers": Array [
       Object {
         "code": "BdiU-TTFP4h",
         "id": "1685001452849004065",
@@ -43,6 +43,7 @@ Object {
             "_3invalidKey": null,
             "code": "BShF_8qhtEv",
             "comment": 0,
+            "defaultTime": "05 huhtikuu",
             "id": "1486495736706552111",
             "idWithDecoration": "decoration-1486495736706552111",
             "image": Object {
@@ -51,6 +52,8 @@ Object {
               },
             },
             "likes": 8,
+            "localeFormat": "05 huhtikuu 2017",
+            "localeString": "05 апреля",
             "time": "05.04.2017",
           },
         },
@@ -59,6 +62,7 @@ Object {
             "_3invalidKey": null,
             "code": "BY6B8z5lR1F",
             "comment": 0,
+            "defaultTime": "11 syyskuu",
             "id": "1601601194425654597",
             "idWithDecoration": "decoration-1601601194425654597",
             "image": Object {
@@ -67,6 +71,8 @@ Object {
               },
             },
             "likes": 9,
+            "localeFormat": "11 syyskuu 2017",
+            "localeString": "11 сентября",
             "time": "11.09.2017",
           },
         },
