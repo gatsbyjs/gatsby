@@ -12,7 +12,7 @@ The Gatsby `<Link />` component is for linking between pages within your site. F
 
 Here's an example of creating a link between two pages in a Gatsby site.
 
-Open a page component (e.g. `src/pages/index.js`) in your Gatsby site. Import the `<Link />` component from Gatsby, which makes it available in the component. Add a `<Link />` component below the header, and give it a `to` property, with the value of `"/contact/"` for the pathname:
+Open a page component (e.g. `src/pages/index.js`) in your Gatsby site. Import the `Link` component from Gatsby, which makes it available in the component. Add a `<Link />` component below the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
 
 ```jsx
 import React from "react"
@@ -25,11 +25,15 @@ export default () => (
 )
 ```
 
-Note that the value `"/"` for the `to` property will take users to the home page.
+The above code will add a link to the contact page, automatically rendered in HTML as `<a href="/contact/">` but with added performance benefits.
+
+> **Note:** the value `"/"` for the `to` property will take users to the home page.
 
 ## Using `<a>` for external links
 
-If you are linking to pages not handled by your Gatsby site and wish to have them open in a new window using the `target` attribute, use it with the `rel` attribute as seen below to avoid a vulnerability in which the referrer page can be replaced dynamically in JavaScript with a different page:
+If you are linking to pages not handled by your Gatsby site (such as on a different domain), you should use the native HTML `<a>` tag instead of Gatsby Link.
+
+Additionally, if you wish to have an external link open in new window using the `target` attribute, use the `rel` attribute as seen below to avoid a vulnerability in which the [referrer page](https://developer.mozilla.org/en-US/docs/Web/Security/Referer_header:_privacy_and_security_concerns) can be replaced dynamically in JavaScript with a different page:
 
 ```jsx
 import React from "react"
@@ -42,6 +46,8 @@ export default () => (
   </div>
 )
 ```
+
+It is also recommended to include a [visual icon](https://thenounproject.com/term/new-window/2864/) or some kind of indicator differentiating external links from internal ones.
 
 ## Other resources
 
