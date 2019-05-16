@@ -358,12 +358,13 @@ You will need to add it in your graphql query as is shown in the following snipp
 |                        |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                   |
 | Defaults to `cover`.   |
+
 |
 | `objectPosition` | `string` | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.
 |
-| `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`.                                                                      |
-| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.          |
-| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.        |
+| `critical` | `bool` | Opt-out of lazy-loading behavior. Defaults to `false`. |
+| `objectFit` | `string` | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`. |
+| `objectPosition` | `string` | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`. |
 
 ## Image processing arguments
 
