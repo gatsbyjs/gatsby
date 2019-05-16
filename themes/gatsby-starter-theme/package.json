@@ -1,8 +1,7 @@
 {
-  "name": "gatsby-starter-theme-blog-mdx",
+  "name": "gatsby-starter-theme-blog",
+  "private": true,
   "version": "0.0.1",
-  "author": "Brent Jackson <jxnblk@gmail.com>",
-  "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
@@ -10,7 +9,8 @@
   },
   "dependencies": {
     "gatsby": "^2.3.23",
-    "gatsby-theme-blog-mdx": "0.0.1-alpha.0",
+    "gatsby-theme-blog-mdx": "0.0.1",
+    "gatsby-theme-notes": "0.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

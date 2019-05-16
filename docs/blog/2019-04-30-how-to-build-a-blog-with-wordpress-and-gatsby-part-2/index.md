@@ -236,7 +236,7 @@ Since you are seeing stuff on the right-hand side, it means that you are getting
 
 ## Creating pages in gatsby-node.js
 
-As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
+As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programmatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
 
 ### Creating templates in Gatsby.js
 

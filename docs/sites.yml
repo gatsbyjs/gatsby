@@ -2017,16 +2017,6 @@
   built_by: Mahipat Jadav
   built_by_url: "https://mojaave.com/"
   featured: false
-- title: Cmsbased
-  main_url: "https://www.cmsbased.net"
-  url: "https://www.cmsbased.net"
-  description: >
-    Cmsbased is providing automation tools and design resources for Web Hosting
-    and IT services industry.
-  categories:
-    - Technology
-    - Design
-  featured: false
 - title: Insights
   main_url: "https://justaskusers.com/"
   url: "https://justaskusers.com/"
@@ -5867,4 +5857,73 @@
   source_url: https://github.com/bennetthardwick/website
   built_by: Bennett Hardwick
   built_by_url: https://bennetthardwick.com
+  featured: false
+- title: Sindhuka
+  url: https://sindhuka.org/
+  main_url: https://sindhuka.org/
+  description: >
+    Official website of the Sindhuka initiative, a sustainable farmers' network in Nepal.
+  categories:
+    - Business
+    - Community
+    - Government
+    - Landing
+    - Marketing
+  source_url: https://github.com/Polcius/sindhuka-serif
+  built_by: Pol Milian
+  built_by_url: https://github.com/Polcius/
+  featured: false
+- title: Sandbox
+  url: https://www.sandboxneu.com/
+  main_url: https://www.sandboxneu.com/
+  source_url: https://github.com/sandboxneu/sandboxneu.com
+  description: >
+    Official website of Sandbox, a Northeastern University student group that builds software for researchers.
+  categories:
+    - Marketing
+    - Research
+    - Student
+  built_by: Sandbox at Northeastern
+  built_by_url: https://github.com/sandboxneu/
+  featured: false
+- title: Accessible App
+  main_url: https://accessible-app.com
+  url: https://accessible-app.com
+  source_url: https://github.com/accessible-app/accessible-app_com
+  description: >
+    Learn how to build inclusive web applications and Single Page Apps in modern JavaScript frameworks. This project collects strategies, links, patterns and plugins for React, Vue and Angular.
+  categories:
+    - Accessibility
+    - Web Development
+    - Tutorial
+    - JavaScript
+  built_by: Marcus Herrmann
+  built_by_url: https://marcus.io
+  featured: false
+- title: PygmalionPolymorph
+  url: https://pygmalionpolymorph.com
+  main_url: https://pygmalionpolymorph.com
+  source_url: https://github.com/PygmalionPolymorph/portfolio
+  description: >
+    Portfolio of artist, musician and developer PygmalionPolymorph.
+  categories:
+    - Portfolio
+    - Gallery
+    - Music
+    - Photography
+    - Web Development
+  built_by: PygmalionPolymorph
+  built_by_url: https://pygmalionpolymorph.com
+  featured: false
+- title: Gonzalo Nuñez Photographer
+  main_url: https://www.gonzalonunez.com
+  url: https://www.gonzalonunez.com
+  description: >
+    Website for Cancun based destination wedding photographer Gonzalo Nuñez. Site built with GatsbyJS, WordPress API and Netlify.
+  categories:
+    - Photography
+    - Portfolio
+    - WordPress
+  built_by: Miguel Mayo
+  built_by_url: https://www.miguelmayo.com
   featured: false
