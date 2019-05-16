@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.7...gatsby@2.5.0) (2019-05-16)
+
+### Features
+
+- **schema:** Inference controls and improvements ([#13028](https://github.com/gatsbyjs/gatsby/issues/13028)) ([0f8febf](https://github.com/gatsbyjs/gatsby/commit/0f8febf))
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.6...gatsby@2.4.7) (2019-05-16)
+
+### Features
+
+- **gatsby:** cors is enabled correctly in development ([#14065](https://github.com/gatsbyjs/gatsby/issues/14065)) ([32e49ce](https://github.com/gatsbyjs/gatsby/commit/32e49ce))
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.5...gatsby@2.4.6) (2019-05-15)
+
+### Bug Fixes
+
+- **gatsby:** compile themes through default webpack config ([#13651](https://github.com/gatsbyjs/gatsby/issues/13651)) ([d5be306](https://github.com/gatsbyjs/gatsby/commit/d5be306))
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.4...gatsby@2.4.5) (2019-05-14)
+
+### Features
+
+- **gatsby:** allow awaiting API run triggered by createNode action ([#12748](https://github.com/gatsbyjs/gatsby/issues/12748)) ([17a67a5](https://github.com/gatsbyjs/gatsby/commit/17a67a5))
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.3...gatsby@2.4.4) (2019-05-14)
+
+**Note:** Version bump only for package gatsby
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.2...gatsby@2.4.3) (2019-05-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.1...gatsby@2.4.2) (2019-05-03)
+
+**Note:** Version bump only for package gatsby
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.0...gatsby@2.4.1) (2019-05-03)
+
+**Note:** Version bump only for package gatsby
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.36...gatsby@2.4.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/commit/8291044))
+
+## [2.3.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.35...gatsby@2.3.36) (2019-05-02)
+
+### Bug Fixes
+
+- **types:** node APIs typings should be in GatsbyNode interface not in Node ([#13799](https://github.com/gatsbyjs/gatsby/issues/13799)) ([cbdb039](https://github.com/gatsbyjs/gatsby/commit/cbdb039))
+
+## [2.3.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.34...gatsby@2.3.35) (2019-05-01)
+
+### Bug Fixes
+
+- **types:** update TypeScript declarations ([#13755](https://github.com/gatsbyjs/gatsby/issues/13755)) ([b41755b](https://github.com/gatsbyjs/gatsby/commit/b41755b))
+
 ## [2.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.33...gatsby@2.3.34) (2019-04-30)
 
 **Note:** Version bump only for package gatsby

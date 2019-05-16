@@ -17,6 +17,10 @@ class IndexRoute extends React.Component {
           <Container>
             <Helmet>
               <title>Contributing</title>
+              <meta
+                name="description"
+                content="Learn about contributing to one of the most welcoming communities helping develop the future of the web"
+              />
             </Helmet>
             <h1 id="contributing-gatsby" css={{ marginTop: 0 }}>
               Contributing to Gatsby.js

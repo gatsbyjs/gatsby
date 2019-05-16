@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/compare/gatsby-plugin-feed@2.1.2...gatsby-plugin-feed@2.2.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/commit/8291044))
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/compare/gatsby-plugin-feed@2.1.1...gatsby-plugin-feed@2.1.2) (2019-04-30)
 
 **Note:** Version bump only for package gatsby-plugin-feed

@@ -37,6 +37,7 @@ export const navigate: NavigateFn
  * development and production
  */
 export const withPrefix: (path: string) => string
+export const withAssetPrefix: (path: string) => string
 
 /**
  * @deprecated

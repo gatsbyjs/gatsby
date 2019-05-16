@@ -6,6 +6,10 @@ When you're new to Gatsby there can be a lot of words that seem alien. This glos
 
 ## A
 
+### AST
+
+Abstract Syntax Tree: A tree representation of the source code that is found during a [compilation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/packages/gatsby-transformer-remark/) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure using the [Remark](#remark) parser.
+
 ### API
 
 Application Programming Interface: A method for one application to communicate with another. For example, a [source plugin](#source-plugin) will often use an API to get its data.
@@ -216,6 +220,10 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
+### Remark
+
+A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
+
 ### Routing
 
 Routing is the mechanism for loading the correct content in a website or app based on a network request - usually a URL. For example, it allows for routing URLs like `/about-us` to the appropriate [page](#page), [template](#template), or [component](#component).
@@ -246,7 +254,7 @@ It also refers to the `/static` folder which is automatically copied into `/publ
 
 ### Template
 
-A [component](#component) that is [programatically](#programatically) turned into a page by Gatsby.
+A [component](#component) that is [programmatically](#programmatically) turned into a page by Gatsby.
 
 ### Transformer
 

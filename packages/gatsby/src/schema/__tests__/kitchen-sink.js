@@ -1,7 +1,14 @@
 // @flow
 
 const { SchemaComposer } = require(`graphql-compose`)
-const { graphql } = require(`graphql`)
+const {
+  graphql,
+  GraphQLSchema,
+  GraphQLNonNull,
+  GraphQLList,
+  GraphQLObjectType,
+  getNamedType,
+} = require(`graphql`)
 const { store } = require(`../../redux`)
 const { build } = require(`../index`)
 const fs = require(`fs-extra`)
@@ -14,7 +21,7 @@ jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 // XXX(freiksenet): Expand
-describe(`Kichen sink schema test`, () => {
+describe(`Kitchen sink schema test`, () => {
   let schema
 
   const runQuery = query =>
@@ -47,17 +54,20 @@ describe(`Kichen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        type PostsJson implements Node {
+        type PostsJson implements Node @infer {
           id: String!
-          time: Date
+          time: Date @dateformat(locale: "fi", formatString: "DD MMMM")
           code: String
+          image: File @fileByRelativePath
         }
       `,
     })
-    store.dispatch({
-      type: `ADD_THIRD_PARTY_SCHEMA`,
-      payload: buildThirdPartySchema(),
-    })
+    buildThirdPartySchemas().forEach(schema =>
+      store.dispatch({
+        type: `ADD_THIRD_PARTY_SCHEMA`,
+        payload: schema,
+      })
+    )
     await build({})
     schema = store.getState().schema
   })
@@ -72,6 +82,9 @@ describe(`Kichen sink schema test`, () => {
                 id
                 idWithDecoration
                 time(formatString: "DD.MM.YYYY")
+                localeString: time(locale: "ru")
+                localeFormat: time(formatString: "DD MMMM YYYY")
+                defaultTime: time
                 code
                 likes
                 comment
@@ -97,7 +110,7 @@ describe(`Kichen sink schema test`, () => {
             idWithDecoration
             likes
           }
-          addResolvers: likedEnough {
+          createResolvers: likedEnough {
             id
             likes
             code
@@ -130,9 +143,21 @@ describe(`Kichen sink schema test`, () => {
     `)
     ).toMatchSnapshot()
   })
+
+  it(`correctly resolves nested Query types from third-party types`, () => {
+    const queryFields = schema.getQueryType().getFields()
+    ;[`relay`, `relay2`, `query`, `manyQueries`].forEach(fieldName =>
+      expect(getNamedType(queryFields[fieldName].type)).toBe(
+        schema.getQueryType()
+      )
+    )
+    expect(schema.getType(`Nested`).getFields().query.type).toBe(
+      schema.getQueryType()
+    )
+  })
 })
 
-const buildThirdPartySchema = () => {
+const buildThirdPartySchemas = () => {
   const schemaComposer = new SchemaComposer()
   schemaComposer.addTypeDefs(`
     type ThirdPartyStuff {
@@ -205,7 +230,31 @@ const buildThirdPartySchema = () => {
   schemaComposer.addSchemaMustHaveType(
     schemaComposer.getOTC(`ThirdPartyStuff3`)
   )
-  return schemaComposer.buildSchema()
+
+  // Query type with non-default name
+  const RootQueryType = new GraphQLObjectType({
+    name: `RootQueryType`,
+    fields: () => {
+      return {
+        query: { type: RootQueryType },
+        manyQueries: {
+          type: new GraphQLNonNull(new GraphQLList(RootQueryType)),
+        },
+        nested: { type: Nested },
+      }
+    },
+  })
+  const Nested = new GraphQLObjectType({
+    name: `Nested`,
+    fields: () => {
+      return {
+        query: { type: RootQueryType },
+      }
+    },
+  })
+  const schema = new GraphQLSchema({ query: RootQueryType })
+
+  return [schemaComposer.buildSchema(), schema]
 }
 
 const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {

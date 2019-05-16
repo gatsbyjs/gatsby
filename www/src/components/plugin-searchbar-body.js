@@ -6,8 +6,8 @@ import {
   Stats,
   RefinementList,
   InfiniteHits,
-  Toggle,
-} from "react-instantsearch/dom"
+  ToggleRefinement,
+} from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
 import { Link } from "gatsby"
 import DownloadArrow from "react-icons/lib/md/file-download"
@@ -43,11 +43,11 @@ const searchInputWrapperMargin = space[6]
 
 /* stylelint-disable */
 const searchBoxStyles = css`
-  .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
+  .ais-SearchBox-input:valid ~ .ais-SearchBox-reset {
     display: block;
   }
 
-  .ais-SearchBox__root {
+  .ais-SearchBox {
     display: inline-block;
     position: relative;
     margin: 0;
@@ -57,13 +57,14 @@ const searchBoxStyles = css`
     box-sizing: border-box;
   }
 
-  .ais-SearchBox__wrapper {
+  .ais-SearchBox-form {
     height: calc(${searchInputHeight} + ${searchInputWrapperMargin});
     display: flex;
     align-items: flex-end;
+    margin-bottom: 0;
   }
 
-  .ais-SearchBox__input {
+  .ais-SearchBox-input {
     -webkit-appearance: none;
     background: ${colors.white};
     border: 1px solid ${colors.ui.bright};
@@ -84,28 +85,28 @@ const searchBoxStyles = css`
     white-space: normal;
     width: calc(100% - ${rhythm(6 / 4)});
   }
-  .ais-SearchBox__input:hover,
-  .ais-SearchBox__input:active,
-  .ais-SearchBox__input:focus {
+  .ais-SearchBox-input:hover,
+  .ais-SearchBox-input:active,
+  .ais-SearchBox-input:focus {
     box-shadow: none;
     outline: 0;
   }
 
-  .ais-SearchBox__input:active,
-  .ais-SearchBox__input:focus {
+  .ais-SearchBox-input:active,
+  .ais-SearchBox-input:focus {
     border-color: ${colors.lilac};
     box-shadow: 0 0 0 3px ${colors.ui.bright};
   }
 
-  .ais-SearchBox__input::-webkit-input-placeholder,
-  .ais-SearchBox__input::-moz-placeholder,
-  .ais-SearchBox__input:-ms-input-placeholder,
-  .ais-SearchBox__input::placeholder {
+  .ais-SearchBox-input::-webkit-input-placeholder,
+  .ais-SearchBox-input::-moz-placeholder,
+  .ais-SearchBox-input:-ms-input-placeholder,
+  .ais-SearchBox-input::placeholder {
     color: ${colors.lilac};
   }
 
-  .ais-SearchBox__submit,
-  .ais-SearchBox__reset {
+  .ais-SearchBox-submit,
+  .ais-SearchBox-reset {
     position: absolute;
     margin: 0;
     border: 0;
@@ -122,47 +123,57 @@ const searchBoxStyles = css`
     user-select: none;
   }
 
-  .ais-SearchBox__submit {
+  .ais-SearchBox-submit {
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
     border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
   }
-  .ais-SearchBox__submit:focus {
+  .ais-SearchBox-submit:focus {
     outline: 0;
   }
-  .ais-SearchBox__submit:focus svg {
+  .ais-SearchBox-submit:focus svg {
     fill: ${colors.gatsby};
   }
-  .ais-SearchBox__submit svg {
+  .ais-SearchBox-submit svg {
     width: ${space[4]};
     height: ${space[4]};
     vertical-align: middle;
     fill: ${colors.ui.bright};
   }
 
-  .ais-SearchBox__reset {
+  .ais-SearchBox-reset {
     display: none;
     top: ${searchInputWrapperMargin};
     left: auto;
     right: ${searchInputWrapperMargin};
     font-size: inherit;
   }
-  .ais-SearchBox__reset:focus {
+  .ais-SearchBox-reset:focus {
     outline: 0;
   }
-  .ais-SearchBox__reset:hover svg,
-  .ais-SearchBox__reset:focus svg {
+  .ais-SearchBox-reset:hover svg,
+  .ais-SearchBox-reset:focus svg {
     fill: ${colors.gatsby};
   }
-  .ais-SearchBox__reset svg {
+  .ais-SearchBox-reset svg {
     fill: ${colors.ui.bright};
     width: ${space[3]};
     height: ${space[3]};
     vertical-align: middle;
   }
 
-  .ais-InfiniteHits__loadMore {
+  .ais-InfiniteHits-list {
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  .ais-InfiniteHits-item {
+    margin-bottom: 0;
+  }
+
+  .ais-InfiniteHits-loadMore {
     background-color: transparent;
     border: 1px solid ${colors.gatsby};
     border-radius: ${radii[1]}px;
@@ -175,13 +186,14 @@ const searchBoxStyles = css`
     transition: all ${transition.speed.default} ${transition.curve.default};
     font-family: ${fonts.header};
   }
-  .ais-InfiniteHits__loadMore:hover,
-  .ais-InfiniteHits__loadMore:focus {
+
+  .ais-InfiniteHits-loadMore:hover,
+  .ais-InfiniteHits-loadMore:focus {
     background-color: ${colors.gatsby};
     color: ${colors.white};
   }
 
-  .ais-InfiniteHits__loadMore[disabled] {
+  .ais-InfiniteHits-loadMore[disabled] {
     display: none;
   }
 `
@@ -215,7 +227,7 @@ class Search extends Component {
           <div css={{ display: `none` }}>
             <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
-              attributeName="keywords"
+              attribute="keywords"
               transformItems={items =>
                 items.map(({ count, ...item }) => {
                   return {
@@ -226,8 +238,8 @@ class Search extends Component {
               }
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
             />
-            <Toggle
-              attributeName="deprecated"
+            <ToggleRefinement
+              attribute="deprecated"
               value={false}
               label="No deprecated plugins"
               defaultRefinement={true}
