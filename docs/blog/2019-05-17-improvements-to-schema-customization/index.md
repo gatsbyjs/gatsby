@@ -54,7 +54,7 @@ Inference won't run at all. Existing fields won't automatically get resolvers (u
 
 Applies with `@dontInfer(noDefaultResolvers: false)`
 
-Inference will run, but fields won't be added. If a type has defined fields of types `Date`, `File`, and any other node, and we inferred that they should have resolvers/args. These will still be added in Gatsby v2, but we will now warn and note the future deprecation.
+Inference will run, but fields won't be added. If a type has defined fields of types `Date`, `File`, and any other node, and we inferred that they should have resolvers/args. These will still be added in Gatsby v2, but we will now warn and note the deprecation.
 
 ### Migrating your code
 
