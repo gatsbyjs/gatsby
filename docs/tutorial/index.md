@@ -23,6 +23,6 @@ In these intermediate tutorials, you'll learn how to pull data from almost anywh
 
 ## Advanced tutorials
 
-There are many use cases for Gatsby, some which aren't covered in beginner or advanced tutorials to keep you focused while learning. The advanced Gatsby tutorials section is a collection of advanced use case how-tos, such as using sourcing plugins for images and CMS content step-by-step.
+There are many use cases for Gatsby, some which aren't covered in beginner or advanced tutorials to keep you focused while learning. The advanced Gatsby tutorials section is a collection of advanced use cases shown step-by-step, such as using source plugins for images and CMS content.
 
 Go deeper with the [advanced Gatsby tutorials](/tutorial/advanced-tutorials/).
