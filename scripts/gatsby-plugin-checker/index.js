@@ -110,6 +110,10 @@ const updatePlugins = (updates, plugins) => {
 }
 
 const filterArchived = plugins => {
+  if (!process.env.GITHUB_API_TOKEN) {
+    throw `Please use instructions in README.md to setup GITHUB_API_TOKEN`
+  }
+
   const promises = plugins.map(plugin => {
     const [username, packageName] = plugin.links.repository.split(`/`).slice(-2)
     const url = `https://api.github.com/repos/${username}/${packageName}`
