@@ -2,7 +2,7 @@
 title: Glamor
 ---
 
-In this guide, you will learn setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
+In this guide, you will learn setting up a site with the `CSS-in-JS` library [Glamor](https://github.com/threepointone/glamor).
 
 Glamor is not actively maintained, the maintainer recommends using [Emotion](/docs/emotion).
 
@@ -11,7 +11,7 @@ CSS syntax React supports for the `style` prop. Glamor is a variant on "CSS-in-J
 
 One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
 
-With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it easier to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
+With `CSS-in-JS`, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it easier to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
 First, open a new terminal window and run the following to create a new site:
 
