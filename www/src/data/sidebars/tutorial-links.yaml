@@ -118,8 +118,6 @@
           link: /tutorial/authentication-tutorial/
         - title: Making an e-commerce Gatsby Site with Stripe
           link: /tutorial/ecommerce-tutorial/
-        - title: Pixabay Image Source Plugin Tutorial
-          link: /tutorial/pixabay-source-plugin-tutorial/
         - title: Using the WordPress Source Plugin
           link: /tutorial/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site
