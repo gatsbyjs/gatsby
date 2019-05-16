@@ -9,7 +9,6 @@ Provides drop-in support for TypeScript and TSX.
 ## How to use
 
 1.  Include the plugin in your `gatsby-config.js` file.
-1.  Install related type definition based on your installed packages.
 1.  Write your components in TSX or TypeScript.
 1.  You're good to go.
 
@@ -21,6 +20,8 @@ module.exports = {
   plugins: [...`gatsby-plugin-typescript`],
 }
 ```
+
+**\*Please note**: If packages don't ship with TypeScript definitions you'll need to manually install those type definitions, e.g. for React. A typical Gatsby project would need: `npm install --save-dev @types/react @types/react-dom @types/node.`\*
 
 ## Options
 
