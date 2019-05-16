@@ -1,4 +1,6 @@
-## Setting Up a Gatsby Site Without `gatsby new`
+---
+title: Setting Up a Gatsby Site without the `gatsby new` Command
+---
 
 There are many Enterprise level companies that maintain an internal clone of the NPM registry for security purposes. If you work for such a company, you may find that you are able to successfully run `npm install -g gatsby-cli` but cannot run the `gatsby new <project-source>` as the `gatsby new` command clones a repo from a public GitHub repository. Many companies block public GitHub, which will cause the `gatsby new` command to fail. Not to worry, though, you can set up a new Gatsby site without the `gatsby new` command with a few quick steps.
 

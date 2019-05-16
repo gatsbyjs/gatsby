@@ -1,5 +1,5 @@
 ---
-title: Preparing your environment
+title: Preparing your Environment
 overview: true
 ---
 
