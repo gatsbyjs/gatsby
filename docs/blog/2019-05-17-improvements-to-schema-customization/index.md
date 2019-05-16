@@ -7,7 +7,7 @@ tags:
   - graphql
 ---
 
-Today we are releasing further improvements to the schema customization that [we've released in version 2.2.0](/blog/2019-03-18-releasing-new-schema-customization). You can use them with Gatsby 2.4.0.
+Today we are releasing further improvements to the schema customization that [we've released in version 2.2.0](/blog/2019-03-18-releasing-new-schema-customization). You can use them with Gatsby 2.5.0.
 
 It is now possible to indicate to Gatsby, that you want to add a resolver to an explicitly defined fields. Use extensions like `@link` and `@dateformat` to add default arguments or/and resolvers to fields. In addition, when `@dontInfer` is set, Gatsby will no longer run inference for marked type, allowing one to improve performance for large data sets.
 
