@@ -125,9 +125,13 @@ const Img = React.forwardRef((props, ref) => {
     ...otherProps
   } = props
 
-  const loadingAttribute = {
-    ...(nativeLazyLoadSupported && loading),
+  let loadingAttribute = {}
+
+  if (nativeLazyLoadSupported) {
+    loadingAttribute.loading = loading
   }
+
+  console.log(props)
 
   return (
     <img
@@ -299,8 +303,24 @@ class Image extends React.Component {
       backgroundColor,
       Tag,
       itemProp,
-      loading,
+      critical,
     } = convertProps(this.props)
+
+    let { loading } = convertProps(this.props)
+
+    if (typeof critical === `boolean`) {
+      console.log(
+        `
+        The "critical" option is now deprecated and will be removed in a later version 
+        of "gatsby-image"
+
+        Please use the native "loading" attribute instead of critical. 
+        `
+      )
+      // We want to continue supporting critical and in case it is passed in
+      // we map its value to loading
+      loading = critical ? `eager` : `lazy`
+    }
 
     const { nativeLazyLoadSupported } = this.state
 
@@ -529,7 +549,6 @@ class Image extends React.Component {
 }
 
 Image.defaultProps = {
-  critical: false,
   fadeIn: true,
   alt: ``,
   Tag: `div`,
