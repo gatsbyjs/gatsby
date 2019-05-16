@@ -15,9 +15,10 @@ import FooterLinks from "../components/shared/footer-links"
 import Container from "../components/container"
 
 import docsHierarchy from "../data/sidebars/doc-links.yaml"
+import tutorialHierarchy from "../data/sidebars/tutorial-links.yaml"
 
 // Search through tree, which may be 2, 3 or more levels deep
-const childItemsBySlug = (docsHierarchy, slug) => {
+const childItemsBySlug = (docsHierarchy, tutorialHierarchy, slug) => {
   let result
 
   const iter = a => {
@@ -29,12 +30,13 @@ const childItemsBySlug = (docsHierarchy, slug) => {
   }
 
   docsHierarchy.some(iter)
+  tutorialHierarchy.some(iter)
   return result && result.items
 }
 
 const getPageHTML = page => {
   const subitemsForPage =
-    childItemsBySlug(docsHierarchy, page.fields.slug) || []
+    childItemsBySlug(docsHierarchy, tutorialHierarchy, page.fields.slug) || []
   const subitemList = subitemsForPage
     .map(subitem => `<li><a href="${subitem.link}">${subitem.title}</a></li>`)
     .join(``)

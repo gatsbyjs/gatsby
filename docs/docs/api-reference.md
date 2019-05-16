@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Gatsby API Reference
 overview: true
 ---
 

@@ -260,6 +260,42 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/advanced-tutorials/`,
+    toPath: `/tutorial/advanced-tutorials/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/authentication-tutorial/`,
+    toPath: `/tutorial/authentication-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/ecommerce-tutorial/`,
+    toPath: `/tutorial/ecommerce-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/image-tutorial/`,
+    toPath: `/tutorial/image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/pixabay-source-plugin-tutorial/`,
+    toPath: `/tutorial/pixabay-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/wordpress-source-plugin-tutorial/`,
+    toPath: `/tutorial/wordpress-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/writing-documentation-with-docz/`,
+    toPath: `/tutorial/writing-documentation-with-docz/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
