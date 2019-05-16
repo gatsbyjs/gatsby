@@ -238,7 +238,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
   createRedirect({
     fromPath: `/docs/source-plugin-tutorial/`,
-    toPath: `/docs/pixabay-source-plugin-tutorial/`,
+    toPath: `/tutorial/pixabay-source-plugin-tutorial/`,
     isPermanent: true,
   })
 

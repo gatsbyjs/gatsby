@@ -86,7 +86,7 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 ```js:title=www/gatsby-node.js
 createRedirect({
   fromPath: `/docs/source-plugin-tutorial/`,
-  toPath: `/docs/pixabay-source-plugin-tutorial/`,
+  toPath: `/tutorial/pixabay-source-plugin-tutorial/`,
   isPermanent: true,
 })
 ```
