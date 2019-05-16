@@ -1,6 +1,6 @@
 exports.onRouteUpdate = (
   { location },
-  pluginOptions = { stripSearchParam: false }
+  pluginOptions = { stripQueryString: false }
 ) => {
   const domElem = document.querySelector(`link[rel='canonical']`)
   const existingValue = domElem.getAttribute(`href`)
@@ -9,9 +9,9 @@ exports.onRouteUpdate = (
   if (existingValue && baseProtocol && baseHost) {
     let value = `${baseProtocol}//${baseHost}${location.pathname}`
 
-    const { stripSearchParam } = pluginOptions
+    const { stripQueryString } = pluginOptions
 
-    if (!stripSearchParam) {
+    if (!stripQueryString) {
       value += location.search
     }
 

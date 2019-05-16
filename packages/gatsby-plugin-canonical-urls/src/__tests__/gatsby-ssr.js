@@ -39,10 +39,10 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
 
-  it(`strips search paramaters if option stripSearchParam is true`, async () => {
+  it(`strips search paramaters if option stripQueryString is true`, async () => {
     const pluginOptions = {
       siteUrl: `http://someurl.com`,
-      stripSearchParam: true,
+      stripQueryString: true,
     }
     const setHeadComponents = jest.fn()
     const pathname = `/somepost?tag=foobar`

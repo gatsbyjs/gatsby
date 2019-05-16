@@ -8,14 +8,14 @@ exports.onRenderBody = (
   if (pluginOptions && pluginOptions.siteUrl) {
     const siteUrl = pluginOptions.siteUrl.replace(/\/$/, ``)
     const parsed = url.parse(`${siteUrl}${pathname}`)
-    const stripSearchParam =
-      typeof pluginOptions.stripSearchParam !== `undefined`
-        ? pluginOptions.stripSearchParam
+    const stripQueryString =
+      typeof pluginOptions.stripQueryString !== `undefined`
+        ? pluginOptions.stripQueryString
         : false
 
     let pageUrl = ``
 
-    if (stripSearchParam) {
+    if (stripQueryString) {
       pageUrl = `${parsed.protocol}//${parsed.host}${parsed.pathname}`
     } else {
       pageUrl = parsed.href

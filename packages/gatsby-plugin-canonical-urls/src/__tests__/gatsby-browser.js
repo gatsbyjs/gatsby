@@ -35,9 +35,9 @@ describe(`gatsby-plugin-canonical-urls`, () => {
       `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts?house=gryffindor\\" rel=\\"canonical\\">"`
     )
   })
-  it(`should strip search paramaters if option stripSearchParam is true`, () => {
+  it(`should strip search paramaters if option stripQueryString is true`, () => {
     const pluginOptions = {
-      stripSearchParam: true,
+      stripQueryString: true,
     }
 
     onRouteUpdate(
