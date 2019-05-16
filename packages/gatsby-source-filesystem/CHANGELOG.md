@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.35...gatsby-source-filesystem@2.0.36) (2019-05-16)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** fix createRemoteFileNode ts types ([#14086](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14086)) ([e47da77](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/e47da77))
+
 ## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.34...gatsby-source-filesystem@2.0.35) (2019-05-15)
 
 ### Bug Fixes
