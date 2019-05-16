@@ -129,8 +129,6 @@ const Img = React.forwardRef((props, ref) => {
     loadingAttribute.loading = loading
   }
 
-  console.log(props)
-
   return (
     <img
       sizes={sizes}
