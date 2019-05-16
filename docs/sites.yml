@@ -5927,3 +5927,12 @@
   built_by: Miguel Mayo
   built_by_url: https://www.miguelmayo.com
   featured: false
+- title: Measures for Justice
+  main_url: https://www.measuresforjustice.org
+  url: https://www.measuresforjustice.org
+  description: >
+    Measures for Justice gathers criminal justice data at the county level and makes it available on a free public Data Portal. Site rebuilt from scratch with GatsbyJS.
+  categories:
+    - Nonprofit
+    - Marketing
+  featured: false
