@@ -101,11 +101,9 @@ const noscriptImg = props => {
     : ``
 
   // Since we're in the noscript block for this image (which is rendered during SSR or when js is disabled),
-  // we have no way to "detect" if native lazy loading is supported by the user's browser (at least not today — See 1)
+  // we have no way to "detect" if native lazy loading is supported by the user's browser
   // Since this attribute is a progressive enhancement, it won't break a browser with no support
   // Therefore setting it by default is a good idea.
-
-  // 1. In the future, a Client Hint for this might be available (https://bugs.chromium.org/p/chromium/issues/detail?id=949365)
 
   const loading = props.loading ? `loading="${props.loading}" ` : ``
 
