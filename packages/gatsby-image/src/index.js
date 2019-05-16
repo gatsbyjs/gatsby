@@ -307,10 +307,13 @@ class Image extends React.Component {
 
     let { loading } = convertProps(this.props)
 
-    if (typeof critical === `boolean`) {
+    if (
+      typeof critical === `boolean` &&
+      process.env.NODE_ENV !== `production`
+    ) {
       console.log(
         `
-        The "critical" prop is now deprecated and will be removed the next major version 
+        The "critical" prop is now deprecated and will be removed in the next major version 
         of "gatsby-image"
 
         Please use the native "loading" attribute instead of "critical" 
