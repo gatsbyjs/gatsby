@@ -4,6 +4,8 @@ A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for
 [styletron](https://github.com/styletron/styletron) with built-in server-side
 rendering support.
 
+**This plugin supports `styletron-react` v5.** Check [the release notes](https://github.com/styletron/styletron/releases/tag/styletron-react%405.0.0) for more details about v5.
+
 ## Install
 
 ```sh
