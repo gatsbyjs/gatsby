@@ -61,6 +61,10 @@ class StubListRoute extends React.Component {
           <Container>
             <Helmet>
               <title>Stub List</title>
+              <meta
+                name="description"
+                content="Find places in the documentation that are still a work in progress, in need of community help"
+              />
             </Helmet>
             <h1 id="stublist" css={{ marginTop: 0 }}>
               Stub List

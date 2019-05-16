@@ -22,6 +22,10 @@ class SSRAPIs extends React.Component {
         <Container>
           <Helmet>
             <title>SSR APIs</title>
+            <meta
+              name="description"
+              content="Documentation on APIs related to server side rendering during Gatsby's build process"
+            />
           </Helmet>
           <h1 id="gatsby-server-rendering-apis" css={{ marginTop: 0 }}>
             Gatsby Server Rendering APIs
