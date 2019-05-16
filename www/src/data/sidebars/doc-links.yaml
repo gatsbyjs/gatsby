@@ -13,7 +13,7 @@
       link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby/
-    - title: Guides
+    - title: Reference Guides
       link: /docs/guides/
       items:
         - title: Preparing Your Environment
@@ -333,7 +333,7 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
-    - title: API Reference
+    - title: Gatsby API
       link: /docs/api-reference/
       items:
         - title: Gatsby Link
