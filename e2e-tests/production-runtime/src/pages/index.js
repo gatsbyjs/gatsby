@@ -46,6 +46,11 @@ const IndexPage = ({ pageContext }) => (
           StaticQuery and useStaticQuery
         </Link>
       </li>
+      <li>
+        <Link to="/compilation-hash/" data-testid="compilation-hash">
+          Compilation Hash Page
+        </Link>
+      </li>
     </ul>
   </Layout>
 )
