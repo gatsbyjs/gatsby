@@ -49,7 +49,7 @@ Gatsby is unique among most open source projects because:
 
 ## How do we do first touch maintenance?
 
-### General Guidelines
+### General guidelines
 
 - **Be empathetic.** The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
 - **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
@@ -60,15 +60,15 @@ Gatsby is unique among most open source projects because:
 
 Labeling helps group issues into manageable sets and also improves searchability and scannability. We have a set of labels that we use to group issues based on their type and status. While we want to limit adding too many labels, feel free to add one if it seems relevant and helps with this grouping!
 
-It's nice to update labels as the state of an issue changes or if the type of an issue changes, for example if a question becomes a feature request.
+It's nice to update labels as the state of an issue changes or if the type of an issue changes, for example if a question becomes a feature request. This means labels are transient in nature and subject to being updated as progress is made on addressing issues.
 
-### Resolution Flow Chart
+### Resolution flowchart
 
-https://whimsical.co/QvuMgo31T2C3xcWbou8xhy
+The [resolution flowchart](https://whimsical.co/QvuMgo31T2C3xcWbou8xhy) provides a decision tree for how issues should be categorized into one of five types: question or discussion, bug report, feature request, documentation, or maintenance.
 
-### Saved Replies
+### Saved replies
 
-https://github.com/orgs/gatsbyjs/teams/admin/discussions/3
+Gatsby team members have saved certain [common form responses](https://github.com/orgs/gatsbyjs/teams/admin/discussions/3) to help accelerate issue triage.
 
 ## Bot
 
@@ -78,7 +78,7 @@ We have a bot that helps us automate some aspects:
 - Issues with an empty body are closed
 - Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless there are additional comments or the "not stale" label is applied
 
-## Frequently Asked Questions
+## Frequently asked questions
 
 > When do I do a demo for an issue?
 
