@@ -12,9 +12,6 @@ We’re going to create a CLI style guide and then implement that style guide, w
 
 # Basic example
 
-If the proposal involves a new or changed API, include a basic code example.
-Omit this section if it's not applicable.
-
 Note: [Ink](https://www.npmjs.com/package/ink), an npm package that give us the use of React for CLIs, will make it easier to design the CLI with consistency. Just as React helps  web UIs have consistent design, Ink will provide the same thing for our CLI.
 
 # Motivation
@@ -48,8 +45,8 @@ See this [RFC on Error surveying & improvement](https://github.com/gatsbyjs/rfcs
 - CLI should embody the principles in the CLI style guide
 
 ## Anti-goals
-- losing Gatsby users
-- creating frustration or making tasks take more time
+- Losing Gatsby users
+- Creating frustration or making tasks take more time
 
 # Detailed design
 We’d like to create a [CLI style guide](https://docs.google.com/document/d/1rv7tBUeqHN4t_UecuEAKVCWAVzQoCmcDoONBmf3HggI/edit?usp=sharing) and implement its principles.
@@ -86,11 +83,11 @@ There will be many more proposed changes based off of the CLI style guide.
 
 Why should we *not* do this? Please consider:
 
-- implementation cost, both in term of code size and complexity
-- whether the proposed feature can be implemented in user space
-- the impact on teaching people Gatsby
-- integration of this feature with other existing and planned features
-- cost of migrating existing Gatsby applications (is it a breaking change?)
+- Implementation cost, both in term of code size and complexity
+- Whether the proposed feature can be implemented in user space
+- The impact on teaching people Gatsby
+- Integration of this feature with other existing and planned features
+- Cost of migrating existing Gatsby applications (is it a breaking change?)
 
 There are tradeoffs to choosing any path. Attempt to identify them here.
 
