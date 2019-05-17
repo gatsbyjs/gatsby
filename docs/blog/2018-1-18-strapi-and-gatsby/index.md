@@ -20,7 +20,7 @@ Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and
 
 Both static websites and PWAs have strong advantages which make us crave for a way to use them together in the same project! Luckily, we have tools that bridge the gap between them and the one we recently heard of is definitely Gatsby. So, we decided to give you a complete example of how to get started with Gatsby. A static website needs a source of content: in this example we will deliver it using an API built with Strapi.
 
-#### What is Gatsby?
+## What is Gatsby?
 
 [Gatsby](/) is a _blazing-fast **website framework** for React_. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
 
@@ -28,9 +28,9 @@ Both static websites and PWAs have strong advantages which make us crave for a w
 
 Because it is based on React, the website pages are never reloaded which makes the generated website super fast. A large set of plugins is available allowing developers to save time coding. For example, plugins exist to get data from any source (Markdown files, CMS, etc.). Gatsby is strongly based on the ["node" interface](/docs/node-interface/), which is the center of Gatsby's data system.
 
-Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was officially [released in July 2017](/blog/gatsby-v1/). (As of February 2109,[Gatsby is in Gatsby v2](https://github.com/gatsbyjs/gatsby/blob/master/README.md) and is now [used by many companies and for hundreds of websites](/showcase/).
+Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was officially [released in July 2017](/blog/gatsby-v1/). (As of February 2019, [Gatsby is in Gatsby v2](https://github.com/gatsbyjs/gatsby/blob/master/README.md) and is now [used by many companies and for hundreds of websites](/showcase/).
 
-#### What is Strapi?
+## What is Strapi?
 
 [Strapi](https://strapi.io) is an _open source **Headless CMS Front-End Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
 
@@ -44,22 +44,22 @@ Unlike other CMSs, **Strapi is 100% open-source**, which means:
 - You can **host it on your own servers**, so you own the data.
 - It is entirely **customisable and extensible**, thanks to the plugin system.
 
-### Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series
+## Learn Gatsby with Strapi Headless CMS Video Tutorial Series
 
 Please follow along watching the videos below and reading the text. You can watch just the videos or read just the text, but you will get the most from this tutorial by watching and reading both. The videos are designed to be used together with this article.
 
 **_The videos follow the exact sequence of this article. The videos contain additional information and additional configuration details for a few sections. However, for intermediate to advanced users this article will be sufficient to get oriented and started building Strapi powered Gatsby projects._**
 
-#### Index of Tutorial
+### Index of Tutorial
 
-1. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Introduction](/blog/2019-03-19-strapi-and-gatsby/#1-introduction)
-2. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Installation](/blog/2019-03-19-strapi-and-gatsby/#2-installation)
-3. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Content Types](/blog/2019-03-19-strapi-and-gatsby/#3-content-types)
-4. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Roles and Permissions](/blog/2019-03-19-strapi-and-gatsby/#4-roles-and-permissions)
-5. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Setting up Gatsby](/blog/2019-03-19-strapi-and-gatsby/#5-setting-up-gatsby)
-6. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Create the Index page view](/blog/2019-03-19-strapi-and-gatsby/#6-create-our-index-page)
-7. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Create the Article page view](/blog/2019-03-19-strapi-and-gatsby/#7-create-the-article-page-view)
-8. [Learn Gatsbyjs with Strapi Headless CMS Video Tutorial Series - Gatsby Images & the Article page view](/blog/2019-03-19-strapi-and-gatsby/#8-gatsby-images-and-author-page)
+1. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Introduction](/blog/2019-03-19-strapi-and-gatsby/#1-introduction)
+2. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Installation](/blog/2019-03-19-strapi-and-gatsby/#2-installation)
+3. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Content Types](/blog/2019-03-19-strapi-and-gatsby/#3-content-types)
+4. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Roles and Permissions](/blog/2019-03-19-strapi-and-gatsby/#4-roles-and-permissions)
+5. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Setting up Gatsby](/blog/2019-03-19-strapi-and-gatsby/#5-setting-up-gatsby)
+6. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Create the Index page view](/blog/2019-03-19-strapi-and-gatsby/#6-create-our-index-page)
+7. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Create the Article page view](/blog/2019-03-19-strapi-and-gatsby/#7-create-the-article-page-view)
+8. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Gatsby Images & the Article page view](/blog/2019-03-19-strapi-and-gatsby/#8-gatsby-images-and-author-page)
 
 Note: Final tutorial and code is available at [the GitHub repo for the Strapi and Gatsby tutorial](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). In this repo, you can download and/or copy/paste the [example content](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
@@ -69,7 +69,7 @@ Note: Within the content below we provide links that open a running _localhost_ 
 
 This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced headless CMS - Strapi.
 
-<iframe width="1206" height="678" src="https://www.youtube.com/embed/It4PRFJJaF0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1206" height="678" title="Intro - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/It4PRFJJaF0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -80,7 +80,7 @@ _Important links from Video:_
 
 ### 2. Installation
 
-<iframe width="1206" height="678" src="https://www.youtube.com/embed/4QnDgxtWqOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1206" height="678" title="Installation - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/4QnDgxtWqOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -152,7 +152,7 @@ Starting here, you should be able to visit the admin panel of your project: http
 
 ### 3. Content Types
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/cPEkpfik6X4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" title="Content Types - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/cPEkpfik6X4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -190,7 +190,7 @@ Note: You can download the sample content from the video [here](https://github.c
 
 ### 4. Roles and Permissions
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/1jev6QRwcSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" title="Roles and Permissions - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/1jev6QRwcSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Allow access to Article
 
@@ -204,7 +204,7 @@ Great job, our API is ready! We can start developing the static website.
 
 ### 5. Setting up Gatsby
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/SnrEEW1uTlU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" title="Setting up Gatsby - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/SnrEEW1uTlU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -320,7 +320,7 @@ Next, restart the server to ensure Gatsby registers these updates.
 
 ### 6. Create our Index Page
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/UaFgCubwRD8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" title="Create the Index page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/UaFgCubwRD8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -404,7 +404,7 @@ const IndexPage = ({ data }) => (
           <h2>
             <Link to={`/${document.node.id}`}>{document.node.title}</Link>
           </h2>
-          <Img fixed={document.node.image.childImageSharp.fixed} />
+          <Img fixed={document.node.image.childImageSharp.fixed} alt="" />
           <p>{document.node.content}</p>
         </li>
       ))}
@@ -441,7 +441,7 @@ export const pageQuery = graphql`
 
 ### 7. Create the Article page view
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/UaFgCubwRD8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" title="Create the Article page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/FTzwb49tBvw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -563,7 +563,7 @@ From now on, you should be able to visit the detail page by clicking on URLs dis
 
 ### 8. Gatsby Images and author page
 
-<iframe width="886" height="498" src="https://www.youtube.com/embed/mPyJrjD3oU0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="886" height="498" title="Gatsby Images & author page - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/mPyJrjD3oU0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 _Important links from Video:_
 
@@ -708,7 +708,7 @@ Finally, restart the server and visit the author page from the article view's li
 
 ![Page view showing all articles by Author](restart-server.png)
 
-### Conclusion
+## Conclusion
 
 Congrats! You’ve successfully built a super fast and easy-to-maintain blog!
 
