@@ -27,7 +27,7 @@ As a first touch maintainer, you might sift through, triage, communicate and man
 They typically:
 
 - answer questions that can be answered immediately
-  -test and reproduce possible bug reports and label them appropriately
+- test and reproduce possible bug reports and label them appropriately
 - communicate feature requests to the rest of the team and ensure a valid response
 - enable discussions on complicated use cases, whether themselves or via the rest of team
 
