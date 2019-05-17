@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.12...gatsby-plugin-canonical-urls@2.0.13) (2019-05-16)
+
+### Features
+
+- **gatsby-plugin-canonical-urls:** add option to strip query string ([#13339](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/issues/13339)) ([c903fed](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/commit/c903fed))
+
 ## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.11...gatsby-plugin-canonical-urls@2.0.12) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-canonical-urls

@@ -1,8 +1,12 @@
 import React from "react"
-import { withPrefix } from "gatsby"
-import createContentDigest from "gatsby/dist/utils/create-content-digest"
-import { defaultIcons, addDigestToPath } from "./common.js"
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import fs from "fs"
+import createContentDigest from "gatsby/dist/utils/create-content-digest"
+
+import { defaultIcons, addDigestToPath } from "./common.js"
+
+// TODO: remove for v3
+const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 let iconDigest = null
 
@@ -50,7 +54,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`/manifest.webmanifest`)}
+      href={withPrefix(`manifest.webmanifest`)}
       crossOrigin={pluginOptions.crossOrigin}
     />
   )

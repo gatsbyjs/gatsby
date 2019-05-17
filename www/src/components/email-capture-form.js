@@ -7,7 +7,7 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   fonts,
 } from "../utils/presets"
@@ -18,7 +18,7 @@ import { buttonStyles } from "../utils/styles"
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
@@ -76,7 +76,7 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     width: auto;
     margin-top: 0;
     margin-left: ${space[2]};

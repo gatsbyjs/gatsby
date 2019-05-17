@@ -1,7 +1,7 @@
 {
   "name": "gatsby-telemetry",
   "description": "Gatsby Telemetry",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,6 +10,7 @@
     "@babel/code-frame": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
+    "boxen": "^3.1.0",
     "ci-info": "2.0.0",
     "configstore": "^4.0.0",
     "envinfo": "^5.8.1",
@@ -34,7 +35,8 @@
   },
   "files": [
     "lib",
-    "src/postinstall.js"
+    "src/postinstall.js",
+    "src/showAnalyticsNotification.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry#readme",
   "keywords": [

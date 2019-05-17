@@ -7,6 +7,7 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
+import FooterLinks from "../../components/shared/footer-links"
 
 class IndexRoute extends React.Component {
   render() {
@@ -16,6 +17,10 @@ class IndexRoute extends React.Component {
           <Container>
             <Helmet>
               <title>Docs</title>
+              <meta
+                name="description"
+                content="The one stop location for tutorials, guides, and information about building with Gatsby"
+              />
             </Helmet>
             <h1 id="gatsby-documentation" css={{ marginTop: 0 }}>
               Gatsby.js Documentation
@@ -101,6 +106,8 @@ class IndexRoute extends React.Component {
               get started contributing to Gatsby.
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
+
+            <FooterLinks />
           </Container>
         </DocSearchContent>
       </Layout>

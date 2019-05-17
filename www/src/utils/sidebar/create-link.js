@@ -49,7 +49,7 @@ const createLink = ({
           isDraft && styles.draft,
           isActive && styles.activeLink,
           isParentOfActiveItem && styles.parentOfActiveLink,
-          customCSS && customCSS,
+          customCSS,
           { paddingLeft: indent },
           {
             "&:before, &:after": {

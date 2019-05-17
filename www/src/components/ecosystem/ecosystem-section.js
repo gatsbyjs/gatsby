@@ -13,7 +13,7 @@ import {
   lineHeights,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fontSizes,
 } from "../../utils/presets"
 
@@ -22,7 +22,7 @@ const EcosystemSectionRoot = styled(`section`)`
   padding: 0 ${space[6]};
   margin-bottom: ${space[3]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
@@ -39,7 +39,7 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-basis: calc(33.33% - ${space[5]});
     max-height: 100%;
 

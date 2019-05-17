@@ -18,7 +18,7 @@ In this post, I'll aim for the latter -- an approachable explanation of what Gat
 
 ## 1. Start off with a pre-configured development environment and build process
 
-Gatsby uses [React](https://reactjs.org/) for its UI layer. It can be notoriously difficult for newcomers to get started with React, or even for experienced React devs to configure a new React project from the ground up every time. (See: [Javascript Fatigue](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4)).
+Gatsby uses [React](https://reactjs.org/) for its UI layer. It can be notoriously difficult for newcomers to get started with React, or even for experienced React devs to configure a new React project from the ground up every time. (See: [JavaScript Fatigue](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4)).
 
 Is it possible to learn every fine-grained detail to optimize a development environment and build process for React? Sure. Is it necessary to get up and going on a project? No, not anymore.
 
