@@ -65,15 +65,15 @@ exports.sourceNodes = ({ actions }) => {
       lends: String
       type: DoctrineType
       default: JSON
-      augments: [DocumentationJs]
+      augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
-      implements: [DocumentationJs]
-      params: [DocumentationJs]
-      properties: [DocumentationJs]
-      returns: [DocumentationJs]
-      throws: [DocumentationJs]
-      todos: [DocumentationJs]
-      yields: [DocumentationJs]
+      implements: [DocumentationJs] @link(from: "implements___NODE")
+      params: [DocumentationJs] @link(from: "params___NODE")
+      properties: [DocumentationJs] @link(from: "properties___NODE")
+      returns: [DocumentationJs] @link(from: "returns___NODE")
+      throws: [DocumentationJs] @link(from: "throws___NODE")
+      todos: [DocumentationJs] @link(from: "todos___NODE")
+      yields: [DocumentationJs] @link(from: "yields___NODE")
       members: DocumentationJsMembers
       codeLocation: DocumenationJSLocationRange
       docsLocation: DocumenationJSLocationRange
@@ -97,11 +97,11 @@ exports.sourceNodes = ({ actions }) => {
     }
 
     type DocumentationJsMembers {
-      static: [DocumentationJs]
-      instance: [DocumentationJs]
-      events: [DocumentationJs]
-      global: [DocumentationJs]
-      inner: [DocumentationJs]
+      static: [DocumentationJs] @link(from: "static___NODE")
+      instance: [DocumentationJs] @link(from: "instance___NODE")
+      events: [DocumentationJs] @link(from: "events___NODE")
+      global: [DocumentationJs] @link(from: "global___NODE")
+      inner: [DocumentationJs] @link(from: "inner___NODE")
     }
 
     type DoctrineType {
@@ -113,7 +113,7 @@ exports.sourceNodes = ({ actions }) => {
       params: [JSON]
       fields: [JSON]
       result: JSON
-      typeDef: DocumentationJs
+      typeDef: DocumentationJs @link(from: "typeDef___NODE")
     }
   `
   createTypes(typeDefs)
