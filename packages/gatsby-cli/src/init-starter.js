@@ -10,6 +10,7 @@ const isValid = require(`is-valid-path`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
 const prompts = require(`prompts`)
+const opn = require(`better-opn`)
 
 const {
   getPackageManager,
@@ -173,7 +174,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
 const getPaths = async (starterPath: string, rootPath: string) => {
   let selectedOtherStarter = false
 
-  // if no args are passed, prompt user for input
+  // if no args are passed, prompt user for path and starter
   if (!starterPath && !rootPath) {
     const response = await prompts.prompt([
       {
@@ -198,12 +199,17 @@ const getPaths = async (starterPath: string, rootPath: string) => {
         initial: 0,
       },
     ])
-    selectedOtherStarter = response.starter === `different`
+    // exit gracefully if responses aren't provided
+    if (!response.starter || !response.path) {
+      process.exit()
+    }
 
+    selectedOtherStarter = response.starter === `different`
     starterPath = `gatsbyjs/${response.starter}`
     rootPath = response.path
   }
 
+  // set defaults if no root or starter has been set yet
   rootPath = rootPath || process.cwd()
   starterPath = starterPath || `gatsbyjs/gatsby-starter-default`
 
@@ -226,9 +232,10 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   const urlObject = url.parse(rootPath)
 
   if (selectedOtherStarter) {
-    report.info(
-      `Visit the starter library at https://gatsby.dev/starters?v=2 to browse other starters`
+    report.log(
+      `Opening the starter library at https://gatsby.dev/starters?v=2...\nThe starter library has a variety of options for starters you can browse\n\nYou can then use the gatsby new command with the link to a repository of a starter you'd like to use, for example:\ngatsby new ${rootPath} https://github.com/gatsbyjs/gatsby-starter-default`
     )
+    opn(`https://gatsby.dev/starters?v=2`)
     return
   }
 
