@@ -3,9 +3,6 @@ title: Adding website functionality
 overview: true
 ---
 
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+Gatsby empowers developers and creators to make a diverse amount of websites. One may wish to add additional functionality to their site such as search, authentication, forms, comments, and plenty of others. In this section, you will find a showcase of guides and concepts on how to level up your site.
 
 [[guidelist]]

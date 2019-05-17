@@ -80,7 +80,7 @@ Second, create a CSS file and define any styles you wish. An example:
 
 ```css:title=src/styles/global.css
 html {
-  background-color: lavenderblush;
+  background-color: peachpuff;
 }
 
 a {

@@ -11,10 +11,3 @@ As an agency, you'll want to show others [how Gatsby helps your agency](/docs/ga
 If you're at a company, there are [different strategies for adopting Gatsby](/docs/gatsby-for-companies) depending on the type and size of company.
 
 [[guidelist]]
-
---
-
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.

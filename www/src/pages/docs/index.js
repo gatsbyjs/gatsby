@@ -17,6 +17,10 @@ class IndexRoute extends React.Component {
           <Container>
             <Helmet>
               <title>Docs</title>
+              <meta
+                name="description"
+                content="The one stop location for tutorials, guides, and information about building with Gatsby"
+              />
             </Helmet>
             <h1 id="gatsby-documentation" css={{ marginTop: 0 }}>
               Gatsby.js Documentation
