@@ -279,7 +279,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       const children = []
 
-      const picked = _.pick(docsJson, [
+      let picked = _.pick(docsJson, [
         `kind`,
         `memberof`,
         `name`,
@@ -314,6 +314,9 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       }
 
       if (picked.type) {
+        if (picked.type === `OptionalType` && docsJson.expression) {
+          picked = { ...picked, optional: true, ...docsJson.expression }
+        }
         if (picked.type.type === `OptionalType` && picked.type.expression) {
           picked.optional = true
           picked.type = picked.type.expression
