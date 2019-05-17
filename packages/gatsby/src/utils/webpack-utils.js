@@ -296,7 +296,7 @@ module.exports = async ({
     let js = (options = {}) => {
       return {
         test: /\.jsx?$/,
-        exclude: vendorRegex,
+        exclude: /core-js/,
         use: [loaders.js(options)],
       }
     }
