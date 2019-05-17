@@ -13,7 +13,7 @@ const workerPool = new Worker(require.resolve(`./worker`), {
 
 module.exports = (htmlComponentRendererPath, pages, activity) =>
   new Promise((resolve, reject) => {
-    // We need to only pass env vars that are set programatically in gatsby-cli
+    // We need to only pass env vars that are set programmatically in gatsby-cli
     // to child process. Other vars will be picked up from environment.
     const envVars = Object.entries({
       NODE_ENV: process.env.NODE_ENV,

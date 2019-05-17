@@ -5,8 +5,6 @@ const {
   isIntrospectionType,
   defaultFieldResolver,
   assertValidName,
-  getNamedType,
-  Kind,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -14,11 +12,13 @@ const {
   UnionTypeComposer,
   InputTypeComposer,
 } = require(`graphql-compose`)
+
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
+const { processFieldExtensions } = require(`./extensions`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -119,19 +119,19 @@ const processTypeComposer = async ({
   nodeStore,
   parentSpan,
 }) => {
-  if (
-    typeComposer instanceof ObjectTypeComposer &&
-    typeComposer.hasInterface(`Node`)
-  ) {
-    await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
-    await addResolvers({ schemaComposer, typeComposer, parentSpan })
-    await addConvenienceChildrenFields({
-      schemaComposer,
-      typeComposer,
-      nodeStore,
-      parentSpan,
-    })
-    await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+  if (typeComposer instanceof ObjectTypeComposer) {
+    await processFieldExtensions({ schemaComposer, typeComposer, parentSpan })
+    if (typeComposer.hasInterface(`Node`)) {
+      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+      await addResolvers({ schemaComposer, typeComposer, parentSpan })
+      await addConvenienceChildrenFields({
+        schemaComposer,
+        typeComposer,
+        nodeStore,
+        parentSpan,
+      })
+      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+    }
   }
 }
 
@@ -205,39 +205,54 @@ const processAddedType = ({
   typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
 
   if (createdFrom === `sdl`) {
-    if (type.astNode && type.astNode.directives) {
-      type.astNode.directives.forEach(directive => {
-        if (directive.name.value === `infer`) {
-          typeComposer.setExtension(`infer`, true)
-          typeComposer.setExtension(
-            `addDefaultResolvers`,
-            getNoDefaultResolvers(directive)
-          )
-        } else if (directive.name.value === `dontInfer`) {
-          typeComposer.setExtension(`infer`, false)
-          typeComposer.setExtension(
-            `addDefaultResolvers`,
-            getNoDefaultResolvers(directive)
-          )
-        }
-      })
-    }
+    const directives = typeComposer.getDirectives()
+    directives.forEach(({ name, args }) => {
+      switch (name) {
+        case `infer`:
+        case `dontInfer`:
+          typeComposer.setExtension(`infer`, name === `infer`)
+          if (args.noDefaultResolvers != null) {
+            typeComposer.setExtension(
+              `addDefaultResolvers`,
+              !args.noDefaultResolvers
+            )
+          }
+          break
+        default:
+      }
+    })
+  }
+
+  if (
+    typeComposer instanceof ObjectTypeComposer ||
+    typeComposer instanceof InterfaceTypeComposer
+  ) {
+    typeComposer.getFieldNames().forEach(fieldName => {
+      typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
+      typeComposer.setFieldExtension(
+        fieldName,
+        `plugin`,
+        plugin ? plugin.name : null
+      )
+
+      if (createdFrom === `sdl`) {
+        const directives = typeComposer.getFieldDirectives(fieldName)
+        directives.forEach(({ name, args }) => {
+          typeComposer.setFieldExtension(fieldName, name, args)
+        })
+      }
+    })
+  }
+
+  if (typeComposer.hasExtension(`addDefaultResolvers`)) {
+    report.warn(
+      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, ` +
+        `defined fields won't get resolvers, unless explicitly added with a ` +
+        `directive/extension.`
+    )
   }
 
   return typeComposer
-}
-
-const getNoDefaultResolvers = directive => {
-  const noDefaultResolvers = directive.arguments.find(
-    ({ name }) => name.value === `noDefaultResolvers`
-  )
-  if (noDefaultResolvers) {
-    if (noDefaultResolvers.value.kind === Kind.BOOLEAN) {
-      return !noDefaultResolvers.value.value
-    }
-  }
-
-  return null
 }
 
 const checkIsAllowedTypeName = name => {
@@ -350,14 +365,9 @@ const addThirdPartySchemas = ({
 }) => {
   thirdPartySchemas.forEach(schema => {
     const schemaQueryType = schema.getQueryType()
-    const queryTC = ObjectTypeComposer.createTemp(schemaQueryType)
-    processThirdPartyType({
-      schemaComposer,
-      typeComposer: queryTC,
-      schemaQueryType,
-    })
-    const fields = queryTC.getFields()
-    schemaComposer.Query.addFields(fields)
+    const queryTC = schemaComposer.createTempTC(schemaQueryType)
+    processThirdPartyTypeFields({ typeComposer: queryTC, schemaQueryType })
+    schemaComposer.Query.addFields(queryTC.getFields())
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `createResolvers` API.
@@ -367,38 +377,35 @@ const addThirdPartySchemas = ({
       if (
         type !== schemaQueryType &&
         !isSpecifiedScalarType(type) &&
-        !isIntrospectionType(type)
+        !isIntrospectionType(type) &&
+        type.name !== `Date` &&
+        type.name !== `JSON`
       ) {
-        schemaComposer.addAsComposer(type)
-        const typeComposer = schemaComposer.getAnyTC(type.name)
-        processThirdPartyType({ schemaComposer, typeComposer, schemaQueryType })
+        const typeComposer = schemaComposer.createTC(type)
+        if (
+          typeComposer instanceof ObjectTypeComposer ||
+          typeComposer instanceof InterfaceTypeComposer
+        ) {
+          processThirdPartyTypeFields({ typeComposer, schemaQueryType })
+        }
+        typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
         schemaComposer.addSchemaMustHaveType(typeComposer)
       }
     })
   })
 }
 
-const processThirdPartyType = ({
-  schemaComposer,
-  typeComposer,
-  schemaQueryType,
-}) => {
-  typeComposer.getType().isThirdPartyType = true
+const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
   // Fix for types that refer to Query. Thanks Relay Classic!
-  if (
-    typeComposer instanceof ObjectTypeComposer ||
-    typeComposer instanceof InterfaceTypeComposer
-  ) {
-    typeComposer.getFieldNames().forEach(fieldName => {
-      const fieldType = typeComposer.getFieldType(fieldName)
-      if (getNamedType(fieldType) === schemaQueryType) {
-        typeComposer.extendField(fieldName, {
-          type: fieldType.toString().replace(schemaQueryType.name, `Query`),
-        })
-      }
-    })
-  }
-  return typeComposer
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const field = typeComposer.getField(fieldName)
+    const fieldType = field.type.toString()
+    if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
+      typeComposer.extendField(fieldName, {
+        type: fieldType.replace(schemaQueryType.name, `Query`),
+      })
+    }
+  })
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
@@ -420,7 +427,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               !fieldTypeName ||
               fieldTypeName.replace(/!/g, ``) ===
                 originalTypeName.replace(/!/g, ``) ||
-              tc.getType().isThirdPartyType
+              tc.getExtension(`createdFrom`) === `thirdPartySchema`
             ) {
               const newConfig = {}
               if (fieldConfig.type) {
@@ -502,8 +509,6 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
       sort: sortInputTC,
       skip: `Int`,
       limit: `Int`,
-      // page: `Int`,
-      // perPage: { type: `Int`, defaultValue: 20 },
     },
     resolve: findManyPaginated(typeName),
   })
