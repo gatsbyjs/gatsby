@@ -20,8 +20,10 @@ You have to install and configure Tailwind for both of these methods, so this gu
 1. Install Tailwind
 
 ```shell
-npm install tailwindcss --save-dev
+npm install tailwindcss@0.7.4 --save-dev
 ```
+
+> Note: This version of this guide doesn't work with Tailwind 1.0 and above. The Gatsby Team is working on this.
 
 2. Generate Tailwind config file
 
