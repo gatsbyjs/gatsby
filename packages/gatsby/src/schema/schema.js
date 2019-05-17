@@ -5,6 +5,7 @@ const {
   isIntrospectionType,
   defaultFieldResolver,
   assertValidName,
+  parse,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -138,18 +139,25 @@ const processTypeComposer = async ({
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
     if (typeof typeOrTypeDef === `string`) {
-      let addedTypes
+      let parsedTypes
+      const createdFrom = `sdl`
       try {
-        addedTypes = schemaComposer.addTypeDefs(typeOrTypeDef)
+        parsedTypes = parseTypeDefs({
+          typeDefs: typeOrTypeDef,
+          plugin,
+          createdFrom,
+          schemaComposer,
+          parentSpan,
+        })
       } catch (error) {
         reportParsingError(error)
       }
-      addedTypes.forEach(type => {
+      parsedTypes.forEach(type => {
         processAddedType({
           schemaComposer,
           type,
           parentSpan,
-          createdFrom: `sdl`,
+          createdFrom,
           plugin,
         })
       })
@@ -161,24 +169,69 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
       })
 
       if (type) {
+        const typeName = type.getTypeName()
+        const createdFrom = `typeBuilder`
+        checkIsAllowedTypeName(typeName)
+        if (schemaComposer.has(typeName)) {
+          const typeComposer = schemaComposer.get(typeName)
+          mergeTypes({
+            typeComposer,
+            type,
+            plugin,
+            createdFrom,
+            parentSpan,
+          })
+        } else {
+          processAddedType({
+            schemaComposer,
+            type,
+            parentSpan,
+            createdFrom,
+            plugin,
+          })
+        }
+      }
+    } else {
+      const typeName = typeOrTypeDef.name
+      const createdFrom = `graphql-js`
+      checkIsAllowedTypeName(typeName)
+      if (schemaComposer.has(typeName)) {
+        const typeComposer = schemaComposer.get(typeName)
+        mergeTypes({
+          typeComposer,
+          type: typeOrTypeDef,
+          plugin,
+          createdFrom,
+          parentSpan,
+        })
+      } else {
         processAddedType({
           schemaComposer,
-          type,
+          type: typeOrTypeDef,
           parentSpan,
-          createdFrom: `typeBuilder`,
+          createdFrom,
           plugin,
         })
       }
-    } else {
-      processAddedType({
-        schemaComposer,
-        type: typeOrTypeDef,
-        parentSpan,
-        createdFrom: `graphql-js`,
-        plugin,
-      })
     }
   })
+}
+
+const mergeTypes = ({
+  typeComposer,
+  type,
+  plugin,
+  createdFrom,
+  parentSpan,
+}) => {
+  typeComposer.merge(type)
+  if (
+    type instanceof ObjectTypeComposer ||
+    type instanceof InterfaceTypeComposer
+  ) {
+    typeComposer.extendExtensions(type.getExtensions())
+  }
+  addExtensions({ typeComposer, plugin, createdFrom })
 }
 
 const processAddedType = ({
@@ -189,7 +242,6 @@ const processAddedType = ({
   plugin,
 }) => {
   const typeName = schemaComposer.addAsComposer(type)
-  checkIsAllowedTypeName(typeName)
   const typeComposer = schemaComposer.get(typeName)
   if (
     typeComposer instanceof InterfaceTypeComposer ||
@@ -201,6 +253,12 @@ const processAddedType = ({
   }
   schemaComposer.addSchemaMustHaveType(typeComposer)
 
+  addExtensions({ typeComposer, plugin, createdFrom })
+
+  return typeComposer
+}
+
+const addExtensions = ({ typeComposer, plugin, createdFrom }) => {
   typeComposer.setExtension(`createdFrom`, createdFrom)
   typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
 
@@ -589,6 +647,65 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
     [queryName]: typeComposer.getResolver(`findOne`),
     [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
   })
+}
+
+const parseTypes = ({
+  doc,
+  plugin,
+  createdFrom,
+  schemaComposer,
+  parentSpan,
+}) => {
+  const types = []
+  doc.definitions.forEach(def => {
+    const name = def.name.value
+    checkIsAllowedTypeName(name)
+
+    if (schemaComposer.has(name)) {
+      // We don't check if ast.kind matches composer type, but rely
+      // that this will throw when something is wrong and get
+      // reported by `reportParsingError`.
+
+      // Keep the original type composer around
+      const typeComposer = schemaComposer.get(name)
+      // Only allow user to extend an already existing type
+      if (!plugin || plugin.name === `default-site-plugin`) {
+        // The parsed type composer will be set for the type name after this
+        const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
+        // Merge the parsed type with the original
+        mergeTypes({
+          typeComposer,
+          type: parsedType,
+          plugin,
+          createdFrom,
+          parentSpan,
+        })
+        // Set the original with the merged fields for the type name again
+        schemaComposer.typeMapper.set(typeComposer.getTypeName(), typeComposer)
+      } else {
+        report.warn(
+          `Plugin \`${plugin.name}\` tried to define the GraphQL ` +
+            `type \`${name}\`, which has already been defined by the ` +
+            `plugin \`${typeComposer.getExtension(`plugin`)}\`.`
+        )
+      }
+    } else {
+      const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
+      types.push(parsedType)
+    }
+  })
+  return types
+}
+
+const parseTypeDefs = ({
+  typeDefs,
+  plugin,
+  createdFrom,
+  schemaComposer,
+  parentSpan,
+}) => {
+  const doc = parse(typeDefs)
+  return parseTypes({ doc, plugin, createdFrom, schemaComposer, parentSpan })
 }
 
 const reportParsingError = error => {
