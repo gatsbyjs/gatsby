@@ -1308,7 +1308,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  * * `@fileByRelativePath` - connect to a File node. Same arguments. The
  *   difference from link is that this normalizes the relative path to be
  *   relative from the path where source node is found.
- *
+ * * `proxy` - in case the underlying node data contains field names with
+ *   characters that are invalid in GraphQL, `proxy` allows to explicitly
+ *   proxy those properties to fields with valid field names. Takes a `from` arg.
  *
  *
  * @example
