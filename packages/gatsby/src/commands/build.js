@@ -17,6 +17,7 @@ const telemetry = require(`gatsby-telemetry`)
 const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
+const WorkerPool = require(`../utils/worker/pool`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
@@ -92,6 +93,8 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
+  const workerPool = WorkerPool.create()
+
   const webpackCompilationHash = stats.hash
   if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
     store.dispatch({
@@ -113,7 +116,7 @@ module.exports = async function build(program: BuildArgs) {
       pageQueryIds
     )
     await pageDataUtil.updateCompilationHashes(
-      { publicDir },
+      { publicDir, workerPool },
       cleanPagePaths,
       webpackCompilationHash
     )
@@ -144,6 +147,7 @@ module.exports = async function build(program: BuildArgs) {
       stage: `build-html`,
       pagePaths: [...store.getState().pages.keys()],
       activity,
+      workerPool,
     })
   } catch (err) {
     reportFailure(
@@ -170,4 +174,5 @@ module.exports = async function build(program: BuildArgs) {
 
   buildSpan.finish()
   await stopTracer()
+  workerPool.end()
 }

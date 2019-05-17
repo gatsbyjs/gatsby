@@ -1,8 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
-const Worker = require(`jest-worker`).default
-const cpuCoreCount = require(`./cpu-core-count`)
 const { chunk } = require(`lodash`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
@@ -27,16 +25,10 @@ const write = async ({ publicDir }, page, result, webpackCompilationHash) => {
 }
 
 const updateCompilationHashes = (
-  { publicDir },
+  { publicDir, workerPool },
   pagePaths,
   webpackCompilationHash
 ) => {
-  const workerPool = new Worker(require.resolve(`./page-data-worker`), {
-    numWorkers: cpuCoreCount(true),
-    forkOptions: {
-      silent: false,
-    },
-  })
   const segments = chunk(pagePaths, 50)
   return Promise.map(segments, segment =>
     workerPool.updateCompilationHashes(
@@ -44,7 +36,7 @@ const updateCompilationHashes = (
       segment,
       webpackCompilationHash
     )
-  ).then(() => workerPool.end())
+  )
 }
 
 module.exports = {
