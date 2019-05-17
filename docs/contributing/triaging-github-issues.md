@@ -24,7 +24,7 @@ An opened issue could be:
 
 As a first touch maintainer, you might sift through, triage, communicate and manage this first line of communication.
 
-They typically:
+You will typically:
 
 - answer questions that can be answered immediately
 - test and reproduce possible bug reports and label them appropriately
