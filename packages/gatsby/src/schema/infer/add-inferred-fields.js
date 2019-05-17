@@ -116,7 +116,12 @@ const addInferredFieldsImpl = ({
               .filter(name =>
                 // It is okay to list allowed extensions explicitly here,
                 // since this is deprecated anyway and won't change.
-                [`dateformat`, `fileByRelativePath`, `link`].includes(name)
+                [
+                  `dateformat`,
+                  `fileByRelativePath`,
+                  `link`,
+                  `proxyFrom`,
+                ].includes(name)
               )
               .forEach(name => {
                 if (!typeComposer.hasFieldExtension(key, name)) {
