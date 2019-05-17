@@ -1,20 +1,19 @@
 import React from "react"
-import useCommunityEvents from "../../hooks/use-community-events"
 import Event from "./event"
 
-const Events = () => {
-  const events = useCommunityEvents()
+const Events = ({ events }) => {
+  const upcoming = events.nodes.filter(event => event.data.date >= Date.now())
+  const past = events.nodes
+    .filter(event => event.data.date < Date.now())
+    .reverse()
 
-  const upcoming = events.filter(event => event.date >= Date.now())
-  const past = events.filter(event => event.date < Date.now()).reverse()
-
-  return events.length > 0 ? (
+  return events.nodes.length > 0 ? (
     <>
       <h2>Upcoming Events</h2>
       <ul>
         {upcoming.map(event => (
           <li key={event.id}>
-            <Event {...event} />
+            <Event event={event.data} />
           </li>
         ))}
       </ul>
@@ -22,7 +21,7 @@ const Events = () => {
       <ul>
         {past.map(event => (
           <li key={event.id}>
-            <Event {...event} />
+            <Event event={event.data} />
           </li>
         ))}
       </ul>
@@ -33,3 +32,15 @@ const Events = () => {
 }
 
 export default Events
+
+export const query = graphql`
+  fragment CommunityEvents on AirtableConnection {
+    nodes {
+      id
+      data {
+        date
+        ...EventFragment
+      }
+    }
+  }
+`

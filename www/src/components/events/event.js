@@ -10,14 +10,16 @@ const displayDate = date =>
   })
 
 const Event = ({
-  name,
-  organizer_fname,
-  organizer_lname,
-  date,
-  location,
-  url,
-  type,
-  hasGatsbyTeamSpeaker,
+  event: {
+    name,
+    organizerFirstName,
+    organizerLastName,
+    date,
+    location,
+    url,
+    type,
+    hasGatsbyTeamSpeaker,
+  },
 }) => (
   <React.Fragment>
     <p
@@ -44,12 +46,25 @@ const Event = ({
     </p>
     <p>
       <small>
-        This {type.toLowerCase()} was submitted by {organizer_fname}
+        This {type.toLowerCase()} was submitted by {organizerFirstName}
         {` `}
-        {organizer_lname}.
+        {organizerLastName}.
       </small>
     </p>
   </React.Fragment>
 )
 
 export default Event
+
+export const query = graphql`
+  fragment EventFragment on AirtableData {
+    name
+    organizerFirstName
+    organizerLastName
+    date
+    location
+    url
+    type
+    hasGatsbyTeamSpeaker
+  }
+`
