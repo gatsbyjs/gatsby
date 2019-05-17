@@ -9,7 +9,7 @@ const url = require(`url`)
 const isValid = require(`is-valid-path`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
-const inquirer = require(`inquirer`)
+const prompts = require(`prompts`)
 
 const {
   getPackageManager,
@@ -175,29 +175,33 @@ const getPaths = async (starterPath: string, rootPath: string) => {
 
   // if no args are passed, prompt user for input
   if (!starterPath && !rootPath) {
-    const getPath = await inquirer.prompt([
+    const response = await prompts.prompt([
       {
-        type: `input`,
+        type: `text`,
         name: `path`,
         message: `What is your project called?`,
-        default: `my-gatsby-project`,
+        initial: `my-gatsby-project`,
+      },
+      {
+        type: `select`,
+        name: `starter`,
+        message: `What starter would you like to use?`,
+        choices: [
+          { title: `gatsby-starter-default`, value: `gatsby-starter-default` },
+          { title: `gatsby-starter-blog`, value: `gatsby-starter-blog` },
+          {
+            title: `gatsby-starter-hello-world`,
+            value: `gatsby-starter-hello-world`,
+          },
+          { title: `(Use a different starter)`, value: `different` },
+        ],
+        initial: 0,
       },
     ])
-    const getStarter = await inquirer.prompt({
-      type: `list`,
-      name: `starter`,
-      message: `What starter would you like to use?`,
-      choices: [
-        `gatsby-starter-default`,
-        `gatsby-starter-blog`,
-        `gatsby-starter-hello-world`,
-        `(Use a different starter)`,
-      ],
-    })
-    selectedOtherStarter = getStarter.starter === `(Use a different starter)`
+    selectedOtherStarter = response.starter === `different`
 
-    starterPath = `gatsbyjs/${getStarter.starter}`
-    rootPath = getPath.path
+    starterPath = `gatsbyjs/${response.starter}`
+    rootPath = response.path
   }
 
   rootPath = rootPath || process.cwd()
