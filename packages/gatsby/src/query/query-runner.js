@@ -27,7 +27,7 @@ type QueryJob = {
 
 // Run query
 module.exports = async (queryJob: QueryJob) => {
-  const { schema, program } = store.getState()
+  const { schema, program, webpackCompilationHash } = store.getState()
 
   const graphql = (query, context) =>
     graphqlFunction(
@@ -147,7 +147,12 @@ ${formatErrorDetails(errorDetails)}`)
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
       const page = pages.get(queryJob.id)
-      await pageDataUtil.write({ publicDir }, page, result)
+      await pageDataUtil.write(
+        { publicDir },
+        page,
+        result,
+        webpackCompilationHash
+      )
     }
   }
 
