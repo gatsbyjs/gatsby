@@ -65,7 +65,37 @@ configure(loadStories, module)
 
 Next make some adjustments to Storybook's default `webpack` configuration so you can transpile Gatsby source files, and to ensure you have the necessary `babel` plugins to transpile Gatsby components.
 
-Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following in that file.
+Create a new file called `webpack.config.js` in the `.storybook` folder created by the Storybook CLI. Then place the following code in that file (depending on which version of Storybook you're using):
+
+**For Storybook v5:**
+
+```js:title=.storybook/webpack.config.js
+module.exports = ({ config }) => {
+  // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
+  config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+
+  // use installed babel-loader which is v8.0-beta (which is meant to work with @babel/core@7)
+  config.module.rules[0].use[0].loader = require.resolve("babel-loader")
+
+  // use @babel/preset-react for JSX and env (instead of staged presets)
+  config.module.rules[0].use[0].options.presets = [
+    require.resolve("@babel/preset-react"),
+    require.resolve("@babel/preset-env"),
+  ]
+
+  // use @babel/plugin-proposal-class-properties for class arrow functions
+  config.module.rules[0].use[0].options.plugins = [
+    require.resolve("@babel/plugin-proposal-class-properties"),
+  ]
+
+  // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
+  config.resolve.mainFields = ["browser", "module", "main"]
+
+  return config
+}
+```
+
+**For Storybook v4:**
 
 ```js:title=.storybook/webpack.config.js
 module.exports = (baseConfig, env, defaultConfig) => {

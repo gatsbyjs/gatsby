@@ -16,9 +16,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
             color: colors.gray.calm,
             fontWeight: `normal`,
             borderBottom: `none`,
-            boxShadow: `none`,
             "&:hover": {
-              background: `none`,
               color: colors.gatsby,
             },
           },

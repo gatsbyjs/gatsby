@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GraphQL type inference Handles dates Infers from Date objects 1`] = `
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "dateObject": "2012-11-05T00:00:00.000Z",
+          },
+        },
+        Object {
+          "node": Object {
+            "dateObject": "2012-11-05T00:00:00.000Z",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference Handles dates Infers from array of Date objects 1`] = `
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "dateObject": Array [
+              "2012-11-05T00:00:00.000Z",
+              "2012-11-06T00:00:00.000Z",
+            ],
+          },
+        },
+        Object {
+          "node": Object {
+            "dateObject": Array [
+              "2012-11-05T00:00:00.000Z",
+            ],
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference Handles priority for conflicting fields 1`] = `
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "_2invalid": 1,
+            "sibling": Object {
+              "id": "2",
+            },
+          },
+        },
+        Object {
+          "node": Object {
+            "_2invalid": 1,
+            "sibling": Object {
+              "id": "3",
+            },
+          },
+        },
+        Object {
+          "node": Object {
+            "_2invalid": 1,
+            "sibling": Object {
+              "id": "1",
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference Handles priority for conflicting nested fields 1`] = `
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "_2invalid": Object {
+              "nested": Object {
+                "check": true,
+              },
+            },
+          },
+        },
+        Object {
+          "node": Object {
+            "_2invalid": Object {
+              "nested": Object {
+                "check": false,
+              },
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference Infers graphql type from array of nodes 1`] = `
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "aBoolean": true,
+            "aNestedArray": Array [
+              Array [
+                1,
+                2,
+                3,
+                4,
+              ],
+              Array [
+                5,
+                6,
+                7,
+                8,
+              ],
+            ],
+            "anArray": Array [
+              1,
+              2,
+              3,
+              4,
+            ],
+            "anObjectArray": Array [
+              Object {
+                "aBoolean": true,
+                "aNumber": 2,
+                "anArray": null,
+                "anotherObjectArray": null,
+              },
+              Object {
+                "aBoolean": null,
+                "aNumber": 2,
+                "anArray": Array [
+                  1,
+                  2,
+                ],
+                "anotherObjectArray": null,
+              },
+              Object {
+                "aBoolean": null,
+                "aNumber": null,
+                "anArray": null,
+                "anotherObjectArray": Array [
+                  Object {
+                    "bar": 10,
+                    "baz": null,
+                  },
+                ],
+              },
+            ],
+            "anObjectArrayWithNull": Array [
+              Object {
+                "anotherObjectArray": Array [
+                  Object {
+                    "baz": "quz",
+                  },
+                ],
+              },
+              null,
+            ],
+            "date": "1012",
+            "deepObject": Object {
+              "deepObject": Object {
+                "deepObject": Object {
+                  "level": 3,
+                },
+                "level": 2,
+              },
+              "level": 1,
+            },
+            "domain": "pizza.com",
+            "externalUrl": "https://example.com/awesome.jpg",
+            "frontmatter": Object {
+              "date": "1012",
+              "title": "The world of dash and adventure",
+            },
+            "hair": 1,
+          },
+        },
+        Object {
+          "node": Object {
+            "aBoolean": null,
+            "aNestedArray": Array [
+              Array [
+                1,
+                2,
+                3,
+                4,
+              ],
+            ],
+            "anArray": Array [
+              1,
+              2,
+              5,
+              4,
+            ],
+            "anObjectArray": Array [
+              Object {
+                "aBoolean": null,
+                "aNumber": null,
+                "anArray": null,
+                "anotherObjectArray": Array [
+                  Object {
+                    "bar": null,
+                    "baz": "quz",
+                  },
+                ],
+              },
+            ],
+            "anObjectArrayWithNull": Array [
+              Object {
+                "anotherObjectArray": Array [
+                  Object {
+                    "baz": "quz",
+                  },
+                ],
+              },
+              null,
+            ],
+            "date": "1984",
+            "deepObject": null,
+            "domain": null,
+            "externalUrl": null,
+            "frontmatter": Object {
+              "date": "1984",
+              "title": "The world of slash and adventure",
+            },
+            "hair": 2,
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference handles lowercase type names 1`] = `
+Object {
+  "data": Object {
+    "allWordpressPage": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "__typename": "wordpress__PAGE",
+            "acfFields": Object {
+              "__typename": "wordpress__PAGEAcfFields",
+              "fooz": "bar",
+            },
+            "id": "1",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`GraphQL type inference type conflicts catches conflicts and removes field 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Test.number",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1.1,
+      },
+      "string" => Object {
+        "description": "",
+        "value": "1",
+      },
+    },
+  },
+]
+`;

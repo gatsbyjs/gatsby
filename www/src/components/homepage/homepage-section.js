@@ -4,33 +4,39 @@ import styled from "@emotion/styled"
 
 import Button from "../button"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 
-const ICON_SIZE = `32px`
+const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsbyDark : `#fff`)};
+  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  padding: ${rhythm(1)} ${rhythm(presets.gutters.default / 2)};
+  padding: ${space[5]} ${space[6]};
   width: 100%;
 
-  ${presets.Xl} {
+  ${mediaQueries.xl} {
     margin: -1px 0;
-    padding: ${rhythm(1)} 5%;
+    padding: ${space[5]} 5%;
   }
 
-  ${presets.Xxl} {
-    padding: ${rhythm(1.5)} 8%;
+  ${mediaQueries.xxl} {
+    padding: ${space[7]} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${presets.Md} {
+  ${mediaQueries.md} {
     max-width: 30rem;
   }
 
-  ${presets.Lg} {
-    margin-left: 3rem;
+  ${mediaQueries.lg} {
+    margin-left: ${space[9]};
   }
 `
 
@@ -38,13 +44,13 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: 1rem;
+  font-size: ${fontSizes[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -52,7 +58,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -66,14 +72,14 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: 1.75rem;
+  font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: 1.125rem;
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-size: ${fontSizes[3]};
+  font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `
@@ -81,14 +87,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 1.5rem;
+  margin: ${space[4]} 0 ${space[6]};
 
   > a {
-    margin-right: ${rhythm(0.2)};
+    margin-right: ${space[1]};
   }
 
-  ${presets.Lg} {
-    margin: 1rem 0 2.5rem;
+  ${mediaQueries.lg} {
+    margin: ${space[4]} 0 ${space[8]};
   }
 `
 
@@ -120,7 +126,7 @@ const HomepageSection = ({
         )}
         {links && (
           <Actions>
-            {links.map((item, idx) => {
+            {links.map(item => {
               const { to, label, icon: Icon, secondary, tracking } = item
 
               return (

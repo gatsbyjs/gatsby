@@ -1,7 +1,7 @@
 import React from "react"
 import { stripIndent } from "common-tags"
 
-exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
+export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   const {
     appId,
     includeInDevelopment = false,

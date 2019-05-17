@@ -3,23 +3,25 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
-import { options } from "../utils/typography"
+import { space } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
+import FooterLinks from "../components/shared/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import GatsbyIcon from "../monogram.svg"
 import { linkStyles } from "../utils/styles"
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
+  const metaExcerpt = excerpt || `Plugin information for ${packageName}`
 
   return (
     <Container>
       <Helmet>
         <title>{packageName}</title>
-        <meta name="description" content={excerpt} />
-        <meta property="og:description" content={excerpt} />
-        <meta name="twitter:description" content={excerpt} />
+        <meta name="description" content={metaExcerpt} />
+        <meta property="og:description" content={metaExcerpt} />
+        <meta name="twitter:description" content={metaExcerpt} />
         <meta property="og:title" content={packageName} />
         <meta property="og:type" content="article" />
         <meta name="twitter.label1" content="Reading time" />
@@ -30,6 +32,10 @@ const PackageReadMe = props => {
           display: `flex`,
           flexWrap: `wrap`,
           justifyContent: `space-between`,
+          paddingBottom: space[9],
+          "&&:hover": {
+            color: `inherit`,
+          },
         }}
       >
         <div
@@ -44,11 +50,7 @@ const PackageReadMe = props => {
                 css={{
                   ...linkStyles,
                   color: `#aaa !important`,
-                  marginRight: `1rem`,
-                  "&&:hover": {
-                    color: `inherit`,
-                  },
-                  fontFamily: options.headerFontFamily.join(`, `),
+                  marginRight: space[6],
                 }}
               >
                 <img
@@ -70,7 +72,7 @@ const PackageReadMe = props => {
             href={githubUrl}
             aria-labelledby="github-link-label"
           >
-            <GithubIcon focusable="false" style={{ marginRight: `.5rem` }} />
+            <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
             <span id="github-link-label">View plugin on GitHub</span>
           </a>
         </div>
@@ -80,12 +82,12 @@ const PackageReadMe = props => {
           </Link>
         )}
       </div>
-
       <div
         css={{ position: `relative` }}
         dangerouslySetInnerHTML={{ __html: html }}
       />
       <MarkdownPageFooter page={page} packagePage />
+      <FooterLinks />
     </Container>
   )
 }

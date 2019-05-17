@@ -132,13 +132,25 @@ const gatsby = jest.requireActual("gatsby")
 module.exports = {
   ...gatsby,
   graphql: jest.fn(),
-  Link: jest.fn().mockImplementation(({ to, ...rest }) =>
-    React.createElement("a", {
-      ...rest,
-      href: to,
-    })
+  Link: jest.fn().mockImplementation(
+    // these props are invalid for an `a` tag
+    ({
+      activeClassName,
+      activeStyle,
+      getProps,
+      innerRef,
+      ref,
+      replace,
+      to,
+      ...rest
+    }) =>
+      React.createElement("a", {
+        ...rest,
+        href: to,
+      })
   ),
   StaticQuery: jest.fn(),
+  useStaticQuery: jest.fn(),
 }
 ```
 
@@ -219,7 +231,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest",
     "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  testRegex: "(/__tests__/.*\\.([tj]sx?)|(\\.|/)(test|spec))\\.([tj]sx?)$",
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.([tj]sx?)$",
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":

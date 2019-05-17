@@ -73,15 +73,14 @@ let packages = Object.keys(
   _.merge({}, localPkg.dependencies, localPkg.devDependencies)
 )
 
+// get list of packages from monorepo
+const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
+
 if (argv.copyAll) {
-  packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
+  packages = monoRepoPackages
 } else {
-  const { dependencies } = JSON.parse(
-    fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`))
-  )
-  packages = packages
-    .concat(Object.keys(dependencies))
-    .filter(p => p.startsWith(`gatsby`))
+  // intersect dependencies with monoRepoPackags to get list of packages to watch
+  packages = _.intersection(monoRepoPackages, packages)
 }
 
 if (!argv.packages && _.isEmpty(packages)) {
@@ -104,4 +103,5 @@ gatsby-dev will pick them up.
 watch(gatsbyLocation, argv.packages || packages, {
   quiet: argv.quiet,
   scanOnce: argv.scanOnce,
+  monoRepoPackages,
 })

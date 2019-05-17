@@ -3,7 +3,13 @@ import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 import styles from "./styles"
-import presets from "../../utils/presets"
+import {
+  colors,
+  transition,
+  space,
+  lineHeights,
+  fonts,
+} from "../../utils/presets"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
   let screenshot = false
@@ -22,15 +28,17 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       state={{ isModal: true, ...state }}
       css={{
         ...styles.withTitleHover,
+        lineHeight: lineHeights.dense,
+        fontFamily: fonts.header,
         "&&": {
           borderBottom: `none`,
-          boxShadow: `none`,
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
+          color: colors.gray.dark,
+          transition: `all ${transition.speed.default} ${
+            transition.curve.default
           }`,
           "&:hover": { ...styles.screenshotHover },
           "&:hover ~ .meta > .featured-site": {
-            transform: `translateY(-3px)`,
+            transform: `translateY(-${space[1]})`,
           },
         },
       }}

@@ -15,6 +15,8 @@ With this plugin, _any_ file that lives in the `src/pages` folder (or subfolders
 - `_*`
 - `.*`
 
+To exclude custom patterns, see [Ignoring Specific Files](#ignoring-specific-files)
+
 ## Install
 
 `npm install --save gatsby-plugin-page-creator`
@@ -41,6 +43,58 @@ module.exports = {
       resolve: `gatsby-plugin-page-creator`,
       options: {
         path: `${__dirname}/src/settings/pages`,
+      },
+    },
+  ],
+}
+```
+
+### Ignoring Specific Files
+
+#### Shorthand
+
+```javascript
+// The following example will disable the `/blog` index page
+
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/indexes/pages`,
+        ignore: [`blog.(js|ts)?(x)`],
+        // See pattern syntax recognized by micromatch
+        // https://www.npmjs.com/package/micromatch#matching-features
+      },
+    },
+  ],
+}
+```
+
+**NOTE**: The above code snippet will only stop the creation of the `/blog` page, which is defined as a React component.
+This plugin does not affect programmatically generated pages from the [createPagesAPI](https://www.gatsbyjs.org/docs/node-apis/#createPages).
+
+#### Ignore Options
+
+```javascript
+// The following example will ignore pages using case-insensitive matching
+
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/examples/pages`,
+        ignore: {
+          // Example: Ignore `file.example.js`, `dir/s/file.example.tsx`
+          patterns: [`**/*.example.(js|ts)?(x)`],
+          // Example: Match both `file.example.js` and `file.EXAMPLE.js`
+          options: { nocase: true },
+          // See all available micromatch options
+          // https://www.npmjs.com/package/micromatch#optionsnocase
+        },
       },
     },
   ],

@@ -8,7 +8,7 @@ This guide will show you how to get started in a few quick steps:
 
 ## Step 1: Getting Started with Gatsby
 
-If you haven't already [set up a Gatsby project](https://www.gatsbyjs.org/docs/quick-start) you can do so by first installing Gatsby globally:
+If you haven't already [set up a Gatsby project](/docs/quick-start) you can do so by first installing Gatsby globally:
 
 ```shell
 npm install --global gatsby-cli

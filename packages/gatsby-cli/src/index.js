@@ -7,8 +7,6 @@ import "@babel/polyfill"
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
 
-global.Promise = require(`bluebird`)
-
 const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])
 
@@ -23,11 +21,6 @@ if (verDigit < 6) {
       `Upgrade node to the latest stable release.`
   )
 }
-
-Promise.onPossiblyUnhandledRejection(error => {
-  report.error(error)
-  throw error
-})
 
 process.on(`unhandledRejection`, error => {
   // This will exit the process in newer Node anyway so lets be consistent

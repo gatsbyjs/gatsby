@@ -10,7 +10,7 @@ Actually, the way Contentful handles bits of content means that you can push con
 
 ## Prerequisites
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs/quick-start), then come back.
 
 ## Pulling data in and pushing data out
 

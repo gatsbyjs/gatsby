@@ -33,7 +33,7 @@ cd gatsby-site
 ### Start development server.
 
 ```shell
-npm run develop
+gatsby develop
 ```
 
 Gatsby will start a hot-reloading development environment accessible by default at `localhost:8000`.
@@ -43,7 +43,7 @@ Try editing the JavaScript pages in `src/pages`. Saved changes will live reload 
 ### Create a production build.
 
 ```shell
-npm run build
+gatsby build
 ```
 
 Gatsby will perform an optimized production build for your site, generating static HTML and per-route JavaScript code bundles.
@@ -51,10 +51,10 @@ Gatsby will perform an optimized production build for your site, generating stat
 ### Serve the production build locally.
 
 ```shell
-npm run serve
+gatsby serve
 ```
 
-Gatsby starts a local HTML server for testing your built site. Remember to build your site using `npm run build` before using this command.
+Gatsby starts a local HTML server for testing your built site. Remember to build your site using `gatsby build` before using this command.
 
 ### Access documentation for CLI commands.
 

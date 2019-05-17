@@ -1,4 +1,4 @@
-const r = m => require.resolve(m)
+const r = require(`./resolver`)
 
 function preset(context, options = {}) {
   const { browser = false, debug = false } = options

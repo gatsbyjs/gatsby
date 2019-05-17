@@ -154,7 +154,7 @@ Keep in mind that drafts do not have to conform to any validation rules, so your
 
 While developing, it can often be beneficial to get updates without having to manually restart the build process. By setting `watchMode` to true, this plugin will set up a listener which watches for changes. When it detects a change, the document in question is updated in real-time and will be reflected immediately.
 
-If you add an [environement token](#using-env-variables) and set `overlayDrafts` to true, each small change to the draft will immediately be applied.
+If you add an [environment token](#using-env-variables) and set `overlayDrafts` to true, each small change to the draft will immediately be applied.
 
 ## Generating pages
 
@@ -212,7 +212,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 The above query will fetch all projects that have a `slug.current` field set, and generate pages for them, available as `/project/<project-slug>`. It will use the template defined in `src/templates/project.js` as the basis for these pages.
 
-Most [Gatsby starters](https://www.gatsbyjs.org/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
+Most [Gatsby starters](/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
 
 Remember to use the GraphiQL interface to help write the queries you need - it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
 
@@ -257,4 +257,4 @@ module.exports = {
 }
 ```
 
-This example is based off [Gatsby Docs' implementation](https://www.gatsbyjs.org/docs/environment-variables/).
+This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
