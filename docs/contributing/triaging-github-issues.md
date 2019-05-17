@@ -102,4 +102,4 @@ If an author hasn’t responded to a comment for a week or two, it might be nice
 
 > What do I do if an issue relates to something upstream?
 
-It’s a good practise to open an issue in the upstream repository in cases like this but isn’t strictly necessary.
+It’s a good practice to open an issue in the upstream repository in cases like this but isn’t strictly necessary. Upstream in this case refers to repositories that house dependencies for Gatsby.
