@@ -5036,6 +5036,9 @@
   categories:
     - Portfolio
     - Web Development
+    - Freelance
+    - Design
+    - SEO
   built_by: Jacob Herper
   built_by_url: https://github.com/jakeherp
   featured: false
@@ -5965,4 +5968,18 @@
   categories:
     - Nonprofit
     - Marketing
+  featured: false
+- title: Raconteur Agency
+  main_url: https://www.raconteur.net/agency
+  url: https://www.raconteur.net/agency
+  description: >
+    Raconteur Agency is a London-based content marketing agency for B2B brands. We have rebuilt their site with Gatsby v2 using their existing WordPress backend as the data source. By switching from WordPress to GatsbyJS we have achieved a 200%+ improvement in page load times and went from a Lighthouse performance score of 49 to 100.
+  categories:
+    - Agency
+    - Publishing
+    - Advertising
+    - Marketing
+    - WordPress
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
   featured: false
