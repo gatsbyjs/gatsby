@@ -5873,6 +5873,21 @@
   built_by: Pol Milian
   built_by_url: https://github.com/Polcius/
   featured: false
+- title: ERS HCL Open Source Portal
+  url: https://ers-hcl.github.io/
+  main_url: https://ers-hcl.github.io/
+  description: >
+    Official site for ERS-HCL github organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including github APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
+  categories:
+    - Open Source
+    - Blog
+    - Technology
+    - Web Development
+    - Community
+    - Documentation
+  source_url: https://github.com/ERS-HCL/gatsby-ershcl-app
+  built_by: Tarun Kumar Sukhu
+  built_by_url: https://github.com/tsukhu
 - title: Sandbox
   url: https://www.sandboxneu.com/
   main_url: https://www.sandboxneu.com/
