@@ -846,7 +846,7 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = ({ actions: { createTypes } }) => {
+exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make
@@ -862,19 +862,37 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       id: ID!
       data: AirtableData
     }
-
-    type AirtableData {
-      Name_of_Event: String
-      Organizer_Name: String
-      Date_of_Event: Date
-      Location_of_Event: String
-      Event_URL__if_applicable_: String
-      What_type_of_event_is_this_: String
-      Organizer_s_Last_Name: String
-      Gatsby_Speaker_Approved: Boolean
-      Approved_for_posting_on_event_page: Boolean
-    }
   `
 
   createTypes(typeDefs)
+
+  createTypes(
+    schema.buildObjectType({
+      name: `AirtableData`,
+      fields: {
+        Name_of_Event: `String`,
+        Organizer_Name: `String`,
+        Date_of_Event: `Date`,
+        Location_of_Event: `String`,
+        Gatsby_Speaker_Approved: `Boolean`,
+        Approved_for_posting_on_event_page: `Boolean`,
+
+        // below is handling of regressions (?)
+        // before 2.5.0 those were working without resolvers
+        // that use un-sanitized field names from source
+        Event_URL__if_applicable_: {
+          type: `String`,
+          resolve: source => source[`Event_URL_(if_applicable)`],
+        },
+        What_type_of_event_is_this_: {
+          type: `String`,
+          resolve: source => source[`What_type_of_event_is_this?`],
+        },
+        Organizer_s_Last_Name: {
+          type: `String`,
+          resolve: source => source[`Organizer's_Last_Name`],
+        },
+      },
+    })
+  )
 }
