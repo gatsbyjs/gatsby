@@ -292,6 +292,7 @@ const queue = {
           const page = {
             componentChunkName: pageData.componentChunkName,
             path: pageData.path,
+            webpackCompilationHash: pageData.webpackCompilationHash,
           }
 
           const jsonData = pageData.result

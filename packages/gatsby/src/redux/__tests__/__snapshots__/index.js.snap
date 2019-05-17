@@ -21,5 +21,6 @@ Object {
   "status": Object {
     "plugins": Object {},
   },
+  "webpackCompilationHash": "",
 }
 `;
