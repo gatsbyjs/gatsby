@@ -155,6 +155,8 @@ People often store dates like "2018-01-05" but want to display the date in some 
 }
 ```
 
+See the full list of formatting options by viewing our [GraphQL Reference page](/docs/graphql-reference/#dates).
+
 ### Markdown
 
 Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify you want the transformed HTML version instead of markdown:

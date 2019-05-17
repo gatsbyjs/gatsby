@@ -59,3 +59,4 @@ If you want more information about authenticated areas with Gatsby, this (non-ex
 - [Gatsby repo simple auth example](https://github.com/gatsbyjs/gatsby/tree/master/examples/simple-auth)
 - [A Gatsby email _application_](https://github.com/DSchau/gatsby-mail), using React Context API to handle authentication
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)
+- [Add Authentication to your Gatsby apps with Auth0](/blog/2019-03-21-add-auth0-to-gatsby-livestream/) (livestream with Jason Lengstorf)

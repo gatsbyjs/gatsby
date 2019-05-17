@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.1...gatsby@2.5.2) (2019-05-17)
+
+### Bug Fixes
+
+- **gatsby:** fix hot-reloading for hooks (patch hmr) ([#13713](https://github.com/gatsbyjs/gatsby/issues/13713)) ([117fbb4](https://github.com/gatsbyjs/gatsby/commit/117fbb4))
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.0...gatsby@2.5.1) (2019-05-17)
+
+### Bug Fixes
+
+- **schema:** Fix proxying invalid field names ([#14108](https://github.com/gatsbyjs/gatsby/issues/14108)) ([6d297c5](https://github.com/gatsbyjs/gatsby/commit/6d297c5))
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.7...gatsby@2.5.0) (2019-05-16)
+
+### Features
+
+- **schema:** Inference controls and improvements ([#13028](https://github.com/gatsbyjs/gatsby/issues/13028)) ([0f8febf](https://github.com/gatsbyjs/gatsby/commit/0f8febf))
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.6...gatsby@2.4.7) (2019-05-16)
+
+### Features
+
+- **gatsby:** cors is enabled correctly in development ([#14065](https://github.com/gatsbyjs/gatsby/issues/14065)) ([32e49ce](https://github.com/gatsbyjs/gatsby/commit/32e49ce))
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.5...gatsby@2.4.6) (2019-05-15)
+
+### Bug Fixes
+
+- **gatsby:** compile themes through default webpack config ([#13651](https://github.com/gatsbyjs/gatsby/issues/13651)) ([d5be306](https://github.com/gatsbyjs/gatsby/commit/d5be306))
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.4...gatsby@2.4.5) (2019-05-14)
+
+### Features
+
+- **gatsby:** allow awaiting API run triggered by createNode action ([#12748](https://github.com/gatsbyjs/gatsby/issues/12748)) ([17a67a5](https://github.com/gatsbyjs/gatsby/commit/17a67a5))
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.3...gatsby@2.4.4) (2019-05-14)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.2...gatsby@2.4.3) (2019-05-09)
 
 **Note:** Version bump only for package gatsby

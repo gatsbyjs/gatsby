@@ -257,6 +257,17 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.media(),
       rules.miscAssets(),
     ]
+    if (store.getState().themes.themes) {
+      configRules = configRules.concat(
+        store.getState().themes.themes.map(theme => {
+          return {
+            test: /\.jsx?$/,
+            include: theme.themeDir,
+            use: [loaders.js()],
+          }
+        })
+      )
+    }
     switch (stage) {
       case `develop`: {
         // get schema to pass to eslint config and program for directory
@@ -272,6 +283,16 @@ module.exports = async (program, directory, suppliedStage) => {
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
+
+        // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
+        // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
+        configRules.push({
+          include: /node_modules/,
+          test: /\.jsx?$/,
+          use: {
+            loader: require.resolve(`./webpack-hmr-hooks-patch`),
+          },
+        })
 
         break
       }
