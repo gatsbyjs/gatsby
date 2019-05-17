@@ -28,6 +28,22 @@ if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
   })
 }
 
+if (process.env.AIRTABLE_API_KEY) {
+  dynamicPlugins.push({
+    resolve: `gatsby-source-airtable`,
+    options: {
+      apiKey: process.env.AIRTABLE_API_KEY,
+      tables: [
+        {
+          baseId: `app0q5U0xkEwZaT9c`,
+          tableName: `Community Events Submitted`,
+          queryName: `CommunityEvents`,
+        },
+      ],
+    },
+  })
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,

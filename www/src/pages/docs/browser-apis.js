@@ -23,6 +23,10 @@ class BrowserAPIDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Browser APIs</title>
+            <meta
+              name="description"
+              content="Documentation about leveraging standard browser APIs within Gatsby"
+            />
           </Helmet>
           <h1 id="browser-apis" css={{ marginTop: 0 }}>
             Gatsby Browser APIs
@@ -36,7 +40,7 @@ class BrowserAPIDocs extends React.Component {
           <hr />
           <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
-            {funcs.map((node, i) => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>

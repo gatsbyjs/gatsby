@@ -30,7 +30,7 @@ People are interested in tutorials that go beyond the basic [Tutorial](/tutorial
 
 - [WordPress Source Plugin Tutorial](/docs/wordpress-source-plugin-tutorial/)
 - [Adding Images to a WordPress Site](/docs/image-tutorial/)
-- [Creating a Source Plugin](/docs/source-plugin-tutorial/)
+- [Creating a Source Plugin](/docs/creating-a-source-plugin/)
 
 ## Why you might want to host a workshop
 

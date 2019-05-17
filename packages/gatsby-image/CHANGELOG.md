@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.41...gatsby-image@2.1.0) (2019-05-16)
+
+### Features
+
+- **gatsby-image:** Add support for native lazy loading ([#13217](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/13217)) ([3c0eb1e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/3c0eb1e))
+
+## [2.0.41](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.40...gatsby-image@2.0.41) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.0.40](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.39...gatsby-image@2.0.40) (2019-04-23)
+
+### Features
+
+- **gatsby-image:** Add durationFadeIn ([#13566](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/13566)) ([6f46aac](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/6f46aac))
+
 ## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.38...gatsby-image@2.0.39) (2019-04-15)
 
 **Note:** Version bump only for package gatsby-image

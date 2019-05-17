@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
-const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
@@ -252,6 +251,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
     toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/gatsby-in-the-enterprise/`,
+    toPath: `/docs/building-in-the-enterprise/`,
     isPermanent: true,
   })
 
@@ -594,7 +599,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
-    const parsedFilePath = parseFilepath(node.relativePath)
+    const parsedFilePath = path.parse(node.relativePath)
     if (node.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
@@ -612,7 +617,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
-    const parsedFilePath = parseFilepath(fileNode.relativePath)
+    const parsedFilePath = path.parse(fileNode.relativePath)
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
@@ -837,5 +842,57 @@ exports.onPostBuild = () => {
   fs.copySync(
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
+  )
+}
+
+// XXX this should probably be a plugin or something.
+exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+  /*
+   * NOTE: This _only_ defines the schema we currently query for. If anything in
+   * the query at `src/pages/contributing/events.js` changes, we need to make
+   * sure these types are updated as well.
+   *
+   * But why?! Why would I do something this fragile?
+   *
+   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
+   * lazy to make upstream fixes...
+   */
+  const typeDefs = `
+    type Airtable implements Node {
+      id: ID!
+      data: AirtableData
+    }
+  `
+
+  createTypes(typeDefs)
+
+  createTypes(
+    schema.buildObjectType({
+      name: `AirtableData`,
+      fields: {
+        Name_of_Event: `String`,
+        Organizer_Name: `String`,
+        Date_of_Event: `Date`,
+        Location_of_Event: `String`,
+        Gatsby_Speaker_Approved: `Boolean`,
+        Approved_for_posting_on_event_page: `Boolean`,
+
+        // below is handling of regressions (?)
+        // before 2.5.0 those were working without resolvers
+        // that use un-sanitized field names from source
+        Event_URL__if_applicable_: {
+          type: `String`,
+          resolve: source => source[`Event_URL_(if_applicable)`],
+        },
+        What_type_of_event_is_this_: {
+          type: `String`,
+          resolve: source => source[`What_type_of_event_is_this?`],
+        },
+        Organizer_s_Last_Name: {
+          type: `String`,
+          resolve: source => source[`Organizer's_Last_Name`],
+        },
+      },
+    })
   )
 }

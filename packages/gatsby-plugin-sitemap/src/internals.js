@@ -24,7 +24,6 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
 
     // Add path prefix
     r.data.allSitePage.edges = r.data.allSitePage.edges.map(page => {
-      // uses `normalizePath` logic from `gatsby-link`
       page.node.path = (pathPrefix + page.node.path).replace(/^\/\//g, `/`)
       return page
     })

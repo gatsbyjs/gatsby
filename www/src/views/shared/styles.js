@@ -4,7 +4,7 @@ import {
   radii,
   transition,
   shadows,
-  breakpoints,
+  mediaQueries,
   sizes,
   fontSizes,
   lineHeights,
@@ -20,11 +20,11 @@ const styles = {
     width: 320,
     marginBottom: space[9],
     marginRight: space[6],
-    [breakpoints.xl]: {
+    [mediaQueries.xl]: {
       width: 360,
       marginRight: space[8],
     },
-    [breakpoints.xxl]: {
+    [mediaQueries.xxl]: {
       width: 400,
     },
   },
@@ -48,7 +48,7 @@ const styles = {
     transition: `background ${transition.speed.slow} ${
       transition.curve.default
     }, transform ${transition.speed.slow} ${transition.curve.default}`,
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       alignItems: `center`,
       background: colors.accent,
       border: `none`,
@@ -100,7 +100,7 @@ const styles = {
     // "Featured Sites" content block, but no success—only removing the entire block
     // resolves the issue.
     top: `calc(${sizes.bannerHeight} - 1px)`,
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
     },
   },
@@ -203,7 +203,7 @@ const styles = {
   },
   sidebarHeader: {
     margin: 0,
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       fontSize: fontSizes[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
@@ -227,7 +227,7 @@ const styles = {
   },
   sidebarContainer: {
     display: `none`,
-    [breakpoints.lg]: {
+    [mediaQueries.lg]: {
       display: `block`,
       flexBasis: `15rem`,
       minWidth: `15rem`,

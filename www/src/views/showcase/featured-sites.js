@@ -14,7 +14,7 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   fonts,
 } from "../../utils/presets"
@@ -39,7 +39,7 @@ class FeaturedSites extends Component {
           margin: `${space[6]} ${space[6]} 0`,
           position: `relative`,
           display: `none`,
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             display: `block`,
           },
         }}
@@ -91,7 +91,7 @@ class FeaturedSites extends Component {
               ...styles.withTitleHover,
               display: `none`,
               fontSize: fontSizes[1],
-              [breakpoints.sm]: {
+              [mediaQueries.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -121,7 +121,7 @@ class FeaturedSites extends Component {
                 fontSize: fontSizes[1],
                 marginRight: 15,
                 display: `none`,
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   display: `block`,
                 },
               }}
@@ -199,7 +199,7 @@ class FeaturedSites extends Component {
                     fontSize: fontSizes[1],
                     color: colors.gray.calm,
                     fontWeight: `normal`,
-                    [breakpoints.lg]: {
+                    [mediaQueries.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -268,10 +268,10 @@ class FeaturedSites extends Component {
                         width: `auto`,
                         display: `block`,
                         margin: `0 auto ${space[6]}`,
-                        [breakpoints.md]: {
+                        [mediaQueries.md]: {
                           height: 64,
                         },
-                        [breakpoints.xl]: {
+                        [mediaQueries.xl]: {
                           height: 72,
                         },
 

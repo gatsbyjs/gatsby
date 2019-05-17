@@ -19,7 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
-const { addFieldResolvers } = require(`./add-field-resolvers`)
+const { processFieldExtensions } = require(`./extensions`)
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
@@ -120,22 +120,19 @@ const processTypeComposer = async ({
   nodeStore,
   parentSpan,
 }) => {
-  if (
-    typeComposer instanceof ObjectTypeComposer &&
-    typeComposer.hasInterface(`Node`)
-  ) {
-    await addFieldResolvers({ schemaComposer, typeComposer, parentSpan })
-    await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
-    await addResolvers({ schemaComposer, typeComposer, parentSpan })
-    await addConvenienceChildrenFields({
-      schemaComposer,
-      typeComposer,
-      nodeStore,
-      parentSpan,
-    })
-    await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
-  } else if (typeComposer instanceof ObjectTypeComposer) {
-    await addFieldResolvers({ schemaComposer, typeComposer, parentSpan })
+  if (typeComposer instanceof ObjectTypeComposer) {
+    await processFieldExtensions({ schemaComposer, typeComposer, parentSpan })
+    if (typeComposer.hasInterface(`Node`)) {
+      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+      await addResolvers({ schemaComposer, typeComposer, parentSpan })
+      await addConvenienceChildrenFields({
+        schemaComposer,
+        typeComposer,
+        nodeStore,
+        parentSpan,
+      })
+      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+    }
   }
 }
 
@@ -307,9 +304,13 @@ const addExtensions = ({ typeComposer, plugin, createdFrom }) => {
 
   if (typeComposer.hasExtension(`addDefaultResolvers`)) {
     report.warn(
-      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, defined fields won't get resolvers, unless "addResolver" directive/extension is used.`
+      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, ` +
+        `defined fields won't get resolvers, unless explicitly added with a ` +
+        `directive/extension.`
     )
   }
+
+  return typeComposer
 }
 
 const checkIsAllowedTypeName = name => {
@@ -566,8 +567,6 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
       sort: sortInputTC,
       skip: `Int`,
       limit: `Int`,
-      // page: `Int`,
-      // perPage: { type: `Int`, defaultValue: 20 },
     },
     resolve: findManyPaginated(typeName),
   })

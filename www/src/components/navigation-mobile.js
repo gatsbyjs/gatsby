@@ -13,7 +13,7 @@ import {
   transition,
   radii,
   space,
-  breakpoints,
+  mediaQueries,
   sizes,
   fontSizes,
   lineHeights,
@@ -79,7 +79,7 @@ const MobileNavigation = () => (
         height: sizes.headerHeight,
         fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [breakpoints.md]: {
+        [mediaQueries.md]: {
           display: `none`,
         },
       }}
