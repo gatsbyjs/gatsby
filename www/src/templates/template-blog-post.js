@@ -109,6 +109,10 @@ class BlogPostTemplate extends React.Component {
               <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
+              <meta
+                property="og:url"
+                content={post.frontmatter.canonicalLink}
+              />
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
