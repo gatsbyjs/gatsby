@@ -182,6 +182,7 @@ class LocalNodeModel {
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
+      gqlSchema: this.schema,
       gqlType,
       nodes,
     })

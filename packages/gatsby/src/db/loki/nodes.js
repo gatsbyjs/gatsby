@@ -10,6 +10,10 @@ function makeTypeCollName(type) {
   return `gatsby:nodeType:${type}`
 }
 
+function makeTypesViewName(types) {
+  return `gatsby.nodeTypesView:${types.sort().join(`:`)}`
+}
+
 /**
  * Creates a collection that will contain nodes of a certain type. The
  * name of the collection for type `MyType` will be something like
@@ -60,6 +64,24 @@ function getNodeTypeCollection(type) {
   } else {
     return undefined
   }
+}
+
+/**
+ * Returns a view for multiple node type collection
+ */
+function getNodeTypesView(types) {
+  const typesViewName = makeTypesViewName(types)
+  const coll = getDb().getCollection(colls.nodeMeta.name)
+  let view = coll.getDynamicView(typesViewName)
+  if (!view) {
+    view = coll.addDynamicView(typesViewName, {
+      persistent: true,
+    })
+    view.applyFind({
+      "internal.type": { $in: types },
+    })
+  }
+  return view
 }
 
 /**
@@ -333,6 +355,7 @@ function reducer(state = new Map(), action) {
 
 module.exports = {
   getNodeTypeCollection,
+  getNodeTypesView,
 
   getNodes,
   getNode,

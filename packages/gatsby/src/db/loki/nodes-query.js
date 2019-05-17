@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
+const { GraphQLUnionType, GraphQLInterfaceType } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
-const { getNodeTypeCollection } = require(`./nodes`)
+const { getNodeTypeCollection, getNodeTypesView } = require(`./nodes`)
 const { emitter } = require(`../../redux`)
 
 // Cleared on DELETE_CACHE
@@ -244,24 +245,47 @@ function ensureFieldIndexes(coll, lokiArgs) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery({ gqlType, queryArgs, firstOnly }) {
+async function runQuery({ gqlType, gqlSchema, queryArgs, firstOnly }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
   const lokiArgs = convertArgs(gqlArgs, gqlType)
-  const coll = getNodeTypeCollection(gqlType.name)
-  ensureFieldIndexes(coll, lokiArgs)
-  let chain = coll.chain().find(lokiArgs, firstOnly)
+  let possibleTypeNames
+  if (
+    gqlType instanceof GraphQLUnionType ||
+    gqlType instanceof GraphQLInterfaceType
+  ) {
+    possibleTypeNames = gqlSchema
+      .getPossibleTypes(gqlType)
+      .map(type => type.name)
+  } else {
+    possibleTypeNames = [gqlType.name]
+  }
 
-  if (queryArgs.sort) {
-    const sortFields = toSortFields(queryArgs.sort)
+  let chain
+  let sortFields
+  if (possibleTypeNames.length > 1) {
+    const view = getNodeTypesView(possibleTypeNames)
+    chain = view.branchResultSet()
+  } else {
+    const coll = getNodeTypeCollection(possibleTypeNames[0])
+    ensureFieldIndexes(coll, lokiArgs)
+    if (queryArgs.sort) {
+      sortFields = toSortFields(queryArgs.sort)
 
-    // Create an index for each sort field. Indexing requires sorting
-    // so we lose nothing by ensuring an index is added for each sort
-    // field. Loki ensures this is a noop if the index already exists
-    for (const sortField of sortFields) {
-      coll.ensureIndex(sortField[0])
+      // Create an index for each sort field. Indexing requires sorting
+      // so we lose nothing by ensuring an index is added for each sort
+      // field. Loki ensures this is a noop if the index already exists
+      for (const sortField of sortFields) {
+        coll.ensureIndex(sortField[0])
+      }
     }
+    chain = coll.chain()
+  }
+
+  chain.find(lokiArgs, firstOnly)
+
+  if (sortFields) {
     chain = chain.compoundsort(sortFields)
   }
 

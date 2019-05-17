@@ -135,6 +135,12 @@ const processTypeComposer = async ({
       })
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
     }
+  } else if (
+    typeComposer instanceof InterfaceTypeComposer &&
+    typeComposer.getExtension(`nodeInterface`)
+  ) {
+    await addResolvers({ schemaComposer, typeComposer, parentSpan })
+    await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
   }
 }
 
@@ -282,7 +288,7 @@ const addExtensions = ({ typeComposer, plugin, createdFrom }) => {
     directives.forEach(({ name, args }) => {
       switch (name) {
         case `infer`:
-        case `dontInfer`:
+        case `dontInfer`: {
           typeComposer.setExtension(`infer`, name === `infer`)
           if (args.noDefaultResolvers != null) {
             typeComposer.setExtension(
@@ -291,6 +297,11 @@ const addExtensions = ({ typeComposer, plugin, createdFrom }) => {
             )
           }
           break
+        }
+        case `nodeInterface`: {
+          typeComposer.setExtension(`nodeInterface`, true)
+          break
+        }
         default:
       }
     })
@@ -571,24 +582,25 @@ const addResolvers = ({ schemaComposer, typeComposer }) => {
     schemaComposer,
     typeComposer,
   })
-  typeComposer.addResolver({
-    name: `findOne`,
-    type: typeComposer,
-    args: {
-      ...filterInputTC.getFields(),
+
+  typeComposer.setExtension(`resolvers`, {
+    findOne: {
+      type: typeComposer,
+      args: {
+        ...filterInputTC.getFields(),
+      },
+      resolve: findOne(typeName),
     },
-    resolve: findOne(typeName),
-  })
-  typeComposer.addResolver({
-    name: `findManyPaginated`,
-    type: paginationTC,
-    args: {
-      filter: filterInputTC,
-      sort: sortInputTC,
-      skip: `Int`,
-      limit: `Int`,
+    findManyPaginated: {
+      type: paginationTC,
+      args: {
+        filter: filterInputTC,
+        sort: sortInputTC,
+        skip: `Int`,
+        limit: `Int`,
+      },
+      resolve: findManyPaginated(typeName),
     },
-    resolve: findManyPaginated(typeName),
   })
 }
 
@@ -664,8 +676,10 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const queryName = _.camelCase(typeName)
   const queryNamePlural = _.camelCase(`all ${typeName}`)
   schemaComposer.Query.addFields({
-    [queryName]: typeComposer.getResolver(`findOne`),
-    [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
+    [queryName]: typeComposer.getExtension(`resolvers`)[`findOne`],
+    [queryNamePlural]: typeComposer.getExtension(`resolvers`)[
+      `findManyPaginated`
+    ],
   })
 }
 
