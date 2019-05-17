@@ -256,6 +256,8 @@
         - title: Adding Website Functionality
           link: /docs/adding-website-functionality/
           items:
+            - title: Linking Between Pages
+              link: /docs/linking-between-pages/
             - title: Adding Search
               link: /docs/adding-search/
               items:
@@ -285,8 +287,6 @@
               link: /docs/creating-a-sitemap/
             - title: Adding an RSS Feed
               link: /docs/adding-an-rss-feed/
-            - title: Linking Between Pages
-              link: /docs/linking-between-pages/
             - title: Adding Page Transitions
               link: /docs/adding-page-transitions/
               items:
