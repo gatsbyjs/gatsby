@@ -1,6 +1,6 @@
 ---
 title: Advanced Sitemap Plugin for SEO
-date: 2019-05-07
+date: 2019-05-17
 author: Aileen Nowak
 excerpt: "Ghost migrated their docs site to Gatsby and built an automatic XML sitemap plugin which is now open source and available for anyone to use!"
 tags:
