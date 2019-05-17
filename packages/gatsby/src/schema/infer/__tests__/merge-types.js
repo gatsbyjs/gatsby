@@ -529,6 +529,7 @@ describe(`merges explicit and inferred type definitions`, () => {
     const typeDefs = `
       type Test implements Node @infer {
         explicitDate: Date @dateformat
+        proxied: Date @proxy(from: "explicitDate")
       }
 
       type LinkTest implements Node @infer {
@@ -546,9 +547,12 @@ describe(`merges explicit and inferred type definitions`, () => {
     expect(link.resolve).toBeDefined()
     expect(links.resolve).toBeDefined()
 
-    const { explicitDate, inferDate } = schema.getType(`Test`).getFields()
+    const { explicitDate, inferDate, proxied } = schema
+      .getType(`Test`)
+      .getFields()
     expect(explicitDate.resolve).toBeDefined()
     expect(inferDate.resolve).toBeDefined()
+    expect(proxied.resolve).toBeDefined()
   })
 
   it(`adds explicit resolvers through extensions`, async () => {

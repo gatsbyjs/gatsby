@@ -80,9 +80,14 @@ const fieldExtensions = {
     },
   },
 
-  proxyFrom: {
+  proxy: {
     description: `Proxy resolver from another field.`,
-    process(from, fieldConfig) {
+    args: {
+      from: {
+        type: GraphQLString,
+      },
+    },
+    process({ from }, fieldConfig) {
       const resolver = fieldConfig.resolve || defaultFieldResolver
       return {
         resolve(source, args, context, info) {
@@ -125,7 +130,7 @@ const processFieldExtensions = ({
     const extensions = typeComposer.getFieldExtensions(fieldName)
     Object.keys(extensions)
       .filter(name => !internalExtensionNames.includes(name))
-      .sort(a => a === `proxyFrom`) // Ensure `proxyFrom` is run last
+      .sort(a => a === `proxy`) // Ensure `proxy` is run last
       .forEach(name => {
         const { process } = fieldExtensions[name] || {}
         if (process) {
