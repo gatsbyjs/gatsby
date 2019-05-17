@@ -9,6 +9,7 @@ const url = require(`url`)
 const isValid = require(`is-valid-path`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
+const inquirer = require(`inquirer`)
 
 const {
   getPackageManager,
@@ -169,6 +170,42 @@ const clone = async (hostInfo: any, rootPath: string) => {
   if (!isGit) await createInitialGitCommit(rootPath, url)
 }
 
+const getPaths = async (starterPath: string, rootPath: string) => {
+  let selectedOtherStarter = false
+
+  // if no args are passed, prompt user for input
+  if (!starterPath && !rootPath) {
+    const getPath = await inquirer.prompt([
+      {
+        type: `input`,
+        name: `path`,
+        message: `What is your project called?`,
+        default: `my-gatsby-project`,
+      },
+    ])
+    const getStarter = await inquirer.prompt({
+      type: `list`,
+      name: `starter`,
+      message: `What starter would you like to use?`,
+      choices: [
+        `gatsby-starter-default`,
+        `gatsby-starter-blog`,
+        `gatsby-starter-hello-world`,
+        `(Use a different starter)`,
+      ],
+    })
+    selectedOtherStarter = getStarter.starter === `(Use a different starter)`
+
+    starterPath = `gatsbyjs/${getStarter.starter}`
+    rootPath = getPath.path
+  }
+
+  rootPath = rootPath || process.cwd()
+  starterPath = starterPath || `gatsbyjs/gatsby-starter-default`
+
+  return { starterPath, rootPath, selectedOtherStarter }
+}
+
 type InitOptions = {
   rootPath?: string,
 }
@@ -177,9 +214,20 @@ type InitOptions = {
  * Main function that clones or copies the starter.
  */
 module.exports = async (starter: string, options: InitOptions = {}) => {
-  const rootPath = options.rootPath || process.cwd()
+  const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
+    starter,
+    options.rootPath
+  )
 
   const urlObject = url.parse(rootPath)
+
+  if (selectedOtherStarter) {
+    report.info(
+      `Visit the starter library at https://gatsby.dev/starters?v=2 to browse other starters`
+    )
+    return
+  }
+
   if (urlObject.protocol && urlObject.host) {
     trackError(`NEW_PROJECT_NAME_MISSING`)
     report.panic(
@@ -203,9 +251,9 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
     return
   }
 
-  const hostedInfo = hostedGitInfo.fromUrl(starter)
+  const hostedInfo = hostedGitInfo.fromUrl(starterPath)
 
-  trackCli(`NEW_PROJECT`, { starterName: starter })
+  trackCli(`NEW_PROJECT`, { starterName: starterPath })
   if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starter, rootPath)
+  else await copy(starterPath, rootPath)
 }
