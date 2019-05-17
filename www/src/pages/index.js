@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { colors, space, breakpoints } from "../utils/presets"
+import { colors, space, mediaQueries } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -110,7 +110,7 @@ class IndexRoute extends React.Component {
               borderBottom: `1px solid ${colors.ui.light}`,
               borderTop: `1px solid ${colors.ui.light}`,
               background: colors.ui.whisper,
-              [breakpoints.xl]: {
+              [mediaQueries.xl]: {
                 padding: space[8],
               },
             }}

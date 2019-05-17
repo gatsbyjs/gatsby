@@ -106,6 +106,8 @@ export const hashShouldBeFollowed = (origin, destination) =>
     destination.pathname === origin.pathname)
 
 export const routeThroughBrowserOrApp = hrefHandler => event => {
+  if (window.___failedResources) return true
+
   if (userIsForcingNavigation(event)) return true
 
   if (navigationWasHandledElsewhere(event)) return true

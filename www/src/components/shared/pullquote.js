@@ -8,7 +8,7 @@ import {
   colors,
   radii,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
   fonts,
@@ -31,7 +31,7 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: ${space[8]} 0;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     line-height: ${lineHeights.loose};
     margin: ${space[8]} -3.5rem;
     padding: 2.8rem 3.5rem;
@@ -61,7 +61,7 @@ const QuotationMark = styled(`span`)`
     fill: ${colors.gatsbyDark};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     left: 3rem;
     top: 2.8rem;
 
@@ -92,7 +92,7 @@ const Star = styled(`span`)`
       fill: ${colors.lemon};
     }
 
-    ${breakpoints.lg} {
+    ${mediaQueries.lg} {
       height: 27px;
       width: 27px;
     }

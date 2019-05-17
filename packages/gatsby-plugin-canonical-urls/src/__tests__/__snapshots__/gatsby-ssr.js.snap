@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Adds canonical link to head correctly creates a canonical link if siteUrl is set 1`] = `
+exports[`gatsby-plugin-canonical-urls creates a canonical link if siteUrl is set 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -23,4 +23,50 @@ exports[`Adds canonical link to head correctly creates a canonical link if siteU
 }
 `;
 
-exports[`Adds canonical link to head correctly does not create a canonical link if siteUrl is not set 1`] = `[MockFunction]`;
+exports[`gatsby-plugin-canonical-urls does not create a canonical link if siteUrl is not set 1`] = `[MockFunction]`;
+
+exports[`gatsby-plugin-canonical-urls strips a trailing slash on the siteUrl and leaves search parameters 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          data-basehost="someurl.com"
+          data-baseprotocol="http:"
+          href="http://someurl.com/somepost?tag=foobar"
+          rel="canonical"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-canonical-urls strips search paramaters if option stripQueryString is true 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          data-basehost="someurl.com"
+          data-baseprotocol="http:"
+          href="http://someurl.com/somepost"
+          rel="canonical"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

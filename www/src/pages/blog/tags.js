@@ -68,7 +68,13 @@ class TagsPage extends React.Component {
     return (
       <Layout location={location}>
         <Container>
-          <Helmet title="Tags" />
+          <Helmet>
+            <title>Tags</title>
+            <meta
+              name="description"
+              content="Find case studies, tutorials, and more about Gatsby related topics by tag"
+            />
+          </Helmet>
           <div>
             <div
               css={{

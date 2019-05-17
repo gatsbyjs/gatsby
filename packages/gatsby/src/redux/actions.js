@@ -17,6 +17,7 @@ const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 const actions = {}
 
@@ -403,6 +404,26 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id)
+  if (plugin) {
+    const pluginName = plugin.name
+
+    if (node && typeOwners[node.internal.type] !== pluginName)
+      throw new Error(stripIndent`
+          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
+
+          The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
+
+          The node object passed to "deleteNode":
+
+          ${JSON.stringify(node, null, 4)}
+
+          The plugin deleting the node:
+
+          ${JSON.stringify(plugin, null, 4)}
+        `)
+  }
 
   const createDeleteAction = node => {
     return {
@@ -482,7 +503,7 @@ const typeOwners = {}
  * markdown transformers look for media types of
  * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
- * choosen by the plugin creating the node. Should be descriptive of the
+ * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
@@ -507,6 +528,8 @@ const typeOwners = {}
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @returns {Promise} The returned Promise resolves when all cascading
+ * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example
  * createNode({
  *   // Data for the node.
@@ -531,7 +554,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (
+const createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
@@ -694,6 +717,26 @@ actions.createNode = (
   } else {
     return updateNodeAction
   }
+}
+
+actions.createNode = (...args) => dispatch => {
+  const actions = createNode(...args)
+  dispatch(actions)
+  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
+    action => action.type === `CREATE_NODE`
+  )
+
+  if (!createNodeAction) {
+    return undefined
+  }
+
+  const { payload: node, traceId, parentSpan } = createNodeAction
+  return apiRunnerNode(`onCreateNode`, {
+    node,
+    traceId,
+    parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  })
 }
 
 /**
@@ -1245,8 +1288,28 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *   with inferred field types, and default field resolvers for `Date` (which
  *   adds formatting options) and `File` (which resolves the field value as
  *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer` and `@dontInfer` directives, and their
- *   `noDefaultResolvers` argument.
+ *   customised with `@infer`, `@dontInfer` directives or extensions. Fields
+ *   may be assigned resolver (and other option like args) with additional
+ *   directives. Currently `@dateformat`, `@link` and `@fileByRelativePath` are
+ *   available.
+ *
+ *
+ * Schema customization controls:
+ * * `@infer` - run inference on the type and add fields that don't exist on the
+ * defined type to it.
+ * * `@dontInfer` - don't run any inference on the type
+ *
+ * Extensions to add resolver options:
+ * * `@dateformat` - add date formatting arguments. Accepts `formatString` and
+ *   `locale` options that sets the defaults for this field
+ * * `@link` - connect to a different Node. Arguments `by` and `from`, which
+ *   define which field to compare to on a remote node and which field to use on
+ *   the source node
+ * * `@fileByRelativePath` - connect to a File node. Same arguments. The
+ *   difference from link is that this normalizes the relative path to be
+ *   relative from the path where source node is found.
+ *
+ *
  *
  * @example
  * exports.sourceNodes = ({ actions }) => {
@@ -1255,17 +1318,17 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     """
  *     Markdown Node
  *     """
- *     type MarkdownRemark implements Node {
+ *     type MarkdownRemark implements Node @infer {
  *       frontmatter: Frontmatter!
  *     }
  *
  *     """
  *     Markdown Frontmatter
  *     """
- *     type Frontmatter {
+ *     type Frontmatter @infer {
  *       title: String!
- *       author: AuthorJson!
- *       date: Date!
+ *       author: AuthorJson! @link
+ *       date: Date! @dateformat
  *       published: Boolean!
  *       tags: [String!]!
  *     }
@@ -1274,9 +1337,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     Author information
  *     """
  *     # Does not include automatically inferred fields
- *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *     type AuthorJson implements Node @dontInfer {
  *       name: String!
- *       birthday: Date! # no default resolvers for Date formatting added
+ *       birthday: Date! @dateformat(locale: "ru")
  *     }
  *   `
  *   createTypes(typeDefs)
@@ -1292,6 +1355,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *         frontmatter: 'Frontmatter!'
  *       },
  *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: true,
+ *       },
  *     }),
  *     schema.buildObjectType({
  *       name: 'Frontmatter',
@@ -1302,12 +1368,40 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *             return parent.title || '(Untitled)'
  *           }
  *         },
- *         author: 'AuthorJson!',
- *         date: 'Date!',
+ *         author: {
+ *           type: 'AuthorJson'
+ *           extensions: {
+ *             link: {},
+ *           },
+ *         }
+ *         date: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             dateformat: {},
+ *           },
+ *         },
  *         published: 'Boolean!',
  *         tags: '[String!]!',
  *       }
- *     })
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'AuthorJson',
+ *       fields: {
+ *         name: 'String!'
+ *         birthday: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             dateformat: {
+ *               locale: 'ru',
+ *             },
+ *           },
+ *         },
+ *       },
+ *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: false,
+ *       },
+ *     }),
  *   ]
  *   createTypes(typeDefs)
  * }

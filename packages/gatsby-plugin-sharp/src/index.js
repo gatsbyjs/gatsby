@@ -1,23 +1,4 @@
-try {
-  require(`sharp`)
-} catch (error) {
-  // Bail early if sharp isn't available
-  console.error(
-    `
-      The dependency "sharp" does not seem to have been built or installed correctly.
-
-      - Try to reinstall packages and look for errors during installation
-      - Consult "sharp" installation page at http://sharp.pixelplumbing.com/en/stable/install/
-      
-      If neither of the above work, please open an issue in https://github.com/gatsbyjs/gatsby/issues
-    `
-  )
-  console.log()
-  console.error(error)
-  process.exit(1)
-}
-
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 
 const imageSize = require(`probe-image-size`)
 
@@ -263,6 +244,23 @@ async function getTracedSVG(options, file) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
+
+  if (options.sizeByPixelDensity) {
+    /*
+     * We learned that `sizeByPixelDensity` is only valid for vector images,
+     * and Gatsby’s implementation of Sharp doesn’t support vector images.
+     * This means we should remove this option in the next major version of
+     * Gatsby, but for now we can no-op and warn.
+     *
+     * See https://github.com/gatsbyjs/gatsby/issues/12743
+     *
+     * TODO: remove the sizeByPixelDensity option in the next breaking release
+     */
+    reporter.warn(
+      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
+    )
+  }
+
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
@@ -274,11 +272,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   const { width, height, density, format } = metadata
-  const defaultImagePPI = 72 // Standard digital image pixel density
-  const pixelRatio =
-    options.sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / defaultImagePPI
-      : 1
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
@@ -294,16 +287,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
-    presentationWidth = Math.min(
-      options.maxWidth,
-      Math.round(width / pixelRatio)
-    )
+    presentationWidth = Math.min(options.maxWidth, width)
     presentationHeight = Math.round(presentationWidth * (height / width))
   } else {
-    presentationHeight = Math.min(
-      options.maxHeight,
-      Math.round(height / pixelRatio)
-    )
+    presentationHeight = Math.min(options.maxHeight, height)
     presentationWidth = Math.round(presentationHeight * (width / height))
   }
 
