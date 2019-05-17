@@ -52,14 +52,14 @@ Please follow along watching the videos below and reading the text. You can watc
 
 ### Index of Tutorial
 
-1. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Introduction](/blog/2019-03-19-strapi-and-gatsby/#1-introduction)
-2. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Installation](/blog/2019-03-19-strapi-and-gatsby/#2-installation)
-3. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Content Types](/blog/2019-03-19-strapi-and-gatsby/#3-content-types)
-4. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Roles and Permissions](/blog/2019-03-19-strapi-and-gatsby/#4-roles-and-permissions)
-5. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Setting up Gatsby](/blog/2019-03-19-strapi-and-gatsby/#5-setting-up-gatsby)
-6. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Create the Index page view](/blog/2019-03-19-strapi-and-gatsby/#6-create-our-index-page)
-7. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Create the Article page view](/blog/2019-03-19-strapi-and-gatsby/#7-create-the-article-page-view)
-8. [Learn Gatsby with Strapi Headless CMS Video Tutorial Series - Gatsby Images & the Article page view](/blog/2019-03-19-strapi-and-gatsby/#8-gatsby-images-and-author-page)
+1. [Introduction](/blog/2019-03-19-strapi-and-gatsby/#1-introduction)
+2. [Installation](/blog/2019-03-19-strapi-and-gatsby/#2-installation)
+3. [Content Types](/blog/2019-03-19-strapi-and-gatsby/#3-content-types)
+4. [Roles and Permissions](/blog/2019-03-19-strapi-and-gatsby/#4-roles-and-permissions)
+5. [Setting up Gatsby](/blog/2019-03-19-strapi-and-gatsby/#5-setting-up-gatsby)
+6. [Create the Index page view](/blog/2019-03-19-strapi-and-gatsby/#6-create-our-index-page)
+7. [Create the Article page view](/blog/2019-03-19-strapi-and-gatsby/#7-create-the-article-page-view)
+8. [Gatsby Images & the Article page view](/blog/2019-03-19-strapi-and-gatsby/#8-gatsby-images-and-author-page)
 
 Note: Final tutorial and code is available at [the GitHub repo for the Strapi and Gatsby tutorial](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). In this repo, you can download and/or copy/paste the [example content](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
