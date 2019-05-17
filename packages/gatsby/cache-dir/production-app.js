@@ -18,6 +18,7 @@ import EnsureResources from "./ensure-resources"
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
+window.___webpackCompilationHash = window.webpackCompilationHash
 
 loader.addProdRequires(asyncRequires)
 setApiRunnerForLoader(apiRunner)
