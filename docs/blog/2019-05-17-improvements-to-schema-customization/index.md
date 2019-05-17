@@ -103,6 +103,9 @@ Add resolver and resolver options (such as arguments) to the given field. There 
 - `@fileByRelativePath` - connect to a File node. Same arguments. The
   difference from link is that this normalizes the relative path to be
   relative from the path where source node is found.
+- `proxy` - in case the underlying node data contains field names with
+  characters that are invalid in GraphQL, `proxy` allows to explicitly
+  proxy those properties to fields with valid field names. Takes a `from` arg.
 
 ```graphql:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
