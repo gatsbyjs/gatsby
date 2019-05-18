@@ -28,7 +28,7 @@
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
-            - title: Preparing your Site for Deployment*
+            - title: Preparing your Site for Deployment
               link: /docs/preparing-for-deployment/
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
