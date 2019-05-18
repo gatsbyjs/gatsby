@@ -15,7 +15,7 @@ Quoting from [the CSS Module homepage](https://github.com/css-modules/css-module
 CSS Modules let you write styles in CSS files but consume them as JavaScript objects for additional processing and safety. CSS Modules are very popular because they automatically make class and animation names unique so you don't have to worry about selector name collisions.
 
 ### CSS Module example
-
+The CSS in a CSS module is no different than normal CSS, but the extension of the file is different to mark that the file will be processed.
 ```css:title=src/components/container.module.css
 .container {
   margin: 3rem auto;
