@@ -143,7 +143,7 @@ describe(`Query fields of type File`, () => {
             files { name }
           }
           arrayOfArray { name }
-          arrayOfArrayOfObjects { 
+          arrayOfArrayOfObjects {
             nested {
               name
             }

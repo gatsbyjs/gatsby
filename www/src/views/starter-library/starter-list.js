@@ -8,7 +8,7 @@ import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "../../assets/v2icon.svg"
-import get from "lodash/get"
+import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
@@ -33,12 +33,14 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           No {`${emptyStateReason}`} starters found!
           <div css={{ color: colors.gatsby }}>
             <small>
-              Maybe you should write one and
+              Why not write one and
               {` `}
               <Link to="/contributing/submit-to-starter-library/">
                 submit it
               </Link>
-              ?
+              ? Or learn more
+              {` `}
+              <Link to="/docs/starters">about starters</Link>.
             </small>
           </div>
         </h1>
@@ -117,10 +119,6 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
-                    {/* {isGatsbyVersionWarning ?
-                        <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
-                        <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                      } */}
                   </div>
                   <div
                     css={{
@@ -178,7 +176,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 
 export default StartersList
 
-function sortingFunction(sortRecent) {
+function sortingFunction() {
   return function({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)

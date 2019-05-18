@@ -137,10 +137,10 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 
 If you want to add line numbering alongside your code, you need to
 import the corresponding CSS file from PrismJS, right after importing your
-colorscheme in `src/components/layout.js`:
+colorscheme in `gatsby-browser.js`:
 
 ```javascript
-// src/components/layout.js
+// gatsby-browser.js
 require("prismjs/plugins/line-numbers/prism-line-numbers.css")
 ```
 

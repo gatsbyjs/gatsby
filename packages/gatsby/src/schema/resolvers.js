@@ -75,6 +75,13 @@ const paginate = (results = [], { skip = 0, limit }) => {
   const count = results.length
   const items = results.slice(skip, limit && skip + limit)
 
+  const pageCount = limit
+    ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
+    : skip
+    ? 2
+    : 1
+  const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
+  const hasPreviousPage = currentPage > 1
   const hasNextPage = skip + limit < count
 
   return {
@@ -88,12 +95,17 @@ const paginate = (results = [], { skip = 0, limit }) => {
     }),
     nodes: items,
     pageInfo: {
+      currentPage,
+      hasPreviousPage,
       hasNextPage,
+      itemCount: items.length,
+      pageCount,
+      perPage: limit,
     },
   }
 }
 
-const link = ({ by, from }) => async (source, args, context, info) => {
+const link = ({ by = `id`, from }) => async (source, args, context, info) => {
   const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -140,8 +152,8 @@ const link = ({ by, from }) => async (source, args, context, info) => {
   )
 }
 
-const fileByPath = (source, args, context, info) => {
-  const fieldValue = source && source[info.fieldName]
+const fileByPath = ({ from }) => (source, args, context, info) => {
+  const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -188,4 +200,5 @@ module.exports = {
   link,
   distinct,
   group,
+  paginate,
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
@@ -21,6 +21,10 @@ class ActionCreatorsDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Actions</title>
+            <meta
+              name="description"
+              content="Documentation on actions and how they help you manipulate state within Gatsby"
+            />
           </Helmet>
           <h1 css={{ marginTop: 0 }}>Actions</h1>
           <p>

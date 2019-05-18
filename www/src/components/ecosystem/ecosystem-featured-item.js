@@ -15,7 +15,7 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   fonts,
 } from "../../utils/presets"
@@ -25,7 +25,7 @@ const MAX_DESCRIPTION_LENGTH = 100
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
   margin-right: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-bottom: 1px solid ${colors.gray.superLight};
     box-shadow: none;
     margin: 0;
@@ -43,13 +43,13 @@ export const BlockLink = styled(Link)`
   height: 100%;
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
     transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     :hover {
       background: ${colors.ui.whisper};
     }

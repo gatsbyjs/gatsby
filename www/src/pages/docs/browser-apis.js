@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
@@ -23,6 +23,10 @@ class BrowserAPIDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Browser APIs</title>
+            <meta
+              name="description"
+              content="Documentation about leveraging standard browser APIs within Gatsby"
+            />
           </Helmet>
           <h1 id="browser-apis" css={{ marginTop: 0 }}>
             Gatsby Browser APIs
@@ -36,7 +40,7 @@ class BrowserAPIDocs extends React.Component {
           <hr />
           <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
-            {funcs.map((node, i) => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>

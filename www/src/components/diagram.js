@@ -8,7 +8,7 @@ import {
   space,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   letterSpacings,
   lineHeights,
   fontSizes,
@@ -130,10 +130,10 @@ const SourceItem = ({ children }) => (
       boxSizing: `border-box`,
       padding: `0 ${space[4]} ${space[5]}`,
       display: `flex`,
-      [breakpoints.xs]: {
+      [mediaQueries.xs]: {
         flex: `1 1 50%`,
       },
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -200,7 +200,7 @@ const Gatsby = () => (
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -214,7 +214,7 @@ const Gatsby = () => (
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
-        [breakpoints.lg]: {
+        [mediaQueries.lg]: {
           height: space[9],
         },
       }}
@@ -264,7 +264,7 @@ const Diagram = () => (
           css={{
             marginTop: 0,
             marginBottom: space[6],
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               marginTop: space[6],
             },
           }}

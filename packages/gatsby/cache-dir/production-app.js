@@ -66,10 +66,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // Make sure the window.page object is defined
     page &&
     // The canonical path doesn't match the actual path (i.e. the address bar)
-    __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
+    __BASE_PATH__ + page.path !== browserLoc.pathname &&
     // ...and if matchPage is specified, it also doesn't match the actual path
     (!page.matchPath ||
-      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname)) &&
+      !match(__BASE_PATH__ + page.matchPath, browserLoc.pathname)) &&
     // Ignore 404 pages, since we want to keep the same URL
     page.path !== `/404.html` &&
     !page.path.match(/^\/404\/?$/) &&
@@ -77,10 +77,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     // pages have this canonical path)
     !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
-    navigate(
-      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
-      { replace: true }
-    )
+    navigate(__BASE_PATH__ + page.path + browserLoc.search + browserLoc.hash, {
+      replace: true,
+    })
   }
 
   loader.getResourcesForPathname(browserLoc.pathname).then(() => {
@@ -88,7 +87,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       createElement(
         Router,
         {
-          basepath: __PATH_PREFIX__,
+          basepath: __BASE_PATH__,
         },
         createElement(RouteHandler, { path: `/*` })
       )

@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { rhythm } from "../../utils/typography"
@@ -21,6 +21,10 @@ class NodeModelDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Node Model</title>
+            <meta
+              name="description"
+              content="Documentation explaining the model of nodes in Gatsby's GraphQL data layer"
+            />
           </Helmet>
           <h1 id="node-model" css={{ marginTop: 0 }}>
             Node Model

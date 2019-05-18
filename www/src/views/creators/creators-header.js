@@ -22,15 +22,23 @@ class CreatorsHeader extends Component {
           ...styles.header,
         }}
       >
-        <Link
-          to="/creators/"
-          state={{ filter: `` }}
+        <h1
           css={{
-            ...styles.creatorsLink,
+            display: `flex`,
+            height: `100%`,
+            margin: 0,
           }}
         >
-          Creators
-        </Link>
+          <Link
+            to="/creators/"
+            state={{ filter: `` }}
+            css={{
+              ...styles.creatorsLink,
+            }}
+          >
+            Creators
+          </Link>
+        </h1>
         <div
           className="creators--filters"
           css={{
@@ -47,7 +55,7 @@ class CreatorsHeader extends Component {
           >
             <Button
               small
-              to="/docs/submit-to-creator-showcase/"
+              to="/contributing/submit-to-creator-showcase/"
               icon={<ArrowForwardIcon />}
             >
               {submissionText}
@@ -74,6 +82,7 @@ const styles = {
     fontFamily: fonts.header,
   },
   creatorsLink: {
+    alignSelf: `center`,
     "&&": {
       fontSize: fontSizes[4],
       color: colors.gatsby,

@@ -83,7 +83,7 @@ at the autocomplete:
 
 ![markdown-autocomplete](markdown-autocomplete.png)
 
-Select `allMarkdownRemark` again and run it like you did for `allFile`. You'll
+Select `allMarkdownRemark` again and run it as you did for `allFile`. You'll
 see there the markdown file you recently added. Explore the fields that are
 available on the `MarkdownRemark` node.
 

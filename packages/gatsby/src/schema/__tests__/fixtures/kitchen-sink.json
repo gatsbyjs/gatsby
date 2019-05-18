@@ -1060,7 +1060,7 @@
     "nodeAPIs": [
       "createPages",
       "sourceNodes",
-      "addResolvers"
+      "createResolvers"
     ],
     "browserAPIs": [
       "shouldUpdateScroll",

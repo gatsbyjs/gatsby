@@ -24,7 +24,7 @@ File - src/pages/about.**en**.js
 
 URL - /**en**/about
 
-[gatsby-plugin-i18n on Github](https://github.com/angeloocana/gatsby-plugin-i18n)
+[gatsby-plugin-i18n on GitHub](https://github.com/angeloocana/gatsby-plugin-i18n)
 
 ### react-intl
 

@@ -17,7 +17,7 @@ import {
   transition,
   shadows,
   fontSizes,
-  breakpoints,
+  mediaQueries,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
@@ -38,11 +38,11 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     width: 20rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-shrink: 0;
     margin-right: 0;
     margin-bottom: ${space[8]};
@@ -78,7 +78,7 @@ const Header = styled(`h1`)`
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     font-size: ${props => (props.first ? fontSizes[6] : fontSizes[5])};
     padding: ${space[7]};
     padding-bottom: 0;
@@ -98,7 +98,7 @@ const Meta = styled(`div`)`
     flex-shrink: 0;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-top: ${space[6]};
     padding: 0 ${space[7]};
   }
@@ -118,7 +118,7 @@ const Author = styled(Link)`
     font-weight: normal;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     :hover {
       span {
         background: ${colors.ui.bright};
@@ -131,7 +131,7 @@ const Excerpt = styled(`p`)`
   color: ${colors.gray.copy};
   padding: 0 ${rhythm(4 / 5)};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: 0;
     margin-top: ${space[6]};
     padding: 0 ${space[7]};
@@ -169,7 +169,7 @@ const ReadMore = styled(Link)`
     margin-right: ${space[1]};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     padding: ${space[7]};
 
     span {

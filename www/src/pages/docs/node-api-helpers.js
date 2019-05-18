@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Helmet from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
@@ -20,6 +20,10 @@ class NodeAPIHelperDocs extends React.Component {
         <Container>
           <Helmet>
             <title>Node API helpers</title>
+            <meta
+              name="description"
+              content="Documentation on API helpers for creating nodes within Gatsby's GraphQL data layer"
+            />
           </Helmet>
           <h1 id="gatsby-node-helpers-apis" css={{ marginTop: 0 }}>
             Gatsby Node API helpers
