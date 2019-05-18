@@ -2576,3 +2576,18 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-prologue
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-prologue
+  description: Single page starter based on the Prologue site template by HTML5 up, for portfolio pages
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
