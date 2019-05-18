@@ -26,7 +26,7 @@ describe(`Component Shadowing`, () => {
       )
     ).toEqual([
       {
-        themeDir: `/some/place/a-theme`,
+        themeDir: path.join(`some`, `place`, `a-theme`),
         themeName: `a-theme`,
       },
     ])
@@ -48,7 +48,7 @@ describe(`Component Shadowing`, () => {
       )
     ).toEqual([
       {
-        themeDir: `/some/place/theme-b`,
+        themeDir: path.join(`some`, `place`, `theme-b`),
         themeName: `theme-b`,
       },
     ])
