@@ -137,8 +137,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
   getMatchingThemesForPath(filepath) {
     // find out which theme's src/components dir we're requiring from
-    const allMatchingThemes = this.themes.filter(({ themeName }) =>
-      filepath.includes(path.join(themeName, `src`))
+    const allMatchingThemes = this.themes.filter(({ themeDir }) =>
+      filepath.includes(path.join(themeDir, `src`))
     )
 
     // The same theme can be included twice in the themes list causing multiple
