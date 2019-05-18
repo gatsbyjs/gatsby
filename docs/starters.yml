@@ -2561,7 +2561,7 @@
     - Elm
   features:
     - Elm language integration
-    - url: https://anubhavsrivastava.github.io/gatsby-starter-readonly
+- url: https://anubhavsrivastava.github.io/gatsby-starter-readonly
   repo: https://github.com/anubhavsrivastava/gatsby-starter-readonly
   description: Single page starter based on the ReadOnly site template by HTML5 up, with landing and Elements(Component) page
   tags:
