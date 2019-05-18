@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.60](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.59...gatsby-source-contentful@2.0.60) (2019-05-18)
+
+### Features
+
+- **gatsby-source-contentful:** add options validation and more detailed error messages ([#9231](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/9231)) ([68cb1a5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/68cb1a5))
+
 ## [2.0.59](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.58...gatsby-source-contentful@2.0.59) (2019-05-16)
 
 **Note:** Version bump only for package gatsby-source-contentful
