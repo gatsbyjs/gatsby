@@ -75,7 +75,6 @@ class BlogPostTemplate extends React.Component {
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
     }
-    console.log(this.props)
     return (
       <Layout location={this.props.location}>
         <Container>
