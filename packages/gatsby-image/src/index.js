@@ -154,57 +154,41 @@ class Image extends React.Component {
     let isVisible = true
     let imgLoaded = false
     let imgCached = false
-    let IOSupported = false
     let fadeIn = props.fadeIn
-    let nativeLazyLoadSupported = false
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
     const seenBefore = inImageCache(props)
 
-    // browser with Intersection Observer available
-    if (
-      !seenBefore &&
-      typeof window !== `undefined` &&
+    const isBrowser = typeof window !== `undefined`
+    const hasIOSupport = (
+      isBrowser &&
       window.IntersectionObserver
-    ) {
-      isVisible = false
-      IOSupported = true
-    }
+    )
 
-    // Chrome Canary 75 added native lazy loading support!
-    // https://addyosmani.com/blog/lazy-loading/
-    if (
+    // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
+    const hasNativeLazyLoadSupport = (
       typeof HTMLImageElement !== `undefined` &&
       `loading` in HTMLImageElement.prototype
-    ) {
-      // Setting isVisible to true to short circuit our IO code and let the browser do its magic
-      isVisible = true
-      nativeLazyLoadSupported = true
-    }
+    )
 
-    // Never render image during SSR
-    if (typeof window === `undefined`) {
-      isVisible = false
-    }
+    const addNoScript  = !(props.critical && !props.fadeIn)
+    const useIOSupport = !props.critical && !seenBefore && hasIOSupport
 
-    // Force render for critical images
-    if (props.critical) {
-      isVisible = true
-      IOSupported = false
-    }
-
-    const hasNoScript = !(props.critical && !props.fadeIn)
+    const isVisible = (
+      props.critical ||
+      isBrowser && (hasNativeLazyLoadSupport || !useIOSupport)
+    )
 
     this.state = {
       isVisible,
       imgLoaded,
       imgCached,
-      IOSupported,
+      useIOSupport,
       fadeIn,
-      hasNoScript,
+      addNoScript,
       seenBefore,
-      nativeLazyLoadSupported,
+      hasNativeLazyLoadSupport,
     }
 
     this.imageRef = React.createRef()
@@ -230,12 +214,13 @@ class Image extends React.Component {
     }
   }
 
+  // Specific to IntersectionObserver based lazy-load support
   handleRef(ref) {
-    if (this.state.nativeLazyLoadSupported) {
+    if (this.state.hasNativeLazyLoadSupport) {
       // Bail because the browser natively supports lazy loading
       return
     }
-    if (this.state.IOSupported && ref) {
+    if (this.state.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
@@ -417,7 +402,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.state.hasNoScript && (
+          {this.state.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
                 __html: noscriptImg({
@@ -510,7 +495,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.state.hasNoScript && (
+          {this.state.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
                 __html: noscriptImg({
