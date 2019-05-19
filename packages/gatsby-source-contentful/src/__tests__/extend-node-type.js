@@ -56,14 +56,19 @@ describe(`contentful extend node type`, () => {
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
-    it(`If the height isn't specified it should be set keeping with the aspect ratio of the original image`, async () => {
+    it(`resorts to a default width if no arguments are given`, async () => {
+      const resp = await resolveFixed(image)
+      expect(resp.width).toBe(400)
+      expect(resp.height).toBe(533)
+    })
+    it(`resolves the height if only a width is given`, async () => {
       const resp = await resolveFixed(image, {
         width: 450,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(600)
     })
-    it(`if the width isn't specified it should be set keeping with the aspect ratio of the original image`, async () => {
+    it(`resolves the width if only a height is given`, async () => {
       const resp = await resolveFixed(image, {
         height: 600,
       })
