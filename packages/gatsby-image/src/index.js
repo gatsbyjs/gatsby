@@ -112,16 +112,9 @@ const Img = React.forwardRef((props, ref) => {
     style,
     onLoad,
     onError,
-    nativeLazyLoadSupported,
     loading,
     ...otherProps
   } = props
-
-  let loadingAttribute = {}
-
-  if (nativeLazyLoadSupported) {
-    loadingAttribute.loading = loading
-  }
 
   return (
     <img
@@ -132,7 +125,7 @@ const Img = React.forwardRef((props, ref) => {
       onLoad={onLoad}
       onError={onError}
       ref={ref}
-      {...loadingAttribute}
+      loading={loading}
       style={{
         position: `absolute`,
         top: 0,
@@ -316,8 +309,6 @@ class Image extends React.Component {
       loading = critical ? `eager` : `lazy`
     }
 
-    const { nativeLazyLoadSupported } = this.state
-
     const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
@@ -420,7 +411,6 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
-                nativeLazyLoadSupported={nativeLazyLoadSupported}
                 loading={loading}
               />
             </picture>
@@ -514,7 +504,6 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
-                nativeLazyLoadSupported={nativeLazyLoadSupported}
                 loading={loading}
               />
             </picture>
