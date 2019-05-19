@@ -1,5 +1,5 @@
-import React, { createElement } from "react"
-import { Router } from "@reach/router"
+import React from "react"
+import { Router, Location } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
 import {
@@ -33,7 +33,7 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 
 navigationInit()
 
-class RouteHandler extends React.Component {
+class LocationHandler extends React.Component {
   render() {
     let { location } = this.props
 
@@ -50,7 +50,17 @@ class RouteHandler extends React.Component {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <JSONStore {...this.props} {...locationAndPageResources} />
+                <Router
+                  basepath={__BASE_PATH__}
+                  location={location}
+                  id="gatsby-focus-wrapper"
+                >
+                  <JSONStore
+                    path={page.matchPath || page.path}
+                    {...this.props}
+                    {...locationAndPageResources}
+                  />
+                </Router>
               </ScrollContext>
             </RouteUpdates>
           )}
@@ -72,25 +82,29 @@ class RouteHandler extends React.Component {
 
       return (
         <RouteUpdates location={location}>
-          <JSONStore
+          <Router
+            basepath={__BASE_PATH__}
             location={location}
-            pageResources={dev404PageResources}
-            custom404={custom404}
-          />
+            id="gatsby-focus-wrapper"
+          >
+            <JSONStore
+              path={location.pathname}
+              location={location}
+              pageResources={dev404PageResources}
+              custom404={custom404}
+            />
+          </Router>
         </RouteUpdates>
       )
     }
   }
 }
 
-const Root = () =>
-  createElement(
-    Router,
-    {
-      basepath: __BASE_PATH__,
-    },
-    createElement(RouteHandler, { path: `/*` })
-  )
+const Root = () => (
+  <Location>
+    {locationContext => <LocationHandler {...locationContext} />}
+  </Location>
+)
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(

@@ -25,11 +25,11 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "cross-env ENABLE_GATSBY_REFRESH_ENDPOINT=true CYPRESS_SUPPORT=y gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "CYPRESS_SUPPORT=y npm run start-server-and-test || (npm run reset && exit 1)",
+    "test": "npm run start-server-and-test || (npm run reset && exit 1)",
     "posttest": "npm run reset",
     "reset": "node scripts/reset.js",
     "reset:preview": "node plugins/gatsby-source-fake-data/reset.js && npm run update:preview",
