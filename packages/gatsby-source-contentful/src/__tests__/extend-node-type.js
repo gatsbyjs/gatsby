@@ -146,8 +146,16 @@ describe(`contentful extend node type`, () => {
     })
   })
   describe(`resolveResize`, () => {
-    it(`generates resized images`, async () => {
+    it(`generates resized images using a default width`, async () => {
+      const resp = await resolveResize(image)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates resized images given a certain width`, async () => {
       const resp = await resolveResize(image, { width: 400 })
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates resized images given a certain height`, async () => {
+      const resp = await resolveResize(image, { height: 600 })
       expect(resp).toMatchSnapshot()
     })
     it(`generates resized images using all options`, async () => {
