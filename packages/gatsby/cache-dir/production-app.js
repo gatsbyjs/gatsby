@@ -41,35 +41,33 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       return (
         <EnsureResources location={location}>
-          {({ pageResources, location }) =>
-            console.log(pageResources) || (
-              <RouteUpdates location={location}>
-                <ScrollContext
+          {({ pageResources, location }) => (
+            <RouteUpdates location={location}>
+              <ScrollContext
+                location={location}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <Router
+                  basepath={__BASE_PATH__}
                   location={location}
-                  shouldUpdateScroll={shouldUpdateScroll}
+                  id="gatsby-focus-wrapper"
                 >
-                  <Router
-                    basepath={__BASE_PATH__}
+                  <PageRenderer
+                    path={
+                      pageResources.page.path === `/404.html`
+                        ? location.pathname
+                        : pageResources.page.matchPath ||
+                          pageResources.page.path
+                    }
+                    {...this.props}
                     location={location}
-                    id="gatsby-focus-wrapper"
-                  >
-                    <PageRenderer
-                      path={
-                        pageResources.page.path === `/404.html`
-                          ? location.pathname
-                          : pageResources.page.matchPath ||
-                            pageResources.page.path
-                      }
-                      {...this.props}
-                      location={location}
-                      pageResources={pageResources}
-                      {...pageResources.json}
-                    />
-                  </Router>
-                </ScrollContext>
-              </RouteUpdates>
-            )
-          }
+                    pageResources={pageResources}
+                    {...pageResources.json}
+                  />
+                </Router>
+              </ScrollContext>
+            </RouteUpdates>
+          )}
         </EnsureResources>
       )
     }
