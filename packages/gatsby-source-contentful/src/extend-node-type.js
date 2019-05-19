@@ -177,8 +177,18 @@ const resolveFluid = (image, options) => {
 
   let desiredAspectRatio = aspectRatio
 
+  // If no dimension is given, set a default maxWidth
+  if (options.maxWidth === undefined && options.maxHeight === undefined) {
+    options.maxWidth = 800
+  }
+
+  // If only a maxHeight is given, calculate the maxWidth based on the height and the aspect ratio
+  if (options.maxHeight !== undefined && options.maxWidth === undefined) {
+    options.maxWidth = Math.round(options.maxHeight * desiredAspectRatio)
+  }
+
   // If we're cropping, calculate the specified aspect ratio.
-  if (options.maxHeight) {
+  if (options.maxHeight !== undefined && options.maxWidth !== undefined) {
     desiredAspectRatio = options.maxWidth / options.maxHeight
   }
 
@@ -424,7 +434,6 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
     args: {
       maxWidth: {
         type: GraphQLInt,
-        defaultValue: 800,
       },
       maxHeight: {
         type: GraphQLInt,
