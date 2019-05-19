@@ -208,7 +208,7 @@ class Index extends React.Component {
           and a{` `}
           <code>base64</code>
           {` `}
-          image to use as a placeholder) you need to implement the "blur up"
+          image to use as a placeholder) you need to implement the {`"blur up"`}
           technique popularized by
           {` `}
           <a href="https://jmperezperez.com/medium-image-progressive-loading-placeholder/">
@@ -247,8 +247,8 @@ class Index extends React.Component {
 
         <p>
           The <code>toFormat</code> option lets you convert the source image to
-          another image format. We use "PNG" here to ensure that the duotoned
-          image does not show any JPG artifacts.
+          another image format. We use {`"PNG"`} here to ensure that the
+          duotoned image does not show any JPG artifacts.
         </p>
 
         <h3>
@@ -256,7 +256,8 @@ class Index extends React.Component {
             fluid(duotone:
             {` `}
             {`{ `}
-            highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
+            highlight: {`"#f00e2e"`}, shadow: {`"#192550"`} {`}`}, toFormat:
+            PNG)
           </small>
         </h3>
 
@@ -267,7 +268,7 @@ class Index extends React.Component {
             fluid(duotone:
             {` `}
             {`{ `}
-            highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
+            highlight: {`"#0ec4f1"`}, shadow: {`"#192550"`}, opacity: 50 {`}`})
           </small>
         </h3>
 

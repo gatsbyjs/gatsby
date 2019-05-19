@@ -1,6 +1,6 @@
 ---
 title: Gatsbygram Case Study
-date: "2017-03-09"
+date: 2017-03-09
 author: "Kyle Mathews"
 image: "ui-and-code.png"
 imageTitle: Gatsbygram
@@ -23,7 +23,7 @@ playing with the code!
 
 ## What is Gatsby
 
-Gatsby is a JavaScript web framework that let's you build fast, dynamic,
+Gatsby is a JavaScript web framework that lets you build fast, dynamic,
 mobile-ready websites _without_ an advanced degree in JavaScript wizardry.
 
 It combines the fast performance of static websites with the powerful
@@ -363,7 +363,7 @@ own page on smaller screens.
 
 ## Client routing and pre-caching
 
-Gatsby loads first a static server-rendered HTML page and then the JavasScript
+Gatsby loads first a static server-rendered HTML page and then the JavaScript
 to convert the site into a web application. Which means that clicking around the
 site doesn't require a page reload. Gatsby _pre-caches_ code and data needed for
 other pages so that clicking on a link loads the next page instantly.
@@ -554,7 +554,7 @@ node scrape.js INSTAGRAM_USERNAME
 # Start the Gatsby development server. The initial
 # run will take extra time as it processes
 # images the first time.
-gatsby develop
+npm run develop
 ```
 
 While writing this post I scraped a few accounts and published their resulting

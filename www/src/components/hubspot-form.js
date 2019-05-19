@@ -1,10 +1,9 @@
 import React, { Component } from "react"
-import HubspotForm from "react-hubspot-form"
-import presets, { colors } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import HubspotForm from "./react-hubspot-form"
 import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/form-styles"
-import { buttonStyles } from "../utils/styles"
+
+import { colors, radii, space, fontSizes } from "../utils/presets"
+import { formInput, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {
@@ -18,33 +17,37 @@ export default class GatsbyHubspotForm extends Component {
       <div
         css={{
           backgroundColor: colors.ui.light,
-          borderRadius: presets.radius,
+          borderRadius: radii[1],
           color: colors.gatsby,
-          fontFamily: options.headerFontFamily.join(`,`),
-          padding: `15px`,
+          padding: space[4],
+          "& form": {
+            margin: 0,
+          },
           "& .hs-form fieldset": {
             maxWidth: `none`,
             width: `100%`,
           },
           "& .hs-form-field": {
-            paddingBottom: `20px`,
+            paddingBottom: space[5],
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,
             margin: 0,
             color: colors.warning,
-            fontSize: rhythm(1 / 2),
+            fontSize: fontSizes[1],
           },
           "& .hs-form-required": {
             color: colors.warning,
           },
-          "& .hs-form input": formInput,
+          "& .hs-form input": {
+            ...formInput,
+          },
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
             width: `100% !important`,
             ":focus": {
               borderColor: colors.gatsby,
               outline: 0,
-              boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+              boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
             },
           },
           "& .hs-button.primary": {
@@ -57,7 +60,7 @@ export default class GatsbyHubspotForm extends Component {
           formId={formId}
           sfdcCampaignId={sfdcCampaignId}
           loading="Loading..."
-          css=""
+          {...{ css: `` }}
         />
       </div>
     )

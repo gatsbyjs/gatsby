@@ -1,6 +1,6 @@
 ---
 title: My experience doing pair programming with the Gatsby team and why you should do it
-date: "2018-08-11"
+date: 2018-08-11
 image: images/screenshot.jpg
 author: Horacio Herrera
 tags: ["collaboration", "community"]
@@ -36,4 +36,4 @@ Jason patiently explained the parts I didn’t understand about Gatsby and he al
 
 Again, thanks Jason Lengstorf for the time! and thanks Gatsby for this amazing project!! 🎉
 
-> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/docs/pair-programming/).
+> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/contributing/pair-programming/).

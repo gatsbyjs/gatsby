@@ -40,7 +40,7 @@ The following fields are used by the page object and should be avoided.
   * \\"component\\"
   * \\"componentChunkName\\"
   * \\"pluginCreator___NODE\\"
-  * \\"pluginCreatorName\\"
+  * \\"pluginCreatorId\\"
 
             "
 `;
@@ -52,6 +52,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
@@ -64,6 +65,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHiPizza",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-pizza-f10",
     "matchPath": undefined,
     "path": "/hi/pizza/",
@@ -76,11 +78,13 @@ Map {
 
 exports[`Add pages allows you to add pages 1`] = `
 Object {
+  "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
@@ -103,6 +107,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
@@ -115,6 +120,7 @@ Map {
 
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
+  "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
@@ -122,6 +128,7 @@ Object {
       "id": 123,
     },
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
@@ -146,6 +153,7 @@ Map {
       "id": 123,
     },
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",
@@ -158,11 +166,13 @@ Map {
 
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
+  "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
@@ -185,6 +195,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
@@ -204,6 +215,7 @@ Map {
     "componentChunkName": "component---whatever-2-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
+    "isCreatedByStatefulCreatePages": undefined,
     "jsonName": "hi-18e",
     "matchPath": undefined,
     "path": "/hi/",

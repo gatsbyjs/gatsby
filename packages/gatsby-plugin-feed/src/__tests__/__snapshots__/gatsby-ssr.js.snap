@@ -20,7 +20,7 @@ exports[`Adds <Link> for feed to head creates Link href with path prefix when __
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -42,7 +42,7 @@ exports[`Adds <Link> for feed to head creates Link if feeds does exist 1`] = `
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -71,7 +71,7 @@ exports[`Adds <Link> for feed to head creates Link with a title if it does exist
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],
@@ -98,7 +98,7 @@ exports[`Adds <Link> for feed to head creates multiple Link if feeds are several
   ],
   "results": Array [
     Object {
-      "isThrow": false,
+      "type": "return",
       "value": undefined,
     },
   ],

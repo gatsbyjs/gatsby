@@ -19,7 +19,7 @@ module.exports = function(plop) {
         message: `Will this package contain code that runs in a browser, e.g. have a gatsby-browser.js or gatsby-ssr.js file?`,
       },
     ],
-    actions: (data) =>
+    actions: data =>
       [
         {
           type: `add`,

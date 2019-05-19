@@ -1,0 +1,13 @@
+{
+  "extends": ["config:base"],
+  "includePaths": ["starters/**"],
+  "major": {
+    "enabled": false
+  },
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 20,
+  "rebaseStalePrs": false,
+  "rangeStrategy": "bump",
+  "bumpVersion": null,
+  "semanticCommitScope": "starters"
+}

@@ -24,6 +24,7 @@ Map {
 
 exports[`Create and update nodes allows creating nodes 1`] = `
 Object {
+  "oldNode": undefined,
   "payload": Object {
     "children": Array [],
     "id": "hi",
@@ -125,17 +126,4 @@ exports[`Create and update nodes throws error if a node sets a value on "fields"
       {
     \\"name\\": \\"pluginA\\"
 }"
-`;
-
-exports[`Create and update nodes warns when using old deleteNode signature  1`] = `
-Object {
-  "children": Array [],
-  "id": "hi",
-  "internal": Object {
-    "contentDigest": "hasdfljds",
-    "owner": "tests",
-    "type": "Test",
-  },
-  "parent": "test",
-}
 `;

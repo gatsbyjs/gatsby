@@ -37,13 +37,13 @@ Contains a map of Page [path](#path) -> [Page object](#page-object).
 
 Think of this instead as `client matchPath`. It is ignored when creating pages during the build. But on the frontend, when resolving the page from the path ([find-path.js]()), it is used (via [reach router](https://github.com/reach/router/blob/master/src/lib/utils.js)) to find the matching page. Note that the [pages are sorted](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js#L38) so that those with matchPaths are at the end, so that explicit paths are matched first.
 
-This is also used by [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the front end.
+This is also used by [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the frontend.
 
 It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
 
 ### jsonName
 
-The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For above page path, it is:
+The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
@@ -51,13 +51,13 @@ The actual json file is written to disk after [Query Execution](/docs/query-exec
 
 ### component
 
-The path on disk to the javascript file containing the React component. E.g
+The path on disk to the JavaScript file containing the React component. E.g
 
 `/src/templates/template-blog-post.js`
 
 Think of this as `componentPath` instead.
 
-### Redux `components ` namespace
+### Redux `components` namespace
 
 Mapping from `component` (path on disk) to its [Page object](#page-object). It is created every time a page is created (by listening to `CREATE_PAGE`).
 

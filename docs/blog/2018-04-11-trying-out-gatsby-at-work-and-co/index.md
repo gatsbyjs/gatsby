@@ -1,6 +1,6 @@
 ---
 title: Trying out Gatsby at Work & Co
-date: "2018-04-11"
+date: 2018-04-11
 author: "Sarah Mogin"
 excerpt: Thoughts on setup, workflow, and giving back to Gatsby
 tags: ["contentful", "netlify", "getting-started"]
@@ -153,7 +153,7 @@ To enforce such validations, we set up a static validator page that runs a repor
 
 That same validation page also served as a site status page, containing the time and GitHub hash of the last build. The build time was particularly important. Since builds happen quite frequently (whenever content is updated), it’s helpful for the team to be able to easily see the time of the last build for a given environment. (We also had Netlify integrated to Slack, but this contained notifications about every branch and was a bit noisy for a less tech-savvy audience.)
 
-Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the front end, we needed to rename them to begin with `GATSBY_`:
+Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the frontend, we needed to rename them to begin with `GATSBY_`:
 
 ```
 exports.createPages = () => {
@@ -275,7 +275,7 @@ If you’ve ever used `yarn link` to modify a dependency locally, this provides 
 
 As I said, I was impressed by the Gatsby team’s quick turnaround time with PR approvals, but even so, when doing client work on a tight deadline, it can be stressful waiting for your changes to be merged. For ultimate peace of mind, you should be able to move forward using your forked work even if — in the worst case scenario — your PR is never approved.
 
-Of course, this is something developers do all the time. They push their fork to git and link to it in their project’s `package.json`:
+Of course, this is something developers do all the time. They push their fork to Git and link to it in their project’s `package.json`:
 
 ```
 “dependencies”: {
@@ -283,7 +283,7 @@ Of course, this is something developers do all the time. They push their fork to
 }
 ```
 
-Gatsby, however, uses a monorepo architecture, so pushing up a fork with a change to a specific package is not such a trivial manner; npm and yarn just don’t support it. (If you feel like being depressed, check out the npm thread about [supporting github paths to monorepo packages](https://github.com/npm/npm/issues/2974).)
+Gatsby, however, uses a monorepo architecture, so pushing up a fork with a change to a specific package is not such a trivial manner; npm and yarn just don’t support it. (If you feel like being depressed, check out the npm thread about [supporting GitHub paths to monorepo packages](https://github.com/npm/npm/issues/2974).)
 
 Our workaround was to create a new repo for the package in question and push the build directly to GitHub. Here’s how it would work if you were making an update to, say, `gatsby-source-contentful`:
 

@@ -1,16 +1,16 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import domReady from "domready"
-import { hot } from "react-hot-loader"
+import domReady from "@mikaelkristiansson/domready"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import loader from "./loader"
+import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
 window.___emitter = emitter
+setApiRunnerForLoader(apiRunner)
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -28,13 +28,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
    * This is especially frustrating when you need to test the
    * production build on your local machine.
    *
-   * Let's unregister the service workers in development, and tidy up a few errors.
+   * Let's warn if we find service workers in development.
    */
-  if (supportsServiceWorkers(location, navigator)) {
+  if (`serviceWorker` in navigator) {
     navigator.serviceWorker.getRegistrations().then(registrations => {
-      for (let registration of registrations) {
-        registration.unregister()
-      }
+      if (registrations.length > 0)
+        console.warn(
+          `Warning: found one or more service workers present.`,
+          `If your site isn't behaving as expected, you might want to remove these.`,
+          registrations
+        )
     })
   }
 
@@ -48,22 +51,18 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   loader.addPagesArray(pages)
   loader.addDevRequires(syncRequires)
-
-  loader.getResourcesForPathname(window.location.pathname).then(() => {
-    let Root = hot(module)(preferDefault(require(`./root`)))
+  Promise.all([
+    loader.getResourcesForPathname(`/dev-404-page/`),
+    loader.getResourcesForPathname(`/404.html`),
+    loader.getResourcesForPathname(window.location.pathname),
+  ]).then(() => {
+    const preferDefault = m => (m && m.default) || m
+    let Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
+        postInitialRenderWork()
         apiRunner(`onInitialClientRender`)
       })
     })
   })
 })
-
-const preferDefault = m => (m && m.default) || m
-
-function supportsServiceWorkers(location, navigator) {
-  if (location.hostname === `localhost` || location.protocol === `https:`) {
-    return `serviceWorker` in navigator
-  }
-  return false
-}

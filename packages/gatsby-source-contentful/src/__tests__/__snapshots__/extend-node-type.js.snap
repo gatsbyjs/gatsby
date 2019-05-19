@@ -4,6 +4,19 @@ exports[`contentful extend node type createUrl allows you to create URls 1`] = `
 
 exports[`contentful extend node type createUrl ignores options it doesn't understand 1`] = `"//images.contentful.com/dsf/bl.jpg?"`;
 
+exports[`contentful extend node type resolveFixed filters out sizes larger than the image's width 1`] = `
+Object {
+  "aspectRatio": 0.75,
+  "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
+  "height": 3000,
+  "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=2250",
+  "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=2250&h=3000 1x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=3375&h=4500 1.5x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=4500&h=6000 2x",
+  "width": 2250,
+}
+`;
+
 exports[`contentful extend node type resolveFixed generates responsive resolution data for images 1`] = `
 Object {
   "aspectRatio": 0.75,
@@ -29,6 +42,20 @@ Object {
 //images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=900&h=798&q=50&fit=fill&bg=rgb%3A000000 2x,
 //images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=1350&h=1197&q=50&fit=fill&bg=rgb%3A000000 3x",
   "width": 450,
+}
+`;
+
+exports[`contentful extend node type resolveFluid filters out sizes larger than the image's width 1`] = `
+Object {
+  "aspectRatio": 0.75,
+  "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
+  "sizes": "(max-width: 2250px) 100vw, 2250px",
+  "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=2250",
+  "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=563&h=751 563w,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=1125&h=1500 1125w,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=2250&h=3000 2250w,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=3375&h=4500 3375w,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=4500&h=6000 4500w",
 }
 `;
 

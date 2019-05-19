@@ -1,6 +1,6 @@
 import React from "react"
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+export const onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   if (process.env.NODE_ENV === `production`) {
     return setHeadComponents([
       <script

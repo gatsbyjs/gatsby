@@ -1,10 +1,7 @@
 import React from "react"
-// import FaAngleDown from "react-icons/lib/fa/angle-down"
-// import FaAngleUp from "react-icons/lib/fa/angle-up"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import { colors } from "../../utils/presets"
-import { scale } from "../../utils/typography"
 
 import Collapsible from "../shared/collapsible"
 import styles from "../shared/styles"
@@ -46,8 +43,7 @@ export default function LHSFilter({
               <div
                 css={{
                   color: filters.has(c) ? colors.gatsby : colors.ui.bright,
-                  ...scale(0),
-                  marginRight: 8,
+                  ...styles.filterCheckbox,
                 }}
               >
                 {filters.has(c) ? (

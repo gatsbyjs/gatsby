@@ -2,23 +2,15 @@
 title: Themes
 ---
 
-Rough outline
+> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
 
-Themes are collections of plugins with optional additional assets such as react
-components, css, and binary files e.g. images.
+These Gatsby Themes docs are considered a work in progress. We are welcoming
+all feedback and will gladly accept PRs.
 
-Themes are NPM packages.
-
-A site can have multiple themes.
-
-Themes can compose other themes.
-
-User can override theme's default options for plugins.
-
-All theme assets are "ejectable" e.g. will be copied into the site's source so
-you can modify the file directory.
-
-You'll type something like `gatsby eject gatsby-core-theme` and then be
-presented with a list of assets from which you could choose which assets to
-eject. A common use case will be, install Gatsby blog theme, decide to override
-the blog index page, eject it, tweak the react component.
+- [Introduction](/docs/themes/introduction/)
+- [Getting Started](/docs/themes/getting-started/)
+- [Building Themes](/docs/themes/building-themes/)
+  - [API Reference](/docs/themes/api-reference/)
+  - [Converting a Starter](/docs/themes/converting-a-starter/)
+  - [Theme Composition](/docs/themes/theme-composition/)
+  - [Conventions](/docs/themes/conventions/)

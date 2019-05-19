@@ -2,14 +2,16 @@
 
 Plugin for connecting arbitrary GraphQL APIs to Gatsby GraphQL. Remote schemas are stitched together by adding a type that wraps the remote schema Query type and putting it under field of Gatsby GraphQL Query.
 
-- [Example website]([See it here](https://using-gatsby-source-graphql.netlify.com/))
-- [Example website source]([See it here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql))
+- [Example website](https://using-gatsby-source-graphql.netlify.com/)
+- [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
 ## Install
 
 `npm install --save gatsby-source-graphql`
 
 ## How to use
+
+First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about dotenv and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
 
 ```javascript
 // In your gatsby-config.js
@@ -37,7 +39,8 @@ module.exports = {
         url: "https://api.github.com/graphql",
         // HTTP headers
         headers: {
-          Authorization: "bearer <GITHUB_TOKEN>",
+          // Learn about environment variables: https://gatsby.dev/env-vars
+          Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
         },
         // Additional options to pass to node-fetch
         fetchOptions: {},
@@ -151,3 +154,6 @@ module.exports = {
   ],
 }
 ```
+
+[dotenv]: https://github.com/motdotla/dotenv
+[envvars]: https://gatsby.dev/env-vars

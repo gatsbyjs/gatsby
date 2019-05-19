@@ -1,11 +1,11 @@
 const Promise = require(`bluebird`)
 const convertHrtime = require(`convert-hrtime`)
 const Worker = require(`jest-worker`).default
-const numWorkers = require(`physical-cpu-count`) || 1
 const { chunk } = require(`lodash`)
+const cpuCoreCount = require(`./cpu-core-count`)
 
 const workerPool = new Worker(require.resolve(`./worker`), {
-  numWorkers,
+  numWorkers: cpuCoreCount(true),
   forkOptions: {
     silent: false,
   },
@@ -13,7 +13,7 @@ const workerPool = new Worker(require.resolve(`./worker`), {
 
 module.exports = (htmlComponentRendererPath, pages, activity) =>
   new Promise((resolve, reject) => {
-    // We need to only pass env vars that are set programatically in gatsby-cli
+    // We need to only pass env vars that are set programmatically in gatsby-cli
     // to child process. Other vars will be picked up from environment.
     const envVars = Object.entries({
       NODE_ENV: process.env.NODE_ENV,

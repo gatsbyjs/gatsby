@@ -7,7 +7,7 @@ describe(`gatsby-plugin-remove-trailing-slashes`, () => {
   }
 
   it(`correctly keeps index /`, () => {
-    onCreatePage({ actions, page: { page: `/` } })
+    onCreatePage({ actions, page: { path: `/` } })
     expect(actions.createPage).not.toBeCalled()
     expect(actions.deletePage).not.toBeCalled()
   })

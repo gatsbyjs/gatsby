@@ -5,6 +5,9 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
+const isWsl = require(`is-wsl`)
+
+const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
@@ -68,11 +71,11 @@ export type LoaderUtils = {
 }
 
 /**
- * Utils that prodcue webpack rule objects
+ * Utils that produce webpack rule objects
  */
 export type RuleUtils = {
   /**
-   * Handles Javascript compilation via babel
+   * Handles JavaScript compilation via babel
    */
   js: RuleFactory<*>,
   yaml: RuleFactory<*>,
@@ -91,6 +94,7 @@ export type PluginUtils = BuiltinPlugins & {
   extractText: PluginFactory,
   uglify: PluginFactory,
   moment: PluginFactory,
+  extractStats: PluginFactory,
 }
 
 /**
@@ -282,7 +286,7 @@ module.exports = async ({
   const rules = {}
 
   /**
-   * Javascript loader via babel, excludes node_modules
+   * JavaScript loader via babel, excludes node_modules
    */
   {
     let js = (options = {}) => {
@@ -386,7 +390,7 @@ module.exports = async ({
         loaders.css({ ...options, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR) use.unshift(loaders.miniCssExtract())
+      if (!isSSR) use.unshift(loaders.miniCssExtract({ hmr: !options.modules }))
 
       return {
         use,
@@ -435,18 +439,31 @@ module.exports = async ({
   const plugins = { ...builtinPlugins }
 
   /**
-   * Minify javascript code without regard for IE8. Attempts
+   * Minify JavaScript code without regard for IE8. Attempts
    * to parallelize the work to save time. Generally only add in Production
    */
   plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
     new TerserPlugin({
       cache: true,
-      parallel: true,
+      // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
+      // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
+      parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {
-        ecma: 8,
         ie8: false,
+        mangle: {
+          safari10: true,
+        },
+        parse: {
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+        },
+        output: {
+          ecma: 5,
+        },
         ...terserOptions,
       },
       ...options,
@@ -466,6 +483,8 @@ module.exports = async ({
     })
 
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
+
+  plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
 
   return {
     loaders,

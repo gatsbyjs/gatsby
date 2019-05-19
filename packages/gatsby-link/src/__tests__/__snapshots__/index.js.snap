@@ -24,3 +24,15 @@ exports[`<Link /> matches basic snapshot 1`] = `
   </a>
 </div>
 `;
+
+exports[`<Link /> matches partially active snapshot 1`] = `
+<div>
+  <a
+    class="link"
+    href="/active/nested"
+    style="color: black;"
+  >
+    link
+  </a>
+</div>
+`;

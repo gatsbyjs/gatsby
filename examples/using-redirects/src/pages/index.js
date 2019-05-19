@@ -53,7 +53,7 @@ const IndexPage = () => (
         to apply the <code>selected</code>
         &nbsp;class to links that match to the active path, and
         {` `}
-        <code>import './selected.css'</code>
+        <code>import {`'./selected.css'`}</code>
         &nbsp;in <code>/src/layouts/index.js</code>
         &nbsp;makes the <code>.selected {`{ color: #396; }`}</code> &nbsp;style
         declaration globally available to both&nbsp;pages.

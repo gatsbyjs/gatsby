@@ -4,26 +4,17 @@ const Lorem = () => (
   <div>
     <p>
       Ah, I see you have the machine that goes ping. This is my favorite. You
-      see we <a href="http://nunc.io/fuit.html">lease it back</a> from the
-      company we sold it to and that way it comes under the monthly current
-      budget and not the capital account.
+      see we lease it back from the company we sold it to and that way it comes
+      under the monthly current budget and not the capital account.
     </p>
-    <ul>
-      <li>Nobody expects the Spanish Inquisition!</li>
-      <li>Aquarum rutilos</li>
-      <li>Hinc vimque</li>
-    </ul>
-    <h2>
-      We interrupt this program to annoy you and make things generally
-      irritating.
-    </h2>
+    <h2>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</h2>
     <p>
       Proteus ut dis nec exsecrantia data: agrestes, truculenta Peleus. Et
       diffidunt, talia intravit Thaumantias; figere et <em>et</em> qui socio
-      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc
+      qui, tuo servet unda hoc <strong>classi</strong>? Causam <em>quemque</em>?
+      Subigebant cornibus fibras ut per nare nati, cunctis et
       {` `}
-      <strong>classi</strong>? Causam <em>quemque</em>? Subigebant cornibus
-      fibras ut per nare nati, cunctis et <strong>illa verba</strong> inrita.
+      <strong>illa verba</strong> inrita.
     </p>
     <ol>
       <li>Furori adacto</li>
@@ -33,6 +24,11 @@ const Lorem = () => (
       <li>Et frustra pestifero et inquit cornua victa</li>
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
+    <p>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua.
+    </p>
   </div>
 )
 

@@ -6,10 +6,8 @@ if (process.env.NODE_ENV !== `test`) {
   ignore.push(`**/__tests__`)
 }
 
-const presetAbsPath = require(`path`).join(__dirname, '.babel-preset.js')
-
 module.exports = {
   sourceMaps: true,
-  presets: [presetAbsPath],
+  presets: ["babel-preset-gatsby-package"],
   ignore,
 }

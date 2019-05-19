@@ -2,7 +2,10 @@
 title: Sourcing from Databases
 ---
 
-This is a stub. Help our community expand it.
+The Gatsby ecosystem includes built-in connectors to several database systems. These include:
 
-Please use the [Gatsby Style Guide](/docs/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+- [PostgreSQL](/packages/gatsby-source-pg/?=pg)
+- [MySQL](/packages/gatsby-source-mysql/?=mysql)
+- [Amazon Redshift, SQLite3, Oracle and MSSQL](https://github.com/mrfunnyshoes/gatsby-source-sql)
+
+These plugins will ingest data from your DB and make it available for your page components to query.

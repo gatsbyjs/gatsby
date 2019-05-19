@@ -1,3 +1,2 @@
-const presetAbsPath = require(`path`).join(__dirname, `.babel-preset.js`)
-const babelPreset = require(presetAbsPath)()
+const babelPreset = require(`babel-preset-gatsby-package`)()
 module.exports = require(`babel-jest`).createTransformer(babelPreset)

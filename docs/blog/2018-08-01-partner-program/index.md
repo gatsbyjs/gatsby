@@ -19,7 +19,7 @@ With that in mind, we’re happy to announce Gatsby’s Partner Program. Partner
 
 Step 1: Build a client (or agency) website with Gatsby.
 
-Step 2: Submit your Gatsby client or agency website to the [Site Showcase](/docs/site-showcase-submissions/).
+Step 2: Submit your Gatsby client or agency website to the [Site Showcase](/contributing/site-showcase-submissions/).
 
 Step 3: Fill out the form below to let us know you’re interested in learning more about future developments to Gatsby’s Partner Program.
 
@@ -34,5 +34,7 @@ We’ll have a lot more features and benefits coming soon. Future additions to t
 - Free swag! Exclusive partner swag coming soon.
 
 Fill out the form below to let us know your interest in the Gatsby Partner Program!
+
+### Partner application form:
 
 <hubspot-form portal-id="4731712" form-id="bbad5044-d31d-4473-bd57-62cb64fdc811" sfdc-campaign-id="701f4000000VDrYAAW"></hubspot-form>

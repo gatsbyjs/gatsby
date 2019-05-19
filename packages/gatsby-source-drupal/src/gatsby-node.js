@@ -1,25 +1,33 @@
 const axios = require(`axios`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 const { nodeFromData } = require(`./normalize`)
-
-// Get content digest of node.
-const createContentDigest = obj =>
-  crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(obj))
-    .digest(`hex`)
+const asyncPool = require(`tiny-async-pool`)
 
 exports.sourceNodes = async (
-  { actions, getNode, hasNodeChanged, store, cache, createNodeId },
-  { baseUrl, apiBase }
+  { actions, store, cache, createNodeId, createContentDigest, reporter },
+  {
+    baseUrl,
+    apiBase,
+    basicAuth,
+    filters,
+    headers,
+    params,
+    concurrentFileRequests,
+  }
 ) => {
   const { createNode } = actions
+  const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
+  const downloadingFilesActivity = reporter.activityTimer(
+    `Remote file download`
+  )
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
+
+  // Default concurrentFileRequests to `20`
+  concurrentFileRequests = concurrentFileRequests || 20
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -28,7 +36,7 @@ exports.sourceNodes = async (
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
-  console.log(`Starting to fetch data from Drupal`)
+  reporter.info(`Starting to fetch data from Drupal`)
 
   // TODO restore this
   // let lastFetched
@@ -40,16 +48,40 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
-  const data = await axios.get(`${baseUrl}/${apiBase}`)
+  drupalFetchActivity.start()
+
+  const data = await axios.get(`${baseUrl}/${apiBase}`, {
+    auth: basicAuth,
+    headers,
+    params,
+  })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
+        if (typeof url === `object`) {
+          // url can be string or object containing href field
+          url = url.href
+
+          // Apply any filters configured in gatsby-config.js. Filters
+          // can be any valid JSON API filter query string.
+          // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
+          if (typeof filters === `object`) {
+            if (filters.hasOwnProperty(type)) {
+              url = url + `?${filters[type]}`
+            }
+          }
+        }
+
         let d
         try {
-          d = await axios.get(url)
+          d = await axios.get(url, {
+            auth: basicAuth,
+            headers,
+            params,
+          })
         } catch (error) {
           if (error.response && error.response.status == 405) {
             // The endpoint doesn't support the GET method, so just skip it.
@@ -79,6 +111,8 @@ exports.sourceNodes = async (
       return result
     })
   )
+
+  drupalFetchActivity.end()
 
   // Make list of all IDs so we can check against that when creating
   // relationships.
@@ -173,33 +207,61 @@ exports.sourceNodes = async (
     })
   })
 
-  // Download all files.
-  await Promise.all(
-    nodes.map(async node => {
-      let fileNode
-      if (
-        node.internal.type === `files` ||
-        node.internal.type === `file__file`
-      ) {
-        try {
-          // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(node.url, baseUrl)
-          fileNode = await createRemoteFileNode({
-            url: url.href,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-          })
-        } catch (e) {
-          // Ignore
-        }
-        if (fileNode) {
-          node.localFile___NODE = fileNode.id
-        }
-      }
-    })
-  )
+  reporter.info(`Downloading remote files from Drupal`)
+  downloadingFilesActivity.start()
 
-  nodes.forEach(n => createNode(n))
+  // Download all files (await for each pool to complete to fix concurrency issues)
+  await asyncPool(concurrentFileRequests, nodes, async node => {
+    // If we have basicAuth credentials, add them to the request.
+    const auth =
+      typeof basicAuth === `object`
+        ? {
+            htaccess_user: basicAuth.username,
+            htaccess_pass: basicAuth.password,
+          }
+        : {}
+    let fileNode = null
+    let fileUrl = ``
+    let url = {}
+
+    if (node.internal.type === `files` || node.internal.type === `file__file`) {
+      fileUrl = node.url
+
+      // If node.uri is an object
+      if (typeof node.uri === `object`) {
+        // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+        fileUrl = node.uri.url
+      }
+
+      // Resolve w/ baseUrl if node.uri isn't absolute.
+      url = new URL(fileUrl, baseUrl)
+
+      // Create the remote file from the given node
+      try {
+        fileNode = await createRemoteFileNode({
+          url: url.href,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          parentNodeId: node.id,
+          auth,
+        })
+      } catch (err) {
+        reporter.error(err)
+      }
+
+      // If the fileNode exists set the node ID of the local file
+      if (fileNode) {
+        node.localFile___NODE = fileNode.id
+      }
+    }
+  })
+
+  downloadingFilesActivity.end()
+
+  // Create each node
+  for (const node of nodes) {
+    createNode(node)
+  }
 }

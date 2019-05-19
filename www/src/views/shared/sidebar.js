@@ -1,10 +1,11 @@
 import React from "react"
-import { merge, css } from "glamor"
 import MdFilterList from "react-icons/lib/md/filter-list"
 import styles from "../shared/styles"
 
-export const SidebarContainer = ({ children }) => (
-  <div css={merge(styles.sidebarContainer, styles.sticky)}>{children}</div>
+export const SidebarContainer = ({ children, className }) => (
+  <div className={className} css={[styles.sidebarContainer, styles.sticky]}>
+    {children}
+  </div>
 )
 
 export const SidebarBody = ({ children }) => (
@@ -25,8 +26,10 @@ export const ContentContainer = ({ children }) => (
   <div css={{ width: `100%` }}>{children}</div>
 )
 
-export const ContentHeader = ({ children }) => (
-  <div css={{ ...styles.contentHeader, ...styles.sticky }}>{children}</div>
+export const ContentHeader = ({ children, cssOverrides = {} }) => (
+  <div css={{ ...styles.contentHeader, ...styles.sticky, ...cssOverrides }}>
+    {children}
+  </div>
 )
 
 export const ContentTitle = ({
@@ -38,7 +41,7 @@ export const ContentTitle = ({
   // todo smooth that out ("Starters" uses "size")
   what = `length`,
 }) => (
-  <h2 css={styles.contentTitle}>
+  <h1 css={styles.contentTitle}>
     {search.length === 0 ? (
       filters[what] === 0 ? (
         // no search or filters
@@ -63,5 +66,5 @@ export const ContentTitle = ({
         {items.length !== 1 && `s`}
       </span>
     )}
-  </h2>
+  </h1>
 )

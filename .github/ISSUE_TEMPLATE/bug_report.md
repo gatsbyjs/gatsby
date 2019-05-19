@@ -8,7 +8,7 @@ about: Something isn't working as expected? Here is the right place to report.
 
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
-  - How to File an Issue: https://www.gatsbyjs.org/docs/how-to-file-an-issue/
+  - How to File an Issue: https://www.gatsbyjs.org/contributing/how-to-file-an-issue/
 
   Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues
 -->
@@ -31,4 +31,4 @@ What happened.
 
 ### Environment
 
-Run `gatsby info --clipboard` in your project directory and paste the output here. Not working? You may need to update your global gatsby-cli - `npm install -g gatsby-cli`
+Run `gatsby info --clipboard` in your project directory and paste the output here.

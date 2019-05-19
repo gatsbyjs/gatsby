@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
 import RRSM from "../../utils/reach-router-state-manager"
+import queryString from "query-string"
 
 import FilteredStarters from "./filtered-starters"
 
@@ -11,13 +12,16 @@ class StarterLibraryPage extends Component {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps)
   }
   render() {
-    const { location, urlState } = this.props
+    const { location } = this.props
+    const urlState = queryString.parse(location.search)
+
     const filtersApplied =
-      urlState.s !== ``
+      urlState.s !== undefined
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `Showcase` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `Library` // if no search term or single dependency
+
     return (
       <Layout location={location}>
         <Helmet>
@@ -27,24 +31,33 @@ class StarterLibraryPage extends Component {
             content={`Gatsby Starters: ${filtersApplied}`}
           />
           <meta
-            name="og:description"
+            property="og:description"
             content={`Gatsby Starters: ${filtersApplied}`}
           />
           <meta
             name="twitter:description"
             content={`Gatsby Starters: ${filtersApplied}`}
           />
-          <meta name="og:title" content={filtersApplied} />
-          <meta name="og:type" content="article" />
+          <meta property="og:title" content={filtersApplied} />
+          <meta property="og:type" content="article" />
           <meta name="twitter.label1" content="Reading time" />
           <meta name="twitter:data1" content={`1 min read`} />
         </Helmet>
-        <FilteredStarters {...this.props} />
+        <RRSM
+          {...this.props}
+          location={location}
+          render={({ setURLState, urlState }) => (
+            <FilteredStarters
+              {...this.props}
+              setURLState={setURLState}
+              urlState={urlState}
+            />
+          )}
+          defaultSearchState={{ v: [`2`] }}
+        />
       </Layout>
     )
   }
 }
 
-export default RRSM({ s: ``, c: [], d: [], v: [], sort: `recent` })(
-  StarterLibraryPage
-)
+export default StarterLibraryPage

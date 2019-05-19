@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the correct post body components 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": Array [
+              "
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : ",
+              ",
+              xfbml      : true,
+              version    : 'v2.12'
+            });
+
+            FB.AppEvents.logPageView();
+
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = \\"https://connect.facebook.net/",
+              "/sdk",
+              "\\";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));",
+            ],
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;
+
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the correct script src during debug 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": Array [
+              "
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : ",
+              ",
+              xfbml      : true,
+              version    : 'v2.12'
+            });
+
+            FB.AppEvents.logPageView();
+
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = \\"https://connect.facebook.net/",
+              "/sdk",
+              "\\";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));",
+            ],
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;
+
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the correct script src for other languages than en_US 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": Array [
+              "
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : ",
+              ",
+              xfbml      : true,
+              version    : 'v2.12'
+            });
+
+            FB.AppEvents.logPageView();
+
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = \\"https://connect.facebook.net/",
+              "/sdk",
+              "\\";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));",
+            ],
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;

@@ -1,4 +1,4 @@
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import React from "react"
 import { makeBlogPath } from "../utils"
 import dateformat from "dateformat"
@@ -7,16 +7,16 @@ export default ({ data }) => (
   <div>
     <h1>My Gatsby Blog</h1>
     <p>
-      <a href="https://www.gatsbyjs.org/plugins/gatsby-source-graphql">
+      <a href="https://www.gatsbyjs.org/packages/gatsby-source-graphql/">
         Using gatsby-source-graphql
       </a>
     </p>
     {data.cms.blogPosts.map((blog, i) => (
-      <a key={i} href={makeBlogPath(blog)}>
+      <Link key={i} to={makeBlogPath(blog)}>
         <h2>
           {dateformat(blog.createdAt, `fullDate`)} - {blog.title}
         </h2>
-      </a>
+      </Link>
     ))}
   </div>
 )
