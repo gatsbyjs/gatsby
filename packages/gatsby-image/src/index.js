@@ -198,7 +198,10 @@ class Image extends React.Component {
     const seenBefore = inImageCache(props)
 
     const addNoScript  = !(props.critical && !props.fadeIn)
-    const useIOSupport = !props.critical && !seenBefore && hasIOSupport
+    const useIOSupport = (
+      !hasNativeLazyLoadSupport &&
+      hasIOSupport && !props.critical && !seenBefore
+    )
 
     const isVisible = (
       props.critical ||
@@ -241,10 +244,6 @@ class Image extends React.Component {
 
   // Specific to IntersectionObserver based lazy-load support
   handleRef(ref) {
-    if (this.state.hasNativeLazyLoadSupport) {
-      // Bail because the browser natively supports lazy loading
-      return
-    }
     if (this.state.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
