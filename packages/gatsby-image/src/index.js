@@ -64,6 +64,18 @@ const activateCacheForImage = props => {
   imageCache[src] = true
 }
 
+// Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
+const hasNativeLazyLoadSupport = (
+  typeof HTMLImageElement !== `undefined` &&
+  `loading` in HTMLImageElement.prototype
+)
+
+const isBrowser = typeof window !== `undefined`
+const hasIOSupport = (
+  isBrowser &&
+  window.IntersectionObserver
+)
+
 let io
 const listeners = new WeakMap()
 
@@ -184,18 +196,6 @@ class Image extends React.Component {
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
     const seenBefore = inImageCache(props)
-
-    const isBrowser = typeof window !== `undefined`
-    const hasIOSupport = (
-      isBrowser &&
-      window.IntersectionObserver
-    )
-
-    // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
-    const hasNativeLazyLoadSupport = (
-      typeof HTMLImageElement !== `undefined` &&
-      `loading` in HTMLImageElement.prototype
-    )
 
     const addNoScript  = !(props.critical && !props.fadeIn)
     const useIOSupport = !props.critical && !seenBefore && hasIOSupport
