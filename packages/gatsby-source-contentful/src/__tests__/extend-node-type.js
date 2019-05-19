@@ -107,7 +107,17 @@ describe(`contentful extend node type`, () => {
   })
   describe(`resolveFluid`, () => {
     it(`generates responsive size data for images`, async () => {
+      const resp = await resolveFluid(image)
+      expect(resp.srcSet.length).toBeGreaterThan(1)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates responsive size data for images given a maxWidth`, async () => {
       const resp = await resolveFluid(image, { maxWidth: 400 })
+      expect(resp.srcSet.length).toBeGreaterThan(1)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates responsive size data for images given a maxHeight`, async () => {
+      const resp = await resolveFluid(image, { maxHeight: 400 })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
