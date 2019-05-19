@@ -99,12 +99,6 @@ const noscriptImg = props => {
   const crossOrigin = props.crossOrigin
     ? `crossorigin="${props.crossOrigin}" `
     : ``
-
-  // Since we're in the noscript block for this image (which is rendered during SSR or when js is disabled),
-  // we have no way to "detect" if native lazy loading is supported by the user's browser
-  // Since this attribute is a progressive enhancement, it won't break a browser with no support
-  // Therefore setting it by default is a good idea.
-
   const loading = props.loading ? `loading="${props.loading}" ` : ``
 
   return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
