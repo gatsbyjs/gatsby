@@ -15,27 +15,24 @@ const logDeprecationNotice = (prop, replacement) => {
 }
 
 // Handle legacy props during their deprecation phase
-const convertProps = props => {
-  let convertedProps = { ...props }
+const convertProps = convertedProps => {
+  let { resolutions, sizes, critical, loading } = convertedProps
 
   // `resolutions`/`sizes` => `fixed`/`fluid`
-  if (convertedProps.resolutions) {
-    convertedProps.fixed = convertedProps.resolutions
+  if (resolutions) {
+    convertedProps.fixed = resolutions
     delete convertedProps.resolutions
   }
-  if (convertedProps.sizes) {
-    convertedProps.fluid = convertedProps.sizes
+  if (sizes) {
+    convertedProps.fluid = sizes
     delete convertedProps.sizes
   }
 
   // `critical` => `loading`
-  if (
-    typeof convertedProps.critical === `boolean` &&
-    process.env.NODE_ENV !== `production`
-  ) {
+  if (typeof critical === `boolean` && process.env.NODE_ENV !== `production`) {
     logDeprecationNotice(`critical`, `the native "loading" attribute`)
 
-    convertedProps.loading = convertedProps.critical ? `eager` : convertedProps.loading || `lazy`
+    convertedProps.loading = critical ? `eager` : loading || `lazy`
   }
 
   return convertedProps
@@ -65,16 +62,12 @@ const activateCacheForImage = props => {
 }
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
-const hasNativeLazyLoadSupport = (
+const hasNativeLazyLoadSupport =
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
-)
 
 const isBrowser = typeof window !== `undefined`
-const hasIOSupport = (
-  isBrowser &&
-  window.IntersectionObserver
-)
+const hasIOSupport = isBrowser && window.IntersectionObserver
 
 let io
 const listeners = new WeakMap()
@@ -188,7 +181,6 @@ class Image extends React.Component {
     super(props)
 
     // default settings for browser without Intersection Observer available
-    let isVisible = true
     let imgLoaded = false
     let imgCached = false
     let fadeIn = props.fadeIn
@@ -197,16 +189,16 @@ class Image extends React.Component {
     // already in the browser cache so it's cheap to just show directly.
     const seenBefore = inImageCache(props)
 
-    const addNoScript  = !(props.critical && !props.fadeIn)
-    const useIOSupport = (
+    const addNoScript = !(props.critical && !props.fadeIn)
+    const useIOSupport =
       !hasNativeLazyLoadSupport &&
-      hasIOSupport && !props.critical && !seenBefore
-    )
+      hasIOSupport &&
+      !props.critical &&
+      !seenBefore
 
-    const isVisible = (
+    const isVisible =
       props.critical ||
-      isBrowser && (hasNativeLazyLoadSupport || !useIOSupport)
-    )
+      (isBrowser && (hasNativeLazyLoadSupport || !useIOSupport))
 
     this.state = {
       isVisible,
