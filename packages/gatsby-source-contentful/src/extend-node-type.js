@@ -82,14 +82,19 @@ const resolveFixed = (image, options) => {
 
   let desiredAspectRatio = aspectRatio
 
+  // If no dimension is given, set a default width
+  if (options.width === undefined && options.height === undefined) {
+    options.width = 400
+  }
+
   // If we're cropping, calculate the specified aspect ratio.
-  if (options.height) {
+  if (options.width && options.height) {
     desiredAspectRatio = options.width / options.height
   }
 
-  // If the user selected a height (so cropping) and fit option
+  // If the user selected a height and width (so cropping) and fit option
   // is not set, we'll set our defaults
-  if (options.height) {
+  if (options.width && options.height) {
     if (!options.resizingBehavior) {
       options.resizingBehavior = `fill`
     }
@@ -142,17 +147,19 @@ const resolveFixed = (image, options) => {
     })
     .join(`,\n`)
 
-  let pickedHeight
+  let pickedHeight, pickedWidth
   if (options.height) {
     pickedHeight = options.height
+    pickedWidth = options.height * desiredAspectRatio
   } else {
     pickedHeight = options.width / desiredAspectRatio
+    pickedWidth = options.width
   }
 
   return {
     aspectRatio: desiredAspectRatio,
     baseUrl,
-    width: Math.round(options.width),
+    width: Math.round(pickedWidth),
     height: Math.round(pickedHeight),
     src: createUrl(baseUrl, {
       ...options,
@@ -323,7 +330,6 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
     args: {
       width: {
         type: GraphQLInt,
-        defaultValue: 400,
       },
       height: {
         type: GraphQLInt,
