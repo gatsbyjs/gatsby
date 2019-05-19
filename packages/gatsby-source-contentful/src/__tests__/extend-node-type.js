@@ -106,7 +106,7 @@ describe(`contentful extend node type`, () => {
     })
   })
   describe(`resolveFluid`, () => {
-    it(`generates responsive size data for images`, async () => {
+    it(`generates responsive size data for images using a default maxWidth`, async () => {
       const resp = await resolveFluid(image, {})
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
