@@ -63,6 +63,13 @@ describe(`contentful extend node type`, () => {
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(600)
     })
+    it(`if the width isn't specified it should be set keeping with the aspect ratio of the original image`, async () => {
+      const resp = await resolveFixed(image, {
+        height: 600,
+      })
+      expect(resp.width).toBe(450)
+      expect(resp.height).toBe(600)
+    })
     it(`if width and height are set that's what is returned`, async () => {
       const resp = await resolveFixed(image, {
         width: 450,
