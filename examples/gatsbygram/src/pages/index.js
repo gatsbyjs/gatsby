@@ -93,7 +93,7 @@ class Index extends React.Component {
               flexWrap: `wrap`,
             }}
           >
-          <div
+            <div
               css={{
                 marginRight: rhythm(1),
                 flexGrow: 1,
