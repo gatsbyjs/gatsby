@@ -34,6 +34,39 @@ Cypress.Commands.add(`shouldNotMatchScrollPosition`, id =>
   })
 )
 
-Cypress.Commands.add(`assertRouterWrapperFocus`, () =>
-  cy.focused().should(`have.attr`, `id`, `gatsby-focus-wrapper`)
+Cypress.Commands.add(`assertRouterWrapperFocus`, (shouldBeFocused = true) =>
+  cy
+    .focused()
+    .should(
+      shouldBeFocused ? `have.attr` : `not.have.attr`,
+      `id`,
+      `gatsby-focus-wrapper`
+    )
+)
+
+Cypress.Commands.add(
+  `navigateAndWaitForRouteChange`,
+  {
+    prevSubject: `optional`,
+  },
+  (subject, pathname) => {
+    cy.window().then(win => {
+      win.___navigate(pathname)
+    })
+
+    return cy.waitForAPI(`onRouteUpdate`).then(() => subject)
+  }
+)
+
+Cypress.Commands.add(
+  `changeFocus`,
+  {
+    prevSubject: `optional`,
+  },
+  subject => {
+    cy.get(`a`)
+      .first()
+      .focus()
+      .then(() => subject)
+  }
 )
