@@ -1,9 +1,24 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// Handle legacy names for image queries.
+const logDeprecationNotice = (prop, replacement) => {
+  console.log(
+    `
+    The "${prop}" prop is now deprecated and will be removed in the next major version
+    of "gatsby-image".
+    `
+  )
+
+  if (replacement) {
+    console.log(`Please use ${replacement} instead of "${prop}".`)
+  }
+}
+
+// Handle legacy props during their deprecation phase
 const convertProps = props => {
   let convertedProps = { ...props }
+
+  // `resolutions`/`sizes` => `fixed`/`fluid`
   if (convertedProps.resolutions) {
     convertedProps.fixed = convertedProps.resolutions
     delete convertedProps.resolutions
@@ -11,6 +26,16 @@ const convertProps = props => {
   if (convertedProps.sizes) {
     convertedProps.fluid = convertedProps.sizes
     delete convertedProps.sizes
+  }
+
+  // `critical` => `loading`
+  if (
+    typeof convertedProps.critical === `boolean` &&
+    process.env.NODE_ENV !== `production`
+  ) {
+    logDeprecationNotice(`critical`, `the native "loading" attribute`)
+
+    convertedProps.loading = convertedProps.critical ? `eager` : convertedProps.loading || `lazy`
   }
 
   return convertedProps
@@ -272,27 +297,8 @@ class Image extends React.Component {
       durationFadeIn,
       Tag,
       itemProp,
-      critical,
+      loading,
     } = convertProps(this.props)
-
-    let { loading } = convertProps(this.props)
-
-    if (
-      typeof critical === `boolean` &&
-      process.env.NODE_ENV !== `production`
-    ) {
-      console.log(
-        `
-        The "critical" prop is now deprecated and will be removed in the next major version 
-        of "gatsby-image"
-
-        Please use the native "loading" attribute instead of "critical" 
-        `
-      )
-      // We want to continue supporting critical and in case it is passed in
-      // we map its value to loading
-      loading = critical ? `eager` : `lazy`
-    }
 
     const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
