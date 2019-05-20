@@ -2,6 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const logDeprecationNotice = (prop, replacement) => {
+  if (process.env.NODE_ENV === `production`) {
+    return
+  }
+
   console.log(
     `
     The "${prop}" prop is now deprecated and will be removed in the next major version
@@ -16,7 +20,7 @@ const logDeprecationNotice = (prop, replacement) => {
 
 // Handle legacy props during their deprecation phase
 const convertProps = convertedProps => {
-  let { resolutions, sizes, critical, loading } = convertedProps
+  let { resolutions, sizes, critical } = convertedProps
 
   // `resolutions`/`sizes` => `fixed`/`fluid`
   if (resolutions) {
@@ -29,10 +33,9 @@ const convertProps = convertedProps => {
   }
 
   // `critical` => `loading`
-  if (typeof critical === `boolean` && process.env.NODE_ENV !== `production`) {
+  if (critical) {
     logDeprecationNotice(`critical`, `the native "loading" attribute`)
-
-    convertedProps.loading = critical ? `eager` : loading || `lazy`
+    convertedProps.loading = `eager`
   }
 
   return convertedProps
