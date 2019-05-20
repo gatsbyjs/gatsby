@@ -161,7 +161,7 @@ exports.sourceNodes = async (
   })
 
   // Process nodes
-  const nodes = []
+  const nodes = {}
   _.each(allData, contentType => {
     if (!contentType) return
 
@@ -206,6 +206,95 @@ exports.sourceNodes = async (
       nodes.push(node)
     })
   })
+
+  let nodeDatumsBreak = false
+
+  // Map media to their entities
+  for (const i in nodes) {
+    if (nodes[i]) {
+      const node = nodes[i]
+
+      // Check if the node is a file with no alt data attached
+      if (node.internal.type === `file__file` && !node.alt) {
+        // Check if a relationships property exists in the node
+        if (node.relationships) {
+          // For each relationship, check for a `node` type
+          for (const type in node.relationships) {
+            if (/^node--|^paragraph--/.test(type) && node.relationships[type]) {
+              const nodeEntityId = _.toString(node.relationships[type])
+              const parentEntity = nodes[nodeEntityId]
+              let parentDrupalId = ""
+
+              if (!parentEntity) {
+                continue
+              }
+
+              // Set parentDrupalId
+              parentDrupalId = parentEntity.drupal_id
+
+              // break if nodeDatumsBreak is true
+              if (nodeDatumsBreak) {
+                break
+              }
+
+              // Go through all of the datum's and get the datum which matches
+              // the node entities drupal ID.
+              for (const i in allData) {
+                if (allData[i]) {
+                  const contentType = allData[i]
+
+                  // break if nodeDatumsBreak is true
+                  if (nodeDatumsBreak) {
+                    break
+                  }
+
+                  // Check that the contentType has a data property
+                  if (contentType.data) {
+                    // Search through each datum which matches the parentDrupalId
+                    for (const datum of contentType.data) {
+                      if (datum.id === parentDrupalId) {
+                        // If the matching datum has no relationships, break
+                        if (
+                          !datum.relationships ||
+                          Object.keys(datum.relationships).length === 0
+                        ) {
+                          // Tell the reset of the stack to break;
+                          nodeDatumsBreak = true
+                          break
+                        }
+
+                        // For each relationship, try to find the relationship
+                        // which matches the node.
+                        for (const j in datum.relationships) {
+                          if (datum.relationships[j]) {
+                            const rel = datum.relationships[j]
+
+                            // Only if the relationship has a type of 'file--file'
+                            // and matches our node entity, store the alt data in
+                            // the node entity
+                            if (
+                              rel.data &&
+                              rel.data.id === node.drupal_id &&
+                              rel.data.type &&
+                              rel.data.type === "file--file" &&
+                              rel.data.meta &&
+                              rel.data.meta.alt
+                            ) {
+                              node.alt = rel.data.meta.alt
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   reporter.info(`Downloading remote files from Drupal`)
   downloadingFilesActivity.start()
@@ -261,7 +350,9 @@ exports.sourceNodes = async (
   downloadingFilesActivity.end()
 
   // Create each node
-  for (const node of nodes) {
-    createNode(node)
+  for (const i in nodes) {
+    if (nodes[i]) {
+      createNode(nodes[i])
+    }
   }
 }
