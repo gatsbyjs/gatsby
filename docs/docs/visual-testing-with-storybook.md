@@ -121,12 +121,15 @@ module.exports = (baseConfig, env, defaultConfig) => {
   defaultConfig.module.rules[0].use[0].options.plugins = [
     // use @babel/plugin-proposal-class-properties for class arrow functions
     require.resolve("@babel/plugin-proposal-class-properties"),
-    // use babel-plugin-remove-graphql-queries to render components that use static queries
+    // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
     require.resolve("babel-plugin-remove-graphql-queries"),
   ]
 
   // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
   defaultConfig.resolve.mainFields = ["browser", "module", "main"]
+
+  // Set the NODE_ENV to 'production' so that babel-plugin-remove-graphql-queries can remove static queries
+  process.env.NODE_ENV = "production"
 
   return defaultConfig
 }
