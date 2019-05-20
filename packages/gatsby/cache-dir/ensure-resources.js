@@ -132,6 +132,10 @@ class EnsureResources extends React.Component {
       window.___failedResources = true
 
       console.error(`Missing resources for ${this.state.location.pathname}`)
+      // Code below cause partial hydration. Anything above will be properly hydrated,
+      // but there's really not much other than LocationHandler and any wrappers
+      // added by wrapRootElement. <div> will mount in place of @reach/router's wrapper
+      // and preserve DOM elements from static html.
       return (
         <div
           dangerouslySetInnerHTML={{ __html: `` }}
