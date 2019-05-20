@@ -6,7 +6,7 @@ Traditionally, websites are styled using global CSS files.
 
 Globally-scoped CSS rules are declared in external `.css` stylesheets, and [CSS specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) and [the Cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade) determine how styles are applied.
 
-### Adding global styles with a layout component
+## Adding global styles with a layout component
 
 The best way to add global styles is with a [shared layout component](/tutorial/part-three/#your-first-layout-component). This layout component is used for things that are shared throughout the site, including styles, header components, and other common items.
 
@@ -62,7 +62,7 @@ Run `npm run develop` and you’ll see the global styles applied.
 
 ![Global styles](./images/global-styles.png)
 
-## Adding global styles without layout component
+## Adding global styles without a layout component
 
 In some cases, using a shared layout component is not desirable. In these cases, you can include a global stylesheet using `gatsby-browser.js`.
 
