@@ -203,13 +203,13 @@ exports.sourceNodes = async (
       }
 
       node.internal.contentDigest = createContentDigest(node)
-      nodes.push(node)
+      nodes[node.id] = node
     })
   })
 
   let nodeDatumsBreak = false
 
-  // Map media to their entities
+  // Map media entities
   for (const i in nodes) {
     if (nodes[i]) {
       const node = nodes[i]
@@ -300,7 +300,7 @@ exports.sourceNodes = async (
   downloadingFilesActivity.start()
 
   // Download all files (await for each pool to complete to fix concurrency issues)
-  await asyncPool(concurrentFileRequests, nodes, async node => {
+  await asyncPool(concurrentFileRequests, _.toArray(nodes), async node => {
     // If we have basicAuth credentials, add them to the request.
     const auth =
       typeof basicAuth === `object`
