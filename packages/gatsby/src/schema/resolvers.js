@@ -105,7 +105,7 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = ({ by, from }) => async (source, args, context, info) => {
+const link = ({ by = `id`, from }) => async (source, args, context, info) => {
   const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -146,14 +146,25 @@ const link = ({ by, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  return context.nodeModel.runQuery(
+  const result = await context.nodeModel.runQuery(
     { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
     { path: context.path }
   )
+  if (
+    returnType instanceof GraphQLList &&
+    Array.isArray(fieldValue) &&
+    Array.isArray(result)
+  ) {
+    return fieldValue.map(value =>
+      result.find(obj => getValueAt(obj, by) === value)
+    )
+  } else {
+    return result
+  }
 }
 
-const fileByPath = (source, args, context, info) => {
-  const fieldValue = source && source[info.fieldName]
+const fileByPath = ({ from }) => (source, args, context, info) => {
+  const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
