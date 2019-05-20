@@ -5983,3 +5983,14 @@
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
+- title: Purple11
+  main_url: https://purple11.com/
+  url: https://purple11.com/
+  description: >
+    Purple11 is a site for photography and photo retouching tips and tricks.
+  categories:
+    - Blog
+    - Photography
+  built_by: Sébastien Noël
+  built_by_url: https://blkfuel.com/
+  featured: false
