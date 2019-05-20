@@ -189,11 +189,11 @@ const getPaths = async (starterPath: string, rootPath: string) => {
         message: `What starter would you like to use?`,
         choices: [
           { title: `gatsby-starter-default`, value: `gatsby-starter-default` },
-          { title: `gatsby-starter-blog`, value: `gatsby-starter-blog` },
           {
             title: `gatsby-starter-hello-world`,
             value: `gatsby-starter-hello-world`,
           },
+          { title: `gatsby-starter-blog`, value: `gatsby-starter-blog` },
           { title: `(Use a different starter)`, value: `different` },
         ],
         initial: 0,
