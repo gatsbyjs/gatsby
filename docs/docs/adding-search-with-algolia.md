@@ -591,3 +591,9 @@ Note that this is where we define our array of search indices and pass it as a p
 If everything works as expected, running `gatsby develop` should now give you some instant search magic looking something like in the video below! You can also play around with it [here](https://janosh.io/blog).
 
 `youtube: Amsub4xJ3Jc`
+
+## Additional Resources
+
+If you have any issues or if you want to learn more about using Algolia for search, check out this tutorial from Jason Lengstorf:
+
+`youtube: VSkXyuXzwlc`
