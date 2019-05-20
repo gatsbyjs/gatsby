@@ -11,19 +11,19 @@ Two things before we begin:
 
 ## Configuring the Algolia plugin
 
-First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia) and [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) to your project. `react-instantsearch` is Algolia's library containing off-the-shelf React components which we can import to save ourselves a lot of work. If you're not using it already, also install [`dotenv`](https://github.com/motdotla/dotenv) while you're at it. We're going to need it to specify your Algolia app ID and both the search and admin API keys without commiting them to version control.
+First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia) and [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) to your project. `react-instantsearch` is Algolia's library containing off-the-shelf React components which you can import to save ourselves a lot of work. You'll also be using `dotenv` which gets shipped with Gatsby by default. You're going to need it to specify your Algolia app ID and both the search and admin API keys without commiting them to version control.
 
-```sh
+```shell
 yarn add gatsby-plugin-algolia react-instantsearch-dom algoliasearch dotenv
 ```
 
-We will be using `styled-components` to design the search UI in this guide but you can use whichever CSS solution you prefer. If you'd like to start using `styled-components` as well, you also need to install
+You will be using `styled-components` to design the search UI in this guide but you can use whichever CSS solution you prefer. If you'd like to start using `styled-components` as well, you also need to install
 
-```sh
-yarn add react styled-components gatsby-plugin-styled-components
+```shell
+npm install --save styled-components gatsby-plugin-styled-components
 ```
 
-Next, add `gatsby-plugin-algolia` and `gatsby-plugin-styled-components` if you installed it to your `gatsby-config.js`.
+Next, add `gatsby-plugin-algolia` and `gatsby-plugin-styled-components` to your `gatsby-config.js`.
 
 ```js:title=gatsby-config.js
 const queries = require("./src/utils/algolia")
@@ -53,7 +53,7 @@ module.exports = {
 
 Notice that we're loading `queries` from a file at `./src/utils/algolia.js` (you can of course put it wherever you like) and our Algolia ID and API key from `.env` so let's add those files.
 
-```sh:title=.env
+```text:title=.env
 GATSBY_ALGOLIA_APP_ID = KA4OJA9KAS
 GATSBY_ALGOLIA_SEARCH_KEY=lkjas987ef923ohli9asj213k12n59ad
 ALGOLIA_ADMIN_KEY = lksa09sadkj1230asd09dfvj12309ajl
@@ -61,7 +61,7 @@ ALGOLIA_ADMIN_KEY = lksa09sadkj1230asd09dfvj12309ajl
 
 These are random character sequences but yours should be the same length. Also, it's good practice to commit a `.env.example` to version control so that if someone forks your repo, they know which environment variables they need to supply.
 
-```sh:title=.env.example
+```text:title=.env.example
 # rename this file to .env and supply the values listed below
 # also make sure they are available to the build tool (e.g. Netlify)
 # warning: variables prexifed with GATSBY_ will be made available to client-side code
@@ -543,7 +543,7 @@ export const PostHit = clickHandler => ({ hit }) => (
 
 ## Usage
 
-Now all we need to do is import `Search` somewhere. The obvious place is the `Header` component so let's add it there.
+Now all you need to do is import `Search` somewhere. The obvious place is the `Header` component so let's add it there.
 
 ```jsx:title=src/components/Header/index.js
 import React from "react"
