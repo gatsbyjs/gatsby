@@ -182,14 +182,9 @@ class Image extends React.Component {
   constructor(props) {
     super(props)
 
-    // default settings for browser without Intersection Observer available
-    let imgLoaded = false
-    let imgCached = false
-    let fadeIn = props.fadeIn
-
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
-    this.seenBefore = inImageCache(props)
+    this.seenBefore = isBrowser && inImageCache(props)
 
     this.addNoScript = !(props.critical && !props.fadeIn)
     this.useIOSupport =
@@ -204,9 +199,9 @@ class Image extends React.Component {
 
     this.state = {
       isVisible,
-      imgLoaded,
-      imgCached,
-      fadeIn,
+      imgLoaded: false,
+      imgCached: false,
+      fadeIn: !this.seenBefore && props.fadeIn,
     }
 
     this.imageRef = React.createRef()
@@ -263,11 +258,7 @@ class Image extends React.Component {
   handleImageLoaded() {
     activateCacheForImage(this.props)
 
-    let state = { imgLoaded: true }
-    if (this.seenBefore) {
-      state.fadeIn = false
-    }
-    this.setState(state)
+    this.setState({ imgLoaded: true })
 
     if (this.props.onLoad) {
       this.props.onLoad()
