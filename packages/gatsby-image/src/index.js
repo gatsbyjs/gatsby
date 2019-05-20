@@ -189,28 +189,24 @@ class Image extends React.Component {
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
-    const seenBefore = inImageCache(props)
+    this.seenBefore = inImageCache(props)
 
-    const addNoScript = !(props.critical && !props.fadeIn)
-    const useIOSupport =
+    this.addNoScript = !(props.critical && !props.fadeIn)
+    this.useIOSupport =
       !hasNativeLazyLoadSupport &&
       hasIOSupport &&
       !props.critical &&
-      !seenBefore
+      !this.seenBefore
 
     const isVisible =
       props.critical ||
-      (isBrowser && (hasNativeLazyLoadSupport || !useIOSupport))
+      (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
     this.state = {
       isVisible,
       imgLoaded,
       imgCached,
-      useIOSupport,
       fadeIn,
-      addNoScript,
-      seenBefore,
-      hasNativeLazyLoadSupport,
     }
 
     this.imageRef = React.createRef()
@@ -238,7 +234,7 @@ class Image extends React.Component {
 
   // Specific to IntersectionObserver based lazy-load support
   handleRef(ref) {
-    if (this.state.useIOSupport && ref) {
+    if (this.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
@@ -267,10 +263,11 @@ class Image extends React.Component {
   handleImageLoaded() {
     activateCacheForImage(this.props)
 
-    this.setState({ imgLoaded: true })
-    if (this.state.seenBefore) {
-      this.setState({ fadeIn: false })
+    let state = { imgLoaded: true }
+    if (this.seenBefore) {
+      state.fadeIn = false
     }
+    this.setState(state)
 
     if (this.props.onLoad) {
       this.props.onLoad()
@@ -295,7 +292,7 @@ class Image extends React.Component {
       loading,
     } = convertProps(this.props)
 
-    const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
     const imageStyle = {
@@ -403,7 +400,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.state.addNoScript && (
+          {this.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
                 __html: noscriptImg({
@@ -496,7 +493,7 @@ class Image extends React.Component {
           )}
 
           {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.state.addNoScript && (
+          {this.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
                 __html: noscriptImg({
