@@ -161,22 +161,14 @@ exports.sourceNodes = async (
     locales,
   })
 
-  // Right now back references are implemented in field resolvers
-  // but that might be bad idea, because we need to track connections
-  // instead of individual nodes.
-  // I had some issues with testing this after unpublishing content:
-  // seems like backreferences don't play well with locale - this wasn't
-  // the focus of this PR so easiest way forward for me was to make backrefences
-  // dynamic with custom resolvers. This also gave me some insight in backreferences
-  // in Gatsby in general.
   // Build foreign reference map before starting to insert any nodes
-  // const foreignReferenceMap = normalize.buildForeignReferenceMap({
-  //   contentTypeItems,
-  //   entryList,
-  //   resolvable,
-  //   defaultLocale,
-  //   locales,
-  // })
+  const foreignReferenceMap = normalize.buildForeignReferenceMap({
+    contentTypeItems,
+    entryList,
+    resolvable,
+    defaultLocale,
+    locales,
+  })
 
   const newOrUpdatedEntries = []
   entryList.forEach(entries => {
@@ -187,24 +179,24 @@ exports.sourceNodes = async (
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
-  // existingNodes
-  //   .filter(n => _.includes(newOrUpdatedEntries, n.id))
-  //   .forEach(n => {
-  //     if (foreignReferenceMap[n.id]) {
-  //       foreignReferenceMap[n.id].forEach(foreignReference => {
-  //         // Add reverse links
-  //         if (n[foreignReference.name]) {
-  //           n[foreignReference.name].push(foreignReference.id)
-  //           // It might already be there so we'll uniquify after pushing.
-  //           n[foreignReference.name] = _.uniq(n[foreignReference.name])
-  //         } else {
-  //           // If is one foreign reference, there can always be many.
-  //           // Best to be safe and put it in an array to start with.
-  //           n[foreignReference.name] = [foreignReference.id]
-  //         }
-  //       })
-  //     }
-  //   })
+  existingNodes
+    .filter(n => _.includes(newOrUpdatedEntries, n.id))
+    .forEach(n => {
+      if (foreignReferenceMap[n.id]) {
+        foreignReferenceMap[n.id].forEach(foreignReference => {
+          // Add reverse links
+          if (n[foreignReference.name]) {
+            n[foreignReference.name].push(foreignReference.id)
+            // It might already be there so we'll uniquify after pushing.
+            n[foreignReference.name] = _.uniq(n[foreignReference.name])
+          } else {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            n[foreignReference.name] = [foreignReference.id]
+          }
+        })
+      }
+    })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
     normalize.createContentTypeNodes({
@@ -215,7 +207,7 @@ exports.sourceNodes = async (
       createNode,
       createNodeId,
       resolvable,
-      // foreignReferenceMap,
+      foreignReferenceMap,
       defaultLocale,
       locales,
     })
@@ -254,12 +246,6 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
     `${program.directory}/.cache/contentful/assets/`
   )
   await fs.ensureDir(CACHE_DIR)
-
-  // removed this early bail - it breaks queries using fragments
-  // when there is no assets in space
-  // if (getNodesByType(`ContentfulAsset`).length == 0) {
-  //   return
-  // }
 
   let gatsbyImageDoesNotExist = true
   try {

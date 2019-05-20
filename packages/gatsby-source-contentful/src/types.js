@@ -66,6 +66,9 @@ const fieldTypeToGraphQLTypeLookup = {
         // is union combining all children node types
       },
       interfaces: [`Node`],
+      extensions: {
+        infer: false,
+      },
     })
 
     context.gqlTypes.push(textGQLTypeConfig)
@@ -94,7 +97,6 @@ const fieldTypeToGraphQLTypeLookup = {
             from: `${context.fieldName}___NODE`,
           },
         },
-        //resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
       }
 
       return type
@@ -125,8 +127,6 @@ const fieldTypeToGraphQLTypeLookup = {
         context.addBackReference({
           referencingType: context.typeName,
           referencedType: contentType.name,
-          fieldName: context.fieldName,
-          array: context.isArray,
         })
       })
 
@@ -160,7 +160,6 @@ const fieldTypeToGraphQLTypeLookup = {
               from: `${context.fieldName}___NODE`,
             },
           },
-          // resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
         }
       } else if (contentTypes.length === 1) {
         // this is single type - not sure if this should be special case
@@ -173,7 +172,6 @@ const fieldTypeToGraphQLTypeLookup = {
               from: `${context.fieldName}___NODE`,
             },
           },
-          // resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
         }
       } else {
         return null
@@ -198,28 +196,36 @@ const fieldTypeToGraphQLTypeLookup = {
     }
   },
 
+  RichText: (field, context) => {
+    const richTextTypeName = _.camelCase(
+      `${context.typeName} ${context.fieldName} RichTextNode`
+    )
+
+    // create object type
+    const richTextFieldType = context.schema.buildObjectType({
+      name: richTextTypeName,
+      fields: {
+        json: {
+          type: `JSON`,
+          resolve: source => source,
+        },
+      },
+      extensions: {
+        infer: false,
+      },
+    })
+
+    context.gqlTypes.push(richTextFieldType)
+
+    return richTextTypeName
+  },
+
   // Breaking changes below:
 
   // Object / Json field type in contentful was fully inferred from data
   // This trully depended on free-form data, so I do think using GraphQLJSON
   // here is better option (tho it loses filtering support for those fields)
   Object: () => `JSON`,
-
-  // Previously RichText child node would be created that would look something like this:
-  // {
-  //   type: `Contentful<ContentTypeName><FieldKey>RichTextNode`
-  //   fields: {
-  //     [<FieldKey>]: `String`,
-  //     json: `JSON`,
-  //   }
-  //   interfaces: [`Node]
-  // }
-  // Which seriously just adds extra nesting, but we kept it because original
-  // RichText field type implementation relied on creating RichText Nodes
-  // for RichText transformer that would consume input and render
-  // html string. Because this set of changes introduce number of breaking changes
-  // this is good opportunity to clean up RichText as well.
-  RichText: () => `JSON`,
 }
 
 const fieldTypeToGraphQLType = (field, context) => {
@@ -315,8 +321,6 @@ exports.createTypes = ({ actions, schema, contentTypeItems }) => {
 
   const typeConfigs = contentTypeItems.reduce((acc, contentType) => {
     const fieldType = {
-      // I would like to use @dontInfer on this field and
-      // not quite sure how?
       name: makeTypeName(contentType.name),
       fields: contentType.fields.reduce(
         (fields, field) => {
@@ -324,22 +328,13 @@ exports.createTypes = ({ actions, schema, contentTypeItems }) => {
             gqlTypes: extraTypes,
             typeName: contentType.name,
             fieldName: field.id,
-            addBackReference: ({
-              referencingType,
-              referencedType,
-              ...rest
-            }) => {
+            addBackReference: ({ referencingType, referencedType }) => {
               let backReferencesForType = backReferences[referencedType]
               if (!backReferencesForType) {
-                backReferencesForType = backReferences[referencedType] = {}
+                backReferencesForType = backReferences[referencedType] = []
               }
 
-              let fields = backReferencesForType[referencingType]
-              if (!fields) {
-                fields = backReferencesForType[referencingType] = []
-              }
-
-              fields.push(rest)
+              backReferencesForType.push(referencingType)
             },
             ...context,
           })
@@ -367,8 +362,10 @@ exports.createTypes = ({ actions, schema, contentTypeItems }) => {
           },
         }
       ),
-
       interfaces: [`Node`],
+      extensions: {
+        infer: false,
+      },
     }
 
     acc[contentType.name] = fieldType
@@ -385,63 +382,16 @@ exports.createTypes = ({ actions, schema, contentTypeItems }) => {
       const typeBackReferences = backReferences[typeName]
 
       if (typeBackReferences) {
-        Object.keys(typeBackReferences).forEach(referencedByType => {
-          const fieldsReferencingType = typeBackReferences[referencedByType]
+        _.uniq(typeBackReferences).forEach(referencedByType => {
           const gqlTypeName = makeTypeName(referencedByType)
-          typeConfig.fields[_.camelCase(referencedByType)] = {
+          const fieldName = _.camelCase(referencedByType)
+          typeConfig.fields[fieldName] = {
             // back references are always array
             type: `[${gqlTypeName}]`,
-            resolve: async (source, _fieldArgs, context, _info) => {
-              const allNodesIdsThatReferenceThisOne = await Promise.all(
-                fieldsReferencingType.map(async ({ fieldName, array }) => {
-                  // Ideally I could use query below (or something like that)
-                  // but we currently don't support filtering using union
-                  // type fields.
-                  // const query = {
-                  //   filter: { [fieldName]: { id: { eq: source.id } } },
-                  // }
-                  // const nodes = await context.nodeModel.runQuery({
-                  //   query,
-                  //   type: gqlTypeName,
-                  //   firstOnly: false,
-                  // }, {
-                  // connectionType: gqlTypeName,
-                  // })
-
-                  // I shouln't call nodeStore here.
-                  // I only need to do it right now because I can't use
-                  // runQuery, because we can't filter by fields that are
-                  // unions
-                  const nodes = context.nodeModel.nodeStore.getNodesByType(
-                    gqlTypeName
-                  )
-                  const filteredNodes = nodes.filter(node => {
-                    if (array) {
-                      const fieldValue = node[`${fieldName}___NODE`]
-                      return fieldValue && fieldValue.includes(source.id)
-                    } else {
-                      return node[`${fieldName}___NODE`] === source.id
-                    }
-                  })
-
-                  return filteredNodes.map(node => node.id)
-                })
-              )
-
-              const nodes = context.nodeModel.getNodesByIds(
-                {
-                  ids: _.uniq(_.flatten(allNodesIdsThatReferenceThisOne)),
-                  type: gqlTypeName,
-                },
-                {
-                  // I don't want individual nodes page dependency
-                  // as it won't catch if new node of that type
-                  // will link to this one.
-                  connectionType: gqlTypeName,
-                }
-              )
-
-              return nodes
+            extensions: {
+              link: {
+                from: `${fieldName}___NODE`,
+              },
             },
           }
         })
