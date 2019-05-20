@@ -37,9 +37,11 @@ const renderAst = new rehypeReact({
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
-    const prev = this.props.pageContext.prev
-    const next = this.props.pageContext.next
+    const {
+      pageContext: { prev, next },
+      data: { markdownRemark: post },
+      location: { href },
+    } = this.props
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
@@ -73,7 +75,6 @@ class BlogPostTemplate extends React.Component {
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
     }
-
     return (
       <Layout location={this.props.location}>
         <Container>
@@ -109,6 +110,7 @@ class BlogPostTemplate extends React.Component {
               <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
+              <meta property="og:url" content={href} />
               {post.frontmatter.image && (
                 <meta
                   property="og:image"

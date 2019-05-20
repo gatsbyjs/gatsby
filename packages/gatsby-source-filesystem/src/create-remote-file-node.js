@@ -345,8 +345,11 @@ module.exports = ({
     name,
   })
 
-  fileDownloadPromise.then(() => bar.tick())
+  processingCache[url] = fileDownloadPromise.then(node => {
+    bar.tick()
 
-  processingCache[url] = fileDownloadPromise
-  return fileDownloadPromise
+    return node
+  })
+
+  return processingCache[url]
 }
