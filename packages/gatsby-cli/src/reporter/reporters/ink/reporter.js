@@ -129,16 +129,14 @@ export default class GatsbyReporter extends React.Component {
             ))}
           </Static>
 
-          <Box flexDirection="column" marginTop={1}>
-            {showProgress &&
-              Object.keys(this.state.activities).map(activityName => (
-                <Activity
-                  key={activityName}
-                  name={activityName}
-                  {...this.state.activities[activityName]}
-                />
-              ))}
-          </Box>
+          {showProgress &&
+            Object.keys(this.state.activities).map(activityName => (
+              <Activity
+                key={activityName}
+                name={activityName}
+                {...this.state.activities[activityName]}
+              />
+            ))}
         </Box>
       </Box>
     )
