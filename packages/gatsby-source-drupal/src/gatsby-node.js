@@ -223,7 +223,7 @@ exports.sourceNodes = async (
             if (/^node--|^paragraph--/.test(type) && node.relationships[type]) {
               const nodeEntityId = _.toString(node.relationships[type])
               const parentEntity = nodes[nodeEntityId]
-              let parentDrupalId = ""
+              let parentDrupalId = ``
 
               if (!parentEntity) {
                 continue
@@ -276,7 +276,7 @@ exports.sourceNodes = async (
                               rel.data &&
                               rel.data.id === node.drupal_id &&
                               rel.data.type &&
-                              rel.data.type === "file--file" &&
+                              rel.data.type === `file--file` &&
                               rel.data.meta &&
                               rel.data.meta.alt
                             ) {
