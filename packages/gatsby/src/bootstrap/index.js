@@ -181,7 +181,7 @@ module.exports = async (args: BootstrapArgs) => {
     try {
       // Attempt to empty dir if remove fails,
       // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      // await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }

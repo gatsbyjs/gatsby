@@ -53,9 +53,6 @@ const bar = new ProgressBar(
  * @param  {Auth} [options.auth]
  */
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
 /**
  * createFilePath
  * --
@@ -162,7 +159,6 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts) =>
  */
 async function processRemoteNode({
   url,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -172,14 +168,7 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
-  await fs.ensureDir(pluginCacheDir)
-
+  const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
