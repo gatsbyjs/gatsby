@@ -110,6 +110,11 @@ const adjustPackageJson = ({
     }
   })
 
+  // tmp - don't run build script in circleCI
+  if (process.env.CI) {
+    delete monorepoPKGjson.scripts
+  }
+
   const temporaryMonorepoPKGjsonString = JSON.stringify(monorepoPKGjson)
 
   const unignorePackageJSONChanges = ignorePackageJSONChanges(packageName, [
