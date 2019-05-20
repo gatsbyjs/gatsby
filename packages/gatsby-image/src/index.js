@@ -19,10 +19,10 @@ const logDeprecationNotice = (prop, replacement) => {
 }
 
 // Handle legacy props during their deprecation phase
-const convertProps = convertedProps => {
-  let { resolutions, sizes, critical } = convertedProps
+const convertProps = props => {
+  let convertedProps = { ...props }
+  const { resolutions, sizes, critical } = convertedProps
 
-  // `resolutions`/`sizes` => `fixed`/`fluid`
   if (resolutions) {
     convertedProps.fixed = resolutions
     delete convertedProps.resolutions
@@ -32,7 +32,6 @@ const convertProps = convertedProps => {
     delete convertedProps.sizes
   }
 
-  // `critical` => `loading`
   if (critical) {
     logDeprecationNotice(`critical`, `the native "loading" attribute`)
     convertedProps.loading = `eager`
