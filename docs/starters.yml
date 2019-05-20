@@ -2591,3 +2591,15 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-london.netlify.com
+  repo: https://github.com/ImedAdel/gatsby-london
+  description: A custom, image-centric theme for Gatsby.
+  tags:
+    - Portfolio
+    - Blog
+    - Styling:PostCSS
+  features:
+    - Post thumbnails in the homepage
+    - Built with PostCSS
+    - Made for image-centeric portfolios
+    - Based on London for Ghost
