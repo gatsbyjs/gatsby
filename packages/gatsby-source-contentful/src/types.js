@@ -1,12 +1,5 @@
 const _ = require(`lodash`)
 
-// Ideally we would have nice access to it - I also potentially missed something
-// obvious and I don't need to import from gatsby internals (yikes #1)
-const { link } = require(`gatsby/dist/schema/resolvers`)
-// This probably will be handled by automatically adding fieldArgs/resolver
-// to Date fields - for now importing directly from gatsby internals (yikes #2)
-const { dateResolver } = require(`gatsby/dist/schema/types/date`)
-
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -80,6 +73,11 @@ const fieldTypeToGraphQLTypeLookup = {
     // use that type
     return {
       type: textTypeName,
+      extensions: {
+        link: {
+          from: `${context.fieldName}___NODE`,
+        },
+      },
     }
   },
 
@@ -91,7 +89,12 @@ const fieldTypeToGraphQLTypeLookup = {
       // Media field
       const type = {
         type: `ContentfulAsset`,
-        resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
+        extensions: {
+          link: {
+            from: `${context.fieldName}___NODE`,
+          },
+        },
+        //resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
       }
 
       return type
@@ -152,7 +155,12 @@ const fieldTypeToGraphQLTypeLookup = {
         // use that type
         return {
           type: UnionTypeName,
-          resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
+          extensions: {
+            link: {
+              from: `${context.fieldName}___NODE`,
+            },
+          },
+          // resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
         }
       } else if (contentTypes.length === 1) {
         // this is single type - not sure if this should be special case
@@ -160,7 +168,12 @@ const fieldTypeToGraphQLTypeLookup = {
         // or should create union with single type?
         return {
           type: makeTypeName(contentTypes[0].name),
-          resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
+          extensions: {
+            link: {
+              from: `${context.fieldName}___NODE`,
+            },
+          },
+          // resolve: link({ by: `id`, from: `${context.fieldName}___NODE` }),
         }
       } else {
         return null
@@ -176,7 +189,14 @@ const fieldTypeToGraphQLTypeLookup = {
 
   // TO-DO figure out how to attach fields args / resolver properly.
   // I'm importing private internals from gatsby which is no-no
-  Date: () => dateResolver,
+  Date: () => {
+    return {
+      type: `Date`,
+      extensions: {
+        dateformat: {},
+      },
+    }
+  },
 
   // Breaking changes below:
 
@@ -333,8 +353,18 @@ exports.createTypes = ({ actions, schema, contentTypeItems }) => {
         // default content node fields
         {
           ...defaultFields,
-          createdAt: dateResolver,
-          updatedAt: dateResolver,
+          createdAt: {
+            type: `Date`,
+            extensions: {
+              dateformat: {},
+            },
+          },
+          updatedAt: {
+            type: `Date`,
+            extensions: {
+              dateformat: {},
+            },
+          },
         }
       ),
 

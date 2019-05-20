@@ -12,7 +12,7 @@
     "base64-img": "^1.0.3",
     "bluebird": "^3.5.0",
     "chalk": "^2.3.2",
-    "contentful": "^6.1.0",
+    "contentful": "^7.6.0",
     "deep-map": "^1.5.0",
     "fs-extra": "^4.0.2",
     "gatsby-plugin-sharp": "^2.0.37",

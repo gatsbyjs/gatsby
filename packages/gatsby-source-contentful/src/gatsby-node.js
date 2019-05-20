@@ -36,7 +36,7 @@ exports.onPreBootstrap = validateOptions
  */
 
 exports.sourceNodes = async (
-  { actions, getNode, getNodes, createNodeId, store, cache, reporter },
+  { actions, getNode, getNodes, createNodeId, schema, store, cache, reporter },
   pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
