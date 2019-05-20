@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.6...gatsby@2.5.7) (2019-05-20)
+
+### Bug Fixes
+
+- **themes:** package names don't have to match filesystem ([#14149](https://github.com/gatsbyjs/gatsby/issues/14149)) ([e4b27b3](https://github.com/gatsbyjs/gatsby/commit/e4b27b3)), closes [#14134](https://github.com/gatsbyjs/gatsby/issues/14134)
+
 ## [2.5.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.5...gatsby@2.5.6) (2019-05-20)
 
 ### Bug Fixes
