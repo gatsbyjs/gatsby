@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.8...gatsby-source-drupal@3.1.9) (2019-05-20)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.7...gatsby-source-drupal@3.1.8) (2019-05-16)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.6...gatsby-source-drupal@3.1.7) (2019-05-15)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.5...gatsby-source-drupal@3.1.6) (2019-05-14)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.4...gatsby-source-drupal@3.1.5) (2019-05-14)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** limit concurrentFileRequests while downloading remote images ([#13943](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/13943)) ([1f0e0f4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/1f0e0f4))
+
+## [3.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.3...gatsby-source-drupal@3.1.4) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.2...gatsby-source-drupal@3.1.3) (2019-04-24)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.1...gatsby-source-drupal@3.1.2) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.0...gatsby-source-drupal@3.1.1) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.34...gatsby-source-drupal@3.1.0) (2019-04-09)
+
+### Features
+
+- **gatsby-source-drupal:** added Request Headers and GET Request Params options ([#12180](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/12180)) ([239101e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/239101e))
+
+## [3.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.33...gatsby-source-drupal@3.0.34) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.32...gatsby-source-drupal@3.0.33) (2019-04-02)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 ## [3.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.0.31...gatsby-source-drupal@3.0.32) (2019-03-22)
 
 **Note:** Version bump only for package gatsby-source-drupal

@@ -47,7 +47,7 @@ rows.forEach(row => {
   const date = new Date(row.created * 1000);
 ```
 
-The interesting thing here is the initial query, and this is based on a Drupal 7 database. A Drupal 8 or Drupal 6 database could be different, so check your schema. Next, load the tags on a simple Javascript array. Each post can have more than one tag, so you can take advantage of better-sqlite's _.pluck()_ function, which retrieves only the first column of a database query, and the _.all()_ function, which retrieves all rows in a single array:
+The interesting thing here is the initial query, and this is based on a Drupal 7 database. A Drupal 8 or Drupal 6 database could be different, so check your schema. Next, load the tags on a simple JavaScript array. Each post can have more than one tag, so you can take advantage of better-sqlite's _.pluck()_ function, which retrieves only the first column of a database query, and the _.all()_ function, which retrieves all rows in a single array:
 
 ```javascript
 const tags = db
@@ -75,7 +75,7 @@ if (image) {
 }
 ```
 
-And now that you have all the data you need, it is just a matter of creating a file with the metadata in yaml format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown Javascript library like [turndown](https://github.com/domchristie/turndown).
+And now that you have all the data you need, it is just a matter of creating a file with the metadata in yaml format and the body of the text in Markdown format. Luckily, a Drupal blog can also use Markdown or you can also look for an HTML to Markdown JavaScript library like [turndown](https://github.com/domchristie/turndown).
 
 ```javascript
   fs.mkdir(path, (err) => { });

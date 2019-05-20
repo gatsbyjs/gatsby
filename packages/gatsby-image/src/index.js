@@ -96,16 +96,38 @@ const noscriptImg = props => {
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
   const width = props.width ? `width="${props.width}" ` : ``
   const height = props.height ? `height="${props.height}" ` : ``
-  const opacity = props.opacity ? props.opacity : `1`
-  const transitionDelay = props.transitionDelay ? props.transitionDelay : `0.5s`
   const crossOrigin = props.crossOrigin
     ? `crossorigin="${props.crossOrigin}" `
     : ``
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+
+  // Since we're in the noscript block for this image (which is rendered during SSR or when js is disabled),
+  // we have no way to "detect" if native lazy loading is supported by the user's browser
+  // Since this attribute is a progressive enhancement, it won't break a browser with no support
+  // Therefore setting it by default is a good idea.
+
+  const loading = props.loading ? `loading="${props.loading}" ` : ``
+
+  return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
-  const { sizes, srcSet, src, style, onLoad, onError, ...otherProps } = props
+  const {
+    sizes,
+    srcSet,
+    src,
+    style,
+    onLoad,
+    onError,
+    nativeLazyLoadSupported,
+    loading,
+    ...otherProps
+  } = props
+
+  let loadingAttribute = {}
+
+  if (nativeLazyLoadSupported) {
+    loadingAttribute.loading = loading
+  }
 
   return (
     <img
@@ -116,6 +138,7 @@ const Img = React.forwardRef((props, ref) => {
       onLoad={onLoad}
       onError={onError}
       ref={ref}
+      {...loadingAttribute}
       style={{
         position: `absolute`,
         top: 0,
@@ -143,8 +166,10 @@ class Image extends React.Component {
     // default settings for browser without Intersection Observer available
     let isVisible = true
     let imgLoaded = false
+    let imgCached = false
     let IOSupported = false
     let fadeIn = props.fadeIn
+    let nativeLazyLoadSupported = false
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
@@ -158,6 +183,17 @@ class Image extends React.Component {
     ) {
       isVisible = false
       IOSupported = true
+    }
+
+    // Chrome Canary 75 added native lazy loading support!
+    // https://addyosmani.com/blog/lazy-loading/
+    if (
+      typeof HTMLImageElement !== `undefined` &&
+      `loading` in HTMLImageElement.prototype
+    ) {
+      // Setting isVisible to true to short circuit our IO code and let the browser do its magic
+      isVisible = true
+      nativeLazyLoadSupported = true
     }
 
     // Never render image during SSR
@@ -176,10 +212,12 @@ class Image extends React.Component {
     this.state = {
       isVisible,
       imgLoaded,
+      imgCached,
       IOSupported,
       fadeIn,
       hasNoScript,
       seenBefore,
+      nativeLazyLoadSupported,
     }
 
     this.imageRef = React.createRef()
@@ -206,6 +244,10 @@ class Image extends React.Component {
   }
 
   handleRef(ref) {
+    if (this.state.nativeLazyLoadSupported) {
+      // Bail because the browser natively supports lazy loading
+      return
+    }
     if (this.state.IOSupported && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
@@ -216,7 +258,16 @@ class Image extends React.Component {
           this.props.onStartLoad({ wasCached: imageInCache })
         }
 
-        this.setState({ isVisible: true, imgLoaded: imageInCache })
+        // imgCached and imgLoaded must update after isVisible,
+        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
+        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
+        // avoiding initiating unnecessary animation frames from style changes.
+        this.setState({ isVisible: true }, () =>
+          this.setState({
+            imgLoaded: imageInCache,
+            imgCached: !!this.imageRef.current.currentSrc,
+          })
+        )
       })
     }
   }
@@ -246,26 +297,54 @@ class Image extends React.Component {
       fluid,
       fixed,
       backgroundColor,
+      durationFadeIn,
       Tag,
       itemProp,
+      critical,
     } = convertProps(this.props)
+
+    let { loading } = convertProps(this.props)
+
+    if (
+      typeof critical === `boolean` &&
+      process.env.NODE_ENV !== `production`
+    ) {
+      console.log(
+        `
+        The "critical" prop is now deprecated and will be removed in the next major version 
+        of "gatsby-image"
+
+        Please use the native "loading" attribute instead of "critical" 
+        `
+      )
+      // We want to continue supporting critical and in case it is passed in
+      // we map its value to loading
+      loading = critical ? `eager` : `lazy`
+    }
+
+    const { nativeLazyLoadSupported } = this.state
+
+    const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+
+    const imageStyle = {
+      opacity: shouldReveal ? 1 : 0,
+      transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
+      ...imgStyle,
+    }
 
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const initialDelay = `0.25s`
-    const imagePlaceholderStyle = {
-      opacity: this.state.imgLoaded ? 0 : 1,
-      transition: `opacity 0.5s`,
-      transitionDelay: this.state.imgLoaded ? `0.5s` : initialDelay,
-      ...imgStyle,
-      ...placeholderStyle,
+    const delayHideStyle = {
+      transitionDelay: `${durationFadeIn}ms`,
     }
 
-    const imageStyle = {
-      opacity: this.state.imgLoaded || this.state.fadeIn === false ? 1 : 0,
-      transition: this.state.fadeIn === true ? `opacity 0.5s` : `none`,
+    const imagePlaceholderStyle = {
+      opacity: this.state.imgLoaded ? 0 : 1,
+      ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
+      ...placeholderStyle,
     }
 
     const placeholderImageProps = {
@@ -307,9 +386,9 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 right: 0,
                 left: 0,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -347,6 +426,8 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
+                nativeLazyLoadSupported={nativeLazyLoadSupported}
+                loading={loading}
               />
             </picture>
           )}
@@ -355,7 +436,12 @@ class Image extends React.Component {
           {this.state.hasNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
-                __html: noscriptImg({ alt, title, ...image }),
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  loading,
+                  ...image,
+                }),
               }}
             />
           )}
@@ -393,8 +479,8 @@ class Image extends React.Component {
                 backgroundColor: bgColor,
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
-                transitionDelay: initialDelay,
                 height: image.height,
+                ...(shouldFadeIn && delayHideStyle),
               }}
             />
           )}
@@ -434,6 +520,8 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
+                nativeLazyLoadSupported={nativeLazyLoadSupported}
+                loading={loading}
               />
             </picture>
           )}
@@ -445,8 +533,7 @@ class Image extends React.Component {
                 __html: noscriptImg({
                   alt,
                   title,
-                  width: image.width,
-                  height: image.height,
+                  loading,
                   ...image,
                 }),
               }}
@@ -461,10 +548,13 @@ class Image extends React.Component {
 }
 
 Image.defaultProps = {
-  critical: false,
   fadeIn: true,
+  durationFadeIn: 500,
   alt: ``,
   Tag: `div`,
+  // We set it to `lazy` by default because it's best to default to a performant
+  // setting and let the user "opt out" to `eager`
+  loading: `lazy`,
 }
 
 const fixedObject = PropTypes.shape({
@@ -495,6 +585,7 @@ Image.propTypes = {
   fixed: fixedObject,
   fluid: fluidObject,
   fadeIn: PropTypes.bool,
+  durationFadeIn: PropTypes.number,
   title: PropTypes.string,
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
@@ -510,6 +601,7 @@ Image.propTypes = {
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
+  loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
 }
 
 export default Image

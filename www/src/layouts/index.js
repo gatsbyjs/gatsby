@@ -1,8 +1,17 @@
-import React from "react"
-import PluginLibraryWrapper from "../components/layout/plugin-library-wrapper"
+import React, { useState } from "react"
 
+let PluginLibraryWrapper
 export default props => {
-  if (props.pageContext.layout === `plugins`) {
+  const [loaded, setLoaded] = useState(false)
+
+  const promise = import(`../components/layout/plugin-library-wrapper`)
+  if (props.pageContext.layout === `plugins` && !loaded) {
+    promise.then(pl => {
+      PluginLibraryWrapper = pl.default
+      setLoaded(true)
+    })
+    return null
+  } else if (props.pageContext.layout === `plugins` && loaded) {
     return (
       <PluginLibraryWrapper location={props.location}>
         {props.children}

@@ -18,7 +18,7 @@ Add a `deploy` script to `package.json`
 }
 ```
 
-The `--prefix-paths` flag is used because your website is inside a folder like `http://username.github.io/reponame/`, you'll need to add your `/reponame` path prefix as an option to `gatsby-config.js`:
+The `--prefix-paths` flag is used because your website is inside a folder like `http://username.github.io/reponame/`. You'll need to add your `/reponame` path prefix as an option to `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {

@@ -32,7 +32,7 @@ interface GatsbyImageProps {
   alt?: string
   className?: string | object
   critical?: boolean
-  crossOrigin?: string | boolean;
+  crossOrigin?: string | boolean
   style?: object
   imgStyle?: object
   placeholderStyle?: object
@@ -42,6 +42,7 @@ interface GatsbyImageProps {
   onError?: (event: any) => void
   Tag?: string
   itemProp?: string
+  loading?: `auto` | `lazy` | `eager`
 }
 
 export default class GatsbyImage extends React.Component<

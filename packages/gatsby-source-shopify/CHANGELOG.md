@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.31...gatsby-source-shopify@2.0.32) (2019-05-20)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.31](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.30...gatsby-source-shopify@2.0.31) (2019-05-16)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.29...gatsby-source-shopify@2.0.30) (2019-05-15)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.28...gatsby-source-shopify@2.0.29) (2019-05-14)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.28](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.27...gatsby-source-shopify@2.0.28) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.26...gatsby-source-shopify@2.0.27) (2019-04-24)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.26](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.25...gatsby-source-shopify@2.0.26) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.25](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.24...gatsby-source-shopify@2.0.25) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.24](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.23...gatsby-source-shopify@2.0.24) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.23](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.22...gatsby-source-shopify@2.0.23) (2019-04-02)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [2.0.22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.21...gatsby-source-shopify@2.0.22) (2019-03-22)
 
 **Note:** Version bump only for package gatsby-source-shopify

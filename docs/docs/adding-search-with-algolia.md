@@ -13,7 +13,7 @@ Two things before we begin:
 
 First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia), [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) and [`algoliasearch`](https://github.com/algolia/algoliasearch-client-javascript) to your project. With `react-instantsearch` Algolia provides an extensive library of off-the-shelf React components that we can import to save ourselves a lot of work. `algoliasearch` provides the actual search client which we'll simply pass into `react-instantsearch`. If you're not using it already, also install [`dotenv`](https://github.com/motdotla/dotenv) while you're at it. We're going to need it to specify your Algolia app ID and both the search and admin API keys without committing them to version control.
 
-```sh
+```shell
 yarn add gatsby-plugin-algolia react-instantsearch-dom algoliasearch dotenv
 ```
 
@@ -56,7 +56,7 @@ I inserted random character sequences here but yours should be the same length. 
 
 ```env:title=.env.example
 # rename this file to .env and supply the listed values
-# also make sure they are available to the build tool (e.g. netlify)
+# also make sure they are available to the build tool (e.g. Netlify)
 # warning: variables prexifed with GATSBY_ will be made available to client-side code,
 #   be careful not to expose sensitive data (in this case your Algolia admin key)
 
@@ -591,3 +591,9 @@ Note that this is where we define our array of search indices and pass it as a p
 If everything works as expected, running `gatsby develop` should now give you some instant search magic looking something like in the video below! You can also play around with it [here](https://janosh.io/blog).
 
 `youtube: Amsub4xJ3Jc`
+
+## Additional Resources
+
+If you have any issues or if you want to learn more about using Algolia for search, check out this tutorial from Jason Lengstorf:
+
+`youtube: VSkXyuXzwlc`

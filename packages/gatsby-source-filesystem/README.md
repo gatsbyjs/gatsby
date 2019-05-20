@@ -183,6 +183,10 @@ createRemoteFileNode({
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
 
   // OPTIONAL
+  // Adds extra http headers to download request if passed in.
+  httpHeaders: { Authorization: `Bearer someAccessToken` },
+
+  // OPTIONAL
   // Sets the file extension
   ext: ".jpg",
 })

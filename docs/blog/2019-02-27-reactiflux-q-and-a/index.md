@@ -49,7 +49,7 @@ Date of interview: December 13 2018
 
 **A:** Improving integrations with hosted services (CMSs etc) often used with Gatsby + improving Gatsby build speeds — we're working to support very large sites in new year e.g. 1 million+ pages.
 
-We're also working on adding [Gatsby Theme support](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/) which @biscarch is leading.
+We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing-gatsby-themes/) which @biscarch is leading.
 
 — kylemathews
 
@@ -71,7 +71,7 @@ We're also working on adding [Gatsby Theme support](https://www.gatsbyjs.org/blo
 
 ---
 
-**Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using gastby build and serve, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
+**Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using gatsby build and serve, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
 
 **A:** Yes, (this is github issues)[https://github.com/gatsbyjs/gatsby/issues] which you should definitely file an issue for so we can investigate your issue in depth.
 
@@ -81,15 +81,15 @@ We're also working on adding [Gatsby Theme support](https://www.gatsbyjs.org/blo
 
 **Q:** How far down the roadmap are incremental builds? — ghardin137
 
-**A:** Pretty close! We're working on creating a hosted Gatsby build service which will include incremental build support. We should be able to launch that in first half of next year. We're focused right now on launching [Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/) and then this will be the next thing we'll tackle.
+**A:** Pretty close! We're working on creating a hosted Gatsby build service which will include incremental build support. We should be able to launch that in first half of next year. We're focused right now on launching [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/) and then this will be the next thing we'll tackle.
 
 — kylemathews
 
 ---
 
-**Q:** Do you hope or believe that gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outrdated wordpress sites and architechture? — max
+**Q:** Do you hope or believe that gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outdated wordpress sites and architecture? — max
 
-**A:** Yup! That's why I started [the Gatsby OSS project and company](https://www.gatsbyjs.org/blog/2018-05-24-launching-new-gatsby-company/)! CMSs we're designed in the late 1990s and are very outdated for today's cloud/serverless computing environment. We want Gatsby to be able to replace CMSs.
+**A:** Yup! That's why I started [the Gatsby OSS project and company](/blog/2018-05-24-launching-new-gatsby-company/)! CMSs we're designed in the late 1990s and are very outdated for today's cloud/serverless computing environment. We want Gatsby to be able to replace CMSs.
 
 — kylemathews
 
@@ -141,7 +141,7 @@ While it's inevitable that bugs come with any platform you choose to build on, G
 
 **A:** Yeah — this is a top priority — we've been a bit overwhelmed post v2 launch handling issues/PRs but our we've thought a lot about this problem and next steps are a) [make it possible to export your schema and directly control it](https://github.com/gatsbyjs/gatsby/issues/4261).
 
-We're also very excited that more and more services are offering native GraphQL APIs which gets us out of having to dynamically create the schema. We added [support for stitching in graphql schemas](https://www.gatsbyjs.org/blog/2018-09-25-announcing-graphql-stitching-support/) earlier this year and have a lot more plans to make schema stitching more powerful e.g. [add support for transforming data from 3rd party schemas](https://github.com/gatsbyjs/rfcs/pull/11).
+We're also very excited that more and more services are offering native GraphQL APIs which gets us out of having to dynamically create the schema. We added [support for stitching in graphql schemas](/blog/2018-09-25-announcing-graphql-stitching-support/) earlier this year and have a lot more plans to make schema stitching more powerful e.g. [add support for transforming data from 3rd party schemas](https://github.com/gatsbyjs/rfcs/pull/11).
 
 — kylemathews
 
@@ -149,21 +149,21 @@ We're also very excited that more and more services are offering native GraphQL 
 
 **Q:** Any info on contributing to the codebase or documentation greatly appreciated. Any tips that might not be in the official How To, or a contact if applicable/available. Thank you for your time — seanmoore1976
 
-**A:** Definitely! So I'd recommend starting with the [How to Contribute guide](https://www.gatsbyjs.org/docs/how-to-contribute/).
+**A:** Definitely! So I'd recommend starting with the [How to Contribute guide](/docs/how-to-contribute/).
 
-It's a great place to get started. That said, I'd also encourage to check out [a Pairing session](https://www.gatsbyjs.org/docs/pair-programming/), where a Gatsby employee and you will pair 1:1 for about an hour or so to work on a problem or challenge you've run into. We've had some really good stuff come out of pairing sessions, and I think people really like them as a way to get started contributing!
+It's a great place to get started. That said, I'd also encourage to check out [a Pairing session](/docs/pair-programming/), where a Gatsby employee and you will pair 1:1 for about an hour or so to work on a problem or challenge you've run into. We've had some really good stuff come out of pairing sessions, and I think people really like them as a way to get started contributing!
 
 — dustin
 
 ---
 
-**Q:** How is authenication handled in gatsby? — Reinhard
+**Q:** How is authentication handled in gatsby? — Reinhard
 
 **A:** Great question! So in general, and I probably say it far too often, but a Gatsby app is just a React application.
 
 So--however you implement authentication into a React application can be followed similarly with a Gatsby application, because a Gatsby app is a React application.
 
-We do have [a guide/tutorial written here](https://www.gatsbyjs.org/docs/authentication-tutorial/) which many have found helpful. Shameless shout out to my little side-project (just a demo, not a real product!) [gatsby-mail](https://github.com/dschau/gatsby-mail) which has user authentication (via React context) as well.
+We do have [a guide/tutorial written here](/docs/authentication-tutorial/) which many have found helpful. Shameless shout out to my little side-project (just a demo, not a real product!) [gatsby-mail](https://github.com/dschau/gatsby-mail) which has user authentication (via React context) as well.
 
 Check it out, and hope it's helpful!
 
@@ -183,7 +183,7 @@ A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by cr
 
 **Q:** What support will Gatsby team provide to .com clients and the idea behind it? — kdichev
 
-**A:** Many of the largest OSS projects have commercial companies backing them. Complicated software is well... complicated :smiley: and requires a lot of investment to build and maintain. I founded Gatsby Inc to be an excellent steward of the project and ecosystem & provide support and services for commercial users of Gatsby. Most large companies that adopt open source want to pay for commercial support — we provide that. Also there's many cloud services we're building that'll add a lot of value to companies using Gatsby like the before mentioned [Gatsby Preview](https://www.gatsbyjs.org/blog/2018-07-17-announcing-gatsby-preview/).
+**A:** Many of the largest OSS projects have commercial companies backing them. Complicated software is well... complicated :smiley: and requires a lot of investment to build and maintain. I founded Gatsby Inc to be an excellent steward of the project and ecosystem & provide support and services for commercial users of Gatsby. Most large companies that adopt open source want to pay for commercial support — we provide that. Also there's many cloud services we're building that'll add a lot of value to companies using Gatsby like the before mentioned [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/).
 
 — kylemathews
 
@@ -217,7 +217,7 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 **Q:** What about non-product partnership? — yuchi
 
-**A:** We've started with [an agency partner program](https://www.gatsbyjs.org/blog/2018-08-01-partner-program/) which we'll be talking about more soon — if interested, please sign up!
+**A:** We've started with [an agency partner program](/blog/2018-08-01-partner-program/) which we'll be talking about more soon — if interested, please sign up!
 
 — kylemathews
 

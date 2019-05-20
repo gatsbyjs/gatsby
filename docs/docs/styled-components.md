@@ -34,7 +34,7 @@ module.exports = {
 }
 ```
 
-Then in your terminal run `npm run develop` to start the Gatsby development server.
+Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
 Now let's create a sample Styled Components page at `src/pages/index.js`:
 

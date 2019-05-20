@@ -17,8 +17,15 @@ npm install --save gatsby-source-shopify
 
 ## How to use
 
+Ensure you have an access token for the [Shopify Storefront API][shopify-storefront-api]. The token should have the following permissions:
+
+- Read products, variants, and collections
+- Read product tags
+- Read content like articles, blogs, and comments
+
+Then in your `gatsby-config.js` add the following config to enable this plugin:
+
 ```js
-// In your gatsby-config.js
 plugins: [
   /*
    * Gatsby's data processing layer begins with “source”

@@ -1,42 +1,11 @@
 const report = require(`gatsby-cli/lib/reporter`)
+const { ObjectTypeComposer } = require(`graphql-compose`)
 const { getExampleValue } = require(`./example-value`)
 const {
   addNodeInterface,
   getNodeInterface,
 } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
-const getInferConfig = require(`./get-infer-config`)
-
-const addInferredType = ({
-  schemaComposer,
-  typeComposer,
-  nodeStore,
-  typeConflictReporter,
-  typeMapping,
-  parentSpan,
-}) => {
-  const typeName = typeComposer.getTypeName()
-  const exampleValue = getExampleValue({
-    nodes: nodeStore.getNodesByType(typeName),
-    typeName,
-    typeConflictReporter,
-    ignoreFields: [
-      ...getNodeInterface({ schemaComposer }).getFieldNames(),
-      `$loki`,
-    ],
-  })
-
-  addInferredFields({
-    schemaComposer,
-    typeComposer,
-    nodeStore,
-    exampleValue,
-    inferConfig: getInferConfig(typeComposer),
-    typeMapping,
-    parentSpan,
-  })
-  return typeComposer
-}
 
 const addInferredTypes = ({
   schemaComposer,
@@ -50,52 +19,95 @@ const addInferredTypes = ({
   const typeNames = putFileFirst(nodeStore.getTypes())
   const noNodeInterfaceTypes = []
 
+  const typesToInfer = []
+
   typeNames.forEach(typeName => {
     let typeComposer
-    let inferConfig
     if (schemaComposer.has(typeName)) {
       typeComposer = schemaComposer.getOTC(typeName)
-      inferConfig = getInferConfig(typeComposer)
-      if (inferConfig.infer) {
+      // Infer if we have enabled "@infer" or if it's "@dontInfer" but we
+      // have "addDefaultResolvers: true"
+      const runInfer = typeComposer.hasExtension(`infer`)
+        ? typeComposer.getExtension(`infer`) ||
+          typeComposer.getExtension(`addDefaultResolvers`)
+        : true
+      if (runInfer) {
         if (!typeComposer.hasInterface(`Node`)) {
-          noNodeInterfaceTypes.push(typeComposer.getType())
+          noNodeInterfaceTypes.push(typeName)
         }
+        typesToInfer.push(typeComposer)
       }
     } else {
-      typeComposer = schemaComposer.createObjectTC(typeName)
+      typeComposer = ObjectTypeComposer.create(typeName, schemaComposer)
       addNodeInterface({ schemaComposer, typeComposer })
+      typeComposer.setExtension(`createdFrom`, `inference`)
+      typesToInfer.push(typeComposer)
     }
   })
 
-  // XXX(freiksenet): We iterate twice to pre-create all types
-  const typeComposers = typeNames.map(typeName => {
-    addInferredType({
-      schemaComposer,
-      nodeStore,
-      typeConflictReporter,
-      typeComposer: schemaComposer.getOTC(typeName),
-      typeMapping,
-      parentSpan,
-    })
-  })
-
   if (noNodeInterfaceTypes.length > 0) {
-    noNodeInterfaceTypes.forEach(type => {
+    noNodeInterfaceTypes.forEach(typeName => {
       report.warn(
-        `Type \`${type}\` declared in \`createTypes\` looks like a node, ` +
+        `Type \`${typeName}\` declared in \`createTypes\` looks like a node, ` +
           `but doesn't implement a \`Node\` interface. It's likely that you should ` +
           `add the \`Node\` interface to your type def:\n\n` +
-          `\`type ${type} implements Node { ... }\`\n\n` +
+          `\`type ${typeName} implements Node { ... }\`\n\n` +
           `If you know that you don't want it to be a node (which would mean no ` +
           `root queries to retrieve it), you can explicitly disable inference ` +
           `for it:\n\n` +
-          `\`type ${type} @dontInfer { ... }\``
+          `\`type ${typeName} @dontInfer { ... }\``
       )
     })
     report.panic(`Building schema failed`)
   }
 
-  return typeComposers
+  return typesToInfer.map(typeComposer =>
+    addInferredType({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  )
+}
+
+const addInferredType = ({
+  schemaComposer,
+  typeComposer,
+  nodeStore,
+  typeConflictReporter,
+  typeMapping,
+  parentSpan,
+}) => {
+  const typeName = typeComposer.getTypeName()
+  const nodes = nodeStore.getNodesByType(typeName)
+  // TODO: Move this to where the type is created once we can get
+  // node type owner information directly from store
+  if (typeComposer.getExtension(`createdFrom`) === `inference`) {
+    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+  }
+
+  const exampleValue = getExampleValue({
+    nodes,
+    typeName,
+    typeConflictReporter,
+    ignoreFields: [
+      ...getNodeInterface({ schemaComposer }).getFieldNames(),
+      `$loki`,
+    ],
+  })
+
+  addInferredFields({
+    schemaComposer,
+    typeComposer,
+    nodeStore,
+    exampleValue,
+    typeMapping,
+    parentSpan,
+  })
+  return typeComposer
 }
 
 const putFileFirst = typeNames => {

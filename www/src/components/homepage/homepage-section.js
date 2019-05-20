@@ -5,7 +5,13 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm } from "../../utils/typography"
-import { colors, space, breakpoints, scale, fonts } from "../../utils/presets"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 
 const ICON_SIZE = space[7]
 
@@ -15,21 +21,21 @@ const HomepageSectionRoot = styled(`section`)`
   padding: ${space[5]} ${space[6]};
   width: 100%;
 
-  ${breakpoints.xl} {
+  ${mediaQueries.xl} {
     margin: -1px 0;
     padding: ${space[5]} 5%;
   }
 
-  ${breakpoints.xxl} {
+  ${mediaQueries.xxl} {
     padding: ${space[7]} 8%;
   }
 `
 export const Header = styled(`header`)`
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     max-width: 30rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-left: ${space[9]};
   }
 `
@@ -38,13 +44,13 @@ export const Name = styled(`h3`)`
   align-items: center;
   color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
   display: flex;
-  font-size: ${scale[2]};
+  font-size: ${fontSizes[2]};
   font-weight: normal;
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
@@ -52,7 +58,7 @@ export const Name = styled(`h3`)`
 const Icon = styled(`span`)`
   display: block;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     margin-right: calc(${ICON_SIZE} / 5);
   }
 
@@ -66,13 +72,13 @@ const Icon = styled(`span`)`
 
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
-  font-size: ${scale[6]};
+  font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
   color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
-  font-size: ${scale[3]};
+  font-size: ${fontSizes[3]};
   font-family: ${fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
@@ -87,7 +93,7 @@ const Actions = styled(`div`)`
     margin-right: ${space[1]};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: ${space[4]} 0 ${space[8]};
   }
 `
@@ -120,7 +126,7 @@ const HomepageSection = ({
         )}
         {links && (
           <Actions>
-            {links.map((item, idx) => {
+            {links.map(item => {
               const { to, label, icon: Icon, secondary, tracking } = item
 
               return (

@@ -253,6 +253,27 @@ Object {
 }
 `;
 
+exports[`GraphQL type inference handles lowercase type names 1`] = `
+Object {
+  "data": Object {
+    "allWordpressPage": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "__typename": "wordpress__PAGE",
+            "acfFields": Object {
+              "__typename": "wordpress__PAGEAcfFields",
+              "fooz": "bar",
+            },
+            "id": "1",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`GraphQL type inference type conflicts catches conflicts and removes field 1`] = `
 Array [
   TypeConflictEntry {

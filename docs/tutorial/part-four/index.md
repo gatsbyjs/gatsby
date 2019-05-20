@@ -6,7 +6,7 @@ typora-copy-images-to: ./
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
 to feel pretty comfortable 😀
 
-## Recap of first half of the tutorial
+## Recap of the first half of the tutorial
 
 So far, you've been learning how to use React.js—how powerful it is to be able to
 create your _own_ components to act as custom building blocks for websites.
@@ -22,11 +22,11 @@ GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 
 ## Data in Gatsby
 
-A website has four parts, HTML, CSS, JS, and data. The first half of the
+A website has four parts: HTML, CSS, JS, and data. The first half of the
 tutorial focused on the first three. Now let’s learn how to use data in Gatsby
 sites.
 
-What is data?
+**What is data?**
 
 A very computer science-y answer would be: data is things like `"strings"`,
 integers (`42`), objects (`{ pizza: true }`), etc.
@@ -63,7 +63,7 @@ See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guid
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
 1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/how-plugins-work/) guide and consider building your own!
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -83,9 +83,9 @@ Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Create a new example site
 
-Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
+Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way, you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
 
-Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
+Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`. Then navigate to the new directory:
 
 ```shell
 gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -292,21 +292,21 @@ Page queries live outside of the component definition -- by convention at the en
 ### Use a StaticQuery
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
-
-Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
+Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/)
+Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
 import { css } from "@emotion/core"
 // highlight-next-line
-import { StaticQuery, Link, graphql } from "gatsby"
+import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-export default ({ children }) => (
-  {/* highlight-start */}
-  <StaticQuery
-    query={graphql`
+export default ({ children }) => {
+  // highlight-start
+  const data = useStaticQuery(
+    graphql`
       query {
         site {
           siteMetadata {
@@ -314,43 +314,45 @@ export default ({ children }) => (
           }
         }
       }
-    `}
-    render={data => (
-      {/* highlight-end */}
-      <div
-        css={css`
-          margin: 0 auto;
-          max-width: 700px;
-          padding: ${rhythm(2)};
-          padding-top: ${rhythm(1.5)};
-        `}
-      >
-        <Link to={`/`}>
-          <h3
-            css={css`
-              margin-bottom: ${rhythm(2)};
-              display: inline-block;
-              font-style: normal;
-            `}
-          >
-            {data.site.siteMetadata.title}{/* highlight-line */}
-          </h3>
-        </Link>
-        <Link
-          to={`/about/`}
+    `
+  )
+  // highlight-end
+  // highlight-start
+  return (
+    // highlight-end
+    <div
+      css={css`
+        margin: 0 auto;
+        max-width: 700px;
+        padding: ${rhythm(2)};
+        padding-top: ${rhythm(1.5)};
+      `}
+    >
+      <Link to={`/`}>
+        <h3
           css={css`
-            float: right;
+            margin-bottom: ${rhythm(2)};
+            display: inline-block;
+            font-style: normal;
           `}
         >
-          About
-        </Link>
-        {children}
-      </div>
-      {/* highlight-start */}
-    )}
-  />
-  {/* highlight-end */}
-)
+          {data.site.siteMetadata.title} {/* highlight-line */}
+        </h3>
+      </Link>
+      <Link
+        to={`/about/`}
+        css={css`
+          float: right;
+        `}
+      >
+        About
+      </Link>
+      {children}
+    </div>
+    // highlight-start
+  )
+  // highlight-end
+}
 ```
 
 Another success! 🎉

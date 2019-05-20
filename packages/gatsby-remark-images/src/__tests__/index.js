@@ -22,6 +22,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 const Remark = require(`remark`)
 const { Potrace } = require(`potrace`)
 const queryString = require(`query-string`)
+const cheerio = require(`cheerio`)
 
 const plugin = require(`../`)
 
@@ -336,4 +337,36 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
       args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
     })
   )
+})
+
+describe(`showCaptions`, () => {
+  it(`display title as caption`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display alt as caption if title was not found`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
 })

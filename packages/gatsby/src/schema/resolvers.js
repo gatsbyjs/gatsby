@@ -75,10 +75,17 @@ const paginate = (results = [], { skip = 0, limit }) => {
   const count = results.length
   const items = results.slice(skip, limit && skip + limit)
 
+  const pageCount = limit
+    ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
+    : skip
+    ? 2
+    : 1
+  const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
+  const hasPreviousPage = currentPage > 1
   const hasNextPage = skip + limit < count
 
   return {
-    totalCount: items.length,
+    totalCount: count,
     edges: items.map((item, i, arr) => {
       return {
         node: item,
@@ -88,12 +95,17 @@ const paginate = (results = [], { skip = 0, limit }) => {
     }),
     nodes: items,
     pageInfo: {
+      currentPage,
+      hasPreviousPage,
       hasNextPage,
+      itemCount: items.length,
+      pageCount,
+      perPage: limit,
     },
   }
 }
 
-const link = ({ by, from }) => async (source, args, context, info) => {
+const link = ({ by = `id`, from }) => async (source, args, context, info) => {
   const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -134,22 +146,35 @@ const link = ({ by, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  return context.nodeModel.runQuery(
+  const result = await context.nodeModel.runQuery(
     { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
     { path: context.path }
   )
+  if (
+    returnType instanceof GraphQLList &&
+    Array.isArray(fieldValue) &&
+    Array.isArray(result)
+  ) {
+    return fieldValue.map(value =>
+      result.find(obj => getValueAt(obj, by) === value)
+    )
+  } else {
+    return result
+  }
 }
 
-const fileByPath = (source, args, context, info) => {
-  let fieldValue = source[info.fieldName]
+const fileByPath = ({ from }) => (source, args, context, info) => {
+  const fieldValue = source && source[from || info.fieldName]
 
-  const isArray = getNullableType(info.returnType) instanceof GraphQLList
-
-  if (!fieldValue) {
-    return null
+  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
+  if (
+    Array.isArray(fieldValue) &&
+    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
+  ) {
+    return fieldValue
   }
 
-  const findLinkedFileNode = async relativePath => {
+  const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
     const fileLinkPath = normalize(
@@ -158,7 +183,7 @@ const fileByPath = (source, args, context, info) => {
 
     // Use that path to find the linked File node.
     const linkedFileNode = _.find(
-      await context.nodeModel.getAllNodes({ type: `File` }),
+      context.nodeModel.getAllNodes({ type: `File` }),
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
@@ -166,15 +191,18 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the File node for this node (we assume the node is something
   // like markdown which would be a child node of a File node).
-  const parentFileNode = context.nodeModel.findRootNodeAncestor(source)
+  const parentFileNode = context.nodeModel.findRootNodeAncestor(
+    source,
+    node => node.internal && node.internal.type === `File`
+  )
 
-  // Find the linked File node(s)
-  if (isArray) {
-    return Promise.all(fieldValue.map(findLinkedFileNode))
-  } else {
-    return findLinkedFileNode(fieldValue)
-  }
+  return resolveValue(findLinkedFileNode, fieldValue)
 }
+
+const resolveValue = (resolve, value) =>
+  Array.isArray(value)
+    ? value.map(v => resolveValue(resolve, v))
+    : resolve(value)
 
 module.exports = {
   findManyPaginated,
@@ -183,4 +211,5 @@ module.exports = {
   link,
   distinct,
   group,
+  paginate,
 }
