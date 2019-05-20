@@ -256,6 +256,8 @@ class Image extends React.Component {
         this.setState({ isVisible: true }, () =>
           this.setState({
             imgLoaded: imageInCache,
+            // `currentSrc` should be a string, but can be `undefined` in IE,
+            // !! operator validates the value is not undefined/null/""
             imgCached: !!this.imageRef.current.currentSrc,
           })
         )
