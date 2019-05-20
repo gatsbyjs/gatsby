@@ -783,7 +783,7 @@ describe(`GraphQL type inference`, () => {
       const nodes = [
         {
           id: `1`,
-          linkedOnCustomField: [`test1`, `test3`],
+          linkedOnCustomField: [`test3`, `test1`],
           internal: { type: `Test` },
         },
       ].concat(getMappingNodes())
@@ -802,20 +802,28 @@ describe(`GraphQL type inference`, () => {
         }
       )
 
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges.length).toEqual(1)
-      expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField
-      ).toBeDefined()
-      expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField.length
-      ).toEqual(2)
-      expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField[0].label
-      ).toEqual(`First node`)
-      expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField[1].label
-      ).toEqual(`Third node`)
+      expect(result).toMatchInlineSnapshot(`
+Object {
+  "data": Object {
+    "allTest": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "linkedOnCustomField": Array [
+              Object {
+                "label": "Third node",
+              },
+              Object {
+                "label": "First node",
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+}
+`)
     })
   })
 
