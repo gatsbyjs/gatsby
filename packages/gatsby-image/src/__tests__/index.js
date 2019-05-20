@@ -85,7 +85,7 @@ describe(`<Image />`, () => {
   })
 
   it(`should have a transition-delay of 1sec`, () => {
-    const component = setup(false, { durationFadeIn: `1000` })
+    const component = setup(false, { durationFadeIn: 1000 })
     expect(component).toMatchSnapshot()
   })
 
