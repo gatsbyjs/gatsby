@@ -10,7 +10,7 @@ const { cloneDeep } = require("lodash");
 const DataLoader = require("dataloader");
 
 const queue = new PQueue({
-  concurrency: process.env.GATSBY_MDX_CONCURRENCY || 4
+  concurrency: parseInt(process.env.GATSBY_MDX_CONCURRENCY) || 4
 });
 
 let count = 0;
@@ -159,7 +159,7 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) => {
                     renderMdxBody
                       ? renderMdxBody(body)
                       : reporter.error(
-                          `gatsby-mdx: renderMdxBody was unavailable when rendering html. 
+                          `gatsby-mdx: renderMdxBody was unavailable when rendering html.
 >> This is a bug.`
                         )
                 )
