@@ -205,14 +205,21 @@ async function startServer(program) {
       const { headers, method } = req
       req
         .pipe(
-          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
-            const message = `Error when trying to proxy request "${
-              req.originalUrl
-            }" to "${proxiedUrl}"`
+          got
+            .stream(proxiedUrl, { headers, method })
+            .on(`error`, err => {
+              const message = `Error when trying to proxy request "${
+                req.originalUrl
+              }" to "${proxiedUrl}"`
 
-            report.error(message, err)
-            res.status(500).end()
-          })
+              report.error(message, err)
+              res.status(500).end()
+            })
+            .on(`response`, resp => {
+              Object.keys(resp.headers).forEach(key => {
+                res.setHeader(key, resp.headers[key])
+              })
+            })
         )
         .pipe(res)
     })
