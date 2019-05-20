@@ -386,8 +386,8 @@
           link: /docs/querying-with-graphql/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
-    - title: Behind the Scenes
-      link: /docs/behind-the-scenes/
+    - title: Gatsby Internals
+      link: /docs/gatsby-internals/
       items:
         - title: How APIs/Plugins Are Run
           link: /docs/how-plugins-apis-are-run/
@@ -439,7 +439,7 @@
         - title: Build Caching*
           link: /docs/build-caching/
         - title: Terminology
-          link: /docs/behind-the-scenes-terminology/
+          link: /docs/gatsby-internals-terminology/
     - title: Advanced Tutorials
       link: /docs/advanced-tutorials/
       items:
