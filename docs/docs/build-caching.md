@@ -1,26 +1,23 @@
 ---
 title: Build Caching
-issue: https://github.com/gatsbyjs/gatsby/issues/8103
 ---
 
-Plugins can cache data as json objects and retrieve them on consecutive builds.
+Plugins can cache data as JSON objects and retrieve them on consecutive builds.
 
 Caching is already used by Gatsby and plugins for example:
 
 * any nodes created by source/transformer plugins are cached
 * `gatsby-plugin-sharp` caches built thumbnails
 
-
 Data is stored in the `.cache` directory relative to your project root.
 
+## The cache API
 
-## The cache api
+The cache API is passed to [Gatsby's Node APIs](/docs/node-apis/) which is typically implemented by plugins.
 
-The cache API is passed to [Gatsby's Node APIs](/docs/node-apis/), which is typically implemented by plugins.
-```
+```js
 exports.onPostBootstrap = async function({ cache, store, graphql }) {
 ```
-
 
 The two functions you would want to use are:
 
@@ -30,13 +27,11 @@ The two functions you would want to use are:
 ### `get`
 `cache.get(key: String): Promise<any>`
 
-
-
 ## Plugin Example
 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
-```
+```js:title=gatsby-node.js
 exports.onPostBuild = async function(
   { cache, store, graphql },
   { query } ) {
@@ -61,12 +56,15 @@ exports.onPostBuild = async function(
   }
 ```
 
-
 ## Clearing cache
 
-Since cache files are stored within the `/.cache/` directory, simply deleting it will clear all cache.
+Since cache files are stored within the `.cache` directory, simply deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
 The cache is also invalidated by Gatsby in a few cases, specifically:
 
 - If `package.json` changes, for example a dependency is updated or added
 - If `gatsby-config.js` changes, for example a plugin is added or modified
 - If `gatsby-node.js` changes, for example if you invoke a new Node API, or change a `createPage` call
+
+## Conclusion
+
+With the cache API you're able to persist data between builds which is really helpful while developing a site with Gatsby (as you re-run `gatsby develop` really often). Performance-heavy operations (like image transformations) or downloading data can slow down the bootstrap of Gatsby significantly and adding this optimization to your plugin can be a huge improvement to your end users. You can also have a look at the following examples who implemented the cache API: [gatsby-source-contenful](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-contentful/src/download-contentful-assets.js), [gatsby-source-shopify](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-shopify/src/nodes.js#L23-L54), [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-wordpress/src/normalize.js#L471-L537), [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-transformer-remark/src/extend-node-type.js), [gatsby-source-tmdb](https://github.com/LekoArts/gatsby-source-tmdb/blob/e12c19af5e7053bfb7737e072db9e24acfa77f49/src/add-local-image.js). 
