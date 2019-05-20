@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-page-helper",
+  "name": "gatsby-page-utils",
   "version": "0.0.1",
   "description": "Gatsby library that helps creating pages",
   "main": "index.js",
@@ -13,7 +13,7 @@
   ],
   "author": "Yvonnick FRIN <frin.yvonnick@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-helper",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-utils",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
