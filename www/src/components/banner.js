@@ -49,9 +49,9 @@ const Banner = () => (
     <InnerContainer>
       <Content>
         <OutboundLink href="https://www.gatsbyjs.com/gatsby-plugins/">
-          Watch now
+          Register now
         </OutboundLink>
-        {`: "What Can Gatsby Plugins Do?" - See what Gatsby plugins are capable of!`}
+        {`: "What Can Gatsby Plugins Do?" - Learn about different types of plugins and how to build one!`}
       </Content>
     </InnerContainer>
   </BannerContainer>
