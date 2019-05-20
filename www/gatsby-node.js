@@ -47,6 +47,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
+    fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
+    toPath: `/docs/css-modules/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2018-10-25-unstructured-data/`,
     toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
     isPermanent: true,

@@ -192,24 +192,26 @@
           items:
             - title: Using Layout Components
               link: /docs/layout-components/
-            - title: Using CSS Modules
+            - title: Standard, Global CSS Files
+              link: /docs/global-css/
+            - title: Component-Scoped CSS Modules
               link: /docs/css-modules/
-            - title: Using Typography.js
-              link: /docs/typography-js/
-            - title: Using CSS-in-JS Library Emotion
-              link: /docs/emotion/
-            - title: Using CSS-in-JS Library Glamor
-              link: /docs/glamor/
-            - title: Using CSS-in-JS Library Styled Components
-              link: /docs/styled-components/
-            - title: Creating Global Styles
-              link: /docs/creating-global-styles/
-            - title: Writing Component CSS
-              link: /docs/component-css/
-            - title: Using PostCSS
-              link: /docs/post-css/
-            - title: Using TailwindCSS
-              link: /docs/tailwind-css/
+            - title: Enhancing with CSS-in-JS
+              link: /docs/css-in-js/
+              items:
+                - title: Emotion
+                  link: /docs/emotion/
+                - title: Styled-Components
+                  link: /docs/styled-components/
+            - title: CSS Libraries and Frameworks
+              link: /docs/css-libraries-and-frameworks/
+              items:
+                - title: Typography.js
+                  link: /docs/typography-js/
+                - title: Using PostCSS
+                  link: /docs/post-css/
+                - title: Using TailwindCSS
+                  link: /docs/tailwind-css/
         - title: Adding Components to Content with MDX
           link: /docs/mdx/
           items:
