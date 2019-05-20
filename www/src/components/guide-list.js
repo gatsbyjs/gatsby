@@ -18,7 +18,7 @@ const childItemsBySlug = (docsHierarchy, slug) => {
   return result && result.items
 }
 
-const GuideList = slug => {
+const GuideList = ({ slug }) => {
   const subitemsForPage = childItemsBySlug(docsHierarchy, slug) || []
   const subitemList = subitemsForPage.map((subitem, i) => (
     <li key={i}>
