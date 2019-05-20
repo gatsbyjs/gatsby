@@ -28,7 +28,7 @@
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
-            - title: Preparing your Site for Deployment*
+            - title: Preparing your Site for Deployment
               link: /docs/preparing-for-deployment/
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
@@ -256,6 +256,8 @@
         - title: Adding Website Functionality
           link: /docs/adding-website-functionality/
           items:
+            - title: Linking Between Pages
+              link: /docs/linking-between-pages/
             - title: Adding Search
               link: /docs/adding-search/
               items:
@@ -285,8 +287,6 @@
               link: /docs/creating-a-sitemap/
             - title: Adding an RSS Feed
               link: /docs/adding-an-rss-feed/
-            - title: Linking Between Pages
-              link: /docs/linking-between-pages/
             - title: Adding Page Transitions
               link: /docs/adding-page-transitions/
               items:
@@ -386,8 +386,8 @@
           link: /docs/querying-with-graphql/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
-    - title: Behind the Scenes
-      link: /docs/behind-the-scenes/
+    - title: Gatsby Internals
+      link: /docs/gatsby-internals/
       items:
         - title: How APIs/Plugins Are Run
           link: /docs/how-plugins-apis-are-run/
@@ -439,7 +439,7 @@
         - title: Build Caching*
           link: /docs/build-caching/
         - title: Terminology
-          link: /docs/behind-the-scenes-terminology/
+          link: /docs/gatsby-internals-terminology/
     - title: Advanced Tutorials
       link: /docs/advanced-tutorials/
       items:

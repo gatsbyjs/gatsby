@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.5...gatsby@2.5.6) (2019-05-20)
+
+### Bug Fixes
+
+- **develop:** fix "Unexpected token < in JSON at position 0" after restarting development server ([#14166](https://github.com/gatsbyjs/gatsby/issues/14166)) ([c63dbb8](https://github.com/gatsbyjs/gatsby/commit/c63dbb8))
+- **gatsby:** Fix ordering for node links when search field isn't id ([#14176](https://github.com/gatsbyjs/gatsby/issues/14176)) ([eeb1f8c](https://github.com/gatsbyjs/gatsby/commit/eeb1f8c))
+
+## [2.5.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.4...gatsby@2.5.5) (2019-05-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.5.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.3...gatsby@2.5.4) (2019-05-18)
+
+### Features
+
+- **gatsby-source-contentful:** add options validation and more detailed error messages ([#9231](https://github.com/gatsbyjs/gatsby/issues/9231)) ([68cb1a5](https://github.com/gatsbyjs/gatsby/commit/68cb1a5))
+
+## [2.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.2...gatsby@2.5.3) (2019-05-17)
+
+### Bug Fixes
+
+- **gatsby:** include includePrerelease in semver.satisfies check ([#14118](https://github.com/gatsbyjs/gatsby/issues/14118)) ([20c2169](https://github.com/gatsbyjs/gatsby/commit/20c2169))
+
+## [2.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.1...gatsby@2.5.2) (2019-05-17)
+
+### Bug Fixes
+
+- **gatsby:** fix hot-reloading for hooks (patch hmr) ([#13713](https://github.com/gatsbyjs/gatsby/issues/13713)) ([117fbb4](https://github.com/gatsbyjs/gatsby/commit/117fbb4))
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.5.0...gatsby@2.5.1) (2019-05-17)
+
+### Bug Fixes
+
+- **schema:** Fix proxying invalid field names ([#14108](https://github.com/gatsbyjs/gatsby/issues/14108)) ([6d297c5](https://github.com/gatsbyjs/gatsby/commit/6d297c5))
+
 # [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.4.7...gatsby@2.5.0) (2019-05-16)
 
 ### Features

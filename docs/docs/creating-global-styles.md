@@ -142,7 +142,7 @@ Second, create a css file and define any styles you wish. An arbitrary example:
 
 ```css:title=src/styles/global.css
 html {
-  background-color: lavenderblush;
+  background-color: peachpuff;
 }
 
 a {

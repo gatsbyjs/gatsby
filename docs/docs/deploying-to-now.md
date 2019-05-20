@@ -6,21 +6,7 @@ title: Deploying to Now
 
 This guide will show you how to get started in a few quick steps:
 
-## Step 1: Getting Started with Gatsby
-
-If you haven't already [set up a Gatsby project](/docs/quick-start) you can do so by first installing Gatsby globally:
-
-```shell
-npm install --global gatsby-cli
-```
-
-Then generate a project with the following command:
-
-```shell
-gatsby new <your project name>
-```
-
-## Step 2: Getting Now
+## Step 1: Getting Now
 
 You can use Now by installing [Now Desktop](https://zeit.co/docs/v2/getting-started/installation/#now-desktop), which also installs Now CLI and keeps it up-to-date automatically.
 
@@ -30,7 +16,7 @@ To install Now CLI quickly with npm, use the following:
 npm install -g now
 ```
 
-## Step 3: Preparing to Deploy
+## Step 2: Preparing to Deploy
 
 With Now CLI installed, we can go on to deploy our previously setup Gatsby project by first creating a `now.json` file with the following contents:
 
@@ -65,7 +51,7 @@ The final step is to add a script to the `package.json` which will build our app
 }
 ```
 
-## Step 4: Deploying
+## Step 3: Deploying
 
 You can deploy your application by running the following in the root of the project directory, where the `now.json` is:
 
