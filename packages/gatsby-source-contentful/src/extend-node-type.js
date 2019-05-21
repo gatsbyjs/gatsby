@@ -128,9 +128,6 @@ const resolveFixed = (image, options) => {
         case 2:
           resolution = `2x`
           break
-        case 3:
-          resolution = `3x`
-          break
         default:
       }
       const h = Math.round(size / desiredAspectRatio)

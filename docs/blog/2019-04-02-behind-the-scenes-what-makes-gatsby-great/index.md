@@ -394,7 +394,7 @@ There are far, far, far too many otherwise decently performing websites that loa
 - Responsive, optimized images using a `srcset`
   - A [`picture`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) element with a `source srcset` is used
   - This means that using several media queries, you load the smallest image that matches your device (e.g. mobile devices get smaller images, desktop devices get larger images, etc.)
-  - We even generate 2x and 3x DPi images for beautiful images, regardless of the screen quality!
+  - We even generate 2x DPi images for beautiful images, regardless of the screen quality!
 - A base64 blurred image loaded by default
   - This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
   - Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)
