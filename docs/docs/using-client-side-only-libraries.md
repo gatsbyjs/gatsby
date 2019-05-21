@@ -23,8 +23,10 @@ import { Helmet } from 'react-helmet'
 
 
 const MyComponent = (props) => {
+  // check for browser DOM readiness
   if (typeof window !== undefined) {
-    // check for external package and use as needed here
+    // use external package as needed here,
+    // e.g. `window.externalLibrary.method()`
   }
   return (
     {/* load our dependency client-side using react-helmet */}
