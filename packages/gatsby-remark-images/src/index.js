@@ -250,7 +250,8 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && getNodeTitle(node, alt, defaultAlt)
+    const showCaptions =
+      options.showCaptions && getNodeTitle(node, alt, defaultAlt)
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
