@@ -85,6 +85,7 @@ module.exports = {
         path: `${__dirname}/src/data/ecosystem/`,
       },
     },
+    `gatsby-plugin-find-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
