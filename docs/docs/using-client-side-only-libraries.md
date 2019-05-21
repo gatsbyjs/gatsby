@@ -1,5 +1,5 @@
 ---
-title: Using client side only packages
+title: Using Client-Side Only Packages
 issue: https://github.com/gatsbyjs/gatsby/issues/13355
 ---
 
