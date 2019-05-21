@@ -8,7 +8,7 @@ First, some context. `gatsby-plugin-sharp` ships with a `fluid` option which wil
 
 If you find yourself running into build performance issues, it could be helpful to consider applying some image optimizations. Images in your setup _could_ be overly large, especially compared to the requested image sizes in your layout (e.g. if your layout has a max width of 600 pixels).
 
-For instance, if your layout is 600 pixels wide, then the highest resolution image you will need is 1800 pixels to account for 3x pixel density. If you have images that are 3000 or 4000 pixels wide then you could resize your image to 1800 pixels, which may improve overall build performance.
+For instance, if your layout is 600 pixels wide, then the highest resolution image you will need is 1200 pixels to account for 2x pixel density. If you have images that are 3000 or 4000 pixels wide then you could resize your image to 1800 pixels, which may improve overall build performance.
 
 Here's an example script to pre-optimize your image dimensions and slightly compress. This optimization may serve as a helpful technique to possibly improve build time if your local repository has many, very large images.
 
