@@ -61,7 +61,7 @@ const ImageAPI = props => {
       <h2>Fixed</h2>
       <p>
         If you make queries with <code>fixed</code> then Gatsby automatically
-        generates images with 1x, 1.5x, and 2x versions so your images look
+        generates images with 1x, 1.5x, 2x, and 3x versions so your images look
         great on whatever screen resolution of device {`they're`} on.
       </p>
       <p>
