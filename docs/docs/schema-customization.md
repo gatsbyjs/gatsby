@@ -150,8 +150,8 @@ field will now have both Date and String values.
 #### Fixing field types
 
 To ensure that the field will always be of Date type, you can provide explicit
-type definitions to Gatsby with the `createTypes` action. It accepts type
-definitions in GraphQL Schema Definition Language:
+type definitions to Gatsby with the [`createTypes`](/docs/actions/#createTypes) action.
+It accepts type definitions in GraphQL Schema Definition Language:
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions }) => {
@@ -170,7 +170,7 @@ provided, they will still be handled by Gatsby's type inference.
 
 > Although the `createTypes` action is passed to all `gatsby-node` APIs,
 > it has to be called before schema generation. We recommend to use the
-> [`sourceNodes` API](https://gatsby.dev/api/#sourceNodes).
+> [`sourceNodes` API](/docs/node-apis/#sourceNodes).
 
 #### Opting out of type inference
 
@@ -286,7 +286,26 @@ exports.sourceNodes = ({ actions, schema }) => {
 ```
 
 Gatsby Type Builders allow referencing types as simple strings, and accept full
-field configs (`type`, `args`, `resolve`).
+field configs (`type`, `args`, `resolve`). When defining top-level types, don't forget
+to pass `interfaces: ['Node']`, which does the same for Type Builders as adding
+`implements Node` does for SDL-defined types. It is also possible to opt out of type
+inference with Type Builders by setting the `infer` type extension to `false`:
+
+```diff
+schema.buildObjectType({
+  name: "ContributorJson",
+  fields: {
+    name: "String!",
+  },
+  interfaces: ["Node"],
++ extensions: {
++   // While in SDL we have two different directives, @infer and @dontInfer to
++   // control inference behavior, Gatsby Type Builders take a single `infer`
++   // extension which accepts a Boolean
++   infer: false
++ },
+}),
+```
 
 > Type Builders also exist for Input, Interface and Union types:
 > `buildInputType`, `buildInterfaceType`, and `buildUnionType`.
@@ -368,6 +387,11 @@ argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the foreign-keys from the specified
 field, which is especially helpful when adding a field for back-linking.
+
+> Note that when using `createTypes` to fix type inference for a foreign-key field
+> created by a plugin, the underlying data will probably live on a field with
+> a `___NODE` suffix. Use the `from` argument to point the `link` extension to
+> the correct field name. For example: `author: [AuthorJson] @link(from: "author___NODE")`.
 
 #### Extensions and directives
 
@@ -492,9 +516,11 @@ the `createTypes` action.
 As mentioned above, Gatsby's internal data store and query capabilities are
 available to custom field resolvers on the `context.nodeModel` argument passed
 to every resolver. Accessing node(s) by `id` (and optional `type`) is possible
-with `getNodeById` and `getNodesByIds`. To get all nodes, or all nodes of a
-certain type, use `getAllNodes`. And running a query from inside your resolver
-functions can be accomplished with `runQuery`, which accepts `filter`, `sort`,
+with [`getNodeById`](/docs/node-model/#getNodeById) and
+[`getNodesByIds`](/docs/node-model/#getNodesByIds). To get all nodes, or all
+nodes of a certain type, use [`getAllNodes`](/docs/node-model/#getAllNodes).
+And running a query from inside your resolver functions can be accomplished
+with [`runQuery`](/docs/node-model/#runQuery), which accepts `filter`, `sort`,
 `limit` and `skip` query arguments.
 
 We could for example add a field to the `AuthorJson` type that lists all recent
@@ -594,14 +620,14 @@ exports.createResolvers = ({ createResolvers }) => {
 
 When creating custom field resolvers, it is important to ensure that Gatsby
 knows about the data a page depends on for hot reloading to work properly. When
-you retrieve nodes from the store with `context.nodeModel` methods, it is
-usually not necessary to do anything manually, because Gatsby will register
+you retrieve nodes from the store with [`context.nodeModel`](/docs/node-model/) methods,
+it is usually not necessary to do anything manually, because Gatsby will register
 dependencies for the query results automatically. The exception is `getAllNodes`
 which will _not_ register data dependencies by default. This is because
 requesting re-running of queries when any node of a certain type changes is
 potentially a very expensive operation. If you are sure you really need this,
 you can add a page data dependency either programmatically with
-`context.nodeModel.trackPageDependencies`, or with:
+[`context.nodeModel.trackPageDependencies`](/docs/node-model/#trackPageDependencies), or with:
 
 ```js
 context.nodeModel.getAllNodes(
@@ -699,13 +725,11 @@ However, Gatsby also allows to integrate and modify third-party GraphQL schemas.
 
 Usually, those third-party schemas are retrieved from remote sources via introspection
 query with Gatsby's `gatsby-source-graphql` plugin. To customize types integrated from
-a third-party schema, we can use the `createResolvers` API.
+a third-party schema, we can use the [`createResolvers`](/docs/node-apis/#createResolvers) API.
 
 ### Feeding remote images into `gatsby-image`
 
-As an example,
-let's look at [using-gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how we could use `createResolvers` to feed images from a
-CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
+As an example, let's look at [using-gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how we could use `createResolvers` to feed images from a CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
 to prefix all types from the third-party schema with `CMS`):
 
 ```js:title=gatsby-node.js
