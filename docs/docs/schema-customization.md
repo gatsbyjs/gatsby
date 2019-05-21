@@ -201,7 +201,8 @@ exports.sourceNodes = ({ actions }) => {
 Note that you don't need to explicitly provide the Node interface fields (`id`,
 `parent`, etc.), Gatsby will automatically add them for you.
 
-> If you wonder about the exclamation marks - those allow specifying nullability
+> If you wonder about the exclamation marks - those allow
+> [specifying nullability](https://graphql.org/learn/schema/#lists-and-non-null)
 > in GraphQL, i.e. if a field value is allowed to be `null` or not.
 
 #### Nested types
