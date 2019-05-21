@@ -1,6 +1,6 @@
 ---
 title: Lions and Tigers and Errors, Oh My! Redesigning the Gatsby CLI
-date: 2019-05-20
+date: 2019-05-22
 author: Shannon Soper
 tags:
   - cli
