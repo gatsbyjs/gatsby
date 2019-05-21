@@ -32,8 +32,8 @@ module.exports = {
   log: reporter.log.bind(reporter),
 
   createActivity: activity => {
-    if (activity.type === 'spinner') {
-      const spinner = reporter.activity();
+    if (activity.type === `spinner`) {
+      const spinner = reporter.activity()
       let start
       let status
 
@@ -58,7 +58,7 @@ module.exports = {
       }
     }
 
-    if (activity.type === 'progress') {
+    if (activity.type === `progress`) {
       const bar = new ProgressBar(
         ` [:bar] :current/:total :elapsed s :percent ${activity.id}`,
         {
@@ -76,11 +76,18 @@ module.exports = {
           }
         },
         done: () => {
-          reporter.success(`${activity.id} — ${activity.current}/${activity.total} - ${calcElapsedTime(
-            activity.startTime
-          )} s`)
+          reporter.success(
+            `${activity.id} — ${activity.current}/${
+              activity.total
+            } - ${calcElapsedTime(activity.startTime)} s`
+          )
         },
       }
+    }
+
+    return {
+      update: () => {},
+      done: () => {},
     }
   },
 }

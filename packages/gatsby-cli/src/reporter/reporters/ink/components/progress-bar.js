@@ -32,9 +32,7 @@ export default function ProgressBar({ message, current, total, startTime }) {
         </Box>
         ]
       </Box>
-      <Box marginRight={1}>
-        {calcElapsedTime(startTime)} s
-      </Box>
+      <Box marginRight={1}>{calcElapsedTime(startTime)} s</Box>
       <Box marginRight={1}>
         {current}/{total}
       </Box>
