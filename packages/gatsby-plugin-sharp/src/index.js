@@ -316,7 +316,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     fluidSizes.push(options[fixedDimension] / 2)
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
-    fluidSizes.push(options[fixedDimension] * 3)
   } else {
     options.srcSetBreakpoints.forEach(breakpoint => {
       if (breakpoint < 1) {
@@ -441,7 +440,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  sizes.push(options[fixedDimension] * 3)
   const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
