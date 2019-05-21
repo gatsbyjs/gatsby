@@ -6,6 +6,7 @@ const feed = Joi.object({
   query: Joi.string().required(),
   title: Joi.string(),
   serialize: Joi.func(),
+  match: Joi.string(),
 }).unknown(true)
 
 // TODO: make feeds required in next major version bump

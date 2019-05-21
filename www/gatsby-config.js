@@ -1,3 +1,4 @@
+const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -53,6 +54,7 @@ module.exports = {
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
+    "Mdx.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
     {
@@ -95,6 +97,41 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/data/diagram`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.md`, `.mdx`],
+        shouldBlockNodeFromTransformation(node) {
+          return (
+            [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
+            (node.internal.type === `File` &&
+              path.parse(node.dir).dir.endsWith(`packages`))
+          )
+        },
+        gatsbyRemarkPlugins: [
+          `gatsby-remark-graphviz`,
+          `gatsby-remark-embed-video`,
+          `gatsby-remark-code-titles`,
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 786,
+              backgroundColor: `#ffffff`,
+            },
+          },
+          {
+            resolve: `gatsby-remark-responsive-iframe`,
+            options: {
+              wrapperStyle: `margin-bottom: 1.5rem`,
+            },
+          },
+          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-prismjs`,
+          `gatsby-remark-copy-linked-files`,
+          `gatsby-remark-smartypants`,
+        ],
       },
     },
     {
@@ -173,7 +210,7 @@ module.exports = {
           {
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] }
                   filter: {
                     frontmatter: { draft: { ne: true } }
@@ -214,8 +251,8 @@ module.exports = {
                 generator: `GatsbyJS`,
               }
             },
-            serialize: ({ query: { site, allMarkdownRemark } }) =>
-              allMarkdownRemark.edges.map(({ node }) => {
+            serialize: ({ query: { site, allMdx } }) =>
+              allMdx.edges.map(({ node }) => {
                 return {
                   title: node.frontmatter.title,
                   description: node.frontmatter.excerpt || node.excerpt,

@@ -17,21 +17,21 @@ I recently sat down with David Eads, who recently wrote a [fascinating deep dive
 
 **David:** Everything I've made since 2018 has been in Gatsby. https://projects.propublica.org/graphics/il/stuck-kids/ is one example, https://projects.propublica.org/chicago-tickets/ is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
 
-<pullquote citation="ProPublica">
+<Pullquote citation="ProPublica">
 Every day, a child is held beyond medical necessity in Illinois.
-They've been cleared to leave, but there's no where for them to go. Explore the cases of Illinois youths stuck in psychiatric hospitals because of failures within the state'a Department of Children and Family Services.</pullquote>
+They've been cleared to leave, but there's no where for them to go. Explore the cases of Illinois youths stuck in psychiatric hospitals because of failures within the state'a Department of Children and Family Services.</Pullquote>
 
 ![Illinois medical necessity](./images/medical.png)
 
-<pullquote citation="ProPublica">
+<Pullquote citation="ProPublica">
 The Ticket Trap: Where Chicago Issues Parking Tickets and Who Pays...
-The city of Chicago has generated billions of dollars in revenue from parking tickets while sending low-income and black communities into debt. Search our interactive database of 54 million tickets issued since 1996 — and learn how your ward stacks up.</pullquote>
+The city of Chicago has generated billions of dollars in revenue from parking tickets while sending low-income and black communities into debt. Search our interactive database of 54 million tickets issued since 1996 — and learn how your ward stacks up.</Pullquote>
 
 ![Chicago parking tickets](./images/chicagoparking.jpg)
 
-<pullquote citation="ProPublica">
+<Pullquote citation="ProPublica">
 Illinois Bet on Video Gambling — and Lost
-Legalizing video poker and slots was supposed to generate billions of dollars for the state. A decade later, that hasn’t happened. Now, legislators want to double down on gambling.</pullquote>
+Legalizing video poker and slots was supposed to generate billions of dollars for the state. A decade later, that hasn’t happened. Now, legislators want to double down on gambling.</Pullquote>
 
 ![Illinois video gambling](./images/illinoisgambling.jpg)
 
