@@ -162,7 +162,7 @@ There's quite a lot happening in these files so let's break them down one by one
 
 ### `index.js`
 
-```jsx:title=src/components/search/index.js
+```js:title=src/components/search/index.js
 import React, { useState, useEffect, createRef } from "react"
 import {
   InstantSearch,
@@ -240,7 +240,7 @@ At the top, you import `InstantSearch` from [`react-instantsearch-dom`](https://
 
 You then import the styled components that make up the UI and the `Input` component into which the user enters the query.
 
-```js
+```js:title=src/components/search/index.js
 import { Root, SearchBox, HitsWrapper, PoweredBy } from "./styles"
 import Input from "./Input"
 ```
@@ -249,13 +249,13 @@ import Input from "./Input"
 
 The last thing you need for the `Search` component to work are hit components for every type of result you want to display to the user. The hit component determines how attributes of matching results (such as author, date, tags and title in the case of a blog post) are displayed to the user.
 
-```js
+```js:title=src/components/search/index.js
 import * as hitComps from "./hitComps"
 ```
 
 Next you define two connected components. `Results` informs the user that no matches could be found for a query unless the number of hits is positive, i.e. `searchResults.nbHits > 0`. `Stats` just displays `searchResults.nbHits`.
 
-```js
+```js:title=src/components/search/index.js
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
     res && res.nbHits > 0 ? children : `No results for ${state.query}`
@@ -269,7 +269,7 @@ const Stats = connectStateResults(
 
 Now comes the actual `Search` component. It starts off with some state initialization, defining handler functions and event listeners to trigger them. All they do is make the search input slide out when the user clicks a search icon and disappear again when the user clicks or touches (on mobile) anywhere.
 
-```jsx
+```js:title=src/components/search/index.js
 export default function Search({ indices, collapse, hitsAsGrid }) {
   const ref = createRef()
   const [query, setQuery] = useState(``)
@@ -295,7 +295,7 @@ export default function Search({ indices, collapse, hitsAsGrid }) {
 
 `Search` returns JSX that renders a dynamic array of `indices` passed as a prop. Each array item should be an object with keys `name`, `title`, `hitComp` that specifies the name of the index in your Algolia account to be queried, the title to display above the results shown to the user and the component `hitComp` that renders the data returned for each match.
 
-```jsx
+```js:title=src/components/search/index.js
   return (
     <InstantSearch
       searchClient={searchClient}
@@ -329,7 +329,7 @@ Note that you fed `algoliasearch` with the same app ID you specified in our `.en
 
 ## `input.js`
 
-```jsx
+```js:title=src/components/search/input.js
 import React from "react"
 import { connectSearchBox } from "react-instantsearch-dom"
 
@@ -355,7 +355,7 @@ Now let's look at the styled components `SearchIcon`, `Form`, `Input` as well as
 
 ## `styled.js`
 
-```jsx:title=src/components/search/styles.js
+```js:title=src/components/search/styles.js
 import React from "react"
 import styled, { css } from "styled-components"
 import { Search } from "styled-icons/fa-solid/Search"
@@ -495,7 +495,7 @@ Now you're almost done, two small steps remain. First you need to put together a
 
 ## `hitComps.js`
 
-```jsx:title=src/components/Search/hitComps.js
+```js:title=src/components/Search/hitComps.js
 import React, { Fragment } from "react"
 import { Highlight, Snippet } from "react-instantsearch-dom"
 import { Link } from "gatsby"
@@ -545,7 +545,7 @@ export const PostHit = clickHandler => ({ hit }) => (
 
 Now all you need to do is import `Search` somewhere. The obvious place is the `Header` component so let's add it there.
 
-```jsx:title=src/components/Header/index.js
+```js:title=src/components/Header/index.js
 import React from "react"
 
 import { Container, Logo } from "./styles"
