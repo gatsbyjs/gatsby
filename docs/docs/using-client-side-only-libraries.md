@@ -22,7 +22,7 @@ Sometimes the simplest approach is to work around the problem. If you can re-imp
 
 ## Workaround 2: Add client-side package via CDN
 
-In the component where you need it, load the package via CDN using a [`<script />`](https://www.w3schools.com/Tags/tag_script.asp) tag with `react-helmet`. You'll still need to check to see if `window` exists before using the library, so that SSR can still complete.
+In the component where you need it, load the package via CDN using a [`<script />`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag with `react-helmet`. You'll still need to check to see if `window` exists before using the library, so that SSR can still complete.
 
 ```jsx
 import { Helmet } from 'react-helmet'
