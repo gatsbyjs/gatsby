@@ -1,5 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const sharp = require(`sharp`)
 jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
@@ -113,28 +114,6 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(path.parse(result.src).name).toBe(file.name)
       expect(path.parse(result.srcSet).name).toBe(file.name)
-    })
-
-    it(`accounts for pixel density`, async () => {
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: {
-          sizeByPixelDensity: true,
-        },
-      })
-
-      expect(result).toMatchSnapshot()
-    })
-
-    it(`can optionally ignore pixel density`, async () => {
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: {
-          sizeByPixelDensity: false,
-        },
-      })
-
-      expect(result).toMatchSnapshot()
     })
 
     it(`does not change the arguments object it is given`, async () => {
@@ -268,17 +247,8 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fixed`, () => {
-    console.warn = jest.fn()
-
-    beforeEach(() => {
-      console.warn.mockClear()
-    })
-
-    afterAll(() => {
-      console.warn.mockClear()
-    })
-
     it(`does not warn when the requested width is equal to the image width`, async () => {
+      console.warn = jest.fn()
       const args = { width: 1 }
 
       const result = await fixed({
@@ -288,18 +258,22 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(1)
       expect(console.warn).toHaveBeenCalledTimes(0)
+      console.warn.mockClear()
     })
 
     it(`warns when the requested width is greater than the image width`, async () => {
-      const args = { width: 2 }
+      console.warn = jest.fn()
+      const { width } = await sharp(file.absolutePath).metadata()
+      const args = { width: width * 2 }
 
       const result = await fixed({
         file,
         args,
       })
 
-      expect(result.width).toEqual(1)
+      expect(result.width).toEqual(width)
       expect(console.warn).toHaveBeenCalledTimes(1)
+      console.warn.mockClear()
     })
 
     it(`correctly infers the width when only the height is given`, async () => {
@@ -368,19 +342,19 @@ describe(`gatsby-plugin-sharp`, () => {
         base64: false,
       }
 
-      let result = await fixed({
+      const fixedSvg = await fixed({
         file,
         args,
       })
 
-      expect(result).toMatchSnapshot()
+      expect(fixedSvg).toMatchSnapshot()
 
-      result = await fluid({
+      const fluidSvg = await fluid({
         file,
         args,
       })
 
-      expect(result).toMatchSnapshot()
+      expect(fluidSvg).toMatchSnapshot()
     })
   })
 })

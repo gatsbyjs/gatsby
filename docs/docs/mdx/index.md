@@ -1,18 +1,29 @@
 ---
-title: MDX
+title: Adding Components to Content with MDX
 ---
+
+When writing long-form content in Markdown you might want to embed components.
+This is often achieved by either writing content in JSX or using plugins that
+use custom syntax. The first approach isn't optimal because JSX isn't the best
+format for content and can make it less approachable to members of a team. Custom
+syntax and plugins are often too inflexible and don't promote composition. If
+you're finding yourself wanting to add components to your content you can use
+`gatsby-mdx` which is a Gatsby plugin to integrate MDX into your project.
+
+## What's MDX?
 
 [MDX][mdx] is Markdown for the component era.
 It lets you write JSX embedded inside Markdown.
-It’s a great combination because it allows you to use Markdown’s often terse
-syntax (such as `# heading`) for your content and JSX for more advanced
+It’s a great combination because it allows you to use Markdown’s terse
+syntax (such as `# Heading`) for your content and JSX for more advanced
 components.
 
 This is useful in content-driven sites where you want the ability
 to introduce components like charts or alerts without having to
 configure a plugin. It emphasizes composition over configuration
 and really shines with interactive blog posts, documenting design
-systems, or long form articles with ambitious layouts.
+systems, or long form articles with immersive or dynamic
+interactions.
 
 When using MDX you can also import other MDX documents and render
 them as components. This lets you write something like an FAQ

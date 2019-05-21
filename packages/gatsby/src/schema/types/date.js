@@ -96,16 +96,96 @@ const GraphQLDate = new GraphQLScalarType({
   },
 })
 
-// Check if this is a date.
-// All the allowed ISO 8601 date-time formats used.
-function isDate(value) {
+const momentFormattingTokens = /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
+const momentFormattingRegexes = {
+  YYYY: `\\d{4}`,
+  MM: `\\d{2}`,
+  DD: `\\d{2}`,
+  DDDD: `\\d{4}`,
+  HH: `\\d{2}`,
+  mm: `\\d{2}`,
+  ss: `\\d{2}`,
+  SSS: `\\d{3}`,
+  SSSSSS: `\\d{6}`,
+  E: `\\d`,
+  W: `\\d`,
+  WW: `\\d{2}`,
+  "[W]": `W`,
+  ".": `\\.`,
+  Z: `(Z|[+-]\\d\\d(?::?\\d\\d)?)`,
+}
+const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format =>
+  // convert ISO string to a map of momentTokens ([YYYY, MM, DD])
+  [...format.match(momentFormattingTokens)]
+    .map(token =>
+      // see if the token (YYYY or ss) is found, else we just return the value
+      momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token
+    )
+    .join(``)
+).join(`|`)
+
+// calculate all lengths of the formats, if a string is longer or smaller it can't be valid
+const ISO_8601_FORMAT_LENGTHS = [
+  ...new Set(
+    ISO_8601_FORMAT.reduce((acc, val) => {
+      if (!val.endsWith(`Z`)) {
+        return acc.concat(val.length)
+      }
+
+      // we add count of +01 & +01:00
+      return acc.concat([val.length, val.length + 3, val.length + 5])
+    }, [])
+  ),
+]
+
+// lets imagine these formats: YYYY-MM-DDTHH & YYYY-MM-DD HHmmss.SSSSSS Z
+// this regex looks like (/^(\d{4}-\d{2}-\d{2}T\d{2}|\d{4}-\d{2}-\d{2} \d{2}\d{2}\d{2}.\d{6} Z)$)
+const quickDateValidateRegex = new RegExp(`^(${ISO_8601_FORMAT_AS_REGEX})$`)
+
+const looksLikeDateStartRegex = /^\d{4}/
+// this regex makes sure the last characters are a number or the letter Z
+const looksLikeDateEndRegex = /(\d|Z)$/
+
+/**
+ * looksLikeADate isn't a 100% valid check if it is a real date but at least it's something that looks like a date.
+ * It won't catch values like 2010-02-30
+ * 1) is it a number?
+ * 2) does the length of the value comply with any of our formats
+ * 3) does the str starts with 4 digites (YYYY)
+ * 4) does the str ends with something that looks like a date
+ * 5) Small regex to see if it matches any of the formats
+ * 6) check momentjs
+ *
+ * @param {*} value
+ * @return {boolean}
+ */
+function looksLikeADate(value) {
   // quick check if value does not look like a date
-  if (typeof value === `number` || !/^\d{4}/.test(value)) {
+  if (
+    !value ||
+    (value.length && !ISO_8601_FORMAT_LENGTHS.includes(value.length)) ||
+    !looksLikeDateStartRegex.test(value) ||
+    !looksLikeDateEndRegex.test(value)
+  ) {
     return false
   }
 
+  // If it looks like a date we parse the date with a regex to see if we can handle it.
+  // momentjs just does regex validation itself if you don't do any operations on it.
+  if (typeof value === `string` && quickDateValidateRegex.test(value)) {
+    return true
+  }
+
+  return isDate(value)
+}
+
+/**
+ * @param {*} value
+ * @return {boolean}
+ */
+function isDate(value) {
   const momentDate = moment.utc(value, ISO_8601_FORMAT, true)
-  return momentDate.isValid()
+  return typeof value !== `number` && momentDate.isValid()
 }
 
 const formatDate = ({
@@ -135,44 +215,48 @@ const formatDate = ({
   return normalizedDate
 }
 
-const dateResolver = {
-  type: `Date`,
-  args: {
-    formatString: {
-      type: GraphQLString,
-      description: oneLine`
+const getDateResolver = defaults => {
+  const { locale, formatString } = defaults
+  return {
+    args: {
+      formatString: {
+        type: GraphQLString,
+        description: oneLine`
         Format the date using Moment.js' date tokens, e.g.
         \`date(formatString: "YYYY MMMM DD")\`.
         See https://momentjs.com/docs/#/displaying/format/
         for documentation for different tokens.`,
-    },
-    fromNow: {
-      type: GraphQLBoolean,
-      description: oneLine`
+        defaultValue: formatString,
+      },
+      fromNow: {
+        type: GraphQLBoolean,
+        description: oneLine`
         Returns a string generated with Moment.js' \`fromNow\` function`,
-    },
-    difference: {
-      type: GraphQLString,
-      description: oneLine`
+      },
+      difference: {
+        type: GraphQLString,
+        description: oneLine`
         Returns the difference between this date and the current time.
-        Defaults to "miliseconds" but you can also pass in as the
+        Defaults to "milliseconds" but you can also pass in as the
         measurement "years", "months", "weeks", "days", "hours", "minutes",
         and "seconds".`,
-    },
-    locale: {
-      type: GraphQLString,
-      description: oneLine`
+      },
+      locale: {
+        type: GraphQLString,
+        description: oneLine`
         Configures the locale Moment.js will use to format the date.`,
+        defaultValue: locale,
+      },
     },
-  },
-  resolve(source, args, context, { fieldName }) {
-    const date = source[fieldName]
-    if (date == null) return null
+    resolve(source, args, context, { fieldName }) {
+      const date = source[fieldName]
+      if (date == null) return null
 
-    return Array.isArray(date)
-      ? date.map(d => formatDate({ date: d, ...args }))
-      : formatDate({ date, ...args })
-  },
+      return Array.isArray(date)
+        ? date.map(d => formatDate({ date: d, ...args }))
+        : formatDate({ date, ...args })
+    },
+  }
 }
 
-module.exports = { GraphQLDate, dateResolver, isDate }
+module.exports = { GraphQLDate, getDateResolver, isDate, looksLikeADate }

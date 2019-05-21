@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { space } from "../../utils/presets"
@@ -12,7 +12,9 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 class SSRAPIs extends React.Component {
   render() {
     const funcs = sortBy(
-      this.props.data.file.childrenDocumentationJs,
+      this.props.data.file.childrenDocumentationJs.filter(
+        doc => doc.kind !== `typedef`
+      ),
       func => func.name
     )
     return (
@@ -20,6 +22,10 @@ class SSRAPIs extends React.Component {
         <Container>
           <Helmet>
             <title>SSR APIs</title>
+            <meta
+              name="description"
+              content="Documentation on APIs related to server side rendering during Gatsby's build process"
+            />
           </Helmet>
           <h1 id="gatsby-server-rendering-apis" css={{ marginTop: 0 }}>
             Gatsby Server Rendering APIs
@@ -42,7 +48,7 @@ class SSRAPIs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} />
+          <APIReference docs={funcs} showTopLevelSignatures={true} />
         </Container>
       </Layout>
     )

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Slider from "./slider"
 import { options } from "../utils/typography"
-import { scale, colors, space, radii } from "../utils/presets"
+import { fontSizes, colors, space, radii } from "../utils/presets"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
@@ -18,7 +18,7 @@ const controlButtonStyles = {
   bottom: 0,
   left: 0,
   padding: 0,
-  fontSize: scale[5],
+  fontSize: fontSizes[5],
   width: space[8],
   textAlign: `center`,
   "&:hover": {
@@ -121,66 +121,71 @@ class Rotator extends Component {
           position: `relative`,
         }}
       >
-        <p
-          css={{
-            color: colors.gray.copy,
-            fontSize: scale[4],
-            fontFamily: options.headerFontFamily.join(`,`),
-            textAlign: `center`,
-            marginBottom: 0,
-          }}
+        <div
+          aria-live={this.intervalId ? `off` : `polite`}
+          aria-atomic="true"
+          aria-relevant="all"
         >
-          <span>Need&nbsp;</span>
-          <span
-            style={{
-              display: `inline-block`,
-              transition: `width 150ms linear`,
-              width: this.state.size.width || `auto`,
+          <p
+            css={{
+              color: colors.gray.copy,
+              fontSize: fontSizes[4],
+              fontFamily: options.headerFontFamily.join(`,`),
+              textAlign: `center`,
+              marginBottom: 0,
             }}
           >
+            <span>Need&nbsp;</span>
             <span
-              css={{
-                fontWeight: 600,
-                whiteSpace: `nowrap`,
+              style={{
                 display: `inline-block`,
+                transition: shouldAnimate ? `width 150ms linear` : `none`,
+                width: this.state.size.width || `auto`,
               }}
-              id="headline-slider"
-              ref={this.sliderContainer}
-              aria-live={this.intervalId ? `off` : `polite`}
             >
-              {!enableSlider ? (
-                <>{text}</>
-              ) : (
-                <Slider items={[text]} color={`#000`} />
-              )}
+              <span
+                css={{
+                  fontWeight: 600,
+                  whiteSpace: `nowrap`,
+                  display: `inline-block`,
+                }}
+                id="headline-slider"
+                ref={this.sliderContainer}
+              >
+                {!enableSlider ? (
+                  <>{text}</>
+                ) : (
+                  <Slider items={[text]} color={`#000`} />
+                )}
+              </span>
             </span>
-          </span>
-        </p>
+          </p>
 
-        <p
-          css={{
-            color: colors.gray.calm,
-            margin: 0,
-            fontSize: scale[3],
-            textAlign: `center`,
-          }}
-        >
-          There’s{` `}
-          {pluginName ? (
-            <Link to={`/packages/` + pluginName}>a plugin</Link>
-          ) : (
-            `a plugin`
-          )}
-          {` `}
-          for that.
-        </p>
+          <p
+            css={{
+              color: colors.gray.calm,
+              margin: 0,
+              fontSize: fontSizes[3],
+              textAlign: `center`,
+            }}
+          >
+            There’s{` `}
+            {pluginName ? (
+              <Link to={`/packages/` + pluginName}>a plugin</Link>
+            ) : (
+              `a plugin`
+            )}
+            {` `}
+            for that.
+          </p>
+        </div>
         <button
           css={{ ...controlButtonStyles }}
           onClick={this.decrementItem}
           aria-controls="headline-slider"
         >
           <MdNavigateBefore aria-hidden="true" />
-          <span css={srOnly}>Previous</span>
+          <span css={srOnly}>Previous plugin category</span>
         </button>
         <button
           css={{ ...controlButtonStyles, left: `auto`, right: 0 }}
@@ -188,7 +193,7 @@ class Rotator extends Component {
           aria-controls="headline-slider"
         >
           <MdNavigateNext aria-hidden="true" />
-          <span css={srOnly}>Next</span>
+          <span css={srOnly}>Next plugin category</span>
         </button>
       </div>
     )

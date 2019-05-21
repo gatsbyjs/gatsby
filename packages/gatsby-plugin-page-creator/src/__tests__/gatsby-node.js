@@ -119,21 +119,9 @@ describe(`JavaScript page creator`, () => {
 
   describe(`create-path`, () => {
     it(`should create unix paths`, () => {
-      const basePath = `/a/`
-      const paths = [`/a/b/c/de`, `/a/bee`, `/a/b/d/c/`]
+      const paths = [`b/c/de`, `bee`, `b/d/c/`]
 
-      expect(paths.map(p => createPath(basePath, p))).toMatchSnapshot()
-    })
-
-    it(`should deal with windows paths`, () => {
-      const basePath = `D:/Projets/gatsby-starter/src/pages`
-      const paths = [
-        `D:\\Projets\\gatsby-starter\\src\\pages\\404.tsx`,
-        `D:\\Projets\\gatsby-starter\\src\\pages\\index.tsx`,
-        `D:\\Projets\\gatsby-starter\\src\\pages\\blog.tsx`,
-      ]
-
-      expect(paths.map(p => createPath(basePath, p))).toMatchSnapshot()
+      expect(paths.map(p => createPath(p))).toMatchSnapshot()
     })
   })
 })

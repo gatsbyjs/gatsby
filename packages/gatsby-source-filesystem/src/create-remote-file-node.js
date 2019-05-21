@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const crypto = require(`crypto`)
+const { createContentDigest } = require(`./fallback`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
@@ -52,24 +52,6 @@ const bar = new ProgressBar(
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
  */
-
-/*********
- * utils *
- *********/
-
-/**
- * createHash
- * --
- *
- * Create an md5 hash of the given str
- * @param  {Stringq} str
- * @return {String}
- */
-const createHash = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
@@ -123,7 +105,6 @@ async function pushToQueue(task, cb) {
     const node = await processRemoteNode(task)
     return cb(null, node)
   } catch (e) {
-    console.warn(`Failed to process remote content ${task.url}`)
     return cb(e)
   }
 }
@@ -186,6 +167,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
+  httpHeaders = {},
   createNodeId,
   ext,
   name,
@@ -201,7 +183,7 @@ async function processRemoteNode({
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
-  const headers = {}
+  const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
   }
@@ -214,7 +196,7 @@ async function processRemoteNode({
   }
 
   // Create the temp and permanent file names for the url.
-  const digest = createHash(url)
+  const digest = createContentDigest(url)
   if (!name) {
     name = getRemoteFileName(url)
   }
@@ -259,7 +241,7 @@ async function processRemoteNode({
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
   // gatsby-source-filesystem.
-  createNode(fileNode, { name: `gatsby-source-filesystem` })
+  await createNode(fileNode, { name: `gatsby-source-filesystem` })
 
   return fileNode
 }
@@ -284,8 +266,8 @@ const pushTask = task =>
       .on(`finish`, task => {
         resolve(task)
       })
-      .on(`failed`, () => {
-        resolve()
+      .on(`failed`, err => {
+        reject(`failed to process ${task.url}\n${err}`)
       })
   })
 
@@ -314,6 +296,7 @@ module.exports = ({
   createNode,
   parentNodeId = null,
   auth = {},
+  httpHeaders = {},
   createNodeId,
   ext = null,
   name = null,
@@ -343,9 +326,7 @@ module.exports = ({
   }
 
   if (!url || isWebUri(url) === undefined) {
-    // should we resolve here, or reject?
-    // Technically, it's invalid input
-    return Promise.resolve()
+    return Promise.reject(`wrong url: ${url}`)
   }
 
   totalJobs += 1
@@ -359,12 +340,16 @@ module.exports = ({
     parentNodeId,
     createNodeId,
     auth,
+    httpHeaders,
     ext,
     name,
   })
 
-  fileDownloadPromise.then(() => bar.tick())
+  processingCache[url] = fileDownloadPromise.then(node => {
+    bar.tick()
 
-  processingCache[url] = fileDownloadPromise
-  return fileDownloadPromise
+    return node
+  })
+
+  return processingCache[url]
 }

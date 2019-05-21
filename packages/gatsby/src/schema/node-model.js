@@ -47,6 +47,10 @@ export interface NodeModel {
     pageDependencies?: PageDependencies
   ): Promise<any>;
   getTypes(): Array<string>;
+  trackPageDependencies<nodeOrNodes: Node | Node[]>(
+    result: nodeOrNodes,
+    pageDependencies?: PageDependencies
+  ): nodesOrNodes;
 }
 
 class LocalNodeModel {
@@ -81,11 +85,7 @@ class LocalNodeModel {
       result = nodeTypeNames.includes(node.internal.type) ? node : null
     }
 
-    return trackPageDependencies(
-      result,
-      { path: this.path, ...pageDependencies },
-      this.createPageDependency
-    )
+    return this.trackPageDependencies(result, pageDependencies)
   }
 
   /**
@@ -112,15 +112,13 @@ class LocalNodeModel {
       result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
     }
 
-    return trackPageDependencies(
-      result,
-      { path: this.path, ...pageDependencies },
-      this.createPageDependency
-    )
+    return this.trackPageDependencies(result, pageDependencies)
   }
 
   /**
-   * Get all nodes in the store, or all nodes of a specified type.
+   * Get all nodes in the store, or all nodes of a specified type. Note that
+   * this doesn't add tracking to all the nodes, unless pageDependencies are
+   * passed.
    *
    * @param {Object} args
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
@@ -142,11 +140,11 @@ class LocalNodeModel {
       result = nodes.filter(Boolean)
     }
 
-    return trackPageDependencies(
-      result,
-      { path: this.path, ...pageDependencies },
-      this.createPageDependency
-    )
+    if (pageDependencies) {
+      return this.trackPageDependencies(result, pageDependencies)
+    } else {
+      return result
+    }
   }
 
   /**
@@ -197,11 +195,7 @@ class LocalNodeModel {
       }
     }
 
-    return trackPageDependencies(
-      result,
-      { path: this.path, ...pageDependencies },
-      this.createPageDependency
-    )
+    return this.trackPageDependencies(result, pageDependencies)
   }
 
   /**
@@ -223,6 +217,35 @@ class LocalNodeModel {
    */
   findRootNodeAncestor(obj, predicate) {
     return this.nodeStore.findRootNodeAncestor(obj, predicate)
+  }
+
+  /**
+   * Given a result, that's either a single node or an array of them, track them
+   * using pageDependencies. Defaults to tracking according to current resolver
+   * path. Returns the result back.
+   *
+   * @param {Node | Node[]} result
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Node | Node[]}
+   */
+  trackPageDependencies(result, pageDependencies) {
+    const fullDependencies = {
+      path: this.path,
+      ...(pageDependencies || {}),
+    }
+    const { path, connectionType } = fullDependencies
+    if (path) {
+      if (connectionType) {
+        this.createPageDependency({ path, connection: connectionType })
+      } else {
+        const nodes = Array.isArray(result) ? result : [result]
+        nodes
+          .filter(Boolean)
+          .map(node => this.createPageDependency({ path, nodeId: node.id }))
+      }
+    }
+
+    return result
   }
 }
 
@@ -249,26 +272,6 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
   return possibleTypes
     .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
     .map(type => type.name)
-}
-
-const trackPageDependencies = (
-  result,
-  pageDependencies,
-  createPageDependency
-) => {
-  const { path, connectionType } = pageDependencies
-  if (path) {
-    if (connectionType) {
-      createPageDependency({ path, connection: connectionType })
-    } else {
-      const nodes = Array.isArray(result) ? result : [result]
-      nodes
-        .filter(Boolean)
-        .map(node => createPageDependency({ path, nodeId: node.id }))
-    }
-  }
-
-  return result
 }
 
 module.exports = {

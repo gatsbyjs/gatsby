@@ -5,8 +5,8 @@ import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   lineHeights,
   letterSpacings,
   fonts,
@@ -17,11 +17,13 @@ const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${space[8]}`,
+      margin: `0 auto`,
       paddingBottom: space[9],
       paddingTop: space[9],
+      paddingLeft: space[8],
+      paddingRight: space[8],
       textAlign: `center`,
-      [breakpoints.md]: {
+      [mediaQueries.md]: {
         paddingBottom: rhythm(3),
         paddingTop: rhythm(3),
       },
@@ -44,15 +46,15 @@ const MastheadContent = () => (
       css={{
         color: colors.gray.copy,
         fontFamily: fonts.header,
-        fontSize: scale[4],
+        fontSize: fontSizes[4],
         maxWidth: rhythm(30),
         margin: `0 auto ${space[7]}`,
         WebkitFontSmoothing: `antialiased`,
-        [breakpoints.sm]: {
-          fontSize: scale[5],
+        [mediaQueries.sm]: {
+          fontSize: fontSizes[5],
         },
-        [breakpoints.lg]: {
-          fontSize: scale[6],
+        [mediaQueries.lg]: {
+          fontSize: fontSizes[6],
         },
       }}
     >

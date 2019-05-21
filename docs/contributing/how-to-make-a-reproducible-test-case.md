@@ -24,7 +24,7 @@ A reproducible test case is a great way to share a specific environment that cau
 ## Places to develop a reproducible test case
 
 - Locally with a starter: You can start with a [Starter](/docs/starters) locally and then build it on your own machine. Gatsby's official [`hello-world`](https://github.com/gatsbyjs/gatsby/tree/master/starters/hello-world) or [`default`](https://github.com/gatsbyjs/gatsby-starter-default) starter are both good foundations for a reproducible test case.
-- Host on CodeSandbox: You can develop a Gatsby site straight from your browser with CodeSandbox using their [Gatsby template](https://codesandbox.io/s/github/gatsbyjs/gatsby-starter-default). CodeSandbox also hosts your site automatically, which can be useful to demonstrate the behaviour of your site.
+- Host on CodeSandbox: You can develop a Gatsby site straight from your browser with CodeSandbox using their [Gatsby template](https://codesandbox.io/s/github/gatsbyjs/gatsby-starter-default). CodeSandbox also hosts your site automatically, which can be useful to demonstrate the behavior of your site.
 
 ## Benefits of reproducible test cases
 

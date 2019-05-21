@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/compare/gatsby-plugin-sitemap@2.0.12...gatsby-plugin-sitemap@2.1.0) (2019-05-02)
+
+### Features
+
+- **gatsby:** add assetPrefix to support deploying assets separate from html ([#12128](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/issues/12128)) ([8291044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/commit/8291044))
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/compare/gatsby-plugin-sitemap@2.0.11...gatsby-plugin-sitemap@2.0.12) (2019-04-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** add meaningful error when siteUrl is missing ([#13123](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/issues/13123)) ([65693d3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/commit/65693d3)), closes [#12912](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/issues/12912)
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/compare/gatsby-plugin-sitemap@2.0.10...gatsby-plugin-sitemap@2.0.11) (2019-03-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** use pathPrefix when building sitemap index ([#12852](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/issues/12852)) ([1d7e6c7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/commit/1d7e6c7))
+
 ## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap/compare/gatsby-plugin-sitemap@2.0.9...gatsby-plugin-sitemap@2.0.10) (2019-03-16)
 
 ### Features

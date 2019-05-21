@@ -126,13 +126,13 @@ export default (pagePath, callback) => {
 
   let dataAndContext = {}
   if (page.jsonName in dataPaths) {
-    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
+    const pathToJsonData = join(
+      process.cwd(),
+      `/public/static/d`,
+      `${dataPaths[page.jsonName]}.json`
+    )
     try {
-      dataAndContext = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
-        )
-      )
+      dataAndContext = JSON.parse(fs.readFileSync(pathToJsonData))
     } catch (e) {
       console.log(`error`, pathToJsonData, e)
       process.exit()
@@ -167,11 +167,11 @@ export default (pagePath, callback) => {
 
   const routerElement = createElement(
     ServerLocation,
-    { url: `${__PATH_PREFIX__}${pagePath}` },
+    { url: `${__BASE_PATH__}${pagePath}` },
     createElement(
       Router,
       {
-        baseuri: `${__PATH_PREFIX__}`,
+        baseuri: `${__BASE_PATH__}`,
       },
       createElement(RouteHandler, { path: `/*` })
     )

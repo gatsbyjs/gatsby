@@ -10,7 +10,10 @@ import {
 
 const publicPath = `./public`
 
-exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
+exports.onPostBuild = async (
+  { graphql, pathPrefix, basePath = pathPrefix },
+  pluginOptions
+) => {
   const options = { ...pluginOptions }
   delete options.plugins
   delete options.createLinkInHead
@@ -25,12 +28,7 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
   // Paths we're excluding...
   const excludeOptions = exclude.concat(defaultOptions.exclude)
 
-  const queryRecords = await runQuery(
-    graphql,
-    query,
-    excludeOptions,
-    pathPrefix
-  )
+  const queryRecords = await runQuery(graphql, query, excludeOptions, basePath)
   const urls = serialize(queryRecords)
 
   if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
@@ -52,7 +50,9 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     )
     const sitemapIndexOptions = {
       ...rest,
-      hostname: hostname || withoutTrailingSlash(siteUrl),
+      hostname:
+        (hostname || withoutTrailingSlash(siteUrl)) +
+        withoutTrailingSlash(pathPrefix || ``),
       targetFolder: publicPath,
       urls,
       callback: error => {

@@ -11,8 +11,8 @@ import {
   colors,
   space,
   radii,
-  breakpoints,
-  scale,
+  mediaQueries,
+  fontSizes,
   letterSpacings,
   lineHeights,
   fonts,
@@ -52,7 +52,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -71,7 +71,7 @@ const Ornament = styled(`span`)`
 const Name = styled(`h3`)`
   color: ${colors.lilac};
   font-family: ${fonts.header};
-  font-size: ${scale[1]};
+  font-size: ${fontSizes[1]};
   font-weight: normal;
   letter-spacing: ${letterSpacings.tracked};
   margin: 0;
@@ -80,7 +80,7 @@ const Name = styled(`h3`)`
 
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
-  font-size: ${scale[4]};
+  font-size: ${fontSizes[4]};
   line-height: ${lineHeights.dense};
   margin: 0;
   margin-top: ${space[1]};
@@ -89,7 +89,7 @@ const Title = styled(`h1`)`
 const Form = styled(EmailCaptureForm)`
   margin-top: ${space[5]};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-top: 0;
   }
 `

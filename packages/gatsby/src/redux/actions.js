@@ -17,6 +17,7 @@ const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 const actions = {}
 
@@ -86,6 +87,7 @@ const pascalCase = _.flow(
 )
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
+const pageComponentCache = {}
 const fileOkCache = {}
 
 /**
@@ -201,37 +203,48 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       console.log(page)
       noPageOrComponent = true
     } else if (page.component) {
-      // normalize component path
-      page.component = slash(page.component)
-      // check if path uses correct casing - incorrect casing will
-      // cause issues in query compiler and inconsistencies when
-      // developing on Mac or Windows and trying to deploy from
-      // linux CI/CD pipeline
-      const trueComponentPath = slash(truePath(page.component))
-      if (trueComponentPath !== page.component) {
-        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-          const markers = page.component
-            .split(``)
-            .map((letter, index) => {
-              if (letter !== trueComponentPath[index]) {
-                return `^`
-              }
-              return ` `
-            })
-            .join(``)
+      // check if we've processed this component path
+      // before, before running the expensive "truePath"
+      // operation
+      if (pageComponentCache[page.component]) {
+        page.component = pageComponentCache[page.component]
+      } else {
+        const originalPageComponent = page.component
 
-          report.warn(
-            stripIndent`
-          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+        // normalize component path
+        page.component = slash(page.component)
+        // check if path uses correct casing - incorrect casing will
+        // cause issues in query compiler and inconsistencies when
+        // developing on Mac or Windows and trying to deploy from
+        // linux CI/CD pipeline
+        const trueComponentPath = slash(truePath(page.component))
+        if (trueComponentPath !== page.component) {
+          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+            const markers = page.component
+              .split(``)
+              .map((letter, index) => {
+                if (letter !== trueComponentPath[index]) {
+                  return `^`
+                }
+                return ` `
+              })
+              .join(``)
 
-          page.component:     "${page.component}"
-          path in filesystem: "${trueComponentPath}"
-                               ${markers}
-        `
-          )
-          hasWarnedForPageComponentInvalidCasing.add(page.component)
+            report.warn(
+              stripIndent`
+            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+
+            page.component:     "${page.component}"
+            path in filesystem: "${trueComponentPath}"
+                                 ${markers}
+          `
+            )
+            hasWarnedForPageComponentInvalidCasing.add(page.component)
+          }
+
+          page.component = trueComponentPath
         }
-        page.component = trueComponentPath
+        pageComponentCache[originalPageComponent] = page.component
       }
     }
   }
@@ -339,6 +352,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
+  const alternateSlashPath = page.path.endsWith(`/`)
+    ? page.path.slice(0, -1)
+    : page.path + `/`
+
+  if (store.getState().pages.has(alternateSlashPath)) {
+    report.warn(
+      `Attempting to create page "${
+        page.path
+      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+    )
+  }
+
   return {
     ...actionOptions,
     type: `CREATE_PAGE`,
@@ -356,7 +381,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * deleteNode({node: node})
  */
 actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
-  let node = _.get(options, `node`)
+  let id
 
   // Check if using old method signature. Warn about incorrect usage but get
   // node from nodeID anyway.
@@ -371,7 +396,33 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
     report.warn(msg)
 
-    node = getNode(options)
+    id = options
+  } else {
+    id = options && options.node && options.node.id
+  }
+
+  // Always get node from the store, as the node we get as an arg
+  // might already have been deleted.
+  const node = getNode(id)
+  if (plugin) {
+    const pluginName = plugin.name
+
+    if (node && typeOwners[node.internal.type] !== pluginName)
+      throw new Error(stripIndent`
+          The plugin "${pluginName}" deleted a node of a type owned by another plugin.
+
+          The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
+
+          The node object passed to "deleteNode":
+
+          ${JSON.stringify(node, null, 4)}
+
+          The plugin deleting the node:
+
+          ${JSON.stringify(plugin, null, 4)}
+        `)
   }
 
   const createDeleteAction = node => {
@@ -452,13 +503,24 @@ const typeOwners = {}
  * markdown transformers look for media types of
  * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
- * choosen by the plugin creating the node. Should be descriptive of the
+ * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
- * @param {string} node.internal.content An optional field. The raw content
- * of the node. Can be excluded if it'd require a lot of memory to load in
- * which case you must define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.content An optional field. This is rarely
+ * used. It is used when a source plugin sources data it doesn't know how
+ * to transform e.g. a markdown string pulled from an API. The source plugin
+ * can defer the transformation to a specialized transformer plugin like
+ * gatsby-transformer-remark. This `content` field holds the raw content
+ * (so for the markdown case, the markdown string).
+ *
+ * Data that's already structured should be added to the top-level of the node
+ * object and _not_ added here. You should not `JSON.stringify` your node's
+ * data here.
+ *
+ * If the content is very large and can be lazy-loaded, e.g. a file on disk,
+ * you can define a `loadNodeContent` function for this node and the node
+ * content will be lazy loaded when it's needed.
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
@@ -466,6 +528,8 @@ const typeOwners = {}
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @returns {Promise} The returned Promise resolves when all cascading
+ * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example
  * createNode({
  *   // Data for the node.
@@ -490,7 +554,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (
+const createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
@@ -562,7 +626,7 @@ actions.createNode = (
     )
   }
 
-  trackInlineObjectsInRootNode(node)
+  node = trackInlineObjectsInRootNode(node, true)
 
   const oldNode = getNode(node.id)
 
@@ -653,6 +717,26 @@ actions.createNode = (
   } else {
     return updateNodeAction
   }
+}
+
+actions.createNode = (...args) => dispatch => {
+  const actions = createNode(...args)
+  dispatch(actions)
+  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
+    action => action.type === `CREATE_NODE`
+  )
+
+  if (!createNodeAction) {
+    return undefined
+  }
+
+  const { payload: node, traceId, parentSpan } = createNodeAction
+  return apiRunnerNode(`onCreateNode`, {
+    node,
+    traceId,
+    parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  })
 }
 
 /**
@@ -1204,8 +1288,30 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *   with inferred field types, and default field resolvers for `Date` (which
  *   adds formatting options) and `File` (which resolves the field value as
  *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer` and `@dontInfer` directives, and their
- *   `noDefaultResolvers` argument.
+ *   customised with `@infer`, `@dontInfer` directives or extensions. Fields
+ *   may be assigned resolver (and other option like args) with additional
+ *   directives. Currently `@dateformat`, `@link` and `@fileByRelativePath` are
+ *   available.
+ *
+ *
+ * Schema customization controls:
+ * * `@infer` - run inference on the type and add fields that don't exist on the
+ * defined type to it.
+ * * `@dontInfer` - don't run any inference on the type
+ *
+ * Extensions to add resolver options:
+ * * `@dateformat` - add date formatting arguments. Accepts `formatString` and
+ *   `locale` options that sets the defaults for this field
+ * * `@link` - connect to a different Node. Arguments `by` and `from`, which
+ *   define which field to compare to on a remote node and which field to use on
+ *   the source node
+ * * `@fileByRelativePath` - connect to a File node. Same arguments. The
+ *   difference from link is that this normalizes the relative path to be
+ *   relative from the path where source node is found.
+ * * `proxy` - in case the underlying node data contains field names with
+ *   characters that are invalid in GraphQL, `proxy` allows to explicitly
+ *   proxy those properties to fields with valid field names. Takes a `from` arg.
+ *
  *
  * @example
  * exports.sourceNodes = ({ actions }) => {
@@ -1214,17 +1320,17 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     """
  *     Markdown Node
  *     """
- *     type MarkdownRemark implements Node {
+ *     type MarkdownRemark implements Node @infer {
  *       frontmatter: Frontmatter!
  *     }
  *
  *     """
  *     Markdown Frontmatter
  *     """
- *     type Frontmatter {
+ *     type Frontmatter @infer {
  *       title: String!
- *       author: AuthorJson!
- *       date: Date!
+ *       author: AuthorJson! @link
+ *       date: Date! @dateformat
  *       published: Boolean!
  *       tags: [String!]!
  *     }
@@ -1233,9 +1339,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     Author information
  *     """
  *     # Does not include automatically inferred fields
- *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *     type AuthorJson implements Node @dontInfer {
  *       name: String!
- *       birthday: Date! # no default resolvers for Date formatting added
+ *       birthday: Date! @dateformat(locale: "ru")
  *     }
  *   `
  *   createTypes(typeDefs)
@@ -1250,6 +1356,10 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *       fields: {
  *         frontmatter: 'Frontmatter!'
  *       },
+ *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: true,
+ *       },
  *     }),
  *     schema.buildObjectType({
  *       name: 'Frontmatter',
@@ -1260,12 +1370,40 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *             return parent.title || '(Untitled)'
  *           }
  *         },
- *         author: 'AuthorJson!',
- *         date: 'Date!',
+ *         author: {
+ *           type: 'AuthorJson'
+ *           extensions: {
+ *             link: {},
+ *           },
+ *         }
+ *         date: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             dateformat: {},
+ *           },
+ *         },
  *         published: 'Boolean!',
  *         tags: '[String!]!',
  *       }
- *     })
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'AuthorJson',
+ *       fields: {
+ *         name: 'String!'
+ *         birthday: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             dateformat: {
+ *               locale: 'ru',
+ *             },
+ *           },
+ *         },
+ *       },
+ *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: false,
+ *       },
+ *     }),
  *   ]
  *   createTypes(typeDefs)
  * }
@@ -1284,6 +1422,133 @@ actions.createTypes = (
     plugin,
     traceId,
     payload: types,
+  }
+}
+
+/**
+ *
+ * Report that a query has been extracted from a component. Used by
+ * query-compilier.js.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {query} $0.query The GraphQL query that was extracted from the component.
+ * @private
+ */
+actions.queryExtracted = (
+  { componentPath, query },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTED`,
+    plugin,
+    traceId,
+    payload: { componentPath, query },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a graphql error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The GraphQL query that was extracted from the component.
+ * @private
+ */
+actions.queryExtractionGraphQLError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ *
+ * Report that babel was able to extract the graphql query.
+ * Indicates that the file is free of JS errors.
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @private
+ */
+actions.queryExtractedBabelSuccess = (
+  { componentPath },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
+    plugin,
+    traceId,
+    payload: { componentPath },
+  }
+}
+
+/**
+ *
+ * Report that the Relay Compilier found a babel error when attempting to extract a query
+ *
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {error} $0.error The Babel error object
+ * @private
+ */
+actions.queryExtractionBabelError = (
+  { componentPath, error },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `QUERY_EXTRACTION_BABEL_ERROR`,
+    plugin,
+    traceId,
+    payload: { componentPath, error },
+  }
+}
+
+/**
+ * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
+ *
+ * @param {string} Program status
+ * @private
+ */
+actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
+  return {
+    type: `SET_PROGRAM_STATUS`,
+    plugin,
+    traceId,
+    payload: status,
+  }
+}
+
+/**
+ * Broadcast that a page's query was run.
+ *
+ * @param {string} Path to the page component that changed.
+ * @private
+ */
+actions.pageQueryRun = (
+  { path, componentPath, isPage },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `PAGE_QUERY_RUN`,
+    plugin,
+    traceId,
+    payload: { path, componentPath, isPage },
   }
 }
 

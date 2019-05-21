@@ -1,7 +1,14 @@
 // @flow
 
 const { SchemaComposer } = require(`graphql-compose`)
-const { graphql } = require(`graphql`)
+const {
+  graphql,
+  GraphQLSchema,
+  GraphQLNonNull,
+  GraphQLList,
+  GraphQLObjectType,
+  getNamedType,
+} = require(`graphql`)
 const { store } = require(`../../redux`)
 const { build } = require(`../index`)
 const fs = require(`fs-extra`)
@@ -14,7 +21,7 @@ jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 // XXX(freiksenet): Expand
-describe(`Kichen sink schema test`, () => {
+describe(`Kitchen sink schema test`, () => {
   let schema
 
   const runQuery = query =>
@@ -47,17 +54,20 @@ describe(`Kichen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        type PostsJson implements Node {
+        type PostsJson implements Node @infer {
           id: String!
-          time: Date
+          time: Date @dateformat(locale: "fi", formatString: "DD MMMM")
           code: String
+          image: File @fileByRelativePath
         }
       `,
     })
-    store.dispatch({
-      type: `ADD_THIRD_PARTY_SCHEMA`,
-      payload: buildThirdPartySchema(),
-    })
+    buildThirdPartySchemas().forEach(schema =>
+      store.dispatch({
+        type: `ADD_THIRD_PARTY_SCHEMA`,
+        payload: schema,
+      })
+    )
     await build({})
     schema = store.getState().schema
   })
@@ -72,6 +82,9 @@ describe(`Kichen sink schema test`, () => {
                 id
                 idWithDecoration
                 time(formatString: "DD.MM.YYYY")
+                localeString: time(locale: "ru")
+                localeFormat: time(formatString: "DD MMMM YYYY")
+                defaultTime: time
                 code
                 likes
                 comment
@@ -97,39 +110,151 @@ describe(`Kichen sink schema test`, () => {
             idWithDecoration
             likes
           }
-          addResolvers: likedEnough {
+          createResolvers: likedEnough {
             id
             likes
             code
           }
           thirdPartyStuff {
             text
+            child {
+              ... on ThirdPartyStuff {
+                text
+              }
+              ... on ThirdPartyStuff2 {
+                foo
+              }
+            }
+          }
+          thirdPartyUnion {
+            ... on ThirdPartyStuff {
+              text
+            }
+            ... on ThirdPartyStuff2 {
+              foo
+            }
+          }
+          thirdPartyInterface {
+            ... on ThirdPartyStuff3 {
+              text
+            }
           }
         }
     `)
     ).toMatchSnapshot()
   })
+
+  it(`correctly resolves nested Query types from third-party types`, () => {
+    const queryFields = schema.getQueryType().getFields()
+    ;[`relay`, `relay2`, `query`, `manyQueries`].forEach(fieldName =>
+      expect(getNamedType(queryFields[fieldName].type)).toBe(
+        schema.getQueryType()
+      )
+    )
+    expect(schema.getType(`Nested`).getFields().query.type).toBe(
+      schema.getQueryType()
+    )
+  })
 })
 
-const buildThirdPartySchema = () => {
+const buildThirdPartySchemas = () => {
   const schemaComposer = new SchemaComposer()
   schemaComposer.addTypeDefs(`
     type ThirdPartyStuff {
       text: String
+      child: ThirdPartyUnion2
     }
+
+    type ThirdPartyStuff2 {
+      foo: String
+    }
+
+    union ThirdPartyUnion = ThirdPartyStuff | ThirdPartyStuff2
+
+    interface ThirdPartyInterface {
+      text: String
+      relay: Query
+    }
+
+    type ThirdPartyStuff3 implements ThirdPartyInterface {
+      text: String
+      relay: Query
+    }
+
+    union ThirdPartyUnion2 = ThirdPartyStuff | ThirdPartyStuff2
 
     type Query {
       thirdPartyStuff: ThirdPartyStuff
+      thirdPartyUnion: ThirdPartyUnion
+      thirdPartyInterface: ThirdPartyInterface
+      relay: Query
+      relay2: [Query]!
     }
   `)
+  schemaComposer
+    .getUTC(`ThirdPartyUnion`)
+    .setResolveType(() => `ThirdPartyStuff`)
+  schemaComposer
+    .getUTC(`ThirdPartyUnion2`)
+    .setResolveType(() => `ThirdPartyStuff`)
+  schemaComposer
+    .getIFTC(`ThirdPartyInterface`)
+    .setResolveType(() => `ThirdPartyStuff3`)
   schemaComposer.Query.extendField(`thirdPartyStuff`, {
+    resolve() {
+      return {
+        text: `Hello third-party schema!`,
+        child: {
+          text: `Hello from children!`,
+        },
+      }
+    },
+  })
+  schemaComposer.Query.extendField(`thirdPartyUnion`, {
+    resolve() {
+      return {
+        text: `Hello third-party schema!`,
+        child: {
+          text: `Hello from children!`,
+        },
+      }
+    },
+  })
+  schemaComposer.Query.extendField(`thirdPartyInterface`, {
     resolve() {
       return {
         text: `Hello third-party schema!`,
       }
     },
   })
-  return schemaComposer.buildSchema()
+  schemaComposer.addSchemaMustHaveType(
+    schemaComposer.getOTC(`ThirdPartyStuff3`)
+  )
+
+  // Query type with non-default name
+  const RootQueryType = new GraphQLObjectType({
+    name: `RootQueryType`,
+    fields: () => {
+      return {
+        query: { type: RootQueryType },
+        manyQueries: {
+          type: new GraphQLNonNull(new GraphQLList(RootQueryType)),
+        },
+        nested: { type: Nested },
+      }
+    },
+  })
+  const Nested = new GraphQLObjectType({
+    name: `Nested`,
+    fields: () => {
+      return {
+        query: { type: RootQueryType },
+      }
+    },
+  })
+  const schema = new GraphQLSchema({ query: RootQueryType })
+
+  return [schemaComposer.buildSchema(), schema]
 }
 
 const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {

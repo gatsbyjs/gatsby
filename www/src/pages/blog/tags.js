@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { graphql, Link } from "gatsby"
-import kebabCase from "lodash/kebabCase"
+import { kebabCase } from "lodash-es"
 
 import Layout from "../../components/layout"
 import Container from "../../components/container"
@@ -15,7 +15,7 @@ let currentLetter = ``
 class TagsPage extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      allMarkdownRemark: PropTypes.shape({
+      allMdx: PropTypes.shape({
         group: PropTypes.arrayOf(
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
@@ -41,7 +41,7 @@ class TagsPage extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { group },
+        allMdx: { group },
       },
       location,
     } = this.props
@@ -52,6 +52,12 @@ class TagsPage extends React.Component {
         lookup[key] = Object.assign(tag, {
           slug: `/blog/tags/${key}`,
         })
+      } else {
+        lookup[key].totalCount += tag.totalCount
+      }
+      // Prefer spaced tag names (instead of hyphenated) for display
+      if (tag.fieldValue.includes(` `)) {
+        lookup[key].fieldValue = tag.fieldValue
       }
       return lookup
     }, {})
@@ -62,7 +68,13 @@ class TagsPage extends React.Component {
     return (
       <Layout location={location}>
         <Container>
-          <Helmet title="Tags" />
+          <Helmet>
+            <title>Tags</title>
+            <meta
+              name="description"
+              content="Find case studies, tutorials, and more about Gatsby related topics by tag"
+            />
+          </Helmet>
           <div>
             <div
               css={{
@@ -166,7 +178,7 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark(
+    allMdx(
       limit: 2000
       filter: {
         fields: { released: { eq: true } }

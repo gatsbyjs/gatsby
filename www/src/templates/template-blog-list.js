@@ -9,6 +9,7 @@ import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
+import FooterLinks from "../components/shared/footer-links"
 
 import {
   colors,
@@ -16,33 +17,33 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
 } from "../utils/presets"
 import { rhythm, options } from "../utils/typography"
 
 class BlogPostsIndex extends React.Component {
   render() {
-    const { allMarkdownRemark } = this.props.data
+    const { allMdx } = this.props.data
 
     return (
       <Layout location={this.props.location}>
         <main
           id={`reach-skip-nav`}
           css={{
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               background: colors.gray.whisper,
               paddingBottom: rhythm(options.blockMarginBottom * 4),
             },
           }}
         >
           <Helmet>
-            <title>Blog</title>
+            <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   marginTop: 0,
                   position: `absolute`,
                   width: 1,
@@ -57,13 +58,13 @@ class BlogPostsIndex extends React.Component {
             >
               Blog
             </h1>
-            {allMarkdownRemark.edges.map(({ node }) => (
+            {allMdx.edges.map(({ node }) => (
               <BlogPostPreviewItem
                 post={node}
                 key={node.fields.slug}
                 css={{
                   marginBottom: space[6],
-                  [breakpoints.md]: {
+                  [mediaQueries.md]: {
                     boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],
@@ -105,6 +106,7 @@ class BlogPostsIndex extends React.Component {
               </Button>
             </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
+            <FooterLinks />
           </Container>
         </main>
       </Layout>
@@ -116,7 +118,7 @@ export default BlogPostsIndex
 
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }

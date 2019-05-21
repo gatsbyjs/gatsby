@@ -4,7 +4,7 @@ title: Adding search with js-search
 
 ## Prerequisites
 
-Before we go through the steps needed for adding client side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
+Before we go through the steps needed for adding client side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
 
 ## What is JS Search
 
@@ -16,7 +16,7 @@ The full code and documentation for this library is [available on GitHub](https:
 
 You'll start by creating a new Gatsby site based on the official _hello world_ starter. Open up a terminal and run the following command:
 
-```bash
+```shell
 gatsby new js-search-example https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
@@ -24,13 +24,13 @@ After the process is complete, some additional packages are needed.
 
 Change directories to the `js-search-example` folder and issue the following command:
 
-```bash
+```shell
 npm install --save js-search axios
 ```
 
 Or if Yarn is being used:
 
-```bash
+```shell
 yarn add js-search axios
 ```
 
@@ -257,7 +257,7 @@ Run `gatsby develop` and if all went well, open your browser of choice and enter
 
 ## JS-Search with a big dataset
 
-Now let's try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](https://www.gatsbyjs.org/docs/behind-the-scenes-terminology/#pagecontext).
+Now let's try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
 
 To do this, some changes are required.
 

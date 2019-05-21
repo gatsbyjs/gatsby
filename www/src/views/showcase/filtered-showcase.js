@@ -7,6 +7,7 @@ import ShowcaseList from "./showcase-list"
 import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
+import FooterLinks from "../../components/shared/footer-links"
 import { colors, space } from "../../utils/presets"
 import {
   ContentHeader,
@@ -161,6 +162,7 @@ class FilteredShowcase extends Component {
               Load More
             </Button>
           )}
+          <FooterLinks />
         </ContentContainer>
       </section>
     )
