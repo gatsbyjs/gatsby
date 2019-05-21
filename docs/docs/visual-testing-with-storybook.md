@@ -83,17 +83,24 @@ module.exports = ({ config }) => {
     require.resolve("@babel/preset-env"),
   ]
 
-  // use @babel/plugin-proposal-class-properties for class arrow functions
   config.module.rules[0].use[0].options.plugins = [
+    // use @babel/plugin-proposal-class-properties for class arrow functions
     require.resolve("@babel/plugin-proposal-class-properties"),
+    // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
+    require.resolve("babel-plugin-remove-graphql-queries"),
   ]
 
   // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
   config.resolve.mainFields = ["browser", "module", "main"]
 
+  // Set the NODE_ENV to 'production' so that babel-plugin-remove-graphql-queries can remove static queries
+  process.env.NODE_ENV = "production"
+
   return config
 }
 ```
+
+> Note that if you're using a [StaticQuery](https://www.gatsbyjs.org/docs/static-query/) in your components, `babel-plugin-remove-graphql-queries` is required to render them in Storybook. This is because the queries are run at build time in Gatsby, and will not have been run when rendering the components directly.
 
 **For Storybook v4:**
 
@@ -111,13 +118,18 @@ module.exports = (baseConfig, env, defaultConfig) => {
     require.resolve("@babel/preset-env"),
   ]
 
-  // use @babel/plugin-proposal-class-properties for class arrow functions
   defaultConfig.module.rules[0].use[0].options.plugins = [
+    // use @babel/plugin-proposal-class-properties for class arrow functions
     require.resolve("@babel/plugin-proposal-class-properties"),
+    // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
+    require.resolve("babel-plugin-remove-graphql-queries"),
   ]
 
   // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
   defaultConfig.resolve.mainFields = ["browser", "module", "main"]
+
+  // Set the NODE_ENV to 'production' so that babel-plugin-remove-graphql-queries can remove static queries
+  process.env.NODE_ENV = "production"
 
   return defaultConfig
 }
