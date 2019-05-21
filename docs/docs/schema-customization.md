@@ -9,7 +9,7 @@ many cases this is really all you need. There are however situations when you
 either want to explicitly define the data shape, or add custom functionality to
 the query layer - this is what Gatsby's Schema Customization API provides.
 
-The following guide walks through a basic example to showcase the API.
+The following guide walks through some examples to showcase the API.
 
 > This guide is aimed at plugin authors, users trying to fix GraphQL schemas
 > created by automatic type inference, developers optimising builds for larger
@@ -17,7 +17,7 @@ The following guide walks through a basic example to showcase the API.
 > As such, the guide assumes that you're somewhat familiar with GraphQL types
 > and with using Gatsby's Node APIs.
 
-# Explicitly defining data types
+## Explicitly defining data types
 
 Our example project is a blog that gets its data from local Markdown files which
 provide the post contents, as well as author information in JSON format. We also
@@ -68,7 +68,7 @@ a unique `id` and a type `MarkdownRemark`. Similarly, an author will be
 represented by a node object of type `AuthorJson`, and contributor info will be
 transformed into node objects of type `ContributorJson`.
 
-## The Node interface
+### The Node interface
 
 This data structure is represented in Gatsby's GraphQL schema with the `Node`
 interface, which describes the set of fields common to node objects created by
@@ -111,7 +111,7 @@ type AuthorJson implements Node {
 > playground at `http://localhost:8000/___graphql` and inspect the `Schema` tab on
 > the right.
 
-## Automatic type inference
+### Automatic type inference
 
 It's important to note that the data in `author.json` does not provide type
 information of the Author fields by itself. In order to translate the data
@@ -128,7 +128,7 @@ suddenly fail.
 Both problems can be solved by providing explicit type definitions for Gatsby's
 GraphQL schema.
 
-## Creating type definitions
+### Creating type definitions
 
 Let's take the latter case first. Assume a new author joins the team, but in the
 new author entry there is a typo on the `joinedAt` field: "201-04-02" which is
@@ -147,7 +147,7 @@ not a valid Date.
 This will confuse Gatsby's type inference since the `joinedAt`
 field will now have both Date and String values.
 
-### Fixing field types
+#### Fixing field types
 
 To ensure that the field will always be of Date type, you can provide explicit
 type definitions to Gatsby with the `createTypes` action. It accepts type
@@ -172,7 +172,7 @@ provided, they will still be handled by Gatsby's type inference.
 > it has to be called before schema generation. We recommend to use the
 > [`sourceNodes` API](https://gatsby.dev/api/#sourceNodes).
 
-### Opting out of type inference
+#### Opting out of type inference
 
 There are however advantages to providing full definitions for a node type, and
 bypassing the type inference mechanism altogether. With smaller scale projects
@@ -204,7 +204,7 @@ Note that you don't need to explicitly provide the Node interface fields (`id`,
 > If you wonder about the exclamation marks - those allow specifying nullability
 > in GraphQL, i.e. if a field value is allowed to be `null` or not.
 
-### Nested types
+#### Nested types
 
 So far we have only been dealing with scalar values (`String` and `Date`;
 GraphQL also knows `ID`, `Int`, `Float`, `Boolean` and `JSON`). Fields can
@@ -254,7 +254,7 @@ always starting from the Node types created by source and transformer plugins.
 > it is not a top-level type created by source or transformer plugins: it has no
 > `id` field, and is just there to describe the data shape on a nested field.
 
-### Gatsby Type Builders
+#### Gatsby Type Builders
 
 In many cases, GraphQL SDL provides a succinct way to provide type definitions
 for your schema. If however you need more flexibility, `createTypes` also
@@ -292,7 +292,7 @@ field configs (`type`, `args`, `resolve`).
 > Note that the `createTypes` action also accepts `graphql-js` types directly,
 > but usually either SDL or Type Builders are the better alternatives.
 
-### Foreign-key fields
+#### Foreign-key fields
 
 Gatsby's automatic type inference has one trick up its sleeve: for every field
 that ends in `___NODE` it will interpret the field value as an `id` and create a
@@ -368,9 +368,9 @@ otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the foreign-keys from the specified
 field, which is especially helpful when adding a field for back-linking.
 
-### Extensions and directives
+#### Extensions and directives
 
-Out of the box, Gatsby provides [four extensions](https://www.gatsbyjs.org/docs/actions/#createTypes)
+Out of the box, Gatsby provides [four extensions](/docs/actions/#createTypes)
 that allow adding custom functionality to fields without having to manually
 write field resolvers: the `link` extension has already been discussed above,
 `dateformat` allows adding date formatting options, `fileByRelativePath` is
@@ -405,7 +405,7 @@ exports.sourceNodes = ({ action, schema }) => {
 }
 ```
 
-The above example adds [date formatting options](https://www.gatsbyjs.org/docs/graphql-reference/#dates)
+The above example adds [date formatting options](/docs/graphql-reference/#dates)
 to the `AuthorJson.joinedAt` and the `MarkdownRemark.frontmatter.publishedAt`
 fields. Those options are available as field arguments when querying those fields:
 
@@ -420,7 +420,7 @@ query {
 For `publishedAt` we also provide a default `formatString` which will be used
 when no explicit formatting options are provided in the query.
 
-### Setting default field values
+#### Setting default field values
 
 For setting default field values, Gatsby currently does not (yet) provide an
 out-of-the-box extension, so resolving a field to a default value (instead of
@@ -454,7 +454,7 @@ exports.sourceNodes = ({ action, schema }) => {
 }
 ```
 
-# createResolvers API
+## createResolvers API
 
 While it is possible to directly pass `args` and `resolvers` along the type
 definitions using Gatsby Type Builders, an alternative approach specifically
@@ -486,7 +486,7 @@ would mean having to regenerate corresponding input types (`filter`, `sort`),
 which we want to avoid. If possible, specifying field types should be done with
 the `createTypes` action.
 
-## Accessing Gatsby's data store from field resolvers
+### Accessing Gatsby's data store from field resolvers
 
 As mentioned above, Gatsby's internal data store and query capabilities are
 available to custom field resolvers on the `context.nodeModel` argument passed
@@ -526,7 +526,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-## Custom query fields
+### Custom query fields
 
 One powerful approach enabled by `createResolvers` is adding custom root query
 fields. While the default root query fields added by Gatsby (e.g.
@@ -589,7 +589,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-## Taking care of Hot reloading
+### Taking care of hot reloading
 
 When creating custom field resolvers, it is important to ensure that Gatsby
 knows about the data a page depends on for hot reloading to work properly. When
@@ -609,7 +609,7 @@ context.nodeModel.getAllNodes(
 )
 ```
 
-# Custom Interfaces and Unions
+## Custom Interfaces and Unions
 
 Finally, let's say we want to have a page on our example blog that lists all
 team members (authors and contributors). What we could do is have two queries,
@@ -691,7 +691,7 @@ export const query = graphql`
 `
 ```
 
-# Extending third-party types
+## Extending third-party types
 
 So far, the examples have been dealing with types created from locally available data.
 However, Gatsby also allows to integrate and modify third-party GraphQL schemas.
@@ -700,10 +700,10 @@ Usually, those third-party schemas are retrieved from remote sources via introsp
 query with Gatsby's `gatsby-source-graphql` plugin. To customize types integrated from
 a third-party schema, we can use the `createResolvers` API.
 
-## Feeding remote images into `gatsby-image`
+### Feeding remote images into `gatsby-image`
 
-As an [example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js),
-let's look at how we could use `createResolvers` to feed images from a
+As an example,
+let's look at [using-gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how we could use `createResolvers` to feed images from a
 CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
 to prefix all types from the third-party schema with `CMS`):
 
