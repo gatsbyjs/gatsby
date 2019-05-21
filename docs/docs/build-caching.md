@@ -6,8 +6,8 @@ Plugins can cache data as JSON objects and retrieve them on consecutive builds.
 
 Caching is already used by Gatsby and plugins for example:
 
-* any nodes created by source/transformer plugins are cached
-* `gatsby-plugin-sharp` caches built thumbnails
+- any nodes created by source/transformer plugins are cached
+- `gatsby-plugin-sharp` caches built thumbnails
 
 Data is stored in the `.cache` directory relative to your project root.
 
@@ -40,28 +40,26 @@ The [Node API helpers](/docs/node-api-helpers/#cache) documentation offers more 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
 ```js:title=gatsby-node.js
-exports.onPostBuild = async function(
-  { cache, store, graphql },
-  { query } ) {
-    const cacheKey = 'some-key-name';
-    let obj = await cache.get(cacheKey);
+exports.onPostBuild = async function({ cache, store, graphql }, { query }) {
+  const cacheKey = "some-key-name"
+  let obj = await cache.get(cacheKey)
 
-    if (!obj) {
-      obj = { created: Date.now() };      
-      const data = await graphql(query);
-      obj.data = data;
-    } else if (Date.now() > obj.lastChecked + 3600000) {
-      /* Reload after a day */
-      const data = await graphql(query);
-      obj.data = data;
-    }
-    
-    obj.lastChecked = Date.now();    
-
-    await cache.set(cacheKey, obj);
-    
-    /* Do something with data ... */
+  if (!obj) {
+    obj = { created: Date.now() }
+    const data = await graphql(query)
+    obj.data = data
+  } else if (Date.now() > obj.lastChecked + 3600000) {
+    /* Reload after a day */
+    const data = await graphql(query)
+    obj.data = data
   }
+
+  obj.lastChecked = Date.now()
+
+  await cache.set(cacheKey, obj)
+
+  /* Do something with data ... */
+}
 ```
 
 ## Clearing cache
@@ -75,4 +73,4 @@ The cache is also invalidated by Gatsby in a few cases, specifically:
 
 ## Conclusion
 
-With the cache API you're able to persist data between builds, which is really helpful while developing a site with Gatsby (as you re-run `gatsby develop` really often). Performance-heavy operations (like image transformations) or downloading data can slow down the bootstrap of Gatsby significantly and adding this optimization to your plugin can be a huge improvement to your end users. You can also have a look at the following examples who implemented the cache API: [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-contentful/src/download-contentful-assets.js), [gatsby-source-shopify](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-shopify/src/nodes.js#L23-L54), [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-wordpress/src/normalize.js#L471-L537), [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-transformer-remark/src/extend-node-type.js), [gatsby-source-tmdb](https://github.com/LekoArts/gatsby-source-tmdb/blob/e12c19af5e7053bfb7737e072db9e24acfa77f49/src/add-local-image.js). 
+With the cache API you're able to persist data between builds, which is really helpful while developing a site with Gatsby (as you re-run `gatsby develop` really often). Performance-heavy operations (like image transformations) or downloading data can slow down the bootstrap of Gatsby significantly and adding this optimization to your plugin can be a huge improvement to your end users. You can also have a look at the following examples who implemented the cache API: [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-contentful/src/download-contentful-assets.js), [gatsby-source-shopify](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-shopify/src/nodes.js#L23-L54), [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-source-wordpress/src/normalize.js#L471-L537), [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/blob/7f5b262d7b5323f1a387b8b7278d9a81ee227258/packages/gatsby-transformer-remark/src/extend-node-type.js), [gatsby-source-tmdb](https://github.com/LekoArts/gatsby-source-tmdb/blob/e12c19af5e7053bfb7737e072db9e24acfa77f49/src/add-local-image.js).
