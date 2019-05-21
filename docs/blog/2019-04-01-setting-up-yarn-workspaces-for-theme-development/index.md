@@ -130,7 +130,7 @@ import React from "react"
 export default props => <h1>Hello, world</h1>
 ```
 
-Add Gatsby scripts to the example site's `package.json`.
+Add Gatsby develop and build scripts to the example site's `package.json`.
 
 ```json:title=example/package.json
 {
