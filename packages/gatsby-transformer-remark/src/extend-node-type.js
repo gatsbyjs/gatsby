@@ -609,6 +609,7 @@ module.exports = (
             type: GraphQLString,
             defaultValue: ``,
           },
+        },
           resolve(markdownNode, { depth, ...rest }) {
             return getHeadings(markdownNode, {
               ...rest,
@@ -648,7 +649,7 @@ module.exports = (
             },
             heading: {
               type: GraphQLString,
-            },
+          }
           },
           resolve(markdownNode, args) {
             return getTableOfContents(markdownNode, args)
