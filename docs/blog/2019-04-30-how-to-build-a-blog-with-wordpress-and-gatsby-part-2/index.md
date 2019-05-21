@@ -20,7 +20,7 @@ I have set up a WordPress site for you to use with the plugins mentioned in the 
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4">
+    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4"/>
   </video>
   <figcaption>Shut up and take my money!</figcaption>
 </figure>
@@ -116,7 +116,7 @@ Whew! That was a mouthful.
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4">
+    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4"/>
   </video>
   <figcaption>Get on with it!</figcaption>
 </figure>
@@ -272,9 +272,9 @@ The gatsby-node.js file allows you to pull in a template file, then query your d
 
 <figure>
   <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4">
+    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
   </video>
-  <figcaption>Yes!!!<figcaption>
+  <figcaption>Yes!!!</figcaption>
 </figure>
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
@@ -409,7 +409,7 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 <figure>
   <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4">
+    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4"/>
   </video>
   <figcaption>Obligatory Great Gatsby meme</figcaption>
 </figure>

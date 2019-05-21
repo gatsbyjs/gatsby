@@ -1,10 +1,10 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
 import {
@@ -20,20 +20,8 @@ import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
-import HubspotForm from "../components/hubspot-form"
-import Pullquote from "../components/shared/pullquote"
-import Chart from "../components/chart"
 import Avatar from "../components/avatar"
 import FooterLinks from "../components/shared/footer-links"
-
-const renderAst = new rehypeReact({
-  createElement: React.createElement,
-  components: {
-    "hubspot-form": HubspotForm,
-    "date-chart": Chart,
-    pullquote: Pullquote,
-  },
-}).Compiler
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -199,7 +187,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {this.props.data.markdownRemark.fields.publishedAt}
+                        {this.props.data.mdx.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -213,7 +201,7 @@ class BlogPostTemplate extends React.Component {
                 [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
-              {this.props.data.markdownRemark.frontmatter.title}
+              {this.props.data.mdx.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
@@ -232,11 +220,9 @@ class BlogPostTemplate extends React.Component {
                 </div>
               )}
             <section className="post-body">
-              {renderAst(this.props.data.markdownRemark.htmlAst)}
+              <MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
             </section>
-            <TagsSection
-              tags={this.props.data.markdownRemark.frontmatter.tags}
-            />
+            <TagsSection tags={this.props.data.mdx.frontmatter.tags} />
             <EmailCaptureForm />
           </main>
         </Container>
@@ -311,8 +297,8 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      htmlAst
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
       excerpt
       timeToRead
       fields {

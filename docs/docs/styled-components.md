@@ -10,7 +10,7 @@ One of the most important problems they solve is selector name collisions. With 
 
 With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it much easier to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components/embed" />
+<iframe class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components/embed" />
 
 Video hosted on [egghead.io](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components).
 

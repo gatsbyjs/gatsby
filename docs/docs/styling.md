@@ -11,4 +11,4 @@ There are many ways to style your website. They can roughly be grouped into thre
 
 Gatsby doesn't have an opinion about which styling approach you choose. Almost every possible option is supported through official and community plugins. _(If there isn’t a plugin yet for your favorite option, consider [contributing](/docs/creating-plugins) one!)_
 
-[[guidelist]]
+<GuideList slug={props.slug} />
