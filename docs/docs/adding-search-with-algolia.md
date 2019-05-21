@@ -54,9 +54,9 @@ module.exports = {
 Notice that you're loading `queries` from a file at `./src/utils/algolia.js` (you can of course put it wherever you like) and your Algolia ID and API key from `.env` so let's add those files.
 
 ```text:title=.env
-GATSBY_ALGOLIA_APP_ID = KA4OJA9KAS
+GATSBY_ALGOLIA_APP_ID=KA4OJA9KAS
 GATSBY_ALGOLIA_SEARCH_KEY=lkjas987ef923ohli9asj213k12n59ad
-ALGOLIA_ADMIN_KEY = lksa09sadkj1230asd09dfvj12309ajl
+ALGOLIA_ADMIN_KEY=lksa09sadkj1230asd09dfvj12309ajl
 ```
 
 These are random character sequences but yours should be the same length. Also, it's good practice to commit a `.env.example` to version control so that if someone forks your repo, they know which environment variables they need to supply.
