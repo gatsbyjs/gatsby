@@ -17,7 +17,7 @@ We’re going to create a CLI style guide and then implement that style guide, w
 
 ## What did we learn?
 
-4 usability tests with awesome Gatsby users to learn how they do tasks using the Gatsby CLI and how they use error messages to debug their projects. Thanks [Simon Koelewijn](https://github.com/smnk), [Gene Smith](https://twitter.com/gene_r_smith), [Jonathan Prozzi](https://github.com/jonathanprozzi), and [Benjamin Lannon](https://github.com/lannonbr) for teaching us how you use the CLI, and thanks to [@sidharthachatterjee](https://github.com/sidharthachatterjee), [@wardpeet](https://github.com/wardpeet), [@pieh](https://github.com/pieh), [@m-allanson](https://github.com/m-allanson), [@gillkyle](https://github.com/gillkyle) for copiloting the interviews with me and helping turn what we learned into action.
+We conducted 4 usability tests with awesome Gatsby users to learn how they do tasks using the Gatsby CLI and how they use error messages to debug their projects. Thanks [Simon Koelewijn](https://github.com/smnk), [Gene Smith](https://twitter.com/gene_r_smith), [Jonathan Prozzi](https://github.com/jonathanprozzi), and [Benjamin Lannon](https://github.com/lannonbr) for teaching us how you use the CLI, and thanks to [@sidharthachatterjee](https://github.com/sidharthachatterjee), [@wardpeet](https://github.com/wardpeet), [@pieh](https://github.com/pieh), [@m-allanson](https://github.com/m-allanson), [@gillkyle](https://github.com/gillkyle) for copiloting the interviews with me and helping turn what we learned into action.
 
 If you want to be part of future usability tests, [sign up here](https://mailchi.mp/84f6243ba763/gatsby-usability-newsletter-signup).
 
