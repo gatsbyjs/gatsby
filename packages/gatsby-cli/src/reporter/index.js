@@ -5,7 +5,7 @@ const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const reporterInstance = require(`./reporters/yurnalist`)
+const reporterInstance = require(`./reporters`)
 
 const errorFormatter = getErrorFormatter()
 
@@ -61,6 +61,7 @@ const reporter: Reporter = {
       error = message
       message = error.message
     }
+
     reporterInstance.error(message)
     if (error) this.log(errorFormatter.render(error))
   },
@@ -71,11 +72,13 @@ const reporter: Reporter = {
   uptime(prefix) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
+
   success: reporterInstance.success,
   verbose: reporterInstance.verbose,
   info: reporterInstance.info,
   warn: reporterInstance.warn,
   log: reporterInstance.log,
+
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
