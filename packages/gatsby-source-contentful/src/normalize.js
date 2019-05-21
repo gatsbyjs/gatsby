@@ -300,7 +300,6 @@ exports.createContentTypeNodes = ({
       if (foreignReferences) {
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
-          // console.log(`adding backreference`, foreignReference)
           if (existingReference) {
             entryItemFields[foreignReference.name].push(
               mId(foreignReference.id)
