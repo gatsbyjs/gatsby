@@ -16,16 +16,24 @@ Data is stored in the `.cache` directory relative to your project root.
 The cache API is passed to [Gatsby's Node APIs](/docs/node-apis/) which is typically implemented by plugins.
 
 ```js
-exports.onPostBootstrap = async function({ cache, store, graphql }) {
+exports.onPostBootstrap = async function({ cache, store, graphql }) {}
 ```
 
 The two functions you would want to use are:
 
 ### `set`
-`cache.set(key: String, obj: Object): Promise<any>`
+
+Cache value
+
+`cache.set(key: string, value: any) => Promise<any>`
 
 ### `get`
-`cache.get(key: String): Promise<any>`
+
+Retrieve cached value
+
+`cache.get(key: string) => Promise<any>`
+
+The [Node API helpers](/docs/node-api-helpers/#cache) documentation offers more detailed information on the API.
 
 ## Plugin Example
 
