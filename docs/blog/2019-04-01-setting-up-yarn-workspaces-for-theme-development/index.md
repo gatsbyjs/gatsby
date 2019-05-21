@@ -206,7 +206,7 @@ Stop and restart the Gatsby development server to pick up the new page from the 
 
 That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with.
 Be sure to look for more posts on developing Gatsby themes in the near future,
-and you can read more about themes on the [blog][themes-tag].
+and you can read more about themes here on the [blog][themes-tag].
 
 [themes-tag]: /blog/tags/themes
 [yarn]: https://yarnpkg.com
