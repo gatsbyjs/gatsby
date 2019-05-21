@@ -451,8 +451,11 @@ module.exports = async (program, directory, suppliedStage) => {
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    // Packages we want to externalize to save space
+    // Packages we want to externalize to save some build time
+    // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
     const externalList = [
+      `@reach/router/lib/history`,
+      `@reach/router`,
       `common-tags`,
       /^core-js\//,
       `crypto`,
@@ -467,7 +470,7 @@ module.exports = async (program, directory, suppliedStage) => {
       `zlib`,
     ]
 
-    // Packages we want to externalize because the user should provide them
+    // Packages we want to externalize because meant to be user-provided
     const userExternalList = [
       `es6-promise`,
       `minimatch`,
@@ -475,8 +478,6 @@ module.exports = async (program, directory, suppliedStage) => {
       `react-helmet`,
       `react`,
       /^react-dom\//,
-      `@react/router`,
-      `@reach/router/lib/history`,
     ]
 
     const checkItem = (item, request) => {
