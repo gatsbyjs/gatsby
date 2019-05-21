@@ -95,9 +95,6 @@ exports.sourceNodes = async (
   })
 
   if (schema && actions.createTypes) {
-    // TO-DO: check what happens if refresh webhook is triggered
-    // as this will re-add types. It shouldn't do anything (at least right now)
-    // because we don't rebuild schema.
     createTypes({ schema, actions, contentTypeItems })
   }
 
