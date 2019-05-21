@@ -1,17 +1,11 @@
 // @flow
 
 const { createReporter } = require(`yurnalist`)
-const convertHrtime = require(`convert-hrtime`)
 const ProgressBar = require(`progress`)
+const calcElapsedTime = require(`../../../util/calc-elapsed-time`)
 
 const VERBOSE = process.env.gatsby_log_level === `verbose`
 const reporter = createReporter({ emoji: true, verbose: VERBOSE })
-
-const calcElapsedTime = startTime => {
-  const elapsed = process.hrtime(startTime)
-
-  return convertHrtime(elapsed)[`seconds`].toFixed(3)
-}
 
 /**
  * Reporter module.
@@ -66,7 +60,7 @@ module.exports = {
 
     if (activity.type === 'progress') {
       const bar = new ProgressBar(
-        ` [:bar] :current/:total :elapsed secs :percent ${activity.id}`,
+        ` [:bar] :current/:total :elapsed s :percent ${activity.id}`,
         {
           total: 0,
           width: 30,

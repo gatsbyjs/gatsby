@@ -136,6 +136,7 @@ const reporter: Reporter = {
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
 
+    let hasStarted = false;
     let current = start
     const activity = reporterInstance.createActivity({
       type: `progress`,
@@ -146,6 +147,11 @@ const reporter: Reporter = {
 
     return {
       start() {
+        if (hasStarted) {
+          return
+        }
+
+        hasStarted = true;
         activity.update({
           startTime: process.hrtime(),
         })

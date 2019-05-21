@@ -1,18 +1,13 @@
 import React from "react"
 import { Static, Box } from "ink"
-import { isCI } from "ci-info"
 import chalk from "chalk"
-import convertHrtime from "convert-hrtime"
 import Spinner from "./components/spinner"
 import ProgressBar from "./components/progress-bar"
 import { Message } from "./components/messages"
+import isTTY from "../../../util/is-tty"
+import calcElapsedTime from "../../../util/calc-elapsed-time"
 
-const showProgress = process.stdout.isTTY && !isCI
-const calcElapsedTime = startTime => {
-  const elapsed = process.hrtime(startTime)
-
-  return convertHrtime(elapsed)[`seconds`].toFixed(3)
-}
+const showProgress = isTTY
 
 const successTextGenerator = {
   spinner: activity => {
@@ -166,6 +161,7 @@ export default class GatsbyReporter extends React.Component {
               message={activity.id}
               total={activity.total}
               current={activity.current}
+              startTime={activity.startTime}
             />
           ))}
         </Box>
