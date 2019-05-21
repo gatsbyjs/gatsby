@@ -105,7 +105,6 @@ const resolveFixed = (image, options) => {
   fixedSizes.push(options.width)
   fixedSizes.push(options.width * 1.5)
   fixedSizes.push(options.width * 2)
-  fixedSizes.push(options.width * 3)
   fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width.
@@ -191,7 +190,6 @@ const resolveFluid = (image, options) => {
   fluidSizes.push(options.maxWidth)
   fluidSizes.push(options.maxWidth * 1.5)
   fluidSizes.push(options.maxWidth * 2)
-  fluidSizes.push(options.maxWidth * 3)
   fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth.
