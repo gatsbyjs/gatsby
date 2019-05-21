@@ -11,7 +11,7 @@ tags:
 
 Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites.
 Using [Yarn workspaces][] is an excellent way to set up a project for theme development.
-It allows you to keep multiple packages in a single parent directory and link dependencies together.
+[Yarn workspaces][] are an excellent way to set up a project for theme development because they allow you to keep multiple packages in a single parent directory and link dependencies together.
 For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project.
 In this post, we'll walk through how to use Yarn workspaces to set up a development environment for creating custom themes.
 
@@ -35,7 +35,7 @@ Add a `package.json` to the root directory with these subdirectories in the `wor
 }
 ```
 
-Switch to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
+Change to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
 Be sure the `name` field in your theme's `package.json` matches the directory name exactly.
 This is currently a limitation of the shadowing feature, not Yarn workspaces.
 
@@ -122,7 +122,7 @@ module.exports = {
 }
 ```
 
-Add a `src/pages/` directory and add a simple _Hello, world_ page.
+Add a `src/pages/` directory and add a _Hello, world_ page.
 
 ```js:title=example/src/pages/index.js
 import React from "react"
@@ -130,7 +130,7 @@ import React from "react"
 export default props => <h1>Hello, world</h1>
 ```
 
-Add Gatsby scripts to the example site's `package.json`.
+Add Gatsby develop and build scripts to the example site's `package.json`.
 
 ```json:title=example/package.json
 {
@@ -206,7 +206,7 @@ Stop and restart the Gatsby development server to pick up the new page from the 
 
 That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with.
 Be sure to look for more posts on developing Gatsby themes in the near future,
-and you can read more about themes on the [blog][themes-tag].
+and you can read more about themes here on the [blog][themes-tag].
 
 [themes-tag]: /blog/tags/themes
 [yarn]: https://yarnpkg.com
