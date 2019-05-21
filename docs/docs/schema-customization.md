@@ -616,6 +616,51 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
+It is also possible to provide more complex custom input types which can be defined
+directly inline in SDL. We could for example add a field to the `ContributorJson`
+type that counts the number of posts by a contributor, and then add a custom root
+query field `contributors` which accepts `min` or `max` arguments to only return
+contributors who have written at least `min`, or at most `max` number of posts:
+
+```js:title=gatsby-node.js
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    Query: {
+      contributors: {
+        type: ["ContributorJson"],
+        args: {
+          postsCount: "input PostsCountInput { min: Int, max: Int }",
+        },
+        resolve(source, args, context, info) {
+          const { max, min = 0 } = args.postsCount || {}
+          const operator = max != null ? { lte: max } : { gte: min }
+          return context.nodeModel.runQuery({
+            query: {
+              filter: {
+                posts: operator,
+              },
+            },
+            type: "ContributorJson",
+            firstOnly: false,
+          })
+        },
+      },
+    },
+    ContributorJson: {
+      posts: {
+        type: `Int`,
+        resolve: (source, args, context, info) => {
+          return context.nodeModel
+            .getAllNodes({ type: "MarkdownRemark" })
+            .filter(post => post.frontmatter.author === source.email).length
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
+}
+```
+
 ### Taking care of hot reloading
 
 When creating custom field resolvers, it is important to ensure that Gatsby
