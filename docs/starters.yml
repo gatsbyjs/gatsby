@@ -2619,3 +2619,15 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://jokin.github.io/gatsby-starter-purecss-landing/
+  repo: https://github.com/jokin/gatsby-starter-purecss-landing
+  description: Purecss landing page based starter
+  tags:
+    - Purecss
+    - Onepage
+    - Styling:CSS
+    - landing
+    - minimal
+  features:
+    - Fully Responsive
+    - minimal
