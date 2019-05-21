@@ -151,10 +151,7 @@ async function generateBase64({ file, args, reporter }) {
   }
 
   if (options.trim) {
-    pipeline =
-      typeof args.trim === `number`
-        ? pipeline.trim(options.trim)
-        : pipeline.trim()
+    pipeline = pipeline.trim(options.trim)
   }
 
   const forceBase64Format =

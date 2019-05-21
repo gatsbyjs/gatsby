@@ -94,10 +94,7 @@ exports.processFile = (file, transforms, options = {}) => {
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
 
     if (args.trim) {
-      clonedPipeline =
-        typeof args.trim === `number`
-          ? clonedPipeline.trim(args.trim)
-          : clonedPipeline.trim()
+      clonedPipeline = clonedPipeline.trim(args.trim)
     }
 
     // Sharp only allows ints as height/width. Since both aren't always

@@ -501,7 +501,7 @@ module.exports = ({
         },
         trim: {
           type: GraphQLFloat,
-          defaultValue: false,
+          defaultValue: 0,
         },
       },
       resolve: (image, fieldArgs, context) => {
