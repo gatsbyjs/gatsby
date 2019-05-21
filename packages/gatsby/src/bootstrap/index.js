@@ -3,8 +3,6 @@
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
-const md5File = require(`md5-file/promise`)
-const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
@@ -151,19 +149,16 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   const { cacheDirectory, changes, hash } = await safeRemoveCache({
-    additional: [
-      `gatsby-node.js`,
-      `gatsby-config.js`
-    ],
+    additional: [`gatsby-node.js`, `gatsby-config.js`],
     directory: program.directory,
     existing: existingPluginHash,
     plugins: flattenedPlugins,
-    report
+    report,
   })
 
   if (changes.length > 0) {
     store.dispatch({
-      type: `DELETE_CACHE`
+      type: `DELETE_CACHE`,
     })
   }
 

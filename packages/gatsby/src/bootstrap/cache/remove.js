@@ -16,11 +16,16 @@ module.exports = async function safeRemoveCache({
   directory,
   plugins,
   existing,
-  report
+  report,
 }) {
   const cacheDirectory = path.join(directory, `.cache`)
 
-  const { changes, hash } = await getPluginHash({ additional, directory, plugins, existing })
+  const { changes, hash } = await getPluginHash({
+    additional,
+    directory,
+    plugins,
+    existing,
+  })
 
   const equalHashes = _.isEqual(existing, hash)
   const hasExistingCache = Object.keys(existing).length > 0
@@ -30,7 +35,7 @@ module.exports = async function safeRemoveCache({
   if (hasExistingCache && !equalHashes) {
     report.info(report.stripIndent`
       The following files or plugins have changed since the last time you ran Gatsby:
-      ${changes.map(change => `\t\t${change}`).join('\n')}
+      ${changes.map(change => `\t\t${change}`).join(`\n`)}
       As a precaution, we're invalidating parts of your cache to ensure your data is sparkly fresh.
     `)
   }
@@ -41,25 +46,22 @@ module.exports = async function safeRemoveCache({
         merged[folderName] = true
         return merged
       }, {})
-      const filesToRemove = await fs.readdir(cacheDirectory)
-        .then(allFiles => {
-          return allFiles.reduce((merged, file) => {
-            if (file === CACHE_FOLDER) {
-              const cacheFolderPath = path.join(cacheDirectory, CACHE_FOLDER)
-              const cacheFolders = fs.readdirSync(cacheFolderPath)
-              return merged.concat(
-                cacheFolders
-                  .filter(folder => changesLookup[folder])
-                  .map(folder => path.join(cacheFolderPath, folder))
-              )
-            }
-            return merged.concat(path.join(cacheDirectory, file))
-          }, [])
-        })
-
-      await Promise.all(
-        filesToRemove.map(file => fs.remove(file))
+      const filesToRemove = await fs.readdir(cacheDirectory).then(allFiles =>
+        allFiles.reduce((merged, file) => {
+          if (file === CACHE_FOLDER) {
+            const cacheFolderPath = path.join(cacheDirectory, CACHE_FOLDER)
+            const cacheFolders = fs.readdirSync(cacheFolderPath)
+            return merged.concat(
+              cacheFolders
+                .filter(folder => changesLookup[folder])
+                .map(folder => path.join(cacheFolderPath, folder))
+            )
+          }
+          return merged.concat(path.join(cacheDirectory, file))
+        }, [])
       )
+
+      await Promise.all(filesToRemove.map(file => fs.remove(file)))
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }
