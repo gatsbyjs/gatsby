@@ -35,7 +35,7 @@ Add a `package.json` to the root directory with these subdirectories in the `wor
 }
 ```
 
-Switch to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
+Change to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
 Be sure the `name` field in your theme's `package.json` matches the directory name exactly.
 This is currently a limitation of the shadowing feature, not Yarn workspaces.
 
