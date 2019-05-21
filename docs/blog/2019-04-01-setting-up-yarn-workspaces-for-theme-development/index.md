@@ -11,7 +11,7 @@ tags:
 
 Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites.
 Using [Yarn workspaces][] is an excellent way to set up a project for theme development.
-It allows you to keep multiple packages in a single parent directory and link dependencies together.
+[Yarn workspaces][] are an excellent way to set up a project for theme development because they allow you to keep multiple packages in a single parent directory and link dependencies together.
 For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project.
 In this post, we'll walk through how to use Yarn workspaces to set up a development environment for creating custom themes.
 
