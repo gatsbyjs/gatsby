@@ -132,25 +132,28 @@ const fieldTypeToGraphQLTypeLookup = {
 
       if (contentTypes.length > 1) {
         // this is union field
-
-        // would be good to have access to gatsby convenience function
-        // to generate this union name, so it's consistent with names
-        // that gatsby is generating during inference (to not break queries
-        // if someone defines fragment on union type)
-        const UnionTypeName = _.camelCase(
-          `${context.typeName} ${context.fieldName}`
+        const usedTypesNames = contentTypes.map(contentType =>
+          makeTypeName(contentType.name)
         )
 
-        // create union type
-        const unionType = context.schema.buildUnionType({
-          name: UnionTypeName,
-          types: contentTypes.map(contentType =>
-            makeTypeName(contentType.name)
-          ),
-          resolveType: node => node.internal.type,
-        })
+        // this is re-implementation of union type naming function from gatsby
+        const UnionTypeName = usedTypesNames.sort().join(``) + `Union`
 
-        context.gqlTypes.push(unionType)
+        let unionType = context.gqlTypes.find(
+          gqlType =>
+            gqlType.kind === `UNION` && gqlType.config.name === UnionTypeName
+        )
+
+        // create union type, if it doesn't exist yet
+        if (!unionType) {
+          unionType = context.schema.buildUnionType({
+            name: UnionTypeName,
+            types: usedTypesNames,
+            resolveType: node => node.internal.type,
+          })
+
+          context.gqlTypes.push(unionType)
+        }
 
         // use that type
         return {
