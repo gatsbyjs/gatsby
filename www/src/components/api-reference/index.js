@@ -34,13 +34,13 @@ export const pageQuery = graphql`
   fragment DocumentationDescriptionFragment on DocumentationJs {
     name
     description {
-      childMarkdownRemark {
-        html
+      childMdx {
+        body
       }
     }
     deprecated {
-      childMarkdownRemark {
-        html
+      childMdx {
+        body
       }
     }
   }
