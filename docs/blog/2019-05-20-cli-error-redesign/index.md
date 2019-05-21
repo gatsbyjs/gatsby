@@ -13,7 +13,7 @@ Our command-line interface (CLI) is OK but not great. It will be useful to gener
 
 The CLI is the main entry point and interface people have (currently) for Gatsby. Everyone sees it! So it has a huge influence on people’s experience of Gatsby.
 
-We’re going to create a CLI style guide and then implement that style guide, which includes redesigning error messages, introducing `gatsby --quiet` as a default mode and make more extensive use of `gatsby --verbose` flag. To make the CLI easier to design and improve, we’ll implement Ink. To optimize the CLI design, we’ll use the data being collected through our telemetry setup, which collects data about CLI usage (opt out is possible).
+We’re going to create a CLI style guide and then implement that style guide, which includes redesigning error messages, introducing `gatsby --quiet` as a default mode and make more extensive use of the `gatsby --verbose` flag. To make the CLI easier to design and improve, we’ll implement [Ink](https://github.com/vadimdemedes/ink). To optimize the CLI design, we’ll use the data being collected through our telemetry setup, which collects data about CLI usage (opt out is possible).
 
 ## What did we learn?
 
