@@ -5,7 +5,6 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
