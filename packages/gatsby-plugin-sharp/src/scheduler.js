@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const ProgressBar = require(`progress`)
+const { createProgress } = require(`gatsby-cli/lib/reporter`)
 const { existsSync } = require(`fs`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
@@ -10,13 +10,7 @@ const q = queue((task, callback) => {
   task(callback)
 }, 1)
 
-const bar = new ProgressBar(
-  `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
+const bar = createProgress(`Generating image thumbnails`)
 
 exports.scheduleJob = async (
   job,
@@ -96,6 +90,10 @@ function runJobs(
 
   // We're now processing the file's jobs.
   let imagesFinished = 0
+  if (!bar.total) {
+    bar.start()
+  }
+
   bar.total = totalJobs
 
   try {
