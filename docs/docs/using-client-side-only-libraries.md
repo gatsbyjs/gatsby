@@ -1,12 +1,6 @@
 ---
 title: Using Client-Side Only Packages
-issue: https://github.com/gatsbyjs/gatsby/issues/13355
 ---
-
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
 
 On occasion, you may need to use a function or library that only works client side. This usually is because the library in question accesses something that isn't available during server-side rendering (SSR), like [browser DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) methods.
 
@@ -69,3 +63,5 @@ const LoadableBuyButton = Loadable({
 
 export default LoadableBuyButton
 ```
+
+> **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions/) and add yours!
