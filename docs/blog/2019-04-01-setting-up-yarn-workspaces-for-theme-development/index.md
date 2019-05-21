@@ -122,7 +122,7 @@ module.exports = {
 }
 ```
 
-Add a `src/pages/` directory and add a simple _Hello, world_ page.
+Add a `src/pages/` directory and add a _Hello, world_ page.
 
 ```js:title=example/src/pages/index.js
 import React from "react"
