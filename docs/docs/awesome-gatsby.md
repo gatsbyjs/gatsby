@@ -6,15 +6,15 @@ A curated list of interesting Gatsby community projects and learning resources.
 
 ## Site showcase
 
-See the [site showcase](/showcase/)
+See the [site showcase](https://www.gatsbyjs.org/showcase/)
 
 ## Starters
 
-See the [library of official and community starters](/starters/)
+See the [library of official and community starters](https://www.gatsbyjs.org/starters/)
 
 ## Plugins
 
-See the [library of official and community plugins](/plugins/)
+See the [library of official and community plugins](https://www.gatsbyjs.org/plugins/)
 
 ## Tools
 
@@ -45,8 +45,8 @@ See the [library of official and community plugins](/plugins/)
 
 ## Gatsby tutorials
 
-- [Official tutorial](/tutorial/)
-- [Creating a blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
+- [Official tutorial](https://www.gatsbyjs.org/tutorial/)
+- [Creating a blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
 - [Level Up Tutorials series on creating a blog](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg)
 - [Level up Tutorials Pro Gatsby series](https://www.leveluptutorials.com/store/products/tutorials/lut-dd020)
 - [Giraffe Academy series on getting started with Gatsby](https://www.youtube.com/playlist?list=PLLAZ4kZ9dFpMXuwazIt4mWtTuqOHdjRlk)
