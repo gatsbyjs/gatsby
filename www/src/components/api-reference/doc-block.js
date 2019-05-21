@@ -14,7 +14,9 @@ import {
 import ReturnBlock from "./returns"
 import { Header } from "./utils"
 import { scale } from "../../utils/typography"
-import { fonts } from "../../utils/presets"
+import { fonts, space } from "../../utils/presets"
+import { linkStyles } from "../../utils/styles"
+import GithubIcon from "react-icons/lib/go/mark-github"
 
 const Optional = styled.span`
   :before {
@@ -44,6 +46,29 @@ const Deprecated = ({ definition }) => {
   return null
 }
 
+const APILink = ({ definition, githubPath }) => {
+  if (definition.codeLocation) {
+    return (
+      <a
+        css={{
+          ...linkStyles,
+          display: `inline-flex !important`,
+          marginLeft: space[3],
+        }}
+        href={`${githubPath}#L${definition.codeLocation.start.line}-L${
+          definition.codeLocation.end.line
+        }`}
+        aria-label="View source on GitHub"
+      >
+        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <span>Source</span>
+      </a>
+    )
+  }
+
+  return null
+}
+
 const Description = ({ definition }) => {
   if (definition.description) {
     return (
@@ -66,6 +91,7 @@ const Description = ({ definition }) => {
 
 const DocBlock = ({
   definition,
+  githubPath = null,
   level = 0,
   linkableTitle = false,
   title = null,
@@ -115,6 +141,9 @@ const DocBlock = ({
               </SignatureWrapper>
             )}
           </React.Fragment>
+        )}
+        {level === 0 && githubPath && (
+          <APILink githubPath={githubPath} definition={definition} />
         )}
         {definition.optional && <Optional />}
       </Header>

@@ -16,6 +16,10 @@ class ActionCreatorsDocs extends React.Component {
       func => func.name
     ).filter(func => func.name !== `deleteNodes`)
 
+    const githubPath = `https://github.com/gatsbyjs/gatsby/blob/master/packages/${
+      this.props.data.file.relativePath
+    }`
+
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
@@ -65,7 +69,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           </ul>
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} />
+          <APIReference githubPath={githubPath} docs={funcs} />
         </Container>
       </Layout>
     )
@@ -77,8 +81,16 @@ export default ActionCreatorsDocs
 export const pageQuery = graphql`
   query {
     file(relativePath: { eq: "gatsby/src/redux/actions.js" }) {
+      relativePath
       childrenDocumentationJs {
-        name
+        codeLocation {
+          start {
+            line
+          }
+          end {
+            line
+          }
+        }
         ...DocumentationFragment
       }
     }
