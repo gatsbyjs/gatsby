@@ -8,7 +8,7 @@ This is a stub. Help our community expand it.
 Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
 pull request gets accepted.
 
-On occasion, you may need to use a function or library that only works client side. This usually is because the library in question accesses something that isn't available during server-side rendering (SSR).
+On occasion, you may need to use a function or library that only works client side. This usually is because the library in question accesses something that isn't available during server-side rendering (SSR), like [browser DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) methods.
 
 You'll need to use one of the workarounds outlined below if your project fails to compile with `gatsby develop` or `gatsby build` with an error like:
 
