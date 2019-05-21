@@ -177,7 +177,7 @@ exports[`it uses tracedSVG placeholder when enabled 1`] = `
   >
     <span
       class=\\"gatsby-resp-image-background-image\\"
-      style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/svg+xml,%3csvg \\\\'MOCK SVG\\\\'%3c/svg%3e'); background-size: cover; display: block;\\"
+      style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/svg+xml,%3csvg /'MOCK SVG/'%3c/svg%3e'); background-size: cover; display: block;\\"
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
