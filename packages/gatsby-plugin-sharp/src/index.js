@@ -435,7 +435,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
-  // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
+  // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
   const sizes = []
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
@@ -518,9 +518,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
           break
         case 2:
           resolution = `2x`
-          break
-        case 3:
-          resolution = `3x`
           break
         default:
       }
