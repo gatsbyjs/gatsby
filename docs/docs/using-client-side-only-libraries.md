@@ -12,19 +12,17 @@ On occasion, you may need to use a function or library that only works client si
 
 You'll need to use one of the workarounds outlined below if your project fails to compile with `gatsby develop` or `gatsby build` with an error like:
 
-```
+```bash
 Reference error: Window is not Defined
 ```
 
-
-# Workaround 1: Use a different library or approach
+## Workaround 1: Use a different library or approach
 
 Sometimes the simplest approach is to work around the problem.  If you can re-implement your component using a plugin which _doesn't_ break SSR, that's probably best.
 
-# Workaround 2: Add client-side package via CDN
+## Workaround 2: Add client-side package via CDN
 
 In the component where you need it, load the package via CDN using a [`<script />`](https://www.w3schools.com/Tags/tag_script.asp) tag with `react-helmet`.  You'll still need to check to see if `window` exists before using the library, so that SSR can still complete.
-
 
 ```jsx
 import { Helmet } from 'react-helmet'
@@ -43,9 +41,9 @@ const MyComponent = (props) => {
 }
 ```
 
-# Workaround 3: Load client-side dependent components with react-loadable
-Install [react loadable](https://github.com/jamiebuilds/react-loadable) and use it as a wrapper for a component that wants to use a client side only package.
+## Workaround 3: Load client-side dependent components with react-loadable
 
+Install [react loadable](https://github.com/jamiebuilds/react-loadable) and use it as a wrapper for a component that wants to use a client side only package.
 
 ```jsx
 import React, { Component } from 'react';
