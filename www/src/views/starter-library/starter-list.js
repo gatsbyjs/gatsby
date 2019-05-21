@@ -33,12 +33,14 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           No {`${emptyStateReason}`} starters found!
           <div css={{ color: colors.gatsby }}>
             <small>
-              Maybe you should write one and
+              Why not write one and
               {` `}
               <Link to="/contributing/submit-to-starter-library/">
                 submit it
               </Link>
-              ?
+              ? Or learn more
+              {` `}
+              <Link to="/docs/starters">about starters</Link>.
             </small>
           </div>
         </h1>

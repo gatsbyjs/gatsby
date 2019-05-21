@@ -109,3 +109,25 @@ export default () => (
   </Container>
 )
 ```
+
+### Enabling user stylesheets with a stable class name
+
+Adding a persistent CSS `className` to your styled components can make it easier for users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
+
+Here's an example where the class name `container` is added to the DOM along with the Styled Components' dynamically-created class names:
+
+```jsx:title=src/components/container.js
+import React from "react"
+import styled from "styled-components"
+
+const Section = styled.section`
+  margin: 3rem auto;
+  max-width: 600px;
+`
+
+export default ({ children }) => (
+  <Section className={`container`}>{children}</Section>
+)
+```
+
+A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS-in-JS output changed.

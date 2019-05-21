@@ -220,6 +220,14 @@ async function startServer(program) {
 
   await apiRunnerNode(`onCreateDevServer`, { app })
 
+  // In case nothing before handled hot-update - send 404.
+  // This fixes "Unexpected token < in JSON at position 0" runtime
+  // errors after restarting development server and
+  // cause automatic hard refresh in the browser.
+  app.use(/.*\.hot-update\.json$/i, (req, res) => {
+    res.status(404).end()
+  })
+
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     res.sendFile(directoryPath(`public/index.html`), err => {

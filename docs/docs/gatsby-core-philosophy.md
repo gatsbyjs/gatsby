@@ -4,14 +4,14 @@ title: Gatsby Core Philosophy
 
 Gatsby's core philosophy can be divided into three parts.
 
-**First, our vision.** Our vision is to _construct higher-level web building blocks_, and _create a cohesive "content mesh system"_, in order to _make building websites fun_ and _build a better web_.
+**First, [our vision](#the-gatsby-vision).** Our vision is to _[construct higher-level web building blocks](#construct-new-higher-level-web-building-blocks)_, and _[create a cohesive content mesh system](#create-a-cohesive-content-mesh-system)_, in order to _[make building websites fun](#make-building-websites-fun)_ and _[build a better web](#build-a-better-web)_.
 
-**Second, our tooling philosophy.** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
+**Second, [our tooling philosophy](#gatsbys-tooling-philosophy).** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
-- bundling the modern Javascript ecosystem
-- progressive disclosure of complexity
+- [bundling the modern Javascript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
+- [progressive disclosure of complexity](#progressively-disclose-complexity)
 
-**Third, our community philosophy.** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _work in the open_. At all times, we believe, and strive to communicate, that _you belong here_.
+**Third, [our community philosophy](#gatsbys-community-philosophy).** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _[work in the open](#work-in-the-open)_. At all times, we believe, and strive to communicate, that _[you belong here](#you-belong-here)_.
 
 ## The Gatsby Vision
 

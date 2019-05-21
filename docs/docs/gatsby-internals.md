@@ -1,5 +1,5 @@
 ---
-title: Behind the Scenes
+title: Gatsby Internals
 ---
 
 Curious how Gatsby works under the hood? The pages in this section describe how a Gatsby build works from an internal code/architecture point of view. It should be useful for anyone who needs to work on the internals of Gatsby, or for those who are simply curious how it all works, or perhaps you're a plugin author and need to understand how core works to track down a bug? Come one, come all!
