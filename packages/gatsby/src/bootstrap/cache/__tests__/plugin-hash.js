@@ -3,7 +3,7 @@ jest.mock(`md5-file/promise`, () => {
   return jest.fn(file => Promise.resolve(path.basename(file)))
 })
 const md5File = require(`md5-file/promise`)
-const getPluginHash = require(`../get-plugin-hash`)
+const getPluginHash = require(`../plugin-hash`)
 
 const getHash = ({
   directory = __dirname,
