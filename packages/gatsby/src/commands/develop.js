@@ -123,9 +123,14 @@ async function startServer(program) {
 
   app.use(cors())
 
+  /**
+   * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
+   */
+  const graphqlEndpoint = `/_+graphi{0,1}ql`
+
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
-      `/_+graphi{0,1}ql`,
+      graphqlEndpoint,
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
@@ -134,7 +139,7 @@ async function startServer(program) {
   }
 
   app.use(
-    `/_+graphi{0,1}ql`,
+    graphqlEndpoint,
     graphqlHTTP(() => {
       const schema = store.getState().schema
       return {
