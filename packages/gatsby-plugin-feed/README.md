@@ -78,10 +78,11 @@ Each feed must include `output`, `query`, and `title`. Additionally, it is stron
 
 `match` is an optional configuration, indicating which pages will have feed reference included. The accepted types of `match` are `string` or `undefined`. By default, when `match` is not configured, all pages will have feed reference inserted. If `string` is provided, it will be used to build a RegExp and then to test whether `pathname` of current page satisifed this regular expression. Only pages that satisifed this rule will have feed reference included.
 
-All additional options are passed through to the [`rss`][rss] utillity. For more info on those additional options, [explore the `itemOptions` section of the `rss` package](https://www.npmjs.com/package/rss#itemoptions).
+All additional options are merged with `query.site.siteMetadata`, and processed through `setup` option (which is a function). Return value of `setup` is, in turn, passed as a [feedOptions][rss-feedOptions] argument of the [`rss`][rss] utillity. For instance, you can return object containing `site_url` field from `setup` function to set the top-level `<link>` tag of the feed. For more info on those additional options, [explore the `itemOptions` section of the `rss` package](https://www.npmjs.com/package/rss#itemoptions).
 
 Check out an example of [how you could implement](https://www.gatsbyjs.org/docs/adding-an-rss-feed/) to your own site, with a custom `serialize` function, and additional functionality.
 
 _NOTE: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`._
 
 [rss]: https://www.npmjs.com/package/rss
+[rss-feedOptions]: https://github.com/dylang/node-rss#feedoptions
