@@ -1,6 +1,5 @@
 {
   "name": "gatsby-plugin-find-api-calls",
-  "version": "1.0.0",
   "private": true,
   "description": "Find API calls in the repository for our documentation",
   "main": "index.js",
