@@ -382,6 +382,5 @@ describe(`showCaptions`, () => {
     const node = nodes.pop()
     const $ = cheerio.load(node.value)
     expect($(`figcaption`).length).toBe(0)
-    expect(node.value).toMatchSnapshot()
   })
 })
