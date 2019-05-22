@@ -1,6 +1,6 @@
 ---
 title: Setting up Yarn Workspaces for Theme Development
-date: 2019-05-21
+date: 2019-05-22
 author: Brent Jackson
 excerpt: ""
 tags:
