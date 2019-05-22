@@ -16,11 +16,9 @@ class ActionCreatorsDocs extends React.Component {
       func => func.name
     ).filter(func => func.name !== `deleteNodes`)
 
-    const COMMIT_SHA = `master`
-
-    const githubPath = `https://github.com/gatsbyjs/gatsby/blob/${COMMIT_SHA}/packages/${
-      this.props.data.file.relativePath
-    }`
+    const githubPath = `https://github.com/gatsbyjs/gatsby/blob/${
+      process.env.COMMIT_SHA
+    }/packages/${this.props.data.file.relativePath}`
 
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
