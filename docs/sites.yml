@@ -5983,7 +5983,7 @@
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
-- title: Green Orbit
+- title: GreenOrbit
   main_url: https://www.greenorbit.com/
   url: https://www.greenorbit.com/
   description: >
@@ -6032,4 +6032,17 @@
   source_url: https://github.com/camilortte/camilortte.github.com
   built_by: Camilo Ramírez
   built_by_url: https://www.unbackend.pro/about
+  featured: false
+- title: Hitesh Vaghasiya
+  main_url: https://hiteshvaghasiya.com/
+  url: https://hiteshvaghasiya.com/
+  description: >
+    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommece.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Hitesh Vaghasiya
+  built_by_url: https://hiteshvaghasiya.com/
   featured: false

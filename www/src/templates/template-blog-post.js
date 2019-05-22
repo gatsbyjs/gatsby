@@ -27,7 +27,7 @@ class BlogPostTemplate extends React.Component {
   render() {
     const {
       pageContext: { prev, next },
-      data: { markdownRemark: post },
+      data: { mdx: post },
       location: { href },
     } = this.props
     const prevNextLinkStyles = {
@@ -187,7 +187,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {this.props.data.mdx.fields.publishedAt}
+                        {post.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -201,7 +201,7 @@ class BlogPostTemplate extends React.Component {
                 [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
-              {this.props.data.mdx.frontmatter.title}
+              {post.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
@@ -220,9 +220,9 @@ class BlogPostTemplate extends React.Component {
                 </div>
               )}
             <section className="post-body">
-              <MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
+              <MDXRenderer>{post.body}</MDXRenderer>
             </section>
-            <TagsSection tags={this.props.data.mdx.frontmatter.tags} />
+            <TagsSection tags={post.frontmatter.tags} />
             <EmailCaptureForm />
           </main>
         </Container>

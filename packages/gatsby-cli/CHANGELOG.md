@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.0...gatsby-cli@2.6.1) (2019-05-22)
+
+### Bug Fixes
+
+- **gatsby-cli:** make ink an optional dependency ([#14233](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14233)) ([10638f8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/10638f8))
+
 # [2.6.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.5.15...gatsby-cli@2.6.0) (2019-05-21)
 
 **Note:** Version bump only for package gatsby-cli
