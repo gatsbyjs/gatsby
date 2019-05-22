@@ -9,7 +9,7 @@ All files are optional unless specifically marked as required.
 - `package.json` — [required] this can be an empty object (`{}`) for local plugins.
   - `name` is used to identify the plugin when it mutates Gatsby’s GraphQL data structure
     - if `name` isn’t set, the folder name for the plugin is used
-  - `main` is the name of the file that will be loaded when your module is required by another application
+  - `main` is the [name of the file that will be loaded when your module is required by another application](https://docs.npmjs.com/creating-node-js-modules#create-the-file-that-will-be-loaded-when-your-module-is-required-by-another-application)
     - if `main` isn’t set, a default name of `index.js` will be used
     - if `main` isn't set, it is recommended to create an empty index.js file with the contents `//no-op` (short for no-operation), as seen in this example plugin
   - `version` is used to manage the cache — if it changes, the cache is cleared
