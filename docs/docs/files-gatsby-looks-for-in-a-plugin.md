@@ -6,7 +6,7 @@ title: Files Gatsby Looks for in a Plugin
 
 All files are optional unless specifically marked as required.
 
-- `package.json` — [required] this can be an empty object (`{}`) for local plugins
+- `package.json` — [required] this can be an empty object (`{}`) for local plugins. If the plugin will be installed from [npm](https://npmjs.com) it needs the `main`[field](https://docs.npmjs.com/creating-node-js-modules#create-the-file-that-will-be-loaded-when-your-module-is-required-by-another-application).
   - `name` is used to identify the plugin when it mutates Gatsby’s GraphQL data structure
     - if `name` isn’t set, the folder name for the plugin is used
   - `version` is used to manage the cache — if it changes, the cache is cleared
