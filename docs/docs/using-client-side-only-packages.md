@@ -67,3 +67,5 @@ export default LoadableBuyButton
 ```
 
 > **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions/) and add yours!
+
+If all else fails, you may also want to check out the documentation on [Debugging HTML Builds](/docs/debugging-html-builds/).
