@@ -5036,6 +5036,9 @@
   categories:
     - Portfolio
     - Web Development
+    - Freelance
+    - Design
+    - SEO
   built_by: Jacob Herper
   built_by_url: https://github.com/jakeherp
   featured: false
@@ -5965,4 +5968,81 @@
   categories:
     - Nonprofit
     - Marketing
+  featured: false
+- title: Raconteur Agency
+  main_url: https://www.raconteur.net/agency
+  url: https://www.raconteur.net/agency
+  description: >
+    Raconteur Agency is a London-based content marketing agency for B2B brands. We have rebuilt their site with Gatsby v2 using their existing WordPress backend as the data source. By switching from WordPress to GatsbyJS we have achieved a 200%+ improvement in page load times and went from a Lighthouse performance score of 49 to 100.
+  categories:
+    - Agency
+    - Publishing
+    - Advertising
+    - Marketing
+    - WordPress
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
+- title: GreenOrbit
+  main_url: https://www.greenorbit.com/
+  url: https://www.greenorbit.com/
+  description: >
+    Cloud-based intranet software. Get your people going with everything you need, built in.
+  categories:
+    - B2B Services
+    - Business
+    - App
+    - Productivity
+    - Technology
+    - CMS
+  built_by: Effective Digital
+  built_by_url: https://effective.digital/
+- title: Purple11
+  main_url: https://purple11.com/
+  url: https://purple11.com/
+  description: >
+    Purple11 is a site for photography and photo retouching tips and tricks.
+  categories:
+    - Blog
+    - Photography
+  built_by: Sébastien Noël
+  built_by_url: https://blkfuel.com/
+  featured: false
+- title: PerfReviews
+  main_url: https://perf.reviews/
+  url: https://perf.reviews/
+  source_url: https://github.com/PerfReviews/PerfReviews
+  description: >
+    The best content about web performance in spanish language.
+  categories:
+    - Performance
+    - Spanish
+  built_by: Joan León & José M. Pérez
+  built_by_url: https://perf.reviews/nosotros/
+  featured: false
+- title: Un Backend - Blog
+  main_url: https://www.unbackend.pro/
+  url: https://www.unbackend.pro/
+  description: >
+    The personal website and blog of Camilo Ramírez, a backend developer :).
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  source_url: https://github.com/camilortte/camilortte.github.com
+  built_by: Camilo Ramírez
+  built_by_url: https://www.unbackend.pro/about
+  featured: false
+- title: Hitesh Vaghasiya
+  main_url: https://hiteshvaghasiya.com/
+  url: https://hiteshvaghasiya.com/
+  description: >
+    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommece.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Hitesh Vaghasiya
+  built_by_url: https://hiteshvaghasiya.com/
   featured: false

@@ -104,6 +104,11 @@ describe(`create-remote-file-node`, () => {
         pipe: jest.fn(() => gotMock),
         on: jest.fn((mockType, mockCallback) => {
           if (mockType === type) {
+            // got throws on 404/500 so we mimic this behaviour
+            if (response.statusCode === 404) {
+              throw new Error(`Response code 404 (Not Found)`)
+            }
+
             mockCallback(response)
           }
 
@@ -177,7 +182,7 @@ describe(`create-remote-file-node`, () => {
         )
       })
 
-      it(`passes custom http heades, if defined`, async () => {
+      it(`passes custom http header, if defined`, async () => {
         await setup({
           httpHeaders: {
             Authorization: `Bearer foobar`,
@@ -192,6 +197,19 @@ describe(`create-remote-file-node`, () => {
             }),
           })
         )
+      })
+
+      it(`fails when 404 is given`, async () => {
+        expect.assertions(1)
+        try {
+          await setup({}, `response`, { statusCode: 404 })
+        } catch (err) {
+          expect(err).toEqual(
+            expect.stringContaining(
+              `failed to process https://images.whatever.com/real-image-trust-me`
+            )
+          )
+        }
       })
     })
   })
