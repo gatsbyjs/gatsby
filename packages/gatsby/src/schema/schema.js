@@ -12,6 +12,8 @@ const {
   InterfaceTypeComposer,
   UnionTypeComposer,
   InputTypeComposer,
+  ScalarTypeComposer,
+  EnumTypeComposer,
 } = require(`graphql-compose`)
 
 const apiRunner = require(`../utils/api-runner-node`)
@@ -224,14 +226,22 @@ const mergeTypes = ({
   createdFrom,
   parentSpan,
 }) => {
-  typeComposer.merge(type)
-  if (
-    type instanceof ObjectTypeComposer ||
-    type instanceof InterfaceTypeComposer
-  ) {
-    typeComposer.extendExtensions(type.getExtensions())
+  // Only allow user to extend an already existing type.
+  if (!plugin || plugin.name === `default-site-plugin`) {
+    typeComposer.merge(type)
+    if (isNamedTypeComposer(type)) {
+      typeComposer.extendExtensions(type.getExtensions())
+    }
+    addExtensions({ typeComposer, plugin, createdFrom })
+    return true
+  } else {
+    report.warn(
+      `Plugin \`${plugin.name}\` tried to define the GraphQL type ` +
+        `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
+        `by the plugin \`${typeComposer.getExtension(`plugin`)}\`.`
+    )
+    return false
   }
-  addExtensions({ typeComposer, plugin, createdFrom })
 }
 
 const processAddedType = ({
@@ -668,27 +678,23 @@ const parseTypes = ({
 
       // Keep the original type composer around
       const typeComposer = schemaComposer.get(name)
-      // Only allow user to extend an already existing type
-      if (!plugin || plugin.name === `default-site-plugin`) {
-        // The parsed type composer will be set for the type name after this
-        const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
-        // Merge the parsed type with the original
-        mergeTypes({
-          typeComposer,
-          type: parsedType,
-          plugin,
-          createdFrom,
-          parentSpan,
-        })
-        // Set the original with the merged fields for the type name again
-        schemaComposer.typeMapper.set(typeComposer.getTypeName(), typeComposer)
-      } else {
-        report.warn(
-          `Plugin \`${plugin.name}\` tried to define the GraphQL ` +
-            `type \`${name}\`, which has already been defined by the ` +
-            `plugin \`${typeComposer.getExtension(`plugin`)}\`.`
-        )
-      }
+
+      // After this, the parsed type composer will be registered as the composer
+      // handling the type name
+      const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
+
+      // Merge the parsed type with the original
+      mergeTypes({
+        typeComposer,
+        type: parsedType,
+        plugin,
+        createdFrom,
+        parentSpan,
+      })
+
+      // Set the original type composer (with the merged fields added)
+      // as the correct composer for the type name
+      schemaComposer.typeMapper.set(typeComposer.getTypeName(), typeComposer)
     } else {
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
       types.push(parsedType)
@@ -731,3 +737,12 @@ const reportParsingError = error => {
     throw error
   }
 }
+
+// TODO: Import this directly from graphql-compose once we update to v7
+const isNamedTypeComposer = type =>
+  type instanceof ObjectTypeComposer ||
+  type instanceof InputTypeComposer ||
+  type instanceof ScalarTypeComposer ||
+  type instanceof EnumTypeComposer ||
+  type instanceof InterfaceTypeComposer ||
+  type instanceof UnionTypeComposer
