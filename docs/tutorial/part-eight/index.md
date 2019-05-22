@@ -153,7 +153,7 @@ npm install --save gatsby-plugin-offline
 
 That's all you need to get started with service workers with Gatsby.
 
-> 💡 The manifest plugin should be listed _before_ the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
+> 💡 The offline plugin should be listed _after_ the manifest plugin so that the offline plugin can cache the created `manifest.webmanifest`.
 
 ## Add page metadata
 
