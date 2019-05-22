@@ -6,16 +6,16 @@ title: Docs Templates
 2.  [Reference guides](#reference-guides)
     - [Reference guide template](#reference-guide-template)
     - [Reference guide overview template](#reference-guide-overview-template)
-4.  [Recipes](#recipes)
+3.  [Recipes](#recipes)
     - [Recipe template](#recipe-template)
-5.  [Tutorials](#tutorials)
+4.  [Tutorials](#tutorials)
     - [Tutorial template](#tutorial-template)
-6.  [Plugin README template](#plugin-readme-template)
-7.  [Starter README template](#starter-readme-template)
+5.  [Plugin README template](#plugin-readme-template)
+6.  [Starter README template](#starter-readme-template)
 
 ## The Gatsby Way of writing learning materials
 
-Docs guides, recipes, and tutorials are intended to facilitate learning about Gatsby from a variety of perspectives and skill-sets. 
+Docs guides, recipes, and tutorials are intended to facilitate learning about Gatsby from a variety of perspectives and skill-sets.
 
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
@@ -210,20 +210,19 @@ Recipes should be short. If you're finding a recipe is becoming too long to fit 
 ### Recipe template
 
 ````markdown
-
 ## Recipe name
 
 ### Requirements
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby <Link /> component
-- The Gatsby CLI method `gatsby develop` 
+- The Gatsby CLI method `gatsby develop`
 
 ### Directions
 
 1. Open the index page component (src/pages/index.js), import the <Link />
-component from Gatsby, add a <Link /> component above the header, and give
-it a `to` property with the value of "/contact/" for the pathname:
+   component from Gatsby, add a <Link /> component above the header, and give
+   it a `to` property with the value of "/contact/" for the pathname:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -236,11 +235,12 @@ export default () => (
   </div>
 )
 ```
+
 2. Run `gatsby develop` and navigate to the index page. You should have a link
-that takes you to the contact page when clicked!
+   that takes you to the contact page when clicked!
 
 // optional:
-For a working example, check out __this example.__
+For a working example, check out **this example.**
 ````
 
 ## Tutorials
