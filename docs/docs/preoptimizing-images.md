@@ -2,7 +2,7 @@
 title: Preoptimizing your Images
 ---
 
-Gatsby ships with excellent image optimization capabilities (see the [Image Tutorial](/docs/image-tutorial/) for more info). However, this image optimization can come with a cost. It can be fairly CPU intensive, and in some cases may lead to long build times. As a means of debugging and perhaps improving your overall build performance, it _may_ be helpful to pre-optimize your (extremely large) images.
+Gatsby ships with excellent image optimization capabilities (see the [Image Tutorial](/tutorial/image-tutorial/) for more info). However, this image optimization can come with a cost. It can be fairly CPU intensive, and in some cases may lead to long build times. As a means of debugging and perhaps improving your overall build performance, it _may_ be helpful to pre-optimize your (extremely large) images.
 
 First, some context. `gatsby-plugin-sharp` ships with a `fluid` option which will attempt to create five images intended to map to various screen resolutions. Producing multiple images ensures that your images are ready and optimized for phone displays, desktop displays, and everything in between. This plugin receives a non-optimized image and produces optimized images for _all_ of your users and devices. Magic!
 
