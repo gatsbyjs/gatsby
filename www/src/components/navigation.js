@@ -204,7 +204,7 @@ const styles = {
   navItem: {
     fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
-    color: colors.text.copy,
+    color: colors.text.primary,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,

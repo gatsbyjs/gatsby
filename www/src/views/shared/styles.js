@@ -166,7 +166,7 @@ const styles = {
     alignItems: `flex-start`,
     background: `none`,
     border: `none`,
-    color: colors.text.copy,
+    color: colors.text.primary,
     cursor: `pointer`,
     display: `flex`,
     justifyContent: `space-between`,

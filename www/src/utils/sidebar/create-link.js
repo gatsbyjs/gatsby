@@ -135,7 +135,7 @@ const styles = {
     width: `100%`,
     "&&": {
       border: 0,
-      color: colors.text.copy,
+      color: colors.text.primary,
       fontWeight: `normal`,
       "&:hover": {
         background: presets.itemHoverBackground,

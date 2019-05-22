@@ -126,7 +126,7 @@ const SplitButton = ({
                 color:
                   (isParentOfActiveItem && isExpanded) || isActive
                     ? colors.gatsby
-                    : colors.text.copy,
+                    : colors.text.primary,
               },
             }),
           paddingRight: presets.itemMinHeight,

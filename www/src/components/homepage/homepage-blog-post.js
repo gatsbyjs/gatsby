@@ -127,7 +127,7 @@ const Author = styled(Link)`
 `
 
 const Excerpt = styled(`p`)`
-  color: ${colors.text.copy};
+  color: ${colors.text.primary};
   padding: 0 ${rhythm(4 / 5)};
 
   ${mediaQueries.lg} {
@@ -173,7 +173,7 @@ const ReadMore = styled(Link)`
 
     span {
       :hover {
-        border-color: ${colors.ui.hoverBorder};
+        border-color: ${colors.ui.border.linkHover};
       }
     }
   }

@@ -118,21 +118,22 @@ export default {
   warning: palette.red[600],
   white: `#ffffff`,
   black: `#000000`,
-  // todo figure out naming
+  // todo figure out naming, most of these are cr@p
   ui: {
     background: palette.grey[50],
+    hover: palette.purple[50], // this currently is used for hovered and selected plugin cards mostly
     bright: `#F1DEFA`, // todo
     light: `#F6EDFA`, // todo
     border: {
       subtle: palette.grey[200],
       form: palette.grey[300],
+      link: palette.purple[500],
+      linkHover: palette.purple[200],
     },
-    hover: palette.purple[50], // this currently is used for hovered and selected plugin cards mostly
-    hoverBorder: palette.purple[200],
   },
   text: {
     header: palette.grey[900],
-    copy: palette.grey[800],
+    primary: palette.grey[800],
     secondary: palette.grey[500],
     placeholder: palette.grey[400],
   },

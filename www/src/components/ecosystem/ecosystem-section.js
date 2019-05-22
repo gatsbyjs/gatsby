@@ -90,7 +90,7 @@ const SubTitle = styled(`h2`)`
 `
 
 const Description = styled(`p`)`
-  color: ${colors.text.copy};
+  color: ${colors.text.primary};
   font-size: ${fontSizes[2]};
 `
 

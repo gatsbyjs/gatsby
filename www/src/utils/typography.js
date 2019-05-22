@@ -20,7 +20,7 @@ const _options = {
   baseLineHeight: lineHeights.default,
   headerLineHeight: lineHeights.dense,
   headerColor: colors.text.header,
-  bodyColor: colors.text.copy,
+  bodyColor: colors.text.primary,
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm }) => {
     return {
@@ -212,10 +212,10 @@ const _options = {
         color: colors.lilac,
         textDecoration: `none`,
         transition: `all ${transition.speed.fast} ${transition.curve.default}`,
-        borderBottom: `1px solid ${colors.lilac}`,
+        borderBottom: `1px solid ${colors.ui.border.link}`,
       },
       ".main-body a:hover": {
-        borderBottomColor: colors.ui.hoverBorder,
+        borderBottomColor: colors.ui.border.linkHover,
       },
       ".post-body figure img": {
         marginBottom: 0,

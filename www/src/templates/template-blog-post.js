@@ -171,7 +171,7 @@ class BlogPostTemplate extends React.Component {
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": { borderColor: colors.ui.hoverBorder },
+                        "&:hover": { borderColor: colors.ui.border.linkHover },
                       }}
                     >
                       {post.frontmatter.author.id}
