@@ -6042,9 +6042,7 @@
     - Blog
     - Programming
     - Technology
-    - Tutorial
     - Web Development
-    - Netlify    
   built_by: Hitesh Vaghasiya
   built_by_url: https://hiteshvaghasiya.com/
-  featured: true
+  featured: false
