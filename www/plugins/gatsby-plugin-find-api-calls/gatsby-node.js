@@ -13,18 +13,6 @@ exports.sourceNodes = async ({
 
   const buckets = await findApiCalls(globRegex)
 
-  /*
-  ApiCalls {
-    edges {
-      group // SSR, Browser
-      name
-      hits {
-        location // line
-      }
-    }
-  }
-  */
-
   buckets.forEach(bucket => {
     bucket.hits.forEach((hits, api) => {
       const apiHits = hits.map(
@@ -41,11 +29,8 @@ exports.sourceNodes = async ({
         group: bucket.group,
         name: api,
         hits: apiHits,
-        //[api]: apiHits,
         internal: {
           type: `GatsbyAPICall`,
-          //content: JSON.stringify(api),
-          //contentDigest: createContentDigest(api),
         },
       }
 
@@ -54,6 +39,4 @@ exports.sourceNodes = async ({
       createNode(node)
     })
   })
-
-  console.log(buckets)
 }
