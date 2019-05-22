@@ -43,7 +43,7 @@ gatsby build
 gatsby serve
 ```
 
-Once this starts, you can now view your site at `http://localhost:9000`.
+Once this starts, you can view your site at http://localhost:9000.
 
 ### Run a Lighthouse audit
 
