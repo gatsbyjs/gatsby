@@ -74,7 +74,7 @@ const styles = {
     display: `flex`,
     flexDirection: `row`,
     alignItems: `center`,
-    borderBottom: `1px solid ${colors.ui.light}`,
+    borderBottom: `1px solid ${colors.ui.border.subtle}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${space[6]}`,
@@ -111,7 +111,7 @@ const styles = {
     },
   },
   filter: {
-    border: `1px solid ${colors.ui.bright}`,
+    border: `1px solid ${colors.ui.border.subtle}`,
     borderRadius: 40,
     margin: `${space[6]} ${space[1]}`,
     paddingLeft: space[1],

@@ -41,7 +41,7 @@ class BlogPostTemplate extends React.Component {
     const prevNextLabelStyles = {
       marginTop: 0,
       marginBottom: 0,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
       fontWeight: `normal`,
       lineHeight: lineHeights.solid,
     }
@@ -51,7 +51,7 @@ class BlogPostTemplate extends React.Component {
           lineHeight: lineHeights.dense,
           fontFamily: fonts.header,
           margin: 0,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         {children}
@@ -167,11 +167,11 @@ class BlogPostTemplate extends React.Component {
                   >
                     <span
                       css={{
-                        borderBottom: `1px solid ${colors.ui.bright}`,
+                        borderBottom: `1px solid ${colors.lilac}`,
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": { background: colors.ui.bright },
+                        "&:hover": { borderColor: colors.ui.hoverBorder },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -228,7 +228,7 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${colors.ui.light}`,
+            borderTop: `1px solid ${colors.ui.border.subtle}`,
             marginTop: space[9],
             [mediaQueries.md]: {
               paddingBottom: space[5],

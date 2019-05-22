@@ -16,8 +16,8 @@ import {
 const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
-  color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
+  background: ${props => (props.inverse ? colors.purple[800] : colors.white)};
+  color: ${props => (props.inverse ? colors.ui.light : colors.purple[800])};
   padding: ${space[5]} ${space[6]};
   width: 100%;
 
@@ -71,13 +71,13 @@ const Icon = styled(`span`)`
 `
 
 export const Title = styled(`h1`)`
-  color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
+  color: ${props => (props.inverse ? colors.yellow[400] : colors.gatsby)};
   font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
-  color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
+  color: ${props => (props.inverse ? colors.ui.light : colors.purple[800])};
   font-size: ${fontSizes[3]};
   font-family: ${fonts.header};
   margin: 0;

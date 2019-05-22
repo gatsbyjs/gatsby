@@ -13,7 +13,7 @@ const formatDate = dateString =>
 
 const BlogPostPreviewItem = ({ post, className }) => (
   <article className={className} css={{ position: `relative` }}>
-    <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
+    <Link to={post.fields.slug} css={{ "&&": { color: colors.text.copy } }}>
       <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
       <p>
         {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
@@ -42,7 +42,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         css={{
           display: `inline-block`,
           fontFamily: fonts.header,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         <div>

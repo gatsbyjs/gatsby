@@ -44,7 +44,6 @@ const MastheadContent = () => (
     </h1>
     <p
       css={{
-        color: colors.gray.copy,
         fontFamily: fonts.header,
         fontSize: fontSizes[4],
         maxWidth: rhythm(30),

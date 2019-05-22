@@ -82,7 +82,7 @@ const Navigation = ({ pathname }) => {
         // },
         [mediaQueries.md]: {
           position: isHomepage || isBlog ? `absolute` : `fixed`,
-          backgroundColor: isBlog ? colors.gray.whisper : false,
+          backgroundColor: isBlog ? colors.ui.background : false,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
@@ -99,7 +99,7 @@ const Navigation = ({ pathname }) => {
             right: 0,
             height: 1,
             zIndex: -1,
-            background: isHomepage ? `transparent` : colors.gray.border,
+            background: isHomepage ? `transparent` : colors.ui.border.subtle,
           },
         }}
       >
@@ -204,7 +204,7 @@ const styles = {
   navItem: {
     fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
-    color: colors.gray.copy,
+    color: colors.text.copy,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,

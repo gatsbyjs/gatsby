@@ -90,7 +90,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span css={{ color: colors.gray.dark }}>{owner} /</span>
+                    <span css={{ color: colors.text.header }}>{owner} /</span>
                     <span css={{ display: `flex` }}>
                       {gatsbyMajorVersion[0][1] === `2` && (
                         <img
@@ -102,14 +102,14 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                           }}
                         />
                       )}
-                      <div css={{ display: `inline-block` }}>
-                        <MdStar
-                          style={{
-                            color: colors.gray.light,
-                            verticalAlign: `text-top`,
-                          }}
-                        />
-                        {stars}
+                      <div
+                        css={{
+                          alignItems: `center`,
+                          display: `inline-flex`,
+                          fontSize: fontSizes[0],
+                        }}
+                      >
+                        <MdStar /> {stars}
                       </div>
                     </span>
                   </div>

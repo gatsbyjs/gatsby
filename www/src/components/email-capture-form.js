@@ -11,9 +11,7 @@ import {
   fontSizes,
   fonts,
 } from "../utils/presets"
-import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/styles"
-import { buttonStyles } from "../utils/styles"
+import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 
 const StyledForm = styled(`form`)`
   margin: 0;
@@ -32,13 +30,8 @@ const Label = styled(`label`)`
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
+  ${formInputFocus}
   width: 100%;
-
-  :focus {
-    border-color: ${colors.gatsby};
-    outline: 0;
-    box-shadow: 0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)};
-  }
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`

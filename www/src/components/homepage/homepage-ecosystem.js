@@ -58,7 +58,7 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  color: ${colors.lemon};
+  color: ${colors.yellow[400]};
   font-size: ${fontSizes[3]};
   margin-bottom: ${space[1]};
   margin-top: ${space[7]};
@@ -118,13 +118,13 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 
     ${mediaQueries.lg} {
       :hover {
-        background: ${colors.ui.whisper};
+        background: ${colors.ui.hover};
       }
     }
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
+        props.item.type === `Starter` ? colors.teal[100] : colors.orange[200]};
       border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";
@@ -138,7 +138,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
+        props.item.type === `Starter` ? colors.blue[700] : colors.orange[900]};
       font-family: ${fonts.header};
       font-size: ${fontSizes[1]};
       left: 0;

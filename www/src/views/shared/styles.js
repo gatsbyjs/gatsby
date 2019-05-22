@@ -104,19 +104,6 @@ const styles = {
       top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
     },
   },
-  scrollbar: {
-    WebkitOverflowScrolling: `touch`,
-    "&::-webkit-scrollbar": {
-      width: space[2],
-      height: space[2],
-    },
-    "&::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "&::-webkit-scrollbar-track": {
-      background: colors.ui.whisper,
-    },
-  },
   screenshot: {
     borderRadius: radii[1],
     boxShadow: shadows.raised,
@@ -134,7 +121,7 @@ const styles = {
   shortcutIcon: {
     paddingLeft: space[1],
     "&&": {
-      color: colors.gray.bright,
+      color: colors.text.secondary,
       borderBottom: `none`,
       "&:hover": {
         color: colors.gatsby,
@@ -145,7 +132,7 @@ const styles = {
     fontSize: fontSizes[1],
     alignItems: `baseline`,
     "&&": {
-      color: colors.gray.bright,
+      color: colors.text.secondary,
     },
   },
   searchInput: {
@@ -179,7 +166,7 @@ const styles = {
     alignItems: `flex-start`,
     background: `none`,
     border: `none`,
-    color: colors.gray.text,
+    color: colors.text.copy,
     cursor: `pointer`,
     display: `flex`,
     justifyContent: `space-between`,
@@ -199,7 +186,7 @@ const styles = {
     fontSize: fontSizes[2],
   },
   filterCount: {
-    color: colors.gray.bright,
+    color: colors.text.secondary,
   },
   sidebarHeader: {
     margin: 0,
@@ -207,7 +194,7 @@ const styles = {
       fontSize: fontSizes[3],
       display: `none`,
       borderBottom: `1px solid ${colors.ui.light}`,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
       fontWeight: `normal`,
       flexShrink: 0,
       lineHeight: lineHeights.solid,
@@ -232,14 +219,14 @@ const styles = {
       flexBasis: `15rem`,
       minWidth: `15rem`,
       paddingTop: 0,
-      borderRight: `1px solid ${colors.ui.light}`,
+      borderRight: `1px solid ${colors.ui.border.subtle}`,
       height: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
     },
   },
   contentHeader: {
     alignItems: `center`,
     background: `rgba(255,255,255,0.98)`,
-    borderBottom: `1px solid ${colors.ui.light}`,
+    borderBottom: `1px solid ${colors.ui.border.subtle}`,
     display: `flex`,
     flexDirection: `row`,
     flexWrap: `wrap`,
@@ -250,14 +237,14 @@ const styles = {
     zIndex: 1,
   },
   contentTitle: {
-    color: colors.gatsby,
     margin: 0,
-    fontSize: fontSizes[3],
+    fontSize: fontSizes[4],
     lineHeight: lineHeights.solid,
   },
   resultCount: {
-    color: colors.lilac,
+    color: colors.text.secondary,
     fontWeight: `normal`,
+    fontSize: fontSizes[2],
   },
 }
 

@@ -74,7 +74,7 @@ const MobileNavigation = () => (
         left: 0,
         right: 0,
         zIndex: 1,
-        borderTop: `1px solid ${colors.ui.light}`,
+        borderTop: `1px solid ${colors.ui.border.subtle}`,
         background: colors.white,
         height: sizes.headerHeight,
         fontFamily: fonts.header,
@@ -95,33 +95,14 @@ const MobileNavigation = () => (
 
 export default MobileNavigation
 
-const svgActive = {
-  ...svgStyles.active,
-}
-
 const styles = {
   svg: {
     default: {
-      "& .svg-stroke": {
-        strokeMiterlimit: 10,
-        strokeWidth: 1.4173,
-      },
-      "& .svg-stroke-accent": { stroke: colors.lavender },
-      "& .svg-stroke-lilac": { stroke: colors.lavender },
-      "& .svg-fill-lilac": { fill: colors.lavender },
-      "& .svg-fill-gatsby": { fill: colors.lavender },
-      "& .svg-fill-brightest": { fill: colors.white },
-      "& .svg-fill-accent": { fill: colors.lavender },
-      "& .svg-stroke-gatsby": { stroke: colors.lavender },
-      "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
-      "& .svg-fill-gradient-purple": { fill: colors.lavender },
-      "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
-      "& .svg-fill-wisteria": { fill: `transparent` },
-      "&:hover": { ...svgActive },
+      ...svgStyles.stroke,
+      ...svgStyles.default,
+      "&:hover": { ...svgStyles.active },
     },
-    active: svgActive,
+    active: svgStyles.active,
   },
   link: {
     default: {

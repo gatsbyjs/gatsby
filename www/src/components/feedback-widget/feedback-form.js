@@ -60,7 +60,7 @@ const TextareaLabel = styled(`label`)`
 `
 
 const Textarea = styled(`textarea`)`
-  border: 1px solid ${colors.gray.light};
+  border: 1px solid ${colors.ui.border.form};
   border-radius: ${radii[2]}px;
   display: block;
   font-weight: normal;

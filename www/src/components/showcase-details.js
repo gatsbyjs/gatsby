@@ -49,7 +49,7 @@ const styles = {
     boxShadow: shadows.overlay,
   },
   prevNextPermalinkLabel: {
-    color: colors.gray.calm,
+    color: colors.text.secondary,
     fontFamily: fonts.header,
     fontWeight: `normal`,
   },
@@ -270,10 +270,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: space[2],
                   [mediaQueries.lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: space[6],
                   },
                 }}
               >
@@ -288,7 +286,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span css={{ color: colors.gray.calm }}>
+                  <span css={{ color: colors.text.secondary }}>
                     <span
                       css={{
                         paddingRight: 8,
@@ -317,7 +315,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   display: `flex`,
-                  borderTop: `1px solid ${colors.ui.light}`,
+                  borderTop: `1px solid ${colors.ui.border.subtle}`,
                   fontFamily: fonts.header,
                   margin: `0 ${gutter}`,
                   [mediaQueries.lg]: {
@@ -328,7 +326,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 {data.sitesYaml.featured && (
                   <div
                     css={{
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                       color: colors.gatsby,
                       display: `flex`,
                       fontWeight: `bold`,
@@ -484,7 +482,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 >
                   <div
                     css={{
-                      color: colors.gray.calm,
+                      color: colors.text.secondary,
                       paddingRight: 20,
                     }}
                   >

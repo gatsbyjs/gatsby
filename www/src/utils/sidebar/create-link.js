@@ -88,7 +88,7 @@ const createLink = ({
             css={{
               left: space[6],
               background: colors.white,
-              border: `1px solid ${colors.gray.border}`,
+              border: `1px solid ${colors.ui.border.subtle}`,
               borderRadius: radii[6],
               display: `block`,
               fontWeight: `normal`,
@@ -109,7 +109,7 @@ const createLink = ({
 const styles = {
   draft: {
     "&&": {
-      color: colors.gray.calm,
+      color: colors.text.secondary,
     },
   },
   parentOfActiveLink: {
@@ -135,7 +135,7 @@ const styles = {
     width: `100%`,
     "&&": {
       border: 0,
-      color: colors.gray.copy,
+      color: colors.text.copy,
       fontWeight: `normal`,
       "&:hover": {
         background: presets.itemHoverBackground,

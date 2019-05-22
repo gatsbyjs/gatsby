@@ -32,7 +32,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
         fontFamily: fonts.header,
         "&&": {
           borderBottom: `none`,
-          color: colors.gray.dark,
+          color: colors.text.header,
           transition: `all ${transition.speed.default} ${
             transition.curve.default
           }`,

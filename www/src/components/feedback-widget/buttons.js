@@ -79,14 +79,14 @@ export const SubmitButton = styled(`button`)`
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
   background: ${colors.white};
-  border: 1px solid ${colors.gray.border};
-  color: ${colors.gatsby};
+  border: 1px solid ${colors.ui.border.form};
+  color: ${colors.text.secondary};
 `
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
   background: ${colors.white};
-  border: 1px solid ${colors.gray.border};
+  border: 1px solid ${colors.ui.border.subtle};
   border-radius: ${radii[2]}px;
   display: flex;
   height: 2.5rem;
@@ -195,7 +195,7 @@ export const ToggleButton = styled(`button`)`
 
       ${ToggleButtonIcon} {
         background: ${colors.white};
-        border: 1px solid ${colors.gray.border};
+        border: 1px solid ${colors.ui.border.subtle};
         transform: scale(1);
 
         svg {
