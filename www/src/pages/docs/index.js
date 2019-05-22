@@ -78,7 +78,7 @@ class IndexRoute extends React.Component {
                     : Dig into how Gatsby works under the hood.
                   </li>
                   <li>
-                    <Link to="/docs/advanced-tutorials/">
+                    <Link to="/tutorial/advanced-tutorials/">
                       Advanced Tutorials
                     </Link>
                     : Learn about topics that are too large for a doc and

@@ -13,7 +13,7 @@
       link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby/
-    - title: Guides
+    - title: Reference Guides
       link: /docs/guides/
       items:
         - title: Preparing Your Environment
@@ -174,7 +174,7 @@
                   link: /docs/creating-a-transformer-plugin/
                 - title: Submit to Plugin Library
                   link: /contributing/submit-to-plugin-library/
-                - title: Pixabay Source Plugin Tutorial
+                - title: Pixabay Image Source Plugin Tutorial
                   link: /docs/pixabay-source-plugin-tutorial/
                 - title: Remark Plugin Tutorial
                   link: /docs/remark-plugin-tutorial/
@@ -335,7 +335,7 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
-    - title: API Reference
+    - title: Gatsby API
       link: /docs/api-reference/
       items:
         - title: Gatsby Link
@@ -442,21 +442,6 @@
           link: /docs/build-caching/
         - title: Terminology
           link: /docs/gatsby-internals-terminology/
-    - title: Advanced Tutorials
-      link: /docs/advanced-tutorials/
-      items:
-        - title: Making a Site with User Authentication
-          link: /docs/authentication-tutorial/
-        - title: Making an e-commerce Gatsby Site
-          link: /docs/ecommerce-tutorial/
-        - title: Creating a Source Plugin
-          link: /docs/pixabay-source-plugin-tutorial/
-        - title: Using the WordPress Source Plugin
-          link: /docs/wordpress-source-plugin-tutorial/
-        - title: Adding Images to a WordPress Site
-          link: /docs/image-tutorial/
-        - title: Writing Documentation with Docz
-          link: /docs/writing-documentation-with-docz/
     - title: Using Gatsby Professionally
       link: /docs/using-gatsby-professionally/
       items:
@@ -528,6 +513,8 @@
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
+    - title: Advanced Tutorials
+      link: /tutorial/advanced-tutorials/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet

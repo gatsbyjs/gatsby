@@ -85,7 +85,11 @@ const MobileNavigation = () => (
       }}
     >
       <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
-      <MobileNavItem linkTo="/tutorial/" label="Tutorial" icon={TutorialIcon} />
+      <MobileNavItem
+        linkTo="/tutorial/"
+        label="Tutorials"
+        icon={TutorialIcon}
+      />
       <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
