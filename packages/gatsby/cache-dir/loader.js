@@ -46,7 +46,7 @@ const findMatchPath = (matchPaths, trimmedPathname) => {
 const cleanAndFindPath = rawPathname => {
   let pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  let trimmedPathname = stripPrefix(pathname, __PATH_PREFIX__)
+  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
   // Remove any hashfragment
   if (trimmedPathname.split(`#`).length > 1) {
     trimmedPathname = trimmedPathname
