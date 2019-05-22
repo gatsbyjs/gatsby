@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Slider from "./slider"
 import { options } from "../utils/typography"
-import { fontSizes, colors, space, radii } from "../utils/presets"
+import { fontSizes, colors, space } from "../utils/presets"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
