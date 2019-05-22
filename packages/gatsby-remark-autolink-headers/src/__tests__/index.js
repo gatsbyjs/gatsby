@@ -189,7 +189,9 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
 ## Heading Two {#custom-heading-two}
 
-# With *Bold* {#cusgom-withbold}
+# With *Bold* {#custom-withbold}
+
+# Invalid {#this_is_italic}
     `)
     const enableCustomId = true
 
