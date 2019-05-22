@@ -126,7 +126,7 @@ async function startServer(program) {
   /**
    * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
    */
-  const graphqlEndpoint = `/_+graphi{0,1}ql`
+  const graphqlEndpoint = `/_+graphi?ql`
 
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
