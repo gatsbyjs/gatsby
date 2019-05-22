@@ -188,8 +188,6 @@ const fieldTypeToGraphQLTypeLookup = {
   Number: () => `Float`,
   Location: () => makeTypeName(`Location`),
 
-  // TO-DO figure out how to attach fields args / resolver properly.
-  // I'm importing private internals from gatsby which is no-no
   Date: () => {
     return {
       type: `Date`,
