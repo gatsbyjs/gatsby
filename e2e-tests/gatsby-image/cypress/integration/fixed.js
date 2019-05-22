@@ -22,7 +22,6 @@ describe(`fixed`, () => {
       })
   })
 
-  // TODO: figure out why these tests are failing
   it(`applies 1x/2x`, () => {
     cy.getTestElement(fixedTestId)
       .find(`picture > source`)
