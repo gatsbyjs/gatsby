@@ -26,8 +26,6 @@
     "fs-extra": "^4.0.1",
     "gatsby-telemetry": "^1.0.9",
     "hosted-git-info": "^2.6.0",
-    "ink": "^2.0.5",
-    "ink-spinner": "^3.0.1",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.10",
     "meant": "^1.0.1",
@@ -39,7 +37,7 @@
     "react": "^16.8.4",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.0.0",
-    "source-map": "^0.5.7",
+    "source-map": "0.5.7",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
     "update-notifier": "^2.3.0",
@@ -52,6 +50,10 @@
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.1.4",
     "cross-env": "^5.1.4"
+  },
+  "optionalDependencies": {
+    "ink": "^2.0.5",
+    "ink-spinner": "^3.0.1"
   },
   "files": [
     "lib"
