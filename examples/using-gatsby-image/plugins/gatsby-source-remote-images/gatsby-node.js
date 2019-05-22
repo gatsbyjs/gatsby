@@ -4,9 +4,11 @@ exports.onCreateNode = async (
   { actions: { createNode }, node, createContentDigest, store, cache },
   { filter, nodeName = `localFile` }
 ) => {
+  // asdf
   if (filter(node)) {
     const fileNode = await createRemoteFileNode({
       url: node.url,
+      parentNodeId: node.id,
       store,
       cache,
       createNode,

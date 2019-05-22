@@ -9,6 +9,7 @@ const getNodesOfType = (node, state) => {
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
+      console.log(state)
       return new Map()
 
     case `CREATE_NODE`: {

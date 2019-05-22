@@ -159,6 +159,7 @@ module.exports = async (args: BootstrapArgs) => {
   if (changes.length > 0) {
     store.dispatch({
       type: `DELETE_CACHE`,
+      payload: changes,
     })
   }
 

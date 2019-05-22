@@ -7,7 +7,7 @@
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
     "emotion": "^10.0.9",
-    "gatsby": "2.5.7-dev-1558465070544",
+    "gatsby": "2.5.7-dev-1558474686888",
     "gatsby-image": "^2.1.0",
     "gatsby-plugin-emotion": "^4.0.6",
     "gatsby-plugin-netlify": "^2.0.17",
