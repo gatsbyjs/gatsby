@@ -185,10 +185,10 @@ module.exports = class AnalyticsTracker {
       nodeVersion: process.version,
       platform: os.platform(),
       release: os.release(),
-      cpus: cpus && cpus.length > 0 && cpus[0].model,
+      cpus: (cpus && cpus.length > 0 && cpus[0].model) || undefined,
       arch: os.arch(),
       ci: ci.isCI,
-      ciName: (ci.isCI && ci.name) || undefined,
+      ciName: (ci.isCI && ci.name) || process.env.CI_NAME || undefined,
       docker: isDocker(),
     }
     this.osInfo = osInfo
