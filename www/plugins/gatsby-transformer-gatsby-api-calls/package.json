@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-plugin-find-api-calls",
+  "name": "gatsby-transformer-gatsby-api-calls",
   "private": true,
   "description": "Find API calls in the repository for our documentation",
   "main": "index.js",
@@ -7,7 +7,6 @@
   "dependencies": {
     "@babel/parser": "^7.4.4",
     "@babel/traverse": "^7.4.4",
-    "fs-extra": "^8.0.1",
-    "glob": "^7.1.4"
+    "minimatch": "^3.0.4"
   }
 }
