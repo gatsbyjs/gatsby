@@ -36,7 +36,7 @@ Add a `package.json` to the root directory with these subdirectories in the `wor
 
 Change to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
 Be sure the `name` field in your theme's `package.json` matches the directory name exactly.
-This is currently a limitation of the shadowing feature, not Yarn workspaces.
+This is currently a limitation of Gatsby theme shadowing, not Yarn workspaces.
 
 Your directory structure should now look like this:
 
@@ -64,23 +64,11 @@ yarn workspace gatsby-theme-example-workspaces add --peer gatsby react react-dom
 
 ## Base theme setup
 
-To ensure that Gatsby will compile ES6 syntax in your theme, add the following plugin to its `gatsby-config.js`.
-Note that this is only needed temporarily. Gatsby will automatically transpile themes in a later version.
-
-```shell
-yarn workspace gatsby-theme-example-workspaces add gatsby-plugin-compile-es6-packages
-```
+Add a `gatsby-config.js` file to the theme directory.
 
 ```js:title=gatsby-theme-example-workspaces/gatsby-config.js
 module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        modules: ["gatsby-theme-example-workspaces"],
-      },
-    },
-  ],
+  plugins: [],
 }
 ```
 
@@ -97,9 +85,6 @@ Change the `main` field in your theme's `package.json` to point to the `gatsby-c
     "gatsby": "^2.2.10",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
-  },
-  "dependencies": {
-    "gatsby-plugin-compile-es6-packages": "^1.0.6"
   }
 }
 ```
@@ -183,12 +168,6 @@ module.exports = {
       },
     },
     // highlight-end
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        modules: ["gatsby-theme-example-workspaces"],
-      },
-    },
   ],
 }
 ```
