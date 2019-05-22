@@ -125,7 +125,7 @@ async function startServer(program) {
 
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
-      `/___graphql`,
+      `/_+graphi{0,1}ql`,
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
@@ -134,7 +134,7 @@ async function startServer(program) {
   }
 
   app.use(
-    `/___graphql`,
+    `/_+graphi{0,1}ql`,
     graphqlHTTP(() => {
       const schema = store.getState().schema
       return {
