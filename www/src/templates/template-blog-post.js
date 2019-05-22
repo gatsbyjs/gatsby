@@ -27,7 +27,7 @@ class BlogPostTemplate extends React.Component {
   render() {
     const {
       pageContext: { prev, next },
-      data: { markdownRemark: post },
+      data: { mdx: post },
       location: { href },
     } = this.props
     const prevNextLinkStyles = {
