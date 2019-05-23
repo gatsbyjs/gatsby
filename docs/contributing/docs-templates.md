@@ -20,7 +20,7 @@ Docs guides, recipes, and tutorials are intended to facilitate learning about Ga
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
 - [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
-- [Reference guides](#reference-guides), in contrast, are evergreen, easy-to-discover documentation pieces that go beyond any one case study or situation.
+- [Reference guides](#reference-guides), in contrast, are evergreen, easy-to-discover documentation articles that go beyond any one case study or situation.
 - [Recipes](#recipes) add concise, easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
@@ -36,7 +36,7 @@ Reference guide articles cover discrete topics as documentation with links to ot
 
 Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios.
 
-### What should a guide article be about?
+### What should a reference guide be about?
 
 We need guide articles to describe every concept and task you can accomplish with Gatsby.
 
@@ -46,23 +46,23 @@ Each guide article should explain exactly one concept and that concept should be
 
 [Linking Between Pages](/docs/linking-between-pages/)
 
-### What if I want to include multiple tasks and concepts in a guide article?
+### What if I want to include multiple tasks and concepts in a reference guide?
 
 If you find yourself wanting to include multiple related topics in one article, consider splitting each into its own individual guide and referencing the other topics under sections called “Prerequisites” and/or "Other Resources" sections in the related guide articles.
 
 It’s more ideal to have many articles that cover a broad range of technical topics rather than smashing too many topics into one article.
 
-If you find yourself wanting to teach the reader how to accomplish a series of related tasks, you might want to write a tutorial.
+If you find yourself wanting to teach the reader how to accomplish a series of related tasks, you might want to write a tutorial. For short and super common how-to instructions for a single task, a recipe may work best.
 
 ### When to write a reference guide vs. a tutorial, vs. a recipe?
 
-[Reference guide articles](#reference-guide-template) cover discrete topics as documentation with links to other resources. A reference guide explains a task or concept without the step-by-step context provided by a tutorial or recipe.
+[Reference guide articles](#reference-guide-template) cover discrete topics as documentation while linking to other resources and guides. A reference guide explains a task or concept without the step-by-step context provided by a tutorial or recipe.
 
-[Tutorials](#tutorial-template) guide users through a series of related tasks they can string together successfully, with minimal distractions or detours.
+[Tutorials](#tutorial-template) guide users through a series of related tasks they can string together successfully. Listing prerequisites up front and limiting distractions or links away from the instructions can make a focused tutorial.
 
-[Recipes](#recipe-template) are a happy medium between step-by-step tutorials and crawling the full reference guides, by providing step-by-step guidance for small, common tasks.
+[Recipes](#recipe-template) are a happy medium between step-by-step tutorials and crawling the full reference guides, by providing step-by-step guidance for short, common Gatsby tasks.
 
-### How to choose a guide article topic?
+### How to choose a reference guide topic?
 
 Guide topics should be chosen based on these priorities:
 
@@ -72,7 +72,7 @@ Guide topics should be chosen based on these priorities:
 4.  Articles listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
 5.  Articles that you or other community members would like to see
 
-### Length of a guide
+### Length of a reference guide
 
 Ideally, a guide's table of contents would fit above the fold on a desktop computer screen. This means the outline is easily consumable, so the person can quickly determine if that section of the docs contains the information they need to complete a task.
 
@@ -124,8 +124,7 @@ If there are disadvantages Gatsby has, state those here as well and any known bu
 
 ## Other resources
 
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
-them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blogposts, outside tutorials, etc.).
+If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
 
 - Link to a blog post
 - Link to a YouTube tutorial
@@ -141,17 +140,17 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 [Deploying and Hosting](/docs/deploying-and-hosting/)
 
-### What should a guide overview be about?
+### What should a reference guide overview be about?
 
 Each overview should give a short introduction of its section of the guides and list the relevant subtopics.
 
-### Length of a guide overview article
+### Length of a reference guide overview
 
 Ideally, a guide overview fits above the fold on a desktop computer screen. This means the outline is easily consumable, so the person can quickly determine if that section of the docs contains the information they need to complete a task.
 
-### When should I create a new guide overview article?
+### When should I create a new reference guide overview?
 
-Guide overview articles are essentially new parent categories that help organize all the guide articles. Here’s how to decide if you should create a new guide overview article:
+Guide overview articles are essentially new parent categories that help organize all the reference guides. Here’s how to decide if you should create a new reference guide overview:
 
 1.  [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
 2.  Article sections with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
@@ -184,7 +183,7 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Other resources
 
-- Link to a blogpost
+- Link to a blog post
 - Link to a YouTube tutorial
 - Link to an example site
 - Link to source code for a live site
@@ -196,7 +195,7 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should list requirements and a few short steps to complete a task, listing actionable instructions inline and omitting everything else. Recipes are smaller units than tutorials: multiple recipes could be linked from a reference guide or tutorial.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should include requirements and a few short steps to complete a task, listing actionable instructions inline and omitting everything else. Recipes are smaller units than tutorials: multiple recipes could be linked from a reference guide or tutorial.
 
 The components of a recipe are:
 
@@ -330,7 +329,7 @@ If there are more parts to the tutorial, link to the next step here.
 ## Other resources
 
 If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
-them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blogposts, outside tutorials, etc.).
+them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
 
 - Link to a blog post
 - Link to a YouTube tutorial
