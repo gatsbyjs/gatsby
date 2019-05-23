@@ -1,4 +1,5 @@
 const Remark = require(`remark`)
+const toString = require(`mdast-util-to-string`)
 const visit = require(`unist-util-visit`)
 
 const plugin = require(`../`)
@@ -185,7 +186,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
   it(`extracts custom id`, () => {
     const markdownAST = remark.parse(`
-# Heading One {#cusom_h1}
+# Heading One {#custom_h1}
 
 ## Heading Two {#custom-heading-two}
 
@@ -197,10 +198,27 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { enableCustomId })
 
+    const headers = []
     visit(transformed, `heading`, node => {
-      expect(node.data.id).toBeDefined()
-
-      expect(node).toMatchSnapshot()
+      headers.push({ text: toString(node), id: node.data.id })
     })
+    expect(headers).toEqual([
+      {
+        id: `custom_h1`,
+        text: `Heading One`,
+      },
+      {
+        id: `custom-heading-two`,
+        text: `Heading Two`,
+      },
+      {
+        id: `custom-withbold`,
+        text: `With Bold`,
+      },
+      {
+        id: `invalid-thisisitalic`,
+        text: `Invalid {#thisisitalic}`,
+      },
+    ])
   })
 })
