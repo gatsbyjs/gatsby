@@ -19,14 +19,14 @@ const convertProps = props => {
 // Find the source of an image to use as a key in the image cache.
 // Use `fixed` or `fluid` if specified, or the first image in
 // either `fixedImages` or `fluidImages`
-const getImageSrc = props =>
-  props.fluid
-    ? props.fluid.src
-    : props.fixed
-    ? props.fixed.src
-    : props.fluidImages
-    ? props.fluidImages[0].src
-    : props.fixedImages[0].src
+const getImageSrc = ({ fluid, fixed, fluidImages, fixedImages }) => {
+  const data =
+    fluid ||
+    fixed ||
+    (fluidImages && fluidImages[0]) ||
+    (fixedImages && fixedImages[0])
+  return data.src
+}
 
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
@@ -92,18 +92,14 @@ function generateImageSources(imageVariants) {
 }
 
 function generateTracedSVGSources(imageVariants) {
-  return imageVariants.map(variant => (
-    <source
-      key={variant.src}
-      media={variant.media}
-      srcSet={variant.tracedSVG}
-    />
+  return imageVariants.map(({ src, media, tracedSVG }) => (
+    <source key={src} media={media} srcSet={tracedSVG} />
   ))
 }
 
 function generateBase64Sources(imageVariants) {
-  return imageVariants.map(variant => (
-    <source key={variant.src} media={variant.media} srcSet={variant.base64} />
+  return imageVariants.map(({ src, media, base64 }) => (
+    <source key={src} media={media} srcSet={base64} />
   ))
 }
 
@@ -117,11 +113,13 @@ function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
 }
 
 function generateNoscriptSources(imageVariants) {
-  return imageVariants.map(
-    variant =>
-      (variant.srcSetWebp ? generateNoscriptSource(variant, true) : ``) +
-      generateNoscriptSource(variant)
-  )
+  return imageVariants
+    .map(
+      variant =>
+        (variant.srcSetWebp ? generateNoscriptSource(variant, true) : ``) +
+        generateNoscriptSource(variant)
+    )
+    .join(``)
 }
 
 const listenToIntersections = (el, cb) => {
@@ -152,18 +150,16 @@ const noscriptImg = props => {
     ? `crossorigin="${props.crossOrigin}" `
     : ``
 
-  let initialSources = ``
+  let sources = ``
   if (props.srcSetWebp) {
-    initialSources += generateNoscriptSource(props, true)
+    sources += generateNoscriptSource(props, true)
   }
   if (props.media) {
-    initialSources += generateNoscriptSource(props)
+    sources += generateNoscriptSource(props)
   }
-
-  const variantSources =
-    props.imageVariants.length > 0
-      ? generateNoscriptSources(props.imageVariants)
-      : ``
+  if (props.imageVariants.length > 0) {
+    sources += generateNoscriptSources(props.imageVariants)
+  }
 
   // Since we're in the noscript block for this image (which is rendered during SSR or when js is disabled),
   // we have no way to "detect" if native lazy loading is supported by the user's browser
@@ -172,7 +168,7 @@ const noscriptImg = props => {
 
   const loading = props.loading ? `loading="${props.loading}" ` : ``
 
-  return `<picture>${initialSources}${variantSources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -422,7 +418,7 @@ class Image extends React.Component {
     }
 
     if (fluid || fluidImages) {
-      // First image data is supplied to `image`, if an array the rest will go to `variants`
+      // Image variants support. First element to `image`, remaining to `imageVariants`
       const [image, ...imageVariants] = fluidImages ? fluidImages : [fluid]
 
       return (
@@ -533,6 +529,7 @@ class Image extends React.Component {
     }
 
     if (fixed || fixedImages) {
+      // Image variants support. First element to `image`, remaining to `imageVariants`
       const [image, ...imageVariants] = fixedImages ? fixedImages : [fixed]
       const divStyle = {
         position: `relative`,
