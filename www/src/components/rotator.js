@@ -153,7 +153,7 @@ class Rotator extends Component {
                 {!enableSlider ? (
                   <>{text}</>
                 ) : (
-                  <Slider items={[text]} color={`#000`} />
+                  <Slider items={[text]} color={colors.black} />
                 )}
               </span>
             </span>
