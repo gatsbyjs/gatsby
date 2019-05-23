@@ -60,8 +60,7 @@ plugins: [
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 
 #### Parameters
 
