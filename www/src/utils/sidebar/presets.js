@@ -1,5 +1,6 @@
-import { colors, space } from "../../utils/presets"
 import hex2rgba from "hex2rgba"
+
+import { colors, space } from "../../utils/presets"
 
 export default {
   backgroundDefault: colors.white,

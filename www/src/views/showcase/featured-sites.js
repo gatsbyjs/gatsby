@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import hex2rgba from "hex2rgba"
 
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
@@ -245,7 +244,7 @@ class FeaturedSites extends Component {
                 href="#showcase"
                 css={{
                   marginRight: `${space[6]} !important`,
-                  backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                  backgroundColor: colors.purple[50],
                   borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
