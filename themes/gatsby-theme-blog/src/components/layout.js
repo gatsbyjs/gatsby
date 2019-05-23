@@ -1,72 +1,130 @@
-/* eslint-disable */
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react";
+import { Link } from "gatsby";
+import Toggle from "./toggle";
+// import Helmet from "react-helmet";
+import ThemeContext from "../context/theme-context";
 
-import { rhythm, scale } from '../utils/typography'
+import { rhythm, scale } from "../utils/typography";
+import sun from "../../content/assets/sun.png";
+import moon from "../../content/assets/moon.png";
 
-class Template extends React.Component {
-  render() {
-    const { location, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
+const renderHeader = props => {
+  const { location, title } = props;
+  const rootPath = `${__PATH_PREFIX__}/`;
 
-    if (location.pathname === rootPath) {
-      header = (
-        <h1
-          css={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            css={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            to={'/'}
-          >
-            Gatsby Theme Blog
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          css={{
-            fontFamily: 'Montserrat, sans-serif',
-            marginTop: 0,
-            marginBottom: rhythm(-1),
-          }}
-        >
-          <Link
-            css={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            to={'/'}
-          >
-            Gatsby Theme Blog
-          </Link>
-        </h3>
-      )
-    }
+  if (location.pathname === rootPath) {
     return (
-      <div
-        css={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          maxWidth: rhythm(24),
-          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
+      <h1
+        style={{
+          ...scale(0.75),
+          marginBottom: 0,
+          marginTop: 0
         }}
       >
-        {header}
-        {children}
-      </div>
-    )
+        <Link
+          style={{
+            boxShadow: "none",
+            textDecoration: "none",
+            color: "var(--textTitle)"
+          }}
+          to={"/"}
+        >
+          {title}
+        </Link>
+      </h1>
+    );
+  } else {
+    return (
+      <h3
+        style={{
+          fontFamily: "Montserrat, sans-serif",
+          marginTop: 0,
+          marginBottom: 0,
+          height: 42, // because
+          lineHeight: "2.625rem"
+        }}
+      >
+        <Link
+          style={{
+            boxShadow: "none",
+            textDecoration: "none",
+            color: "rgb(102, 185, 191)"
+          }}
+          to={"/"}
+        >
+          {title}
+        </Link>
+      </h3>
+    );
   }
-}
+};
 
-export default Template
+const Layout = props => {
+  const { children } = props;
+
+  return (
+    <ThemeContext.Consumer>
+      {theme => (
+        <div
+          style={{
+            color: "var(--textNormal)",
+            background: "var(--bg)",
+            transition: "color 0.2s ease-out, background 0.2s ease-out",
+            minHeight: "100vh"
+          }}
+        >
+          <div
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              maxWidth: rhythm(24),
+              padding: `2.625rem ${rhythm(3 / 4)}`
+            }}
+          >
+            <header
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "2.625rem"
+              }}
+            >
+              {renderHeader(props)}
+              <Toggle
+                icons={{
+                  checked: (
+                    <img
+                      alt="moon indicating dark mode"
+                      src={moon}
+                      width="16"
+                      height="16"
+                      role="presentation"
+                      style={{ pointerEvents: "none" }}
+                    />
+                  ),
+                  unchecked: (
+                    <img
+                      alt="sun indicating light mode"
+                      src={sun}
+                      width="16"
+                      height="16"
+                      role="presentation"
+                      style={{ pointerEvents: "none" }}
+                    />
+                  )
+                }}
+                checked={theme.isDark}
+                onChange={e => {
+                  theme.toggleDark();
+                }}
+              />
+            </header>
+            {children}
+          </div>
+        </div>
+      )}
+    </ThemeContext.Consumer>
+  );
+};
+
+export default Layout;

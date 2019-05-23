@@ -1,7 +1,10 @@
-import React from "react"
-import { ThemeProvider } from "emotion-theming"
-import tokens from "./src/components/tokens"
+import React from "react";
+// custom typefaces
+import "typeface-montserrat";
+import "typeface-merriweather";
+
+import { ThemeProvider } from "./src/context/theme-context";
 
 export const wrapRootElement = ({ element }) => (
-  <ThemeProvider theme={tokens}>{element}</ThemeProvider>
-)
+  <ThemeProvider>{element}</ThemeProvider>
+);

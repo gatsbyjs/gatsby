@@ -1,41 +1,76 @@
-import React from "react"
+/**
+ * Bio component that queries for data
+ * with Gatsby's StaticQuery component
+ *
+ * See: https://www.gatsbyjs.org/docs/static-query/
+ */
 
-// Import typefaces
-import "typeface-montserrat"
-import "typeface-merriweather"
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
+import Image from "gatsby-image";
+// import { MDXRenderer } from "gatsby-mdx";
+import BioFragment from "../fragments/bio.mdx";
 
-import profilePic from "./profile-pic.jpg"
-import { rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography";
 
-class Bio extends React.Component {
-  render() {
-    return (
-      <div
-        css={{
-          display: `flex`,
-          marginBottom: rhythm(2.5),
-        }}
-      >
-        <img
-          src={profilePic}
-          alt={`Kyle Mathews`}
-          css={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: 0,
-            width: rhythm(2),
-            height: rhythm(2),
-          }}
-        />
-        <p>
-          Written by <strong>Kyle Mathews</strong> who lives and works in San
-          Francisco building useful things.{` `}
-          <a href="https://twitter.com/kylemathews">
-            You should follow him on Twitter
-          </a>
-        </p>
-      </div>
-    )
-  }
+function Bio() {
+  return (
+    <StaticQuery
+      query={bioQuery}
+      render={data => {
+        const { author } = data.site.siteMetadata;
+        return (
+          <div
+            style={{
+              display: `flex`,
+              marginBottom: rhythm(2.5)
+            }}
+          >
+            <Image
+              fixed={data.avatar.childImageSharp.fixed}
+              alt={author}
+              style={{
+                marginRight: rhythm(1 / 2),
+                marginBottom: 0,
+                minWidth: 50,
+                borderRadius: `100%`
+              }}
+              imgStyle={{
+                borderRadius: `50%`
+              }}
+            />
+            <BioFragment />
+          </div>
+        );
+      }}
+    />
+  );
 }
 
-export default Bio
+const bioQuery = graphql`
+  query BioQuery {
+    avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+      childImageSharp {
+        fixed(width: 50, height: 50) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    # bioFragment: mdx(fileAbsolutePath: { regex: "/content/fragments/bio/" }) {
+    #   id
+    #   code {
+    #     body
+    #   }
+    # }
+    site {
+      siteMetadata {
+        author
+        social {
+          twitter
+        }
+      }
+    }
+  }
+`;
+
+export default Bio;

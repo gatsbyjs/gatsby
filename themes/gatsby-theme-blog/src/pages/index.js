@@ -1,63 +1,67 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import get from "lodash/get"
-import Helmet from "react-helmet"
+import React from "react";
+import { Link, graphql } from "gatsby";
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import { rhythm } from "../utils/typography"
+import Bio from "../components/bio";
+import Layout from "../components/layout";
+import SEO from "../components/seo";
+import Footer from "../components/footer";
+import { rhythm } from "../utils/typography";
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, `props.data.site.siteMetadata.title`)
-    const siteDescription = get(
-      this,
-      `props.data.site.siteMetadata.description`
-    )
-    const posts = get(this, `props.data.allMarkdownRemark.edges`)
+    const { data } = this.props;
+    const siteTitle = data.site.siteMetadata.title;
+    const posts = data.allMdx.edges;
 
     return (
-      <Layout location={this.props.location}>
-        <Helmet
-          htmlAttributes={{ lang: `en` }}
-          meta={[{ name: `description`, content: siteDescription }]}
-          title={siteTitle}
+      <Layout location={this.props.location} title={siteTitle}>
+        <SEO
+          title="amberley dot blog"
+          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
         <Bio />
         {posts.map(({ node }) => {
-          const title = get(node, `frontmatter.title`) || node.fields.slug
+          const title = node.frontmatter.title || node.fields.slug;
           return (
             <div key={node.fields.slug}>
-              <h3
-                css={{
-                  marginBottom: rhythm(1 / 4),
+              <h2
+                style={{
+                  marginBottom: rhythm(1 / 4)
                 }}
               >
-                <Link css={{ boxShadow: `none` }} to={node.fields.slug}>
+                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link>
-              </h3>
+              </h2>
               <small>{node.frontmatter.date}</small>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              <p>{node.excerpt}</p>
             </div>
-          )
+          );
         })}
+        <Footer />
       </Layout>
-    )
+    );
   }
 }
 
-export default BlogIndex
+export default BlogIndex;
 
 export const pageQuery = graphql`
   query {
     site {
       siteMetadata {
         title
-        description
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: {
+        fields: {
+          source: { in: ["blog-default-posts", "blog-posts"] }
+          slug: { ne: null }
+        }
+      }
+    ) {
       edges {
         node {
           excerpt
@@ -65,11 +69,11 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "DD MMMM, YYYY")
+            date(formatString: "MMMM DD, YYYY")
             title
           }
         }
       }
     }
   }
-`
+`;
