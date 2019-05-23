@@ -17,7 +17,7 @@ class EnsureResources extends React.Component {
 
     this.state = {
       location: { ...location },
-      pageResources: loader.getPageOr404(location.pathname),
+      pageResources: loader.loadPageOr404Sync(location.pathname),
     }
   }
 
@@ -34,7 +34,7 @@ class EnsureResources extends React.Component {
 
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location !== location) {
-      const pageResources = loader.getPageOr404(location.pathname)
+      const pageResources = loader.loadPageOr404Sync(location.pathname)
 
       return {
         pageResources,
@@ -60,7 +60,7 @@ class EnsureResources extends React.Component {
   retryResources(nextProps) {
     const { pathname } = nextProps.location
 
-    if (!loader.getPage(pathname)) {
+    if (!loader.loadPageSync(pathname)) {
       // Store the previous and next location before resolving resources
       const prevLocation = this.props.location
       this.nextLocation = nextProps.location
