@@ -67,6 +67,7 @@
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.6.2",
+    "gatsby-graphiql-explorer": "0.0.1",
     "gatsby-link": "^2.1.1",
     "gatsby-plugin-page-creator": "^2.0.13",
     "gatsby-react-router-scroll": "^2.0.7",
