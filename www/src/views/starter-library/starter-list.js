@@ -50,11 +50,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (count) {
     starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
     return (
-      <div
-        css={{
-          ...styles.showcaseList,
-        }}
-      >
+      <div css={{ ...styles.showcaseList }}>
         {starters.map(({ node: starter }) => {
           const {
             description,
@@ -82,11 +78,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   image={starter.childScreenshot}
                   title={`${owner}/${name}`}
                 />
-                <div
-                  css={{
-                    ...styles.meta,
-                  }}
-                >
+                <div css={{ ...styles.meta }}>
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >

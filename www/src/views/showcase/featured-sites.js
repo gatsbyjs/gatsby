@@ -22,6 +22,23 @@ import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
+const featuredSitesCard = {
+  display: `flex`,
+  flexDirection: `column`,
+  flexGrow: 0,
+  flexShrink: 0,
+  width: 320,
+  marginBottom: space[9],
+  marginRight: space[6],
+  [mediaQueries.xl]: {
+    width: 360,
+    marginRight: space[8],
+  },
+  [mediaQueries.xxl]: {
+    width: 400,
+  },
+}
+
 class FeaturedSites extends Component {
   setFilterToFeatured = e => {
     e.preventDefault()
@@ -158,7 +175,7 @@ class FeaturedSites extends Component {
               <div
                 key={node.id}
                 css={{
-                  ...styles.featuredSitesCard,
+                  ...featuredSitesCard,
                   ...styles.withTitleHover,
                 }}
               >
@@ -242,7 +259,7 @@ class FeaturedSites extends Component {
                       boxShadow: shadows.overlay,
                     },
                   },
-                  ...styles.featuredSitesCard,
+                  ...featuredSitesCard,
                 }}
                 onClick={this.setFilterToFeatured}
               >
