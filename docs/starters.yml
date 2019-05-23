@@ -2626,7 +2626,6 @@
     - Landing Page
     - Blog
     - Portfolio
-    - Gatsby JS
     - Cosmic JS
     - React
     - Node JS
@@ -2642,7 +2641,7 @@
   tags:
     - React
     - Node JS
-    - Gatsby
+    - Cosmic JS
     - Localization
     - Web Dev
   features:
@@ -2653,7 +2652,7 @@
   tags:
     - React
     - Node JS
-    - Gatsby
+    - Cosmic JS
     - Docs
     - Web Dev
   features:
@@ -2664,7 +2663,7 @@
   tags:
     - React
     - Node JS
-    - Gatsby
+    - Cosmic JS
     - Ecommerce
     - Web Dev
   features:
