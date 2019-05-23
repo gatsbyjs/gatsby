@@ -111,7 +111,7 @@ class Accordion extends React.Component {
                 borderTop:
                   !isExpanded && !isSingle && !isActive
                     ? `1px solid ${colors.ui.border.subtle}`
-                    : `1px solid ${colors.ui.light}`,
+                    : `1px solid ${colors.purple[100]}`,
                 left:
                   (isParentOfActiveItem && isExpanded) ||
                   (isActive && isExpanded)

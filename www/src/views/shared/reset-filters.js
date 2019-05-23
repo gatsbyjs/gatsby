@@ -16,7 +16,8 @@ const ResetFilters = ({ onClick }) => (
         display: `flex`,
         fontFamily: fonts.header,
         marginTop: space[6],
-        paddingRight: space[6],
+        paddingLeft: space[2],
+        paddingRight: space[3],
         textAlign: `left`,
         "&:hover": {
           background: colors.gatsby,

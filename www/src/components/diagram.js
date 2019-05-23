@@ -94,7 +94,7 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.ui.light}`,
+  border: `1px solid ${colors.purple[100]}`,
   borderRadius: radii[2],
   padding: `${space[5]} ${space[7]} 0`,
 }

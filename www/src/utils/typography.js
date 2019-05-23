@@ -43,7 +43,7 @@ const _options = {
         borderLeft: `${rhythm(space[1])} solid ${colors.ui.border.subtle}`,
       },
       hr: {
-        backgroundColor: colors.ui.light,
+        backgroundColor: colors.ui.border.subtle,
       },
       iframe: {
         border: 0,

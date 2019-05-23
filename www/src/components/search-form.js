@@ -122,7 +122,7 @@ const algoliaStyles = css`
     .ds-suggestion.ds-cursor
     .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
     .algolia-docsearch-suggestion--content {
-    background-color: ${colors.ui.light} !important;
+    background-color: ${colors.ui.hover} !important;
   }
 
   .algolia-autocomplete

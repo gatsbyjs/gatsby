@@ -351,7 +351,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       padding: 20,
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                     }}
                   >
                     <a
@@ -376,7 +376,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     css={{
                       padding: 20,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                     }}
                   >
                     <img
@@ -450,21 +450,19 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   </div>
                 </div>
               </div>
-              <div css={{ borderTop: `1px solid ${colors.ui.light}` }}>
-                <Img
-                  key={data.sitesYaml.id}
-                  fluid={
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.fluid
-                  }
-                  alt={`Screenshot of ${data.sitesYaml.title}`}
-                  css={{
-                    boxShadow: isModal
-                      ? false
-                      : sharedStyles.screenshot.boxShadow,
-                  }}
-                />
-              </div>
+              <Img
+                key={data.sitesYaml.id}
+                fluid={
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .fluid
+                }
+                alt={`Screenshot of ${data.sitesYaml.title}`}
+                css={{
+                  boxShadow: isModal
+                    ? false
+                    : sharedStyles.screenshot.boxShadow,
+                }}
+              />
               <div
                 css={{
                   padding: gutter,
