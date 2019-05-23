@@ -2619,9 +2619,9 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
-- url: https://cosmicjs.com/apps/gatsby-agency-portfolio
+- url: https://cosmicjs.com/apps/gatsby-agency-portfolio/demo
   repo: https://github.com/cosmicjs/gatsby-agency-portfolio
-  description: Static Webpage for displaying your agencies skills and past work.  Implements 4 sections for displaying information about your company: A home page, information about services, projects, and the people in your organization.
+  description: Static Webpage for displaying your agencies skills and past work.  Implements 4 sections for displaying information about your company, A home page, information about services, projects, and the people in your organization.
   tags:
     - Landing Page
     - Blog
