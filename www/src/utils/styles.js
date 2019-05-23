@@ -17,6 +17,11 @@ const stripeAnimation = keyframes({
   "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
+const focusStyle = {
+  outline: 0,
+  boxShadow: `0 0 0 ${space[1]} ${colors.purple[200]}`,
+}
+
 export const srOnly = {
   position: `absolute`,
   width: 1,
@@ -32,7 +37,7 @@ export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: radii[1],
+    borderRadius: radii[2],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
@@ -57,8 +62,7 @@ export const buttonStyles = {
       borderColor: colors.gatsby,
     },
     ":focus": {
-      outline: 0,
-      boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
+      ...focusStyle,
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
@@ -73,6 +77,7 @@ export const buttonStyles = {
     padding: `${space[3]} ${space[4]}`,
   },
   small: {
+    borderRadius: radii[1],
     fontSize: fontSizes[1],
     padding: `${space[2]} ${space[3]}`,
     [mediaQueries.md]: {
@@ -80,6 +85,7 @@ export const buttonStyles = {
     },
   },
   tiny: {
+    borderRadius: radii[1],
     fontSize: fontSizes[1],
     padding: `${space[1]} ${space[2]}`,
     [mediaQueries.md]: {
@@ -171,8 +177,7 @@ export const formInput = {
 export const formInputFocus = {
   ":focus": {
     borderColor: colors.gatsby,
-    outline: 0,
-    boxShadow: `0 0 0 ${space[1]} ${colors.purple[200]}`,
+    ...focusStyle,
   },
 }
 
