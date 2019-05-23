@@ -12,17 +12,9 @@ import {
 
 const sticky = {
   position: `sticky`,
-  // We need the -1px here to work around a weird issue on Chrome
-  // where the sticky element is consistently positioned 1px too far down,
-  // leaving a nasty gap that the page content peeks through.
-  // FWIW the problem is only present on the "Site Showcase" index page,
-  // not the "Starter Showcase" index page; if the "Featured Sites" block
-  // is removed, the problem goes away. I tried removing elements in the
-  // "Featured Sites" content block, but no success—only removing the entire block
-  // resolves the issue.
-  top: `calc(${sizes.bannerHeight} - 1px)`,
+  top: `calc(${sizes.bannerHeight})`,
   [mediaQueries.lg]: {
-    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
   },
 }
 
