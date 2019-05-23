@@ -12,7 +12,10 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 class ActionCreatorsDocs extends React.Component {
   render() {
     const funcs = sortBy(
-      this.props.data.file.childrenDocumentationJs,
+      [
+        ...this.props.data.public.childrenDocumentationJs,
+        ...this.props.data.restricted.childrenDocumentationJs,
+      ],
       func => func.name
     ).filter(func => func.name !== `deleteNodes`)
 
@@ -76,7 +79,15 @@ export default ActionCreatorsDocs
 
 export const pageQuery = graphql`
   query {
-    file(relativePath: { eq: "gatsby/src/redux/actions.js" }) {
+    public: file(relativePath: { eq: "gatsby/src/redux/actions/public.js" }) {
+      childrenDocumentationJs {
+        name
+        ...DocumentationFragment
+      }
+    }
+    restricted: file(
+      relativePath: { eq: "gatsby/src/redux/actions/restricted.js" }
+    ) {
       childrenDocumentationJs {
         name
         ...DocumentationFragment
