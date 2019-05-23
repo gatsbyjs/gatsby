@@ -1,3 +1,5 @@
+// @flow
+// @flow
 const actions = {}
 
 /**
