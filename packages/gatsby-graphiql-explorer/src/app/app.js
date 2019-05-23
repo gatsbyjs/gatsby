@@ -135,8 +135,16 @@ ${queryExample}
 `
 }
 
+const storedExplorerPaneState = window.localStorage
+  ? window.localStorage.getItem(`graphiql:graphiqlExplorerOpen`) !== `false`
+  : true
+
 class App extends React.Component {
-  state = { schema: null, query: DEFAULT_QUERY, explorerIsOpen: true }
+  state = {
+    schema: null,
+    query: DEFAULT_QUERY,
+    explorerIsOpen: storedExplorerPaneState,
+  }
 
   componentDidMount() {
     graphQLFetcher({
@@ -182,7 +190,14 @@ class App extends React.Component {
   }
 
   _handleToggleExplorer = () => {
-    this.setState({ explorerIsOpen: !this.state.explorerIsOpen })
+    const newExplorerIsOpen = !this.state.explorerIsOpen
+    if (window.localStorage) {
+      window.localStorage.setItem(
+        `graphiql:graphiqlExplorerOpen`,
+        newExplorerIsOpen
+      )
+    }
+    this.setState({ explorerIsOpen: newExplorerIsOpen })
   }
 
   render() {
