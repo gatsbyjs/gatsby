@@ -93,7 +93,7 @@ npm install --save gatsby-plugin-manifest
 {
   plugins: [
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
         name: "GatsbyJS",
         short_name: "GatsbyJS",
@@ -132,7 +132,7 @@ npm install --save gatsby-plugin-offline
 {
   plugins: [
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
         name: "GatsbyJS",
         short_name: "GatsbyJS",
@@ -177,7 +177,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 {
   plugins: [
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
         name: "GatsbyJS",
         short_name: "GatsbyJS",
@@ -192,7 +192,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
     },
     'gatsby-plugin-offline',
     // highlight-next-line
-    `gatsby-plugin-react-helmet`
+    'gatsby-plugin-react-helmet'
   ]
 }
 ```
