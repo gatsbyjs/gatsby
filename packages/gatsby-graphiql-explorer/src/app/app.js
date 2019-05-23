@@ -87,9 +87,53 @@ function updateURL() {
 const DEFAULT_QUERY =
   parameters.query ||
   (window.localStorage && window.localStorage.getItem(`graphiql:query`)) ||
-  `{
+  null
 
-}`
+const QUERY_EXAMPLE_SITEMETADATA_TITLE = `#     {
+#       site {
+#         siteMetadata {
+#           title
+#         }
+#       }
+#     }`
+
+const QUERY_EXAMPLE_FALLBACK = `#     {
+#       allSitePage {
+#         nodes {
+#           path
+#         }
+#       }
+#     }`
+
+function generateDefaultFallbackQuery(queryExample) {
+  return `# Welcome to GraphiQL
+#
+# GraphiQL is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# Type queries into this side of the screen, and you will see intelligent
+# typeaheads aware of the current GraphQL type schema and live syntax and
+# validation errors highlighted within the text.
+#
+# GraphQL queries typically start with a "{" character. Lines that starts
+# with a # are ignored.
+#
+# An example GraphQL query might look like:
+#
+${queryExample}
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#
+#     Merge Query:  Shift-Ctrl-M (or press the merge button above)
+#
+#       Run Query:  Ctrl-Enter (or press the play button above)
+#
+#   Auto Complete:  Ctrl-Space (or just start typing)
+#
+`
+}
 
 class App extends React.Component {
   state = { schema: null, query: DEFAULT_QUERY, explorerIsOpen: true }
@@ -98,7 +142,36 @@ class App extends React.Component {
     graphQLFetcher({
       query: getIntrospectionQuery(),
     }).then(result => {
-      this.setState({ schema: buildClientSchema(result.data) })
+      const newState = { schema: buildClientSchema(result.data) }
+
+      if (this.state.query === null) {
+        try {
+          const siteMetadataType = result.data.__schema.types.find(
+            type => type.name === `SiteSiteMetadata` && type.kind === `OBJECT`
+          )
+          if (siteMetadataType) {
+            const titleField = siteMetadataType.fields.find(
+              field =>
+                field.name === `title` &&
+                field.type &&
+                field.type.kind === `SCALAR` &&
+                field.type.name === `String`
+            )
+
+            if (titleField) {
+              newState.query = generateDefaultFallbackQuery(
+                QUERY_EXAMPLE_SITEMETADATA_TITLE
+              )
+            }
+          }
+          // eslint-disable-next-line no-empty
+        } catch {}
+        if (!newState.query) {
+          newState.query = generateDefaultFallbackQuery(QUERY_EXAMPLE_FALLBACK)
+        }
+      }
+
+      this.setState(newState)
     })
   }
 
