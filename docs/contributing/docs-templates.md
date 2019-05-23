@@ -21,7 +21,7 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 
 - [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
 - [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
-- [Recipes](#recipes) add concise, easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
+- [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
 ### Why use templates?
@@ -177,7 +177,7 @@ The section overview should be a 2-5 sentence explanation of the category and an
 
 Assume the reader has basic programming knowledge like the command line, code editors, and beginning familiarity with React and GraphQL concepts. Beyond that assumed knowledge, list any other prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
 
-## Guides in this section
+## Reference guides in this section
 
 <GuideList slug={props.slug} />
 
@@ -195,7 +195,9 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should include requirements and a few short steps to complete a task, listing actionable instructions inline and omitting everything else. Recipes are smaller units than tutorials: multiple recipes could be linked from a reference guide or tutorial.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should include requirements and a few short steps to complete a task, listing actionable instructions inline and omitting everything else.
+
+Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability.
 
 The components of a recipe are:
 
