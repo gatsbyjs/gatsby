@@ -1,7 +1,7 @@
 {
   "name": "gatsby-graphiql-explorer",
   "version": "0.0.1",
-  "description": "Stub description for gatsby-graphiql-explorer",
+  "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
     "build:app": "webpack --config ./src/app/webpack.config.js",
