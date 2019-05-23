@@ -27,6 +27,7 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const cors = require(`cors`)
 const telemetry = require(`gatsby-telemetry`)
+const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
@@ -81,12 +82,14 @@ const waitJobsFinished = () =>
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
+  const workerPool = WorkerPool.create()
   const createIndexHtml = async () => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
+        workerPool,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {

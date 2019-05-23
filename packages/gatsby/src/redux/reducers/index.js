@@ -40,7 +40,6 @@ module.exports = {
   webpackCompilationHash: require(`./webpack-compilation-hash`),
   redirects: require(`./redirects`),
   babelrc: require(`./babelrc`),
-  jsonDataPaths: require(`./json-data-paths`),
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
 }

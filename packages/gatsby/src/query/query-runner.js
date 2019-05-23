@@ -7,9 +7,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const { store } = require(`../redux`)
 const withResolverContext = require(`../schema/context`)
-const { generatePathChunkName } = require(`../utils/js-chunk-names`)
 const { formatErrorDetails } = require(`./utils`)
-const mod = require(`hash-mod`)(999)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
 
@@ -18,7 +16,6 @@ const resultHashes = {}
 type QueryJob = {
   id: string,
   hash?: string,
-  jsonName: string,
   query: string,
   componentPath: string,
   context: Object,
@@ -75,7 +72,6 @@ ${formatErrorDetails(errorDetails)}`)
 
   // Delete internal data from pageContext
   if (result.pageContext) {
-    delete result.pageContext.jsonName
     delete result.pageContext.path
     delete result.pageContext.internalComponentName
     delete result.pageContext.component
@@ -96,53 +92,6 @@ ${formatErrorDetails(errorDetails)}`)
   if (resultHashes[queryJob.id] !== resultHash) {
     resultHashes[queryJob.id] = resultHash
 
-    // Remove potentially unsafe characters. This increases chances of collisions
-    // slightly but it should still be very safe + we get a shorter
-    // url vs hex.
-    const readableResultHash = resultHash.replace(/[^a-zA-Z0-9-_]/g, ``)
-
-    let dataPath
-    if (queryJob.isPage) {
-      const pathChunkName = generatePathChunkName(queryJob.jsonName)
-      dataPath = `${pathChunkName}-${readableResultHash}`
-    } else {
-      dataPath = queryJob.hash
-    }
-
-    let modInt = ``
-    // We leave StaticQuery results at public/static/d
-    // as the babel plugin has that path hard-coded
-    // for importing static query results.
-    if (queryJob.isPage) {
-      modInt = mod(dataPath).toString()
-    }
-
-    // Always write file to public/static/d/ folder.
-    const resultPath = path.join(
-      program.directory,
-      `public`,
-      `static`,
-      `d`,
-      modInt,
-      `${dataPath}.json`
-    )
-
-    if (queryJob.isPage) {
-      dataPath = `${modInt}/${dataPath}`
-    }
-
-    await fs.outputFile(resultPath, resultJSON)
-
-    store.dispatch({
-      type: `SET_JSON_DATA_PATH`,
-      payload: {
-        key: queryJob.jsonName,
-        value: dataPath,
-      },
-    })
-
-    // Save page-data.json. This isn't used yet but is part of
-    // https://github.com/gatsbyjs/gatsby/pull/13004
     if (queryJob.isPage) {
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
@@ -153,6 +102,18 @@ ${formatErrorDetails(errorDetails)}`)
         result,
         webpackCompilationHash
       )
+    } else {
+      // The babel plugin is hard-coded to load static queries from
+      // public/static/d/
+      const resultPath = path.join(
+        program.directory,
+        `public`,
+        `static`,
+        `d`,
+        `${queryJob.hash}.json`
+      )
+
+      await fs.outputFile(resultPath, resultJSON)
     }
   }
 
