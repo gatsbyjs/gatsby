@@ -80,7 +80,7 @@ const styles = {
       }, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
-      boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
+      boxShadow: `inset 0 -1px 0px 0px ${colors.lavender}`,
     },
   },
   loadMoreButton: {

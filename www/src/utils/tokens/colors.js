@@ -107,6 +107,8 @@ const palette = {
     100: `#F5F5F5`,
     50: `#FBFBFB`,
   },
+  white: `#ffffff`,
+  black: `#000000`,
 }
 
 export default {
@@ -116,13 +118,10 @@ export default {
   lavender: palette.purple[200],
   accent: palette.orange[500],
   warning: palette.red[600],
-  white: `#ffffff`,
-  black: `#000000`,
   // todo figure out naming, most of these are cr@p
   ui: {
     background: palette.grey[50],
     hover: palette.purple[50], // this currently is used for hovered and selected plugin cards mostly
-    bright: `#F1DEFA`, // todo
     light: `#F6EDFA`, // todo
     border: {
       subtle: palette.grey[200],

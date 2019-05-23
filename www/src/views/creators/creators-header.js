@@ -126,7 +126,7 @@ const styles = {
     appearance: `none`,
     width: space[4],
     height: space[4],
-    border: `1px solid ${colors.ui.bright}`,
+    border: `1px solid ${colors.lavender}`,
     borderRadius: 40,
     marginRight: `${space[2]}`,
     outline: `none`,
@@ -138,7 +138,7 @@ const styles = {
     },
   },
   activeFilter: {
-    backgroundColor: colors.ui.bright,
+    backgroundColor: colors.lavender,
     color: colors.gatsby,
   },
 }
