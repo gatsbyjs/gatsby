@@ -122,7 +122,6 @@ export default {
   ui: {
     background: palette.grey[50],
     hover: palette.purple[50], // this currently is used for hovered and selected plugin cards mostly
-    light: `#F6EDFA`, // todo
     border: {
       subtle: palette.grey[200],
       form: palette.grey[300],

@@ -247,7 +247,7 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <div
             css={{
-              borderTop: `1px solid ${colors.ui.light}`,
+              borderTop: `1px solid ${colors.purple[100]}`,
               fontFamily: fonts.header,
               marginTop: space[9],
               paddingTop: space[5],
@@ -258,7 +258,7 @@ class EmailCaptureForm extends React.Component {
               <p>{signupMessage}</p>
               <div
                 css={{
-                  backgroundColor: colors.ui.light,
+                  backgroundColor: colors.purple[100],
                   borderRadius: radii[1],
                   color: colors.gatsby,
                   fontFamily: fonts.header,

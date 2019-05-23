@@ -56,7 +56,7 @@ export const SidebarHeader = () => (
       [mediaQueries.lg]: {
         fontSize: fontSizes[3],
         display: `none`,
-        borderBottom: `1px solid ${colors.ui.light}`,
+        borderBottom: `1px solid ${colors.purple[100]}`,
         color: colors.text.secondary,
         fontWeight: `normal`,
         flexShrink: 0,

@@ -92,7 +92,7 @@ export const buttonStyles = {
     },
   },
   ondark: {
-    border: `1px solid ${colors.ui.light}`,
+    border: `1px solid ${colors.purple[100]}`,
     background: colors.purple[800],
   },
 }
