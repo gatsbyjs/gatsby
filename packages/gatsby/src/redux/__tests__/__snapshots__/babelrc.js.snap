@@ -168,6 +168,30 @@ Array [
   Array [
     Array [
       "/path/to/module/babel-preset-gatsby",
+      Object {
+        "modern": false,
+        "stage": "test",
+      },
+    ],
+    Object {
+      "type": "preset",
+    },
+  ],
+  Array [
+    Array [
+      "/path/to/module/babel-plugin-remove-graphql-queries",
+    ],
+    Object {
+      "type": "plugin",
+    },
+  ],
+  Array [
+    Array [
+      "/path/to/module/babel-preset-gatsby",
+      Object {
+        "modern": true,
+        "stage": "test",
+      },
     ],
     Object {
       "type": "preset",

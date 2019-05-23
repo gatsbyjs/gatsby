@@ -28,7 +28,7 @@ module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
   const pluginBabelConfig = loadCachedConfig()
-  const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  const stage = options.stage || `test`
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -37,6 +37,13 @@ module.exports = function preset(_, options = {}) {
       }
     } else {
       targets = pluginBabelConfig.browserslist
+    }
+  }
+
+  // when options.modern is set we overwrite targets to contain esmodules = true
+  if (options.modern) {
+    targets = {
+      esmodules: true,
     }
   }
 

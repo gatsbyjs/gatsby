@@ -48,16 +48,9 @@ it(`Specifies proper presets and plugins for test stage`, () => {
 })
 
 it(`Specifies proper presets and plugins for build-html stage`, () => {
-  const currentGatsbyBuildStage = process.env.GATSBY_BUILD_STAGE
-  let presets, plugins
-  try {
-    process.env.GATSBY_BUILD_STAGE = `build-html`
-    const config = preset()
-    presets = config.presets
-    plugins = config.plugins
-  } finally {
-    process.env.GATSBY_BUILD_STAGE = currentGatsbyBuildStage
-  }
+  const config = preset(null, { stage: `build-html` })
+  const presets = config.presets
+  const plugins = config.plugins
 
   expect(presets).toEqual([
     [
@@ -105,6 +98,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
 it(`Allows to configure browser targets`, () => {
   const targets = `last 1 version`
   const { presets } = preset(null, {
+    stage: `build-javascript`,
     targets,
   })
 
@@ -116,6 +110,28 @@ it(`Allows to configure browser targets`, () => {
       modules: false,
       useBuiltIns: `usage`,
       targets,
+    },
+  ])
+})
+
+it(`Allows to configure modern builds`, () => {
+  const targets = `last 1 version`
+  const { presets } = preset(null, {
+    stage: `build-javascript`,
+    targets,
+    modern: true,
+  })
+
+  expect(presets[0]).toEqual([
+    expect.stringContaining(path.join(`@babel`, `preset-env`)),
+    {
+      corejs: 2,
+      loose: true,
+      modules: false,
+      useBuiltIns: `usage`,
+      targets: {
+        esmodules: true,
+      },
     },
   ])
 })
