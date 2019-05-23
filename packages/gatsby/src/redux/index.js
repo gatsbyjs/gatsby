@@ -57,7 +57,6 @@ const saveState = () => {
     `nodes`,
     `status`,
     `componentDataDependencies`,
-    `jsonDataPaths`,
     `components`,
     `staticQueryComponents`,
     `webpackCompilationHash`,
