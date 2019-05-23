@@ -34,6 +34,15 @@ describe(`fixed`, () => {
       })
   })
 
+  it(`does not apply 3x`, () => {
+    cy.getTestElement(fixedTestId)
+      .find(`picture > source`)
+      .should(`have.attr`, `srcset`)
+      .and(srcset => {
+        expect(srcset).not.contains(`3x`)
+      })
+  })
+
   describe(`picture > img sizing`, () => {
     it(`applies height attribute`, () => {
       cy.getTestElement(fixedTestId)
