@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.37...gatsby-plugin-sharp@2.1.0) (2019-05-23)
+
+### Features
+
+- **gatsby-plugin-sharp:** remove 3x DPi resolutions ([#14201](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14201)) ([d821f0e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/d821f0e))
+
 ## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.36...gatsby-plugin-sharp@2.0.37) (2019-05-09)
 
 ### Bug Fixes

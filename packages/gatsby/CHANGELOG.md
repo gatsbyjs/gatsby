@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.0...gatsby@2.7.1) (2019-05-23)
+
+### Bug Fixes
+
+- **gatsby:** fix `gatsby develop` with Yarn PnP ([#14261](https://github.com/gatsbyjs/gatsby/issues/14261)) ([2870dfb](https://github.com/gatsbyjs/gatsby/commit/2870dfb))
+
 # [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.6.4...gatsby@2.7.0) (2019-05-23)
 
 ### Features
