@@ -1511,7 +1511,7 @@
     - Styling:Grommet
     - PWA
     - SEO
-    - Google Spreadsheet
+    - Google Sheets
   features:
     - Grommet
     - Theming
@@ -2619,3 +2619,13 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://harshil1712.github.io/gatsby-starter-googlesheets/
+  repo: https://github.com/harshil1712/gatsby-starter-googlesheets
+  description: A starter using Google Sheets as data source
+  tags:
+    - Google Sheets
+    - SEO
+    - Blog
+  features:
+    - Uses Google Sheets for data
+    - Easily configurable
