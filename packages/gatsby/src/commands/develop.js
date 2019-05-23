@@ -9,6 +9,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
 const got = require(`got`)
 const rl = require(`readline`)
@@ -136,6 +137,10 @@ async function startServer(program) {
       }),
       () => {}
     )
+  } else {
+    graphiqlExplorer(app, {
+      graphqlEndpoint,
+    })
   }
 
   app.use(
@@ -144,8 +149,7 @@ async function startServer(program) {
       const schema = store.getState().schema
       return {
         schema,
-        graphiql:
-          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        graphiql: false,
         context: withResolverContext({}, schema),
         formatError(err) {
           return {
