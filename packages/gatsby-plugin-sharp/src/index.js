@@ -316,7 +316,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     fluidSizes.push(options[fixedDimension] / 2)
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
-    fluidSizes.push(options[fixedDimension] * 3)
   } else {
     options.srcSetBreakpoints.forEach(breakpoint => {
       if (breakpoint < 1) {
@@ -436,12 +435,11 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
-  // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
+  // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
   const sizes = []
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  sizes.push(options[fixedDimension] * 3)
   const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
@@ -520,9 +518,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
           break
         case 2:
           resolution = `2x`
-          break
-        case 3:
-          resolution = `3x`
           break
         default:
       }

@@ -1511,7 +1511,7 @@
     - Styling:Grommet
     - PWA
     - SEO
-    - Google Spreadsheet
+    - Google Sheets
   features:
     - Grommet
     - Theming
@@ -2561,3 +2561,71 @@
     - Elm
   features:
     - Elm language integration
+- url: https://anubhavsrivastava.github.io/gatsby-starter-readonly
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-readonly
+  description: Single page starter based on the ReadOnly site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Landing Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-prologue
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-prologue
+  description: Single page starter based on the Prologue site template by HTML5 up, for portfolio pages
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-london.netlify.com
+  repo: https://github.com/ImedAdel/gatsby-london
+  description: A custom, image-centric theme for Gatsby.
+  tags:
+    - Portfolio
+    - Blog
+    - Styling:PostCSS
+  features:
+    - Post thumbnails in the homepage
+    - Built with PostCSS
+    - Made for image-centeric portfolios
+    - Based on London for Ghost
+- url: https://anubhavsrivastava.github.io/gatsby-starter-overflow
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-overflow
+  description: Single page starter based on the Overflow site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://harshil1712.github.io/gatsby-starter-googlesheets/
+  repo: https://github.com/harshil1712/gatsby-starter-googlesheets
+  description: A starter using Google Sheets as data source
+  tags:
+    - Google Sheets
+    - SEO
+    - Blog
+  features:
+    - Uses Google Sheets for data
+    - Easily configurable

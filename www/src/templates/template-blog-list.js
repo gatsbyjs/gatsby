@@ -23,7 +23,7 @@ import { rhythm, options } from "../utils/typography"
 
 class BlogPostsIndex extends React.Component {
   render() {
-    const { allMarkdownRemark } = this.props.data
+    const { allMdx } = this.props.data
 
     return (
       <Layout location={this.props.location}>
@@ -58,7 +58,7 @@ class BlogPostsIndex extends React.Component {
             >
               Blog
             </h1>
-            {allMarkdownRemark.edges.map(({ node }) => (
+            {allMdx.edges.map(({ node }) => (
               <BlogPostPreviewItem
                 post={node}
                 key={node.fields.slug}
@@ -118,7 +118,7 @@ export default BlogPostsIndex
 
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }
