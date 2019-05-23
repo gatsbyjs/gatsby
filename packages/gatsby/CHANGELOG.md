@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.6.4...gatsby@2.7.0) (2019-05-23)
+
+### Features
+
+- **schema:** Merge user-defined types with plugin-defined types ([#14116](https://github.com/gatsbyjs/gatsby/issues/14116)) ([321ae05](https://github.com/gatsbyjs/gatsby/commit/321ae05))
+
 ## [2.6.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.6.3...gatsby@2.6.4) (2019-05-23)
 
 ### Bug Fixes
