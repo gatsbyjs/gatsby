@@ -302,7 +302,7 @@ import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-  // highlight-start
+// highlight-start
 export default ({ children }) => {
   const data = useStaticQuery(
     graphql`
