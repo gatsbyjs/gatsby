@@ -2623,14 +2623,11 @@
   repo: https://github.com/cosmicjs/gatsby-agency-portfolio
   description: Static Webpage for displaying your agencies skills and past work.  Implements 4 sections for displaying information about your company, A home page, information about services, projects, and the people in your organization.
   tags:
-    - Landing Page
     - Blog
     - Portfolio
     - Cosmic JS
-    - React
-    - Node JS
   features:
-    - Static Site Generator
+    - Landing Page
     - Home
     - Services
     - Projects
@@ -2639,10 +2636,8 @@
   repo: https://github.com/cosmicjs/gatsby-localization-app-starter
   description: A localized Gatsby starter application powered by Cosmic JS.
   tags:
-    - React
-    - Node JS
     - Cosmic JS
-    - Localization
+    - i18n
     - Web Dev
   features:
     - Gatsby localization starter app
@@ -2650,10 +2645,8 @@
   repo: https://github.com/cosmicjs/gatsby-docs-app
   description: Be able to view and create documentation using Gatsby and Cosmic JS. Leveraging the speed and high powered APIs of the Gatsby framework and the simplicity and scalability of Cosmic JS.
   tags:
-    - React
-    - Node JS
     - Cosmic JS
-    - Docs
+    - Documentation
     - Web Dev
   features:
     - manage docs in static web file format for zippy delivery
@@ -2661,10 +2654,8 @@
   repo: https://github.com/a9kitkumar/Gatsby-Ecommerce
   description: A localized Gatsby starter application powered by Cosmic JS.
   tags:
-    - React
-    - Node JS
     - Cosmic JS
-    - Ecommerce
+    - eCommerce
     - Web Dev
   features:
     - Stores products, orders using Cosmic JS as a database and a server
