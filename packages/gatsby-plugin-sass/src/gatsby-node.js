@@ -29,7 +29,7 @@ exports.onCreateWebpackConfig = (
   }
   if (useResolveUrlLoader && !isSSR) {
     sassRule.use.splice(-1, 0, {
-      loader: "resolve-url-loader",
+      loader: `resolve-url-loader`,
       options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
     })
   }
