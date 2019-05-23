@@ -13,14 +13,14 @@ title: Docs Templates
 5.  [Plugin README template](#plugin-readme-template)
 6.  [Starter README template](#starter-readme-template)
 
-## The Gatsby Way of writing learning materials
+## The Gatsby way of writing learning materials
 
-Docs guides, recipes, and tutorials are intended to facilitate learning about Gatsby from a variety of perspectives and skill-sets.
+Docs reference guides, recipes, and tutorials teach Gatsby concepts to users with a variety of learning styles and skill-sets.
 
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
 - [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
-- [Reference guides](#reference-guides), in contrast, are evergreen, easy-to-discover documentation articles that go beyond any one case study or situation.
+- [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
 - [Recipes](#recipes) add concise, easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
