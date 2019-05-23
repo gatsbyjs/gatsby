@@ -102,7 +102,7 @@
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js",
     "stylelint": "stylelint './src/**/*.js'",
     "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0",
-    "postinstall": "cd plugins/gatsby-plugin-find-api-calls && npm install"
+    "postinstall": "cd plugins/gatsby-transformer-gatsby-api-calls && npm install"
   },
   "devDependencies": {
     "babel-jest": "^24.3.1",

@@ -61,7 +61,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           </div>
           <h2 css={{ marginBottom: space[3] }}>Functions</h2>
           <ul>
-            {funcs.map((node, i) => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>
