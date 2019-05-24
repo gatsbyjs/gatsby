@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 const ctaSection = ({ elements }) => {
   const buttons = elements.buttons.map(({ elements, system }) => (

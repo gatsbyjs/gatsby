@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 const featuresSection = ({ elements }) => {
   const icons = elements.icons.map((icon, index) => (

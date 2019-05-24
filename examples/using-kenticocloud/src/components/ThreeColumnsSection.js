@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import BlogPostThumbnail from './BlogPostThumbnail'
+import BlogPostThumbnail from "./BlogPostThumbnail"
 
 const threeColumnsSection = ({ elements }) => {
   const blogThumbnails = elements.columns.map(blogPost => (

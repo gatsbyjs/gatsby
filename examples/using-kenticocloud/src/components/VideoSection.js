@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 const videoSection = ({ system, elements }) => (
   <section id={system.codename} className="main style1">

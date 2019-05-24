@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 const footerSection = ({ elements }) => {
   const icons = elements.icons.map(({ elements, system }) => (

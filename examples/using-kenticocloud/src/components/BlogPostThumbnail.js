@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 const blogPostThumbnail = ({ elements, keyValue, detailValue }) => (
   <div className="col-4" key={keyValue}>

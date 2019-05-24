@@ -1,9 +1,9 @@
-import React from 'react'
-import Helmet from 'react-helmet'
+import React from "react"
+import Helmet from "react-helmet"
 
-import { StaticQuery, graphql } from 'gatsby'
-import Layout from '../components/layout'
-import Section from '../components/Section'
+import { StaticQuery, graphql } from "gatsby"
+import Layout from "../components/layout"
+import Section from "../components/Section"
 
 class Homepage extends React.Component {
   render() {
