@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets cookie to false by default 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : 1,
+                xfbml      : true,
+                version    : 'v2.12',
+                cookie:    : false,
+              });
+
+              FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s); js.id = id;
+              js.src = \\"https://connect.facebook.net/en_US/sdk.js\\";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        ",
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;
+
 exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the correct SDK version when set in the config 1`] = `
 Array [
   Array [
@@ -12,7 +47,43 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : true,
-                version    : 'v3.3'
+                version    : 'v3.3',
+                cookie:    : false,
+              });
+
+              FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s); js.id = id;
+              js.src = \\"https://connect.facebook.net/en_US/sdk.js\\";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        ",
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;
+
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the correct cookie value when set in the config 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : 1,
+                xfbml      : true,
+                version    : 'v2.12',
+                cookie:    : true,
               });
 
               FB.AppEvents.logPageView();
@@ -46,7 +117,8 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : true,
-                version    : 'v2.12'
+                version    : 'v2.12',
+                cookie:    : false,
               });
 
               FB.AppEvents.logPageView();
@@ -80,7 +152,8 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : true,
-                version    : 'v2.12'
+                version    : 'v2.12',
+                cookie:    : false,
               });
 
               FB.AppEvents.logPageView();
@@ -114,7 +187,8 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : true,
-                version    : 'v2.12'
+                version    : 'v2.12',
+                cookie:    : false,
               });
 
               FB.AppEvents.logPageView();
@@ -148,7 +222,8 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : false,
-                version    : 'v2.12'
+                version    : 'v2.12',
+                cookie:    : false,
               });
 
               FB.AppEvents.logPageView();
@@ -182,7 +257,8 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : true,
-                version    : 'v2.12'
+                version    : 'v2.12',
+                cookie:    : false,
               });
 
               FB.AppEvents.logPageView();
@@ -216,7 +292,8 @@ Array [
               FB.init({
                 appId      : 1,
                 xfbml      : true,
-                version    : 'v2.12'
+                version    : 'v2.12',
+                cookie:    : false,
               });
 
               FB.AppEvents.logPageView();
