@@ -2,6 +2,9 @@ export default {
   root: {
     fontFamily: `body`,
   },
+  Container: {
+    maxWidth: 672,
+  },
   pre: {
     // references styles from theme.prism (src/theme/prism.js)
     variant: `prism`,
@@ -56,7 +59,7 @@ export default {
     },
   },
   hr: {
-    bg: `muted`,
+    borderColor: `muted`,
   },
   p: {
     code: {

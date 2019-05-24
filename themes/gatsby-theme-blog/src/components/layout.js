@@ -16,10 +16,11 @@ const Title = props => {
       <Styled.h1
         css={css({
           my: 0,
-          // ...scale(0.75),
+          fontSize: 4,
         })}
       >
-        <Link
+        <Styled.a
+          as={Link}
           css={{
             color: `inherit`,
             boxShadow: `none`,
@@ -28,7 +29,7 @@ const Title = props => {
           to={`/`}
         >
           {title}
-        </Link>
+        </Styled.a>
       </Styled.h1>
     )
   } else {
@@ -36,21 +37,19 @@ const Title = props => {
       <Styled.h3
         css={css({
           my: 0,
-          // fontFamily: `body`,
-          // height: 42, // because
-          // lineHeight: `2.625rem`,
         })}
       >
-        <Link
+        <Styled.a
+          as={Link}
           css={css({
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `teal`, // color: `rgb(102, 185, 191)`,
+            color: `teal`,
           })}
           to={`/`}
         >
           {title}
-        </Link>
+        </Styled.a>
       </Styled.h3>
     )
   }
@@ -80,14 +79,14 @@ export default props => {
         />
         <Container
           css={css({
-            py: 2,
+            py: 4,
           })}
         >
           <Header
             css={css({
               justifyContent: `space-between`,
               alignItems: `center`,
-              mb: 3,
+              mb: 4,
             })}
           >
             <Title {...props} />

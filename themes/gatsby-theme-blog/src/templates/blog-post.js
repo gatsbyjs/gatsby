@@ -20,8 +20,8 @@ class BlogPostTemplate extends React.Component {
         <Styled.p
           css={css({
             fontSize: 1,
-            mt: -1,
-            mb: 1,
+            mt: -3,
+            mb: 3,
           })}
         >
           {post.frontmatter.date}

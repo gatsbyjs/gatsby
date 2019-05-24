@@ -1,31 +1,31 @@
 import React from "react"
-import { css } from "theme-ui"
+import { css, Styled } from "theme-ui"
 
 class Footer extends React.Component {
   render() {
     return (
       <footer
         css={css({
-          mt: 3,
-          pt: 1,
+          mt: 4,
+          pt: 3,
         })}
       >
-        <a
+        <Styled.a
           href="https://twitter.com/amber1ey"
           target="_blank"
           rel="noopener noreferrer"
         >
           twitter
-        </a>
+        </Styled.a>
         {` `}
         &bull;{` `}
-        <a
+        <Styled.a
           href="https://github.com/amberleyromo"
           target="_blank"
           rel="noopener noreferrer"
         >
           github
-        </a>
+        </Styled.a>
         {` `}
       </footer>
     )
