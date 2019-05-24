@@ -54,8 +54,8 @@ class RouteHandler extends React.Component {
       )
     }
 
-    const dev404PageResources = loader.getPage(`/dev-404-page`)
-    const real404PageResources = loader.getPage(`/404.html`)
+    const dev404PageResources = loader.loadPageSync(`/dev-404-page`)
+    const real404PageResources = loader.loadPageSync(`/404.html`)
     let custom404
     if (real404PageResources) {
       custom404 = (

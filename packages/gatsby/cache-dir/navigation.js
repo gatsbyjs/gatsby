@@ -18,7 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.getPage(pathname)
+      const pageResources = loader.loadPageSync(pathname)
 
       if (pageResources != null) {
         console.error(
