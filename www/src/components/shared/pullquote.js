@@ -147,7 +147,7 @@ const Star = styled(`span`)`
     width: ${space[3]};
 
     svg {
-      fill: ${colors.warning};
+      fill: ${colors.red[600]};
     }
 
     .variantB & {
