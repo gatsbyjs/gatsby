@@ -130,8 +130,8 @@ export default {
   },
   link: {
     color: palette.purple[500],
-    border: palette.purple[500],
-    hoverBorder: palette.purple[200],
+    border: palette.purple[300],
+    hoverBorder: palette.purple[500],
   },
   text: {
     header: palette.black,
