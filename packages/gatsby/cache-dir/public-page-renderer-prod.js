@@ -5,7 +5,7 @@ import InternalPageRenderer from "./page-renderer"
 import loader from "./loader"
 
 const ProdPageRenderer = ({ location }) => {
-  const pageResources = loader.getPageOr404(location.pathname)
+  const pageResources = loader.loadPageOr404Sync(location.pathname)
   if (!pageResources) {
     return null
   }
