@@ -1,39 +1,44 @@
-@import "libs/vars";
-@import "libs/functions";
-@import "libs/mixins";
-@import "libs/skel";
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/skel';
 @import url('../css/font-awesome.min.css');
-@import url("../css/material-icons.css");
-@import url("https://fonts.googleapis.com/css?family=Poppins:300,300italic,400,400italic");
-@import "css-grid";
+@import url('../css/material-icons.css');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,300italic,400,400italic');
+@import 'css-grid';
 /*
 	Photon by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-@include skel-breakpoints((xlarge: "(max-width: 1680px)",
-large: "(max-width: 1280px)",
-medium: "(max-width: 980px)",
-small: "(max-width: 736px)",
-xsmall: "(max-width: 480px)",
-xxsmall: "(max-width: 360px)"
-));
-@include skel-layout((reset: "full",
-boxModel: "border"
-));
+@include skel-breakpoints(
+  (
+    xlarge: '(max-width: 1680px)',
+    large: '(max-width: 1280px)',
+    medium: '(max-width: 980px)',
+    small: '(max-width: 736px)',
+    xsmall: '(max-width: 480px)',
+    xxsmall: '(max-width: 360px)',
+  )
+);
+@include skel-layout(
+  (
+    reset: 'full',
+    boxModel: 'border',
+  )
+);
 /* Basic */
 
 body {
   background: _palette(bg);
 
   .body.is-loading {
-
     *,
     *:before,
     *:after {
-      @include vendor("animation", "none !important");
-      @include vendor("transition", "none !important");
+      @include vendor('animation', 'none !important');
+      @include vendor('transition', 'none !important');
     }
   }
 }
@@ -50,8 +55,13 @@ textarea {
 }
 
 a {
-  @include vendor("transition",
-  ("color #{_duration(transition)} ease-in-out", "border-color #{_duration(transition)} ease-in-out"));
+  @include vendor(
+    'transition',
+    (
+      'color #{_duration(transition)} ease-in-out',
+      'border-color #{_duration(transition)} ease-in-out'
+    )
+  );
   border-bottom: dotted 1px _palette(fg);
   color: inherit;
   text-decoration: none;
@@ -204,21 +214,21 @@ header {
     position: relative;
   }
 
-  h2+p {
+  h2 + p {
     font-size: 1.25em;
     line-height: 1.5em;
     margin-top: (_size(element-margin) * -0.5);
   }
 
-  h3+p {
+  h3 + p {
     font-size: 1.1em;
     line-height: 1.5em;
     margin-top: (_size(element-margin) * -0.4);
   }
 
-  h4+p,
-  h5+p,
-  h6+p {
+  h4 + p,
+  h5 + p,
+  h6 + p {
     font-size: 0.9em;
     line-height: 1.5em;
     margin-top: (_size(element-margin) * -0.3);
@@ -229,7 +239,7 @@ header {
 
     &:after {
       background: _palette(border);
-      content: "";
+      content: '';
       display: inline-block;
       height: 1px;
       margin-top: (_size(element-margin) * 0.75);
@@ -268,12 +278,12 @@ label {
   margin: 0 0 (_size(element-margin) * 0.5) 0;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
 select,
 textarea {
-  @include vendor("appearance", "none");
+  @include vendor('appearance', 'none');
   background: _palette(border-bg);
   border-radius: _size(border-radius);
   border: none;
@@ -301,7 +311,7 @@ textarea {
 
   &:before {
     color: _palette(border);
-    content: "\f078";
+    content: '\f078';
     display: block;
     height: _size(element-height);
     line-height: _size(element-height);
@@ -318,9 +328,9 @@ textarea {
   }
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
 select {
   height: _size(element-height);
 }
@@ -329,9 +339,9 @@ textarea {
   padding: 0.75em 1em;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
-  @include vendor("appearance", "none");
+input[type='checkbox'],
+input[type='radio'] {
+  @include vendor('appearance', 'none');
   display: block;
   float: left;
   margin-right: -2em;
@@ -339,7 +349,7 @@ input[type="radio"] {
   width: 1em;
   z-index: -1;
 
-  &+label {
+  & + label {
     @include icon;
     color: _palette(fg);
     cursor: pointer;
@@ -354,7 +364,7 @@ input[type="radio"] {
       background: _palette(border-bg);
       border-radius: _size(border-radius);
       border: solid 1px _palette(border);
-      content: "";
+      content: '';
       display: inline-block;
       height: (_size(element-height) * 0.6);
       left: 0;
@@ -366,32 +376,32 @@ input[type="radio"] {
     }
   }
 
-  &:checked+label {
+  &:checked + label {
     &:before {
       background: _palette(dark, bg);
       border-color: _palette(dark, bg);
       color: _palette(dark, fg-bold);
-      content: "\f00c";
+      content: '\f00c';
     }
   }
 
-  &:focus+label {
+  &:focus + label {
     &:before {
       border-color: _palette(accent3);
     }
   }
 }
 
-input[type="checkbox"] {
-  &+label {
+input[type='checkbox'] {
+  & + label {
     &:before {
       border-radius: _size(border-radius);
     }
   }
 }
 
-input[type="radio"] {
-  &+label {
+input[type='radio'] {
+  & + label {
     &:before {
       border-radius: 100%;
     }
@@ -432,8 +442,8 @@ input[type="radio"] {
   padding: 1.5em;
 
   > :last-child,
-  > :last-child> :last-child,
-  > :last-child> :last-child> :last-child {
+  > :last-child > :last-child,
+  > :last-child > :last-child > :last-child {
     margin-bottom: 0;
   }
 
@@ -451,7 +461,7 @@ input[type="radio"] {
   border-bottom: none;
   position: relative;
 
-  >.label {
+  > .label {
     display: none;
   }
 
@@ -617,7 +627,7 @@ ul {
       text-align: center;
 
       .icon {
-        @include vendor("transform", "rotate(45deg)");
+        @include vendor('transform', 'rotate(45deg)');
         border-radius: _size(border-radius);
         border: solid 1px _palette(border);
         display: inline-block;
@@ -628,7 +638,7 @@ ul {
         width: 8em;
 
         &:before {
-          @include vendor("transform", "rotate(-45deg)");
+          @include vendor('transform', 'rotate(-45deg)');
           display: inline-block;
           line-height: inherit;
         }
@@ -666,7 +676,7 @@ ul {
           padding-top: 0;
         }
 
-        >* {
+        > * {
           margin-bottom: 0;
         }
       }
@@ -684,7 +694,7 @@ ul {
 
     &.uniform {
       li {
-        >* {
+        > * {
           min-width: 12em;
         }
       }
@@ -701,7 +711,7 @@ ul {
         display: table-cell;
         padding: 0 0 0 (_size(element-margin) * 0.5);
 
-        >* {
+        > * {
           margin-bottom: 0;
         }
       }
@@ -799,14 +809,19 @@ table {
 
 /* Button */
 
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
+input[type='submit'],
+input[type='reset'],
+input[type='button'],
 button,
 .button {
-  @include vendor("appearance", "none");
-  @include vendor("transition",
-  ("background-color #{_duration(transition)} ease-in-out", "color #{_duration(transition)} ease-in-out"));
+  @include vendor('appearance', 'none');
+  @include vendor(
+    'transition',
+    (
+      'background-color #{_duration(transition)} ease-in-out',
+      'color #{_duration(transition)} ease-in-out'
+    )
+  );
   background-color: transparent;
   border-radius: _size(border-radius);
   border: 0;
@@ -913,9 +928,9 @@ button,
     }
   }
 
-  input[type="submit"],
-  input[type="reset"],
-  input[type="button"],
+  input[type='submit'],
+  input[type='reset'],
+  input[type='button'],
   button,
   .button {
     box-shadow: inset 0 0 0 1px _palette(dark, border);
@@ -986,7 +1001,13 @@ button,
   @include padding(9em, 0, (0, 0, _size(element-margin), 0));
   @include dark(#4686a0);
   background-attachment: fixed, fixed, fixed;
-  background-image: url('../images/overlay2.png'), url('../images/overlay3.svg'), linear-gradient(45deg, _palette(accent1-alt) 5%, _palette(accent3-alt) 30%, _palette(accent6-alt));
+  background-image: url('../images/overlay2.png'), url('../images/overlay3.svg'),
+    linear-gradient(
+      45deg,
+      _palette(accent1-alt) 5%,
+      _palette(accent3-alt) 30%,
+      _palette(accent6-alt)
+    );
   background-position: top left, center center, center center;
   background-size: auto, cover, cover;
   overflow: hidden;
@@ -1007,7 +1028,7 @@ button,
 
     &:after {
       background: _palette(dark, border);
-      content: "";
+      content: '';
       height: 100vh;
       left: 50%;
       position: absolute;
@@ -1017,25 +1038,29 @@ button,
   }
 
   .inner {
-    @include vendor("transition", ("transform 1.5s ease", "opacity 2s ease"));
-    @include vendor("transition-delay", "0.25s");
-    @include vendor("transform", "scale(1)");
+    @include vendor('transition', ('transform 1.5s ease', 'opacity 2s ease'));
+    @include vendor('transition-delay', '0.25s');
+    @include vendor('transform', 'scale(1)');
     opacity: 1;
     position: relative;
     z-index: 1;
 
     .actions {
-      @include vendor("transition", "transform 1.25s ease");
-      @include vendor("transition-delay", "1s");
-      @include vendor("transform", "translateY(0)");
+      @include vendor('transition', 'transform 1.25s ease');
+      @include vendor('transition-delay', '1s');
+      @include vendor('transform', 'translateY(0)');
       opacity: 1;
     }
   }
 
   &:after {
-    @include vendor("transition", "opacity 1s ease");
-    background-image: linear-gradient(45deg, _palette(accent3-alt), _palette(accent6-alt));
-    content: "";
+    @include vendor('transition', 'opacity 1s ease');
+    background-image: linear-gradient(
+      45deg,
+      _palette(accent3-alt),
+      _palette(accent6-alt)
+    );
+    content: '';
     height: 100%;
     left: 0;
     opacity: 0;
@@ -1048,11 +1073,11 @@ button,
 .body.is-loading {
   #header {
     .inner {
-      @include vendor("transform", "scale(1.05)");
+      @include vendor('transform', 'scale(1.05)');
       opacity: 0;
 
       .actions {
-        @include vendor("transform", "translateY(30em)");
+        @include vendor('transform', 'translateY(30em)');
         opacity: 0;
       }
     }
@@ -1069,8 +1094,13 @@ button,
   @include padding(6em, 0, (0, 0, _size(element-margin), 0));
   @include dark(#4686a0);
   background-attachment: fixed, fixed, fixed;
-  background-image: url("../images/overlay2.png"), url("../images/overlay4.svg"),
-    linear-gradient(45deg, _palette(accent6-alt), _palette(accent3-alt) 50%, _palette(accent1-alt) 95%);
+  background-image: url('../images/overlay2.png'), url('../images/overlay4.svg'),
+    linear-gradient(
+      45deg,
+      _palette(accent6-alt),
+      _palette(accent3-alt) 50%,
+      _palette(accent1-alt) 95%
+    );
   background-position: top left, center center, center center;
   background-size: auto, cover, cover;
   text-align: center;
@@ -1104,7 +1134,6 @@ button,
 /* XLarge */
 
 @include breakpoint(xlarge) {
-
   /* Basic */
   body,
   input,
@@ -1122,7 +1151,6 @@ button,
 /* Large */
 
 @include breakpoint(large) {
-
   /* Basic */
   body,
   input,
@@ -1186,7 +1214,6 @@ button,
 /* Medium */
 
 @include breakpoint(medium) {
-
   /* List */
   ul {
     &.major-icons {
@@ -1231,7 +1258,6 @@ button,
 /* Small */
 
 @include breakpoint(small) {
-
   /* Basic */
   body,
   input,
@@ -1283,9 +1309,9 @@ button,
   }
 
   /* Button */
-  input[type="submit"],
-  input[type="reset"],
-  input[type="button"],
+  input[type='submit'],
+  input[type='reset'],
+  input[type='button'],
   button,
   .button {
     height: 3em;
@@ -1315,7 +1341,6 @@ button,
 /* XSmall */
 
 @include breakpoint(xsmall) {
-
   /* List */
   ul {
     &.actions {
@@ -1331,7 +1356,7 @@ button,
           padding-top: 0;
         }
 
-        >* {
+        > * {
           margin: 0 !important;
           width: 100%;
 
@@ -1356,9 +1381,9 @@ button,
   }
 
   /* Button */
-  input[type="submit"],
-  input[type="reset"],
-  input[type="button"],
+  input[type='submit'],
+  input[type='reset'],
+  input[type='button'],
   .button {
     padding: 0;
   }
@@ -1401,7 +1426,6 @@ button,
 /* XXSmall */
 
 @include breakpoint(xxsmall) {
-
   /* Basic */
   html,
   body {

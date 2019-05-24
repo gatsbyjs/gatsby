@@ -11,56 +11,56 @@
 
 /* Header */
 
-	#header {
-		$from: _palette(accent3-alt);
-		$to: _palette(accent6-alt);
+#header {
+  $from: _palette(accent3-alt);
+  $to: _palette(accent6-alt);
 
-		background-image: none;
-		filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#{$from}", endColorStr="#{$to}", GradientType=1);
-		position: relative;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#{$from}", endColorStr="#{$to}", GradientType=1);
+  position: relative;
 
-		&:before {
-			background-image:		url('images/overlay2.png'),		url('images/overlay3.svg');
-			background-position:	top left,							center center;
-			background-size:		auto,								cover;
-			content: '';
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
-			width: 100%;
-		}
+  &:before {
+    background-image: url('images/overlay2.png'), url('images/overlay3.svg');
+    background-position: top left, center center;
+    background-size: auto, cover;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 
-		> * {
-			position: relative;
-			z-index: 1;
-		}
-	}
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
 
 /* Footer */
 
-	#footer {
-		$from: _palette(accent6-alt);
-		$to: _palette(accent3-alt);
+#footer {
+  $from: _palette(accent6-alt);
+  $to: _palette(accent3-alt);
 
-		background-image: none;
-		filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#{$from}", endColorStr="#{$to}", GradientType=1);
-		position: relative;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr="#{$from}", endColorStr="#{$to}", GradientType=1);
+  position: relative;
 
-		&:before {
-			background-image:		url('images/overlay2.png'),		url('images/overlay4.svg');
-			background-position:	top left,							center center;
-			background-size:		auto,								cover;
-			content: '';
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
-			width: 100%;
-		}
+  &:before {
+    background-image: url('images/overlay2.png'), url('images/overlay4.svg');
+    background-position: top left, center center;
+    background-size: auto, cover;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 
-		> * {
-			position: relative;
-			z-index: 1;
-		}
-	}
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
