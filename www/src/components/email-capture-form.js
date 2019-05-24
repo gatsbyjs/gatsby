@@ -32,8 +32,8 @@ const Container = styled(`div`)`
     background: ${colors.white}
       repeating-linear-gradient(
         135deg,
-        ${colors.red[400]},
-        ${colors.red[400]} 20px,
+        ${colors.red[40]},
+        ${colors.red[40]} 20px,
         transparent 20px,
         transparent 40px,
         ${colors.blue[400]} 40px,

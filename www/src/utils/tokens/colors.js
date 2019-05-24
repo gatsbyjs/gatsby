@@ -119,7 +119,7 @@ export default {
   lilac: palette.purple[50],
   lavender: palette.purple[20],
   accent: palette.orange[50],
-  warning: palette.red[700],
+  warning: palette.red[70],
   // role-based tokens
   // this is merely a humble start, lots to do here
   ui: {
