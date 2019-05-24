@@ -127,9 +127,13 @@ const fetchResource = resourceName => {
 
 const prefetchResource = resourceName => {
   if (resourceName.slice(0, 12) === `component---`) {
-    return Promise.all(
-      createComponentUrls(resourceName).map(url => prefetchHelper(url))
-    )
+    let componentUrls = createComponentUrls(resourceName)
+    if (process.env.MODERN_BUILD) {
+      componentUrls = componentUrls.filter(resource =>
+        resource.endsWith(`.mjs`)
+      )
+    }
+    return Promise.all(componentUrls.map(url => prefetchHelper(url)))
   } else {
     const url = createJsonURL(jsonDataPaths[resourceName])
     return prefetchHelper(url)

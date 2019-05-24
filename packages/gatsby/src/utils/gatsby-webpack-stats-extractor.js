@@ -30,12 +30,13 @@ class GatsbyWebpackStatsExtractor {
         ...stats.toJson({ all: false, chunkGroups: true }),
         assetsByChunkName: assets,
       }
+
       fs.writeFile(
-        path.join(`public`, `chunk-map.json`),
+        path.join(`public`, this.options.chunkMapFilename),
         JSON.stringify(assetsMap),
         () => {
           fs.writeFile(
-            path.join(`public`, `webpack.stats.json`),
+            path.join(`public`, this.options.webpackStatsFilename),
             JSON.stringify(webpackStats),
             done
           )

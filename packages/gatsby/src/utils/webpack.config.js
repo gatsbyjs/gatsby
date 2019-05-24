@@ -86,6 +86,7 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
+    envObject.MODERN_BUILD = !!options.modern
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
@@ -219,12 +220,25 @@ module.exports = async (
         ])
         break
       case `build-javascript`: {
-        configPlugins = configPlugins.concat([
-          plugins.extractText(),
-          // Write out stats object mapping named dynamic imports (aka page
-          // components) to all their async chunks.
-          plugins.extractStats(),
-        ])
+        // With modern builds we load the null loader so we can't extractText
+        if (!options.modern) {
+          configPlugins.push(plugins.extractText())
+        }
+
+        // Write out stats object mapping named dynamic imports (aka page
+        // components) to all their async chunks.
+        let extractStatsOptions = {
+          chunkMapFilename: `chunk-map.json`,
+          webpackStatsFilename: `webpack.stats.json`,
+        }
+        if (options.modern) {
+          extractStatsOptions = {
+            chunkMapFilename: `chunk-map.modern.json`,
+            webpackStatsFilename: `webpack.stats.modern.json`,
+          }
+        }
+        configPlugins.push(plugins.extractStats(extractStatsOptions))
+
         break
       }
     }
@@ -340,7 +354,10 @@ module.exports = async (
         // classNames to use.
         configRules = configRules.concat([
           {
-            oneOf: [rules.cssModules(), rules.css()],
+            oneOf: [
+              rules.cssModules({ modern: options.modern }),
+              rules.css({ modern: options.modern }),
+            ],
           },
         ])
 

@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
-const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
+const { get, merge, mergeWith, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
@@ -14,12 +14,31 @@ const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const pagesObjectMap = new Map()
 pages.forEach(p => pagesObjectMap.set(p.path, p))
 
-const stats = JSON.parse(
+const statsLegacy = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
+const statsModern = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/webpack.stats.modern.json`, `utf-8`)
+)
 
-const chunkMapping = JSON.parse(
+const chunkMappingLegacy = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
+)
+const chunkMappingModern = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/chunk-map.modern.json`, `utf-8`)
+)
+
+// eslint-disable-next-line consistent-return
+const mergeWithArrayConcatenator = (objValue, srcValue) => {
+  if (Array.isArray(objValue)) {
+    return objValue.concat(srcValue)
+  }
+}
+const stats = mergeWith(statsLegacy, statsModern, mergeWithArrayConcatenator)
+const chunkMapping = mergeWith(
+  chunkMappingLegacy,
+  chunkMappingModern,
+  mergeWithArrayConcatenator
 )
 
 // const testRequireError = require("./test-require-error")
@@ -210,6 +229,9 @@ export default (pagePath, callback) => {
     }
   }
 
+  const getPreloadValue = name =>
+    name.endsWith(`.mjs`) ? `modulepreload` : `preload`
+
   // Create paths to scripts
   let scriptsAndStyles = flatten(
     [`app`, page.componentChunkName].map(s => {
@@ -226,11 +248,11 @@ export default (pagePath, callback) => {
         if (chunk === `/`) {
           return null
         }
-        return { rel: `preload`, name: chunk }
+        return { rel: getPreloadValue(chunk), name: chunk }
       })
 
       namedChunkGroups[s].assets.forEach(asset =>
-        chunks.push({ rel: `preload`, name: asset })
+        chunks.push({ rel: getPreloadValue(asset), name: asset })
       )
 
       const childAssets = namedChunkGroups[s].childAssets
@@ -247,12 +269,13 @@ export default (pagePath, callback) => {
     })
   )
     .filter(s => isObject(s))
-    .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
+    .sort((s1, s2) => (s1.rel == getPreloadValue(s1.name) ? -1 : 1)) // given priority to preload
 
   scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
-
   const scripts = scriptsAndStyles.filter(
-    script => script.name && script.name.endsWith(`.js`)
+    script =>
+      script.name &&
+      (script.name.endsWith(`.js`) || script.name.endsWith(`.mjs`))
   )
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
@@ -275,6 +298,8 @@ export default (pagePath, callback) => {
   scripts
     .slice(0)
     .reverse()
+    // remove legacy scripts from our preload as we preload our modern files instead
+    .filter(script => script.name.endsWith(`.js`))
     .forEach(script => {
       // Add preload/prefetch <link>s for scripts.
       headComponents.push(
@@ -374,7 +399,16 @@ export default (pagePath, callback) => {
         1,
         -1
       )}`
-      return <script key={scriptPath} src={scriptPath} async />
+      const isModule = s.rel === `modulepreload`
+      return (
+        <script
+          key={scriptPath}
+          src={scriptPath}
+          noModule={!isModule}
+          type={isModule ? `module` : null}
+          async
+        />
+      )
     })
 
   postBodyComponents.push(...bodyScripts)
