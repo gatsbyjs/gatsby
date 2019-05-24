@@ -9,7 +9,7 @@ describe(`gatsby-plugin-flow`, () => {
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
-        name: `@babel/preset-flow`,
+        name: expect.stringContaining(`@babel/preset-flow`),
       })
     })
   })
