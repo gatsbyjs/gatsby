@@ -1,0 +1,38 @@
+/* CSS Grid */
+
+@media screen and (min-width: 981px) {
+
+	.grid-wrapper {
+		display: grid;
+		grid-gap: 0 2.25em;
+		grid-template-columns: repeat(12, 1fr);
+		margin: 0 auto;
+		width: 90%;
+	}
+
+	/* Generate Columns 1 through 12 */
+	/*
+		Example:
+		.col-6 { grid-column: span 6; }
+	*/
+
+	$columns: 12;
+	@mixin col-x-list {
+	  	@for $i from 1 through $columns {
+	      	.col-#{$i} {
+	      		grid-column: span #{$i}
+	      	}
+	  	}
+	}
+	@include col-x-list;
+
+}
+
+@media screen and (min-width: 1141px) {
+
+	.grid-wrapper {
+		grid-gap: 0 3em;
+		width: 60em;
+	}
+
+}

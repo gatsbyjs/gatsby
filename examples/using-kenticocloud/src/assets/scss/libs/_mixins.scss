@@ -1,0 +1,396 @@
+/// Makes an element's :before pseudoelement a FontAwesome icon.
+/// @param {string} $content Optional content value to use.
+/// @param {string} $where Optional pseudoelement to target (before or after).
+@mixin icon($content: false, $where: before) {
+
+	text-decoration: none;
+
+	&:#{$where} {
+
+		@if $content {
+			content: $content;
+		}
+
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		font-family: FontAwesome;
+		font-style: normal;
+		font-weight: normal;
+		text-transform: none !important;
+	}
+}
+
+/// Applies padding to an element, taking the current element-margin value into account.
+/// @param {mixed} $tb Top/bottom padding.
+/// @param {mixed} $lr Left/right padding.
+/// @param {list} $pad Optional extra padding (in the following order top, right, bottom, left)
+/// @param {bool} $important If true, adds !important.
+@mixin padding($tb, $lr, $pad: (0,0,0,0), $important: null) {
+
+	@if $important {
+		$important: '!important';
+	}
+
+	$x: 0.1em;
+
+	@if unit(_size(element-margin)) == 'rem' {
+		$x: 0.1rem;
+	}
+
+	padding: ($tb + nth($pad,1)) ($lr + nth($pad,2)) max($x, $tb - _size(element-margin) + nth($pad,3)) ($lr + nth($pad,4)) #{$important};
+
+}
+
+/// Encodes a SVG data URL so IE doesn't choke (via codepen.io/jakob-e/pen/YXXBrp).
+/// @param {string} $svg SVG data URL.
+/// @return {string} Encoded SVG data URL.
+@function svg-url($svg) {
+
+	$svg: str-replace($svg, '"', '\'');
+	$svg: str-replace($svg, '%', '%25');
+	$svg: str-replace($svg, '<', '%3C');
+	$svg: str-replace($svg, '>', '%3E');
+	$svg: str-replace($svg, '&', '%26');
+	$svg: str-replace($svg, '#', '%23');
+	$svg: str-replace($svg, '{', '%7B');
+	$svg: str-replace($svg, '}', '%7D');
+	$svg: str-replace($svg, ';', '%3B');
+
+	@return url("data:image/svg+xml;charset=utf8,#{$svg}");
+
+}
+
+/// Initializes base flexgrid classes.
+/// @param {string} $vertical-align Vertical alignment of cells.
+/// @param {string} $horizontal-align Horizontal alignment of cells.
+@mixin flexgrid-base($vertical-align: null, $horizontal-align: null) {
+
+	// Grid.
+		@include vendor('display', 'flex');
+		@include vendor('flex-wrap', 'wrap');
+
+		// Vertical alignment.
+			@if ($vertical-align == top) {
+				@include vendor('align-items', 'flex-start');
+			}
+			@else if ($vertical-align == bottom) {
+				@include vendor('align-items', 'flex-end');
+			}
+			@else if ($vertical-align == center) {
+				@include vendor('align-items', 'center');
+			}
+			@else {
+				@include vendor('align-items', 'stretch');
+			}
+
+		// Horizontal alignment.
+			@if ($horizontal-align != null) {
+				text-align: $horizontal-align;
+			}
+
+	// Cells.
+		> * {
+			@include vendor('flex-shrink', '1');
+			@include vendor('flex-grow', '0');
+		}
+
+}
+
+/// Sets up flexgrid columns.
+/// @param {integer} $columns Columns.
+@mixin flexgrid-columns($columns) {
+
+	> * {
+		$cell-width: 100% / $columns;
+		width: #{$cell-width};
+	}
+
+}
+
+/// Sets up flexgrid gutters.
+/// @param {integer} $columns Columns.
+/// @param {number} $gutters Gutters.
+@mixin flexgrid-gutters($columns, $gutters) {
+
+	// Apply padding.
+		> * {
+			$cell-width: 100% / $columns;
+
+			padding: ($gutters * 0.5);
+			width: $cell-width;
+		}
+
+}
+
+/// Sets up flexgrid gutters (flush).
+/// @param {integer} $columns Columns.
+/// @param {number} $gutters Gutters.
+@mixin flexgrid-gutters-flush($columns, $gutters) {
+
+	// Apply padding.
+		> * {
+			$cell-width: 100% / $columns;
+			$cell-width-pad: $gutters / $columns;
+
+			padding: ($gutters * 0.5);
+			width: calc(#{$cell-width} + #{$cell-width-pad});
+		}
+
+	// Clear top/bottom gutters.
+		> :nth-child(-n + #{$columns}) {
+			padding-top: 0;
+		}
+
+		> :nth-last-child(-n + #{$columns}) {
+			padding-bottom: 0;
+		}
+
+	// Clear left/right gutters.
+		> :nth-child(#{$columns}n + 1) {
+			padding-left: 0;
+		}
+
+		> :nth-child(#{$columns}n) {
+			padding-right: 0;
+		}
+
+	// Adjust widths of leftmost and rightmost cells.
+		> :nth-child(#{$columns}n + 1),
+		> :nth-child(#{$columns}n) {
+			$cell-width: 100% / $columns;
+			$cell-width-pad: ($gutters / $columns) - ($gutters / 2);
+
+			width: calc(#{$cell-width} + #{$cell-width-pad});
+		}
+
+}
+
+/// Reset flexgrid gutters (flush only).
+/// Used to override a previous set of flexgrid gutter classes.
+/// @param {integer} $columns Columns.
+/// @param {number} $gutters Gutters.
+/// @param {integer} $prev-columns Previous columns.
+@mixin flexgrid-gutters-flush-reset($columns, $gutters, $prev-columns) {
+
+	// Apply padding.
+		> * {
+			$cell-width: 100% / $prev-columns;
+			$cell-width-pad: $gutters / $prev-columns;
+
+			padding: ($gutters * 0.5);
+			width: calc(#{$cell-width} + #{$cell-width-pad});
+		}
+
+	// Clear top/bottom gutters.
+		> :nth-child(-n + #{$prev-columns}) {
+			padding-top: ($gutters * 0.5);
+		}
+
+		> :nth-last-child(-n + #{$prev-columns}) {
+			padding-bottom: ($gutters * 0.5);
+		}
+
+	// Clear left/right gutters.
+		> :nth-child(#{$prev-columns}n + 1) {
+			padding-left: ($gutters * 0.5);
+		}
+
+		> :nth-child(#{$prev-columns}n) {
+			padding-right: ($gutters * 0.5);
+		}
+
+	// Adjust widths of leftmost and rightmost cells.
+		> :nth-child(#{$prev-columns}n + 1),
+		> :nth-child(#{$prev-columns}n) {
+			$cell-width: 100% / $columns;
+			$cell-width-pad: $gutters / $columns;
+
+			padding: ($gutters * 0.5);
+			width: calc(#{$cell-width} + #{$cell-width-pad});
+		}
+
+}
+
+/// Adds debug styles to current flexgrid element.
+@mixin flexgrid-debug() {
+
+	box-shadow: 0 0 0 1px red;
+
+	> * {
+		box-shadow: inset 0 0 0 1px blue;
+		position: relative;
+
+		> * {
+			position: relative;
+			box-shadow: inset 0 0 0 1px green;
+		}
+	}
+
+}
+
+/// Initializes the current element as a flexgrid.
+/// @param {integer} $columns Columns (optional).
+/// @param {number} $gutters Gutters (optional).
+/// @param {bool} $flush If true, clears padding around the very edge of the grid.
+@mixin flexgrid($settings: ()) {
+
+	// Settings.
+
+		// Debug.
+			$debug: false;
+
+			@if (map-has-key($settings, 'debug')) {
+				$debug: map-get($settings, 'debug');
+			}
+
+		// Vertical align.
+			$vertical-align: null;
+
+			@if (map-has-key($settings, 'vertical-align')) {
+				$vertical-align: map-get($settings, 'vertical-align');
+			}
+
+		// Horizontal align.
+			$horizontal-align: null;
+
+			@if (map-has-key($settings, 'horizontal-align')) {
+				$horizontal-align: map-get($settings, 'horizontal-align');
+			}
+
+		// Columns.
+			$columns: null;
+
+			@if (map-has-key($settings, 'columns')) {
+				$columns: map-get($settings, 'columns');
+			}
+
+		// Gutters.
+			$gutters: 0;
+
+			@if (map-has-key($settings, 'gutters')) {
+				$gutters: map-get($settings, 'gutters');
+			}
+
+		// Flush.
+			$flush: true;
+
+			@if (map-has-key($settings, 'flush')) {
+				$flush: map-get($settings, 'flush');
+			}
+
+	// Initialize base grid.
+		@include flexgrid-base($vertical-align, $horizontal-align);
+
+	// Debug?
+		@if ($debug) {
+			@include flexgrid-debug;
+		}
+
+	// Columns specified?
+		@if ($columns != null) {
+
+			// Initialize columns.
+				@include flexgrid-columns($columns);
+
+			// Gutters specified?
+				@if ($gutters > 0) {
+
+					// Flush gutters?
+						@if ($flush) {
+
+							// Initialize gutters (flush).
+								@include flexgrid-gutters-flush($columns, $gutters);
+
+						}
+
+					// Otherwise ...
+						@else {
+
+							// Initialize gutters.
+								@include flexgrid-gutters($columns, $gutters);
+
+						}
+
+				}
+
+		}
+
+}
+
+/// Resizes a previously-initialized grid.
+/// @param {integer} $columns Columns.
+/// @param {number} $gutters Gutters (optional).
+/// @param {list} $reset A list of previously-initialized grid columns (only if $flush is true).
+/// @param {bool} $flush If true, clears padding around the very edge of the grid.
+@mixin flexgrid-resize($settings: ()) {
+
+	// Settings.
+
+		// Columns.
+			$columns: 1;
+
+			@if (map-has-key($settings, 'columns')) {
+				$columns: map-get($settings, 'columns');
+			}
+
+		// Gutters.
+			$gutters: 0;
+
+			@if (map-has-key($settings, 'gutters')) {
+				$gutters: map-get($settings, 'gutters');
+			}
+
+		// Previous columns.
+			$prev-columns: false;
+
+			@if (map-has-key($settings, 'prev-columns')) {
+				$prev-columns: map-get($settings, 'prev-columns');
+			}
+
+		// Flush.
+			$flush: true;
+
+			@if (map-has-key($settings, 'flush')) {
+				$flush: map-get($settings, 'flush');
+			}
+
+	// Resize columns.
+		@include flexgrid-columns($columns);
+
+	// Gutters specified?
+		@if ($gutters > 0) {
+
+			// Flush gutters?
+				@if ($flush) {
+
+					// Previous columns specified?
+						@if ($prev-columns) {
+
+							// Convert to list if it isn't one already.
+								@if (type-of($prev-columns) != list) {
+									$prev-columns: ($prev-columns);
+								}
+
+							// Step through list of previous columns and reset them.
+								@each $x in $prev-columns {
+									@include flexgrid-gutters-flush-reset($columns, $gutters, $x);
+								}
+
+						}
+
+					// Resize gutters (flush).
+						@include flexgrid-gutters-flush($columns, $gutters);
+
+				}
+
+			// Otherwise ...
+				@else {
+
+					// Resize gutters.
+						@include flexgrid-gutters($columns, $gutters);
+
+				}
+
+		}
+
+}

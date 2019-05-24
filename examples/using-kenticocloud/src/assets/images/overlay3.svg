@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000px" height="1000px" viewBox="0 0 1000 1000" zoomAndPan="disable">
+    <style type="text/css"><![CDATA[
+		.p-4 { fill: rgba(255,255,255,0.16); }
+		.p-3 { fill: rgba(255,255,255,0.12); }
+		.p-2 { fill: rgba(255,255,255,0.08); }
+		.p-1 { fill: rgba(255,255,255,0.04); }
+		.p0 { fill: none; }
+		.p1 { fill: rgba(0,0,0,0.025); }
+		.p2 { fill: rgba(0,0,0,0.05); }
+		.p3 { fill: rgba(0,0,0,0.075); }
+		.p4 { fill: rgba(0,0,0,0.1); }
+    ]]></style>
+	<polygon class="p-4" points="-1125,0 -375,1000 125,1000 -875,0" />
+	<polygon class="p-3" points="-875,0 125,1000 375,1000 -625,0" />
+	<polygon class="p-2" points="-625,0 375,1000 625,1000 -375,0" />
+	<polygon class="p-1" points="-375,0 625,1000 875,1000 -125,0" />
+	<polygon class="p0" points="-125,0 875,1000 1125,1000 125,0" />
+	<polygon class="p1" points="125,0 1125,1000 1375,1000 375,0" />
+	<polygon class="p2" points="375,0 1375,1000 1625,1000 625,0" />
+	<polygon class="p3" points="625,0 1625,1000 1875,1000 875,0" />
+	<polygon class="p4" points="875,0 1875,1000 2125,1000 1125,0" />
+</svg>

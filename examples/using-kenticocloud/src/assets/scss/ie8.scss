@@ -1,0 +1,246 @@
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/skel';
+
+/*
+	Photon by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+// Vars
+
+	$ie-palette-border:				#ccc;
+	$ie-palette-border-bg:			transparent;
+	$ie-palette-border2:			#ccc;
+	$ie-palette-border2-bg:			transparent;
+	$ie-palette-dark-bg:			#666666;
+	$ie-palette-dark-fg-bold:		#ffffff;
+	$ie-palette-dark-fg:			#ffffff;
+	$ie-palette-dark-fg-light:		#ffffff;
+	$ie-palette-dark-border:		#ffffff;
+	$ie-palette-dark-border-bg:		transparent;
+	$ie-palette-dark-border2:		#ffffff;
+	$ie-palette-dark-border2-bg:	transparent;
+
+/* Basic */
+
+	hr {
+		border-bottom: solid 1px $ie-palette-border;
+	}
+
+	blockquote {
+		border-left: solid 4px $ie-palette-border;
+	}
+
+	code {
+		border: solid 1px $ie-palette-border;
+	}
+
+/* Section/Article */
+
+	header {
+		&.major {
+			&:after {
+				background: $ie-palette-border;
+			}
+		}
+	}
+
+/* Form */
+
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select,
+	textarea {
+		-ms-behavior: url('assets/js/ie/PIE.htc');
+		border: solid 1px $ie-palette-border;
+		position: relative;
+	}
+
+/* List */
+
+	ul {
+		&.alt {
+			li {
+				border-top: solid 1px $ie-palette-border;
+			}
+		}
+
+		&.major-icons {
+			li {
+				.icon {
+					-ms-behavior: url('assets/js/ie/PIE.htc');
+					border: solid 1px $ie-palette-border;
+					position: relative;
+				}
+			}
+		}
+	}
+
+/* Table */
+
+	table {
+		thead {
+			border-bottom: solid 1px $ie-palette-border;
+		}
+
+		tfoot {
+			border-top: solid 1px $ie-palette-border;
+		}
+
+		&.alt {
+			tbody {
+				tr {
+					td {
+						border: solid 1px $ie-palette-border;
+						border-left-width: 0;
+						border-top-width: 0;
+					}
+				}
+			}
+		}
+	}
+
+/* Button */
+
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	button,
+	.button {
+		-ms-behavior: url('assets/js/ie/PIE.htc');
+		border: solid 1px $ie-palette-border;
+		position: relative;
+	}
+
+/* Image */
+
+	.image {
+		-ms-behavior: url('assets/js/ie/PIE.htc');
+
+		img {
+			-ms-behavior: url('assets/js/ie/PIE.htc');
+			position: relative;
+		}
+	}
+
+// Dark (mixin)
+
+	@mixin dark($ie-palette-this-bg: $ie-palette-dark-bg) {
+		background-color: $ie-palette-this-bg;
+		color: $ie-palette-dark-fg;
+
+		a {
+			border-bottom-color: $ie-palette-dark-fg;
+
+			&:hover {
+				color: $ie-palette-dark-fg-bold;
+			}
+		}
+
+		h1, h2, h3, h4, h5, h6, strong, b {
+			color: $ie-palette-dark-fg-bold;
+		}
+
+		header {
+			p {
+				color: $ie-palette-dark-fg-bold;
+			}
+
+			&.major {
+				&:after {
+					background: $ie-palette-dark-border;
+				}
+			}
+		}
+
+		input[type="submit"],
+		input[type="reset"],
+		input[type="button"],
+		button,
+		.button {
+			border: solid 1px $ie-palette-dark-border !important;
+			color: $ie-palette-dark-fg-bold !important;
+
+			&:hover {
+				background-color: $ie-palette-dark-border-bg;
+			}
+
+			&:active {
+				background-color: $ie-palette-dark-border2-bg;
+			}
+
+			&.special {
+				background-color: $ie-palette-dark-fg-bold;
+				border: solid 1px $ie-palette-dark-border !important;
+				color: $ie-palette-this-bg !important;
+
+				&:hover {
+					background-color: $ie-palette-dark-border-bg !important;
+					color: $ie-palette-dark-fg-bold !important;
+				}
+
+				&:active {
+					background-color: $ie-palette-dark-border2-bg !important;
+				}
+			}
+		}
+
+		ul {
+			&.major-icons {
+				li {
+					.icon {
+						border-color: $ie-palette-dark-border;
+					}
+				}
+			}
+		}
+
+		.icon {
+			&.major {
+				color: $ie-palette-dark-fg-bold;
+			}
+		}
+	}
+
+/* Main */
+
+	.main {
+		&.style2 {
+			@include dark(#333);
+			-ms-behavior: url('assets/js/ie/backgroundsize.min.htc');
+			background-image: url('../../images/header.jpg');
+			background-size: cover;
+			position: relative;
+
+			&:before {
+				background-image: url('images/overlay1.png');
+				content: '';
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+
+			> * {
+				position: relative;
+				z-index: 1;
+			}
+		}
+	}
+
+/* Header */
+
+	#header {
+		@include dark(#4686a0);
+	}
+
+/* Footer */
+
+	#footer {
+		@include dark(#4686a0);
+	}
