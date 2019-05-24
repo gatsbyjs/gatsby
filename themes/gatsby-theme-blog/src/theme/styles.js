@@ -15,7 +15,7 @@ export default {
     color: `white`,
     bg: `none`,
     overflow: `auto`,
-    padding: 2,
+    p: 3,
   },
   code: {
     fontFamily: `monospace`,
@@ -28,19 +28,18 @@ export default {
     borderRadius: `0.3em`,
     color: `secondary`,
     bg: `highlight`,
-    paddingTop: `0.15em`,
-    paddingBottom: `0.05em`,
+    // paddingTop: `0.15em`,
+    // paddingBottom: `0.05em`,
     paddingX: `0.2em`,
   },
   // .gatsby-highlight is rendered *outside* of the <pre> tag
   div: {
     "&.gatsby-highlight": {
       // todo: update spacing
-      marginBottom: `1.75rem`,
-      marginLeft: `-1.3125rem`,
-      marginRight: `-1.3125rem`,
+      mx: -3,
+      mb: 3,
       borderRadius: [0, `10px`],
-      background: `#011627`,
+      bg: `prism.background`,
       WebkitOverflowScrolling: `touch`,
       overflow: `auto`,
     },
@@ -48,27 +47,27 @@ export default {
   // from typography overrideThemeStyles
   a: {
     color: `primary`,
-    "&.gatsby-resp-image-link": {
-      boxShadow: `none`,
-    },
-    "&.anchor": {
-      boxShadow: `none`,
-      'svg[aria-hidden="true"]': {
-        stroke: `primary`,
-      },
-    },
+    // "&.gatsby-resp-image-link": {
+    //   boxShadow: `none`,
+    // },
+    // "&.anchor": {
+    //   boxShadow: `none`,
+    //   'svg[aria-hidden="true"]': {
+    //     stroke: `primary`,
+    //   },
+    // },
   },
   hr: {
     borderColor: `muted`,
   },
   p: {
     code: {
-      fontSize: `1rem`,
+      fontSize: `inherit`,
     },
   },
   li: {
     code: {
-      fontSize: `1rem`,
+      fontSize: `inherit`,
     },
   },
   blockquote: {

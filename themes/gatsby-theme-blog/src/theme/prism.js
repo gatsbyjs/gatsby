@@ -1,52 +1,48 @@
 // todo: swap for theme colors
 export default {
   ".attr-name": {
-    color: `rgb(173, 219, 103)`,
     fontStyle: `italic`,
   },
   ".comment": {
-    color: `rgb(128, 147, 147)`,
+    color: `prism.comment`,
   },
-  [[`.string`, `.url`]]: {
-    color: `rgb(173, 219, 103)`,
+  [[`.attr-name`, `.string`, `.url`]]: {
+    color: `prism.string`,
   },
   ".variable": {
-    color: `rgb(214, 222, 235)`,
+    color: `prism.var`,
   },
   ".number": {
-    color: `rgb(247, 140, 108)`,
+    color: `prism.number`,
   },
   [[`.builtin`, `.char`, `.constant`, `.function`]]: {
-    color: `rgb(130, 170, 255)`,
+    color: `prism.constant`,
   },
-  ".punctuation": {
-    color: `rgb(199, 146, 234)`,
-  },
-  [[`.selector`, `.doctype`]]: {
-    color: `rgb(199, 146, 234)`,
+  [[`.punctuation`, `.selector`, `.doctype`]]: {
+    color: `prism.punctuation`,
   },
   ".class-name": {
-    color: `rgb(255, 2013, 139)`,
+    color: `prism.className`,
   },
   [[`.tag`, `.operator`, `.keyword`]]: {
-    color: `#ffa7c4`,
+    color: `prism.tag`,
   },
   ".boolean": {
-    color: `rgb(255, 88, 116)`,
+    color: `prism.boolean`,
   },
   ".property": {
-    color: `rgb(128, 203, 196)`,
+    color: `prism.property`,
   },
   ".namespace": {
-    color: `rgb(178, 204, 214)`,
+    color: `prism.namespace`,
   },
   ".gatsby-highlight-code-line": {
-    backgroundColor: `hsla(207, 95%, 15%, 1)`,
+    bg: `prism.highlight`,
     display: `block`,
-    marginRight: `-1.3125rem`,
-    marginLeft: `-1.3125rem`,
-    paddingRight: `1em`,
-    paddingLeft: `1.25em`,
-    borderLeft: `0.25em solid #ffa7c4`,
+    mx: -3,
+    px: 3,
+    // todo: compensate for border
+    borderLeft: `4px solid`,
+    borderColor: `prism.tag`,
   },
 }
