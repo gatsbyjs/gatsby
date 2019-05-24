@@ -158,6 +158,11 @@ const searchBoxStyles = css`
     height: ${space[3]};
     vertical-align: middle;
   }
+  .ais-SearchBox-input:valid ~ .ais-SearchBox-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .ais-InfiniteHits-list {
     list-style: none;
@@ -250,7 +255,7 @@ class Search extends Component {
               height: searchMetaHeight,
               paddingLeft: space[6],
               paddingRight: space[6],
-              fontSize: fontSizes[1],
+              fontSize: fontSizes[0],
             }}
           >
             <Stats
@@ -364,6 +369,9 @@ const Result = ({ hit, pathname, query }) => {
             position: `absolute`,
             top: `auto`,
             width: `100%`,
+            [mediaQueries.md]: {
+              display: `none`,
+            },
           },
           "&:after": {
             background: selected ? colors.gatsby : false,
@@ -387,12 +395,13 @@ const Result = ({ hit, pathname, query }) => {
       >
         <h2
           css={{
-            color: selected ? colors.gatsby : false,
-            fontSize: `inherit`,
-            fontFamily: fonts.header,
-            fontWeight: `bold`,
-            display: `flex`,
             alignItems: `center`,
+            color: selected ? colors.gatsby : false,
+            display: `flex`,
+            fontSize: `inherit`,
+            fontFamily: fonts.system,
+            fontSize: fontSizes[1],
+            fontWeight: `bold`,
             marginBottom: 0,
             marginTop: 0,
           }}
