@@ -18,7 +18,7 @@ describe(`The GraphQL endpoint`, () => {
       )
     })
 
-    it(`Should execute queries created with explorer on  ${endpoint}`, () => {
+    it(`Should execute queries created with explorer on ${endpoint}`, () => {
       // hack to show (almost) empty editor instead of
       cy.visit(endpoint + `?query=%20`)
       cy.get(`[data-field-name="site"]`).click()
