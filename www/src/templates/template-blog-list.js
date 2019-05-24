@@ -107,7 +107,7 @@ class BlogPostsIndex extends React.Component {
                 display: `flex`,
                 flexFlow: `row nowrap`,
                 justifyContent: `flex-end`,
-                [mediaQueries.md]: {
+                [breakpointGutter]: {
                   border: 0,
                 },
               }}
