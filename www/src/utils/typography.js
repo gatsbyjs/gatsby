@@ -15,8 +15,6 @@ import {
 const _options = {
   bodyFontFamily: fonts.system,
   headerFontFamily: fonts.header,
-  monospaceFontFamily: fonts.monospace.join(`,`),
-  systemFontFamily: fonts.system,
   baseLineHeight: lineHeights.default,
   headerLineHeight: lineHeights.dense,
   headerColor: colors.text.header,
@@ -209,13 +207,13 @@ const _options = {
         color: colors.lilac,
       },
       ".main-body a": {
-        color: colors.lilac,
+        color: colors.link.color,
         textDecoration: `none`,
         transition: `all ${transition.speed.fast} ${transition.curve.default}`,
-        borderBottom: `1px solid ${colors.ui.border.link}`,
+        borderBottom: `1px solid ${colors.link.border}`,
       },
       ".main-body a:hover": {
-        borderBottomColor: colors.ui.border.linkHover,
+        borderBottomColor: colors.link.hoverBorder,
       },
       ".post-body figure img": {
         marginBottom: 0,
@@ -226,15 +224,17 @@ const _options = {
         marginTop: rhythm(space[1]),
         marginBottom: rhythm(space[3]),
       },
+      //
       ".main-body a.anchor": {
         color: `inherit`,
-        fill: colors.lilac,
+        fill: colors.link.color,
         textDecoration: `none`,
         borderBottom: `none`,
       },
       ".main-body a.anchor:hover": {
         background: `none`,
       },
+      // gatsby-image
       ".main-body a.gatsby-resp-image-link": {
         borderBottom: `transparent`,
         marginTop: rhythm(space[9]),

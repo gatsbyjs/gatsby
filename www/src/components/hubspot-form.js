@@ -43,7 +43,9 @@ export default class GatsbyHubspotForm extends Component {
           },
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
             width: `100% !important`,
-            ...formInputFocus,
+            ":focus": {
+              ...formInputFocus,
+            },
           },
           "& .hs-button.primary": {
             ...buttonStyles.default,

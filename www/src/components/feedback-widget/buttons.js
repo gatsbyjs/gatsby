@@ -9,6 +9,7 @@ import {
   shadows,
   space,
 } from "../../utils/presets"
+import { formInputFocus, focusStyle } from "../../utils/styles"
 
 const rotation = keyframes`
   0% {
@@ -17,11 +18,6 @@ const rotation = keyframes`
   100% {
     transform: translateX(${space[1]}) rotate(360deg);
   }
-`
-
-export const focusStyle = css`
-  outline: 2px solid ${colors.accent};
-  outline-offset: -2px;
 `
 
 const buttonStyles = css`
@@ -52,10 +48,6 @@ const buttonStyles = css`
     cursor: not-allowed;
     opacity: 0.9;
   }
-
-  &:hover {
-    box-shadow: 0 0 0 0.12rem ${colors.accent}88;
-  }
 `
 
 export const SubmitButton = styled(`button`)`
@@ -79,8 +71,12 @@ export const SubmitButton = styled(`button`)`
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
   background: ${colors.white};
-  border: 1px solid ${colors.ui.border.form};
+  border: 1px solid ${colors.input.border};
   color: ${colors.text.secondary};
+
+  :focus {
+    ${formInputFocus}
+  }
 `
 
 export const ToggleButtonLabel = styled(`span`)`

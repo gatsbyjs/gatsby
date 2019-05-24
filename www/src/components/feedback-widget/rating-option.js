@@ -70,7 +70,7 @@ const RatingText = styled(`span`)`
 
 const Label = styled(`label`)`
   align-items: center;
-  background: ${colors.purple[100]};
+  background: ${colors.white};
   cursor: pointer;
   display: flex;
   flex-basis: 33.33%;

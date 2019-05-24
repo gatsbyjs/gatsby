@@ -173,7 +173,7 @@ const ReadMore = styled(Link)`
 
     span {
       :hover {
-        border-color: ${colors.ui.border.linkHover};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }

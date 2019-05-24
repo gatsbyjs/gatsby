@@ -16,9 +16,9 @@ const stripeAnimation = keyframes({
   "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
-const focusStyle = {
+export const focusStyle = {
   outline: 0,
-  boxShadow: `0 0 0 ${space[1]} ${colors.purple[200]}`,
+  boxShadow: `0 0 0 ${space[1]} ${colors.input.focusBoxShadow}`,
 }
 
 export const srOnly = {
@@ -160,7 +160,7 @@ export const linkStyles = {
 
 export const formInput = {
   backgroundColor: colors.white,
-  border: `1px solid ${colors.ui.border.form}`,
+  border: `1px solid ${colors.input.border}`,
   borderRadius: radii[2],
   padding: space[2],
   fontFamily: fonts.system,
@@ -174,10 +174,8 @@ export const formInput = {
 }
 
 export const formInputFocus = {
-  ":focus": {
-    borderColor: colors.gatsby,
-    ...focusStyle,
-  },
+  borderColor: colors.input.focusBorder,
+  ...focusStyle,
 }
 
 export const skipLink = {

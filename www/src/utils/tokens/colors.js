@@ -114,26 +114,35 @@ const palette = {
 export default {
   ...palette,
   gatsby: palette.purple[600],
+  // legacy shortcuts
+  // most of these should be refactored to role-based tokens as we flesh those out
   lilac: palette.purple[500],
   lavender: palette.purple[200],
   accent: palette.orange[500],
   warning: palette.red[600],
-  // todo figure out naming, most of these are cr@p
+  // role-based tokens
   ui: {
     background: palette.grey[50],
-    hover: palette.purple[50], // this currently is used for hovered and selected plugin cards mostly
+    hover: palette.purple[50],
     border: {
       subtle: palette.grey[200],
-      form: palette.grey[300],
-      link: palette.purple[500],
-      linkHover: palette.purple[200],
     },
+  },
+  link: {
+    color: palette.purple[500],
+    border: palette.purple[500],
+    hoverBorder: palette.purple[200],
   },
   text: {
     header: palette.grey[900],
     primary: palette.grey[800],
     secondary: palette.grey[500],
     placeholder: palette.grey[400],
+  },
+  input: {
+    border: palette.grey[300],
+    focusBorder: palette.orange[400],
+    focusBoxShadow: palette.orange[200],
   },
   code: {
     bgInline: `#fbf2e9`,

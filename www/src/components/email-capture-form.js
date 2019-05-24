@@ -30,8 +30,11 @@ const Label = styled(`label`)`
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
-  ${formInputFocus}
   width: 100%;
+
+  :focus {
+    ${formInputFocus}
+  }
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
