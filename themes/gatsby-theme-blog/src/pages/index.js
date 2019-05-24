@@ -31,7 +31,9 @@ class BlogIndex extends React.Component {
               >
                 <Styled.a
                   as={Link}
-                  css={{ boxShadow: `none` }}
+                  css={{
+                    textDecoration: `none`,
+                  }}
                   to={node.fields.slug}
                 >
                   {title}
