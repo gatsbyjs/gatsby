@@ -23,7 +23,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : ${appId},
-                cookie:    : ${cookie},
+                cookie     : ${cookie},
                 version    : '${version}',
                 xfbml      : ${xfbml},
               });

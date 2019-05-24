@@ -11,7 +11,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : true,
               });
@@ -46,7 +46,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v3.3',
                 xfbml      : true,
               });
@@ -81,7 +81,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : true,
+                cookie     : true,
                 version    : 'v2.12',
                 xfbml      : true,
               });
@@ -116,7 +116,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : true,
               });
@@ -151,7 +151,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : true,
               });
@@ -186,7 +186,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : true,
               });
@@ -221,7 +221,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : false,
               });
@@ -256,7 +256,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : true,
               });
@@ -291,7 +291,7 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                cookie:    : false,
+                cookie     : false,
                 version    : 'v2.12',
                 xfbml      : true,
               });
