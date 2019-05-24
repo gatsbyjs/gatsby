@@ -25,9 +25,15 @@ const FooterList = styled.ul`
       padding-left: 1em;
       margin-right: 1em;
     }
+
     a {
       color: ${colors.text.secondary};
       border-color: ${colors.grey[300]};
+
+      &:hover {
+        color: ${colors.gatsby};
+        border-color: ${colors.link.hoverBorder};
+      }
     }
   }
 `
