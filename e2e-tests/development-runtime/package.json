@@ -25,6 +25,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "predevelop": "rm node_modules/gatsby/dist/redux/actions.js*",
     "develop": "cross-env ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
