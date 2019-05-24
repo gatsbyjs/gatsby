@@ -23,10 +23,8 @@ const _options = {
   overrideStyles: ({ rhythm }) => {
     return {
       html: {
-        // not really sure about this
         WebkitFontSmoothing: `antialiased`,
         MozOsxFontSmoothing: `grayscale`,
-        TextRendering: `optimizeLegibility`,
       },
       a: {
         textDecoration: `none`,
