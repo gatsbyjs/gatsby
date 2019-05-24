@@ -110,7 +110,7 @@ const Author = styled(Link)`
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.lilac};
+    border-bottom: 1px solid ${colors.link.border};
   }
 
   a& {
@@ -120,7 +120,7 @@ const Author = styled(Link)`
   ${mediaQueries.lg} {
     :hover {
       span {
-        border-color: ${colors.purple[200]};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
@@ -163,7 +163,7 @@ const ReadMore = styled(Link)`
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.lilac};
+    border-bottom: 1px solid ${colors.link.border};
     font-weight: bold;
     margin-right: ${space[1]};
   }
