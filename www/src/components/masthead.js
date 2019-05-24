@@ -32,7 +32,7 @@ const MastheadContent = () => (
     <h1
       css={{
         color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 3.5vw)`,
+        fontSize: `calc(12px + 2vh + 3vw)`,
         letterSpacing: letterSpacings.tight,
         lineHeight: lineHeights.solid,
         margin: `0 auto ${space[7]}`,
