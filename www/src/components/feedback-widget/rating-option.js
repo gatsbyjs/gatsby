@@ -86,7 +86,7 @@ const Label = styled(`label`)`
 
     ${IconWrapper} {
       svg {
-        color: ${colors.accent};
+        color: ${colors.orange[400]};
       }
     }
   }
