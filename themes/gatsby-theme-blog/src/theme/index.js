@@ -6,6 +6,10 @@ import prism from "./prism"
 
 export default merge({}, typography, {
   colors,
+  fonts: {
+    heading: `Montserrat, sans-serif`,
+    monospace: `Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
+  },
   styles,
   prism,
 })
