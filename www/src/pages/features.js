@@ -245,8 +245,8 @@ class FeaturesPage extends Component {
             />
             <FeaturesFooter />
           </main>
-          <FooterLinks />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }
