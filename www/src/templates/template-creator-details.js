@@ -173,7 +173,7 @@ class CreatorTemplate extends Component {
                   <Badge
                     forHire={creator.for_hire}
                     customCSS={{
-                      background: colors.green[500],
+                      background: colors.green[50],
                       color: colors.white,
                     }}
                   >
