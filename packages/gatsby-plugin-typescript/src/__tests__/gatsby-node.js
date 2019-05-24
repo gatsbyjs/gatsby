@@ -21,7 +21,7 @@ describe(`gatsby-plugin-typescript`, () => {
       }
       onCreateBabelConfig({ actions }, options)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
-        name: `@babel/preset-typescript`,
+        name: expect.stringContaining(`@babel/preset-typescript`),
         options,
       })
     })
