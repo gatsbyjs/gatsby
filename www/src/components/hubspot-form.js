@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import HubspotForm from "./react-hubspot-form"
 
-import { colors, radii, space, fontSizes } from "../utils/presets"
+import { colors, space, fontSizes } from "../utils/presets"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
@@ -15,9 +15,6 @@ export default class GatsbyHubspotForm extends Component {
     return (
       <div
         css={{
-          // backgroundColor: colors.ui.background,
-          // borderRadius: radii[1],
-          // padding: space[4],
           "& form": {
             margin: 0,
           },
