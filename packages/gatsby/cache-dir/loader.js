@@ -17,6 +17,7 @@ let asyncRequires = {}
 const fetchedPageData = {}
 const pageDatas = {}
 const fetchPromiseStore = {}
+const pageHtmlExistsResults = {}
 
 let devGetPageData
 if (process.env.NODE_ENV !== `production`) {
@@ -285,7 +286,10 @@ const queue = {
       .then(pageData => {
         // If no page was found, then preload the 404.html
         if (pageData === null && rawPath !== `/404.html`) {
-          return queue.loadPage(`/404.html`).then(() => null)
+          return Promise.all([
+            queue.fetchPageHtml(rawPath),
+            queue.loadPage(`/404.html`),
+          ]).then(() => null)
         }
         // Otherwise go ahead and load the page's component
         return loadComponent(pageData.componentChunkName).then(component => {
@@ -359,6 +363,20 @@ const queue = {
       return null
     }
   },
+
+  fetchPageHtml: rawPath => {
+    const path = cleanAndFindPath(rawPath)
+    if (pageHtmlExistsResults.hasOwnProperty(path)) {
+      return pageHtmlExistsResults[path]
+    }
+
+    return doFetch(path).then(req => {
+      pageHtmlExistsResults[path] = req.status === 200
+    })
+  },
+
+  fetchPageHtmlSync: rawPath =>
+    pageHtmlExistsResults[cleanAndFindPath(rawPath)],
 }
 
 export const postInitialRenderWork = () => {
@@ -397,6 +415,7 @@ export const publicLoader = {
   loadPage: queue.loadPage,
   loadPageSync: queue.loadPageSync,
   loadPageOr404Sync: queue.loadPageOr404Sync,
+  pageHtmlExists: queue.pageHtmlExists,
 }
 
 export default queue
