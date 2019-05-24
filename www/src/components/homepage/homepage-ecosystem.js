@@ -123,7 +123,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? colors.teal[100] : colors.orange[20]};
+        props.item.type === `Starter` ? colors.teal[10] : colors.orange[20]};
       border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";

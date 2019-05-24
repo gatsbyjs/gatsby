@@ -121,7 +121,7 @@ const Star = styled(`span`)`
     width: 14px;
 
     svg {
-      fill: ${colors.teal[400]};
+      fill: ${colors.teal[40]};
     }
     .variantB & {
       bottom: 0;
