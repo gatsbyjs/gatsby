@@ -330,18 +330,18 @@ const queue = {
       .loadPage(rawPath)
       .then(result =>
         result === null && rawPath !== `/404.html`
-          ? queue.getPage(`/404.html`)
+          ? queue.loadPageSync(`/404.html`)
           : null
       ),
 
-  getPage: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
+  loadPageSync: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
-  getPageOr404: rawPath => {
-    const page = queue.getPage(rawPath)
+  loadPageOr404Sync: rawPath => {
+    const page = queue.loadPageSync(rawPath)
     if (page) {
       return page
     } else if (rawPath !== `/404.html`) {
-      return queue.getPage(`/404.html`)
+      return queue.loadPageSync(`/404.html`)
     } else {
       return null
     }
@@ -352,7 +352,7 @@ const queue = {
   // already loaded into the browser by the time this function is
   // called. Use the resource URLs passed in `onPostPrefetch` instead.
   getResourceURLsForPathname: path => {
-    const pageData = queue.getPage(path)
+    const pageData = queue.loadPageSync(path)
     if (pageData) {
       return createComponentUrls(pageData.componentChunkName)
     } else {
@@ -382,9 +382,9 @@ export const publicLoader = {
   },
   getResourcesForPathnameSync: rawPath => {
     console.warn(
-      `Warning: getResourcesForPathnameSync is deprecated. Use getPage instead`
+      `Warning: getResourcesForPathnameSync is deprecated. Use loadPageSync instead`
     )
-    return queue.getPage(rawPath)
+    return queue.loadPageSync(rawPath)
   },
   getResourceURLsForPathname: pathname => {
     console.warn(
@@ -395,8 +395,8 @@ export const publicLoader = {
 
   // Real methods
   loadPage: queue.loadPage,
-  getPage: queue.getPage,
-  getPageOr404: queue.getPageOr404,
+  loadPageSync: queue.loadPageSync,
+  loadPageOr404Sync: queue.loadPageOr404Sync,
 }
 
 export default queue

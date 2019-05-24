@@ -4,7 +4,7 @@ const {
   getResourcesForPathnameSync,
   getResourceURLsForPathname,
   loadPage,
-  getPage,
+  loadPageSync,
 } = require(`./loader`).publicLoader
 
 exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
@@ -24,14 +24,14 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
       return undefined
     }
 
-    // Deprecated April 2019. Use `getPage` instead
+    // Deprecated April 2019. Use `loadPageSync` instead
     args.getResourcesForPathnameSync = getResourcesForPathnameSync
     // Deprecated April 2019. Use `loadPage` instead
     args.getResourcesForPathname = getResourcesForPathname
     // Deprecated April 2019. Use resources passed in `onPostPrefetch` instead
     args.getResourceURLsForPathname = getResourceURLsForPathname
     args.loadPage = loadPage
-    args.getPage = getPage
+    args.loadPageSync = loadPageSync
 
     const result = plugin.plugin[api](args, plugin.options)
     if (result && argTransform) {
