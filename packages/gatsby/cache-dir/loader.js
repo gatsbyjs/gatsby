@@ -340,17 +340,6 @@ const queue = {
 
   loadPageSync: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
-  loadPageOr404Sync: rawPath => {
-    const page = queue.loadPageSync(rawPath)
-    if (page) {
-      return page
-    } else if (rawPath !== `/404.html`) {
-      return queue.loadPageSync(`/404.html`)
-    } else {
-      return null
-    }
-  },
-
   // Deprecated April 2019. Query results used to be in a separate
   // file, but are now included in the page-data.json, which is
   // already loaded into the browser by the time this function is
@@ -414,8 +403,6 @@ export const publicLoader = {
   // Real methods
   loadPage: queue.loadPage,
   loadPageSync: queue.loadPageSync,
-  loadPageOr404Sync: queue.loadPageOr404Sync,
-  pageHtmlExists: queue.pageHtmlExists,
 }
 
 export default queue
