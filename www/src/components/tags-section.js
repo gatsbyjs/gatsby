@@ -48,7 +48,7 @@ const TagsSection = ({ tags }) => {
         key="blog-post-view-all-tags-button"
         to="/blog/tags"
       >
-        View All Tags <TagsIcon />
+        View all Tags <TagsIcon />
       </Button>
     </div>
   )

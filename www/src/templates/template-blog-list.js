@@ -113,7 +113,7 @@ class BlogPostsIndex extends React.Component {
               }}
             >
               <Button key="blog-view-all-tags-button" to="/blog/tags" small>
-                View All Tags <TagsIcon />
+                View all Tags <TagsIcon />
               </Button>
             </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
