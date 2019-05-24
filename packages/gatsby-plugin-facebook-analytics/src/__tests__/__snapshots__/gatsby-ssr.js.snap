@@ -11,9 +11,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -46,9 +46,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v3.3',
                 cookie:    : false,
+                version    : 'v3.3',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -81,9 +81,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : true,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -116,9 +116,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -151,9 +151,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -186,9 +186,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -221,9 +221,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : false,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : false,
               });
 
               FB.AppEvents.logPageView();
@@ -256,9 +256,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();
@@ -291,9 +291,9 @@ Array [
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : 1,
-                xfbml      : true,
-                version    : 'v2.12',
                 cookie:    : false,
+                version    : 'v2.12',
+                xfbml      : true,
               });
 
               FB.AppEvents.logPageView();

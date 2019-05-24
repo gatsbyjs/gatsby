@@ -4,12 +4,12 @@ import { stripIndent } from "common-tags"
 export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   const {
     appId,
-    includeInDevelopment = false,
+    cookie = false,
     debug = false,
+    includeInDevelopment = false,
     language = `en_US`,
     version = `v2.12`,
     xfbml = true,
-    cookie = false,
   } = pluginOptions
 
   const sdkFile = debug === true ? `sdk/debug.js` : `sdk.js`
@@ -23,9 +23,9 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : ${appId},
-                xfbml      : ${xfbml},
-                version    : '${version}',
                 cookie:    : ${cookie},
+                version    : '${version}',
+                xfbml      : ${xfbml},
               });
 
               FB.AppEvents.logPageView();
