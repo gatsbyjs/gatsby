@@ -243,7 +243,6 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <div
             css={{
-              borderTop: `1px solid ${colors.ui.border.subtle}`,
               marginTop: space[9],
               paddingTop: space[5],
             }}
