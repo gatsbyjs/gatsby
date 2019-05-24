@@ -1,4 +1,6 @@
 // @flow
+import type { Plugin } from "./types"
+
 const actions = {}
 
 /**

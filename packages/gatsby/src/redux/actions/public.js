@@ -35,6 +35,8 @@ const findChildrenRecursively = (children = []) => {
   return children
 }
 
+import type { Plugin } from "./types"
+
 type Job = {
   id: string,
 }
@@ -53,10 +55,6 @@ type Page = {
   jsonName: string,
   componentChunkName: string,
   updatedAt: number,
-}
-
-type Plugin = {
-  name: string,
 }
 
 type ActionOptions = {

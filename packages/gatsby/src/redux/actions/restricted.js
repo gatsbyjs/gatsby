@@ -1,5 +1,9 @@
 // @flow
-// @flow
+const _ = require(`lodash`)
+const report = require(`gatsby-cli/lib/reporter`)
+
+import type { Plugin } from "./types"
+
 const actions = {}
 
 /**
@@ -187,19 +191,81 @@ actions.createTypes = (
   }
 }
 
-const availableInAPI = {
-  // onPreInit: {
-  //   createTypes: actions.createTypes,
-  //   addThirdPartySchema: actions.addThirdPartySchema,
-  // },
-  // onPreBootstrap: {
-  //   createTypes: actions.createTypes,
-  //   addThirdPartySchema: actions.addThirdPartySchema,
-  // },
+const withDeprecationWarning = ({
+  api,
+  actions,
+  actionNames,
+  alternativeAPI,
+}) =>
+  actionNames.reduce((acc, action) => {
+    acc[action] = (...args) => {
+      report.warn(
+        `Calling \`${action}\` in the \`${api}\` API is deprecated. ` +
+          `Please use: ${alternativeAPI.map(a => `\`${a}\``).join(`, `)}.`
+      )
+      return actions[action](...args)
+    }
+    return acc
+  }, {})
+
+const withErrorMessage = ({ api, actionNames, alternativeAPI }) =>
+  actionNames.reduce((acc, action) => {
+    acc[action] = () => {
+      report.error(
+        `\`${action}\` is not available in the \`${api}\` API. ` +
+          `Please use: ${alternativeAPI.map(a => `\`${a}\``).join(`, `)}.`
+      )
+      // FIXME: Dummy error action - required because action creators
+      // must return an action. Better would be to have a logging middleware
+      // so we could just `return log({ message, type: 'error' })`
+      return { type: `DISPATCH_ERROR` }
+    }
+    return acc
+  }, {})
+
+const nodeAPI = Object.keys(require(`../../utils/api-node-docs`))
+
+// Schema-related actions need to be called *before* schema generation
+const apiWithoutSchemaActions = nodeAPI
+  .filter(api => ![`onPreInit`, `onPreBootstrap`, `sourceNodes`].includes(api))
+  .reduce((acc, api) => {
+    acc[api] = withErrorMessage({
+      api,
+      actionNames: [`createTypes`, `addThirdPartySchema`],
+      alternativeAPI: [`sourceNodes`],
+    })
+    return acc
+  }, {})
+
+// Deprecate schema related actions everyhere but in `sourceNodes`
+const apiWithDeprecatedSchemaActions = [`onPreInit`, `onPreBootstrap`].reduce(
+  (acc, api) => {
+    acc[api] = withDeprecationWarning({
+      api,
+      actions,
+      actionNames: [`createTypes`, `addThirdPartySchema`],
+      alternativeAPI: [`sourceNodes`],
+    })
+    return acc
+  },
+  {}
+)
+
+const forbiddenInAPI = {
+  ...apiWithoutSchemaActions,
+}
+
+const deprecatedInAPI = {
+  ...apiWithDeprecatedSchemaActions,
+}
+
+const allowedInAPI = {
   sourceNodes: {
     createTypes: actions.createTypes,
     addThirdPartySchema: actions.addThirdPartySchema,
   },
 }
+
+const availableInAPI = _.merge(forbiddenInAPI, deprecatedInAPI, allowedInAPI)
 
 module.exports = { actions, availableInAPI }
