@@ -40,6 +40,7 @@ class Pagination extends React.Component {
             background: `transparent`,
             borderTop: 0,
             marginBottom: 0,
+            paddingTop: 0,
             flexDirection: `row`,
           },
         }}
