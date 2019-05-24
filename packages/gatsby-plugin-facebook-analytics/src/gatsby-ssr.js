@@ -7,6 +7,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
     includeInDevelopment = false,
     debug = false,
     language = `en_US`,
+    version = `v2.12`,
   } = pluginOptions
 
   const sdkFile = debug === true ? `sdk/debug.js` : `sdk.js`
@@ -21,7 +22,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
               FB.init({
                 appId      : ${appId},
                 xfbml      : true,
-                version    : 'v2.12'
+                version    : '${version}'
               });
 
               FB.AppEvents.logPageView();
