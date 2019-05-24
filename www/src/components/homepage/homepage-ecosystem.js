@@ -164,7 +164,6 @@ const HomepageEcosystem = ({ featuredItems }) => (
         tracking: `Plugins - Explore the Gatsby Ecosystem`,
       },
     ]}
-    inverseStyle={true}
   >
     <Sections>
       <Section
