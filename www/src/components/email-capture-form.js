@@ -223,7 +223,7 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS, isHomepage, className } = this.props
+    const { signupMessage, isHomepage, className } = this.props
 
     const FormComponent = props => (
       <Form
@@ -250,34 +250,30 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <div
             css={{
-              borderTop: `1px solid ${colors.purple[100]}`,
-              fontFamily: fonts.header,
+              borderTop: `1px solid ${colors.ui.border.subtle}`,
               marginTop: space[9],
               paddingTop: space[5],
-              ...overrideCSS,
             }}
           >
             <div>
-              <p>{signupMessage}</p>
-              <div
+              <p
                 css={{
-                  backgroundColor: colors.purple[100],
-                  borderRadius: radii[1],
-                  color: colors.gatsby,
+                  fontWeight: `bold`,
+                  fontSize: fontSizes[4],
                   fontFamily: fonts.header,
-                  padding: space[4],
                 }}
               >
-                {this.state.successMessage ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: this.state.successMessage,
-                    }}
-                  />
-                ) : (
-                  <FormComponent />
-                )}
-              </div>
+                {signupMessage}
+              </p>
+              {this.state.successMessage ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: this.state.successMessage,
+                  }}
+                />
+              ) : (
+                <FormComponent />
+              )}
             </div>
           </div>
         )}
@@ -289,7 +285,6 @@ class EmailCaptureForm extends React.Component {
 EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
-  overrideCSS: {},
   isHomepage: false,
   className: ``,
 }

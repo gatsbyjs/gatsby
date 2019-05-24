@@ -15,10 +15,9 @@ export default class GatsbyHubspotForm extends Component {
     return (
       <div
         css={{
-          backgroundColor: colors.purple[100],
-          borderRadius: radii[1],
-          color: colors.gatsby,
-          padding: space[4],
+          // backgroundColor: colors.ui.background,
+          // borderRadius: radii[1],
+          // padding: space[4],
           "& form": {
             margin: 0,
           },
@@ -35,9 +34,6 @@ export default class GatsbyHubspotForm extends Component {
             color: colors.warning,
             fontSize: fontSizes[1],
           },
-          "& .hs-form-required": {
-            color: colors.warning,
-          },
           "& .hs-form input": {
             ...formInput,
           },
@@ -46,6 +42,15 @@ export default class GatsbyHubspotForm extends Component {
             ":focus": {
               ...formInputFocus,
             },
+          },
+          "& label": {
+            // a bit unsure about the implications of the next line
+            display: `inline-block`,
+            fontSize: fontSizes[1],
+            paddingBottom: space[1],
+          },
+          "& .hs-form-required": {
+            color: colors.text.secondary,
           },
           "& .hs-button.primary": {
             ...buttonStyles.default,
