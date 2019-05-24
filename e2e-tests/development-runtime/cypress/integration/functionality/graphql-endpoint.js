@@ -1,6 +1,12 @@
 const endpoints = [`/___graphql`, `/_graphql`, `/___graphiql`]
 
-const testQueryString = `?query=%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D`
+const testQueryString = `?query=${encodeURIComponent(`{
+  site {
+    siteMetadata {
+      title
+    }
+  }
+}`)}`
 
 describe(`The GraphQL endpoint`, () => {
   endpoints.forEach(endpoint => {
