@@ -292,6 +292,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/docs/prismic-source-graphql-tutorial/`,
+    toPath: `/tutorial/prismic-source-graphql-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/writing-documentation-with-docz/`,
     toPath: `/tutorial/writing-documentation-with-docz/`,
     isPermanent: true,

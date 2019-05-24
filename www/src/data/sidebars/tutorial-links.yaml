@@ -120,6 +120,8 @@
           link: /tutorial/ecommerce-tutorial/
         - title: Using the WordPress Source Plugin
           link: /tutorial/wordpress-source-plugin-tutorial/
+        - title: Using the Prismic with GraphQL Source Plugin
+          link: /tutorial/prismic-source-graphql-tutorial
         - title: Adding Images to a WordPress Site
           link: /tutorial/image-tutorial/
         - title: Writing Documentation with Docz
