@@ -67,12 +67,12 @@ const createLink = ({
               width: bulletSize,
             },
             "&:before": {
-              background: isActive ? colors.gatsby : false,
+              background: isActive ? colors.link.color : false,
               borderRadius: radii[6],
               transform: isActive ? `scale(1)` : `scale(0.1)`,
             },
             "&:after": {
-              background: colors.gatsby,
+              background: colors.link.color,
               borderRadius: radii[2],
               opacity: isActive ? 1 : 0,
               transform: `translateX(-${bulletSizeActive - bulletSize}px)`,
@@ -114,13 +114,13 @@ const styles = {
   },
   parentOfActiveLink: {
     "&&": {
-      color: colors.gatsby,
+      color: colors.link.color,
       fontWeight: 600,
     },
   },
   activeLink: {
     "&&": {
-      color: colors.gatsby,
+      color: colors.link.color,
       fontWeight: 600,
       background: presets.activeItemBackground,
     },
@@ -141,7 +141,7 @@ const styles = {
         background: presets.itemHoverBackground,
         color: colors.gatsby,
         "&:before": {
-          background: colors.gatsby,
+          background: colors.link.color,
           transform: `scale(1)`,
         },
       },

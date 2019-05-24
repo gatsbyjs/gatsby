@@ -218,8 +218,8 @@ const styles = {
       color: colors.gatsby,
     },
     active: {
-      borderBottomColor: colors.gatsby,
-      color: colors.gatsby,
+      borderBottomColor: colors.lilac,
+      color: colors.lilac,
     },
   },
   socialIconItem: {
