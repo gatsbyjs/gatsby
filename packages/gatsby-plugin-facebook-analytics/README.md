@@ -24,7 +24,7 @@ plugins: [
       appId: `YOUR_APP_ID`,
 
       // Which version of the SDK to load.
-      version: `v2.12`,
+      version: `v3.3`,
 
       // Determines whether XFBML tags used by social plugins are parsed.
       xfbml: true,

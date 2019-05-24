@@ -8,7 +8,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
     debug = false,
     includeInDevelopment = false,
     language = `en_US`,
-    version = `v2.12`,
+    version = `v3.3`,
     xfbml = true,
   } = pluginOptions
 

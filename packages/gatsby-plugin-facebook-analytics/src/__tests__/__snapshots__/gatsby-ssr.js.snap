@@ -12,7 +12,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
@@ -82,7 +82,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : true,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
@@ -117,7 +117,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
@@ -152,7 +152,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
@@ -187,7 +187,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
@@ -222,7 +222,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : false,
               });
 
@@ -257,7 +257,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
@@ -292,7 +292,7 @@ Array [
               FB.init({
                 appId      : 1,
                 cookie     : false,
-                version    : 'v2.12',
+                version    : 'v3.3',
                 xfbml      : true,
               });
 
