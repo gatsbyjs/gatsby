@@ -125,7 +125,7 @@ const SplitButton = ({
                 ...styles.level0,
                 color:
                   (isParentOfActiveItem && isExpanded) || isActive
-                    ? colors.gatsby
+                    ? colors.link.color
                     : colors.text.primary,
               },
             }),
