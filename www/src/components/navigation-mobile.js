@@ -73,7 +73,7 @@ const MobileNavigation = () => (
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 1,
+        zIndex: 10,
         borderTop: `1px solid ${colors.ui.border.subtle}`,
         background: colors.white,
         height: sizes.headerHeight,
