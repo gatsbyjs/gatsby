@@ -16,7 +16,11 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 }) => {
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath).rotate()
+    pipeline = sharp(file.absolutePath)
+
+    if (!options.rotate || options.rotate === 0) {
+      pipeline.rotate()
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return
