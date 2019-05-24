@@ -271,7 +271,7 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, isHomepage, className, layout } = this.props
+    const { signupMessage, isHomepage, className } = this.props
 
     const FormComponent = props => (
       <Form
