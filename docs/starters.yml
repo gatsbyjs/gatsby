@@ -2619,6 +2619,46 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://cosmicjs.com/apps/gatsby-agency-portfolio/demo
+  repo: https://github.com/cosmicjs/gatsby-agency-portfolio
+  description: Static Webpage for displaying your agencies skills and past work.  Implements 4 sections for displaying information about your company, A home page, information about services, projects, and the people in your organization.
+  tags:
+    - Blog
+    - Portfolio
+    - Cosmic JS
+  features:
+    - Landing Page
+    - Home
+    - Services
+    - Projects
+    - People
+- url: https://cosmicjs.com/apps/gatsby-localization-app-starter/demo
+  repo: https://github.com/cosmicjs/gatsby-localization-app-starter
+  description: A localized Gatsby starter application powered by Cosmic JS.
+  tags:
+    - Cosmic JS
+    - i18n
+    - Web Dev
+  features:
+    - Gatsby localization starter app
+- url: https://cosmicjs.com/apps/gatsby-docs/demo
+  repo: https://github.com/cosmicjs/gatsby-docs-app
+  description: Be able to view and create documentation using Gatsby and Cosmic JS. Leveraging the speed and high powered APIs of the Gatsby framework and the simplicity and scalability of Cosmic JS.
+  tags:
+    - Cosmic JS
+    - Documentation
+    - Web Dev
+  features:
+    - manage docs in static web file format for zippy delivery
+- url: https://cosmicjs.com/apps/gatsby-ecommerce-website/demo
+  repo: https://github.com/a9kitkumar/Gatsby-Ecommerce
+  description: A localized Gatsby starter application powered by Cosmic JS.
+  tags:
+    - Cosmic JS
+    - eCommerce
+    - Web Dev
+  features:
+    - Stores products, orders using Cosmic JS as a database and a server
 - url: https://harshil1712.github.io/gatsby-starter-googlesheets/
   repo: https://github.com/harshil1712/gatsby-starter-googlesheets
   description: A starter using Google Sheets as data source
