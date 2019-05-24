@@ -134,7 +134,7 @@ export default {
     hoverBorder: palette.purple[200],
   },
   text: {
-    header: palette.grey[900],
+    header: palette.black,
     primary: palette.grey[800],
     secondary: palette.grey[500],
     placeholder: palette.grey[400],

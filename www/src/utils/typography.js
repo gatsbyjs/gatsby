@@ -28,13 +28,15 @@ const _options = {
       "h1, h2, h3, h4, h5, h6": {
         letterSpacing: letterSpacings.tight,
       },
-      h1: { color: colors.black },
       h2: {
         marginTop: rhythm(space[9]),
       },
       h3: {
         marginTop: rhythm(space[9]),
       },
+      "h4, h5, h6": { fontSize: fontSizes[3] },
+      "h5, h6": { fontWeight: `normal` },
+      h6: { fontSize: fontSizes[2] },
       blockquote: {
         paddingLeft: rhythm(space[6]),
         marginLeft: 0,
