@@ -12,16 +12,6 @@ module.exports = {
   },
   plugins: [
     /*
-     * We need to make sure that Webpack processes this theme as ES6, so we add
-     * this plugin and specify the package name in `modules`.
-     */
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        modules: [pkg.name]
-      }
-    },
-    /*
      * User override content
      */
     {
@@ -121,12 +111,6 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: require.resolve(`./src/utils/typography`)
-      }
-    },
     `gatsby-plugin-twitter`,
     `gatsby-plugin-netlify`,
     {
@@ -135,13 +119,5 @@ module.exports = {
         path: `${__dirname}/src/pages`
       }
     },
-    {
-      resolve: "gatsby-plugin-use-dark-mode",
-      options: {
-        classNameDark: "dark",
-        classNameLight: "light",
-        storageKey: "theme"
-      }
-    }
   ]
 };

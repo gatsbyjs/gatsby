@@ -35,6 +35,7 @@
     "prismjs": "^1.15.0",
     "react-helmet": "^5.2.0",
     "react-typography": "^0.16.18",
+    "theme-ui": "^0.0.15",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.54",
     "typography": "^0.16.18",
