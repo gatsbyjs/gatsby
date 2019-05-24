@@ -6,10 +6,7 @@ const testQuery = `{
       title
     }
   }
-}
-
-# some more typing just to give graphiql some time for some reason
-`
+}`
 
 describe(`The GraphQL endpoint`, () => {
   endpoints.forEach(endpoint => {
