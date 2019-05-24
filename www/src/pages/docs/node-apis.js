@@ -118,20 +118,7 @@ export const pageQuery = graphql`
       }
     }
     nodeAPIs: allGatsbyApiCall(filter: { group: { eq: "NodeAPI" } }) {
-      group(field: name) {
-        name: fieldValue
-        nodes {
-          file
-          codeLocation {
-            start {
-              line
-            }
-            end {
-              line
-            }
-          }
-        }
-      }
+      ...ApiCallFragment
     }
   }
 `

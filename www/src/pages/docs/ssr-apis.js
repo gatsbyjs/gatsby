@@ -77,20 +77,7 @@ export const pageQuery = graphql`
       }
     }
     ssrAPIs: allGatsbyApiCall(filter: { group: { eq: "SSRAPI" } }) {
-      group(field: name) {
-        name: fieldValue
-        nodes {
-          file
-          codeLocation {
-            start {
-              line
-            }
-            end {
-              line
-            }
-          }
-        }
-      }
+      ...ApiCallFragment
     }
   }
 `
