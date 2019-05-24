@@ -123,7 +123,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? colors.teal[100] : colors.orange[200]};
+        props.item.type === `Starter` ? colors.teal[100] : colors.orange[20]};
       border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";
@@ -137,7 +137,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? colors.blue[700] : colors.orange[900]};
+        props.item.type === `Starter` ? colors.blue[700] : colors.orange[90]};
       font-family: ${fonts.header};
       font-size: ${fontSizes[1]};
       left: 0;

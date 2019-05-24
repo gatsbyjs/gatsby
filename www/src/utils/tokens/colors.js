@@ -118,7 +118,7 @@ export default {
   // most of these should be refactored to role-based tokens as we flesh those out
   lilac: palette.purple[50],
   lavender: palette.purple[20],
-  accent: palette.orange[500],
+  accent: palette.orange[50],
   warning: palette.red[700],
   // role-based tokens
   // this is merely a humble start, lots to do here
@@ -142,8 +142,8 @@ export default {
   },
   input: {
     border: palette.grey[300],
-    focusBorder: palette.orange[400],
-    focusBoxShadow: palette.orange[200],
+    focusBorder: palette.orange[40],
+    focusBoxShadow: palette.orange[20],
   },
   code: {
     bgInline: `#fbf2e9`,

@@ -1,7 +1,7 @@
 import React from "react"
 import { colors, space } from "../utils/presets"
 
-const bgDefault = colors.orange[200]
+const bgDefault = colors.orange[20]
 const bgFeatureAvailability = colors.accent
 
 const getBackground = num => {
