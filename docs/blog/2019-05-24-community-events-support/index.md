@@ -1,6 +1,6 @@
 ---
 title: Announcing Support for Gatsby Meetups
-date: 2019-05-17
+date: 2019-05-24
 author: Linda Watkins
 excerpt: Announcing the new Gatsby Community Events Page! Check out the upcoming Gatsby meetups in your area and submit an event for support.
 tags:
