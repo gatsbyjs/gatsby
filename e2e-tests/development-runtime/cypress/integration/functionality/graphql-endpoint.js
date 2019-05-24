@@ -24,7 +24,7 @@ describe(`The GraphQL endpoint`, () => {
       cy.get(`[data-field-name="site"]`).click()
       cy.get(`[data-field-name="port"]`).click()
       cy.get(`.execute-button`).click()
-      cy.get(`.result-window .CodeMirror-code`).contains(`8001`)
+      cy.get(`.result-window .CodeMirror-code`).contains(`8000`)
     })
   })
 })
