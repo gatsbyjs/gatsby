@@ -1,10 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled from "@emotion/styled"
-import { colors, space } from "../../utils/presets"
+import { colors, space, fontSizes } from "../../utils/presets"
 
 const FooterList = styled.ul`
   border-top: 1px solid ${colors.ui.border.subtle};
+  font-size: ${fontSizes[1]};
   padding-top: ${space[9]};
   margin: ${space[9]} 0
     ${props => (props.bottomMargin ? props.bottomMargin : `0`)};
