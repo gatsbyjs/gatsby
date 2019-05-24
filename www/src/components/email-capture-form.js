@@ -3,14 +3,7 @@ import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  fontSizes,
-  fonts,
-} from "../utils/presets"
+import { colors, space, mediaQueries, fontSizes, fonts } from "../utils/presets"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 
 const StyledForm = styled(`form`)`
