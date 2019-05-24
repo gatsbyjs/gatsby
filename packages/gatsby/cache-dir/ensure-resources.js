@@ -48,7 +48,7 @@ class EnsureResources extends React.Component {
     super()
     let location = props.location
     let pageResources = loader.loadPageSync(location.pathname)
-    if (!pageResources && !loader.fetchPageHtmlSync(location.pathname)) {
+    if (!pageResources && !loader.doesPageHtmlExistSync(location.pathname)) {
       pageResources = loader.loadPageSync(`/404.html`)
     }
     this.state = {
@@ -101,7 +101,7 @@ class EnsureResources extends React.Component {
       const prevLocation = this.props.location
       this.nextLocation = nextProps.location
 
-      if (loader.fetchPageHtmlSync(pathname)) {
+      if (loader.doesPageHtmlExistSync(pathname)) {
         this.reloadPage(prevLocation.href)
         return
       }

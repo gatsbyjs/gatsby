@@ -92,10 +92,10 @@ const cachedFetch = (resourceName, fetchFn) => {
   })
 }
 
-const doFetch = url =>
+const doFetch = (url, method = `GET`) =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
-    req.open(`GET`, url, true)
+    req.open(method, url, true)
     req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
@@ -287,7 +287,7 @@ const queue = {
         // If no page was found, then preload the 404.html
         if (pageData === null && rawPath !== `/404.html`) {
           return Promise.all([
-            queue.fetchPageHtml(rawPath),
+            queue.doesPageHtmlExist(rawPath),
             queue.loadPage(`/404.html`),
           ]).then(() => null)
         }
@@ -364,18 +364,18 @@ const queue = {
     }
   },
 
-  fetchPageHtml: rawPath => {
+  doesPageHtmlExist: rawPath => {
     const path = cleanAndFindPath(rawPath)
     if (pageHtmlExistsResults.hasOwnProperty(path)) {
       return pageHtmlExistsResults[path]
     }
 
-    return doFetch(path).then(req => {
+    return doFetch(path, `HEAD`).then(req => {
       pageHtmlExistsResults[path] = req.status === 200
     })
   },
 
-  fetchPageHtmlSync: rawPath =>
+  doesPageHtmlExistSync: rawPath =>
     pageHtmlExistsResults[cleanAndFindPath(rawPath)],
 }
 
