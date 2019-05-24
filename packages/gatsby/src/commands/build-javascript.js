@@ -5,14 +5,21 @@ const webpackConfig = require(`../utils/webpack.config`)
 module.exports = async program => {
   const { directory } = program
 
-  const compilerConfig = await webpackConfig(
+  const legacyConfig = await webpackConfig(
     program,
     directory,
     `build-javascript`
   )
 
+  const modernConfig = await webpackConfig(
+    program,
+    directory,
+    `build-javascript`,
+    { modern: true }
+  )
+
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig).run((err, stats) => {
+    webpack([legacyConfig, modernConfig]).run((err, stats) => {
       if (err) {
         reject(err)
         return

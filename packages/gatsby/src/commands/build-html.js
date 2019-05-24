@@ -38,7 +38,7 @@ const doBuildRenderer = async (program, webpackConfig) => {
 
 const buildRenderer = async (program, stage) => {
   const { directory } = program
-  const config = await webpackConfig(program, directory, stage, null)
+  const config = await webpackConfig(program, directory, stage)
   return await doBuildRenderer(program, config)
 }
 
