@@ -16,13 +16,25 @@ const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 const hasLocalEslint = require(`./local-eslint-config-finder`)
 
-// Four stages or modes:
-//   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
-//   2) develop-html: same as develop without react-hmre in the babel config for html renderer
-//   3) build-javascript: Build JS and CSS chunks for production
-//   4) build-html: build all HTML files
+/** @typedef {{ modern: boolean }} WebpackOptions */
 
-module.exports = async (program, directory, suppliedStage) => {
+/**
+ * Four stages or modes:
+ * 1) develop: for `gatsby develop` command, hot reload and CSS injection into page
+ * 2) develop-html: same as develop without react-hmre in the babel config for html renderer
+ * 3) build-javascript: Build JS and CSS chunks for production
+ * 4) build-html: build all HTML files
+ * @param {*} program
+ * @param {string} directory
+ * @param {"develop" | "develop-html" | "build-javascript" | "build-html"} suppliedStage
+ * @param {WebpackOptions} options
+ */
+module.exports = async (
+  program,
+  directory,
+  suppliedStage,
+  options = { modern: false }
+) => {
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -106,6 +118,7 @@ module.exports = async (program, directory, suppliedStage) => {
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
+
   function getOutput() {
     switch (stage) {
       case `develop`:
@@ -137,8 +150,10 @@ module.exports = async (program, directory, suppliedStage) => {
         }
       case `build-javascript`:
         return {
-          filename: `[name]-[contenthash].js`,
-          chunkFilename: `[name]-[contenthash].js`,
+          filename: `[name]-[contenthash].${options.modern ? `mjs` : `js`}`,
+          chunkFilename: `[name]-[contenthash].${
+            options.modern ? `mjs` : `js`
+          }`,
           path: directoryPath(`public`),
           publicPath: withTrailingSlash(publicPath),
         }
@@ -245,12 +260,12 @@ module.exports = async (program, directory, suppliedStage) => {
     }
   }
 
-  function getModule(config) {
+  function getModule() {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
       rules.mjs(),
-      rules.js(),
+      rules.js({ modern: options.modern, stage }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
@@ -263,7 +278,7 @@ module.exports = async (program, directory, suppliedStage) => {
           return {
             test: /\.jsx?$/,
             include: theme.themeDir,
-            use: [loaders.js()],
+            use: [loaders.js({ modern: options.modern })],
           }
         })
       )

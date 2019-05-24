@@ -16,16 +16,15 @@ const loadCachedConfig = () => {
   return pluginBabelConfig
 }
 
-const getCustomOptions = () => {
+const getCustomOptions = stage => {
   const pluginBabelConfig = loadCachedConfig()
-  const stage = process.env.GATSBY_BUILD_STAGE || `test`
   return pluginBabelConfig.stages[stage].options
 }
 
-const prepareOptions = (babel, resolve = require.resolve) => {
+const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   let pluginBabelConfig = loadCachedConfig()
 
-  const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  const { modern, stage = `test` } = options
 
   // Required plugins/presets
   const requiredPlugins = [
@@ -56,9 +55,18 @@ const prepareOptions = (babel, resolve = require.resolve) => {
   const fallbackPresets = []
 
   fallbackPresets.push(
-    babel.createConfigItem([resolve(`babel-preset-gatsby`)], {
-      type: `preset`,
-    })
+    babel.createConfigItem(
+      [
+        resolve(`babel-preset-gatsby`),
+        {
+          modern: !!modern,
+          stage,
+        },
+      ],
+      {
+        type: `preset`,
+      }
+    )
   )
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
