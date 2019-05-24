@@ -20,7 +20,7 @@ const FooterList = styled.ul`
     display: inline-block;
 
     &:first-of-type:after {
-      color: ${colors.grey[300]};
+      color: ${colors.grey[30]};
       content: "•";
       padding-left: 1em;
       margin-right: 1em;
@@ -28,7 +28,7 @@ const FooterList = styled.ul`
 
     a {
       color: ${colors.text.secondary};
-      border-color: ${colors.grey[300]};
+      border-color: ${colors.grey[30]};
 
       &:hover {
         color: ${colors.gatsby};

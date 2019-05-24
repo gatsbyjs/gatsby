@@ -123,10 +123,10 @@ export default {
   // role-based tokens
   // this is merely a humble start, lots to do here
   ui: {
-    background: palette.grey[50],
+    background: palette.grey[5],
     hover: palette.purple[5],
     border: {
-      subtle: palette.grey[200],
+      subtle: palette.grey[20],
     },
   },
   link: {
@@ -136,12 +136,12 @@ export default {
   },
   text: {
     header: palette.black,
-    primary: palette.grey[800],
-    secondary: palette.grey[500],
-    placeholder: palette.grey[400],
+    primary: palette.grey[80],
+    secondary: palette.grey[50],
+    placeholder: palette.grey[40],
   },
   input: {
-    border: palette.grey[300],
+    border: palette.grey[30],
     focusBorder: palette.orange[40],
     focusBoxShadow: palette.orange[20],
   },
