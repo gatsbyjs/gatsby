@@ -43,7 +43,7 @@ const ErrorMessage = styled(`div`)`
   margin: ${space[2]} 0;
 `
 
-const SuccesMessage = styled(`div`)`
+const SuccessMessage = styled(`div`)`
   font-family: ${fonts.system};
 `
 
@@ -233,7 +233,7 @@ class EmailCaptureForm extends React.Component {
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
-              <SuccesMessage
+              <SuccessMessage
                 dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
