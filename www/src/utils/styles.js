@@ -76,7 +76,6 @@ export const buttonStyles = {
     padding: `${space[3]} ${space[4]}`,
   },
   small: {
-    borderRadius: radii[1],
     fontSize: fontSizes[1],
     padding: `${space[2]} ${space[3]}`,
     [mediaQueries.md]: {
