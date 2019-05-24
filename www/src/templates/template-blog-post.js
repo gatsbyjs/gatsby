@@ -34,6 +34,7 @@ class BlogPostTemplate extends React.Component {
       "&&": {
         borderBottom: 0,
         fontFamily: fonts.header,
+        fontSize: fontSizes[3],
         fontWeight: `bold`,
         color: colors.gatsby,
       },

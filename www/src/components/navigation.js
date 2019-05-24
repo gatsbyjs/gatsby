@@ -15,6 +15,7 @@ import {
   sizes,
   fonts,
 } from "../utils/presets"
+import { breakpointGutter } from "../utils/styles"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -80,9 +81,9 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [mediaQueries.md]: {
-          position: isHomepage || isBlog ? `absolute` : `fixed`,
+        [breakpointGutter]: {
           backgroundColor: isBlog ? colors.ui.background : false,
+          position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,

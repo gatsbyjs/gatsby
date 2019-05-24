@@ -10,10 +10,10 @@ import {
   radii,
   space,
   shadows,
-  mediaQueries,
   sizes,
   fontSizes,
 } from "../utils/presets"
+import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -165,7 +165,7 @@ class DefaultLayout extends React.Component {
             paddingTop: sizes.bannerHeight,
             // make room for the mobile navigation
             paddingBottom: sizes.headerHeight,
-            [mediaQueries.md]: {
+            [breakpointGutter]: {
               paddingTop: `calc(${sizes.bannerHeight} + ${sizes.headerHeight})`,
               paddingBottom: 0,
             },

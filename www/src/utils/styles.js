@@ -178,6 +178,13 @@ export const formInputFocus = {
   ...focusStyle,
 }
 
+export const pullIntoGutter = {
+  marginLeft: `-${space[6]}`,
+  marginRight: `-${space[6]}`,
+  paddingLeft: space[6],
+  paddingRight: space[6],
+}
+
 export const skipLink = {
   border: 0,
   color: colors.gatsby,
@@ -202,3 +209,5 @@ export const skipLink = {
     clip: `auto`,
   },
 }
+
+export const breakpointGutter = `@media (min-width: 42rem)`
