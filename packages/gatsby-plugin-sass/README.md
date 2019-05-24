@@ -121,7 +121,7 @@ plugins: [
 ]
 ```
 
-
+NOTE that adding resolve-url-loader will use sourceMap: true on sass-loader which is required even in production.
 
 ## Other options
 
