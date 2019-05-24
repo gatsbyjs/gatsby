@@ -121,6 +121,7 @@ export default {
   accent: palette.orange[500],
   warning: palette.red[700],
   // role-based tokens
+  // this is merely a humble start, lots to do here
   ui: {
     background: palette.grey[50],
     hover: palette.purple[50],
