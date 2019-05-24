@@ -272,6 +272,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   padding: gutter,
                   [mediaQueries.lg]: {
                     padding: gutterDesktop,
+                    paddingRight: isModal ? 96 : false,
                   },
                 }}
               >
