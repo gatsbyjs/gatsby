@@ -97,6 +97,10 @@ class Plugins extends Component {
                   pluginName: `gatsby-plugin-google-analytics`,
                 },
                 {
+                  text: `a headless CMS integration?`,
+                  pluginName: `gatsby-source-kentico-cloud`,
+                },
+                {
                   text: `Wordpress integration?`,
                   pluginName: `gatsby-source-wordpress`,
                 },
