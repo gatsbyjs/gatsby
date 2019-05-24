@@ -26,7 +26,7 @@ const InnerContainer = styled(`div`)`
 `
 
 const Content = styled(`div`)`
-  color: ${colors.purple[200]};
+  color: ${colors.purple[20]};
   font-family: ${fonts.header};
   padding-left: ${horizontalPadding};
   padding-right: ${horizontalPadding};

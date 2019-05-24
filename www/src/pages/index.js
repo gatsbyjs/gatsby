@@ -107,9 +107,9 @@ class IndexRoute extends React.Component {
               padding: space[6],
               paddingTop: 0,
               width: `100%`,
-              borderBottom: `1px solid ${colors.purple[100]}`,
-              borderTop: `1px solid ${colors.purple[100]}`,
-              background: colors.purple[50],
+              borderBottom: `1px solid ${colors.purple[10]}`,
+              borderTop: `1px solid ${colors.purple[10]}`,
+              background: colors.purple[5],
               [mediaQueries.xl]: {
                 padding: space[8],
               },

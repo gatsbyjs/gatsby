@@ -91,8 +91,8 @@ export const buttonStyles = {
     },
   },
   ondark: {
-    border: `1px solid ${colors.purple[100]}`,
-    background: colors.purple[800],
+    border: `1px solid ${colors.purple[10]}`,
+    background: colors.purple[80],
   },
 }
 
@@ -104,18 +104,18 @@ export const svgStyles = {
     },
   },
   default: {
-    "& .svg-stroke-accent": { stroke: colors.purple[400] },
-    "& .svg-stroke-lilac": { stroke: colors.purple[400] },
-    "& .svg-fill-lilac": { fill: colors.purple[400] },
-    "& .svg-fill-gatsby": { fill: colors.purple[400] },
+    "& .svg-stroke-accent": { stroke: colors.purple[40] },
+    "& .svg-stroke-lilac": { stroke: colors.purple[40] },
+    "& .svg-fill-lilac": { fill: colors.purple[40] },
+    "& .svg-fill-gatsby": { fill: colors.purple[40] },
     "& .svg-fill-brightest": { fill: colors.white },
-    "& .svg-fill-accent": { fill: colors.purple[400] },
-    "& .svg-stroke-gatsby": { stroke: colors.purple[400] },
+    "& .svg-fill-accent": { fill: colors.purple[40] },
+    "& .svg-stroke-gatsby": { stroke: colors.purple[40] },
     "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
     "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
     "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
-    "& .svg-fill-gradient-purple": { fill: colors.purple[400] },
-    "& .svg-stroke-gradient-purple": { stroke: colors.purple[400] },
+    "& .svg-fill-gradient-purple": { fill: colors.purple[40] },
+    "& .svg-stroke-gradient-purple": { stroke: colors.purple[40] },
     "& .svg-fill-lavender": { fill: `transparent` },
   },
   active: {

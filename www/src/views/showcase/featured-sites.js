@@ -244,7 +244,7 @@ class FeaturedSites extends Component {
                 href="#showcase"
                 css={{
                   marginRight: `${space[6]} !important`,
-                  backgroundColor: colors.purple[50],
+                  backgroundColor: colors.purple[5],
                   borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {

@@ -46,7 +46,7 @@ const H1 = styled(`h1`)`
     position: absolute;
     right: -${space[3]};
     z-index: -1;
-    color: ${colors.purple[50]};
+    color: ${colors.purple[5]};
 
     ${mediaQueries.md} {
       display: block;

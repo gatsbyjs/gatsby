@@ -113,26 +113,26 @@ const palette = {
 
 export default {
   ...palette,
-  gatsby: palette.purple[600],
+  gatsby: palette.purple[60],
   // legacy shortcuts
   // most of these should be refactored to role-based tokens as we flesh those out
-  lilac: palette.purple[500],
-  lavender: palette.purple[200],
+  lilac: palette.purple[50],
+  lavender: palette.purple[20],
   accent: palette.orange[500],
   warning: palette.red[700],
   // role-based tokens
   // this is merely a humble start, lots to do here
   ui: {
     background: palette.grey[50],
-    hover: palette.purple[50],
+    hover: palette.purple[5],
     border: {
       subtle: palette.grey[200],
     },
   },
   link: {
-    color: palette.purple[500],
-    border: palette.purple[300],
-    hoverBorder: palette.purple[500],
+    color: palette.purple[50],
+    border: palette.purple[30],
+    hoverBorder: palette.purple[50],
   },
   text: {
     header: palette.black,

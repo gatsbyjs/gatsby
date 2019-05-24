@@ -19,8 +19,8 @@ import { rhythm } from "../utils/typography"
 const stripedBorderHeight = space[1]
 
 const Container = styled(`div`)`
-  background: ${colors.purple[50]};
-  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[100]};
+  background: ${colors.purple[5]};
+  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
   border-radius: ${radii[2]}px;
   margin-top: ${space[8]};
   padding: calc(${space[6]} * 1.2);
@@ -77,7 +77,7 @@ const Label = styled(`label`)`
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
-  border-color: ${colors.purple[200]};
+  border-color: ${colors.purple[20]};
   width: 100%;
 
   :focus {

@@ -19,7 +19,7 @@ import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = colors.purple[700]
+const stripeColor = colors.purple[70]
 const stripeSize = 15
 const stripeAnimation = keyframes({
   "0%": {
@@ -28,7 +28,7 @@ const stripeAnimation = keyframes({
   "100%": { backgroundPosition: `0 0` },
 })
 const stripeBg = {
-  backgroundColor: colors.purple[800],
+  backgroundColor: colors.purple[80],
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
   backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
@@ -94,7 +94,7 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.purple[100]}`,
+  border: `1px solid ${colors.purple[10]}`,
   borderRadius: radii[2],
   padding: `${space[5]} ${space[7]} 0`,
 }
@@ -180,7 +180,7 @@ const ItemDescriptionLink = ({ to, children }) => (
   <Link
     css={{
       "&&": {
-        color: colors.purple[800],
+        color: colors.purple[80],
       },
     }}
     to={to}

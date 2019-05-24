@@ -58,7 +58,7 @@ const QuotationMark = styled(`span`)`
   top: ${space[7]};
 
   svg {
-    fill: ${colors.purple[800]};
+    fill: ${colors.purple[80]};
   }
 
   ${mediaQueries.lg} {
@@ -66,7 +66,7 @@ const QuotationMark = styled(`span`)`
     top: 2.8rem;
 
     svg {
-      fill: ${colors.purple[800]};
+      fill: ${colors.purple[80]};
       transform: scale(1.1);
     }
   }

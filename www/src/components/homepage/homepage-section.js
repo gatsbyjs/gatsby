@@ -16,8 +16,8 @@ import {
 const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.purple[800] : colors.white)};
-  color: ${props => (props.inverse ? colors.purple[100] : colors.purple[800])};
+  background: ${props => (props.inverse ? colors.purple[80] : colors.white)};
+  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
   padding: ${space[5]} ${space[6]};
   width: 100%;
 
@@ -42,7 +42,7 @@ export const Header = styled(`header`)`
 
 export const Name = styled(`h3`)`
   align-items: center;
-  color: ${props => (props.inverse ? colors.purple[100] : colors.lilac)};
+  color: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
   display: flex;
   font-size: ${fontSizes[2]};
   font-weight: normal;
@@ -65,7 +65,7 @@ const Icon = styled(`span`)`
   svg {
     fill: transparent;
     height: ${ICON_SIZE};
-    stroke: ${props => (props.inverse ? colors.purple[100] : colors.lilac)};
+    stroke: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
     width: ${ICON_SIZE};
   }
 `
@@ -77,7 +77,7 @@ export const Title = styled(`h1`)`
 `
 
 const Introduction = styled(`p`)`
-  color: ${props => (props.inverse ? colors.purple[100] : colors.purple[800])};
+  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
   font-size: ${fontSizes[3]};
   font-family: ${fonts.header};
   margin: 0;

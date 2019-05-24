@@ -93,7 +93,7 @@ const styles = {
     "&:focus": {
       outline: `none`,
       width: `9rem`,
-      background: colors.purple[100],
+      background: colors.purple[10],
     },
   },
   filterButton: {

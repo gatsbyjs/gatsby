@@ -30,7 +30,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       textAlign: `left`,
       transition: `all ${transition.speed.fast}`,
       "&:hover": {
-        background: colors.purple[100],
+        background: colors.purple[10],
         color: colors.gatsby,
       },
     }}

@@ -62,7 +62,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete
     .algolia-docsearch-suggestion--subcategory-column:before {
-    background: ${colors.purple[100]} !important;
+    background: ${colors.purple[10]} !important;
   }
 
   .algolia-autocomplete
@@ -227,7 +227,7 @@ const algoliaStyles = css`
       top: 0 !important;
       height: 100% !important;
       width: 1px !important;
-      background: ${colors.purple[100]} !important;
+      background: ${colors.purple[10]} !important;
     }
 
     .algolia-autocomplete
@@ -407,7 +407,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               ":focus": {
-                backgroundColor: colors.purple[100],
+                backgroundColor: colors.purple[10],
                 color: colors.gatsby,
                 outline: 0,
                 width: rhythm(5),
@@ -416,7 +416,7 @@ class SearchForm extends Component {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
-                  backgroundColor: colors.purple[100],
+                  backgroundColor: colors.purple[10],
                 },
               },
             }}

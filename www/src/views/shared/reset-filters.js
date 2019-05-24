@@ -8,7 +8,7 @@ const ResetFilters = ({ onClick }) => (
     <button
       css={{
         alignItems: `center`,
-        background: colors.purple[100],
+        background: colors.purple[10],
         border: 0,
         borderRadius: radii[1],
         color: colors.gatsby,
