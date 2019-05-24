@@ -89,7 +89,7 @@ const Star = styled(`span`)`
     width: 20px;
 
     svg {
-      fill: ${colors.yellow[400]};
+      fill: ${colors.yellow[40]};
     }
 
     ${mediaQueries.lg} {

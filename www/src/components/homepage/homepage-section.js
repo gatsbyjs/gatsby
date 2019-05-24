@@ -71,7 +71,7 @@ const Icon = styled(`span`)`
 `
 
 export const Title = styled(`h1`)`
-  color: ${props => (props.inverse ? colors.yellow[400] : colors.gatsby)};
+  color: ${props => (props.inverse ? colors.yellow[40] : colors.gatsby)};
   font-size: ${fontSizes[6]};
   margin: 0;
 `
