@@ -1,7 +1,7 @@
-@import 'libs/vars';
-@import 'libs/functions';
-@import 'libs/mixins';
-@import 'libs/skel';
+@import "libs/vars";
+@import "libs/functions";
+@import "libs/mixins";
+@import "libs/skel";
 
 /*
 	Photon by HTML5 UP
@@ -50,12 +50,12 @@ header {
 
 /* Form */
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
+input[type="text"],
+input[type="password"],
+input[type="email"],
 select,
 textarea {
-  -ms-behavior: url('assets/js/ie/PIE.htc');
+  -ms-behavior: url("assets/js/ie/PIE.htc");
   border: solid 1px $ie-palette-border;
   position: relative;
 }
@@ -72,7 +72,7 @@ ul {
   &.major-icons {
     li {
       .icon {
-        -ms-behavior: url('assets/js/ie/PIE.htc');
+        -ms-behavior: url("assets/js/ie/PIE.htc");
         border: solid 1px $ie-palette-border;
         position: relative;
       }
@@ -106,12 +106,12 @@ table {
 
 /* Button */
 
-input[type='submit'],
-input[type='reset'],
-input[type='button'],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
 button,
 .button {
-  -ms-behavior: url('assets/js/ie/PIE.htc');
+  -ms-behavior: url("assets/js/ie/PIE.htc");
   border: solid 1px $ie-palette-border;
   position: relative;
 }
@@ -119,10 +119,10 @@ button,
 /* Image */
 
 .image {
-  -ms-behavior: url('assets/js/ie/PIE.htc');
+  -ms-behavior: url("assets/js/ie/PIE.htc");
 
   img {
-    -ms-behavior: url('assets/js/ie/PIE.htc');
+    -ms-behavior: url("assets/js/ie/PIE.htc");
     position: relative;
   }
 }
@@ -164,9 +164,9 @@ button,
     }
   }
 
-  input[type='submit'],
-  input[type='reset'],
-  input[type='button'],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
   button,
   .button {
     border: solid 1px $ie-palette-dark-border !important;
@@ -218,14 +218,14 @@ button,
 .main {
   &.style2 {
     @include dark(#333);
-    -ms-behavior: url('assets/js/ie/backgroundsize.min.htc');
-    background-image: url('../../images/header.jpg');
+    -ms-behavior: url("assets/js/ie/backgroundsize.min.htc");
+    background-image: url("../../images/header.jpg");
     background-size: cover;
     position: relative;
 
     &:before {
-      background-image: url('images/overlay1.png');
-      content: '';
+      background-image: url("images/overlay1.png");
+      content: "";
       height: 100%;
       left: 0;
       position: absolute;

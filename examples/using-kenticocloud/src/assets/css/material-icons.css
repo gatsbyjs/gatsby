@@ -1,16 +1,16 @@
 @font-face {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
-  src: local('Material Icons'), local('MaterialIcons-Regular'),
-    url('../fonts/MaterialIcons-Regular.woff2') format('woff2'),
-    url('../fonts/MaterialIcons-Regular.woff') format('woff'),
-    url('../fonts/MaterialIcons-Regular.ttf') format('truetype');
+  src: url("../fonts/MaterialIcons-Regular.eot"); /* For IE6-8 */
+  src: local("Material Icons"), local("MaterialIcons-Regular"),
+    url("../fonts/MaterialIcons-Regular.woff2") format("woff2"),
+    url("../fonts/MaterialIcons-Regular.woff") format("woff"),
+    url("../fonts/MaterialIcons-Regular.ttf") format("truetype");
 }
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   display: inline-block;
@@ -30,5 +30,5 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Support for IE. */
-  font-feature-settings: 'liga';
+  font-feature-settings: "liga";
 }

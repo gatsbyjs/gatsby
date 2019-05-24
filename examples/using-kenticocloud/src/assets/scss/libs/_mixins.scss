@@ -25,12 +25,12 @@
 /// @param {bool} $important If true, adds !important.
 @mixin padding($tb, $lr, $pad: (0, 0, 0, 0), $important: null) {
   @if $important {
-    $important: '!important';
+    $important: "!important";
   }
 
   $x: 0.1em;
 
-  @if unit(_size(element-margin)) == 'rem' {
+  @if unit(_size(element-margin)) == "rem" {
     $x: 0.1rem;
   }
 
@@ -43,16 +43,16 @@
 /// @return {string} Encoded SVG data URL.
 @function svg-url($svg) {
   $svg: str-replace($svg, '"', "'");
-  $svg: str-replace($svg, '%', '%25');
-  $svg: str-replace($svg, '<', '%3C');
-  $svg: str-replace($svg, '>', '%3E');
-  $svg: str-replace($svg, '&', '%26');
-  $svg: str-replace($svg, '#', '%23');
-  $svg: str-replace($svg, '{', '%7B');
-  $svg: str-replace($svg, '}', '%7D');
-  $svg: str-replace($svg, ';', '%3B');
+  $svg: str-replace($svg, "%", "%25");
+  $svg: str-replace($svg, "<", "%3C");
+  $svg: str-replace($svg, ">", "%3E");
+  $svg: str-replace($svg, "&", "%26");
+  $svg: str-replace($svg, "#", "%23");
+  $svg: str-replace($svg, "{", "%7B");
+  $svg: str-replace($svg, "}", "%7D");
+  $svg: str-replace($svg, ";", "%3B");
 
-  @return url('data:image/svg+xml;charset=utf8,#{$svg}');
+  @return url("data:image/svg+xml;charset=utf8,#{$svg}");
 }
 
 /// Initializes base flexgrid classes.
@@ -60,18 +60,18 @@
 /// @param {string} $horizontal-align Horizontal alignment of cells.
 @mixin flexgrid-base($vertical-align: null, $horizontal-align: null) {
   // Grid.
-  @include vendor('display', 'flex');
-  @include vendor('flex-wrap', 'wrap');
+  @include vendor("display", "flex");
+  @include vendor("flex-wrap", "wrap");
 
   // Vertical alignment.
   @if ($vertical-align == top) {
-    @include vendor('align-items', 'flex-start');
+    @include vendor("align-items", "flex-start");
   } @else if ($vertical-align == bottom) {
-    @include vendor('align-items', 'flex-end');
+    @include vendor("align-items", "flex-end");
   } @else if ($vertical-align == center) {
-    @include vendor('align-items', 'center');
+    @include vendor("align-items", "center");
   } @else {
-    @include vendor('align-items', 'stretch');
+    @include vendor("align-items", "stretch");
   }
 
   // Horizontal alignment.
@@ -81,8 +81,8 @@
 
   // Cells.
   > * {
-    @include vendor('flex-shrink', '1');
-    @include vendor('flex-grow', '0');
+    @include vendor("flex-shrink", "1");
+    @include vendor("flex-grow", "0");
   }
 }
 
@@ -218,43 +218,43 @@
   // Debug.
   $debug: false;
 
-  @if (map-has-key($settings, 'debug')) {
-    $debug: map-get($settings, 'debug');
+  @if (map-has-key($settings, "debug")) {
+    $debug: map-get($settings, "debug");
   }
 
   // Vertical align.
   $vertical-align: null;
 
-  @if (map-has-key($settings, 'vertical-align')) {
-    $vertical-align: map-get($settings, 'vertical-align');
+  @if (map-has-key($settings, "vertical-align")) {
+    $vertical-align: map-get($settings, "vertical-align");
   }
 
   // Horizontal align.
   $horizontal-align: null;
 
-  @if (map-has-key($settings, 'horizontal-align')) {
-    $horizontal-align: map-get($settings, 'horizontal-align');
+  @if (map-has-key($settings, "horizontal-align")) {
+    $horizontal-align: map-get($settings, "horizontal-align");
   }
 
   // Columns.
   $columns: null;
 
-  @if (map-has-key($settings, 'columns')) {
-    $columns: map-get($settings, 'columns');
+  @if (map-has-key($settings, "columns")) {
+    $columns: map-get($settings, "columns");
   }
 
   // Gutters.
   $gutters: 0;
 
-  @if (map-has-key($settings, 'gutters')) {
-    $gutters: map-get($settings, 'gutters');
+  @if (map-has-key($settings, "gutters")) {
+    $gutters: map-get($settings, "gutters");
   }
 
   // Flush.
   $flush: true;
 
-  @if (map-has-key($settings, 'flush')) {
-    $flush: map-get($settings, 'flush');
+  @if (map-has-key($settings, "flush")) {
+    $flush: map-get($settings, "flush");
   }
 
   // Initialize base grid.
@@ -298,29 +298,29 @@
   // Columns.
   $columns: 1;
 
-  @if (map-has-key($settings, 'columns')) {
-    $columns: map-get($settings, 'columns');
+  @if (map-has-key($settings, "columns")) {
+    $columns: map-get($settings, "columns");
   }
 
   // Gutters.
   $gutters: 0;
 
-  @if (map-has-key($settings, 'gutters')) {
-    $gutters: map-get($settings, 'gutters');
+  @if (map-has-key($settings, "gutters")) {
+    $gutters: map-get($settings, "gutters");
   }
 
   // Previous columns.
   $prev-columns: false;
 
-  @if (map-has-key($settings, 'prev-columns')) {
-    $prev-columns: map-get($settings, 'prev-columns');
+  @if (map-has-key($settings, "prev-columns")) {
+    $prev-columns: map-get($settings, "prev-columns");
   }
 
   // Flush.
   $flush: true;
 
-  @if (map-has-key($settings, 'flush')) {
-    $flush: map-get($settings, 'flush');
+  @if (map-has-key($settings, "flush")) {
+    $flush: map-get($settings, "flush");
   }
 
   // Resize columns.

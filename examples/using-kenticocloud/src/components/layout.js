@@ -1,17 +1,17 @@
-import React from 'react'
-import '../assets/scss/main.scss'
+import React from "react"
+import "../assets/scss/main.scss"
 
 class Template extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: 'is-loading',
+      loading: `is-loading`,
     }
   }
 
   componentDidMount() {
     this.timeoutId = setTimeout(() => {
-      this.setState({ loading: '' })
+      this.setState({ loading: `` })
     }, 100)
   }
 

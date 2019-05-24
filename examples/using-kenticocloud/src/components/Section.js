@@ -1,25 +1,25 @@
-import React from 'react'
+import React from "react"
 
-import HeaderSection from './HeaderSection'
-import VideoSection from './VideoSection'
-import FeaturesSection from './FeaturesSection'
-import ThreeColumnsSection from './ThreeColumnsSection'
-import CtaSection from './CTASection'
-import FooterSection from './FooterSection'
+import HeaderSection from "./HeaderSection"
+import VideoSection from "./VideoSection"
+import FeaturesSection from "./FeaturesSection"
+import ThreeColumnsSection from "./ThreeColumnsSection"
+import CtaSection from "./CTASection"
+import FooterSection from "./FooterSection"
 
 const Section = props => {
   switch (props.data.__typename) {
-    case 'KenticoCloudItemHeaderSection':
+    case `KenticoCloudItemHeaderSection`:
       return <HeaderSection {...props.data} />
-    case 'KenticoCloudItemVideoSection':
+    case `KenticoCloudItemVideoSection`:
       return <VideoSection {...props.data} />
-    case 'KenticoCloudItemFeaturesSection':
+    case `KenticoCloudItemFeaturesSection`:
       return <FeaturesSection {...props.data} />
-    case 'KenticoCloudItemThreeColumnsSection':
+    case `KenticoCloudItemThreeColumnsSection`:
       return <ThreeColumnsSection {...props.data} />
-    case 'KenticoCloudItemCtaSection':
+    case `KenticoCloudItemCtaSection`:
       return <CtaSection {...props.data} />
-    case 'KenticoCloudItemFooterSection':
+    case `KenticoCloudItemFooterSection`:
       return <FooterSection {...props.data} />
     default:
       return <div>Unknown section!</div>
