@@ -299,7 +299,7 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     // remove legacy scripts from our preload as we preload our modern files instead
-    .filter(script => script.name.endsWith(`.js`))
+    .filter(script => script.name.endsWith(`.mjs`))
     .forEach(script => {
       // Add preload/prefetch <link>s for scripts.
       headComponents.push(
@@ -393,23 +393,44 @@ export default (pagePath, callback) => {
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
   const bodyScripts = scripts
-    .filter(s => s.rel !== `prefetch`)
+    .filter(s => s.rel === `modulepreload`)
     .map(s => {
       const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
         1,
         -1
       )}`
-      const isModule = s.rel === `modulepreload`
-      return (
-        <script
-          key={scriptPath}
-          src={scriptPath}
-          noModule={!isModule}
-          type={isModule ? `module` : null}
-          async
-        />
-      )
+      return <script key={scriptPath} src={scriptPath} type="module" async />
     })
+
+  // Patches browsers who have a flawed noModule - module system
+  // Sadly we lose preload for legacy browsers
+  // @see https://caniuse.com/#feat=es6-module
+  // 1. Safari 10.1 supports modules, but does not support the `nomodule` attribute - it will load <script nomodule> anyway.
+  // 2. Edge does not executes noModule but still fetches it
+  const noModuleBugFixScripts = `(function(b){function c(e){var d=b.createElement("script");d.src=e;b.body.appendChild(d)}"noModule"in b.createElement("script")||/Version\\/10\\.1(\\.\\d+)* Safari|Version\\/10\\.\\d(\\.\\d+)*.*Safari|Edge\\/1[6-8]\\.\\d/i.test(navigator.userAgent)||(%scripts%)})(document)`
+
+  const legacyScrips = scripts
+    .filter(s => s.rel !== `prefetch` && s.rel !== `modulepreload`)
+    .map(s => {
+      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+        1,
+        -1
+      )}`
+
+      return `c('${scriptPath}')`
+    })
+  bodyScripts.push(
+    <script
+      key="noModuleFix"
+      dangerouslySetInnerHTML={{
+        __html: noModuleBugFixScripts.replace(
+          `%scripts%`,
+          legacyScrips.join(`,`)
+        ),
+      }}
+      noModule={true}
+    />
+  )
 
   postBodyComponents.push(...bodyScripts)
 
