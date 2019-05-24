@@ -136,7 +136,75 @@ Array [
 ]
 `;
 
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the correct xfbml value when set in the config 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : 1,
+                xfbml      : false,
+                version    : 'v2.12'
+              });
+
+              FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s); js.id = id;
+              js.src = \\"https://connect.facebook.net/en_US/sdk.js\\";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        ",
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;
+
 exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets the existing SDK version as default when no version is set in config 1`] = `
+Array [
+  Array [
+    Array [
+      <script
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : 1,
+                xfbml      : true,
+                version    : 'v2.12'
+              });
+
+              FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s); js.id = id;
+              js.src = \\"https://connect.facebook.net/en_US/sdk.js\\";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        ",
+          }
+        }
+      />,
+    ],
+  ],
+]
+`;
+
+exports[`gatsby-plugin-facebook-analytics onRenderBody in production mode sets xfbml to true by default 1`] = `
 Array [
   Array [
     Array [

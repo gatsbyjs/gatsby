@@ -74,6 +74,24 @@ describe(`gatsby-plugin-facebook-analytics`, () => {
 
         expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
       })
+
+      it(`sets the correct xfbml value when set in the config`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1, xfbml: false }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
+
+      it(`sets xfbml to true by default`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1 }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
     })
   })
 })

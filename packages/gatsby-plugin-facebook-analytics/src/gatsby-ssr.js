@@ -8,6 +8,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
     debug = false,
     language = `en_US`,
     version = `v2.12`,
+    xfbml = true,
   } = pluginOptions
 
   const sdkFile = debug === true ? `sdk/debug.js` : `sdk.js`
@@ -21,7 +22,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
             window.fbAsyncInit = function() {
               FB.init({
                 appId      : ${appId},
-                xfbml      : true,
+                xfbml      : ${xfbml},
                 version    : '${version}'
               });
 
