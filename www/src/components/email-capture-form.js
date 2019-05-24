@@ -36,8 +36,8 @@ const Container = styled(`div`)`
         ${colors.red[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.blue[400]} 40px,
-        ${colors.blue[400]} 60px,
+        ${colors.blue[40]} 40px,
+        ${colors.blue[40]} 60px,
         transparent 60px,
         transparent 80px
       );

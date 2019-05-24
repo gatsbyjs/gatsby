@@ -137,7 +137,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? colors.blue[700] : colors.orange[90]};
+        props.item.type === `Starter` ? colors.blue[70] : colors.orange[90]};
       font-family: ${fonts.header};
       font-size: ${fontSizes[1]};
       left: 0;

@@ -81,8 +81,8 @@ export const CloseButton = styled(`button`)`
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  border: 1px solid ${colors.blue[100]};
-  background: ${colors.blue[50]};
+  border: 1px solid ${colors.blue[10]};
+  background: ${colors.blue[5]};
   border-radius: ${radii[2]}px;
   display: flex;
   height: 2.5rem;
