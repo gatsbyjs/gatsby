@@ -121,7 +121,22 @@ plugins: [
 ]
 ```
 
-NOTE that adding resolve-url-loader will use sourceMap: true on sass-loader which is required even in production.
+NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader which is required even in production. You can then configure it then in the resolve-url-loader options then:
+
+```javascript
+plugins: [
+  {
+    resolve: "gatsby-plugin-sass",
+    options: {
+      useResolveUrlLoader: {
+        options: {
+          sourceMap: true //default is false
+        }
+      }
+    }
+  }
+]
+```
 
 ## Other options
 
