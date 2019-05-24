@@ -3,8 +3,61 @@ import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import { colors, space, mediaQueries, fontSizes, fonts } from "../utils/presets"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  fonts,
+  radii,
+  shadows,
+  lineHeights,
+} from "../utils/presets"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { rhythm } from "../utils/typography"
+
+const stripedBorderHeight = space[1]
+
+const Container = styled(`div`)`
+  background: ${colors.purple[50]};
+  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[100]};
+  border-radius: ${radii[2]}px;
+  margin-top: ${space[8]};
+  padding: calc(${space[6]} * 1.2);
+  padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
+  position: relative;
+
+  :after {
+    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
+    background: ${colors.white}
+      repeating-linear-gradient(
+        135deg,
+        ${colors.red[400]},
+        ${colors.red[400]} 20px,
+        transparent 20px,
+        transparent 40px,
+        ${colors.blue[400]} 40px,
+        ${colors.blue[400]} 60px,
+        transparent 60px,
+        transparent 80px
+      );
+    bottom: 0;
+    content: "";
+    height: ${stripedBorderHeight};
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  ${mediaQueries.lg} {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > * {
+      flex-basis: 50%;
+    }
+  }
+`
 
 const StyledForm = styled(`form`)`
   margin: 0;
@@ -15,14 +68,16 @@ const StyledForm = styled(`form`)`
 `
 
 const Label = styled(`label`)`
+  font-size: ${fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${colors.warning};
+    color: ${colors.text.secondary};
   }
 `
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
+  border-color: ${colors.purple[200]};
   width: 100%;
 
   :focus {
@@ -177,7 +232,7 @@ class Form extends React.Component {
             this.email = input
           }}
           aria-label={isHomepage ? `Email` : ``}
-          placeholder={isHomepage ? `your.email@example.com` : ``}
+          placeholder={`your.email@example.com`}
         />
         {this.state.fieldErrors.email && (
           <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
@@ -216,7 +271,7 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, isHomepage, className } = this.props
+    const { signupMessage, isHomepage, className, layout } = this.props
 
     const FormComponent = props => (
       <Form
@@ -241,33 +296,28 @@ class EmailCaptureForm extends React.Component {
             )}
           </div>
         ) : (
-          <div
-            css={{
-              marginTop: space[9],
-              paddingTop: space[5],
-            }}
-          >
-            <div>
-              <p
-                css={{
-                  fontWeight: `bold`,
-                  fontSize: fontSizes[4],
-                  fontFamily: fonts.header,
+          <Container>
+            <p
+              css={{
+                color: colors.gatsby,
+                fontWeight: `bold`,
+                fontSize: fontSizes[3],
+                fontFamily: fonts.header,
+                lineHeight: lineHeights.dense,
+              }}
+            >
+              {signupMessage}
+            </p>
+            {this.state.successMessage ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: this.state.successMessage,
                 }}
-              >
-                {signupMessage}
-              </p>
-              {this.state.successMessage ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: this.state.successMessage,
-                  }}
-                />
-              ) : (
-                <FormComponent />
-              )}
-            </div>
-          </div>
+              />
+            ) : (
+              <FormComponent />
+            )}
+          </Container>
         )}
       </>
     )

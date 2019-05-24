@@ -18,7 +18,7 @@ import {
   fonts,
 } from "../../utils/presets"
 
-const stripedBorderHeight = space[2]
+const stripedBorderHeight = space[1]
 
 const Container = styled(`div`)`
   border: 1px solid ${colors.ui.border.subtle};
