@@ -398,7 +398,6 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? colors.gatsby : false,
             display: `flex`,
-            fontSize: `inherit`,
             fontFamily: fonts.system,
             fontSize: fontSizes[1],
             fontWeight: `bold`,
