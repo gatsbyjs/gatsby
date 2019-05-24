@@ -182,6 +182,10 @@ exports.sourceNodes = async (
           } else if (ids[v.data.id]) {
             node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
           }
+          if (typeof node.relationships[`${k}___NODE`] === 'undefined') {
+            // Do not lose relationships data.
+            node.relationships[k] = v.data
+          }
         })
       }
 
