@@ -6046,3 +6046,14 @@
   built_by: Hitesh Vaghasiya
   built_by_url: https://hiteshvaghasiya.com/
   featured: false
+- title: Aditus
+  main_url: https://www.aditus.io
+  url: https://www.aditus.io
+  description: >
+    Aditus is the accessibility tool for your team. We help teams build accessible websites and products.
+  categories:
+    - Accessibility
+    - Education
+  built_by: Aditus
+  built_by_url: https://www.aditus.io
+  featured: false
