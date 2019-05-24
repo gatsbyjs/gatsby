@@ -1,13 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
+import { useColorMode } from "theme-ui"
 import Toggle from "./toggle"
-// import Helmet from "react-helmet";
-import ThemeContext from "../context/theme-context"
 
 import sun from "../../content/assets/sun.png"
 import moon from "../../content/assets/moon.png"
 
-const renderHeader = props => {
+const Header = props => {
   const { location, title } = props
   const rootPath = `${__PATH_PREFIX__}/`
 
@@ -60,69 +59,68 @@ const renderHeader = props => {
 
 const Layout = props => {
   const { children } = props
+  const [colorMode, setColorMode] = useColorMode()
+  const isDark = colorMode === `dark`
+  const toggleColorMode = e => {
+    setColorMode(isDark ? `light` : `dark`)
+  }
 
   return (
-    <ThemeContext.Consumer>
-      {theme => (
-        <div
+    <div
+      style={{
+        color: `var(--textNormal)`,
+        background: `var(--bg)`,
+        transition: `color 0.2s ease-out, background 0.2s ease-out`,
+        minHeight: `100vh`,
+      }}
+    >
+      <div
+        style={{
+          marginLeft: `auto`,
+          marginRight: `auto`,
+          // maxWidth: rhythm(24),
+          // padding: `2.625rem ${rhythm(3 / 4)}`
+        }}
+      >
+        <header
           style={{
-            color: `var(--textNormal)`,
-            background: `var(--bg)`,
-            transition: `color 0.2s ease-out, background 0.2s ease-out`,
-            minHeight: `100vh`,
+            display: `flex`,
+            justifyContent: `space-between`,
+            alignItems: `center`,
+            marginBottom: `2.625rem`,
           }}
         >
-          <div
-            style={{
-              marginLeft: `auto`,
-              marginRight: `auto`,
-              // maxWidth: rhythm(24),
-              // padding: `2.625rem ${rhythm(3 / 4)}`
+          <Header {...props} />
+          <Toggle
+            icons={{
+              checked: (
+                <img
+                  alt="moon indicating dark mode"
+                  src={moon}
+                  width="16"
+                  height="16"
+                  role="presentation"
+                  style={{ pointerEvents: `none` }}
+                />
+              ),
+              unchecked: (
+                <img
+                  alt="sun indicating light mode"
+                  src={sun}
+                  width="16"
+                  height="16"
+                  role="presentation"
+                  style={{ pointerEvents: `none` }}
+                />
+              ),
             }}
-          >
-            <header
-              style={{
-                display: `flex`,
-                justifyContent: `space-between`,
-                alignItems: `center`,
-                marginBottom: `2.625rem`,
-              }}
-            >
-              {renderHeader(props)}
-              <Toggle
-                icons={{
-                  checked: (
-                    <img
-                      alt="moon indicating dark mode"
-                      src={moon}
-                      width="16"
-                      height="16"
-                      role="presentation"
-                      style={{ pointerEvents: `none` }}
-                    />
-                  ),
-                  unchecked: (
-                    <img
-                      alt="sun indicating light mode"
-                      src={sun}
-                      width="16"
-                      height="16"
-                      role="presentation"
-                      style={{ pointerEvents: `none` }}
-                    />
-                  ),
-                }}
-                checked={theme.isDark}
-                onChange={e => {
-                  theme.toggleDark()
-                }}
-              />
-            </header>
-            {children}
-          </div>
-        </div>
-      )}
-    </ThemeContext.Consumer>
+            checked={isDark}
+            onChange={toggleColorMode}
+          />
+        </header>
+        {children}
+      </div>
+    </div>
   )
 }
 
