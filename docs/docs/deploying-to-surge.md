@@ -33,12 +33,12 @@ This generates a publishable version of your site in the `./public` folder.
 You can deploy your site by running the following in the root of the project directory.
 
 ```shell
-surge build/
+surge public/
 ```
 
 If this is your first time using surge, you'll be prompted to create a (free) account from the command line. This will only happen once.
 
-Press `enter` to confirm that the path to your `build/` folder is correct, and that you'd like to keep the randomly generated subdomain name (it can be edited if not).
+Press `enter` to confirm that the path to your `public/` folder is correct, and that you'd like to keep the randomly generated subdomain name (it can be edited if not).
 
 You're done! Your terminal will output the address of the domain where your site was deployed.
 

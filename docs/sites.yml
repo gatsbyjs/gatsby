@@ -5983,3 +5983,88 @@
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
+- title: GreenOrbit
+  main_url: https://www.greenorbit.com/
+  url: https://www.greenorbit.com/
+  description: >
+    Cloud-based intranet software. Get your people going with everything you need, built in.
+  categories:
+    - B2B Services
+    - Business
+    - App
+    - Productivity
+    - Technology
+    - CMS
+  built_by: Effective Digital
+  built_by_url: https://effective.digital/
+- title: Purple11
+  main_url: https://purple11.com/
+  url: https://purple11.com/
+  description: >
+    Purple11 is a site for photography and photo retouching tips and tricks.
+  categories:
+    - Blog
+    - Photography
+  built_by: Sébastien Noël
+  built_by_url: https://blkfuel.com/
+  featured: false
+- title: PerfReviews
+  main_url: https://perf.reviews/
+  url: https://perf.reviews/
+  source_url: https://github.com/PerfReviews/PerfReviews
+  description: >
+    The best content about web performance in spanish language.
+  categories:
+    - Performance
+    - Spanish
+  built_by: Joan León & José M. Pérez
+  built_by_url: https://perf.reviews/nosotros/
+  featured: false
+- title: Un Backend - Blog
+  main_url: https://www.unbackend.pro/
+  url: https://www.unbackend.pro/
+  description: >
+    The personal website and blog of Camilo Ramírez, a backend developer :).
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  source_url: https://github.com/camilortte/camilortte.github.com
+  built_by: Camilo Ramírez
+  built_by_url: https://www.unbackend.pro/about
+  featured: false
+- title: Hitesh Vaghasiya
+  main_url: https://hiteshvaghasiya.com/
+  url: https://hiteshvaghasiya.com/
+  description: >
+    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommece.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Hitesh Vaghasiya
+  built_by_url: https://hiteshvaghasiya.com/
+  featured: false
+- title: Aditus
+  main_url: https://www.aditus.io
+  url: https://www.aditus.io
+  description: >
+    Aditus is the accessibility tool for your team. We help teams build accessible websites and products.
+  categories:
+    - Accessibility
+    - Education
+  built_by: Aditus
+  built_by_url: https://www.aditus.io
+  featured: false
+- title: Ultra Config
+  main_url: https://ultraconfig.com.au/
+  url: https://ultraconfig.com.au/ultra-config-generator/
+  description: >
+    Ultra Config Generator is a software application for Network Engineers to efficiently manage their network infrastructure.
+  categories:
+    - Blog
+    - Technology
+  built_by: Ultra Config
+  built_by_url: https://ultraconfig.com.au/
+  featured: false

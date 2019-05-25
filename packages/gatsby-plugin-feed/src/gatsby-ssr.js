@@ -5,27 +5,32 @@ import { defaultOptions } from "./internals"
 // TODO: remove for v3
 const withPrefix = withAssetPrefix || fallbackWithPrefix
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+exports.onRenderBody = ({ setHeadComponents, pathname }, pluginOptions) => {
   const { feeds } = {
     ...defaultOptions,
     ...pluginOptions,
   }
 
-  const links = feeds.map(({ output, title }, i) => {
-    if (output.charAt(0) !== `/`) {
-      output = `/` + output
-    }
+  const links = feeds
+    .filter(({ match }) => {
+      if (typeof match === `string`) return new RegExp(match).exec(pathname)
+      return true
+    })
+    .map(({ output, title }, i) => {
+      if (output.charAt(0) !== `/`) {
+        output = `/` + output
+      }
 
-    return (
-      <link
-        key={`gatsby-plugin-feed-${i}`}
-        rel="alternate"
-        type="application/rss+xml"
-        title={title}
-        href={withPrefix(output)}
-      />
-    )
-  })
+      return (
+        <link
+          key={`gatsby-plugin-feed-${i}`}
+          rel="alternate"
+          type="application/rss+xml"
+          title={title}
+          href={withPrefix(output)}
+        />
+      )
+    })
 
   setHeadComponents(links)
 }

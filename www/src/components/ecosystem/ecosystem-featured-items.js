@@ -8,19 +8,17 @@ import {
 } from "../shared/horizontal-scroller"
 
 import { colors, space, mediaQueries } from "../../utils/presets"
-import { scrollbarStyles } from "../../utils/styles"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
   margin: 0 -${space[6]};
 
   ${mediaQueries.md} {
-    border-top: 1px solid ${colors.gray.superLight};
+    border-top: 1px solid ${colors.ui.border.subtle};
     margin-top: ${space[3]};
     margin-bottom: 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    ${scrollbarStyles};
   }
 `
 
