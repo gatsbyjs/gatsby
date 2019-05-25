@@ -89,7 +89,7 @@ exports.processFile = (file, transforms, options = {}) => {
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
 
-    if (!args.rotate || args.rotate === 0) {
+    if (!args.rotate) {
       clonedPipeline = clonedPipeline.rotate()
     }
 
