@@ -28,7 +28,7 @@
     "gatsby-plugin-layout": "^1.0.10",
     "gatsby-plugin-mailchimp": "^2.2.3",
     "gatsby-plugin-manifest": "^2.0.2",
-    "gatsby-plugin-mdx": "1.0.3",
+    "gatsby-plugin-mdx": "^1.0.0",
     "gatsby-plugin-netlify": "^2.0.0",
     "gatsby-plugin-netlify-cache": "^0.1.0",
     "gatsby-plugin-nprogress": "^2.0.5",
@@ -101,7 +101,8 @@
     "test": "jest",
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js",
     "stylelint": "stylelint './src/**/*.js'",
-    "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0"
+    "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0",
+    "postinstall": "cd plugins/gatsby-transformer-gatsby-api-calls && npm install"
   },
   "devDependencies": {
     "babel-jest": "^24.3.1",
