@@ -47,12 +47,13 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 
 #### Options
 
-|     Option      | Description                                     |
-| :-------------: | ----------------------------------------------- |
-| `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to 8000                      |
-| `-o`, `--open`  | Open the site in your (default) browser for you |
-| `-S`, `--https` | Use HTTPS                                       |
+|     Option       | Description                                                         |
+| :--------------: | ------------------------------------------------------------------- |
+| `-H`, `--host`   | Set host. Defaults to localhost                                     |
+| `-p`, `--port`   | Set port. Defaults to 8000                                          |
+| `-o`, `--open`   | Open the site in your (default) browser for you                     |
+| `-S`, `--https`  | Use HTTPS                                                           |
+| `--prefix-paths` | Build site with link paths prefixed (set pathPrefix in your config) |                           
 
 Follow the [Local HTTPS guide](/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
