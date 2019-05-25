@@ -2669,3 +2669,12 @@
   features:
     - Uses Google Sheets for data
     - Easily configurable
+- url: https://gatsby-starter-blockstack.openintents.org
+  repo: https://github.com/friedger/gatsby-starter-blockstack
+  description: A starter using Blockstack on client side
+  tags:
+    - Blockstack
+    - auth
+  features:
+    - Uses Blockstack
+    - Client side app
