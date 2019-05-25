@@ -99,7 +99,7 @@ const APILink = ({ definition, githubPath }) => {
         css={{
           ...linkStyles,
           "&&:hover": {
-            color: colors.gray.calm,
+            color: colors.text.secondary,
           },
           display: `inline-flex !important`,
           alignItems: `center`,
