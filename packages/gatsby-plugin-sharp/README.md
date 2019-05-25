@@ -60,8 +60,7 @@ plugins: [
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 
 #### Parameters
 
@@ -81,8 +80,8 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 ### fluid
 
 Create fluid sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
-1600, 2400 – enough to provide close to the optimal image size for every device
+rendered markdown file is 800px, the sizes would then be: 200px, 400px, 800px, 1200px,
+1600px – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
 If you want more control over which sizes are output you can use the `srcSetBreakpoints`
@@ -107,10 +106,11 @@ fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned t
 - `maxWidth` (int, default: 800)
 - `maxHeight` (int)
 - `quality` (int, default: 50)
-- `sizeByPixelDensity` (bool, default: false)
 - `srcSetBreakpoints` (array of int, default: [])
 - `fit` (string, default: '[sharp.fit.cover][6]')
 - `background` (string, default: 'rgba(0,0,0,1)')
+- [deprecated] `sizeByPixelDensity` (bool, default: false)
+  - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
 
 #### Returns
 

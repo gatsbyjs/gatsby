@@ -24,6 +24,9 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const cors = require(`cors`)
+const telemetry = require(`gatsby-telemetry`)
+
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
@@ -32,7 +35,6 @@ const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const db = require(`../db`)
-const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
@@ -119,9 +121,16 @@ async function startServer(program) {
     })
   )
 
+  app.use(cors())
+
+  /**
+   * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
+   */
+  const graphqlEndpoint = `/_+graphi?ql`
+
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
-      `/___graphql`,
+      graphqlEndpoint,
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
@@ -130,7 +139,7 @@ async function startServer(program) {
   }
 
   app.use(
-    `/___graphql`,
+    graphqlEndpoint,
     graphqlHTTP(() => {
       const schema = store.getState().schema
       return {
@@ -147,16 +156,6 @@ async function startServer(program) {
       }
     })
   )
-
-  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
-  app.use((req, res, next) => {
-    res.header(`Access-Control-Allow-Origin`, `*`)
-    res.header(
-      `Access-Control-Allow-Headers`,
-      `Origin, X-Requested-With, Content-Type, Accept`
-    )
-    next()
-  })
 
   /**
    * Refresh external data sources.
@@ -225,6 +224,14 @@ async function startServer(program) {
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
+
+  // In case nothing before handled hot-update - send 404.
+  // This fixes "Unexpected token < in JSON at position 0" runtime
+  // errors after restarting development server and
+  // cause automatic hard refresh in the browser.
+  app.use(/.*\.hot-update\.json$/i, (req, res) => {
+    res.status(404).end()
+  })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {

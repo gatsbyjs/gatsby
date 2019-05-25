@@ -15,19 +15,19 @@ _When I met Ahmed Alahmady in March 2018 at a React Dallas meetup, I was incredi
 
 **Sam Bhagwat**: You started using Gatsby in late 2016. Could you talk a bit about where you were then, personally and professionally?
 
-**Ahmed Alahmady**: I was unemployed. This was a couple months after leaving medical school. I spent a couple years in med school, but left after a couple of incidents that really shook me, including a patient at a clinic we misdiagnosed as pregnant and then had to explain to her that she actually had a tumor growth. I love the science -- I love the medicine, I love biochem. I knew I could do the science. But I didn't know if I could do the human part.
+**Ahmed Alahmady**: I was unemployed. This was a couple months after leaving medical school. I spent a couple years in med school, but left after a couple of incidents that really shook me, including a patient at a clinic we misdiagnosed as pregnant and then had to explain to her that she actually had a tumor growth. I love the science -- I love the medicine, I love bio-chem. I knew I could do the science. But I didn't know if I could do the human part.
 
 After leaving, personally I had no idea what I wanted to do, but I had to find something to do pretty quickly before my living situation got harder. I had never worked on anything to do with code whatsoever. I didn’t know what a MEAN/MERN/LAMP stack was. Basically zero idea about anything with code.
 
 **Sam**: How did you get started with Gatsby?
 
-**Ahmed**: Around that time, late Christmas of 2016, I was going to code for sure, but didn't know what I was going to go into. I learned how to use Github.
+**Ahmed**: Around that time, late Christmas of 2016, I was going to code for sure, but didn't know what I was going to go into. I learned how to use GitHub.
 
 So I searched React, and saw repos that were getting updated frequently, and saw Gatsby. The README and description doesn’t look anything like it does now -- it was just "build a static site with React and GraphQL"
 
 I dug a bit, and saw [Kyle’s clone of Instagram](https://gatsbygram.gatsbyjs.org/), and I was like "holy shit it's fast". At the time, it was mind-blowingly fast.
 
-I learned a lot of basic Javascript functionality from [reading the Gatsbygram code](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram) -- map, for each, and so on. I would open up an issue when I got stuck, which in retrospect I’m shocked Kyle responded to all my questions.
+I learned a lot of basic JavaScript functionality from [reading the Gatsbygram code](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram) -- map, for each, and so on. I would open up an issue when I got stuck, which in retrospect I’m shocked Kyle responded to all my questions.
 
 My wife and I were living in a two bedroom apartment, and couldn’t really pay for it -- we were pretty close to broke. And we didn’t necessarily see eye to eye about me leaving medical school.
 
@@ -67,13 +67,13 @@ If you need to survive, learn React, put it on your resume, and you'll probably 
 
 **Ahmed**: A lot of the hard work goes away. It's really easy to build with. And it doesn't matter where your data is.
 
-Plus Gatsby makes it really easy for your site to be really fast, which is great for showing other people. It really blows people’s minds. When I showed the director at the firm I ended up turning down my Gatsby sites, he called two of his friends over because he was so stunned. He was like, "how is it this fast?"
+Plus, Gatsby makes it really easy for your site to be really fast, which is great for showing other people. It really blows people’s minds. When I showed the director at the firm I ended up turning down my Gatsby sites, he called two of his friends over because he was so stunned. He was like, "how is it this fast?"
 
-**Sam**: So July 2017, you join Match, what did your growth look like there?
+**Sam**: So July 2017, you joined Match, what did your growth look like there?
 
 **Ahmed**: When I joined, my manager told me, we're going to stick you on bugs for a couple weeks, so you learn the codebase. And then three days later, I'm building a feature.
 
-There were a few things I had to learn -- git etiquette, not committing to other people's branches, not running Prettier on other people's code - being strategic and surgical.
+There were a few things I had to learn -- Git etiquette, not committing to other people's branches, not running Prettier on other people's code - being strategic and surgical.
 
 But there's stuff you just can't learn until you work professionally -- how to be an effective team member, how to weight tickets.
 
@@ -85,7 +85,7 @@ And that's why Gatsby's great.
 
 **Ahmed**: If there's something I tell people coming out of dev camp, is be invested in something that other people are invested in.
 
-Don't just pick something with 2 stars on Github -- of course stars aren't a perfect measure, but still -- pick something with a community, with conversation, with features and bug fixes going out all the time.
+Don't just pick something with 2 stars on GitHub -- of course stars aren't a perfect measure, but still -- pick something with a community, with conversation, with features and bug fixes going out all the time.
 
 With Gatsby, I was able to get rapid, direct responses whenever I had a problem or challenge -- and that's not something that's common with open source. And you have so many people building things on Gatsby -- there are a ton of examples of how to build things, how to find things, that you can go into, with all the starters.
 
@@ -111,7 +111,7 @@ When I moved to my next job -- my current role at Hilton -- I was able to more t
 
 My wife and I have a really strong relationship -- turns out being in a good financial place helps a lot with that. And when I got this job, that's when my wife and I decided to have a kid -- our daughter was born three weeks ago. Because we had enough money that it seemed reasonable to do so.
 
-I’ve got into Typescript, really thinking about Javascript performance, multithreading, deep into webpack. One of my current projects is creating a design system that is unified across 15 brands.
+I’ve got into Typescript, really thinking about JavaScript performance, multithreading, deep into webpack. One of my current projects is creating a design system that is unified across 15 brands.
 
 Now it feels like if I wanted, I could get five job offers in a week.
 
