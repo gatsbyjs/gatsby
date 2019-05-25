@@ -1,15 +1,16 @@
 import React from "react"
 import { css } from "@emotion/core"
 
-import { colors, space, fontSizes } from "../../utils/presets"
+import { colors, space, fontSizes, radii } from "../../utils/presets"
 import styled from "@emotion/styled"
 
 export const LinkBox = styled(`a`)`
   border-bottom: none !important;
+  border-radius: ${radii[1]}px;
   font-size: ${fontSizes[0]} !important;
-  color: ${colors.gray.copy} !important;
+  color: ${colors.text.primary} !important;
   line-height: 22px;
-  background: ${colors.gray.superLight};
+  background: ${colors.ui.background};
   margin-left: ${space[1]};
   width: 22px;
   text-align: center;
