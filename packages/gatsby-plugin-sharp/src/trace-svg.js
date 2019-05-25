@@ -18,7 +18,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
   try {
     pipeline = sharp(file.absolutePath)
 
-    if (!options.rotate || options.rotate === 0) {
+    if (!options.rotate) {
       pipeline.rotate()
     }
   } catch (err) {
