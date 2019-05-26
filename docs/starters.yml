@@ -2666,6 +2666,17 @@
   features:
     - Uses Google Sheets for data
     - Easily configurable
+- url: https://the-plain-gatsby.netlify.com/
+  repo: https://github.com/wangonya/the-plain-gatsby
+  description: A simple minimalist starter for your personal blog.
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Minimalist design
+    - Next and previous blog post navigation
+    - About page
+    - Markdown support
 - url: https://gatsby-starter-blockstack.openintents.org
   repo: https://github.com/friedger/gatsby-starter-blockstack
   description: A starter using Blockstack on client side
