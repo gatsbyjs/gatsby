@@ -18,6 +18,7 @@ import {
   fontSizes,
   lineHeights,
   fonts,
+  zIndices,
 } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 
@@ -73,7 +74,7 @@ const MobileNavigation = () => (
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 10,
+        zIndex: zIndices.navigation,
         borderTop: `1px solid ${colors.ui.border.subtle}`,
         background: colors.white,
         height: sizes.headerHeight,
