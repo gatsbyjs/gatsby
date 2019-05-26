@@ -1511,7 +1511,7 @@
     - Styling:Grommet
     - PWA
     - SEO
-    - Google Spreadsheet
+    - Google Sheets
   features:
     - Grommet
     - Theming
@@ -2540,3 +2540,132 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-eventually
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-eventually
+  description: Single page starter based on the Eventually site template by HTML5 up, suitable for upcoming product page.
+  tags:
+    - HTML5UP
+    - Styling:SCSS
+    - Landing Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://jovial-jones-806326.netlify.com/
+  repo: https://github.com/GabeAtWork/gatsby-elm-starter
+  description: An Elm-in-Gatsby integration, based on gatsby-plugin-elm
+  tags:
+    - Elm
+  features:
+    - Elm language integration
+- url: https://anubhavsrivastava.github.io/gatsby-starter-readonly
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-readonly
+  description: Single page starter based on the ReadOnly site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Landing Page
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-prologue
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-prologue
+  description: Single page starter based on the Prologue site template by HTML5 up, for portfolio pages
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-london.netlify.com
+  repo: https://github.com/ImedAdel/gatsby-london
+  description: A custom, image-centric theme for Gatsby.
+  tags:
+    - Portfolio
+    - Blog
+    - Styling:PostCSS
+  features:
+    - Post thumbnails in the homepage
+    - Built with PostCSS
+    - Made for image-centeric portfolios
+    - Based on London for Ghost
+- url: https://anubhavsrivastava.github.io/gatsby-starter-overflow
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-overflow
+  description: Single page starter based on the Overflow site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://cosmicjs.com/apps/gatsby-agency-portfolio/demo
+  repo: https://github.com/cosmicjs/gatsby-agency-portfolio
+  description: Static Webpage for displaying your agencies skills and past work.  Implements 4 sections for displaying information about your company, A home page, information about services, projects, and the people in your organization.
+  tags:
+    - Blog
+    - Portfolio
+    - Cosmic JS
+  features:
+    - Landing Page
+    - Home
+    - Services
+    - Projects
+    - People
+- url: https://cosmicjs.com/apps/gatsby-localization-app-starter/demo
+  repo: https://github.com/cosmicjs/gatsby-localization-app-starter
+  description: A localized Gatsby starter application powered by Cosmic JS.
+  tags:
+    - Cosmic JS
+    - i18n
+    - Web Dev
+  features:
+    - Gatsby localization starter app
+- url: https://cosmicjs.com/apps/gatsby-docs/demo
+  repo: https://github.com/cosmicjs/gatsby-docs-app
+  description: Be able to view and create documentation using Gatsby and Cosmic JS. Leveraging the speed and high powered APIs of the Gatsby framework and the simplicity and scalability of Cosmic JS.
+  tags:
+    - Cosmic JS
+    - Documentation
+    - Web Dev
+  features:
+    - manage docs in static web file format for zippy delivery
+- url: https://cosmicjs.com/apps/gatsby-ecommerce-website/demo
+  repo: https://github.com/a9kitkumar/Gatsby-Ecommerce
+  description: A localized Gatsby starter application powered by Cosmic JS.
+  tags:
+    - Cosmic JS
+    - eCommerce
+    - Web Dev
+  features:
+    - Stores products, orders using Cosmic JS as a database and a server
+- url: https://harshil1712.github.io/gatsby-starter-googlesheets/
+  repo: https://github.com/harshil1712/gatsby-starter-googlesheets
+  description: A starter using Google Sheets as data source
+  tags:
+    - Google Sheets
+    - SEO
+    - Blog
+  features:
+    - Uses Google Sheets for data
+    - Easily configurable

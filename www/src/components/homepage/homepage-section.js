@@ -16,8 +16,8 @@ import {
 const ICON_SIZE = space[7]
 
 const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.gatsbyDark : colors.white)};
-  color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
+  background: ${props => (props.inverse ? colors.purple[80] : colors.white)};
+  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
   padding: ${space[5]} ${space[6]};
   width: 100%;
 
@@ -42,7 +42,7 @@ export const Header = styled(`header`)`
 
 export const Name = styled(`h3`)`
   align-items: center;
-  color: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
+  color: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
   display: flex;
   font-size: ${fontSizes[2]};
   font-weight: normal;
@@ -65,19 +65,19 @@ const Icon = styled(`span`)`
   svg {
     fill: transparent;
     height: ${ICON_SIZE};
-    stroke: ${props => (props.inverse ? colors.ui.light : colors.lilac)};
+    stroke: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
     width: ${ICON_SIZE};
   }
 `
 
 export const Title = styled(`h1`)`
-  color: ${props => (props.inverse ? colors.lemon : colors.gatsby)};
+  color: ${props => (props.inverse ? colors.yellow[40] : colors.gatsby)};
   font-size: ${fontSizes[6]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
-  color: ${props => (props.inverse ? colors.ui.light : colors.gatsbyDark)};
+  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
   font-size: ${fontSizes[3]};
   font-family: ${fonts.header};
   margin: 0;

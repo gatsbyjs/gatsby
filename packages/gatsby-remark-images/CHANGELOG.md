@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.11...gatsby-remark-images@3.0.12) (2019-05-23)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** captions do not show fallback based on filename ([#14219](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/14219)) ([167df1a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/167df1a))
+
 ## [3.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.10...gatsby-remark-images@3.0.11) (2019-04-23)
 
 ### Bug Fixes

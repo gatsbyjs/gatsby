@@ -26,7 +26,7 @@ const InnerContainer = styled(`div`)`
 `
 
 const Content = styled(`div`)`
-  color: ${colors.ui.bright};
+  color: ${colors.purple[20]};
   font-family: ${fonts.header};
   padding-left: ${horizontalPadding};
   padding-right: ${horizontalPadding};
@@ -48,10 +48,10 @@ const Banner = () => (
   <BannerContainer className="banner">
     <InnerContainer>
       <Content>
-        <OutboundLink href="https://www.gatsbyjs.com/gatsby-themes/">
-          Watch now
+        <OutboundLink href="https://www.gatsbyjs.com/gatsby-plugins/">
+          Register now
         </OutboundLink>
-        {`: "Making Gatsby Even Greater With Themes — Better, Faster, Flexible-er".`}
+        {`: "What Can Gatsby Plugins Do?" - Learn about different types of plugins and how to build one!`}
       </Content>
     </InnerContainer>
   </BannerContainer>

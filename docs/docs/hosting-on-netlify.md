@@ -8,10 +8,6 @@ Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified 
 
 Their free tier includes unlimited personal and commercial projects, HTTPS, continuous deployment from public or private repos and more.
 
-## Prerequisites
-
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs/quick-start) , then come back.
-
 ### Hosting Setup
 
 There are two ways, we can host our site.
