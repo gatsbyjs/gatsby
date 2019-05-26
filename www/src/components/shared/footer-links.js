@@ -18,12 +18,16 @@ const FooterList = styled.ul`
 
   li {
     display: inline-block;
+    margin-right: 1em;
 
-    &:first-of-type:after {
+    &:after {
       color: ${colors.grey[30]};
       content: "•";
       padding-left: 1em;
-      margin-right: 1em;
+    }
+
+    &:last-of-type:after {
+      content: "";
     }
 
     a {
@@ -45,6 +49,9 @@ const FooterLinks = props => (
     </li>
     <li>
       <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
+    </li>
+    <li>
+      <a href="/guidelines/logo/">Logo &amp; Assets</a>
     </li>
   </FooterList>
 )

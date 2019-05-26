@@ -111,6 +111,12 @@ const palette = {
   black: `#000000`,
 }
 
+// @todo these do not correspond to either grey or black palette colors
+const whiteOpacity = [1, 0.6, 0.38]
+const blackOpacity = [0.87, 0.6, 0.38, 0.1]
+const blackRGB = [27, 31, 35]
+const whiteRGB = [255, 255, 255]
+
 export default {
   ...palette,
   gatsby: palette.purple[60],
@@ -120,6 +126,18 @@ export default {
   lavender: palette.purple[20],
   accent: palette.orange[50],
   warning: palette.red[70],
+  // semi-transparent colors
+  blackFade: {
+    80: `rgba(${blackRGB.join(`,`)}, ${blackOpacity[0]})`,
+    70: `rgba(${blackRGB.join(`,`)}, ${blackOpacity[1]})`,
+    60: `rgba(${blackRGB.join(`,`)}, ${blackOpacity[2]})`,
+    10: `rgba(${blackRGB.join(`,`)}, ${blackOpacity[3]})`,
+  },
+  whiteFade: {
+    80: `rgba(${whiteRGB.join(`,`)}, ${whiteOpacity[0]})`,
+    70: `rgba(${whiteRGB.join(`,`)}, ${whiteOpacity[1]})`,
+    60: `rgba(${whiteRGB.join(`,`)}, ${whiteOpacity[2]})`,
+  },
   // role-based tokens
   // this is merely a humble start, lots to do here
   ui: {

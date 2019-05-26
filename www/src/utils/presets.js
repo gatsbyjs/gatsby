@@ -8,7 +8,7 @@ import {
   radii,
   shadows,
   space as spaceTokens,
-  fontSizes,
+  fontSizes as fontSizeTokens,
   transition,
   fonts as fontTokens,
   zIndices,
@@ -21,6 +21,11 @@ let fonts = {}
 for (let fontFamily in fontTokens) {
   fonts[fontFamily] = fontTokens[fontFamily].join(`,`)
 }
+
+const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
+
+const fontWeights = [400, 700, 800]
+const borders = [0, `1px solid`, `2px solid`]
 
 export {
   breakpoints,
@@ -36,4 +41,6 @@ export {
   fontSizes,
   fonts,
   zIndices,
+  fontWeights,
+  borders,
 }
