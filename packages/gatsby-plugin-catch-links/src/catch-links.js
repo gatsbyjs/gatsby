@@ -81,8 +81,8 @@ export const pathIsNotHandledByApp = (destination, pathStartRegEx) => {
      * pointing to the same domain but outside of the app's pathPrefix. For
      * example, a Gatsby app lives at https://example.com/myapp/, with the
      * pathPrefix set to `/myapp`. When adding an absolute link to the same
-     * domain but outside of the /myapp path, for example, <a
-     * href="https://example.com/not-my-app"> the plugin won't catch it and
+     * domain but outside of the /myapp path, for example, `<a
+     * href="https://example.com/not-my-app">` the plugin won't catch it and
      * will navigate to an external link instead of doing a pushState resulting
      * in `https://example.com/myapp/https://example.com/not-my-app`
      */

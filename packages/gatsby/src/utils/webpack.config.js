@@ -152,7 +152,7 @@ module.exports = async (program, directory, suppliedStage) => {
       case `develop`:
         return {
           commons: [
-            `event-source-polyfill`,
+            require.resolve(`event-source-polyfill`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -451,47 +451,62 @@ module.exports = async (program, directory, suppliedStage) => {
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
+    // Packages we want to externalize to save some build time
+    // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
     const externalList = [
-      // match `lodash` and `lodash/foo`
-      // but not things like `lodash-es`
-      `lodash`,
-      /^lodash\//,
-      `react`,
-      /^react-dom\//,
-      `pify`,
-      `@reach/router`,
       `@reach/router/lib/history`,
+      `@reach/router`,
       `common-tags`,
+      /^core-js\//,
+      `crypto`,
+      `debug`,
+      `fs`,
+      `https`,
+      `http`,
+      `lodash`,
       `path`,
       `semver`,
-      `react-helmet`,
-      `minimatch`,
-      `fs`,
-      /^core-js\//,
-      `es6-promise`,
-      `crypto`,
+      /^lodash\//,
       `zlib`,
-      `http`,
-      `https`,
-      `debug`,
     ]
+
+    // Packages we want to externalize because meant to be user-provided
+    const userExternalList = [
+      `es6-promise`,
+      `minimatch`,
+      `pify`,
+      `react-helmet`,
+      `react`,
+      /^react-dom\//,
+    ]
+
+    const checkItem = (item, request) => {
+      if (typeof item === `string` && item === request) {
+        return true
+      } else if (item instanceof RegExp && item.test(request)) {
+        return true
+      }
+      return false
+    }
+
+    const isExternal = request => {
+      if (externalList.some(item => checkItem(item, request))) {
+        return `umd ${require.resolve(request)}`
+      }
+      if (userExternalList.some(item => checkItem(item, request))) {
+        return `umd ${request}`
+      }
+      return null
+    }
 
     config.externals = [
       function(context, request, callback) {
-        if (
-          externalList.some(item => {
-            if (typeof item === `string` && item === request) {
-              return true
-            } else if (item instanceof RegExp && item.test(request)) {
-              return true
-            }
-
-            return false
-          })
-        ) {
-          return callback(null, `umd ${request}`)
+        const external = isExternal(request)
+        if (external !== null) {
+          callback(null, external)
+        } else {
+          callback()
         }
-        return callback()
       },
     ]
   }

@@ -53,6 +53,10 @@ See how you can troubleshoot and add or remove contributors:
 
 We’re currently running a closed beta for Gatsby Preview. [Sign up here](https://www.gatsbyjs.com/preview/) to get added to the waitlist.
 
+## Gatsby Preview Docs
+
+Once you've been invited to Gatsby Preview, you can view the documentation for integrating Preview with the CMS platforms that are supported on [GatsbyJS.com](https://www.gatsbyjs.com/docs/).
+
 ## What’s coming next
 
 The initial invites for the closed beta have just gone out! We’ll be talking directly with beta users so we can continue learning and make the experience even better.

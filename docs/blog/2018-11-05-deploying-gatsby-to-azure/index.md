@@ -107,7 +107,7 @@ Change the option to `enabled`, set a default document name of `index.html` and 
 
 ![Set default document](setdefaultdocument.png)
 
-> Note down the `Primary Endpoint` that azure gives you, that will be the web address that our blog will be deployed, it will be in the format (https://<the-name-of-your-storage>.<the-zone>.web.core.windows.net/)
+> Note down the `Primary Endpoint` that azure gives you, that will be the web address that our blog will be deployed, it will be in the format (`https://<the-name-of-your-storage>.<the-zone>.web.core.windows.net/`)
 
 ### Create a production Gatsby build
 

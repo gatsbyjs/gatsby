@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-facebook-analytics/compare/gatsby-plugin-facebook-analytics@2.0.5...gatsby-plugin-facebook-analytics@2.1.0) (2019-05-24)
+
+### Features
+
+- **gatsby-plugin-facebook-analytics:** Add version, cookie and xfbml config options ([#14311](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-facebook-analytics/issues/14311)) ([a42e08f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-facebook-analytics/commit/a42e08f))
+
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-facebook-analytics/compare/gatsby-plugin-facebook-analytics@2.0.4...gatsby-plugin-facebook-analytics@2.0.5) (2019-04-23)
 
 **Note:** Version bump only for package gatsby-plugin-facebook-analytics

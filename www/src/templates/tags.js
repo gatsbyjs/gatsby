@@ -23,7 +23,7 @@ const preferSpacedTag = tags => {
 
 const Tags = ({ pageContext, data, location }) => {
   const { tags } = pageContext
-  const { edges, totalCount } = data.allMarkdownRemark
+  const { edges, totalCount } = data.allMdx
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? `` : `s`
   } tagged with "${preferSpacedTag(tags)}"`
@@ -42,7 +42,7 @@ const Tags = ({ pageContext, data, location }) => {
       <Container>
         <h1>{tagHeader}</h1>
         <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
-          View All Tags <TagsIcon />
+          View all Tags <TagsIcon />
         </Button>
         {edges.map(({ node }) => (
           <BlogPostPreviewItem
@@ -63,7 +63,7 @@ export default Tags
 
 export const pageQuery = graphql`
   query($tags: [String]) {
-    allMarkdownRemark(
+    allMdx(
       limit: 2000
       sort: { fields: [frontmatter___date, fields___slug], order: DESC }
       filter: {

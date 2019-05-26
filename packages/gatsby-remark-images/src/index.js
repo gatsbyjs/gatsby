@@ -50,7 +50,7 @@ module.exports = (
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
   let rawHtmlNodes = []
-  visitWithParents(markdownAST, `html`, (node, ancestors) => {
+  visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
     rawHtmlNodes.push({ node, inLink })
@@ -81,10 +81,10 @@ module.exports = (
     }
   }
 
-  const getNodeTitle = (node, alt) => {
+  const getNodeTitle = (node, alt, defaultAlt) => {
     if (node.title) {
       return node.title
-    } else if (alt && alt.length > 0) {
+    } else if (alt && alt.length > 0 && alt !== defaultAlt) {
       return alt
     }
     return ``
@@ -250,7 +250,8 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && getNodeTitle(node, alt)
+    const showCaptions =
+      options.showCaptions && getNodeTitle(node, alt, defaultAlt)
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
@@ -288,7 +289,8 @@ module.exports = (
     ${rawHTML}
     <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
       node,
-      alt
+      alt,
+      defaultAlt
     )}</figcaption>
   </figure>
       `.trim()

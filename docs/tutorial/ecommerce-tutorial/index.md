@@ -518,7 +518,7 @@ You can call `redirectToCheckout()` providing an array of SKUs and their quantit
 
 ## Custom: Fully custom checkout flow (requires backend component)
 
-Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you can set up a simple function that your Gatsby project can POST to in order to handle the payment. See the previous version of [this tutorial](https://github.com/gatsbyjs/gatsby/blob/6b3c08782d0898719b61181638b6a0967da49dd6/docs/docs/ecommerce-tutorial/index.md) for detailed steps.
+Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you can set up a simple function that your Gatsby project can POST to in order to handle the payment. See the previous version of [this tutorial](https://github.com/gatsbyjs/gatsby/blob/6b3c08782d0898719b61181638b6a0967da49dd6/docs/tutorial/ecommerce-tutorial/index.md) for detailed steps.
 
 # Testing Payments
 

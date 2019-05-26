@@ -9,7 +9,7 @@ import SubmitSuccess from "./submit-success"
 import SubmitError from "./submit-error"
 import { ScreenReaderText, WidgetContainer } from "./styled-elements"
 import MdClose from "react-icons/lib/md/close"
-import MdChatBubbleOutline from "react-icons/lib/md/chat-bubble-outline"
+import MdForum from "react-icons/lib/md/forum"
 
 const postFeedback = ({ rating, comment }) => {
   const payload = {
@@ -170,7 +170,7 @@ const FeedbackWidget = () => {
           <Fragment>
             <ToggleButtonLabel>Was this doc helpful to you?</ToggleButtonLabel>
             <ToggleButtonIcon>
-              <MdChatBubbleOutline />
+              <MdForum />
             </ToggleButtonIcon>
           </Fragment>
         )}

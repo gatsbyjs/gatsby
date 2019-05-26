@@ -47,6 +47,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
+    fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
+    toPath: `/docs/css-modules/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2018-10-25-unstructured-data/`,
     toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
     isPermanent: true,
@@ -261,6 +267,37 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/advanced-tutorials/`,
+    toPath: `/tutorial/advanced-tutorials/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/authentication-tutorial/`,
+    toPath: `/tutorial/authentication-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/ecommerce-tutorial/`,
+    toPath: `/tutorial/ecommerce-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/image-tutorial/`,
+    toPath: `/tutorial/image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/wordpress-source-plugin-tutorial/`,
+    toPath: `/tutorial/wordpress-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/writing-documentation-with-docz/`,
+    toPath: `/tutorial/writing-documentation-with-docz/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/behind-the-scenes/`,
     toPath: `/docs/gatsby-internals/`,
     isPermanent: true,
@@ -304,7 +341,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     // Query for markdown nodes to use in creating pages.
     graphql(`
       query {
-        allMarkdownRemark(
+        allMdx(
           sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
@@ -401,7 +438,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         return reject(result.errors)
       }
 
-      const blogPosts = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      const blogPosts = _.filter(result.data.allMdx.edges, edge => {
         const slug = _.get(edge, `node.fields.slug`)
         const draft = _.get(edge, `node.frontmatter.draft`)
         if (!slug) return undefined
@@ -548,7 +585,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create docs pages.
-      result.data.allMarkdownRemark.edges.forEach(edge => {
+      result.data.allMdx.edges.forEach(edge => {
         const slug = _.get(edge, `node.fields.slug`)
         if (!slug) return
 
@@ -625,7 +662,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (
-    node.internal.type === `MarkdownRemark` &&
+    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
@@ -907,4 +944,20 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
       },
     })
   )
+}
+
+exports.onCreateWebpackConfig = ({ actions, plugins }) => {
+  const currentCommitSHA = require(`child_process`)
+    .execSync(`git rev-parse HEAD`, {
+      encoding: `utf-8`,
+    })
+    .trim()
+
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
+  })
 }
