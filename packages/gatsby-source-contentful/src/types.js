@@ -130,7 +130,7 @@ const fieldTypeToGraphQLTypeLookup = {
         })
       })
 
-      if (contentTypes.length > 1) {
+      if (contentTypes.length > 0) {
         // this is union field
         const usedTypesNames = contentTypes.map(contentType =>
           makeTypeName(contentType.name)
@@ -158,18 +158,6 @@ const fieldTypeToGraphQLTypeLookup = {
         // use that type
         return {
           type: UnionTypeName,
-          extensions: {
-            link: {
-              from: `${context.fieldName}___NODE`,
-            },
-          },
-        }
-      } else if (contentTypes.length === 1) {
-        // this is single type - not sure if this should be special case
-        // (using regular object type)
-        // or should create union with single type?
-        return {
-          type: makeTypeName(contentTypes[0].name),
           extensions: {
             link: {
               from: `${context.fieldName}___NODE`,
