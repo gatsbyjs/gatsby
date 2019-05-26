@@ -1472,13 +1472,13 @@
 - title: Timeline Theme Portfolio
   description: |
     I'm Aman Mittal, a software developer.
-  main_url: "http://www.amanhimself.me/"
-  url: "http://www.amanhimself.me/"
+  main_url: "https://amanhimself.dev/"
+  url: "https://amanhimself.dev/"
   categories:
     - Web Development
     - Portfolio
   built_by: Aman Mittal
-  built_by_url: "http://www.amanhimself.me/"
+  built_by_url: "https://amanhimself.dev/"
 - title: Ocean artUp
   description: >
     Science outreach site built using styled-components and Contentful. It
