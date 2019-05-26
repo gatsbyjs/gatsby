@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { colors, space, breakpoints } from "../utils/presets"
+import { colors, space, mediaQueries } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -14,6 +14,8 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
+import HomepageSection from "../components/homepage/homepage-section"
+import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -39,7 +41,7 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { edges: postsData },
+        allMdx: { edges: postsData },
         allStartersYaml: { edges: startersData },
         allNpmPackage: { edges: pluginsData },
       },
@@ -105,10 +107,10 @@ class IndexRoute extends React.Component {
               padding: space[6],
               paddingTop: 0,
               width: `100%`,
-              borderBottom: `1px solid ${colors.ui.light}`,
-              borderTop: `1px solid ${colors.ui.light}`,
-              background: colors.ui.whisper,
-              [breakpoints.xl]: {
+              borderBottom: `1px solid ${colors.purple[10]}`,
+              borderTop: `1px solid ${colors.purple[10]}`,
+              background: colors.purple[5],
+              [mediaQueries.xl]: {
                 padding: space[8],
               },
             }}
@@ -142,7 +144,15 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
+
+          <HomepageSection
+            css={{
+              paddingTop: `0 !important`,
+              paddingBottom: `0 !important`,
+            }}
+          />
         </main>
+        <FooterLinks />
       </Layout>
     )
   }
@@ -164,7 +174,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 4
       filter: {

@@ -240,13 +240,14 @@ import React from 'react'
 import { Link } from 'gatsby'
 
 const Header = ({ siteTitle, menuLinks }) => (
-+  <nav style={{ display: 'flex', flex: 1 }}>
-+    {
-+      menuLinks.map(link =>
-+        <li key={link.name} style={{ 'listStyleType': 'none' }}>
++  <nav>
++    <ul style={{ display: 'flex', flex: 1, listStyle: 'none' }}>
++      {menuLinks.map(link =>
++        <li key={link.link}>
 +          <Link to={link.link}>{link.name}</Link>
-+        </li>)
-+    }
++        </li>
++      )}
++    </ul>
 +  </nav>
 )
 ```
@@ -259,5 +260,5 @@ If you have made it this far, good job! You can now add new site links to your w
 
 Be sure to check out more documentation for further in-depth examples and guides on achieving tasks using Gatsby.
 
-- [Authentication in Gatsby](/docs/authentication-tutorial/)
-- [E-commerce in Gatsby](/docs/ecommerce-tutorial/)
+- [Authentication in Gatsby](/tutorial/authentication-tutorial/)
+- [E-commerce in Gatsby](/tutorial/ecommerce-tutorial/)

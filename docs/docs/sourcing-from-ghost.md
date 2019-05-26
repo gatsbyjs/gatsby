@@ -62,11 +62,12 @@ Once the source plugin is set up, you can use the `createPages` API in `gatsby-n
 There are several ways to structure queries depending on how you prefer to work, but here's a very minimal example:
 
 ```javascript:title=gatsby-node.js
+const path = require(`path`)
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   const createPosts = new Promise((resolve, reject) => {
     const postTemplate = path.resolve(`./src/templates/post.js`)
-
     resolve(
       graphql(`
         {
@@ -79,10 +80,19 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       `).then(result => {
+        if (result.errors) {
+          return reject(result.errors)
+        }
+
+        if (!result.data.allGhostPost) {
+          return resolve()
+        }
+
         const items = result.data.allGhostPost.edges
 
-        _.forEach(items, ({ node }) => {
+        items.forEach(({ node }) => {
           node.url = `/${node.slug}/`
+
           createPage({
             path: node.url,
             component: path.resolve(postTemplate),
@@ -91,13 +101,12 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
-
         return resolve()
       })
     )
   })
 
-  return Promise.all(createPosts)
+  return Promise.all([createPosts])
 }
 ```
 

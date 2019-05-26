@@ -475,7 +475,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 #### Migrating React Router client routes to @reach/router
 
 - Use `<Location>` instead of `withRouter`
-- import `{ navigate }` from `@reach/router` for programmatic navigation instead of the history object
+- `import { navigate } from @reach/router` for programmatic navigation instead of the history object
 - There's no `Route` component any more. You add a `<Router>` component (a site can have as many routers as it wishes) and then the immediate children of `<Router>` must have a prop named `path`.
 
 A basic example of the `<Router>` component:
@@ -579,7 +579,7 @@ In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-ap
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
-Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
+Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API:
 We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
@@ -1029,18 +1029,18 @@ _Starters:_ If you'd rather use one of the official starters, install your favou
 
 `gatsby-starter-default` with v2:
 
-```
+```shell
 gatsby new my-default-project https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 `gatsby-starter-hello-world` with v2:
 
-```
+```shell
 gatsby new my-hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 `gatsby-starter-blog` with v2:
 
-```
+```shell
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```

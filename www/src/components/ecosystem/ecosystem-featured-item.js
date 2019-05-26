@@ -15,7 +15,7 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   fonts,
 } from "../../utils/presets"
@@ -25,8 +25,8 @@ const MAX_DESCRIPTION_LENGTH = 100
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
   margin-right: ${space[6]};
 
-  ${breakpoints.md} {
-    border-bottom: 1px solid ${colors.gray.superLight};
+  ${mediaQueries.md} {
+    border-bottom: 1px solid ${colors.ui.border.subtle};
     box-shadow: none;
     margin: 0;
     padding: 0;
@@ -43,15 +43,15 @@ export const BlockLink = styled(Link)`
   height: 100%;
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
     transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     :hover {
-      background: ${colors.ui.whisper};
+      background: ${colors.ui.hover};
     }
   }
 `
@@ -62,7 +62,7 @@ const Header = styled(`header`)`
   justify-content: space-between;
 
   h3 {
-    color: ${colors.gatsbyDark};
+    color: ${colors.purple[80]};
     font-size: ${fontSizes[2]};
     margin: 0;
   }
@@ -75,7 +75,7 @@ const Header = styled(`header`)`
     padding-left: ${space[3]};
 
     svg {
-      fill: ${colors.gray.light};
+      fill: ${colors.lilac};
       height: auto;
       margin-left: ${space[1]};
       width: ${space[4]};
@@ -97,12 +97,12 @@ const Thumbnail = styled(`div`)`
   margin-top: ${space[1]};
 
   img {
-    border: 1px solid ${colors.gray.superLight};
+    border: 1px solid ${colors.ui.border.subtle};
   }
 `
 
 const Description = styled(`p`)`
-  color: ${colors.gray.lightCopy};
+  color: ${colors.text.secondary};
   flex-grow: 1;
   font-size: ${fontSizes[1]};
   margin: 0;

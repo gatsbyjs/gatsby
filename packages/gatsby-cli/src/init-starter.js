@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
 const url = require(`url`)
+const isValid = require(`is-valid-path`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
 
@@ -40,6 +41,16 @@ const shouldUseYarn = async () => {
 
     return packageManager === `yarn`
   } catch (e) {
+    return false
+  }
+}
+
+const isAlreadyGitRepository = async () => {
+  try {
+    return await spawn(`git rev-parse --is-inside-work-tree`, {
+      stdio: `pipe`,
+    }).then(output => output.stdout === `true`)
+  } catch (err) {
     return false
   }
 }
@@ -152,9 +163,10 @@ const clone = async (hostInfo: any, rootPath: string) => {
   await fs.remove(sysPath.join(rootPath, `.git`))
 
   await install(rootPath)
-  await gitInit(rootPath)
+  const isGit = await isAlreadyGitRepository()
+  if (!isGit) await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
-  await createInitialGitCommit(rootPath, url)
+  if (!isGit) await createInitialGitCommit(rootPath, url)
 }
 
 type InitOptions = {
@@ -172,6 +184,15 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
     trackError(`NEW_PROJECT_NAME_MISSING`)
     report.panic(
       `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
+    )
+    return
+  }
+
+  if (!isValid(rootPath)) {
+    report.panic(
+      `Could not create a project in "${sysPath.resolve(
+        rootPath
+      )}" because it's not a valid path`
     )
     return
   }

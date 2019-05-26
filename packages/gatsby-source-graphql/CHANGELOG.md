@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.17...gatsby-source-graphql@2.0.18) (2019-04-12)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** fix data refetching ([#13280](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/issues/13280)) ([a61d002](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/commit/a61d002))
+
 ## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.16...gatsby-source-graphql@2.0.17) (2019-04-08)
 
 ### Bug Fixes

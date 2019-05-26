@@ -1,4 +1,5 @@
 import breakpoints from "./breakpoints"
+import mediaQueries from "./media-queries"
 import colors from "./colors"
 import sizes from "./sizes"
 import letterSpacings from "./letter-spacings"
@@ -9,9 +10,11 @@ import space from "./space"
 import transition from "./transition"
 import fontSizes from "./font-sizes"
 import fonts from "./fonts"
+import zIndices from "./z-indices"
 
 export {
   breakpoints,
+  mediaQueries,
   colors,
   sizes,
   letterSpacings,
@@ -22,4 +25,5 @@ export {
   transition,
   fontSizes,
   fonts,
+  zIndices,
 }

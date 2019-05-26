@@ -1,12 +1,11 @@
 const MongoClient = require(`mongodb`).MongoClient
-const crypto = require(`crypto`)
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
 const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged },
+  { actions, getNode, createNodeId, hasNodeChanged, createContentDigest },
   pluginOptions
 ) => {
   const { createNode } = actions
@@ -41,7 +40,15 @@ exports.sourceNodes = (
 
       return Promise.all(
         collection.map(col =>
-          createNodes(db, pluginOptions, dbName, createNode, createNodeId, col)
+          createNodes(
+            db,
+            pluginOptions,
+            dbName,
+            createNode,
+            createNodeId,
+            col,
+            createContentDigest
+          )
         )
       )
         .then(() => {
@@ -65,7 +72,8 @@ function createNodes(
   dbName,
   createNode,
   createNodeId,
-  collectionName
+  collectionName,
+  createContentDigest
 ) {
   const { preserveObjectIds = false } = pluginOptions
   return new Promise((resolve, reject) => {
@@ -100,10 +108,7 @@ function createNodes(
               collectionName
             )}`,
             content: JSON.stringify(item),
-            contentDigest: crypto
-              .createHash(`md5`)
-              .update(JSON.stringify(item))
-              .digest(`hex`),
+            contentDigest: createContentDigest(item),
           },
         }
         const childrenNodes = []

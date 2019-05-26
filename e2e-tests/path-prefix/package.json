@@ -5,10 +5,12 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "cypress": "^3.1.0",
-    "gatsby": "^2.0.118",
+    "gatsby": "^2.3.34",
+    "gatsby-plugin-feed": "^2.1.2",
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-offline": "^2.0.23",
     "gatsby-plugin-react-helmet": "^3.0.6",
+    "gatsby-plugin-sitemap": "^2.0.12",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-helmet": "^5.2.0"
@@ -18,18 +20,22 @@
   ],
   "license": "MIT",
   "scripts": {
+    "prebuild": "rm -rf assets && mkdir -p assets/blog",
     "build": "gatsby build --prefix-paths",
+    "postbuild": "cp -r public/. assets/blog",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
-    "start-server-and-test": "start-server-and-test serve http://localhost:9000/blog cy:run",
-    "serve": "gatsby serve --prefix-paths",
+    "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
+    "serve": "gatsby serve --prefix-paths & npm run serve:assets",
+    "serve:assets": "node scripts/serve.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"
   },
   "devDependencies": {
     "gatsby-cypress": "^0.1.7",
     "prettier": "^1.14.3",
+    "serve-handler": "^6.0.0",
     "start-server-and-test": "^1.7.1"
   },
   "repository": {

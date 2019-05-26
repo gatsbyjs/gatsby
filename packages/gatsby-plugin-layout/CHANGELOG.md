@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-layout/compare/gatsby-plugin-layout@1.0.14...gatsby-plugin-layout@1.0.15) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
 ## [1.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.0.13...gatsby-plugin-layout@1.0.14) (2019-03-27)
 
 **Note:** Version bump only for package gatsby-plugin-layout

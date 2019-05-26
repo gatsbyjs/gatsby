@@ -3,28 +3,28 @@ const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
 
-const makeBaseOptions = () => {
+const createBaseOptions = () => {
   return {
     concurrent: 4,
     store: FastMemoryStore(),
   }
 }
 
-const makeBuild = () => {
+const createBuildQueue = () => {
   const handler = (queryJob, callback) =>
     queryRunner(queryJob)
       .then(result => callback(null, result))
       .catch(callback)
-  return new Queue(handler, makeBaseOptions())
+  return new Queue(handler, createBaseOptions())
 }
 
-const makeDevelop = () => {
+const createDevelopQueue = () => {
   let queue
   const processing = new Set()
   const waiting = new Map()
 
   const queueOptions = {
-    ...makeBaseOptions(),
+    ...createBaseOptions(),
     priority: (job, cb) => {
       const activePaths = Array.from(websocketManager.activePaths.values())
       if (job.id && activePaths.includes(job.id)) {
@@ -102,7 +102,7 @@ const processBatch = async (queue, jobs) => {
 }
 
 module.exports = {
-  makeBuild,
-  makeDevelop,
+  createBuildQueue,
+  createDevelopQueue,
   processBatch,
 }
