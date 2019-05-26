@@ -8,6 +8,7 @@ import {
   radii,
   shadows,
   space,
+  zIndices,
 } from "../../utils/presets"
 
 const boldEntry = keyframes`
@@ -35,7 +36,7 @@ const WrapperDiv = styled(`div`)`
   opacity: 0.5;
   padding: ${space[6]} 0;
   width: 100%;
-  z-index: 2;
+  z-index: ${zIndices.feedbackWidget};
 
   [tabindex="-1"]:focus {
     outline: none;
