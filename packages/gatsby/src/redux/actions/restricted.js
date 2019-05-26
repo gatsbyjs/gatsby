@@ -266,6 +266,11 @@ const allowedInAPI = {
   },
 }
 
-const availableInAPI = _.merge(forbiddenInAPI, deprecatedInAPI, allowedInAPI)
+const availableInAPI = _.merge(
+  {},
+  forbiddenInAPI,
+  deprecatedInAPI,
+  allowedInAPI
+)
 
 module.exports = { actions, availableInAPI }

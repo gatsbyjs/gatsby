@@ -26,6 +26,7 @@
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
+    "prestart-server-and-test": "rm node_modules/gatsby/dist/redux/actions.js*",
     "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
     "serve": "gatsby serve --prefix-paths & npm run serve:assets",
     "serve:assets": "node scripts/serve.js",

@@ -25,7 +25,6 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "predevelop": "rm node_modules/gatsby/dist/redux/actions.js*",
     "develop": "cross-env ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
@@ -36,6 +35,7 @@
     "reset:preview": "node plugins/gatsby-source-fake-data/reset.js && npm run update:preview",
     "update": "node scripts/update.js",
     "update:preview": "curl -X POST http://localhost:8000/__refresh",
+    "prestart-server-and-test": "rm node_modules/gatsby/dist/redux/actions.js*",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"

@@ -22,6 +22,7 @@
   "scripts": {
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
+    "pretest": "rm node_modules/gatsby/dist/redux/actions.js*",
     "test": "jest --config=../jest.config.js gatsby-pipeline/"
   },
   "devDependencies": {
