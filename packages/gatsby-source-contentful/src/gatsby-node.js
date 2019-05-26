@@ -94,9 +94,7 @@ exports.sourceNodes = async (
     pluginConfig,
   })
 
-  if (schema && actions.createTypes) {
-    createTypes({ schema, actions, contentTypeItems })
-  }
+  createTypes({ schema, actions, contentTypeItems, reporter })
 
   const entryList = normalize.buildEntryList({
     currentSyncData,
