@@ -246,7 +246,7 @@ const fieldTypeToGraphQLType = (field, context) => {
  * @param {any} Context.actions
  * @param {any} Context.schema
  */
-exports.createTypes = ({ actions, schema, contentTypeItems }) => {
+exports.createTypes = ({ actions, schema, contentTypeItems, reporter }) => {
   const context = {
     contentTypeItems,
     schema,
@@ -374,6 +374,16 @@ exports.createTypes = ({ actions, schema, contentTypeItems }) => {
         _.uniq(typeBackReferences).forEach(referencedByType => {
           const gqlTypeName = makeTypeName(referencedByType)
           const fieldName = _.camelCase(referencedByType)
+
+          if (typeConfig.fields[fieldName]) {
+            reporter.warn(
+              `Can't create "${fieldName}" back reference in "${makeTypeName(
+                typeName
+              )}" type because field already exists`
+            )
+            return
+          }
+
           typeConfig.fields[fieldName] = {
             // back references are always array
             type: `[${gqlTypeName}]`,
