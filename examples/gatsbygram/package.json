@@ -41,6 +41,8 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
+    "predevelop": "rm -f node_modules/gatsby/dist/redux/actions.js*",
+    "prebuild": "rm -f node_modules/gatsby/dist/redux/actions.js*",
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "CYPRESS_SUPPORT=y start-server-and-test develop http://localhost:8000 cy:run",
     "develop": "gatsby develop",
