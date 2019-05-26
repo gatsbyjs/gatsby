@@ -1537,14 +1537,6 @@
   categories:
     - Directory
   featured: false
-- title: Bureau Of Meteorology (beta)
-  description: |
-    Help shape the future of Bureau services
-  url: "https://beta.bom.gov.au/"
-  main_url: "https://beta.bom.gov.au/"
-  categories:
-    - Meteorology
-  featured: false
 - title: Curbside
   description: |
     Connecting Stores with Mobile Customers
