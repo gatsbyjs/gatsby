@@ -10,6 +10,7 @@ import {
   space,
   mediaQueries,
   sizes,
+  zIndices,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
@@ -120,7 +121,7 @@ const styles = {
     top: 0,
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     width: 320,
-    zIndex: 10,
+    zIndex: zIndices.sidebar,
     [mediaQueries.md]: {
       height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight})`,
       maxWidth: `none`,
@@ -157,7 +158,7 @@ const styles = {
     right: space[6],
     visibility: `visible`,
     width: space[10],
-    zIndex: 20,
+    zIndex: zIndices.sidebarToggleButton,
     [mediaQueries.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
