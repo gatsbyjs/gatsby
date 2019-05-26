@@ -2638,7 +2638,6 @@
   tags:
     - Cosmic JS
     - i18n
-    - Web Dev
   features:
     - Gatsby localization starter app
 - url: https://cosmicjs.com/apps/gatsby-docs/demo
@@ -2647,7 +2646,6 @@
   tags:
     - Cosmic JS
     - Documentation
-    - Web Dev
   features:
     - manage docs in static web file format for zippy delivery
 - url: https://cosmicjs.com/apps/gatsby-ecommerce-website/demo
@@ -2656,7 +2654,6 @@
   tags:
     - Cosmic JS
     - eCommerce
-    - Web Dev
   features:
     - Stores products, orders using Cosmic JS as a database and a server
 - url: https://harshil1712.github.io/gatsby-starter-googlesheets/
@@ -2669,6 +2666,15 @@
   features:
     - Uses Google Sheets for data
     - Easily configurable
+- url: https://gatsby-starter-blockstack.openintents.org
+  repo: https://github.com/friedger/gatsby-starter-blockstack
+  description: A starter using Blockstack on client side
+  tags:
+    - Blockstack
+    - Authentication
+  features:
+    - Uses Blockstack
+    - Client side app
 - url: https://anubhavsrivastava.github.io/gatsby-starter-multiverse
   repo: https://github.com/anubhavsrivastava/gatsby-starter-multiverse
   description: Single page starter based on the Multiverse site template by HTML5 up, with landing and Elements(Component) page
