@@ -18,8 +18,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "predevelop": "rm node_modules/gatsby/dist/redux/actions.js*",
-    "prebuild": "rm node_modules/gatsby/dist/redux/actions.js*",
+    "predevelop": "rm -f node_modules/gatsby/dist/redux/actions.js*",
+    "prebuild": "rm -f node_modules/gatsby/dist/redux/actions.js*",
     "build": "CYPRESS_SUPPORT=y gatsby build",
     "build:offline": "TEST_PLUGIN_OFFLINE=y gatsby build",
     "develop": "gatsby develop",
