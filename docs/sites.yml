@@ -5161,18 +5161,6 @@
     - Marketing
   built_by: Becreatives
   built_by_url: "https://becreatives.com"
-- title: Little Wolf Studio
-  main_url: https://littlewolfstudio.co.uk
-  url: https://littlewolfstudio.co.uk
-  featured: false
-  description: >
-    A simple agency site built using GatsbyJS and DatoCMS. Aesthetic was creating using a customisation of Bulma.
-  categories:
-    - Blog
-    - Agency
-    - Web Development
-  built_by: Little Wolf Studio
-  built_by_url: https://littlewolfstudio.co.uk
 - title: Paul Clifton Photography
   main_url: https://paulcliftonphotography.com
   url: https://paulcliftonphotography.com
