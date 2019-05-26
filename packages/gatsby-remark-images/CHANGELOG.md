@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.12...gatsby-remark-images@3.0.13) (2019-05-26)
+
+### Features
+
+- **gatsby-remark-images:** enable relative images in jsx content ([#14314](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/14314)) ([1ccc3c2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/1ccc3c2))
+
 ## [3.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.11...gatsby-remark-images@3.0.12) (2019-05-23)
 
 ### Bug Fixes
