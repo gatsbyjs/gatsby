@@ -14,6 +14,7 @@ import {
   mediaQueries,
   sizes,
   fonts,
+  zIndices,
 } from "../utils/presets"
 import { breakpointGutter } from "../utils/styles"
 
@@ -67,7 +68,7 @@ const Navigation = ({ pathname }) => {
         left: 0,
         right: 0,
         top: sizes.bannerHeight,
-        zIndex: 2,
+        zIndex: zIndices.navigation,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {

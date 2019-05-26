@@ -10,6 +10,7 @@ import {
   lineHeights,
   fonts,
 } from "./presets"
+import { zIndices } from "./tokens"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -194,7 +195,7 @@ export const skipLink = {
   padding: 0,
   overflow: `hidden`,
   position: `absolute`,
-  zIndex: 100,
+  zIndex: zIndices.skipLink,
   fontSize: fontSizes[1],
   ":focus": {
     padding: space[4],
