@@ -2673,10 +2673,8 @@
   repo: https://github.com/wangonya/the-plain-gatsby
   description: A simple minimalist starter for your personal blog.
   tags:
-    - Minimalist
     - Blog
     - Markdown
-    - Personal
   features:
     - Minimalist design
     - Next and previous blog post navigation
