@@ -2669,3 +2669,19 @@
   features:
     - Uses Google Sheets for data
     - Easily configurable
+- url: https://anubhavsrivastava.github.io/gatsby-starter-multiverse
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-multiverse
+  description: Single page starter based on the Multiverse site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
