@@ -98,6 +98,10 @@ class CreatorsView extends Component {
       <Layout location={location}>
         <Helmet>
           <title>{title}</title>
+          <meta
+            name="description"
+            content="Discover developers skilled in working on Gatsby applications available for hire"
+          />
         </Helmet>
         <CreatorsHeader
           applyFilter={filter => applyFilter(filter)}
@@ -141,7 +145,7 @@ class CreatorsView extends Component {
                     <div
                       css={{
                         margin: `0 0 ${space[1]}`,
-                        color: colors.gray.calm,
+                        color: colors.text.secondary,
                       }}
                     >
                       {item.node.location}

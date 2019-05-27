@@ -84,5 +84,5 @@ Read these ideas and create issues and/or PRs for ones that prove valuable!
 
 - Add a “processAllNodes()” helper that automatically sets up the Promise.all() so people don’t need to know how this works
 - Plugin library default filter set to v2 compatible. Script to grab file, looks for exported APIs that aren’t compatible
-- Create end-to-end tests for plugins (more needed for internal/core plugins where we want to test the outpout)
+- Create end-to-end tests for plugins (more needed for internal/core plugins where we want to test the output)
 - Create #plugin-authoring Discord channel and publicize the #contributing channel more

@@ -71,7 +71,6 @@ const Cover = styled(Img)`
 `
 
 const Header = styled(`h1`)`
-  color: ${colors.gatsbyDarker};
   font-size: ${fontSizes[4]};
   font-weight: bold;
   margin: 0;
@@ -87,7 +86,7 @@ const Header = styled(`h1`)`
 
 const Meta = styled(`div`)`
   align-items: center;
-  color: ${colors.gray.calm};
+  color: ${colors.text.secondary};
   display: flex;
   flex-wrap: wrap;
   font-size: ${fontSizes[1]};
@@ -111,7 +110,7 @@ const Author = styled(Link)`
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.ui.bright};
+    border-bottom: 1px solid ${colors.link.border};
   }
 
   a& {
@@ -121,14 +120,14 @@ const Author = styled(Link)`
   ${mediaQueries.lg} {
     :hover {
       span {
-        background: ${colors.ui.bright};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
 `
 
 const Excerpt = styled(`p`)`
-  color: ${colors.gray.copy};
+  color: ${colors.text.primary};
   padding: 0 ${rhythm(4 / 5)};
 
   ${mediaQueries.lg} {
@@ -164,7 +163,7 @@ const ReadMore = styled(Link)`
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.ui.bright};
+    border-bottom: 1px solid ${colors.link.border};
     font-weight: bold;
     margin-right: ${space[1]};
   }
@@ -174,7 +173,7 @@ const ReadMore = styled(Link)`
 
     span {
       :hover {
-        background: ${colors.ui.bright};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
@@ -255,7 +254,7 @@ HomepageBlogPost.propTypes = {
 }
 
 export const homepageBlogPostFragment = graphql`
-  fragment HomepageBlogPostData on MarkdownRemark {
+  fragment HomepageBlogPostData on Mdx {
     ...BlogPostPreview_item
   }
 `

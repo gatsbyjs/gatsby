@@ -10,7 +10,7 @@ export function createFilePath(args: CreateFilePathArgs): string
  */
 export function createRemoteFileNode(
   args: CreateRemoteFileNodeArgs
-): FileSystemNode
+): Promise<FileSystemNode>
 
 export interface CreateFilePathArgs {
   node: Node

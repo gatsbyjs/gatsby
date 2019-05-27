@@ -15,6 +15,10 @@ const IndexRoute = props => (
       <Container>
         <Helmet>
           <title>Community Events</title>
+          <meta
+            name="description"
+            content="Learn about other events happening around the globe to connect with other members of the Gatsby community"
+          />
         </Helmet>
         <h1 id="contributing-gatsby" css={{ marginTop: 0 }}>
           Gatsby Community Events
@@ -36,8 +40,8 @@ const IndexRoute = props => (
         </p>
         <Events />
         <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
-        <FooterLinks />
       </Container>
+      <FooterLinks />
     </DocSearchContent>
   </Layout>
 )
