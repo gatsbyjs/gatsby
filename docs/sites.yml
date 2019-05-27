@@ -6059,3 +6059,14 @@
   built_by: Sysdream
   built_by_url: https://sysdream.com/
   featured: false
+- title: Axel Fuhrmann
+  url: https://axelfuhrmann.com
+  main_url: https://axelfuhrmann.com
+  source_url: https://github.com/afuh/axelfuhrmann.com
+  description: >
+    Personal portfolio.
+  categories:
+    - Portfolio
+    - Freelance
+    - Web Development
+  featured: false
