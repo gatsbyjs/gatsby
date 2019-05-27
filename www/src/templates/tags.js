@@ -49,6 +49,7 @@ const Tags = ({ pageContext, data, location }) => {
             post={node}
             key={node.fields.slug}
             css={{
+              position: `relative`,
               marginTop: space[9],
               marginBottom: space[9],
             }}
