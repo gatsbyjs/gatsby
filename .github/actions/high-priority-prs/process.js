@@ -83,6 +83,11 @@ const maintainers = {
   },
 }
 
+const ignoreMessages = [
+  "Merge branch 'master'",
+  "Merge remote-tracking branch"
+]
+
 module.exports = data => {
   const prs = data.repository.pullRequests
 
@@ -151,11 +156,14 @@ module.exports = data => {
       _.maxBy(pr.comments.nodes, n => n.createdAt),
       `createdAt`
     )
+
+    const lastCommitMessage = pr.commits.nodes[0].commit.message
     const lastCommit = pr.commits.nodes[0].commit.authoredDate
     commitNewerThanComment = lastComment < lastCommit
 
     if (
       commitNewerThanComment &&
+      ignoreMessages.every(m => lastCommitMessage.indexOf(m) === -1) &&
       !queues.noMaintainers.some(p => p.url === pr.url)
     ) {
       queues.commitsSinceLastComment.push(pr)

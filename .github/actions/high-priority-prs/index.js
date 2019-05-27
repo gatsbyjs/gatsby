@@ -32,6 +32,7 @@ query GitHubOpenPullRequestsQuery {
             nodes {
               commit {
                 authoredDate
+                message
               }
             }
           }
