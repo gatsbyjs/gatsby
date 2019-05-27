@@ -226,8 +226,11 @@ export const PRODUCT_TYPES_QUERY = `
 `
 
 export const PAGES_QUERY = `
-  query GetPages($first: Int!) {
-    pages(first: 10) {
+  query GetPages($first: Int!, $after: String) {
+    pages(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
       edges {
         node {
           id

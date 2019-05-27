@@ -16,7 +16,7 @@ const PRODUCT_OPTION = `ProductOption`
 const PRODUCT_VARIANT = `ProductVariant`
 const SHOP_POLICY = `ShopPolicy`
 const PRODUCT_TYPE = `ProductType`
-const PAGE = `PAGE`
+const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
