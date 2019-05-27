@@ -191,44 +191,66 @@ const Layout = ({ children }) => (
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
-```diff:title=src/components/header.js
+```diff:titlesrc/components/header.js
 import React from 'react'
 import { Link } from 'gatsby'
 const Header = ({ siteTitle, menuLinks }) => (
--  <div
--    style={{
--      background: 'rebeccapurple',
--      marginBottom: '1.45rem',
--    }}
--  >
--    <div
--      style={{
--        margin: '0 auto',
--        maxWidth: 960,
--        padding: '1.45rem 1.0875rem',
--      }}
--    >
--      <div style={{
--        display: 'flex',
--        'justifyItems': 'space-between',
--        'alignItems': 'center'
--      }}>
--        <h1 style={{ margin: 0, flex: 1 }}>
--          <Link
--            to="/"
--            style={{
--              color: 'white',
--              textDecoration: 'none',
--            }}
--          >
--            {siteTitle}
--          </Link>
--        </h1>
--
--      </div>
--    </div>
--  </div>
-)
+	 <header
+    style={{
+      background: 'rebeccapurple',
+      marginBottom: '1.45rem',
+    }}
+   >
+  <div
+    style={{
+      background: 'rebeccapurple',
+      marginBottom: '1.45rem',
+  }}
+  >
+    <div
+      style={{
+        margin: '0 auto',
+        maxWidth: 960,
+        padding: '1.45rem 1.0875rem',
++        display: 'flex',
++        'justifyItems': 'space-between',
++        'alignItems': 'center'
+      }}>
+        <h1 style={{ margin: 0, flex: 1 }}>
+          <Link
+            to="/"
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+            }}
+          >
+            {siteTitle}
+          </Link>
+        </h1>
++        <div>
++					<nav style={{ display: 'flex', flex: 1 }}>
++						{ menuLinks.map(link =>
++								<li key={link.name} style={{
++									'listStyleType': 'none',
++									padding: `1rem` }}>
++									<Link style={{ color: `white` }} to={link.link}>{link.name}</Link>
++							</li>)
++					}
++				</nav>
++				</div>
+			</div>
+		</header>
+		)
+
+Header.propTypes = {
+  siteTitle: PropTypes.string,
+}
+
+Header.defaultProps = {
+  siteTitle: ``,
+}
+
+export default Header
 ```
 
 The `siteTitle` and `menuLinks` arguments are de-structured es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
