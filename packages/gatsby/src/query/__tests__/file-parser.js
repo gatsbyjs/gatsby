@@ -143,6 +143,21 @@ export default () => (
     render={data => <div>{data.pizza}</div>}
   />
 )`,
+    "static-query-hooks.js": `import { graphql, useStaticQuery } from 'gatsby'
+export default () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
+    "static-query-hooks-with-type-parameter.ts": `import { graphql, useStaticQuery } from 'gatsby'
+export default () => {
+  const data = useStaticQuery<HomepageQuery>(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
+    "static-query-missing-argument.js": `import { graphql, useStaticQuery } from 'gatsby'
+export default () => {
+const data = useStaticQuery();
+return <div>{data.doo}</div>;
+}`,
   }
 
   const parser = new FileParser()
