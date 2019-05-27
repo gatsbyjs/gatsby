@@ -62,26 +62,13 @@ function watch(
   // add them to packages list
   const { seenPackages, depTree } = traversePackagesDeps({
     root,
-    packages: _.uniq([...localPackages]),
+    packages: _.uniq(localPackages),
     monoRepoPackages,
   })
 
-  const allPackagesToWatch =
-    _.intersection(packages, seenPackages) || seenPackages
-
-  // scenarios
-  // - --packages gatsby-cli
-  //   install `gatsby` and watch just gatsby-cli
-  // - --packages gatsby-source-filesystem
-  //   - if user have gatsby-source-wordpress
-  //     - we want to install wordpress and watch for filesystem
-  //   - if user have just gatsby-source-filesystem
-  //     - we want to install filesystem and watch for filesystem
-  //   - if user doesn't have neither
-  //     - throw error - make sure that user add filesystem or
-  //       any plugin that depend on that to local site
-  //   - if user have both filesystem and wordpress
-  //     - watch filesystem and install both
+  const allPackagesToWatch = packages
+    ? _.intersection(packages, seenPackages)
+    : seenPackages
 
   let packagesToInstall = []
 
