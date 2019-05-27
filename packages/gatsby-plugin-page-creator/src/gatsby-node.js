@@ -7,9 +7,7 @@ const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)
 
-const createPath = require(`./create-path`)
-const validatePath = require(`./validate-path`)
-const ignorePath = require(`./ignore-path`)
+const { createPath, validatePath, ignorePath } = require(`gatsby-page-utils`)
 const slash = require(`slash`)
 
 // Path creator.
