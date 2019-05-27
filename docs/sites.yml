@@ -6059,6 +6059,18 @@
   built_by: Sysdream
   built_by_url: https://sysdream.com/
   featured: false
+- title: Nash
+  main_url: https://nash.io/
+  url: https://nash.io/
+  description: >
+    Nash is a decentralized platform for trading, payment and other financial services. Our goal is to bring distributed finance to everyone by making blockchain technology fast and easy to use. We employ an off-chain engine to match trades rapidly, but never take control of customers’ assets. Our intuitive interface offers easy access to a range of trading, payment and investment functions.
+  categories:
+    - Portfolio
+    - Security
+    - Technology
+  built_by: Andrej Gajdos
+  built_by_url: https://andrejgajdos.com/
+  featured: false
 - title: Axel Fuhrmann
   url: https://axelfuhrmann.com
   main_url: https://axelfuhrmann.com
