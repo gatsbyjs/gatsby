@@ -103,7 +103,6 @@ The following data types are available:
 | **ProductVariant** | Represents a different version of a product, such as differing sizes or differing colors.                             |
 | **ProductType**    | Represents a category of products.                                                                                    |
 | **ShopPolicy**     | Policy that a merchant has configured for their store, such as their refund or privacy policy.                        |
-| **Page**           | Pages that hold static HTML content. Each Page object represents a custom page on the online store.                   |
 
 For each data type listed above, `shopify${typeName}` and
 `allShopify${typeName}` is made available. Nodes that are closely related, such
@@ -319,6 +318,26 @@ like the following:
         body
         title
         type
+      }
+    }
+  }
+}
+```
+
+### Query pages
+
+Shopify merchants can create pages to hold static HTML content.
+
+```graphql
+{
+  allShopifyPage {
+    edges {
+      node {
+        id
+        handle
+        title
+        body
+        bodySummary
       }
     }
   }
