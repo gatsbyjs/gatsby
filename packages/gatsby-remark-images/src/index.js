@@ -235,6 +235,7 @@ module.exports = (
         file: imageNode,
         args,
         fileArgs: args,
+        cache,
         reporter,
       })
 
