@@ -10,6 +10,7 @@ jest.mock(`fs-extra`, () => {
     removeSync: jest.fn(),
   }
 })
+jest.mock(`del`, () => jest.fn())
 
 jest.mock(`verdaccio`, () => {
   return {

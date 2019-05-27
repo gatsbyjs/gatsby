@@ -1,5 +1,6 @@
 const chokidar = require(`chokidar`)
 const _ = require(`lodash`)
+const del = require(`del`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
@@ -43,9 +44,9 @@ function watch(
     })
   }
 
-  const copyPath = (oldPath, newPath, quiet) =>
+  const copyPath = (oldPath, newPath, quiet, packageName) =>
     new Promise((resolve, reject) => {
-      const argObj = { oldPath, newPath, quiet, resolve, reject }
+      const argObj = { oldPath, newPath, quiet, packageName, resolve, reject }
       if (afterPackageInstallation) {
         realCopyPath(argObj)
       } else {
@@ -57,6 +58,21 @@ function watch(
     afterPackageInstallation = true
     queuedCopies.forEach(argObj => realCopyPath(argObj))
     queuedCopies = []
+  }
+
+  const clearJSFilesFromNodeModules = async () => {
+    const packagesToClear = queuedCopies.reduce((acc, { packageName }) => {
+      if (packageName) {
+        acc.add(packageName)
+      }
+      return acc
+    }, new Set())
+
+    await Promise.all(
+      [...packagesToClear].map(async packageToClear => {
+        await del(`node_modules/${packageToClear}/**/*.{js,js.map}`)
+      })
+    )
   }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
@@ -209,13 +225,7 @@ function watch(
         return
       }
 
-      if (isInitialScan && packagesToPublish.has(packageName)) {
-        // we are in middle of publishing to localy registry,
-        // so we don't need to copy files as yarn will handle this
-        return
-      }
-
-      let localCopies = [copyPath(filePath, newPath, quiet)]
+      let localCopies = [copyPath(filePath, newPath, quiet, packageName)]
 
       // If this is from "cache-dir" also copy it into the site's .cache
       if (_.includes(filePath, `cache-dir`)) {
@@ -252,6 +262,7 @@ function watch(
           console.log(`Installation complete`)
         }
 
+        await clearJSFilesFromNodeModules()
         runQueuedCopies()
       }
 
