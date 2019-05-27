@@ -159,6 +159,7 @@ const styles = {
     visibility: `visible`,
     width: space[10],
     zIndex: zIndices.sidebarToggleButton,
+    outline: `none`,
     [mediaQueries.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {
