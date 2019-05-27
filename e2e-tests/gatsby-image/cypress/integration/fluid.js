@@ -14,14 +14,14 @@ describe(`fluid`, () => {
 
   it(`renders sizes`, () => {
     cy.getTestElement(fluidTestId)
-      .find(`picture > source`)
+      .find(`picture:nth-of-type(2) > source`)
       .should(`have.attr`, `sizes`)
       .and(`match`, /\(max-width: \d+px\) 100vw, \d+px/)
   })
 
   it(`renders correct srcset`, () => {
     cy.getTestElement(fluidTestId)
-      .find(`picture > source`)
+      .find(`picture:nth-of-type(2) > source`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
         srcset.split(/\s*,\s*/).forEach(part => {

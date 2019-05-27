@@ -7,7 +7,7 @@ describe(`fixed`, () => {
 
   it(`renders a traced svg`, () => {
     cy.getTestElement(tracedTestId)
-      .find(`.gatsby-image-wrapper > img`)
+      .find(`picture:nth-of-type(1) img`)
       .should(`have.attr`, `src`)
       .and(src => {
         ;[`data:image/svg+xml`, `fill='white'`].forEach(part =>
