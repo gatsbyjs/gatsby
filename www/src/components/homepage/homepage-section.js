@@ -50,7 +50,7 @@ export const Name = styled(`h3`)`
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
 
-  ${mediaQueries.md} {
+  ${mediaQueries.lg} {
     margin-left: calc(${ICON_SIZE} * -1.2);
   }
 `
