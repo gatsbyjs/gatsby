@@ -6048,3 +6048,14 @@
   built_by: Ultra Config
   built_by_url: https://ultraconfig.com.au/
   featured: false
+- title: Malice
+  main_url: https://malice.fr/
+  url: https://malice.fr/
+  description: >
+    Malice is a cyber-training  platform for learning, validating and improving security related skills through simulated scenarios and challenges.
+  categories:
+    - Security
+    - Technology
+  built_by: Sysdream
+  built_by_url: https://sysdream.com/
+  featured: false
