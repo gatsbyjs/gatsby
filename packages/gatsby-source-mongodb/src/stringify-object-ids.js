@@ -3,7 +3,7 @@ const ObjectID = require(`mongodb`).ObjectID
 module.exports = function stringifyObjectIds(val) {
   if (val instanceof ObjectID) {
     return val.toHexString()
-  } else if (typeof val === `object`) {
+  } else if (val && typeof val === `object`) {
     if (Array.isArray(val)) {
       return val.map(el => stringifyObjectIds(el))
     } else {
