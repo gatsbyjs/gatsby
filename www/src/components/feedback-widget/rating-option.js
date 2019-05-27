@@ -70,7 +70,7 @@ const RatingText = styled(`span`)`
 
 const Label = styled(`label`)`
   align-items: center;
-  background: ${colors.ui.light};
+  background: ${colors.white};
   cursor: pointer;
   display: flex;
   flex-basis: 33.33%;
@@ -86,7 +86,7 @@ const Label = styled(`label`)`
 
     ${IconWrapper} {
       svg {
-        color: ${colors.accent};
+        color: ${colors.orange[40]};
       }
     }
   }

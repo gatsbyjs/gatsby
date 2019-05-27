@@ -101,9 +101,8 @@ class IndexRoute extends React.Component {
               get started contributing to Gatsby.
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
-
-            <FooterLinks />
           </Container>
+          <FooterLinks />
         </DocSearchContent>
       </Layout>
     )

@@ -26,7 +26,7 @@ const MetaTitle = ({ children }) => (
   <p
     css={{
       margin: `0`,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
       marginBottom: space[1],
       flexShrink: 0,
       [mediaQueries.xs]: {
@@ -46,12 +46,12 @@ const MetaTitle = ({ children }) => (
 const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
-      background: background ? background : colors.ui.whisper,
+      background: background ? background : colors.ui.background,
       marginLeft: `-${space[5]}`,
       marginRight: `-${space[5]}`,
       padding: space[5],
-      borderTop: first ? `1px solid ${colors.ui.light}` : null,
-      borderBottom: last ? null : `1px solid ${colors.ui.light}`,
+      borderTop: first ? `1px solid ${colors.ui.border.subtle}` : null,
+      borderBottom: last ? null : `1px solid ${colors.ui.border.subtle}`,
       [breakpoint2Columns]: {
         background: `transparent`,
         paddingLeft: 0,
@@ -154,7 +154,7 @@ class CreatorTemplate extends Component {
               {isAgencyOrCompany && (
                 <span
                   css={{
-                    color: colors.gray.calm,
+                    color: colors.text.secondary,
                     marginRight: space[2],
                   }}
                 >
@@ -173,7 +173,7 @@ class CreatorTemplate extends Component {
                   <Badge
                     forHire={creator.for_hire}
                     customCSS={{
-                      background: colors.success,
+                      background: colors.green[50],
                       color: colors.white,
                     }}
                   >
