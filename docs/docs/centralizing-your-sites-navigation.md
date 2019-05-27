@@ -192,46 +192,46 @@ const Layout = ({ children }) => (
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
 ```js:title=src/components/header.js
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react"
+import { Link } from "gatsby"
 const Header = ({ siteTitle, menuLinks }) => (
   <header
     style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
+      background: "rebeccapurple",
+      marginBottom: "1.45rem",
     }}
   >
     <div
       style={{
-        background: 'rebeccapurple',
-        marginBottom: '1.45rem',
+        background: "rebeccapurple",
+        marginBottom: "1.45rem",
       }}
     >
       <div
         style={{
-          margin: '0 auto',
+          margin: "0 auto",
           maxWidth: 960,
-          padding: '1.45rem 1.0875rem',
-          display: 'flex',
-          justifyItems: 'space-between',
-          alignItems: 'center',
+          padding: "1.45rem 1.0875rem",
+          display: "flex",
+          justifyItems: "space-between",
+          alignItems: "center",
         }}
       >
         <h1 style={{ margin: 0, flex: 1 }}>
           <Link
             to="/"
             style={{
-              color: 'white',
-              textDecoration: 'none',
+              color: "white",
+              textDecoration: "none",
             }}
           >
             {siteTitle}
           </Link>
         </h1>
-// highlight-start        
+        // highlight-start
         <div>
           <nav>
-            <ul style={{ display: 'flex', flex: 1 }}>
+            <ul style={{ display: "flex", flex: 1 }}>
               {menuLinks.map(link => (
                 <li
                   key={link.name}
@@ -248,7 +248,7 @@ const Header = ({ siteTitle, menuLinks }) => (
             </ul>
           </nav>
         </div>
-// highlight-end  
+        // highlight-end
       </div>
     </div>
   </header>
