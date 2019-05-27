@@ -17,6 +17,7 @@ let asyncRequires = {}
 const fetchedPageData = {}
 const pageDatas = {}
 const fetchPromiseStore = {}
+const pageHtmlExistsResults = {}
 
 let devGetPageData
 if (process.env.NODE_ENV !== `production`) {
@@ -91,10 +92,10 @@ const cachedFetch = (resourceName, fetchFn) => {
   })
 }
 
-const doFetch = url =>
+const doFetch = (url, method = `GET`) =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
-    req.open(`GET`, url, true)
+    req.open(method, url, true)
     req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
@@ -285,7 +286,10 @@ const queue = {
       .then(pageData => {
         // If no page was found, then preload the 404.html
         if (pageData === null && rawPath !== `/404.html`) {
-          return queue.loadPage(`/404.html`).then(() => null)
+          return Promise.all([
+            queue.doesPageHtmlExist(rawPath),
+            queue.loadPage(`/404.html`),
+          ]).then(() => null)
         }
         // Otherwise go ahead and load the page's component
         return loadComponent(pageData.componentChunkName).then(component => {
@@ -336,17 +340,6 @@ const queue = {
 
   loadPageSync: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
-  loadPageOr404Sync: rawPath => {
-    const page = queue.loadPageSync(rawPath)
-    if (page) {
-      return page
-    } else if (rawPath !== `/404.html`) {
-      return queue.loadPageSync(`/404.html`)
-    } else {
-      return null
-    }
-  },
-
   // Deprecated April 2019. Query results used to be in a separate
   // file, but are now included in the page-data.json, which is
   // already loaded into the browser by the time this function is
@@ -359,6 +352,20 @@ const queue = {
       return null
     }
   },
+
+  doesPageHtmlExist: rawPath => {
+    const path = cleanAndFindPath(rawPath)
+    if (pageHtmlExistsResults.hasOwnProperty(path)) {
+      return pageHtmlExistsResults[path]
+    }
+
+    return doFetch(path, `HEAD`).then(req => {
+      pageHtmlExistsResults[path] = req.status === 200
+    })
+  },
+
+  doesPageHtmlExistSync: rawPath =>
+    pageHtmlExistsResults[cleanAndFindPath(rawPath)],
 }
 
 export const postInitialRenderWork = () => {
@@ -396,7 +403,6 @@ export const publicLoader = {
   // Real methods
   loadPage: queue.loadPage,
   loadPageSync: queue.loadPageSync,
-  loadPageOr404Sync: queue.loadPageOr404Sync,
 }
 
 export default queue

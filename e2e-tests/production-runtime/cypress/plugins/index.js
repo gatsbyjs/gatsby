@@ -1,4 +1,5 @@
 const compilationHash = require(`./compilation-hash`)
+const blockResources = require(`./block-resources`)
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -17,5 +18,5 @@ module.exports = (on, config) => {
     })
   }
 
-  on(`task`, Object.assign({}, compilationHash))
+  on(`task`, Object.assign({}, compilationHash, blockResources))
 }
