@@ -191,7 +191,7 @@ const Layout = ({ children }) => (
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
-```diff:titlesrc/components/header.js
+```diff:title=src/components/header.js
 import React from 'react'
 import { Link } from 'gatsby'
 const Header = ({ siteTitle, menuLinks }) => (
@@ -213,9 +213,10 @@ const Header = ({ siteTitle, menuLinks }) => (
         maxWidth: 960,
         padding: '1.45rem 1.0875rem',
 +        display: 'flex',
-+        'justifyItems': 'space-between',
-+        'alignItems': 'center'
-      }}>
++        justifyItems: 'space-between',
++        alignItems: 'center'
+      }}
+    >
         <h1 style={{ margin: 0, flex: 1 }}>
           <Link
             to="/"
@@ -227,21 +228,26 @@ const Header = ({ siteTitle, menuLinks }) => (
             {siteTitle}
           </Link>
         </h1>
-+        <div>
++       <div>
 +					<nav>
-+	           <ul style={{ display: 'flex', flex: 1 }}>
-+						{ menuLinks.map(link =>
-+								<li key={link.name} style={{
-+									'listStyleType': 'none',
-+									padding: `1rem` }}>
++	          <ul style={{ display: 'flex', flex: 1 }}>
++						  {menuLinks.map(link =>
++								<li
++                 key={link.name}
++                 style={{
++									  listStyleType: `none`,
++									  padding: `1rem`,
++                 }}
++               >
 +									<Link style={{ color: `white` }} to={link.link}>{link.name}</Link>
-+							</li>)
-+					}
-+				</nav>
++							  </li>
++					    }
++           </ul>
++				  </nav>
 +				</div>
 +			</div>
 +		</header>
-		)
+)
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
