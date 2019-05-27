@@ -202,20 +202,20 @@ async function generateBase64({ file, args, reporter }) {
   return base64output
 }
 
-const base64CacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 
-const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
+const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
-const cachifiedProcess = async ({ cache, ...arg }, key, f) => {
-  const cachedKey = key(arg)
+const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
+  const cachedKey = genKey(arg)
   const cached = await cache.get(cachedKey)
 
   if (cached) {
     return cached
   }
 
-  const result = await f(arg)
-  await cache.set(key, result)
+  const result = await processFn(arg)
+  await cache.set(cachedKey, result)
 
   return result
 }
@@ -223,18 +223,16 @@ const cachifiedProcess = async ({ cache, ...arg }, key, f) => {
 async function base64(arg) {
   if (arg.cache) {
     // Not all tranformer plugins are going to provide cache
-    return await cachifiedProcess(arg, base64CacheKey, generateBase64)
+    return await cachifiedProcess(arg, generateCacheKey, generateBase64)
   }
 
   return await memoizedBase64(arg)
 }
 
-const tracedSvgCacheKey = ({ file, args }) =>
-  `${file.id}${JSON.stringify(args)}`
-
 async function traceSVG(args) {
   if (args.cache) {
-    return await cachifiedProcess(args, tracedSvgCacheKey, notMemoizedtraceSVG)
+    // Not all tranformer plugins are going to provide cache
+    return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
   }
   return await memoizedTraceSVG(args)
 }
