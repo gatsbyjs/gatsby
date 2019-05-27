@@ -56,156 +56,242 @@ const args = [
   },
 ]
 
-const callEventCallback = (...args) => on.mock.calls[0].slice(-1).pop()(...args)
-const callReadyCallback = (...args) => on.mock.calls[1].slice(-1).pop()(...args)
+const callEventCallback = (...args) =>
+  on && on.mock.calls[0].slice(-1).pop()(...args)
+const callReadyCallback = (...args) =>
+  on && on.mock.calls[1].slice(-1).pop()(...args)
 
-// describe(`watching`, () => {
-//   it(`watches files`, () => {
-//     watch(...args)
-//     expect(chokidar.watch).toHaveBeenCalledTimes(1)
-//     expect(chokidar.watch).toHaveBeenCalledWith(expect.any(Array), {
-//       ignored: [expect.any(Function)],
-//     })
-//   })
+describe(`watching`, () => {
+  it(`watches files`, () => {
+    watch(...args)
+    expect(chokidar.watch).toHaveBeenCalledTimes(1)
+    expect(chokidar.watch).toHaveBeenCalledWith(expect.any(Array), {
+      ignored: [expect.any(Function)],
+    })
+  })
 
-//   it(`registers on handlers`, () => {
-//     watch(...args)
+  it(`registers on handlers`, () => {
+    watch(...args)
 
-//     expect(on).toHaveBeenCalledTimes(2)
-//     expect(on).toHaveBeenLastCalledWith(`ready`, expect.any(Function))
-//   })
+    expect(on).toHaveBeenCalledTimes(2)
+    expect(on).toHaveBeenLastCalledWith(`ready`, expect.any(Function))
+  })
 
-//   describe(`copying files`, () => {
-//     it(`does not copy files on non-watch event`, () => {
-//       watch(...args)
+  describe(`copying files`, () => {
+    it(`does not copy files on non-watch event`, () => {
+      watch(...args)
 
-//       callEventCallback(`test`)
+      callEventCallback(`test`)
 
-//       expect(fs.copy).not.toHaveBeenCalled()
-//     })
+      expect(fs.copy).not.toHaveBeenCalled()
+    })
 
-//     it(`it doesn't copy files before ready event`, async () => {
-//       const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
-//       watch(...args)
-//       await callEventCallback(`add`, filePath)
+    it(`it doesn't copy files before ready event`, async () => {
+      const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
+      watch(...args)
+      await callEventCallback(`add`, filePath)
 
-//       expect(fs.copy).toHaveBeenCalledTimes(0)
-//     })
+      expect(fs.copy).toHaveBeenCalledTimes(0)
+    })
 
-//     it(`copies files after ready event`, async () => {
-//       const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
-//       watch(...args)
-//       await callEventCallback(`add`, filePath)
-//       await callReadyCallback()
+    it(`copies files after ready event`, async () => {
+      const filePath = path.join(process.cwd(), `packages/gatsby/dist/index.js`)
+      watch(...args)
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
 
-//       // console.log(`checking`)
+      // console.log(`checking`)
 
-//       expect(fs.copy).toHaveBeenCalledTimes(1)
-//       expect(fs.copy).toHaveBeenCalledWith(
-//         filePath,
-//         path.join(`node_modules`, `gatsby`, `dist`, `index.js`),
-//         expect.any(Function)
-//       )
-//     })
+      expect(fs.copy).toHaveBeenCalledTimes(1)
+      expect(fs.copy).toHaveBeenCalledWith(
+        filePath,
+        path.join(`node_modules`, `gatsby`, `dist`, `index.js`),
+        expect.any(Function)
+      )
+    })
 
-//     it(`copies cache-dir files`, async () => {
-//       watch(...args)
+    it(`copies cache-dir files`, async () => {
+      watch(...args)
 
-//       const filePath = path.join(
-//         process.cwd(),
-//         `packages/gatsby/cache-dir/register-service-worker.js`
-//       )
-//       await callEventCallback(`add`, filePath)
-//       await callReadyCallback()
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby/cache-dir/register-service-worker.js`
+      )
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
 
-//       expect(fs.copy).toHaveBeenCalledTimes(2)
-//       expect(fs.copy).toHaveBeenLastCalledWith(
-//         filePath,
-//         path.join(`.cache`, `register-service-worker.js`),
-//         expect.any(Function)
-//       )
-//     })
+      expect(fs.copy).toHaveBeenCalledTimes(2)
+      expect(fs.copy).toHaveBeenLastCalledWith(
+        filePath,
+        path.join(`.cache`, `register-service-worker.js`),
+        expect.any(Function)
+      )
+    })
 
-//     it(`filters non-existant files/directories`, () => {
-//       fs.existsSync.mockReset().mockImplementation(file => false)
+    it(`filters non-existant files/directories`, () => {
+      fs.existsSync.mockReset().mockImplementation(file => false)
 
-//       watch(...args)
+      watch(...args)
 
-//       expect(chokidar.watch).toHaveBeenCalledWith([], expect.any(Object))
-//     })
+      expect(chokidar.watch).toHaveBeenCalledWith([], expect.any(Object))
+    })
 
-//     it(`filters duplicate directories`, () => {
-//       watch(process.cwd(), [`gatsby`, `gatsby`], {
-//         localPackages: [`gatsby`],
-//       })
-
-//       expect(chokidar.watch).toHaveBeenCalledWith(
-//         [expect.stringContaining(`gatsby`)],
-//         expect.any(Object)
-//       )
-//     })
-//   })
-
-//   describe(`exiting`, () => {
-//     let realProcess
-//     beforeAll(() => {
-//       realProcess = global.process
-
-//       global.process = {
-//         ...realProcess,
-//         exit: jest.fn(),
-//       }
-//     })
-
-//     afterAll(() => {
-//       global.process = realProcess
-//     })
-
-//     it(`does not exit if scanOnce is not defined`, async () => {
-//       watch(...args)
-//       await callReadyCallback()
-
-//       expect(process.exit).not.toHaveBeenCalled()
-//     })
-
-//     it(`exits if scanOnce is defined`, async () => {
-//       watch(process.cwd(), [`gatsby`], {
-//         scanOnce: true,
-//         localPackages: [`gatsby`],
-//       })
-
-//       await callReadyCallback()
-
-//       expect(process.exit).toHaveBeenCalledTimes(1)
-//     })
-//   })
-// })
-
-jest.mock(`../utils/traverse-package-deps`, () => {
-  return {
-    traversePackagesDeps: () => {
-      return {
-        seenPackages: [`gatsby`, `gatsby-cli`],
-        depTree: {
-          "gatsby-cli": new Set([`gatsby`]),
-        },
-      }
-    },
-  }
-})
-jest.mock(`../utils/check-deps-changes`, () => {
-  console.log(`mocking`)
-  return {
-    checkDepsChanges: ({ packageName }) => {
-      if (packageName === `gatsby-cli`) {
-        return Promise.resolve({
-          didDepsChanged: true,
-        })
-      }
-      return Promise.resolve({
-        didDepsChanged: false,
+    it(`filters duplicate directories`, () => {
+      watch(process.cwd(), [`gatsby`, `gatsby`], {
+        localPackages: [`gatsby`],
       })
-    },
+
+      expect(chokidar.watch).toHaveBeenCalledWith(
+        [expect.stringContaining(`gatsby`)],
+        expect.any(Object)
+      )
+    })
+  })
+
+  describe(`exiting`, () => {
+    let realProcess
+    beforeAll(() => {
+      realProcess = global.process
+
+      global.process = {
+        ...realProcess,
+        exit: jest.fn(),
+      }
+    })
+
+    afterAll(() => {
+      global.process = realProcess
+    })
+
+    it(`does not exit if scanOnce is not defined`, async () => {
+      watch(...args)
+      await callReadyCallback()
+
+      expect(process.exit).not.toHaveBeenCalled()
+    })
+
+    it(`exits if scanOnce is defined`, async () => {
+      watch(process.cwd(), [`gatsby`], {
+        scanOnce: true,
+        localPackages: [`gatsby`],
+      })
+
+      await callReadyCallback()
+
+      expect(process.exit).toHaveBeenCalledTimes(1)
+    })
+  })
+})
+
+const monoRepoPackages = [
+  `babel-plugin-remove-graphql-queries`,
+  `babel-preset-gatsby`,
+  `babel-preset-gatsby-package`,
+  `cypress-gatsby`,
+  `gatsby`,
+  `gatsby-cli`,
+  `gatsby-codemods`,
+  `gatsby-cypress`,
+  `gatsby-dev-cli`,
+  `gatsby-image`,
+  `gatsby-link`,
+  `gatsby-plugin-canonical-urls`,
+  `gatsby-plugin-catch-links`,
+  `gatsby-plugin-coffeescript`,
+  `gatsby-plugin-create-client-paths`,
+  `gatsby-plugin-cxs`,
+  `gatsby-plugin-emotion`,
+  `gatsby-plugin-facebook-analytics`,
+  `gatsby-plugin-feed`,
+  `gatsby-plugin-flow`,
+  `gatsby-plugin-fullstory`,
+  `gatsby-plugin-glamor`,
+  `gatsby-plugin-google-analytics`,
+  `gatsby-plugin-google-gtag`,
+  `gatsby-plugin-google-tagmanager`,
+  `gatsby-plugin-guess-js`,
+  `gatsby-plugin-jss`,
+  `gatsby-plugin-layout`,
+  `gatsby-plugin-less`,
+  `gatsby-plugin-lodash`,
+  `gatsby-plugin-manifest`,
+  `gatsby-plugin-netlify`,
+  `gatsby-plugin-netlify-cms`,
+  `gatsby-plugin-no-sourcemaps`,
+  `gatsby-plugin-nprogress`,
+  `gatsby-plugin-offline`,
+  `gatsby-plugin-page-creator`,
+  `gatsby-plugin-postcss`,
+  `gatsby-plugin-preact`,
+  `gatsby-plugin-react-css-modules`,
+  `gatsby-plugin-react-helmet`,
+  `gatsby-plugin-remove-trailing-slashes`,
+  `gatsby-plugin-sass`,
+  `gatsby-plugin-sharp`,
+  `gatsby-plugin-sitemap`,
+  `gatsby-plugin-styled-components`,
+  `gatsby-plugin-styled-jsx`,
+  `gatsby-plugin-styletron`,
+  `gatsby-plugin-stylus`,
+  `gatsby-plugin-subfont`,
+  `gatsby-plugin-twitter`,
+  `gatsby-plugin-typescript`,
+  `gatsby-plugin-typography`,
+  `gatsby-react-router-scroll`,
+  `gatsby-remark-autolink-headers`,
+  `gatsby-remark-code-repls`,
+  `gatsby-remark-copy-linked-files`,
+  `gatsby-remark-custom-blocks`,
+  `gatsby-remark-embed-snippet`,
+  `gatsby-remark-graphviz`,
+  `gatsby-remark-images`,
+  `gatsby-remark-images-contentful`,
+  `gatsby-remark-katex`,
+  `gatsby-remark-prismjs`,
+  `gatsby-remark-responsive-iframe`,
+  `gatsby-remark-smartypants`,
+  `gatsby-source-contentful`,
+  `gatsby-source-drupal`,
+  `gatsby-source-faker`,
+  `gatsby-source-filesystem`,
+  `gatsby-source-graphql`,
+  `gatsby-source-hacker-news`,
+  `gatsby-source-lever`,
+  `gatsby-source-medium`,
+  `gatsby-source-mongodb`,
+  `gatsby-source-npm-package-search`,
+  `gatsby-source-shopify`,
+  `gatsby-source-wikipedia`,
+  `gatsby-source-wordpress`,
+  `gatsby-telemetry`,
+  `gatsby-transformer-asciidoc`,
+  `gatsby-transformer-csv`,
+  `gatsby-transformer-documentationjs`,
+  `gatsby-transformer-excel`,
+  `gatsby-transformer-hjson`,
+  `gatsby-transformer-javascript-frontmatter`,
+  `gatsby-transformer-javascript-static-exports`,
+  `gatsby-transformer-json`,
+  `gatsby-transformer-pdf`,
+  `gatsby-transformer-react-docgen`,
+  `gatsby-transformer-remark`,
+  `gatsby-transformer-screenshot`,
+  `gatsby-transformer-sharp`,
+  `gatsby-transformer-sqip`,
+  `gatsby-transformer-toml`,
+  `gatsby-transformer-xml`,
+  `gatsby-transformer-yaml`,
+  `graphql-skip-limit`,
+]
+
+const mockDepsChanges = packagesWithChangedDeps => ({ packageName }) =>
+  Promise.resolve({
+    didDepsChanged: packagesWithChangedDeps.includes(packageName),
+  })
+
+jest.mock(`../utils/check-deps-changes`, () => {
+  return {
+    checkDepsChanges: jest.fn(),
   }
 })
 
@@ -221,9 +307,53 @@ jest.mock(`../local-npm-registry/install-packages`, () => {
   }
 })
 
+jest.mock(`../utils/promisified-spawn`, () => {
+  return {
+    promisifiedSpawn: jest.fn(() => Promise.resolve()),
+  }
+})
+
 describe(`dependency changs`, () => {
   const { publishPackage } = require(`../local-npm-registry/publish-package`)
   const { installPackages } = require(`../local-npm-registry/install-packages`)
+  const { checkDepsChanges } = require(`../utils/check-deps-changes`)
+  const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
+
+  const assertPublish = ({ include = [], exclude = [] }) => {
+    include.forEach(includedPackage => {
+      expect(publishPackage).toBeCalledWith(
+        expect.objectContaining({
+          packageName: includedPackage,
+        })
+      )
+    })
+
+    exclude.forEach(excludedPackage => {
+      expect(publishPackage).not.toBeCalledWith(
+        expect.objectContaining({
+          packageName: excludedPackage,
+        })
+      )
+    })
+  }
+
+  const assertInstall = ({ include = [], exclude = [] }) => {
+    include.forEach(includedPackage => {
+      expect(installPackages).toBeCalledWith(
+        expect.objectContaining({
+          packagesToInstall: expect.arrayContaining([includedPackage]),
+        })
+      )
+    })
+
+    exclude.forEach(excludedPackage => {
+      expect(installPackages).not.toBeCalledWith(
+        expect.objectContaining({
+          packagesToInstall: expect.arrayContaining([excludedPackage]),
+        })
+      )
+    })
+  }
 
   let realProcess
   beforeAll(() => {
@@ -235,83 +365,293 @@ describe(`dependency changs`, () => {
     }
   })
 
+  beforeEach(() => {
+    publishPackage.mockClear()
+    installPackages.mockClear()
+    checkDepsChanges.mockClear()
+    promisifiedSpawn.mockClear()
+  })
+
   afterAll(() => {
     global.process = realProcess
   })
 
-  it(`test`, async () => {
-    watch(process.cwd(), [`gatsby-cli`], {
-      scanOnce: true,
-      quiet: true,
-      // monoRepoPackages,
-      localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+  describe(`publishing and installing packages`, () => {
+    it(`watching gatsby installs gatsby`, async () => {
+      checkDepsChanges.mockImplementationOnce(mockDepsChanges([`gatsby`]))
+
+      watch(process.cwd(), [`gatsby`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      assertPublish({
+        include: [`gatsby`],
+        exclude: [`gatsby-plugin-sharp`],
+      })
+
+      assertInstall({
+        include: [`gatsby`],
+        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
+      })
     })
 
-    const filePath = path.join(
-      process.cwd(),
-      `packages/gatsby-cli/package.json`
-    )
-    await callEventCallback(`add`, filePath)
-    await callReadyCallback()
+    it(`watching gatsby-cli installs gatsby`, async () => {
+      checkDepsChanges.mockImplementationOnce(mockDepsChanges([`gatsby-cli`]))
 
-    expect(publishPackage).toMatchInlineSnapshot(`
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "ignorePackageJSONChanges": [Function],
-        "packageName": "gatsby-cli",
-        "packagesToPublish": Array [
-          "gatsby-cli",
-          "gatsby",
+      watch(process.cwd(), [`gatsby-cli`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby-cli/package.json`
+      )
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      assertPublish({
+        include: [`gatsby`, `gatsby-cli`],
+        exclude: [`gatsby-plugin-sharp`],
+      })
+
+      assertInstall({
+        include: [`gatsby`],
+        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
+      })
+    })
+
+    it(`watching gatsby-source-filesytem and having gatsby-source-wordpress installs gatsby-source-wordpress`, async () => {
+      checkDepsChanges.mockImplementationOnce(
+        mockDepsChanges([`gatsby-source-filesystem`])
+      )
+
+      watch(process.cwd(), [`gatsby-source-filesystem`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [
+          `gatsby`,
+          `gatsby-source-wordpress`,
+          `gatsby-plugin-sharp`,
         ],
-        "root": "<PROJECT_ROOT>",
-        "versionPostFix": 1555336693230,
-      },
-    ],
-    Array [
-      Object {
-        "ignorePackageJSONChanges": [Function],
-        "packageName": "gatsby",
-        "packagesToPublish": Array [
-          "gatsby-cli",
-          "gatsby",
+      })
+
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby-source-filesystem/package.json`
+      )
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      assertPublish({
+        include: [`gatsby-source-wordpress`, `gatsby-source-filesystem`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      assertInstall({
+        include: [`gatsby-source-wordpress`],
+        exclude: [`gatsby`, `gatsby-source-filesystem`, `gatsby-plugin-sharp`],
+      })
+    })
+
+    it(`watching gatsby-source-filesytem and having gatsby-source-filesystem installs gatsby-source-filesystem`, async () => {
+      checkDepsChanges.mockImplementationOnce(
+        mockDepsChanges([`gatsby-source-filesystem`])
+      )
+
+      watch(process.cwd(), [`gatsby-source-filesystem`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [
+          `gatsby`,
+          `gatsby-source-filesystem`,
+          `gatsby-plugin-sharp`,
         ],
-        "root": "<PROJECT_ROOT>",
-        "versionPostFix": 1555336693230,
-      },
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
-`)
-    expect(installPackages).toMatchInlineSnapshot(`
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "packagesToInstall": Array [
-          "gatsby@gatsby-dev",
+      })
+
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby-source-filesystem/package.json`
+      )
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      assertPublish({
+        include: [`gatsby-source-filesystem`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      assertInstall({
+        include: [`gatsby-source-filesystem`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+    })
+
+    it(`watching gatsby-source-filesystem and not having gatsby-source-filesystem or gatsby-source-wordpress, installs nothing`, async () => {
+      checkDepsChanges.mockImplementationOnce(
+        mockDepsChanges([`gatsby-source-filesystem`])
+      )
+
+      watch(process.cwd(), [`gatsby-source-filesystem`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby-source-filesystem/package.json`
+      )
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      assertPublish({
+        include: [],
+        exclude: [
+          `gatsby`,
+          `gatsby-source-filesystem`,
+          `gatsby-source-wordpress`,
+          `gatsby-plugin-sharp`,
         ],
-      },
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
-`)
+      })
+
+      assertInstall({
+        include: [],
+        exclude: [
+          `gatsby`,
+          `gatsby-source-filesystem`,
+          `gatsby-source-wordpress`,
+          `gatsby-plugin-sharp`,
+        ],
+      })
+    })
+
+    it(`watching gatsby-source-filesytem and both having gatsby-source-filesystem and gatsby-source-wordpress, should install both`, async () => {
+      checkDepsChanges.mockImplementationOnce(
+        mockDepsChanges([`gatsby-source-filesystem`])
+      )
+
+      watch(process.cwd(), [`gatsby-source-filesystem`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [
+          `gatsby`,
+          `gatsby-source-wordpress`,
+          `gatsby-source-filesystem`,
+          `gatsby-plugin-sharp`,
+        ],
+      })
+
+      const filePath = path.join(
+        process.cwd(),
+        `packages/gatsby-source-filesystem/package.json`
+      )
+      await callEventCallback(`add`, filePath)
+      await callReadyCallback()
+
+      assertPublish({
+        include: [`gatsby-source-filesystem`, `gatsby-source-wordpress`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      assertInstall({
+        include: [`gatsby-source-filesystem`, `gatsby-source-wordpress`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+    })
+  })
+
+  describe(`order of operation`, () => {
+    it(`publish and installs from verdaccio before copying files`, async () => {
+      let lastOp = null
+      let installWasCalledAfterFsCopy = false
+      installPackages.mockImplementation(() => {
+        if (lastOp === fs.copy) {
+          installWasCalledAfterFsCopy = true
+        }
+        lastOp = installPackages
+      })
+
+      fs.copy.mockImplementation(() => {
+        lastOp = fs.copy
+      })
+
+      checkDepsChanges.mockImplementationOnce(mockDepsChanges([`gatsby`]))
+
+      watch(process.cwd(), [`gatsby`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
+      await callEventCallback(
+        `add`,
+        path.join(process.cwd(), `packages/gatsby/not-package.json`)
+      )
+      await callEventCallback(`add`, filePath)
+
+      await callReadyCallback()
+
+      expect(installWasCalledAfterFsCopy).toBe(false)
+      expect(installPackages).toBeCalled()
+      expect(fs.copy).toBeCalled()
+    })
+
+    it(`installs from npm before copying files`, async () => {
+      let lastOp = null
+      let installWasCalledAfterFsCopy = false
+      promisifiedSpawn.mockImplementation(() => {
+        if (lastOp === fs.copy) {
+          installWasCalledAfterFsCopy = true
+        }
+        lastOp = promisifiedSpawn
+      })
+
+      fs.copy.mockImplementation(() => {
+        lastOp = fs.copy
+      })
+
+      checkDepsChanges.mockImplementationOnce(() =>
+        Promise.resolve({
+          didDepsChanged: false,
+          packageNotInstalled: true,
+        })
+      )
+
+      watch(process.cwd(), [`gatsby`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
+      await callEventCallback(
+        `add`,
+        path.join(process.cwd(), `packages/gatsby/not-package.json`)
+      )
+      await callEventCallback(`add`, filePath)
+
+      await callReadyCallback()
+
+      expect(installWasCalledAfterFsCopy).toBe(false)
+      expect(promisifiedSpawn).toBeCalled()
+      expect(fs.copy).toBeCalled()
+    })
   })
 })

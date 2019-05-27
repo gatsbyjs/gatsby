@@ -4,7 +4,12 @@ const { registryUrl } = require(`./verdaccio-config`)
 const installPackages = async ({ packagesToInstall }) => {
   const installCmd = [
     `yarn`,
-    [`add`, ...packagesToInstall, `--registry=${registryUrl}`, `--exact`],
+    [
+      `add`,
+      ...packagesToInstall.map(packageName => `${packageName}@gatsby-dev`),
+      `--registry=${registryUrl}`,
+      `--exact`,
+    ],
   ]
 
   console.log(

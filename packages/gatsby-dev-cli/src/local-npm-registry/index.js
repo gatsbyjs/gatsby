@@ -48,7 +48,6 @@ exports.publishPackagesLocallyAndInstall = async ({
   root,
   ignorePackageJSONChanges,
 }) => {
-  console.log({ packagesToPublish })
   await startServer()
 
   const versionPostFix = Date.now()
@@ -63,11 +62,7 @@ exports.publishPackagesLocallyAndInstall = async ({
     })
   }
 
-  const packagesToInstall = _.intersection(
-    packagesToPublish,
-    localPackages
-  ).map(packageName => `${packageName}@gatsby-dev`)
+  const packagesToInstall = _.intersection(packagesToPublish, localPackages)
 
-  console.log({ packagesToInstall })
   installPackages({ packagesToInstall })
 }

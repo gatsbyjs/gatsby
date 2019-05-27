@@ -54,7 +54,6 @@ function watch(
     })
 
   const runQueuedCopies = () => {
-    console.log(`run queued copies`)
     afterPackageInstallation = true
     queuedCopies.forEach(argObj => realCopyPath(argObj))
     queuedCopies = []
@@ -63,11 +62,12 @@ function watch(
   // add them to packages list
   const { seenPackages, depTree } = traversePackagesDeps({
     root,
-    packages: _.uniq([...localPackages, ...packages]),
+    packages: _.uniq([...localPackages]),
     monoRepoPackages,
   })
 
-  const allPackagesToWatch = packages || seenPackages
+  const allPackagesToWatch =
+    _.intersection(packages, seenPackages) || seenPackages
 
   // scenarios
   // - --packages gatsby-cli
@@ -83,7 +83,6 @@ function watch(
   //   - if user have both filesystem and wordpress
   //     - watch filesystem and install both
 
-  // let allPackagesToWatch = [...packages]
   let packagesToInstall = []
 
   const getPackagesToInstall = packages =>
@@ -97,41 +96,6 @@ function watch(
     })
 
   getPackagesToInstall(allPackagesToWatch)
-
-  // let packagesToInstall = _.intersection(localPackages, seenPackages)
-
-  // const getTopMostPackage = pkg => {}
-
-  // add all packages that depend on things we want to watch
-  // packages.forEach(pkg => {
-  //   // while( )
-
-  //   if (depTree[pkg]) {
-  //     getTopMostPackage(pkg)
-  //     // allPackagesToWatch = allPackagesToWatch.concat([...depTree[pkg]])
-  //   } else {
-  //     packagesToInstall.push(pkg)
-  //   }
-  // })
-  // allPackagesToWatch = _.uniq(allPackagesToWatch)
-
-  // gatsby-dev --packages gatsby-cli
-  //  - we should watch only gatsby-cli but install gatsby
-  // gatsby-dev
-  // -
-
-  // return {
-  //   packages,
-  //   allPackagesToWatch,
-  //   packagesToInstall,
-  //   localPackages,
-  //   depTree,
-  //   monoRepoPackages,
-  // }
-
-  // process.exit()
-
-  console.log(`watching`, { allPackagesToWatch })
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
@@ -278,13 +242,6 @@ function watch(
       allCopies = allCopies.concat(localCopies)
     })
     .on(`ready`, async () => {
-      console.log({
-        packagesToPublish,
-        localPackages,
-        ignorePackageJSONChanges,
-      })
-      // return
-      // process.exit()
       // wait for all async work needed to be done
       // before publishing / installing
       await Promise.all(Array.from(waitFor))
