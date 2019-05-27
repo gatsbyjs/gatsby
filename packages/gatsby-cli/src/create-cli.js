@@ -346,14 +346,13 @@ module.exports = argv => {
         }
       ),
     })
-    .command(`plugin`, `run commands pertaining to gatsby plugins`, yargs =>
+    .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
       yargs
         .command({
           command: `docs`,
-          desc: `Directs you to docs about using and creating plugins`,
+          desc: `Helpful info about using and creating plugins`,
           handler: handlerP(() =>
             console.log(`
-Resources:
 Using a plugin:
 - What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
 - Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
@@ -370,7 +369,7 @@ Creating a plugin:
 - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
 - Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
-- Join Discord #plugin-authoring channel to ask questions!
+- Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)
           ),
         })
