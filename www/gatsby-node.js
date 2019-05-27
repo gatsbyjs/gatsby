@@ -945,3 +945,19 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
     })
   )
 }
+
+exports.onCreateWebpackConfig = ({ actions, plugins }) => {
+  const currentCommitSHA = require(`child_process`)
+    .execSync(`git rev-parse HEAD`, {
+      encoding: `utf-8`,
+    })
+    .trim()
+
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
+  })
+}

@@ -301,7 +301,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   // Create sizes (in width) for the image if no custom breakpoints are
   // provided. If the max width of the container for the rendered markdown file
-  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much

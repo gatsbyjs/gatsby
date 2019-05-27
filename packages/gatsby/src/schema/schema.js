@@ -226,8 +226,13 @@ const mergeTypes = ({
   createdFrom,
   parentSpan,
 }) => {
-  // Only allow user to extend an already existing type.
-  if (!plugin || plugin.name === `default-site-plugin`) {
+  // Only allow user or plugin owning the type to extend already existing type.
+  const typeOwner = typeComposer.getExtension(`plugin`)
+  if (
+    !plugin ||
+    plugin.name === `default-site-plugin` ||
+    plugin.name === typeOwner
+  ) {
     typeComposer.merge(type)
     if (isNamedTypeComposer(type)) {
       typeComposer.extendExtensions(type.getExtensions())
@@ -238,7 +243,7 @@ const mergeTypes = ({
     report.warn(
       `Plugin \`${plugin.name}\` tried to define the GraphQL type ` +
         `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
-        `by the plugin \`${typeComposer.getExtension(`plugin`)}\`.`
+        `by the plugin \`${typeOwner}\`.`
     )
     return false
   }
