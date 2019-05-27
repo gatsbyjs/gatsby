@@ -232,6 +232,7 @@ export const PAGES_QUERY = `
         hasNextPage
       }
       edges {
+        cursor
         node {
           id
           handle
