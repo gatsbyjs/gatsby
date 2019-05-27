@@ -70,7 +70,10 @@ function watch(
 
     await Promise.all(
       [...packagesToClear].map(async packageToClear => {
-        await del(`node_modules/${packageToClear}/**/*.{js,js.map}`)
+        await del([
+          `node_modules/${packageToClear}/**/*.{js,js.map}`,
+          `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
+        ])
       })
     )
   }
