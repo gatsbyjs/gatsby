@@ -228,7 +228,8 @@ const Header = ({ siteTitle, menuLinks }) => (
           </Link>
         </h1>
 +        <div>
-+					<nav style={{ display: 'flex', flex: 1 }}>
++					<nav>
++	           <ul style={{ display: 'flex', flex: 1 }}>
 +						{ menuLinks.map(link =>
 +								<li key={link.name} style={{
 +									'listStyleType': 'none',
@@ -238,8 +239,8 @@ const Header = ({ siteTitle, menuLinks }) => (
 +					}
 +				</nav>
 +				</div>
-			</div>
-		</header>
++			</div>
++		</header>
 		)
 
 Header.propTypes = {
@@ -251,27 +252,6 @@ Header.defaultProps = {
 }
 
 export default Header
-```
-
-The `siteTitle` and `menuLinks` arguments are de-structured es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
-
-You can now access the header component's props and map the `menuLinks` array into elements that can be rendered in the document:
-
-```diff:title=src/components/header.js
-import React from 'react'
-import { Link } from 'gatsby'
-
-const Header = ({ siteTitle, menuLinks }) => (
-+  <nav>
-+    <ul style={{ display: 'flex', flex: 1, listStyle: 'none' }}>
-+      {menuLinks.map(link =>
-+        <li key={link.link}>
-+          <Link to={link.link}>{link.name}</Link>
-+        </li>
-+      )}
-+    </ul>
-+  </nav>
-)
 ```
 
 Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically generated menu links on your page.
