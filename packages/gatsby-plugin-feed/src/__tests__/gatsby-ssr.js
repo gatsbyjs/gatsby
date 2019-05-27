@@ -1,14 +1,14 @@
 const { onRenderBody } = require(`../gatsby-ssr`)
 
-const defaultPathPrefix = global.__PATH_PREFIX__
-
 describe(`Adds <Link> for feed to head`, () => {
+  const prefix = global.__BASE_PATH__
   beforeEach(() => {
+    global.__BASE_PATH__ = ``
     global.__PATH_PREFIX__ = ``
   })
 
-  afterEach(() => {
-    global.__PATH_PREFIX__ = defaultPathPrefix
+  afterAll(() => {
+    global.__BASE_PATH__ = prefix
   })
 
   it(`creates Link if feeds does exist`, async () => {
@@ -98,6 +98,35 @@ describe(`Adds <Link> for feed to head`, () => {
     await onRenderBody(
       {
         setHeadComponents,
+      },
+      pluginOptions
+    )
+
+    expect(setHeadComponents).toMatchSnapshot()
+    expect(setHeadComponents).toHaveBeenCalledTimes(1)
+  })
+
+  it(`creates Link only if pathname satisfied match`, async () => {
+    const pluginOptions = {
+      feeds: [
+        {
+          output: `gryffindor/feed.xml`,
+          title: `Gryffindor's RSS Feed`,
+          match: `^/gryffindor/`,
+        },
+        {
+          output: `ravenclaw/feed.xml`,
+          title: `Ravenclaw's RSS Feed`,
+          match: `^/ravenclaw/`,
+        },
+      ],
+    }
+    const setHeadComponents = jest.fn()
+
+    await onRenderBody(
+      {
+        setHeadComponents,
+        pathname: `/gryffindor/welcome`,
       },
       pluginOptions
     )

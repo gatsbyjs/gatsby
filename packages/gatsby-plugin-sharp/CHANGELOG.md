@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.0...gatsby-plugin-sharp@2.1.1) (2019-05-24)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.37...gatsby-plugin-sharp@2.1.0) (2019-05-23)
+
+### Features
+
+- **gatsby-plugin-sharp:** remove 3x DPi resolutions ([#14201](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14201)) ([d821f0e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/d821f0e))
+
+## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.36...gatsby-plugin-sharp@2.0.37) (2019-05-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** ignore sizeByPixelDensity option and add deprecation warning ([#13852](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/13852)) ([4131a09](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/4131a09)), closes [#12743](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12743)
+
+## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.35...gatsby-plugin-sharp@2.0.36) (2019-05-03)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.34...gatsby-plugin-sharp@2.0.35) (2019-04-17)
 
 ### Bug Fixes

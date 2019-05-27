@@ -1,5 +1,6 @@
 ---
 title: Winning Over Executives
+issue: https://github.com/gatsbyjs/gatsby/issues/14040
 ---
 
 Executives tend to care about both top-line (revenue) and bottom-line (profit), as well as overall company brand and image.

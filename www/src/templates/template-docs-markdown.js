@@ -1,6 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
 import {
@@ -14,41 +15,6 @@ import FooterLinks from "../components/shared/footer-links"
 
 import Container from "../components/container"
 
-import docsHierarchy from "../data/sidebars/doc-links.yaml"
-
-// Search through tree, which may be 2, 3 or more levels deep
-const childItemsBySlug = (docsHierarchy, slug) => {
-  let result
-
-  const iter = a => {
-    if (a.link === slug) {
-      result = a
-      return true
-    }
-    return Array.isArray(a.items) && a.items.some(iter)
-  }
-
-  docsHierarchy.some(iter)
-  return result && result.items
-}
-
-const getPageHTML = page => {
-  const subitemsForPage =
-    childItemsBySlug(docsHierarchy, page.fields.slug) || []
-  const subitemList = subitemsForPage
-    .map(subitem => `<li><a href="${subitem.link}">${subitem.title}</a></li>`)
-    .join(``)
-  const toc = subitemList
-    ? `
-    <h2>In this section:</h2>
-    <ul>${subitemList}</ul>
-  `
-    : ``
-
-  // This is probably a capital offense in Reactland. 😱😱😱
-  return page.html.replace(`[[guidelist]]`, toc)
-}
-
 const getDocsData = location => {
   const [urlSegment] = location.pathname.split(`/`).slice(1)
   const itemListLookup = {
@@ -61,8 +27,7 @@ const getDocsData = location => {
 }
 
 function DocsTemplate({ data, location }) {
-  const page = data.markdownRemark
-  const html = getPageHTML(page)
+  const page = data.mdx
 
   const [urlSegment, itemList] = getDocsData(location)
 
@@ -88,11 +53,7 @@ function DocsTemplate({ data, location }) {
             <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
               {page.frontmatter.title}
             </h1>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: html,
-              }}
-            />
+            <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
             {page.frontmatter.issue && (
               <a
                 href={page.frontmatter.issue}
@@ -103,9 +64,9 @@ function DocsTemplate({ data, location }) {
               </a>
             )}
             <MarkdownPageFooter page={page} />
-            <FooterLinks />
           </Container>
         </DocSearchContent>
+        <FooterLinks />
       </Layout>
     </>
   )
@@ -115,8 +76,8 @@ export default DocsTemplate
 
 export const pageQuery = graphql`
   query($path: String!) {
-    markdownRemark(fields: { slug: { eq: $path } }) {
-      html
+    mdx(fields: { slug: { eq: $path } }) {
+      body
       excerpt
       timeToRead
       fields {
@@ -128,7 +89,7 @@ export const pageQuery = graphql`
         overview
         issue
       }
-      ...MarkdownPageFooter
+      ...MarkdownPageFooterMdx
     }
   }
 `

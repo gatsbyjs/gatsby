@@ -48,7 +48,7 @@ There are a couple of caveats to address prior to beginning:
 
 Due to the scale of our demo site, you may feel that monorepos aren’t practical. You’ll be right in thinking that because a monorepo in this instance isn’t practical. There’ll be elements of duplication and rewriting that will seem counter productive. It’ll also seem like we’re over-engineering a simple site. The real learning comes from understanding how the pieces fit together on a small scale. You’ll be able to easily integrate monorepos at production level with your understanding of the fundamental concepts and underlying technologies.
 
-This tutorial deals with loads of small changes which make for plenty of opportunities for things to go wrong. I’ve tried making myself as clear as possible to prevent this but if you do come across issues then leave a descriptive commentI’ll do my best to respond, edit and improve this article. You can also find the [finished repo here](https://github.com/andrico1234/lerna-monorepo-finisher). There’s no shame in copying my code if you’re stuck.
+This tutorial deals with loads of small changes which make for plenty of opportunities for things to go wrong. I’ve tried making myself as clear as possible to prevent this but if you do come across issues then leave a descriptive comment. I’ll do my best to respond, edit and improve this article. You can also find the [finished repo here](https://github.com/andrico1234/lerna-monorepo-finisher). There’s no shame in copying my code if you’re stuck.
 
 I’m also assuming fundamental web dev knowledge including experience with React, Git and the command line.
 
