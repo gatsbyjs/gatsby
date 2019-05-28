@@ -370,6 +370,22 @@ describe(`showCaptions`, () => {
     expect(node.value).toMatchSnapshot()
   })
 
+  it(`display nothing as caption if title was not found and fallbackToAltTextForCaptions is false`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+      fallbackToAltTextForCaptions: false,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+    expect(node.value).toMatchSnapshot()
+  })
+
   it(`display nothing as caption if no title or alt`, async () => {
     const imagePath = `images/my-image.jpeg`
     const content = `![](./${imagePath})`

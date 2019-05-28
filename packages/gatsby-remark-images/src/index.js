@@ -30,6 +30,7 @@ module.exports = (
     backgroundColor: `white`,
     linkImagesToOriginal: true,
     showCaptions: false,
+    fallbackToAltTextForCaptions: true,
     pathPrefix,
     withWebp: false,
     tracedSVG: false,
@@ -84,7 +85,12 @@ module.exports = (
   const getNodeTitle = (node, alt, defaultAlt) => {
     if (node.title) {
       return node.title
-    } else if (alt && alt.length > 0 && alt !== defaultAlt) {
+    } else if (
+      alt &&
+      alt.length > 0 &&
+      alt !== defaultAlt &&
+      options.fallbackToAltTextForCaptions
+    ) {
       return alt
     }
     return ``
