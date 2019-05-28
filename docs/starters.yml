@@ -2722,7 +2722,7 @@
   repo: https://github.com/andykenward/gatsby-starter-default-typescript
   description: Starter Default Typescript
   tags:
-    - typescript
+    - TypeScript
   features:
     - TypeScript
     - Typing generation for GraphQL using GraphQL Code Generator
