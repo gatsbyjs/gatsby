@@ -144,7 +144,11 @@ async function generateBase64({ file, args, reporter }) {
   })
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath).rotate()
+    pipeline = sharp(file.absolutePath)
+
+    if (!options.rotate) {
+      pipeline.rotate()
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
