@@ -46,7 +46,7 @@ export default class Toggle extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (`checked` in nextProps) {
       this.setState({ checked: !!nextProps.checked })
       this.previouslyChecked = !!nextProps.checked
@@ -154,6 +154,7 @@ export default class Toggle extends PureComponent {
   }
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { className, icons: _icons, ...inputProps } = this.props
     const classes =
       `react-toggle` +
