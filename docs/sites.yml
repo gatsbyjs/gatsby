@@ -6102,3 +6102,15 @@
     - Music
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
+- title: Luke Secomb Digital
+  url: https://lukesecomb.digital
+  main_url: https://lukesecomb.digital
+  source_url: https://github.com/lukethacoder/luke-secomb-simple
+  description: >
+    A simple portfolio site built using TypeScript, Markdown and React Spring.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Luke Secomb
+  built_by_url: https://lukesecomb.digital
+  featured: false
