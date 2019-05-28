@@ -28,7 +28,7 @@ const DesignTokens = ({ location }) => (
           This page collects all design tokens currently available for
           gatsbyjs.org which are not covered in "Color" or "Typography"
         </Intro>
-        <Badge my={3} bg="teal.10" color="grey.50" borderColor="teal.10">
+        <Badge my={3}>
           Work in Progress{` `}
           <MdWarning style={{ fontSize: 16, marginLeft: `0.25rem` }} />
         </Badge>
