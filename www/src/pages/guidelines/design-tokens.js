@@ -38,7 +38,7 @@ const DesignTokens = ({ location }) => (
     <Section>
       <SectionHeading>Space</SectionHeading>
       <Columns>
-        <CopyColumn pr={{ xxs: 5, xs: 6, sm: 7, lg: 0 }}>
+        <CopyColumn>
           <p>
             Spacing tokens are intended for use with <code>margin</code>,{` `}
             <code>padding</code>, and other layout-related CSS properties.
@@ -86,7 +86,7 @@ const DesignTokens = ({ location }) => (
     </Section>
 
     <Section bg="grey.5">
-      <SectionHeading>Shadows and Elevation</SectionHeading>
+      <SectionHeading>Shadows &amp; Elevation</SectionHeading>
       <Columns>
         <CopyColumn>
           <p>
@@ -123,7 +123,7 @@ const DesignTokens = ({ location }) => (
     <Section>
       <SectionHeading>Radii</SectionHeading>
       <Columns>
-        <CopyColumn pr={{ xxs: 5, xs: 6, sm: 7, lg: 0 }}>
+        <CopyColumn>
           <p>
             Intended for use with the <code>border-radius</code> CSS property.
             Currently defined in <code>px</code>, which means they do not yet
