@@ -12,6 +12,7 @@ import {
   shadows,
   sizes,
   fontSizes,
+  zIndices,
 } from "../utils/presets"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
@@ -103,7 +104,7 @@ class DefaultLayout extends React.Component {
                 bottom: `unset`,
                 minHeight: `100%`,
                 minWidth: `100%`,
-                zIndex: 10,
+                zIndex: zIndices.modal,
                 overflowY: `auto`,
                 backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },
