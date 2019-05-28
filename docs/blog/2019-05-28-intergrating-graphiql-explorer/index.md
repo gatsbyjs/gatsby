@@ -17,15 +17,21 @@ tags:
 
 We often hear that first contact with GraphQL is through Gatsby. GraphQL, like any technology, has a learning curve. We can't elimnate learning curve completely but we can try to make it smoother. As mentioned in previous section, Explorer allow users to build full GraphQL queries with just mouse clicks. This enables users that don't yet know query syntax to use GraphQL:
 
--insert gif of selecting few fields-
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./graphiql-explorer-demo.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
 
 Check ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details about it from [OneGraph](https://www.onegraph.com/) (creators of GraphiQL Explorer).
 
 ## Advenced usecases
 
-Improvements to onboarding users new to GraphQL isn't only goal of integrating GraphiQL Explorer into Gatsby. There are other pain points that are getting addressed with this addtion. Example of this would be [union types and inline fragments](https://graphql.org/learn/queries/#inline-fragments). If user is not aware of syntax used to query this type of fields it can be pretty frustrating experience. Explorer helps here too by listing available types in union:
+Improvements to onboarding users new to GraphQL isn't only goal of integrating GraphiQL Explorer into Gatsby. There are other pain points that are getting addressed with this addition. Example of this would be [union types and inline fragments](https://graphql.org/learn/queries/#inline-fragments). If user is not aware of syntax used to query this type of fields it can be pretty frustrating experience. Explorer helps here too by listing available types in union:
 
--insert gif with union field-
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="./graphiql-explorer-union-demo.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
 
 ## Try it now
 
