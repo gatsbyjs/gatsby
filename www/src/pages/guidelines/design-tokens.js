@@ -90,13 +90,19 @@ const DesignTokens = ({ location }) => (
       <Columns>
         <CopyColumn>
           <p>
-            Component elevation in our UI is depicted using shadows. There is a
-            lot of definition work to do here, obviously.
+            Component elevation in our UI is depicted using shadows. These
+            tokens are intended to be used with the <code>box-shadow</code> CSS
+            property.
+          </p>
+          <p>
+            There is a lot of definition work to do here, which is why we
+            deliberately chose to omit adding more documentation at this point.
           </p>
         </CopyColumn>
         <ContentColumn
           css={{
             alignSelf: `flex-end`,
+            justifyContent: `center`,
             display: `flex`,
             flexWrap: `wrap`,
             overflow: `visible`,
@@ -113,7 +119,7 @@ const DesignTokens = ({ location }) => (
               width="50%"
               boxShadow={shadow}
             >
-              {shadow}
+              <code>shadows.{shadow}</code>
             </Box>
           ))}
         </ContentColumn>
