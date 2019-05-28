@@ -59,12 +59,12 @@ plugins: [
                 language: "superscript",
                 extend: "javascript",
                 definition: {
-                  superscript_types: /(SuperType)/
-                }
+                  superscript_types: /(SuperType)/,
+                },
                 insertBefore: {
                   function: {
                     superscript_keywords: /(superif|superelse)/,
-                  }
+                  },
                 },
               },
             ],
@@ -372,12 +372,12 @@ languageExtensions: [
     language: "superscript",
     extend: "javascript",
     definition: {
-      superscript_types: /(SuperType)/
-    }
+      superscript_types: /(SuperType)/,
+    },
     insertBefore: {
       function: {
         superscript_keywords: /(superif|superelse)/,
-      }
+      },
     },
   },
 ]
