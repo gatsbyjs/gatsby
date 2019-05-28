@@ -15,7 +15,11 @@ const ColorValue = ({ label, inverted, value, href }) => (
       {label}
     </Text>
     <Flex alignItems="center">
-      <Text fontSize={1} css={{ whiteSpace: `nowrap` }}>
+      <Text
+        fontSize={1}
+        css={{ whiteSpace: `nowrap` }}
+        color={inverted ? `whiteFade.80` : `blackFade.80`}
+      >
         {value}
         {href && (
           <>
@@ -44,10 +48,15 @@ const ColorSwatch = ({ color, ...rest }) => {
       px={2}
       {...rest}
       bg={color.hex}
-      color={textColor}
       withBorder={!inverted}
     >
-      <Text fontFamily="header" fontSize={4} px={2} fontWeight={1}>
+      <Text
+        fontFamily="header"
+        fontSize={4}
+        px={2}
+        fontWeight={1}
+        color={textColor}
+      >
         {color.name}
       </Text>
       <Flex flexWrap="wrap">

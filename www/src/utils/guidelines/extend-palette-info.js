@@ -59,21 +59,17 @@ const meta = {
   },
   black: {
     meta: {
-      90: {
-        name: `Black`,
-        cmyk: {
-          value: `0 0 0 100`,
-        },
+      name: `Black`,
+      cmyk: {
+        value: `0 0 0 100`,
       },
     },
   },
   white: {
     meta: {
-      90: {
-        name: `White`,
-        cmyk: {
-          value: `0 0 0 0`,
-        },
+      name: `White`,
+      cmyk: {
+        value: `0 0 0 0`,
       },
     },
   },
@@ -117,6 +113,23 @@ for (var color in theme.colors) {
       name: capitalize(color), // Color group name
       ...(m.base && m.base ? { base: m.base } : {}), // Base color index
       colors: c,
+    }
+  } else if (typeof theme.colors[color] === `string`) {
+    palette[color] = {
+      name: capitalize(color), // Color group name
+      color: {
+        hex: theme.colors[color],
+        ...colorable(theme.colors[color]),
+        ...(m &&
+          m.meta && {
+            name: m.meta.name,
+            pms: m.meta.pms,
+            cmyk: m.meta.cmyk,
+          }),
+        rgb: Color(theme.colors[color])
+          .rgb()
+          .object(),
+      },
     }
   }
 }

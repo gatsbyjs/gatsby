@@ -395,12 +395,12 @@ const Logo = ({ data, location }) => (
               mr={{ md: 4 }}
               mb={{ xxs: 4, md: 0 }}
             />
-            {/* <ColorSwatch
-              color={palette.black.colors[`90`]}
+            <ColorSwatch
+              color={palette.black.color}
               mr={{ md: 4 }}
               mb={{ xxs: 4, md: 0 }}
             />
-            <ColorSwatch color={palette.white.colors[`90`]} /> */}
+            <ColorSwatch color={palette.white.color} />
           </Box>
         </ContentColumn>
       </Columns>
