@@ -1,21 +1,26 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled from "@emotion/styled"
-import { color, fontFamily, fontWeight, fontSize, space } from "styled-system"
+import {
+  color,
+  fontFamily,
+  fontWeight,
+  fontSize,
+  space,
+  themeGet,
+} from "styled-system"
 import shouldForwardProp from "@styled-system/should-forward-prop"
 
-import { colors } from "../../utils/presets"
-
-const ActiveLink = props => (
-  <Link
-    {...props}
-    getProps={({ isCurrent }) =>
-      isCurrent ? { style: { color: colors.lilac } } : false
-    }
-  />
-)
+const ActiveLink = props => <Link {...props} activeClassName="active" />
 
 const NavLink = styled(ActiveLink, { shouldForwardProp })(
+  props => {
+    return {
+      "&.active": {
+        color: themeGet(`colors.lilac`)(props),
+      },
+    }
+  },
   color,
   fontFamily,
   fontSize,
