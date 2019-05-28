@@ -6,7 +6,16 @@ import shouldForwardProp from "@styled-system/should-forward-prop"
 
 import { colors } from "../../utils/presets"
 
-const NavLink = styled(Link, { shouldForwardProp })(
+const ActiveLink = props => (
+  <Link
+    {...props}
+    getProps={({ isCurrent }) =>
+      isCurrent ? { style: { color: colors.lilac } } : false
+    }
+  />
+)
+
+const NavLink = styled(ActiveLink, { shouldForwardProp })(
   color,
   fontFamily,
   fontSize,
@@ -30,11 +39,4 @@ NavLink.propTypes = {
   ...space.propTypes,
 }
 
-export const NavItem = props => (
-  <NavLink
-    getProps={({ isCurrent }) =>
-      isCurrent ? { style: { color: colors.lilac } } : false
-    }
-    {...props}
-  />
-)
+export const NavItem = props => <NavLink {...props} />
