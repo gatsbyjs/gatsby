@@ -18,7 +18,7 @@ The NYC gathering kicked off with a quick tour of "[What is Gatsby](https://www.
 
 Tim Brown, a senior software engineer for Harry’s Inc/Flamingo, was tech lead for this upscale shaving products’ new website targeted to female customers. Tim [spoke about using Gatsby](https://www.gatsbyjs.com/gatsby-days-NYC-flamingo) to build a performant, visually-appealing, and secure site with relative ease. "The architecture performs well across browsers and devices, emphasizes developer ergonomics and modern tools, and lets us continuously deploy with confidence," he said. "We think shopflamingo.com can be a model for how to architect future e-commerce sites."
 
-![Tim Brown and Mae Capozzi with Harry's at Gatsby Days](./images/harrys.jpg)
+![Tim Brown and Mae Capozzi representing Harry's at Gatsby Days](./images/harrys.jpg)
 
 Brian Webster, founder of the LA-based Delicious Simplicity web design and development agency, spoke about how [Gatsby is a gamechanger for his team](https://www.gatsbyjs.com/gatsby-days-NYC-delicious-simplicity). Brian described how his search to replace Drupal and WordPress led to standardizing on Gatsby. In fact his team came to love Gatsby’s React component approach so much that they have now refactored two dozen existing client projects into Gatsby applications!
 
