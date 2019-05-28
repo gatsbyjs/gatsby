@@ -34,6 +34,7 @@ const DesignTokens = ({ location }) => (
         </Badge>
       </div>
     </Container>
+
     <Section>
       <SectionHeading>Space</SectionHeading>
       <Columns>
@@ -83,7 +84,8 @@ const DesignTokens = ({ location }) => (
         </ContentColumn>
       </Columns>
     </Section>
-    <Section bg="teal.10">
+
+    <Section bg="grey.5">
       <SectionHeading>Shadows and Elevation</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -114,6 +116,50 @@ const DesignTokens = ({ location }) => (
               {shadow}
             </Box>
           ))}
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
+      <SectionHeading>Radii</SectionHeading>
+      <Columns>
+        <CopyColumn pr={{ xxs: 5, xs: 6, sm: 7, lg: 0 }}>
+          <p>
+            Intended for use with the <code>border-radius</code> CSS property.
+            Currently defined in <code>px</code>, which means they do not yet
+            scale when adjusting the root font size.
+          </p>
+        </CopyColumn>
+        <ContentColumn>
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>px</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              {theme.radii.map((radius, index) => (
+                <tr key={`tokens-radii-${index}`}>
+                  <td>
+                    <code>radii[{index}]</code>
+                  </td>
+                  <td>{radius}</td>
+                  <td>
+                    {` `}
+                    <Box
+                      key={`${index}-radius`}
+                      height={40}
+                      width={80}
+                      bg="teal.30"
+                      borderRadius={index}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </ContentColumn>
       </Columns>
     </Section>
