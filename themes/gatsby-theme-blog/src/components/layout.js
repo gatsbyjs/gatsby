@@ -44,7 +44,7 @@ const Title = props => {
           css={css({
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `teal`,
+            color: `primary`,
           })}
           to={`/`}
         >

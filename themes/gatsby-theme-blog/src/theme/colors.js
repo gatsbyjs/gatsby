@@ -18,20 +18,6 @@ export default {
   muted: lightGray,
   highlight: opaqueLightYellow,
   heading: darkGray,
-
-  // raw colors
-  teal,
-  darkTeal,
-  darkBlue,
-  darkGray,
-  almostBlack,
-  lightWhite,
-  opaqueLightYellow,
-  opaqueLightWhite,
-  lightGray,
-  slateBlue,
-
-  // prism colors
   prism: {
     background: `#011627`,
     comment: `#809393`,
@@ -47,7 +33,6 @@ export default {
     namespace: `#b2ccd6`,
     highlight: `hsla(207, 95%, 15%, 1)`,
   },
-
   modes: {
     dark: {
       text: lightWhite,
