@@ -74,7 +74,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-${space}`}
                       height={space}
                       width={space}
-                      bg="teal.30"
+                      bg="orange.30"
                     />
                   </td>
                 </tr>
@@ -152,7 +152,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-radius`}
                       height={40}
                       width={80}
-                      bg="teal.30"
+                      bg="orange.30"
                       borderRadius={index}
                     />
                   </td>
