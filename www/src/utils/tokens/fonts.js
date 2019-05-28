@@ -22,7 +22,7 @@ const monospace = [
   `Courier New`,
   `monospace`,
 ]
-const serif = [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`]
+const serif = [`Georgia`, `Times New Roman`, `Times`, `serif`]
 
 // @todo think about naming, e.g.
 // system -> sans
