@@ -84,7 +84,7 @@ class Color extends React.Component {
               <p>
                 We are committed to complying with{` `}
                 <a href="https://www.w3.org/WAI/intro/wcag">WCAG 2.0</a> AA
-                standard contrast ratios. To do this, we choose primary,
+                standard contrast ratios. To do this, we need to choose primary,
                 secondary and neutral colors that support usability. This
                 ensures sufficient color contrast between elements so that users
                 with low vision can see and use our products.
@@ -135,7 +135,7 @@ class Color extends React.Component {
                   articles that will be read for a significant period of time.
                 </li>
               </ul>
-              <h4>Color Blindness</h4>
+              <SectionSubheading>Color Blindness</SectionSubheading>
               <p>
                 There are different types of color blindness. The most common
                 form is red-green color blindness, followed by blue-yellow color
