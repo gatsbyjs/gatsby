@@ -10,7 +10,7 @@ const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
-const { memoizedTraceSVG } = require(`./trace-svg`)
+const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -202,40 +202,49 @@ async function generateBase64({ file, args, reporter }) {
   return base64output
 }
 
-const base64CacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 
-const memoizedBase64 = _.memoize(generateBase64, base64CacheKey)
+const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
-const cachifiedBase64 = async ({ cache, ...arg }) => {
-  const cacheKey = base64CacheKey(arg)
+const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
+  const cachedKey = genKey(arg)
+  const cached = await cache.get(cachedKey)
 
-  const cachedBase64 = await cache.get(cacheKey)
-  if (cachedBase64) {
-    return cachedBase64
+  if (cached) {
+    return cached
   }
 
-  const base64output = await generateBase64(arg)
+  const result = await processFn(arg)
+  await cache.set(cachedKey, result)
 
-  await cache.set(cacheKey, base64output)
-
-  return base64output
+  return result
 }
 
 async function base64(arg) {
   if (arg.cache) {
     // Not all tranformer plugins are going to provide cache
-    return await cachifiedBase64(arg)
+    return await cachifiedProcess(arg, generateCacheKey, generateBase64)
   }
 
   return await memoizedBase64(arg)
 }
 
-async function getTracedSVG(options, file) {
+async function traceSVG(args) {
+  if (args.cache) {
+    // Not all tranformer plugins are going to provide cache
+    return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
+  }
+  return await memoizedTraceSVG(args)
+}
+
+async function getTracedSVG({ file, options, cache, reporter }) {
   if (options.generateTracedSVG && options.tracedSVG) {
     const tracedSVG = await traceSVG({
-      file,
       args: options.tracedSVG,
       fileArgs: options,
+      file,
+      cache,
+      reporter,
     })
     return tracedSVG
   }
@@ -380,7 +389,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     base64Image = await base64({ file, args: base64Args, reporter, cache })
   }
 
-  const tracedSVG = await getTracedSVG(options, file)
+  const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
 
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
@@ -503,7 +512,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     })
   }
 
-  const tracedSVG = await getTracedSVG(options, file)
+  const tracedSVG = await getTracedSVG({ options, file, reporter, cache })
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -537,10 +546,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
     originalName: originalName,
     tracedSVG,
   }
-}
-
-async function traceSVG(args) {
-  return await memoizedTraceSVG(args)
 }
 
 function toArray(buf) {
