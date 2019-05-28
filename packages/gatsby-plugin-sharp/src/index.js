@@ -237,11 +237,12 @@ async function traceSVG(args) {
   return await memoizedTraceSVG(args)
 }
 
-async function getTracedSVG({ options, cache, reporter }) {
+async function getTracedSVG({ file, options, cache, reporter }) {
   if (options.generateTracedSVG && options.tracedSVG) {
     const tracedSVG = await traceSVG({
       args: options.tracedSVG,
       fileArgs: options,
+      file,
       cache,
       reporter,
     })
