@@ -1236,11 +1236,11 @@
   main_url: "https://www.michaeluloth.com"
   url: "https://www.michaeluloth.com"
   featured: false
-  description: Michael Uloth is an opera singer and web developer based in Toronto.
+  description: Michael Uloth is a web developer, opera singer, and the creator of Up and Running Tutorials.
   categories:
     - Portfolio
-    - Music
     - Web Development
+    - Music
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
 - title: Spacetime
@@ -2336,7 +2336,7 @@
 - title: Aria Umezawa
   main_url: "https://www.ariaumezawa.com"
   url: "https://www.ariaumezawa.com"
-  description: Aria Umezawa is a director, producer, and writer currently based in San Francisco.
+  description: Aria Umezawa is a director, producer, and writer currently based in San Francisco. Site designed by Stephen Bell.
   categories:
     - Portfolio
     - Music
@@ -2347,7 +2347,7 @@
 - title: Pomegranate Opera
   main_url: "https://www.pomegranateopera.com"
   url: "https://www.pomegranateopera.com"
-  description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall.
+  description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall. Site designed by Stephen Bell.
   categories:
     - Gallery
     - Music
@@ -2357,7 +2357,7 @@
 - title: Daniel Cabena
   main_url: "https://www.danielcabena.com"
   url: "https://www.danielcabena.com"
-  description: Daniel Cabena is a Canadian countertenor highly regarded in both Canada and Europe for prize-winning performances ranging from baroque to contemporary repertoire.
+  description: Daniel Cabena is a Canadian countertenor highly regarded in both Canada and Europe for prize-winning performances ranging from baroque to contemporary repertoire. Site designed by Stephen Bell.
   categories:
     - Portfolio
     - Music
@@ -2367,7 +2367,7 @@
 - title: Artist.Center
   main_url: "https://artistcenter.netlify.com"
   url: "https://artistcenter.netlify.com"
-  description: The marketing page for Artist.Center, a soon-to-launch platform designed to connect opera singers to opera companies.
+  description: The marketing page for Artist.Center, a soon-to-launch platform designed to connect opera singers to opera companies. Site designed by Stephen Bell.
   categories:
     - Music
   built_by: Michael Uloth
@@ -2376,7 +2376,7 @@
 - title: DG Volo & Company
   main_url: "https://www.dgvolo.com"
   url: "https://www.dgvolo.com"
-  description: DG Volo & Company is a Toronto-based investment consultancy.
+  description: DG Volo & Company is a Toronto-based investment consultancy. Site designed by Stephen Bell.
   categories:
     - Finance
   built_by: Michael Uloth
@@ -2385,7 +2385,7 @@
 - title: Shawna Lucey
   main_url: "https://www.shawnalucey.com"
   url: "https://www.shawnalucey.com"
-  description: Shawna Lucey is an American theater and opera director based in New York City.
+  description: Shawna Lucey is an American theater and opera director based in New York City. Site designed by Stephen Bell.
   categories:
     - Portfolio
     - Music
@@ -3222,7 +3222,7 @@
   url: https://kingsvalleypaving.com
   main_url: https://kingsvalleypaving.com
   description: >
-    Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area.
+    Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area. Site designed by Stephen Bell.
   categories:
     - Marketing
     - Construction
@@ -3233,7 +3233,7 @@
   url: https://www.peterbarrett.ca
   main_url: https://www.peterbarrett.ca
   description: >
-    Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world.
+    Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
     - Portfolio
     - Music
@@ -3796,7 +3796,7 @@
 - title: Ashley Thouret
   main_url: "https://www.ashleythouret.com"
   url: "https://www.ashleythouret.com"
-  description: Official website of Canadian soprano Ashley Thouret.
+  description: Official website of Canadian soprano Ashley Thouret. Site designed by Stephen Bell.
   categories:
     - Portfolio
     - Music
@@ -3806,7 +3806,7 @@
 - title: The AZOOR Society
   main_url: "https://www.theazoorsociety.org"
   url: "https://www.theazoorsociety.org"
-  description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research.
+  description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Health & Wellness
     - Community
@@ -4129,7 +4129,7 @@
   url: https://www.stevehaid.com
   main_url: https://www.stevehaid.com
   description: >
-    Steve Haid is a real estate agent and Professional Financial Planner (PFP) who has been helping clients achieve their investment goals since 2006.
+    Steve Haid is a real estate agent and Professional Financial Planner (PFP) who has been helping clients achieve their investment goals since 2006. Site designed by Stephen Bell.
   categories:
     - Marketing
     - Real Estate
@@ -6082,3 +6082,23 @@
     - Freelance
     - Web Development
   featured: false
+- title: Alaina Viau
+  url: https://www.alainaviau.com
+  main_url: https://www.alainaviau.com
+  description: >
+    Official website of Canadian opera director, creator, and producer Alaina Viau. Site designed by Stephen Bell.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
+- title: Alison Moritz
+  url: https://www.alisonmoritz.com
+  main_url: https://www.alisonmoritz.com
+  description: >
+    Official website of American stage director Alison Moritz. Site designed by Stephen Bell.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: "https://www.michaeluloth.com"
