@@ -72,13 +72,28 @@ export default class Swatch extends React.Component {
               left: 0,
               right: 0,
               bottom: 0,
-              width: 40,
-              height: 20,
+              width: `100%`,
+              height: `100%`,
               zIndex: 1,
             }}
             onClick={this.handleClick}
           >
-            {this.state.displayCopied ? `HEX Copied!` : `Copy HEX`}
+            <Box
+              bg="white"
+              boxShadow="raised"
+              borderRadius={1}
+              fontSize={1}
+              css={{
+                position: `absolute`,
+                top: -40,
+                left: 0,
+                height: 32,
+                width: 80,
+                lineHeight: `32px`,
+              }}
+            >
+              {this.state.displayCopied ? `Copied!` : `Copy HEX`}
+            </Box>
           </button>
         </CopyToClipboard>
 
