@@ -17,15 +17,17 @@ class Footer extends React.Component {
           rel="noopener noreferrer"
         >
           twitter
-        </a>{" "}
-        &bull;{" "}
+        </a>
+        {` `}
+        &bull;{` `}
         <a
           href="https://github.com/amberleyromo"
           target="_blank"
           rel="noopener noreferrer"
         >
           github
-        </a>{" "}
+        </a>
+        {` `}
       </footer>
     )
   }
