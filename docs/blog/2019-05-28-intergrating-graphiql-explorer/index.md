@@ -49,7 +49,7 @@ or update Gatsby in your existing project:
 npm install gatsby
 ```
 
-or dry-run GraphiQL Explorer in [GraphQL Reference](/docs/graphql-reference/) documentation page.
+or try it [live](https://gatsby-1774317511.gtsb.io/___graphql?explorerIsOpen=true).
 
 ## Future work
 
