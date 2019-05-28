@@ -54,10 +54,10 @@ class Color extends React.Component {
         <Container>
           <PageHeading>Color</PageHeading>
           <Intro>
-            Bold, vibrant, and friendly color is one cornerstone of Gatsby’s
-            design. It distinguishes our brand and helps us to create consistent
-            experiences and meaningful expressions across marketing and
-            products.
+            Vibrant, friendly, and accessible color is an important part of
+            Gatsby’s design. It distinguishes our brand and helps us to create
+            consistent experiences and meaningful expressions across marketing
+            and products.
           </Intro>
           <Badge my={3}>
             Work in Progress{` `}
