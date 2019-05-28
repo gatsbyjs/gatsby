@@ -24,13 +24,13 @@ export default {
     // "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code"
     fontSize: `inherit`,
   },
-  // todo: prism seems to break this
+  // todo: prism seems to break MDX inlineCode
   inlineCode: {
     borderRadius: `0.3em`,
     color: `secondary`,
     bg: `highlight`,
-    // paddingTop: `0.15em`,
-    // paddingBottom: `0.05em`,
+    paddingTop: `0.15em`,
+    paddingBottom: `0.05em`,
     paddingX: `0.2em`,
   },
   // .gatsby-highlight is rendered *outside* of the <pre> tag
@@ -48,15 +48,6 @@ export default {
   // from typography overrideThemeStyles
   a: {
     color: `primary`,
-    // "&.gatsby-resp-image-link": {
-    //   boxShadow: `none`,
-    // },
-    // "&.anchor": {
-    //   boxShadow: `none`,
-    //   'svg[aria-hidden="true"]': {
-    //     stroke: `primary`,
-    //   },
-    // },
   },
   hr: {
     borderColor: `muted`,
