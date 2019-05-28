@@ -2,7 +2,6 @@ import React from "react"
 import { ThemeProvider } from "emotion-theming"
 import MdWarning from "react-icons/lib/md/warning"
 
-import Annotation from "../../components/guidelines/annotation"
 import {
   Container,
   Section,
@@ -19,7 +18,6 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 import Starter from "../../components/guidelines/cards/starter"
-import Words from "../../components/guidelines/words"
 import Blog from "../../components/guidelines/cards/blog"
 import ImagePlaceholder from "../../components/guidelines/placeholder"
 
@@ -68,68 +66,11 @@ const Weight = ({ children, fontFamily, fontWeight }) => (
   </Text>
 )
 
-const Background = () => (
-  <Flex
-    alignItems="flex-end"
-    flexDirection="column"
-    css={{
-      position: `absolute`,
-      left: 0,
-      right: 0,
-      top: 0,
-      overflow: `hidden`,
-    }}
-  >
-    <Text
-      fontFamily="header"
-      fontStyle="italic"
-      color="grey.20"
-      fontSize={6}
-      lineHeight="solid"
-      width="50%"
-      display={{ xxs: `none`, lg: `block` }}
-    >
-      <Words
-        config={{
-          tension: 4000,
-          friction: 150,
-          clamp: true,
-        }}
-        css={{ userSelect: `none` }}
-      >
-        Gatsby believed in the green light, the orgastic future that year by
-        year recedes before us. It eluded us then, but that's no matter—tomorrow
-        we will run faster, stretch out our arms farther… And one fine morning—
-        So we beat on, boats against the current, borne back ceaselessly into
-        the past.
-      </Words>
-    </Text>
-    <Text
-      fontFamily="header"
-      color="white"
-      fontWeight={2}
-      fontSize="24vw"
-      lineHeight="solid"
-      css={{
-        textShadow: `-1px -1px 0 ${theme.colors.grey[`20`]}, 1px -1px 0 ${
-          theme.colors.grey[`20`]
-        }, -1px 1px 0 ${theme.colors.grey[`20`]}, 1px 1px 0 ${
-          theme.colors.grey[`20`]
-        }`,
-      }}
-    >
-      <Words css={{ userSelect: `none` }}>Typography</Words>
-    </Text>
-  </Flex>
-)
-
 const Typography = ({ data, location }) => (
   <Layout pathname={location.pathname}>
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
-        <PageHeading>
-          <Annotation type="circle">Typography</Annotation>
-        </PageHeading>
+        <PageHeading>Typography</PageHeading>
         <Intro>
           Typography provides the core structure of a well-designed interface.
           Gatsby’s typography strives to create clear hierarchies, useful
@@ -141,12 +82,9 @@ const Typography = ({ data, location }) => (
           <MdWarning style={{ fontSize: 16, marginLeft: `0.25rem` }} />
         </Badge>
       </div>
-      <Background />
     </Container>
     <Section>
-      <SectionHeading>
-        <Annotation delay={1000}>Font stack</Annotation>
-      </SectionHeading>
+      <SectionHeading>Font stack</SectionHeading>
       <Columns>
         <CopyColumn sticky={false}>
           <p>
@@ -182,9 +120,7 @@ const Typography = ({ data, location }) => (
       </Columns>
     </Section>
     <Section bg="yellow.40" pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
-      <SectionHeading>
-        <Annotation color="white">Scale</Annotation>
-      </SectionHeading>
+      <SectionHeading>Scale</SectionHeading>
       <Columns>
         <CopyColumn pr={{ xxs: 5, xs: 6, sm: 7, lg: 0 }}>
           <p>
@@ -240,8 +176,8 @@ const Typography = ({ data, location }) => (
     </Section>
     <Section>
       <h2>
-        <Annotation>Sample hierarchy</Annotation> and{` `}
-        <Annotation>weights</Annotation>
+        Sample hierarchy and{` `}
+        weights
       </h2>
       <Columns>
         <CopyColumn>
@@ -293,10 +229,7 @@ const Typography = ({ data, location }) => (
               lineHeight="solid"
               mb={5}
             >
-              Create digital experiences on the edge—
-              <Annotation type="circle" color="green.30">
-                faster
-              </Annotation>
+              Create digital experiences on the edge—faster
             </Heading>
             <Heading as="h2" mb={5} fontSize={6} fontWeight={1}>
               Gatsby provides a modern framework for turning content into
@@ -511,9 +444,7 @@ const Typography = ({ data, location }) => (
               </Link>
               . So when they finally landed in React 16.8, we figured it was
               time to give our very own{` `}
-              <Annotation>
-                <code>StaticQuery</code>
-              </Annotation>
+              <code>StaticQuery</code>
               {` `}
               component the hook treatment!
             </p>
@@ -538,15 +469,10 @@ const Typography = ({ data, location }) => (
             <p>
               Let’s quickly check out a basic example. Here’s a typical Header
               component, first written using{` `}
-              <Annotation>
-                <code>StaticQuery</code>
-              </Annotation>
+              <code>StaticQuery</code>
               {` `}
               and then{` `}
-              <Annotation color="purple.20">
-                <code>useStaticQuery</code>
-              </Annotation>
-              .
+              <code>useStaticQuery</code>.
             </p>
             <Box bg="grey.10" p={5} my={6}>
               💡 For a great introduction to using the command line, check out

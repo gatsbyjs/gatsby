@@ -18,7 +18,6 @@ import {
   SectionSubheading,
 } from "../../components/guidelines/typography"
 
-import Annotation from "../../components/guidelines/annotation"
 import Badge from "../../components/guidelines/badge"
 import Overview from "../../components/guidelines/color/overview"
 import ColorModal from "../../components/guidelines/color/modal"
@@ -55,22 +54,10 @@ class Color extends React.Component {
         <Container>
           <PageHeading>Color</PageHeading>
           <Intro>
-            <Annotation color="orange.60" type="line">
-              Bold
-            </Annotation>
-            ,{` `}
-            <Annotation delay={1000} type="line">
-              vibrant
-            </Annotation>
-            {` `}
-            and{` `}
-            <Annotation color="teal.50" delay={1500} type="line">
-              friendly
-            </Annotation>
-            {` `}
-            color is one cornerstone of Gatsby’s design. It distinguishes our
-            brand and helps us to create consistent experiences and meaningful
-            expressions across marketing and products.
+            Bold, vibrant, and friendly color is one cornerstone of Gatsby’s
+            design. It distinguishes our brand and helps us to create consistent
+            experiences and meaningful expressions across marketing and
+            products.
           </Intro>
           <Badge my={3}>
             Work in Progress{` `}
@@ -124,11 +111,7 @@ class Color extends React.Component {
                 somewhere on the spectrum between 0 – 21. That's where the
                 scores are derived from.
               </p>
-              <p>
-                <Annotation type="line" delay={1000}>
-                  There are technically 5 scores.
-                </Annotation>
-              </p>
+              <p>There are technically 5 scores.</p>
               <ul>AAA AAA Large AA AA Large Fail</ul>
               <ul css={{ padding: 0 }}>
                 <li>

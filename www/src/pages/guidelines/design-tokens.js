@@ -1,7 +1,6 @@
 import React from "react"
 import MdWarning from "react-icons/lib/md/warning"
 
-import Annotation from "../../components/guidelines/annotation"
 import {
   Container,
   Section,
@@ -24,11 +23,7 @@ const DesignTokens = ({ location }) => (
   <Layout pathname={location.pathname}>
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
-        <PageHeading>
-          <Annotation type="highlight" color="teal.20">
-            Design Tokens
-          </Annotation>
-        </PageHeading>
+        <PageHeading>Design Tokens</PageHeading>
         <Intro>
           This page collects all design tokens currently available for
           gatsbyjs.org which are not covered in "Color" or "Typography"
@@ -40,9 +35,7 @@ const DesignTokens = ({ location }) => (
       </div>
     </Container>
     <Section>
-      <SectionHeading>
-        <Annotation color="white">Space</Annotation>
-      </SectionHeading>
+      <SectionHeading>Space</SectionHeading>
       <Columns>
         <CopyColumn pr={{ xxs: 5, xs: 6, sm: 7, lg: 0 }}>
           <p>
