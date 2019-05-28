@@ -27,9 +27,6 @@ function locationQuery(params) {
   return (
     `?` +
     Object.keys(params)
-      .filter(function(key) {
-        return Boolean(params[key])
-      })
       .map(function(key) {
         return encodeURIComponent(key) + `=` + encodeURIComponent(params[key])
       })
@@ -42,6 +39,7 @@ const graphqlParamNames = {
   query: true,
   variables: true,
   operationName: true,
+  explorerIsOpen: true,
 }
 const otherParams = {}
 for (var k in parameters) {
@@ -135,9 +133,14 @@ ${queryExample}
 `
 }
 
-const storedExplorerPaneState = window.localStorage
-  ? window.localStorage.getItem(`graphiql:graphiqlExplorerOpen`) !== `false`
-  : true
+const storedExplorerPaneState =
+  typeof parameters.explorerIsOpen !== `undefined`
+    ? parameters.explorerIsOpen === `false`
+      ? false
+      : true
+    : window.localStorage
+    ? window.localStorage.getItem(`graphiql:graphiqlExplorerOpen`) !== `false`
+    : true
 
 class App extends React.Component {
   state = {
@@ -197,6 +200,8 @@ class App extends React.Component {
         newExplorerIsOpen
       )
     }
+    parameters.explorerIsOpen = newExplorerIsOpen
+    updateURL()
     this.setState({ explorerIsOpen: newExplorerIsOpen })
   }
 
