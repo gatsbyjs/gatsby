@@ -39,3 +39,22 @@ export function getRemoteFileExtension(url) {
 export function getRemoteFileName(url) {
   return getParsedPath(url).name
 }
+
+/**
+ * slash
+ * --
+ * Convert Windows backslash paths to slash paths: foo\\bar ➔ foo/bar
+ *
+ *
+ * @param  {String}          path
+ * @return {String}          slashed path
+ */
+export function slash(path) {
+  const isExtendedLengthPath = /^\\\\\?\\/.test(path)
+
+  if (isExtendedLengthPath) {
+    return path
+  }
+
+  return path.replace(/\\/g, `/`)
+}

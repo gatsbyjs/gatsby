@@ -1,4 +1,4 @@
-const slash = require(`slash`)
+const { slash } = require(`./utils`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const mime = require(`mime`)
