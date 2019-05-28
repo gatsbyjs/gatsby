@@ -333,7 +333,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 
 ## Art-directing multiple images
 
-If you want to show different images at different breakpoints (also known as [art direction](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#Art_direction), you can define your own array of `fixed` or `fluid` images, along with a `media` key per image, and pass it to `gatsby-image`'s `fixedImages` or `fluidImages` props. The `media` key that is set on an image can be any valid CSS media query.
+`gatsby-image` supports showing different images at different breakpoints, which is known as [art direction](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#Art_direction). To do this, you can define your own array of `fixed` or `fluid` images, along with a `media` key per image, and pass it to `gatsby-image`'s `fixedImages` or `fluidImages` props. The `media` key that is set on an image can be any valid CSS media query.
 
 ```jsx
 import React from "react"
