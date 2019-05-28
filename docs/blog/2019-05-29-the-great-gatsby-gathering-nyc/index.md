@@ -32,9 +32,9 @@ After all that, everyone was definitely ready for happy hour. It was an enjoyabl
 
 Gatsby Days was the perfect energizing kick off to the rest of the week: our spring Gatsby Gathering. Since Gatsby is a distributed team, we mostly interact with each other and community members through GitHub and Slack. With team members sprinkled all over the globe, everywhere from California to Finland to India, it’s a priority for us to convene every few months in person. Each time we get to connect, we play together -- in NYC there were outings to Broadway, a food tour of Brooklyn, and late night karaoke -- and make great strides during a week of face to face collaboration.
 
-![Chris Biscardi and Dustin Schau show off their karaoke skills.]()
+![Chris Biscardi and Dustin Schau show off their karaoke skills.](./images/chris-dustin.jpg)
 
-![Marisa Morby, Dustin Schau, and Michal Piechowiak getting in on the Karaoke]()
+![Marisa Morby, Dustin Schau, and Michal Piechowiak getting in on the Karaoke](./images/marisa-dustin-michal.jpg)
 
 ![Gatsby team members gather for brunch](./images/lunch.jpg)
 
