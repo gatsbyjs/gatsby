@@ -324,6 +324,26 @@ like the following:
 }
 ```
 
+### Query pages
+
+Shopify merchants can create pages to hold static HTML content.
+
+```graphql
+{
+  allShopifyPage {
+    edges {
+      node {
+        id
+        handle
+        title
+        body
+        bodySummary
+      }
+    }
+  }
+}
+```
+
 ### Image processing
 
 To use image processing you need `gatsby-transformer-sharp`,

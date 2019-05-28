@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.0...gatsby-plugin-offline@2.1.1) (2019-05-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Drop preload link for json from offline shell ([#13935](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/13935)) ([d1f0ae6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/d1f0ae6))
+
 # [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.25...gatsby-plugin-offline@2.1.0) (2019-05-02)
 
 ### Features
