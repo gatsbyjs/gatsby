@@ -72,7 +72,6 @@ export default props => {
               body: {
                 color: `text`,
                 bg: `background`,
-                transition: `color 0.2s ease-out, background 0.2s ease-out`,
               },
             })(theme)
           }

@@ -4,6 +4,7 @@ export default {
   },
   Container: {
     maxWidth: 672,
+    px: 3,
   },
   pre: {
     // references styles from theme.prism (src/theme/prism.js)
