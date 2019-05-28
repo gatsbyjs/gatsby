@@ -2718,3 +2718,13 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-default-typescript.netlify.com/
+  repo: https://github.com/andykenward/gatsby-starter-default-typescript
+  description: Starter Default Typescript
+  tags:
+    - TypeScript
+  features:
+    - TypeScript
+    - Typing generation for GraphQL using GraphQL Code Generator
+    - Comes with React Helmet for adding site meta tags
+    - Based on Gatsby Starter Default
