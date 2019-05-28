@@ -15,7 +15,7 @@ class NotFoundPage extends React.Component {
         <SEO title="404: Not Found" />
         <Styled.h1>Not Found</Styled.h1>
         <Styled.p>
-          You just hit a route that doesn&#39;t exist... the sadness.
+          The page you’re trying to visit has moved or doesn’t exist. Please check the URL or use the site navigation to find the content you’re looking for.
         </Styled.p>
       </Layout>
     )
