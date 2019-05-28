@@ -157,13 +157,15 @@ module.exports = data => {
       `createdAt`
     )
 
-    const lastCommitMessage = pr.commits.nodes[0].commit.message
-    const lastCommit = pr.commits.nodes[0].commit.authoredDate
-    commitNewerThanComment = lastComment < lastCommit
-
+    const commitMessages = pr.commits.nodes.filter(c => (lastComment < c.commit.authoredDate))
+    commitNewerThanComment = (commitMessages.length !== 0)
+    notContainIgnoreMessages = commitMessages.every(
+      cm => ignoreMessages.every(im => cm.commit.message.indexOf(im) === -1)
+    )
+    
     if (
       commitNewerThanComment &&
-      ignoreMessages.every(m => lastCommitMessage.indexOf(m) === -1) &&
+      notContainIgnoreMessages &&
       !queues.noMaintainers.some(p => p.url === pr.url)
     ) {
       queues.commitsSinceLastComment.push(pr)
