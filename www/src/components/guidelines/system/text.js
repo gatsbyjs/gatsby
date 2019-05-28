@@ -1,5 +1,4 @@
 import styled from "@emotion/styled"
-import isPropValid from "@emotion/is-prop-valid"
 import {
   fontFamily,
   fontWeight,
@@ -8,11 +7,9 @@ import {
   letterSpacing,
   fontStyle,
 } from "styled-system"
+import shouldForwardProp from "@styled-system/should-forward-prop"
 
 import Box from "./box"
-
-const shouldForwardProp = propTypes => prop =>
-  isPropValid(prop) && !Object.keys(propTypes).includes(prop)
 
 const textPropTypes = {
   ...fontFamily.propTypes,
@@ -23,14 +20,19 @@ const textPropTypes = {
   ...textAlign.propTypes,
 }
 
-const Text = styled(Box, {
-  shouldForwardProp: shouldForwardProp(textPropTypes),
-})(fontFamily, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign)
+const Text = styled(Box, { shouldForwardProp })(
+  fontFamily,
+  fontStyle,
+  fontWeight,
+  letterSpacing,
+  lineHeight,
+  textAlign
+)
 
 Text.propTypes = textPropTypes
 
 Text.defaultProps = {
-  color: `grey.700`,
+  color: `grey.70`,
 }
 
 export default Text

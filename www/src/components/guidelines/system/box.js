@@ -1,6 +1,5 @@
 import styled from "@emotion/styled"
-import isPropValid from "@emotion/is-prop-valid"
-
+import shouldForwardProp from "@styled-system/should-forward-prop"
 import {
   space,
   color,
@@ -18,9 +17,6 @@ import {
   position,
   boxShadow,
 } from "styled-system"
-
-const shouldForwardProp = propTypes => prop =>
-  isPropValid(prop) && !Object.keys(propTypes).includes(prop)
 
 const boxPropTypes = {
   ...alignSelf.propTypes,
@@ -41,7 +37,7 @@ const boxPropTypes = {
 }
 
 const Box = styled(`div`, {
-  shouldForwardProp: shouldForwardProp(boxPropTypes),
+  shouldForwardProp,
 })(
   {
     boxSizing: `border-box`,

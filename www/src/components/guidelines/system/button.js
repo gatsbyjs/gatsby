@@ -1,6 +1,4 @@
 import styled from "@emotion/styled"
-import isPropValid from "@emotion/is-prop-valid"
-
 import {
   fontSize,
   fontFamily,
@@ -14,9 +12,6 @@ import {
 
 import Box from "./box"
 
-const shouldForwardProp = propTypes => prop =>
-  isPropValid(prop) && !Object.keys(propTypes).includes(prop)
-
 const buttonPropTypes = {
   ...borders.propTypes,
   ...borderColor.propTypes,
@@ -26,9 +21,7 @@ const buttonPropTypes = {
   ...buttonStyle.propTypes,
 }
 
-const Button = styled(Box, {
-  shouldForwardProp: shouldForwardProp(buttonPropTypes),
-})(
+const Button = styled(Box)(
   {
     appearance: `none`,
     display: `inline-block`,
