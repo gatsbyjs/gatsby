@@ -27,7 +27,6 @@ import Wordmark from "!raw-loader!../../assets/guidelines/wordmark.svg"
 import Clearspace from "!raw-loader!../../assets/guidelines/clearspace.svg"
 import ClearspaceMonogram from "!raw-loader!../../assets/guidelines/clearspace-monogram.svg"
 import ManuallyTracked from "!raw-loader!../../assets/guidelines/manually-tracked.svg"
-import Background from "../../components/guidelines/logo/construction"
 import ColorSwatch from "../../components/guidelines/color/card"
 
 import { Box, Button, Flex, Text } from "../../components/guidelines/system"
@@ -155,23 +154,7 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
 )
 
 const Logo = ({ data, location }) => (
-  <Layout
-    background={
-      <div
-        css={{
-          position: `absolute`,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: `100%`,
-          width: `100%`,
-        }}
-      >
-        <Background />
-      </div>
-    }
-    pathname={location.pathname}
-  >
+  <Layout pathname={location.pathname}>
     <Container>
       <PageHeading>Logo</PageHeading>
       <Intro>
