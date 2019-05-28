@@ -150,22 +150,26 @@ const Typography = ({ data, location }) => (
       <Columns>
         <CopyColumn sticky={false}>
           <p>
-            Gatsby uses the all-time classic Futura for it’s headlines and
-            display copy. Long form text such as articles and documentation
-            currently use the native font stack—but we are actively looking for
-            a serif to increase the reading experience.
+            Gatsby uses the all-time classic Futura for headlines and display
+            copy. Long form text such as articles and documentation currently
+            use the native font stack, but we are actively looking for a serif
+            to increase the reading experience.
           </p>
           <SectionSubheading>The native font stack</SectionSubheading>
           <p>
             The “native font stack” depends on the user’s operating system and
             device; depending on that, we use San Francisco UI, Roboto or Segoe
-            UI. In our Figma designs we use Roboto as it’s easily available.
+            UI.
           </p>
-          <Text as="p" mb={0}>
+          <Text as="p">
             Our monospace font stack also makes use of the default fonts
             available: That’s usually San Francisco Mono, Menlo or Monaco on Mac
             OS X, Consolas on Windows, or Liberation Sans on Linux
             distributions.
+          </Text>
+          <Text as="p" mb={0}>
+            In our (Figma, Sketch, etc.) designs we use Roboto as it’s easily
+            available.
           </Text>
         </CopyColumn>
         <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
