@@ -46,8 +46,8 @@ export default class Toggle extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ("checked" in nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (`checked` in nextProps) {
       this.setState({ checked: !!nextProps.checked })
       this.previouslyChecked = !!nextProps.checked
     }
@@ -154,13 +154,14 @@ export default class Toggle extends PureComponent {
   }
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { className, icons: _icons, ...inputProps } = this.props
     const classes =
-      "react-toggle" +
-      (this.state.checked ? " react-toggle--checked" : "") +
-      (this.state.hasFocus ? " react-toggle--focus" : "") +
-      (this.props.disabled ? " react-toggle--disabled" : "") +
-      (className ? " " + className : "")
+      `react-toggle` +
+      (this.state.checked ? ` react-toggle--checked` : ``) +
+      (this.state.hasFocus ? ` react-toggle--focus` : ``) +
+      (this.props.disabled ? ` react-toggle--disabled` : ``) +
+      (className ? ` ` + className : ``)
     return (
       <div
         className={classes}
@@ -172,10 +173,10 @@ export default class Toggle extends PureComponent {
       >
         <div className="react-toggle-track">
           <div className="react-toggle-track-check">
-            {this.getIcon("checked")}
+            {this.getIcon(`checked`)}
           </div>
           <div className="react-toggle-track-x">
-            {this.getIcon("unchecked")}
+            {this.getIcon(`unchecked`)}
           </div>
         </div>
         <div className="react-toggle-thumb" />

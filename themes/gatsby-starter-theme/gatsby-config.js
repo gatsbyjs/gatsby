@@ -1,7 +1,7 @@
 module.exports = {
   __experimentalThemes: [
     {
-      resolve: `gatsby-theme-blog-mdx`,
+      resolve: `gatsby-theme-blog`,
       options: {},
     },
     {

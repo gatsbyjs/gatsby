@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-theme-darklight-blog",
+  "name": "gatsby-theme-blog",
   "version": "0.0.8",
   "description": "A Gatsby theme for miscellaneous blogging with a dark/light mode",
   "main": "index.js",
