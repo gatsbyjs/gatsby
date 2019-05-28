@@ -180,11 +180,10 @@ const Logo = ({ data, location }) => (
             everything you need.
           </p>
           <Box
-            bg="yellow.5"
+            bg="yellow.10"
             py={3}
             px={4}
             my={4}
-            color="yellow.90"
             fontSize={1}
             borderRadius={2}
             maxWidth="30rem"
@@ -192,7 +191,7 @@ const Logo = ({ data, location }) => (
             Please open an issue on GitHub or{` `}
             <a href="mailto:team@gatsbyjs.com">send a mail</a> to the Gatsby
             Inkteam if you have any questions, suggestions, or problems!{` `}
-            <em>Happy shipping!</em>
+            <strong>Happy shipping!</strong>
           </Box>
         </CopyColumn>
         <ContentColumn>
