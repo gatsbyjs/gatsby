@@ -9,6 +9,13 @@ tags:
   - developer experience
 ---
 
+Gatsby's data layer is powered by GraphQL. This means that if you are building Gatsby site, you will most likely use GraphQL to take advantage of Gatsby rich source and transformer plugins ecosystem. GraphQL is very often paired with [GraphiQL](https://github.com/graphql/graphiql) (A graphical interactive in-browser GraphQL integrated development environment), which serves as interactive playground where you can compose and test your queries. You might be familiar with with GraphiQL interface:
+
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
+
 ## What is GraphiQL Explorer?
 
 [`graphiql-explorer`](https://github.com/OneGraph/graphiql-explorer) is plugin for GraphiQL IDE that adds new way to explore and build GraphQL queries. It adds graphical representation of available fields and inputs that can be used in queries. It also allow to construct full queries by clicking through available fields and inputs without the having to write GraphQL queries by hand.
