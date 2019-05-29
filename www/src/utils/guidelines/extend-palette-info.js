@@ -9,10 +9,6 @@ const meta = {
   purple: {
     base: 60,
     meta: {
-      90: {
-        name: `Brand Darker`,
-      },
-      70: { name: `Brand Dark` },
       60: {
         name: `Gatsby`,
         pms: {
@@ -24,9 +20,6 @@ const meta = {
         },
       },
       50: { name: `Lilac` },
-      20: { name: `UI Bright` },
-      10: { name: `UI Light` },
-      5: { name: `UI Whisper` },
     },
   },
   orange: {
