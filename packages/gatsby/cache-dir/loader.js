@@ -173,10 +173,10 @@ let prefetchTriggered = {}
 let prefetchCompleted = {}
 let disableCorePrefetching = false
 
-const onPostPrefetch = ({ path, resourceUrls }) => {
-  if (!prefetchCompleted[path]) {
-    apiRunner(`onPostPrefetch`, { path, resourceUrls })
-    prefetchCompleted[path] = true
+const onPostPrefetchPathname = pathname => {
+  if (!prefetchCompleted[pathname]) {
+    apiRunner(`onPostPrefetchPathname`, { pathname })
+    prefetchCompleted[pathname] = true
   }
 }
 
@@ -250,11 +250,7 @@ const queue = {
           const chunkName = pageData.componentChunkName
           const componentUrls = createComponentUrls(chunkName)
           return Promise.all(componentUrls.map(prefetchHelper)).then(() => {
-            const resourceUrls = [pageDataUrl].concat(componentUrls)
-            onPostPrefetch({
-              path: rawPath,
-              resourceUrls,
-            })
+            onPostPrefetchPathname(rawPath)
           })
         })
     }
@@ -312,16 +308,9 @@ const queue = {
             page: pageResources,
             pageResources,
           })
+
           if (process.env.NODE_ENV === `production`) {
-            const pageDataUrl = createPageDataUrl(cleanAndFindPath(rawPath))
-            const componentUrls = createComponentUrls(
-              pageData.componentChunkName
-            )
-            const resourceUrls = [pageDataUrl].concat(componentUrls)
-            onPostPrefetch({
-              path: rawPath,
-              resourceUrls,
-            })
+            onPostPrefetchPathname(rawPath)
           }
 
           return pageResources
@@ -340,14 +329,14 @@ const queue = {
 
   loadPageSync: rawPath => pathScriptsCache[cleanAndFindPath(rawPath)],
 
-  // Deprecated April 2019. Query results used to be in a separate
-  // file, but are now included in the page-data.json, which is
-  // already loaded into the browser by the time this function is
-  // called. Use the resource URLs passed in `onPostPrefetch` instead.
-  getResourceURLsForPathname: path => {
-    const pageData = queue.loadPageSync(path)
+  getResourceURLsForPathname: rawPath => {
+    const path = cleanAndFindPath(rawPath)
+    const pageData = pageDatas[path]
     if (pageData) {
-      return createComponentUrls(pageData.componentChunkName)
+      return [
+        ...createComponentUrls(pageData.componentChunkName),
+        createPageDataUrl(path),
+      ]
     } else {
       return null
     }
@@ -393,14 +382,9 @@ export const publicLoader = {
     )
     return queue.loadPageSync(rawPath)
   },
-  getResourceURLsForPathname: pathname => {
-    console.warn(
-      `Warning: getResourceURLsForPathname is deprecated. Use onPostPrefetch instead`
-    )
-    return queue.getResourceURLsForPathname
-  },
 
   // Real methods
+  getResourceURLsForPathname: queue.getResourceURLsForPathname,
   loadPage: queue.loadPage,
   loadPageSync: queue.loadPageSync,
 }
