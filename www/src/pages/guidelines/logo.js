@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import Link from "gatsby-link"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
-import MdFileDownload from "react-icons/lib/md/file-download"
+import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import { themeGet } from "styled-system"
 
 import Layout from "../../components/guidelines/layout"
@@ -213,7 +213,7 @@ const Logo = ({ data, location }) => (
           </p>
           <Button as="a" href="/Gatsby-Logos.zip" mt={6} mb={3}>
             Download all logo assets{` `}
-            <MdFileDownload style={{ verticalAlign: `middle`, fontSize: 24 }} />
+            <ArrowDownwardIcon style={{ fontSize: 24 }} />
           </Button>
           <Text as="p" fontSize={1} color="grey.50">
             Contains EPS, PNG, and SVG files
@@ -225,11 +225,11 @@ const Logo = ({ data, location }) => (
           </Text>
           <Button outlined as="a" href="/Gatsby-Logo.svg" mt={3} mb={3} mr={3}>
             Logo SVG{` `}
-            <MdFileDownload style={{ verticalAlign: `middle`, fontSize: 24 }} />
+            <ArrowDownwardIcon />
           </Button>
           <Button outlined as="a" href="/Gatsby-Monogram.svg" mt={3} mb={3}>
             Monogram SVG{` `}
-            <MdFileDownload style={{ verticalAlign: `middle`, fontSize: 24 }} />
+            <ArrowDownwardIcon />
           </Button>
         </ContentColumn>
       </Columns>

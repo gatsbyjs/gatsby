@@ -22,6 +22,14 @@ const buttonPropTypes = {
 }
 
 const Button = styled(Box)(
+  props => {
+    return {
+      "&&": {
+        color: `#fff`,
+        borderColor: `#639`,
+      },
+    }
+  },
   {
     appearance: `none`,
     display: `inline-block`,
@@ -40,13 +48,18 @@ const Button = styled(Box)(
   props =>
     props.outlined && {
       background: themeGet(`colors.white`)(props),
-      border: `1px solid ${themeGet(`colors.purple.30`)(props)}`,
-      color: themeGet(`colors.purple.60`)(props),
       fontSize: `${themeGet(`fontSizes.3`)(props)}px`,
+      ":hover": {
+        borderColor: `inherit`,
+      },
       fontWeight: `normal`,
       padding: `${themeGet(`space.2`)(props)}px ${themeGet(`space.3`)(
         props
       )}px`,
+      "&&": {
+        border: `1px solid ${themeGet(`colors.purple.30`)(props)}`,
+        color: themeGet(`colors.purple.60`)(props),
+      },
       [`@media (min-width: ${themeGet(`breakpoints.md`)(props)}px)`]: {
         fontSize: `${themeGet(`fontSizes.3`)(props)}px`,
       },
