@@ -27,6 +27,8 @@ import Wordmark from "!raw-loader!../../assets/guidelines/wordmark.svg"
 import Clearspace from "!raw-loader!../../assets/guidelines/clearspace.svg"
 import ClearspaceMonogram from "!raw-loader!../../assets/guidelines/clearspace-monogram.svg"
 import ManuallyTracked from "!raw-loader!../../assets/guidelines/manually-tracked.svg"
+import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-lockups.svg"
+
 import ColorSwatch from "../../components/guidelines/color/card"
 
 import { Box, Button, Flex, Text } from "../../components/guidelines/system"
@@ -319,6 +321,31 @@ const Logo = ({ data, location }) => (
             <Monogram size={32} mr={{ xxs: 4, lg: 6 }} />
             <Monogram size={16} display={{ xxs: `none`, lg: `block` }} />
           </Flex>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section id="partnership-lockups">
+      <SectionHeading>Partnership Lockups</SectionHeading>
+      <Columns>
+        <CopyColumn sticky={false}>
+          <p>
+            When combining our logotype with another brand, product, or
+            technology, we prefer the monogram over the logotype. It should be
+            the same visual weight as the partner's logo, and connected by a
+            "plus" sign.
+          </p>
+        </CopyColumn>
+        <ContentColumn>
+          <Flex alignItems="flex-end" flexWrap="wrap" />
+          <Box
+            maxWidth="542px"
+            mb={4}
+            dangerouslySetInnerHTML={{
+              __html: PartnershipLockups,
+            }}
+            css={{ svg: { display: `block`, width: `100%` } }}
+          />
         </ContentColumn>
       </Columns>
     </Section>
