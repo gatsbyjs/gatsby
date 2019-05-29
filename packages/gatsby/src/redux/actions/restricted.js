@@ -210,15 +210,12 @@ const withDeprecationWarning = ({
 
 const withErrorMessage = ({ api, actionNames, alternativeAPI }) =>
   actionNames.reduce((acc, action) => {
-    acc[action] = () => {
+    // return a thunk that does not dispatch anything
+    acc[action] = () => () => {
       report.error(
         `\`${action}\` is not available in the \`${api}\` API. ` +
           `Please use: ${alternativeAPI.map(a => `\`${a}\``).join(`, `)}.`
       )
-      // FIXME: Dummy error action - required because action creators
-      // must return an action. Better would be to have a logging middleware
-      // so we could just `return log({ message, type: 'error' })`
-      return { type: `DISPATCH_ERROR` }
     }
     return acc
   }, {})
