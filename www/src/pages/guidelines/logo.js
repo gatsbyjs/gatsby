@@ -606,7 +606,6 @@ const Logo = ({ data, location }) => (
                 css={{
                   color: theme.colors.purple[`50`],
                   textDecoration: `none`,
-                  fontWeight: `bold`,
                 }}
                 href={node.href}
                 key={`logo-footnotes-${index}`}

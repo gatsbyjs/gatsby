@@ -426,7 +426,7 @@ const Typography = ({ data, location }) => (
           <Text
             fontSize={{ xxs: 2, md: 3, lg: 4 }}
             color="black.50"
-            fontWeight="400"
+            fontWeight={0}
             // fontFamily="serif"
           >
             <ImagePlaceholder mb={4} />
