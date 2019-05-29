@@ -28,7 +28,6 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
     args.getResourcesForPathnameSync = getResourcesForPathnameSync
     // Deprecated April 2019. Use `loadPage` instead
     args.getResourcesForPathname = getResourcesForPathname
-    // Deprecated April 2019. Use resources passed in `onPostPrefetch` instead
     args.getResourceURLsForPathname = getResourceURLsForPathname
     args.loadPage = loadPage
     args.loadPageSync = loadPageSync
