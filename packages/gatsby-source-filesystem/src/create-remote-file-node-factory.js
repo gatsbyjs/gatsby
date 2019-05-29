@@ -1,365 +1,262 @@
-const fs = require(`fs-extra`)
-const got = require(`got`)
-const path = require(`path`)
-const { isWebUri } = require(`valid-url`)
-const Queue = require(`better-queue`)
-const readChunk = require(`read-chunk`)
-const fileType = require(`file-type`)
-const ProgressBar = require(`progress`)
-
-const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
-const cacheId = url => `create-remote-file-node-${url}`
-
-const bar = new ProgressBar(
-  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
+jest.mock(`fs-extra`, () => {
+  return {
+    createWriteStream: jest.fn(() => {
+      return {
+        on: jest.fn((type, cb) => {
+          if (type === `finish`) {
+            cb()
+          }
+        }),
+      }
+    }),
+    ensureDir: jest.fn(),
+    move: jest.fn(),
+    stat: jest.fn(),
   }
+})
+jest.mock(`got`, () => {
+  return {
+    stream: jest.fn(),
+  }
+})
+jest.mock(
+  `progress`,
+  () =>
+    class ProgressBar {
+      static total = 0
+      static tick = jest.fn(() => (ProgressBar.total -= 1))
+
+      total = ProgressBar.total
+      tick = ProgressBar.tick
+    }
 )
+jest.mock(`../create-file-node`, () => {
+  return {
+    createFileNode: jest.fn(),
+  }
+})
+const got = require(`got`)
+const ProgressBar = require(`progress`)
+const createRemoteFileNode = require(`../create-remote-file-node-factory`)()
+const { createFileNode } = require(`../create-file-node`)
 
-/********************
- * Type Definitions *
- ********************/
+beforeEach(() => {
+  ProgressBar.total = 0
+  ProgressBar.tick.mockClear()
+})
 
-/**
- * @typedef {Redux}
- * @see [Redux Docs]{@link https://redux.js.org/api-reference}
- */
+describe(`create-remote-file-node`, () => {
+  const defaultArgs = {
+    url: ``,
+    store: {},
+    cache: {},
+    createNode: jest.fn(),
+    createNodeId: jest.fn(),
+  }
 
-/**
- * @typedef {GatsbyCache}
- * @see gatsby/packages/gatsby/utils/cache.js
- */
+  describe(`basic functionality`, () => {
+    describe(`non-url`, () => {
+      it(`short-circuits and resolves`, () => {
+        const value = createRemoteFileNode({
+          ...defaultArgs,
+          url: ``,
+        })
 
-/**
- * @typedef {Auth}
- * @type {Object}
- * @property {String} htaccess_pass
- * @property {String} htaccess_user
- */
+        expect(value).rejects.toMatch(`wrong url: `)
+      })
 
-/**
- * @typedef {CreateRemoteFileNodePayload}
- * @typedef {Object}
- * @description Create Remote File Node Payload
- *
- * @param  {String} options.url
- * @param  {Redux} options.store
- * @param  {GatsbyCache} options.cache
- * @param  {Function} options.createNode
- * @param  {Auth} [options.auth]
- */
+      it(`does not increment progress bar total`, () => {
+        const value = createRemoteFileNode({
+          ...defaultArgs,
+          url: ``,
+        })
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
+        expect(value).rejects.toMatch(`wrong url: `)
 
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} url
- * @return {String}
- */
-const createFilePath = (directory, filename, ext) =>
-  path.join(directory, `${filename}${ext}`)
-
-module.exports = ({ maxConcurrentTasks = 200, logProgress = true } = {}) => {
-  /********************
-   * Queue Management *
-   ********************/
-
-  /**
-   * Queue
-   * Use the task's url as the id
-   * When pushing a task with a similar id, prefer the original task
-   * as it's already in the processing cache
-   */
-  const queue = new Queue(pushToQueue, {
-    id: `url`,
-    merge: (old, _, cb) => cb(old),
-    concurrent: maxConcurrentTasks,
+        expect(ProgressBar.total).toBe(0)
+        expect(ProgressBar.tick).not.toHaveBeenCalled()
+      })
+    })
   })
 
-  /**
-   * @callback {Queue~queueCallback}
-   * @param {*} error
-   * @param {*} result
-   */
+  describe(`valid url`, () => {
+    let uuid = 0
 
-  /**
-   * pushToQueue
-   * --
-   * Handle tasks that are pushed in to the Queue
-   *
-   *
-   * @param  {CreateRemoteFileNodePayload}          task
-   * @param  {Queue~queueCallback}  cb
-   * @return {Promise<null>}
-   */
-  async function pushToQueue(task, cb) {
-    try {
-      const node = await processRemoteNode(task)
-      return cb(null, node)
-    } catch (e) {
-      return cb(e)
-    }
-  }
+    const setup = (
+      args = {},
+      type = `response`,
+      response = { statusCode: 200 }
+    ) => {
+      const url = `https://images.whatever.com/real-image-trust-me-${uuid}.png`
 
-  /******************
-   * Core Functions *
-   ******************/
-
-  /**
-   * requestRemoteNode
-   * --
-   * Download the requested file
-   *
-   * @param  {String}   url
-   * @param  {Headers}  headers
-   * @param  {String}   tmpFilename
-   * @param  {Object}   httpOpts
-   * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
-   */
-  const requestRemoteNode = (url, headers, tmpFilename, httpOpts) =>
-    new Promise((resolve, reject) => {
-      const opts = Object.assign({}, { timeout: 30000, retries: 5 }, httpOpts)
-      const responseStream = got.stream(url, {
-        headers,
-        ...opts,
-      })
-      const fsWriteStream = fs.createWriteStream(tmpFilename)
-      responseStream.pipe(fsWriteStream)
-      responseStream.on(`downloadProgress`, pro => logProgress && console.log(pro))
-
-      // If there's a 400/500 response or other error.
-      responseStream.on(`error`, (error, body, response) => {
-        fs.removeSync(tmpFilename)
-        reject(error)
-      })
-
-      fsWriteStream.on(`error`, error => {
-        reject(error)
-      })
-
-      responseStream.on(`response`, response => {
-        fsWriteStream.on(`finish`, () => {
-          resolve(response)
-        })
-      })
-    })
-
-  /**
-   * processRemoteNode
-   * --
-   * Request the remote file and return the fileNode
-   *
-   * @param {CreateRemoteFileNodePayload} options
-   * @return {Promise<Object>} Resolves with the fileNode
-   */
-  async function processRemoteNode({
-    url,
-    store,
-    cache,
-    createNode,
-    parentNodeId,
-    auth = {},
-    httpHeaders = {},
-    createNodeId,
-    ext,
-    name,
-  }) {
-    // Ensure our cache directory exists.
-    const pluginCacheDir = path.join(
-      store.getState().program.directory,
-      CACHE_DIR,
-      FS_PLUGIN_DIR
-    )
-    await fs.ensureDir(pluginCacheDir)
-
-    // See if there's response headers for this url
-    // from a previous request.
-    const cachedHeaders = await cache.get(cacheId(url))
-    const headers = { ...httpHeaders }
-    if (cachedHeaders && cachedHeaders.etag) {
-      headers[`If-None-Match`] = cachedHeaders.etag
-    }
-
-    // Add htaccess authentication if passed in. This isn't particularly
-    // extensible. We should define a proper API that we validate.
-    const httpOpts = {}
-    if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-      httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-    }
-
-    // Create the temp and permanent file names for the url.
-    const digest = createContentDigest(url)
-    if (!name) {
-      name = getRemoteFileName(url)
-    }
-    if (!ext) {
-      ext = getRemoteFileExtension(url)
-    }
-
-    const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
-
-    // Fetch the file.
-    const response = await requestRemoteNode(
-      url,
-      headers,
-      tmpFilename,
-      httpOpts
-    )
-
-    if (response.statusCode == 200) {
-      // Save the response headers for future requests.
-      await cache.set(cacheId(url), response.headers)
-    }
-
-    // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-    if (ext === ``) {
-      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-      const filetype = fileType(buffer)
-      if (filetype) {
-        ext = `.${filetype.ext}`
+      const gotMock = {
+        pipe: jest.fn(),
+        on: jest.fn(),
       }
+
+      createFileNode.mockImplementationOnce(() => {
+        return {
+          internal: {},
+        }
+      })
+
+      got.stream.mockReturnValueOnce({
+        pipe: jest.fn(() => gotMock),
+        on: jest.fn((mockType, mockCallback) => {
+          if (mockType === type) {
+            // got throws on 404/500 so we mimic this behaviour
+            if (response.statusCode === 404) {
+              throw new Error(`Response code 404 (Not Found)`)
+            }
+
+            mockCallback(response)
+          }
+
+          return gotMock
+        }),
+      })
+
+      uuid += 1
+
+      return createRemoteFileNode({
+        ...defaultArgs,
+        cache: {
+          get: jest.fn(),
+          set: jest.fn(),
+        },
+        store: {
+          getState: jest.fn(() => {
+            return {
+              program: {
+                directory: `__whatever__`,
+              },
+            }
+          }),
+        },
+        url,
+        ...args,
+      })
     }
 
-    const filename = createFilePath(
-      path.join(pluginCacheDir, digest),
-      name,
-      ext
-    )
-    // If the status code is 200, move the piped temp file to the real name.
-    if (response.statusCode === 200) {
-      await fs.move(tmpFilename, filename, { overwrite: true })
-      // Else if 304, remove the empty response.
-    } else {
-      await fs.remove(tmpFilename)
-    }
+    it(`invokes ProgressBar tick`, async () => {
+      await setup()
 
-    // Create the file node.
-    const fileNode = await createFileNode(filename, createNodeId, {})
-    fileNode.internal.description = `File "${url}"`
-    fileNode.url = url
-    fileNode.parent = parentNodeId
-    // Override the default plugin as gatsby-source-filesystem needs to
-    // be the owner of File nodes or there'll be conflicts if any other
-    // File nodes are created through normal usages of
-    // gatsby-source-filesystem.
-    await createNode(fileNode, { name: `gatsby-source-filesystem` })
-
-    return fileNode
-  }
-
-  /**
-   * Index of promises resolving to File node from remote url
-   */
-  const processingCache = {}
-  /**
-   * pushTask
-   * --
-   * pushes a task in to the Queue and the processing cache
-   *
-   * Promisfy a task in queue
-   * @param {CreateRemoteFileNodePayload} task
-   * @return {Promise<Object>}
-   */
-  const pushTask = task =>
-    new Promise((resolve, reject) => {
-      queue
-        .push(task)
-        .on(`finish`, task => {
-          resolve(task)
-        })
-        .on(`failed`, err => {
-          reject(`failed to process ${task.url}\n${err}`)
-        })
+      expect(ProgressBar.tick).toHaveBeenCalledTimes(1)
     })
 
-  // Keep track of the total number of jobs we push in the queue
-  let totalJobs = 0
+    describe(`requesting remote image`, () => {
+      it(`passes correct url`, async () => {
+        const url = `https://hello.com/image.png`
+        await setup({
+          url,
+        })
 
-  /***************
-   * Entry Point *
-   ***************/
+        expect(got.stream).toHaveBeenCalledWith(url, expect.any(Object))
+      })
 
-  /**
-   * createRemoteFileNode
-   * --
-   *
-   * Download a remote file
-   * First checks cache to ensure duplicate requests aren't processed
-   * Then pushes to a queue
-   *
-   * @param {CreateRemoteFileNodePayload} options
-   * @return {Promise<Object>}                  Returns the created node
-   */
-  module.exports = ({
-    url,
-    store,
-    cache,
-    createNode,
-    parentNodeId = null,
-    auth = {},
-    httpHeaders = {},
-    createNodeId,
-    ext = null,
-    name = null,
-  }) => {
-    // validation of the input
-    // without this it's notoriously easy to pass in the wrong `createNodeId`
-    // see gatsbyjs/gatsby#6643
-    if (typeof createNodeId !== `function`) {
-      throw new Error(
-        `createNodeId must be a function, was ${typeof createNodeId}`
+      it(`passes headers`, async () => {
+        await setup()
+
+        expect(got.stream).toHaveBeenCalledWith(
+          expect.any(String),
+          expect.objectContaining({
+            headers: {},
+          })
+        )
+      })
+
+      it(`passes custom auth header, if defined`, async () => {
+        const auth = {
+          htaccess_user: `hunter2`,
+          htaccess_pass: `*******`,
+        }
+        await setup({
+          auth,
+        })
+
+        expect(got.stream).toHaveBeenCalledWith(
+          expect.any(String),
+          expect.objectContaining({
+            auth: [auth.htaccess_user, auth.htaccess_pass].join(`:`),
+          })
+        )
+      })
+
+      it(`passes custom http header, if defined`, async () => {
+        await setup({
+          httpHeaders: {
+            Authorization: `Bearer foobar`,
+          },
+        })
+
+        expect(got.stream).toHaveBeenCalledWith(
+          expect.any(String),
+          expect.objectContaining({
+            headers: expect.objectContaining({
+              Authorization: `Bearer foobar`,
+            }),
+          })
+        )
+      })
+
+      it(`fails when 404 is given`, async () => {
+        expect.assertions(1)
+        try {
+          await setup({}, `response`, { statusCode: 404 })
+        } catch (err) {
+          expect(err).toEqual(
+            expect.stringContaining(
+              `failed to process https://images.whatever.com/real-image-trust-me`
+            )
+          )
+        }
+      })
+    })
+  })
+
+  describe(`validation`, () => {
+    it(`throws on invalid inputs: createNode`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          createNode: undefined,
+        })
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"createNode must be a function, was undefined"`
       )
-    }
-    if (typeof createNode !== `function`) {
-      throw new Error(`createNode must be a function, was ${typeof createNode}`)
-    }
-    if (typeof store !== `object`) {
-      throw new Error(`store must be the redux store, was ${typeof store}`)
-    }
-    if (typeof cache !== `object`) {
-      throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
-    }
-
-    // Check if we already requested node for this remote file
-    // and return stored promise if we did.
-    if (processingCache[url]) {
-      return processingCache[url]
-    }
-
-    if (!url || isWebUri(url) === undefined) {
-      return Promise.reject(`wrong url: ${url}`)
-    }
-
-    totalJobs += 1
-    bar.total = totalJobs
-
-    const fileDownloadPromise = pushTask({
-      url,
-      store,
-      cache,
-      createNode,
-      parentNodeId,
-      createNodeId,
-      auth,
-      httpHeaders,
-      ext,
-      name,
     })
 
-    processingCache[url] = fileDownloadPromise.then(node => {
-      bar.tick()
-
-      return node
+    it(`throws on invalid inputs: createNodeId`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          createNodeId: undefined,
+        })
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"createNodeId must be a function, was undefined"`
+      )
     })
 
-    return processingCache[url]
-  }
-}
+    it(`throws on invalid inputs: cache`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          cache: undefined,
+        })
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"cache must be the Gatsby cache, was undefined"`
+      )
+    })
+
+    it(`throws on invalid inputs: store`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          store: undefined,
+        })
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"store must be the redux store, was undefined"`
+      )
+    })
+  })
+})

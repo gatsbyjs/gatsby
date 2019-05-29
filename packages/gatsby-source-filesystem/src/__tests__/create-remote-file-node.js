@@ -37,9 +37,9 @@ jest.mock(`../create-file-node`, () => {
     createFileNode: jest.fn(),
   }
 })
+
 const got = require(`got`)
 const ProgressBar = require(`progress`)
-const createRemoteFileNode = require(`../create-remote-file-node`)
 const { createFileNode } = require(`../create-file-node`)
 
 beforeEach(() => {
