@@ -18,6 +18,7 @@ import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import "../../fonts/Webfonts/futurapt_bold_macroman/MyFontsWebfontsKit.css"
 
 const Layout = ({ children, background, pathname }) => (
   <ThemeProvider theme={theme}>
@@ -50,9 +51,11 @@ const Layout = ({ children, background, pathname }) => (
     >
       {background && background}
       <Header />
-      {children}
+      <Box className="main-body">
+        {children}
+        <Footer />
+      </Box>
     </Box>
-    <Footer />
   </ThemeProvider>
 )
 

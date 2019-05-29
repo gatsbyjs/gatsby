@@ -29,6 +29,9 @@ const _options = {
       a: {
         textDecoration: `none`,
       },
+      h1: {
+        fontWeight: `800`,
+      },
       "h1, h2, h3, h4, h5, h6": {
         letterSpacing: letterSpacings.tight,
       },
