@@ -48,23 +48,23 @@ const Button = styled(Box)(
   props =>
     props.outlined && {
       background: themeGet(`colors.white`)(props),
-      fontSize: `${themeGet(`fontSizes.3`)(props)}px`,
-      ":hover": {
-        borderColor: `inherit`,
-      },
-      fontWeight: `normal`,
+      fontWeight: themeGet(`fontWeights.0`)(props),
       padding: `${themeGet(`space.2`)(props)}px ${themeGet(`space.3`)(
         props
       )}px`,
       "&&": {
         border: `1px solid ${themeGet(`colors.purple.30`)(props)}`,
         color: themeGet(`colors.purple.60`)(props),
-      },
-      [`@media (min-width: ${themeGet(`breakpoints.md`)(props)}px)`]: {
-        fontSize: `${themeGet(`fontSizes.3`)(props)}px`,
+        fontSize: `${themeGet(`fontSizes.3`)(props)}`,
+        ":hover": {
+          borderColor: themeGet(`colors.lilac`)(props),
+        },
       },
       svg: {
         height: 20,
+      },
+      [`@media (min-width: ${themeGet(`breakpoints.md`)(props)}px)`]: {
+        fontSize: `${themeGet(`fontSizes.3`)(props)}`,
       },
     }
 )
