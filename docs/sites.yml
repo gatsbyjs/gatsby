@@ -6114,3 +6114,16 @@
   built_by: Luke Secomb
   built_by_url: https://lukesecomb.digital
   featured: false
+- title: Global City Data
+  main_url: https://globalcitydata.com
+  url: https://globalcitydata.com
+  source_url: https://github.com/globalcitydata/globalcitydata
+  description: >
+    Global City Data is an open, easily browsable platform to showcase peer-reviewed urban datasets and models created by different research groups.
+  categories:
+    - Research
+    - Education
+    - Open Source
+  built_by: Rafi Barash
+  built_by_url: https://rafibarash.com
+  featured: false
