@@ -1,3 +1,5 @@
+import prism from "./prism"
+
 export default {
   root: {
     fontFamily: `body`,
@@ -7,8 +9,6 @@ export default {
     px: 3,
   },
   pre: {
-    // references styles from theme.prism (src/theme/prism.js)
-    variant: `prism`,
     fontFamily: `monospace`,
     tabSize: 4,
     hyphens: `none`,
@@ -17,6 +17,7 @@ export default {
     bg: `none`,
     overflow: `auto`,
     p: 3,
+    ...prism,
   },
   code: {
     fontFamily: `monospace`,

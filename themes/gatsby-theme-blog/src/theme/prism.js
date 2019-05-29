@@ -1,4 +1,3 @@
-// todo: swap for theme colors
 export default {
   ".attr-name": {
     fontStyle: `italic`,
@@ -6,7 +5,7 @@ export default {
   ".comment": {
     color: `prism.comment`,
   },
-  [[`.attr-name`, `.string`, `.url`]]: {
+  ".attr-name, .string, .url": {
     color: `prism.string`,
   },
   ".variable": {
@@ -15,16 +14,16 @@ export default {
   ".number": {
     color: `prism.number`,
   },
-  [[`.builtin`, `.char`, `.constant`, `.function`]]: {
+  ".builtin, .char, .constant, .function": {
     color: `prism.constant`,
   },
-  [[`.punctuation`, `.selector`, `.doctype`]]: {
+  ".punctuation, .selector, .doctype": {
     color: `prism.punctuation`,
   },
   ".class-name": {
     color: `prism.className`,
   },
-  [[`.tag`, `.operator`, `.keyword`]]: {
+  ".tag, .operator, .keyword": {
     color: `prism.tag`,
   },
   ".boolean": {
