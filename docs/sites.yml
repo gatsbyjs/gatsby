@@ -6139,3 +6139,13 @@
   built_by: Rafi Barash
   built_by_url: https://rafibarash.com
   featured: false
+- title: Submittable
+  url: https://www.submittable.com
+  main_url: https://www.submittable.com
+  description: >
+    Submissions made simple. Submittalbe is a cloud-based submissions manager that lets you accept, review, and make decisions on any kind of digital content.
+  categories:
+    - Technology
+    - Marketing
+  built_by: Genevieve Crow
+  built_by_url: https://github.com/g-crow
