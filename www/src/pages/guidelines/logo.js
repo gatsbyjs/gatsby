@@ -574,10 +574,9 @@ const Logo = ({ data, location }) => (
         <ContentColumn>
           {data.allFootnotesYaml.edges.map(({ node }, index) => (
             <Text key={`logo-footnotes-${index}`} mb={3}>
-              {node.description}:
+              {node.description}:<br />
               <a
                 css={{
-                  display: `block`,
                   color: theme.colors.purple[`50`],
                   textDecoration: `none`,
                   fontWeight: `bold`,
@@ -585,7 +584,7 @@ const Logo = ({ data, location }) => (
                 href={node.href}
                 key={`logo-footnotes-${index}`}
               >
-                {node.href}
+                {node.href.replace(/^(?:https?:\/\/)?(?:www\.)?/i, ``)}
               </a>
             </Text>
           ))}
