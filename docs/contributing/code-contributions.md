@@ -110,6 +110,6 @@ Using Docker Compose, you can start and stop a Wordpress instance and integrate 
 
 Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
 
-## Sharing
+## Feedback
 
 At any point during the contributing process, the Gatsby Core team would love to help! We hold a weekly [Core Maintainer's meeting](/contributing/commnuity#core-maintainers-meeting) where you can share your creation(s) and receive advice and feedback directly from the team!
