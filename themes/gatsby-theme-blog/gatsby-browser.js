@@ -1,6 +1,4 @@
 import React from "react"
-import "typeface-montserrat"
-import "typeface-merriweather"
 import ThemeProvider from "./src/theme/provider"
 
 export const wrapRootElement = ({ element }) => (
