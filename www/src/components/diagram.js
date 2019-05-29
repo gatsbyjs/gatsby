@@ -21,17 +21,10 @@ import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = colors.purple[70]
 const stripeSize = 15
-const stripeAnimation = keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
 const stripeBg = {
   backgroundColor: colors.purple[80],
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
   backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
-  animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },

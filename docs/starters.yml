@@ -2728,3 +2728,18 @@
     - Typing generation for GraphQL using GraphQL Code Generator
     - Comes with React Helmet for adding site meta tags
     - Based on Gatsby Starter Default
+- url: http://gatsbyhoney.davshoward.com/
+  repo: https://github.com/davshoward/gatsby-starter-honey
+  description: A delicious baseline for Gatsby (v2).
+  tags:
+    - Styling:PostCSS
+    - SEO
+    - Accessibility
+  features:
+    - Gastby v2
+    - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
+    - Google Analytics
+    - PostCSS support
+    - Developer enviornment variables
+    - Accessibility support
+    - Based on Gatsby Starter Default
