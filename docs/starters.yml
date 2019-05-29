@@ -2719,7 +2719,7 @@
     - Offline support
     - Web App Manifest
 - url: https://gatsby-starter-anoun-1-markdown.netlify.com/
-  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown/
+  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
   description: A clean, modern starter for businesses using Material Design Components
   tags:
     - Business Website
