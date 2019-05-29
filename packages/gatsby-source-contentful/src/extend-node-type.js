@@ -323,7 +323,6 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
     args: {
       width: {
         type: GraphQLInt,
-        defaultValue: 400,
       },
       height: {
         type: GraphQLInt,
@@ -418,7 +417,6 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
     args: {
       maxWidth: {
         type: GraphQLInt,
-        defaultValue: 800,
       },
       maxHeight: {
         type: GraphQLInt,
@@ -546,7 +544,6 @@ exports.extendNodeType = ({ type, store }) => {
       args: {
         width: {
           type: GraphQLInt,
-          defaultValue: 400,
         },
         height: {
           type: GraphQLInt,
