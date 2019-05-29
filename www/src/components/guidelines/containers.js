@@ -40,7 +40,7 @@ export const CopyColumn = ({ children, sticky = true, ...rest }) => (
   <Box
     {...rest}
     fontSize={2}
-    mr={{ md: 7 }}
+    mr={{ md: 10 }}
     mb={{ xs: 4, lg: 0 }}
     maxWidth={{ xxs: `30rem`, lg: `none` }}
     width={{ lg: `25rem` }}
