@@ -31,7 +31,7 @@ We often hear that first contact with GraphQL is through Gatsby. GraphQL, like a
 
 Check ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details about it from [OneGraph](https://www.onegraph.com/) (creators of GraphiQL Explorer).
 
-## Advenced usecases
+## Advanced usecases
 
 Improvements to onboarding users new to GraphQL isn't only goal of integrating GraphiQL Explorer into Gatsby. There are other pain points that are getting addressed with this addition. Example of this would be [union types and inline fragments](https://graphql.org/learn/queries/#inline-fragments). If user is not aware of syntax used to query this type of fields it can be pretty frustrating experience. Explorer helps here too by listing available types in union:
 
