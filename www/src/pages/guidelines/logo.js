@@ -218,7 +218,7 @@ const Logo = ({ data, location }) => (
           <Text as="p" fontSize={1} color="grey.50">
             Contains EPS, PNG, and SVG files
             <br />
-            v1.0, February 20, 2019
+            v1.0, May 28, 2019
           </Text>
           <Text as="p" mb={0} fontSize={1}>
             In a hurry? Here’s just the SVGs:
