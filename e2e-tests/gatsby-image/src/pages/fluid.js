@@ -24,7 +24,7 @@ export const pageQuery = graphql`
     fruitsFluid: file(relativePath: { eq: "citrus-fruits.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 500) {
-          ...GatsbyImageSharpFluid
+          ...GatsbyImageSharpFluid_withWebp
         }
       }
     }

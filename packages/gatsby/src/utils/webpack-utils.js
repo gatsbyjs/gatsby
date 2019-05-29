@@ -5,6 +5,7 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
+const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 
@@ -366,7 +367,7 @@ module.exports = async ({
   rules.media = () => {
     return {
       use: [loaders.url()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
     }
   }
 
@@ -444,7 +445,9 @@ module.exports = async ({
   plugins.minifyJs = ({ terserOptions, ...options } = {}) =>
     new TerserPlugin({
       cache: true,
-      parallel: true,
+      // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
+      // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
+      parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {

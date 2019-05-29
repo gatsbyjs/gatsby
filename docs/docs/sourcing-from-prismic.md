@@ -31,7 +31,7 @@ In order for Gatsby to grab all information from Prismic you'll need to generate
 First, open a new terminal window and run the following command to create a new site:
 
 ```shell
-npx gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change `prismic-tutorial` in the command above to whatever name you prefer!
@@ -56,7 +56,7 @@ API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
 
 _Note: If you want to locally build your project you'll also have to create a `.env.production` file with the same content._
 
-Now you need to configure the plugin (See all [available options](https://github.com/angeloashmore/gatsby-source-prismic/tree/master)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/javascript/query-the-api/link-resolving) for each field if necessary.
+Now you need to configure the plugin (See all [available options](https://www.npmjs.com/package/gatsby-source-prismic#how-to-use)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/javascript/query-the-api/link-resolving) for each field if necessary.
 
 Add the following to register the plugin:
 

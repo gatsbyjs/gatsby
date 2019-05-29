@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.12...gatsby-plugin-typography@2.2.13) (2019-04-12)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.11...gatsby-plugin-typography@2.2.12) (2019-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.10...gatsby-plugin-typography@2.2.11) (2019-04-08)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.9...gatsby-plugin-typography@2.2.10) (2019-03-13)
+
+### Bug Fixes
+
+- **gatsby-pugin-typography:** headerComponents is now tolerant to null values ([#12551](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/12551)) ([a02ef30](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/commit/a02ef30)), closes [#12549](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/12549)
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.8...gatsby-plugin-typography@2.2.9) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.2.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.7...gatsby-plugin-typography@2.2.8) (2019-03-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-typography:** sort typography style tag first to avoid overwriting issues ([#12295](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/issues/12295)) ([5caf95e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/commit/5caf95e))
+
 ## [2.2.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography/compare/gatsby-plugin-typography@2.2.6...gatsby-plugin-typography@2.2.7) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-typography

@@ -39,7 +39,7 @@ module.exports = {
         url: "https://api.github.com/graphql",
         // HTTP headers
         headers: {
-          // Learn about environment variables: https://gatsby.app/env-vars
+          // Learn about environment variables: https://gatsby.dev/env-vars
           Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
         },
         // Additional options to pass to node-fetch
@@ -156,4 +156,4 @@ module.exports = {
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://gatsby.app/env-vars
+[envvars]: https://gatsby.dev/env-vars

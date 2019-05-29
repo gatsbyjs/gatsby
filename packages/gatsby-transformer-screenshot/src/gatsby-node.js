@@ -44,6 +44,7 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        parentNodeId: n.id,
         createContentDigest,
       })
     } else {
@@ -90,6 +91,7 @@ exports.onCreateNode = async (
           createNode,
           createNodeId,
           createContentDigest,
+          parentNodeId: node.id,
         })
         .on(`finish`, r => {
           resolve(r)
@@ -115,6 +117,7 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  parentNodeId,
   createContentDigest,
 }) => {
   try {
@@ -135,6 +138,7 @@ const createScreenshotNode = async ({
         cache,
         createNode,
         createNodeId,
+        parentNodeId,
       })
       expires = screenshotResponse.data.expires
 

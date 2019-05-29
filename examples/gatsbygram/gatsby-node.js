@@ -40,7 +40,7 @@ exports.createPages = ({ graphql, actions }) => {
     // Create image post pages.
     const postTemplate = path.resolve(`src/templates/post-page.js`)
     // We want to create a detailed page for each
-    // Instagram post. Since the scrapped Instagram data
+    // Instagram post. Since the scraped Instagram data
     // already includes an ID field, we just use that for
     // each page's path.
     _.each(result.data.allPostsJson.edges, edge => {

@@ -7,8 +7,8 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
-const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
+const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
@@ -21,24 +21,19 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
-require(`../db`).startAutosave()
+const withResolverContext = require(`../schema/context`)
+// Add `util.promisify` polyfill for old node versions
+require(`util.promisify/shim`)()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const {
-  extractQueries,
-} = require(`../internal-plugins/query-runner/query-watcher`)
-const {
-  runInitialQueries,
-} = require(`../internal-plugins/query-runner/page-query-runner`)
-const queryQueue = require(`../internal-plugins/query-runner/query-queue`)
-const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
-const {
-  writeRedirects,
-} = require(`../internal-plugins/query-runner/redirects-writer`)
+const { extractQueries } = require(`../query/query-watcher`)
+const queryUtil = require(`../query`)
+const { writePages } = require(`../query/pages-writer`)
+const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -108,8 +103,12 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity = report.activityTimer(`load plugins`)
   activity.start()
-  const flattenedPlugins = await loadPlugins(config)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
+
+  telemetry.decorateEvent(`BUILD_END`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
 
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {
@@ -119,22 +118,24 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // Delete html and css files from the public directory as we don't want
+  // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  activity = report.activityTimer(
-    `delete html and css files from previous builds`,
-    {
-      parentSpan: bootstrapSpan,
-    }
-  )
-  activity.start()
-  await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
-  ])
-  activity.end()
+  if (process.env.NODE_ENV === `production`) {
+    activity = report.activityTimer(
+      `delete html and css files from previous builds`,
+      {
+        parentSpan: bootstrapSpan,
+      }
+    )
+    activity.start()
+    await del([
+      `public/*.{html,css}`,
+      `public/**/*.{html,css}`,
+      `!public/static`,
+      `!public/static/**/*.{html,css}`,
+    ])
+    activity.end()
+  }
 
   activity = report.activityTimer(`initialize cache`)
   activity.start()
@@ -385,7 +386,13 @@ module.exports = async (args: BootstrapArgs) => {
 
   const graphqlRunner = (query, context = {}) => {
     const schema = store.getState().schema
-    return graphql(schema, query, context, context, context)
+    return graphql(
+      schema,
+      query,
+      context,
+      withResolverContext(context, schema),
+      context
+    )
   }
 
   // Collect pages.
@@ -429,10 +436,8 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`).build({ parentSpan: activity.span })
+  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
-
-  require(`../schema/type-conflict-reporter`).printConflicts()
 
   // Extract queries
   activity = report.activityTimer(`extract queries from components`, {
@@ -447,22 +452,27 @@ module.exports = async (args: BootstrapArgs) => {
     require(`./page-hot-reloader`)(graphqlRunner)
   }
 
-  // Run queries
-  activity = report.activityTimer(`run graphql queries`, {
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  activity = report.activityTimer(`run static queries`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  const startQueries = process.hrtime()
-  queryQueue.on(`task_finish`, () => {
-    const stats = queryQueue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
   })
-  await runInitialQueries(activity)
   activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
 
   // Write out files.
   activity = report.activityTimer(`write out page data`, {
@@ -484,50 +494,46 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
-  const checkJobsDone = _.debounce(resolve => {
+  let onEndJob
+
+  const checkJobsDone = _.debounce(async resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
-      report.log(``)
-      report.info(`bootstrap finished - ${process.uptime()} s`)
-      report.log(``)
+      emitter.off(`END_JOB`, onEndJob)
 
-      // onPostBootstrap
-      activity = report.activityTimer(`onPostBootstrap`, {
-        parentSpan: bootstrapSpan,
-      })
-      activity.start()
-      apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(
-        () => {
-          activity.end()
-          bootstrapSpan.finish()
-          resolve({ graphqlRunner })
-        }
-      )
+      await finishBootstrap(bootstrapSpan)
+      resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    // onPostBootstrap
-    activity = report.activityTimer(`onPostBootstrap`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
-    activity.end()
-
-    bootstrapSpan.finish()
-
-    report.log(``)
-    report.info(`bootstrap finished - ${process.uptime()} s`)
-    report.log(``)
-    emitter.emit(`BOOTSTRAP_FINISHED`)
-    return {
-      graphqlRunner,
-    }
+    await finishBootstrap(bootstrapSpan)
+    return { graphqlRunner }
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
+      onEndJob = () => checkJobsDone(resolve)
+      emitter.on(`END_JOB`, onEndJob)
     })
   }
+}
+
+const finishBootstrap = async bootstrapSpan => {
+  // onPostBootstrap
+  const activity = report.activityTimer(`onPostBootstrap`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+  activity.end()
+
+  report.log(``)
+  report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
+  report.log(``)
+  emitter.emit(`BOOTSTRAP_FINISHED`)
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_FINISHED`
+  )
+
+  bootstrapSpan.finish()
 }

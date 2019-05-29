@@ -79,7 +79,7 @@ All queries queued after being extracted (from `query-watcher.js`).
 
 ##### Queries without node dependencies
 
-All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is _not_ contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89).
+All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is _not_ contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L96).
 
 ##### Pages that depend on dirty nodes
 
@@ -87,7 +87,7 @@ In `develop` mode, every time a node is created, or is updated (e.g via editing 
 
 #### Queue Queries for Execution
 
-We now have the list of all pages that need to be executed (linked to their Query information). Let's queue them for execution (for realz this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L21) kicks off this step. For each page or static query, we create a Query Job that looks something like:
+We now have the list of all pages that need to be executed (linked to their Query information). Let's queue them for execution (for realz this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L127) kicks off this step. For each page or static query, we create a Query Job that looks something like:
 
 ```javascript
 {

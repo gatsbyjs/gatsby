@@ -18,6 +18,7 @@ const HomepageBlog = ({ posts }) => (
         label: `View all posts`,
         to: `/blog/`,
         icon: ArrowForwardIcon,
+        tracking: `The Gatsby Blog - View all posts`,
       },
     ]}
   >

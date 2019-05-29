@@ -69,8 +69,8 @@ The result is an array of File "nodes" (node is a fancy name for an object in a
 
 ## Transforming File nodes
 
-Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-plugin`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
+Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-filesystem`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
 
 ## Further reference and examples
 
-For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).
+For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).

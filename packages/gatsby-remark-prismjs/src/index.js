@@ -70,7 +70,7 @@ module.exports = (
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
-    +       `${highlightCode(languageName, node.value, highlightLines)}`
+    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`

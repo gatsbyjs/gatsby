@@ -33,6 +33,10 @@ function getErrorFormatter() {
     },
   })
 
+  if (process.env.FORCE_COLOR === `0`) {
+    prettyError.withoutColors()
+  }
+
   prettyError.render = err => {
     if (Array.isArray(err)) {
       return err.map(prettyError.render).join(`\n`)

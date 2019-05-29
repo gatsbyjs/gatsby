@@ -13,7 +13,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -51,7 +51,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -88,7 +88,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -118,7 +118,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -173,7 +173,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -194,7 +194,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -216,7 +216,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -248,143 +248,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
-                    Object {
-                      "loader": "/resolved/path/postcss-loader",
-                      "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
-                        "sourceMap": false,
-                      },
-                    },
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.css\\$/,
-                  "use": Array [
-                    "miniCssExtract",
-                    "css-loader({\\"importLoaders\\":1})",
-                    Object {
-                      "loader": "/resolved/path/postcss-loader",
-                      "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
-                        "sourceMap": false,
-                      },
-                    },
-                  ],
-                },
-                Object {
-                  "loaders": Array [
-                    "css-loader",
-                  ],
-                  "test": /\\\\\\.css\\$/,
-                },
-                Object {
-                  "loaders": Array [
-                    "css-loader",
-                  ],
-                  "test": /\\\\\\.module\\\\\\.css\\$/,
-                },
-              ],
-            },
-            Object {
-              "test": /\\\\\\.js/,
-              "use": Array [
-                "babel-loader",
-              ],
-            },
-          ],
-        },
-      },
-    ],
-    Array [
-      Object {
-        "module": Object {
-          "rules": Array [
-            Object {
-              "oneOf": Array [
-                Object {
-                  "test": /\\\\\\.module\\\\\\.css\\$/,
-                  "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
-                    Object {
-                      "loader": "/resolved/path/postcss-loader",
-                      "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
-                        "sourceMap": false,
-                      },
-                    },
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.css\\$/,
-                  "use": Array [
-                    "null-loader",
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.module\\\\\\.css\\$/,
-                  "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
-                    Object {
-                      "loader": "/resolved/path/postcss-loader",
-                      "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
-                        "sourceMap": false,
-                      },
-                    },
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.css\\$/,
-                  "use": Array [
-                    "null-loader",
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.module\\\\\\.css\\$/,
-                  "use": Array [
-                    "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
-                    Object {
-                      "loader": "/resolved/path/postcss-loader",
-                      "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
-                        "sourceMap": false,
-                      },
-                    },
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.css\\$/,
-                  "use": Array [
-                    "miniCssExtract",
-                    "css-loader({\\"importLoaders\\":1})",
-                    Object {
-                      "loader": "/resolved/path/postcss-loader",
-                      "options": Object {
-                        "plugins": Array [
-                          "autoprefixer",
-                        ],
-                        "sourceMap": false,
-                      },
-                    },
-                  ],
-                },
-                Object {
-                  "test": /\\\\\\.module\\\\\\.css\\$/,
-                  "use": Array [
-                    "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -445,7 +309,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -466,7 +330,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -488,7 +352,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -520,7 +384,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -581,7 +445,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -602,7 +466,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -624,7 +488,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -656,7 +520,143 @@ exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "plugins": Array [
+                          "autoprefixer",
+                        ],
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "plugins": Array [
+                          "autoprefixer",
+                        ],
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "plugins": Array [
+                          "autoprefixer",
+                        ],
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "plugins": Array [
+                          "autoprefixer",
+                        ],
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "plugins": Array [
+                          "autoprefixer",
+                        ],
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "plugins": Array [
+                          "autoprefixer",
+                        ],
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -743,7 +743,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -781,7 +781,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -836,7 +836,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -868,7 +868,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -930,7 +930,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -962,7 +962,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1041,7 +1041,7 @@ exports[`gatsby-plugin-postcss Stage: develop / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1092,7 +1092,7 @@ exports[`gatsby-plugin-postcss Stage: develop / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1167,7 +1167,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1205,7 +1205,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1242,7 +1242,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1293,7 +1293,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1315,7 +1315,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1347,7 +1347,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1408,7 +1408,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1430,7 +1430,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1462,7 +1462,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1523,7 +1523,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1545,7 +1545,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -1577,7 +1577,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"modules\\":true,\\"importLoaders\\":1})",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {

@@ -2,13 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import Link, {
   withPrefix,
+  withAssetPrefix,
   navigate,
   push,
   replace,
   navigateTo,
+  parsePath,
 } from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
-import parsePath from "./parse-path"
 
 const StaticQueryContext = React.createContext({})
 
@@ -61,14 +62,15 @@ StaticQuery.propTypes = {
 function graphql() {
   throw new Error(
     `It appears like Gatsby is misconfigured. Gatsby related \`graphql\` calls ` +
-      `are supposed to only be evaluated at compile time, and then compiled away,. ` +
-      `Unfortunately, something went wrong and the query was left in the compiled code.\n\n.` +
+      `are supposed to only be evaluated at compile time, and then compiled away. ` +
+      `Unfortunately, something went wrong and the query was left in the compiled code.\n\n` +
       `Unless your site has a complex or custom babel/Gatsby configuration this is likely a bug in Gatsby.`
   )
 }
 
 export {
   Link,
+  withAssetPrefix,
   withPrefix,
   graphql,
   parsePath,

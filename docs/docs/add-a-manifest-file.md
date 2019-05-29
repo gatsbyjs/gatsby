@@ -24,7 +24,9 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information look at the docs of [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+
+3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -41,6 +43,10 @@ npm install --save gatsby-plugin-manifest
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
         display: "standalone",
         icon: "src/images/icon.png", // This path is relative to the root of the site.
+        // An optional attribute which provides support for CORS check.
+        // If you do not provide a crossOrigin option, it will skip CORS for manifest.
+        // Any invalid keyword or empty string defaults to `anonymous`
+        crossOrigin: `use-credentials`,
       },
     },
   ]

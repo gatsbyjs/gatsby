@@ -8,10 +8,11 @@ about: Usage question or discussion about Gatsby.
 
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
+  - Contributing: https://www.gatsbyjs.org/contributing/
 
   Gatsby has several community support channels, try asking your question on:
 
-  - Discord: https://gatsby.app/discord
+  - Discord: https://gatsby.dev/discord
   - Spectrum: https://spectrum.chat/gatsby-js
   - Twitter: https://twitter.com/gatsbyjs
 
@@ -27,7 +28,7 @@ about: Usage question or discussion about Gatsby.
 ### Environment (if relevant)
 
 <!--
-  Required. Run `npx gatsby info --clipboard` in your gatsby project directory and paste its contents here.
+  Required. Run `gatsby info --clipboard` in your gatsby project directory and paste its contents here.
 -->
 
 ### File contents (if changed)

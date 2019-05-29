@@ -11,7 +11,12 @@ const builtTestsDirs = pkgs
   .filter(p => fs.existsSync(path.join(p, `src`)))
   .map(p => path.join(p, `__tests__`))
 const distDirs = pkgs.map(p => path.join(p, `dist`))
-const ignoreDirs = [].concat(gatsbyBuildDirs, builtTestsDirs, distDirs)
+const ignoreDirs = [`<rootDir>/packages/gatsby-dev-cli/verdaccio`].concat(
+  gatsbyBuildDirs,
+  builtTestsDirs,
+  distDirs
+)
+
 const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
 const useCoverage = !!process.env.GENERATE_JEST_REPORT
 
@@ -32,6 +37,7 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
+  snapshotSerializers: [`jest-serializer-path`],
   collectCoverage: useCoverage,
   coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
   coverageThreshold: {
@@ -44,4 +50,5 @@ module.exports = {
   },
   collectCoverageFrom: coverageDirs,
   reporters: [`default`].concat(useCoverage ? `jest-junit` : []),
+  testEnvironment: `jest-environment-jsdom-fourteen`,
 }

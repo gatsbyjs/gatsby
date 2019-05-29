@@ -14,7 +14,7 @@ module.exports = {
       options: {
         /*
          * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-         * Example : 'gatsbyjswpexample.wordpress.com' or 'www.example-site.com'
+         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
          */
         baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.

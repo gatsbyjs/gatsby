@@ -45,6 +45,7 @@ module.exports = function preset(_, options = {}) {
       [
         resolve(`@babel/preset-env`),
         {
+          corejs: 2,
           loose: true,
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,

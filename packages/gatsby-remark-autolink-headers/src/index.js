@@ -1,6 +1,7 @@
 const toString = require(`mdast-util-to-string`)
 const visit = require(`unist-util-visit`)
 const slugs = require(`github-slugger`)()
+const deburr = require(`lodash/deburr`)
 
 function patch(context, key, value) {
   if (!context[key]) {
@@ -14,12 +15,18 @@ const svgIcon = `<svg aria-hidden="true" focusable="false" height="16" version="
 
 module.exports = (
   { markdownAST },
-  { icon = svgIcon, className = `anchor`, maintainCase = false }
+  {
+    icon = svgIcon,
+    className = `anchor`,
+    maintainCase = false,
+    removeAccents = false,
+  }
 ) => {
   slugs.reset()
 
   visit(markdownAST, `heading`, node => {
-    const id = slugs.slug(toString(node), maintainCase)
+    const slug = slugs.slug(toString(node), maintainCase)
+    const id = removeAccents ? deburr(slug) : slug
     const data = patch(node, `data`, {})
 
     patch(data, `id`, id)

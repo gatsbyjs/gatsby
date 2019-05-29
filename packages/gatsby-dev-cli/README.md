@@ -34,7 +34,7 @@ watchers to build Gatsby source code.
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
 
 More detailed instruction for setting up your Gatsby development environment can
-be found [here](https://www.gatsbyjs.org/docs/how-to-contribute/).
+be found [here](https://www.gatsbyjs.org/contributing/how-to-contribute/).
 
 ### Other commands
 
@@ -55,7 +55,7 @@ https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 #### `--quiet`
 
-Don't output anything except for a quit message when used together with
+Don't output anything except for a success message when used together with
 `--scan-once`.
 
 #### `--copy-all`

@@ -1,3 +1,5 @@
+import "cypress-testing-library/add-commands"
+
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
     .window()

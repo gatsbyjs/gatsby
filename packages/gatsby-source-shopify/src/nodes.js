@@ -16,12 +16,13 @@ const PRODUCT_OPTION = `ProductOption`
 const PRODUCT_VARIANT = `ProductVariant`
 const SHOP_POLICY = `ShopPolicy`
 const PRODUCT_TYPE = `ProductType`
+const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
 
 const downloadImageAndCreateFileNode = async (
-  { url },
+  { url, nodeId },
   { createNode, createNodeId, touchNode, store, cache }
 ) => {
   let fileNodeID
@@ -41,6 +42,7 @@ const downloadImageAndCreateFileNode = async (
     cache,
     createNode,
     createNodeId,
+    parentNodeId: nodeId,
   })
 
   if (fileNode) {
@@ -63,7 +65,7 @@ export const ArticleNode = imageArgs =>
 
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
-        { id: node.image.id, url: node.image.src },
+        { id: node.image.id, url: node.image.src, nodeId: node.id },
         imageArgs
       )
 
@@ -84,6 +86,7 @@ export const CollectionNode = imageArgs =>
         {
           id: node.image.id,
           url: node.image.src && node.image.src.split(`?`)[0],
+          nodeId: node.id,
         },
         imageArgs
       )
@@ -142,3 +145,5 @@ export const ProductVariantNode = imageArgs =>
   })
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
+
+export const PagesNode = createNodeFactory(PAGE)

@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import { rhythm, options } from "../utils/typography"
 import { mq, gutter } from "../utils/presets"

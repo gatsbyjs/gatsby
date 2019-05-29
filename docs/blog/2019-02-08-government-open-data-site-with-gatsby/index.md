@@ -16,7 +16,7 @@ _This post was originally published at [Open data design at the U.S. Department 
 
 A few months ago, our small team at the Office of Natural Resources Revenue (ONRR) decided we needed to refactor our [open-data website](https://revenuedata.doi.gov/). We knew we were in for a massive undertaking, as the site was originally built with the static-site generator [Jekyll](https://jekyllrb.com/), with significant custom coding to furnish bespoke features, automate data updates, and compile and deploy the site with [18F's](https://18f.gsa.gov/) fantastic static-site hosting service, [Federalist](https://federalist.18f.gov/).
 
-As covered in our [first post in this series](https://revenuedata.doi.gov/homepage-revamp/), we were simultaneously scoping a redesign of our homepage. Rebuilding the homepage would allow us to test some of our assumptions about how to address obstacles in our existing workflow.
+As covered in our [first post in this series](https://revenuedata.doi.gov/blog/homepage-revamp/), we were simultaneously scoping a redesign of our homepage. Rebuilding the homepage would allow us to test some of our assumptions about how to address obstacles in our existing workflow.
 
 ## Transition obstacles
 
@@ -185,7 +185,7 @@ Fortunately, Gatsby provides a hook into the entire lifecycle of its build proce
 
 Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
-Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gastby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
+Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
 
 ```javascript
 exports.onClientEntry = () => {
@@ -213,7 +213,7 @@ exports.onClientEntry = () => {
 
 As mentioned above, we use [Federalist](https://federalist.18f.gov/) to build and deploy the site. Federalist builds out every branch in our GitHub repository, so we can preview the changes before we merge them.
 
-We encountered an issue with the Federalist preview URLs and relative links and assets. Gastby solves this by using a `pathPrefix` variable in `gastby-config.js` and a custom component named `Link`.
+We encountered an issue with the Federalist preview URLs and relative links and assets. Gatsby solves this by using a `pathPrefix` variable in `gatsby-config.js` and a custom component named `Link`.
 
 We set a `BASEURL` environment variable in `gatsby-config.js` that resolves the Federalist preview URL at build time.
 
@@ -223,8 +223,7 @@ We set a `BASEURL` environment variable in `gatsby-config.js` that resolves the 
 const BASEURL = process.env.BASEURL || ""
 
 module.exports = {
-  // Note: it must *not* have a trailing slash.
-  // This is currently the realtive path in our Jekyll deployment. This path points to our Gatsby pages.
+  // This is currently the relative path in our Jekyll deployment. This path points to our Gatsby pages.
   // This prefix is prepended to load all our related images, code, and pages.
   pathPrefix: `${BASEURL}/gatsby-public`,
 }

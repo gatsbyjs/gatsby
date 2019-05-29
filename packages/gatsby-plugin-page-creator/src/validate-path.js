@@ -8,7 +8,7 @@ const jsonYamlExtTest = /\.(json|ya?ml)$/
 function isTestFile(filePath) {
   const testPatterns = [
     `**/__tests__/**/*.(js|ts)?(x)`,
-    `**/?(*.)+(spec|test).(js|ts)?(x)`,
+    `**/(*.)+(spec|test).(js|ts)?(x)`,
   ]
 
   return mm.isMatch(filePath, testPatterns)

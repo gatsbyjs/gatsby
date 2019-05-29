@@ -39,7 +39,7 @@ npm install --global gatsby-cli
 Create a new site based on the Gatsby Cosmic JS starter:
 
 ```bash
-npx gatsby new gatsby-blog-cosmicjs
+gatsby new gatsby-blog-cosmicjs
 ```
 
 Enter in your project's folder:
@@ -62,7 +62,7 @@ In a static website, data can be consumed from multiple different sources, for e
 
 To make consuming data simpler, Gatsby implements a data layer powered by GraphQL. Very exciting stuff!
 
-To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/create-source-plugin/) if necessary.
+To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/creating-a-source-plugin/) if necessary.
 
 In our case, we are using [Cosmic JS](https://cosmicjs.com). We need a source plugin to connect data from Cosmic JS to our Gatsby site. Good news: there's already a [source plugin for Cosmic JS](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
 
@@ -356,7 +356,7 @@ export const pageQuery = graphql`
 `
 ```
 
-That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
+That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each post needs a specific URL. So, we are going to inform Gatsby about the new URLs we need using the [`createPages` API](/docs/node-apis/#createPages).
 
 Path: `gatsby-node.js`
 

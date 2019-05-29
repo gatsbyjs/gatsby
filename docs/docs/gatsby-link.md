@@ -10,7 +10,7 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 ## How to use Gatsby Link
 
-<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -39,7 +39,7 @@ const Page = () => (
 
 ### Add custom styles for the currently active link
 
-<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -70,7 +70,7 @@ const SiteNavigation = () => (
     <Link
       to="/about/"
       {/* highlight-next-line */}
-      activeStyle={{ color: red }}
+      activeStyle={{ color: "red" }}
     >
       About
     </Link>
@@ -80,40 +80,34 @@ const SiteNavigation = () => (
 
 ### Show active styles for partially matched and parent links
 
-<iframe title="Screencast on egghead of how to style partially matched links in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-customize-styles-for-partially-matched-urls-with-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
-
-The `activeStyle` or `activeClassName` prop are only set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
 - We may want `/blog/hello-world` to match `<Link to="/blog">`
 - Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
-In instances like these, we can use [@reach/router's](https://reach.tech/router/api/Link) `getProps` API to to set active styles like in the following example:
+In instances like these, just add the `partiallyActive` prop to your `<Link>` component and the style will also be applied even if the `to` prop only is a partial match:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-const PartialNavLink = () => (
+const Header = <>
   <Link
-    to="/blog/"
-    {/* highlight-start */}
-    getProps={({ isPartiallyCurrent }) =>
-      isPartiallyCurrent ? { className: "active" } : null
-    }
-    {/* highlight-end */}
+    to="/articles/"
+    activeStyle={{ color: "red" }}
+    {/* highlight-next-line */}
+    partiallyActive={true}
   >
-    Blog
+    Articles
   </Link>
-)
+</>;
 ```
 
-Check out this [codesandbox](https://codesandbox.io/s/p92vm09m37) for a working example!
+_**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please check your version and/or update._
 
 ### Pass state as props to the linked page
 
-<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -146,7 +140,7 @@ const Photo = ({ location, photoId }) => {
 
 ### Replace history to change “back” button behavior
 
-<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -171,21 +165,21 @@ const AreYouSureLink = () => (
 
 ## How to use the `navigate` helper function
 
-<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
+<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
 
 Video hosted on [egghead.io][egghead].
 
-Sometimes you need to navigate to pages programatically, such as during form submissions. In these cases, `Link` won’t work.
+Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
 
 _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
 
 Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
 
-| Argument          | Required | Description                                                                                      |
-| ----------------- | -------- | ------------------------------------------------------------------------------------------------ |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                         |
-| `options.state`   | no       | An object. Values passed here will be available in `locations.state` in the target page’s props. |
-| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                   |
+| Argument          | Required | Description                                                                                     |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
+| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
+| `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
+| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
 By default, `navigate` operates the same way as a clicked `Link` component.
 
@@ -304,9 +298,10 @@ following may be a good starting point:
 ```jsx
 import { Link as GatsbyLink } from "gatsby"
 
-// Since DOM elements <a> cannot receive activeClassName,
-// destructure the prop here and pass it only to GatsbyLink
-const Link = ({ children, to, activeClassName, ...other }) => {
+// Since DOM elements <a> cannot receive activeClassName
+// and partiallyActive, destructure the prop here and
+// pass it only to GatsbyLink
+const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
@@ -315,7 +310,12 @@ const Link = ({ children, to, activeClassName, ...other }) => {
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <GatsbyLink to={to} activeClassName={activeClassName} {...other}>
+      <GatsbyLink
+        to={to}
+        activeClassName={activeClassName}
+        partiallyActive={partiallyActive}
+        {...other}
+      >
         {children}
       </GatsbyLink>
     )
@@ -356,3 +356,19 @@ You can similarly check for file downloads:
 ```
 
 [egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
+
+## Recommendations for programmatic, in-app navigation
+
+Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
+
+```jsx
+import { navigate } from '@reach/router';
+
+...
+
+onClick = () => {
+  navigate('#some-link');
+  // OR
+  navigate('?foo=bar');
+}
+```
