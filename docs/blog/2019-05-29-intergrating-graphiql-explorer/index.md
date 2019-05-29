@@ -2,14 +2,14 @@
 title: Improvements to GraphiQL IDE - adding GraphiQL Explorer
 date: 2019-05-29
 author: Michal Piechowiak
-excerpt: TO-DO
+excerpt: Overview of recently added GraphiQL Explorer integration.
 tags:
   - graphql
   - graphiql-explorer
   - developer experience
 ---
 
-Gatsby's data layer is powered by GraphQL. This means that if you are building Gatsby site, you will most likely use GraphQL to take advantage of Gatsby rich source and transformer plugins ecosystem. GraphQL is very often paired with [GraphiQL](https://github.com/graphql/graphiql) (A graphical interactive in-browser GraphQL integrated development environment), which serves as interactive playground where you can compose and test your queries. You might be familiar with with GraphiQL interface:
+Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building Gatsby site, you will most likely use GraphQL to take advantage of Gatsby rich source and transformer plugins ecosystem. GraphQL is very often paired with [GraphiQL](https://github.com/graphql/graphiql) (A graphical interactive in-browser GraphQL integrated development environment), which serves as interactive playground where you can compose and test your queries. You might be familiar with with GraphiQL interface:
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4"></source>
