@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.32...gatsby-source-shopify@2.0.33) (2019-05-29)
+
+### Features
+
+- **gatsby-source-shopify:** Add support for Shopify Pages ([#13183](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/13183)) ([cae067c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/cae067c))
+
 ## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.31...gatsby-source-shopify@2.0.32) (2019-05-20)
 
 **Note:** Version bump only for package gatsby-source-shopify
