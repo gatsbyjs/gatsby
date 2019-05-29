@@ -50,7 +50,7 @@ module.exports = (
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
   let rawHtmlNodes = []
-  visitWithParents(markdownAST, `html`, (node, ancestors) => {
+  visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
     rawHtmlNodes.push({ node, inLink })
@@ -235,6 +235,7 @@ module.exports = (
         file: imageNode,
         args,
         fileArgs: args,
+        cache,
         reporter,
       })
 

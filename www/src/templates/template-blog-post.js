@@ -230,7 +230,6 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           css={{
-            background: colors.ui.background,
             borderTop: `1px solid ${colors.ui.border.subtle}`,
             marginTop: space[9],
             [mediaQueries.md]: {

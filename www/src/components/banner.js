@@ -2,7 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import { colors, space, sizes, fonts } from "../utils/presets"
+import { colors, space, sizes, fonts, zIndices } from "../utils/presets"
 
 const horizontalPadding = space[6]
 const backgroundColor = colors.gatsby
@@ -12,7 +12,7 @@ const BannerContainer = styled(`aside`)`
   height: ${sizes.bannerHeight};
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: ${zIndices.banner};
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 `

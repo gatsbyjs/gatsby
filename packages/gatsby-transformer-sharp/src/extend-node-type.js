@@ -41,11 +41,13 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs }) =>
+const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
   traceSVG({
     file,
     args: { ...fieldArgs.traceSVG },
     fileArgs: fieldArgs,
+    cache,
+    reporter,
   })
 
 const fixedNodeType = ({
@@ -63,7 +65,12 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: GraphQLFloat },
@@ -195,7 +202,12 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         src: { type: GraphQLString },
@@ -417,7 +429,12 @@ module.exports = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent => getTracedSVG(parent),
+            resolve: parent =>
+              getTracedSVG({
+                ...parent,
+                cache,
+                reporter,
+              }),
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
