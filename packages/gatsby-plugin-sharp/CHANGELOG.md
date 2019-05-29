@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.1...gatsby-plugin-sharp@2.1.2) (2019-05-29)
+
+### Bug Fixes
+
+- cache tracedSVG calculations when cache is present ([#12044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12044)) ([c40bc4b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/c40bc4b))
+- **gatsby-plugin-sharp:** Image rotation ([#14302](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14302)) ([5e4bf34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/5e4bf34))
+
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.0...gatsby-plugin-sharp@2.1.1) (2019-05-24)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
