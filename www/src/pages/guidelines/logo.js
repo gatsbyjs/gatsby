@@ -190,7 +190,12 @@ const Logo = ({ data, location }) => (
             borderRadius={2}
             maxWidth="30rem"
           >
-            Please open an issue on GitHub or{` `}
+            Please{` `}
+            <a href="https://github.com/gatsbyjs/gatsby/issues">
+              open an issue
+            </a>
+            {` `}
+            on GitHub or{` `}
             <a href="mailto:team@gatsbyjs.com">send a mail</a> to the Gatsby
             Inkteam if you have any questions, suggestions, or problems!{` `}
             <strong>Happy shipping!</strong>
@@ -436,12 +441,12 @@ const Logo = ({ data, location }) => (
           <p>
             There are two additional, one-color versions of the Gatsby logo: An
             entirely black or white logo for those instances where the logo must
-            print in a single color.
+            display or print in a single color.
           </p>
           <p>For dark backgrounds, the logo should always be white.</p>
           <p>
             There are no absolutes regarding the selection of the specific color
-            application, but context, contrast with regard to background color
+            application, but context, contrast with regard to background color,
             and surrounding imagery and production parameters all should be
             considered.
           </p>
@@ -455,7 +460,9 @@ const Logo = ({ data, location }) => (
           <p>
             Additionally, we allow the single color version of the Gatsby logo
             to adapt to light colored backgrounds as long as a healthy contrast
-            is preserved. Our example uses base neutral (Grey 60) on Grey 20.
+            is preserved. Our example uses base neutral (
+            <Link to="/guidelines/color/">Grey 60</Link>) on{` `}
+            <Link to="/guidelines/color/">Grey 20</Link>.
           </p>
         </CopyColumn>
         <ContentColumn>
@@ -570,7 +577,8 @@ const Logo = ({ data, location }) => (
           </p>
           <p>
             If you find your needs are not covered by the logo and its
-            recommended usage, please get in touch.
+            recommended usage, please{` `}
+            <a href="mailto:team@gatsbyjs.com">get in touch</a>.
           </p>
         </CopyColumn>
         <ContentColumn>
