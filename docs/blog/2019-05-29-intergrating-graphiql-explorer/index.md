@@ -4,8 +4,8 @@ date: 2019-05-29
 author: Michal Piechowiak
 tags:
   - graphql
- - graphiql-explorer
- - developer experience
+  - graphiql-explorer
+  - developer experience
 ---
 
 Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. This GraphQL schema is very often used in conjunction with [GraphiQL](https://github.com/graphql/graphiql) which is a graphical interactive in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
