@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.1.0...gatsby-graphiql-explorer@0.1.1) (2019-05-29)
+
+### Features
+
+- **gatsby-graphiql-explorer:** allow hiding explorer using query param ([#14376](https://github.com/gatsbyjs/gatsby/issues/14376)) ([45b5a0b](https://github.com/gatsbyjs/gatsby/commit/45b5a0b))
+
 # 0.1.0 (2019-05-27)
 
 ### Features

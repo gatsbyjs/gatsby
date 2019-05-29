@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.13...gatsby-plugin-google-tagmanager@2.0.14) (2019-05-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-tagmanager:** Properly communicate site title with GTM services ([#14384](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/issues/14384)) ([f9bb78a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/commit/f9bb78a))
+
+### Features
+
+- **gatsby-plugin-google-tagmanager:** Allow to place the GTM script … ([#13424](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/issues/13424)) ([0b56c3b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/commit/0b56c3b))
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager/compare/gatsby-plugin-google-tagmanager@2.0.12...gatsby-plugin-google-tagmanager@2.0.13) (2019-04-11)
 
 **Note:** Version bump only for package gatsby-plugin-google-tagmanager
