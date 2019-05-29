@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Container } from "./containers"
-import { NavItem } from "./navigation"
+import NavItem from "./nav-item"
 
 const Header = () => (
   <Container py={4}>

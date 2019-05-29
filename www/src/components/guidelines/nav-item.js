@@ -44,4 +44,6 @@ NavLink.propTypes = {
   ...space.propTypes,
 }
 
-export const NavItem = props => <NavLink {...props} />
+const NavItem = props => <NavLink {...props} />
+
+export default NavItem
