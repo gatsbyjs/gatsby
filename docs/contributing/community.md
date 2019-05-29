@@ -45,7 +45,7 @@ For the latest news about Gatsby,
 
 ### Core Maintainers Meeting
 
-The Gatsby Core team (official Gatsby employees who are working on Gatsby open-source) holds a weekly meeting where we encourage community members to share their projects, struggles, and successes with the Gatsby Core team. Additionally the Core team shares pertinent info and plans that are applicable to the community!
+The Gatsby Core team (official Gatsby employees who are working on Gatsby open-source) holds a weekly meeting where we encourage community members to share their projects, struggles, and successes directly with the Gatsby Core team. Additionally the Core team shares pertinent info and plans that are applicable to the community!
 
 This event is held on a recurring basis, every Wednesday at 8:45 AM Pacific Standard Time (PST).
 
