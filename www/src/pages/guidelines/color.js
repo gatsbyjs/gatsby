@@ -137,13 +137,46 @@ class Color extends React.Component {
               </ul>
               <SectionSubheading>Color Blindness</SectionSubheading>
               <p>
-                There are different types of color blindness. The most common
-                form is red-green color blindness, followed by blue-yellow color
-                blindness and total color blindness. Red-green color blindness
-                affects up to 8% of males and 0.5% of females. Ensure that
-                adjacent color shades are distinguishable for color blind
-                people. Use a color blindness analyzer to confirm your choices.
+                There are different types of{` `}
+                <a href="https://en.wikipedia.org/wiki/Color_blindness">
+                  color blindness
+                </a>
+                {` `}— the most common form is red-green color blindness,
+                followed by blue-yellow color blindness and total color
+                blindness. Red-green color blindness affects up to 6% of males
+                and 0.4% of females.
               </p>
+              <p>
+                When using color, ensure that adjacent color shades are
+                distinguishable for color blind people. Use a color blindness
+                analyzer to confirm your choices. Here are a couple of free apps
+                and browser extensions to help:
+              </p>
+              <ul>
+                <li>
+                  <a href="https://michelf.ca/projects/sim-daltonism/">
+                    Sim Daltonism
+                  </a>
+                  {` `}
+                  (iOS, Mac OS X)
+                </li>
+                <li>
+                  <a href="https://colororacle.org/index.html">Color Oracle</a>
+                  {` `}
+                  (Mac OS X, Windows, Linux)
+                </li>
+                <li>
+                  A11Y - Color blindness empathy test (
+                  <a href="https://chrome.google.com/webstore/detail/a11y-color-blindness-empa/idphhflanmeibmjgaciaadkmjebljhcc">
+                    Chrome
+                  </a>
+                  ,{` `}
+                  <a href="https://addons.mozilla.org/en-US/firefox/addon/a11y-color-blindness-test/">
+                    Firefox
+                  </a>
+                  )
+                </li>
+              </ul>
             </ContentColumn>
           </Columns>
         </Section>
