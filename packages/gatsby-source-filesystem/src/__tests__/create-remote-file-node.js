@@ -1,4 +1,4 @@
-const createRemoteFileNode = require(`../create-remote-file-node`)
+const createRemoteFileNode = require(`../create-remote-file-node-factory`)()
 
 describe(`create-remote-file-node`, () => {
   const defaultArgs = {
