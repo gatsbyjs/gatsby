@@ -12,8 +12,8 @@ export const Container = styled(Box)(themed(`Container`))
 
 Container.defaultProps = {
   position: `relative`,
-  pr: { xxs: 6 },
-  pl: { xxs: 6 },
+  pr: { xxs: 6, md: 10 },
+  pl: { xxs: 6, md: 10 },
   zIndex: 1,
 }
 
