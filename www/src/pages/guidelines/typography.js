@@ -57,7 +57,7 @@ const Typeface = ({ children, fontFamily }) => (
 const Weight = ({ children, fontFamily, fontWeight }) => (
   <Text
     fontFamily={fontFamily}
-    fontSize={13}
+    fontSize={12}
     fontWeight={fontWeight}
     lineHeight="solid"
     mb={2}
@@ -66,7 +66,7 @@ const Weight = ({ children, fontFamily, fontWeight }) => (
   </Text>
 )
 
-const Typography = ({ data, location }) => (
+const Typography = ({ location }) => (
   <Layout pathname={location.pathname}>
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
@@ -93,6 +93,15 @@ const Typography = ({ data, location }) => (
             use the native font stack, but we are actively looking for a serif
             to increase the reading experience.
           </p>
+        </CopyColumn>
+        <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
+          <Flex flexDirection="column">
+            <Typeface fontFamily="header">Futura PT</Typeface>
+          </Flex>
+        </ContentColumn>
+      </Columns>
+      <Columns>
+        <CopyColumn>
           <SectionSubheading>The native font stack</SectionSubheading>
           <p>
             The “native font stack” depends on the user’s operating system and
@@ -112,7 +121,6 @@ const Typography = ({ data, location }) => (
         </CopyColumn>
         <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
           <Flex flexDirection="column">
-            <Typeface fontFamily="header">Futura PT</Typeface>
             <Typeface fontFamily="system">Sans-serif</Typeface>
             <Typeface fontFamily="monospace">Monospace</Typeface>
           </Flex>
@@ -175,10 +183,123 @@ const Typography = ({ data, location }) => (
       </Columns>
     </Section>
     <Section>
-      <h2>
-        Sample hierarchy and{` `}
-        weights
-      </h2>
+      <h2>Weights, letter spacings and line heights</h2>
+      <Columns>
+        <CopyColumn>
+          <p>
+            All tokens shown here may be applied to any of the typefaces in our
+            font stack.
+          </p>
+          <p>
+            <strong>A note on Futura PT Bold:</strong> While Futura PT Bold
+            works well at display size, it gets hard to read below ~30px. For
+            screens, use it for the page title (once per page). Do not use it
+            for "bold" text—that is the job of Futura PT Demi.
+          </p>
+        </CopyColumn>
+        <ContentColumn>
+          <SectionSubheading mt={0}>Font Weights</SectionSubheading>
+          <Flex flexWrap="wrap" flexDirection="row">
+            <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
+              <Weight fontFamily="header" fontWeight={2}>
+                Bold
+              </Weight>
+              <Box pb={4}>
+                <code>fontWeights[2]</code> —{` `}
+                <code>{theme.fontWeights[2]}</code>
+                <Text as="p" pt={4}>
+                  Use this for the main headline, set in Futura PT Bold, only.
+                </Text>
+              </Box>
+            </Box>
+
+            <Box maxWidth={{ xl: `40%` }}>
+              <Weight fontFamily="header" fontWeight={1}>
+                Demi
+              </Weight>
+              <Box pb={4}>
+                <code>fontWeights[1]</code> —{` `}
+                <code>{theme.fontWeights[1]}</code>/<code>bold</code>
+                <Text as="p" pt={4}>
+                  Use this for the all headlines but the main page title, and to
+                  emphasize text throughout regular copy.
+                </Text>
+              </Box>
+            </Box>
+            <Box>
+              <Weight fontFamily="header" fontWeight={0}>
+                Normal
+              </Weight>
+              <code>fontWeights[0]</code> — <code>{theme.fontWeights[0]}</code>/
+              <code>normal</code>
+            </Box>
+          </Flex>
+
+          <SectionSubheading pt={6}>Letter Spacing</SectionSubheading>
+
+          <p>
+            Letterspacing (also known as character spacing or tracking) is the
+            adjustment of the horizontal white space between the letters in a
+            block of text.
+          </p>
+
+          <Box pt={4}>
+            <Text as="p" mb={0}>
+              <strong>Normal</strong> — <code>letterSpacings.normal</code> —
+              {` `}
+              <code>{theme.letterSpacings.normal}</code>
+            </Text>
+            <p>Use for almost everything.</p>
+          </Box>
+
+          <hr />
+
+          <Box pt={4}>
+            <Text as="p" mb={0}>
+              <strong>Tight</strong> — <code>letterSpacings.tight</code> —{` `}
+              <code>{theme.letterSpacings.tight}</code>
+            </Text>
+            <p>Use for headlines set in Futura PT.</p>
+            <Heading letterSpacing="tight" lineHeight="solid" pb={8}>
+              Create digital experiences on the edge—faster
+            </Heading>
+          </Box>
+
+          <hr />
+
+          <Box pt={4}>
+            <Text as="p" mb={0}>
+              <strong>Tracked</strong> — <code>letterSpacings.tracked</code> —
+              {` `}
+              <code>{theme.letterSpacings.tracked}</code>
+            </Text>
+            <p>
+              Use for small caps, particularly at small sizes. Lowercase letters
+              don’t need letterspacing, and neither do capital letters (when
+              appear at the beginning of a word, because they’re designed to fit
+              correctly next to lowercase letters). However, when using capital
+              letters together, the default spacing looks too tight.
+            </p>
+            <Text
+              color="grey.60"
+              fontFamily="header"
+              fontSize={1}
+              letterSpacing="tracked"
+              pb={8}
+              css={{
+                textTransform: `uppercase`,
+              }}
+            >
+              greglobinski/
+            </Text>
+          </Box>
+
+          <SectionSubheading pt={6}>Line Heights</SectionSubheading>
+        </ContentColumn>
+      </Columns>
+    </Section>
+    <Section>
+      <h2>Sample hierarchies</h2>
       <Columns>
         <CopyColumn>
           <p>
@@ -189,27 +310,6 @@ const Typography = ({ data, location }) => (
           </p>
         </CopyColumn>
         <ContentColumn>
-          <Box>
-            <p>
-              While Futura Bold works well at display size, it gets hard to read
-              below ~30px. For screens, use it for the page title (once per
-              page). Do not use it for "bold" text—that is the job of Futura PT
-              Demi.
-            </p>
-            <Flex justifyContent="flex-end" flexDirection="column" width="100%">
-              <Box alignSelf="flex-end">
-                <Weight fontFamily="header" fontWeight={2}>
-                  Bold
-                </Weight>
-                <Weight fontFamily="header" fontWeight={1}>
-                  Demi
-                </Weight>
-                <Weight fontFamily="header" fontWeight={0}>
-                  Normal
-                </Weight>
-              </Box>
-            </Flex>
-          </Box>
           <Box maxWidth="35rem">
             <Text
               as="p"
@@ -281,7 +381,7 @@ const Typography = ({ data, location }) => (
         css={{ WebkitFontSmoothing: `antialiased` }}
       >
         <Text fontSize={1} color="blackFade.60">
-          Simple landing page
+          Simple landing page (using an inverted theme)
         </Text>
 
         <Box maxWidth={1040} mx="auto">
@@ -299,7 +399,12 @@ const Typography = ({ data, location }) => (
             Gatsby brings your content to the edge for lightning fast, safe
             website delivery with no CMS overhead.
           </Intro>
-          <Button bg="black" mx="auto" mb={3}>
+          <Button
+            bg="black"
+            mx="auto"
+            mb={3}
+            css={{ color: `black !important` }}
+          >
             Start a free trial
           </Button>
           <Text color="blackFade.60" fontSize={1}>
@@ -319,7 +424,7 @@ const Typography = ({ data, location }) => (
               databases, your file system, and more.
             </MarketingColumn>
           </Box>
-          <Box display={{ lg: `flex ` }} mt={7} textAlign="left">
+          <Box display={{ lg: `flex ` }} mt={7} pb={8} textAlign="left">
             <MarketingColumn title="Speed past the competition">
               Gatsby.js builds the fastest possible website. Instead of waiting
               to generate pages when requested, pre-build pages and lift them
@@ -474,7 +579,7 @@ const Typography = ({ data, location }) => (
               and then{` `}
               <code>useStaticQuery</code>.
             </p>
-            <Box bg="grey.10" p={5} my={6}>
+            <Box bg="grey.10" p={5} my={6} fontSize={{ xxs: 1, md: 2 }}>
               💡 For a great introduction to using the command line, check out
               {` `}
               <a href="https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command">
@@ -485,16 +590,6 @@ const Typography = ({ data, location }) => (
               if you are a Windows user, the first page of the Codecademy
               tutorial is a valuable read.
             </Box>
-            {/* {data.allMarkdownRemark.edges.map(({ node }, index) => (
-              <Text
-                key={`logo-footnotes-${index}`}
-                mb={3}
-                width="100%"
-                dangerouslySetInnerHTML={{
-                  __html: node.html,
-                }}
-              />
-            ))} */}
           </Text>
         </Box>
       </Flex>
