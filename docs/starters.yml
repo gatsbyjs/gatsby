@@ -2718,6 +2718,30 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-anoun-1-markdown.netlify.com/
+  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
+  description: A clean, modern starter for businesses using Material Design Components
+  tags:
+    - Business Website
+    - Blog
+    - Modern Design
+    - PWA
+    - Styling:Material Design
+    - Styling:SCSS
+  features:
+    - Minimal, Modern Business Website Design
+    - Material Design Components
+    - MDC React Components
+    - MDC Theming
+    - Blog
+    - Home Page
+    - Contact Page
+    - Contact Form
+    - About Page
+    - Mobile-First approach in development
+    - Fully Responsive
+    - Markdown
+    - PWA
 - url: https://gatsby-starter-default-typescript.netlify.com/
   repo: https://github.com/andykenward/gatsby-starter-default-typescript
   description: Starter Default Typescript
