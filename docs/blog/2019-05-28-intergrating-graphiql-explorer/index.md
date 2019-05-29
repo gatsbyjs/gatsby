@@ -61,5 +61,3 @@ or try it [live](https://gatsby-1774317511.gtsb.io/___graphql?explorerIsOpen=tru
 ## Future work
 
 There is opportunity for further improvements for Gatsby users. One that we will be tackling next is [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371).
-
-<span style="color: red;">(?) Should we have call to action for additional feature request?</span>
