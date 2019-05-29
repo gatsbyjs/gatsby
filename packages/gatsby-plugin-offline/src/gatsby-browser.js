@@ -1,9 +1,12 @@
 exports.registerServiceWorker = () => true
 
-const prefetchedResources = []
+const prefetchedPathnames = []
 const whitelistedPathnames = []
 
-exports.onServiceWorkerActive = ({ serviceWorker }) => {
+exports.onServiceWorkerActive = ({
+  getResourceURLsForPathname,
+  serviceWorker,
+}) => {
   // if the SW has just updated then reset whitelisted paths and don't cache
   // stuff, since we're on the old revision until we navigate to another page
   if (window.___swUpdated) {
@@ -22,6 +25,15 @@ exports.onServiceWorkerActive = ({ serviceWorker }) => {
   const headerResources = [].slice
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
+
+  // Loop over all resources and fetch the page component and JSON
+  // to add it to the sw cache.
+  const prefetchedResources = []
+  prefetchedPathnames.forEach(path =>
+    getResourceURLsForPathname(path).forEach(resource =>
+      prefetchedResources.push(resource)
+    )
+  )
 
   const resources = [...headerResources, ...prefetchedResources]
   resources.forEach(resource => {
@@ -57,12 +69,12 @@ function whitelistPathname(pathname, includesPrefix) {
   }
 }
 
-exports.onPostPrefetch = ({ path, resourceUrls }) => {
+exports.onPostPrefetchPathname = ({ pathname }) => {
   // do nothing if the SW has just updated, since we still have old pages in
   // memory which we don't want to be whitelisted
   if (window.___swUpdated) return
 
-  whitelistPathname(path, false)
+  whitelistPathname(pathname, false)
 
   // if SW is not installed, we need to record any prefetches
   // that happen so we can then add them to SW cache once installed
@@ -73,6 +85,6 @@ exports.onPostPrefetch = ({ path, resourceUrls }) => {
       navigator.serviceWorker.controller.state === `activated`
     )
   ) {
-    prefetchedResources.push(...resourceUrls)
+    prefetchedPathnames.push(pathname)
   }
 }
