@@ -21,12 +21,6 @@ import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = colors.purple[70]
 const stripeSize = 15
-const stripeAnimation = keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
 const stripeBg = {
   backgroundColor: colors.purple[80],
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
