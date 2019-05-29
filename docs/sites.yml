@@ -6114,6 +6114,18 @@
   built_by: Luke Secomb
   built_by_url: https://lukesecomb.digital
   featured: false
+- title: We are Brew
+  url: https://www.wearebrew.co.uk
+  main_url: https://www.wearebrew.co.uk
+  description: >
+    Official website for Brew, a Birmingham based Digital Marketing Agency.
+  categories:
+    - Portfolio
+    - Web Development
+    - Agency
+    - Marketing
+  built_by: Brew Digital Ltd
+  built_by_url: https://www.wearebrew.co.uk
 - title: Global City Data
   main_url: https://globalcitydata.com
   url: https://globalcitydata.com
