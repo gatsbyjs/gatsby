@@ -12,20 +12,18 @@ import {
   transition,
   fonts as fontTokens,
   zIndices,
+  fontWeights,
 } from "./tokens"
 import { rhythm } from "./typography"
-
-const space = spaceTokens.map(token => rhythm(token))
 
 let fonts = {}
 for (let fontFamily in fontTokens) {
   fonts[fontFamily] = fontTokens[fontFamily].join(`,`)
 }
 
-const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
-
-const fontWeights = [400, 700, 800]
 const borders = [0, `1px solid`, `2px solid`]
+const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
+const space = spaceTokens.map(token => rhythm(token))
 
 export {
   breakpoints,
