@@ -48,10 +48,10 @@ const FooterLinks = props => (
       <Link to="/accessibility-statement">Accessibility Statement</Link>
     </li>
     <li>
-      <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
+      <a href="/guidelines/logo/">Logo &amp; Assets</a>
     </li>
     <li>
-      <a href="/guidelines/logo/">Logo &amp; Assets</a>
+      <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
     </li>
   </FooterList>
 )
