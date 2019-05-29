@@ -356,6 +356,16 @@ describe(`dependency changs`, () => {
     })
   }
 
+  const assertCopy = packages => {
+    packages.forEach(pkgName => {
+      expect(fs.copy).toBeCalledWith(
+        expect.stringContaining(path.join(`packages`, pkgName)),
+        expect.stringContaining(path.join(`node_modules`, pkgName)),
+        expect.anything()
+      )
+    })
+  }
+
   let realProcess
   beforeAll(() => {
     realProcess = global.process
@@ -401,6 +411,38 @@ describe(`dependency changs`, () => {
         include: [`gatsby`],
         exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
       })
+    })
+
+    it(`watching gatsby and gatsby-plugin-sharp installs gatsby and copies gatsby-plugin-sharp`, async () => {
+      checkDepsChanges.mockImplementationOnce(mockDepsChanges([`gatsby`]))
+
+      watch(process.cwd(), [`gatsby`, `gatsby-plugin-sharp`], {
+        scanOnce: true,
+        quiet: true,
+        monoRepoPackages,
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+      })
+
+      const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
+      await callEventCallback(`add`, filePath)
+      // no deps changes in gatsby-plugin-sharp, just copy files over
+      await callEventCallback(
+        `add`,
+        path.join(process.cwd(), `packages/gatsby-plugin-sharp/index.js`)
+      )
+      await callReadyCallback()
+
+      assertPublish({
+        include: [`gatsby`],
+        exclude: [`gatsby-plugin-sharp`],
+      })
+
+      assertInstall({
+        include: [`gatsby`],
+        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
+      })
+
+      assertCopy([`gatsby`, `gatsby-plugin-sharp`])
     })
 
     it(`watching gatsby-cli installs gatsby`, async () => {
