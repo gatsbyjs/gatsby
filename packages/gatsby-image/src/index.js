@@ -1,16 +1,40 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// Handle legacy names for image queries.
+const logDeprecationNotice = (prop, replacement) => {
+  if (process.env.NODE_ENV === `production`) {
+    return
+  }
+
+  console.log(
+    `
+    The "${prop}" prop is now deprecated and will be removed in the next major version
+    of "gatsby-image".
+    `
+  )
+
+  if (replacement) {
+    console.log(`Please use ${replacement} instead of "${prop}".`)
+  }
+}
+
+// Handle legacy props during their deprecation phase
 const convertProps = props => {
   let convertedProps = { ...props }
-  if (convertedProps.resolutions) {
-    convertedProps.fixed = convertedProps.resolutions
+  const { resolutions, sizes, critical } = convertedProps
+
+  if (resolutions) {
+    convertedProps.fixed = resolutions
     delete convertedProps.resolutions
   }
-  if (convertedProps.sizes) {
-    convertedProps.fluid = convertedProps.sizes
+  if (sizes) {
+    convertedProps.fluid = sizes
     delete convertedProps.sizes
+  }
+
+  if (critical) {
+    logDeprecationNotice(`critical`, `the native "loading" attribute`)
+    convertedProps.loading = `eager`
   }
 
   return convertedProps
@@ -38,6 +62,14 @@ const activateCacheForImage = props => {
 
   imageCache[src] = true
 }
+
+// Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
+const hasNativeLazyLoadSupport =
+  typeof HTMLImageElement !== `undefined` &&
+  `loading` in HTMLImageElement.prototype
+
+const isBrowser = typeof window !== `undefined`
+const hasIOSupport = isBrowser && window.IntersectionObserver
 
 let io
 const listeners = new WeakMap()
@@ -99,12 +131,6 @@ const noscriptImg = props => {
   const crossOrigin = props.crossOrigin
     ? `crossorigin="${props.crossOrigin}" `
     : ``
-
-  // Since we're in the noscript block for this image (which is rendered during SSR or when js is disabled),
-  // we have no way to "detect" if native lazy loading is supported by the user's browser
-  // Since this attribute is a progressive enhancement, it won't break a browser with no support
-  // Therefore setting it by default is a good idea.
-
   const loading = props.loading ? `loading="${props.loading}" ` : ``
 
   return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
@@ -118,16 +144,9 @@ const Img = React.forwardRef((props, ref) => {
     style,
     onLoad,
     onError,
-    nativeLazyLoadSupported,
     loading,
     ...otherProps
   } = props
-
-  let loadingAttribute = {}
-
-  if (nativeLazyLoadSupported) {
-    loadingAttribute.loading = loading
-  }
 
   return (
     <img
@@ -138,7 +157,7 @@ const Img = React.forwardRef((props, ref) => {
       onLoad={onLoad}
       onError={onError}
       ref={ref}
-      {...loadingAttribute}
+      loading={loading}
       style={{
         position: `absolute`,
         top: 0,
@@ -163,61 +182,26 @@ class Image extends React.Component {
   constructor(props) {
     super(props)
 
-    // default settings for browser without Intersection Observer available
-    let isVisible = true
-    let imgLoaded = false
-    let imgCached = false
-    let IOSupported = false
-    let fadeIn = props.fadeIn
-    let nativeLazyLoadSupported = false
-
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
-    const seenBefore = inImageCache(props)
+    this.seenBefore = isBrowser && inImageCache(props)
 
-    // browser with Intersection Observer available
-    if (
-      !seenBefore &&
-      typeof window !== `undefined` &&
-      window.IntersectionObserver
-    ) {
-      isVisible = false
-      IOSupported = true
-    }
+    this.addNoScript = !(props.critical && !props.fadeIn)
+    this.useIOSupport =
+      !hasNativeLazyLoadSupport &&
+      hasIOSupport &&
+      !props.critical &&
+      !this.seenBefore
 
-    // Chrome Canary 75 added native lazy loading support!
-    // https://addyosmani.com/blog/lazy-loading/
-    if (
-      typeof HTMLImageElement !== `undefined` &&
-      `loading` in HTMLImageElement.prototype
-    ) {
-      // Setting isVisible to true to short circuit our IO code and let the browser do its magic
-      isVisible = true
-      nativeLazyLoadSupported = true
-    }
-
-    // Never render image during SSR
-    if (typeof window === `undefined`) {
-      isVisible = false
-    }
-
-    // Force render for critical images
-    if (props.critical) {
-      isVisible = true
-      IOSupported = false
-    }
-
-    const hasNoScript = !(props.critical && !props.fadeIn)
+    const isVisible =
+      props.critical ||
+      (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
     this.state = {
       isVisible,
-      imgLoaded,
-      imgCached,
-      IOSupported,
-      fadeIn,
-      hasNoScript,
-      seenBefore,
-      nativeLazyLoadSupported,
+      imgLoaded: false,
+      imgCached: false,
+      fadeIn: !this.seenBefore && props.fadeIn,
     }
 
     this.imageRef = React.createRef()
@@ -243,12 +227,9 @@ class Image extends React.Component {
     }
   }
 
+  // Specific to IntersectionObserver based lazy-load support
   handleRef(ref) {
-    if (this.state.nativeLazyLoadSupported) {
-      // Bail because the browser natively supports lazy loading
-      return
-    }
-    if (this.state.IOSupported && ref) {
+    if (this.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
@@ -265,6 +246,8 @@ class Image extends React.Component {
         this.setState({ isVisible: true }, () =>
           this.setState({
             imgLoaded: imageInCache,
+            // `currentSrc` should be a string, but can be `undefined` in IE,
+            // !! operator validates the value is not undefined/null/""
             imgCached: !!this.imageRef.current.currentSrc,
           })
         )
@@ -276,9 +259,6 @@ class Image extends React.Component {
     activateCacheForImage(this.props)
 
     this.setState({ imgLoaded: true })
-    if (this.state.seenBefore) {
-      this.setState({ fadeIn: false })
-    }
 
     if (this.props.onLoad) {
       this.props.onLoad()
@@ -300,31 +280,10 @@ class Image extends React.Component {
       durationFadeIn,
       Tag,
       itemProp,
-      critical,
+      loading,
     } = convertProps(this.props)
 
-    let { loading } = convertProps(this.props)
-
-    if (
-      typeof critical === `boolean` &&
-      process.env.NODE_ENV !== `production`
-    ) {
-      console.log(
-        `
-        The "critical" prop is now deprecated and will be removed in the next major version 
-        of "gatsby-image"
-
-        Please use the native "loading" attribute instead of "critical" 
-        `
-      )
-      // We want to continue supporting critical and in case it is passed in
-      // we map its value to loading
-      loading = critical ? `eager` : `lazy`
-    }
-
-    const { nativeLazyLoadSupported } = this.state
-
-    const shouldReveal = this.state.imgLoaded || this.state.fadeIn === false
+    const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
     const imageStyle = {
@@ -426,14 +385,13 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
-                nativeLazyLoadSupported={nativeLazyLoadSupported}
                 loading={loading}
               />
             </picture>
           )}
 
           {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.state.hasNoScript && (
+          {this.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
                 __html: noscriptImg({
@@ -520,14 +478,13 @@ class Image extends React.Component {
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
                 itemProp={itemProp}
-                nativeLazyLoadSupported={nativeLazyLoadSupported}
                 loading={loading}
               />
             </picture>
           )}
 
           {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.state.hasNoScript && (
+          {this.addNoScript && (
             <noscript
               dangerouslySetInnerHTML={{
                 __html: noscriptImg({

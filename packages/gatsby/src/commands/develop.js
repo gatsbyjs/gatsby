@@ -9,6 +9,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
 const got = require(`got`)
 const rl = require(`readline`)
@@ -136,6 +137,10 @@ async function startServer(program) {
       }),
       () => {}
     )
+  } else {
+    graphiqlExplorer(app, {
+      graphqlEndpoint,
+    })
   }
 
   app.use(
@@ -144,8 +149,7 @@ async function startServer(program) {
       const schema = store.getState().schema
       return {
         schema,
-        graphiql:
-          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        graphiql: false,
         context: withResolverContext({}, schema),
         formatError(err) {
           return {
@@ -207,17 +211,31 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      const { headers, method } = req
+      const {
+        // remove `host` from copied headers
+        // eslint-disable-next-line no-unused-vars
+        headers: { host, ...headers },
+        method,
+      } = req
       req
         .pipe(
-          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
-            const message = `Error when trying to proxy request "${
-              req.originalUrl
-            }" to "${proxiedUrl}"`
+          got
+            .stream(proxiedUrl, { headers, method, decompress: false })
+            .on(`response`, response =>
+              res.writeHead(response.statusCode, response.headers)
+            )
+            .on(`error`, (err, _, response) => {
+              if (response) {
+                res.writeHead(response.statusCode, response.headers)
+              } else {
+                const message = `Error when trying to proxy request "${
+                  req.originalUrl
+                }" to "${proxiedUrl}"`
 
-            report.error(message, err)
-            res.status(500).end()
-          })
+                report.error(message, err)
+                res.sendStatus(500)
+              }
+            })
         )
         .pipe(res)
     })

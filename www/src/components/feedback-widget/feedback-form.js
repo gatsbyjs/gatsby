@@ -1,7 +1,8 @@
 import React, { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
-import { SubmitButton, CloseButton, focusStyle } from "./buttons"
+import { SubmitButton, CloseButton } from "./buttons"
+import { formInputFocus } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
 import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
@@ -32,8 +33,8 @@ const Legend = styled(`legend`)`
 
 const Rating = styled(`div`)`
   align-content: stretch;
-  border: 1px solid ${colors.lilac};
-  border-radius: ${radii[3]}px;
+  border: 1px solid ${colors.input.border};
+  border-radius: ${radii[2]}px;
   display: flex;
   flex: 1 1 auto;
   justify-content: stretch;
@@ -42,7 +43,7 @@ const Rating = styled(`div`)`
   width: 99.99%;
 
   &:focus-within {
-    ${focusStyle}
+    ${formInputFocus}
   }
 
   [disabled] & {
@@ -60,7 +61,7 @@ const TextareaLabel = styled(`label`)`
 `
 
 const Textarea = styled(`textarea`)`
-  border: 1px solid ${colors.gray.light};
+  border: 1px solid ${colors.input.border};
   border-radius: ${radii[2]}px;
   display: block;
   font-weight: normal;
@@ -71,7 +72,7 @@ const Textarea = styled(`textarea`)`
   width: 100%;
 
   &:focus {
-    ${focusStyle}
+    ${formInputFocus}
   }
 
   &:disabled {

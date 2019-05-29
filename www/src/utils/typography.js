@@ -15,38 +15,45 @@ import {
 const _options = {
   bodyFontFamily: fonts.system,
   headerFontFamily: fonts.header,
-  monospaceFontFamily: fonts.monospace.join(`,`),
-  systemFontFamily: fonts.system,
   baseLineHeight: lineHeights.default,
   headerLineHeight: lineHeights.dense,
-  headerColor: colors.gray.dark,
-  bodyColor: colors.gray.copy,
+  headerColor: colors.text.header,
+  bodyColor: colors.text.primary,
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm }) => {
     return {
+      html: {
+        WebkitFontSmoothing: `antialiased`,
+        MozOsxFontSmoothing: `grayscale`,
+      },
       a: {
         textDecoration: `none`,
       },
       "h1, h2, h3, h4, h5, h6": {
         letterSpacing: letterSpacings.tight,
       },
-      h1: { color: `#000` },
       h2: {
         marginTop: rhythm(space[9]),
       },
       h3: {
         marginTop: rhythm(space[9]),
       },
+      "h4, h5, h6": { fontSize: fontSizes[3] },
+      "h5, h6": { fontWeight: `normal` },
+      h6: { fontSize: fontSizes[2] },
       blockquote: {
         paddingLeft: rhythm(space[6]),
         marginLeft: 0,
-        borderLeft: `${rhythm(space[1])} solid ${colors.ui.light}`,
+        borderLeft: `${rhythm(space[1])} solid ${colors.ui.border.subtle}`,
       },
       hr: {
-        backgroundColor: colors.ui.light,
+        backgroundColor: colors.ui.border.subtle,
       },
       iframe: {
         border: 0,
+      },
+      "th, td": {
+        borderColor: colors.ui.border.subtle,
       },
       "tt, code, kbd, samp": {
         // reset line-height set by
@@ -85,7 +92,7 @@ const _options = {
       ".gatsby-highlight pre[class*='language-']::before": {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
-        color: colors.gray.dark,
+        color: colors.text.header,
         fontSize: fontSizes[0],
         fontFamily: fonts.monospace.join(`,`),
         letterSpacing: letterSpacings.tracked,
@@ -198,7 +205,7 @@ const _options = {
         marginBottom: rhythm(space[9]),
         display: `block`,
         fontStyle: `normal`,
-        color: colors.gray.calm,
+        color: colors.text.secondary,
         position: `relative`,
       },
       ".gatsby-resp-image-link + em a, .gatsby-resp-image-wrapper + em a": {
@@ -206,32 +213,34 @@ const _options = {
         color: colors.lilac,
       },
       ".main-body a": {
-        color: colors.lilac,
+        color: colors.link.color,
         textDecoration: `none`,
         transition: `all ${transition.speed.fast} ${transition.curve.default}`,
-        borderBottom: `1px solid ${colors.lilac}`,
+        borderBottom: `1px solid ${colors.link.border}`,
       },
       ".main-body a:hover": {
-        borderBottomColor: colors.ui.bright,
+        borderBottomColor: colors.link.hoverBorder,
       },
       ".post-body figure img": {
         marginBottom: 0,
       },
       ".post-body figcaption": {
-        color: colors.gray.calm,
+        color: colors.text.secondary,
         fontSize: `87.5%`,
         marginTop: rhythm(space[1]),
         marginBottom: rhythm(space[3]),
       },
+      //
       ".main-body a.anchor": {
         color: `inherit`,
-        fill: colors.lilac,
+        fill: colors.link.color,
         textDecoration: `none`,
         borderBottom: `none`,
       },
       ".main-body a.anchor:hover": {
         background: `none`,
       },
+      // gatsby-image
       ".main-body a.gatsby-resp-image-link": {
         borderBottom: `transparent`,
         marginTop: rhythm(space[9]),

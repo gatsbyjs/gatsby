@@ -8,7 +8,7 @@ const Source = ({ startersYaml, repoUrl }) => (
   <div
     css={{
       display: `flex`,
-      borderTop: `1px solid ${colors.ui.light}`,
+      borderTop: `1px solid ${colors.ui.border.subtle}`,
       fontFamily: fonts.header,
       margin: `0 ${space[6]}`,
       [mediaQueries.sm]: {
@@ -72,7 +72,7 @@ const Source = ({ startersYaml, repoUrl }) => (
       <span
         css={{
           marginRight: 20,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         Try this starter
