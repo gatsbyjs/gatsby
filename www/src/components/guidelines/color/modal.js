@@ -80,7 +80,7 @@ const colores = (palette, color) => {
             width={{ lg: `50%` }}
           >
             <span>
-              {9 - index}00 {c.name && c.name}
+              {9 - index}0 {c.name && c.name}
             </span>
             <span css={{ marginLeft: `auto` }}>{c.hex}</span>
             <Box width="100%" flexShrink={0}>
@@ -94,8 +94,8 @@ const colores = (palette, color) => {
             color={c.hex}
             width={{ lg: `50%` }}
           >
-            <Text as="p" fontSize={7} fontFamily="header" fontWeight={1} mr={3}>
-              {palette[color].name} {9 - index}00 {c.name && c.name}
+            <Text as="p" fontSize={2} fontFamily="header" fontWeight={1} mr={3}>
+              {9 - index}0 {c.name && c.name}
               <br />
               <Text as="span" fontWeight={0}>
                 {c.contrast.colorOnWhite.toFixed(2)} {getAccessibilityLabel(c)}
@@ -107,13 +107,12 @@ const colores = (palette, color) => {
                 <p>
                   This text is conforming to AA
                   {getAccessibilityLabel(c) === `AAA` && <>A</>} requirements of
-                  lorem ipsum sunt sicilia est insula. Pork ham sausage
-                  Schnitzel foo bar.{` `}
+                  WCGA.
                   {getAccessibilityLabel(c) === `AAA` && (
-                    <strong>
+                    <>
                       The contrast score of at least 7.0 qualifies it for long
                       form text.
-                    </strong>
+                    </>
                   )}
                 </p>
               )}
