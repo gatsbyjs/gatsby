@@ -152,20 +152,32 @@ module.exports = data => {
   // What PRs have commits (aka activity) since the last comment by
   // a maintainer.
   prs.nodes.forEach(pr => {
+    const authorUrl = pr.author.url
+    const botUrl = "https://github.com/apps/gatsbot"
+
+    const reviewList = pr.comments.nodes.filter(x => 
+      (x.author.url !== authorUrl && x.author.url !== botUrl)
+    )
     const lastComment = _.get(
-      _.maxBy(pr.comments.nodes, n => n.createdAt),
+      _.maxBy(reviewList, n => n.createdAt),
       `createdAt`
     )
 
-    const commitMessages = pr.commits.nodes.filter(c => (lastComment < c.commit.authoredDate))
+    let commitMessages = []
+    pr.commits.nodes.forEach(c => {
+      const message = c.commit.message
+      if(ignoreMessages.every(im => message.indexOf(im) === -1) ) {
+        commitMessages.push(c)
+      } else {
+        commitMessages = []
+      }
+    })
+
+    commitMessages = commitMessages.filter(c => lastComment < c.commit.authoredDate)
     commitNewerThanComment = (commitMessages.length !== 0)
-    notContainIgnoreMessages = commitMessages.every(
-      cm => ignoreMessages.every(im => cm.commit.message.indexOf(im) === -1)
-    )
-    
+
     if (
       commitNewerThanComment &&
-      notContainIgnoreMessages &&
       !queues.noMaintainers.some(p => p.url === pr.url)
     ) {
       queues.commitsSinceLastComment.push(pr)
