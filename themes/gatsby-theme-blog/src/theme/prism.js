@@ -39,8 +39,9 @@ export default {
     bg: `prism.highlight`,
     display: `block`,
     mx: -3,
-    px: 3,
-    // todo: compensate for border
+    // compensate for 4px border
+    pl: t => t.space[3] - 4,
+    pr: 3,
     borderLeft: `4px solid`,
     borderColor: `prism.tag`,
   },

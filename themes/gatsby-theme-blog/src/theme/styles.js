@@ -34,10 +34,9 @@ export default {
     paddingBottom: `0.05em`,
     paddingX: `0.2em`,
   },
-  // .gatsby-highlight is rendered *outside* of the <pre> tag
   div: {
+    // .gatsby-highlight is rendered *outside* of the <pre> tag
     "&.gatsby-highlight": {
-      // todo: update spacing
       mx: -3,
       mb: 3,
       borderRadius: [0, `10px`],
