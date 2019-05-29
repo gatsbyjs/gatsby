@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Box } from "../../components/guidelines/system"
+import { Box } from "./system"
 
 const ImagePlaceholder = ({ aspectRatio, ...props }) => (
   <Box

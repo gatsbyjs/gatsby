@@ -19,7 +19,7 @@ import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 import Starter from "../../components/guidelines/cards/starter"
 import Blog from "../../components/guidelines/cards/blog"
-import ImagePlaceholder from "../../components/guidelines/placeholder"
+import ImagePlaceholder from "../../components/guidelines/image-placeholder"
 
 import theme from "../../utils/guidelines/theme"
 import themeInverted from "../../utils/guidelines/theme-inverted"

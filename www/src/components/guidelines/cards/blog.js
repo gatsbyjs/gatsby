@@ -2,7 +2,7 @@ import React from "react"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 
 import { Box, Flex, Heading, Link, Text } from "../system"
-import ImagePlaceholder from "../placeholder"
+import ImagePlaceholder from "../image-placeholder"
 import Avatar from "../avatar"
 
 const BlogCard = ({ ...props }) => (

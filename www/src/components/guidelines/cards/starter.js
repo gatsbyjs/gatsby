@@ -2,7 +2,7 @@ import React from "react"
 import MdStar from "react-icons/lib/md/star"
 
 import { Box, Flex, Heading, Text } from "../system"
-import ImagePlaceholder from "../placeholder"
+import ImagePlaceholder from "../image-placeholder"
 
 const Card = () => (
   <Box width="20rem" mb={8}>
