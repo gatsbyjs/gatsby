@@ -2,7 +2,6 @@
 title: Improvements to GraphiQL IDE - adding GraphiQL Explorer
 date: 2019-05-29
 author: Michal Piechowiak
-excerpt: Overview of recently added GraphiQL Explorer integration.
 tags:
   - graphql
   - graphiql-explorer
