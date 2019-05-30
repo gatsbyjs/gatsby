@@ -28,7 +28,7 @@ We often hear that many developers' first usage of GraphQL is through Gatsby. Gr
   <p>Your browser does not support the video element.</p>
 </video>
 
-For more information, check out ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details.
+Check out ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details.
 
 ## Advanced usecases
 
