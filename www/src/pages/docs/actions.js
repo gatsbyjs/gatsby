@@ -11,23 +11,17 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class ActionCreatorsDocs extends React.Component {
   render() {
-    const publicActions = sortBy(
-      this.props.data.public.childrenDocumentationJs,
-      func => func.name
-    ).filter(func => func.name !== `deleteNodes`)
-    const restrictedActions = sortBy(
-      this.props.data.restricted.childrenDocumentationJs,
-      func => func.name
-    )
-    const allActions = [...publicActions, ...restrictedActions]
+    const docs = this.props.data.allFile.nodes.reduce((acc, node) => {
+      const doc = node.childrenDocumentationJs.map(def => {
+        def.codeLocation.file = node.relativePath
+        return def
+      })
+      return acc.concat(doc)
+    }, [])
 
-    const basePath = `https://github.com/gatsbyjs/gatsby/blob/${
-      process.env.COMMIT_SHA
-    }/packages/`
-    const publicActionsGithubPath =
-      basePath + this.props.data.public.relativePath
-    const restrictedActionsGithubPath =
-      basePath + this.props.data.restricted.relativePath
+    const funcs = sortBy(docs, func => func.name).filter(
+      func => func.name !== `deleteNodes`
+    )
 
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
@@ -70,7 +64,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           </div>
           <h2 css={{ marginBottom: space[3] }}>Functions</h2>
           <ul>
-            {allActions.map(node => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>
@@ -78,14 +72,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           </ul>
           <hr />
           <h2>Reference</h2>
-          <APIReference
-            githubPath={publicActionsGithubPath}
-            docs={publicActions}
-          />
-          <APIReference
-            githubPath={restrictedActionsGithubPath}
-            docs={restrictedActions}
-          />
+          <APIReference docs={funcs} />
         </Container>
       </Layout>
     )
@@ -96,34 +83,29 @@ export default ActionCreatorsDocs
 
 export const pageQuery = graphql`
   query {
-    public: file(relativePath: { eq: "gatsby/src/redux/actions/public.js" }) {
-      relativePath
-      childrenDocumentationJs {
-        codeLocation {
-          start {
-            line
-          }
-          end {
-            line
-          }
+    allFile(
+      filter: {
+        relativePath: {
+          in: [
+            "gatsby/src/redux/actions/public.js"
+            "gatsby/src/redux/actions/restricted.js"
+          ]
         }
-        ...DocumentationFragment
       }
-    }
-    restricted: file(
-      relativePath: { eq: "gatsby/src/redux/actions/restricted.js" }
     ) {
-      relativePath
-      childrenDocumentationJs {
-        codeLocation {
-          start {
-            line
+      nodes {
+        relativePath
+        childrenDocumentationJs {
+          codeLocation {
+            start {
+              line
+            }
+            end {
+              line
+            }
           }
-          end {
-            line
-          }
+          ...DocumentationFragment
         }
-        ...DocumentationFragment
       }
     }
   }
