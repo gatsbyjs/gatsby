@@ -16,24 +16,37 @@ Sometimes the simplest approach is to work around the problem. If you can re-imp
 
 ## Workaround 2: Add client-side package via CDN
 
-In the component where you need it, load the package via CDN using a [`<script />`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag with `react-helmet`. You'll still need to check to see if `window` exists before using the library, so that SSR can still complete.
+In the component where you need it, load the package via CDN using a [`<script />`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag.
+
+To embed your script, you can:
+
+- Include it in a custom component as needed using [`react-helmet`](https://github.com/nfl/react-helmet).
+- Add the script tag directly in your base html using Gatsby's [html.js](/docs/custom-html/)
+
+You should then follow React's guidelines for [Integrating with DOM Manipulation Plugins](https://reactjs.org/docs/integrating-with-other-libraries.html#integrating-with-dom-manipulation-plugins), using the methods available in the [React Component Lifecycle](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to interact with the library you're using.
 
 ```jsx
-import { Helmet } from 'react-helmet'
+import React, { Component } from "react"
+import { Helmet } from "react-helmet"
 
-
-const MyComponent = (props) => {
-  // check for browser DOM readiness
-  if (typeof window !== undefined) {
-    // use external package as needed here,
-    // e.g. `window.externalLibrary.method()`
+class MyComponent extends Component {
+  componentDidMount() {
+    // set up and use external package as needed
+    window.externalLibrary.method()
   }
-  return (
-    {/* load our dependency client-side using react-helmet */}
-    <Helmet>
-      <script src="https://cdn.example/path-to-external-library.js" />
-    </Helmet>
-  );
+
+  render(props) {
+    return (
+      <React.Fragment>
+        <Helmet>
+          <script src="https://cdn.example/path-to-external-library.js" />
+        </Helmet>
+
+        <h1>Hello World</h1>
+        {/* etc */}
+      </React.Fragment>
+    )
+  }
 }
 ```
 
