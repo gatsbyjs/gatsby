@@ -5,7 +5,7 @@ issue: https://github.com/gatsbyjs/gatsby/issues/11810
 
 ## What is the aim of this document?
 
-On the Gatsby core team, we've found patterns that help us effectively triage incoming Github issues, providing answers to the community's questions, identifying bugs, and providing contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
+On the Gatsby core team, we've found patterns that help us effectively triage incoming GitHub issues, providing answers to the community's questions, identifying bugs, and providing contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
 
 We want to share these patterns with the broader community, so that if you're interesting in helping us triage, you're able to do so more effectively!
 
