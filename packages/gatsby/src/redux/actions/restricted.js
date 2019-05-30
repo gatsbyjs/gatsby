@@ -10,11 +10,11 @@ const actions = {}
  * Add a third-party schema to be merged into main schema. Schema has to be a
  * graphql-js GraphQLSchema object.
  *
- * Only available in [`sourceNodes`](/docs/node-apis/#sourceNodes) API.
- *
  * This schema is going to be merged as-is. This can easily break the main
  * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
  * (by eg namespacing the schema).
+ *
+ * @availableIn [sourceNodes]
  *
  * @param {Object} $0
  * @param {GraphQLSchema} $0.schema GraphQL schema to add
@@ -36,7 +36,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
 /**
  * Add type definitions to the GraphQL schema.
  *
- * Only available in [`sourceNodes`](/docs/node-apis/#sourceNodes) API.
+ * @availableIn [sourceNodes]
  *
  * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
  *

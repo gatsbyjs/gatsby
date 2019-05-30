@@ -96,6 +96,7 @@ export const pageQuery = graphql`
       nodes {
         relativePath
         childrenDocumentationJs {
+          availableIn
           codeLocation {
             start {
               line
