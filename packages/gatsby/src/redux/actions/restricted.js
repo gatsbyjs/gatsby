@@ -1,5 +1,4 @@
 // @flow
-const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 import type { Plugin } from "./types"
