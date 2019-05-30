@@ -202,6 +202,7 @@ module.exports = {
       options: {
         trackingId: GA.identifier,
         anonymize: true,
+        allowLinker: true,
       },
     },
     {
