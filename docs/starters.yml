@@ -2767,3 +2767,18 @@
     - Developer enviornment variables
     - Accessibility support
     - Based on Gatsby Starter Default
+- url: https://material-ui-starter.netlify.com/
+  repo: https://github.com/dominicabela/gatsby-starter-material-ui
+  description: This starter includes Material UI boilerplate and configuration files along with the standard Gatsby configuration files. It provides a starting point for developing Gatsby apps with the Material UI framework.
+  tags:
+    - SEO
+    - Styling:Material
+    - Styling:Material Design
+    - Material UI
+    - Boilerplate
+  features:
+    - Material UI Framework
+    - Roboto Typeface (self hosted)
+    - SEO
+    - Offline Support
+    - Based on Gatsby Default Starter
