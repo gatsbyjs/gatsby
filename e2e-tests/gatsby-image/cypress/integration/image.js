@@ -1,4 +1,5 @@
 const fluidTestId = `image-fluid`
+const placeholderImage = `picture:nth-of-type(1)`
 
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
@@ -26,20 +27,20 @@ describe(`Production gatsby-image`, () => {
   describe(`fallback image`, () => {
     it(`renders base-64 src`, () => {
       cy.getTestElement(fluidTestId)
-        .find(`picture:nth-of-type(1) img`)
+        .find(`${placeholderImage} img`)
         .should(`have.attr`, `src`)
         .and(`contains`, `base64`)
     })
 
     it(`renders with style`, () => {
       cy.getTestElement(fluidTestId)
-        .find(`picture:nth-of-type(1) img`)
+        .find(`${placeholderImage} img`)
         .should(`have.attr`, `style`)
     })
 
     it(`swaps opacity to 0`, () => {
       cy.getTestElement(fluidTestId)
-        .find(`picture:nth-of-type(1) img`)
+        .find(`${placeholderImage} img`)
         .should(`have.attr`, `style`)
         .and(`contains`, `opacity: 0`)
     })
