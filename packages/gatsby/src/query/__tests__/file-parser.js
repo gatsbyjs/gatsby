@@ -153,12 +153,12 @@ export default () => {
   const data = useStaticQuery<HomepageQuery>(graphql\`query StaticQueryName { foo }\`);
   return <div>{data.doo}</div>;
 }`,
-    "static-query-missing-argument.js": `import { graphql, useStaticQuery } from 'gatsby'
+    "static-query-hooks-missing-argument.js": `import { graphql, useStaticQuery } from 'gatsby'
 export default () => {
   const data = useStaticQuery();
   return <div>{data.doo}</div>;
 }`,
-    "static-query-in-separate-variable.js": `import React from "react"
+    "static-query-hooks-in-separate-variable.js": `import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 const query = graphql\`{ allMarkdownRemark { blah { node { cheese }}}}\`
@@ -167,14 +167,14 @@ export default () => {
   const data = useStaticQuery(query);
   return <div>{data.doo}</div>;
 }`,
-    "static-query-not-defined.js": `import React from "react"
+    "static-query-hooks-not-defined.js": `import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 export default () => {
   const data = useStaticQuery(strangeQueryName);
   return <div>{data.pizza}</div>;
 }`,
-    "static-query-imported.js": `import React from "react"
+    "static-query-hooks-imported.js": `import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import strangeQueryName from "./another-file.js"
 

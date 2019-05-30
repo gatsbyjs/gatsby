@@ -1082,7 +1082,7 @@ Map {
     ],
     "kind": "Document",
   },
-  "static-query-in-separate-variable.js" => Object {
+  "static-query-hooks-in-separate-variable.js" => Object {
     "definitions": Array [
       Object {
         "directives": Array [],
@@ -1096,7 +1096,7 @@ Map {
         },
         "name": Object {
           "kind": "Name",
-          "value": "staticQueryInSeparateVariableJs3748317405",
+          "value": "staticQueryHooksInSeparateVariableJs3748317405",
         },
         "operation": "query",
         "selectionSet": Object {
@@ -1240,20 +1240,20 @@ Also note that we are currently unable to use queries defined in files other tha
     ],
     Array [
       "
-We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the useStaticQuery declaration in \\"static-query-not-defined.js\\".
+We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the useStaticQuery declaration in \\"static-query-hooks-not-defined.js\\".
 
 Perhaps the variable name has a typo?
 
-Also note that we are currently unable to use queries defined in files other than the file where the useStaticQuery is defined. If you're attempting to import the query, please move it into \\"static-query-not-defined.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
+Also note that we are currently unable to use queries defined in files other than the file where the useStaticQuery is defined. If you're attempting to import the query, please move it into \\"static-query-hooks-not-defined.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
 ",
     ],
     Array [
       "
-We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the useStaticQuery declaration in \\"static-query-imported.js\\".
+We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the useStaticQuery declaration in \\"static-query-hooks-imported.js\\".
 
 Perhaps the variable name has a typo?
 
-Also note that we are currently unable to use queries defined in files other than the file where the useStaticQuery is defined. If you're attempting to import the query, please move it into \\"static-query-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
+Also note that we are currently unable to use queries defined in files other than the file where the useStaticQuery is defined. If you're attempting to import the query, please move it into \\"static-query-hooks-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
 ",
     ],
   ],
