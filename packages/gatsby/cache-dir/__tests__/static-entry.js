@@ -1,5 +1,6 @@
 import React from "react"
 import fs from "fs"
+const { join } = require(`path`)
 
 import DevelopStaticEntry from "../develop-static-entry"
 
@@ -33,7 +34,10 @@ jest.mock(
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
-  [`${process.cwd()}/public/page-data/about/page-data.json`]: JSON.stringify({
+  [join(
+    process.cwd(),
+    `/public/page-data/about/page-data.json`
+  )]: JSON.stringify({
     componentChunkName: `page-component---src-pages-test-js`,
     path: `/about/`,
     webpackCompilationHash: `1234567890abcdef1234`,
