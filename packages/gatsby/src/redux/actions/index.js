@@ -3,12 +3,15 @@ const { store } = require(`..`)
 
 const { actions: internalActions } = require(`./internal`)
 const { actions: publicActions } = require(`./public`)
-const { actions: restrictedActions, availableInAPI } = require(`./restricted`)
+const {
+  actions: restrictedActions,
+  availableActionsByAPI,
+} = require(`./restricted`)
 
 exports.internalActions = internalActions
 exports.publicActions = publicActions
 exports.restrictedActions = restrictedActions
-exports.restrictedActionsAvailableInAPI = availableInAPI
+exports.restrictedActionsAvailableInAPI = availableActionsByAPI
 
 const actions = {
   ...internalActions,

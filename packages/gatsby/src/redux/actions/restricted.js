@@ -191,83 +191,80 @@ actions.createTypes = (
   }
 }
 
-const withDeprecationWarning = ({
-  api,
-  actions,
-  actionNames,
-  alternativeAPI,
-}) =>
-  actionNames.reduce((acc, action) => {
-    acc[action] = (...args) => {
-      report.warn(
-        `Calling \`${action}\` in the \`${api}\` API is deprecated. ` +
-          `Please use: ${alternativeAPI.map(a => `\`${a}\``).join(`, `)}.`
+const withDeprecationWarning = (action, api, allowedIn) => (...args) => {
+  report.warn(
+    `Calling \`${action}\` in the \`${api}\` API is deprecated. ` +
+      `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+  )
+  return actions[action](...args)
+}
+
+const withErrorMessage = (action, api, allowedIn) => () =>
+  // return a thunk that does not dispatch anything
+  () => {
+    report.error(
+      `\`${action}\` is not available in the \`${api}\` API. ` +
+        `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+    )
+  }
+
+const nodeAPIs = Object.keys(require(`../../utils/api-node-docs`))
+
+const ALLOWED_IN = `ALLOWED_IN`
+const DEPRECATED_IN = `DEPRECATED_IN`
+
+const set = (availableActionsByAPI, api, actionName, action) => {
+  availableActionsByAPI[api] = availableActionsByAPI[api] || {}
+  availableActionsByAPI[api][actionName] = action
+}
+
+const mapAvailablectionsToAPIs = restrictions => {
+  const availableActionsByAPI = {}
+
+  const actionNames = Object.keys(restrictions)
+  actionNames.forEach(actionName => {
+    const action = actions[actionName]
+
+    const allowedIn = restrictions[actionName][ALLOWED_IN]
+    allowedIn.forEach(api =>
+      set(availableActionsByAPI, api, actionName, action)
+    )
+
+    const deprecatedIn = restrictions[actionName][DEPRECATED_IN]
+    deprecatedIn.forEach(api =>
+      set(
+        availableActionsByAPI,
+        api,
+        actionName,
+        withDeprecationWarning(action, api, allowedIn)
       )
-      return actions[action](...args)
-    }
-    return acc
-  }, {})
+    )
 
-const withErrorMessage = ({ api, actionNames, alternativeAPI }) =>
-  actionNames.reduce((acc, action) => {
-    // return a thunk that does not dispatch anything
-    acc[action] = () => () => {
-      report.error(
-        `\`${action}\` is not available in the \`${api}\` API. ` +
-          `Please use: ${alternativeAPI.map(a => `\`${a}\``).join(`, `)}.`
+    const forbiddenIn = nodeAPIs.filter(
+      api => ![...allowedIn, ...deprecatedIn].includes(api)
+    )
+    forbiddenIn.forEach(api =>
+      set(
+        availableActionsByAPI,
+        api,
+        actionName,
+        withErrorMessage(action, api, allowedIn)
       )
-    }
-    return acc
-  }, {})
+    )
+  })
 
-const nodeAPI = Object.keys(require(`../../utils/api-node-docs`))
+  return availableActionsByAPI
+}
 
-// Schema-related actions need to be called *before* schema generation
-const apiWithoutSchemaActions = nodeAPI
-  .filter(api => ![`onPreInit`, `onPreBootstrap`, `sourceNodes`].includes(api))
-  .reduce((acc, api) => {
-    acc[api] = withErrorMessage({
-      api,
-      actionNames: [`createTypes`, `addThirdPartySchema`],
-      alternativeAPI: [`sourceNodes`],
-    })
-    return acc
-  }, {})
-
-// Deprecate schema related actions everyhere but in `sourceNodes`
-const apiWithDeprecatedSchemaActions = [`onPreInit`, `onPreBootstrap`].reduce(
-  (acc, api) => {
-    acc[api] = withDeprecationWarning({
-      api,
-      actions,
-      actionNames: [`createTypes`, `addThirdPartySchema`],
-      alternativeAPI: [`sourceNodes`],
-    })
-    return acc
+const availableActionsByAPI = mapAvailablectionsToAPIs({
+  createTypes: {
+    [ALLOWED_IN]: [`sourceNodes`],
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
-  {}
-)
-
-const forbiddenInAPI = {
-  ...apiWithoutSchemaActions,
-}
-
-const deprecatedInAPI = {
-  ...apiWithDeprecatedSchemaActions,
-}
-
-const allowedInAPI = {
-  sourceNodes: {
-    createTypes: actions.createTypes,
-    addThirdPartySchema: actions.addThirdPartySchema,
+  addThirdPartySchema: {
+    [ALLOWED_IN]: [`sourceNodes`],
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
-}
+})
 
-const availableInAPI = _.merge(
-  {},
-  forbiddenInAPI,
-  deprecatedInAPI,
-  allowedInAPI
-)
-
-module.exports = { actions, availableInAPI }
+module.exports = { actions, availableActionsByAPI }
