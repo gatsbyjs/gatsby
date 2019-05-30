@@ -217,7 +217,7 @@ const set = (availableActionsByAPI, api, actionName, action) => {
   availableActionsByAPI[api][actionName] = action
 }
 
-const mapAvailablectionsToAPIs = restrictions => {
+const mapAvailableActionsToAPIs = restrictions => {
   const availableActionsByAPI = {}
 
   const actionNames = Object.keys(restrictions)
@@ -255,7 +255,7 @@ const mapAvailablectionsToAPIs = restrictions => {
   return availableActionsByAPI
 }
 
-const availableActionsByAPI = mapAvailablectionsToAPIs({
+const availableActionsByAPI = mapAvailableActionsToAPIs({
   createTypes: {
     [ALLOWED_IN]: [`sourceNodes`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
