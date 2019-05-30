@@ -1,4 +1,4 @@
-exports.onRouteUpdate = ({ location }, pluginOptions) => {
+exports.onRouteUpdate = (_, pluginOptions) => {
   if (
     process.env.NODE_ENV === `production` ||
     pluginOptions.includeInDevelopment
