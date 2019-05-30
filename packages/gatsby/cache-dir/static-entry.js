@@ -152,6 +152,8 @@ export default (pagePath, callback) => {
       const props = {
         ...this.props,
         ...pageData.result,
+        // pathContext was deprecated in v2. Renamed to pageContext
+        pathContext: pageData.result ? pageData.result.pageContext : undefined,
       }
 
       const pageElement = createElement(
