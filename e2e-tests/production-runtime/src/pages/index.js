@@ -51,6 +51,11 @@ const IndexPage = ({ pageContext }) => (
           Compilation Hash Page
         </Link>
       </li>
+      <li>
+        <Link to="/path-context/" data-testid="path-context">
+          Path Context
+        </Link>
+      </li>
     </ul>
   </Layout>
 )

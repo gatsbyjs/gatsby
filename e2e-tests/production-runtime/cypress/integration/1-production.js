@@ -83,6 +83,13 @@ describe(`Production build tests`, () => {
       .should(`exist`)
   })
 
+  it(`should pass pathContext to props`, () => {
+    cy.visit(`/path-context`).waitForRouteChange()
+
+    // `bar` is set in gatsby-node createPages
+    cy.getTestElement(`path-context-foo`).contains(`bar`)
+  })
+
   it(`Uses env vars`, () => {
     cy.visit(`/env-vars`).waitForRouteChange()
 
