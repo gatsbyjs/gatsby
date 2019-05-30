@@ -8,7 +8,7 @@ tags:
   - developer experience
 ---
 
-Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. A popular tool for exploring your GraphQL schema is [GraphiQL](https://github.com/graphql/graphiql) — which is a graphical interactive in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
+Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. A popular tool for exploring your GraphQL schema is [GraphiQL](https://github.com/graphql/graphiql) — which is a graphical, interactive, in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4"></source>
@@ -17,22 +17,22 @@ Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means th
 
 ## What is GraphiQL Explorer?
 
-[`graphiql-explorer`](https://github.com/OneGraph/graphiql-explorer) is a plugin for GraphiQL that adds a new technique to explore and build GraphQL queries. It adds a graphical representation of available fields and inputs that can be used in queries. It also allows constructing full queries by clicking through available fields and inputs without the repetitive process of typing these queries out by hand!
+[`graphiql-explorer`](https://github.com/OneGraph/graphiql-explorer) is a plugin for GraphiQL built by the team at [OneGraph](https://www.onegraph.com/) that adds a new technique to explore and build GraphQL queries. It adds a graphical representation of available fields and inputs that can be used in queries. It also allows constructing full queries by clicking through available fields and inputs without the repetitive process of typing these queries out by hand!
 
-## Why is GraphiQL Explorer?
+## Why use GraphiQL Explorer?
 
-We often hear that many developer's first usage of GraphQL is through Gatsby. GraphQL, like any technology, has a learning curve. We can't eliminate this learning curve completely but we can try to make it smoother. As mentioned previously, GraphiQL Explorer allow users to build full GraphQL queries without typing a single line of code. This enables users that don't yet fully understand the GraphQL query syntax to _learn_ GraphQL much more easily:
+We often hear that many developers' first usage of GraphQL is through Gatsby. GraphQL, like any technology, has a learning curve. We can't eliminate this learning curve completely but we can try to make it smoother. As mentioned previously, GraphiQL Explorer allows users to build full GraphQL queries without typing a single line of code. This enables users that don't yet fully understand the GraphQL query syntax to _learn_ GraphQL much more easily:
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./graphiql-explorer-demo.mp4"></source>
   <p>Your browser does not support the video element.</p>
 </video>
 
-For more information, check out ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details about it from [OneGraph](https://www.onegraph.com/) (creators of GraphiQL Explorer).
+For more information, check out ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details.
 
 ## Advanced usecases
 
-Improvements to on-boarding users new to GraphQL isn't the only goal of integrating GraphiQL Explorer into Gatsby. There are other pain points that are getting addressed with this addition. Specifically [union types and inline fragments](https://graphql.org/learn/queries/#inline-fragments). If the user is not aware of this syntax to query this type of fields it can be a fairly frustrating experience! GraphiQL Explorer helps solve this problem by listing available types in union:
+Improvements to on-boarding users new to GraphQL isn't the only goal of integrating GraphiQL Explorer into Gatsby. There are other pain points that are getting addressed with this addition. Specifically [union types and inline fragments](https://graphql.org/learn/queries/#inline-fragments). If the user is not aware of this syntax to query this type of fields it can be a fairly frustrating experience! GraphiQL Explorer helps solve this problem by listing available union types:
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./graphiql-explorer-union-demo.mp4"></source>
