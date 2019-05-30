@@ -2744,7 +2744,7 @@
     - PWA
 - url: https://gatsby-starter-default-typescript.netlify.com/
   repo: https://github.com/andykenward/gatsby-starter-default-typescript
-  description: Starter Default Typescript
+  description: Starter Default TypeScript
   tags:
     - TypeScript
   features:
