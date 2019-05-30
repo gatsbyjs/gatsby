@@ -297,7 +297,7 @@ export default (pagePath, callback) => {
         rel="preload"
         key={dataPath}
         href={dataPath}
-        crossOrigin="use-credentials"
+        crossOrigin="anonymous"
       />
     )
   }

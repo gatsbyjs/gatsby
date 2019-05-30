@@ -84,7 +84,6 @@ const fetchResource = resourceName => {
           const url = createJsonURL(jsonDataPaths[resourceName])
           const req = new XMLHttpRequest()
           req.open(`GET`, url, true)
-          req.withCredentials = true
           req.onreadystatechange = () => {
             if (req.readyState == 4) {
               if (req.status === 200) {
