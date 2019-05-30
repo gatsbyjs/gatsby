@@ -6149,3 +6149,17 @@
     - Marketing
   built_by: Genevieve Crow
   built_by_url: https://github.com/g-crow
+- title: Appmantle
+  main_url: https://appmantle.com
+  url: https://appmantle.com
+  description: >
+    Appmantle is a new way of creating apps. A complete modern app that you build yourself quickly & easily, without programming knowledge.
+  categories:
+    - App
+    - Marketing
+    - Landing Page
+    - Mobile Development
+    - Technology
+  built_by: Appmantle
+  built_by_url: https://appmantle.com
+  featured: false
