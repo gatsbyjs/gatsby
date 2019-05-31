@@ -554,7 +554,7 @@ const Typography = ({ location }) => (
             </Heading>
             <SidebarUL>
               {[`Introduction`, `Quickstart`, `Recipes`].map((item, index) => (
-                <SidebarLI key={`sidebar-item-${index}`}>{item}</SidebarLI>
+                <SidebarLI key={`sidebar-item-1-${index}`}>{item}</SidebarLI>
               ))}
             </SidebarUL>
             <Heading fontWeight="1" fontSize={3} mt={8} mb={5}>
@@ -577,7 +577,7 @@ const Typography = ({ location }) => (
                 `Improving performance`,
                 `Localizing your site`,
               ].map((item, index) => (
-                <SidebarLI key={`typographic-scale-${index}`}>{item}</SidebarLI>
+                <SidebarLI key={`sidebar-item-2-${index}`}>{item}</SidebarLI>
               ))}
             </SidebarUL>
           </Box>
