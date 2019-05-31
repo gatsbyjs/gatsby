@@ -42,13 +42,14 @@ const Tags = ({ pageContext, data, location }) => {
       <Container>
         <h1>{tagHeader}</h1>
         <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
-          View All Tags <TagsIcon />
+          View all Tags <TagsIcon />
         </Button>
         {edges.map(({ node }) => (
           <BlogPostPreviewItem
             post={node}
             key={node.fields.slug}
             css={{
+              position: `relative`,
               marginTop: space[9],
               marginBottom: space[9],
             }}

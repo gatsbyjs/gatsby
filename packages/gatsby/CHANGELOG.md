@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.6...gatsby@2.8.0) (2019-05-31)
+
+### Features
+
+- **gatsby:** Allow sorting resolved fields ([#14423](https://github.com/gatsbyjs/gatsby/issues/14423)) ([461439a](https://github.com/gatsbyjs/gatsby/commit/461439a))
+
+## [2.7.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.5...gatsby@2.7.6) (2019-05-31)
+
+### Bug Fixes
+
+- **gatsby:** Find identifiers only in the first argument when extracting queries from useStaticQuery ([#14362](https://github.com/gatsbyjs/gatsby/issues/14362)) ([524817a](https://github.com/gatsbyjs/gatsby/commit/524817a)), closes [#14345](https://github.com/gatsbyjs/gatsby/issues/14345)
+- **schema:** Handle types wrapped in js array in createResolvers ([#14422](https://github.com/gatsbyjs/gatsby/issues/14422)) ([56647bc](https://github.com/gatsbyjs/gatsby/commit/56647bc))
+
+## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.4...gatsby@2.7.5) (2019-05-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.3...gatsby@2.7.4) (2019-05-29)
+
+### Features
+
+- **gatsby:** Add `ogv` support to webpack media rule ([#14365](https://github.com/gatsbyjs/gatsby/issues/14365)) ([6070279](https://github.com/gatsbyjs/gatsby/commit/6070279))
+
+## [2.7.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.2...gatsby@2.7.3) (2019-05-27)
+
+### Features
+
+- **gatsby:** use graphiql-explorer ([#14280](https://github.com/gatsbyjs/gatsby/issues/14280)) ([3863f24](https://github.com/gatsbyjs/gatsby/commit/3863f24))
+
+## [2.7.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.1...gatsby@2.7.2) (2019-05-27)
+
+### Bug Fixes
+
+- **gatsby:** send all responses from the proxy API to the client ([#14329](https://github.com/gatsbyjs/gatsby/issues/14329)) ([17b6ea0](https://github.com/gatsbyjs/gatsby/commit/17b6ea0))
+
 ## [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.0...gatsby@2.7.1) (2019-05-23)
 
 ### Bug Fixes

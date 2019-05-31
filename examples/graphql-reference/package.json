@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "LekoArts <hello@lekoarts.de>",
   "dependencies": {
-    "gatsby": "^2.0.107",
+    "gatsby": "^2.7.4",
     "gatsby-image": "^2.0.22",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sharp": "^2.0.6",

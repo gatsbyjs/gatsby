@@ -377,7 +377,7 @@ type Frontmatter {
   reviewers: [AuthorJson] @link(by: "email") # foreign-key relation by custom field
 }
 type AuthorJson implements Node {
-  posts: [MarkdownRemark] @link(by: "frontmatter.author", from: "email") # easy back-ref
+  posts: [MarkdownRemark] @link(by: "frontmatter.author.email", from: "email") # easy back-ref
 }
 ```
 

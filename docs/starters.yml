@@ -2638,7 +2638,6 @@
   tags:
     - Cosmic JS
     - i18n
-    - Web Dev
   features:
     - Gatsby localization starter app
 - url: https://cosmicjs.com/apps/gatsby-docs/demo
@@ -2647,7 +2646,6 @@
   tags:
     - Cosmic JS
     - Documentation
-    - Web Dev
   features:
     - manage docs in static web file format for zippy delivery
 - url: https://cosmicjs.com/apps/gatsby-ecommerce-website/demo
@@ -2656,7 +2654,6 @@
   tags:
     - Cosmic JS
     - eCommerce
-    - Web Dev
   features:
     - Stores products, orders using Cosmic JS as a database and a server
 - url: https://harshil1712.github.io/gatsby-starter-googlesheets/
@@ -2669,3 +2666,123 @@
   features:
     - Uses Google Sheets for data
     - Easily configurable
+- url: https://the-plain-gatsby.netlify.com/
+  repo: https://github.com/wangonya/the-plain-gatsby
+  description: A simple minimalist starter for your personal blog.
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Minimalist design
+    - Next and previous blog post navigation
+    - About page
+    - Markdown support
+- url: https://gatsby-starter-blockstack.openintents.org
+  repo: https://github.com/friedger/gatsby-starter-blockstack
+  description: A starter using Blockstack on client side
+  tags:
+    - Blockstack
+    - Authentication
+  features:
+    - Uses Blockstack
+    - Client side app
+- url: https://anubhavsrivastava.github.io/gatsby-starter-multiverse
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-multiverse
+  description: Single page starter based on the Multiverse site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-highlights
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-highlights
+  description: Single page starter based on the Highlights site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-starter-anoun-1-markdown.netlify.com/
+  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
+  description: A clean, modern starter for businesses using Material Design Components
+  tags:
+    - Business Website
+    - Blog
+    - Modern Design
+    - PWA
+    - Styling:Material Design
+    - Styling:SCSS
+  features:
+    - Minimal, Modern Business Website Design
+    - Material Design Components
+    - MDC React Components
+    - MDC Theming
+    - Blog
+    - Home Page
+    - Contact Page
+    - Contact Form
+    - About Page
+    - Mobile-First approach in development
+    - Fully Responsive
+    - Markdown
+    - PWA
+- url: https://gatsby-starter-default-typescript.netlify.com/
+  repo: https://github.com/andykenward/gatsby-starter-default-typescript
+  description: Starter Default TypeScript
+  tags:
+    - TypeScript
+  features:
+    - TypeScript
+    - Typing generation for GraphQL using GraphQL Code Generator
+    - Comes with React Helmet for adding site meta tags
+    - Based on Gatsby Starter Default
+- url: http://gatsbyhoney.davshoward.com/
+  repo: https://github.com/davshoward/gatsby-starter-honey
+  description: A delicious baseline for Gatsby (v2).
+  tags:
+    - Styling:PostCSS
+    - SEO
+    - Accessibility
+  features:
+    - Gastby v2
+    - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
+    - Google Analytics
+    - PostCSS support
+    - Developer enviornment variables
+    - Accessibility support
+    - Based on Gatsby Starter Default
+- url: https://developer-diary.netlify.com/
+  repo: https://github.com/willjw3/gatsby-starter-developer-diary
+  description: A blog template created with web developers in mind. Totally usable right out of the box, but minimalist enough to be easily modifiable.
+  tags:
+    - Blog
+    - Markdown
+    - Pagination
+    - SEO
+  features:
+    - Ready to go - Blog author name, author image, etc,... can be easily added using a config file
+    - Blog posts created as markdown files
+    - Gatsby v.2
+    - Mobile responsive
+    - Pagination
+    - Category and tag pages
+    - Social media sharing icons in each post
+    - Icons from React Icons (Font Awesome, Devicons, etc,...)
+    - Beautiful tech-topic tags to attach to your web-development-related blog posts
+    - Developer-relevant social media icon links, including GitHub, Stack Overflow, and freeCodeCamp
