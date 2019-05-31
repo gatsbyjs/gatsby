@@ -120,7 +120,7 @@ class IndexRoute extends React.Component {
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
-              <div css={{ textAlign: `center` }}>
+              <section css={{ textAlign: `center` }}>
                 <h1 css={{ fontWeight: fontWeights[1], marginTop: 0 }}>
                   Curious yet?
                 </h1>
@@ -137,7 +137,7 @@ class IndexRoute extends React.Component {
                 >
                   Get Started
                 </Button>
-              </div>
+              </section>
             </Container>
           </div>
 
