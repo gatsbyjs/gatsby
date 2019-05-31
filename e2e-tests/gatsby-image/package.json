@@ -22,8 +22,6 @@
   ],
   "license": "MIT",
   "scripts": {
-    "predevelop": "rm -f node_modules/gatsby/dist/redux/actions.js*",
-    "prebuild": "rm -f node_modules/gatsby/dist/redux/actions.js*",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",

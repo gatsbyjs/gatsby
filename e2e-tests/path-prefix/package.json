@@ -20,8 +20,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "predevelop": "rm -f node_modules/gatsby/dist/redux/actions.js*",
-    "prebuild": "rm -f node_modules/gatsby/dist/redux/actions.js* && rm -rf assets && mkdir -p assets/blog",
+    "prebuild": "rm -rf assets && mkdir -p assets/blog",
     "build": "gatsby build --prefix-paths",
     "postbuild": "cp -r public/. assets/blog",
     "develop": "gatsby develop",
