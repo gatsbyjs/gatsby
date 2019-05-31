@@ -2,9 +2,11 @@ import React from "react"
 import Event from "./event"
 
 const Events = ({ events }) => {
-  const upcoming = events.nodes.filter(event => event.data.date >= Date.now())
+  const upcoming = events.nodes.filter(
+    event => new Date(event.data.date) >= Date.now()
+  )
   const past = events.nodes
-    .filter(event => event.data.date < Date.now())
+    .filter(event => new Date(event.data.date) < Date.now())
     .reverse()
 
   return events.nodes.length > 0 ? (
