@@ -590,6 +590,6 @@ That's a good looking component! Let's see what it looks like when you visit the
 
 Well done! You now have a functioning blog using WordPress and Gatsby. There are more things you can do to add custom functionality such as custom post types, galleries, and more, but this is enough to get you started for now. As you've seen, this stack is the best of both worlds since clients and users get the awesome experience of content creating with WordPress and as a developer you can leverage the amazing capabilities of Gatsby. As usual, go forth and make the internet a better place to be!
 
-The [code for this post](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Github.
+The [code for this post](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on GitHub.
 
 If you have any thoughts or questions, you can find me on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!

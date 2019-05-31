@@ -13,6 +13,7 @@
     "@babel/runtime": "^7.0.0",
     "chokidar": "^1.7.0",
     "configstore": "^3.1.0",
+    "del": "^3.0.0",
     "execa": "^1.0.0",
     "fs-extra": "^4.0.1",
     "is-absolute": "^0.2.6",

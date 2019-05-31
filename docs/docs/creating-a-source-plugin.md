@@ -110,7 +110,7 @@ At a high-level, these are the jobs of a source plugin:
   contentDigests.
 - "Link" nodes types you create as appropriate (see
   [_Node Link_](/docs/api-specification/) in the API specification concepts
-  section.
+  section).
 - Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
 
 ## Getting helper functions
@@ -142,7 +142,7 @@ In order to create a parent/child relationship, when calling `createNode` for th
 
 _Examples_
 
-[Here's the above example](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/on-node-create.js#L34-L64) from the `gatsby-transformer-remark` source plugin.
+[Here's the above example](https://github.com/gatsbyjs/gatsby/blob/72077527b4acd3f2109ed5a2fcb780cddefee35a/packages/gatsby-transformer-remark/src/on-node-create.js#L39-L67) from the `gatsby-transformer-remark` source plugin.
 
 [Here's another example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.
 

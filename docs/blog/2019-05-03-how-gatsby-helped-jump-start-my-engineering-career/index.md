@@ -111,7 +111,7 @@ When I moved to my next job -- my current role at Hilton -- I was able to more t
 
 My wife and I have a really strong relationship -- turns out being in a good financial place helps a lot with that. And when I got this job, that's when my wife and I decided to have a kid -- our daughter was born three weeks ago. Because we had enough money that it seemed reasonable to do so.
 
-I’ve got into Typescript, really thinking about JavaScript performance, multithreading, deep into webpack. One of my current projects is creating a design system that is unified across 15 brands.
+I’ve got into TypeScript, really thinking about JavaScript performance, multithreading, deep into webpack. One of my current projects is creating a design system that is unified across 15 brands.
 
 Now it feels like if I wanted, I could get five job offers in a week.
 
