@@ -24,7 +24,7 @@ import {
 
 export const sourceNodes = async (
   { actions: { createNode, touchNode }, createNodeId, store, cache },
-  { shopName, accessToken, verbose = true }
+  { shopName, accessToken, verbose = true, initialQuerySize = 250 }
 ) => {
   const client = createClient(shopName, accessToken)
 
@@ -46,6 +46,7 @@ export const sourceNodes = async (
       formatMsg,
       verbose,
       imageArgs,
+      initialQuerySize,
     }
 
     // Message printed when fetching is complete.
@@ -93,7 +94,7 @@ const createNodes = async (
   endpoint,
   query,
   nodeFactory,
-  { client, createNode, formatMsg, verbose, imageArgs },
+  { client, createNode, formatMsg, verbose, imageArgs, initialQuerySize },
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
@@ -101,7 +102,7 @@ const createNodes = async (
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(client, [`shop`, endpoint], query),
+    await queryAll(client, [`shop`, endpoint], query, initialQuerySize),
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
