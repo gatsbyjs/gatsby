@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
 
 import { Heading, Text } from "./system"
+import { srOnly } from "../../utils/styles"
 
 const themed = key => props => props.theme[key]
 
@@ -53,4 +54,10 @@ SectionSubheading.defaultProps = {
   as: `h3`,
   color: `grey.90`,
   fontSize: { xs: 5 },
+}
+
+export const SrOnly = styled(Text)(srOnly)
+
+SrOnly.defaultProps = {
+  as: `span`,
 }

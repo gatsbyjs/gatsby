@@ -4,6 +4,7 @@ import MdLaunch from "react-icons/lib/md/launch"
 import { Box, Flex, Link, Text } from "../system"
 import BoxWithBorder from "../box-with-border"
 import { getTextColor } from "../../../utils/guidelines/color"
+import { SrOnly } from "../typography"
 import { colors } from "../../../utils/presets"
 
 const ColorValue = ({ label, inverted, value, href }) => (
@@ -36,6 +37,7 @@ const ColorValue = ({ label, inverted, value, href }) => (
               }}
             >
               <MdLaunch style={{ marginLeft: `0.25rem` }} />
+              <SrOnly>Pantone Matching System reference</SrOnly>
             </Link>
           </>
         )}
