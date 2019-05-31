@@ -1,4 +1,4 @@
-FROM node:10-slim
+FROM node:12-slim
 
 # Labels for GitHub to read your action
 LABEL "com.github.actions.name"="high-priority-prs"
@@ -15,4 +15,4 @@ COPY . .
 RUN yarn
 
 # Run `node /index.js`
-ENTRYPOINT ["node", "/index.js"]
+ENTRYPOINT ["node", "/src/index.js"]

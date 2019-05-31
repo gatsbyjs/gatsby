@@ -3,11 +3,11 @@ const { WebClient } = require("@slack/web-api")
 const prMessage = require(`./pr-message`)
 const { Toolkit } = require("actions-toolkit")
 const tools = new Toolkit({
-  secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
+  // secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
 })
 
-const token = process.env.SLACK_TOKEN
-const web = new WebClient(token)
+// const token = process.env.SLACK_TOKEN
+// const web = new WebClient(token)
 
 // const filecontents = tools.getFile(".github/actions/gatsby-pr-bot/data.json")
 // const data = JSON.parse(filecontents)
@@ -83,14 +83,12 @@ const maintainers = {
   },
 }
 
-const ignoreMessages = [
-  "Merge branch 'master'",
-  "Merge remote-tracking branch"
-]
+const ignoreMessages = ["Merge branch 'master'", "Merge remote-tracking branch"]
 
-module.exports = data => {
+const process = data => {
   const prs = data.repository.pullRequests
 
+  fs.writeFileSync("./data.json", JSON.stringify(data))
   // Total PRs
   // console.log(`total PRS`, prs.totalCount)
 
@@ -155,8 +153,8 @@ module.exports = data => {
     const authorUrl = pr.author.url
     const botUrl = "https://github.com/apps/gatsbot"
 
-    const reviewList = pr.comments.nodes.filter(x => 
-      (x.author.url !== authorUrl && x.author.url !== botUrl)
+    const reviewList = pr.comments.nodes.filter(
+      x => x.author.url !== authorUrl && x.author.url !== botUrl
     )
     const lastComment = _.get(
       _.maxBy(reviewList, n => n.createdAt),
@@ -166,15 +164,17 @@ module.exports = data => {
     let commitMessages = []
     pr.commits.nodes.forEach(c => {
       const message = c.commit.message
-      if(ignoreMessages.every(im => message.indexOf(im) === -1) ) {
+      if (ignoreMessages.every(im => message.indexOf(im) === -1)) {
         commitMessages.push(c)
       } else {
         commitMessages = []
       }
     })
 
-    commitMessages = commitMessages.filter(c => lastComment < c.commit.authoredDate)
-    commitNewerThanComment = (commitMessages.length !== 0)
+    commitMessages = commitMessages.filter(
+      c => lastComment < c.commit.authoredDate
+    )
+    commitNewerThanComment = commitMessages.length !== 0
 
     if (
       commitNewerThanComment &&
@@ -190,6 +190,10 @@ module.exports = data => {
     pr => pr.updatedAt
   )
 
+  return queues
+}
+
+const report = queues => {
   const report = prMessage(queues, maintainers)
 
   tools.log.info(JSON.stringify(report, null, 4))
@@ -201,17 +205,24 @@ module.exports = data => {
   ;(async () => {
     try {
       // See: https://api.slack.com/methods/chat.postMessage
-      const res = await web.chat.postMessage({
-        channel: process.env.SLACK_CHANNEL_ID,
-        blocks: report,
-      })
+      // const res = await web.chat.postMessage({
+      //   channel: process.env.SLACK_CHANNEL_ID,
+      //   blocks: report,
+      // })
 
       // `res` contains information about the posted message
-      tools.log.success("Message sent: ", res.ts)
+      // tools.log.success("Message sent: ", res.ts)
       tools.exit.success()
     } catch (error) {
       tools.log.fatal(error)
       tools.exit.failure()
     }
   })()
+}
+
+module.exports = {
+  process,
+  report,
+  ignoreMessages,
+  maintainers,
 }

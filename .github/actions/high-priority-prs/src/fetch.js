@@ -4,7 +4,7 @@ const query = `
 query GitHubOpenPullRequestsQuery {
     repository(name: "gatsby", owner: "gatsbyjs") {
       pullRequests(
-        orderBy: { direction: ASC, field: CREATED_AT }
+        orderBy: { direction: ASC, field: UPDATED_AT }
         first: 100
         states: OPEN
         baseRefName: "master"
@@ -12,6 +12,7 @@ query GitHubOpenPullRequestsQuery {
         totalCount
         nodes {
           createdAt
+          updatedAt
           title
           url
           author {
@@ -51,7 +52,7 @@ query GitHubOpenPullRequestsQuery {
 }
 `
 
-async function start() {
+module.exports = async () => {
   let data
   try {
     data = await tools.github.graphql(query)
@@ -61,7 +62,5 @@ async function start() {
   }
 
   // do something great with this precious data
-  if (data) require(`./process`)(data)
+  return data
 }
-
-start()
