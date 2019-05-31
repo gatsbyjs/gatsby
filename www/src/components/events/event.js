@@ -41,7 +41,7 @@ const Event = ({
         />
       )}
       <strong>{url ? <a href={url}>{name}</a> : name}</strong> —{` `}
-      {date ? displayDate(new Date(date)) : ""}
+      {date ? displayDate(new Date(date)) : ``}
       {` `}({location})
     </p>
     <p>
