@@ -70,10 +70,10 @@ const DesignTokens = ({ location }) => (
           <table>
             <thead>
               <tr>
-                <th>Token</th>
-                <th>rem</th>
-                <th>px</th>
-                <th>Example</th>
+                <th scope="col">Token</th>
+                <th scope="col">rem</th>
+                <th scope="col">px</th>
+                <th scope="col">Example</th>
               </tr>
             </thead>
             <tbody>
@@ -157,9 +157,9 @@ const DesignTokens = ({ location }) => (
           <table>
             <thead>
               <tr>
-                <th>Token</th>
-                <th>px</th>
-                <th>Example</th>
+                <th scope="col">Token</th>
+                <th scope="col">px</th>
+                <th scope="col">Example</th>
               </tr>
             </thead>
             <tbody>
@@ -199,9 +199,9 @@ const DesignTokens = ({ location }) => (
           <table>
             <thead>
               <tr>
-                <th>Token</th>
-                <th>value</th>
-                <th>Example</th>
+                <th scope="col">Token</th>
+                <th scope="col">value</th>
+                <th scope="col">Example</th>
               </tr>
             </thead>
             <tbody>
@@ -236,9 +236,9 @@ const DesignTokens = ({ location }) => (
           <table>
             <thead>
               <tr>
-                <th>Token</th>
-                <th>value</th>
-                <th>Example</th>
+                <th scope="col">Token</th>
+                <th scope="col">value</th>
+                <th scope="col">Example</th>
               </tr>
             </thead>
             <tbody>
@@ -282,9 +282,9 @@ const DesignTokens = ({ location }) => (
           <table>
             <thead>
               <tr>
-                <th>Token</th>
-                <th>value</th>
-                <th>Example</th>
+                <th scope="col">Token</th>
+                <th scope="col">value</th>
+                <th scope="col">Example</th>
               </tr>
             </thead>
             <tbody>
