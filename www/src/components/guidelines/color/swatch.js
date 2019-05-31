@@ -46,10 +46,10 @@ export default class Swatch extends React.Component {
             position="absolute"
             fontWeight={0}
             css={{
-              lineHeight: 1,
               bottom: 2,
-              top: `auto`,
               left: 3,
+              lineHeight: 1,
+              top: `auto`,
             }}
           >
             {accessibilityLabel}
@@ -59,21 +59,23 @@ export default class Swatch extends React.Component {
         <CopyToClipboard text={this.state.value} onCopy={this.toggleCopied}>
           <button
             className="btn-copy"
-            tabIndex="0"
             css={{
               background: `none`,
               border: 0,
               bottom: 0,
               color: `black`,
               cursor: `pointer`,
-              display: `none`,
               height: `100%`,
               left: 0,
+              opacity: 0,
               position: `absolute`,
               right: 0,
               top: 0,
               width: `100%`,
               zIndex: 1,
+              ":focus": {
+                opacity: 1,
+              },
             }}
             onClick={this.handleClick}
           >
