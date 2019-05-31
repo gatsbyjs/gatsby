@@ -607,21 +607,23 @@ const Logo = ({ data, location }) => (
           </p>
         </CopyColumn>
         <ContentColumn>
-          {data.allFootnotesYaml.edges.map(({ node }, index) => (
-            <Text key={`logo-footnotes-${index}`} mb={3}>
-              {node.description}:<br />
-              <a
-                css={{
-                  color: theme.colors.purple[`50`],
-                  textDecoration: `none`,
-                }}
-                href={node.href}
-                key={`logo-footnotes-${index}`}
-              >
-                {node.href.replace(/^(?:https?:\/\/)?(?:www\.)?/i, ``)}
-              </a>
-            </Text>
-          ))}
+          <ul>
+            {data.allFootnotesYaml.edges.map(({ node }, index) => (
+              <Text as="li" key={`logo-footnotes-${index}`} mb={3}>
+                {node.description}:<br />
+                <a
+                  css={{
+                    color: theme.colors.purple[`50`],
+                    textDecoration: `none`,
+                  }}
+                  href={node.href}
+                  key={`logo-footnotes-${index}`}
+                >
+                  {node.href.replace(/^(?:https?:\/\/)?(?:www\.)?/i, ``)}
+                </a>
+              </Text>
+            ))}
+          </ul>
         </ContentColumn>
       </Columns>
     </Section>
