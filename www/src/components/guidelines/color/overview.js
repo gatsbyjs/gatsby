@@ -21,7 +21,8 @@ const swatchStyle = {
   flexGrow: 0,
   flexShrink: 0,
   height: swatchWidth,
-  marginBottom: theme.space[2],
+  marginBottom: theme.space[1],
+  marginTop: theme.space[1],
   marginRight: theme.space[2],
   position: `relative`,
   textAlign: `center`,
@@ -68,6 +69,7 @@ const Palette = ({ color, handler }) => {
     <Box
       key={node}
       display={{ xxs: `block`, lg: `flex` }}
+      mb={{ xxs: 4, md: 0 }}
       css={{ alignItems: `center` }}
     >
       <Box
