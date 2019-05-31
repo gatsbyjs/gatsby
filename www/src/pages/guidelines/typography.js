@@ -57,6 +57,18 @@ const Typeface = ({ children, fontFamily }) => (
   </Text>
 )
 
+const SidebarUL = ({ children }) => (
+  <Text as="ul" m={0} p={0} css={{ listStyle: `none` }}>
+    {children}
+  </Text>
+)
+
+const SidebarLI = ({ children }) => (
+  <Text as="li" p={0} fontSize={1} my={3} color="grey.50">
+    {children}
+  </Text>
+)
+
 const Weight = ({ children, fontFamily, fontWeight }) => (
   <Text
     fontFamily={fontFamily}
@@ -540,49 +552,34 @@ const Typography = ({ location }) => (
             <Heading fontWeight="1" fontSize={3} mb={5}>
               Documentation
             </Heading>
-            {[`Introduction`, `Quickstart`, `Recipes`].map((item, index) => (
-              <Text
-                key={`sidebar-item-${index}`}
-                as="li"
-                p={0}
-                fontSize={1}
-                my={3}
-                color="grey.50"
-                css={{ listStyle: `none` }}
-              >
-                {item}
-              </Text>
-            ))}
+            <SidebarUL>
+              {[`Introduction`, `Quickstart`, `Recipes`].map((item, index) => (
+                <SidebarLI key={`sidebar-item-${index}`}>{item}</SidebarLI>
+              ))}
+            </SidebarUL>
             <Heading fontWeight="1" fontSize={3} mt={8} mb={5}>
               Guides
             </Heading>
-            {[
-              `Preparing your environment`,
-              `Deploying & hosting`,
-              `Custom configuration`,
-              `Images and files`,
-              `Sourcing content and data`,
-              `Querying your data with GraphQl`,
-              `Plugins`,
-              `Starters`,
-              `Styling your site`,
-              `Adding testing`,
-              `Debugging Gatsby`,
-              `Adding website functionality`,
-              `Improving performance`,
-              `Localizing your site`,
-            ].map((item, index) => (
-              <Text
-                key={`typographic-scale-${index}`}
-                as="li"
-                fontSize={1}
-                my={3}
-                color="grey.50"
-                css={{ listStyle: `none` }}
-              >
-                {item}
-              </Text>
-            ))}
+            <SidebarUL>
+              {[
+                `Preparing your environment`,
+                `Deploying & hosting`,
+                `Custom configuration`,
+                `Images and files`,
+                `Sourcing content and data`,
+                `Querying your data with GraphQl`,
+                `Plugins`,
+                `Starters`,
+                `Styling your site`,
+                `Adding testing`,
+                `Debugging Gatsby`,
+                `Adding website functionality`,
+                `Improving performance`,
+                `Localizing your site`,
+              ].map((item, index) => (
+                <SidebarLI key={`typographic-scale-${index}`}>{item}</SidebarLI>
+              ))}
+            </SidebarUL>
           </Box>
         </Box>
 
