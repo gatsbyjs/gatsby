@@ -9,6 +9,7 @@ On this page:
 - [Repo setup](#repo-setup)
 - [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
 - [Making changes to the starter Library](#making-changes-to-the-starter-library)
+- [Contributing example sites](#contributing-example-sites)
 - [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
 - [Development tools](#development-tools)
 
@@ -39,6 +40,12 @@ GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
 The `.env.development` file is ignored by git. Your token should never be committed.
+
+## Contributing example sites
+
+Gatsby's policy is that "Using" example sites (like those in the [examples part of the repo](https://github.com/gatsbyjs/gatsby/tree/master/examples)) should only be around plugins that are maintained by the core team as it's hard to keep things up to date otherwise.
+
+To contribute example sites, it is recommended to create your own GitHub repo and link to it from your source plugin, etc.
 
 ## Using Docker to set up test environments
 
