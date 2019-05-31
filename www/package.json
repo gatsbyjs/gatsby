@@ -12,7 +12,7 @@
     "@reach/visually-hidden": "^0.1.2",
     "@styled-system/should-forward-prop": "^1.0.0",
     "@xstate/react": "^0.2.1",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "bluebird": "^3.5.1",
     "color": "^3.1.1",
     "dotenv": "^6.0.0",

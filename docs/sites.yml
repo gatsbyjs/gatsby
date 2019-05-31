@@ -6163,3 +6163,14 @@
   built_by: Appmantle
   built_by_url: https://appmantle.com
   featured: false
+- title: Gatsby GitHub Stats
+  url: https://gatsby-github-stats.netlify.com
+  main_url: https://gatsby-github-stats.netlify.com
+  source_url: https://github.com/lannonbr/gatsby-github-stats/
+  description: >
+    Statistics Dashboard for Gatsby GitHub repository
+  categories:
+    - Data
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+  featured: false
