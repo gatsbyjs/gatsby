@@ -182,7 +182,7 @@ const Typography = ({ location }) => (
               <Box
                 fontSize={0}
                 mb={theme.fontSizes.length === index + 1 ? 0 : 3}
-                color="blackFade.70"
+                color="grey.90"
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
