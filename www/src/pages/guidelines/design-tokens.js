@@ -12,6 +12,7 @@ import {
   Intro,
   PageHeading,
   SectionHeading,
+  SrOnly,
 } from "../../components/guidelines/typography"
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
@@ -92,6 +93,13 @@ const DesignTokens = ({ location }) => (
                       width={space}
                       bg="orange.30"
                     />
+                    <SrOnly>
+                      A box with <code>space[{index}]</code> set as value for
+                      the <code>height</code> and <code>width</code> CSS
+                      properties. This should result in a{` `}
+                      {parseFloat(space) * 16}&times;
+                      {parseFloat(space) * 16}px box being rendered.
+                    </SrOnly>
                   </td>
                 </tr>
               ))}
@@ -178,6 +186,12 @@ const DesignTokens = ({ location }) => (
                       bg="orange.30"
                       borderRadius={index}
                     />
+                    <SrOnly>
+                      A 80&times;40px box with <code>radii[{index}]</code>
+                      {` `}
+                      set as value for the <code>border-radius</code> CSS
+                      property.
+                    </SrOnly>
                   </td>
                 </tr>
               ))}
