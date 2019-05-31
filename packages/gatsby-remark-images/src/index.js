@@ -89,7 +89,8 @@ module.exports = (
       : false
 
     if (captionOptions) {
-      for (let option of captionOptions) {
+      for (const option of captionOptions) {
+        /*eslint-disable */
         switch (option) {
           case `title`:
             if (node.title) return node.title
@@ -98,6 +99,7 @@ module.exports = (
               return alt
             }
         }
+        /*eslint-enable */
       }
     }
 
