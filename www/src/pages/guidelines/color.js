@@ -63,7 +63,7 @@ class Color extends React.Component {
 
   render() {
     return (
-      <Layout pathname={this.props.location.pathname}>
+      <Layout pathname={this.props.location.pathname} pageTitle="Color">
         <Container>
           <PageHeading>Color</PageHeading>
           <Intro>

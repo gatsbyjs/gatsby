@@ -156,7 +156,7 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
 )
 
 const Logo = ({ data, location }) => (
-  <Layout pathname={location.pathname}>
+  <Layout pathname={location.pathname} pageTitle="Logo">
     <Container>
       <PageHeading>Logo</PageHeading>
       <Intro>
@@ -258,8 +258,8 @@ const Logo = ({ data, location }) => (
               about Gatsby
             </ListItem>
             <ListItem>
-              Use the Gatsby monogram when linking to your Gatsby
-              community profile
+              Use the Gatsby monogram when linking to your Gatsby community
+              profile
             </ListItem>
           </List>
         </CopyColumn>
@@ -361,8 +361,8 @@ const Logo = ({ data, location }) => (
         <CopyColumn sticky={false}>
           <p>
             The typeface used to set the logo wordmark is Futura PT Demi. The
-            wordmark is optically kerned, and its uppercase “G” is customized
-            to partly mirror the strict geometry of the monogram.
+            wordmark is optically kerned, and its uppercase “G” is customized to
+            partly mirror the strict geometry of the monogram.
           </p>
           <Text color="grey.40" fontSize={1}>
             Futura PT Demi

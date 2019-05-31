@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
 import { ThemeProvider } from "emotion-theming"
 
@@ -20,7 +21,7 @@ import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_bold_macroman/MyFontsWebfontsKit.css"
 
-const Layout = ({ children, background, pathname }) => (
+const Layout = ({ children, background, pathname, pageTitle }) => (
   <ThemeProvider theme={theme}>
     <Global
       styles={{
@@ -39,6 +40,16 @@ const Layout = ({ children, background, pathname }) => (
         },
       }}
     />
+    <Helmet>
+      <title>
+        {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}
+      </title>
+      <meta name="twitter:site" content="@gatsbyjs" />
+      <meta name="og:type" content="website" />
+      <meta name="og:site_name" content="GatsbyJS" />
+      <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
+      <html lang="en" />
+    </Helmet>
     <Banner />
     <AnotherHeader pathname={pathname} />
     <Box

@@ -20,7 +20,7 @@ import theme from "../../utils/guidelines/theme"
 import { Box, Text } from "../../components/guidelines/system"
 
 const DesignTokens = ({ location }) => (
-  <Layout pathname={location.pathname}>
+  <Layout pathname={location.pathname} pageTitle="Design Tokens">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Design Tokens</PageHeading>

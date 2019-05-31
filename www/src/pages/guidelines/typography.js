@@ -82,7 +82,7 @@ const Weight = ({ children, fontFamily, fontWeight }) => (
 )
 
 const Typography = ({ location }) => (
-  <Layout pathname={location.pathname}>
+  <Layout pathname={location.pathname} pageTitle="Typography">
     <Container>
       <div css={{ position: `relative`, zIndex: 1 }}>
         <PageHeading>Typography</PageHeading>
