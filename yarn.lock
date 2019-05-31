@@ -10578,10 +10578,10 @@ graceful-fs@^4.1.15, graceful-fs@^4.1.9:
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
   integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
 
-graphiql-explorer@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/graphiql-explorer/-/graphiql-explorer-0.3.7.tgz#92f1c0860d6371754373cb5107db8672dc3ee381"
-  integrity sha512-i24+xTe012/OAMFH/r9YL5QarSr/YqkP0Si0NspCnXKmJv7HzHueFUTRpFRPF1Ka9dLqiszrmOg/5stU4gCQnA==
+graphiql-explorer@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/graphiql-explorer/-/graphiql-explorer-0.4.3.tgz#86a60292faf96462e73530035ae84e678f27c0ea"
+  integrity sha512-8WST2MfVPesgspCDYOucZHhWjeL0du8GB/vy2o44qrI/Y0iLaZ9BwCVw6jEz658S8AgxcAkKBl1jPCkMRxsdsQ==
 
 graphiql@^0.13.0:
   version "0.13.0"
