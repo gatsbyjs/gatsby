@@ -177,7 +177,7 @@ const Logo = ({ data, location }) => (
             members and commercial partners.
           </p>
           <p>
-            Wether you want to reference Gatsby in your publication or service,
+            Whether you want to reference Gatsby in your publication or service,
             show some love or link back to us, we hope this page contains
             everything you need.
           </p>
