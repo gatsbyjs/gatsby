@@ -51,7 +51,7 @@ const Layout = ({ children, background, pathname }) => (
     >
       {background && background}
       <Header />
-      <Box className="main-body">
+      <Box as="main" className="main-body">
         {children}
         <Footer />
       </Box>
