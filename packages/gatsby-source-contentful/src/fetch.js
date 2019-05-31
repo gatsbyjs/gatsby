@@ -153,6 +153,7 @@ function pagedGet(
         method,
         query,
         skip + pageLimit,
+        pageLimit,
         aggregatedResponse
       )
     }
