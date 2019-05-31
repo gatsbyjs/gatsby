@@ -144,10 +144,18 @@ async function generateBase64({ file, args, reporter }) {
   })
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath).rotate()
+    pipeline = sharp(file.absolutePath)
+
+    if (!options.rotate) {
+      pipeline.rotate()
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
+  }
+
+  if (options.trim) {
+    pipeline = pipeline.trim(options.trim)
   }
 
   const forceBase64Format =
@@ -380,6 +388,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
+      trim: options.trim,
       toFormat: options.toFormat,
       toFormatBase64: options.toFormatBase64,
       width: base64Width,

@@ -8,7 +8,7 @@ This guide will walk you through sourcing data from the filesystem.
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](https://github.com/gatsbyjs/gatsby/tree/master/docs).
 
-It will also be useful if you are familiar with [Graph_i_QL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
+It will also be useful if you are familiar with [GraphiQL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
 
 ## Using `gatsby-source-filesystem`
 
@@ -43,7 +43,7 @@ module.exports = {
 
 Save the `gatsby-config.js` file, and restart the Gatsby development server.
 
-Open up Graph_i_QL.
+Open up GraphiQL.
 
 If you bring up the autocomplete window, you'll see:
 
