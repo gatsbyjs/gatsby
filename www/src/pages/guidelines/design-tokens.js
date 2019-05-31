@@ -224,7 +224,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section>
+    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
       <SectionHeading>Font Sizes</SectionHeading>
       <Columns>
         <CopyColumn>
