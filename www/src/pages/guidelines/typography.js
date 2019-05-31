@@ -447,7 +447,7 @@ const Typography = ({ location }) => (
         textAlign="center"
         css={{ WebkitFontSmoothing: `antialiased` }}
       >
-        <Text fontSize={1} color="blackFade.60">
+        <Text fontSize={1} color="blackFade.70">
           Simple landing page (using an inverted theme)
         </Text>
 
@@ -469,16 +469,16 @@ const Typography = ({ location }) => (
           <Button
             bg="black"
             mx="auto"
-            mb={3}
+            mb={4}
             css={{ color: `black !important` }}
           >
             Start a free trial
           </Button>
-          <Text color="blackFade.60" fontSize={1}>
+          <Text color="blackFade.70" fontSize={1}>
             14 day free trial — no credit card required
           </Text>
 
-          <Box display={{ md: `flex ` }} mt={10} pb={12} textAlign="left">
+          <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
             <MarketingColumn title="Modern web tech without the headache">
               Enjoy the power of the latest web technologies – React.js ,
               Webpack , modern JavaScript and CSS and more — all set up and
