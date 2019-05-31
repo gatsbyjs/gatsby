@@ -361,7 +361,7 @@ const Logo = ({ data, location }) => (
         <CopyColumn sticky={false}>
           <p>
             The typeface used to set the logo wordmark is Futura PT Demi. The
-            wordmark is optically kerned, and it’s uppercase “G” is customized
+            wordmark is optically kerned, and its uppercase “G” is customized
             to partly mirror the strict geometry of the monogram.
           </p>
           <Text color="grey.40" fontSize={1}>
