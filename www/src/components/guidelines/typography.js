@@ -43,7 +43,6 @@ SectionHeading.defaultProps = {
   m: 0,
   mb: 4,
   fontSize: { xs: 6 },
-  lineHeight: 1.25,
 }
 
 export const SectionSubheading = styled(PageHeading)(

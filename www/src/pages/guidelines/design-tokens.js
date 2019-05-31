@@ -17,7 +17,7 @@ import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
 import theme from "../../utils/guidelines/theme"
-import { Box } from "../../components/guidelines/system"
+import { Box, Text } from "../../components/guidelines/system"
 
 const DesignTokens = ({ location }) => (
   <Layout pathname={location.pathname}>
@@ -26,7 +26,7 @@ const DesignTokens = ({ location }) => (
         <PageHeading>Design Tokens</PageHeading>
         <Intro>
           This page collects all design tokens currently available for
-          gatsbyjs.org which are not covered in "Color" or "Typography"
+          gatsbyjs.org which are not covered on sibling pages.
         </Intro>
         <Badge my={3}>
           Work in Progress{` `}
@@ -34,6 +34,23 @@ const DesignTokens = ({ location }) => (
         </Badge>
       </div>
     </Container>
+
+    <Section>
+      <Columns>
+        <CopyColumn sticky={false} narrow={false}>
+          <p>
+            Our design tokens can be imported from{` `}
+            <code>src/utils/presets</code>. We are following the{` `}
+            <a href="https://system-ui.com/theme">
+              System UI Theme Specification
+            </a>
+            . This page is not a complete list of all available tokens yet.
+            Please bear with us as we sort out documentation for what is
+            currently missing.
+          </p>
+        </CopyColumn>
+      </Columns>
+    </Section>
 
     <Section>
       <SectionHeading>Space</SectionHeading>
@@ -44,10 +61,9 @@ const DesignTokens = ({ location }) => (
             <code>padding</code>, and other layout-related CSS properties.
           </p>
           <p>
-            The primary use for these tokens should be building individual
-            components; however, as we flesh out this part of our design tokens,
-            they are also expected to be used to define global (layout) spacing
-            properties.
+            The primary use should be building individual components; however,
+            as we flesh out this part of our design tokens, they are also
+            expected to be used to define global (layout) spacing properties.
           </p>
         </CopyColumn>
         <ContentColumn>
@@ -102,7 +118,6 @@ const DesignTokens = ({ location }) => (
         <ContentColumn
           css={{
             alignSelf: `flex-end`,
-            justifyContent: `center`,
             display: `flex`,
             flexWrap: `wrap`,
             overflow: `visible`,
@@ -113,11 +128,13 @@ const DesignTokens = ({ location }) => (
               bg="white"
               borderRadius="2"
               key={`tokens-shadow-${i}`}
-              mx={2}
-              my={8}
+              mb={10}
+              mr={4}
               p={4}
               width="50%"
               boxShadow={shadow}
+              height={0}
+              pb={`${0.3 * 100}%`}
             >
               <code>shadows.{shadow}</code>
             </Box>
@@ -161,6 +178,129 @@ const DesignTokens = ({ location }) => (
                       bg="orange.30"
                       borderRadius={index}
                     />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
+      <SectionHeading>Fonts</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended for use with the <code>font-family</code> CSS property.
+          </p>
+        </CopyColumn>
+        <ContentColumn>
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>value</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(theme.fonts).map((font, i) => (
+                <tr key={`tokens-fonts-${i}`}>
+                  <td css={{ verticalAlign: `top` }}>
+                    <code>fonts.{font}</code>
+                  </td>
+                  <td css={{ verticalAlign: `top` }}>{theme.fonts[font]}</td>
+                  <td css={{ verticalAlign: `top` }}>
+                    <Text fontFamily={font} fontSize={4}>
+                      ABC
+                    </Text>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
+      <SectionHeading>Font Sizes</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended for use with the <code>font-size</code> CSS property.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth>
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>value</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              {theme.fontSizes.map((size, index) => (
+                <tr key={`${index}-${size}`}>
+                  <td>
+                    <code>fontSizes[{index}]</code>
+                  </td>
+                  <td>{size}</td>
+                  <td>
+                    <Text
+                      // don't scale based on root font size here
+                      fontSize={`${parseFloat(size) * 16}px`}
+                      color="grey.90"
+                      lineHeight="solid"
+                      css={{
+                        whiteSpace: `nowrap`,
+                      }}
+                    >
+                      Gatsby believed in the green light, the orgastic future
+                      that year by year recedes before us.
+                    </Text>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
+      <SectionHeading>Line Heights</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended for use with the <code>line-height</code> CSS property.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth>
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>value</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(theme.lineHeights).map((lineHeight, i) => (
+                <tr key={`tokens-lineHeights-${i}`}>
+                  <td css={{ verticalAlign: `top` }}>
+                    <code>lineHeights.{lineHeight}</code>
+                  </td>
+                  <td css={{ verticalAlign: `top` }}>
+                    {theme.lineHeights[lineHeight]}
+                  </td>
+                  <td css={{ verticalAlign: `top` }}>
+                    <Text lineHeight={lineHeight}>
+                      Plugins are packages that extend Gatsby sites. They can
+                      source content, transform data, and more!
+                    </Text>
                   </td>
                 </tr>
               ))}

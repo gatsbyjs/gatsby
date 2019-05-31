@@ -4,6 +4,8 @@ import MdWarning from "react-icons/lib/md/warning"
 
 import Layout from "../../components/guidelines/layout"
 
+import { Box, Flex, Text } from "../../components/guidelines/system"
+
 import {
   Container,
   Section,
@@ -27,6 +29,17 @@ import palette from "../../utils/guidelines/extend-palette-info"
 // http://reactcommunity.org/react-modal/accessibility/
 Modal.setAppElement(`#___gatsby`)
 
+const LegacyColorIcon = ({ textColor }) => (
+  <Box
+    borderRadius={7}
+    fontSize={0}
+    lineHeight="solid"
+    height="8px"
+    width="8px"
+    display="inline-block"
+    bg={textColor}
+  />
+)
 class Color extends React.Component {
   constructor(props) {
     super(props)
@@ -67,12 +80,40 @@ class Color extends React.Component {
 
         <Section>
           <Columns>
-            <CopyColumn>
+            <CopyColumn sticky={false}>
               <p>
                 Our color palette includes primary and secondary colors that can
                 be used for interfaces as well as illustrations.
               </p>
             </CopyColumn>
+            <ContentColumn>
+              <Flex alignItems="flex-end">
+                <Flex alignItems="center" mr={8}>
+                  <LegacyColorIcon textColor="grey.50" />
+                  {` `}
+                  <Text as="span" ml={2} c>
+                    Aliased color
+                  </Text>
+                </Flex>
+
+                <Box>
+                  <Text as="h4" color="grey.50" mb={0} fontWeight={0}>
+                    WCGA Contrast Score
+                  </Text>
+                  <Flex as="ul" m={0} p={0} css={{ listStyle: `none` }}>
+                    <Text as="li" mr={4} mb={0}>
+                      <strong>3</strong> AAA
+                    </Text>
+                    <Text as="li" mr={4} mb={0}>
+                      <strong>2+</strong> AA Large
+                    </Text>
+                    <Text as="li" mr={4} mb={0}>
+                      <strong>2</strong> AA
+                    </Text>
+                  </Flex>
+                </Box>
+              </Flex>
+            </ContentColumn>
           </Columns>
           <Overview handler={this.handleModalOpen} />
         </Section>
@@ -83,56 +124,53 @@ class Color extends React.Component {
             <CopyColumn>
               <p>
                 We are committed to complying with{` `}
-                <a href="https://www.w3.org/WAI/intro/wcag">WCAG 2.0</a> AA
-                standard contrast ratios. To do this, we need to choose primary,
-                secondary and neutral colors that support usability. This
-                ensures sufficient color contrast between elements so that users
-                with low vision can see and use our products.
+                <a href="https://www.w3.org/WAI/intro/wcag">
+                  Web Content Accessibility Guidelines 2.0
+                </a>
+                {` `}
+                Level AA standard contrast ratios. To do this, we need to choose
+                primary, secondary and neutral colors that support usability.
+                This ensures sufficient color contrast between elements so that
+                users with low vision can see and use our products.
               </p>
             </CopyColumn>
             <ContentColumn>
-              <SectionSubheading>Color Contrast</SectionSubheading>
-              <h4>Score and Ratio</h4>
+              <SectionSubheading id="color-contrast" mt={0}>
+                Color Contrast
+              </SectionSubheading>
               <p>
-                There is an equation provided by the WCAG (Web Content
-                Accessibility Guidelines) that determines these two values.
-              </p>
-              <ol>
-                <li>The Score</li>
-                <li>The Ratio</li>
-              </ol>
-              <p>
-                The equation outputs a number between 0 and 21, with 21 being
-                the highest amount of contrast—think black text and a white
-                background—and 0 being no contrast—white on white.
+                The WCAG provides an equation that determines these two values.
+                It outputs a number between 0 and 21, with 21 being the highest
+                amount of contrast—think black text and a white background—and 0
+                being no contrast—white on white.
               </p>
               <p>
                 The output of contrast between any two colors will fall
                 somewhere on the spectrum between 0 – 21. That's where the
-                scores are derived from.
+                scores are derived from. There are technically 5 scores.
               </p>
-              <p>There are technically 5 scores.</p>
-              <ul>AAA AAA Large AA AA Large Fail</ul>
               <ul css={{ padding: 0 }}>
                 <li>
-                  <strong>&times; — Fail</strong> –&nbsp;Your text doesn't have
-                  enough contrast with the background. You probably want to make
-                  it darker. This is a score of less than <code>3.0</code>.
+                  <strong>&times; — Fail</strong> – <code>&lt; 3.0</code>
+                  <br />
+                  The text doesn't have enough contrast with the background.
                 </li>
                 <li>
-                  <strong>2+ — AA Large</strong> – The smallest acceptable
-                  amount of contrast for type sizes of 18pt and larger. This is
-                  a score of at least <code>3.0</code>.
+                  <strong>2+ — AA Large</strong> – <code>&gt;= 3.0</code>
+                  <br />
+                  The smallest acceptable amount of contrast for type sizes of
+                  18pt and larger.
                 </li>
                 <li>
-                  <strong>2 — AA</strong> –&nbsp;This is the sweet spot for text
-                  sizes below ~18pt. This is a score of at least{` `}
-                  <code>4.5</code>.
+                  <strong>2 — AA</strong> – <code>&gt;= 4.5</code>
+                  <br />
+                  The required contrast score for text sizes below ~18pt.
                 </li>
                 <li>
-                  <strong>3 — AAA</strong> –&nbsp;This is enhanced contrast with
-                  a score of at least <code>7.0</code>. Think longer form
-                  articles that will be read for a significant period of time.
+                  <strong>3 — AAA</strong> – <code>&gt;= 7.0</code>
+                  <br />
+                  Use it for longer form text that will be read for a
+                  significant period of time and requires enhanced contrast.
                 </li>
               </ul>
               <SectionSubheading>Color Blindness</SectionSubheading>

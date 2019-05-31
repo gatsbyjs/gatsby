@@ -31,7 +31,6 @@ export default class Swatch extends React.Component {
 
     return (
       <Box
-        borderRadius={1}
         bg={color.hex}
         css={{
           ...swatchStyle,
@@ -62,18 +61,18 @@ export default class Swatch extends React.Component {
             className="btn-copy"
             tabIndex="0"
             css={{
-              border: 0,
-              display: `none`,
               background: `none`,
+              border: 0,
+              bottom: 0,
               color: `black`,
               cursor: `pointer`,
-              position: `absolute`,
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              width: `100%`,
+              display: `none`,
               height: `100%`,
+              left: 0,
+              position: `absolute`,
+              right: 0,
+              top: 0,
+              width: `100%`,
               zIndex: 1,
             }}
             onClick={this.handleClick}
@@ -84,12 +83,12 @@ export default class Swatch extends React.Component {
               borderRadius={1}
               fontSize={1}
               css={{
-                position: `absolute`,
                 top: -40,
-                left: 0,
                 height: 32,
-                width: 80,
+                left: 0,
                 lineHeight: `32px`,
+                position: `absolute`,
+                width: 80,
               }}
             >
               {this.state.displayCopied ? `Copied!` : `Copy HEX`}
@@ -99,15 +98,15 @@ export default class Swatch extends React.Component {
 
         {(color.name || color.base) && (
           <Box
-            fontSize={0}
             bg={textColor}
             borderRadius={7}
+            bottom={4}
+            fontSize={0}
             lineHeight="solid"
             height={8}
             width={8}
             position="absolute"
             top="auto"
-            bottom={4}
             right={4}
             css={{
               bottom: 4,

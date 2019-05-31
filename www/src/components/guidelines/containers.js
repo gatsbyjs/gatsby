@@ -30,24 +30,32 @@ Section.defaultProps = {
   pb: { xxs: 4, sm: 5, md: 8 },
 }
 
+export const copyColumnWidth = `20rem`
+export const copyColumnGutter = 10
+
 export const Columns = ({ children, ...rest }) => (
   <Box {...rest} display={{ lg: `flex` }} mt={4} mb={8}>
     {children}
   </Box>
 )
 
-export const CopyColumn = ({ children, sticky = true, ...rest }) => (
+export const CopyColumn = ({
+  children,
+  sticky = true,
+  narrow = true,
+  ...rest
+}) => (
   <Box
     {...rest}
     fontSize={2}
-    mr={{ md: 10 }}
+    mr={{ md: copyColumnGutter }}
     mb={{ xs: 4, lg: 0 }}
     maxWidth={{ xxs: `30rem`, lg: `none` }}
-    width={{ lg: `25rem` }}
+    width={{ lg: narrow ? copyColumnWidth : `30rem` }}
     flex={{ lg: `0 0 auto` }}
     css={{
       "p, ul, ol": {
-        maxWidth: `30rem`,
+        maxWidth: `40rem`,
       },
     }}
   >
@@ -73,7 +81,7 @@ export const ContentColumn = ({ children, fullWidth, ...props }) => (
       overflow: `hidden`,
       position: `relative`,
       "p, ul, ol": {
-        maxWidth: `30rem`,
+        maxWidth: `40rem`,
       },
     }}
     {...props}

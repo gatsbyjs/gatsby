@@ -10,12 +10,10 @@ import {
   getAccessibilityLabel,
   getTextColor,
 } from "../../../utils/guidelines/color"
+import { copyColumnGutter, CopyColumn } from "../containers"
 import palette from "../../../utils/guidelines/extend-palette-info"
-import { Box, Flex, Text } from "../system"
+import { Box, Flex } from "../system"
 import theme from "../../../utils/guidelines/theme"
-
-const bpMargin = theme.space[7]
-const bpWidth = 400
 
 // Color swatches
 const swatchWidth = 40
@@ -24,10 +22,9 @@ const swatchStyle = {
   flexShrink: 0,
   width: swatchWidth,
   height: swatchWidth,
-  marginRight: theme.space[4],
-  marginBottom: theme.space[4],
+  marginRight: theme.space[2],
+  marginBottom: theme.space[2],
   position: `relative`,
-  // borderRadius: 2,
 }
 
 const colores = node => {
@@ -55,34 +52,39 @@ const colores = node => {
   return colors
 }
 
-const ColorRow = ({ color, handler }) => {
+const Palette = ({ color, handler }) => {
   const node = Object.keys(palette)
     .filter(group => group === color)
     .map(node => node)
 
   return (
-    <Box key={node} display={{ xxs: `block`, lg: `flex` }} alignItems="center">
+    <Box
+      key={node}
+      display={{ xxs: `block`, lg: `flex` }}
+      css={{ alignItems: `center` }}
+    >
       <Box
-        width={{ lg: `${bpWidth / 2}px` }}
         textAlign={{ lg: `right` }}
-        mr={{ lg: bpMargin }}
+        width={{ lg: `8rem` }}
+        mr={{ lg: copyColumnGutter }}
       >
-        <button
+        <Box
+          as="button"
+          bg="none"
+          p={0}
           onClick={e => {
             handler(e, node)
           }}
           css={{
+            border: 0,
             cursor: `pointer`,
             WebkitAppearance: `none`,
-            border: 0,
-            background: `none`,
-            padding: 0,
           }}
         >
-          <SectionSubheading fontWeight={0} mt={0} fontSize={4}>
+          <SectionSubheading fontWeight={0} mt={0} mb={0} fontSize={4}>
             {capitalize(node)}
           </SectionSubheading>
-        </button>
+        </Box>
       </Box>
       <Flex flexWrap="wrap">
         <Flex flexDirection="row" alignItems="stretch">
@@ -96,30 +98,11 @@ const ColorRow = ({ color, handler }) => {
   )
 }
 
-const LegacyColorIcon = ({ textColor }) => (
-  <Box
-    borderRadius={7}
-    fontSize={0}
-    lineHeight="solid"
-    height="8px"
-    width="8px"
-    display="inline-block"
-    bg={textColor}
-  />
-)
-
 const Overview = ({ handler }) => (
   <>
-    <div>
-      <Flex alignItems="center">
-        <LegacyColorIcon textColor="grey.50" />
-        {` `}
-        <Text as="span" fontSize={1} ml={2} color="grey.50">
-          Named color
-        </Text>
-      </Flex>
+    <Flex>
+      <CopyColumn />
       <Box
-        ml={{ lg: `30rem` }}
         alignItems={{ lg: `flex-end` }}
         display={{ xxs: `none`, lg: `flex` }}
       >
@@ -134,31 +117,35 @@ const Overview = ({ handler }) => (
         <div css={swatchStyle}>10</div>
         <div css={swatchStyle}>5</div>
       </Box>
-    </div>
-    <Box display={{ lg: `flex` }}>
-      <SectionHeading width={`${bpWidth / 2}px`}>Primary</SectionHeading>
+    </Flex>
+    <Box
+      display={{ lg: `flex` }}
+      borderBottom={1}
+      borderColor="ui.border.subtle"
+    >
+      <SectionHeading width={{ lg: `12rem` }}>Primary</SectionHeading>
       <div>
-        <ColorRow color="purple" handler={handler} />
-        <ColorRow color="orange" handler={handler} />
+        <Palette color="purple" handler={handler} />
+        <Palette color="orange" handler={handler} />
       </div>
     </Box>
     <Box display={{ lg: `flex` }}>
-      <SectionHeading width={`${bpWidth / 2}px`}>Secondary</SectionHeading>
+      <SectionHeading width={{ lg: `12rem` }}>Secondary</SectionHeading>
       <div>
-        <ColorRow color="magenta" handler={handler} />
-        <ColorRow color="blue" handler={handler} />
-        <ColorRow color="teal" handler={handler} />
-        <ColorRow color="yellow" handler={handler} />
-        <ColorRow color="red" handler={handler} />
-        <ColorRow color="green" handler={handler} />
+        <Palette color="magenta" handler={handler} />
+        <Palette color="blue" handler={handler} />
+        <Palette color="teal" handler={handler} />
+        <Palette color="yellow" handler={handler} />
+        <Palette color="red" handler={handler} />
+        <Palette color="green" handler={handler} />
       </div>
     </Box>
     <Box display={{ lg: `flex` }}>
-      <SectionHeading width={`${bpWidth / 2}px`}>Neutral</SectionHeading>
+      <SectionHeading width={{ lg: `12rem` }}>Neutral</SectionHeading>
       <div>
-        <ColorRow color="grey" handler={handler} />
-        {/* <ColorRow color="blackFade" handler={handler} />
-        <ColorRow color="whiteFade" handler={handler} /> */}
+        <Palette color="grey" handler={handler} />
+        {/* <Palette color="blackFade" handler={handler} />
+        <Palette color="whiteFade" handler={handler} /> */}
       </div>
     </Box>
   </>

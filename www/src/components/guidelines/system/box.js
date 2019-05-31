@@ -1,39 +1,41 @@
 import styled from "@emotion/styled"
 import shouldForwardProp from "@styled-system/should-forward-prop"
 import {
-  space,
-  color,
-  width,
-  maxWidth,
-  height,
-  flex,
-  order,
   alignSelf,
+  border,
+  borderRadius,
+  boxShadow,
+  color,
+  display,
+  flex,
   flexWrap,
   fontSize,
-  textAlign,
-  borderRadius,
-  display,
+  height,
+  maxWidth,
+  order,
   position,
-  boxShadow,
+  space,
+  textAlign,
+  width,
 } from "styled-system"
 
 const boxPropTypes = {
   ...alignSelf.propTypes,
+  ...border.propTypes,
   ...borderRadius.propTypes,
+  ...boxShadow.propTypes,
   ...color.propTypes,
   ...display.propTypes,
   ...flex.propTypes,
   ...fontSize.propTypes,
+  ...flexWrap.propTypes,
   ...height.propTypes,
+  ...maxWidth.propTypes,
   ...order.propTypes,
   ...position.propTypes,
   ...space.propTypes,
-  ...width.propTypes,
-  ...maxWidth.propTypes,
   ...textAlign.propTypes,
-  ...boxShadow.propTypes,
-  ...flexWrap.propTypes,
+  ...width.propTypes,
 }
 
 const Box = styled(`div`, {
@@ -44,9 +46,11 @@ const Box = styled(`div`, {
   },
   alignSelf,
   borderRadius,
+  boxShadow,
   color,
   display,
   flex,
+  flexWrap,
   height,
   fontSize,
   maxWidth,
@@ -54,9 +58,7 @@ const Box = styled(`div`, {
   position,
   space,
   textAlign,
-  width,
-  boxShadow,
-  flexWrap
+  width
 )
 
 Box.propTypes = boxPropTypes

@@ -1,12 +1,12 @@
 import styled from "@emotion/styled"
 import {
-  fontSize,
-  fontFamily,
-  fontWeight,
   borders,
   borderColor,
   borderRadius,
   buttonStyle,
+  fontFamily,
+  fontSize,
+  fontWeight,
   themeGet,
 } from "styled-system"
 
@@ -16,17 +16,17 @@ const buttonPropTypes = {
   ...borders.propTypes,
   ...borderColor.propTypes,
   ...borderRadius.propTypes,
+  ...buttonStyle.propTypes,
   ...fontFamily.propTypes,
   ...fontWeight.propTypes,
-  ...buttonStyle.propTypes,
 }
 
 const Button = styled(Box)(
   props => {
     return {
       "&&": {
-        color: `#fff`,
-        borderColor: `#639`,
+        borderColor: themeGet(`colors.gatsby`)(props),
+        color: themeGet(`colors.white`)(props),
       },
     }
   },
@@ -81,7 +81,7 @@ Button.defaultProps = {
   fontSize: { xxs: 4, md: 5 },
   fontWeight: 1,
   m: 0,
-  px: 3,
+  px: 4,
   py: 2,
 }
 

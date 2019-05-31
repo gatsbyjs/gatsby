@@ -1,4 +1,5 @@
 import React from "react"
+import styled from "@emotion/styled"
 import { ThemeProvider } from "emotion-theming"
 import MdWarning from "react-icons/lib/md/warning"
 
@@ -32,8 +33,10 @@ import {
   Text,
 } from "../../components/guidelines/system"
 
+const ExampleBox = styled(Box)({ pt: 4 })
+
 const MarketingColumn = ({ children, title }) => (
-  <Box width={{ lg: 1 / 2 }} px={{ lg: 7 }} py={{ xxs: 4, lg: 0 }}>
+  <Box width={{ lg: 1 / 2 }} px={{ md: 8 }} py={{ xxs: 4, lg: 0 }}>
     <Heading fontSize={5} mb={3} fontWeight={1}>
       {title}
     </Heading>
@@ -130,7 +133,7 @@ const Typography = ({ location }) => (
     <Section bg="yellow.40" pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
       <SectionHeading>Scale</SectionHeading>
       <Columns>
-        <CopyColumn pr={{ xxs: 5, xs: 6, sm: 7, lg: 0 }}>
+        <CopyColumn>
           <p>
             Since our primary use for the design system is interface design, our
             typographic scale is hand-crafted. This way we don’t have to worry
@@ -139,23 +142,22 @@ const Typography = ({ location }) => (
             control over which sizes exist instead of outsourcing that job to a
             mathematical formula.
           </p>
-          <p>
+          <Text as="p" mb={0}>
             For long form content like articles, using a modular scale is
             totally fine though. Typography.js makes setting up and using such a
             scale easy.
-          </p>
+          </Text>
         </CopyColumn>
         <ContentColumn fullWidth>
           {theme.fontSizes.map((size, index) => (
             <div key={`${index}-${size}`}>
               <Text
-                // don't scale based on root font size
+                // don't scale based on root font size here
                 fontSize={`${parseFloat(size) * 16}px`}
                 color="grey.90"
                 css={{
                   overflow: `hidden`,
                   position: `relative`,
-                  // textOverflow: 'ellipsis',
                   whiteSpace: `nowrap`,
                 }}
               >
@@ -165,7 +167,11 @@ const Typography = ({ location }) => (
                 farther… And one fine morning— So we beat on, boats against the
                 current, borne back ceaselessly into the past.
               </Text>
-              <Box fontSize={0} mb={3} color="blackFade.70">
+              <Box
+                fontSize={0}
+                mb={theme.fontSizes.length === index + 1 ? 0 : 3}
+                color="blackFade.70"
+              >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
                 <code
@@ -187,10 +193,6 @@ const Typography = ({ location }) => (
       <Columns>
         <CopyColumn>
           <p>
-            All tokens shown here may be applied to any of the typefaces in our
-            font stack.
-          </p>
-          <p>
             <strong>A note on Futura PT Bold:</strong> While Futura PT Bold
             works well at display size, it gets hard to read below ~30px. For
             screens, use it for the page title (once per page). Do not use it
@@ -202,11 +204,10 @@ const Typography = ({ location }) => (
           <Flex flexWrap="wrap" flexDirection="row">
             <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
               <Weight fontFamily="header" fontWeight={2}>
-                Bold
+                {theme.fontWeights[2]}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights[2]</code> —{` `}
-                <code>{theme.fontWeights[2]}</code>
+                <code>fontWeights[2]</code>
                 <Text as="p" pt={4}>
                   Use this for the main headline, set in Futura PT Bold, only.
                 </Text>
@@ -215,11 +216,10 @@ const Typography = ({ location }) => (
 
             <Box maxWidth={{ xl: `40%` }}>
               <Weight fontFamily="header" fontWeight={1}>
-                Demi
+                {theme.fontWeights[1]}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights[1]</code> —{` `}
-                <code>{theme.fontWeights[1]}</code>/<code>bold</code>
+                <code>fontWeights[1]</code> — <code>bold</code>
                 <Text as="p" pt={4}>
                   Use this for the all headlines but the main page title, and to
                   emphasize text throughout regular copy.
@@ -228,10 +228,9 @@ const Typography = ({ location }) => (
             </Box>
             <Box>
               <Weight fontFamily="header" fontWeight={0}>
-                Normal
+                {theme.fontWeights[0]}
               </Weight>
-              <code>fontWeights[0]</code> — <code>{theme.fontWeights[0]}</code>/
-              <code>normal</code>
+              <code>fontWeights[0]</code> — <code>normal</code>
             </Box>
           </Flex>
 
@@ -240,45 +239,43 @@ const Typography = ({ location }) => (
           <p>
             Letterspacing (also known as character spacing or tracking) is the
             adjustment of the horizontal white space between the letters in a
-            block of text.
+            block of text. Tokens are intended for use with the{` `}
+            <code>letter-spacing</code> CSS property.
           </p>
 
-          <Box pt={4}>
+          <ExampleBox pt={8}>
             <Text as="p" mb={0}>
               <strong>Normal</strong> — <code>letterSpacings.normal</code> —
               {` `}
               <code>{theme.letterSpacings.normal}</code>
             </Text>
             <p>Use for almost everything.</p>
-          </Box>
+          </ExampleBox>
 
           <hr />
 
-          <Box pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Tight</strong> — <code>letterSpacings.tight</code> —{` `}
               <code>{theme.letterSpacings.tight}</code>
             </Text>
             <p>Use for headlines set in Futura PT.</p>
-            <Heading letterSpacing="tight" lineHeight="solid" pb={8}>
+            <Heading lineHeight="solid" pb={8}>
               Create digital experiences on the edge—faster
             </Heading>
-          </Box>
+          </ExampleBox>
 
           <hr />
 
-          <Box pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Tracked</strong> — <code>letterSpacings.tracked</code> —
               {` `}
               <code>{theme.letterSpacings.tracked}</code>
             </Text>
             <p>
-              Use for small caps, particularly at small sizes. Lowercase letters
-              don’t need letterspacing, and neither do capital letters (when
-              appear at the beginning of a word, because they’re designed to fit
-              correctly next to lowercase letters). However, when using capital
-              letters together, the default spacing looks too tight.
+              Use for small caps, particularly at small sizes — when using
+              capital letters together, the default spacing looks too tight.
             </p>
             <Text
               color="grey.60"
@@ -290,11 +287,67 @@ const Typography = ({ location }) => (
                 textTransform: `uppercase`,
               }}
             >
-              greglobinski/
+              greglobinski
             </Text>
-          </Box>
+          </ExampleBox>
 
           <SectionSubheading pt={6}>Line Heights</SectionSubheading>
+
+          <ExampleBox>
+            <Text as="p" mb={0}>
+              <strong>Default</strong> — <code>lineHeights.default</code> —{` `}
+              <code>{theme.lineHeights.default}</code>
+            </Text>
+            <Text as="p" lineHeight="default" pb={8} pt={4}>
+              It eluded us then, but that’s no matter—tomorrow we will run
+              faster, stretch out our arms farther. . . . And then one fine
+              morning— So we beat on, boats against the current, borne back
+              ceaselessly into the past.
+            </Text>
+          </ExampleBox>
+
+          <hr />
+
+          <ExampleBox>
+            <Text as="p" mb={0}>
+              <strong>Solid</strong> — <code>lineHeights.solid</code> —{` `}
+              <code>{theme.lineHeights.solid}</code>
+            </Text>
+            <Heading pb={8} pt={4} lineHeight="solid">
+              Scale to the entire internet
+            </Heading>
+          </ExampleBox>
+
+          <hr />
+
+          <ExampleBox>
+            <Text as="p" mb={0}>
+              <strong>Dense</strong> — <code>lineHeights.dense</code> —{` `}
+              <code>{theme.lineHeights.dense}</code>
+            </Text>
+            <Heading pb={8} pt={4} fontWeight={1}>
+              Stop managing content.
+              <br />
+              Start telling your story.
+            </Heading>
+          </ExampleBox>
+
+          <hr />
+
+          <ExampleBox>
+            <Text as="p" mb={0}>
+              <strong>Loose</strong> — <code>lineHeights.loose</code> —{` `}
+              <code>{theme.lineHeights.loose}</code>
+            </Text>
+            <Intro lineHeight="loose" pb={8} pt={4} mb={0}>
+              As a popular and growing framework for building websites and web
+              applications, Gatsby is in a position to make an impact for
+              accessibility and people with disabilities. The Gatsby team is
+              passionate about helping you create websites that work for
+              everyone, with helpful defaults that bake in web accessibility as
+              well as performance optimizations.
+            </Intro>
+          </ExampleBox>
         </ContentColumn>
       </Columns>
     </Section>
@@ -303,10 +356,11 @@ const Typography = ({ location }) => (
       <Columns>
         <CopyColumn>
           <p>
-            A couple of usage examples lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-            accusam et justo duo dolores et ea rebum.
+            A couple of usage examples — currently, these are rough PoC-style
+            {` `}
+            <a href="https://styled-system.com/">styled-system</a> remodels of
+            components used on our website. Ideally, this section will be built
+            using these "live" components.
           </p>
         </CopyColumn>
         <ContentColumn>
@@ -316,6 +370,7 @@ const Typography = ({ location }) => (
               fontFamily="header"
               fontWeight={0}
               fontSize={4}
+              mb={4}
               letterSpacing="tracked"
               css={{
                 textTransform: `uppercase`,
@@ -324,14 +379,14 @@ const Typography = ({ location }) => (
               The Future is Fast
             </Text>
             <Heading
-              fontSize={{ xxs: 8, sm: 12, lg: 13 }}
+              fontSize={{ xxs: 9, sm: 12, lg: 13 }}
               letterSpacing="tight"
               lineHeight="solid"
               mb={5}
             >
               Create digital experiences on the edge—faster
             </Heading>
-            <Heading as="h2" mb={5} fontSize={6} fontWeight={1}>
+            <Heading as="h2" mb={8} fontSize={6} fontWeight={1}>
               Gatsby provides a modern framework for turning content into
               feature-rich, visually engaging apps and websites.
             </Heading>
@@ -411,12 +466,11 @@ const Typography = ({ location }) => (
             14 day free trial — no credit card required
           </Text>
 
-          <Box display={{ lg: `flex ` }} mt={9} textAlign="left">
-            <MarketingColumn title="Scale to the entire internet">
-              Forget complicated deploys with databases and servers and their
-              expensive, time-consuming setup costs, maintenance, and scaling
-              fears — Gatsby builds your site as “static” files which can be
-              deployed easily on various services.
+          <Box display={{ md: `flex ` }} mt={10} pb={12} textAlign="left">
+            <MarketingColumn title="Modern web tech without the headache">
+              Enjoy the power of the latest web technologies – React.js ,
+              Webpack , modern JavaScript and CSS and more — all set up and
+              waiting for you to start building.
             </MarketingColumn>
             <MarketingColumn title="Bring your own data">
               Gatsby’s rich data plugin ecosystem lets you build sites with the
@@ -424,7 +478,21 @@ const Typography = ({ location }) => (
               databases, your file system, and more.
             </MarketingColumn>
           </Box>
-          <Box display={{ lg: `flex ` }} mt={7} pb={8} textAlign="left">
+          <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+            <MarketingColumn title="Future-proof your website">
+              Do not build a website with last decade’s tech. The future of the
+              web is mobile, JavaScript and APIs—the JAMstack. Every website is
+              a web app and every web app is a website. Gatsby.js is the
+              universal JavaScript framework you’ve been waiting for.
+            </MarketingColumn>
+            <MarketingColumn title="Scale to the entire internet">
+              Forget complicated deploys with databases and servers and their
+              expensive, time-consuming setup costs, maintenance, and scaling
+              fears — Gatsby builds your site as “static” files which can be
+              deployed easily on various services.
+            </MarketingColumn>
+          </Box>
+          <Box display={{ md: `flex ` }} pb={12} textAlign="left">
             <MarketingColumn title="Speed past the competition">
               Gatsby.js builds the fastest possible website. Instead of waiting
               to generate pages when requested, pre-build pages and lift them

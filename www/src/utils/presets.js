@@ -18,7 +18,7 @@ import { rhythm } from "./typography"
 
 let fonts = {}
 for (let fontFamily in fontTokens) {
-  fonts[fontFamily] = fontTokens[fontFamily].join(`,`)
+  fonts[fontFamily] = fontTokens[fontFamily].join(`, `)
 }
 
 const borders = [0, `1px solid`, `2px solid`]
