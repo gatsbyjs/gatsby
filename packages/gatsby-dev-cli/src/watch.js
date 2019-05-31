@@ -113,6 +113,7 @@ function watch(
     /\.git/i,
     /\.DS_Store/,
     /[/\\]__tests__[/\\]/i,
+    /\.npmrc/i,
   ].concat(
     allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
