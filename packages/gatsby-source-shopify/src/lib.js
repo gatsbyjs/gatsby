@@ -1,6 +1,6 @@
 import { GraphQLClient } from "graphql-request"
 import prettyjson from "prettyjson"
-import { get, last } from "lodash/fp"
+import { get, getOr, last } from "lodash/fp"
 
 /**
  * Create a Shopify Storefront GraphQL client for the provided name and token.
@@ -43,8 +43,7 @@ export const queryAll = async (
   aggregatedResponse = null
 ) => {
   const data = await queryOnce(client, query, first, after)
-
-  const edges = get([...path, `edges`], data)
+  const edges = getOr([], [...path, `edges`], data)
   const nodes = edges.map(edge => edge.node)
 
   aggregatedResponse = aggregatedResponse
