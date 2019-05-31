@@ -148,7 +148,13 @@ function pagedGet(
       aggregatedResponse.items = aggregatedResponse.items.concat(response.items)
     }
     if (skip + pageLimit <= response.total) {
-      return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
+      return pagedGet(
+        client,
+        method,
+        query,
+        skip + pageLimit,
+        aggregatedResponse
+      )
     }
     return aggregatedResponse
   })
