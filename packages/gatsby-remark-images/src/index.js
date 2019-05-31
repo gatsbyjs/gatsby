@@ -30,7 +30,6 @@ module.exports = (
     backgroundColor: `white`,
     linkImagesToOriginal: true,
     showCaptions: false,
-    fallbackToAltTextForCaptions: true,
     pathPrefix,
     withWebp: false,
     tracedSVG: false,
@@ -82,17 +81,26 @@ module.exports = (
     }
   }
 
-  const getNodeTitle = (node, alt, defaultAlt) => {
-    if (node.title) {
-      return node.title
-    } else if (
-      alt &&
-      alt.length > 0 &&
-      alt !== defaultAlt &&
-      options.fallbackToAltTextForCaptions
-    ) {
-      return alt
+  const getImageCaption = (node, alt, defaultAlt) => {
+    const captionOptions = Array.isArray(options.showCaptions)
+      ? options.showCaptions
+      : options.showCaptions === true
+      ? [`title`, `alt`]
+      : false
+
+    if (captionOptions) {
+      for (let option of captionOptions) {
+        switch (option) {
+          case `title`:
+            if (node.title) return node.title
+          case `alt`:
+            if (alt && alt.length > 0 && alt !== defaultAlt) {
+              return alt
+            }
+        }
+      }
     }
+
     return ``
   }
 
@@ -258,7 +266,8 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const showCaptions =
-      options.showCaptions && getNodeTitle(node, alt, defaultAlt)
+      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
@@ -294,7 +303,7 @@ module.exports = (
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
+    <figcaption class="gatsby-resp-image-figcaption">${getImageCaption(
       node,
       alt,
       defaultAlt
