@@ -142,7 +142,7 @@ const Typography = ({ location }) => (
         </ContentColumn>
       </Columns>
     </Section>
-    <Section bg="yellow.40" pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
       <SectionHeading>Scale</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -182,7 +182,7 @@ const Typography = ({ location }) => (
               <Box
                 fontSize={0}
                 mb={theme.fontSizes.length === index + 1 ? 0 : 3}
-                color="grey.90"
+                color="grey.70"
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
