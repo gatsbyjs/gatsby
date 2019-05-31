@@ -93,7 +93,7 @@ export default class Swatch extends React.Component {
                 width: 80,
               }}
             >
-              {this.state.displayCopied ? `Copied!` : `Copy HEX`}
+              {this.state.displayCopied ? `Copied!` : `Copy HEX ${color.hex}`}
             </Box>
           </button>
         </CopyToClipboard>
