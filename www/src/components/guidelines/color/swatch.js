@@ -2,6 +2,7 @@ import React from "react"
 import CopyToClipboard from "react-copy-to-clipboard"
 
 import { Box } from "../system"
+import { SrOnly } from "../typography"
 
 export default class Swatch extends React.Component {
   state = {
@@ -93,7 +94,13 @@ export default class Swatch extends React.Component {
                 width: 80,
               }}
             >
-              {this.state.displayCopied ? `Copied!` : `Copy HEX ${color.hex}`}
+              {this.state.displayCopied ? (
+                `Copied!`
+              ) : (
+                <>
+                  Copy HEX <SrOnly>${color.hex}</SrOnly>
+                </>
+              )}
             </Box>
           </button>
         </CopyToClipboard>
