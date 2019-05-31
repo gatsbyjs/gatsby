@@ -29,7 +29,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "graphiql": "^0.13.0",
-    "graphiql-explorer": "^0.3.7",
+    "graphiql-explorer": "^0.4.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "whatwg-fetch": "^3.0.0"
