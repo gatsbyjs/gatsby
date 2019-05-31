@@ -882,9 +882,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ### Missing Fields
 
-If you have custom post types or metadata that are not showing up within the schema, make sure that they are enabled within the REST API. 
+If you have custom post types or metadata that are not showing up within the schema, make sure that they are enabled within the REST API.
 
-- **Custom Meta**  
+- **Custom Meta**
 
   To retrieve custom post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see https://developer.wordpress.org/reference/functions/register_meta/.
 
