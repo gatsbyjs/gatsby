@@ -258,7 +258,7 @@ const Logo = ({ data, location }) => (
               about Gatsby
             </ListItem>
             <ListItem>
-              Use the Gatsby monogram in social buttons to link to your Gatsby
+              Use the Gatsby monogram when linking to your Gatsby
               community profile
             </ListItem>
           </List>
