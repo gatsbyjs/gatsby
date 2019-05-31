@@ -539,7 +539,7 @@ const Typography = ({ location }) => (
       <Text color="grey.60" fontSize={1} textAlign="center">
         Long-form text (with sidebar on large screens)
       </Text>
-      <Flex py={4} my={4}>
+      <Flex as="section" py={4} my={4}>
         <Box mt={8} mr="auto" pr={7} display={{ xxs: `none`, md: `block` }}>
           <Box
             css={{
