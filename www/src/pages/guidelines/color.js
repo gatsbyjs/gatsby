@@ -81,12 +81,13 @@ class Color extends React.Component {
         <Section>
           <Columns>
             <CopyColumn sticky={false}>
-              <p>
+              <Text as="p" mb={0}>
                 Our color palette includes primary and secondary colors that can
-                be used for interfaces as well as illustrations.
-              </p>
+                be used for interfaces as well as illustrations.{` `}
+                <em>Click the color names for detailed information.</em>
+              </Text>
             </CopyColumn>
-            <ContentColumn>
+            <ContentColumn alignSelf="flex-end">
               <Flex alignItems="flex-end">
                 <Flex alignItems="center" mr={8}>
                   <LegacyColorIcon textColor="grey.50" />

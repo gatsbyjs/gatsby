@@ -68,14 +68,13 @@ export default class Swatch extends React.Component {
               cursor: `pointer`,
               height: `100%`,
               left: 0,
-              opacity: 0,
               position: `absolute`,
               right: 0,
               top: 0,
               width: `100%`,
               zIndex: 1,
-              ":focus": {
-                opacity: 1,
+              ":focus .tooltip, :hover .tooltip": {
+                display: `block`,
               },
             }}
             onClick={this.handleClick}
@@ -85,11 +84,13 @@ export default class Swatch extends React.Component {
               boxShadow="raised"
               borderRadius={1}
               fontSize={1}
+              className="tooltip"
               css={{
                 top: -40,
                 height: 32,
                 left: 0,
                 lineHeight: `32px`,
+                display: `none`,
                 position: `absolute`,
                 width: 80,
               }}

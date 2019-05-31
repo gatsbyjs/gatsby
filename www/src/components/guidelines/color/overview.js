@@ -20,11 +20,18 @@ const swatchWidth = 40
 const swatchStyle = {
   flexGrow: 0,
   flexShrink: 0,
-  width: swatchWidth,
   height: swatchWidth,
-  marginRight: theme.space[2],
   marginBottom: theme.space[2],
+  marginRight: theme.space[2],
   position: `relative`,
+  textAlign: `center`,
+  width: swatchWidth,
+}
+const colorNumber = {
+  ...swatchStyle,
+  color: theme.colors.grey[50],
+  fontSize: theme.fontSizes[1],
+  transform: `rotate(-45deg)`,
 }
 
 const colores = node => {
@@ -79,9 +86,19 @@ const Palette = ({ color, handler }) => {
             border: 0,
             cursor: `pointer`,
             WebkitAppearance: `none`,
+            "&&:hover span, &&:focus span": {
+              color: theme.colors.lilac,
+            },
           }}
         >
-          <SectionSubheading fontWeight={0} mt={0} mb={0} fontSize={4}>
+          <SectionSubheading
+            as="span"
+            fontFamily="header"
+            fontWeight={0}
+            mt={0}
+            mb={0}
+            fontSize={4}
+          >
             {capitalize(node)}
           </SectionSubheading>
         </Box>
@@ -106,16 +123,16 @@ const Overview = ({ handler }) => (
         alignItems={{ lg: `flex-end` }}
         display={{ xxs: `none`, lg: `flex` }}
       >
-        <div css={swatchStyle}>90</div>
-        <div css={swatchStyle}>80</div>
-        <div css={swatchStyle}>70</div>
-        <div css={swatchStyle}>60</div>
-        <div css={swatchStyle}>50</div>
-        <div css={swatchStyle}>40</div>
-        <div css={swatchStyle}>30</div>
-        <div css={swatchStyle}>20</div>
-        <div css={swatchStyle}>10</div>
-        <div css={swatchStyle}>5</div>
+        <div css={colorNumber}>90</div>
+        <div css={colorNumber}>80</div>
+        <div css={colorNumber}>70</div>
+        <div css={colorNumber}>60</div>
+        <div css={colorNumber}>50</div>
+        <div css={colorNumber}>40</div>
+        <div css={colorNumber}>30</div>
+        <div css={colorNumber}>20</div>
+        <div css={colorNumber}>10</div>
+        <div css={colorNumber}>5</div>
       </Box>
     </Flex>
     <Box
