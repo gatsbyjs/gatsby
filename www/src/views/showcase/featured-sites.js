@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import hex2rgba from "hex2rgba"
 
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
@@ -21,6 +20,23 @@ import {
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
+const featuredSitesCard = {
+  display: `flex`,
+  flexDirection: `column`,
+  flexGrow: 0,
+  flexShrink: 0,
+  width: 320,
+  marginBottom: space[9],
+  marginRight: space[6],
+  [mediaQueries.xl]: {
+    width: 360,
+    marginRight: space[8],
+  },
+  [mediaQueries.xxl]: {
+    width: 400,
+  },
+}
 
 class FeaturedSites extends Component {
   setFilterToFeatured = e => {
@@ -74,7 +90,6 @@ class FeaturedSites extends Component {
           <h1
             css={{
               fontSize: fontSizes[4],
-              color: colors.gray.dark,
               fontFamily: fonts.header,
               fontWeight: `bold`,
               marginRight: 30,
@@ -117,7 +132,7 @@ class FeaturedSites extends Component {
           >
             <div
               css={{
-                color: colors.gray.calm,
+                color: colors.text.secondary,
                 fontSize: fontSizes[1],
                 marginRight: 15,
                 display: `none`,
@@ -152,14 +167,14 @@ class FeaturedSites extends Component {
               flexShrink: 0,
               margin: `0 -${space[6]}`,
               padding: `3px ${space[6]} 0`,
-              borderBottom: `1px solid ${colors.gray.border}`,
+              borderBottom: `1px solid ${colors.ui.border.subtle}`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
                 css={{
-                  ...styles.featuredSitesCard,
+                  ...featuredSitesCard,
                   ...styles.withTitleHover,
                 }}
               >
@@ -169,7 +184,7 @@ class FeaturedSites extends Component {
                       borderBottom: `none`,
                       fontSize: fontSizes[3],
                       fontWeight: `bold`,
-                      color: colors.gray.dark,
+                      color: colors.text.header,
                       fontFamily: fonts.header,
                       transition: `box-shadow ${transition.speed.slow} ${
                         transition.curve.default
@@ -197,7 +212,7 @@ class FeaturedSites extends Component {
                 <div
                   css={{
                     fontSize: fontSizes[1],
-                    color: colors.gray.calm,
+                    color: colors.text.secondary,
                     fontWeight: `normal`,
                     [mediaQueries.lg]: {
                       marginTop: `auto`,
@@ -229,7 +244,7 @@ class FeaturedSites extends Component {
                 href="#showcase"
                 css={{
                   marginRight: `${space[6]} !important`,
-                  backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                  backgroundColor: colors.purple[5],
                   borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
@@ -243,7 +258,7 @@ class FeaturedSites extends Component {
                       boxShadow: shadows.overlay,
                     },
                   },
-                  ...styles.featuredSitesCard,
+                  ...featuredSitesCard,
                 }}
                 onClick={this.setFilterToFeatured}
               >
@@ -299,7 +314,7 @@ class FeaturedSites extends Component {
               right: `-${space[6]}`,
               width: 60,
               pointerEvents: `none`,
-              background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+              background: `linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)`,
             }}
           />
         </div>

@@ -81,8 +81,6 @@ exports.processFile = (file, transforms, options = {}) => {
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
-
-    pipeline = pipeline.rotate()
   } catch (err) {
     throw new Error(`Failed to process image ${file}`)
   }
@@ -95,6 +93,10 @@ exports.processFile = (file, transforms, options = {}) => {
 
     if (args.trim) {
       clonedPipeline = clonedPipeline.trim(args.trim)
+    }
+
+    if (!args.rotate) {
+      clonedPipeline = clonedPipeline.rotate()
     }
 
     // Sharp only allows ints as height/width. Since both aren't always

@@ -41,7 +41,7 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { edges: postsData },
+        allMdx: { edges: postsData },
         allStartersYaml: { edges: startersData },
         allNpmPackage: { edges: pluginsData },
       },
@@ -107,9 +107,9 @@ class IndexRoute extends React.Component {
               padding: space[6],
               paddingTop: 0,
               width: `100%`,
-              borderBottom: `1px solid ${colors.ui.light}`,
-              borderTop: `1px solid ${colors.ui.light}`,
-              background: colors.ui.whisper,
+              borderBottom: `1px solid ${colors.purple[10]}`,
+              borderTop: `1px solid ${colors.purple[10]}`,
+              background: colors.purple[5],
               [mediaQueries.xl]: {
                 padding: space[8],
               },
@@ -150,10 +150,9 @@ class IndexRoute extends React.Component {
               paddingTop: `0 !important`,
               paddingBottom: `0 !important`,
             }}
-          >
-            <FooterLinks bottomMargin={space[9]} />
-          </HomepageSection>
+          />
         </main>
+        <FooterLinks />
       </Layout>
     )
   }
@@ -175,7 +174,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 4
       filter: {

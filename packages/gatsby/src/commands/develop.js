@@ -9,6 +9,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
 const got = require(`got`)
 const rl = require(`readline`)
@@ -123,24 +124,32 @@ async function startServer(program) {
 
   app.use(cors())
 
+  /**
+   * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
+   */
+  const graphqlEndpoint = `/_+graphi?ql`
+
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
-      `/___graphql`,
+      graphqlEndpoint,
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
       () => {}
     )
+  } else {
+    graphiqlExplorer(app, {
+      graphqlEndpoint,
+    })
   }
 
   app.use(
-    `/___graphql`,
+    graphqlEndpoint,
     graphqlHTTP(() => {
       const schema = store.getState().schema
       return {
         schema,
-        graphiql:
-          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        graphiql: false,
         context: withResolverContext({}, schema),
         formatError(err) {
           return {
@@ -202,23 +211,45 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      const { headers, method } = req
+      const {
+        // remove `host` from copied headers
+        // eslint-disable-next-line no-unused-vars
+        headers: { host, ...headers },
+        method,
+      } = req
       req
         .pipe(
-          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
-            const message = `Error when trying to proxy request "${
-              req.originalUrl
-            }" to "${proxiedUrl}"`
+          got
+            .stream(proxiedUrl, { headers, method, decompress: false })
+            .on(`response`, response =>
+              res.writeHead(response.statusCode, response.headers)
+            )
+            .on(`error`, (err, _, response) => {
+              if (response) {
+                res.writeHead(response.statusCode, response.headers)
+              } else {
+                const message = `Error when trying to proxy request "${
+                  req.originalUrl
+                }" to "${proxiedUrl}"`
 
-            report.error(message, err)
-            res.status(500).end()
-          })
+                report.error(message, err)
+                res.sendStatus(500)
+              }
+            })
         )
         .pipe(res)
     })
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
+
+  // In case nothing before handled hot-update - send 404.
+  // This fixes "Unexpected token < in JSON at position 0" runtime
+  // errors after restarting development server and
+  // cause automatic hard refresh in the browser.
+  app.use(/.*\.hot-update\.json$/i, (req, res) => {
+    res.status(404).end()
+  })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {

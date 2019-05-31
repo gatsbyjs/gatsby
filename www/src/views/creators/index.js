@@ -145,7 +145,7 @@ class CreatorsView extends Component {
                     <div
                       css={{
                         margin: `0 0 ${space[1]}`,
-                        color: colors.gray.calm,
+                        color: colors.text.secondary,
                       }}
                     >
                       {item.node.location}

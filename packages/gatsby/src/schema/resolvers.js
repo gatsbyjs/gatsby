@@ -146,10 +146,21 @@ const link = ({ by = `id`, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  return context.nodeModel.runQuery(
+  const result = await context.nodeModel.runQuery(
     { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
     { path: context.path }
   )
+  if (
+    returnType instanceof GraphQLList &&
+    Array.isArray(fieldValue) &&
+    Array.isArray(result)
+  ) {
+    return fieldValue.map(value =>
+      result.find(obj => getValueAt(obj, by) === value)
+    )
+  } else {
+    return result
+  }
 }
 
 const fileByPath = ({ from }) => (source, args, context, info) => {

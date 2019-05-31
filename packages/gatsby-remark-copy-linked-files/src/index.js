@@ -267,6 +267,11 @@ module.exports = (
       `src`
     ).forEach(processUrl)
 
+    // Handle flash embed tags.
+    extractUrlAttributeAndElement($(`object param[value]`), `value`).forEach(
+      processUrl
+    )
+
     // Handle a tags.
     extractUrlAttributeAndElement($(`a[href]`), `href`).forEach(processUrl)
 
