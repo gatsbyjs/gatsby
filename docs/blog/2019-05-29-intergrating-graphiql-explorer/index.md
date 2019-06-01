@@ -43,7 +43,7 @@ Improvements to on-boarding users new to GraphQL isn't the only goal of integrat
 
 ## Try it now
 
-We recently [added](https://github.com/gatsbyjs/gatsby/pull/14280) GraphiQL Explorer to Gatsby. It's available in starting with `gatsby@2.7.3`.
+We recently [added](https://github.com/gatsbyjs/gatsby/pull/14280) GraphiQL Explorer to Gatsby. It's available starting with `gatsby@2.7.3`.
 
 Create new Gatsby project:
 
@@ -61,4 +61,4 @@ or try it [live](https://gatsby-1774317511.gtsb.io/___graphql?explorerIsOpen=tru
 
 ## Future work
 
-There is opportunity for further improvements for Gatsby users. One that we will be tackling next is [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371).
+There are opportunities for further improvements for Gatsby users. One that we will be tackling next is [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371).
