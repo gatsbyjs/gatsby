@@ -10,10 +10,13 @@ tags:
 
 Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. A popular tool for exploring your GraphQL schema is [GraphiQL](https://github.com/graphql/graphiql) — which is a graphical, interactive, in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
 
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+<figure>
+  <video controls="controls" autoplay="false">
+    <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+    <p>Your browser does not support the video element.</p>
+  </video>
+  <figcaption>GraphiQL demo</figcaption>
+</figure>
 
 ## What is GraphiQL Explorer?
 
@@ -25,10 +28,13 @@ GraphiQL Explorer was built by the team at [OneGraph](https://www.onegraph.com/)
 
 We often hear that many developers' first usage of GraphQL is through Gatsby. GraphQL, like any technology, has a learning curve. We can't eliminate this learning curve completely but we can try to make it smoother. As mentioned previously, GraphiQL Explorer allows users to build full GraphQL queries without typing a single line of code. This enables users that don't yet fully understand the GraphQL query syntax to _learn_ GraphQL much more easily:
 
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./graphiql-explorer-demo.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+<figure>
+  <video controls="controls" autoplay="false">
+    <source type="video/mp4" src="./graphiql-explorer-demo.mp4"></source>
+    <p>Your browser does not support the video element.</p>
+  </video>
+  <figcaption>GraphiQL Explorer introduction demo</figcaption>
+</figure>
 
 Check out ["How OneGraph onboards users who are new to GraphQL"](https://www.onegraph.com/blog/2019/01/24/How_OneGraph_onboards_users_new_to_GraphQL.html) blog post for more details.
 
@@ -36,10 +42,13 @@ Check out ["How OneGraph onboards users who are new to GraphQL"](https://www.one
 
 Improvements to on-boarding users new to GraphQL isn't the only goal of integrating GraphiQL Explorer into Gatsby. There are other pain points that are getting addressed with this addition. Specifically [union types and inline fragments](https://graphql.org/learn/queries/#inline-fragments). If the user is not aware of this syntax to query this type of fields it can be a fairly frustrating experience! GraphiQL Explorer helps solve this problem by listing available union types:
 
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./graphiql-explorer-union-demo.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
+<figure>
+  <video controls="controls" autoplay="false">
+    <source type="video/mp4" src="./graphiql-explorer-union-demo.mp4"></source>
+    <p>Your browser does not support the video element.</p>
+  </video>
+  <figcaption>GraphiQL Explorer union types support</figcaption>
+</figure>
 
 ## Try it now
 
