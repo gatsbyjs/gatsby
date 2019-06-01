@@ -6124,7 +6124,7 @@
     - Web Development
     - Agency
     - Marketing
-  built_by: Brew Digital Ltd
+  built_by: Brew Digital
   built_by_url: https://www.wearebrew.co.uk
 - title: Global City Data
   main_url: https://globalcitydata.com
@@ -6176,4 +6176,14 @@
     - Mobile Development
   built_by: Acto
   built_by_url: https://www.acto.dk/
+- title: Gatsby GitHub Stats
+  url: https://gatsby-github-stats.netlify.com
+  main_url: https://gatsby-github-stats.netlify.com
+  source_url: https://github.com/lannonbr/gatsby-github-stats/
+  description: >
+    Statistics Dashboard for Gatsby GitHub repository
+  categories:
+    - Data
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
   featured: false

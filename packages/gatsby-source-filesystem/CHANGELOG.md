@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.37...gatsby-source-filesystem@2.0.38) (2019-05-31)
+
+### Features
+
+- **gatsby-source-filesystem:** add an environment variable to control concurrent queue size ([#13110](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/13110)) ([90aa247](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/90aa247))
+
 ## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.36...gatsby-source-filesystem@2.0.37) (2019-05-20)
 
 ### Bug Fixes
