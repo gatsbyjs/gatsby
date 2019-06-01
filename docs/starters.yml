@@ -2804,3 +2804,19 @@
     - Icons from React Icons (Font Awesome, Devicons, etc,...)
     - Beautiful tech-topic tags to attach to your web-development-related blog posts
     - Developer-relevant social media icon links, including GitHub, Stack Overflow, and freeCodeCamp
+- url: https://anubhavsrivastava.github.io/gatsby-starter-paradigmshift
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-paradigmshift
+  description: Single page starter based on the Paradigm Shift site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
