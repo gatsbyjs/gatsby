@@ -56,7 +56,7 @@ plugins: [
       // Number of records to fetch on each request when building the cache
       // at startup. If your application encounters timeout errors during
       // startup, try decreasing this number.
-      initialQuerySize: 250,
+      paginationSize: 250,
     },
   },
 ]
