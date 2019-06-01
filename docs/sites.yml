@@ -6163,6 +6163,19 @@
   built_by: Appmantle
   built_by_url: https://appmantle.com
   featured: false
+- title: Acto
+  main_url: https://www.acto.dk/
+  url: https://www.acto.dk/
+  description: >
+    Tomorrows solutions - today. Acto is an innovative software engineering company, providing your business with high-quality, scalable and maintainable software solutions, to make your business shine.
+  categories:
+    - Agency
+    - Technology
+    - Web Development
+    - Software Engineering
+    - Mobile Development
+  built_by: Acto
+  built_by_url: https://www.acto.dk/
 - title: Gatsby GitHub Stats
   url: https://gatsby-github-stats.netlify.com
   main_url: https://gatsby-github-stats.netlify.com
