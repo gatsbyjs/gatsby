@@ -18,7 +18,50 @@ import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
 import theme from "../../utils/guidelines/theme"
-import { Box, Text } from "../../components/guidelines/system"
+import { Box, Flex, Link, Text } from "../../components/guidelines/system"
+import { mediaQueries } from "../../utils/presets"
+
+const ColorExample = ({ hex, token }) => (
+  <tr>
+    <td
+      css={{
+        borderColor: hex,
+        verticalAlign: `middle`,
+      }}
+    >
+      <code>{token}</code>
+    </td>
+    <td
+      css={{
+        borderColor: hex,
+        verticalAlign: `middle`,
+        width: `100%`,
+      }}
+    >
+      {hex}
+    </td>
+    <td
+      css={{
+        borderColor: hex,
+        verticalAlign: `middle`,
+      }}
+    >
+      <Flex alignItems="center">
+        <Text color={hex} fontWeight={1} fontSize={6} mr={8}>
+          Aa
+        </Text>
+        <div
+          css={{
+            backgroundColor: hex,
+            height: 40,
+            margin: 0,
+            width: 80,
+          }}
+        />
+      </Flex>
+    </td>
+  </tr>
+)
 
 const DesignTokens = ({ location }) => (
   <Layout pathname={location.pathname} pageTitle="Design Tokens">
@@ -214,7 +257,7 @@ const DesignTokens = ({ location }) => (
             <thead>
               <tr>
                 <th scope="col">Token</th>
-                <th scope="col">value</th>
+                <th scope="col">Value</th>
                 <th scope="col">Example</th>
               </tr>
             </thead>
@@ -251,7 +294,7 @@ const DesignTokens = ({ location }) => (
             <thead>
               <tr>
                 <th scope="col">Token</th>
-                <th scope="col">value</th>
+                <th scope="col">Value</th>
                 <th scope="col">Example</th>
               </tr>
             </thead>
@@ -297,7 +340,7 @@ const DesignTokens = ({ location }) => (
             <thead>
               <tr>
                 <th scope="col">Token</th>
-                <th scope="col">value</th>
+                <th scope="col">Value</th>
                 <th scope="col">Example</th>
               </tr>
             </thead>
@@ -320,6 +363,164 @@ const DesignTokens = ({ location }) => (
               ))}
             </tbody>
           </table>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
+      <SectionHeading>Breakpoints &amp; Media Queries</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            For convenience, a <code>mediaQueries</code> scale derived from the
+            {` `}
+            <code>breakpoints</code> scale is available.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth width="100%">
+          <Flex>
+            <table css={{ width: `50%` }}>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.breakpoints).map((breakpoint, i) => (
+                  <tr key={`tokens-breakpoints-${i}`}>
+                    <td css={{ verticalAlign: `top` }}>
+                      <code>breakpoints.{breakpoint}</code>
+                    </td>
+                    <td css={{ verticalAlign: `top` }}>
+                      {theme.breakpoints[breakpoint]}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <Box as="table" ml={10}>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.breakpoints).map((breakpoint, i) => (
+                  <tr key={`tokens-breakpoints-${i}`}>
+                    <td css={{ verticalAlign: `top` }}>
+                      <code>mediaQueries.{breakpoint}</code>
+                    </td>
+                    <td css={{ verticalAlign: `top` }}>
+                      {mediaQueries[breakpoint]}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Box>
+          </Flex>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
+      <SectionHeading>Colors</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Please also see the <Link to="/guidelines/colors/">Colors</Link>
+            {` `}
+            section for detailed information and accessibility notes.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth width="100%">
+          <Flex>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Hex</th>
+                  <th scope="col">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.colors).map((color, i) => {
+                  if (typeof theme.colors[color] === `object`) {
+                    return Object.keys(theme.colors[color]).map((range, i) => (
+                      <ColorExample
+                        key={`tokens-colors-poop-${i}`}
+                        hex={
+                          typeof theme.colors[color][range] !== `object` &&
+                          theme.colors[color][range]
+                        }
+                        token={`colors.${color}.${range}`}
+                      />
+                    ))
+                  } else if (typeof color === `string`) {
+                    return (
+                      <ColorExample
+                        key={`tokens-colors-${i}`}
+                        hex={theme.colors[color]}
+                        token={`colors.${color}`}
+                      />
+                    )
+                  }
+                })}
+              </tbody>
+            </table>
+          </Flex>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+      <SectionHeading>Letter Spacing</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended for use with the <code>letter-spacing</code> CSS property.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth>
+          <Flex>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.letterSpacings).map((letterSpacing, i) => (
+                  <tr key={`tokens-letterSpacings-${i}`}>
+                    <td css={{ verticalAlign: `top` }}>
+                      <code>letterSpacings.{letterSpacing}</code>
+                    </td>
+                    <td css={{ verticalAlign: `top` }}>
+                      {theme.letterSpacings[letterSpacing]}
+                    </td>
+                    <td>
+                      <Text
+                        // don't scale based on root font size here
+                        letterSpacing={letterSpacing}
+                        color="grey.90"
+                        lineHeight="solid"
+                        css={{
+                          whiteSpace: `nowrap`,
+                        }}
+                      >
+                        Gatsby believed in the green light, the orgastic future
+                        that year by year recedes before us.
+                      </Text>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Flex>
         </ContentColumn>
       </Columns>
     </Section>
