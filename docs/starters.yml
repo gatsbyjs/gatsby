@@ -2770,6 +2770,21 @@
     - Developer enviornment variables
     - Accessibility support
     - Based on Gatsby Starter Default
+- url: https://material-ui-starter.netlify.com/
+  repo: https://github.com/dominicabela/gatsby-starter-material-ui
+  description: This starter includes Material UI boilerplate and configuration files along with the standard Gatsby configuration files. It provides a starting point for developing Gatsby apps with the Material UI framework.
+  tags:
+    - SEO
+    - Styling:Material
+    - Styling:Material Design
+    - Material UI
+    - Boilerplate
+  features:
+    - Material UI Framework
+    - Roboto Typeface (self hosted)
+    - SEO
+    - Offline Support
+    - Based on Gatsby Default Starter
 - url: https://developer-diary.netlify.com/
   repo: https://github.com/willjw3/gatsby-starter-developer-diary
   description: A blog template created with web developers in mind. Totally usable right out of the box, but minimalist enough to be easily modifiable.
