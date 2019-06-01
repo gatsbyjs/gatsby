@@ -20,8 +20,6 @@ Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#
 #### Install
 
 `npm install --save gatsby-source-filesystem`
-or
-`yarn add gatsby-source-filesystem`
 
 #### Add plugin
 
@@ -50,8 +48,6 @@ We'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-
 #### Install
 
 `npm install --save gatsby-transformer-remark`
-or
-`yarn add gatsby-transformer-remark`
 
 #### Add plugin
 
