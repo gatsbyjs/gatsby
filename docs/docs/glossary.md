@@ -114,7 +114,7 @@ The [public-facing](#public) interface for your website or app, delivered using 
 
 ### Gatsby
 
-Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [Javascript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
+Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [JavaScript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
 
 ### GraphQL
 

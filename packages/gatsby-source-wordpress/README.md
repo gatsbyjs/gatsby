@@ -25,10 +25,12 @@ This module currently pulls the following entities from WordPress:
       users, statuses, taxonomies, site metadata, ...)
 - [x] Any new entity should be pulled as long as the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
-- [x] Custom post types (any type you could have declared using WordPress'
-      `functions.php`)
+- [x] Custom Post Types (any type you could have registered and enabled in the REST API)
+- [x] Post Meta (any meta fields you could have registered and enabled in the REST API)
 
 We welcome PRs adding support for data from other plugins.
+
+Note : If some fields are missing, check [troubleshooting missing fields](#missing-fields) section.
 
 ## Install
 
@@ -877,6 +879,18 @@ exports.createPages = async ({ graphql, actions }) => {
 ```
 
 ## Troubleshooting
+
+### Missing Fields
+
+If you have custom post types or metadata that are not showing up within the schema, make sure that they are enabled within the REST API.
+
+- **Custom Meta**
+
+  To retrieve custom post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see https://developer.wordpress.org/reference/functions/register_meta/.
+
+- **Custom Post Types**
+
+  If you are programmatically registering post types with `register_post_type()` and would like to use them in your queries, make sure to have `show_in_rest` set as `true`. Otherwise if you are using a plugin such as CPT UI to register your custom post types, check your configurations to make sure that the post types you want to query are enabled to show in REST API.
 
 ### GraphQL Error - Unknown Field on ACF
 

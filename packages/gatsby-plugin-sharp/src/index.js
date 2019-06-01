@@ -154,6 +154,10 @@ async function generateBase64({ file, args, reporter }) {
     return null
   }
 
+  if (options.trim) {
+    pipeline = pipeline.trim(options.trim)
+  }
+
   const forceBase64Format =
     args.toFormatBase64 || pluginOptions.forceBase64Format
   if (forceBase64Format) {
@@ -384,6 +388,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
+      trim: options.trim,
       toFormat: options.toFormat,
       toFormatBase64: options.toFormatBase64,
       width: base64Width,

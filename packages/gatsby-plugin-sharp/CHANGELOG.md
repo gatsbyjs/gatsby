@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.2...gatsby-plugin-sharp@2.1.3) (2019-05-31)
+
+### Features
+
+- **image-sharp:** add trim option ([#14137](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14137)) ([cf0e77b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/cf0e77b))
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.1...gatsby-plugin-sharp@2.1.2) (2019-05-29)
 
 ### Bug Fixes

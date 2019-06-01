@@ -23,7 +23,7 @@ module.exports = {
 
 ### Build
 
-Once the `pathPrefix` is specified in `gastby-config.js`, we are well on our way to a prefixed app. The final step is to build out your application with a flag `--prefix-paths`, like so:
+Once the `pathPrefix` is specified in `gatsby-config.js`, we are well on our way to a prefixed app. The final step is to build out your application with a flag `--prefix-paths`, like so:
 
 ```shell
 gatsby build --prefix-paths
