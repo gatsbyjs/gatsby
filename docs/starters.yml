@@ -2820,3 +2820,13 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://dazzling-heyrovsky-62d4f9.netlify.com/
+  repo: https://github.com/s-kris/gatsby-starter-medium
+  description: A GatsbyJS starter blog as close as possible to medium.
+  tags:
+    - Markdown
+    - Styling:CSS-in-JS
+    - Medium
+  features:
+    - Careers Listing
+    - Mobile Responsive
