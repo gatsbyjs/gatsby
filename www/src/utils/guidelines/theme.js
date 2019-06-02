@@ -10,6 +10,8 @@ import {
   borders,
   fontSizes,
   space,
+  zIndices,
+  transition,
 } from "../presets"
 
 const theme = {
@@ -24,6 +26,8 @@ const theme = {
   radii: radii,
   space: space,
   shadows: shadows,
+  zIndices: zIndices,
+  transition: transition,
 }
 
 export default theme

@@ -195,6 +195,43 @@ const DesignTokens = ({ location }) => (
     </Section>
 
     <Section>
+      <SectionHeading>Z-Indices</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended to be used with the <code>box-shadow</code> CSS property,
+            these tokens along "Shadows &amp; Elevation" define the order of
+            components along the z-axis.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth width="100%">
+          <Flex>
+            <table css={{ width: `50%` }}>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.zIndices).map((zIndex, i) => (
+                  <tr key={`tokens-zIndices-${i}`}>
+                    <td css={{ verticalAlign: `top` }}>
+                      <code>zIndices.{zIndex}</code>
+                    </td>
+                    <td css={{ verticalAlign: `top` }}>
+                      {theme.zIndices[zIndex]}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Flex>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
       <SectionHeading>Radii</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -328,6 +365,100 @@ const DesignTokens = ({ location }) => (
     </Section>
 
     <Section>
+      <SectionHeading>Font Weights</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended for use with the <code>font-weight</code> CSS property.
+          </p>
+        </CopyColumn>
+        <ContentColumn>
+          <Flex>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.fontWeights).map((fontWeight, i) => (
+                  <tr key={`tokens-fontWeights-${i}`}>
+                    <td css={{ verticalAlign: `top` }}>
+                      <code>fontWeights[{fontWeight}]</code>
+                    </td>
+                    <td css={{ verticalAlign: `top` }}>
+                      {theme.fontWeights[fontWeight]}
+                    </td>
+                    <td>
+                      <Text
+                        fontWeight={fontWeight}
+                        color="grey.90"
+                        lineHeight="solid"
+                      >
+                        Aa
+                      </Text>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Flex>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+      <SectionHeading>Letter Spacing</SectionHeading>
+      <Columns>
+        <CopyColumn>
+          <p>
+            Intended for use with the <code>letter-spacing</code> CSS property.
+          </p>
+        </CopyColumn>
+        <ContentColumn fullWidth>
+          <Flex>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.letterSpacings).map((letterSpacing, i) => (
+                  <tr key={`tokens-letterSpacings-${i}`}>
+                    <td css={{ verticalAlign: `top` }}>
+                      <code>letterSpacings.{letterSpacing}</code>
+                    </td>
+                    <td css={{ verticalAlign: `top` }}>
+                      {theme.letterSpacings[letterSpacing]}
+                    </td>
+                    <td>
+                      <Text
+                        letterSpacing={letterSpacing}
+                        color="grey.90"
+                        lineHeight="solid"
+                        css={{
+                          whiteSpace: `nowrap`,
+                        }}
+                      >
+                        Gatsby believed in the green light, the orgastic future
+                        that year by year recedes before us.
+                      </Text>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Flex>
+        </ContentColumn>
+      </Columns>
+    </Section>
+
+    <Section>
       <SectionHeading>Line Heights</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -450,7 +581,7 @@ const DesignTokens = ({ location }) => (
                   if (typeof theme.colors[color] === `object`) {
                     return Object.keys(theme.colors[color]).map((range, i) => (
                       <ColorExample
-                        key={`tokens-colors-poop-${i}`}
+                        key={`tokens-colors-foo-${i}`}
                         hex={
                           typeof theme.colors[color][range] !== `object` &&
                           theme.colors[color][range]
@@ -476,49 +607,39 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
-      <SectionHeading>Letter Spacing</SectionHeading>
+    <Section>
+      <SectionHeading>Transition</SectionHeading>
       <Columns>
         <CopyColumn>
           <p>
-            Intended for use with the <code>letter-spacing</code> CSS property.
+            Intended to be used with the <code>transition</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn>
           <Flex>
             <table>
               <thead>
                 <tr>
                   <th scope="col">Token</th>
                   <th scope="col">Value</th>
-                  <th scope="col">Example</th>
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(theme.letterSpacings).map((letterSpacing, i) => (
-                  <tr key={`tokens-letterSpacings-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
-                      <code>letterSpacings.{letterSpacing}</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {theme.letterSpacings[letterSpacing]}
-                    </td>
-                    <td>
-                      <Text
-                        // don't scale based on root font size here
-                        letterSpacing={letterSpacing}
-                        color="grey.90"
-                        lineHeight="solid"
-                        css={{
-                          whiteSpace: `nowrap`,
-                        }}
-                      >
-                        Gatsby believed in the green light, the orgastic future
-                        that year by year recedes before us.
-                      </Text>
-                    </td>
-                  </tr>
-                ))}
+                {Object.keys(theme.transition).map((color, i) => {
+                  if (typeof theme.transition[color] === `object`) {
+                    return Object.keys(theme.transition[color]).map(
+                      (range, i) => (
+                        <tr key={`tokens-transition-${i}`}>
+                          <td>
+                            <code>{`colors.${color}.${range}`}</code>
+                          </td>
+                          <td>{theme.transition[color][range]}</td>
+                        </tr>
+                      )
+                    )
+                  }
+                  return false
+                })}
               </tbody>
             </table>
           </Flex>
