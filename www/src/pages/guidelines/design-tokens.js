@@ -1,5 +1,6 @@
 import React from "react"
 import MdWarning from "react-icons/lib/md/warning"
+import Link from "gatsby-link"
 
 import {
   Container,
@@ -18,7 +19,7 @@ import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
 import theme from "../../utils/guidelines/theme"
-import { Box, Flex, Link, Text } from "../../components/guidelines/system"
+import { Box, Flex, Text } from "../../components/guidelines/system"
 import { mediaQueries } from "../../utils/presets"
 
 const ColorExample = ({ hex, token }) => (
@@ -561,7 +562,7 @@ const DesignTokens = ({ location }) => (
       <Columns>
         <CopyColumn>
           <p>
-            Please also see the <Link to="/guidelines/colors/">Colors</Link>
+            Please also see the <Link to="/guidelines/color/">Colors</Link>
             {` `}
             section for detailed information and accessibility notes.
           </p>
