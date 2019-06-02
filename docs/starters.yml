@@ -2818,3 +2818,17 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-phantom
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-phantom
+  description: Single page starter based on the Phantom site template by HTML5 up, with landing, generic and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
