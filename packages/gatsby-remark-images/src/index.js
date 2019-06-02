@@ -141,11 +141,13 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    const alt = overWrites.alt
+    const alt = _.escape(
+      overWrites.alt
       ? overWrites.alt
       : node.alt
       ? node.alt
       : defaultAlt
+    )
 
     const title = node.title ? node.title : ``
 
