@@ -2,7 +2,6 @@ plugins:
   - addAttributesToSVGElement:
       attributes:
         - focusable: false
-        - data-image: icon
   - collapseGroups: true
   - removeDesc: true
   - removeScriptElement: true
