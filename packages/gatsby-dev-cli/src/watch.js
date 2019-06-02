@@ -17,6 +17,8 @@ const quit = () => {
   process.exit()
 }
 
+const MAX_COPY_RETRIES = 3
+
 /*
  * non-existant packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
@@ -29,11 +31,19 @@ function watch(
   let afterPackageInstallation = false
   let queuedCopies = []
 
-  const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
+  const realCopyPath = arg => {
+    const { oldPath, newPath, quiet, resolve, reject, retry = 0 } = arg
     fs.copy(oldPath, newPath, err => {
       if (err) {
-        console.error(err)
-        return reject(err)
+        if (retry >= MAX_COPY_RETRIES) {
+          console.error(err)
+          return reject(err)
+        } else {
+          setTimeout(
+            () => realCopyPath({ ...arg, retry: retry + 1 }),
+            500 * Math.pow(2, retry)
+          )
+        }
       }
 
       numCopied += 1
