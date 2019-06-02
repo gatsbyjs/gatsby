@@ -467,6 +467,7 @@ const DesignTokens = ({ location }) => (
                       />
                     )
                   }
+                  return false
                 })}
               </tbody>
             </table>
