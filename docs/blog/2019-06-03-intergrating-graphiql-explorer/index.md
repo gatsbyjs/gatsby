@@ -70,4 +70,8 @@ or try it [live](https://gatsby-1774317511.gtsb.io/___graphql?explorerIsOpen=tru
 
 ## Future work
 
-There are opportunities for further improvements for Gatsby users. One that we will be tackling next is [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371).
+There are opportunities for further improvements for Gatsby users. Few things we will be working on are:
+
+- evaluating accessibility of GraphiQL interface and addressing found issues,
+- adding [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371),
+- adding [code snippet generation for common workflows](https://github.com/gatsbyjs/gatsby/issues/14476) (using another awesome OneGraph's GraphiQL addon - [`graphiql-code-exporter`](https://github.com/OneGraph/graphiql-code-exporter)).
