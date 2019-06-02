@@ -8,7 +8,5 @@ plugins:
   - removeScriptElement: true
   - removeStyleElement: true
   - removeTitle: false
-  - removeUnknownsAndDefaults: true
-      keepRoleAttr: true
   - removeUselessDefs: true
   - removeViewBox: false
