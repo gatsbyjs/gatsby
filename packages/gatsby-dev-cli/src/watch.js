@@ -69,12 +69,14 @@ function watch(
     }, new Set())
 
     await Promise.all(
-      [...packagesToClear].map(async packageToClear => {
-        await del([
-          `node_modules/${packageToClear}/**/*.{js,js.map}`,
-          `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
-        ])
-      })
+      [...packagesToClear].map(
+        async packageToClear =>
+          await del([
+            `node_modules/${packageToClear}/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/src/**/*.{js,js.map}`,
+          ])
+      )
     )
   }
   // check packages deps and if they depend on other packages from monorepo
