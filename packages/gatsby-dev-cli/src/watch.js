@@ -37,12 +37,14 @@ function watch(
       if (err) {
         if (retry >= MAX_COPY_RETRIES) {
           console.error(err)
-          return reject(err)
+          reject(err)
+          return
         } else {
           setTimeout(
             () => realCopyPath({ ...arg, retry: retry + 1 }),
             500 * Math.pow(2, retry)
           )
+          return
         }
       }
 
@@ -50,7 +52,7 @@ function watch(
       if (!quiet) {
         console.log(`Copied ${oldPath} to ${newPath}`)
       }
-      return resolve()
+      resolve()
     })
   }
 
