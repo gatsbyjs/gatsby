@@ -1,8 +1,14 @@
 plugins:
+  - addAttributesToSVGElement:
+      attributes:
+        - focusable: false
+        - data-image: icon
   - collapseGroups: true
   - removeDesc: true
   - removeScriptElement: true
   - removeStyleElement: true
-  - removeTitle: true
+  - removeTitle: false
+  - removeUnknownsAndDefaults: true
+      keepRoleAttr: true
   - removeUselessDefs: true
   - removeViewBox: false
