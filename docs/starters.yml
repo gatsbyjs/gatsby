@@ -2724,6 +2724,7 @@
   tags:
     - Business Website
     - Blog
+    - Markdown
     - Modern Design
     - PWA
     - Styling:Material Design
@@ -2767,6 +2768,21 @@
     - Developer enviornment variables
     - Accessibility support
     - Based on Gatsby Starter Default
+- url: https://material-ui-starter.netlify.com/
+  repo: https://github.com/dominicabela/gatsby-starter-material-ui
+  description: This starter includes Material UI boilerplate and configuration files along with the standard Gatsby configuration files. It provides a starting point for developing Gatsby apps with the Material UI framework.
+  tags:
+    - SEO
+    - Styling:Material
+    - Styling:Material Design
+    - Material UI
+    - Boilerplate
+  features:
+    - Material UI Framework
+    - Roboto Typeface (self hosted)
+    - SEO
+    - Offline Support
+    - Based on Gatsby Default Starter
 - url: https://developer-diary.netlify.com/
   repo: https://github.com/willjw3/gatsby-starter-developer-diary
   description: A blog template created with web developers in mind. Totally usable right out of the box, but minimalist enough to be easily modifiable.
@@ -2786,3 +2802,19 @@
     - Icons from React Icons (Font Awesome, Devicons, etc,...)
     - Beautiful tech-topic tags to attach to your web-development-related blog posts
     - Developer-relevant social media icon links, including GitHub, Stack Overflow, and freeCodeCamp
+- url: https://anubhavsrivastava.github.io/gatsby-starter-paradigmshift
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-paradigmshift
+  description: Single page starter based on the Paradigm Shift site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
