@@ -60,6 +60,10 @@ const ColorExample = ({ hex, token }) => (
           }}
         />
       </Flex>
+      <SrOnly>
+        Example text and color swatch with <code>color</code>/
+        <code>background-color</code> set to <code>{token}</code>.
+      </SrOnly>
     </td>
   </tr>
 )
