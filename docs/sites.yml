@@ -6239,4 +6239,16 @@
     - Healthcare
   built_by: Pill Club
   built_by_url: https://thepillclub.com
+- title: myweekinjs
+  url: https://www.myweekinjs.com/
+  main_url: https://www.myweekinjs.com/
+  source_url: https://github.com/myweekinjs/public-website
+  description: >
+    Challenge to create and/or learn something new in JavaScript each week.
+  categories:
+    - Challenge
+    - Blog
+    - Personal Development
+  built_by: Adriaan Janse van Rensburg
+  built_by_url: https://github.com/HurricaneInteractive/
   featured: false
