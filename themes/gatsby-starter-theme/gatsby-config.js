@@ -14,4 +14,7 @@ module.exports = {
       },
     },
   ],
+  siteMetadata: {
+    title: `Shadowed Site Title`,
+  },
 }
