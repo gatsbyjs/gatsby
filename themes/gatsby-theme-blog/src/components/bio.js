@@ -8,8 +8,8 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
-import { Flex, css } from "theme-ui"
-import BioFragment from "../fragments/bio.mdx"
+import { Styled, css, Flex } from "theme-ui"
+import BioContent from "./bioContent.js"
 
 function Bio() {
   return (
@@ -29,7 +29,9 @@ function Bio() {
                 borderRadius: 99999,
               })}
             />
-            <BioFragment />
+            <Styled.p>
+              <BioContent />
+            </Styled.p>
           </Flex>
         )
       }}
@@ -46,12 +48,6 @@ const bioQuery = graphql`
         }
       }
     }
-    # bioFragment: mdx(fileAbsolutePath: { regex: "/content/fragments/bio/" }) {
-    #   id
-    #   code {
-    #     body
-    #   }
-    # }
     site {
       siteMetadata {
         author
