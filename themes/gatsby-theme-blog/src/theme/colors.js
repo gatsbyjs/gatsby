@@ -1,9 +1,8 @@
-const gatsby = `#663399`
-const gatsbyDarker = `#362066`
-const gatsbyBright = `#D9BAE8`
-const gray = `#48434F`
-const darkGray = `#232129`
-const almostBlack = `#1B1F23`
+const purple60 = `#663399`
+const purple30 = `#D9BAE8`
+const grey70 = `#48434F`
+const grey90 = `#232129`
+const black80 = `#1B1F23`
 const white = `#fff`
 const lightWhite = `rgba(255, 255, 255, 0.86)`
 const opaqueLightYellow = `rgba(255, 229, 100, 0.2)`
@@ -11,13 +10,13 @@ const opaqueLightWhite = `hsla(0, 0%, 100%, 0.2)`
 const lightGray = `hsla(0, 0%, 0%, 0.2)`
 
 export default {
-  text: darkGray,
+  text: grey90,
   background: white,
-  primary: gatsby,
-  secondary: almostBlack,
+  primary: purple60,
+  secondary: black80,
   muted: lightGray,
   highlight: opaqueLightYellow,
-  heading: darkGray,
+  heading: grey90,
   prism: {
     background: `#011627`,
     comment: `#809393`,
@@ -36,11 +35,11 @@ export default {
   modes: {
     dark: {
       text: lightWhite,
-      background: gatsbyDarker,
-      primary: gatsbyBright,
+      background: grey90,
+      primary: purple30,
       secondary: lightWhite,
       muted: opaqueLightWhite,
-      highlight: gray,
+      highlight: purple60,
       heading: white,
     },
   },
