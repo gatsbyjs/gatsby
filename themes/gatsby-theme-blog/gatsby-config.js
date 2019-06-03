@@ -43,29 +43,6 @@ module.exports = {
         path: `${__dirname}/content/assets`,
       },
     },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 590,
-            },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
-          },
-          `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
-          `gatsby-remark-autolink-headers`,
-        ],
-      },
-    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -76,6 +53,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
+              // should this be configurable by the end-user?
               maxWidth: 1380,
               linkImagesToOriginal: false,
             },
@@ -84,6 +62,8 @@ module.exports = {
           { resolve: `gatsby-remark-copy-linked-files` },
           { resolve: `gatsby-remark-numbered-footnotes` },
           { resolve: `gatsby-remark-smartypants` },
+          // todo: needs styles
+          { resolve: `gatsby-remark-autolink-headers` },
           { resolve: `gatsby-remark-code-titles` },
           {
             resolve: `gatsby-remark-prismjs`,
@@ -95,12 +75,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
-    },
-    {
+      // should this be included in the theme?
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Gatsby Starter Blog`,
@@ -115,7 +90,6 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-twitter`,
-    `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
