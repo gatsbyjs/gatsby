@@ -86,7 +86,8 @@ const Palette = ({ color, handler }) => {
             cursor: `pointer`,
             WebkitAppearance: `none`,
             "&&:hover span, &&:focus span": {
-              color: theme.colors.lilac,
+              borderColor: theme.colors.link.hoverBorder,
+              color: theme.colors.gatsby,
             },
           }}
         >
@@ -97,6 +98,10 @@ const Palette = ({ color, handler }) => {
             mt={0}
             mb={0}
             fontSize={4}
+            color="link.color"
+            css={{
+              borderBottom: `1px solid ${theme.colors.link.border}`,
+            }}
           >
             {capitalize(node)}
           </SectionSubheading>
