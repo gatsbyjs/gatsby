@@ -2761,7 +2761,7 @@
     - SEO
     - Accessibility
   features:
-    - Gastby v2
+    - Gatsby v2
     - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
     - Google Analytics
     - PostCSS support
@@ -2818,3 +2818,39 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-personal-starter-blog.netlify.com
+  repo: https://github.com/thomaswangio/gatsby-personal-starter-blog
+  description: Gatsby starter for personal blogs! Blog configured to run at /blog and with Netlify CMS and gatsby-remark-vscode.
+  tags:
+    - Blog
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Netlify CMS
+    - VSCode syntax highlighting
+    - Styled Components
+- url: https://anubhavsrivastava.github.io/gatsby-starter-phantom
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-phantom
+  description: Single page starter based on the Phantom site template by HTML5 up, with landing, generic and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-starter-internationalized.ack.ee/
+  repo: https://github.com/AckeeCZ/gatsby-starter-internationalized
+  description: A simple starter for fully internationalized websites, including route internationalization.
+  tags:
+    - i18n
+  features:
+    - internationalized page content - via react-intl
+    - internationalized routes - via language configuration
+    - lightweight - includes only internationalization code
+    - LocalizedLink - built-in link component handling route generation
+    - LanguageSwitcher - built-in language switcher component
