@@ -98,7 +98,10 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 1. **Install the Gatsby CLI.**
 
    ```shell
+   # NPM users
    npm install -g gatsby-cli
+   # Yarn users
+   yarn global add gatsby-cli
 
    ```
 
