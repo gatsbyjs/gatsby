@@ -4,9 +4,21 @@ import { themeGet } from "styled-system"
 
 import { Box, Flex, Heading, Text } from "../system"
 import {
-  getAccessibilityLabel,
+  getA11yLabel,
   getTextColor,
+  a11y,
 } from "../../../utils/guidelines/color"
+import { focusStyle } from "../../../utils/styles"
+import theme from "../../../utils/guidelines/theme"
+
+const Column = styled(Flex)()
+
+Column.defaultProps = {
+  flexWrap: `wrap`,
+  width: { lg: `50%` },
+  p: { xxs: 6, md: 8 },
+  m: 0,
+}
 
 const CloseButton = styled(Flex)(
   {
@@ -17,8 +29,12 @@ const CloseButton = styled(Flex)(
   },
   props => {
     return {
-      ":focus, :hover": {
-        background: themeGet(`colors.grey.20`)(props),
+      transition: `all ${themeGet(`transition.speed.fast`)} ${themeGet(
+        `transition.curve.default`
+      )}`,
+      ":hover, :focus": {
+        ...focusStyle,
+        color: themeGet(`colors.orange.50`)(props),
       },
     }
   }
@@ -36,96 +52,119 @@ CloseButton.defaultProps = {
   width: 48,
 }
 
+const AADescription = () => (
+  <Text as="p" mb={0}>
+    This text is conforming to AA requirements of the WCGA. This is a score of
+    at least <strong>4.5</strong>, the required contrast score for text sizes
+    below 18pt/~24px @1x.
+  </Text>
+)
+
+const AALargeDescription = () => (
+  <Text as="p" fontSize={5} mb={0}>
+    This text is conforming to <strong>AA Large</strong> — the smallest
+    acceptable amount of contrast for type sizes of 14pt bold/18pt (which
+    roughly translates to ~18.5px bold/24px @1x) and larger. This is a score of
+    at least
+    {` `}
+    <strong>3.0</strong>.
+  </Text>
+)
+
+const AAADescription = () => (
+  <Text as="p" mb={0}>
+    This text is conforming to AAA requirements of WCGA. The contrast score of
+    at least <strong>7.0</strong> qualifies it for long form text.
+  </Text>
+)
+
 // Renders either white or black text samples
-const TextSamples = ({ contrast }) => {
-  const textLabels = [`High Emphasis`, `Medium Emphasis`, `Disabled`]
-  const colorTitle = [`Black`, `White`]
-  const whiteOpacity = [1, 0.6, 0.38]
-  const blackOpacity = [0.87, 0.6, 0.38]
-
+const TextSamples = ({ contrast, bg, colorName }) => {
   const inverted = contrast.blackOnColor < contrast.whiteOnColor
-
-  const colors = inverted
-    ? [`whiteFade.80`, `whiteFade.70`, `whiteFade.60`]
-    : [`blackFade.80`, `blackFade.70`, `blackFade.60`]
+  const colors = inverted ? theme.colors.whiteFade : theme.colors.blackFade
 
   return (
-    <Box pt={3}>
-      {colors.map((color, i) => (
-        <Text key={`text-sample-${i}`} pb={3} color={color}>
-          {textLabels[i]} / {colorTitle[+inverted]}
-          {` `}
-          {(inverted ? blackOpacity[i] : whiteOpacity[i]) * 100}%
-        </Text>
-      ))}
-    </Box>
+    <>
+      {Object.keys(colors).map((color, i) => {
+        const a11yInfo = a11y(colors[color], bg)
+        const a11yLabel = getA11yLabel(a11yInfo, true)
+        if (a11yLabel !== `×`) {
+          return (
+            <Box key={`text-sample-${colorName}-${color}-${i}`}>
+              <Text color={colors[color]}>
+                <code
+                  css={{
+                    ":before, :after": { display: `none` },
+                    background: `none`,
+                  }}
+                >
+                  {inverted ? `white` : `black`}Fade[{color}]
+                </code>
+                {` `}
+                {parseFloat(Math.round(a11yInfo.contrast * 100) / 100).toFixed(
+                  2
+                )}
+                {` `}/ {a11yLabel}
+              </Text>
+            </Box>
+          )
+        } else {
+          return false
+        }
+      })}
+    </>
   )
 }
 
-const colores = (palette, color) => {
+const modalContent = (palette, color) => {
   let colors = []
 
   Object.keys(palette[color].colors)
     .sort((a, b) => b - a)
-    .forEach((foo, index) => {
-      const c = palette[color].colors[foo]
+    .forEach((colorNumber, index) => {
+      const c = palette[color].colors[colorNumber]
+      const textColor = getTextColor(c.contrast)
 
       colors.push(
         <Box width="100%" display={{ lg: `flex` }} key={`palette-${index}`}>
-          <Flex
-            bg={c.hex}
-            p={7}
-            flexWrap="wrap"
-            color={getTextColor(c.contrast)}
-            width={{ lg: `50%` }}
-          >
-            <span>
-              {9 - index}0 {c.name && c.name}
-            </span>
-            <span css={{ marginLeft: `auto` }}>{c.hex}</span>
-            <Box width="100%" flexShrink={0}>
-              <TextSamples contrast={c.contrast} />
-            </Box>
-          </Flex>
-          <Flex
-            bg="white"
-            p={7}
-            flexWrap="wrap"
-            color={c.hex}
-            width={{ lg: `50%` }}
-          >
-            <Text as="p" fontSize={2} fontFamily="header" fontWeight={1} mr={3}>
-              {9 - index}0 {c.name && c.name}
-              <br />
-              <Text as="span" fontWeight={0}>
-                {c.contrast.colorOnWhite.toFixed(2)} {getAccessibilityLabel(c)}
-              </Text>
+          <Column bg={c.hex} color={textColor}>
+            <Text
+              as="span"
+              fontWeight={1}
+              color={textColor}
+              fontFamily="monospace"
+              mb={4}
+            >
+              colors.{color}[{colorNumber}] {c.name && c.name}
+            </Text>
+            <Text as="span" ml="auto" mr={4} color={textColor}>
+              {c.hex}
+            </Text>
+            <Text as="span" color={textColor}>
+              {c.rgb.red}, {c.rgb.green}, {c.rgb.blue}
             </Text>
             <Box width="100%" flexShrink={0}>
-              {(getAccessibilityLabel(c) === `AA` ||
-                getAccessibilityLabel(c) === `AAA`) && (
-                <p>
-                  This text is conforming to AA
-                  {getAccessibilityLabel(c) === `AAA` && <>A</>} requirements of
-                  WCGA.
-                  {getAccessibilityLabel(c) === `AAA` && (
-                    <>
-                      The contrast score of at least 7.0 qualifies it for long
-                      form text.
-                    </>
-                  )}
-                </p>
-              )}
-              {getAccessibilityLabel(c) === `Large` && (
-                <p css={{ fontSize: 24 }}>
-                  This text is conforming to <strong>AA Large</strong> — the
-                  smallest acceptable amount of contrast for type sizes of 18pt
-                  and larger. This is a score of at least 3.0. Schnitzel foo
-                  bar.
-                </p>
-              )}
+              <TextSamples
+                contrast={c.contrast}
+                bg={c.hex}
+                colorName={palette[color]}
+              />
             </Box>
-          </Flex>
+          </Column>
+          <Column bg="white">
+            <Text as="p" fontFamily="monospace" fontWeight={1} mr={3} mb={4}>
+              colors.{color}[{colorNumber}] {c.name && c.name}
+            </Text>
+            <Text as="span" fontWeight={0} ml="auto">
+              {c.contrast.colorOnWhite.toFixed(2)} /{` `}
+              {getA11yLabel(c.a11y)}
+            </Text>
+            <Box width="100%" flexShrink={0} css={{ "& p": { color: c.hex } }}>
+              {getA11yLabel(c.a11y) === `AA` && <AADescription />}
+              {getA11yLabel(c.a11y) === `AAA` && <AAADescription />}
+              {getA11yLabel(c.a11y) === `AA Large` && <AALargeDescription />}
+            </Box>
+          </Column>
         </Box>
       )
     })
@@ -138,18 +177,13 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
 
   return (
     <>
-      <Flex alignItems="baseline" p={7}>
-        <Heading
-          css={{
-            marginRight: 10,
-            marginTop: 0,
-          }}
-        >
+      <Flex alignItems="baseline" p={{ xxs: 6, md: 8 }}>
+        <Heading mr={4} mt={0}>
           {palette[color].name}
         </Heading>
         <CloseButton onClick={handleModalClose}>&times;</CloseButton>
       </Flex>
-      <Box p={7} bg={base.hex}>
+      <Box p={{ xxs: 6, md: 8 }} bg={base.hex}>
         <Heading
           as="h2"
           m={0}
@@ -159,7 +193,7 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
           Base {palette[color].base} {base.name && <span> — {base.name}</span>}
         </Heading>
       </Box>
-      {colores(palette, color).map(color => color)}
+      {modalContent(palette, color).map(color => color)}
     </>
   )
 }

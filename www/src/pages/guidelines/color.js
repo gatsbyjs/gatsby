@@ -98,7 +98,13 @@ class Color extends React.Component {
                 </Flex>
 
                 <Box>
-                  <Text as="h4" color="grey.50" mb={0} fontWeight={0}>
+                  <Text
+                    as="h4"
+                    color="grey.50"
+                    mb={0}
+                    mt={{ xxs: 8, lg: 0 }}
+                    fontWeight={0}
+                  >
                     WCGA Contrast Score
                   </Text>
                   <Flex as="ul" m={0} p={0} css={{ listStyle: `none` }}>

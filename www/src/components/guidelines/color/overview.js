@@ -6,10 +6,7 @@ import { SectionHeading, SectionSubheading } from "../typography"
 
 import Swatch from "./swatch"
 
-import {
-  getAccessibilityLabel,
-  getTextColor,
-} from "../../../utils/guidelines/color"
+import { getA11yLabel, getTextColor } from "../../../utils/guidelines/color"
 import { copyColumnGutter, CopyColumn } from "../containers"
 import palette from "../../../utils/guidelines/extend-palette-info"
 import { Box, Flex } from "../system"
@@ -48,7 +45,7 @@ const colores = node => {
           key={`${index}-${c.hex}`}
           color={c}
           contrast={c.contrast}
-          accessibilityLabel={getAccessibilityLabel(c, true)}
+          a11yLabel={getA11yLabel(c.a11y, true)}
           textColor={getTextColor(c.contrast)}
           name={c.name}
           isBase={c.base}
@@ -143,29 +140,29 @@ const Overview = ({ handler }) => (
       borderColor="ui.border.subtle"
     >
       <SectionHeading width={{ lg: `12rem` }}>Primary</SectionHeading>
-      <div>
+      <Box>
         <Palette color="purple" handler={handler} />
         <Palette color="orange" handler={handler} />
-      </div>
+      </Box>
     </Box>
     <Box display={{ lg: `flex` }}>
       <SectionHeading width={{ lg: `12rem` }}>Secondary</SectionHeading>
-      <div>
+      <Box>
         <Palette color="magenta" handler={handler} />
         <Palette color="blue" handler={handler} />
         <Palette color="teal" handler={handler} />
         <Palette color="yellow" handler={handler} />
         <Palette color="red" handler={handler} />
         <Palette color="green" handler={handler} />
-      </div>
+      </Box>
     </Box>
     <Box display={{ lg: `flex` }}>
       <SectionHeading width={{ lg: `12rem` }}>Neutral</SectionHeading>
-      <div>
+      <Box>
         <Palette color="grey" handler={handler} />
         {/* <Palette color="blackFade" handler={handler} />
         <Palette color="whiteFade" handler={handler} /> */}
-      </div>
+      </Box>
     </Box>
   </>
 )

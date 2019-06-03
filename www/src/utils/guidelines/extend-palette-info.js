@@ -1,5 +1,4 @@
 import { capitalize } from "lodash-es"
-import Color from "color"
 
 import { colorable } from "../../utils/guidelines/color"
 import theme from "../../utils/guidelines/theme"
@@ -20,32 +19,27 @@ const meta = {
         },
       },
       50: { name: `Lilac` },
+      20: { name: `Lavender` },
     },
   },
   orange: {
     base: 50,
     meta: {
-      50: { name: `Mustard` },
+      50: { name: `Accent` },
     },
   },
   magenta: { base: 50 },
   red: {
     base: 50,
     meta: {
-      40: { name: `Warning` },
+      70: { name: `Warning` },
     },
   },
   green: {
     base: 50,
-    meta: {
-      50: { name: `Success` },
-    },
   },
   yellow: {
     base: 40,
-    meta: {
-      40: { name: `Lemon` },
-    },
   },
   blue: {
     base: 50,
@@ -85,20 +79,17 @@ for (var color in theme.colors) {
   if (m && typeof theme.colors[color] === `object` && color !== `ui`) {
     Object.keys(theme.colors[color])
       .sort((a, b) => a - b)
-      .forEach(foo => {
-        c[foo] = {
-          hex: theme.colors[color][foo],
-          ...colorable(theme.colors[color][foo]),
-          ...(m.base && m.base === foo && { base: true }),
+      .forEach(shade => {
+        c[shade] = {
+          hex: theme.colors[color][shade],
+          ...colorable(theme.colors[color][shade]),
+          ...(m.base && m.base === shade && { base: true }),
           ...(m.meta &&
-            m.meta[foo] && {
-              name: m.meta[foo].name,
-              pms: m.meta[foo].pms,
-              cmyk: m.meta[foo].cmyk,
+            m.meta[shade] && {
+              name: m.meta[shade].name,
+              pms: m.meta[shade].pms,
+              cmyk: m.meta[shade].cmyk,
             }),
-          rgb: Color(theme.colors[color][foo])
-            .rgb()
-            .object(),
         }
       })
 
@@ -119,9 +110,6 @@ for (var color in theme.colors) {
             pms: m.meta.pms,
             cmyk: m.meta.cmyk,
           }),
-        rgb: Color(theme.colors[color])
-          .rgb()
-          .object(),
       },
     }
   }

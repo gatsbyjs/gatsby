@@ -1,52 +1,96 @@
-import Color from "color"
+import { rgb as wcag } from "wcag-contrast"
+import hexRgb from "hex-rgb"
+import { normal } from "color-blend"
 
 import theme from "./theme"
 
 // adapted from https://github.com/jxnblk/colorable 🙏
-var minimums = {
+const minimums = {
   aa: 4.5,
   aaLarge: 3,
   aaa: 7,
   aaaLarge: 4.5,
 }
 
+const rgbArray = color => {
+  const pars = color.indexOf(`,`)
+  const repars = color.indexOf(`,`, pars + 1)
+
+  return [
+    parseInt(color.substr(5, pars)),
+    parseInt(color.substr(pars + 1, repars)),
+    parseInt(
+      color.substr(color.indexOf(`,`, pars + 1) + 1, color.indexOf(`,`, repars))
+    ),
+    parseFloat(
+      color.substr(color.indexOf(`,`, repars + 1) + 1, color.indexOf(`)`))
+    ),
+  ]
+}
+
+const colorToHex = color =>
+  color.startsWith(`rgba(`)
+    ? rgbArray(color)
+    : hexRgb(color, { format: `array` })
+
+export const a11y = function(hex, bg) {
+  const text = colorToHex(hex)
+  const background = colorToHex(bg)
+
+  const overlaid = normal(
+    {
+      r: background[0],
+      g: background[1],
+      b: background[2],
+      a: background[3],
+    },
+    { r: text[0], g: text[1], b: text[2], a: text[3] }
+  )
+
+  const contrast = wcag(
+    [overlaid.r, overlaid.g, overlaid.b],
+    [background[0], background[1], background[2]]
+  )
+
+  return {
+    contrast: contrast,
+    aa: contrast >= minimums.aa,
+    aaLarge: contrast >= minimums.aaLarge,
+    aaa: contrast >= minimums.aaa,
+    aaaLarge: contrast >= minimums.aaaLarge,
+  }
+}
+
 export const colorable = function(hex) {
   let result = {}
 
-  const color = Color(hex)
-  const white = Color(theme.colors.white)
-  const black = Color(theme.colors.black)
+  result.hex = hex
+  result.rgb = hexRgb(hex)
+  const rgbArray = [result.rgb.red, result.rgb.green, result.rgb.blue]
 
-  result.hex = color.hex()
   result.contrast = {
-    colorOnWhite: color.contrast(white),
-    whiteOnColor: white.contrast(color),
-    blackOnColor: black.contrast(color),
+    colorOnWhite: wcag(rgbArray, [255, 255, 255]),
+    whiteOnColor: wcag([255, 255, 255], rgbArray),
+    blackOnColor: wcag([0, 0, 0], rgbArray),
   }
-  result.accessibility = {
-    aa: result.contrast.colorOnWhite >= minimums.aa,
-    aaLarge: result.contrast.colorOnWhite >= minimums.aaLarge,
-    aaa: result.contrast.colorOnWhite >= minimums.aaa,
-    aaaLarge: result.contrast.colorOnWhite >= minimums.aaaLarge,
+
+  result.a11y = {
+    ...a11y(hex, theme.colors.white),
   }
 
   return result
 }
 
-export const getAccessibilityLabel = (color, compact) => {
+export const getA11yLabel = (color, compact) => {
   let label = compact ? `×` : `Fail`
 
-  if (
-    color.accessibility.aaa ||
-    color.accessibility.aa ||
-    color.accessibility.aaLarge
-  ) {
-    if (color.accessibility.aaa) {
+  if (color.aaa || color.aa || color.aaLarge) {
+    if (color.aaa) {
       label = compact ? `3` : `AAA`
-    } else if (color.accessibility.aa) {
+    } else if (color.aa) {
       label = compact ? `2` : `AA`
-    } else if (color.accessibility.aaLarge) {
-      label = compact ? `2+` : `Large`
+    } else if (color.aaLarge) {
+      label = compact ? `2+` : `AA Large`
     }
   }
 

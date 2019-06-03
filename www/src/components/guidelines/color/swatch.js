@@ -28,7 +28,7 @@ export default class Swatch extends React.Component {
   }
 
   render() {
-    const { accessibilityLabel, color, swatchStyle, textColor } = this.props
+    const { a11yLabel, color, swatchStyle, textColor } = this.props
 
     return (
       <Box
@@ -40,7 +40,7 @@ export default class Swatch extends React.Component {
           },
         }}
       >
-        {accessibilityLabel !== `×` && (
+        {a11yLabel !== `×` && (
           <Box
             color={textColor}
             fontSize={0}
@@ -53,7 +53,7 @@ export default class Swatch extends React.Component {
               top: `auto`,
             }}
           >
-            {accessibilityLabel}
+            {a11yLabel}
           </Box>
         )}
 

@@ -586,7 +586,7 @@ const DesignTokens = ({ location }) => (
                   if (typeof theme.colors[color] === `object`) {
                     return Object.keys(theme.colors[color]).map((range, i) => (
                       <ColorExample
-                        key={`tokens-colors-foo-${i}`}
+                        key={`tokens-colors-${color}-${i}`}
                         hex={
                           typeof theme.colors[color][range] !== `object` &&
                           theme.colors[color][range]
@@ -597,7 +597,7 @@ const DesignTokens = ({ location }) => (
                   } else if (typeof color === `string`) {
                     return (
                       <ColorExample
-                        key={`tokens-colors-${i}`}
+                        key={`tokens-colors-${color}-${i}`}
                         hex={theme.colors[color]}
                         token={`colors.${color}`}
                       />

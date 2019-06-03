@@ -73,7 +73,7 @@ const ColorSwatch = ({ color, ...rest }) => {
         <ColorValue
           label="RGB"
           inverted={inverted}
-          value={`${color.rgb.r} ${color.rgb.g} ${color.rgb.b} `}
+          value={`${color.rgb.red} ${color.rgb.green} ${color.rgb.blue} `}
         />
         {color.pms && (
           <ColorValue

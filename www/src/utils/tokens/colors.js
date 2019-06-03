@@ -111,10 +111,7 @@ const palette = {
   black: `#000000`,
 }
 
-// @todo these do not correspond to either grey or black palette colors
-const whiteOpacity = [1, 0.6, 0.38]
-const blackOpacity = [0.87, 0.6, 0.38, 0.1]
-const blackRGB = `27, 31, 35`
+const blackRGB = `35, 33, 41` // grey.90
 const whiteRGB = `255, 255, 255`
 
 export default {
@@ -128,15 +125,20 @@ export default {
   warning: palette.red[70],
   // semi-transparent colors
   blackFade: {
-    80: `rgba(${blackRGB}, ${blackOpacity[0]})`,
-    70: `rgba(${blackRGB}, ${blackOpacity[1]})`,
-    60: `rgba(${blackRGB}, ${blackOpacity[2]})`,
-    10: `rgba(${blackRGB}, ${blackOpacity[3]})`,
+    80: `rgba(${blackRGB}, 0.85)`,
+    70: `rgba(${blackRGB}, 0.7)`,
+    60: `rgba(${blackRGB}, 0.6)`,
+    50: `rgba(${blackRGB}, 0.5)`,
+    30: `rgba(${blackRGB}, 0.3)`,
+    10: `rgba(${blackRGB}, 0.1)`,
   },
   whiteFade: {
-    80: `rgba(${whiteRGB}, ${whiteOpacity[0]})`,
-    70: `rgba(${whiteRGB}, ${whiteOpacity[1]})`,
-    60: `rgba(${whiteRGB}, ${whiteOpacity[2]})`,
+    80: `rgba(${whiteRGB}, 0.85)`,
+    70: `rgba(${whiteRGB}, 0.7)`,
+    60: `rgba(${whiteRGB}, 0.6)`,
+    50: `rgba(${whiteRGB}, 0.5)`,
+    30: `rgba(${whiteRGB}, 0.3)`,
+    10: `rgba(${whiteRGB}, 0.1)`,
   },
   // role-based tokens
   // this is merely a humble start, lots to do here
