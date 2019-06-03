@@ -37,6 +37,9 @@ export const a11y = function(hex, bg) {
   const text = colorToHex(hex)
   const background = colorToHex(bg)
 
+  // not 100% sure how well this works — values are slightly different
+  // than what https://contrast-ratio.com/ produces when the text
+  // color is an rgba value; contrast ratios for solid colors seem fine
   const overlaid = normal(
     {
       r: background[0],

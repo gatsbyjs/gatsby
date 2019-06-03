@@ -83,8 +83,9 @@ class Color extends React.Component {
             <CopyColumn sticky={false}>
               <Text as="p" mb={0}>
                 Our color palette includes primary and secondary colors that can
-                be used for interfaces as well as illustrations.{` `}
-                <em>Click the color names for detailed information.</em>
+                be used for interfaces as well as illustrations.
+                <br />
+                <strong>Click the color names for detailed information.</strong>
               </Text>
             </CopyColumn>
             <ContentColumn alignSelf="flex-end">
@@ -105,7 +106,7 @@ class Color extends React.Component {
                     mt={{ xxs: 8, lg: 0 }}
                     fontWeight={0}
                   >
-                    WCGA Contrast Score
+                    WCAG Contrast Score
                   </Text>
                   <Flex as="ul" m={0} p={0} css={{ listStyle: `none` }}>
                     <Text as="li" mr={4} mb={0}>

@@ -54,7 +54,7 @@ CloseButton.defaultProps = {
 
 const AADescription = () => (
   <Text as="p" mb={0}>
-    This text is conforming to AA requirements of the WCGA. This is a score of
+    This text is conforming to AA requirements of the WCAG. This is a score of
     at least <strong>4.5</strong>, the required contrast score for text sizes
     below 18pt/~24px @1x.
   </Text>
@@ -73,7 +73,7 @@ const AALargeDescription = () => (
 
 const AAADescription = () => (
   <Text as="p" mb={0}>
-    This text is conforming to AAA requirements of WCGA. The contrast score of
+    This text is conforming to AAA requirements of WCAG. The contrast score of
     at least <strong>7.0</strong> qualifies it for long form text.
   </Text>
 )
@@ -87,25 +87,37 @@ const TextSamples = ({ contrast, bg, colorName }) => {
     <>
       {Object.keys(colors).map((color, i) => {
         const a11yInfo = a11y(colors[color], bg)
-        const a11yLabel = getA11yLabel(a11yInfo, true)
-        if (a11yLabel !== `×`) {
+        const a11yLabel = getA11yLabel(a11yInfo)
+        if (a11yLabel !== `Fail`) {
           return (
             <Box key={`text-sample-${colorName}-${color}-${i}`}>
-              <Text color={colors[color]}>
-                <code
+              <Flex color={colors[color]}>
+                <Text
+                  as="code"
+                  color={colors[color]}
+                  mr={4}
                   css={{
                     ":before, :after": { display: `none` },
                     background: `none`,
                   }}
                 >
                   {inverted ? `white` : `black`}Fade[{color}]
-                </code>
+                </Text>
                 {` `}
-                {parseFloat(Math.round(a11yInfo.contrast * 100) / 100).toFixed(
-                  2
-                )}
-                {` `}/ {a11yLabel}
-              </Text>
+                <Flex>
+                  <Text
+                    color={colors[color]}
+                    mr={4}
+                    textAlign="right"
+                    width="40px"
+                  >
+                    {parseFloat(
+                      Math.round(a11yInfo.contrast * 100) / 100
+                    ).toFixed(2)}
+                  </Text>
+                  {a11yLabel}
+                </Flex>
+              </Flex>
             </Box>
           )
         } else {
