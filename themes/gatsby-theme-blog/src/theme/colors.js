@@ -1,19 +1,19 @@
-const teal = `#66b9bf`
-const darkTeal = `#078092`
-const darkBlue = `#282c35`
-const darkGray = `#222`
-const almostBlack = `#1a1a1a`
+const gatsby = `#663399`
+const gatsbyDarker = `#362066`
+const gatsbyBright = `#D9BAE8`
+const gray = `#48434F`
+const darkGray = `#232129`
+const almostBlack = `#1B1F23`
 const white = `#fff`
-const lightWhite = `rgba(255, 255, 255, 0.88)`
+const lightWhite = `rgba(255, 255, 255, 0.86)`
 const opaqueLightYellow = `rgba(255, 229, 100, 0.2)`
 const opaqueLightWhite = `hsla(0, 0%, 100%, 0.2)`
 const lightGray = `hsla(0, 0%, 0%, 0.2)`
-const slateBlue = `hsl(222, 14%, 25%)`
 
 export default {
   text: darkGray,
   background: white,
-  primary: darkTeal,
+  primary: gatsby,
   secondary: almostBlack,
   muted: lightGray,
   highlight: opaqueLightYellow,
@@ -36,11 +36,11 @@ export default {
   modes: {
     dark: {
       text: lightWhite,
-      background: darkBlue,
-      primary: teal,
+      background: gatsbyDarker,
+      primary: gatsbyBright,
       secondary: lightWhite,
       muted: opaqueLightWhite,
-      highlight: slateBlue,
+      highlight: gray,
       heading: white,
     },
   },
