@@ -25,7 +25,6 @@ export default {
     // "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code"
     fontSize: `inherit`,
   },
-  // todo: prism seems to break MDX inlineCode
   inlineCode: {
     borderRadius: `0.3em`,
     color: `secondary`,

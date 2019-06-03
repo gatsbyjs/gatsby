@@ -85,7 +85,12 @@ module.exports = {
           { resolve: `gatsby-remark-numbered-footnotes` },
           { resolve: `gatsby-remark-smartypants` },
           { resolve: `gatsby-remark-code-titles` },
-          { resolve: `gatsby-remark-prismjs` },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              noInlineHighlight: true,
+            },
+          },
         ],
       },
     },
