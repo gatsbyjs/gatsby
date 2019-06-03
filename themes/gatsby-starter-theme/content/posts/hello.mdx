@@ -4,9 +4,9 @@ date: 2019-04-15
 author: jay
 ---
 
-Hello, world! This is a demo post for `gatsby-theme-blog-mdx`.
+Hello, world! This is a demo post for `gatsby-theme-blog`.
 
-```jsx:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   __experimentalThemes: [
     'gatsby-theme-blog', // highlight-line
@@ -14,3 +14,19 @@ module.exports = {
   ]
 }
 ```
+
+This is another paragraph after the code block.
+
+## This is a secondary heading
+
+```jsx
+import React from 'react'
+import { ThemeProvider } from 'theme-ui'
+import theme from './theme'
+
+export default props =>
+  <ThemeProvider theme={theme}>
+    {props.children}
+  </ThemeProvider>
+```
+

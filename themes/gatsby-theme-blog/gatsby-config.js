@@ -1,5 +1,3 @@
-const pkg = require(`./package.json`)
-
 module.exports = {
   siteMetadata: {
     title: `My Blog Title`,
@@ -11,16 +9,6 @@ module.exports = {
     },
   },
   plugins: [
-    /*
-     * We need to make sure that Webpack processes this theme as ES6, so we add
-     * this plugin and specify the package name in `modules`.
-     */
-    {
-      resolve: `gatsby-plugin-compile-es6-packages`,
-      options: {
-        modules: [pkg.name],
-      },
-    },
     /*
      * User override content
      */
@@ -97,7 +85,12 @@ module.exports = {
           { resolve: `gatsby-remark-numbered-footnotes` },
           { resolve: `gatsby-remark-smartypants` },
           { resolve: `gatsby-remark-code-titles` },
-          { resolve: `gatsby-remark-prismjs` },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              noInlineHighlight: true,
+            },
+          },
         ],
       },
     },
@@ -121,26 +114,12 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: require.resolve(`./src/utils/typography`),
-      },
-    },
     `gatsby-plugin-twitter`,
     `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
         path: `${__dirname}/src/pages`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-use-dark-mode`,
-      options: {
-        classNameDark: `dark`,
-        classNameLight: `light`,
-        storageKey: `theme`,
       },
     },
   ],

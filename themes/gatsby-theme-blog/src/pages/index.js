@@ -1,11 +1,11 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import { Styled, css } from "theme-ui"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Footer from "../components/footer"
-import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {
@@ -24,17 +24,23 @@ class BlogIndex extends React.Component {
           const title = node.frontmatter.title || node.fields.slug
           return (
             <div key={node.fields.slug}>
-              <h2
-                style={{
-                  marginBottom: rhythm(1 / 4),
-                }}
+              <Styled.h2
+                css={css({
+                  mb: 1,
+                })}
               >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                <Styled.a
+                  as={Link}
+                  css={{
+                    textDecoration: `none`,
+                  }}
+                  to={node.fields.slug}
+                >
                   {title}
-                </Link>
-              </h2>
+                </Styled.a>
+              </Styled.h2>
               <small>{node.frontmatter.date}</small>
-              <p>{node.excerpt}</p>
+              <Styled.p>{node.excerpt}</Styled.p>
             </div>
           )
         })}

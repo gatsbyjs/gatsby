@@ -1,32 +1,31 @@
 import React from "react"
-
-import { rhythm } from "../utils/typography"
+import { css, Styled } from "theme-ui"
 
 class Footer extends React.Component {
   render() {
     return (
       <footer
-        style={{
-          marginTop: rhythm(2.5),
-          paddingTop: rhythm(1),
-        }}
+        css={css({
+          mt: 4,
+          pt: 3,
+        })}
       >
-        <a
+        <Styled.a
           href="https://twitter.com/amber1ey"
           target="_blank"
           rel="noopener noreferrer"
         >
           twitter
-        </a>
+        </Styled.a>
         {` `}
         &bull;{` `}
-        <a
+        <Styled.a
           href="https://github.com/amberleyromo"
           target="_blank"
           rel="noopener noreferrer"
         >
           github
-        </a>
+        </Styled.a>
         {` `}
       </footer>
     )

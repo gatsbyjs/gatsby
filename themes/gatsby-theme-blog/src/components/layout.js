@@ -1,130 +1,124 @@
 import React from "react"
 import { Link } from "gatsby"
+import { Global } from "@emotion/core"
+import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
 import Toggle from "./toggle"
-// import Helmet from "react-helmet";
-import ThemeContext from "../context/theme-context"
 
-import { rhythm, scale } from "../utils/typography"
 import sun from "../../content/assets/sun.png"
 import moon from "../../content/assets/moon.png"
 
-const renderHeader = props => {
+const Title = props => {
   const { location, title } = props
   const rootPath = `${__PATH_PREFIX__}/`
 
   if (location.pathname === rootPath) {
     return (
-      <h1
-        style={{
-          ...scale(0.75),
-          marginBottom: 0,
-          marginTop: 0,
-        }}
+      <Styled.h1
+        css={css({
+          my: 0,
+          fontSize: 4,
+        })}
       >
-        <Link
-          style={{
+        <Styled.a
+          as={Link}
+          css={{
+            color: `inherit`,
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `var(--textTitle)`,
           }}
           to={`/`}
         >
           {title}
-        </Link>
-      </h1>
+        </Styled.a>
+      </Styled.h1>
     )
   } else {
     return (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-          marginBottom: 0,
-          height: 42, // because
-          lineHeight: `2.625rem`,
-        }}
+      <Styled.h3
+        css={css({
+          my: 0,
+        })}
       >
-        <Link
-          style={{
+        <Styled.a
+          as={Link}
+          css={css({
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `rgb(102, 185, 191)`,
-          }}
+            color: `primary`,
+          })}
           to={`/`}
         >
           {title}
-        </Link>
-      </h3>
+        </Styled.a>
+      </Styled.h3>
     )
   }
 }
 
-const Layout = props => {
+export default props => {
   const { children } = props
+  const [colorMode, setColorMode] = useColorMode()
+  const isDark = colorMode === `dark`
+  const toggleColorMode = e => {
+    setColorMode(isDark ? `light` : `dark`)
+  }
 
   return (
-    <ThemeContext.Consumer>
-      {theme => (
-        <div
-          style={{
-            color: `var(--textNormal)`,
-            background: `var(--bg)`,
-            transition: `color 0.2s ease-out, background 0.2s ease-out`,
-            minHeight: `100vh`,
-          }}
+    <Styled.root>
+      <Layout>
+        <Global
+          styles={theme =>
+            css({
+              body: {
+                color: `text`,
+                bg: `background`,
+              },
+            })(theme)
+          }
+        />
+        <Container
+          css={css({
+            py: 4,
+          })}
         >
-          <div
-            style={{
-              marginLeft: `auto`,
-              marginRight: `auto`,
-              maxWidth: rhythm(24),
-              padding: `2.625rem ${rhythm(3 / 4)}`,
-            }}
+          <Header
+            css={css({
+              justifyContent: `space-between`,
+              alignItems: `center`,
+              mb: 4,
+            })}
           >
-            <header
-              style={{
-                display: `flex`,
-                justifyContent: `space-between`,
-                alignItems: `center`,
-                marginBottom: `2.625rem`,
+            <Title {...props} />
+            <Toggle
+              icons={{
+                checked: (
+                  <img
+                    alt="moon indicating dark mode"
+                    src={moon}
+                    width="16"
+                    height="16"
+                    role="presentation"
+                    css={{ pointerEvents: `none` }}
+                  />
+                ),
+                unchecked: (
+                  <img
+                    alt="sun indicating light mode"
+                    src={sun}
+                    width="16"
+                    height="16"
+                    role="presentation"
+                    css={{ pointerEvents: `none` }}
+                  />
+                ),
               }}
-            >
-              {renderHeader(props)}
-              <Toggle
-                icons={{
-                  checked: (
-                    <img
-                      alt="moon indicating dark mode"
-                      src={moon}
-                      width="16"
-                      height="16"
-                      role="presentation"
-                      style={{ pointerEvents: `none` }}
-                    />
-                  ),
-                  unchecked: (
-                    <img
-                      alt="sun indicating light mode"
-                      src={sun}
-                      width="16"
-                      height="16"
-                      role="presentation"
-                      style={{ pointerEvents: `none` }}
-                    />
-                  ),
-                }}
-                checked={theme.isDark}
-                onChange={e => {
-                  theme.toggleDark()
-                }}
-              />
-            </header>
-            {children}
-          </div>
-        </div>
-      )}
-    </ThemeContext.Consumer>
+              checked={isDark}
+              onChange={toggleColorMode}
+            />
+          </Header>
+          {children}
+        </Container>
+      </Layout>
+    </Styled.root>
   )
 }
-
-export default Layout
