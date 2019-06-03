@@ -62,8 +62,6 @@ module.exports = {
           { resolve: `gatsby-remark-copy-linked-files` },
           { resolve: `gatsby-remark-numbered-footnotes` },
           { resolve: `gatsby-remark-smartypants` },
-          // todo: needs styles
-          { resolve: `gatsby-remark-autolink-headers` },
           { resolve: `gatsby-remark-code-titles` },
           {
             resolve: `gatsby-remark-prismjs`,
@@ -72,22 +70,24 @@ module.exports = {
             },
           },
         ],
+        remarkPlugins: [
+          require(`remark-slug`),
+          [
+            require(`remark-autolink-headings`),
+            {
+              content: {
+                type: `element`,
+                // custom MDX element - is this too magical??
+                tagName: `link-icon`,
+                propertis: {
+                  className: `link-icon`,
+                },
+              },
+            },
+          ],
+        ],
       },
     },
-    {
-      // should this be included in the theme?
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: require.resolve(`./content/assets/gatsby-icon.png`),
-      },
-    },
-    `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-twitter`,
     {

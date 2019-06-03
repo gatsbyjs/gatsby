@@ -1,5 +1,18 @@
 import prism from "./prism"
 
+const heading = {
+  // for remark-autolink-headings
+  a: {
+    display: `inline-block`,
+    ml: `-20px`,
+    pr: `4px`,
+    visibility: `hidden`,
+  },
+  ":hover a": {
+    visibility: `visible`,
+  },
+}
+
 export default {
   root: {
     fontFamily: `body`,
@@ -68,5 +81,23 @@ export default {
     "&.translation": {
       fontSize: `1em`,
     },
+  },
+  h2: {
+    ...heading,
+  },
+  h3: {
+    ...heading,
+  },
+  h4: {
+    ...heading,
+  },
+  h5: {
+    ...heading,
+  },
+  h6: {
+    ...heading,
+  },
+  "link-icon": {
+    color: `primary`,
   },
 }
