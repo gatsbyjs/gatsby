@@ -2,6 +2,13 @@ import React from "react"
 import { css } from "@emotion/core"
 import GatsbyLogo from "../../monogram.svg"
 
+const displayDate = date =>
+  date.toLocaleDateString(`en-US`, {
+    year: `numeric`,
+    month: `long`,
+    day: `numeric`,
+  })
+
 const Event = ({
   name,
   organizer_fname,
@@ -32,7 +39,7 @@ const Event = ({
         />
       )}
       <strong>{url ? <a href={url}>{name}</a> : name}</strong> —{` `}
-      {date}
+      {displayDate(date)}
       {` `}({location})
     </p>
     <p>

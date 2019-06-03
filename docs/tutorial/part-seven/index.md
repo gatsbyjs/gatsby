@@ -136,7 +136,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 ```
 
-Restart the development server and open or refresh Graph_i_QL. Then run this
+Restart the development server and open or refresh GraphiQL. Then run this
 GraphQL query to see your new slugs.
 
 ```graphql

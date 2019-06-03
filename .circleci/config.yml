@@ -133,7 +133,7 @@ jobs:
   unit_tests_node12:
     executor:
       name: node
-      image: "latest"
+      image: "12"
     <<: *test_template
 
   unit_tests_www:

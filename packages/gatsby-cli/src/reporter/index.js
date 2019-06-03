@@ -5,19 +5,17 @@ const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const reporterInstance = require(`./reporters/yurnalist`)
+const reporterInstance = require(`./reporters`)
 
 const errorFormatter = getErrorFormatter()
 
-type ActivityArgs = {
-  parentSpan: Object,
-}
+import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
 /**
  * Reporter module.
  * @module reporter
  */
-const reporter = {
+const reporter: Reporter = {
   /**
    * Strip initial indentation template function.
    */
@@ -63,6 +61,7 @@ const reporter = {
       error = message
       message = error.message
     }
+
     reporterInstance.error(message)
     if (error) this.log(errorFormatter.render(error))
   },
@@ -73,18 +72,23 @@ const reporter = {
   uptime(prefix) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
+
   success: reporterInstance.success,
   verbose: reporterInstance.verbose,
   info: reporterInstance.info,
   warn: reporterInstance.warn,
   log: reporterInstance.log,
+
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
-   * @param {activityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {string} The elapsed time of activity.
+   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
+   * @returns {ActivityTracker} The activity tracker.
    */
-  activityTimer(name, activityArgs: ActivityArgs = {}) {
+  activityTimer(
+    name: string,
+    activityArgs: ActivityArgs = {}
+  ): ActivityTracker {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)

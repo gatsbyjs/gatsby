@@ -62,6 +62,8 @@ They will be added to the following default list:
 ../**/dist/**
 ```
 
+To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
+
 ## How to query
 
 You can query file nodes like the following:

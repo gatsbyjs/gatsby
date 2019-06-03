@@ -220,41 +220,40 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
               return
             }
 
-            hookPath.traverse({
-              // Assume the query is inline in the component and extract that.
-              TaggedTemplateExpression(templatePath) {
-                extractStaticQuery(templatePath, true)
-              },
-              // // Also see if it's a variable that's passed in as a prop
-              // // and if it is, go find it.
-              Identifier(identifierPath) {
-                if (
-                  identifierPath.node.name !== `graphql` &&
-                  identifierPath.node.name !== `useStaticQuery`
-                ) {
-                  const varName = identifierPath.node.name
-                  let found = false
-                  traverse(ast, {
-                    VariableDeclarator(varPath) {
-                      if (
-                        varPath.node.id.name === varName &&
-                        varPath.node.init.type === `TaggedTemplateExpression`
-                      ) {
-                        varPath.traverse({
-                          TaggedTemplateExpression(templatePath) {
-                            found = true
-                            extractStaticQuery(templatePath, true)
-                          },
-                        })
-                      }
-                    },
-                  })
-                  if (!found) {
-                    warnForUnknownQueryVariable(varName, file, `useStaticQuery`)
-                  }
+            const firstArg = hookPath.get(`arguments`)[0]
+
+            // Assume the query is inline in the component and extract that.
+            if (firstArg.isTaggedTemplateExpression()) {
+              extractStaticQuery(firstArg, true)
+              // Also see if it's a variable that's passed in as a prop
+              // and if it is, go find it.
+            } else if (firstArg.isIdentifier()) {
+              if (
+                firstArg.node.name !== `graphql` &&
+                firstArg.node.name !== `useStaticQuery`
+              ) {
+                const varName = firstArg.node.name
+                let found = false
+                traverse(ast, {
+                  VariableDeclarator(varPath) {
+                    if (
+                      varPath.node.id.name === varName &&
+                      varPath.node.init.type === `TaggedTemplateExpression`
+                    ) {
+                      varPath.traverse({
+                        TaggedTemplateExpression(templatePath) {
+                          found = true
+                          extractStaticQuery(templatePath, true)
+                        },
+                      })
+                    }
+                  },
+                })
+                if (!found) {
+                  warnForUnknownQueryVariable(varName, file, `useStaticQuery`)
                 }
-              },
-            })
+              }
+            }
           },
         })
 

@@ -22,7 +22,7 @@ _Note: this guide uses the Gatsby Hello World starter to provide a very basic un
 Netlify CMS can work with your Gatsby site. If you get stuck, compare your code to the [example
 project](https://github.com/erquhart/gatsby-netlify-cms-example). If you'd like to start with a full
 blown template, check out
-[gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms)._
+[gatsby-starter-netlify-cms][1]._
 
 ### Setup
 
@@ -37,7 +37,7 @@ gatsby new netlify-cms-tutorial https://github.com/gatsbyjs/gatsby-starter-hello
 Now move into the newly created directory and install the Gatsby plugin for Netlify CMS:
 
 ```shell
-cd netlify-cms-tutorial && npm install --save netlify-cms gatsby-plugin-netlify-cms
+cd netlify-cms-tutorial && npm install --save netlify-cms-app gatsby-plugin-netlify-cms
 ```
 
 Gatsby plugins are registered in a file called `gatsby-config.js` in the site root. Create that file
@@ -202,5 +202,6 @@ mentioned in the beginning of this guide, if you got stuck, you can compare your
 created by following this guide. You can also reach out to the Netlify CMS community on
 [Gitter](https://gitter.im/netlify/netlifycms). Lastly, if you'd like to move into a more complete
 boilerplate to get going with Gatsby and Netlify CMS, you can clone and deploy the [official Gatsby
-Netlify CMS starter](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to Netlify with [one
-click](https://app.netlify.com/start/deploy?repository=https://github.com/AustinGreen/gatsby-starter-netlify-cms&stack=cms).
+Netlify CMS starter][1] to Netlify with [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/gatsby-starter-netlify-cms&stack=cms) .
+
+[1]: https://github.com/netlify-templates/gatsby-starter-netlify-cms
