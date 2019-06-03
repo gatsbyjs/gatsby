@@ -2761,7 +2761,7 @@
     - SEO
     - Accessibility
   features:
-    - Gastby v2
+    - Gatsby v2
     - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
     - Google Analytics
     - PostCSS support
