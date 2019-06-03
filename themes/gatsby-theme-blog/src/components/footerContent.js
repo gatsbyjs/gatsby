@@ -1,0 +1,23 @@
+import React, { Fragment } from "react"
+import { Styled } from "theme-ui"
+
+export default () => (
+  <Fragment>
+    <Styled.a
+      href="https://twitter.com/gatsbyjs"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      twitter
+    </Styled.a>
+    {` `}
+    &bull;{` `}
+    <Styled.a
+      href="https://github.com/gatsbyjs"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      github
+    </Styled.a>
+  </Fragment>
+)
