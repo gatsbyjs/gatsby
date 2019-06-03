@@ -33,6 +33,6 @@
   "author": "Khaled Garbaya <khaledgarbaya@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^2.0.15"
   }
 }
