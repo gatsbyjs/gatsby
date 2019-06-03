@@ -2818,6 +2818,17 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-personal-starter-blog.netlify.com
+  repo: https://github.com/thomaswangio/gatsby-personal-starter-blog
+  description: Gatsby starter for personal blogs! Blog configured to run at /blog and with Netlify CMS and gatsby-remark-vscode.
+  tags:
+    - Blog
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Netlify CMS
+    - VSCode syntax highlighting
+    - Styled Components
 - url: https://anubhavsrivastava.github.io/gatsby-starter-phantom
   repo: https://github.com/anubhavsrivastava/gatsby-starter-phantom
   description: Single page starter based on the Phantom site template by HTML5 up, with landing, generic and Elements(Component) page
