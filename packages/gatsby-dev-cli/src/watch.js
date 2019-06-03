@@ -1,11 +1,10 @@
 const chokidar = require(`chokidar`)
 const _ = require(`lodash`)
+const del = require(`del`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const {
-  publishPackagesLocallyAndInstall,
-} = require(`./local-npm-registry/verdaccio`)
+const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
 const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
@@ -22,7 +21,11 @@ const quit = () => {
  * non-existant packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
-function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
+function watch(
+  root,
+  packages,
+  { scanOnce, quiet, monoRepoPackages, localPackages }
+) {
   let afterPackageInstallation = false
   let queuedCopies = []
 
@@ -41,9 +44,9 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     })
   }
 
-  const copyPath = (oldPath, newPath, quiet) =>
+  const copyPath = (oldPath, newPath, quiet, packageName) =>
     new Promise((resolve, reject) => {
-      const argObj = { oldPath, newPath, quiet, resolve, reject }
+      const argObj = { oldPath, newPath, quiet, packageName, resolve, reject }
       if (afterPackageInstallation) {
         realCopyPath(argObj)
       } else {
@@ -56,13 +59,49 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     queuedCopies.forEach(argObj => realCopyPath(argObj))
     queuedCopies = []
   }
+
+  const clearJSFilesFromNodeModules = async () => {
+    const packagesToClear = queuedCopies.reduce((acc, { packageName }) => {
+      if (packageName) {
+        acc.add(packageName)
+      }
+      return acc
+    }, new Set())
+
+    await Promise.all(
+      [...packagesToClear].map(async packageToClear => {
+        await del([
+          `node_modules/${packageToClear}/**/*.{js,js.map}`,
+          `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
+        ])
+      })
+    )
+  }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
-  const { seenPackages: allPackagesToWatch, depTree } = traversePackagesDeps({
+  const { seenPackages, depTree } = traversePackagesDeps({
     root,
-    packages,
+    packages: _.uniq(localPackages),
     monoRepoPackages,
   })
+
+  const allPackagesToWatch = packages
+    ? _.intersection(packages, seenPackages)
+    : seenPackages
+
+  let packagesToInstall = []
+
+  const getPackagesToInstall = packages =>
+    packages.forEach(pkg => {
+      if (localPackages.includes(pkg)) {
+        packagesToInstall.push(pkg)
+      }
+      if (depTree[pkg]) {
+        getPackagesToInstall([...depTree[pkg]])
+      }
+    })
+
+  getPackagesToInstall(allPackagesToWatch)
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
@@ -189,13 +228,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
         return
       }
 
-      if (packagesToPublish.has(packageName)) {
-        // we are in middle of publishing to localy registry,
-        // so we don't need to copy files as yarn will handle this
-        return
-      }
-
-      let localCopies = [copyPath(filePath, newPath, quiet)]
+      let localCopies = [copyPath(filePath, newPath, quiet, packageName)]
 
       // If this is from "cache-dir" also copy it into the site's .cache
       if (_.includes(filePath, `cache-dir`)) {
@@ -216,14 +249,13 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
-          const publishAndInstallPromise = publishPackagesLocallyAndInstall({
+          await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
-            packages,
+            localPackages,
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
-          allCopies.push(publishAndInstallPromise)
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]
@@ -233,6 +265,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
           console.log(`Installation complete`)
         }
 
+        await clearJSFilesFromNodeModules()
         runQueuedCopies()
       }
 

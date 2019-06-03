@@ -377,11 +377,11 @@ type Frontmatter {
   reviewers: [AuthorJson] @link(by: "email") # foreign-key relation by custom field
 }
 type AuthorJson implements Node {
-  posts: [MarkdownRemark] @link(by: "frontmatter.author", from: "email") # easy back-ref
+  posts: [MarkdownRemark] @link(by: "frontmatter.author.email", from: "email") # easy back-ref
 }
 ```
 
-You simply provide a `@link` directive on a field and Gatbsy will internally
+You simply provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one we wrote manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
