@@ -367,7 +367,7 @@ module.exports = async ({
   rules.media = () => {
     return {
       use: [loaders.url()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
     }
   }
 

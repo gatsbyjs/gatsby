@@ -11,3 +11,12 @@ action "high-priority-prs" {
     "SLACK_CHANNEL_ID",
   ]
 }
+
+workflow "Site Showcase Validator workflow" {
+  resolves = ["gatsby-site-showcase-validator"]
+  on = "schedule(0 0 * * *)"
+}
+
+action "gatsby-site-showcase-validator" {
+  uses = "./.github/actions/gatsby-site-showcase-validator"
+}

@@ -579,7 +579,7 @@ In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-ap
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
-Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
+Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API:
 We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
