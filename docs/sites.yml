@@ -587,7 +587,6 @@
     - Design
     - Featured
     - Marketing
-    - SEO
     - Portfolio
 - title: Design Systems Weekly
   main_url: "https://designsystems.email/"
@@ -4853,14 +4852,15 @@
   built_by_url: https://www.projectival.de/
   featured: false
 - title: Herman Starikov
-  url: https://hermanya.github.io
-  main_url: https://hermanya.github.io
+  url: https://starikov.dev
+  main_url: https://starikov.dev
   source_url: https://github.com/Hermanya/hermanya.github.io
   description: >
-    (optional)
+    Web Developer specializing in React, Toronto Canada
   categories:
     - Portfolio
     - Web Development
+    - Blog
   built_by: Herman Starikov
   built_by_url: https://github.com/Hermanya
   featured: false
@@ -6205,4 +6205,17 @@
   categories:
     - Marketing
     - Directory
+  featured: false
+- title: Timeline of Terror
+  main_url: https://timelineofterror.org/
+  url: https://timelineofterror.org/
+  source_url: https://github.com/Symbitic/timeline-of-terror
+  description: >
+    Complete guide to the events of September 11, 2001.
+  categories:
+    - Directory
+    - Government
+    - History
+  built_by: Alex Shaw
+  built_by_url: https://github.com/Symbitic/
   featured: false

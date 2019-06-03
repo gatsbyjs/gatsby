@@ -2718,8 +2718,6 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
-- url: https://gatsby-starter-material-business-markdown.netlify.com/
-  repo: https://github.com/ANOUN/gatsby-starter-material-business-markdown/
 - url: https://gatsby-starter-anoun-1-markdown.netlify.com/
   repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
   description: A clean, modern starter for businesses using Material Design Components
@@ -2763,7 +2761,7 @@
     - SEO
     - Accessibility
   features:
-    - Gastby v2
+    - Gatsby v2
     - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
     - Google Analytics
     - PostCSS support
@@ -2830,3 +2828,17 @@
   features:
     - Careers Listing
     - Mobile Responsive
+- url: https://anubhavsrivastava.github.io/gatsby-starter-phantom
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-phantom
+  description: Single page starter based on the Phantom site template by HTML5 up, with landing, generic and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
