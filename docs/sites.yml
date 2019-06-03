@@ -6206,6 +6206,16 @@
     - Marketing
     - Directory
   featured: false
+- title: Lesley Barber
+  url: https://www.lesleybarber.com/
+  main_url: https://www.lesleybarber.com/
+  description: >
+    Official website of Canadian film composer Lesley Barber.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
 - title: Timeline of Terror
   main_url: https://timelineofterror.org/
   url: https://timelineofterror.org/
