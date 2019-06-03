@@ -6242,3 +6242,20 @@
   built_by: Adriaan Janse van Rensburg
   built_by_url: https://github.com/HurricaneInteractive/
   featured: false
+- title: Interplanetary Gatsby
+  url: https://interplanetarygatsby.com/
+  main_url: https://interplanetarygatsby.com/
+  source_url: https://github.com/agentofuser/interplanetarygatsby.com
+  description: >
+    Space-Ready Publishing with Gatsby and IPFS
+  categories:
+    - Blog
+    - Education
+    - Hosting
+    - Web Development
+    - Open Source
+    - Gatsby
+    - DWeb
+  built_by: Agent of User 🥌
+  built_by_url: https://agentofuser.com
+  featured: false
