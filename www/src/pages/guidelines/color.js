@@ -149,12 +149,8 @@ class Color extends React.Component {
                 The WCAG provides an equation that determines these two values.
                 It outputs a number between 0 and 21, with 21 being the highest
                 amount of contrast—think black text and a white background—and 0
-                being no contrast—white on white.
-              </p>
-              <p>
-                The output of contrast between any two colors will fall
-                somewhere on the spectrum between 0 – 21. That's where the
-                scores are derived from. There are technically 5 scores.
+                being no contrast—white on white. That ratio is where the scores
+                are derived from. There are technically 5 scores:
               </p>
               <ul css={{ padding: 0 }}>
                 <li>
@@ -166,18 +162,29 @@ class Color extends React.Component {
                   <strong>2+ — AA Large</strong> – <code>&gt;= 3.0</code>
                   <br />
                   The smallest acceptable amount of contrast for type sizes of
-                  18pt and larger.
+                  14pt bold/18pt (which roughly translates to ~18.5px bold/24px
+                  @1x) and larger.
                 </li>
                 <li>
                   <strong>2 — AA</strong> – <code>&gt;= 4.5</code>
                   <br />
-                  The required contrast score for text sizes below ~18pt.
+                  The required contrast score for text sizes below 14pt
+                  bold/18pt.
                 </li>
                 <li>
                   <strong>3 — AAA</strong> – <code>&gt;= 7.0</code>
                   <br />
                   Use it for longer form text that will be read for a
                   significant period of time and requires enhanced contrast.
+                </li>
+                <li>
+                  <strong>AAA Large</strong>
+                  <br />
+                  AAA Large means that your <em>large</em> text has a contrast
+                  ratio of
+                  <code>4.5</code> or higher—which is the same score as AA, and
+                  which is why you won't see AAA Large as a visible score in our
+                  documentation.
                 </li>
               </ul>
               <SectionSubheading>Color Blindness</SectionSubheading>
