@@ -381,7 +381,7 @@ type AuthorJson implements Node {
 }
 ```
 
-You simply provide a `@link` directive on a field and Gatbsy will internally
+You simply provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one we wrote manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
