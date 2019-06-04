@@ -1,7 +1,7 @@
 import React from "react"
+import { css } from "theme-ui"
 
 // from https://octicons.github.com/icon/link/
-// used for remark-autolink-headings
 const LinkIcon = props => (
   <svg
     {...props}
@@ -18,6 +18,37 @@ const LinkIcon = props => (
   </svg>
 )
 
+const heading = Tag => props => (
+  <Tag
+    {...props}
+    css={{
+      a: {
+        visibility: `hidden`,
+      },
+      ":hover a": {
+        visibility: `visible`,
+      },
+    }}
+  >
+    <a
+      href={`#${props.id}`}
+      css={css({
+        ml: `-20px`,
+        pr: `4px`,
+        color: `primary`,
+      })}
+    >
+      <LinkIcon />
+    </a>
+    {props.children}
+  </Tag>
+)
+
 export default {
-  "link-icon": LinkIcon,
+  h1: heading(`h1`),
+  h2: heading(`h2`),
+  h3: heading(`h3`),
+  h4: heading(`h4`),
+  h5: heading(`h5`),
+  h6: heading(`h6`),
 }

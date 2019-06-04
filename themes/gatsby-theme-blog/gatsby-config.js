@@ -70,22 +70,7 @@ module.exports = {
             },
           },
         ],
-        remarkPlugins: [
-          require(`remark-slug`),
-          [
-            require(`remark-autolink-headings`),
-            {
-              content: {
-                type: `element`,
-                // custom MDX element - is this too magical??
-                tagName: `link-icon`,
-                propertis: {
-                  className: `link-icon`,
-                },
-              },
-            },
-          ],
-        ],
+        remarkPlugins: [require(`remark-slug`)],
       },
     },
     `gatsby-plugin-react-helmet`,
