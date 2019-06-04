@@ -767,7 +767,7 @@ If you have created any CSS styling rules referencing the `gatsby-image-outer-wr
 
 ### Import Link from Gatsby
 
-All components and utility functions from `gatsby-link` are now exported from `gatsby` package. So, you should import it directly from `gatsby`.
+All components and utility functions from `gatsby-link` are now exported from the `gatsby` package. So, you should import it directly from `gatsby`.
 
 ```diff
 import React from "react"
