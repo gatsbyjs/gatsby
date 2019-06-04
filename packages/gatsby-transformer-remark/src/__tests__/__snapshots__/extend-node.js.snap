@@ -16,6 +16,22 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 2`] = `
+Object {
+  "excerpt": "",
+  "excerptAst": Object {
+    "children": Array [],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony?",
@@ -130,8 +146,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony?
-",
+  "excerpt": "Where oh where is my little pony?",
   "excerptAst": Object {
     "children": Array [
       Object {
@@ -159,6 +174,26 @@ Object {
   "frontmatter": Object {
     "title": "my little pony",
   },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given HTML correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where <strong>is</strong> my little pony?</p>
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where **is** my little pony?
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given PLAIN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
 }
 `;
 
