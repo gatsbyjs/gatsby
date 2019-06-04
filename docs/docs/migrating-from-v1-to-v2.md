@@ -125,6 +125,7 @@ Some plugins had dependencies that were also made `peerDependencies`. For exampl
 ```shell
 npm i typography react-typography
 ```
+
 You should search for the plugins that you use in the [plugin library](/plugins). Then, check their installation instructions for extra packages that may need installation.
 
 ## Handling Breaking Changes
@@ -305,7 +306,7 @@ const foo = require("foo")
 export default foo
 ```
 
-Mixing `import` and `module.exports` is  **BAD**:
+Mixing `import` and `module.exports` is **BAD**:
 
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
@@ -540,7 +541,7 @@ transition. We passed this as one of the arguments along with `location` to plug
 
 ### Browser API `replaceRouterComponent` was removed
 
-@reach/router doesn't allow you to swap out its history object like React Router. An API,  `replaceRouterComponent`, was used with React Router for this behavior in Gatsby. This is now no longer needed, so we've removed this API.
+@reach/router doesn't allow you to swap out its history object like React Router. An API, `replaceRouterComponent`, was used with React Router for this behavior in Gatsby. This is now no longer needed, so we've removed this API.
 
 We did, erroneously, suggest using this API for adding support for Redux, etc. where you need to wrap the root Gatsby component with your own component.
 
