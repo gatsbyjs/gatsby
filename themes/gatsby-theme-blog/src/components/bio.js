@@ -9,7 +9,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
 import { Styled, css, Flex } from "theme-ui"
-import BioContent from "./bioContent.js"
+import BioContent from "./bio-content.js"
 
 const Bio = () => {
   const data = useStaticQuery(bioQuery)

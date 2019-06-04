@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "theme-ui"
-import FooterContent from "./footerContent"
+import FooterContent from "./footer-content"
 
 const Footer = () => (
   <footer
