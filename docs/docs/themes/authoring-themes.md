@@ -2,6 +2,17 @@
 title: How to author a theme
 ---
 
+## What’s contained in this tutorial?
+
+By the end of this tutorial, you’ll have done the following:
+
+- set up your environment for theme development
+- built a Gatsby Theme
+
+## Prerequisites (if any)
+
+Before following this tutorial, you should have experience building a Gatsby site.
+
 > ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
 
 ## Setting up your environment for theme development
@@ -92,3 +103,27 @@ yarn workspace gatsby-theme-my-theme add --peer gatsby react react-dom
 ```
 
 You want these dependencies as `peerDependencies` in your theme because sites consuming your theme won't work without them. If you added these as `dependencies` to your theme, you would ship a copy of them to any sites that consume your theme. You want to avoid this, because it's possible your theme could have a different copy of the dependencies than the consuming site. But, if the consuming site doesn't have these dependencies, it will break. Including these as `peerDependencies` will show a warning to the developers of the consuming site reminding them to install their own copies of these dependencies.
+
+## What did you just do?
+
+In this tutorial, you did the following:
+
+- learned how to **\_\_**
+- built a \***\*\_\*\***
+- used a **\_\_\_** with Gatsby
+
+## What’s next
+
+If there are more parts to the tutorial, link to the next step here.
+
+## Other resources
+
+If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add
+them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
+
+- Link to a blog post
+- Link to a YouTube tutorial
+- Link to an example site
+- Link to source code for a live site
+- Links to relevant plugins
+- Links to starters
