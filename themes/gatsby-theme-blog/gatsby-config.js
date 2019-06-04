@@ -1,11 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: `My Blog Title`,
-    author: `Your Name`,
-    description: `coming soon...`,
-    siteUrl: `https://github.com/amberleyromo/gatsby-themes/tree/master/packages/gatsby-theme-darklight-blog`,
+    title: `Blog Title Placeholder`,
+    author: `Name Placeholder`,
+    description: `Description placeholder`,
+    siteUrl: `http://example.com/`,
     social: {
-      twitter: `amber1ey`,
+      twitter: `https://twitter.com/gatsbyjs`,
+      github: `https://github.com/gatsbyjs/gatsby`,
     },
   },
   plugins: [
