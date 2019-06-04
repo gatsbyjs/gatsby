@@ -60,9 +60,9 @@ plugins: [
 ]
 ```
 
-#### Note on creating markdown files.
+#### Frontmatter for metadata in markdown files
 
-When you create a Markdown file, at the top of the file, add the block below. You can have different key value pairs that are relevant to your website. This block will be parsed by `gatsby-transformer-remark` as `frontmatter`. The GraphQL API will provide this data in our React components.
+When you create a Markdown file, you can include a set of key value pairs that can be used to provide additional data relevant to specific pages in the GraphQL data layer. This data is called frontmatter and is denoted by the triple dashes at the start and end of the block. This block will be parsed by `gatsby-transformer-remark` as `frontmatter`. The GraphQL API will provide the key value pairs as data in our React components.
 
 ```
 ---
@@ -72,7 +72,7 @@ title: "My first blog post"
 ---
 ```
 
-### Create a page template for the markdown data.
+### Create a page template for the markdown data
 
 Create a folder in the `/src` directory of your Gatsby application called `templates`.
 Now create a `blogTemplate.js` inside it with the following content.
@@ -120,7 +120,7 @@ Two things are important in the file above.
     **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that we find has all the details of the Markdown file. We can use that to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
 
-### Create static pages using Gatsby's Node API.
+### Create static pages using Gatsby's Node API
 
 Gatsby exposes a powerful Node.js API, which allows for functionality such as creating dynamic pages. This API is available in the `gatsby-node.js` file in the root directory of your project, at the same level as `gatsby-config.js`. Each export found in this file will be run by Gatsby, as detailed in its [Node API specification](/docs/node-apis/). However, we only care about one particular API in this instance, `createPages`.
 
