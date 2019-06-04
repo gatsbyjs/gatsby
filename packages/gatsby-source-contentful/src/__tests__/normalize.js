@@ -54,6 +54,7 @@ describe(`Process contentful data`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createContentTypeNodes({
         contentTypeItem,
@@ -62,6 +63,7 @@ describe(`Process contentful data`, () => {
         entries: entryList[i].map(normalize.fixIds),
         createNode,
         createNodeId,
+        createContentDigest,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -75,12 +77,14 @@ describe(`Process contentful data`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
         assetItem,
         createNode,
         createNodeId,
+        createContentDigest,
         defaultLocale,
         locales,
       })

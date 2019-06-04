@@ -1,13 +1,7 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
 
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -173,7 +167,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNodeId) {
+function prepareTextNode(node, key, text, createNodeId, createContentDigest) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -184,7 +178,7 @@ function prepareTextNode(node, key, text, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
       mediaType: `text/markdown`,
       content: str,
-      contentDigest: digest(str),
+      contentDigest: createContentDigest(str),
     },
   }
 
@@ -193,7 +187,13 @@ function prepareTextNode(node, key, text, createNodeId) {
   return textNode
 }
 
-function prepareRichTextNode(node, key, content, createNodeId) {
+function prepareRichTextNode(
+  node,
+  key,
+  content,
+  createNodeId,
+  createContentDigest
+) {
   const str = stringify(content)
   const richTextNode = {
     ...content,
@@ -205,7 +205,7 @@ function prepareRichTextNode(node, key, content, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
       mediaType: `text/richtext`,
       content: str,
-      contentDigest: digest(str),
+      contentDigest: createContentDigest(str),
     },
   }
 
@@ -213,7 +213,14 @@ function prepareRichTextNode(node, key, content, createNodeId) {
 
   return richTextNode
 }
-function prepareJSONNode(node, key, content, createNodeId, i = ``) {
+function prepareJSONNode(
+  node,
+  key,
+  content,
+  createNodeId,
+  createContentDigest,
+  i = ``
+) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...(_.isPlainObject(content) ? { ...content } : { content: content }),
@@ -224,7 +231,7 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
       type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
       mediaType: `application/json`,
       content: str,
-      contentDigest: digest(str),
+      contentDigest: createContentDigest(str),
     },
   }
 
@@ -240,6 +247,7 @@ exports.createContentTypeNodes = ({
   entries,
   createNode,
   createNodeId,
+  createContentDigest,
   resolvable,
   foreignReferenceMap,
   defaultLocale,
@@ -394,7 +402,8 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNodeId
+            createNodeId,
+            createContentDigest
           )
 
           childrenNodes.push(textNode)
@@ -409,7 +418,8 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNodeId
+            createNodeId,
+            createContentDigest
           )
 
           childrenNodes.push(richTextNode)
@@ -424,7 +434,8 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNodeId
+            createNodeId,
+            createContentDigest
           )
 
           childrenNodes.push(jsonNode)
@@ -443,6 +454,7 @@ exports.createContentTypeNodes = ({
               entryItemFieldKey,
               obj,
               createNodeId,
+              createContentDigest,
               i
             )
 
@@ -457,7 +469,7 @@ exports.createContentTypeNodes = ({
       entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }
 
       // Get content digest of node.
-      const contentDigest = digest(stringify(entryNode))
+      const contentDigest = createContentDigest(entryNode)
 
       entryNode.internal.contentDigest = contentDigest
 
@@ -478,7 +490,7 @@ exports.createContentTypeNodes = ({
     }
 
     // Get content digest of node.
-    const contentDigest = digest(stringify(contentTypeNode))
+    const contentDigest = createContentDigest(contentTypeNode)
 
     contentTypeNode.internal.contentDigest = contentDigest
 
@@ -496,6 +508,7 @@ exports.createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,
+  createContentDigest,
   defaultLocale,
   locales,
 }) => {
@@ -539,7 +552,7 @@ exports.createAssetNodes = ({
     }
 
     // Get content digest of node.
-    const contentDigest = digest(stringify(assetNode))
+    const contentDigest = createContentDigest(assetNode)
 
     assetNode.internal.contentDigest = contentDigest
 

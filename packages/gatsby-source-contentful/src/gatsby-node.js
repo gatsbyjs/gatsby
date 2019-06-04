@@ -35,7 +35,16 @@ exports.onPreBootstrap = validateOptions
  */
 
 exports.sourceNodes = async (
-  { actions, getNode, getNodes, createNodeId, store, cache, reporter },
+  {
+    actions,
+    getNode,
+    getNodes,
+    createNodeId,
+    createContentDigest,
+    store,
+    cache,
+    reporter,
+  },
   pluginOptions
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
@@ -198,6 +207,7 @@ exports.sourceNodes = async (
       entries: entryList[i],
       createNode,
       createNodeId,
+      createContentDigest,
       resolvable,
       foreignReferenceMap,
       defaultLocale,
@@ -210,6 +220,7 @@ exports.sourceNodes = async (
       assetItem,
       createNode,
       createNodeId,
+      createContentDigest,
       defaultLocale,
       locales,
     })
