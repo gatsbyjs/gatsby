@@ -15,7 +15,7 @@ It provides light utility functions on top of `react-dom` and `react-dom/test-ut
 Install the library as one of your project's `devDependencies`. Optionally you may install `jest-dom` to use its [custom jest matchers](https://github.com/gnapse/jest-dom#custom-matchers).
 
 ```shell
-npm install --save-dev react-testing-library jest-dom
+npm install --save-dev @testing-library/react jest-dom
 ```
 
 Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
@@ -24,7 +24,7 @@ Create the file `setup-test-env.js` at the root of your project. Insert this cod
 import "jest-dom/extend-expect"
 
 // this is basically: afterEach(cleanup)
-import "react-testing-library/cleanup-after-each"
+import "@testing-library/react/cleanup-after-each"
 ```
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.
@@ -43,7 +43,7 @@ Let's create a little example test using the newly added library. If you haven't
 
 ```js
 import React from "react"
-import { render } from "react-testing-library"
+import { render } from "@testing-library/react"
 
 // You have to write data-testid
 const Title = () => <h1 data-testid="hero-title">Gatsby is awesome!</h1>
