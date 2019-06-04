@@ -1,0 +1,94 @@
+---
+title: How to author a theme
+---
+
+> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
+
+## Setting up your environment for theme development
+
+While there are many ways to develop a Gatsby Theme, we think the easiest way to get started is by creating a Yarn workspace. Yarn workspaces allow you test how a theme might behave inside of a site without you having to actually publish a theme to npm. You are, of course, welcome to develop your theme any way you’d like.
+
+First, if you don’t have yarn installed, you can follow these instructions (https://yarnpkg.com/en/docs/install) to install it.
+
+Next, create a directory for the project:
+
+```bash
+mkdir theme-workspace
+```
+
+`cd` into that folder and create two directories. The first directory will be called the name of the site you use to test your theme. In this tutorial, I’ll call it `sandbox-app`.
+
+```bash
+cd theme-workspace
+mkdir sandbox-app
+```
+
+Then, create a directory called `themes`, and inside it, add a directory called `gatsby-theme-my-theme`.
+
+```bash
+mkdir themes
+cd themes
+mkdir gatsby-theme-my-theme
+```
+
+Conventionally, Gatsby Themes are prefixed with `gatsby-theme-*. So, if you want to name your theme`awesome`, you can call it`gatsby-theme-awesome`.
+
+Once you have that set up, add a `package.json` file to the root of the project. It should look like this:
+
+```json
+{
+  "private": true,
+  "workspaces": ["themes/*", "sandbox-app"]
+}
+```
+
+`”private”: true` is required for Yarn workspaces, so don’t forget it! The `workspaces` key takes an array. We pass it `themes/*` so that any themes you create inside of it will be included. We also include the `sandbox-app` as a separate workspace.
+
+Next, `cd` into the `sandbox-app` directory and create a `package.json` file:
+
+```json
+{
+  "name": "sandbox-app",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js"
+}
+```
+
+Then, `cd` into the `gatsby-theme-my-theme` directory, and create a similar `package.json` file':
+
+```json
+{
+  "name": "gatsby-theme-my-theme",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js"
+}
+```
+
+Note: It's really important that the `name` key in the package.json files matches the name of the directory it is in.
+
+Your directory structure should look like this now:
+
+```
+sandbox-app/
+  package.json
+gatsby-theme-my-theme/
+  package.json
+```
+
+One of the best parts about Yarn workspaces is you can run commands for all of your directories from the root of your project using the `yarn workspace <package>` command.
+
+Let's try it out. You'll need to install Gatsby's dependencies in your `sandbox-app`. To do so, run this command:
+
+```bash
+yarn workspace example add gatsby react react-dom
+```
+
+Next, let's add these as `peerDependencies` to your theme.
+
+```bash
+yarn workspace gatsby-theme-my-theme add --peer gatsby react react-dom
+```
+
+You want these dependencies as `peerDependencies` in your theme because sites consuming your theme won't work without them. If you added these as `dependencies` to your theme, you would ship a copy of them to any sites that consume your theme. You want to avoid this, because it's possible your theme could have a different copy of the dependencies than the consuming site. But, if the consuming site doesn't have these dependencies, it will break. Including these as `peerDependencies` will show a warning to the developers of the consuming site reminding them to install their own copies of these dependencies.
