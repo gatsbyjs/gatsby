@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.18...gatsby-dev-cli@2.4.19) (2019-06-04)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** add missing awaits and other various fixes ([#14510](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/14510)) ([a2c55a7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/a2c55a7))
+
 ## [2.4.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.17...gatsby-dev-cli@2.4.18) (2019-05-31)
 
 **Note:** Version bump only for package gatsby-dev-cli
