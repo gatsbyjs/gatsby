@@ -91,7 +91,7 @@ class ContributorPageTemplate extends React.Component {
                 <BlogPostPreviewItem
                   post={node}
                   key={node.fields.slug}
-                  css={{ marginBottom: space[9], position: `relative` }}
+                  css={{ marginBottom: space[9] }}
                 />
               ))}
             </div>
