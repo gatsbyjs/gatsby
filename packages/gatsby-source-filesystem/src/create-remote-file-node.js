@@ -168,10 +168,12 @@ async function processRemoteNode({
   ext,
   name,
 }) {
+  console.log(`===========I WAS TRIGGERED==========`)
   const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
+
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
