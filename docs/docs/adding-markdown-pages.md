@@ -13,7 +13,7 @@ Here are the steps Gatsby follows for making this happen.
 4.  Create a page component for the markdown files
 5.  Create static pages using Gatsby's Node.js `createPage` API
 
-### Read files into Gatsby from the filesystem — `gatsby-source-filesystem`
+## Read files into Gatsby from the filesystem
 
 Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#gatsby-source-filesystem) to read files.
 
