@@ -995,7 +995,9 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 ### Only allow defined keys on the node internal object
 
-The node internal object isn't meant for adding node data. Those should be added to the top-level object. We now validate against it for v2.
+The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behaviour we now validate against it for v2. Node data should be added as fields on the top-level node object.
+
+[Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface/) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 
