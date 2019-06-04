@@ -42,7 +42,7 @@ cd themes
 mkdir gatsby-theme-my-theme
 ```
 
-Conventionally, Gatsby Themes are prefixed with `gatsby-theme-*. So, if you want to name your theme`awesome`, you can call it`gatsby-theme-awesome`.
+Conventionally, Gatsby Themes are prefixed with `gatsby-theme-*`. So, if you want to name your theme`awesome`, you can call it`gatsby-theme-awesome`.
 
 Once you have that set up, add a `package.json` file to the root of the project. It should look like this:
 
