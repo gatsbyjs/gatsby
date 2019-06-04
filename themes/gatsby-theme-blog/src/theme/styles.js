@@ -69,7 +69,4 @@ export default {
       fontSize: `1em`,
     },
   },
-  "link-icon": {
-    color: `primary`,
-  },
 }
