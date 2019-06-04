@@ -15,7 +15,7 @@ you're finding yourself wanting to add components to your content you can use
 [MDX][mdx] is Markdown for the component era.
 It lets you write JSX embedded inside Markdown.
 It’s a great combination because it allows you to use Markdown’s terse
-syntax (such as `# Heading`) for your content and JSX for more advanced
+syntax (such as `# Heading`) for your content and JSX for more advanced,
 or reusable components.
 
 This is useful in content-driven sites where you want the ability

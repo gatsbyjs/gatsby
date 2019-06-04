@@ -134,7 +134,8 @@ You can export variables, objects, or other data structures:
 <!-- prettier-ignore -->
 ```markdown
 export const metadata = {
-  name: "World"
+  name: "World",
+  path: "/world",
 };
 
 <span>Hello, {metadata.name}</span>
@@ -147,7 +148,8 @@ export const names = ["Abdullah", "Adam", "Alice", "Aida"]
 <div>{names.map(name => <div>{name}</div>)}</div>
 ```
 
-This data could be accessed by GraphQL with a query like this:
+This data could alternatively be accessed in other areas of your Gatsby project
+by a GraphQL query like this:
 
 ```graphql
 query MdxExports {
