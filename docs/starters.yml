@@ -2867,11 +2867,10 @@
   repo: https://github.com/JaeYeopHan/gatsby-starter-bee
   description: A simple starter for blog with fresh UI.
   tags:
-    - blog
-    - template
-    - fresh-UI
-    - full-package
-    - netlify
+    - Blog
+    - Netlify
+    - Disqus
+    - SEO
   features:
     - Code highlight with Fira Code font
     - Emoji (emojione)
