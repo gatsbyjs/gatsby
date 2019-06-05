@@ -190,19 +190,21 @@ actions.createTypes = (
   }
 }
 
-const withDeprecationWarning = (action, api, allowedIn) => (...args) => {
+const withDeprecationWarning = (actionName, action, api, allowedIn) => (
+  ...args
+) => {
   report.warn(
-    `Calling \`${action}\` in the \`${api}\` API is deprecated. ` +
+    `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
       `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
   )
-  return actions[action](...args)
+  return action(...args)
 }
 
-const withErrorMessage = (action, api, allowedIn) => () =>
+const withErrorMessage = (actionName, api, allowedIn) => () =>
   // return a thunk that does not dispatch anything
   () => {
     report.error(
-      `\`${action}\` is not available in the \`${api}\` API. ` +
+      `\`${actionName}\` is not available in the \`${api}\` API. ` +
         `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
     )
   }
@@ -235,7 +237,7 @@ const mapAvailableActionsToAPIs = restrictions => {
         availableActionsByAPI,
         api,
         actionName,
-        withDeprecationWarning(action, api, allowedIn)
+        withDeprecationWarning(actionName, action, api, allowedIn)
       )
     )
 
@@ -247,7 +249,7 @@ const mapAvailableActionsToAPIs = restrictions => {
         availableActionsByAPI,
         api,
         actionName,
-        withErrorMessage(action, api, allowedIn)
+        withErrorMessage(actionName, api, allowedIn)
       )
     )
   })
