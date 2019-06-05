@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 module.exports = (state = { nodes: {}, connections: {} }, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return { nodes: state.nodes, connections: state.connections }
+      return { nodes: {}, connections: {} }
     case `CREATE_COMPONENT_DEPENDENCY`:
       if (action.payload.path === ``) {
         return state
