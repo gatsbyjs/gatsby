@@ -1,6 +1,6 @@
 workflow "Reporting workflow" {
   resolves = ["high-priority-prs"]
-  on = "schedule(1 0 * * 1-5)"
+  on = "schedule(1 0 * * 0,1,2,3,4)"
 }
 
 action "high-priority-prs" {

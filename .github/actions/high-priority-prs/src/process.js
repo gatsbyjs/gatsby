@@ -6,11 +6,11 @@ const parse = require("date-fns/parse")
 const isBefore = require("date-fns/is_before")
 const differenceInDays = require("date-fns/difference_in_days")
 const tools = new Toolkit({
-  // secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
+  secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
 })
 
-// const token = process.env.SLACK_TOKEN
-// const web = new WebClient(token)
+const token = process.env.SLACK_TOKEN
+const web = new WebClient(token)
 
 // const filecontents = tools.getFile(".github/actions/gatsby-pr-bot/data.json")
 // const data = JSON.parse(filecontents)
@@ -218,13 +218,13 @@ const report = queues => {
   ;(async () => {
     try {
       // See: https://api.slack.com/methods/chat.postMessage
-      // const res = await web.chat.postMessage({
-      //   channel: process.env.SLACK_CHANNEL_ID,
-      //   blocks: report,
-      // })
+      const res = await web.chat.postMessage({
+        channel: process.env.SLACK_CHANNEL_ID,
+        blocks: report,
+      })
 
       // `res` contains information about the posted message
-      // tools.log.success("Message sent: ", res.ts)
+      tools.log.success("Message sent: ", res.ts)
       tools.exit.success()
     } catch (error) {
       tools.log.fatal(error)

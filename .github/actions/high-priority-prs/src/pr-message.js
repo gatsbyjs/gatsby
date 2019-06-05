@@ -1,9 +1,7 @@
-// const moment = require(`moment`)
 const _ = require(`lodash`)
 const arrayToSentence = require(`array-to-sentence`)
 const distanceInWords = require(`date-fns/distance_in_words`)
 const parse = require(`date-fns/parse`)
-const fs = require("fs")
 
 // Format a message for Slack's block kit: https://api.slack.com/tools/block-kit-builder
 module.exports = (queues, maintainers, now = new Date()) => {
