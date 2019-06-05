@@ -14,7 +14,7 @@ In production, you should use a tested and robust solution to handle the authent
 
 ## Building your Gatsby app
 
-Start by creating a new Gatsby project using barebones `hello-world` starter:
+Start by creating a new Gatsby project using the barebones `hello-world` starter:
 
 ```shell
 gatsby new gatsby-auth gatsbyjs/gatsby-starter-hello-world
