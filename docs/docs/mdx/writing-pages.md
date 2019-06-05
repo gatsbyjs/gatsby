@@ -47,10 +47,10 @@ query {
 ```
 
 > **Note:** To query `Mdx` content, it must be included in the node system using a
-> source like the `gatsby-source-filesystem` plugin first, instructions for sourcing
+> source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
 > content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
 
-Frontmatter is also availalbe in the `props.pageContext.frontmatter` and
+Frontmatter is also availalbe in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
 
 ```markdown
@@ -85,7 +85,7 @@ The chart is rendered inside our MDX document.
 ```
 
 The `<Chart />` component coming from a `.js` file would be written like any
-other React component, the `<FAQ />` component coming from an `.mdx`
+other React component, while the `<FAQ />` component coming from an `.mdx`
 file might look something like this:
 
 <!-- prettier-ignore -->
@@ -112,15 +112,15 @@ export default ({ children }) => (
 ```
 
 > **Note**: the default export concept used in this code block is explained in more detail
-> in the docs below on [defining layouts](/docs/mdx/writing-pages/#defining-a-layout)
+> in the docs below on [defining layouts](#defining-a-layout)
 
-## Using Javascript exports
+## Using JavaScript exports
 
 MDX supports `export` syntax as well, which enables specific use cases like providing data
 for queries and rendering or overriding the default layout on MDX documents. You
 don't need to export MDX documents to import them in other files.
 
-### Page metadata
+### Exporting page metadata
 
 You can provide additional data about a given document by exporting.
 `gatsby-mdx` will automatically add it to the GraphQL schema so you
@@ -145,11 +145,13 @@ The span above will read: "Hello, World".
 <!-- you can also use other variables or data structures -->
 export const names = ["Abdullah", "Adam", "Alice", "Aida"]
 
-<div>{names.map(name => <div>{name}</div>)}</div>
+<ul>{names.map(name => <li>{name}</li>)}</ul>
 ```
 
-This data could alternatively be accessed in other areas of your Gatsby project
-by a GraphQL query like this:
+The fields `name` and `path` defined on `metadata` could now alternatively
+be accessed on MDX nodes in other areas of your Gatsby project by a GraphQL
+query like this (this query fetches all MDX nodes and the data exports
+associated with them):
 
 ```graphql
 query MdxExports {
@@ -158,6 +160,7 @@ query MdxExports {
       exports {
         metadata {
           name
+          path
         }
       }
     }
