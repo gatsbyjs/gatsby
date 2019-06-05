@@ -83,6 +83,11 @@ const maintainers = {
   },
 }
 
+const ignoreMessages = [
+  "Merge branch 'master'",
+  "Merge remote-tracking branch"
+]
+
 module.exports = data => {
   const prs = data.repository.pullRequests
 
@@ -147,12 +152,29 @@ module.exports = data => {
   // What PRs have commits (aka activity) since the last comment by
   // a maintainer.
   prs.nodes.forEach(pr => {
+    const authorUrl = pr.author.url
+    const botUrl = "https://github.com/apps/gatsbot"
+
+    const reviewList = pr.comments.nodes.filter(x => 
+      (x.author.url !== authorUrl && x.author.url !== botUrl)
+    )
     const lastComment = _.get(
-      _.maxBy(pr.comments.nodes, n => n.createdAt),
+      _.maxBy(reviewList, n => n.createdAt),
       `createdAt`
     )
-    const lastCommit = pr.commits.nodes[0].commit.authoredDate
-    commitNewerThanComment = lastComment < lastCommit
+
+    let commitMessages = []
+    pr.commits.nodes.forEach(c => {
+      const message = c.commit.message
+      if(ignoreMessages.every(im => message.indexOf(im) === -1) ) {
+        commitMessages.push(c)
+      } else {
+        commitMessages = []
+      }
+    })
+
+    commitMessages = commitMessages.filter(c => lastComment < c.commit.authoredDate)
+    commitNewerThanComment = (commitMessages.length !== 0)
 
     if (
       commitNewerThanComment &&

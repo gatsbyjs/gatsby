@@ -27,11 +27,12 @@ query GitHubOpenPullRequestsQuery {
               }
             }
           }
-          commits(last: 1) {
+          commits(last: 50) {
             totalCount
             nodes {
               commit {
                 authoredDate
+                message
               }
             }
           }

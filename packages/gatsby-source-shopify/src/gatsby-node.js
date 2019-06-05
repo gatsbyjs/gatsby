@@ -12,6 +12,7 @@ import {
   ProductVariantNode,
   ShopPolicyNode,
   ProductTypeNode,
+  PageNode,
 } from "./nodes"
 import {
   ARTICLES_QUERY,
@@ -20,11 +21,12 @@ import {
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
   PRODUCT_TYPES_QUERY,
+  PAGES_QUERY,
 } from "./queries"
 
 export const sourceNodes = async (
   { actions: { createNode, touchNode }, createNodeId, store, cache },
-  { shopName, accessToken, verbose = true }
+  { shopName, accessToken, verbose = true, paginationSize = 250 }
 ) => {
   const client = createClient(shopName, accessToken)
 
@@ -46,6 +48,7 @@ export const sourceNodes = async (
       formatMsg,
       verbose,
       imageArgs,
+      paginationSize,
     }
 
     // Message printed when fetching is complete.
@@ -62,6 +65,7 @@ export const sourceNodes = async (
       createNodes(`blogs`, BLOGS_QUERY, BlogNode, args),
       createNodes(`collections`, COLLECTIONS_QUERY, CollectionNode, args),
       createNodes(`productTypes`, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
+      createNodes(`pages`, PAGES_QUERY, PageNode, args),
       createNodes(`products`, PRODUCTS_QUERY, ProductNode, args, async x => {
         if (x.variants)
           await forEach(x.variants.edges, async edge =>
@@ -93,7 +97,7 @@ const createNodes = async (
   endpoint,
   query,
   nodeFactory,
-  { client, createNode, formatMsg, verbose, imageArgs },
+  { client, createNode, formatMsg, verbose, imageArgs, paginationSize },
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
@@ -101,7 +105,7 @@ const createNodes = async (
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(client, [`shop`, endpoint], query),
+    await queryAll(client, [`shop`, endpoint], query, paginationSize),
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)

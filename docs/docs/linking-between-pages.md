@@ -25,7 +25,7 @@ export default () => (
 )
 ```
 
-The above code will add a link to the contact page, automatically rendered in HTML as `<a href="/contact/">` but with added performance benefits.
+The above code will add a link to the contact page, automatically rendered in HTML as `<a href="/contact/">` but with added performance benefits. The link's value is based off of the page's filename which in this case would be `contact.js`.
 
 > **Note:** the value `"/"` for the `to` property will take users to the home page.
 

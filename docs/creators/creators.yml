@@ -287,3 +287,15 @@
   image: images/mangoart.png
   for_hire: true
   portfolio: true
+- name: Brew Digital
+  type: agency
+  image: images/brew-digital.jpg
+  description: >-
+    Hi, We are Brew, a digital marketing agency in Birmingham UK. We work with companies of all sizes delivering websites, apps, marketing campaigns, data integrations, social campaigns and PPC. 
+
+    We love Gatsby and we would love to work with you on your next project, drop us a message if there is anything we can help with.
+  location: Birmingham UK
+  website: https://www.wearebrew.co.uk
+  for_hire: true
+  hiring: false
+  portfolio: true

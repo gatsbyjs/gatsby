@@ -4,17 +4,17 @@ title: Migrating from v1 to v2
 
 Looking for the v1 docs? [Find them here](https://v1.gatsbyjs.org/).
 
-> This document is a work in progress. Have you upgraded your site and run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
+> This document is a work in progress. Have you run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you probably won't need to do everything for your site. We'll do our best to keep things easy to follow, and as sequential as possible so you can quickly get rocking on v2!
+This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While there's a lot covered here, you won't need to do everything for your site. We'll do our best to keep things easy to follow, and as sequential as possible so you can get rocking on v2!
 
 > If you want to start fresh, check out the [starting a new project section](#for-explorers)
 
 ## Why you should migrate
 
-This documentation page covers the _how_ of migrating from v1 to v2. The _why_ is covered in various blog posts:
+This documentation page covers the _how_ of migrating from v1 to v2. Various blog posts cover the _why_:
 
 - [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
 - [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
@@ -25,8 +25,8 @@ This documentation page covers the _how_ of migrating from v1 to v2. The _why_ i
 - [Updating Your Dependencies](#updating-your-dependencies)
 
   - [Update Gatsby version](#update-gatsby-version)
-  - [Manually install React](#manually-install-react)
-  - [Manually install plugins’ peer dependencies](#manually-install-plugins-peer-dependencies)
+  - [Install React](#install-react)
+  - [Install plugins’ peer dependencies](#install-plugins-peer-dependencies)
 
 - [Handling Breaking Changes](#handling-breaking-changes)
 
@@ -76,7 +76,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. The _why_ i
 
 ## Updating Your Dependencies
 
-The very first thing you will need to do is update your dependencies and install any needed peer dependencies.
+First, you need to update your dependencies and install any needed peer dependencies.
 
 ### Update Gatsby version
 
@@ -96,7 +96,7 @@ npm i gatsby@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the latest versions of Gatsby related packages. Any package name that starts with `gatsby-` should be upgraded. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
+Update your `package.json` to use the latest versions of Gatsby related packages. You should upgrade any package name that starts with `gatsby-`. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
 ```shell
 npm outdated
@@ -108,17 +108,17 @@ And compare "Wanted" and "Latest" versions and update `package.json` file manual
 npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
-**NOTE**: Above command is just an example - adjust packages to ones you are actually using.
+**NOTE**: The above command is only an example - adjust packages to ones you are actually using.
 
-### Manually install React
+### Install React
 
-In v1, the `react` and `react-dom` packages were included as part of the `gatsby` package. They are now `peerDependencies` so you are required to install them into your project.
+In v1, the `react` and `react-dom` packages were a part of the `gatsby` package. They are now `peerDependencies` in v2, so you need to install them into your project.
 
 ```shell
 npm i react react-dom
 ```
 
-### Manually install plugins' peer dependencies
+### Install plugins' peer dependencies
 
 Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
 
@@ -126,22 +126,22 @@ Some plugins had dependencies that were also made `peerDependencies`. For exampl
 npm i typography react-typography
 ```
 
-Search for the plugins that you use in the [plugin library](/plugins) and check their installation instructions for additional packages that now need installed.
+You should search for the plugins that you use in the [plugin library](/plugins). Then, check their installation instructions for extra packages that may need installation.
 
 ## Handling Breaking Changes
 
 ### Remove or refactor layout components
 
-In Gatsby v2, the special layout component (`src/layouts/index.js`) that wrapped every page in Gatsby v1 has been removed. The "top level component" is now just the page itself. If the layout of your site looks broken, this is likely the reason why.
+[Gatsby's layout components (`src/layouts/index.js`) are gone now.](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/). The "top level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
 
-There are a number of implications to this change:
+There are some implications to this change:
 
-- To render different layouts for different pages, just use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+- Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
 - Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
-- To learn more about the original decisions behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+- To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
-The following migration path is recommended:
+We reccomend the following migration path:
 
 #### 1. Convert the layout's children from a render prop to a normal prop (required)
 
@@ -183,7 +183,7 @@ Repeat for every page and template that needs this layout.
 
 #### 4. Pass `history`, `location`, and `match` props to layout
 
-In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props; if you need these props in the layout component, pass them through from the page.
+In v1, the layout component had access to `history`, `location`, and `match` props. In v2, only pages have access to these props. If you need these props in the layout component, pass them through from the page.
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -209,7 +209,7 @@ export default props => (
 
 #### 5. Change query to use `StaticQuery`
 
-If you were using the `data` prop in your Gatsby v1 layout, you now need to make use of Gatsby v2’s [StaticQuery feature](/docs/static-query/), since a layout is now a normal component.
+If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/static-query/). This is because a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 
@@ -261,10 +261,9 @@ import { Helmet } from "react-helmet"
 
 ### Change `navigateTo` to `navigate`
 
-The `navigateTo` method in `gatsby-link` was renamed to `navigate` to mirror
-the [API used by @reach/router](https://reach.tech/router/api/navigate).
+The `navigateTo` method in `gatsby-link` was renamed to `navigate` to mirror the [API used by @reach/router](https://reach.tech/router/api/navigate).
 
-In addition to the name change, `gatsby-link` is now directly exported from the `gatsby` package and can't be installed directly.
+In addition to the name change, `gatsby-link` is now exported from the `gatsby` package and can't be installed directly.
 
 ```diff
 import React from "react"
@@ -272,7 +271,7 @@ import React from "react"
 + import { navigate } from "gatsby"
 
 // Don't use navigate with an onClick btw :-)
-// Generally just use the `<Link>` component.
+// Generally use the `<Link>` component.
 export default props => (
 -  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
 +  <div onClick={() => navigate(`/`)}>Click to go to home</div>
@@ -283,7 +282,7 @@ export default props => (
 
 Gatsby v2 uses webpack 4 which is stricter about modules with mixed module systems.
 
-All ES6 is 👍:
+All ES6 is **GOOD**:
 
 ```js
 // GOOD: ES modules syntax works
@@ -291,7 +290,7 @@ import foo from "foo"
 export default foo
 ```
 
-All CommonJS is 👌:
+All CommonJS is **GOOD**:
 
 ```js
 // GOOD: CommonJS syntax works
@@ -299,7 +298,7 @@ const foo = require("foo")
 module.exports = foo
 ```
 
-Mixing `requires` and `export` is 🙀:
+Mixing `requires` and `export` is **BAD**:
 
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
@@ -307,7 +306,7 @@ const foo = require("foo")
 export default foo
 ```
 
-Mixing `import` and `module.exports` 🤪:
+Mixing `import` and `module.exports` is **BAD**:
 
 ```js
 // BAD: Mixed ES and CommonJS module syntax will cause failures
@@ -317,7 +316,7 @@ module.exports = foo
 
 ### Move Babel Configuration
 
-The latest version of Gatsby uses Babel 7, which introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a _.babelrc_ file might have been used at the root of the project, like for configuring Jest, moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
+The latest version of Gatsby uses Babel 7. Babel 7 introduced [a new behavior for configuration lookup / resolution](https://github.com/babel/babel/issues/6766). In the case where a _.babelrc_ file might be used at the root of the project (like for configuring Jest), moving that Babel configuration into _jest.config.json_ will avoid any conflicts.
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
@@ -327,13 +326,13 @@ More information on Gatsby and Babel configuration available [here](/docs/babel/
 
 Gatsby v2 removed `postcss-cssnext` and `postcss-import` from the default PostCSS setup.
 
-To have the same configuration that you had in v1 (if you were using these plugins), you should use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) and follow the recommended migration path below.
+Use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss) to have the same configuration that you had in v1.
 
 #### 1. Install the dependencies
 
 `npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
-**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env` now.
+**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env`.
 
 #### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
 
@@ -361,13 +360,13 @@ module.exports = () => ({
 
 ### Migrate from React Router to @reach/router
 
-We switched our router from [React Router v4](https://reacttraining.com/react-router/) to [@reach/router](https://reach.tech/router) as @reach/router is smaller and most importantly, has 1st class support
-for accessibility.
+We switched our router from [React Router v4](https://reacttraining.com/react-router/) to [@reach/router](https://reach.tech/router) as @reach/router is smaller and has 1st class support for accessibility.
 
-@reach/router is written by [Ryan Florence](https://twitter.com/ryanflorence), who was also the founder of React Router. He says @reach/router restores
-things he misses from React Router v3 while retaining the best parts of React Router v4 _and_ adds full accessibility support.
+The founder of React Router, [Ryan Florence](https://twitter.com/ryanflorence) is also the founder of @reach/router.
 
-For _most_ sites, this change won't cause any breaking changes as the two routers are quite similar.
+He says @reach/router restores things he misses from React Router v3. @reach/router also retains the best parts of React Router v4 _and_ adds full accessibility support.
+
+For _most_ sites, this change won't cause any breaking changes as the two routers are very similar.
 
 Two common ways this change _might_ break your site is:
 
@@ -376,8 +375,7 @@ Two common ways this change _might_ break your site is:
 
 Read more about the features of our new router at https://reach.tech/router
 
-**NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence
-on fixing that so hopefully it'll be supported soon.
+**NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence on hopefully supporting it soon.
 
 Read on for instructions on migrating your site to @reach/router.
 
@@ -393,7 +391,7 @@ React Router allowed you to pass objects to the `to` prop e.g.
 </Link>
 ```
 
-React Router would then simply concatenate the object values together into the full pathname e.g. `/about/?fun=true&pizza=false#people`.
+React Router would then concatenate the object values together into the full pathname e.g. `/about/?fun=true&pizza=false#people`.
 
 Now you'll need to concatenate together the full pathname yourself.
 
@@ -404,7 +402,7 @@ Now you'll need to concatenate together the full pathname yourself.
 
 #### Pass state to the `state` prop
 
-Previously with React Router to pass state to a link, you would pass it as part of a `to` object prop.
+Before with React Router to pass state to a link, you would pass it as part of a `to` object prop.
 
 Now, to add state to a link, pass it via a `state` prop.
 
@@ -443,7 +441,7 @@ import { navigate } from "@reach/router"
 `exact` and `strict` are no longer necessary as @reach/router does matching
 this way by default.
 
-You could pass `location` previously to manually compute whether the
+You could pass `location` before to manually compute whether the
 link is active or not. For advanced link stylings, use `getProps` now.
 
 #### Use `getProps` for advanced link styling
@@ -475,8 +473,8 @@ exports.onCreatePage = async ({ page, actions }) => {
 #### Migrating React Router client routes to @reach/router
 
 - Use `<Location>` instead of `withRouter`
-- import `{ navigate }` from `@reach/router` for programmatic navigation instead of the history object
-- There's no `Route` component any more. You add a `<Router>` component (a site can have as many routers as it wishes) and then the immediate children of `<Router>` must have a prop named `path`.
+- `import { navigate } from @reach/router` for programmatic navigation instead of the history object
+- There's no `Route` component any more. You can add a `<Router>` component (a site can have as many routers as it wishes). Then ensure the immediate children of `<Router>` have a prop named `path`.
 
 A basic example of the `<Router>` component:
 
@@ -530,7 +528,7 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 +};
 ```
 
-Here's links to diffs for three sites with client routes that were upgraded to @reach/router
+Here's links to diffs for three sites with client routes upgraded to @reach/router:
 
 - [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
 - [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
@@ -543,7 +541,7 @@ transition. We passed this as one of the arguments along with `location` to plug
 
 ### Browser API `replaceRouterComponent` was removed
 
-React Router allowed you to swap out its history object. To enable this in Gatsby, an API, `replaceRouterComponent` was added so that you could use a custom version of history or React Router. As @reach/router doesn't support this, we've removed this API.
+@reach/router doesn't allow you to swap out its history object like React Router. An API, `replaceRouterComponent`, was used with React Router for this behavior in Gatsby. This is now no longer needed, so we've removed this API.
 
 We did, erroneously, suggest using this API for adding support for Redux, etc. where you need to wrap the root Gatsby component with your own component.
 
@@ -572,14 +570,13 @@ import { Provider } from 'react-redux'
 
 ### Browser API `replaceHistory` was removed
 
-Similar to `replaceRouterComponent`, we no longer support custom histories so this was removed.
-The `replaceHistory()` method could be used for tracking page views as it is possible to register listeners on route changes using `history.listen()`.
+Like with `replaceRouterComponent`, we no longer support custom histories. That is why we've also removed the `replaceHistory` API. The `replaceHistory()` method was used for tracking page views by registering listeners on route changes using `history.listen()`.
 
-In order to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
+Now, to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
-Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootComponent) API:
+Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API:
 We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
@@ -625,7 +622,7 @@ Here's an example querying an image:
 
 ### Use `Query` in place of `RootQueryType`
 
-The GraphQL root type has been changed from `RootQueryType` to `Query`. This is only likely to impact you if you have top-level fragments in your GraphQL queries:
+We changed the The GraphQL root type from `RootQueryType` to `Query`. This is only likely to impact you if you have top-level fragments in your GraphQL queries:
 
 ```diff
   query Blog {
@@ -765,13 +762,13 @@ Because the outer wrapper `div` was removed, you can no longer use the `outerWra
 />
 ```
 
-Similarly, if you have created any CSS styling rules referencing the `gatsby-image-outer-wrapper` class, you should merge those styles into the `gatsby-image-wrapper` class.
+If you have created any CSS styling rules referencing the `gatsby-image-outer-wrapper` class, you should merge those styles into the `gatsby-image-wrapper` class.
 
 ## Resolving Deprecations
 
 ### Import Link from Gatsby
 
-All components and utility functions from `gatsby-link` are now exported from `gatsby` package. Therefore you should import it directly from `gatsby`.
+All components and utility functions from `gatsby-link` are now exported from the `gatsby` package. So, you should import it directly from `gatsby`.
 
 ```diff
 import React from "react"
@@ -827,7 +824,7 @@ export const query = graphql`
 
 ### Rename `pathContext` to `pageContext`
 
-Similar to `boundActionCreators` above, `pathContext` is deprecated in favor of `pageContext`.
+Like `boundActionCreators` above, `pathContext` is deprecated in favor of `pageContext`.
 
 ### Rename responsive image queries
 
@@ -874,7 +871,7 @@ export const pageQuery = graphql`
 `
 ```
 
-Further examples can be found in the [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/tree/d0e29272ed7b009dae18d35d41a45e700cdcab0d/packages/gatsby-image).
+You can find further examples in the [Gatsby Image docs](https://github.com/gatsbyjs/gatsby/tree/d0e29272ed7b009dae18d35d41a45e700cdcab0d/packages/gatsby-image).
 
 ### Delete Nodes API Deprecated
 
@@ -884,7 +881,7 @@ Further examples can be found in the [Gatsby Image docs](https://github.com/gats
 
 ### Explicit query names no longer required
 
-Gatsby v2 doesn't require explicit query names. You can skip them now:
+Gatsby v2 doesn't need explicit query names. You can skip them now:
 
 ```diff
 export const query = graphql`
@@ -917,19 +914,19 @@ This isn't a breaking change. Queries with explicit names will continue to work 
 
 ### Remove inlined CSS in `html.js`
 
-Gatsby v2 will automatically inline your CSS. You can remove any custom CSS inlining from your custom `html.js` and unless it was used for anything else specifically, you can also remove `html.js` itself.
+Gatsby v2 will automatically inline your CSS. You can remove any custom CSS inlining from your custom `html.js`. Unless you used it for anything else specifically, you can also remove `html.js` itself.
 
 See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](https://github.com/gatsbyjs/gatsby/commit/765b679cbc222fd5f527690427ee431cca7ccd61#diff-637c76e3c059ed8efacedf6e30de2d61).
 
 ### Remove explicit polyfills
 
-If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's babel docs for more details](/docs/babel).
+If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with Babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's Babel docs for more details](/docs/babel).
 
 > Note: This works for your own code, but is not yet implemented for code imported from `node_modules`. Track progress of this feature in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
 
 ## For Plugin Maintainers
 
-In most cases you won't have to do anything to be v2 compatible, however there are a few things you can do to be certain your plugin will work well with v2 sites.
+In most cases you won't have to do anything to be v2 compatible, but there are a few things you can do to be certain your plugin will work well with v2 sites.
 
 ### Setting the Proper Peer Dependencies
 
@@ -944,7 +941,7 @@ In most cases you won't have to do anything to be v2 compatible, however there a
 
 ### Change `modifyBabelrc` to `onCreateBabelConfig`
 
-`modifyBabelrc` was renamed to [`onCreateBabelConfig`](/docs/node-apis/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
+We renamed `modifyBabelrc` to [`onCreateBabelConfig`](/docs/node-apis/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
 
 Use `onCreateBabelConfig`:
 
@@ -963,11 +960,11 @@ Use `onCreateBabelConfig`:
 
 Note usage of the new [`setBabelPlugin` action](/docs/actions/#setBabelPlugins).
 
-See [Gatsby's babel docs for more details](/docs/babel) about configuring babel.
+See [Gatsby's Babel docs for more details](/docs/babel) about configuring Babel.
 
 ### Change `modifyWebpackConfig` to `onCreateWebpackConfig`
 
-`modifyWebpackConfig` was renamed to [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
+We renamed `modifyWebpackConfig` to [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
 
 Use `onCreateWebpackConfig`:
 
@@ -999,8 +996,9 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 ### Only allow defined keys on the node internal object
 
-The node internal object isn't meant for adding node data. Those should be added to the top-level object. We
-didn't document this in v1 nor validate against it but are now for v2.
+The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behaviour we now validate against it for v2. Node data should be added as fields on the top-level node object.
+
+[Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface/) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 
@@ -1013,7 +1011,7 @@ Import graphql types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 ### Add `gatsby-plugin-flow` if you are using Flowtype
 
-`@babel/preset-flow` was removed from Gatsby's default babel configuration to make it easier to allow users to choose their own transpiler. If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary. Otherwise, you should install [`gatsby-plugin-flow`](/packages/gatsby-plugin-flow).
+We removed `@babel/preset-flow` from Gatsby's default Babel configuration to make it easier to allow users to choose their own transpiler. If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary. Otherwise, you should install [`gatsby-plugin-flow`](/packages/gatsby-plugin-flow).
 
 ## For Explorers
 
