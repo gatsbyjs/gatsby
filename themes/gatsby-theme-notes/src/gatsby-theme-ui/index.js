@@ -2,6 +2,7 @@ const primary = `rebeccapurple`
 const blue = `#3c58e8`
 
 export default {
+  initialColorMode: 'light',
   colors: {
     primary,
     secondary: `#444`,
@@ -20,6 +21,10 @@ export default {
     body: 1.5,
   },
   styles: {
+    root: {
+      fontFamily: 'body',
+      lineHeight: 'body',
+    },
     a: {
       color: blue,
       "&:hover": {

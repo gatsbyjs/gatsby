@@ -9,6 +9,7 @@ module.exports = {
       github: `https://github.com/gatsbyjs/gatsby`,
     },
   },
+  __experimentalThemes: [ 'gatsby-theme-ui' ],
   plugins: [
     /*
      * User override content
@@ -123,6 +124,6 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
-    'gatsby-plugin-theme-ui',
+    // 'gatsby-plugin-theme-ui',
   ],
 }
