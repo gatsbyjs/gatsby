@@ -33,6 +33,7 @@
     "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
     "gatsby-source-filesystem": "^2.0.35",
+    "gatsby-theme-header": "0.0.1",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
     "theme-ui": "^0.0.12"

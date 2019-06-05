@@ -1,9 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
 import { Global } from "@emotion/core"
-import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
-import Toggle from "./toggle"
+import { useColorMode, css, Styled, Layout, Container } from "theme-ui"
+import Header from 'gatsby-theme-header'
 
+import Toggle from "./toggle"
 import sun from "../../content/assets/sun.png"
 import moon from "../../content/assets/moon.png"
 
@@ -76,46 +77,11 @@ export default props => {
             })(theme)
           }
         />
+        <Header />
         <Container
           css={css({
             py: 4,
-          })}
-        >
-          <Header
-            css={css({
-              justifyContent: `space-between`,
-              alignItems: `center`,
-              mb: 4,
-            })}
-          >
-            <Title {...props} />
-            <Toggle
-              icons={{
-                checked: (
-                  <img
-                    alt="moon indicating dark mode"
-                    src={moon}
-                    width="16"
-                    height="16"
-                    role="presentation"
-                    css={{ pointerEvents: `none` }}
-                  />
-                ),
-                unchecked: (
-                  <img
-                    alt="sun indicating light mode"
-                    src={sun}
-                    width="16"
-                    height="16"
-                    role="presentation"
-                    css={{ pointerEvents: `none` }}
-                  />
-                ),
-              }}
-              checked={isDark}
-              onChange={toggleColorMode}
-            />
-          </Header>
+          })}>
           {children}
         </Container>
       </Layout>
