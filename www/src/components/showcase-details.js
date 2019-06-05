@@ -123,6 +123,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }
               childScreenshot {
                 screenshotFile {
+                  publicURL
                   childImageSharp {
                     resize(width: 200, height: 200) {
                       src
@@ -255,15 +256,13 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <meta
                   property="og:image"
                   content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
+                    data.sitesYaml.childScreenshot.screenshotFile.publicURL
                   }`}
                 />
                 <meta
                   name="twitter:image"
                   content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
+                    data.sitesYaml.childScreenshot.screenshotFile.publicURL
                   }`}
                 />
               </Helmet>
