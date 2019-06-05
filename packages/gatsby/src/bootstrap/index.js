@@ -156,17 +156,12 @@ module.exports = async (args: BootstrapArgs) => {
     report,
   })
 
-  // if (changes.length > 0) {
-  //   store.dispatch({
-  //     type: `DELETE_CACHE`,
-  //     payload: changes,
-  //   })
-  // }
-
-  store.dispatch({
-    type: `DELETE_CACHE`,
-    payload: changes,
-  })
+  if (changes.length > 0) {
+    store.dispatch({
+      type: `DELETE_CACHE`,
+      payload: changes,
+    })
+  }
 
   store.dispatch({
     type: `UPDATE_PLUGINS_HASH`,
