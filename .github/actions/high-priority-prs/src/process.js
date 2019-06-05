@@ -2,6 +2,9 @@ const _ = require(`lodash`)
 const { WebClient } = require("@slack/web-api")
 const prMessage = require(`./pr-message`)
 const { Toolkit } = require("actions-toolkit")
+const parse = require("date-fns/parse")
+const isBefore = require("date-fns/is_before")
+const differenceInDays = require("date-fns/difference_in_days")
 const tools = new Toolkit({
   // secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
 })
@@ -85,10 +88,10 @@ const maintainers = {
 
 const ignoreMessages = ["Merge branch 'master'", "Merge remote-tracking branch"]
 
-const process = data => {
+const process = (data, now = new Date()) => {
   const prs = data.repository.pullRequests
 
-  fs.writeFileSync("./data.json", JSON.stringify(data))
+  // fs.writeFileSync("./data.json", JSON.stringify(data))
   // Total PRs
   // console.log(`total PRS`, prs.totalCount)
 
@@ -97,6 +100,7 @@ const process = data => {
   const queues = {
     noMaintainers: [],
     commitsSinceLastComment: [],
+    lonelyPrs: [],
   }
 
   // Combine comments and reviews (for us, they're the same).
@@ -183,6 +187,15 @@ const process = data => {
       queues.commitsSinceLastComment.push(pr)
     }
   })
+
+  // lonely PRs - open PRs that haven't been updated for at least 30 days
+  const DAYS_TO_LONELY = 30
+  const prIsLonely = pr =>
+    differenceInDays(now, parse(pr.updatedAt)) > DAYS_TO_LONELY
+  const prsByDate = (a, b) =>
+    isBefore(parse(a.updatedAt), parse(b.updatedAt)) ? -1 : 1
+  const lonely = prs.nodes.filter(prIsLonely).sort(prsByDate)
+  queues.lonelyPrs.push(...lonely)
 
   // Sort awaiting responses by how long since they were last updated.
   queues.commitsSinceLastComment = _.sortBy(
