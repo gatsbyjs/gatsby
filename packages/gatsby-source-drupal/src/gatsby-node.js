@@ -180,7 +180,7 @@ exports.sourceNodes = async (
               v.data.map(data => (ids[data.id] ? createNodeId(data.id) : null))
             )
             var meta = _.compact(
-              v.data.map(data => !_.isEmpty(data.meta) ? data.meta : null)
+              v.data.map(data => (!_.isEmpty(data.meta) ? data.meta : null))
             )
             // If there's meta on the field and it's not an existing/internal one
             // create a new node's field with that meta. It can't exist on both
@@ -188,7 +188,6 @@ exports.sourceNodes = async (
             if (!_.isEmpty(meta) && !(k in node)) {
               node[k] = meta
             }
-
           } else if (ids[v.data.id]) {
             node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
             // If there's meta on the field and it's not an existing/internal one
