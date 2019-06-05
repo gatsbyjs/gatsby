@@ -52,13 +52,19 @@ class MyComponent extends Component {
 
 ## Workaround 3: Load client-side dependent components with react-loadable
 
-Install [react loadable](https://github.com/jamiebuilds/react-loadable) and use it as a wrapper for a component that wants to use a client side only package.
+Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client side only package.
+
+```bash
+npm install @loadable/component
+# or use yarn
+yarn add @loadable/component
+```
 
 ```jsx
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-import Loadable from "react-loadable"
+import Loadable from "@loadable/component"
 
 // these two libraries are client-side only
 import Client from "shopify-buy"
@@ -69,12 +75,7 @@ const ShopifyBuyButton = props => {
   return <div>etc</div>
 }
 
-const Loading = () => <LoadingSpinner /> // custom loader visualization component
-
-const LoadableBuyButton = Loadable({
-  loader: () => import("./ShopifyBuyButton"),
-  loading: Loading,
-})
+const LoadableBuyButton = Loadable(() => import("./ShopifyBuyButton"))
 
 export default LoadableBuyButton
 ```
