@@ -45,7 +45,7 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
 exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
-    type DocumentationJs implements Node @dontInfer {
+    type DocumentationJs implements Node {
       name: String
       kind: String
       memberof: String
@@ -300,6 +300,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `since`,
         `lends`,
         `examples`,
+        `tags`,
       ])
 
       picked.optional = false
@@ -424,21 +425,6 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
             ),
           }
         })
-      }
-
-      // Custom tags
-      if (docsJson.tags && docsJson.tags.length) {
-        // @availableIn, used to specify allowed APIs for restricted actions
-        const availableIn = docsJson.tags.find(
-          tag => tag.title === `availableIn`
-        )
-        if (availableIn) {
-          picked.availableIn = availableIn.description
-            .split(`\n`)[0]
-            .replace(/[[\]]/g, ``)
-            .split(`,`)
-            .map(api => api.trim())
-        }
       }
 
       const docNode = {

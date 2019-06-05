@@ -968,6 +968,23 @@ exports.createResolvers = ({ createResolvers }) => {
     DocumentationJs: {
       availableIn: {
         type: `[String]`,
+        resolve(source) {
+          const { tags } = source
+          if (!tags || !tags.length) {
+            return []
+          }
+
+          const availableIn = tags.find(tag => tag.title === `availableIn`)
+          if (availableIn) {
+            return availableIn.description
+              .split(`\n`)[0]
+              .replace(/[[\]]/g, ``)
+              .split(`,`)
+              .map(api => api.trim())
+          }
+
+          return []
+        },
       },
     },
   })
