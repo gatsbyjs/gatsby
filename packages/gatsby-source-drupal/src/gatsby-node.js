@@ -277,10 +277,9 @@ exports.sourceNodes = async (
                               rel.data.id === node.drupal_id &&
                               rel.data.type &&
                               rel.data.type === `file--file` &&
-                              rel.data.meta &&
-                              rel.data.meta.alt
+                              rel.data.meta
                             ) {
-                              node.alt = rel.data.meta.alt
+                              node.meta = rel.data.meta
                             }
                           }
                         }
