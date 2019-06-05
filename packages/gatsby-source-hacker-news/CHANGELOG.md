@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news/compare/gatsby-source-hacker-news@2.0.11...gatsby-source-hacker-news@2.0.12) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
 ## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-hacker-news/compare/gatsby-source-hacker-news@2.0.10...gatsby-source-hacker-news@2.0.11) (2019-04-08)
 
 **Note:** Version bump only for package gatsby-source-hacker-news

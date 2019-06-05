@@ -15,7 +15,7 @@ let currentLetter = ``
 class TagsPage extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      allMarkdownRemark: PropTypes.shape({
+      allMdx: PropTypes.shape({
         group: PropTypes.arrayOf(
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
@@ -41,7 +41,7 @@ class TagsPage extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { group },
+        allMdx: { group },
       },
       location,
     } = this.props
@@ -84,7 +84,7 @@ class TagsPage extends React.Component {
                 alignItems: `center`,
                 paddingTop: space[9],
                 paddingBottom: space[6],
-                borderBottom: `1px solid ${colors.ui.bright}`,
+                borderBottom: `1px solid ${colors.ui.border.subtle}`,
               }}
             >
               <h1 css={{ margin: 0 }}>
@@ -178,7 +178,7 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark(
+    allMdx(
       limit: 2000
       filter: {
         fields: { released: { eq: true } }

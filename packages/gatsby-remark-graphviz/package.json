@@ -1,13 +1,14 @@
 {
   "name": "gatsby-remark-graphviz",
   "description": "Processes graphviz code blocks and renders to SVG using viz.js",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "Anthony Marcar <anthony@moocar.me>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "cheerio": "^1.0.0-rc.2",
     "unist-util-visit": "^1.4.0",
     "viz.js": "^2.0.0"
   },

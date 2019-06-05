@@ -69,6 +69,7 @@ describe(`<Image />`, () => {
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
     expect(imageTag.getAttribute(`crossOrigin`)).toEqual(`anonymous`)
+    expect(imageTag.getAttribute(`loading`)).toEqual(`lazy`)
   })
 
   it(`should have correct placeholder src, title, style and class attributes`, () => {
@@ -85,8 +86,14 @@ describe(`<Image />`, () => {
   })
 
   it(`should have a transition-delay of 1sec`, () => {
-    const component = setup(false, { durationFadeIn: `1000` })
+    const component = setup(false, { durationFadeIn: 1000 })
     expect(component).toMatchSnapshot()
+  })
+
+  it(`should have the the "critical" prop set "loading='eager'"`, () => {
+    const props = { critical: true }
+    const imageTag = setup(false, props).querySelector(`picture img`)
+    expect(imageTag.getAttribute(`loading`)).toEqual(`eager`)
   })
 
   it(`should call onLoad and onError image events`, () => {

@@ -53,7 +53,11 @@ can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) p
    }
    ```
 
-1. **Restart `gatsby develop`** and add an `.mdx` page to `src/pages`
+1. **Restart `gatsby develop`** and add an `.mdx` page to `src/pages
+
+**Note:** If you want to query for frontmatter, exports, or other fields like
+`tableOfContents` and you haven't previously added a `gatsby-source-filesystem`
+pointing at `src/pages` in your project, you'll want to add one now.
 
 ## What's next?
 

@@ -45,9 +45,9 @@ const CompareButton = ({ children, optionKey, selected, setSelected }) => (
   <button
     css={{
       ...compareButtonStyles,
-      color: selected ? colors.white : colors.gray.bright,
+      color: selected ? colors.white : colors.purple[200],
       backgroundColor: selected ? colors.lavender : colors.white,
-      borderColor: selected ? colors.gatsby : colors.gray.light,
+      borderColor: selected ? colors.gatsby : colors.ui.border.form,
     }}
     onClick={e => setSelected({ [optionKey]: !selected })}
   >
