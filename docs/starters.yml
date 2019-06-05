@@ -2878,3 +2878,13 @@
     - Comment feature (disqus, utterances)
     - Sponsor service (Buy-me-a-coffee)
     - CLI Tool
+- url: https://gatsby-starter-blog-with-lunr.netlify.com/
+  repo: https://github.com/lukewhitehouse/gatsby-starter-blog-with-lunr
+  description: Building upon Gatsby's blog starter with a Lunr.js powered Site Search.
+  tags:
+    - Blog
+    - Lunr.js
+    - Search
+  features:
+    - Same as the official starter blog
+    - Integration with Lunr.js
