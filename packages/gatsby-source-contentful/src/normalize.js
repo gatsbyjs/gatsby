@@ -3,6 +3,7 @@ const stringify = require(`json-stringify-safe`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const digest = str => createContentDigest(str)
+const { getNormalizedRichTextField } = require(`./rich-text`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -280,8 +281,9 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   return JSONNode
 }
 
-exports.createContentTypeNodes = ({
+exports.createNodesForContentType = ({
   contentTypeItem,
+  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -335,10 +337,22 @@ exports.createContentTypeNodes = ({
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
         const fieldProps = contentTypeItem.fields.find(field => field.id === k)
-        if (fieldProps.localized) {
-          return getField(v)
+
+        const localizedField = fieldProps.localized
+          ? getField(v)
+          : v[defaultLocale]
+
+        if (fieldProps.type === `RichText`) {
+          return getNormalizedRichTextField({
+            field: localizedField,
+            fieldProps,
+            contentTypes: contentTypeItems,
+            getField,
+            defaultLocale,
+          })
         }
-        return v[defaultLocale]
+
+        return localizedField
       })
 
       // Prefix any conflicting fields
