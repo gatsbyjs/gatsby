@@ -1,9 +1,10 @@
 import React from "react"
 import { ColorModeProvider, ThemeProvider } from "theme-ui"
+import components from "../components/mdx"
 import theme from "./index"
 
 export default props => (
   <ColorModeProvider initialColorMode="light">
-    <ThemeProvider {...props} theme={theme} />
+    <ThemeProvider {...props} components={components} theme={theme} />
   </ColorModeProvider>
 )
