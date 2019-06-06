@@ -90,7 +90,7 @@ module.exports = (
 
     if (captionOptions) {
       for (const option of captionOptions) {
-        /*eslint-disable */
+        // eslint-disable-next-line no-fallthrough, default-case
         switch (option) {
           case `title`:
             if (node.title) return node.title
@@ -99,7 +99,6 @@ module.exports = (
               return alt
             }
         }
-        /*eslint-enable */
       }
     }
 
