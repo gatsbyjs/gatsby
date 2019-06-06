@@ -3,6 +3,8 @@ const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
 
+const { normalizeRichTextField } = require(`./rich-text`)
+
 const digest = str =>
   crypto
     .createHash(`md5`)
@@ -235,6 +237,7 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
 
 exports.createNodesForContentType = ({
   contentTypeItem,
+  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -277,10 +280,22 @@ exports.createNodesForContentType = ({
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
         const fieldProps = contentTypeItem.fields.find(field => field.id === k)
-        if (fieldProps.localized) {
-          return getField(v)
+
+        const localizedField = fieldProps.localized
+          ? getField(v)
+          : v[defaultLocale]
+
+        if (fieldProps.type === `RichText`) {
+          return normalizeRichTextField({
+            field: localizedField,
+            fieldProps,
+            contentTypeItems,
+            getField,
+            defaultLocale,
+          })
         }
-        return v[defaultLocale]
+
+        return localizedField
       })
 
       // Prefix any conflicting fields
