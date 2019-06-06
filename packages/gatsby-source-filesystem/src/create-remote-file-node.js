@@ -12,7 +12,9 @@ const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-const bar = createProgress(`Downloading remote files`)
+let bar
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
 
 /********************
  * Type Definitions *
@@ -76,6 +78,14 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+})
+
+// when the queue is empty we stop the progressbar
+queue.on(`drain`, () => {
+  if (bar) {
+    bar.done()
+  }
+  totalJobs = 0
 })
 
 /**
@@ -265,9 +275,6 @@ const pushTask = task =>
       })
   })
 
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
-
 /***************
  * Entry Point *
  ***************/
@@ -324,6 +331,7 @@ module.exports = ({
   }
 
   if (totalJobs === 0) {
+    bar = createProgress(`Downloading remote files`)
     bar.start()
   }
 

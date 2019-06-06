@@ -10,7 +10,14 @@ const q = queue((task, callback) => {
   task(callback)
 }, 1)
 
-const bar = createProgress(`Generating image thumbnails`)
+let bar
+// when the queue is empty we stop the progressbar
+q.drain = () => {
+  if (bar) {
+    bar.done()
+  }
+  totalJobs = 0
+}
 
 exports.scheduleJob = async (
   job,
@@ -44,6 +51,10 @@ exports.scheduleJob = async (
     deferred.resolve = resolve
     deferred.reject = reject
   })
+  if (totalJobs === 0) {
+    bar = createProgress(`Generating image thumbnails`)
+    bar.start()
+  }
 
   totalJobs += 1
 
@@ -90,9 +101,6 @@ function runJobs(
 
   // We're now processing the file's jobs.
   let imagesFinished = 0
-  if (!bar.total) {
-    bar.start()
-  }
 
   bar.total = totalJobs
 

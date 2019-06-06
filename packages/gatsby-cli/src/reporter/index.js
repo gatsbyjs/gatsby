@@ -161,15 +161,14 @@ const reporter: Reporter = {
           status: status,
         })
       },
-      tick: () => {
+      tick() {
         activity.update({
           current: ++current,
         })
-
-        if (current === total) {
-          span.finish()
-          activity.done()
-        }
+      },
+      done() {
+        span.finish()
+        activity.done()
       },
       set total(value) {
         total = value

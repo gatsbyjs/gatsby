@@ -32,9 +32,10 @@ module.exports = {
   log: reporter.log.bind(reporter),
 
   createActivity: activity => {
+    let start
+
     if (activity.type === `spinner`) {
       const spinner = reporter.activity()
-      let start
       let status
 
       return {
@@ -64,10 +65,14 @@ module.exports = {
         {
           total: 0,
           width: 30,
+          clear: true,
         }
       )
       return {
         update: newState => {
+          if (newState.startTime) {
+            start = newState.startTime
+          }
           if (newState.total) {
             bar.total = newState.total
           }
@@ -77,9 +82,9 @@ module.exports = {
         },
         done: () => {
           reporter.success(
-            `${activity.id} — ${activity.current}/${
-              activity.total
-            } - ${calcElapsedTime(activity.startTime)} s`
+            `${activity.id} — ${bar.curr}/${bar.total} - ${calcElapsedTime(
+              start
+            )} s`
           )
         },
       }
