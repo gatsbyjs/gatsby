@@ -789,7 +789,11 @@ export interface Actions {
   deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(node: NodeInput, plugin?: ActionPlugin, options?: ActionOptions): void
+  createNode(
+    node: NodeInput,
+    plugin?: ActionPlugin,
+    options?: ActionOptions
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
   touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
@@ -1100,20 +1104,27 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
   serviceWorker: ServiceWorkerRegistration
 }
 
-export interface Node {
-  path?: string
+export interface NodeInput {
   id: string
-  parent: string
-  children: Node[]
-  fields?: Record<string, string>
   internal: {
     type: string
+    contentDigest: string
+    [key: string]: unknown
+  }
+  [key: string]: unknown
+}
+
+export interface Node extends NodeInput {
+  internal: NodeInput["internal"] & {
     mediaType: string
     content: string
-    contentDigest: string
     owner: string
     description?: string
   }
+  path?: string
+  parent: string
+  children: Node[]
+  fields?: Record<string, string>
   resolve?: string
   name?: string
   version?: string
@@ -1138,17 +1149,4 @@ export interface Node {
   pluginCreatorId?: string
   componentPath?: string
   [key: string]: unknown
-}
-
-export interface NodeInput {
-  id: string
-  parent: string
-  children: Node[]
-  internal: {
-    type: string
-    mediaType?: string
-    content: string
-    contentDigest: string
-    description?: string
-  }
 }
