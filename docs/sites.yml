@@ -6277,3 +6277,15 @@
     - Beauty
   built_by: Ask Phill
   built_by_url: https://askphill.com
+- title: Goulburn Physiotherapy
+  url: https://www.goulburnphysiotherapy.com.au/
+  main_url: https://www.goulburnphysiotherapy.com.au/
+  description: >
+    Goulburn Physiotherapy is a leader in injury prevention, individual and community health, and workplace health solutions across Central Victoria.
+  categories:
+    - Blog
+    - Healthcare
+    - Health & Wellness
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
