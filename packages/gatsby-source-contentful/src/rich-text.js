@@ -92,6 +92,10 @@ const getNormalizedRichTextNode = ({
   return node
 }
 
+/**
+ * Walk through the rich-text object, resolving locales on referenced entries
+ * (and on entries they've referenced, etc.).
+ */
 const getNormalizedRichTextField = ({
   field,
   contentTypes,
