@@ -54,25 +54,6 @@ const getEntryWithFieldLocalesResolved = ({
   }
 }
 
-const resolveLocaleForEntryReferenceNode = ({
-  node,
-  contentTypes,
-  getField,
-  defaultLocale,
-}) => {
-  return {
-    ...node,
-    data: {
-      target: getEntryWithFieldLocalesResolved({
-        entry: node.data.target,
-        contentTypes,
-        getField,
-        defaultLocale,
-      }),
-    },
-  }
-}
-
 const getNormalizedRichTextNode = ({
   node,
   contentTypes,
@@ -80,12 +61,18 @@ const getNormalizedRichTextNode = ({
   defaultLocale,
 }) => {
   if (isEntryReferenceNode(node)) {
-    return resolveLocaleForEntryReferenceNode({
-      node,
-      contentTypes,
-      getField,
-      defaultLocale,
-    })
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        target: getEntryWithFieldLocalesResolved({
+          entry: node.data.target,
+          contentTypes,
+          getField,
+          defaultLocale,
+        }),
+      },
+    }
   }
 
   if (Array.isArray(node.content)) {
