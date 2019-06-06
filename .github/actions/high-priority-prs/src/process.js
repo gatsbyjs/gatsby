@@ -2,6 +2,9 @@ const _ = require(`lodash`)
 const { WebClient } = require("@slack/web-api")
 const prMessage = require(`./pr-message`)
 const { Toolkit } = require("actions-toolkit")
+const parse = require("date-fns/parse")
+const isBefore = require("date-fns/is_before")
+const differenceInDays = require("date-fns/difference_in_days")
 const tools = new Toolkit({
   secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
 })
@@ -83,14 +86,12 @@ const maintainers = {
   },
 }
 
-const ignoreMessages = [
-  "Merge branch 'master'",
-  "Merge remote-tracking branch"
-]
+const ignoreMessages = ["Merge branch 'master'", "Merge remote-tracking branch"]
 
-module.exports = data => {
+const process = (data, now = new Date()) => {
   const prs = data.repository.pullRequests
 
+  // fs.writeFileSync("./data.json", JSON.stringify(data))
   // Total PRs
   // console.log(`total PRS`, prs.totalCount)
 
@@ -99,6 +100,7 @@ module.exports = data => {
   const queues = {
     noMaintainers: [],
     commitsSinceLastComment: [],
+    lonelyPrs: [],
   }
 
   // Combine comments and reviews (for us, they're the same).
@@ -155,8 +157,8 @@ module.exports = data => {
     const authorUrl = pr.author.url
     const botUrl = "https://github.com/apps/gatsbot"
 
-    const reviewList = pr.comments.nodes.filter(x => 
-      (x.author.url !== authorUrl && x.author.url !== botUrl)
+    const reviewList = pr.comments.nodes.filter(
+      x => x.author.url !== authorUrl && x.author.url !== botUrl
     )
     const lastComment = _.get(
       _.maxBy(reviewList, n => n.createdAt),
@@ -166,15 +168,17 @@ module.exports = data => {
     let commitMessages = []
     pr.commits.nodes.forEach(c => {
       const message = c.commit.message
-      if(ignoreMessages.every(im => message.indexOf(im) === -1) ) {
+      if (ignoreMessages.every(im => message.indexOf(im) === -1)) {
         commitMessages.push(c)
       } else {
         commitMessages = []
       }
     })
 
-    commitMessages = commitMessages.filter(c => lastComment < c.commit.authoredDate)
-    commitNewerThanComment = (commitMessages.length !== 0)
+    commitMessages = commitMessages.filter(
+      c => lastComment < c.commit.authoredDate
+    )
+    commitNewerThanComment = commitMessages.length !== 0
 
     if (
       commitNewerThanComment &&
@@ -184,12 +188,25 @@ module.exports = data => {
     }
   })
 
+  // lonely PRs - open PRs that haven't been updated for at least 30 days
+  const DAYS_TO_LONELY = 30
+  const prIsLonely = pr =>
+    differenceInDays(now, parse(pr.updatedAt)) > DAYS_TO_LONELY
+  const prsByDate = (a, b) =>
+    isBefore(parse(a.updatedAt), parse(b.updatedAt)) ? -1 : 1
+  const lonely = prs.nodes.filter(prIsLonely).sort(prsByDate)
+  queues.lonelyPrs.push(...lonely)
+
   // Sort awaiting responses by how long since they were last updated.
   queues.commitsSinceLastComment = _.sortBy(
     queues.commitsSinceLastComment,
     pr => pr.updatedAt
   )
 
+  return queues
+}
+
+const report = queues => {
   const report = prMessage(queues, maintainers)
 
   tools.log.info(JSON.stringify(report, null, 4))
@@ -214,4 +231,11 @@ module.exports = data => {
       tools.exit.failure()
     }
   })()
+}
+
+module.exports = {
+  process,
+  report,
+  ignoreMessages,
+  maintainers,
 }
