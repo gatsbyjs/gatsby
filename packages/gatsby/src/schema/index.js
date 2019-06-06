@@ -5,14 +5,22 @@ const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)
 const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
+const { builtInFieldExtensions } = require(`./extensions`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
 module.exports.build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  let {
-    schemaCustomization: { thirdPartySchemas, types },
+  Object.entries(builtInFieldExtensions).forEach(([name, extension]) =>
+    store.dispatch({
+      type: `CREATE_FIELD_EXTENSION`,
+      payload: { name, extension },
+    })
+  )
+
+  const {
+    schemaCustomization: { thirdPartySchemas, types, fieldExtensions },
     config: { mapping: typeMapping },
   } = store.getState()
 
@@ -23,11 +31,12 @@ module.exports.build = async ({ parentSpan }) => {
     type => type.plugin && type.plugin.name === `default-site-plugin`
   )
 
-  const schemaComposer = createSchemaComposer()
+  const schemaComposer = createSchemaComposer({ fieldExtensions })
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,
     types: sortedTypes,
+    fieldExtensions,
     thirdPartySchemas,
     typeMapping,
     typeConflictReporter,
@@ -54,8 +63,9 @@ module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
     `rebuild schema with SitePage context`,
     spanArgs
   )
-  let {
-    schemaCustomization: { composer: schemaComposer },
+
+  const {
+    schemaCustomization: { composer: schemaComposer, fieldExtensions },
     config: { mapping: typeMapping },
   } = store.getState()
 
@@ -64,6 +74,7 @@ module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
   const schema = await rebuildSchemaWithSitePage({
     schemaComposer,
     nodeStore,
+    fieldExtensions,
     typeMapping,
     typeConflictReporter,
     parentSpan,

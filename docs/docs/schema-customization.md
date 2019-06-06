@@ -154,7 +154,7 @@ type definitions to Gatsby with the [`createTypes`](/docs/actions/#createTypes) 
 It accepts type definitions in GraphQL Schema Definition Language:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type AuthorJson implements Node {
@@ -168,9 +168,9 @@ exports.sourceNodes = ({ actions }) => {
 Note that the rest of the fields (`name`, `firstName` etc.) don't have to be
 provided, they will still be handled by Gatsby's type inference.
 
-> Although the `createTypes` action is passed to all `gatsby-node` APIs,
-> it has to be called before schema generation. We recommend to use the
-> [`sourceNodes` API](/docs/node-apis/#sourceNodes).
+> Actions to customize Gatsby's schema generation are made available in the
+> [`createSchemaCustomization`](/docs/node-apis/#createSchemaCustomization),
+> and [`sourcesNodes`](/docs/node-apis/#sourceNodes) APIs.
 
 #### Opting out of type inference
 
@@ -184,7 +184,7 @@ in turn requires that you explicitly provide type definitions for all fields
 that should be available for querying:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type AuthorJson implements Node @dontInfer {
@@ -216,7 +216,7 @@ named (as long as the name is unique in the schema). In our example project, the
 want to ensure that `frontmatter.tags` will always be an array of strings.
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type MarkdownRemark implements Node {
@@ -236,7 +236,7 @@ without also specifying that this is the type of the `frontmatter` field on the
 of knowing which field the `Frontmatter` type should be applied to:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     # This will fail!!!
@@ -264,7 +264,7 @@ are more flexible than SDL syntax but less verbose than `graphql-js`. They are
 accessible on the `schema` argument passed to Node APIs.
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     schema.buildObjectType({
@@ -328,7 +328,7 @@ For this to work, we have to provide a custom field resolver. (see below for
 more info on `context.nodeModel`)
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ action, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -407,7 +407,7 @@ To add an extension to a field you can either use a directive in SDL, or the
 `extensions` property when using Gatsby Type Builders:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ action, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -453,7 +453,7 @@ out-of-the-box extension, so resolving a field to a default value (instead of
 tag to every blog post:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ action, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -693,7 +693,7 @@ a `TeamMember` interface and add a custom query field for all team members
 (as well as a custom resolver for full names):
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     interface TeamMember {

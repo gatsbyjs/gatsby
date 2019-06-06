@@ -872,9 +872,16 @@ export interface Actions {
     traceId?: string
   ): void
 
-  /** TODO create jsdoc on gatsbyjs.org */
+  /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
   createTypes(
     types: string | object | Array<string | object>,
+    plugin: ActionPlugin,
+    traceId?: string
+  ): void
+
+  /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
+  createFieldExtension(
+    extension: object,
     plugin: ActionPlugin,
     traceId?: string
   ): void
