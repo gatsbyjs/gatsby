@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import { Global } from "@emotion/core"
 import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
-import Toggle from "./toggle"
+import Switch from "./switch"
 
 import sun from "../../content/assets/sun.png"
 import moon from "../../content/assets/moon.png"
@@ -55,6 +55,34 @@ const Title = props => {
   }
 }
 
+const checkedIcon = (
+  <img
+    alt="moon indicating dark mode"
+    src={moon}
+    width="16"
+    height="16"
+    role="presentation"
+    css={{
+      pointerEvents: `none`,
+      margin: 4,
+    }}
+  />
+)
+
+const uncheckedIcon = (
+  <img
+    alt="sun indicating light mode"
+    src={sun}
+    width="16"
+    height="16"
+    role="presentation"
+    css={{
+      pointerEvents: `none`,
+      margin: 4,
+    }}
+  />
+)
+
 export default props => {
   const { children } = props
   const [colorMode, setColorMode] = useColorMode()
@@ -89,31 +117,17 @@ export default props => {
             })}
           >
             <Title {...props} />
-            <Toggle
+            <Switch
+              label='Toggle dark mode'
+              css={css({
+                bg: 'black',
+              })}
               icons={{
-                checked: (
-                  <img
-                    alt="moon indicating dark mode"
-                    src={moon}
-                    width="16"
-                    height="16"
-                    role="presentation"
-                    css={{ pointerEvents: `none` }}
-                  />
-                ),
-                unchecked: (
-                  <img
-                    alt="sun indicating light mode"
-                    src={sun}
-                    width="16"
-                    height="16"
-                    role="presentation"
-                    css={{ pointerEvents: `none` }}
-                  />
-                ),
+                checked: checkedIcon,
+                unchecked: uncheckedIcon,
               }}
               checked={isDark}
-              onChange={toggleColorMode}
+              onClick={toggleColorMode}
             />
           </Header>
           {children}
