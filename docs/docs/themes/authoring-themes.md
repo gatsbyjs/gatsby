@@ -1,5 +1,5 @@
 ---
-title: How to author a theme
+title: How to Author a Theme
 ---
 
 ## What’s contained in this tutorial?
@@ -17,7 +17,7 @@ Before following this tutorial, you should have experience building a Gatsby sit
 
 ## Setting up your environment for theme development
 
-While there are many ways to develop a Gatsby Theme, we think the easiest way to get started is by creating a Yarn workspace. Yarn workspaces allow you test how a theme might behave inside of a site without you having to actually publish a theme to npm. You are, of course, welcome to develop your theme any way you’d like.
+While there are many ways to develop a Gatsby Theme, the recommended way is to create a Yarn workspace. Yarn workspaces allow you test how a theme might behave inside of a site without you having to actually publish a theme to npm. You are, of course, welcome to develop your theme any way you’d like.
 
 First, if you don’t have yarn installed, you can follow these instructions (https://yarnpkg.com/en/docs/install) to install it.
 
@@ -46,7 +46,7 @@ Conventionally, Gatsby Themes are prefixed with `gatsby-theme-*`. So, if you wan
 
 Once you have that set up, add a `package.json` file to the root of the project. It should look like this:
 
-```json
+```json:title=package.json
 {
   "private": true,
   "workspaces": ["themes/*", "sandbox-app"]
@@ -57,7 +57,12 @@ Once you have that set up, add a `package.json` file to the root of the project.
 
 Next, `cd` into the `sandbox-app` directory and create a `package.json` file:
 
-```json
+```bash
+cd sandbox-app
+touch package.json
+```
+
+```json:title=sandbox-app/package.json
 {
   "name": "sandbox-app",
   "private": true,
@@ -68,7 +73,12 @@ Next, `cd` into the `sandbox-app` directory and create a `package.json` file:
 
 Then, `cd` into the `gatsby-theme-my-theme` directory, and create a similar `package.json` file':
 
-```json
+```bash
+cd ../gatsby-theme-my-theme
+touch package.json
+```
+
+```json:title=gatsby-theme-my-theme/package.json
 {
   "name": "gatsby-theme-my-theme",
   "private": true,
@@ -90,13 +100,13 @@ gatsby-theme-my-theme/
 
 One of the best parts about Yarn workspaces is you can run commands for all of your directories from the root of your project using the `yarn workspace <package>` command.
 
-Let's try it out. You'll need to install Gatsby's dependencies in your `sandbox-app`. To do so, run this command:
+To try it out, you'll need to install Gatsby's dependencies in your `sandbox-app`. To do so, run this command:
 
 ```bash
 yarn workspace example add gatsby react react-dom
 ```
 
-Next, let's add these as `peerDependencies` to your theme.
+Next, add these as `peerDependencies` to your theme.
 
 ```bash
 yarn workspace gatsby-theme-my-theme add --peer gatsby react react-dom
