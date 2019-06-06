@@ -233,7 +233,7 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   return JSONNode
 }
 
-exports.createContentTypeNodes = ({
+exports.createNodesForContentType = ({
   contentTypeItem,
   restrictedNodeFields,
   conflictFieldPrefix,

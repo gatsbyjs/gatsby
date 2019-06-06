@@ -55,7 +55,7 @@ describe(`Process contentful data`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
-      normalize.createContentTypeNodes({
+      normalize.createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
