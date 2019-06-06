@@ -118,9 +118,9 @@ export default props => {
           >
             <Title {...props} />
             <Switch
-              label='Toggle dark mode'
+              label="Toggle dark mode"
               css={css({
-                bg: 'black',
+                bg: `black`,
               })}
               icons={{
                 checked: checkedIcon,
