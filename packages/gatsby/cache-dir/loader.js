@@ -116,9 +116,41 @@ const handlePageDataResponse = (path, req) => {
     // and we can infer that the requested page doesn't exist
     if (!contentType || !contentType.startsWith(`application/json`)) {
       pageNotFoundPaths.add(path)
+      if (window.Sentry !== undefined) {
+        window.Sentry.withScope(scope => {
+          scope.setExtra(`contentType`, contentType)
+          scope.setExtra(
+            `contentLength`,
+            req.getResponseHeader(`content-length`)
+          )
+          scope.setExtra(`server`, req.getResponseHeader(`server`))
+          scope.setExtra(`page-path`, path)
+          scope.setExtra(`response-url`, req.responseURL)
+          window.Sentry.captureMessage(`unexpected pageData.json content type`)
+        })
+      }
+
+      // null signifies "page doesn't exist"
       return null
     } else {
       const pageData = JSON.parse(req.responseText)
+      if (window.Sentry !== undefined) {
+        if (pageData === null) {
+          window.Sentry.withScope(scope => {
+            scope.setExtra(`contentType`, contentType)
+            scope.setExtra(
+              `contentLength`,
+              req.getResponseHeader(`content-length`)
+            )
+            scope.setExtra(`server`, req.getResponseHeader(`server`))
+            scope.setExtra(`page-path`, path)
+            scope.setExtra(`response-url`, req.responseURL)
+            window.Sentry.captureMessage(
+              `page-data.json request ruturned 200, but JSON.parse returned null`
+            )
+          })
+        }
+      }
       pageDatas[path] = pageData
       return pageData
     }
@@ -126,7 +158,19 @@ const handlePageDataResponse = (path, req) => {
     pageNotFoundPaths.add(path)
     return null
   } else {
-    throw new Error(`error fetching page`)
+    if (window.Sentry !== undefined) {
+      window.Sentry.withScope(scope => {
+        scope.setExtra(`status`, req.status)
+        scope.setExtra(`page-path`, path)
+        scope.setExtra(`response-url`, req.responseURL)
+        window.Sentry.captureMessage(`non-200/404 page-data.json response`)
+      })
+    }
+    // TODO At the moment, if a 500 error occurs, we act as if the
+    // page doesn't exist at all. We should perform retry logic
+    // instead
+    pageNotFoundPaths.add(path)
+    return null
   }
 }
 
@@ -246,6 +290,9 @@ const queue = {
           fetchPageData(realPath)
         )
         .then(pageData => {
+          if (pageData === null) {
+            return Promise.resolve()
+          }
           // Tell plugins the path has been successfully prefetched
           const chunkName = pageData.componentChunkName
           const componentUrls = createComponentUrls(chunkName)
