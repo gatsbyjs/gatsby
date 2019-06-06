@@ -368,15 +368,6 @@ exports.mapEntitiesToMedia = (entities, _siteURL) => {
   return entities.map(e => {
     // Map featured_media to its media node
 
-    // Replace media URL if rely on localhost, when _siteURL isn't
-    if (
-      e.source_url &&
-      e.source_url.indexOf(`localhost`) !== -1 &&
-      _siteURL.indexOf(`localhost`) === -1
-    ) {
-      e.source_url = useApiUrl(_siteURL, e.source_url)
-    }
-
     // Check if it's value of ACF Image field, that has 'Return value' set to
     // 'Image Object' ( https://www.advancedcustomfields.com/resources/image/ )
     const isPhotoObject = field =>
