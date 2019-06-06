@@ -9,7 +9,6 @@ import matchPaths from "./match-paths.json"
 const preferDefault = m => (m && m.default) || m
 
 const pageNotFoundPaths = new Set()
-const Sentry = window.Sentry
 
 let apiRunner
 let syncRequires = {}
@@ -117,8 +116,8 @@ const handlePageDataResponse = (path, req) => {
     // and we can infer that the requested page doesn't exist
     if (!contentType || !contentType.startsWith(`application/json`)) {
       pageNotFoundPaths.add(path)
-      if (Sentry !== undefined) {
-        Sentry.withScope(scope => {
+      if (window.Sentry !== undefined) {
+        window.Sentry.withScope(scope => {
           scope.setExtra(`contentType`, contentType)
           scope.setExtra(
             `contentLength`,
@@ -127,7 +126,7 @@ const handlePageDataResponse = (path, req) => {
           scope.setExtra(`server`, req.getResponseHeader(`server`))
           scope.setExtra(`page-path`, path)
           scope.setExtra(`response-url`, req.responseURL)
-          Sentry.captureMessage(`unexpected pageData.json content type`)
+          window.Sentry.captureMessage(`unexpected pageData.json content type`)
         })
       }
 
@@ -135,9 +134,9 @@ const handlePageDataResponse = (path, req) => {
       return null
     } else {
       const pageData = JSON.parse(req.responseText)
-      if (Sentry !== undefined) {
+      if (window.Sentry !== undefined) {
         if (pageData === null) {
-          Sentry.withScope(scope => {
+          window.Sentry.withScope(scope => {
             scope.setExtra(`contentType`, contentType)
             scope.setExtra(
               `contentLength`,
@@ -146,7 +145,7 @@ const handlePageDataResponse = (path, req) => {
             scope.setExtra(`server`, req.getResponseHeader(`server`))
             scope.setExtra(`page-path`, path)
             scope.setExtra(`response-url`, req.responseURL)
-            Sentry.captureMessage(
+            window.Sentry.captureMessage(
               `page-data.json request ruturned 200, but JSON.parse returned null`
             )
           })
@@ -159,12 +158,12 @@ const handlePageDataResponse = (path, req) => {
     pageNotFoundPaths.add(path)
     return null
   } else {
-    if (Sentry !== undefined) {
-      Sentry.withScope(scope => {
+    if (window.Sentry !== undefined) {
+      window.Sentry.withScope(scope => {
         scope.setExtra(`status`, req.status)
         scope.setExtra(`page-path`, path)
         scope.setExtra(`response-url`, req.responseURL)
-        Sentry.captureMessage(`non-200/404 page-data.json response`)
+        window.Sentry.captureMessage(`non-200/404 page-data.json response`)
       })
     }
     // TODO At the moment, if a 500 error occurs, we act as if the
