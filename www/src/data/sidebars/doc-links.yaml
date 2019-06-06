@@ -310,7 +310,7 @@
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
             - title: Using Client-Side Only Packages
-            - link: /docs/using-client-side-only-packages
+              link: /docs/using-client-side-only-packages
         - title: Improving Performance
           link: /docs/performance/
           items:
