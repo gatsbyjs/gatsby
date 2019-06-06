@@ -6277,6 +6277,18 @@
     - Beauty
   built_by: Ask Phill
   built_by_url: https://askphill.com
+- title: EngineHub.org
+  url: https://enginehub.org
+  main_url: https://enginehub.org
+  source_url: https://github.com/EngineHub/enginehub-website
+  description: >
+    The landing pages for EngineHub, the organisation behind WorldEdit, WorldGuard, CraftBook, and more
+  categories:
+    - Landing Page
+    - Technology
+    - Open Source
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev
 - title: Goulburn Physiotherapy
   url: https://www.goulburnphysiotherapy.com.au/
   main_url: https://www.goulburnphysiotherapy.com.au/
