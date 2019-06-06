@@ -202,6 +202,7 @@ exports.sourceNodes = async (
       foreignReferenceMap,
       defaultLocale,
       locales,
+      options: pluginOptions,
     })
   })
 

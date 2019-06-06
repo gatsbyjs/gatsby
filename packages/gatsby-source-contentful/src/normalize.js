@@ -233,6 +233,39 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   return JSONNode
 }
 
+function applyRichTextEntryFieldFilters(
+  entryItemFieldValue,
+  resolvable,
+  options
+) {
+  if (
+    _.get(entryItemFieldValue, `data.target.sys.id`) &&
+    resolvable.has(entryItemFieldValue.data.target.sys.id)
+  ) {
+    const { includeEntryFields, excludeEntryFields } = options.richText || {}
+
+    let fields = entryItemFieldValue.data.target.fields
+    if (includeEntryFields) {
+      fields = _.pick(fields, includeEntryFields)
+    } else if (excludeEntryFields) {
+      fields = _.omit(fields, excludeEntryFields)
+    }
+
+    entryItemFieldValue.data.target = {
+      sys: entryItemFieldValue.data.target.sys,
+      fields,
+    }
+  }
+
+  if (Array.isArray(entryItemFieldValue.content)) {
+    entryItemFieldValue.content.forEach(contentItem =>
+      applyRichTextEntryFieldFilters(contentItem, resolvable, options)
+    )
+  }
+}
+
+exports.applyRichTextEntryFieldFilters = applyRichTextEntryFieldFilters
+
 exports.createContentTypeNodes = ({
   contentTypeItem,
   restrictedNodeFields,
@@ -244,6 +277,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
   locales,
+  options,
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
@@ -332,6 +366,15 @@ exports.createContentTypeNodes = ({
               )
             }
             delete entryItemFields[entryItemFieldKey]
+          } else if (
+            entryItemFieldValue.nodeType &&
+            entryItemFieldValue.nodeType === `document`
+          ) {
+            applyRichTextEntryFieldFilters(
+              entryItemFieldValue,
+              resolvable,
+              options
+            )
           }
         }
       })

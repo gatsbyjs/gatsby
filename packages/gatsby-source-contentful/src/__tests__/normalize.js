@@ -209,3 +209,93 @@ describe(`Make IDs`, () => {
     ).toBe(`id___en-GB`)
   })
 })
+
+describe(`rich-text entry field inclusion/exclusion`, () => {
+  describe(`when there are no rich-text entry field filters`, () => {
+    const pluginOptions = {}
+
+    it(`includes entries referenced by rich text as-is`, () => {
+      const entryItemFieldValue = {
+        data: {
+          target: {
+            sys: { id: `id123` },
+            fields: { title: `This is a title`, body: `This is the body` },
+          },
+        },
+      }
+      const resolvable = new Set()
+      resolvable.add(`id123`)
+
+      normalize.applyRichTextEntryFieldFilters(
+        entryItemFieldValue,
+        resolvable,
+        pluginOptions
+      )
+
+      const includedFields = Object.keys(entryItemFieldValue.data.target.fields)
+
+      expect(includedFields).toContain(`title`)
+      expect(includedFields).toContain(`body`)
+    })
+  })
+
+  describe(`when there is an include filter`, () => {
+    const pluginOptions = {
+      richText: { includeEntryFields: [`title`] },
+    }
+
+    it(`includes only the listed fields from referenced entries`, () => {
+      const entryItemFieldValue = {
+        data: {
+          target: {
+            sys: { id: `id123` },
+            fields: { title: `This is a title`, body: `This is the body` },
+          },
+        },
+      }
+      const resolvable = new Set()
+      resolvable.add(`id123`)
+
+      normalize.applyRichTextEntryFieldFilters(
+        entryItemFieldValue,
+        resolvable,
+        pluginOptions
+      )
+
+      const includedFields = Object.keys(entryItemFieldValue.data.target.fields)
+
+      expect(includedFields).toContain(`title`)
+      expect(includedFields).not.toContain(`body`)
+    })
+  })
+
+  describe(`when there is an exclude filter`, () => {
+    const pluginOptions = {
+      richText: { excludeEntryFields: [`title`] },
+    }
+
+    it(`includes only the other fields from referenced entries`, () => {
+      const entryItemFieldValue = {
+        data: {
+          target: {
+            sys: { id: `id123` },
+            fields: { title: `This is a title`, body: `This is the body` },
+          },
+        },
+      }
+      const resolvable = new Set()
+      resolvable.add(`id123`)
+
+      normalize.applyRichTextEntryFieldFilters(
+        entryItemFieldValue,
+        resolvable,
+        pluginOptions
+      )
+
+      const includedFields = Object.keys(entryItemFieldValue.data.target.fields)
+
+      expect(includedFields).not.toContain(`title`)
+      expect(includedFields).toContain(`body`)
+    })
+  })
+})

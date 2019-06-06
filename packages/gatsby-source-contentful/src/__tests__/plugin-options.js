@@ -101,6 +101,64 @@ describe(`Options validation`, () => {
     expect(reporter.panic).not.toBeCalled()
   })
 
+  it(`Passes with a richText.includeEntryFields option`, () => {
+    validateOptions(
+      {
+        reporter,
+      },
+      {
+        spaceId: `spaceId`,
+        accessToken: `accessToken`,
+        localeFilter: locale => locale.code === `de`,
+        downloadLocal: false,
+        richText: {
+          includeEntryFields: [`title`],
+        },
+      }
+    )
+
+    expect(reporter.panic).not.toBeCalled()
+  })
+
+  it(`Passes with a richText.excludeEntryFields option`, () => {
+    validateOptions(
+      {
+        reporter,
+      },
+      {
+        spaceId: `spaceId`,
+        accessToken: `accessToken`,
+        localeFilter: locale => locale.code === `de`,
+        downloadLocal: false,
+        richText: {
+          excludeEntryFields: [`title`],
+        },
+      }
+    )
+
+    expect(reporter.panic).not.toBeCalled()
+  })
+
+  it(`Fails when both richText.includeEntryFields and richText.excludeEntryFields are passed`, () => {
+    validateOptions(
+      {
+        reporter,
+      },
+      {
+        spaceId: `spaceId`,
+        accessToken: `accessToken`,
+        localeFilter: locale => locale.code === `de`,
+        downloadLocal: false,
+        richText: {
+          includeEntryFields: [`title`],
+          excludeEntryFields: [`title`],
+        },
+      }
+    )
+
+    expect(reporter.panic).toBeCalled()
+  })
+
   it(`Fails with missing required options`, () => {
     validateOptions(
       {

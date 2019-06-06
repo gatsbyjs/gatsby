@@ -32,6 +32,12 @@ const optionsSchema = Joi.object().keys({
   localeFilter: Joi.func(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
+  richText: Joi.object()
+    .keys({
+      includeEntryFields: Joi.array().items(Joi.string()),
+      excludeEntryFields: Joi.array().items(Joi.string()),
+    })
+    .oxor(`includeEntryFields`, `excludeEntryFields`),
 })
 
 const maskedFields = [`accessToken`, `spaceId`]
