@@ -6253,6 +6253,20 @@
   built_by: Adriaan Janse van Rensburg
   built_by_url: https://github.com/HurricaneInteractive/
   featured: false
+- title: The Edit Suite
+  main_url: https://www.theeditsuite.com.au/
+  url: https://www.theeditsuite.com.au/
+  source_url: https://thriveweb.com.au/portfolio/the-edit-suite/
+  description: >-
+    The Edit Suite is an award winning video production and photography company based out of our Mermaid Beach studio on the Gold Coast of Australia but we also have the ability to work mobile from any location.
+  categories:
+    - Photography
+    - Motion graphics
+    - Events
+    - Marketing
+  built_by: Thrive Team - Gold Coast
+  built_by_url: https://thriveweb.com.au/
+  featured: false
 - title: CarineRoitfeld
   main_url: https://www.carineroitfeld.com/
   url: https://www.carineroitfeld.com/
