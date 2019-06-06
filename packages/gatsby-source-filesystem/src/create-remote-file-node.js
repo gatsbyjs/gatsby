@@ -6,7 +6,7 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const { createProgress } = require(`gatsby-cli/lib/reporter`)
+const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)

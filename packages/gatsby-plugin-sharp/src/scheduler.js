@@ -1,8 +1,8 @@
 const _ = require(`lodash`)
-const { createProgress } = require(`gatsby-cli/lib/reporter`)
 const { existsSync } = require(`fs`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
+const { createProgress } = require(`./utils`)
 
 const toProcess = {}
 let totalJobs = 0
