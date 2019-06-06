@@ -1,4 +1,4 @@
-const { normalizeRichTextField } = require(`../rich-text`)
+const { getNormalizedRichTextField } = require(`../rich-text`)
 
 const entryFactory = () => {
   return {
@@ -23,14 +23,14 @@ const entryFactory = () => {
   }
 }
 
-describe(`normalizeRichTextField()`, () => {
-  let contentTypeItems
+describe(`getNormalizedRichTextField()`, () => {
+  let contentTypes
   let currentLocale
   let defaultLocale
   let getField
 
   beforeEach(() => {
-    contentTypeItems = [
+    contentTypes = [
       {
         sys: { id: `article` },
         fields: [
@@ -58,9 +58,9 @@ describe(`normalizeRichTextField()`, () => {
         ],
       }
       expect(
-        normalizeRichTextField({
+        getNormalizedRichTextField({
           field,
-          contentTypeItems,
+          contentTypes,
           getField,
           defaultLocale,
         })
@@ -86,9 +86,9 @@ describe(`normalizeRichTextField()`, () => {
           }
 
           const expectedTitle = `Title`
-          const actualTitle = normalizeRichTextField({
+          const actualTitle = getNormalizedRichTextField({
             field,
-            contentTypeItems,
+            contentTypes,
             getField,
             defaultLocale,
           }).content[0].data.target.fields.title
@@ -113,9 +113,9 @@ describe(`normalizeRichTextField()`, () => {
           }
 
           const expectedTitle = `Titel`
-          const actualTitle = normalizeRichTextField({
+          const actualTitle = getNormalizedRichTextField({
             field,
-            contentTypeItems,
+            contentTypes,
             getField,
             defaultLocale,
           }).content[0].data.target.fields.title
@@ -143,9 +143,9 @@ describe(`normalizeRichTextField()`, () => {
         }
 
         const expectedTitle = `Titel zwei`
-        const actualTitle = normalizeRichTextField({
+        const actualTitle = getNormalizedRichTextField({
           field,
-          contentTypeItems,
+          contentTypes,
           getField,
           defaultLocale,
         }).content[0].data.target.fields.relatedArticle.fields.title

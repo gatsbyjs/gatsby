@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
 
-const { normalizeRichTextField } = require(`./rich-text`)
+const { getNormalizedRichTextField } = require(`./rich-text`)
 
 const digest = str =>
   crypto
@@ -286,10 +286,10 @@ exports.createNodesForContentType = ({
           : v[defaultLocale]
 
         if (fieldProps.type === `RichText`) {
-          return normalizeRichTextField({
+          return getNormalizedRichTextField({
             field: localizedField,
             fieldProps,
-            contentTypeItems,
+            contentTypes: contentTypeItems,
             getField,
             defaultLocale,
           })

@@ -11,31 +11,28 @@ const isEntryReferenceNode = node =>
 const isEntryReferenceField = field =>
   field && field.sys && field.sys.type === `Entry`
 
-const getContentTypeItemFromEntry = (entry, contentTypeItems) =>
-  contentTypeItems.find(
-    contentTypeItem =>
+const getEntryContentType = (entry, contentTypes) =>
+  contentTypes.find(
+    contentType =>
       entry.sys.contentType &&
-      contentTypeItem.sys.id === entry.sys.contentType.sys.id
+      contentType.sys.id === entry.sys.contentType.sys.id
   )
 
-const getFieldPropsFromContentTypeItem = (contentTypeItem, fieldName) =>
-  contentTypeItem.fields.find(({ id }) => id === fieldName)
+const getFieldProps = (contentType, fieldName) =>
+  contentType.fields.find(({ id }) => id === fieldName)
 
-const resolveLocaleForAllEntryFields = ({
+const getEntryWithFieldLocalesResolved = ({
   entry,
-  contentTypeItems,
+  contentTypes,
   getField,
   defaultLocale,
 }) => {
-  const contentTypeItem = getContentTypeItemFromEntry(entry, contentTypeItems)
+  const contentType = getEntryContentType(entry, contentTypes)
 
   return {
     ...entry,
     fields: _.mapValues(entry.fields, (field, fieldName) => {
-      const fieldProps = getFieldPropsFromContentTypeItem(
-        contentTypeItem,
-        fieldName
-      )
+      const fieldProps = getFieldProps(contentType, fieldName)
 
       const fieldValue = fieldProps.localized
         ? getField(field)
@@ -44,9 +41,9 @@ const resolveLocaleForAllEntryFields = ({
       // If one of the entry's fields is itself a reference to another entry,
       // recursively resolve that entry's field locales too.
       if (isEntryReferenceField(fieldValue)) {
-        return resolveLocaleForAllEntryFields({
+        return getEntryWithFieldLocalesResolved({
           entry: fieldValue,
-          contentTypeItems,
+          contentTypes,
           getField,
           defaultLocale,
         })
@@ -59,16 +56,16 @@ const resolveLocaleForAllEntryFields = ({
 
 const resolveLocaleForEntryReferenceNode = ({
   node,
-  contentTypeItems,
+  contentTypes,
   getField,
   defaultLocale,
 }) => {
   return {
     ...node,
     data: {
-      target: resolveLocaleForAllEntryFields({
+      target: getEntryWithFieldLocalesResolved({
         entry: node.data.target,
-        contentTypeItems,
+        contentTypes,
         getField,
         defaultLocale,
       }),
@@ -76,16 +73,16 @@ const resolveLocaleForEntryReferenceNode = ({
   }
 }
 
-const normalizeRichTextNode = ({
+const getNormalizedRichTextNode = ({
   node,
-  contentTypeItems,
+  contentTypes,
   getField,
   defaultLocale,
 }) => {
   if (isEntryReferenceNode(node)) {
     return resolveLocaleForEntryReferenceNode({
       node,
-      contentTypeItems,
+      contentTypes,
       getField,
       defaultLocale,
     })
@@ -95,9 +92,9 @@ const normalizeRichTextNode = ({
     return {
       ...node,
       content: node.content.map(childNode =>
-        normalizeRichTextNode({
+        getNormalizedRichTextNode({
           node: childNode,
-          contentTypeItems,
+          contentTypes,
           getField,
           defaultLocale,
         })
@@ -108,9 +105,9 @@ const normalizeRichTextNode = ({
   return node
 }
 
-const normalizeRichTextField = ({
+const getNormalizedRichTextField = ({
   field,
-  contentTypeItems,
+  contentTypes,
   getField,
   defaultLocale,
 }) => {
@@ -118,9 +115,9 @@ const normalizeRichTextField = ({
     return {
       ...field,
       content: field.content.map(node =>
-        normalizeRichTextNode({
+        getNormalizedRichTextNode({
           node,
-          contentTypeItems,
+          contentTypes,
           getField,
           defaultLocale,
         })
@@ -131,4 +128,4 @@ const normalizeRichTextField = ({
   return field
 }
 
-exports.normalizeRichTextField = normalizeRichTextField
+exports.getNormalizedRichTextField = getNormalizedRichTextField
