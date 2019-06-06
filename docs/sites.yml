@@ -6301,3 +6301,17 @@
   built_by: KiwiSprout
   built_by_url: https://kiwisprout.nz/
   featured: false
+- title: TomTom Traffic Index
+  main_url: https://www.tomtom.com/en_gb/traffic-index/
+  url: https://www.tomtom.com/en_gb/traffic-index/
+  description: >
+    The TomTom Traffic Index provides drivers, city planners, auto manufacturers and policy makers with unbiased statistics and information about congestion levels in 403 cities across 56 countries on 6 continents.
+  categories:
+    - Travel
+    - Data
+    - Research
+    - Visualization
+    - News
+  built_by: TomTom
+  built_by_url: https://tomtom.com
+  featured: false
