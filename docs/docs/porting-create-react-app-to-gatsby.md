@@ -4,15 +4,15 @@ title: Porting Create React App to Gatsby
 
 ## What is Create React App?
 
-Create React App is an officially supported solution from React to setup React apps, without having to deal with complicated configurations. It provides a default setup for tools like webpack and Babel that are useful in a modern development pipeline.
+Create React App is an officially supported tool from React to setup React apps, without having to deal with complicated configurations. It provides a default setup for tools like webpack and Babel that are useful in a modern development pipeline.
 
-Gatsby offers some advantages like the ability to leverage Gatsby's ecosystem and performance optimizations. React's own [docs](https://reactjs.org/) run on Gatsby, and React [recommends Gatsby](https://github.com/facebook/create-react-app#popular-alternatives) to users of Create React App with more niche use cases like static sites!
+Gatsby is similar in that it can also help you setup an app and removes much of the configuration headache, but offers some additional advantages like the ability to leverage Gatsby's ecosystem and performance optimizations. React's own [docs](https://reactjs.org/) run on Gatsby, and React even [recommends Gatsby](https://github.com/facebook/create-react-app#popular-alternatives) to users of Create React App!
 
 ---
 
 ## What do you get by changing to Gatsby?
 
-Both Create React App and Gatsby use React and allow a faster setup, especially in setting up the initial configuration of a site, but their are substantial differences.
+Both Create React App and Gatsby use React and allow a faster setup, especially in setting up the initial configuration of a site, but their are differences.
 
 ### Performance optimizations
 
@@ -53,11 +53,11 @@ npm install --save gatsby
 
 After installation, the key things that need to change are:
 
-1. protecting any calls to browser based APIs
+1. protecting any calls to browser based APIs (if there are any)
 
 1. converting routes into pages in the `/pages` directory
 
-The following sections
+The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps ([see an example](https://twitter.com/gill_kyle/status/1136666618224730112)).
 
 ### Project Structure
 
@@ -82,7 +82,7 @@ To show some of the differences of how your project structure could differ by mo
 
 Whereas a default Gatsby project will look something like this, files that are different between Create React App and Gatsby are highlighted):
 
-```diff
+```
 ├── .git
 ├── .gitignore
 // highlight-start
@@ -117,37 +117,108 @@ The `src/pages/index.js` file in Gatsby is a little different from the `src/inde
 
 ### Server-side rendering and browser APIs
 
-Understanding the distinction between the client (or browser) and server will help you understand one of the key differences between Create React App and Gatsby. Client-side and server-side describe where the code runs. Create React App by default sets up a project that will run in the browser. That means code is run in the context of the browser, a Create React App project hosted online will send the code to your browser, and your browser will connect to other APIs and decide how to display dynamic data.
+Server-side rendering means pages and dynamic data are built out by the server, and then sent to a browser ready to go. It's like your page is loaded before even being sent to the user. Gatsby is server-side rendered at build time, meaning that the code that gets to your browser has already been run to build pages and content, but this doesn't mean you can't still have dynamic pages.
 
-On the other hand, a server-side rendered app will have the pages and dynamic data built out by the server, and then sent to a browser ready to go. Gatsby is server-side rendered at build time, meaning that the code that gets to your browser has already been run to produce an output,
+Understanding the distinction between the client (or browser) and server will help you understand that key difference between Create React App and Gatsby. Create React App doesn't by default render your components with server-side rendering APIs when it is built like Gatsby does.
 
 _Check out Dustin Schau's [blog post about Gatsby internals](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#server-side-rendering-ssr-at-build-time) that explains the technical aspects of the build process in greater detail_
 
-List some common things that would need to be protected:
+The `gatsby build` command won't be able to use browser APIs so some code would cause your build to break if it isn't protected.
 
-- localStorage
-- window
-- navigator
+Some common APIs that would need to be protected are:
+
+- `window`
+- `localStorage`
+- `navigator`
 - packages like `react-router-dom`
 
-The `gatsby build` command won't be able to use browser apis
+These are only a few examples, though all can be fixed in one of two ways:
+
+1. wrapping the code in an `if` to check if whatever you are referencing is defined so builds won't try to reference something undefined and the browser will be able to deal with it fine:
+
+```jsx
+if (typeof window !== `undefined`) {
+  // code using window like window.location...
+}
+```
+
+2. moving references to them into a `componentDidMount` or `useEffect` hook:
+
+```jsx
+import React from "react"
+
+const Foo = () => {
+  window.alert("This will break the build")
+  return <span>Bar</span>
+}
+
+export default Foo
+```
+
+Would be changed to:
+
+```jsx
+import React from "react"
+
+const Foo = () => {
+  React.useEffect(() => {
+    window.alert("This won't break the build")
+  })
+  return <span>Bar</span>
+}
+
+export default Foo
+```
+
+For more information about errors encountered during builds, see the doc on [debugging HTML builds](/docs/debugging-html-builds/)
 
 ### Routing
 
-Gatsby will automatically turn files in the pages folder into static pages for you. relies on Reach Router for its routing.
+There are two possibilites of routes that you can setup: static and dynamic. A static route has content that doesn't change, whereas a dynamic route can [fetch data at runtime](/docs/client-data-fetching/) just like any other React app.
 
-Gatsby automatically turns files in the pages folder into routes, an advantage to having pages is a defined way of automatically code splitting. CRA requires you to use the `import()` syntax to assign what elements should be loaded dynamically,
-Gatsby will create separate bundles for different pages for you
+Gatsby automatically turns React components in the pages folder into static routes.
+
+> **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works/), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically
+
+For dynamic routes, you should implement routing with [@reach/router](https://reach.tech/router), which is already included with Gatsby. Dynamic routes can be implemented the same way you would implement a router in Create React App (or any other React application). However, because these routes won't be represented as HTML files in the final build, if you want users to be able to visit the routes directly (like entering the URL in the search bar), you'll need to generate pages in the `gatsby-node.js` file which is demonstrated in the [Building Apps with Gatsby](/docs/building-apps-with-gatsby/) guide.
+
+```jsx
+import React from "react"
+import { Router } from "@reach/router"
+
+const App = () => (
+  <Router>
+    <Route path="/user/" component={Users} />
+    <Route path="/user/:id" component={UserDetails} />
+  </Router>
+)
+
+export default App
+```
+
+Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/gatsby-link/).
 
 ### Handling state
 
+Because Gatsby rehydrates into a regular React app, state can be handled inside of components in the same way it would in Create React App. If you use a another library for state management and want to wrap your app in some sort of global state the section on [context providers](#context-providers) will be helpful.
+
 ### Environment Variables
 
-Uses `GATSBY_` prefix...
+Create React App requires you to create environment variables prefixed with `REACT_APP_`. Gatsby instead uses the `GATSBY_` prefix to [make environment variables accessible](/docs/environment-variables) in the browser context.
+
+```title=".env"
+# in Create React App
+REACT_APP_API_URL=http://someapi.com
+
+# in Gatsby
+GATSBY_API_URL=http://someapi.com
+```
 
 ### Advanced customizations
 
 Part of Gatsby's philosophy around tooling is [progressively disclosing complexity](/docs/gatsby-core-philosophy/#progressively-disclose-complexity), this simplifies the experience for a wider audience while still allowing the option to configure more advanced features for those that feel inclined. You won't have to "eject" your Gatsby app to edit more complex configurations.
+
+In terms of levels of abstraction, Gatsby allows you to move up or down to tap into more sophisticated, and lower-level APIs without needing to eject like you would in Create React App.
 
 #### webpack
 
