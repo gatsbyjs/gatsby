@@ -25,10 +25,13 @@ describe(`create remote file node`, () => {
 
 describe(`slash path`, () => {
   it(`can correctly slash path`, () => {
-    ;[[`foo\\bar`, `foo/bar`], [`foo\\中文`, `foo/中文`]].forEach(
-      ([path, expectRes]) => {
-        expect(slash(path)).toBe(expectRes)
-      }
-    )
+    ;[
+      [`foo\\bar`, `foo/bar`],
+      [`foo/bar`, `foo/bar`],
+      [`foo\\中文`, `foo/中文`],
+      [`foo/中文`, `foo/中文`],
+    ].forEach(([path, expectRes]) => {
+      expect(slash(path)).toBe(expectRes)
+    })
   })
 })
