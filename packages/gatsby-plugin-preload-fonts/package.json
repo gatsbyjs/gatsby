@@ -1,0 +1,43 @@
+{
+  "name": "gatsby-plugin-preload-fonts",
+  "description": "Gatsby plugin for preloading fonts per page",
+  "version": "1.0.0",
+  "author": "Aaron Ross <superhawk610@gmail.com>",
+  "main": "dist/prepare/index.js",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "bluebird": "^3.5.0",
+    "graphql-request": "^1.8.2",
+    "puppeteer": "^1.17.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.4",
+    "cross-env": "^5.1.4"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preload-fonts#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "preload",
+    "font",
+    "typography"
+  ],
+  "license": "ISC",
+  "peerDependencies": {
+    "gatsby": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preload-fonts"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir dist --ignore **/__tests__"
+  }
+}
