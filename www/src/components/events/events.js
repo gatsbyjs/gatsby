@@ -3,11 +3,14 @@ import { graphql } from "gatsby"
 import Event from "./event"
 
 const Events = ({ events }) => {
+  const endOfDay = date => new Date(date).setHours(23, 59, 59, 999)
+
   const upcoming = events.nodes.filter(
-    event => new Date(event.data.date) >= Date.now()
+    event => endOfDay(event.data.date) >= Date.now()
   )
+
   const past = events.nodes
-    .filter(event => new Date(event.data.date) < Date.now())
+    .filter(event => endOfDay(event.data.date) < Date.now())
     .reverse()
 
   return events.nodes.length > 0 ? (
