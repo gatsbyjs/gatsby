@@ -25,7 +25,7 @@ html {
 }
 ```
 
-```javascript:title="gatsby-browser.js"
+```javascript
 import("./src/index.sass")
 ```
 
