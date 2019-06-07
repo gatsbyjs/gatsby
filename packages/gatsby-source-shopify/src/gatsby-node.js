@@ -144,7 +144,7 @@ const createPageNodes = async (
   endpoint,
   query,
   nodeFactory,
-  { client, createNode, formatMsg, verbose, imageArgs, paginationSize },
+  { client, createNode, formatMsg, verbose, paginationSize },
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
@@ -154,7 +154,7 @@ const createPageNodes = async (
   await forEach(
     await queryAll(client, [endpoint], query, paginationSize),
     async entity => {
-      const node = await nodeFactory(imageArgs)(entity)
+      const node = await nodeFactory(entity)
       createNode(node)
       await f(entity)
     }
