@@ -34,4 +34,8 @@ describe(`slash path`, () => {
       expect(slash(path)).toBe(expectRes)
     })
   })
+  it(`does not modify extended length paths`, () => {
+    const extended = `\\\\?\\some\\path`
+    expect(slash(extended)).toBe(extended)
+  })
 })
