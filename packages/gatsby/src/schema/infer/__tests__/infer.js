@@ -87,7 +87,8 @@ describe(`GraphQL type inference`, () => {
     )
 
     const { builtInFieldExtensions } = require(`../../extensions`)
-    Object.entries(builtInFieldExtensions).forEach(([name, extension]) => {
+    Object.keys(builtInFieldExtensions).forEach(name => {
+      const extension = builtInFieldExtensions[name]
       store.dispatch({
         type: `CREATE_FIELD_EXTENSION`,
         payload: { name, extension },
