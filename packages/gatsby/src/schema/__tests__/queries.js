@@ -753,8 +753,7 @@ Object {
         expect(results.data).toEqual(expected)
       })
 
-      // FIXME: This is not yet possible
-      it.skip(`groups query results by foreign key field`, async () => {
+      it(`groups query results by foreign key field`, async () => {
         const query = `
           {
             allMarkdown {
@@ -764,7 +763,7 @@ Object {
                   node {
                     frontmatter {
                       title
-                      date
+                      date(formatString: "YYYY-MM-DD")
                     }
                   }
                 }
@@ -865,8 +864,7 @@ Object {
         expect(results.data).toEqual(expected)
       })
 
-      // FIXME: This is not yet possible
-      it.skip(`returns distinct values on foreign-key field`, async () => {
+      it(`returns distinct values on foreign-key field`, async () => {
         const query = `
           {
             allMarkdown {
