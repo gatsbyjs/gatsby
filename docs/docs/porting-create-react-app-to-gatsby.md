@@ -64,47 +64,43 @@ The following sections explain the above steps as well as other changes that you
 To show some of the differences of how your project structure could differ by moving to Gatsby, a default Create React App project looks something like this:
 
 ```diff
-├── .git
-├── .gitignore
-├── README.md
-├── node_modules
-├── package.json
-├── src
-│   ├── App.css
-│   ├── App.js
-│   ├── App.test.js
-│   ├── index.css
-│   ├── index.js
-│   ├── logo.svg
-│   └── serviceWorker.js
-└── yarn.lock
+  my-create-react-app
+  ├── .git
+  ├── .gitignore
+  ├── README.md
+  ├── node_modules
+  ├── package.json
+  ├── src
+  │   ├── App.css
+  │   ├── App.js
+  │   ├── App.test.js
+  │   ├── index.css
+  │   ├── index.js
+  │   ├── logo.svg
+  │   └── serviceWorker.js
+  └── yarn.lock
 ```
 
 Whereas a default Gatsby project will look something like this, files that are different between Create React App and Gatsby are highlighted):
 
 ```diff
-├── .git
-├── .gitignore
-// highlight-start
-├── .prettierrc
-├── LICENSE
-// highlight-end
-├── README.md
-// highlight-start
-├── gatsby-browser.js
-├── gatsby-config.js
-├── gatsby-node.js
-├── gatsby-ssr.js
-// highlight-end
-├── node_modules
-├── package.json
-// highlight-start
-├── src
-│   ├── components
-│   ├── images
-│   └── pages
-// highlight-end
-└── yarn.lock
+  my-gatsby-site
+  ├── .git
+  ├── .gitignore
++ ├── .prettierrc
++ ├── LICENSE
+  ├── README.md
++ ├── gatsby-browser.js
++ ├── gatsby-config.js
++ ├── gatsby-node.js
++ ├── gatsby-ssr.js
+  ├── node_modules
+  ├── package.json
+  ├── src
++ │   ├── components
++ │   ├── images
++ │   └── pages
+  └── yarn.lock
 ```
 
 The structure of a [Gatsby project](/docs/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/browser-apis/) and for [server-side rendering](/docs/ssr-apis/), though much of the project structure is similar enough to feel comfortable quickly.
