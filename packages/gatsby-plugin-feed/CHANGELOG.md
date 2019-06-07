@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/compare/gatsby-plugin-feed@2.2.2...gatsby-plugin-feed@2.2.3) (2019-06-07)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
 ## [2.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed/compare/gatsby-plugin-feed@2.2.1...gatsby-plugin-feed@2.2.2) (2019-05-31)
 
 **Note:** Version bump only for package gatsby-plugin-feed
