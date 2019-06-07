@@ -30,12 +30,12 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package, run `yarn run watch --scope=gatsby`.
-- Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
+- Install [gatsby-dev-cli](https://www.npmjs.com/package/gatsby-dev-cli) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
-  see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
+  see the [gatsby-dev-cli README](https://www.npmjs.com/package/gatsby-dev-cli) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
   - Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
