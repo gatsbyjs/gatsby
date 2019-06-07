@@ -12,12 +12,13 @@ module.exports.build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  Object.entries(builtInFieldExtensions).forEach(([name, extension]) =>
+  Object.keys(builtInFieldExtensions).forEach(name => {
+    const extension = builtInFieldExtensions[name]
     store.dispatch({
       type: `CREATE_FIELD_EXTENSION`,
       payload: { name, extension },
     })
-  )
+  })
 
   const {
     schemaCustomization: { thirdPartySchemas, types, fieldExtensions },
