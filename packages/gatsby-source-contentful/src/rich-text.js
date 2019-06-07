@@ -8,8 +8,11 @@ const isEntryReferenceNode = node =>
     INLINES.EMBEDDED_ENTRY,
   ].indexOf(node.nodeType) >= 0
 
-const isEntryReferenceField = field =>
-  field && field.sys && field.sys.type === `Entry`
+const isAssetReferenceNode = node =>
+  [BLOCKS.EMBEDDED_ASSET, INLINES.ASSET_HYPERLINK].indexOf(node.nodeType) >= 0
+
+const isEntryReferenceField = field => _.get(field, `sys.type`) === `Entry`
+const isAssetReferenceField = field => _.get(field, `sys.type`) === `Asset`
 
 const getEntryContentType = (entry, contentTypes) =>
   contentTypes.find(
@@ -20,6 +23,13 @@ const getEntryContentType = (entry, contentTypes) =>
 
 const getFieldProps = (contentType, fieldName) =>
   contentType.fields.find(({ id }) => id === fieldName)
+
+const getAssetWithFieldLocalesResolved = ({ asset, getField }) => {
+  return {
+    ...asset,
+    fields: _.mapValues(asset.fields, getField),
+  }
+}
 
 const getEntryWithFieldLocalesResolved = ({
   entry,
@@ -49,6 +59,13 @@ const getEntryWithFieldLocalesResolved = ({
         })
       }
 
+      if (isAssetReferenceField(fieldValue)) {
+        return getAssetWithFieldLocalesResolved({
+          asset: fieldValue,
+          getField,
+        })
+      }
+
       return fieldValue
     }),
   }
@@ -70,6 +87,19 @@ const getNormalizedRichTextNode = ({
           contentTypes,
           getField,
           defaultLocale,
+        }),
+      },
+    }
+  }
+
+  if (isAssetReferenceNode(node)) {
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        target: getAssetWithFieldLocalesResolved({
+          asset: node.data.target,
+          getField,
         }),
       },
     }

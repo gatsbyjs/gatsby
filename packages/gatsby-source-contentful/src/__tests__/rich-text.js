@@ -23,6 +23,21 @@ const entryFactory = () => {
   }
 }
 
+const assetFactory = () => {
+  return {
+    sys: {
+      type: `Asset`,
+    },
+    fields: {
+      file: {
+        en: {
+          url: `//images.ctfassets.net/asset.jpg`,
+        },
+      },
+    },
+  }
+}
+
 describe(`getNormalizedRichTextField()`, () => {
   let contentTypes
   let currentLocale
@@ -93,7 +108,7 @@ describe(`getNormalizedRichTextField()`, () => {
             defaultLocale,
           }).content[0].data.target.fields.title
 
-          expect(expectedTitle).toEqual(actualTitle)
+          expect(actualTitle).toBe(expectedTitle)
         })
       })
 
@@ -120,7 +135,7 @@ describe(`getNormalizedRichTextField()`, () => {
             defaultLocale,
           }).content[0].data.target.fields.title
 
-          expect(actualTitle).toEqual(expectedTitle)
+          expect(actualTitle).toBe(expectedTitle)
         })
       })
     })
@@ -150,7 +165,75 @@ describe(`getNormalizedRichTextField()`, () => {
           defaultLocale,
         }).content[0].data.target.fields.relatedArticle.fields.title
 
-        expect(actualTitle).toEqual(expectedTitle)
+        expect(actualTitle).toBe(expectedTitle)
+      })
+    })
+  })
+
+  describe(`when a rich-text node contains an asset reference`, () => {
+    describe(`when the current locale is \`en\``, () => {
+      beforeEach(() => (currentLocale = `en`))
+
+      it(`resolves the locale for the field`, () => {
+        const field = {
+          nodeType: `document`,
+          data: {},
+          content: [
+            {
+              nodeType: `embedded-asset-block`,
+              data: { target: assetFactory() },
+            },
+          ],
+        }
+
+        const expectedURL = `//images.ctfassets.net/asset.jpg`
+        const actualURL = getNormalizedRichTextField({
+          field,
+          contentTypes,
+          getField,
+          defaultLocale,
+        }).content[0].data.target.fields.file.url
+
+        expect(actualURL).toBe(expectedURL)
+      })
+    })
+  })
+
+  describe(`when a referenced entry contains an asset field`, () => {
+    describe(`when the current locale is \`en\``, () => {
+      beforeEach(() => {
+        contentTypes[0].fields.push({
+          id: `assetReference`,
+          localized: true,
+        })
+        currentLocale = `en`
+      })
+
+      it(`resolves the locale for the asset's own fields`, () => {
+        const field = {
+          nodeType: `document`,
+          data: {},
+          content: [
+            {
+              nodeType: `embedded-entry-block`,
+              data: { target: entryFactory() },
+            },
+          ],
+        }
+
+        field.content[0].data.target.fields.assetReference = {
+          en: assetFactory(),
+        }
+
+        const expectedURL = `//images.ctfassets.net/asset.jpg`
+        const actualURL = getNormalizedRichTextField({
+          field,
+          contentTypes,
+          getField,
+          defaultLocale,
+        }).content[0].data.target.fields.assetReference.fields.file.url
+
+        expect(actualURL).toBe(expectedURL)
       })
     })
   })
