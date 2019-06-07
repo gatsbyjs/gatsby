@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import Event from "./event"
 
 const Events = ({ events }) => {

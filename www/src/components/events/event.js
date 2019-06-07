@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import { css } from "@emotion/core"
 import GatsbyLogo from "../../monogram.svg"
 

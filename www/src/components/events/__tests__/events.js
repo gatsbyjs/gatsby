@@ -1,6 +1,5 @@
 import React from "react"
 import { render } from "react-testing-library"
-import { useStaticQuery } from "gatsby"
 
 import Events from "../events"
 
@@ -15,25 +14,27 @@ const toEvent = (date, id) => {
   }
 }
 
-const mockEvents = events =>
-  useStaticQuery.mockReturnValueOnce({
-    allAirtable: {
-      nodes: events,
-    },
-  })
+const mockEvents = events => {
+  return {
+    nodes: events,
+  }
+}
 
 describe(`<Events />`, () => {
   it(`displays no events text if 0 events`, () => {
-    mockEvents([])
-    const { getByText } = render(<Events />)
+    const { getByText } = render(<Events events={mockEvents([])} />)
 
     expect(getByText(`No events are scheduled right now.`)).toBeVisible()
   })
 
   it(`splits upcoming and past events`, () => {
-    mockEvents([`1990-10-08`, `2100-10-08`, `2200-10-08`].map(toEvent))
-
-    const { getByText } = render(<Events />)
+    const { getByText } = render(
+      <Events
+        events={mockEvents(
+          [`1990-10-08`, `2100-10-08`, `2200-10-08`].map(toEvent)
+        )}
+      />
+    )
     const upcoming = getByText(`Upcoming Events`)
     const past = getByText(`Past Events`)
 
