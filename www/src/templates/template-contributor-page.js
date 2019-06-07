@@ -13,7 +13,12 @@ import FooterLinks from "../components/shared/footer-links"
 class ContributorPageTemplate extends React.Component {
   render() {
     const contributor = this.props.data.authorYaml
-    const allMdx = this.props.data.allMdx
+
+    const posts = this.props.data.allMdx.nodes.filter(
+      post =>
+        post.frontmatter.author && post.frontmatter.author.id === contributor.id
+    )
+
     return (
       <Layout location={this.props.location}>
         <Helmet>
@@ -82,20 +87,13 @@ class ContributorPageTemplate extends React.Component {
               </div>
             </div>
             <div css={{ padding: `${space[7]} ${space[6]}` }}>
-              {allMdx.edges.map(({ node }) => {
-                if (node.frontmatter.author) {
-                  if (node.frontmatter.author.id === contributor.id) {
-                    return (
-                      <BlogPostPreviewItem
-                        post={node}
-                        key={node.fields.slug}
-                        css={{ marginBottom: space[9] }}
-                      />
-                    )
-                  }
-                }
-                return null
-              })}
+              {posts.map(node => (
+                <BlogPostPreviewItem
+                  post={node}
+                  key={node.fields.slug}
+                  css={{ marginBottom: space[9] }}
+                />
+              ))}
             </div>
           </Container>
           <FooterLinks />
@@ -137,10 +135,8 @@ export const pageQuery = graphql`
         frontmatter: { draft: { ne: true } }
       }
     ) {
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }
