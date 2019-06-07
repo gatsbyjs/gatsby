@@ -162,6 +162,28 @@ module.exports = {
 }
 ```
 
+## Preview specific configuration
+
+You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby
+
+in order for preview to work we have to use the `preview` flag in options
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal-preview`,
+      options: {
+        baseUrl: `...`,
+        preview: true,
+      },
+    },
+  ],
+}
+```
+
+in your Drupal module configuration set the update URL to your instance URL.
+
 ## How to query
 
 You can query nodes created from Drupal like the following:

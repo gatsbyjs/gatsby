@@ -4,6 +4,8 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 const { nodeFromData } = require(`./normalize`)
 const asyncPool = require(`tiny-async-pool`)
+const micro = require(`micro`)
+const proxy = require(`http-proxy-middleware`)
 
 exports.sourceNodes = async (
   { actions, store, cache, createNodeId, createContentDigest, reporter },
@@ -15,6 +17,7 @@ exports.sourceNodes = async (
     headers,
     params,
     concurrentFileRequests,
+    preview,
   }
 ) => {
   const { createNode } = actions
@@ -29,7 +32,7 @@ exports.sourceNodes = async (
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
 
-  // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
+  // Touch existing Drupal nodes so Gatsby doesn`t garbage collect them.
   // _.values(store.getState().nodes)
   // .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
   // .forEach(n => touchNode({ nodeId: n.id }))
@@ -84,7 +87,7 @@ exports.sourceNodes = async (
           })
         } catch (error) {
           if (error.response && error.response.status == 405) {
-            // The endpoint doesn't support the GET method, so just skip it.
+            // The endpoint doesn`t support the GET method, so just skip it.
             return []
           } else {
             console.error(`Failed to fetch ${url}`, error.message)
@@ -187,7 +190,7 @@ exports.sourceNodes = async (
 
       // Add back reference relationships.
       // Back reference relationships will need to be arrays,
-      // as we can't control how if node is referenced only once.
+      // as we can`t control how if node is referenced only once.
       if (backRefs[datum.id]) {
         backRefs[datum.id].forEach(ref => {
           if (!node.relationships[`${ref.type}___NODE`]) {
@@ -233,7 +236,7 @@ exports.sourceNodes = async (
         fileUrl = node.uri.url
       }
 
-      // Resolve w/ baseUrl if node.uri isn't absolute.
+      // Resolve w/ baseUrl if node.uri isn`t absolute.
       url = new URL(fileUrl, baseUrl)
 
       // Create the remote file from the given node
@@ -264,4 +267,104 @@ exports.sourceNodes = async (
   for (const node of nodes) {
     createNode(node)
   }
+
+  if (process.env.NODE_ENV === `development` && preview) {
+    const server = micro(async (req, res) => {
+      const request = await micro.json(req)
+
+      const nodeToUpdate = JSON.parse(request).data
+
+      const node = nodeFromData(nodeToUpdate, createNodeId)
+      node.relationships = {}
+      // handle relationships
+      if (nodeToUpdate.relationships) {
+        _.each(nodeToUpdate.relationships, (value, key) => {
+          if (!value.data) return
+          if (_.isArray(value.data) && value.data.length > 0) {
+            value.data.forEach(data => addBackRef(data.id, nodeToUpdate))
+            node.relationships[`${key}___NODE`] = _.compact(
+              value.data.map(data => createNodeId(data.id))
+            )
+          } else {
+            addBackRef(value.data.id, nodeToUpdate)
+            node.relationships[`${key}___NODE`] = createNodeId(value.data.id)
+          }
+        })
+      }
+      // handle backRefs
+      if (backRefs[nodeToUpdate.id]) {
+        backRefs[nodeToUpdate.id].forEach(ref => {
+          if (!node.relationships[`${ref.type}___NODE`]) {
+            node.relationships[`${ref.type}___NODE`] = []
+          }
+          node.relationships[`${ref.type}___NODE`].push(createNodeId(ref.id))
+        })
+      }
+
+      // handle file downloads
+      let fileNode
+      if (
+        node.internal.type === `files` ||
+        node.internal.type === `file__file`
+      ) {
+        try {
+          let fileUrl = node.url
+          if (typeof node.uri === `object`) {
+            // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+            fileUrl = node.uri.url
+          }
+          // Resolve w/ baseUrl if node.uri isn`t absolute.
+          const url = new URL(fileUrl, baseUrl)
+          // If we have basicAuth credentials, add them to the request.
+          const auth =
+            typeof basicAuth === `object`
+              ? {
+                  htaccess_user: basicAuth.username,
+                  htaccess_pass: basicAuth.password,
+                }
+              : {}
+          fileNode = await createRemoteFileNode({
+            url: url.href,
+            store,
+            cache,
+            createNode,
+            createNodeId,
+            parentNodeId: node.id,
+            auth,
+          })
+        } catch (e) {
+          // Ignore
+        }
+        if (fileNode) {
+          node.localFile___NODE = fileNode.id
+        }
+      }
+
+      node.internal.contentDigest = createContentDigest(node)
+      createNode(node)
+      console.log(`\x1b[32m`, `Updated node: ${node.id}`)
+
+      res.end(`ok`)
+    })
+    server.listen(
+      8080,
+      console.log(
+        `\x1b[32m`,
+        `listening to changes for live preview at route /___updatePreview`
+      )
+    )
+  }
+}
+
+exports.onCreateDevServer = ({ app }) => {
+  app.use(
+    `/___updatePreview/`,
+    proxy({
+      target: `http://localhost:8080`,
+      secure: false,
+      pathRewrite: {
+        "/___updatePreview/": ``,
+      },
+    })
+  )
 }
