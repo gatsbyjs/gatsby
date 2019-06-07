@@ -133,7 +133,7 @@ const processingCache = {}
  */
 module.exports = ({
   buffer,
-  hash = md5Buffer(buffer),
+  hash,
   store,
   cache,
   createNode,
@@ -158,6 +158,14 @@ module.exports = ({
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+  }
+
+  if (!buffer) {
+    return Promise.reject(`bad buffer: ${buffer}`)
+  }
+
+  if (!hash) {
+    hash = md5Buffer(buffer)
   }
 
   // Check if we already requested node for this remote file
