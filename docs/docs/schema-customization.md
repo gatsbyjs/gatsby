@@ -479,6 +479,158 @@ exports.createSchemaCustomization = ({ action, schema }) => {
 }
 ```
 
+#### Creating custom extensions
+
+With the [`createFieldExtension`](/docs/actions/#createFieldExtension) action
+it is possible to define custom extensions as a way to add reusable functionality
+to fields. Let's say we want to add a `fullName` field to `AuthorJson`
+and `ContributorJson`.
+
+We could of course write a `fullNameResolver`, and use it in two places:
+
+```js:title=gatsby-node.js
+const fullNameResolver = source => `${source.firstName} ${source.name}`
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes([
+    {
+      name: "AuthorJson",
+      interfaces: ["Node"],
+      fields: {
+        fullName: {
+          type: "String",
+          resolve: fullNameResolver,
+        },
+      },
+    },
+    {
+      name: "ContributorJson",
+      interfaces: ["Node"],
+      fields: {
+        fullName: {
+          type: "String",
+          resolve: fullNameResolver,
+        },
+      },
+    },
+  ])
+}
+```
+
+However, to make this functionality available to other plugins as well, and make
+it usable in SDL, we can register it as a field extension.
+
+A field extension definition requires a name, and an `extend` function, which
+should return a (partial) field config (an object, with `type`, `args`, `resolve`)
+which will be merged into the existing field config.
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createFieldExtension, createTypes } = actions
+
+  createFieldExtension({
+    name: "fullName",
+    extend(options, prevFieldConfig) {
+      return {
+        resolve(source) {
+          return `${source.firstName} ${source.name}`
+        },
+      }
+    },
+  })
+
+  createTypes(`
+    type AuthorJson implements Node {
+      fullName: String @fullName
+    }
+    type ContributorJson implements Node {
+      fullName: String @fullName
+    }
+  `)
+}
+```
+
+This approach becomes a lot more powerful when plugins provide custom field
+extensions. A _very_ basic markdown transformer plugin could for example provide
+an extension to convert markdown strings into html:
+
+```js:title=gatsby-transformer-basic-md/src/gatsby-node.js
+const remark = require(`remark`)
+const html = require(`remark-html`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createFieldExtension({
+    name: "md",
+    args: {
+      sanitize: {
+        type: "Boolean!",
+        defaultValue: true,
+      },
+    },
+    // The extension `args` (above) are passed to `extend` as
+    // the first argument (`options` below)
+    extend(options, prevFieldConfig) {
+      return {
+        args: {
+          sanitize: "Boolean",
+        },
+        resolve(source, args, context, info) {
+          const fieldValue = source[info.fieldName]
+          const shouldSanitize =
+            args.sanitize != null ? args.sanitize : options.sanitize
+          const processor = remark().use(html, { sanitize: shouldSanitize })
+          return processor.processSync(fieldValue).contents
+        },
+      }
+    },
+  })
+}
+```
+
+It can then be used in any `createTypes` call by simply adding the directtive/extension
+to the field:
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type BlogPost implements Node {
+      content: String @md
+    }
+  `)
+}
+```
+
+Note that in the above example, we have additionally provided configuration options
+with `args`. This is e.g. useful to provide default field arguments:
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type BlogPost implements Node {
+      content: String @md(sanitize: false)
+    }
+  `)
+}
+```
+
+Also note that field extensions can decide themselves if an existing field resolver
+should be wrapped or overwritten. The above examples have all decided to simply return
+a new `resolve` function. Because the `extend` function receives the current field
+config as its second argument, an extension can also decide to wrap an existing resolver:
+
+```diff
+extend(options, prevFieldConfig) {
++  const { resolve } = prevFieldConfig
++  return {
++    async resolve(source, args, context, info) {
++      const resultFromPrevResolver = await resolve(source, args, context, info)
+      /* ... */
++      return processor.processSync(resultFromPrevResolver).contents
++    }
++  }
+}
+```
+
 ## createResolvers API
 
 While it is possible to directly pass `args` and `resolvers` along the type
