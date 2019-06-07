@@ -75,7 +75,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         textIndent: `-100%`,
         whiteSpace: `nowrap`,
         zIndex: 0,
-        pointer-events: 'none',
+        pointerEvents: 'none',
         "&&": { border: 0 },
       }}
     >
