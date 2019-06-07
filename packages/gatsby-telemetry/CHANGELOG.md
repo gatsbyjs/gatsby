@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.10...gatsby-telemetry@1.0.11) (2019-05-31)
+
+### Bug Fixes
+
+- **telemetry:** Ensure we strip paths with additional layer of `\` escaping ([#14461](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/14461)) ([ae1fcc2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/ae1fcc2))
+
 ## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.9...gatsby-telemetry@1.0.10) (2019-05-22)
 
 ### Bug Fixes

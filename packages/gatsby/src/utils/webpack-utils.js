@@ -206,7 +206,11 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
+      let {
+        plugins,
+        overrideBrowserslist = supportedBrowsers,
+        ...postcssOpts
+      } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -219,7 +223,7 @@ module.exports = async ({
 
             return [
               flexbugs,
-              autoprefixer({ browsers, flexbox: `no-2009` }),
+              autoprefixer({ overrideBrowserslist, flexbox: `no-2009` }),
               ...plugins,
             ]
           },

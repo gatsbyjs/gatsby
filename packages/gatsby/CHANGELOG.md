@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.8.4...gatsby@2.8.5) (2019-06-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.8.3...gatsby@2.8.4) (2019-06-05)
+
+### Bug Fixes
+
+- **themes:** Upgrade Tapable Calls ([#14552](https://github.com/gatsbyjs/gatsby/issues/14552)) ([9359098](https://github.com/gatsbyjs/gatsby/commit/9359098))
+
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.8.2...gatsby@2.8.3) (2019-06-04)
+
+### Bug Fixes
+
+- **gatsby:** autoprefixer browsers option warning ([#14533](https://github.com/gatsbyjs/gatsby/issues/14533)) ([cb09e78](https://github.com/gatsbyjs/gatsby/commit/cb09e78))
+
+## [2.8.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.8.1...gatsby@2.8.2) (2019-05-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.8.0...gatsby@2.8.1) (2019-05-31)
+
+**Note:** Version bump only for package gatsby
+
 # [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.7.6...gatsby@2.8.0) (2019-05-31)
 
 ### Features
