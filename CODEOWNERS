@@ -1,20 +1,8 @@
+# All files must be reviewed by the core team, unless they are owned by other team
+*                                               @gatsbyjs/core
+
 # All docs must be reviewed by the docs team.
 /docs/                                          @gatsbyjs/docs
-
-# These files have the highest likelihood to cause chaos, so we require an
-# admin to review and approve pull requests that affect these.
-/packages/gatsby/                               @gatsbyjs/core
-/packages/babel-plugin-remove-graphql-queries/  @gatsbyjs/core
-/packages/gatsby-link/                          @gatsbyjs/core
-/packages/gatsby-dev-cli/                       @gatsbyjs/core
-/packages/gatsby-cli/                           @gatsbyjs/core
-/starters/                                      @gatsbyjs/core
-
-# We also need to be careful with CI/CD and repo config files.
-.circleci/                                      @gatsbyjs/core
-.travis.yml                                     @gatsbyjs/core
-appveyor.yml                                    @gatsbyjs/core
-.github/                                        @gatsbyjs/core
 
 # The ecosystem files are error-prone, so we require an extra set of eyes on them.
 /docs/*                                         @gatsbyjs/ecosystem
