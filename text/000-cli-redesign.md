@@ -68,6 +68,10 @@ Shortening the input needed is nice: you can take away the https://www before th
 - [ ] If we implement a new format for common errors, with page, line:column, error description, a suggestion of how to resolve the error, and invitation “if you’re unable to resolve this error, here’s how to file an issue. Here are forums in Discord and Spectrum where you can chat with other Gatsby users.” People will be able to resolve errors faster and we’ll get fewer issues on Github about those errors.
 - [ ] Consider a new “job to be done” = user wants to speed up their build times. Helping them identify where things are slowing down helps them reach their goal. "It’d be nice to get more context on what certain output means so that if I have a long-running build, I can target where things are slowing down"
 - [ ] If we garbage collect and warn for certain situations, e.g. “we just got rid of every single node of this type,” the user can determine if that action was correct and may find the root cause of some errors that are hard to trace 
+- [ ] Ctrl+c & `gatsby develop` → notify ppl they might need to hit `r` if they’ve changed package.json, gatsby node, etc.
+- [ ] Peer dependency warnings - how to let ppl know they can ignore them - track thru telemetry
+- [ ] If developing a local plugin, offer to restart & clear cache so it’ll take affect
+
 
 
 
