@@ -911,39 +911,21 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
       id: ID!
       data: AirtableData
     }
+
+    type AirtableData @dontInfer {
+      name: String @proxy(from: "Name_of_Event")
+      organizerFirstName: String @proxy(from: "Organizer_Name")
+      organizerLastName: String @proxy(from: "Organizer's_Last_Name")
+      date: Date @dateformat @proxy(from: "Date_of_Event")
+      location: String @proxy(from: "Location_of_Event")
+      url: String @proxy(from: "Event_URL_(if_applicable)")
+      type: String @proxy(from: "What_type_of_event_is_this?")
+      hasGatsbyTeamSpeaker: Boolean @proxy(from: "Gatsby_Speaker_Approved")
+      approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
+    }
   `
 
   createTypes(typeDefs)
-
-  createTypes(
-    schema.buildObjectType({
-      name: `AirtableData`,
-      fields: {
-        Name_of_Event: `String`,
-        Organizer_Name: `String`,
-        Date_of_Event: `Date`,
-        Location_of_Event: `String`,
-        Gatsby_Speaker_Approved: `Boolean`,
-        Approved_for_posting_on_event_page: `Boolean`,
-
-        // below is handling of regressions (?)
-        // before 2.5.0 those were working without resolvers
-        // that use un-sanitized field names from source
-        Event_URL__if_applicable_: {
-          type: `String`,
-          resolve: source => source[`Event_URL_(if_applicable)`],
-        },
-        What_type_of_event_is_this_: {
-          type: `String`,
-          resolve: source => source[`What_type_of_event_is_this?`],
-        },
-        Organizer_s_Last_Name: {
-          type: `String`,
-          resolve: source => source[`Organizer's_Last_Name`],
-        },
-      },
-    })
-  )
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
