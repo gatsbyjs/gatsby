@@ -6,6 +6,7 @@ import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
+    timeZone: `UTC`,
     month: `long`,
     day: `numeric`,
     year: `numeric`,
