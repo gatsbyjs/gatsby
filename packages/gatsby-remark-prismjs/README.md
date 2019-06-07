@@ -393,13 +393,13 @@ used options:
 More information of the format can be found here:
 https://prismjs.com/extending.html
 
+Note:
 
-Note: 
-- One of the parameters `language` and `extend` is needed. 
-- If only `language` is given, a new language will be defined from scratch. 
-- If only `extend` is given, an extension will be made to the given language. 
+- One of the parameters `language` and `extend` is needed.
+- If only `language` is given, a new language will be defined from scratch.
+- If only `extend` is given, an extension will be made to the given language.
 - If both `language` and `extend` is given, a new language that extends the `extend` language will
-be defined.
+  be defined.
 
 In case a language is extended, note that the definitions will not be merged.
 If the extended language defintion and the given definition contains the same
