@@ -6,10 +6,9 @@ module.exports = {
         mdx: false,
       },
     },
-    {
-      resolve: `gatsby-theme-blog`,
-      options: {},
-    },
+    // with gatsby-theme-ui, the last theme in the config
+    // will override the theme-ui context from other themes
+    { resolve: `gatsby-theme-blog`, },
   ],
   siteMetadata: {
     title: `Shadowed Site Title`,

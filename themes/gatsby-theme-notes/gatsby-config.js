@@ -30,7 +30,6 @@ module.exports = options => {
           modules: [`gatsby-theme-notes`],
         },
       },
-      // 'gatsby-plugin-theme-ui',
     ].filter(Boolean),
   }
 }
