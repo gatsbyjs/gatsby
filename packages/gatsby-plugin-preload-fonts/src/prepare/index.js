@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const path = require(`path`)
 const crypto = require(`crypto`)
 const { URL } = require(`url`)
@@ -9,6 +11,7 @@ const { blue, green, bold, dim } = require(`chalk`)
 const createLogger = require(`./logger`)
 const fetchRoutes = require(`./fetch-routes`)
 const { load, save, getPath: getCachePath } = require(`./cache`)
+const { ellipses } = require(`./utils`)
 
 const {
   PORT = 8000,
@@ -33,21 +36,24 @@ async function main() {
     endpoint: endpoint(GRAPHQL_PATH),
   })
 
-  const msg = `crawing routes`
-  const bar = new ProgressBar(
-    ` ${dim(msg)} (:bar) ${bold(blue(`:percent`))} ${dim(`eta :etas`)} `,
-    {
-      width: 40,
-      total: routes.length,
-      complete: `█`,
-      incomplete: ` `,
-      head: ``,
-    }
-  )
+  const sections = [
+    dim(` crawling routes`),
+    `:bar`,
+    bold(blue(`:percent`)),
+    dim(`eta :etas`),
+    green(`:last`),
+  ]
+  const bar = new ProgressBar(sections.join(` `), {
+    width: 35,
+    total: routes.length,
+    complete: `█`,
+    incomplete: ` `,
+  })
   logger.setAdapter((...args) => bar.interrupt(args.join(` `)))
 
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
+  let last = ``
   page.on(`requestfinished`, e => {
     if (!e._url.match(/(socket\.io|commons\.js)/)) {
       logger.info(`load`, e._method, e._url)
@@ -65,6 +71,8 @@ async function main() {
         cache.assets[pathname] = {}
       }
       cache.assets[pathname][e._url] = true
+      last = ellipses(`found ${e._url}`, 40)
+      bar.update({ last })
     }
   })
 
@@ -82,7 +90,7 @@ async function main() {
     hash.update(route)
     logger.info(`visit`, route)
     await page.goto(endpoint(route), { waitUntil: `networkidle2` })
-    bar.tick()
+    bar.tick({ last })
   }
 
   await browser.close()
