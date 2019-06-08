@@ -2,7 +2,6 @@ const fs = require(`fs`)
 const path = require(`path`)
 
 const findCacheDir = require(`find-cache-dir`)
-const Promise = require(`bluebird`)
 
 const { ensureDir } = require(`./utils`)
 
@@ -28,32 +27,23 @@ try {
 }
 
 function load() {
-  if (cache) return Promise.resolve(cache)
+  if (cache) return cache
 
-  return new Promise(resolve => {
-    try {
-      const json = fs.readFileSync(getPath(), `utf-8`)
-      cache = JSON.parse(json)
-      return resolve(cache)
-    } catch (err) {
-      return resolve({
-        timestamp: Date.now(),
-        hash: `initial-run`,
-        assets: {},
-      })
+  try {
+    const json = fs.readFileSync(getPath(), `utf-8`)
+    cache = JSON.parse(json)
+    return cache
+  } catch (err) {
+    return {
+      timestamp: Date.now(),
+      hash: `initial-run`,
+      assets: {},
     }
-  })
+  }
 }
 
 function save(data) {
-  return new Promise((resolve, reject) => {
-    try {
-      const json = JSON.stringify(data)
-      fs.writeFileSync(getPath(), json, `utf-8`)
-      cache = data
-      return resolve()
-    } catch (err) {
-      return reject(err)
-    }
-  })
+  const json = JSON.stringify(data)
+  fs.writeFileSync(getPath(), json, `utf-8`)
+  cache = data
 }
