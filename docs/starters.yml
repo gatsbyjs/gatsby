@@ -2905,3 +2905,18 @@
   features:
     - Same as the official starter blog
     - Integration with Lunr.js
+- url: https://anubhavsrivastava.github.io/gatsby-starter-spectral
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-spectral
+  description: Single page starter based on the Spectral site template by HTML5 up, with landing, Generic and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
