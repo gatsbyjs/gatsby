@@ -181,11 +181,26 @@ const getQueryOperatorInput = ({ schemaComposer, type }) => {
   )
 }
 
-const getQueryOperatorListInput = ({ schemaComposer, inputTypeComposer }) => {
-  const typeName = inputTypeComposer.getTypeName().replace(/Input/, `ListInput`)
+const getQueryOperatorListInput = ({
+  schemaComposer,
+  inputTypeComposer,
+  recurse = true,
+}) => {
+  const typeName =
+    inputTypeComposer.getTypeName().replace(/Input/, `ListInput`) +
+    (recurse ? `` : `WithoutNot`)
   return schemaComposer.getOrCreateITC(typeName, itc => {
     itc.addFields({
       elemMatch: inputTypeComposer,
+      ...(recurse
+        ? {
+            not: getQueryOperatorListInput({
+              schemaComposer,
+              inputTypeComposer,
+              recurse: false,
+            }),
+          }
+        : {}),
     })
   })
 }

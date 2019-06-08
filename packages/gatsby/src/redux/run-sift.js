@@ -15,7 +15,14 @@ const prepareQueryArgs = (filterFields = {}) =>
   Object.keys(filterFields).reduce((acc, key) => {
     const value = filterFields[key]
     if (_.isPlainObject(value)) {
-      acc[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(value)
+      switch (key) {
+        case `not`:
+        case `elemMatch`:
+          acc[`$${key}`] = prepareQueryArgs(value)
+          break
+        default:
+          acc[key] = prepareQueryArgs(value)
+      }
     } else {
       switch (key) {
         case `regex`:
@@ -104,7 +111,7 @@ function handleMany(siftArgs, nodes, sort) {
  * @returns Collection of results. Collection will be limited to size
  *   if `firstOnly` is true
  */
-module.exports = (args: Object) => {
+module.exports = args => {
   const { getNode, getNodesByType } = require(`../db/nodes`)
 
   const { queryArgs, gqlType, firstOnly = false } = args
