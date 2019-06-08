@@ -14,6 +14,23 @@ const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
 
+const unified = require(`unified`)
+const markdown = require(`remark-parse`)
+const remark2rehype = require(`remark-rehype`)
+const doc = require(`rehype-document`)
+const format = require(`rehype-format`)
+const html = require(`rehype-stringify`)
+function markdownToHtml(markdownString) {
+  return unified()
+    .use(markdown)
+    .use(remark2rehype)
+    .use(doc)
+    .use(format)
+    .use(html)
+    .process(markdownString)
+    .then(x => x.contents)
+}
+
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
 // 2. Find the image's size
@@ -30,6 +47,7 @@ module.exports = (
     backgroundColor: `white`,
     linkImagesToOriginal: true,
     showCaptions: false,
+    markdownCaptions: false,
     pathPrefix,
     withWebp: false,
     tracedSVG: false,
@@ -288,11 +306,11 @@ module.exports = (
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
-      node,
-      alt,
-      defaultAlt
-    )}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${
+      options.markdownCaptions
+        ? markdownToHtml(getNodeTitle(node, alt, defaultAlt))
+        : getNodeTitle(node, alt, defaultAlt)
+    }</figcaption>
   </figure>
       `.trim()
     }
