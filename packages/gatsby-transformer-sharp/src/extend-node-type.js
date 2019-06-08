@@ -161,9 +161,21 @@ const fixedNodeType = ({
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
       },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
     },
     resolve: (image, fieldArgs, context) => {
@@ -309,6 +321,10 @@ const fluidNodeType = ({
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
       sizes: {
         type: GraphQLString,
@@ -488,8 +504,20 @@ module.exports = ({
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
         },
+        fit: {
+          type: ImageFitType,
+          defaultValue: sharp.fit.cover,
+        },
+        background: {
+          type: GraphQLString,
+          defaultValue: `rgba(0,0,0,1)`,
+        },
         rotate: {
           type: GraphQLInt,
+          defaultValue: 0,
+        },
+        trim: {
+          type: GraphQLFloat,
           defaultValue: 0,
         },
       },

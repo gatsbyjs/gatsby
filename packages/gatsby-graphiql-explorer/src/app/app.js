@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 
 import GraphiQL from "graphiql"
 import GraphiQLExplorer from "graphiql-explorer"
-import { getIntrospectionQuery, buildClientSchema } from "graphql"
+import { getIntrospectionQuery, buildClientSchema, parse } from "graphql"
 
 import "whatwg-fetch"
 
@@ -184,6 +184,70 @@ class App extends React.Component {
 
       this.setState(newState)
     })
+
+    const editor = this._graphiql.getQueryEditor()
+    editor.setOption(`extraKeys`, {
+      ...(editor.options.extraKeys || {}),
+      "Shift-Alt-LeftClick": this._handleInspectOperation,
+    })
+  }
+
+  _handleInspectOperation = (cm, mousePos) => {
+    const parsedQuery = parse(this.state.query || ``)
+
+    if (!parsedQuery) {
+      console.error(`Couldn't parse query document`)
+      return null
+    }
+
+    const token = cm.getTokenAt(mousePos)
+    const start = { line: mousePos.line, ch: token.start }
+    const end = { line: mousePos.line, ch: token.end }
+    const relevantMousePos = {
+      start: cm.indexFromPos(start),
+      end: cm.indexFromPos(end),
+    }
+
+    const position = relevantMousePos
+
+    const def = parsedQuery.definitions.find(definition => {
+      if (!definition.loc) {
+        console.log(`Missing location information for definition`)
+        return false
+      }
+
+      const { start, end } = definition.loc
+      return start <= position.start && end >= position.end
+    })
+
+    if (!def) {
+      console.error(`Unable to find definition corresponding to mouse position`)
+      return null
+    }
+
+    const operationKind =
+      def.kind === `OperationDefinition`
+        ? def.operation
+        : def.kind === `FragmentDefinition`
+        ? `fragment`
+        : `unknown`
+
+    const operationName =
+      def.kind === `OperationDefinition` && !!def.name
+        ? def.name.value
+        : def.kind === `FragmentDefinition` && !!def.name
+        ? def.name.value
+        : `unknown`
+
+    const selector = `.graphiql-explorer-root #${operationKind}-${operationName}`
+
+    const el = document.querySelector(selector)
+    if (el) {
+      el.scrollIntoView()
+      return true
+    }
+
+    return false
   }
 
   _handleEditQuery = query => {
@@ -216,6 +280,9 @@ class App extends React.Component {
           onEdit={this._handleEditQuery}
           explorerIsOpen={this.state.explorerIsOpen}
           onToggleExplorer={this._handleToggleExplorer}
+          onRunOperation={operationName =>
+            this._graphiql.handleRunQuery(operationName)
+          }
         />
         <GraphiQL
           ref={ref => (this._graphiql = ref)}

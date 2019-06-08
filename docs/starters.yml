@@ -2718,9 +2718,34 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-anoun-1-markdown.netlify.com/
+  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
+  description: A clean, modern starter for businesses using Material Design Components
+  tags:
+    - Business Website
+    - Blog
+    - Markdown
+    - Modern Design
+    - PWA
+    - Styling:Material Design
+    - Styling:SCSS
+  features:
+    - Minimal, Modern Business Website Design
+    - Material Design Components
+    - MDC React Components
+    - MDC Theming
+    - Blog
+    - Home Page
+    - Contact Page
+    - Contact Form
+    - About Page
+    - Mobile-First approach in development
+    - Fully Responsive
+    - Markdown
+    - PWA
 - url: https://gatsby-starter-default-typescript.netlify.com/
   repo: https://github.com/andykenward/gatsby-starter-default-typescript
-  description: Starter Default Typescript
+  description: Starter Default TypeScript
   tags:
     - TypeScript
   features:
@@ -2728,3 +2753,155 @@
     - Typing generation for GraphQL using GraphQL Code Generator
     - Comes with React Helmet for adding site meta tags
     - Based on Gatsby Starter Default
+- url: http://gatsbyhoney.davshoward.com/
+  repo: https://github.com/davshoward/gatsby-starter-honey
+  description: A delicious baseline for Gatsby (v2).
+  tags:
+    - Styling:PostCSS
+    - SEO
+    - Accessibility
+  features:
+    - Gatsby v2
+    - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
+    - Google Analytics
+    - PostCSS support
+    - Developer enviornment variables
+    - Accessibility support
+    - Based on Gatsby Starter Default
+- url: https://material-ui-starter.netlify.com/
+  repo: https://github.com/dominicabela/gatsby-starter-material-ui
+  description: This starter includes Material UI boilerplate and configuration files along with the standard Gatsby configuration files. It provides a starting point for developing Gatsby apps with the Material UI framework.
+  tags:
+    - SEO
+    - Styling:Material
+    - Styling:Material Design
+    - Material UI
+    - Boilerplate
+  features:
+    - Material UI Framework
+    - Roboto Typeface (self hosted)
+    - SEO
+    - Offline Support
+    - Based on Gatsby Default Starter
+- url: https://developer-diary.netlify.com/
+  repo: https://github.com/willjw3/gatsby-starter-developer-diary
+  description: A blog template created with web developers in mind. Totally usable right out of the box, but minimalist enough to be easily modifiable.
+  tags:
+    - Blog
+    - Markdown
+    - Pagination
+    - SEO
+  features:
+    - Ready to go - Blog author name, author image, etc,... can be easily added using a config file
+    - Blog posts created as markdown files
+    - Gatsby v.2
+    - Mobile responsive
+    - Pagination
+    - Category and tag pages
+    - Social media sharing icons in each post
+    - Icons from React Icons (Font Awesome, Devicons, etc,...)
+    - Beautiful tech-topic tags to attach to your web-development-related blog posts
+    - Developer-relevant social media icon links, including GitHub, Stack Overflow, and freeCodeCamp
+- url: https://anubhavsrivastava.github.io/gatsby-starter-paradigmshift
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-paradigmshift
+  description: Single page starter based on the Paradigm Shift site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Image Gallery
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://dazzling-heyrovsky-62d4f9.netlify.com/
+  repo: https://github.com/s-kris/gatsby-starter-medium
+  description: A GatsbyJS starter blog as close as possible to medium.
+  tags:
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Careers Listing
+    - Mobile Responsive
+- url: https://gatsby-personal-starter-blog.netlify.com
+  repo: https://github.com/thomaswangio/gatsby-personal-starter-blog
+  description: Gatsby starter for personal blogs! Blog configured to run at /blog and with Netlify CMS and gatsby-remark-vscode.
+  tags:
+    - Blog
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Netlify CMS
+    - VSCode syntax highlighting
+    - Styled Components
+- url: https://anubhavsrivastava.github.io/gatsby-starter-phantom
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-phantom
+  description: Single page starter based on the Phantom site template by HTML5 up, with landing, generic and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-starter-internationalized.ack.ee/
+  repo: https://github.com/AckeeCZ/gatsby-starter-internationalized
+  description: A simple starter for fully internationalized websites, including route internationalization.
+  tags:
+    - i18n
+  features:
+    - internationalized page content - via react-intl
+    - internationalized routes - via language configuration
+    - lightweight - includes only internationalization code
+    - LocalizedLink - built-in link component handling route generation
+    - LanguageSwitcher - built-in language switcher component
+- url: https://gatsby-starter-bee.netlify.com/
+  repo: https://github.com/JaeYeopHan/gatsby-starter-bee
+  description: A simple starter for blog with fresh UI.
+  tags:
+    - Blog
+    - Netlify
+    - Disqus
+    - SEO
+  features:
+    - Code highlight with Fira Code font
+    - Emoji (emojione)
+    - Social share feature (Twitter, Facebook)
+    - Comment feature (disqus, utterances)
+    - Sponsor service (Buy-me-a-coffee)
+    - CLI Tool
+- url: https://learn.hasura.io/graphql/react/introduction
+  repo: https://github.com/hasura/gatsby-gitbook-starter
+  description: A starter to generate docs/tutorial websites based on GitBook theme.
+  tags:
+    - Documentation
+    - MDX
+    - Markdown
+    - SEO
+  features:
+    - Write in Markdown / MDX and generate responsive documentation/tutorial web apps
+    - Fully Configurable
+    - Syntax highlighting with Prismjs
+    - Code diffing with +/-
+    - Google Analytics Integration
+    - SEO Tags with MDX frontmatter
+    - Edit on Github button
+    - Fully Customisable with rich embeds using React in MDX.
+- url: https://gatsby-starter-blog-with-lunr.netlify.com/
+  repo: https://github.com/lukewhitehouse/gatsby-starter-blog-with-lunr
+  description: Building upon Gatsby's blog starter with a Lunr.js powered Site Search.
+  tags:
+    - Blog
+    - Lunr.js
+    - Search
+  features:
+    - Same as the official starter blog
+    - Integration with Lunr.js

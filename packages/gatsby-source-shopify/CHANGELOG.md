@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.35...gatsby-source-shopify@2.0.36) (2019-06-04)
+
+### Features
+
+- **gatsby-source-shopify:** add configurable 'paginationSize' parameter ([#14470](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/14470)) ([b07dcc0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/b07dcc0))
+
+## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.34...gatsby-source-shopify@2.0.35) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.33...gatsby-source-shopify@2.0.34) (2019-05-31)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** Fix empty result error ([#14457](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/14457)) ([b34f6d0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/b34f6d0))
+
+## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.32...gatsby-source-shopify@2.0.33) (2019-05-29)
+
+### Features
+
+- **gatsby-source-shopify:** Add support for Shopify Pages ([#13183](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/13183)) ([cae067c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/cae067c))
+
 ## [2.0.32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.31...gatsby-source-shopify@2.0.32) (2019-05-20)
 
 **Note:** Version bump only for package gatsby-source-shopify

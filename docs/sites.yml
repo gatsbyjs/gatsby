@@ -587,7 +587,6 @@
     - Design
     - Featured
     - Marketing
-    - SEO
     - Portfolio
 - title: Design Systems Weekly
   main_url: "https://designsystems.email/"
@@ -3320,8 +3319,8 @@
     - Web Development
     - Learning
 - title: Tandem
-  main_url: "https://tandem.co.uk"
-  url: "https://tandem.co.uk/the-app"
+  main_url: "https://www.tandem.co.uk"
+  url: "https://www.tandem.co.uk"
   description: >
     We're on a mission to free you of money misery. Our app, card and savings account are designed to help you spend less time worrying about money and more time enjoying life.
   categories:
@@ -4853,14 +4852,15 @@
   built_by_url: https://www.projectival.de/
   featured: false
 - title: Herman Starikov
-  url: https://hermanya.github.io
-  main_url: https://hermanya.github.io
+  url: https://starikov.dev
+  main_url: https://starikov.dev
   source_url: https://github.com/Hermanya/hermanya.github.io
   description: >
-    (optional)
+    Web Developer specializing in React, Toronto Canada
   categories:
     - Portfolio
     - Web Development
+    - Blog
   built_by: Herman Starikov
   built_by_url: https://github.com/Hermanya
   featured: false
@@ -6113,4 +6113,217 @@
     - Web Development
   built_by: Luke Secomb
   built_by_url: https://lukesecomb.digital
+  featured: false
+- title: We are Brew
+  url: https://www.wearebrew.co.uk
+  main_url: https://www.wearebrew.co.uk
+  description: >
+    Official website for Brew, a Birmingham based Digital Marketing Agency.
+  categories:
+    - Portfolio
+    - Web Development
+    - Agency
+    - Marketing
+  built_by: Brew Digital
+  built_by_url: https://www.wearebrew.co.uk
+- title: Global City Data
+  main_url: https://globalcitydata.com
+  url: https://globalcitydata.com
+  source_url: https://github.com/globalcitydata/globalcitydata
+  description: >
+    Global City Data is an open, easily browsable platform to showcase peer-reviewed urban datasets and models created by different research groups.
+  categories:
+    - Research
+    - Education
+    - Open Source
+  built_by: Rafi Barash
+  built_by_url: https://rafibarash.com
+  featured: false
+- title: Submittable
+  url: https://www.submittable.com
+  main_url: https://www.submittable.com
+  description: >
+    Submissions made simple. Submittalbe is a cloud-based submissions manager that lets you accept, review, and make decisions on any kind of digital content.
+  categories:
+    - Technology
+    - Marketing
+  built_by: Genevieve Crow
+  built_by_url: https://github.com/g-crow
+- title: Appmantle
+  main_url: https://appmantle.com
+  url: https://appmantle.com
+  description: >
+    Appmantle is a new way of creating apps. A complete modern app that you build yourself quickly & easily, without programming knowledge.
+  categories:
+    - App
+    - Marketing
+    - Landing Page
+    - Mobile Development
+    - Technology
+  built_by: Appmantle
+  built_by_url: https://appmantle.com
+  featured: false
+- title: Acto
+  main_url: https://www.acto.dk/
+  url: https://www.acto.dk/
+  description: >
+    Tomorrows solutions - today. Acto is an innovative software engineering company, providing your business with high-quality, scalable and maintainable software solutions, to make your business shine.
+  categories:
+    - Agency
+    - Technology
+    - Web Development
+    - Software Engineering
+    - Mobile Development
+  built_by: Acto
+  built_by_url: https://www.acto.dk/
+- title: Gatsby GitHub Stats
+  url: https://gatsby-github-stats.netlify.com
+  main_url: https://gatsby-github-stats.netlify.com
+  source_url: https://github.com/lannonbr/gatsby-github-stats/
+  description: >
+    Statistics Dashboard for Gatsby GitHub repository
+  categories:
+    - Data
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+  featured: false
+- title: Graphic Intuitions
+  url: https://www.graphicintuitions.com/
+  main_url: https://www.graphicintuitions.com/
+  description: >
+    Digital marketing agency located in Morris, Manitoba.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+  featured: false
+- title: Smooper
+  url: https://www.smooper.com/
+  main_url: https://www.smooper.com/
+  description: >
+    We connect you with digital marketing experts for 1 on 1 consultation sessions
+  categories:
+    - Marketing
+    - Directory
+  featured: false
+- title: Lesley Barber
+  url: https://www.lesleybarber.com/
+  main_url: https://www.lesleybarber.com/
+  description: >
+    Official website of Canadian film composer Lesley Barber.
+  categories:
+    - Portfolio
+    - Music
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+- title: Timeline of Terror
+  main_url: https://timelineofterror.org/
+  url: https://timelineofterror.org/
+  source_url: https://github.com/Symbitic/timeline-of-terror
+  description: >
+    Complete guide to the events of September 11, 2001.
+  categories:
+    - Directory
+    - Government
+    - History
+  built_by: Alex Shaw
+  built_by_url: https://github.com/Symbitic/
+  featured: false
+- title: Pill Club
+  url: https://thepillclub.com
+  main_url: https://thepillclub.com
+  description: >
+    Zero Copay With Insurance + Free Shipping + Bonus Gifts + Online Delivery – Birth Control Delivery and Prescription
+  categories:
+    - Marketing
+    - Healthcare
+    - Femtech
+  built_by: Pill Club
+  built_by_url: https://thepillclub.com
+- title: myweekinjs
+  url: https://www.myweekinjs.com/
+  main_url: https://www.myweekinjs.com/
+  source_url: https://github.com/myweekinjs/public-website
+  description: >
+    Challenge to create and/or learn something new in JavaScript each week.
+  categories:
+    - Challenge
+    - Blog
+    - Personal Development
+  built_by: Adriaan Janse van Rensburg
+  built_by_url: https://github.com/HurricaneInteractive/
+  featured: false
+- title: The Edit Suite
+  main_url: https://www.theeditsuite.com.au/
+  url: https://www.theeditsuite.com.au/
+  source_url: https://thriveweb.com.au/portfolio/the-edit-suite/
+  description: >-
+    The Edit Suite is an award winning video production and photography company based out of our Mermaid Beach studio on the Gold Coast of Australia but we also have the ability to work mobile from any location.
+  categories:
+    - Photography
+    - Motion graphics
+    - Events
+    - Marketing
+  built_by: Thrive Team - Gold Coast
+  built_by_url: https://thriveweb.com.au/
+  featured: false
+- title: CarineRoitfeld
+  main_url: https://www.carineroitfeld.com/
+  url: https://www.carineroitfeld.com/
+  description: >
+    Online shop for Carine Roitfeld parfume
+  categories:
+    - eCommerce
+    - Beauty
+  built_by: Ask Phill
+  built_by_url: https://askphill.com
+- title: EngineHub.org
+  url: https://enginehub.org
+  main_url: https://enginehub.org
+  source_url: https://github.com/EngineHub/enginehub-website
+  description: >
+    The landing pages for EngineHub, the organisation behind WorldEdit, WorldGuard, CraftBook, and more
+  categories:
+    - Landing Page
+    - Technology
+    - Open Source
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev
+- title: Goulburn Physiotherapy
+  url: https://www.goulburnphysiotherapy.com.au/
+  main_url: https://www.goulburnphysiotherapy.com.au/
+  description: >
+    Goulburn Physiotherapy is a leader in injury prevention, individual and community health, and workplace health solutions across Central Victoria.
+  categories:
+    - Blog
+    - Healthcare
+    - Health & Wellness
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: TomTom Traffic Index
+  main_url: https://www.tomtom.com/en_gb/traffic-index/
+  url: https://www.tomtom.com/en_gb/traffic-index/
+  description: >
+    The TomTom Traffic Index provides drivers, city planners, auto manufacturers and policy makers with unbiased statistics and information about congestion levels in 403 cities across 56 countries on 6 continents.
+  categories:
+    - Travel
+    - Data
+    - Research
+    - Visualization
+    - News
+  built_by: TomTom
+  built_by_url: https://tomtom.com
+  featured: false
+- title: PrintAWorld | A 3D Printing and Fabrication Company
+  main_url: https://prtwd.com/
+  url: https://prtwd.com/
+  description: >
+    PrintAWorld is a NYC based fabrication and manufacturing company that specializes in 3D printing, 3D scanning, CAD Design,
+    laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
+  categories:
+    - Business
+    - Art
+    - 3D Printing
+    - Manufacturing
   featured: false

@@ -8,7 +8,7 @@ Gatsby's core philosophy can be divided into three parts.
 
 **Second, [our tooling philosophy](#gatsbys-tooling-philosophy).** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
-- [bundling the modern Javascript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
+- [bundling the modern JavaScript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
 - [progressive disclosure of complexity](#progressively-disclose-complexity)
 
 **Third, [our community philosophy](#gatsbys-community-philosophy).** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _[work in the open](#work-in-the-open)_. At all times, we believe, and strive to communicate, that _[you belong here](#you-belong-here)_.
@@ -17,7 +17,7 @@ Gatsby's core philosophy can be divided into three parts.
 
 ### Construct new, higher-level web building blocks
 
-Today's building blocks for the web are components of HTML, CSS, and Javascript.
+Today's building blocks for the web are components of HTML, CSS, and JavaScript.
 
 We believe that in 5 or 10 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in.
 
@@ -77,9 +77,9 @@ We believe the most high-impact way to make the web better is to make it high-qu
 
 ## Gatsby's tooling philosophy
 
-### Bundle the modern Javascript ecosystem for the content web
+### Bundle the modern JavaScript ecosystem for the content web
 
-One key way Gatsby makes the content web high-quality by default is to neatly bundle the modern Javascript ecosystem.
+One key way Gatsby makes the content web high-quality by default is to neatly bundle the modern JavaScript ecosystem.
 
 Traditional CMS development [presents many challenges](https://www.gatsbyjs.org/blog/2018-10-11-rise-of-modern-web-development/#traditional-cms-development-presents-challenges) such as walled-garden development, difficult-to-maintain local environments, and a challenging target environment.
 
@@ -127,7 +127,7 @@ Open source is great for developers. It lets you:
 
 However, there are significant barriers to getting started in open source.
 
-First, **getting started in open source is daunting**. OSS projects can be intimidating. They often have thousands of lines of code and tons of required context and history. Navigating Github can be confusing. And there can be awkward social dynamics: imposter syndrome and lack of support.
+First, **getting started in open source is daunting**. OSS projects can be intimidating. They often have thousands of lines of code and tons of required context and history. Navigating GitHub can be confusing. And there can be awkward social dynamics: imposter syndrome and lack of support.
 
 Second, **open source is an expense not everyone can afford**. Potential contributors may not have free time to work on open source, and their jobs may not support contributing as part of our workload.
 

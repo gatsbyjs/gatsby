@@ -1,4 +1,5 @@
 const path = require(`path`)
+const git = require(`git-rev-sync`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -9,25 +10,25 @@ const GA = {
 }
 
 const dynamicPlugins = []
-if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
-  // pick data from 3 months ago
-  const startDate = new Date()
-  startDate.setMonth(startDate.getMonth() - 3)
-  dynamicPlugins.push({
-    resolve: `gatsby-plugin-guess-js`,
-    options: {
-      GAViewID: GA.viewId,
-      jwt: {
-        client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
-        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
-      },
-      period: {
-        startDate,
-        endDate: new Date(),
-      },
-    },
-  })
-}
+// if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
+// // pick data from 3 months ago
+// const startDate = new Date()
+// startDate.setMonth(startDate.getMonth() - 3)
+// dynamicPlugins.push({
+// resolve: `gatsby-plugin-guess-js`,
+// options: {
+// GAViewID: GA.viewId,
+// jwt: {
+// client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
+// private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
+// },
+// period: {
+// startDate,
+// endDate: new Date(),
+// },
+// },
+// })
+// }
 
 if (process.env.AIRTABLE_API_KEY) {
   dynamicPlugins.push({
@@ -202,6 +203,7 @@ module.exports = {
       options: {
         trackingId: GA.identifier,
         anonymize: true,
+        allowLinker: true,
       },
     },
     {
@@ -213,6 +215,7 @@ module.exports = {
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] }
+                  limit: 10,
                   filter: {
                     frontmatter: { draft: { ne: true } }
                     fileAbsolutePath: { regex: "/docs.blog/" }
@@ -279,6 +282,16 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sentry`,
+      options: {
+        dsn: `https://2904ad31b1744c688ae19b627f51a5de@sentry.io/1471074`,
+        release: git.long(),
+        environment: process.env.NODE_ENV,
+        enabled: (() =>
+          [`production`, `stage`].indexOf(process.env.NODE_ENV) !== -1)(),
       },
     },
     // `gatsby-plugin-subfont`,

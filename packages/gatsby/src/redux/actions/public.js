@@ -2,7 +2,6 @@
 const Joi = require(`joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
-const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
@@ -11,13 +10,13 @@ const truePath = require(`true-case-path`)
 const url = require(`url`)
 const kebabHash = require(`kebab-hash`)
 const slash = require(`slash`)
-const { hasNodeChanged, getNode } = require(`../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
-const { store } = require(`./index`)
+const { hasNodeChanged, getNode } = require(`../../db/nodes`)
+const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
+const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../joi-schemas/joi`)
-const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
+const joiSchemas = require(`../../joi-schemas/joi`)
+const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
+const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 const actions = {}
 
@@ -35,6 +34,8 @@ const findChildrenRecursively = (children = []) => {
 
   return children
 }
+
+import type { Plugin } from "./types"
 
 type Job = {
   id: string,
@@ -54,10 +55,6 @@ type Page = {
   jsonName: string,
   componentChunkName: string,
   updatedAt: number,
-}
-
-type Plugin = {
-  name: string,
 }
 
 type ActionOptions = {
@@ -831,9 +828,7 @@ actions.createNodeField = (
     node.fields = {}
   }
 
-  /**
-   * Normalized name of the field that will be used in schema
-   */
+  // Normalized name of the field that will be used in schema
   const schemaFieldName = _.includes(name, `___NODE`)
     ? name.split(`___`)[0]
     : name
@@ -889,83 +884,6 @@ actions.createParentChildLink = (
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
     plugin,
     payload: parent,
-  }
-}
-
-/**
- * Create a dependency between a page and data. Probably for
- * internal use only.
- * @param {Object} $0
- * @param {string} $0.path the path to the page
- * @param {string} $0.nodeId A node ID
- * @param {string} $0.connection A connection type
- * @private
- */
-actions.createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
-  return {
-    type: `CREATE_COMPONENT_DEPENDENCY`,
-    plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
-  }
-}
-
-/**
- * Delete dependencies between an array of pages and data. Probably for
- * internal use only. Used when deleting pages.
- * @param {Array} paths the paths to delete.
- * @private
- */
-actions.deleteComponentsDependencies = (paths: string[]) => {
-  return {
-    type: `DELETE_COMPONENTS_DEPENDENCIES`,
-    payload: {
-      paths,
-    },
-  }
-}
-
-/**
- * When the query watcher extracts a GraphQL query, it calls
- * this to store the query with its component.
- * @private
- */
-actions.replaceComponentQuery = ({
-  query,
-  componentPath,
-}: {
-  query: string,
-  componentPath: string,
-}) => {
-  return {
-    type: `REPLACE_COMPONENT_QUERY`,
-    payload: {
-      query,
-      componentPath,
-    },
-  }
-}
-
-/**
- * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
- * components, it calls this to store the query with its component.
- * @private
- */
-actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
-  return {
-    type: `REPLACE_STATIC_QUERY`,
-    plugin,
-    payload: args,
   }
 }
 
@@ -1188,9 +1106,7 @@ actions.setPluginStatus = (
   }
 }
 
-/**
- * Check if path is absolute and add pathPrefix in front if it's not
- */
+// Check if path is absolute and add pathPrefix in front if it's not
 const maybeAddPathPrefix = (path, pathPrefix) => {
   const parsed = url.parse(path)
   const isRelativeProtocol = path.startsWith(`//`)
@@ -1242,322 +1158,4 @@ actions.createRedirect = ({
   }
 }
 
-/**
- * Add a third-party schema to be merged into main schema. Schema has to be a
- * graphql-js GraphQLSchema object.
- *
- * This schema is going to be merged as-is. This can easily break the main
- * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
- * (by eg namespacing the schema).
- *
- * @param {Object} $0
- * @param {GraphQLSchema} $0.schema GraphQL schema to add
- */
-actions.addThirdPartySchema = (
-  { schema }: { schema: GraphQLSchema },
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `ADD_THIRD_PARTY_SCHEMA`,
-    plugin,
-    traceId,
-    payload: schema,
-  }
-}
-
-import type GatsbyGraphQLType from "../schema/types/type-builders"
-/**
- * Add type definitions to the GraphQL schema.
- *
- * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
- *
- * Type definitions can be provided either as
- * [`graphql-js` types](https://graphql.org/graphql-js/), in
- * [GraphQL schema definition language (SDL)](https://graphql.org/learn/)
- * or using Gatsby Type Builders available on the `schema` API argument.
- *
- * Things to note:
- * * needs to be called *before* schema generation. It is recommended to use
- *   `createTypes` in the `sourceNodes` API.
- * * type definitions targeting node types, i.e. `MarkdownRemark` and others
- *   added in `sourceNodes` or `onCreateNode` APIs, need to implement the
- *   `Node` interface. Interface fields will be added automatically, but it
- *   is mandatory to label those types with `implements Node`.
- * * by default, explicit type definitions from `createTypes` will be merged
- *   with inferred field types, and default field resolvers for `Date` (which
- *   adds formatting options) and `File` (which resolves the field value as
- *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer`, `@dontInfer` directives or extensions. Fields
- *   may be assigned resolver (and other option like args) with additional
- *   directives. Currently `@dateformat`, `@link` and `@fileByRelativePath` are
- *   available.
- *
- *
- * Schema customization controls:
- * * `@infer` - run inference on the type and add fields that don't exist on the
- * defined type to it.
- * * `@dontInfer` - don't run any inference on the type
- *
- * Extensions to add resolver options:
- * * `@dateformat` - add date formatting arguments. Accepts `formatString` and
- *   `locale` options that sets the defaults for this field
- * * `@link` - connect to a different Node. Arguments `by` and `from`, which
- *   define which field to compare to on a remote node and which field to use on
- *   the source node
- * * `@fileByRelativePath` - connect to a File node. Same arguments. The
- *   difference from link is that this normalizes the relative path to be
- *   relative from the path where source node is found.
- * * `proxy` - in case the underlying node data contains field names with
- *   characters that are invalid in GraphQL, `proxy` allows to explicitly
- *   proxy those properties to fields with valid field names. Takes a `from` arg.
- *
- *
- * @example
- * exports.sourceNodes = ({ actions }) => {
- *   const { createTypes } = actions
- *   const typeDefs = `
- *     """
- *     Markdown Node
- *     """
- *     type MarkdownRemark implements Node @infer {
- *       frontmatter: Frontmatter!
- *     }
- *
- *     """
- *     Markdown Frontmatter
- *     """
- *     type Frontmatter @infer {
- *       title: String!
- *       author: AuthorJson! @link
- *       date: Date! @dateformat
- *       published: Boolean!
- *       tags: [String!]!
- *     }
- *
- *     """
- *     Author information
- *     """
- *     # Does not include automatically inferred fields
- *     type AuthorJson implements Node @dontInfer {
- *       name: String!
- *       birthday: Date! @dateformat(locale: "ru")
- *     }
- *   `
- *   createTypes(typeDefs)
- * }
- *
- * // using Gatsby Type Builder API
- * exports.sourceNodes = ({ actions, schema }) => {
- *   const { createTypes } = actions
- *   const typeDefs = [
- *     schema.buildObjectType({
- *       name: 'MarkdownRemark',
- *       fields: {
- *         frontmatter: 'Frontmatter!'
- *       },
- *       interfaces: ['Node'],
- *       extensions: {
- *         infer: true,
- *       },
- *     }),
- *     schema.buildObjectType({
- *       name: 'Frontmatter',
- *       fields: {
- *         title: {
- *           type: 'String!',
- *           resolve(parent) {
- *             return parent.title || '(Untitled)'
- *           }
- *         },
- *         author: {
- *           type: 'AuthorJson'
- *           extensions: {
- *             link: {},
- *           },
- *         }
- *         date: {
- *           type: 'Date!'
- *           extensions: {
- *             dateformat: {},
- *           },
- *         },
- *         published: 'Boolean!',
- *         tags: '[String!]!',
- *       }
- *     }),
- *     schema.buildObjectType({
- *       name: 'AuthorJson',
- *       fields: {
- *         name: 'String!'
- *         birthday: {
- *           type: 'Date!'
- *           extensions: {
- *             dateformat: {
- *               locale: 'ru',
- *             },
- *           },
- *         },
- *       },
- *       interfaces: ['Node'],
- *       extensions: {
- *         infer: false,
- *       },
- *     }),
- *   ]
- *   createTypes(typeDefs)
- * }
- */
-actions.createTypes = (
-  types:
-    | string
-    | GraphQLOutputType
-    | GatsbyGraphQLType
-    | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `CREATE_TYPES`,
-    plugin,
-    traceId,
-    payload: types,
-  }
-}
-
-/**
- *
- * Report that a query has been extracted from a component. Used by
- * query-compilier.js.
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {query} $0.query The GraphQL query that was extracted from the component.
- * @private
- */
-actions.queryExtracted = (
-  { componentPath, query },
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `QUERY_EXTRACTED`,
-    plugin,
-    traceId,
-    payload: { componentPath, query },
-  }
-}
-
-/**
- *
- * Report that the Relay Compilier found a graphql error when attempting to extract a query
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {error} $0.error The GraphQL query that was extracted from the component.
- * @private
- */
-actions.queryExtractionGraphQLError = (
-  { componentPath, error },
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
-    plugin,
-    traceId,
-    payload: { componentPath, error },
-  }
-}
-
-/**
- *
- * Report that babel was able to extract the graphql query.
- * Indicates that the file is free of JS errors.
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @private
- */
-actions.queryExtractedBabelSuccess = (
-  { componentPath },
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
-    plugin,
-    traceId,
-    payload: { componentPath },
-  }
-}
-
-/**
- *
- * Report that the Relay Compilier found a babel error when attempting to extract a query
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {error} $0.error The Babel error object
- * @private
- */
-actions.queryExtractionBabelError = (
-  { componentPath, error },
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `QUERY_EXTRACTION_BABEL_ERROR`,
-    plugin,
-    traceId,
-    payload: { componentPath, error },
-  }
-}
-
-/**
- * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
- *
- * @param {string} Program status
- * @private
- */
-actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
-  return {
-    type: `SET_PROGRAM_STATUS`,
-    plugin,
-    traceId,
-    payload: status,
-  }
-}
-
-/**
- * Broadcast that a page's query was run.
- *
- * @param {string} Path to the page component that changed.
- * @private
- */
-actions.pageQueryRun = (
-  { path, componentPath, isPage },
-  plugin: Plugin,
-  traceId?: string
-) => {
-  return {
-    type: `PAGE_QUERY_RUN`,
-    plugin,
-    traceId,
-    payload: { path, componentPath, isPage },
-  }
-}
-
-/**
- * All action creators wrapped with a dispatch.
- */
-exports.actions = actions
-
-/**
- * All action creators wrapped with a dispatch. - *DEPRECATED*
- */
-exports.boundActionCreators = bindActionCreators(actions, store.dispatch)
+module.exports = { actions }

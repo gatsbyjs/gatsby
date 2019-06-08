@@ -4,7 +4,7 @@
  * @returns {number} Count of the requested type of CPU cores. Defaults to number of physical cores or 1
  */
 
-const cpuCoreCount = (useEnvVar = false) => {
+const cpuCoreCount = (useEnvVar = true) => {
   try {
     let coreCount = require(`./physical-cpu-count`) || 1
 
