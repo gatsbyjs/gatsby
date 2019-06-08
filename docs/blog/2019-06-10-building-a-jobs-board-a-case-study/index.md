@@ -6,7 +6,7 @@ tags:
   - case-study
 ---
 
-Today we are going to discuss how we built [Remotefordays](https://remotefordays.com), a jobs board for remote software engineer roles, with gatsby. First we'll discuss how we made came to our tech stack, then we'll talk about the the gotachas, and falls starts we encountered along the way.
+Today we are going to discuss how we built [Remotefordays](https://remotefordays.com), a jobs board for remote software engineer roles, with gatsby. First we'll discuss how we made came to our tech stack, then we'll talk about the the gotchas, and falls starts we encountered along the way.
 
 # Components of the tech stack
 
