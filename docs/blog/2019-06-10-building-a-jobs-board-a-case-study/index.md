@@ -10,7 +10,7 @@ Today we are going to discuss how we built [Remotefordays](https://remotefordays
 
 # Components of the tech stack
 
-Gatsby is an amazing tool for rapid prototyping high performance websites on the frontend. We can get a new project started without much hassle due to a phenominal developer experience. Therefore choosing gatsby for our frontend concerns was easy. Next we needed to decide how to build and store job listings.
+Gatsby is an amazing tool for rapid prototyping high performance websites on the frontend. We can get a new project started without much hassle due to a phenomenal developer experience. Therefore choosing gatsby for our frontend concerns was easy. Next we needed to decide how to build and store job listings.
 
 Since we are using gatsby, we were tempted to build the job board as a static site. After all, the content is not going to change after the initial job post. But there is a subtle requirement in a jobs board that requires the site to be designed for dynamic actions.
 
@@ -26,7 +26,7 @@ Now that we have a system design we are happy with, we can talk the false starts
 
 The biggest gotcha focused on job listing SEO and the server-side rendering of job detail pages. The detail page was designed to fetch data for a specific job post based on the unique ID passed through from the front page. We implemented this feature using client-only routes because we figured this approach to be the "gatsby way" of working with apps, based on an article focused on [building hybrid apps](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/) with gatsby.
 
-However we found out that these pages could not use React Helmet to add meta tags for social media sharing. The culprit of this problem lies in the fact that gatsby pages are served using the React.Hydrate function which is how gatsby generates server rendered pages, processed with ExpressJS at build time. Pages rendered via React.Hydrate load twice on the frontend. On first call, the React lifecycle methods are unavaliable afterwards, lifecycle methods are available to make API calls. Due to this rendering process we were not able to make API calls in `componentDidMount` to have the data present before we added SEO tags with React Helmet. Boo!
+However we found out that these pages could not use React Helmet to add meta tags for social media sharing. The culprit of this problem lies in the fact that gatsby pages are served using the React.Hydrate function which is how gatsby generates server rendered pages, processed with ExpressJS at build time. Pages rendered via React.Hydrate load twice on the frontend. On first call, the React lifecycle methods are unavailable afterwards, lifecycle methods are available to make API calls. Due to this rendering process we were not able to make API calls in `componentDidMount` to have the data present before we added SEO tags with React Helmet. Boo!
 
 To solve this problem we added request forwarding at the CDN level and moved the details rendering logic to our backend ExpressJS app. When the user requests a job post details, the request goes to a backend app, we generate a job post with the proper SEO meta tags, return a response with the proper data, and then cache the response for future requests. After we made these adjustments we were able to have shareable job posts. Yay!
 
