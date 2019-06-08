@@ -1,25 +1,59 @@
+const fs = require(`fs`)
 const path = require(`path`)
+
+const findCacheDir = require(`find-cache-dir`)
+const Promise = require(`bluebird`)
+
+const { ensureDir } = require(`./utils`)
 
 module.exports.getPath = getPath
 module.exports.load = load
 module.exports.save = save
 
-let cache
-
 function getPath() {
-  return path.join(__dirname, `cache.json`)
+  return path.join(cacheDir, `cache.json`)
+}
+
+let cache
+const cacheDir = findCacheDir({ name: `gatsby-plugin-preload-fonts` })
+try {
+  ensureDir(cacheDir)
+} catch (e) {
+  console.log(
+    `could not write to cache directory, please make sure the following path exists and is writable`
+  )
+  console.log(`  ${cacheDir}`)
+  console.error(e)
+  process.exit(1)
 }
 
 function load() {
-  cache = {
-    timestamp: Date.now(),
-    hash: `not_a_real_hash`,
-    assets: {},
-  }
-  return Promise.resolve(cache)
+  if (cache) return Promise.resolve(cache)
+
+  return new Promise(resolve => {
+    try {
+      const json = fs.readFileSync(getPath(), `utf-8`)
+      cache = JSON.parse(json)
+      return resolve(cache)
+    } catch (err) {
+      return resolve({
+        timestamp: Date.now(),
+        hash: `initial-run`,
+        assets: {},
+      })
+    }
+  })
 }
 
 function save(data) {
-  cache = data
-  return Promise.resolve()
+  return new Promise((resolve, reject) => {
+    try {
+      const json = JSON.stringify(data)
+      fs.writeFileSync(getPath(), json, `utf-8`)
+      cache = data
+      return resolve()
+    } catch (err) {
+      return reject(err)
+    }
+  })
 }

@@ -44,7 +44,7 @@ ${red(`err`)} could not establish a connection with the dev server
 
 ${blue(`note`)} routes have not changed from the last run; if you haven't
     added any new routes or font requirements since then, you
-    should be good to go!
+    should be good to go! would you like to crawl them anyways?
 
       - ${dim(`last run`)} ${bold(lastRun)}
       - ${dim(`route hash`)} ${bold(cache.hash)}
