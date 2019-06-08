@@ -28,7 +28,7 @@ The biggest gotcha focused on job listing SEO and the server-side rendering of j
 
 However we found out that these pages could not use React Helmet to add meta tags for social media sharing. The culprit of this problem lies in the fact that gatsby pages are served using the React.Hydrate function which is how gatsby generates server rendered pages, processed with ExpressJS at build time. Pages rendered via React.Hydrate load twice on the frontend. On first call, the React lifecycle methods are unavaliable afterwards, lifecycle methods are available to make API calls. Due to this rendering process we were not able to make API calls in `componentDidMount` to have the data present before we added SEO tags with React Helmet. Boo!
 
-To solve this problem we added request forwarding at the CDN level and moved the details rendering logic to our backend ExpressJS app. When the user requests a job post details, the request goes to a backedn app, we generate a job post with the proper SEO meta tags, return a response with the proper data, and then cache the response for future requests. After we made these adjustments we were able to have shareable job posts. Yay!
+To solve this problem we added request forwarding at the CDN level and moved the details rendering logic to our backend ExpressJS app. When the user requests a job post details, the request goes to a backend app, we generate a job post with the proper SEO meta tags, return a response with the proper data, and then cache the response for future requests. After we made these adjustments we were able to have shareable job posts. Yay!
 
 # Final thoughts
 
