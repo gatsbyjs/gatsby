@@ -1,12 +1,21 @@
+const path = require(`path`)
+
+module.exports.getPath = getPath
 module.exports.load = load
 module.exports.save = save
 
-// TODO: implement stub
-
 let cache
 
+function getPath() {
+  return path.join(__dirname, `cache.json`)
+}
+
 function load() {
-  cache = {}
+  cache = {
+    timestamp: Date.now(),
+    hash: `not_a_real_hash`,
+    assets: {},
+  }
   return Promise.resolve(cache)
 }
 

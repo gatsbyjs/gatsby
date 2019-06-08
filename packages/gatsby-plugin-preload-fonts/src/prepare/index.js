@@ -1,88 +1,74 @@
-const puppeteer = require(`puppeteer`)
 const path = require(`path`)
-const { request } = require(`graphql-request`)
 const crypto = require(`crypto`)
 const { URL } = require(`url`)
 
-const { load, save } = require(`./cache`)
+const puppeteer = require(`puppeteer`)
+const ProgressBar = require(`progress`)
+const { blue, green, bold, dim } = require(`chalk`)
 
-// TODO: implement better logging
-const log = { info: console.log, debug: console.log }
+const createLogger = require(`./logger`)
+const fetchRoutes = require(`./fetch-routes`)
+const { load, save, getPath: getCachePath } = require(`./cache`)
 
 const {
-  DEBUG = false,
-  HOST = `localhost`,
   PORT = 8000,
+  HOST = `localhost`,
+  LOG_LEVEL = `error`,
   GRAPHQL_PATH = `/___graphql`,
 } = process.env
 
-// TODO: implement progress bar
+const logger = createLogger(LOG_LEVEL)
 
 const endpoint = path => `http://${HOST}:${PORT}${path}`
 
 async function main() {
+  logger.newline()
+  logger.info(`loading cache`)
   const cache = await load()
 
-  const query = `
-    query Routes {
-      allSitePage {
-        nodes {
-          path
-        }
-      }
+  logger.info(`requesting route listing`)
+  const routes = await fetchRoutes({
+    logger,
+    cache,
+    endpoint: endpoint(GRAPHQL_PATH),
+  })
+
+  const msg = `crawing routes`
+  const bar = new ProgressBar(
+    ` ${dim(msg)} (:bar) ${bold(blue(`:percent`))} ${dim(`eta :etas`)} `,
+    {
+      width: 40,
+      total: routes.length,
+      complete: `█`,
+      incomplete: ` `,
+      head: ``,
     }
-  `
-
-  let routes
-  try {
-    const { allSitePage } = await request(endpoint(GRAPHQL_PATH), query)
-    routes = allSitePage.nodes.map(n => n.path)
-  } catch (err) {
-    console.log(`
-  err: could not establish a connection with the dev server
-       attempted connection to ${endpoint(GRAPHQL_PATH)}
-
-       make sure you've run \`gatsby develop\` and set the
-       following env variables (if necessary)
-
-         - HOST          (default: localhost)
-         - PORT          (default: 8000)
-         - GRAPHQL_PATH  (default: /___graphql)
-
-`)
-    process.exit(1)
-  }
-
-  let hash = crypto.createHash(`md5`)
-  routes.forEach(hash.update)
-  if (cache.hash === hash.digest(`hex`)) {
-    // TODO: routes have no changed from last run; prompt user to
-    // just use existing file since it's unlikely much has changed
-    return
-  }
+  )
+  logger.setAdapter((...args) => bar.interrupt(args.join(` `)))
 
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   page.on(`requestfinished`, e => {
-    if (DEBUG && !e._url.match(/socket\.io/)) {
-      log.info(`[load]`, e._method, e._url)
+    if (!e._url.match(/(socket\.io|commons\.js)/)) {
+      logger.info(`load`, e._method, e._url)
     }
+
     if (
       e._method === `GET` &&
       path.parse(e._url).ext.match(/^\.(otf|ttf|woff2?)$/)
     ) {
-      log.debug(`[match]`, e._url)
+      logger.debug(`match`, e._url)
 
       const { pathname } = new URL(page.url())
 
-      if (!Object.prototype.hasOwnProperty.call(cache, pathname)) {
-        cache[pathname] = {}
+      if (!Object.prototype.hasOwnProperty.call(cache.assets, pathname)) {
+        cache.assets[pathname] = {}
       }
-      cache[pathname][e._url] = true
+      cache.assets[pathname][e._url] = true
     }
   })
 
-  hash = crypto.createHash(`md5`)
+  const hash = crypto.createHash(`md5`)
   for (const route of routes) {
     // wait until there are no more than 2 network connections for 500ms
     // to allow for dynamically inserted <link> and <script> tags to load
@@ -93,17 +79,28 @@ async function main() {
     // unfortunately, this increases the minimum load time per route to
     // ~500ms, which adds up quickly on large sites; there may be room
     // for optimization here
-    if (DEBUG) log.info(`[visit]`, route)
     hash.update(route)
+    logger.info(`visit`, route)
     await page.goto(endpoint(route), { waitUntil: `networkidle2` })
+    bar.tick()
   }
 
   await browser.close()
+  logger.resetAdapter()
 
   cache.hash = hash.digest(`hex`)
+  cache.timestamp = Date.now()
   await save(cache)
 
-  console.log(cache)
+  logger.print(`
+
+  ${green(`ok!`)} a mapping between your application's routes and
+      font requirements has been generated; make sure to
+      add ${bold(`\`gatsby-plugin-preload-fonts\``)} to your app config
+
+        - ${dim(`output`)} ${bold(getCachePath())}
+
+`)
 }
 
-main()
+main().then(process.exit.bind(0))
