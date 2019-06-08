@@ -32,7 +32,7 @@ To solve this problem we added request forwarding at the CDN level and moved the
 
 # Final thoughts
 
-To recap, we built a remote jobs board with gatsby as our frontend client because we wanted performance from the start. We deployed our site on [Netlify](https://netlify.com), configured CDN request forwarding with Netlify, used a backend ExpressJS app, deployed on [Google Cloud Appengine](https://cloud.google.com/appengine/), to handle the serving of job detail pages. We hit a frustrating blocker for a critcial feature that caused us to discard core gatsby logic and reimplement that logic on the backend. Given what we know now, would we choose gatsby again? Absolutely! Though we were not able to leverage gatsby to its full potential, we're confident that many more opportunties are on the horizon. To learn more about me you can follow me [@stevennatera](https://twitter.com/stevennatera) on Twitter. Thanks!
+To recap, we built a remote jobs board with gatsby as our frontend client because we wanted performance from the start. We deployed our site on [Netlify](https://netlify.com), configured CDN request forwarding with Netlify, used a backend ExpressJS app, deployed on [Google Cloud Appengine](https://cloud.google.com/appengine/), to handle the serving of job detail pages. We hit a frustrating blocker for a critcial feature that caused us to discard core gatsby logic and reimplement that logic on the backend. Given what we know now, would we choose gatsby again? Absolutely! Though we were not able to leverage gatsby to its full potential, we're confident that many more opportunities are on the horizon. To learn more about me you can follow me [@stevennatera](https://twitter.com/stevennatera) on Twitter. Thanks!
 
 ## Gatsby Manor
 
