@@ -1,6 +1,6 @@
 # gatsbyjs.org
 
-The main Gatsby site at gatsbyjs.org
+The main Gatsby site at gatsbyjs.org:
 
 Run locally with:
 
