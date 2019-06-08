@@ -8,6 +8,5 @@ interface GatsbyImageWithIEPolyfillProps extends GatsbyImageProps {
 }
 
 export default class GatsbyImageWithIEPolyfill extends React.Component<
-  GatsbyImageWithIEPolyfillProps,
-  any
+  GatsbyImageWithIEPolyfillProps
 > {}
