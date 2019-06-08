@@ -36,7 +36,5 @@ To recap, we built a remote jobs board with gatsby as our frontend client becaus
 
 ## Gatsby Manor
 
-[Gatsby Manor](https://gatsbymanor.com) builds professional design
-Gatsby themes. We make themes to meet your project needs, with new starters
-added frequently. Can't find a theme you like? Message us [@thegatsbymanor](https://twitter.com/thegatsbymanor) and we'll build a theme for you!
+[Gatsby Manor](https://gatsbymanor.com) builds professional design Gatsby themes. We make themes to meet your project needs, with new starters added frequently. Can't find a theme you like? Message us [@thegatsbymanor](https://twitter.com/thegatsbymanor) and we'll build a theme for you!
 
