@@ -93,17 +93,17 @@ npm install --save gatsby-plugin-manifest
 {
   plugins: [
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: `gatsby-plugin-manifest"`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
-        start_url: "/",
-        background_color: "#6b37bf",
-        theme_color: "#6b37bf",
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
-        display: "standalone",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
   ]
@@ -132,21 +132,21 @@ npm install --save gatsby-plugin-offline
 {
   plugins: [
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
-        start_url: "/",
-        background_color: "#6b37bf",
-        theme_color: "#6b37bf",
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
-        display: "standalone",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
     // highlight-next-line
-    "gatsby-plugin-offline",
+    `gatsby-plugin-offline`,
   ]
 }
 ```
@@ -177,22 +177,22 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 {
   plugins: [
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: `gatsby-plugin-manifest"`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
-        start_url: "/",
-        background_color: "#6b37bf",
-        theme_color: "#6b37bf",
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
-        display: "standalone",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
-    "gatsby-plugin-offline",
+    `gatsby-plugin-offline`,
     // highlight-next-line
-    "gatsby-plugin-react-helmet",
+    `gatsby-plugin-react-helmet`,
   ]
 }
 ```
