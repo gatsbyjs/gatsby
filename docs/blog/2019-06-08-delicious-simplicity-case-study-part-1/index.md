@@ -1,5 +1,5 @@
 ---
-title: Delicious Simplicity ❤️ Gatsby: Building Happily Ever After 
+title: "Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"
 date: 2019-06-08
 author: Michelle Gienow
 tags:
