@@ -69,7 +69,7 @@ const MastheadContent = () => (
       tracking="MasterHead -> Get Started"
       icon={<ArrowForwardIcon />}
     >
-      Get Started
+      Start Using Gatsby
     </Button>
   </div>
 )
