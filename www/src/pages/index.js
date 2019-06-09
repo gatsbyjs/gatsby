@@ -133,7 +133,7 @@ class IndexRoute extends React.Component {
                   overrideCSS={{ marginTop: space[4] }}
                   icon={<ArrowForwardIcon />}
                 >
-                  Get Started
+                  Start Using Gatsby
                 </Button>
               </div>
             </Container>
