@@ -2863,3 +2863,16 @@
     - lightweight - includes only internationalization code
     - LocalizedLink - built-in link component handling route generation
     - LanguageSwitcher - built-in language switcher component
+- url: https://histaff.io/
+  repo: https://github.com/histaff/website-static
+  description: It's a beautiful starter static website which useful plugins based on Gatsby
+  tags:
+    - Styling:SCSS
+    - Landing Page
+    - Onepage
+    - Google Fonts
+  features:
+    - Fully Responsive
+    - Styling with SCSS
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - LocalizedLink - built-in link component handling route generation
