@@ -54,8 +54,8 @@ After installing gatsby-mdx you can add it to your plugins list in your
 
 ```js
 module.exports = {
-  plugins: [`gatsby-mdx`]
-};
+  plugins: [`gatsby-mdx`],
+}
 ```
 
 By default, this configuration will allow you to create pages
@@ -68,15 +68,15 @@ gatsby-mdx exposes a configuration API that can be used similarly to
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                                                                        | Default                                | Description                                                          |
-| ------------------------------------------------------------------------------------------ | -------------------------------------- | -------------------------------------------------------------------- |
-| [`extensions`](#extensions)                                                                | `[".mdx"]`                             | Configure the file extensions that gatsby-mdx will process           |
-| [`defaultLayouts`](#default-layouts)                                                       | `{}`                                   | Set the layout components for MDX source types                       |
-| [`globalScope`](#global-scope)                                                             | `""`                                   | Define components and variables that are accessible to all MDX files |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]` | Use Gatsby-specific remark plugins |
-| [`remarkPlugins`](#remark-plugins)                                                         | `[]`                                   | Specify remark plugins                                               |
-| [`rehypePlugins`](#rehype-plugins)                                                         | `[]`                                   | Specify rehype plugins                                               |
-| [`mediaTypes`](#media-types)                                                               | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
+| Key                                             | Default                                | Description                                                          |
+| ----------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------- |
+| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-mdx will process           |
+| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                       |
+| [`globalScope`](#global-scope)                  | `""`                                   | Define components and variables that are accessible to all MDX files |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                   |
+| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                               |
+| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                               |
+| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
 
 #### Extensions
 
@@ -92,11 +92,11 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        extensions: [`.mdx`, `.md`]
-      }
-    }
-  ]
-};
+        extensions: [`.mdx`, `.md`],
+      },
+    },
+  ],
+}
 ```
 
 #### Default layouts
@@ -115,12 +115,12 @@ module.exports = {
       options: {
         defaultLayouts: {
           posts: require.resolve("./src/components/posts-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js")
-        }
-      }
-    }
-  ]
-};
+          default: require.resolve("./src/components/default-page-layout.js"),
+        },
+      },
+    },
+  ],
+}
 ```
 
 MDX has the concept of a layout that is different than the Gatsby
@@ -165,7 +165,7 @@ use one layout for all MDX pages that don't already have a layout defined.
 ```js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby MDX Kitchen Sink`
+    title: `Gatsby MDX Kitchen Sink`,
   },
   plugins: [
     {
@@ -173,19 +173,19 @@ module.exports = {
       options: {
         defaultLayouts: {
           posts: require.resolve("./src/components/posts-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js")
-        }
-      }
+          default: require.resolve("./src/components/default-page-layout.js"),
+        },
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts/`
-      }
-    }
-  ]
-};
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+  ],
+}
 ```
 
 #### Global scope
@@ -194,7 +194,7 @@ When importing a react component into your MDX, you can import it using the `imp
 statement as in JavaScript.
 
 ```mdx
-import { SketchPicker } from "react-color";
+import { SketchPicker } from "react-color"
 
 # Hello, world!
 
@@ -217,11 +217,11 @@ module.exports = {
           import { SketchPicker } from "react-color";
 
           export default { SketchPicker };
-        `
-      }
-    }
-  ]
-};
+        `,
+      },
+    },
+  ],
+}
 ```
 
 All that is needed is to import the components you wish to be globally available and
@@ -267,14 +267,14 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 590
-            }
-          }
-        ]
-      }
-    }
-  ]
-};
+              maxWidth: 590,
+            },
+          },
+        ],
+      },
+    },
+  ],
+}
 ```
 
 ###### Note:
@@ -282,7 +282,7 @@ module.exports = {
 Using a string reference is currently not supported for `gatsbyRemarkPlugins`. (A PR would be accepted for this)
 
 ```js
-gatsbyRemarkPlugins: [`gatsby-remark-images`];
+gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
 #### MD plugins
@@ -300,11 +300,11 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        remarkPlugins: [require("remark-abbr")]
-      }
-    }
-  ]
-};
+        remarkPlugins: [require("remark-abbr")],
+      },
+    },
+  ],
+}
 ```
 
 #### HAST plugins
@@ -322,11 +322,11 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        rehypePlugins: [require("rehype-slug")]
-      }
-    }
-  ]
-};
+        rehypePlugins: [require("rehype-slug")],
+      },
+    },
+  ],
+}
 ```
 
 #### Media types
@@ -342,11 +342,11 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        mediaTypes: [`text/markdown`, `text/x-markdown`]
-      }
-    }
-  ]
-};
+        mediaTypes: [`text/markdown`, `text/x-markdown`],
+      },
+    },
+  ],
+}
 ```
 
 ##### Explanation
@@ -372,21 +372,19 @@ for inline `<code>` and `wrapper` is the special element that wraps
 all of the MDX content.
 
 ```js
-import { MDXProvider } from "@mdx-js/react";
+import { MDXProvider } from "@mdx-js/react"
 
-const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />;
-const MyParagraph = props => (
-  <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
-);
+const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
+const MyParagraph = props => <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
 
 const components = {
   h1: MyH1,
-  p: MyParagraph
-};
+  p: MyParagraph,
+}
 
 export const wrapRootElement = ({ element }) => (
   <MDXProvider components={components}>{element}</MDXProvider>
-);
+)
 ```
 
 The following components can be customized with the MDXProvider:
@@ -443,11 +441,11 @@ just like a normal React component.
 Using a page query:
 
 ```js
-import { MDXRenderer } from "gatsby-mdx";
+import { MDXRenderer } from "gatsby-mdx"
 
 export default class MyPageLayout {
   render() {
-    <MDXRenderer>{this.props.data.mdx.code.body}</MDXRenderer>;
+    ;<MDXRenderer>{this.props.data.mdx.code.body}</MDXRenderer>
   }
 }
 
@@ -460,7 +458,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## License
