@@ -1,4 +1,4 @@
-# gatsbyjs.org
+# gatsbyjs.org:
 
 The main Gatsby site at gatsbyjs.org:
 
