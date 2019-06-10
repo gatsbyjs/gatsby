@@ -267,6 +267,20 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   }`}
                 />
                 <meta name="twitter:card" content="summary_large_image" />
+                <meta
+                  property="og:image:width"
+                  content={
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.width
+                  }
+                />
+                <meta
+                  property="og:image:height"
+                  content={
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.height
+                  }
+                />
               </Helmet>
               <div
                 css={{
