@@ -315,7 +315,7 @@ export default ({ children }) => {
         }
       }
     `
-  )
+  );
   // highlight-end
   // highlight-start
   return (
