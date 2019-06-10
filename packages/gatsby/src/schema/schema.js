@@ -6,6 +6,8 @@ const {
   defaultFieldResolver,
   assertValidName,
   parse,
+  GraphQLNonNull,
+  GraphQLList,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -373,11 +375,12 @@ const addExtensions = ({
               }
               const value = args[arg]
               try {
-                argumentDef.type.parseValue(value)
+                validate(argumentDef.type, value)
               } catch (error) {
                 report.error(
                   `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
-                    `has argument \`${arg}\` with invalid value "${value}".`
+                    `has argument \`${arg}\` with invalid value "${value}".\n` +
+                    error.message
                 )
               }
             })
@@ -835,3 +838,19 @@ const isNamedTypeComposer = type =>
   type instanceof EnumTypeComposer ||
   type instanceof InterfaceTypeComposer ||
   type instanceof UnionTypeComposer
+
+const validate = (type, value) => {
+  if (type instanceof GraphQLNonNull) {
+    if (value == null) {
+      throw new Error(`Expected non-null field value.`)
+    }
+    return validate(type.ofType, value)
+  } else if (type instanceof GraphQLList) {
+    if (!Array.isArray(value)) {
+      throw new Error(`Expected array field value.`)
+    }
+    return value.map(v => validate(type.ofType, v))
+  } else {
+    return type.parseValue(value)
+  }
+}
