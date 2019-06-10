@@ -17,7 +17,7 @@ import {
   transition,
   shadows,
   fontSizes,
-  breakpoints,
+  mediaQueries,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
 
@@ -38,11 +38,11 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     width: 20rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-shrink: 0;
     margin-right: 0;
     margin-bottom: ${space[8]};
@@ -71,14 +71,13 @@ const Cover = styled(Img)`
 `
 
 const Header = styled(`h1`)`
-  color: ${colors.gatsbyDarker};
   font-size: ${fontSizes[4]};
   font-weight: bold;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     font-size: ${props => (props.first ? fontSizes[6] : fontSizes[5])};
     padding: ${space[7]};
     padding-bottom: 0;
@@ -87,7 +86,7 @@ const Header = styled(`h1`)`
 
 const Meta = styled(`div`)`
   align-items: center;
-  color: ${colors.gray.calm};
+  color: ${colors.text.secondary};
   display: flex;
   flex-wrap: wrap;
   font-size: ${fontSizes[1]};
@@ -98,7 +97,7 @@ const Meta = styled(`div`)`
     flex-shrink: 0;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-top: ${space[6]};
     padding: 0 ${space[7]};
   }
@@ -111,27 +110,27 @@ const Author = styled(Link)`
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.ui.bright};
+    border-bottom: 1px solid ${colors.link.border};
   }
 
   a& {
     font-weight: normal;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     :hover {
       span {
-        background: ${colors.ui.bright};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
 `
 
 const Excerpt = styled(`p`)`
-  color: ${colors.gray.copy};
+  color: ${colors.text.primary};
   padding: 0 ${rhythm(4 / 5)};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: 0;
     margin-top: ${space[6]};
     padding: 0 ${space[7]};
@@ -164,17 +163,17 @@ const ReadMore = styled(Link)`
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.ui.bright};
+    border-bottom: 1px solid ${colors.link.border};
     font-weight: bold;
     margin-right: ${space[1]};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     padding: ${space[7]};
 
     span {
       :hover {
-        background: ${colors.ui.bright};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
@@ -255,7 +254,7 @@ HomepageBlogPost.propTypes = {
 }
 
 export const homepageBlogPostFragment = graphql`
-  fragment HomepageBlogPostData on MarkdownRemark {
+  fragment HomepageBlogPostData on Mdx {
     ...BlogPostPreview_item
   }
 `

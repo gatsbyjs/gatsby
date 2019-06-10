@@ -5,8 +5,6 @@ import Img from "gatsby-image"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
-import Ipsum from "../components/ipsum"
-import Lorem from "../components/lorem"
 
 const PreferWebp = ({ data, location }) => (
   <Layout
@@ -24,14 +22,27 @@ const PreferWebp = ({ data, location }) => (
         data.floatingImage.credit
       } (via unsplash.com)`}
     />
-    <Lorem />
+    <p>
+      WebP is a modern image format that provides both lossless and lossy
+      compression for images on the web. This format can reduce the filesize
+      considerably compared to JPG and PNG files, and using it is pretty easy
+      with <strong>gatsby-image</strong> and{` `}
+      <strong>gatsby-plugin-sharp</strong>.
+    </p>
+    <p>
+      The <strong>WebP</strong> technique is similar to other gatsby-image
+      techniques in that it can be applied in image queries with GraphQL. To
+      specify that an image should be loaded in the WebP format in supporting
+      browsers, use a fragment with
+      <code>withWebp</code> at the end.
+    </p>
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       title={`“${data.fullWidthImage.title}” by ${
         data.fullWidthImage.credit
       } (via unsplash.com)`}
     />
-    <Ipsum />
+    <p />
   </Layout>
 )
 

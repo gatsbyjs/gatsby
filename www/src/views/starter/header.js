@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { colors, space, breakpoints, fontSizes } from "../../utils/presets"
+import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
 import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
@@ -10,10 +10,10 @@ const Header = ({ stub }) => (
     css={{
       padding: space[6],
       paddingBottom: space[6],
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         paddingBottom: 0,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         padding: space[8],
         paddingBottom: 0,
       },

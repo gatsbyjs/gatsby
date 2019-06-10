@@ -9,8 +9,9 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
-const request = require(`request`)
+const got = require(`got`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
@@ -24,6 +25,9 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const cors = require(`cors`)
+const telemetry = require(`gatsby-telemetry`)
+
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
@@ -32,9 +36,10 @@ const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const db = require(`../db`)
-const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
+const queryUtil = require(`../query`)
+const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
 
 // const isInteractive = process.stdout.isTTY
@@ -89,6 +94,8 @@ async function startServer(program) {
   // Start bootstrap process.
   await bootstrap(program)
 
+  db.startAutosave()
+  queryUtil.startListening(queryQueue.createDevelopQueue())
   queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
@@ -115,24 +122,34 @@ async function startServer(program) {
     })
   )
 
+  app.use(cors())
+
+  /**
+   * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
+   */
+  const graphqlEndpoint = `/_+graphi?ql`
+
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
-      `/___graphql`,
+      graphqlEndpoint,
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
       () => {}
     )
+  } else {
+    graphiqlExplorer(app, {
+      graphqlEndpoint,
+    })
   }
 
   app.use(
-    `/___graphql`,
+    graphqlEndpoint,
     graphqlHTTP(() => {
       const schema = store.getState().schema
       return {
         schema,
-        graphiql:
-          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+        graphiql: false,
         context: withResolverContext({}, schema),
         formatError(err) {
           return {
@@ -143,16 +160,6 @@ async function startServer(program) {
       }
     })
   )
-
-  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
-  app.use((req, res, next) => {
-    res.header(`Access-Control-Allow-Origin`, `*`)
-    res.header(
-      `Access-Control-Allow-Headers`,
-      `Origin, X-Requested-With, Content-Type, Accept`
-    )
-    next()
-  })
 
   /**
    * Refresh external data sources.
@@ -204,22 +211,45 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
+      const {
+        // remove `host` from copied headers
+        // eslint-disable-next-line no-unused-vars
+        headers: { host, ...headers },
+        method,
+      } = req
       req
         .pipe(
-          request(proxiedUrl).on(`error`, err => {
-            const message = `Error when trying to proxy request "${
-              req.originalUrl
-            }" to "${proxiedUrl}"`
+          got
+            .stream(proxiedUrl, { headers, method, decompress: false })
+            .on(`response`, response =>
+              res.writeHead(response.statusCode, response.headers)
+            )
+            .on(`error`, (err, _, response) => {
+              if (response) {
+                res.writeHead(response.statusCode, response.headers)
+              } else {
+                const message = `Error when trying to proxy request "${
+                  req.originalUrl
+                }" to "${proxiedUrl}"`
 
-            report.error(message, err)
-            res.status(500).end()
-          })
+                report.error(message, err)
+                res.sendStatus(500)
+              }
+            })
         )
         .pipe(res)
     })
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
+
+  // In case nothing before handled hot-update - send 404.
+  // This fixes "Unexpected token < in JSON at position 0" runtime
+  // errors after restarting development server and
+  // cause automatic hard refresh in the browser.
+  app.use(/.*\.hot-update\.json$/i, (req, res) => {
+    res.status(404).end()
+  })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
@@ -300,8 +330,6 @@ module.exports = async (program: any) => {
   }
 
   program.port = await detectPortInUseAndPrompt(port, rlInterface)
-
-  db.startAutosave()
 
   const [compiler] = await startServer(program)
 

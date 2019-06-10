@@ -10,7 +10,7 @@ import {
   fontSizes,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
   fonts,
 } from "../utils/presets"
 import sharedStyles from "../views/shared/styles"
@@ -49,7 +49,7 @@ const styles = {
     boxShadow: shadows.overlay,
   },
   prevNextPermalinkLabel: {
-    color: colors.gray.calm,
+    color: colors.text.secondary,
     fontFamily: fonts.header,
     fontWeight: `normal`,
   },
@@ -270,10 +270,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: space[2],
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: space[6],
+                    paddingRight: isModal ? 96 : false,
                   },
                 }}
               >
@@ -288,7 +287,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span css={{ color: colors.gray.calm }}>
+                  <span css={{ color: colors.text.secondary }}>
                     <span
                       css={{
                         paddingRight: 8,
@@ -317,10 +316,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   display: `flex`,
-                  borderTop: `1px solid ${colors.ui.light}`,
+                  borderTop: `1px solid ${colors.ui.border.subtle}`,
                   fontFamily: fonts.header,
                   margin: `0 ${gutter}`,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -328,7 +327,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 {data.sitesYaml.featured && (
                   <div
                     css={{
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                       color: colors.gatsby,
                       display: `flex`,
                       fontWeight: `bold`,
@@ -353,7 +352,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       padding: 20,
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                     }}
                   >
                     <a
@@ -378,7 +377,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     css={{
                       padding: 20,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                     }}
                   >
                     <img
@@ -422,7 +421,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                           color: colors.white,
                           borderBottom: `none`,
                         },
-                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
+                        [shouldShowVisitButtonOnMobile && mediaQueries.sm]: {
                           display: `block`,
                         },
                       }}
@@ -436,7 +435,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       {` `}
                     </a>
                     <ShareMenu
-                      css={{ display: `flex`, minWidth: 32, minHeight: 32 }}
+                      css={{
+                        display: `flex`,
+                        alignItems: `center`,
+                        minWidth: 32,
+                        minHeight: 32,
+                      }}
                       url={data.sitesYaml.main_url}
                       title={data.sitesYaml.title}
                       image={`https://www.gatsbyjs.org${
@@ -447,25 +451,23 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   </div>
                 </div>
               </div>
-              <div css={{ borderTop: `1px solid ${colors.ui.light}` }}>
-                <Img
-                  key={data.sitesYaml.id}
-                  fluid={
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.fluid
-                  }
-                  alt={`Screenshot of ${data.sitesYaml.title}`}
-                  css={{
-                    boxShadow: isModal
-                      ? false
-                      : sharedStyles.screenshot.boxShadow,
-                  }}
-                />
-              </div>
+              <Img
+                key={data.sitesYaml.id}
+                fluid={
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .fluid
+                }
+                alt={`Screenshot of ${data.sitesYaml.title}`}
+                css={{
+                  boxShadow: isModal
+                    ? false
+                    : sharedStyles.screenshot.boxShadow,
+                }}
+              />
               <div
                 css={{
                   padding: gutter,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     padding: gutterDesktop,
                   },
                 }}
@@ -479,7 +481,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 >
                   <div
                     css={{
-                      color: colors.gray.calm,
+                      color: colors.text.secondary,
                       paddingRight: 20,
                     }}
                   >

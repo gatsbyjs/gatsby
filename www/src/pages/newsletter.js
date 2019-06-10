@@ -5,6 +5,7 @@ import { colors, space } from "../utils/presets"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
+import FooterLinks from "../components/shared/footer-links"
 
 class NewsLetter extends Component {
   render() {
@@ -14,6 +15,10 @@ class NewsLetter extends Component {
       <Layout location={location}>
         <Helmet>
           <title>Newsletter</title>
+          <meta
+            name="description"
+            content="Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community, hear about new features, tips & tricks, and what people are building."
+          />
         </Helmet>
         <Container
           hasSideBar={false}
@@ -41,6 +46,7 @@ class NewsLetter extends Component {
             }}
           />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

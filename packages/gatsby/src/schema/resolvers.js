@@ -2,7 +2,7 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
-const { getValueAt } = require(`./utils/get-value-at`)
+const { getValueAt } = require(`../utils/get-value-at`)
 
 const findMany = typeName => ({ args, context, info }) =>
   context.nodeModel.runQuery(
@@ -25,7 +25,17 @@ const findOne = typeName => ({ args, context, info }) =>
   )
 
 const findManyPaginated = typeName => async rp => {
-  const result = await findMany(typeName)(rp)
+  // Peek into selection set and pass on the `field` arg of `group` and
+  // `distinct` which might need to be resolved. The easiest way to check if
+  // `group` or `distinct` are in the selection set is with the `projection`
+  // field which is added by `graphql-compose`'s `Resolver`. If we find it
+  // there, get the actual `field` arg.
+  const group = rp.projection.group && getProjectedField(rp.info, `group`)
+  const distinct =
+    rp.projection.distinct && getProjectedField(rp.info, `distinct`)
+  const args = { ...rp.args, group, distinct }
+
+  const result = await findMany(typeName)({ ...rp, args })
   return paginate(result, { skip: rp.args.skip, limit: rp.args.limit })
 }
 
@@ -75,10 +85,17 @@ const paginate = (results = [], { skip = 0, limit }) => {
   const count = results.length
   const items = results.slice(skip, limit && skip + limit)
 
+  const pageCount = limit
+    ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
+    : skip
+    ? 2
+    : 1
+  const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
+  const hasPreviousPage = currentPage > 1
   const hasNextPage = skip + limit < count
 
   return {
-    totalCount: items.length,
+    totalCount: count,
     edges: items.map((item, i, arr) => {
       return {
         node: item,
@@ -88,12 +105,17 @@ const paginate = (results = [], { skip = 0, limit }) => {
     }),
     nodes: items,
     pageInfo: {
+      currentPage,
+      hasPreviousPage,
       hasNextPage,
+      itemCount: items.length,
+      pageCount,
+      perPage: limit,
     },
   }
 }
 
-const link = ({ by, from }) => async (source, args, context, info) => {
+const link = ({ by = `id`, from }) => async (source, args, context, info) => {
   const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -134,14 +156,25 @@ const link = ({ by, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  return context.nodeModel.runQuery(
+  const result = await context.nodeModel.runQuery(
     { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
     { path: context.path }
   )
+  if (
+    returnType instanceof GraphQLList &&
+    Array.isArray(fieldValue) &&
+    Array.isArray(result)
+  ) {
+    return fieldValue.map(value =>
+      result.find(obj => getValueAt(obj, by) === value)
+    )
+  } else {
+    return result
+  }
 }
 
-const fileByPath = (source, args, context, info) => {
-  const fieldValue = source && source[info.fieldName]
+const fileByPath = ({ from }) => (source, args, context, info) => {
+  const fieldValue = source && source[from || info.fieldName]
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -151,9 +184,7 @@ const fileByPath = (source, args, context, info) => {
     return fieldValue
   }
 
-  const isArray = getNullableType(info.returnType) instanceof GraphQLList
-
-  const findLinkedFileNode = async relativePath => {
+  const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
     const fileLinkPath = normalize(
@@ -162,7 +193,7 @@ const fileByPath = (source, args, context, info) => {
 
     // Use that path to find the linked File node.
     const linkedFileNode = _.find(
-      await context.nodeModel.getAllNodes({ type: `File` }),
+      context.nodeModel.getAllNodes({ type: `File` }),
       n => n.absolutePath === fileLinkPath
     )
     return linkedFileNode
@@ -170,14 +201,30 @@ const fileByPath = (source, args, context, info) => {
 
   // Find the File node for this node (we assume the node is something
   // like markdown which would be a child node of a File node).
-  const parentFileNode = context.nodeModel.findRootNodeAncestor(source)
+  const parentFileNode = context.nodeModel.findRootNodeAncestor(
+    source,
+    node => node.internal && node.internal.type === `File`
+  )
 
-  // Find the linked File node(s)
-  if (isArray) {
-    return Promise.all(fieldValue.map(findLinkedFileNode))
-  } else {
-    return findLinkedFileNode(fieldValue)
-  }
+  return resolveValue(findLinkedFileNode, fieldValue)
+}
+
+const resolveValue = (resolve, value) =>
+  Array.isArray(value)
+    ? value.map(v => resolveValue(resolve, v))
+    : resolve(value)
+
+const getProjectedField = (info, fieldName) => {
+  const { selections } = info.fieldNodes[0].selectionSet
+  const selection = selections.find(s => s.name.value === fieldName)
+  const fieldArg = selection.arguments.find(arg => arg.name.value === `field`)
+  const enumKey = fieldArg.value.value
+  const Enum = getNullableType(
+    info.returnType
+      .getFields()
+      [fieldName].args.find(arg => arg.name === `field`).type
+  )
+  return Enum.getValue(enumKey).value
 }
 
 module.exports = {
@@ -187,4 +234,5 @@ module.exports = {
   link,
   distinct,
   group,
+  paginate,
 }

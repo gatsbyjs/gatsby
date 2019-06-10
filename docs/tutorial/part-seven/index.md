@@ -27,7 +27,7 @@ Creating new pages has two steps:
 1.  Generate the "path" or "slug" for the page.
 2.  Create the page.
 
-_**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself like you do with markdown files._
+_**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself as you do with markdown files._
 
 To create your markdown pages, you'll learn to use two Gatsby APIs:
 [`onCreateNode`](/docs/node-apis/#onCreateNode) and
@@ -136,7 +136,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 ```
 
-Restart the development server and open or refresh Graph_i_QL. Then run this
+Restart the development server and open or refresh GraphiQL. Then run this
 GraphQL query to see your new slugs.
 
 ```graphql

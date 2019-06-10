@@ -87,7 +87,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** Do you hope or believe that gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outrdated wordpress sites and architechture? — max
+**Q:** Do you hope or believe that gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outdated wordpress sites and architecture? — max
 
 **A:** Yup! That's why I started [the Gatsby OSS project and company](/blog/2018-05-24-launching-new-gatsby-company/)! CMSs we're designed in the late 1990s and are very outdated for today's cloud/serverless computing environment. We want Gatsby to be able to replace CMSs.
 
@@ -157,13 +157,13 @@ It's a great place to get started. That said, I'd also encourage to check out [a
 
 ---
 
-**Q:** How is authenication handled in gatsby? — Reinhard
+**Q:** How is authentication handled in gatsby? — Reinhard
 
 **A:** Great question! So in general, and I probably say it far too often, but a Gatsby app is just a React application.
 
 So--however you implement authentication into a React application can be followed similarly with a Gatsby application, because a Gatsby app is a React application.
 
-We do have [a guide/tutorial written here](/docs/authentication-tutorial/) which many have found helpful. Shameless shout out to my little side-project (just a demo, not a real product!) [gatsby-mail](https://github.com/dschau/gatsby-mail) which has user authentication (via React context) as well.
+We do have [a guide/tutorial written here](/tutorial/authentication-tutorial/) which many have found helpful. Shameless shout out to my little side-project (just a demo, not a real product!) [gatsby-mail](https://github.com/dschau/gatsby-mail) which has user authentication (via React context) as well.
 
 Check it out, and hope it's helpful!
 

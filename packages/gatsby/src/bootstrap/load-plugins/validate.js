@@ -213,7 +213,9 @@ function warnOnIncompatiblePeerDependency(name, packageJSON) {
   const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
   if (
     gatsbyPeerDependency &&
-    !semver.satisfies(gatsbyVersion, gatsbyPeerDependency)
+    !semver.satisfies(gatsbyVersion, gatsbyPeerDependency, {
+      includePrerelease: true,
+    })
   ) {
     reporter.warn(
       `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`
