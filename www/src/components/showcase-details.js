@@ -255,13 +255,15 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <meta
                   property="og:image"
                   content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile.publicURL
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.src
                   }`}
                 />
                 <meta
                   name="twitter:image"
                   content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile.publicURL
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.src
                   }`}
                 />
               </Helmet>
