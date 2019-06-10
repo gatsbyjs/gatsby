@@ -753,8 +753,7 @@ Object {
         expect(results.data).toEqual(expected)
       })
 
-      // FIXME: This is not yet possible
-      it.skip(`groups query results by foreign key field`, async () => {
+      it(`groups query results by foreign key field`, async () => {
         const query = `
           {
             allMarkdown {
@@ -764,7 +763,7 @@ Object {
                   node {
                     frontmatter {
                       title
-                      date
+                      date(formatString: "YYYY-MM-DD")
                     }
                   }
                 }
@@ -865,8 +864,7 @@ Object {
         expect(results.data).toEqual(expected)
       })
 
-      // FIXME: This is not yet possible
-      it.skip(`returns distinct values on foreign-key field`, async () => {
+      it(`returns distinct values on foreign-key field`, async () => {
         const query = `
           {
             allMarkdown {
@@ -1069,6 +1067,251 @@ Object {
   },
 }
 `)
+    })
+  })
+
+  describe(`with sorted results`, () => {
+    it(`default sort on one field`, async () => {
+      const query = `
+        {
+          allMarkdown(sort: { fields: [frontmatter___title]}) {
+            nodes {
+              frontmatter {
+                title
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                title: `Markdown File 1`,
+              },
+            },
+            {
+              frontmatter: {
+                title: `Markdown File 2`,
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    it(`DESC sort on one field`, async () => {
+      const query = `
+        {
+          allMarkdown(sort: { fields: [frontmatter___title], order: DESC}) {
+            nodes {
+              frontmatter {
+                title
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                title: `Markdown File 2`,
+              },
+            },
+            {
+              frontmatter: {
+                title: `Markdown File 1`,
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    it(`sort on parent field`, async () => {
+      const query = `
+        {
+          allFirstChild(sort: { fields: [parent___internal___type], order: [DESC]}) {
+            nodes {
+              parent {
+                internal {
+                  type
+                }
+              }
+              name
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allFirstChild: {
+          nodes: [
+            {
+              parent: {
+                internal: {
+                  type: `SecondParent`,
+                },
+              },
+              name: `Child 2`,
+            },
+            {
+              parent: {
+                internal: {
+                  type: `FirstParent`,
+                },
+              },
+              name: `Child 1`,
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    it(`sort on children field`, async () => {
+      const query = `
+        {
+          allFirstParent(sort: { fields: [children___internal___type], order: [ASC]}) {
+            nodes {
+              children {
+                internal {
+                  type
+                }
+              }
+              name
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allFirstParent: {
+          nodes: [
+            {
+              children: [
+                {
+                  internal: {
+                    type: `Child`,
+                  },
+                },
+              ],
+              name: `Parent 3`,
+            },
+            {
+              children: [
+                {
+                  internal: {
+                    type: `FirstChild`,
+                  },
+                },
+              ],
+              name: `Parent 1`,
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    it(`sort on resolved field`, async () => {
+      const query = `
+        {
+          allMarkdown(sort: { fields: [frontmatter___authors___name], order: [DESC]}) {
+            nodes {
+              frontmatter {
+                title
+                authors {
+                  name
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                title: `Markdown File 1`,
+                authors: [
+                  {
+                    name: `Author 1`,
+                  },
+                  {
+                    name: `Author 2`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                title: `Markdown File 2`,
+                authors: [
+                  {
+                    name: `Author 1`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    it(`sort on ___NODE field`, async () => {
+      const query = `
+        {
+          allMarkdown(sort: { fields: [frontmatter___reviewer___name], order: [DESC]}) {
+            nodes {
+              frontmatter {
+                title
+                reviewer {
+                  name
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                title: `Markdown File 2`,
+                reviewer: null,
+              },
+            },
+            {
+              frontmatter: {
+                title: `Markdown File 1`,
+                reviewer: {
+                  name: `Author 2`,
+                },
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
     })
   })
 })

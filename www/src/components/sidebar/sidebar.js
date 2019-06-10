@@ -242,7 +242,7 @@ class SidebarBody extends Component {
         >
           <h3
             css={{
-              color: colors.gray.calm,
+              color: colors.text.secondary,
               paddingLeft: space[6],
               paddingRight: space[6],
               fontSize: fontSizes[1],
@@ -286,7 +286,7 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.gray.border}`,
+    borderRight: `1px solid ${colors.ui.border.subtle}`,
     display: `flex`,
     alignItems: `center`,
     height: sizes.sidebarUtilityHeight,
@@ -302,7 +302,7 @@ const styles = {
     overflowY: `auto`,
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.gray.border}`,
+    borderRight: `1px solid ${colors.ui.border.subtle}`,
   },
   sidebarScrollContainerTablet: {
     backgroundColor: presets.backgroundTablet,

@@ -109,7 +109,7 @@ class Plugins extends Component {
 
             <p
               css={{
-                color: colors.gray.lightCopy,
+                color: colors.text.secondary,
                 fontSize: fontSizes[2],
                 textAlign: `center`,
               }}

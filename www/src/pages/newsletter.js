@@ -45,8 +45,8 @@ class NewsLetter extends Component {
               borderTop: `2px solid ${colors.lilac}`,
             }}
           />
-          <FooterLinks />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

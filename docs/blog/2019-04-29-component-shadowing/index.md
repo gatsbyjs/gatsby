@@ -16,14 +16,14 @@ configuration option hasn't been built in. Component Shadowing provides a powerf
 escape hatch to let users make quick, one-off changes that might not make sense to
 support in the theme itself.
 
-For example, imagine you've installed `gastby-theme-blog` and want to customize the
+For example, imagine you've installed `gatsby-theme-blog` and want to customize the
 author `Bio` component to add a link to their personal website. Before Component
 Shadowing, this new functionality would require configuration at the theme level
 or using a fork of the codebase. These approaches result in a difficult upgrade path
 and a maintenance burden.
 
 Component Shadowing let's you replace the theme's original file,
-`gastby-theme-blog/src/components/bio.js`, with your own to implement any changes you
+`gatsby-theme-blog/src/components/bio.js`, with your own to implement any changes you
 need.
 
 ## Shadowing Example
