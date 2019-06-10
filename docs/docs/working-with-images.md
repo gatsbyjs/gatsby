@@ -50,7 +50,7 @@ export const query = graphql`
 Here is an image component that uses the query from the previous example:
 
 ```jsx
-<Img fluid={data.fileName.childImageSharp.fluid} />
+<Img fluid={data.fileName.childImageSharp.fluid} alt="" />
 ```
 
 ## Using Fragments To Standardize Formatting

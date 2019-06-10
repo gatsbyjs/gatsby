@@ -50,7 +50,7 @@ module.exports = {
 }
 ```
 
-> Note: Read more about [gatsby-config.js](https://www.gatsbyjs.org/docs/gatsby-config/)
+> Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
 
 Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
 

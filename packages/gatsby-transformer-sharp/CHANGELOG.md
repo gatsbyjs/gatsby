@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.20...gatsby-transformer-sharp@2.1.21) (2019-05-31)
+
+### Features
+
+- **image-sharp:** add trim option ([#14137](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/14137)) ([cf0e77b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/cf0e77b))
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.19...gatsby-transformer-sharp@2.1.20) (2019-05-29)
+
+### Bug Fixes
+
+- cache tracedSVG calculations when cache is present ([#12044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/12044)) ([c40bc4b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/c40bc4b))
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.18...gatsby-transformer-sharp@2.1.19) (2019-05-03)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.17...gatsby-transformer-sharp@2.1.18) (2019-04-11)
+
+### Features
+
+- add options fit and background to image sharp ([#13078](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/13078)) ([494ad07](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/494ad07)), closes [#12972](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/12972)
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.16...gatsby-transformer-sharp@2.1.17) (2019-03-12)
+
+### Features
+
+- **gatsby-image:** Placeholder Improvements ([#10944](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/10944)) ([44491ef](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/44491ef))
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.15...gatsby-transformer-sharp@2.1.16) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 ## [2.1.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.14...gatsby-transformer-sharp@2.1.15) (2019-02-28)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

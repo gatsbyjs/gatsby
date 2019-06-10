@@ -2,18 +2,17 @@ import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import presets, { colors, space } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { colors, space, sizes, fonts, zIndices } from "../utils/presets"
 
-const horizontalPadding = rhythm(space[6])
+const horizontalPadding = space[6]
 const backgroundColor = colors.gatsby
 
-const BannerContainer = styled(`div`)`
+const BannerContainer = styled(`aside`)`
   background-color: ${backgroundColor};
-  height: ${presets.bannerHeight};
+  height: ${sizes.bannerHeight};
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: ${zIndices.banner};
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 `
@@ -21,27 +20,27 @@ const BannerContainer = styled(`div`)`
 const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
-  height: ${presets.bannerHeight};
+  height: ${sizes.bannerHeight};
   overflow-x: auto;
   mask-image: ${`linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`};
 `
 
 const Content = styled(`div`)`
-  color: ${colors.ui.bright};
-  font-family: ${options.headerFontFamily.join(`,`)};
+  color: ${colors.purple[20]};
+  font-family: ${fonts.header};
   padding-left: ${horizontalPadding};
   padding-right: ${horizontalPadding};
   -webkit-font-smoothing: antialiased;
   white-space: nowrap;
 
   a {
-    color: #fff;
-    border-bottom: 1px solid #fff;
+    color: ${colors.white};
+    border-bottom: 1px solid ${colors.white};
   }
 
   a:hover {
-    color: #fff;
-    border-bottom-color: #ffffffa0;
+    color: ${colors.white};
+    border-bottom-color: ${colors.white}a0;
   }
 `
 
@@ -49,10 +48,10 @@ const Banner = () => (
   <BannerContainer className="banner">
     <InnerContainer>
       <Content>
-        <OutboundLink href="https://www.gatsbyjs.com/behind-the-scenes/">
-          Watch now
+        <OutboundLink href="https://www.gatsbyjs.com/gatsby-plugins/">
+          Register now
         </OutboundLink>
-        {`: “Behind the Scenes: What makes Gatsby Great”.`}
+        {`: "What Can Gatsby Plugins Do?" - Learn about different types of plugins and how to build one!`}
       </Content>
     </InnerContainer>
   </BannerContainer>

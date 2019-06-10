@@ -5,13 +5,23 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors, space } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import {
+  colors,
+  space,
+  fontSizes,
+  transition,
+  mediaQueries,
+  sizes,
+  fonts,
+  zIndices,
+} from "../utils/presets"
+import { breakpointGutter } from "../utils/styles"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
-const navItemTopOffset = `0.6rem`
-const navItemHorizontalSpacing = rhythm(space[2])
+const navItemTopOffset = `0.4rem`
+const navItemHorizontalSpacing = space[2]
 
 const iconColor = colors.lilac
 
@@ -41,6 +51,7 @@ const Navigation = ({ pathname }) => {
       title={title}
       css={{
         ...socialIconsStyles,
+        fontSize: fontSizes[2],
         ...overrideCSS,
       }}
     >
@@ -53,22 +64,11 @@ const Navigation = ({ pathname }) => {
       css={{
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: `relative`,
-        height: presets.headerHeight,
+        height: sizes.headerHeight,
         left: 0,
         right: 0,
-        top: presets.bannerHeight,
-        zIndex: 2,
-        "&:after": {
-          content: `''`,
-          position: `absolute`,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          width: `100%`,
-          height: 1,
-          zIndex: -1,
-          background: isHomepage ? `transparent` : colors.ui.light,
-        },
+        top: sizes.bannerHeight,
+        zIndex: zIndices.navigation,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
@@ -82,15 +82,29 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [presets.Md]: {
+        [breakpointGutter]: {
+          backgroundColor: isBlog ? colors.ui.background : false,
           position: isHomepage || isBlog ? `absolute` : `fixed`,
-          backgroundColor: isBlog ? colors.ui.whisper : false,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
       }}
     >
-      <div css={{ ...styles.containerInner }}>
+      <div
+        css={{
+          ...styles.containerInner,
+          "&:after": {
+            content: `''`,
+            position: `absolute`,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 1,
+            zIndex: -1,
+            background: isHomepage ? `transparent` : colors.ui.border.subtle,
+          },
+        }}
+      >
         <Link
           to="/"
           css={styles.logoLink}
@@ -110,21 +124,12 @@ const Navigation = ({ pathname }) => {
         >
           <ul css={styles.ulContainer}>
             <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
             <NavItem linkTo="/plugins/">Plugins</NavItem>
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <li css={styles.li}>
-                <Link
-                  to="/community/"
-                  css={styles.navItem}
-                  state={{ filter: `` }}
-                >
-                  Community
-                </Link>
-              </li> */}
           </ul>
         </nav>
         <div css={styles.searchAndSocialContainer}>
@@ -142,7 +147,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [presets.Lg]: { display: `flex` },
+              [mediaQueries.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -152,13 +157,6 @@ const Navigation = ({ pathname }) => {
               <TwitterIcon style={{ verticalAlign: `text-top` }} />
             </SocialNavItem>
           </div>
-          <SocialNavItem
-            href="https://www.gatsbyjs.com"
-            title="gatsbyjs.com"
-            overrideCSS={{ paddingRight: 0 }}
-          >
-            .com
-          </SocialNavItem>
         </div>
       </div>
     </header>
@@ -174,19 +172,19 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [presets.Md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
+      marginLeft: space[6],
     },
   },
   ulContainer: {
     display: `none`,
-    [presets.Md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
       margin: 0,
-      marginLeft: rhythm(1 / 4),
       listStyle: `none`,
       maskImage: `linear-gradient(to right, transparent, white ${rhythm(
         1 / 8
@@ -196,36 +194,33 @@ const styles = {
   },
   containerInner: {
     margin: `0 auto`,
-    paddingLeft: rhythm(space[6]),
-    paddingRight: rhythm(space[6]),
-    fontFamily: options.headerFontFamily.join(`,`),
+    paddingLeft: space[6],
+    paddingRight: space[6],
+    fontFamily: fonts.header,
     display: `flex`,
     alignItems: `center`,
     width: `100%`,
     height: `100%`,
+    position: `relative`,
   },
   navItem: {
-    fontSize: presets.scale[1],
-    borderBottom: `0.125rem solid transparent`,
-    color: `inherit`,
+    fontSize: fontSizes[3],
+    borderBottom: `2px solid transparent`,
+    color: colors.text.primary,
     display: `block`,
-    letterSpacing: `0.03em`,
     WebkitFontSmoothing: `antialiased`,
-    lineHeight: `calc(${presets.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,
     position: `relative`,
     textDecoration: `none`,
-    textTransform: `uppercase`,
     top: 0,
-    transition: `color ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
+    transition: `color ${transition.speed.default} ${transition.curve.default}`,
     zIndex: 1,
     "&:hover": {
       color: colors.gatsby,
     },
     active: {
-      borderBottomColor: colors.gatsby,
-      color: colors.gatsby,
+      borderBottomColor: colors.lilac,
+      color: colors.lilac,
     },
   },
   socialIconItem: {
@@ -239,7 +234,7 @@ const styles = {
     marginLeft: `auto`,
   },
   logo: {
-    height: `1.5rem`,
+    height: space[6],
     margin: 0,
   },
   logoLink: {
@@ -247,7 +242,7 @@ const styles = {
     color: `inherit`,
     display: `flex`,
     flexShrink: 0,
-    marginRight: rhythm(space[3]),
+    marginRight: space[3],
     textDecoration: `none`,
   },
 }

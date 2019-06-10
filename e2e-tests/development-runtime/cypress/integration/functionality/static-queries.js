@@ -1,5 +1,5 @@
 beforeEach(() => {
-  cy.visit(`/static-query/`).waitForAPIorTimeout(`onRouteUpdate`)
+  cy.visit(`/static-query/`).waitForRouteChange()
 })
 
 describe(`StaticQuery behavior`, () => {

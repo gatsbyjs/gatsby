@@ -5,6 +5,12 @@ const report = require(`./reporter`)
 const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
+const clipboardy = require(`clipboardy`)
+const {
+  trackCli,
+  setDefaultTags,
+  setTelemetryEnabled,
+} = require(`gatsby-telemetry`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -40,6 +46,11 @@ function buildLocalCommands(cli, isLocalSite) {
         `gatsby`,
         `package.json`
       ))
+      try {
+        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
+      } catch (e) {
+        // ignore
+      }
       majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
     } catch (err) {
       /* ignore */
@@ -83,6 +94,13 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
+      if (argv.noColor) {
+        // disables colors in popular terminal output coloring packages
+        //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
+        //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
+        process.env.FORCE_COLOR = `0`
+      }
+
       report.setNoColor(!!argv.noColor)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
@@ -141,7 +159,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
@@ -171,7 +189,7 @@ function buildLocalCommands(cli, isLocalSite) {
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
@@ -223,26 +241,30 @@ function buildLocalCommands(cli, isLocalSite) {
       }),
     handler: args => {
       try {
-        envinfo.run(
-          {
+        const copyToClipboard =
+          // Clipboard is not accessible when on a linux tty
+          process.platform === `linux` && !process.env.DISPLAY
+            ? false
+            : args.clipboard
+
+        envinfo
+          .run({
             System: [`OS`, `CPU`, `Shell`],
             Binaries: [`Node`, `npm`, `Yarn`],
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
             Languages: [`Python`],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
-          },
-          {
-            console: true,
-            // Clipboard is not accessible when on a linux tty
-            clipboard:
-              process.platform === `linux` && !process.env.DISPLAY
-                ? false
-                : args.clipboard,
-          }
-        )
+          })
+          .then(envinfoOutput => {
+            console.log(envinfoOutput)
+
+            if (copyToClipboard) {
+              clipboardy.writeSync(envinfoOutput)
+            }
+          })
       } catch (err) {
-        console.log(`Error: unable to print environment info`)
+        console.log(`Error: Unable to print environment info`)
         console.log(err)
       }
     },
@@ -295,6 +317,7 @@ module.exports = argv => {
       global: true,
     })
     .option(`no-color`, {
+      alias: `no-colors`,
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,
@@ -302,6 +325,16 @@ module.exports = argv => {
     })
 
   buildLocalCommands(cli, isLocalSite)
+
+  try {
+    const { version } = require(`../package.json`)
+    cli.version(`version`, version)
+    setDefaultTags({ gatsbyCliVersion: version })
+  } catch (e) {
+    // ignore
+  }
+
+  trackCli(argv)
 
   return cli
     .command({
@@ -313,6 +346,58 @@ module.exports = argv => {
           return initStarter(starter, { rootPath })
         }
       ),
+    })
+    .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
+      yargs
+        .command({
+          command: `docs`,
+          desc: `Helpful info about using and creating plugins`,
+          handler: handlerP(() =>
+            console.log(`
+Using a plugin:
+- What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
+- Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
+- What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for/)
+- Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)
+- Plugin Library (https://www.gatsbyjs.org/plugins/)
+
+Creating a plugin:
+- Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
+- Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
+- Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
+- Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
+- Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
+- Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
+          `)
+          ),
+        })
+        .demandCommand(
+          1,
+          `Pass --help to see all available commands and options.`
+        )
+    )
+    .command({
+      command: `telemetry`,
+      desc: `Enable or disable Gatsby anonymous analytics collection.`,
+      builder: yargs =>
+        yargs
+          .option(`enable`, {
+            type: `boolean`,
+            description: `Enable telemetry (default)`,
+          })
+          .option(`disable`, {
+            type: `boolean`,
+            description: `Disable telemetry`,
+          }),
+
+      handler: handlerP(({ enable, disable }) => {
+        const enabled = enable || !disable
+        setTelemetryEnabled(enabled)
+        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)

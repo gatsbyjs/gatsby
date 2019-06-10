@@ -1,3 +1,5 @@
+import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
+
 jest.mock(
   `../.cache/typography`,
   () => {
@@ -5,8 +7,6 @@ jest.mock(
   },
   { virtual: true }
 )
-
-import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
 
 const clone = arr => arr.reduce((merged, item) => merged.concat(item), [])
 
@@ -99,5 +99,25 @@ describe(`onPreRenderHTML`, () => {
     const spies = setup(clone(components))
 
     expect(spies.replaceHeadComponents).toHaveBeenCalledWith(components)
+  })
+
+  it(`does not fail when head components include null`, () => {
+    const components = [
+      {
+        key: `link-1234`,
+      },
+      {
+        key: `link-preload`,
+      },
+      {
+        key: `_____01234_____`,
+      },
+      null,
+    ]
+
+    const spies = setup(clone(components))
+
+    expect(spies.replaceHeadComponents).toHaveBeenCalledWith(components)
+    expect(spies.replaceHeadComponents).toHaveReturned()
   })
 })

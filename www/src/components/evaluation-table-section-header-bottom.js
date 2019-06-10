@@ -4,15 +4,21 @@ import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import presets, { colors, space } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import {
+  colors,
+  space,
+  mediaQueries,
+  lineHeights,
+  fonts,
+} from "../utils/presets"
+import { rhythm } from "../utils/typography"
 
 const subHeaderTitleStyles = {
-  height: rhythm(space[6]),
+  height: space[6],
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [presets.Xs]: {
+  [mediaQueries.xs]: {
     height: rhythm(5 / 4),
   },
 }
@@ -47,33 +53,14 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: colors.ui.whisper,
-          // borderLeft: i > 0 ? `1px solid ${colors.ui.light}` : `none`,
-          // borderRight: i === 5 ? `1px solid ${colors.ui.light}` : `none`,
+          background: colors.ui.background,
           fontWeight: 600,
-          lineHeight: presets.lineHeights.dense,
+          lineHeight: lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,
-          fontFamily: options.headerFontFamily.join(`,`),
-          borderColor: colors.ui.light,
-          "&&": {
-            paddingTop: rhythm(1 / 4),
-            paddingLeft: rhythm(1 / 4),
-            paddingRight: i >= 1 ? rhythm(space[3]) : 0,
-            paddingBottom: rhythm(1 / 4),
-            "&:last-child": {
-              paddingRight: i >= 1 ? rhythm(space[3]) : 0,
-            },
-          },
-          [presets.Xs]: {
-            paddingTop: rhythm(space[3]),
-            paddingLeft: `${rhythm(space[3])} !important`,
-            paddingRight: rhythm(space[3]),
-            paddingBottom: rhythm(space[3]),
-            "&:last-child": {
-              paddingRight: rhythm(space[3]),
-            },
-          },
+          fontFamily: fonts.header,
+          borderColor: colors.ui.border.subtle,
+          padding: space[3],
         }}
       >
         {header || props.category || `Feature`}

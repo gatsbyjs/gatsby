@@ -7,11 +7,3 @@ Array [
   "/b/d/c/",
 ]
 `;
-
-exports[`JavaScript page creator create-path should deal with windows paths 1`] = `
-Array [
-  "/404/",
-  "/",
-  "/blog/",
-]
-`;

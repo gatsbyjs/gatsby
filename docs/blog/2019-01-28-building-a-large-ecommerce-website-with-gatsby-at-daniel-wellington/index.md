@@ -29,7 +29,7 @@ It was a good improvement, but even the resulting 30-minute build time was too s
 
 ## Improving the preview experience
 
-On a highly customizable website, previewing the changes you make is crucial. The fastest way to change something on a Gatsby platform is by using what we developers use daily: the development server. This server has a [feature](https://www.gatsbyjs.org/docs/environment-variables/#reserved-environment-variables) that allows you to live reload the data on the development server and everything on the website will be updated automatically. Neat!
+On a highly customizable website, previewing the changes you make is crucial. The fastest way to change something on a Gatsby platform is by using what we developers use daily: the development server. This server has a [feature](/docs/environment-variables/#reserved-environment-variables) that allows you to live reload the data on the development server and everything on the website will be updated automatically. Neat!
 
 We started using this feature at the beginning of the migration, and content managers loved the feature. They just had to click a button to see their changes, all it took was a few seconds.
 
@@ -37,9 +37,9 @@ Unfortunately, that does not scale. The development server is made to be used fo
 
 We decided to solve these 2 major problems by slicing our website into smaller (and faster) websites. Since we have so many markets and locales, and each of these markets are pretty silo-ed (they don't communicate or share data with each other), it made a lot of sense to separate them from each other
 
-<pullquote>
+<Pullquote>
 By splitting our 30K-page website into smaller 1K-page websites, we decreased our build time from 20+ minutes to 3 minutes.
-</pullquote>
+</Pullquote>
 
 Technically, we achieved this by setting an environment variable `GATSBY_LOCALE` when building the website, and that will restrict the amount of gatsby nodes and pages we create. To build the whole website, we parallelize the builds on multiple machines.
 

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/compare/gatsby-plugin-styled-components@3.0.6...gatsby-plugin-styled-components@3.0.7) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
 ## [3.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components/compare/gatsby-plugin-styled-components@3.0.5...gatsby-plugin-styled-components@3.0.6) (2019-02-19)
 
 **Note:** Version bump only for package gatsby-plugin-styled-components

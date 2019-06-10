@@ -27,7 +27,7 @@ Just like a source plugin, a transformer plugin is a normal NPM package. It has 
 
 `gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
-As an example, let's partially rebuild a simplified `gatsby-transformer-yaml` directly in an example site. Let's say we have a default gatsby starter site which includes a YAML file:
+As an example, let's partially rebuild a simplified `gatsby-transformer-yaml` directly in an example site. Let's say we have a default gatsby starter site which includes a `src/data/example.yml` file:
 
 ```yaml:title=src/data/example.yml
 - name: Jane Doe
@@ -117,7 +117,7 @@ async function onCreateNode({ node, loadNodeContent }) {
     return
   }
 
-  const fileContent = await loadNodeContent(node)
+  const content = await loadNodeContent(node)
   const parsedContent = jsYaml.load(content)
 }
 
@@ -272,7 +272,7 @@ Check out the [full source code](https://github.com/gatsbyjs/gatsby/blob/master/
 
 Sometimes transforming properties costs time and resources. In order to avoid recreating these properties at each run, you can profit from the global cache mechanism Gatsby provides.
 
-Cache keys should at least contain the contentDigest of the concerned. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
+Cache keys should at least contain the contentDigest of the concerned node. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>

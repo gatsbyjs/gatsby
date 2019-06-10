@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`graphql`)
 const {
@@ -10,16 +9,17 @@ const {
 const { createHttpLink } = require(`apollo-link-http`)
 const fetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+
 const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
-  { actions, createNodeId, cache, store },
+  { actions, createNodeId, cache, createContentDigest },
   options
 ) => {
-  const { addThirdPartySchema, createPageDependency, createNode } = actions
+  const { addThirdPartySchema, createNode } = actions
   const {
     url,
     typeName,
@@ -80,11 +80,19 @@ exports.sourceNodes = async (
   })
 
   const nodeId = createNodeId(`gatsby-source-graphql-${typeName}`)
-  const node = createSchemaNode({ id: nodeId, typeName, fieldName })
+  const node = createSchemaNode({
+    id: nodeId,
+    typeName,
+    fieldName,
+    createContentDigest,
+  })
   createNode(node)
 
   const resolver = (parent, args, context) => {
-    createPageDependency({ path: context.path, nodeId: nodeId })
+    context.nodeModel.createPageDependency({
+      path: context.path,
+      nodeId: nodeId,
+    })
     return {}
   }
 
@@ -104,7 +112,14 @@ exports.sourceNodes = async (
     if (refetchInterval) {
       const msRefetchInterval = refetchInterval * 1000
       const refetcher = () => {
-        createNode(createSchemaNode({ id: nodeId, typeName, fieldName }))
+        createNode(
+          createSchemaNode({
+            id: nodeId,
+            typeName,
+            fieldName,
+            createContentDigest,
+          })
+        )
         setTimeout(refetcher, msRefetchInterval)
       }
       setTimeout(refetcher, msRefetchInterval)
@@ -112,12 +127,9 @@ exports.sourceNodes = async (
   }
 }
 
-function createSchemaNode({ id, typeName, fieldName }) {
+function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
   const nodeContent = uuidv4()
-  const nodeContentDigest = crypto
-    .createHash(`md5`)
-    .update(nodeContent)
-    .digest(`hex`)
+  const nodeContentDigest = createContentDigest(nodeContent)
   return {
     id,
     typeName: typeName,

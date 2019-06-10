@@ -7,8 +7,14 @@ import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import { rhythm } from "../../utils/typography"
-import presets, { space } from "../../utils/presets"
+import {
+  space,
+  lineHeights,
+  transition,
+  mediaQueries,
+  colors,
+  radii,
+} from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
@@ -47,8 +53,8 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
               >
                 <div
                   css={{
-                    paddingRight: rhythm(space[5]),
-                    lineHeight: presets.lineHeights.dense,
+                    paddingRight: space[5],
+                    lineHeight: lineHeights.dense,
                   }}
                 >
                   <ShowcaseItemCategories
@@ -81,7 +87,36 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 </div>
                 {node.featured && (
                   <Link
-                    css={{ "&&": { ...styles.featuredItem } }}
+                    css={{
+                      "&&": {
+                        display: `none`,
+                        transition: `background ${transition.speed.slow} ${
+                          transition.curve.default
+                        }, transform ${transition.speed.slow} ${
+                          transition.curve.default
+                        }`,
+                        [mediaQueries.lg]: {
+                          alignItems: `center`,
+                          background: colors.accent,
+                          border: `none`,
+                          borderTopRightRadius: radii[1],
+                          borderBottomLeftRadius: radii[1],
+                          boxShadow: `none`,
+                          cursor: `pointer`,
+                          display: `flex`,
+                          height: 24,
+                          margin: 0,
+                          padding: 0,
+                          position: `absolute`,
+                          top: 0,
+                          right: 0,
+                          width: 24,
+                          "&:hover": {
+                            background: colors.gatsby,
+                          },
+                        },
+                      },
+                    }}
                     to={`/showcase?${qs.stringify({
                       filters: `Featured`,
                     })}`}
@@ -90,7 +125,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     <img
                       src={FeaturedIcon}
                       alt="icon"
-                      css={{ ...styles.featuredIcon }}
+                      css={{ margin: `0 auto`, display: `block` }}
                     />
                   </Link>
                 )}

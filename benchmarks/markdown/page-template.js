@@ -1,7 +1,7 @@
 const faker = require(`faker`)
 const matter = require(`gray-matter`)
 
-const NUM_ROWS = parseInt(process.env.NUM_ROWS || 25, 10)
+const MAX_NUM_ROWS = parseInt(process.env.MAX_NUM_ROWS || 25, 10)
 
 module.exports = index => `
 ${matter
@@ -17,7 +17,7 @@ ${matter
 
 |Name|Description|Required|
 |:--:|-----------|--------|
-${new Array(faker.random.number(NUM_ROWS))
+${new Array(faker.random.number(MAX_NUM_ROWS))
   .fill(undefined)
   .map(() =>
     `

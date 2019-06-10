@@ -2,24 +2,34 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
-import { rhythm, scale, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
-import presets, { colors, space } from "../utils/presets"
+import FooterLinks from "../components/shared/footer-links"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+} from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
-const breakpoint2Columns = presets.Md
+const breakpoint2Columns = mediaQueries.md
 
 const MetaTitle = ({ children }) => (
   <p
     css={{
       margin: `0`,
-      color: colors.gray.calm,
-      marginBottom: rhythm(options.blockMarginBottom / 4),
-      [presets.Xs]: {
+      color: colors.text.secondary,
+      marginBottom: space[1],
+      flexShrink: 0,
+      [mediaQueries.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
@@ -36,12 +46,12 @@ const MetaTitle = ({ children }) => (
 const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
-      background: background ? background : colors.ui.whisper,
-      marginLeft: rhythm(-scale[1]),
-      marginRight: rhythm(-scale[1]),
-      padding: rhythm(scale[1]),
-      borderTop: first ? `1px solid ${colors.ui.light}` : null,
-      borderBottom: last ? null : `1px solid ${colors.ui.light}`,
+      background: background ? background : colors.ui.background,
+      marginLeft: `-${space[5]}`,
+      marginRight: `-${space[5]}`,
+      padding: space[5],
+      borderTop: first ? `1px solid ${colors.ui.border.subtle}` : null,
+      borderBottom: last ? null : `1px solid ${colors.ui.border.subtle}`,
       [breakpoint2Columns]: {
         background: `transparent`,
         paddingLeft: 0,
@@ -49,7 +59,7 @@ const MetaSection = ({ children, background, last, first }) => (
         marginLeft: 0,
         marginRight: 0,
       },
-      [presets.Sm]: {
+      [mediaQueries.sm]: {
         display: `flex`,
       },
     }}
@@ -75,13 +85,13 @@ class CreatorTemplate extends Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{creator.name}</title>
+          <title>{`${creator.name} - Creator`}</title>
         </Helmet>
         <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"
           css={{
-            padding: rhythm(space[6]),
+            padding: space[6],
             paddingBottom: `10vh`,
             display: `flex`,
             flexDirection: `column`,
@@ -89,7 +99,7 @@ class CreatorTemplate extends Component {
             justifyContent: `center`,
             width: `100%`,
             [breakpoint2Columns]: {
-              paddingBottom: rhythm(space[6]),
+              paddingBottom: space[6],
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
@@ -97,31 +107,31 @@ class CreatorTemplate extends Component {
         >
           <div
             css={{
-              margin: rhythm(space[6]),
-              marginBottom: rhythm(options.blockMarginBottom / 4),
+              margin: space[6],
+              marginBottom: space[1],
               flexGrow: `1`,
               width: `100%`,
               [breakpoint2Columns]: {
                 width: `auto`,
                 maxWidth: 480,
               },
-              [presets.Lg]: {
+              [mediaQueries.lg]: {
                 maxWidth: 560,
               },
             }}
           >
             <Img
               alt={`${creator.name}`}
-              css={{ borderRadius: presets.radii[1] }}
+              css={{ borderRadius: radii[1] }}
               fluid={creator.image.childImageSharp.fluid}
             />
           </div>
           <div
             css={{
-              margin: rhythm(space[6]),
+              margin: space[6],
               flex: `1`,
               width: `100%`,
-              [presets.Lg]: {
+              [mediaQueries.lg]: {
                 width: `auto`,
                 maxWidth: 640,
               },
@@ -138,14 +148,14 @@ class CreatorTemplate extends Component {
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                marginTop: rhythm(options.blockMarginBottom / 2),
+                marginTop: space[3],
               }}
             >
               {isAgencyOrCompany && (
                 <span
                   css={{
-                    color: colors.gray.calm,
-                    marginRight: `.5rem`,
+                    color: colors.text.secondary,
+                    marginRight: space[2],
                   }}
                 >
                   {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
@@ -156,15 +166,15 @@ class CreatorTemplate extends Component {
                 <div
                   css={{
                     alignSelf: `flex-start`,
-                    fontSize: presets.scale[1],
-                    marginRight: `.5rem`,
+                    fontSize: fontSizes[1],
+                    marginRight: space[2],
                   }}
                 >
                   <Badge
                     forHire={creator.for_hire}
                     customCSS={{
-                      background: colors.success,
-                      color: `#fff`,
+                      background: colors.green[50],
+                      color: colors.white,
                     }}
                   >
                     {creator.for_hire ? `Open for work` : `Hiring`}
@@ -178,10 +188,8 @@ class CreatorTemplate extends Component {
                     "& svg": { display: `block` },
                     "&&": {
                       border: 0,
-                      boxShadow: `none`,
-                      lineHeight: presets.lineHeights.solid,
+                      lineHeight: lineHeights.solid,
                       "&:hover": {
-                        background: `none`,
                         color: colors.gatsby,
                       },
                     },
@@ -225,6 +233,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
+                    flexWrap: `wrap`,
                   }}
                 >
                   {sites.map(site => (
@@ -232,15 +241,13 @@ class CreatorTemplate extends Component {
                       key={site.node.title}
                       css={{
                         "&&": {
-                          marginRight: rhythm(space[6]),
+                          marginRight: space[6],
+                          marginBottom: space[6],
                           borderBottom: `none`,
-                          boxShadow: `none`,
-                          transition: `all ${presets.animation.speedDefault} ${
-                            presets.animation.curveDefault
+                          lineHeight: 0,
+                          transition: `all ${transition.speed.default} ${
+                            transition.curve.default
                           }`,
-                          "&:hover": {
-                            background: `none`,
-                          },
                         },
                       }}
                       to={site.node.fields.slug}
@@ -259,6 +266,7 @@ class CreatorTemplate extends Component {
             )}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }

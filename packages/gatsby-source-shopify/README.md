@@ -17,8 +17,15 @@ npm install --save gatsby-source-shopify
 
 ## How to use
 
+Ensure you have an access token for the [Shopify Storefront API][shopify-storefront-api]. The token should have the following permissions:
+
+- Read products, variants, and collections
+- Read product tags
+- Read content like articles, blogs, and comments
+
+Then in your `gatsby-config.js` add the following config to enable this plugin:
+
 ```js
-// In your gatsby-config.js
 plugins: [
   /*
    * Gatsby's data processing layer begins with “source”
@@ -45,6 +52,11 @@ plugins: [
       // much time was required to fetch and process the data.
       // Defaults to true.
       verbose: true,
+
+      // Number of records to fetch on each request when building the cache
+      // at startup. If your application encounters timeout errors during
+      // startup, try decreasing this number.
+      paginationSize: 250,
     },
   },
 ]
@@ -311,6 +323,26 @@ like the following:
         body
         title
         type
+      }
+    }
+  }
+}
+```
+
+### Query pages
+
+Shopify merchants can create pages to hold static HTML content.
+
+```graphql
+{
+  allShopifyPage {
+    edges {
+      node {
+        id
+        handle
+        title
+        body
+        bodySummary
       }
     }
   }

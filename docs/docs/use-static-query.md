@@ -45,6 +45,50 @@ export default () => {
 }
 ```
 
+### Composing custom `useStaticQuery` hooks
+
+One of the most compelling features of hooks is the ability to compose and re-use these blocks of functionality. `useStaticQuery` is a hook. Therefore, using `useStaticQuery` allows us to compose and re-use blocks of reusable functionality. Perfect!
+
+A classic example is to create a `useSiteMetadata` hook which will provide the `siteMetadata` to be re-used in any component. It looks something like:
+
+```jsx:title=src/hooks/use-site-metadata.js
+import { useStaticQuery, graphql } from "gatsby"
+
+export const useSiteMetadata = () => {
+  const { site } = useStaticQuery(
+    graphql`
+      query SiteMetaData {
+        site {
+          siteMetadata {
+            siteUrl
+            headline
+            description
+            image
+            video
+            twitter
+            name
+            logo
+          }
+        }
+      }
+    `
+  )
+  return site.siteMetadata
+}
+```
+
+Then just import our newly created hook, like so:
+
+```jsx:jsx:title=src/pages/index.js
+import React from "react"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
+
+export default () => {
+  const { title, siteUrl } = useSiteMetadata()
+  return <h1>welcome to {title}</h1>
+}
+```
+
 ## Known Limitations
 
 - `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages

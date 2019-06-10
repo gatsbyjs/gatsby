@@ -8,9 +8,19 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import presets, { colors } from "../utils/presets"
+import {
+  colors,
+  transition,
+  radii,
+  space,
+  mediaQueries,
+  sizes,
+  fontSizes,
+  lineHeights,
+  fonts,
+  zIndices,
+} from "../utils/presets"
 import { svgStyles } from "../utils/styles"
-import { rhythm, options } from "../utils/typography"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -64,19 +74,23 @@ const MobileNavigation = () => (
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 1,
-        borderTop: `1px solid ${colors.ui.light}`,
-        background: `#fff`,
-        minHeight: presets.headerHeight,
-        fontFamily: options.headerFontFamily.join(`,`),
+        zIndex: zIndices.navigation,
+        borderTop: `1px solid ${colors.ui.border.subtle}`,
+        background: colors.white,
+        height: sizes.headerHeight,
+        fontFamily: fonts.header,
         paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Md]: {
+        [mediaQueries.md]: {
           display: `none`,
         },
       }}
     >
       <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
-      <MobileNavItem linkTo="/tutorial/" label="Tutorial" icon={TutorialIcon} />
+      <MobileNavItem
+        linkTo="/tutorial/"
+        label="Tutorials"
+        icon={TutorialIcon}
+      />
       <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
@@ -86,45 +100,24 @@ const MobileNavigation = () => (
 
 export default MobileNavigation
 
-const svgActive = {
-  ...svgStyles.active,
-}
-
 const styles = {
   svg: {
     default: {
-      "& .svg-stroke": {
-        strokeMiterlimit: 10,
-        strokeWidth: 1.4173,
-      },
-      "& .svg-stroke-accent": { stroke: colors.lavender },
-      "& .svg-stroke-lilac": { stroke: colors.lavender },
-      "& .svg-fill-lilac": { fill: colors.lavender },
-      "& .svg-fill-gatsby": { fill: colors.lavender },
-      "& .svg-fill-brightest": { fill: `#fff` },
-      "& .svg-fill-accent": { fill: colors.lavender },
-      "& .svg-stroke-gatsby": { stroke: colors.lavender },
-      "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
-      "& .svg-fill-gradient-purple": { fill: colors.lavender },
-      "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
-      "& .svg-fill-wisteria": { fill: `transparent` },
-      "&:hover": { ...svgActive },
+      ...svgStyles.stroke,
+      ...svgStyles.default,
+      "&:hover": { ...svgStyles.active },
     },
-    active: svgActive,
+    active: svgStyles.active,
   },
   link: {
     default: {
       color: colors.lilac,
-      borderRadius: presets.radii[1],
-      fontSize: presets.scale[0],
+      borderRadius: radii[1],
+      fontSize: fontSizes[0],
       flexShrink: 0,
-      lineHeight: presets.lineHeights.solid,
+      lineHeight: lineHeights.solid,
       width: 64,
-      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
-        options.blockMarginBottom / 4
-      )} 0`,
+      padding: space[1],
       textDecoration: `none`,
       textAlign: `center`,
       WebkitFontSmoothing: `antialiased`,
@@ -133,8 +126,8 @@ const styles = {
         height: 32,
         margin: `0 auto`,
         "& path, & line, & polygon": {
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
+          transition: `all ${transition.speed.default} ${
+            transition.curve.default
           }`,
         },
       },

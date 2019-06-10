@@ -16,7 +16,7 @@ For this example we'll use emotion. The testing utilities of emotion and glamor 
 npm install --save-dev jest-emotion babel-plugin-emotion
 ```
 
-As [Gatsby's emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) is using `babel-plugin-emotion` under the hood you'll also need to install it so that Jest can use it.
+As [Gatsby's emotion plugin](/packages/gatsby-plugin-emotion/) is using `babel-plugin-emotion` under the hood you'll also need to install it so that Jest can use it.
 
 If you followed along with the [Unit testing guide](/docs/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
 

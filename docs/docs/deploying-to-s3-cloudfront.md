@@ -5,26 +5,6 @@ title: Deploying to S3/Cloudfront
 In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
 Additionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
 
-## Getting Started - Gatsby
-
-First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
-
-```shell
-npm install --global gatsby-cli
-```
-
-Next, we'll create a new Gatsby site:
-
-```shell
-gatsby new my-gatsby-site
-```
-
-Finally, change into the new site directory:
-
-```shell
-cd my-gatsby-site
-```
-
 ## Getting Started - AWS CLI
 
 Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
@@ -126,6 +106,6 @@ If you need the full address elsewhere in your config, you can access it via `si
 
 - [Gatsby on AWS, the right way](https://blog.joshwalsh.me/aws-gatsby/)
 - [Using CloudFront with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-cloudfront.md)
-- [Publishing Your Next Gatsby Site to AWS With AWS Amplify](https://www.gatsbyjs.org/blog/2018-08-24-gatsby-aws-hosting/)
-- [Escalade Sports: From $5000 to \$5/month in Hosting With Gatsby](https://www.gatsbyjs.org/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
+- [Publishing Your Next Gatsby Site to AWS With AWS Amplify](/blog/2018-08-24-gatsby-aws-hosting/)
+- [Escalade Sports: From $5000 to \$5/month in Hosting With Gatsby](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Deploy your Gatsby.js Site to AWS S3](https://benenewton.com/deploy-your-gatsby-js-site-to-aws-s-3)

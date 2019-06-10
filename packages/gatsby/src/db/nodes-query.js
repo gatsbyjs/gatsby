@@ -1,12 +1,21 @@
-const backend = process.env.GATSBY_DB_NODES || `redux`
+const { getQueryFields, hasFieldResolvers } = require(`./common/query`)
+
 const lokiRunQuery = require(`./loki/nodes-query`)
 const siftRunQuery = require(`../redux/run-sift`)
-const lazyFields = require(`../schema/lazy-fields`)
 
 function chooseQueryEngine(args) {
+  const { backend } = require(`./nodes`)
+
   const { queryArgs, gqlType } = args
-  const { filter } = queryArgs
-  if (backend === `loki` && !lazyFields.contains(filter, gqlType)) {
+  const { filter, sort, group, distinct } = queryArgs
+  const fields = getQueryFields({ filter, sort, group, distinct })
+
+  // NOTE: `hasFieldResolvers` is also true for Date fields
+  if (
+    backend === `loki` &&
+    !args.nodes &&
+    !hasFieldResolvers(gqlType, fields)
+  ) {
     return lokiRunQuery
   } else {
     return siftRunQuery
@@ -16,15 +25,15 @@ function chooseQueryEngine(args) {
 /**
  * Runs the query over all nodes of type. It must first select the
  * appropriate query engine. Sift, or Loki. Sift is used by default,
- * or if the query includes "lazy fields", those that need to be
- * resolved before being queried. These could be either plugin fields,
- * i.e those declared by plugins during the
- * `setFieldsOnGraphQLNodeType` API, or they could be linked
- * fields. See `../redux/run-sift.js` for more.
+ * or if the query includes fields with custom resolver functions,
+ * those that need to be resolved before being queried.
+ * These could be either plugin fields, i.e those declared by plugins during
+ * the `setFieldsOnGraphQLNodeType` API, or they could be linked fields.
+ * See `../redux/run-sift.js` for more.
  *
- * If the query does *not* include lazy fields, and environment
- * variable `GATSBY_DB_NODES` = `loki` then we can perform a much
- * faster pure data query using loki. See `loki/nodes-query.js` for
+ * If the query does *not* include fields with custom resolver functions,
+ * and environment variable `GATSBY_DB_NODES` = `loki` then we can perform
+ * a much faster pure data query using loki. See `loki/nodes-query.js` for
  * more.
  *
  * @param {Object} args. Object with:
