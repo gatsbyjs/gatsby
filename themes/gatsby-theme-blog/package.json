@@ -5,10 +5,12 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@emotion/core": "^10.0.10",
     "@mdx-js/mdx": "^1.0.15",
     "@mdx-js/react": "^1.0.15",
     "gatsby-image": "^2.0.31",
     "gatsby-mdx": "^0.6.2",
+    "gatsby-plugin-emotion": "^4.0.6",
     "gatsby-plugin-feed": "^2.0.14",
     "gatsby-plugin-react-helmet": "^3.0.7",
     "gatsby-plugin-sharp": "^2.0.36",

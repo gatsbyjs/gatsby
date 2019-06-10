@@ -8,6 +8,7 @@
     "gatsby-theme-blog-mdx",
     "gatsby-theme-blog",
     "gatsby-starter-theme",
+    "gatsby-starter-blog-theme",
     "gatsby-theme-notes"
   ]
 }
