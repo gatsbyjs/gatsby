@@ -7,9 +7,8 @@ function chooseQueryEngine(args) {
   const { backend } = require(`./nodes`)
 
   const { queryArgs, gqlType } = args
-  // TODO: Need to get group and distinct `field` arg from projection
-  const { filter, sort } = queryArgs
-  const fields = getQueryFields({ filter, sort })
+  const { filter, sort, group, distinct } = queryArgs
+  const fields = getQueryFields({ filter, sort, group, distinct })
 
   // NOTE: `hasFieldResolvers` is also true for Date fields
   if (
