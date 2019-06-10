@@ -123,7 +123,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }
               childScreenshot {
                 screenshotFile {
-                  publicURL
                   childImageSharp {
                     resize(width: 200, height: 200) {
                       src
