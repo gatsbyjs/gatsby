@@ -4,49 +4,6 @@ import type { Plugin } from "./types"
 const actions = {}
 
 /**
- * Create a dependency between a page and data. Probably for
- * internal use only.
- * @param {Object} $0
- * @param {string} $0.path the path to the page
- * @param {string} $0.nodeId A node ID
- * @param {string} $0.connection A connection type
- * @private
- */
-actions.createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
-  return {
-    type: `CREATE_COMPONENT_DEPENDENCY`,
-    plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
-  }
-}
-
-/**
- * Delete dependencies between an array of pages and data. Probably for
- * internal use only. Used when deleting pages.
- * @param {Array} paths the paths to delete.
- * @private
- */
-actions.deleteComponentsDependencies = (paths: string[]) => {
-  return {
-    type: `DELETE_COMPONENTS_DEPENDENCIES`,
-    payload: {
-      paths,
-    },
-  }
-}
-
-/**
  * When the query watcher extracts a GraphQL query, it calls
  * this to store the query with its component.
  * @private
