@@ -2935,3 +2935,10 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-kea-starter.netlify.com/
+  repo: https://github.com/benjamin-glitsos/gatsby-kea-starter
+  description: Gatsby starter with redux and sagas made simpler by the Kea library
+  tags:
+    - Redux
+  features:
+    - The Kea library makes redux and sagas extremely simple and concise
