@@ -340,8 +340,8 @@
         - title: Porting to Gatsby
           link: /docs/porting-to-gatsby/
           items:
-            - title: Porting Create React App to Gatsby
-              link: /docs/porting-create-react-app-to-gatsby/
+            - title: Porting from Create React App to Gatsby
+              link: /docs/porting-from-create-react-app-to-gatsby/
     - title: Gatsby API
       link: /docs/api-reference/
       items:
