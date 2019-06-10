@@ -6315,3 +6315,15 @@
   built_by: TomTom
   built_by_url: https://tomtom.com
   featured: false
+- title: PrintAWorld | A 3D Printing and Fabrication Company
+  main_url: https://prtwd.com/
+  url: https://prtwd.com/
+  description: >
+    PrintAWorld is a NYC based fabrication and manufacturing company that specializes in 3D printing, 3D scanning, CAD Design,
+    laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
+  categories:
+    - Business
+    - Art
+    - 3D Printing
+    - Manufacturing
+  featured: false
