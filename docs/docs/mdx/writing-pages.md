@@ -71,9 +71,9 @@ author: "Jay Gatsby"
 Similarly to what you'd do in JSX, you can import and render components
 with JSX. You can also import other MDX documents.
 
-```markdown:title="src/pages/chart.mdx"
+```markdown:title=src/pages/chart.mdx
 import { Chart } from "../components/chart"
-import FAQ from "../content/faq.mdx"
+import FAQ from "../components/faq.mdx"
 
 # Here’s a chart
 
@@ -89,7 +89,7 @@ other React component, while the `<FAQ />` component coming from an `.mdx`
 file might look something like this:
 
 <!-- prettier-ignore -->
-```markdown:title="src/content/faq.mdx"
+```markdown:title=src/components/faq.mdx
 ## Frequently Asked Questions
 
 ### Why Gatsby?
@@ -138,7 +138,7 @@ export const metadata = {
   path: "/world",
 };
 
-<span>Hello, {metadata.name}</span>
+# Hello, <span children={metadata.name} /> 
 
 The span above will read: "Hello, World".
 
@@ -174,7 +174,7 @@ If you have [provided a default layout](/packages/gatsby-mdx/?=mdx#default-layou
 through the `gatsby-mdx` plugin's options, the exported component you define
 from this file will replace the default.
 
-```markdown:title="src/pages/layout-example.mdx"
+```markdown:title=src/pages/layout-example.mdx
 import PurpleBorder from "../components/purple-border"
 
 # This will have a purple border
@@ -185,7 +185,7 @@ export default PurpleBorder
 The `<PurpleBorder />` component might look something like this, wrapping the MDX
 document in a `<div>` with a 1px purple border:
 
-```jsx:title="src/components/purple-border.js"
+```jsx:title=src/components/purple-border.js
 import React from "react"
 
 const PurpleBorder = ({ children }) => (
