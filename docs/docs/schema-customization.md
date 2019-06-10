@@ -553,6 +553,23 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
+When using `runQuery` to sort query results, be aware that both `sort.fields`
+and `sort.order` are `GraphQLList` fields. Also, nested fields on `sort.fields`
+have to be provided in dot-notation (not separated by triple underscores).
+For example:
+
+```js
+context.nodeModel.runQuery({
+  query: {
+    sort: {
+      fields: ["frontmatter.publishedAt"],
+      order: ["DESC"],
+    },
+  },
+  type: "MarkdownRemark",
+})
+```
+
 ### Custom query fields
 
 One powerful approach enabled by `createResolvers` is adding custom root query
