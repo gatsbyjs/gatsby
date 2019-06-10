@@ -90,10 +90,10 @@ module.exports = (
 
     if (captionOptions) {
       for (const option of captionOptions) {
-        // eslint-disable-next-line no-fallthrough, default-case
         switch (option) {
           case `title`:
             if (node.title) return node.title
+          // eslint-disable-next-line no-fallthrough
           case `alt`:
             if (alt && alt.length > 0 && alt !== defaultAlt) {
               return alt
