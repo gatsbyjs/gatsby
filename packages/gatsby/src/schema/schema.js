@@ -379,7 +379,7 @@ const addExtensions = ({
               } catch (error) {
                 report.error(
                   `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
-                    `has argument \`${arg}\` with invalid value "${value}".\n` +
+                    `has argument \`${arg}\` with invalid value "${value}". ` +
                     error.message
                 )
               }

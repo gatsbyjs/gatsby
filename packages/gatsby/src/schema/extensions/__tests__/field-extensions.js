@@ -672,7 +672,8 @@ describe(`GraphQL field extensions`, () => {
   })
 
   // FIXME: error message for directive is different from extension error,
-  // because directive is checked before by graphql-compose
+  // because directive is checked before by graphql-compose. also: we get
+  // parsing panics, not error messages.
   // we get an extension option with a wrong type
   it(`validates type of extension options`, async () => {
     dispatch(
@@ -744,11 +745,194 @@ describe(`GraphQL field extensions`, () => {
     await buildSchema({})
     expect(report.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has argument \`planet\` with ` +
-        `invalid value "2".`
+        `invalid value "2". String cannot represent a non string value: 2`
     )
   })
 
-  // FIXME: `graphql-compose` (in `parseDirectives`) silently omits invalid extension options
+  // FIXME: See above (directive error messages different than with extensions,
+  // because they are reported as parsing errors (which are panics, not errors))
+  it(`validates non-null and list types of extension options`, async () => {
+    dispatch(
+      createFieldExtension({
+        name: `test`,
+        args: {
+          one: `Int!`,
+          two: `[Int]`,
+          three: `[Int!]!`,
+        },
+        extend(options) {
+          return {
+            resolve() {
+              return options.planet || `world`
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes([
+        `type Test implements Node {
+          first: String @test(one: 1, two: [1], three: [1])
+          second: String @test(one: "1", two: [1], three: [1])
+        }`,
+        `type Test implements Node {
+          third: String @test(two: [1], one: 1, three: [1])
+          fourth: String @test(two: ["1"], one: 1, three: [1])
+        }`,
+        `type Test implements Node {
+          fifth: String @test(three: [1], one: 1, two: [1])
+          sixth: String @test(three: [], one: 1, two: [1])
+          seventh: String @test(three: [null], one: 1, two: [1])
+        }`,
+      ])
+    )
+    await buildSchema({})
+    expect(report.panic).toBeCalledWith(
+      expect.stringContaining(
+        `Encountered an error parsing the provided GraphQL type definitions:\n` +
+          `Argument "one" has invalid value "1".`
+      )
+    )
+    expect(report.panic).toBeCalledWith(
+      expect.stringContaining(
+        `Encountered an error parsing the provided GraphQL type definitions:\n` +
+          `Argument "two" has invalid value ["1"].`
+      )
+    )
+    expect(report.panic).toBeCalledWith(
+      expect.stringContaining(
+        `Encountered an error parsing the provided GraphQL type definitions:\n` +
+          `Argument "three" has invalid value [null].`
+      )
+    )
+  })
+
+  it(`validates non-null and list types of extension options (type builder)`, async () => {
+    dispatch(
+      createFieldExtension({
+        name: `test`,
+        args: {
+          one: `Int!`,
+          two: `[Int]`,
+          three: `[Int!]!`,
+        },
+        extend(options) {
+          return {
+            resolve() {
+              return options.planet || `world`
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes([
+        buildObjectType({
+          name: `Test`,
+          interfaces: [`Node`],
+          fields: {
+            first: {
+              type: `String`,
+              extensions: {
+                test: {
+                  one: 1,
+                  two: [1],
+                  three: [1],
+                },
+              },
+            },
+            second: {
+              type: `String`,
+              extensions: {
+                test: {
+                  one: `1`,
+                  two: [1],
+                  three: [1],
+                },
+              },
+            },
+          },
+        }),
+        buildObjectType({
+          name: `Test`,
+          interfaces: [`Node`],
+          fields: {
+            third: {
+              type: `String`,
+              extensions: {
+                test: {
+                  two: [1],
+                  one: 1,
+                  three: [1],
+                },
+              },
+            },
+            fourth: {
+              type: `String`,
+              extensions: {
+                test: {
+                  two: [`1`],
+                  one: 1,
+                  three: [1],
+                },
+              },
+            },
+          },
+        }),
+        buildObjectType({
+          name: `Test`,
+          interfaces: [`Node`],
+          fields: {
+            fifth: {
+              type: `String`,
+              extensions: {
+                test: {
+                  three: [1],
+                  one: 1,
+                  two: [1],
+                },
+              },
+            },
+            sixth: {
+              type: `String`,
+              extensions: {
+                test: {
+                  three: [],
+                  one: 1,
+                  two: [1],
+                },
+              },
+            },
+            seventh: {
+              type: `String`,
+              extensions: {
+                test: {
+                  three: [null],
+                  one: 1,
+                  two: [1],
+                },
+              },
+            },
+          },
+        }),
+      ])
+    )
+    await buildSchema({})
+    expect(report.error).toBeCalledWith(
+      `Field extension \`test\` on \`Test.second\` has argument \`one\` with ` +
+        `invalid value "1". Int cannot represent non-integer value: "1"`
+    )
+    expect(report.error).toBeCalledWith(
+      `Field extension \`test\` on \`Test.fourth\` has argument \`two\` with ` +
+        `invalid value "1". Int cannot represent non-integer value: "1"`
+    )
+    expect(report.error).toBeCalledWith(
+      `Field extension \`test\` on \`Test.seventh\` has argument \`three\` with ` +
+        `invalid value "". Expected non-null field value.`
+    )
+  })
+
+  // FIXME: `graphql-compose` (in `parseDirectives`) silently omits invalid extension options.
   // we get an extension option that has not been defined.
   it.skip(`validates non-existing extension options`, async () => {
     dispatch(
