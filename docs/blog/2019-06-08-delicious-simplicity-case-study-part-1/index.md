@@ -8,7 +8,7 @@ tags:
   - enterprise
 ---
 
-When Brian Webster launched his Los Angeles-based development studio he sought a name that would reflect his passion for elegantly simple design. Founded ten years ago, [Delicious SimplicityL](https://delicioussimplicity.com/) has established a reputation for building clean and clever websites for a select clientele of small to mid-sized enterprise and non-profit organizations. The agency, like pretty much every agency in those days, was a Drupal/WordPress shop. As time went on, modern web design embraced bandwidth-hogging elements like hero images and background videos. Clients definitely wanted these -- delivered, of course, at near-instant download speeds and on a plethora of platforms.
+When Brian Webster launched his Los Angeles-based development studio he sought a name that would reflect his passion for elegantly simple design. Founded ten years ago, [Delicious Simplicity](https://www.delicious-simplicity.com/) has established a reputation for building clean and clever websites for a select clientele of small to mid-sized enterprise and non-profit organizations. The agency, like pretty much every agency in those days, was a Drupal/WordPress shop. As time went on, modern web design embraced bandwidth-hogging elements like hero images and background videos. Clients definitely wanted these -- delivered, of course, at near-instant download speeds and on a plethora of platforms.
 
 At the same time, WordPress and Drupal had grown into cumbersome monolithic applications bearing massive core cruft (WP genericons font library, much? Didn’t think so). These platforms were increasingly unsuited to creating the well-honed, fully-featured yet fast websites that Brian envisioned, and that clients demanded. It was time to find a new way of working.
 
@@ -16,24 +16,28 @@ He was drawn to the idea of headless CMS (content management systems) decoupled 
 
 Brian was especially intrigued by JS and Node and React. “The code samples always gave me such envy—short, succinct, clean and well-organized,” Brian says. “I thought, I would really love to interact with this everyday. Here was the problem, though. I loved JavaScript, but it wasn’t a solution to any of our problems. At least not a complete one.”
 
-> **“I really started to trust that I had found the solution.
-> That Gatsby could be The One.”**
+<Pullquote>
+I really started to trust that I had found the solution.
+That Gatsby could be The One.
+</Pullquote>
 
 So Brian kept trying, and not finding, a better way to develop projects and manage client content. “Eventually, Gatsby came along and I did the same test drive,” Brian says. “But this time I kept going down the road and there was no dead end. It just kept being even better than I had hoped, and I really started to trust that I had found the solution. That Gatsby could be The One.”
 
-#### Swiping Right for Gatsby
+## Swiping Right for Gatsby
 
 There was only one potential hurdle to true romance: convincing the Delicious Simplicity team. They were mainly front end developers used to working with HTML/CSS, maybe a little jQuery. Stepping across the divide into the backend to confront the complexities of a headless CMS was not in their comfort zone. But Brian was confident he could get them there.
 
 “Once I got hands on with Gatsby, I was shocked how quickly I managed to pick things up. The syntax was just so intuitive, which made it easy to digest,” he says. There were definitely some growing pains -- the team had little experience with React or Node, and some of the devs found the new component-based way of thinking overwhelming to grasp at first. But they eventually fell in love with Gatsby and now don’t want to work in anything else.
 
-> **“What we are able to produce with the same people now is of massively higher value thanks to Gatsby’s tech stack.”**
+<Pullquote>
+What we are able to produce with the same people now is of massively higher value thanks to Gatsby’s tech stack.
+</Pullquote>
 
 “The stuff we are doing now! Building functional React components that hook into APIs -- making not just websites, but web apps!” Brian says. “I heard my team saying, ‘I never thought I would do this, I feel like a real developer now, not just a themer!’”
 
 The platform’s logical, streamlined tooling made it possible for the Delicious Simplicity team to give their hearts to Gatsby, fully and confidently, as they leveled up their dev skills. “What we are able to produce with the same people now is of massively higher value thanks to Gatsby’s tech stack,” Brian marvels.
 
-#### Fully Committed
+## Fully Committed
 
 Delicious Simplicity’s team is in fact so enamored that they have gone back and refactored the studio’s existing projects into Gatsby. “Any client projects due for updates, we have moved over to Gatsby, because that is where we want to be working. We’ve done about two dozen, there are maybe four left to go,” Brian says.
 
