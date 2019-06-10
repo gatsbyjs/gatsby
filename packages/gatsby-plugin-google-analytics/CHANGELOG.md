@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.20...gatsby-plugin-google-analytics@2.0.21) (2019-06-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Refactor gatsby-plugin-google-analytics gatsby-browser.js ([#14572](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/14572)) ([9f2c0c9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/9f2c0c9))
+
 ## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.19...gatsby-plugin-google-analytics@2.0.20) (2019-05-14)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
