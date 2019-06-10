@@ -1,5 +1,5 @@
 // @flow
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
