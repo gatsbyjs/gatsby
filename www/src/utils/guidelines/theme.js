@@ -11,6 +11,7 @@ import {
   fontSizes,
   space,
   zIndices,
+  sizes,
   transition,
 } from "../presets"
 
@@ -27,6 +28,7 @@ const theme = {
   space: space,
   shadows: shadows,
   zIndices: zIndices,
+  sizes: sizes,
   transition: transition,
 }
 
