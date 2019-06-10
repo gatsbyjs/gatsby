@@ -1175,6 +1175,9 @@ actions.createPageDependency = (
   }: { path: string, nodeId: string, connection: string },
   plugin: string = ``
 ) => {
+  console.warn(
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+  )
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
@@ -1182,21 +1185,6 @@ actions.createPageDependency = (
       path,
       nodeId,
       connection,
-    },
-  }
-}
-
-/**
- * Delete dependencies between an array of pages and data.
- * Used when deleting pages.
- * @param {Array} paths the paths to delete.
- * @private
- */
-actions.deleteComponentsDependencies = (paths: string[]) => {
-  return {
-    type: `DELETE_COMPONENTS_DEPENDENCIES`,
-    payload: {
-      paths,
     },
   }
 }
