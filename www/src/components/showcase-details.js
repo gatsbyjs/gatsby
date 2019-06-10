@@ -266,6 +266,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       .childImageSharp.resize.src
                   }`}
                 />
+                <meta name="twitter:card" content="summary_large_image" />
               </Helmet>
               <div
                 css={{
