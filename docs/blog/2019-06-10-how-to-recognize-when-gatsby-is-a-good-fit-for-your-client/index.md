@@ -22,7 +22,7 @@ In November, I began a conversation with a mid-sized retail and digital commerce
 - First, the content editorial experience for staff was so poor that multiple team members had actually quit because of it (saying as much in their exit interview).
 - Second, development velocity was painfully slow because of the complex implementation.
 
-Once I mapped out the use cases that resonate for Gatsby (and was honest about the trade offs), the client enthusiastically wanted to know more, and they are likely proceeding with a Gatsby stack for their replatform.
+Once I talked about the value of a microservices approach, the unbeatable fast speed of a React powered front end, preview, and the partial builds feature on the roadmap Gatsby (and was honest about the trade offs), the client enthusiastically wanted to know more, and they are likely proceeding with a Gatsby stack for their replatform.
 
 Here are three smart points of entry to get the conversation focused on use cases. (To learn more about explaining the technicalities of Gatsby, check out Linda’s extensive article on [how to break down Gatsby in a way that will resonate](/blog/2019-03-07-sell-gatsby-to-clients/).
 
