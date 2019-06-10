@@ -17,6 +17,8 @@ const quit = () => {
   process.exit()
 }
 
+const MAX_COPY_RETRIES = 3
+
 /*
  * non-existant packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
@@ -29,18 +31,28 @@ function watch(
   let afterPackageInstallation = false
   let queuedCopies = []
 
-  const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
+  const realCopyPath = arg => {
+    const { oldPath, newPath, quiet, resolve, reject, retry = 0 } = arg
     fs.copy(oldPath, newPath, err => {
       if (err) {
-        console.error(err)
-        return reject(err)
+        if (retry >= MAX_COPY_RETRIES) {
+          console.error(err)
+          reject(err)
+          return
+        } else {
+          setTimeout(
+            () => realCopyPath({ ...arg, retry: retry + 1 }),
+            500 * Math.pow(2, retry)
+          )
+          return
+        }
       }
 
       numCopied += 1
       if (!quiet) {
         console.log(`Copied ${oldPath} to ${newPath}`)
       }
-      return resolve()
+      resolve()
     })
   }
 
@@ -69,12 +81,14 @@ function watch(
     }, new Set())
 
     await Promise.all(
-      [...packagesToClear].map(async packageToClear => {
-        await del([
-          `node_modules/${packageToClear}/**/*.{js,js.map}`,
-          `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
-        ])
-      })
+      [...packagesToClear].map(
+        async packageToClear =>
+          await del([
+            `node_modules/${packageToClear}/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/src/**/*.{js,js.map}`,
+          ])
+      )
     )
   }
   // check packages deps and if they depend on other packages from monorepo
@@ -113,6 +127,7 @@ function watch(
     /\.git/i,
     /\.DS_Store/,
     /[/\\]__tests__[/\\]/i,
+    /\.npmrc/i,
   ].concat(
     allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )

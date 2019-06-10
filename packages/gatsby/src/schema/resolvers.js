@@ -25,7 +25,17 @@ const findOne = typeName => ({ args, context, info }) =>
   )
 
 const findManyPaginated = typeName => async rp => {
-  const result = await findMany(typeName)(rp)
+  // Peek into selection set and pass on the `field` arg of `group` and
+  // `distinct` which might need to be resolved. The easiest way to check if
+  // `group` or `distinct` are in the selection set is with the `projection`
+  // field which is added by `graphql-compose`'s `Resolver`. If we find it
+  // there, get the actual `field` arg.
+  const group = rp.projection.group && getProjectedField(rp.info, `group`)
+  const distinct =
+    rp.projection.distinct && getProjectedField(rp.info, `distinct`)
+  const args = { ...rp.args, group, distinct }
+
+  const result = await findMany(typeName)({ ...rp, args })
   return paginate(result, { skip: rp.args.skip, limit: rp.args.limit })
 }
 
@@ -203,6 +213,19 @@ const resolveValue = (resolve, value) =>
   Array.isArray(value)
     ? value.map(v => resolveValue(resolve, v))
     : resolve(value)
+
+const getProjectedField = (info, fieldName) => {
+  const { selections } = info.fieldNodes[0].selectionSet
+  const selection = selections.find(s => s.name.value === fieldName)
+  const fieldArg = selection.arguments.find(arg => arg.name.value === `field`)
+  const enumKey = fieldArg.value.value
+  const Enum = getNullableType(
+    info.returnType
+      .getFields()
+      [fieldName].args.find(arg => arg.name === `field`).type
+  )
+  return Enum.getValue(enumKey).value
+}
 
 module.exports = {
   findManyPaginated,

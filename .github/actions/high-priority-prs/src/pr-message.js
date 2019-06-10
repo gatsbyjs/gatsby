@@ -1,8 +1,10 @@
-const moment = require(`moment`)
 const _ = require(`lodash`)
 const arrayToSentence = require(`array-to-sentence`)
+const distanceInWords = require(`date-fns/distance_in_words`)
+const parse = require(`date-fns/parse`)
 
-module.exports = (queues, maintainers) => {
+// Format a message for Slack's block kit: https://api.slack.com/tools/block-kit-builder
+module.exports = (queues, maintainers, now = new Date()) => {
   const report = [
     {
       type: "section",
@@ -15,22 +17,30 @@ module.exports = (queues, maintainers) => {
   ]
 
   Object.keys(queues).forEach(key => {
+    const messages = {
+      noMaintainers: `[${
+        queues[key].length
+      }] *_PRs with no responses from maintainers_*`,
+      commitsSinceLastComment: `[${
+        queues[key].length
+      }] *_PRs with new commits awaiting review_*`,
+      lonelyPrs: `[${
+        queues[key].length
+      }] *_PRs that were updated more than 30 days ago_*`,
+    }
+
     report.push({
       type: "divider",
     })
 
-    // Add message
-    const message =
-      key === `noMaintainers`
-        ? `[${queues[key].length}] *_PRs with no responses from maintainers_*`
-        : `[${queues[key].length}] *_PRs with new commits awaiting review_*`
     report.push({
       type: "section",
       text: {
         type: "mrkdwn",
-        text: message,
+        text: messages[key],
       },
     })
+
     let text = ``
     queues[key].slice(0, 14).map((pr, i) => {
       const participated = _.uniqBy(pr.comments.nodes, c => c.author.url)
@@ -42,13 +52,12 @@ module.exports = (queues, maintainers) => {
           ? "— commented: " + arrayToSentence(participated)
           : ""
 
-      console.log({ participated })
-
-      text += `${i + 1 + `. `}*<${pr.url}|${pr.title}>* — _created_ ${moment(
-        pr.createdAt
-      ).fromNow()} — _updated_ ${moment(
-        pr.updatedAt
-      ).fromNow()}${participatedStr}\n`
+      // console.log({ participated })
+      const createdAgo = distanceInWords(parse(pr.createdAt), now)
+      const updatedAgo = distanceInWords(parse(pr.updatedAt), now)
+      text += `${i + 1 + `. `}*<${pr.url}|${
+        pr.title
+      }>* — _created_ ${createdAgo} ago — _updated_ ${updatedAgo} ago ${participatedStr}\n`
     })
 
     if (text === ``) {
