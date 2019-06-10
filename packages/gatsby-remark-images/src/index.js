@@ -1,4 +1,5 @@
 const {
+  defaults,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -24,18 +25,7 @@ module.exports = (
   { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
-  const defaults = {
-    maxWidth: 650,
-    wrapperStyle: ``,
-    backgroundColor: `white`,
-    linkImagesToOriginal: true,
-    showCaptions: false,
-    pathPrefix,
-    withWebp: false,
-    tracedSVG: false,
-  }
-
-  const options = _.defaults(pluginOptions, defaults)
+  const options = _.defaults(pluginOptions, { pathPrefix }, defaults)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -147,7 +137,7 @@ module.exports = (
       ? node.alt
       : defaultAlt
 
-    const title = node.title ? node.title : ``
+    const title = node.title ? node.title : alt
 
     const imageStyle = `
       width: 100%;
@@ -157,10 +147,7 @@ module.exports = (
       position: absolute;
       top: 0;
       left: 0;
-      box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};`.replace(
-      /\s*(\S+:)\s*/g,
-      `$1`
-    )
+      color: transparent;`.replace(/\s*(\S+:)\s*/g, `$1`)
 
     // Create our base image tag
     let imageTag = `
