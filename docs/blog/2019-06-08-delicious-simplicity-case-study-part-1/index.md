@@ -21,7 +21,7 @@ Brian was especially intrigued by JS and Node and React. “The code samples alw
 
 So Brian kept trying, and not finding, a better way to develop projects and manage client content. “Eventually, Gatsby came along and I did the same test drive,” Brian says. “But this time I kept going down the road and there was no dead end. It just kept being even better than I had hoped, and I really started to trust that I had found the solution. That Gatsby could be The One.”
 
-#### Swiping Right for Gatsby
+## Swiping Right for Gatsby
 
 There was only one potential hurdle to true romance: convincing the Delicious Simplicity team. They were mainly front end developers used to working with HTML/CSS, maybe a little jQuery. Stepping across the divide into the backend to confront the complexities of a headless CMS was not in their comfort zone. But Brian was confident he could get them there.
 
@@ -33,7 +33,7 @@ There was only one potential hurdle to true romance: convincing the Delicious Si
 
 The platform’s logical, streamlined tooling made it possible for the Delicious Simplicity team to give their hearts to Gatsby, fully and confidently, as they leveled up their dev skills. “What we are able to produce with the same people now is of massively higher value thanks to Gatsby’s tech stack,” Brian marvels.
 
-#### Fully Committed
+## Fully Committed
 
 Delicious Simplicity’s team is in fact so enamored that they have gone back and refactored the studio’s existing projects into Gatsby. “Any client projects due for updates, we have moved over to Gatsby, because that is where we want to be working. We’ve done about two dozen, there are maybe four left to go,” Brian says.
 
