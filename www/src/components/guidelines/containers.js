@@ -1,14 +1,12 @@
 import React from "react"
 
 import styled from "@emotion/styled"
-import { space } from "styled-system"
+import propTypes from "@styled-system/prop-types"
 
 import { Box } from "./system"
 import { sizes } from "../../utils/presets"
 
-const themed = key => props => props.theme[key]
-
-export const Container = styled(Box)(themed(`Container`))
+export const Container = styled(Box)()
 
 Container.defaultProps = {
   position: `relative`,
@@ -17,10 +15,10 @@ Container.defaultProps = {
   zIndex: 1,
 }
 
-export const Section = styled(Container)(themed(`Section`))
+export const Section = styled(Container)()
 
 Section.propTypes = {
-  ...space.propTypes,
+  ...propTypes.space,
 }
 
 Section.defaultProps = {

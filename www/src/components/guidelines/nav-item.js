@@ -1,15 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled from "@emotion/styled"
-import {
-  color,
-  fontFamily,
-  fontWeight,
-  fontSize,
-  space,
-  themeGet,
-} from "styled-system"
+import { color, space, typography } from "styled-system"
 import shouldForwardProp from "@styled-system/should-forward-prop"
+import propTypes from "@styled-system/prop-types"
+import themeGet from "@styled-system/theme-get"
 
 const ActiveLink = props => <Link {...props} activeClassName="active" />
 
@@ -22,9 +17,7 @@ const NavLink = styled(ActiveLink, { shouldForwardProp })(
     }
   },
   color,
-  fontFamily,
-  fontSize,
-  fontWeight,
+  typography,
   space
 )
 
@@ -37,11 +30,9 @@ NavLink.defaultProps = {
 }
 
 NavLink.propTypes = {
-  ...color.propTypes,
-  ...fontWeight.propTypes,
-  ...fontFamily.propTypes,
-  ...fontSize.propTypes,
-  ...space.propTypes,
+  ...propTypes.color,
+  ...propTypes.space,
+  ...propTypes.typography,
 }
 
 const NavItem = props => <NavLink {...props} />

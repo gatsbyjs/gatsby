@@ -1,64 +1,43 @@
 import styled from "@emotion/styled"
 import shouldForwardProp from "@styled-system/should-forward-prop"
 import {
-  alignSelf,
   border,
-  borderRadius,
   boxShadow,
   color,
-  display,
-  flex,
-  flexWrap,
-  fontSize,
-  height,
-  maxWidth,
-  order,
+  flexbox,
+  layout,
   position,
   space,
-  textAlign,
-  width,
+  typography,
+  compose,
 } from "styled-system"
+import propTypes from "@styled-system/prop-types"
 
 const boxPropTypes = {
-  ...alignSelf.propTypes,
-  ...border.propTypes,
-  ...borderRadius.propTypes,
-  ...boxShadow.propTypes,
-  ...color.propTypes,
-  ...display.propTypes,
-  ...flex.propTypes,
-  ...fontSize.propTypes,
-  ...flexWrap.propTypes,
-  ...height.propTypes,
-  ...maxWidth.propTypes,
-  ...order.propTypes,
-  ...position.propTypes,
-  ...space.propTypes,
-  ...textAlign.propTypes,
-  ...width.propTypes,
+  ...propTypes.border,
+  ...propTypes.boxShadow,
+  ...propTypes.color,
+  ...propTypes.flexbox,
+  ...propTypes.layout,
+  ...propTypes.position,
+  ...propTypes.space,
+  ...propTypes.typography,
 }
 
-const Box = styled(`div`, {
-  shouldForwardProp,
-})(
-  {
-    boxSizing: `border-box`,
-  },
-  alignSelf,
-  borderRadius,
+const styleProps = compose(
+  border,
   boxShadow,
   color,
-  display,
-  flex,
-  flexWrap,
-  height,
-  fontSize,
-  maxWidth,
-  order,
+  flexbox,
+  layout,
   position,
   space,
-  textAlign,
-  width
+  typography
+)
+
+const Box = styled(`div`, { shouldForwardProp })(
+  { boxSizing: `border-box` },
+  styleProps
 )
 
 Box.propTypes = boxPropTypes

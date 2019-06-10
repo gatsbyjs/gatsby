@@ -10,7 +10,8 @@ Heading.defaultProps = {
   fontSize: 7,
   lineHeight: `dense`,
   letterSpacing: `tight`,
-  m: 0,
+  mt: 0,
+  mb: 0,
 }
 
 export default Heading

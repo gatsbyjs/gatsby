@@ -1,8 +1,14 @@
 import React from "react"
 import styled from "@emotion/styled"
-import { borders, fontFamily, fontWeight, letterSpacing } from "styled-system"
+import { border, typography, compose } from "styled-system"
+import propTypes from "@styled-system/prop-types"
 
 import { Flex } from "./system"
+
+const styleProps = compose(
+  border,
+  typography
+)
 
 const BadgeBase = styled(Flex)(
   {
@@ -10,17 +16,12 @@ const BadgeBase = styled(Flex)(
     position: `relative`,
     textTransform: `uppercase`,
   },
-  borders,
-  fontFamily,
-  fontWeight,
-  letterSpacing
+  styleProps
 )
 
 BadgeBase.propTypes = {
-  ...borders.propTypes,
-  ...fontFamily.propTypes,
-  ...fontWeight.propTypes,
-  ...letterSpacing.propTypes,
+  ...propTypes.border,
+  ...propTypes.typography,
 }
 
 BadgeBase.defaultProps = {

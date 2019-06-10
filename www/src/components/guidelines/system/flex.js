@@ -1,31 +1,11 @@
 import styled from "@emotion/styled"
-import {
-  order,
-  flexWrap,
-  flexDirection,
-  alignItems,
-  justifyContent,
-} from "styled-system"
+import { flexbox } from "styled-system"
+import propTypes from "@styled-system/prop-types"
 
 import Box from "./box"
 
-const Flex = styled(Box)(
-  {
-    display: `flex`,
-  },
-  alignItems,
-  justifyContent,
-  order,
-  flexDirection,
-  flexWrap
-)
+const Flex = styled(Box)({ display: `flex` }, flexbox)
 
-Flex.propTypes = {
-  ...alignItems.propTypes,
-  ...flexDirection.propTypes,
-  ...flexWrap.propTypes,
-  ...justifyContent.propTypes,
-  ...order.propTypes,
-}
+Flex.propTypes = { ...propTypes.flexbox }
 
 export default Flex

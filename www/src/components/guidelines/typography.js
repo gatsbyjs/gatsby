@@ -3,12 +3,7 @@ import styled from "@emotion/styled"
 import { Heading, Text } from "./system"
 import { srOnly } from "../../utils/styles"
 
-const themed = key => props => props.theme[key]
-
-export const PageHeading = styled(Heading)(
-  { position: `relative` },
-  themed(`PageHeading`)
-)
+export const PageHeading = styled(Heading)({ position: `relative` })
 
 PageHeading.defaultProps = {
   as: `h1`,
@@ -17,10 +12,9 @@ PageHeading.defaultProps = {
   letterSpacing: `tight`,
   pt: { xxs: 7 },
   mb: { xxs: 4, lg: 7 },
-  m: 0,
 }
 
-export const Intro = styled(Text)(themed(`Intro`))
+export const Intro = styled(Text)()
 
 Intro.defaultProps = {
   as: `p`,
@@ -36,19 +30,17 @@ Intro.defaultProps = {
   zIndex: 1,
 }
 
-export const SectionHeading = styled(PageHeading)(themed(`SectionHeading`))
+export const SectionHeading = styled(PageHeading)()
 
 SectionHeading.defaultProps = {
   as: `h2`,
   color: `grey.90`,
-  m: 0,
+  mt: 0,
   mb: 4,
   fontSize: { xs: 6 },
 }
 
-export const SectionSubheading = styled(PageHeading)(
-  themed(`SectionSubheading`)
-)
+export const SectionSubheading = styled(PageHeading)()
 
 SectionSubheading.defaultProps = {
   as: `h3`,

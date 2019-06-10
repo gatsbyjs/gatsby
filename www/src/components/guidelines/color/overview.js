@@ -139,11 +139,7 @@ const Overview = ({ handler }) => (
         <div css={colorNumber}>5</div>
       </Box>
     </Flex>
-    <Box
-      display={{ lg: `flex` }}
-      borderBottom={1}
-      borderColor="ui.border.subtle"
-    >
+    <Box display={{ lg: `flex` }}>
       <SectionHeading width={{ lg: `12rem` }}>Primary</SectionHeading>
       <Box>
         <Palette color="purple" handler={handler} />

@@ -4,7 +4,7 @@ import Link from "gatsby-link"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
-import { themeGet } from "styled-system"
+import themeGet from "@styled-system/theme-get"
 
 import Layout from "../../components/guidelines/layout"
 import BoxWithBorder from "../../components/guidelines/box-with-border"
@@ -121,9 +121,9 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
   <BoxWithBorder
     bg={bg}
     height={0}
+    p={3}
     pb="56.25%"
     width="100%"
-    p={3}
     withBorder={withBorder}
     {...rest}
   >
