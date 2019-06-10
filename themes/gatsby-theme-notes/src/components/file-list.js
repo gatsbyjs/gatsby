@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import { Styled } from "theme-ui"
 
 export default ({ files }) => (
-  <ul css={{ padding: 0 }}>
+  <ul>
     {files.map(url => (
       <li key={url}>
         <Styled.a as={Link} to={url}>

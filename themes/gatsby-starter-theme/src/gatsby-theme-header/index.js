@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
+// import Header from 'gatsby-theme-blog/src/gatsby-theme-header'
 
 export default props =>
   <header>
@@ -11,7 +12,6 @@ export default props =>
         <Link to='/'>Blog</Link>
       </li>
       <li>
-        <Link to='/txt'>Notes</Link>
       </li>
     </ul>
   </header>
