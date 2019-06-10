@@ -6325,3 +6325,16 @@
     - 3D Printing
     - Manufacturing
   featured: false
+- title: Asjas
+  main_url: https://asjas.co.za
+  url: https://asjas.co.za/blog
+  source_url: https://github.com/Asjas/Personal-Webpage
+  description: >
+    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+  built_by: A-J Roos
+  built_by_url: https://twitter.com/_asjas
+  featured: false
