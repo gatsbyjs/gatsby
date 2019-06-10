@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.38...gatsby-source-filesystem@2.0.39) (2019-06-10)
+
+### Features
+
+- **gatsby-source-filesystem:** remove slash ([#14372](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14372)) ([1d9ba86](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/1d9ba86))
+
 ## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.37...gatsby-source-filesystem@2.0.38) (2019-05-31)
 
 ### Features
