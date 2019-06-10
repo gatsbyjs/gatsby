@@ -251,7 +251,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
             >
               <Helmet>
-                <title>{data.sitesYaml.title}</title>
+                <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
                 <meta
                   property="og:image"
                   content={`https://www.gatsbyjs.org${
@@ -267,6 +267,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   }`}
                 />
                 <meta name="twitter:card" content="summary_large_image" />
+                <meta
+                  name="og:title"
+                  value={`${data.sitesYaml.title}: Showcase | GatsbyJS`}
+                />
                 <meta
                   property="og:image:width"
                   content={
