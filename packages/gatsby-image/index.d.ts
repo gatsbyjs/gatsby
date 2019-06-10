@@ -1,6 +1,6 @@
 import * as React from "react"
 
-interface FixedObject {
+export interface FixedObject {
   width: number
   height: number
   src: string
@@ -11,7 +11,7 @@ interface FixedObject {
   srcSetWebp?: string
 }
 
-interface FluidObject {
+export interface FluidObject {
   aspectRatio: number
   src: string
   srcSet: string

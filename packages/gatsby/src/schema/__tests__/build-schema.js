@@ -605,6 +605,46 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`merges types owned by same plugin`, async () => {
+      createTypes(
+        `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
+         type PluginDefinedNested { foo: Int }`,
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `sdl`,
+          plugin: `some-gatsby-plugin`,
+          infer: false,
+        })
+      )
+    })
+
     it(`does not merge plugin-defined type with type defined by other plugin`, async () => {
       createTypes(
         `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }

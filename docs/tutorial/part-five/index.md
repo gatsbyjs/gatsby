@@ -7,11 +7,11 @@ typora-copy-images-to: ./
 
 ## What's in this tutorial?
 
-In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called Graph_i_QL, a tool that helps you structure your queries correctly.
+In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called GraphiQL, a tool that helps you structure your queries correctly.
 
-## Introducing Graph_i_QL
+## Introducing GraphiQL
 
-Graph_i_QL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
+GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
 you'll use often while building Gatsby websites.
 
 You can access it when your site's development server is running—normally at
@@ -24,9 +24,9 @@ You can access it when your site's development server is running—normally at
 
 Here you poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object you queried earlier. Try opening
-Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
+GraphiQL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
 the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
-using Graph_i_QL a lot more through the remainder of the tutorial.
+using GraphiQL a lot more through the remainder of the tutorial.
 
 ## Source plugins
 
@@ -74,7 +74,7 @@ module.exports = {
 }
 ```
 
-Save that and restart the gatsby development server. Then open up Graph_i_QL
+Save that and restart the gatsby development server. Then open up GraphiQL
 again.
 
 If you bring up the autocomplete window, you'll see:
@@ -101,8 +101,8 @@ The result is an array of File "nodes" (node is a fancy name for an object in a
 
 ## Build a page with a GraphQL query
 
-Building new pages with Gatsby often starts in Graph_i_QL. You first sketch out
-the data query by playing in Graph_i_QL then copy this to a React page component
+Building new pages with Gatsby often starts in GraphiQL. You first sketch out
+the data query by playing in GraphiQL then copy this to a React page component
 to start building the UI.
 
 Let's try this.
