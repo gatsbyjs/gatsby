@@ -4,8 +4,6 @@ import { css } from "theme-ui"
 import { Layout, Main, Container } from "theme-ui"
 import Header from 'gatsby-theme-header'
 
-console.log('Header', typeof Header, <Header />)
-
 export default props => (
   <>
     <Global
