@@ -35,6 +35,7 @@ const Title = props => {
   } else {
     return (
       <Styled.h3
+        as="p"
         css={css({
           my: 0,
         })}
