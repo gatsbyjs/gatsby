@@ -112,7 +112,7 @@ You can run `test:e2e` to run the test. If you already have the development serv
 
 One thing to keep in mind is that you can't always see the exact error message from the sidebar (command log). For that, you have to open the developer console and find the message in the output. You can see how an accessibility error looks in the [cypress-axe GitHub page](https://github.com/avanslaars/cypress-axe#output).
 
-You don't have to use the `checkA11y` method only on page load. For example, you can perform a click on a button and check again. This is especially useful if that button opens a modal or mobile menu for example.
+You don't have to use the `checkA11y` method only on page load. For example, you can perform a click on a button and check again. This is especially useful if that button opens a modal or a mobile menu for example.
 
 The following test is for the [gatsby-default-starter](https://github.com/gatsbyjs/gatsby-starter-default). You visit the homepage and you search for the link that goes to page 2 with the `getByText` command. Then you perform a click and check for accessibility errors in the second page.
 
