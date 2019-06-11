@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import { Link, graphql } from "gatsby"
 import { Styled, css } from "theme-ui"
 
-import Bio from "../components/bio"
+// import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Footer from "../components/footer"
@@ -17,7 +17,7 @@ const BlogIndex = ({
   },
 }) => (
   <Layout location={location} title={siteTitle}>
-    <Bio />
+    {/* <Bio /> */}
     {posts.map(({ node }) => {
       const title = node.frontmatter.title || node.fields.slug
       const keywords = node.frontmatter.keywords || [``]
