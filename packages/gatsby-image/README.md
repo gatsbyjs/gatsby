@@ -1,6 +1,6 @@
 # gatsby-image
 
-> `Image` from this package is now exported from the [`gatsby`](/packages/gatsby) package. You should not import anything from this package directly.
+> `Img` from this package is now exported from the [`gatsby`](/packages/gatsby) package. You should not import anything from this package directly.
 
 Speedy, optimized images without the work.
 

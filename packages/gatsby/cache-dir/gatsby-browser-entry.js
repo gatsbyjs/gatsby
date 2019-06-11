@@ -10,7 +10,7 @@ import Link, {
   parsePath,
 } from "gatsby-link"
 
-import Image from "gatsby-image"
+import Img from "gatsby-image"
 
 import PageRenderer from "./public-page-renderer"
 
@@ -85,7 +85,7 @@ function graphql() {
 }
 
 export {
-  Image,
+  Img,
   Link,
   withAssetPrefix,
   withPrefix,
