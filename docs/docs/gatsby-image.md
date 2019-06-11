@@ -11,7 +11,7 @@ Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gats
 ## In this doc
 
 - [Setting up Gatsby Image](#setting-up-gatsby-image)
-- [Types of gatsby-images](#types-of-gatsby-images)
+- [Types of images with gatsby-image](#types-of-images-with-gatsby-image)
   - [Fixed images and parameters](#images-with-a-fixed-width-and-height)
   - [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
   - [Resized images](#resized-images)
@@ -33,13 +33,13 @@ To feed file data in to Gatsby Image, set up a [GraphQL query](/docs/graphql-ref
 
 Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/packages/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/), but ultimately the options available to you will depend on your content sources.
 
-You can also use [GraphQL aliases](/docs/graphql-reference/#aliasing) for querying multiple images of the same type.
+> Note: you can also use [GraphQL aliases](/docs/graphql-reference/#aliasing) for querying multiple images of the same type.
 
 See below for code examples of queries and how to use them in components.
 
-## Types of gatsby-images
+## Types of images with `gatsby-image`
 
-Gatsby-image objects are created through GraphQL methods. There are two types of responsive images available, _fixed_ and _fluid_, which create multiple image sizes (1x, 1.5x, etc.). There is also the _resize_ method, which returns a single image.
+Gatsby image objects are created through GraphQL methods. There are two types of image optimizations available, _fixed_ and _fluid_, which create multiple image sizes (1x, 1.5x, etc.). There is also the _resize_ method, which returns a single image.
 
 ### Images with a _fixed_ width and height
 
@@ -99,10 +99,10 @@ This is where fragments like `GatsbyImageSharpFixed` come in handy, as they'll r
 ```graphql
 file(relativePath: { eq: "images/default.jpg" }) {
   childImageSharp {
-    // highlight-next-line
+    // highlight-start
     fixed(width: 400, height: 400) {
-      // highlight-next-line
       ...GatsbyImageSharpFixed
+      // highlight-end
     }
   }
 }
@@ -159,20 +159,23 @@ In a query, you can specify options for fluid images.
 
 #### Returns
 
+- `base64` (string)
 - `src` (string)
 - `width` (int)
 - `height` (int)
 - `aspectRatio` (float)
+- `src` (string)
+- `srcSet` (string)
 
 This is where fragments like `GatsbyImageSharpFluid` come in handy, as they'll return all the above items in one line without having to type them all out:
 
 ```graphql
 file(relativePath: { eq: "images/default.jpg" }) {
   childImageSharp {
-    // highlight-next-line
+    // highlight-start
     fluid(maxWidth: 400) {
-      // highlight-next-line
       ...GatsbyImageSharpFluid
+      // highlight-end
     }
   }
 }
@@ -304,7 +307,7 @@ After you've made a query, you can pass additional options to the gatsby-image c
 | `fixed`                | `object`            | Data returned from the `fixed` query                                                                                          |
 | `fluid`                | `object`            | Data returned from the `fluid` query                                                                                          |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                       |
-| `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                                 |
+| `durationFadeIn`       | `number`            | fade-in duration is set up to 500ms by default                                                                                |
 | `title`                | `string`            | Passed to the rendered HTML `img` element                                                                                     |
 | `alt`                  | `string`            | Passed to the rendered HTML `img` element. Defaults to an empty string, e.g. `alt=""`                                         |
 | `crossOrigin`          | `string`            | Passed to the rendered HTML `img` element                                                                                     |

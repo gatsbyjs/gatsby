@@ -14,7 +14,7 @@ title: Using Gatsby Image to Prevent Image Bloat
 - holds an image’s position so your page doesn’t jump around as images load
 - makes it easy to add a placeholder—either a gray background or a blurry version of the image.
 
-_For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image-api/) docs._
+_For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image/) docs._
 
 ## Problem
 
@@ -109,7 +109,7 @@ So this is all very nice and it’s far better to be able to use this from NPM v
 
 ### Additional resources
 
-- [Gatsby Image API docs](/docs/gatsby-image-api/)
+- [Gatsby Image API docs](/docs/gatsby-image/)
 - [gatsby-image plugin README file](/packages/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
