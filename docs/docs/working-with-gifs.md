@@ -6,7 +6,7 @@ If you're building a blog with Gatsby, chances are you'll want to include some a
 
 ## Including GIFs in components
 
-In Gatsby pages and components, you'll want to import animated GIFs instead of using Gatsby Image because of the way it processes image data for use with the responsive picture element. 
+In Gatsby pages and components, you'll want to import animated GIFs instead of using Gatsby Image because of the way it processes image data for use with the responsive picture element.
 
 Here's an example:
 
@@ -28,4 +28,3 @@ const AboutPage = () => (
 
 export default AboutPage;
 ```
-
