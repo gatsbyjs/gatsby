@@ -28,6 +28,8 @@ const Title = props => {
       </Styled.a>
     </Styled.h3>
   )
+  // this would likely need to change with this pattern
+  /*
   const { location, title } = props
   const rootPath = `${__PATH_PREFIX__}/`
 
@@ -73,6 +75,7 @@ const Title = props => {
       </Styled.h3>
     )
   }
+  */
 }
 
 export default props => {
