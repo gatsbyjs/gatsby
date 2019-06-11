@@ -253,26 +253,25 @@ Though the routing is working now, you still can access all routes without restr
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=src/components/privateRoute.js
-import React, { Component } from 'react';
-import { navigate } from 'gatsby';
-import { isLoggedIn } from '../services/auth';
+import React, { Component } from "react"
+import { navigate } from "gatsby"
+import { isLoggedIn } from "../services/auth"
 class PrivateRoute extends Component {
   componentDidMount() {
-    const { location } = this.props;
-    let noOnLoginPage = location.pathname !== `/app/login`;
+    const { location } = this.props
+    let noOnLoginPage = location.pathname !== `/app/login`
     if (!isLoggedIn() && noOnLoginPage) {
-      navigate('/app/login');
-      return null;
+      navigate("/app/login")
+      return null
     }
   }
   render() {
-    const { component: Component, ...rest } = this.props;
-    return <Component {...rest} />;
+    const { component: Component, ...rest } = this.props
+    return <Component {...rest} />
   }
 }
 
-export default PrivateRoute;
-
+export default PrivateRoute
 ```
 
 And now you can edit your Router to use the PrivateRoute component:
