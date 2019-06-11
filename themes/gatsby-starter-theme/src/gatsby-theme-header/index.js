@@ -12,6 +12,7 @@ export default props =>
         <Link to='/'>Blog</Link>
       </li>
       <li>
+        <Link to='/notes'>Notes</Link>
       </li>
     </ul>
   </header>
