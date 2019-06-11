@@ -172,7 +172,7 @@ in order for preview to work we have to use the `preview` flag in options
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-source-drupal-preview`,
+      resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `...`,
         preview: true,
