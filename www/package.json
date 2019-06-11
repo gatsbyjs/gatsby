@@ -44,7 +44,7 @@
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-embed-video": "^1.7.0",
     "gatsby-remark-graphviz": "^1.0.11",
-    "gatsby-remark-images": "^2.0.1",
+    "gatsby-remark-images": "^3.0.14",
     "gatsby-remark-normalize-paths": "^1.0.0",
     "gatsby-remark-prismjs": "^3.0.2",
     "gatsby-remark-responsive-iframe": "^2.0.5",
