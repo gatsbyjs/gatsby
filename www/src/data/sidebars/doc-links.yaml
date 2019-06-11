@@ -88,6 +88,8 @@
               link: /docs/working-with-video/
             - title: Importing Media Content
               link: /docs/importing-media-content/
+            - title: Working with GIFs
+              link: /docs/working-with-gifs/
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
