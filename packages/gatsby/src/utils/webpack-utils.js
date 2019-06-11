@@ -296,7 +296,7 @@ module.exports = async ({
     let js = (options = {}) => {
       return {
         test: /\.jsx?$/,
-        exclude: /core-js/,
+        exclude: /core-js|event-source-polyfill|webpack-hot-middleware\/client/,
         use: [loaders.js(options)],
       }
     }
