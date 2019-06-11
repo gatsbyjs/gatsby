@@ -11,6 +11,7 @@ import Link, {
 } from "gatsby-link"
 
 import Img from "gatsby-image"
+import ImgWithIEPolyfill from "gatsby-image"
 
 import PageRenderer from "./public-page-renderer"
 
@@ -86,6 +87,7 @@ function graphql() {
 
 export {
   Img,
+  ImgWithIEPolyfill,
   Link,
   withAssetPrefix,
   withPrefix,

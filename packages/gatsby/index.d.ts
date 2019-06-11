@@ -14,6 +14,7 @@ export {
 } from "gatsby-link"
 
 export { default as Img } from "gatsby-image"
+export { default as ImgWithIEPolyfill } from "gatsby-image/withIEPolyfill"
 
 export interface StaticQueryProps {
   query: any
