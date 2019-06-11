@@ -107,7 +107,24 @@ function getIO() {
   return io
 }
 
-// Return an array ordered by elements having a media prop, does not use native sort, as a stable sort is not guaranteed by all browsers/versions
+function generateImageSources(imageVariants) {
+  return imageVariants.map(({ src, srcSet, srcSetWebp, media, sizes }) => (
+    <React.Fragment key={src}>
+      {srcSetWebp && (
+        <source
+          type="image/webp"
+          media={media}
+          srcSet={srcSetWebp}
+          sizes={sizes}
+        />
+      )}
+      <source media={media} srcSet={srcSet} sizes={sizes} />
+    </React.Fragment>
+  ))
+}
+
+// Return an array ordered by elements having a media prop, does not use
+// native sort, as a stable sort is not guaranteed by all browsers/versions
 function groupByMedia(imageVariants) {
   const withMedia = []
   const without = []
@@ -118,49 +135,28 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without]
 }
 
-function generateImageSources(imageVariants) {
-  return groupByMedia(imageVariants).map(
-    ({ src, srcSet, srcSetWebp, media, sizes }) => (
-      <React.Fragment key={src}>
-        {srcSetWebp && (
-          <source
-            type="image/webp"
-            media={media}
-            srcSet={srcSetWebp}
-            sizes={sizes}
-          />
-        )}
-        <source media={media} srcSet={srcSet} sizes={sizes} />
-      </React.Fragment>
-    )
-  )
-}
-
 function generateTracedSVGSources(imageVariants) {
-  return groupByMedia(imageVariants).map(({ src, media, tracedSVG }) => (
+  return imageVariants.map(({ src, media, tracedSVG }) => (
     <source key={src} media={media} srcSet={tracedSVG} />
   ))
 }
 
 function generateBase64Sources(imageVariants) {
-  return groupByMedia(imageVariants).map(({ src, media, base64 }) => (
+  return imageVariants.map(({ src, media, base64 }) => (
     <source key={src} media={media} srcSet={base64} />
   ))
 }
 
+function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
+  const src = isWebp ? srcSetWebp : srcSet
+  const mediaAttr = media ? `media="${media}" ` : ``
+  const typeAttr = isWebp ? `type='image/webp' ` : ``
+  const sizesAttr = sizes ? `sizes="${sizes}" ` : ``
+
+  return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
+}
+
 function generateNoscriptSources(imageVariants) {
-  function generateNoscriptSource(
-    { srcSet, srcSetWebp, media, sizes },
-    isWebp
-  ) {
-    const src = isWebp ? srcSetWebp : srcSet
-    const mediaAttr = media ? `media="${media}" ` : ``
-    const typeAttr = isWebp ? `type='image/webp' ` : ``
-    const sizesAttr = sizes ? `sizes="${sizes}" ` : ``
-
-    return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
-  }
-
   return imageVariants
     .map(
       variant =>
@@ -204,6 +200,22 @@ const noscriptImg = props => {
   return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
+// Earlier versions of gatsby-image during the 2.x cycle did not wrap
+// the `Img` component in a `picture` element. This maintains compatibility
+// until a breaking change can be introduced in the next major release
+const Placeholder = ({ src, spreadProps, imageVariants, generateSources }) => {
+  const baseImage = <Img src={src} {...spreadProps} />
+
+  return imageVariants.length > 1 ? (
+    <picture>
+      {generateSources(imageVariants)}
+      {baseImage}
+    </picture>
+  ) : (
+    baseImage
+  )
+}
+
 const Img = React.forwardRef((props, ref) => {
   const {
     sizes,
@@ -239,22 +251,6 @@ const Img = React.forwardRef((props, ref) => {
     />
   )
 })
-
-// Earlier versions of gatsby-image during the 2.x cycle did not wrap
-// the `Img` component in a `picture` element. This maintains compatibility
-// until a breaking change can be introduced in the next major release
-const Placeholder = ({ src, spreadProps, imageVariants, generateSources }) => {
-  const baseImage = <Img src={src} {...spreadProps} />
-
-  return imageVariants.length > 1 ? (
-    <picture>
-      {generateSources(imageVariants)}
-      {baseImage}
-    </picture>
-  ) : (
-    baseImage
-  )
-}
 
 Img.propTypes = {
   style: PropTypes.object,
@@ -462,7 +458,7 @@ class Image extends React.Component {
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {imageVariants && generateImageSources(imageVariants)}
+              {generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
@@ -559,8 +555,7 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {imageVariants && generateImageSources(imageVariants)}
-
+              {generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
