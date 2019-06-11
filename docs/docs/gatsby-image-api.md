@@ -33,6 +33,8 @@ To feed image data in to Gatsby Image, set up a [GraphQL query](/docs/graphql-re
 
 Common GraphQL query methods for sourcing images include `file` from [gatsby-source-filesystem](/packages/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/), but ultimately the API methods available to you will depend on your content source.
 
+You can also use [GraphQL aliases](/docs/graphql-reference/#aliasing) for querying multiple images of the same type.
+
 See below for code examples of queries and how to use them in components.
 
 ## Types of gatsby-images
@@ -41,9 +43,12 @@ Gatsby-image objects are created through GraphQL methods. There are two types of
 
 ### Images with a _fixed_ width and height
 
-Automatically create sizes for different resolutions — Gatsby creates responsive images for 1x, 1.5x, and 2x pixel densities using the `<picture>` element.
+Automatically create sizes for different resolutions — Gatsby creates responsive images for 1x, 1.5x, and 2x pixel densities using the `<picture>` element. Once you've queried for an image to retrieve its data, you can pass the `fixed` data into the `Img` component:
 
 ```jsx
+import { useStaticQuery } from "gatsby"
+import Img from "gatsby-image"
+
 export default () => {
   const data = useStaticQuery(query`
     file(relativePath: { eq: "images/default.jpg" }) {
@@ -105,6 +110,8 @@ file(relativePath: { eq: "images/default.jpg" }) {
 ### Images that stretch across a _fluid_ container
 
 Create fluid sizes (in width) for the image. E.g. if the max width of the container for a rendered Markdown file is 800px, the automatic sizes would then be: 200px, 400px, 800px, 1200px, 1600px – enough to provide close to the optimal image size for every device size / screen resolution. If you want more control over which sizes are output you can use the `srcSetBreakpoints` parameter.
+
+Once you've queried for an image to retrieve its data, you can pass the `fluid` data into the `Img` component:
 
 ```jsx
 import { useStaticQuery } from "gatsby"
