@@ -1,8 +1,8 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
-import { Styled, css, Flex, Main, Footer } from "theme-ui"
+import { graphql } from "gatsby"
+import { Styled, css, Main } from "theme-ui"
 
-import Bio from "../components/bio"
+import PostFooter from "../components/post-footer"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { MDXRenderer } from "gatsby-mdx"
@@ -29,36 +29,7 @@ class BlogPostTemplate extends React.Component {
           </Styled.p>
           <MDXRenderer>{post.code.body}</MDXRenderer>
         </Main>
-        <Footer>
-          <Styled.hr />
-          <Bio />
-          {(previous || next) && (
-            <Flex
-              as="ul"
-              css={{
-                flexWrap: `wrap`,
-                justifyContent: `space-between`,
-                listStyle: `none`,
-                padding: 0,
-              }}
-            >
-              <li>
-                {previous && (
-                  <Link to={previous.fields.slug} rel="prev">
-                    ← {previous.frontmatter.title}
-                  </Link>
-                )}
-              </li>
-              <li>
-                {next && (
-                  <Link to={next.fields.slug} rel="next">
-                    {next.frontmatter.title} →
-                  </Link>
-                )}
-              </li>
-            </Flex>
-          )}
-        </Footer>
+        <PostFooter {...{ previous, next }} />
       </Layout>
     )
   }

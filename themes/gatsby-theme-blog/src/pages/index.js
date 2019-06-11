@@ -4,7 +4,7 @@ import { Styled, css, Main } from "theme-ui"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Footer from "../components/footer"
+import Footer from "../components/home-footer"
 
 const BlogIndex = ({
   location,
