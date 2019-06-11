@@ -88,7 +88,7 @@ const maintainers = {
 
 const ignoreMessages = ["Merge branch 'master'", "Merge remote-tracking branch"]
 
-const process = (data, now = new Date()) => {
+const processData = (data, now = new Date()) => {
   const prs = data.repository.pullRequests
 
   // fs.writeFileSync("./data.json", JSON.stringify(data))
@@ -234,7 +234,7 @@ const report = queues => {
 }
 
 module.exports = {
-  process,
+  processData,
   report,
   ignoreMessages,
   maintainers,
