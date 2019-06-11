@@ -17,18 +17,10 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
 }
 
 /**
- * Deprecated default export
- */
-export default class GatsbyLink<TState> extends React.Component<
-  GatsbyLinkProps<TState>,
-  any
-> {}
-
-/**
  * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
  * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
  */
-export class Link<TState> extends React.Component<
+export default class GatsbyLink<TState> extends React.Component<
   GatsbyLinkProps<TState>,
   any
 > {}

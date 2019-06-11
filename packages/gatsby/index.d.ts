@@ -3,7 +3,7 @@ import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
 
 export {
-  Link,
+  default as Link,
   GatsbyLinkProps,
   navigate,
   navigateTo,
