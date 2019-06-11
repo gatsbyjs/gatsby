@@ -17,8 +17,10 @@ const {
 const isTTY = require(`./util/is-tty`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
-  return execa(file, args, { stdio: `inherit`, ...options })
+  return spawnWithArgs(file, args, options)
 }
+const spawnWithArgs = (file: string, args: string[], options: any) =>
+  execa(file, args, { stdio: `inherit`, ...options })
 
 // Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
@@ -152,11 +154,15 @@ const clone = async (hostInfo: any, rootPath: string) => {
     url = hostInfo.https({ noCommittish: true, noGitPlus: true })
   }
 
-  const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
+  const branch = hostInfo.committish ? [`-b`, `hostInfo.committish`] : [``]
 
   report.info(`Creating new site from git: ${url}`)
 
-  await spawn(`git clone ${branch} ${url} ${rootPath} --single-branch`)
+  const args = [`clone`, ...branch, url, rootPath, `--single-branch`].filter(
+    arg => Boolean(arg)
+  )
+
+  await spawnWithArgs(`git`, args)
 
   report.success(`Created starter directory layout`)
 
