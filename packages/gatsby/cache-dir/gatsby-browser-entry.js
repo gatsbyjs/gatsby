@@ -11,7 +11,7 @@ import Link, {
 } from "gatsby-link"
 
 import Img from "gatsby-image"
-import ImgWithIEPolyfill from "gatsby-image"
+import ImgWithIEPolyfill from "gatsby-image/withIEPolyfill"
 
 import PageRenderer from "./public-page-renderer"
 
