@@ -27,4 +27,16 @@ const AboutPage = () => (
 export default AboutPage;
 ```
 
+## Including GIFs in Markdown
+
+In Markdown posts and pages, including an animated GIF is the same as a static image:
+
+```markdown
+![otter dancing with a fish](./images/dancing-ofter.gif)
+```
+
 ![otter dancing with a fish](./images/dancing-otter.gif)
+
+Animated GIFs can be quite large in size, however, so be careful not to sabotage your webpages' performance with extremely large files. You could reduce file size by [optimizing the frames](https://skylilies.livejournal.com/244378.html) or converting them to video.
+
+> Note: beware that flashing and autoplaying GIFs can cause accessibility problems. One technique would be to add controls, such as using a package like [react-gif-player](https://www.npmjs.com/package/react-gif-player).
