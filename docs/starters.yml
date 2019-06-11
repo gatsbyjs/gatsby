@@ -2942,3 +2942,18 @@
     - Redux
   features:
     - The Kea library makes redux and sagas extremely simple and concise
+- url: https://anubhavsrivastava.github.io/gatsby-starter-solidstate
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-solidstate
+  description: Single page starter based on the Solid State site template by HTML5 up, with landing, Generic and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
