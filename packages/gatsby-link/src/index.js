@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from "@reach/router"
+import { Link as ReachLink } from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
@@ -131,7 +131,7 @@ class GatsbyLink extends React.Component {
     const prefixedTo = withPrefix(to)
 
     return (
-      <Link
+      <ReachLink
         to={prefixedTo}
         state={state}
         getProps={getProps}
@@ -178,7 +178,14 @@ GatsbyLink.propTypes = {
   replace: PropTypes.bool,
 }
 
-export default React.forwardRef((props, ref) => (
+export default React.forwardRef((props, ref) => {
+  console.warn(
+    `"Link" is now exported from the "gatsby" package. You should not import it from "gatsby-link" directly.`
+  )
+  return <GatsbyLink innerRef={ref} {...props} />
+})
+
+export const Link = React.forwardRef((props, ref) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
 
