@@ -57,18 +57,18 @@ watchDirectory(
     })
   }
 )
+```
 
 #### watchDirectory
 
 Watch activity on a directory and call functions each time a file is added or removed
 
-| property | description | type |
-|---|---|---|
-|path|Directory path in which pages are stored|String|
-|glob|A glob that select files to watch|String|
-|onNewFile|A function called each time a new file is added|Function|
-|onRemovedFile|A function called each time a file is removed|Function|
-```
+| property      | description                                     | type     |
+| ------------- | ----------------------------------------------- | -------- |
+| path          | Directory path in which pages are stored        | String   |
+| glob          | A glob that select files to watch               | String   |
+| onNewFile     | A function called each time a new file is added | Function |
+| onRemovedFile | A function called each time a file is removed   | Function |
 
 #### createPath
 
@@ -78,16 +78,13 @@ Create a page path from a file path. It returns the page path.
 | -------- | ----------- | ------ |
 | path     | File path   | String |
 
-```
-
 #### validatePath
 
 Validate a file path. It veryfies that it doesn't contains specific characters or strings. It returns true path is valid otherwise it returns false.
 
-| property | description | type |
-|---|---|---|
-|path|File path|String|
-```
+| property | description | type   |
+| -------- | ----------- | ------ |
+| path     | File path   | String |
 
 #### ignorePath
 
@@ -97,7 +94,3 @@ Determines if path should be ignored regarding of a ignore pattern passed as par
 | -------- | --------------------------------- | ------- |
 | path     | File path                         | String  |
 | ignore   | A pattern to match with file path | (Object | String | Array) |
-
-```
-
-```
