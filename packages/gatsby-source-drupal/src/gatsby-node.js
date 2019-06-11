@@ -279,7 +279,8 @@ exports.sourceNodes = async (
       // handle relationships
       if (nodeToUpdate.relationships) {
         _.each(nodeToUpdate.relationships, (value, key) => {
-          if (!value.data) return
+          if (!value.data || (_.isArray(value.data) && !value.data.length))
+            return
           if (_.isArray(value.data) && value.data.length > 0) {
             value.data.forEach(data => addBackRef(data.id, nodeToUpdate))
             node.relationships[`${key}___NODE`] = _.compact(
