@@ -10,7 +10,7 @@ optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
-_Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It's
+_Note: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
 of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
