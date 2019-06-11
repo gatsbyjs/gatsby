@@ -1,5 +1,4 @@
 const fluidTestId = `image-fluid`
-const primaryImage = `picture:nth-of-type(2)`
 
 describe(`fluid`, () => {
   beforeEach(() => {
@@ -15,14 +14,14 @@ describe(`fluid`, () => {
 
   it(`renders sizes`, () => {
     cy.getTestElement(fluidTestId)
-      .find(`${primaryImage} > source`)
+      .find(`picture > source`)
       .should(`have.attr`, `sizes`)
       .and(`match`, /\(max-width: \d+px\) 100vw, \d+px/)
   })
 
   it(`renders correct srcset`, () => {
     cy.getTestElement(fluidTestId)
-      .find(`${primaryImage} > source`)
+      .find(`picture > source`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
         srcset.split(/\s*,\s*/).forEach(part => {

@@ -1,5 +1,4 @@
 const fixedTestId = `image-fixed`
-const primaryImage = `picture:nth-of-type(2)`
 
 describe(`fixed`, () => {
   beforeEach(() => {
@@ -25,7 +24,7 @@ describe(`fixed`, () => {
 
   it(`applies 1x/2x`, () => {
     cy.getTestElement(fixedTestId)
-      .find(`${primaryImage} > source`)
+      .find(`picture > source`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
         ;[`1x`, `2x`].forEach(size => {
@@ -36,7 +35,7 @@ describe(`fixed`, () => {
 
   it(`does not apply 3x`, () => {
     cy.getTestElement(fixedTestId)
-      .find(`${primaryImage} > source`)
+      .find(`picture > source`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
         expect(srcset).not.contains(`3x`)
@@ -46,14 +45,14 @@ describe(`fixed`, () => {
   describe(`picture > img sizing`, () => {
     it(`applies height attribute`, () => {
       cy.getTestElement(fixedTestId)
-        .find(`${primaryImage} > img`)
+        .find(`picture > img`)
         .should(`have.attr`, `height`)
         .and(`match`, /^\d+$/)
     })
 
     it(`applies width attribute`, () => {
       cy.getTestElement(fixedTestId)
-        .find(`${primaryImage} > img`)
+        .find(`picture > img`)
         .should(`have.attr`, `width`)
         .and(`match`, /^\d+$/)
     })
