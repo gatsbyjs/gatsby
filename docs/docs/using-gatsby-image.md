@@ -105,7 +105,7 @@ export default ({ data }) => (
 
 This GraphQL query creates multiple sizes of the image and when the page is rendered the image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between) is used. The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
 
-So this is all very nice and it’s far better to be able to use this from NPM vs. implementing it yourself or cobbling together several standalone libraries.
+So this is all very nice and it’s far better to be able to use this from npm vs. implementing it yourself or cobbling together several standalone libraries.
 
 ### Additional resources
 
