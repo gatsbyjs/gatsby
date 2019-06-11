@@ -4,6 +4,12 @@ import { Link } from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
+if (!module.parent.id.includes(`gatsby-browser-entry`)) {
+  console.warn(
+    `"Link" is now exported from the "gatsby" package. You should not import it from "gatsby-link".`
+  )
+}
+
 export { parsePath }
 
 export function withPrefix(path) {
