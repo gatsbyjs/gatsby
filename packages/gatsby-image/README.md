@@ -1,5 +1,7 @@
 # gatsby-image
 
+> `Image` from this package is now exported from the [`gatsby`](/packages/gatsby) package. You should not import anything from this package directly.
+
 Speedy, optimized images without the work.
 
 `gatsby-image` is a React component specially designed to work seamlessly with

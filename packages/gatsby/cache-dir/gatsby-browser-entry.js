@@ -9,6 +9,9 @@ import Link, {
   navigateTo,
   parsePath,
 } from "gatsby-link"
+
+import Image from "gatsby-image"
+
 import PageRenderer from "./public-page-renderer"
 
 const StaticQueryContext = React.createContext({})
@@ -82,6 +85,7 @@ function graphql() {
 }
 
 export {
+  Image,
   Link,
   withAssetPrefix,
   withPrefix,

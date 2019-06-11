@@ -18,6 +18,11 @@
     "cross-env": "^5.1.4",
     "react-testing-library": "^5.0.0"
   },
+  "peerDependencies": {
+    "gatsby": "^2.0.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image#readme",
   "keywords": [
     "gatsby",

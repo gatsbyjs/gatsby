@@ -13,6 +13,8 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
+export { default as Image } from "gatsby-image"
+
 export interface StaticQueryProps {
   query: any
   render?: RenderCallback
