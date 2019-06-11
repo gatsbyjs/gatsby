@@ -342,6 +342,8 @@
       items:
         - title: Gatsby Link
           link: /docs/gatsby-link/
+        - title: Gatsby Image
+          link: /docs/gatsby-image-api/
         - title: Gatsby Config
           link: /docs/gatsby-config/
         - title: Gatsby Node APIs
