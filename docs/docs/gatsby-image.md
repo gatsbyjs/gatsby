@@ -223,7 +223,7 @@ In addition to `gatsby-plugin-sharp` settings in `gatsby-config.js`, there are a
 
 - `grayscale` (bool, default: false)
 - `duotone` (bool|obj, default: false)
-- `toFormat` (string, default: ``)
+- `toFormat` (string, default: \`\`)
 - `cropFocus` (string, default: `[sharp.strategy.attention][6]`)
 - `pngCompressionSpeed` (int, default: 4)
 
