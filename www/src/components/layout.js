@@ -154,7 +154,12 @@ class DefaultLayout extends React.Component {
 
     return (
       <>
-        <SiteMetadata pathname={this.props.location.pathname} />
+        <SiteMetadata
+          pathname={this.props.location.pathname}
+          metaDescription={this.props.metaDescription}
+          metaImage={this.props.metaImage}
+          metaTitle={this.props.metaTitle}
+        />
         <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
         <Banner />
         <Navigation pathname={this.props.location.pathname} />

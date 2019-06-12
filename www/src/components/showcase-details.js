@@ -144,6 +144,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
 
       return (
         <Layout
+          metaDescription={data.sitesYaml.description}
+          metaImage={`https://www.gatsbyjs.org${
+            data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize
+              .src
+          }`}
+          metaTitle={`${data.sitesYaml.title}: Showcase | GatsbyJS`}
           location={parent.props.location}
           isModal={isModal}
           modalBackgroundPath={parent.getExitLocation()}
@@ -252,25 +258,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
             >
               <Helmet>
                 <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
-                <meta
-                  property="og:image"
-                  content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
-                />
-                <meta
-                  name="twitter:image"
-                  content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
-                />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta
-                  name="og:title"
-                  value={`${data.sitesYaml.title}: Showcase | GatsbyJS`}
-                />
                 <meta
                   property="og:image:width"
                   content={
