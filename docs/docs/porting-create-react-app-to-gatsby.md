@@ -21,7 +21,7 @@ Gatsby enables some useful performance optimizations for you, by default. Route-
 - `gatsby-link` uses an [intersection observer to preload linked pages](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#intersectionobserver) when they appear in the viewport, making them feel like they load _instantly_
 - `gatsby-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org/) to see for yourself
 
-These and more work together to make your Gatsby site fast by default. If you'd like a deep dive on these and other performance optimizations, check out [this blog post](https://www.gatsbyjs.org/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/)
+These features and more work together to make your Gatsby site fast by default. If you'd like a deep dive on these and other performance optimizations, check out [this blog post](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/)
 
 ### Expansive ecosystem
 
