@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.9.0...gatsby@2.9.2) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby:** Fix group and distinct when used with fragments ([#14728](https://github.com/gatsbyjs/gatsby/issues/14728)) ([3a15873](https://github.com/gatsbyjs/gatsby/commit/3a15873))
+- **gatsby:** Make createPageDependency public again ([#14679](https://github.com/gatsbyjs/gatsby/issues/14679)) ([9ff3ba7](https://github.com/gatsbyjs/gatsby/commit/9ff3ba7))
+
 ## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.9.0...gatsby@2.9.1) (2019-06-12)
 
 **Note:** Version bump only for package gatsby
