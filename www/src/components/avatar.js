@@ -14,7 +14,7 @@ const Avatar = ({ image, alt }) => (
       marginRight: space[3],
       marginBottom: 0,
       verticalAlign: `top`,
-      // prevents image twitch in Chrome wfffhen hovering the card tho
+      // prevents image twitch in Chrome wfffffffhen hovering the card tho
       transform: `translateZ(0)`,
     }}
   />
