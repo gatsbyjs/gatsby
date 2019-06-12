@@ -2,20 +2,20 @@
 title: Winning Over Developers
 ---
 
-Developers are often the primary evangelists of Gatsby because they are the primary users of the framework. If you're a developer, you may find that simply talking to other developers about why *you* like Gatsby is enough to get them interested. Here are some talking points to help support your conversations with developers.
+Developers are often the primary evangelists of Gatsby because they are the primary users of the framework. If you're a developer, you may find that simply talking to other developers about why _you_ like Gatsby is enough to get them interested. Here are some talking points to help support your conversations with developers.
 
 Some things that developers care about include:
 
 - **Site Performance** Building sites that are fast and that stay fast as new tools and technology get incorporated.
 - **Working with the best tools and technologies** Getting to use new technologies and having the flexibility to pick the right tools for the job.
-- **Not getting bogged down in configuration and setup** These things are often time consuming, frustrating, and prevent developers from getting to focus on the work they actually care about. 
+- **Not getting bogged down in configuration and setup** These things are often time consuming, frustrating, and prevent developers from getting to focus on the work they actually care about.
 - **Developing as efficiently and effectively as possible** The more things can be streamlined, automated, and/or simplified, the better.
 
 ## Basic Explanation
 
 Here's an example of a basic explanation of Gatsby for developers:
 
-> Gatsby is a free, open-source, React-based framework for building fast websites and applications. Gatsby streamlines the setup and configuration of your build, it can pull data into your UI from any and all of your sources, and amazing performance and current web best practices  are build into Gatsby sites.
+> Gatsby is a free, open-source, React-based framework for building fast websites and applications. Gatsby streamlines the setup and configuration of your build, it can pull data into your UI from any and all of your sources, and amazing performance and current web best practices are build into Gatsby sites.
 
 ## Specific benefits
 
@@ -23,11 +23,11 @@ Gatsby has many benefits that give developers the freedom to build great website
 
 ### Site speed
 
-> Gatsby was built with performance in mind from its inception, and Gatsby sites are consistently 2-3x faster than similar sites built with other tools – pages load in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern/).  If you want to take a deeper dive into Gatsby's performance features, check out [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/).
+> Gatsby was built with performance in mind from its inception, and Gatsby sites are consistently 2-3x faster than similar sites built with other tools – pages load in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern/). If you want to take a deeper dive into Gatsby's performance features, check out [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/).
 
 ### Modern web tools
 
-> Gatsby sites are built with React - currently the most popular framework for developing web apps, and data can be pulled into your React components via GraphQL. Gatsby is also built to pull data from any source so you can pick the best tool for each job and function your site needs to perform. Pull data from the best content management tools, the best e-commerce tools, whatever databases you're using, and more. 
+> Gatsby sites are built with React - currently the most popular framework for developing web apps, and data can be pulled into your React components via GraphQL. Gatsby is also built to pull data from any source so you can pick the best tool for each job and function your site needs to perform. Pull data from the best content management tools, the best e-commerce tools, whatever databases you're using, and more.
 
 ### Plugins and features
 
@@ -55,7 +55,7 @@ You may find that many of your developer friends and colleagues have some questi
 
 ### Our content team needs to be able to make site updates, but they're not super technical. Are they going to be able to work with a Gatsby site?
 
-> Gatsby can pull content from any different source, including all-in-one CMSs like WordPress and Drupal as well as the various headless CMSs out there, so your content team can work with whichever content editor suits their needs and preferences, including the CMS they're already using. 
+> Gatsby can pull content from any different source, including all-in-one CMSs like WordPress and Drupal as well as the various headless CMSs out there, so your content team can work with whichever content editor suits their needs and preferences, including the CMS they're already using.
 
 ## Case studies
 
