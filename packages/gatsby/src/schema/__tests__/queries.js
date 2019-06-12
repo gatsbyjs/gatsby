@@ -816,6 +816,73 @@ Object {
         expect(results.data).toEqual(expected)
       })
 
+      it(`handles groups added in fragment`, async () => {
+        const query = `
+          fragment GroupTest on MarkdownConnection {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              edges {
+                node {
+                  frontmatter {
+                    title
+                    date(formatString: "YYYY-MM-DD")
+                  }
+                }
+              }
+            }
+          }
+
+          {
+            allMarkdown {
+              ...GroupTest
+            }
+          }
+        `
+        const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Author 1`,
+                edges: [
+                  {
+                    node: {
+                      frontmatter: {
+                        title: `Markdown File 1`,
+                        date: `2019-01-01`,
+                      },
+                    },
+                  },
+                  {
+                    node: {
+                      frontmatter: {
+                        title: `Markdown File 2`,
+                        date: null,
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                fieldValue: `Author 2`,
+                edges: [
+                  {
+                    node: {
+                      frontmatter: {
+                        title: `Markdown File 1`,
+                        date: `2019-01-01`,
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
+
       it(`groups null result`, async () => {
         const query = `
           {

@@ -216,7 +216,20 @@ const resolveValue = (resolve, value) =>
 
 const getProjectedField = (info, fieldName) => {
   const { selections } = info.fieldNodes[0].selectionSet
-  const selection = selections.find(s => s.name.value === fieldName)
+
+  // The `group`/`distinct` field can be provided either directly in
+  // the selection set, or in a fragment
+  let selection = null
+  selections.some(s => {
+    if (s.kind === `FragmentSpread`) {
+      const fragmentDef = info.fragments[s.name.value]
+      return (selection = fragmentDef.selectionSet.selections.find(
+        s => s.name.value === fieldName
+      ))
+    }
+    return s.name.value === fieldName && (selection = s)
+  })
+
   const fieldArg = selection.arguments.find(arg => arg.name.value === `field`)
   const enumKey = fieldArg.value.value
   const Enum = getNullableType(
