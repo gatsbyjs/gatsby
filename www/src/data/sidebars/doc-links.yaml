@@ -337,6 +337,11 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
+        - title: Porting to Gatsby
+          link: /docs/porting-to-gatsby/
+          items:
+            - title: Porting from Create React App to Gatsby
+              link: /docs/porting-from-create-react-app-to-gatsby/
     - title: Gatsby API
       link: /docs/api-reference/
       items:
