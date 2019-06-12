@@ -146,7 +146,7 @@ const Img = React.forwardRef((props, ref) => {
     onLoad,
     onError,
     loading,
-    draggable
+    draggable,
     ...otherProps
   } = props
 
