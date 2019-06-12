@@ -118,16 +118,14 @@ export default props => {
           >
             <Title {...props} />
             <Switch
-              label="Toggle dark mode"
+              aria-label="Toggle dark mode"
               css={css({
                 bg: `black`,
               })}
-              icons={{
-                checked: checkedIcon,
-                unchecked: uncheckedIcon,
-              }}
+              checkedIcon={checkedIcon}
+              uncheckedIcon={uncheckedIcon}
               checked={isDark}
-              onClick={toggleColorMode}
+              onChange={toggleColorMode}
             />
           </Header>
           {children}
