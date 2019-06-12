@@ -132,8 +132,9 @@ const noscriptImg = props => {
     ? `crossorigin="${props.crossOrigin}" `
     : ``
   const loading = props.loading ? `loading="${props.loading}" ` : ``
+  const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
 
-  return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}{draggable}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -145,6 +146,7 @@ const Img = React.forwardRef((props, ref) => {
     onLoad,
     onError,
     loading,
+    draggable
     ...otherProps
   } = props
 
@@ -158,6 +160,7 @@ const Img = React.forwardRef((props, ref) => {
       onError={onError}
       ref={ref}
       loading={loading}
+      draggable={draggable}
       style={{
         position: `absolute`,
         top: 0,
@@ -281,6 +284,7 @@ class Image extends React.Component {
       Tag,
       itemProp,
       loading,
+      draggable
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -386,6 +390,7 @@ class Image extends React.Component {
                 onError={this.props.onError}
                 itemProp={itemProp}
                 loading={loading}
+                draggable={draggable}
               />
             </picture>
           )}
@@ -479,6 +484,7 @@ class Image extends React.Component {
                 onError={this.props.onError}
                 itemProp={itemProp}
                 loading={loading}
+                draggable={draggable}
               />
             </picture>
           )}
@@ -559,6 +565,7 @@ Image.propTypes = {
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
+  draggable: PropTypes.oneOf([`false`, `true`])
 }
 
 export default Image
