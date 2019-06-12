@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.3...gatsby-plugin-sharp@2.1.4) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** create job before async-queue processing ([#14731](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14731)) ([f566210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/f566210))
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.2...gatsby-plugin-sharp@2.1.3) (2019-05-31)
 
 ### Features
