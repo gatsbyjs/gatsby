@@ -12,6 +12,7 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
+import matchPaths from "./match-paths.json"
 import loader, { setApiRunnerForLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
 
@@ -21,6 +22,7 @@ window.___loader = loader
 window.___webpackCompilationHash = window.webpackCompilationHash
 
 loader.addProdRequires(asyncRequires)
+loader.addMatchPaths(matchPaths)
 setApiRunnerForLoader(apiRunner)
 
 navigationInit()
