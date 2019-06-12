@@ -15,7 +15,7 @@ Some things that developers care about include:
 
 Here's an example of a basic explanation of Gatsby for developers:
 
-> Gatsby is a free, open-source, React-based framework for building fast websites and applications. Gatsby streamlines the setup and configuration of your build, it can pull data into your UI from any and all of your sources, and amazing performance and current web best practices are build into Gatsby sites.
+> Gatsby is a free, open-source, React-based framework for building fast websites and applications. Gatsby streamlines the setup and configuration of your build, it can pull data into your UI from any and all of your sources, and amazing performance and current web best practices are built into Gatsby sites.
 
 ## Specific benefits
 
