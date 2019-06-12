@@ -237,4 +237,81 @@ describe(`getNormalizedRichTextField()`, () => {
       })
     })
   })
+
+  describe(`when an entry/asset reference field is an array`, () => {
+    beforeEach(() => {
+      contentTypes[0].fields.push({
+        id: `relatedArticles`,
+        localized: false,
+      })
+      contentTypes[0].fields.push({
+        id: `relatedAssets`,
+        localized: false,
+      })
+    })
+
+    it(`resolves the locales of each entry in the array`, () => {
+      const field = {
+        nodeType: `document`,
+        data: {},
+        content: [
+          {
+            nodeType: `embedded-entry-block`,
+            data: { target: entryFactory() },
+          },
+        ],
+      }
+
+      const relatedArticle = entryFactory()
+      relatedArticle.fields.title = { en: `Related article #1` }
+
+      field.content[0].data.target.fields.relatedArticles = {
+        en: [relatedArticle],
+      }
+
+      const expectedTitle = `Related article #1`
+      const actualTitle = getNormalizedRichTextField({
+        field,
+        contentTypes,
+        getField,
+        defaultLocale,
+      }).content[0].data.target.fields.relatedArticles[0].fields.title
+
+      expect(actualTitle).toBe(expectedTitle)
+    })
+
+    it(`resolves the locales of each asset in the array`, () => {
+      const field = {
+        nodeType: `document`,
+        data: {},
+        content: [
+          {
+            nodeType: `embedded-entry-block`,
+            data: { target: entryFactory() },
+          },
+        ],
+      }
+
+      const relatedAsset = assetFactory()
+      relatedAsset.fields.file = {
+        en: {
+          url: `//images.ctfassets.net/related-asset.jpg`,
+        },
+      }
+
+      field.content[0].data.target.fields.relatedAssets = {
+        en: [relatedAsset],
+      }
+
+      const expectedURL = `//images.ctfassets.net/related-asset.jpg`
+      const actualURL = getNormalizedRichTextField({
+        field,
+        contentTypes,
+        getField,
+        defaultLocale,
+      }).content[0].data.target.fields.relatedAssets[0].fields.file.url
+
+      expect(actualURL).toBe(expectedURL)
+    })
+  })
 })

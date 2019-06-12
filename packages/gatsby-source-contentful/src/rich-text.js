@@ -31,6 +31,44 @@ const getAssetWithFieldLocalesResolved = ({ asset, getField }) => {
   }
 }
 
+const getFieldWithLocaleResolved = ({
+  field,
+  contentTypes,
+  getField,
+  defaultLocale,
+}) => {
+  // If the field is itself a reference to another entry, recursively resolve
+  // that entry's field locales too.
+  if (isEntryReferenceField(field)) {
+    return getEntryWithFieldLocalesResolved({
+      entry: field,
+      contentTypes,
+      getField,
+      defaultLocale,
+    })
+  }
+
+  if (isAssetReferenceField(field)) {
+    return getAssetWithFieldLocalesResolved({
+      asset: field,
+      getField,
+    })
+  }
+
+  if (Array.isArray(field)) {
+    return field.map(fieldItem =>
+      getFieldWithLocaleResolved({
+        field: fieldItem,
+        contentTypes,
+        getField,
+        defaultLocale,
+      })
+    )
+  }
+
+  return field
+}
+
 const getEntryWithFieldLocalesResolved = ({
   entry,
   contentTypes,
@@ -48,25 +86,12 @@ const getEntryWithFieldLocalesResolved = ({
         ? getField(field)
         : field[defaultLocale]
 
-      // If one of the entry's fields is itself a reference to another entry,
-      // recursively resolve that entry's field locales too.
-      if (isEntryReferenceField(fieldValue)) {
-        return getEntryWithFieldLocalesResolved({
-          entry: fieldValue,
-          contentTypes,
-          getField,
-          defaultLocale,
-        })
-      }
-
-      if (isAssetReferenceField(fieldValue)) {
-        return getAssetWithFieldLocalesResolved({
-          asset: fieldValue,
-          getField,
-        })
-      }
-
-      return fieldValue
+      return getFieldWithLocaleResolved({
+        field: fieldValue,
+        contentTypes,
+        getField,
+        defaultLocale,
+      })
     }),
   }
 }
