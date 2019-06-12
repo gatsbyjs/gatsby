@@ -43,7 +43,7 @@ Delicious Simplicity’s team is in fact so enamored that they have gone back an
 
 Refactoring so much previous work was eased by the amount of reusability from project to project. “Our speed of building with each project is accelerated because we are now building our own library of techniques and components within Gatsby as we find them recurring from project to project,” Brian says. “Each project we do, we find a better way of doing something and then iterate that back to the previous ones. We are truly emerging with a set of tools we take forward with us, and keep applying in new ways.” By comparison, he notes, when working with WordPress and Drupal previously the team would build something specific for each particular solution, starting largely from scratch on each new project.
 
-“Before, if there was something we really liked that we could theoretically pull into another build. But refactoring it to fit was so involved it would rarely be worth the time investment.” Brian says. “Gatsby, on the other hand, enables such seamless reusability between builds that there have been times where it has just been copy, paste, done.”
+“Before, if there was something we really liked we could theoretically pull into another build -- but refactoring it to fit was so involved it would rarely be worth the time investment.” Brian says. “Gatsby, on the other hand, enables such seamless reusability between builds that there have been times where it has just been copy, paste, done.”
 
 "It took serious searching to find the perfect framework I was looking for, and there were times I really thought I would never find the one." he concludes. "But it was totally worth a little heartbreak to finally get to Gatsby."
 
