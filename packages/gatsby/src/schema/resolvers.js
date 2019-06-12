@@ -1,7 +1,7 @@
 const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
-const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
+const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
 const findMany = typeName => ({ args, context, info }) =>
@@ -26,14 +26,14 @@ const findOne = typeName => ({ args, context, info }) =>
 
 const findManyPaginated = typeName => async rp => {
   // Peek into selection set and pass on the `field` arg of `group` and
-  // `distinct` which might need to be resolved. The easiest way to check if
+  // `distinct` which might need to be resolved. The easiest wayF to check if
   // `group` or `distinct` are in the selection set is with the `projection`
   // field which is added by `graphql-compose`'s `Resolver`. If we find it
   // there, get the actual `field` arg.
   const group = rp.projection.group && getProjectedField(rp.info, `group`)
   const distinct =
     rp.projection.distinct && getProjectedField(rp.info, `distinct`)
-  const args = { ...rp.args, group, distinct }
+  const args = { ...rp.args, group: group || [], distinct: distinct || [] }
 
   const result = await findMany(typeName)({ ...rp, args })
   return paginate(result, { skip: rp.args.skip, limit: rp.args.limit })
@@ -215,30 +215,60 @@ const resolveValue = (resolve, value) =>
     : resolve(value)
 
 const getProjectedField = (info, fieldName) => {
-  const { selections } = info.fieldNodes[0].selectionSet
+  const selectionSet = info.fieldNodes[0].selectionSet
+  const fieldNodes = getFieldNodeByNameInSelectionSet(
+    selectionSet,
+    fieldName,
+    info
+  )
 
-  // The `group`/`distinct` field can be provided either directly in
-  // the selection set, or in a fragment
-  let selection = null
-  selections.some(s => {
-    if (s.kind === `FragmentSpread`) {
-      const fragmentDef = info.fragments[s.name.value]
-      return (selection = fragmentDef.selectionSet.selections.find(
-        s => s.name.value === fieldName
-      ))
-    }
-    return s.name.value === fieldName && (selection = s)
-  })
-
-  const fieldArg = selection.arguments.find(arg => arg.name.value === `field`)
-  const enumKey = fieldArg.value.value
-  const Enum = getNullableType(
-    info.returnType
+  const fieldEnum = getNullableType(
+    getNullableType(info.returnType)
       .getFields()
       [fieldName].args.find(arg => arg.name === `field`).type
   )
-  return Enum.getValue(enumKey).value
+
+  return fieldNodes.reduce((acc, fieldNode) => {
+    const fieldArg = fieldNode.arguments.find(arg => arg.name.value === `field`)
+    if (fieldArg) {
+      const enumKey = fieldArg.value.value
+      return [...acc, fieldEnum.getValue(enumKey).value]
+    } else {
+      return acc
+    }
+  }, [])
 }
+
+const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
+  selectionSet.selections.reduce((acc, selection) => {
+    if (selection.kind === Kind.FRAGMENT_SPREAD) {
+      const fragmentDef = info.fragments[selection.name.value]
+      if (fragmentDef) {
+        return [
+          ...acc,
+          ...getFieldNodeByNameInSelectionSet(
+            fragmentDef.selectionSet,
+            fieldName,
+            info
+          ),
+        ]
+      }
+    } else if (selection.kind === Kind.INLINE_FRAGMENT) {
+      return [
+        ...acc,
+        ...getFieldNodeByNameInSelectionSet(
+          selection.selectionSet,
+          fieldName,
+          info
+        ),
+      ]
+    } /* FIELD_NODE */ else {
+      if (selection.name.value === fieldName) {
+        return [...acc, selection]
+      }
+    }
+    return acc
+  }, [])
 
 module.exports = {
   findManyPaginated,
