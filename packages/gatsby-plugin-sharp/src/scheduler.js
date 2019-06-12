@@ -59,6 +59,15 @@ exports.scheduleJob = async (
   })
 
   if (!isQueued) {
+    // Create image job
+    boundActionCreators.createJob(
+      {
+        id: `processing image ${job.inputPath}`,
+        imagesCount: 1,
+      },
+      { name: `gatsby-plugin-sharp` }
+    )
+
     q.push(cb => {
       runJobs(
         inputFileKey,
@@ -86,10 +95,12 @@ function runJobs(
 
   // Delete the input key from the toProcess list so more jobs can be queued.
   delete toProcess[inputFileKey]
-  boundActionCreators.createJob(
+
+  // Update job info
+  boundActionCreators.setJob(
     {
       id: `processing image ${job.inputPath}`,
-      imagesCount: _.values(toProcess[inputFileKey]).length,
+      imagesCount: jobs.length,
     },
     { name: `gatsby-plugin-sharp` }
   )
