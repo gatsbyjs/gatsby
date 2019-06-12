@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.1...gatsby-plugin-offline@2.1.2) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** use networkFirst caching for page-data.json files ([#14720](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/14720)) ([5352411](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/5352411))
+
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.0...gatsby-plugin-offline@2.1.1) (2019-05-17)
 
 ### Bug Fixes
