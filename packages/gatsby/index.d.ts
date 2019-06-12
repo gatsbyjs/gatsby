@@ -1106,47 +1106,23 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
 
 export interface NodeInput {
   id: string
+  parent?: string
+  children?: string[]
   internal: {
     type: string
+    mediaType?: string
+    content?: string
     contentDigest: string
-    [key: string]: unknown
+    description?: string
   }
   [key: string]: unknown
 }
 
 export interface Node extends NodeInput {
-  internal: NodeInput["internal"] & {
-    mediaType: string
-    content: string
-    owner: string
-    description?: string
-  }
-  path?: string
   parent: string
-  children: Node[]
-  fields?: Record<string, string>
-  resolve?: string
-  name?: string
-  version?: string
-  pluginOptions?: PluginOptions
-  nodeAPIs?: any[]
-  browserAPIs?: any[]
-  ssrAPIs?: any[]
-  pluginFilepath?: string
-  packageJson?: PackageJson
-  siteMetadata?: Record<string, any>
-  port?: string
-  host?: string
-  pathPrefix?: string
-  polyfill?: boolean
-  buildTime?: string
-  jsonName?: string
-  internalComponentName?: string
-  matchPath?: unknown
-  component?: string
-  componentChunkName?: string
-  context?: Record<string, any>
-  pluginCreatorId?: string
-  componentPath?: string
+  children: string[]
+  internal: NodeInput["internal"] & {
+    owner: string
+  }
   [key: string]: unknown
 }
