@@ -26,7 +26,7 @@ const findOne = typeName => ({ args, context, info }) =>
 
 const findManyPaginated = typeName => async rp => {
   // Peek into selection set and pass on the `field` arg of `group` and
-  // `distinct` which might need to be resolved. The easiest wayF to check if
+  // `distinct` which might need to be resolved. The easiest way to check if
   // `group` or `distinct` are in the selection set is with the `projection`
   // field which is added by `graphql-compose`'s `Resolver`. If we find it
   // there, get the actual `field` arg.
