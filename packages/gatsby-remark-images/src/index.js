@@ -27,6 +27,7 @@ module.exports = (
   const defaults = {
     maxWidth: 650,
     wrapperStyle: ``,
+    mediaFolder: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
     showCaptions: false,
@@ -102,7 +103,11 @@ module.exports = (
     // won't work if the image isn't hosted locally.
     const parentNode = getNode(markdownNode.parent)
     let imagePath
-    if (parentNode && parentNode.dir) {
+    if (options.mediaFolder) {
+      imagePath = slash(
+        path.join(options.mediaFolder, getImageInfo(node.url).url)
+      )
+    } else if (parentNode && parentNode.dir) {
       imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
     } else {
       return null
