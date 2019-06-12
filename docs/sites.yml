@@ -585,7 +585,6 @@
     engagement, generate leads and achieve goals.
   categories:
     - Design
-    - Featured
     - Marketing
     - Portfolio
 - title: Design Systems Weekly
@@ -1253,7 +1252,6 @@
     - Marketing
     - Portfolio
     - Agency
-    - Featured
   built_by: Spacetime
   built_by_url: "https://www.heyspacetime.com/"
 - title: Eric Jinks
@@ -6326,4 +6324,33 @@
     - Art
     - 3D Printing
     - Manufacturing
+  featured: false
+- title: Asjas
+  main_url: https://asjas.co.za
+  url: https://asjas.co.za/blog
+  source_url: https://github.com/Asjas/Personal-Webpage
+  description: >
+    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+  built_by: A-J Roos
+  built_by_url: https://twitter.com/_asjas
+  featured: false
+- title: Glug-Infinite
+  main_url: https://gluginfinite.github.io
+  url: https://gluginfinite.github.io
+  source_url: https://github.com/cristonkrizz/glug
+  description: >
+    This is a website built with Gatsby v2 that is deployed on github using github pages and netlify .
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+    - Student
+    - Club
+    - Agency
+  built_by: Criston Macarenhas
+  built_by_url: https://github.com/cristonkrizz
   featured: false

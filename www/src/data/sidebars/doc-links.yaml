@@ -337,6 +337,11 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
+        - title: Porting to Gatsby
+          link: /docs/porting-to-gatsby/
+          items:
+            - title: Porting from Create React App to Gatsby
+              link: /docs/porting-from-create-react-app-to-gatsby/
     - title: Gatsby API
       link: /docs/api-reference/
       items:
@@ -442,7 +447,7 @@
           link: /docs/resource-handling-and-service-workers/
         - title: Data Storage (Redux)*
           link: /docs/data-storage-redux/
-        - title: Build Caching*
+        - title: Build Caching
           link: /docs/build-caching/
         - title: Terminology
           link: /docs/gatsby-internals-terminology/
@@ -458,7 +463,7 @@
         - title: Winning Over Different Stakeholders
           link: /docs/winning-over-stakeholders/
           items:
-            - title: Developers*
+            - title: Developers
               link: /docs/winning-over-developers/
             - title: Engineering Leaders*
               link: /docs/winning-over-engineering-leaders/
