@@ -134,7 +134,7 @@ const noscriptImg = props => {
   const loading = props.loading ? `loading="${props.loading}" ` : ``
   const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
 
-  return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}{draggable}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}${draggable}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -284,7 +284,7 @@ class Image extends React.Component {
       Tag,
       itemProp,
       loading,
-      draggable
+      draggable,
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -565,7 +565,7 @@ Image.propTypes = {
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
-  draggable: PropTypes.oneOf([`false`, `true`])
+  draggable: PropTypes.oneOf([`false`, `true`]),
 }
 
 export default Image
