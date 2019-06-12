@@ -11,7 +11,7 @@ Gatsby has always been, and will always be, focused on performance. All of the b
 
 Over the past few months, I've been gradually changing Gatsby's architecture so that the size of the site has absolutely no impact on real-world performance. This change [has been merged](https://github.com/gatsbyjs/gatsby/pull/14359#event-2402986461) and is available, for free, in [Gatsby v2.9.0](https://www.npmjs.com/package/gatsby/v/2.9.0). From this point forward, your application manifest will no longer grow proportionally to the number of pages in your Gatsby application.
 
-In this post, I'll dive deep into the technical intricacies of what was actually closing this slow down and how we fixed the growing page manifest problem.
+In this post, I'll dive deep into the technical intricacies of what was actually causing this slow down and how we fixed the growing page manifest problem.
 
 ## Symptoms
 
