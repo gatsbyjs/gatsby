@@ -36,15 +36,21 @@ const getFieldWithLocaleResolved = ({
   contentTypes,
   getField,
   defaultLocale,
+  resolvedEntryIDs = [],
 }) => {
   // If the field is itself a reference to another entry, recursively resolve
   // that entry's field locales too.
   if (isEntryReferenceField(field)) {
+    if (resolvedEntryIDs.indexOf(field.sys.id) >= 0) {
+      return field
+    }
+
     return getEntryWithFieldLocalesResolved({
       entry: field,
       contentTypes,
       getField,
       defaultLocale,
+      resolvedEntryIDs: [...resolvedEntryIDs, field.sys.id],
     })
   }
 
@@ -62,6 +68,7 @@ const getFieldWithLocaleResolved = ({
         contentTypes,
         getField,
         defaultLocale,
+        resolvedEntryIDs,
       })
     )
   }
@@ -74,6 +81,12 @@ const getEntryWithFieldLocalesResolved = ({
   contentTypes,
   getField,
   defaultLocale,
+
+  /**
+   * Keep track of entries we've already resolved, in case two or more entries
+   * have circular references (so as to prevent an infinite loop).
+   */
+  resolvedEntryIDs = [],
 }) => {
   const contentType = getEntryContentType(entry, contentTypes)
 
@@ -91,6 +104,7 @@ const getEntryWithFieldLocalesResolved = ({
         contentTypes,
         getField,
         defaultLocale,
+        resolvedEntryIDs,
       })
     }),
   }

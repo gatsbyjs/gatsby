@@ -314,4 +314,42 @@ describe(`getNormalizedRichTextField()`, () => {
       expect(actualURL).toBe(expectedURL)
     })
   })
+
+  describe(`circular references`, () => {
+    it(`prevents infinite loops when two entries reference each other`, () => {
+      const entry1 = entryFactory()
+      entry1.sys.id = `entry1-id`
+      const entry2 = entryFactory()
+      entry2.sys.id = `entry2-id`
+
+      entry2.fields.title = {
+        en: `Related article`,
+        de: `German for "related article" ;)`,
+      }
+
+      // Link the two to each other
+      entry1.fields.relatedArticle.en = entry2
+      entry2.fields.relatedArticle.en = entry1
+
+      const field = {
+        nodeType: `document`,
+        data: {},
+        content: [
+          {
+            nodeType: `embedded-entry-inline`,
+            data: { target: entry1 },
+          },
+        ],
+      }
+
+      expect(() => {
+        getNormalizedRichTextField({
+          field,
+          contentTypes,
+          getField,
+          defaultLocale,
+        })
+      }).not.toThrowError()
+    })
+  })
 })
