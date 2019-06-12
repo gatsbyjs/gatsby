@@ -19,7 +19,7 @@ I generated a new site using the [default starter](https://github.com/gatsbyjs/g
 
 That gets us a new site directory with a couple (mostly) empty "gatsby"-prefixed files and a src directory with some basic scaffolding. The configuration and lifecycle hooks for Gatsby get put in those "gatsby"-prefixed files, `gatsby-config.js`, `gatsby-node.js` and `gatsby-browser.js`.
 
-##gatsby-config.js
+## gatsby-config.js
 
 Essentially the Gatsby home base. The two things defined here initially (in the starter) are `siteMetadata` and `plugins`.
 
@@ -38,19 +38,19 @@ For the curious:
 
 - `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
 
-##gatsby-node.js
+## gatsby-node.js
 
 We can make use of any of [Gatsby's node APIs](/docs/node-apis/) by exporting a function with the name of that API from this file.
 
 For my purposes, the only one I have interacted with so far to get up and running is the [`createPages`](/docs/node-apis/#createPages) API. This gets called after our data has been fetched and is available to use to dynamically build out our static pages. More on this later.
 
-##gatsby-browser.js
+## gatsby-browser.js
 
 Same as above, we can make use of any of [Gatsby's browser APIs](/docs/browser-apis/) by exporting them from this file.
 
 I haven't needed to make use of any of these yet, but they provide a hook into [client runtime operations](/docs/gatsby-lifecycle-apis/) — for example, replacing the router component, as seen in [this example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js#L7).
 
-##Plugin: gatsby-source-wordpress
+## Plugin: gatsby-source-wordpress
 
 Having familiarized with the basic structure, my next step was getting my data successfully pulling from WordPress. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API.
 
@@ -58,7 +58,7 @@ Having familiarized with the basic structure, my next step was getting my data s
 
 I started by reviewing the [code for the plugin's demo site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress).
 
-##Configure the plugin to pull your data
+## Configure the plugin to pull your data
 
 In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
@@ -83,7 +83,8 @@ module.exports = {
 }
 ```
 
-##Use the data to dynamically construct pages.
+## Use the data to dynamically construct pages
+
 Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/querying-with-graphql/#how-does-graphql-and-gatsby-work-together)" that you can query against.
 
 The `createPages` API exposes the `graphql` function:
@@ -114,13 +115,13 @@ _.each(result.data.allWordpressPost.edges, edge => {
 
 The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
 
-##... Take a step back to "templates"
+## ... Take a step back to "templates"
 
 In the step above we dynamically create pages based on our data by passing the absolute path to a defined template to "component". So what's a template?
 
 A template is a page component we can loop over to dynamically create pages based on the content we've pulled in (described above). We pass the post id to "context" to make it available as a GraphQL variable in the template file. The [GraphQL query defined for the template](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/src/templates/post.js#L66) then uses that id to query for data specific to that post.
 
-##... Take another step back to "pages"
+## ... Take another step back to "pages"
 
 So a template is a page component that we can use to programmatically create pages. Then what's a page component?
 
@@ -130,11 +131,11 @@ React components living in `src/pages` automatically become pages. The file name
 
 If you include the "optional GraphQL query" noted above, the result of that query is automatically passed to the component on a `data` prop (`this.props.data`). ([Read more on GraphQL queries](/docs/querying-with-graphql/#what-does-a-graphql-query-look-like)).
 
-##Onward
+## Onward
 
 While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `npm run develop`!
 
-##Sidenotes
+## Sidenotes
 
 1.  You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
 2.  Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
