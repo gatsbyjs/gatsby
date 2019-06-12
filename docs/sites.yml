@@ -585,7 +585,6 @@
     engagement, generate leads and achieve goals.
   categories:
     - Design
-    - Featured
     - Marketing
     - Portfolio
 - title: Design Systems Weekly
@@ -1253,7 +1252,6 @@
     - Marketing
     - Portfolio
     - Agency
-    - Featured
   built_by: Spacetime
   built_by_url: "https://www.heyspacetime.com/"
 - title: Eric Jinks
@@ -3319,8 +3317,8 @@
     - Web Development
     - Learning
 - title: Tandem
-  main_url: "https://tandem.co.uk"
-  url: "https://tandem.co.uk/the-app"
+  main_url: "https://www.tandem.co.uk"
+  url: "https://www.tandem.co.uk"
   description: >
     We're on a mission to free you of money misery. Our app, card and savings account are designed to help you spend less time worrying about money and more time enjoying life.
   categories:
@@ -6252,4 +6250,91 @@
     - Personal Development
   built_by: Adriaan Janse van Rensburg
   built_by_url: https://github.com/HurricaneInteractive/
+  featured: false
+- title: The Edit Suite
+  main_url: https://www.theeditsuite.com.au/
+  url: https://www.theeditsuite.com.au/
+  source_url: https://thriveweb.com.au/portfolio/the-edit-suite/
+  description: >-
+    The Edit Suite is an award winning video production and photography company based out of our Mermaid Beach studio on the Gold Coast of Australia but we also have the ability to work mobile from any location.
+  categories:
+    - Photography
+    - Motion graphics
+    - Events
+    - Marketing
+  built_by: Thrive Team - Gold Coast
+  built_by_url: https://thriveweb.com.au/
+  featured: false
+- title: CarineRoitfeld
+  main_url: https://www.carineroitfeld.com/
+  url: https://www.carineroitfeld.com/
+  description: >
+    Online shop for Carine Roitfeld parfume
+  categories:
+    - eCommerce
+    - Beauty
+  built_by: Ask Phill
+  built_by_url: https://askphill.com
+- title: EngineHub.org
+  url: https://enginehub.org
+  main_url: https://enginehub.org
+  source_url: https://github.com/EngineHub/enginehub-website
+  description: >
+    The landing pages for EngineHub, the organisation behind WorldEdit, WorldGuard, CraftBook, and more
+  categories:
+    - Landing Page
+    - Technology
+    - Open Source
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev
+- title: Goulburn Physiotherapy
+  url: https://www.goulburnphysiotherapy.com.au/
+  main_url: https://www.goulburnphysiotherapy.com.au/
+  description: >
+    Goulburn Physiotherapy is a leader in injury prevention, individual and community health, and workplace health solutions across Central Victoria.
+  categories:
+    - Blog
+    - Healthcare
+    - Health & Wellness
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: TomTom Traffic Index
+  main_url: https://www.tomtom.com/en_gb/traffic-index/
+  url: https://www.tomtom.com/en_gb/traffic-index/
+  description: >
+    The TomTom Traffic Index provides drivers, city planners, auto manufacturers and policy makers with unbiased statistics and information about congestion levels in 403 cities across 56 countries on 6 continents.
+  categories:
+    - Travel
+    - Data
+    - Research
+    - Visualization
+    - News
+  built_by: TomTom
+  built_by_url: https://tomtom.com
+  featured: false
+- title: PrintAWorld | A 3D Printing and Fabrication Company
+  main_url: https://prtwd.com/
+  url: https://prtwd.com/
+  description: >
+    PrintAWorld is a NYC based fabrication and manufacturing company that specializes in 3D printing, 3D scanning, CAD Design,
+    laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
+  categories:
+    - Business
+    - Art
+    - 3D Printing
+    - Manufacturing
+  featured: false
+- title: Asjas
+  main_url: https://asjas.co.za
+  url: https://asjas.co.za/blog
+  source_url: https://github.com/Asjas/Personal-Webpage
+  description: >
+    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+  built_by: A-J Roos
+  built_by_url: https://twitter.com/_asjas
   featured: false
