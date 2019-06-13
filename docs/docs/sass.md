@@ -22,4 +22,36 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 plugins: [`gatsby-plugin-sass`],
 ```
 
+> **Note**: You can configure [additional plugin options](/packages/gatsby-plugin-sass/#other-options) like paths to include and options for `css-loader`.
+
 3.  Write your stylesheets as `.sass` or `.scss` files and require or import them as normal.
+
+```css:styles.scss
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+```
+
+```css:styles.sass
+$font-stack:    Helvetica, sans-serif
+$primary-color: #333
+
+body
+  font: 100% $font-stack
+  color: $primary-color
+```
+
+```javascript
+import "./styles.scss"
+import "./styles.sass"
+```
+
+## Other resources
+
+- [Introduction to Sass](https://designmodo.com/introduction-sass/)
+- [Sass Documentation](https://sass-lang.com/documentation)
+- [Gatsby starters that use Sass](/starters/?c=Styling%3ASCSS)

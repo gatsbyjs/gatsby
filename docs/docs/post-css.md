@@ -18,13 +18,11 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 plugins: [`gatsby-plugin-postcss`],
 ```
 
+> **Note**: If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
+
 3.  Write your stylesheets using PostCSS (.css files) and require or import them as normal.
 
-If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
-
-### Syntax example
-
-```css
+```css:styles.css
 @custom-media --med (width <= 50rem);
 
 @media (--med) {
@@ -34,6 +32,10 @@ If you need to pass options to PostCSS use the plugins options; see [postcss-loa
     }
   }
 }
+```
+
+```javascript
+import "./styles.css"
 ```
 
 ### With CSS Modules
