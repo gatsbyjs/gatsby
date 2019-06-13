@@ -45,14 +45,13 @@ module.exports = async function generateSqip(options) {
 
   return queue.add(async () => {
     let primitiveData = await cache.get(cacheKey)
+    let svg
 
     debug(
       `Executing preview generation request for ${name} (${contentDigest}-${optionsHash})`
     )
 
     if (!primitiveData) {
-      let svg
-
       if (await exists(cachePath)) {
         debug(
           `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`
@@ -118,7 +117,7 @@ module.exports = async function generateSqip(options) {
     }
 
     await cache.set(cacheKey, primitiveData)
-  }
 
-  return primitiveData
+    return primitiveData
+  })
 }
