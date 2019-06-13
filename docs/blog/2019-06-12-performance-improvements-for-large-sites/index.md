@@ -80,4 +80,4 @@ Gatsby has been talking about incremental builds [since day one](/blog/2018-05-2
 
 ## Backwards compatible
 
-To use these changes, simply update to the latest version of Gatsby. All changes are 100% backwards compatible. One of the key values of using Gatsby and keeping up-to-date is that we are regularly making these incremental improvements that you can deliver to your users just by upgrading your version of Gatsby. Upgrade to Gatsby v2.9.2 today--and keep those Gatsby applications blazing fast 🔥!
+To use these changes, simply update to the latest version of Gatsby. All changes are 100% backwards compatible. One of the key values of using Gatsby and keeping up-to-date is that we are regularly making these incremental improvements that you can deliver to your users just by upgrading your version of Gatsby. Upgrade to Gatsby v2.9.x today--and keep those Gatsby applications blazing fast 🔥!
