@@ -64,5 +64,5 @@ exports.publishPackagesLocallyAndInstall = async ({
 
   const packagesToInstall = _.intersection(packagesToPublish, localPackages)
 
-  installPackages({ packagesToInstall })
+  await installPackages({ packagesToInstall })
 }
