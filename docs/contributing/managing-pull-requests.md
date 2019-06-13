@@ -144,17 +144,30 @@ Let's look at some examples of good and bad PR titles:
 
 ## Rights and Permissions
 
-Talk about bots
+### Who can review a PR?
 
-- [ ] Who owns what type of questions
-- When can you review? Should people comment on PRs that are WIP/Draft
-  - Marcy thinks having a go ahead from the author is a good thing to wait for
-  - [ ] Add details about being invited after your first contribution and what that allows one to do
-  - [ ] Talk to the Core Team
-- Who can review?
-  - Everyone!
-- Who can approve/merge?
-  - CODEOWNERS / core team
+If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organisation on GitHub, you can review a PR.
+
+> 💡 Not a member yet? Love us and want to help? Make your first contribution and get invited!
+
+### Who can approve a PR?
+
+Every PR opened in the repository needs to be approved before it can be merged. While anyone who is a member of the [gatsbyjs](http://github.com/gatsbyjs) organisation can approve a PR, to be merged in, it needs to be reviewed by a member of the team that owns that part of Gatsby.
+
+Typically this is:
+
+- **gatsbyjs/core** for Code
+- **gatsbyjs/docs** for Documentation
+
+We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
+
+### Who can merge a PR?
+
+PRs can only be merged by members of the core team and Gatsbot.
+
+#### Gatsbot
+
+Gatsbot is our little android friend that automatically merges PRs that are ready to go. If a PR is approved and all checks are passing, add the `bot: merge on green` label and Gatsbot will merge it in automatically!
 
 ## Gotchas
 
