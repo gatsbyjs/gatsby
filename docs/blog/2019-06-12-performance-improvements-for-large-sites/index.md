@@ -56,7 +56,7 @@ Below is a [webpagetest.org](https://www.webpagetest.org/) comparison of [gatsby
 
 ### Don't we have to wait on a network request on each navigation now?
 
-Prefetching FTW! Gatsby already prefetches any links on the page so that when the browser needs them, they're already in the cache. So when Gatsby makes a request for the `page-data.json`, it's already in the browser (assuming the user has been on the page long enough for the prefetches to finish). You can read more about this prefetching behavior in this blog[deep dive on Gatsby's performance optimizations](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#gatsby-link-and-link-relprefetch).
+Prefetching FTW! Gatsby already prefetches any links on the page so that when the browser needs them, they're already in the cache. So when Gatsby makes a request for the `page-data.json`, it's already in the browser (assuming the user has been on the page long enough for the prefetches to finish). You can read more about this prefetching behavior in this blog [deep dive on Gatsby's performance optimizations](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#gatsby-link-and-link-relprefetch).
 
 ## Other benefits
 
@@ -80,4 +80,4 @@ Gatsby has been talking about incremental builds [since day one](/blog/2018-05-2
 
 ## Backwards compatible
 
-To use these changes, simply update to the latest version of Gatsby. All changes are 100% backwards compatible. One of the key values of using Gatsby and keeping up-to-date is that we are regularly making these incremental improvements that you can deliver to your users just by upgrading your version of Gatsby. Upgrade to Gatsby v2.9.0 today--and keep those Gatsby applications blazing fast 🔥!
+To use these changes, simply update to the latest version of Gatsby. All changes are 100% backwards compatible. One of the key values of using Gatsby and keeping up-to-date is that we are regularly making these incremental improvements that you can deliver to your users just by upgrading your version of Gatsby. Upgrade to Gatsby v2.9.x today--and keep those Gatsby applications blazing fast 🔥!
