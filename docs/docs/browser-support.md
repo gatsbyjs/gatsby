@@ -25,11 +25,9 @@ breaking the older browsers as Babel will automatically add the needed polyfill
 
 ### Polyfill via Gatsby Plugin
 
-Did we mentioned there's a plugin for that? Well be sure to check out [gatsby-plugin-polyfill-io](https://www.gatsbyjs.org/packages/gatsby-plugin-polyfill-io). 
+Did we mentioned there's a plugin for that? Be sure to check out [gatsby-plugin-polyfill-io](https://www.gatsbyjs.org/packages/gatsby-plugin-polyfill-io). 
 
-What is [Polyfill.io](https://polyfill.io/)?
-
-It's a service which accepts a request for a set of browser features and returns only the polyfills that are needed by the requesting browser.
+[Polyfill.io](https://polyfill.io/) is a service which accepts a request for a set of browser features and returns only the polyfills that are needed by the requesting browser.
 
 ## Specify what browsers your project supports using "Browserslist"
 
