@@ -8,7 +8,7 @@ Gatsby is an open source project. We have over 2,000 contributors and so much of
 
 Needless to say, we get a lot of PRs and we've been merging over a [100 contributions](https://twitter.com/kylemathews/status/1111435640581689345) every week. Yes, _every week_.
 
-Let's talk a little about how we manage pull requests in the Gatsby repo!
+Let's talk a little about how we manage pull requests in the Gatsby repo.
 
 ## What is a Pull Request?
 
@@ -29,25 +29,27 @@ When looking at a PR for the first time, it can help to read up on linked issues
 
 ## Verifying a Pull Request
 
-### General
+### General Guidelines
 
 Some general things to verify in a pull request are:
 
 - Links ought to be relative
 - Language ought to be inclusive and accessible
 
+### Type Specific Guidelines
+
 Each kind of PR also requires a different set of specific checks from us before they are merged in!
 
 Let's go over them real quick.
 
-### Documentation
+#### Documentation
 
 We typically look for the following in PRs that add documentation:
 
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
 
-### Code
+#### Code
 
 For PRs that add code (whether a feature or fix), we look for the following:
 
@@ -56,7 +58,7 @@ For PRs that add code (whether a feature or fix), we look for the following:
 - Code Quality — while it isn't good to nit pick, reasonable changes that improve readability are great to point out
 - Documentation in the package's README if you're adding something
 
-### Starters or Site Showcase
+#### Starters or Site Showcase
 
 For PRs that add a site or a starter to the showcase, we ought to check:
 
@@ -65,7 +67,7 @@ For PRs that add a site or a starter to the showcase, we ought to check:
 - Tags — ensure the tags are not arbitrary
 - Featured Status — for the site showcase, we like to default to _not_ featuring a site and typically someone from the Gatsby team features it later if they like!
 
-### Blog posts
+#### Blog posts
 
 For PRs that add a blog posts, we ought to check:
 
@@ -83,23 +85,53 @@ Let's go over some common failure cases in our cases and how to approach fixing 
 
 ### Linting
 
-- Document what commands to run
-- Installing prettier and other tools
+We lint all code and documentation pretty aggressively (consistency is good) and while that is great, you might find some PRs failing the linting check.
+
+An easy fix for this is to run:
+
+> 💡 npm run format
+
+This will format all code and documentation and should get rid of those pesky linting issues!
 
 ## Other Checks
 
-### Test the PR locally
+### Testing Locally
 
-- Test the feature locally
+While we have many _many_ tests in our repository (that are run automatically on every commit), there can be times when there exists an edge case (or five) that isn't covered by these.
 
-  - (Side note: link to another doc?)
-  - [https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/)
-  - Talk about gatsby-dev-cli (and how that helps in testing out changes in a package in the monorepo)
-  - [https://www.gatsbyjs.org/contributing/code-contributions/#using-docker-to-set-up-test-environments](https://www.gatsbyjs.org/contributing/code-contributions/#using-docker-to-set-up-test-environments)
+In situations like this, testing the change locally can be very valuable.
 
-  how to run tests
+> 💡 In case this is the first time you're doing this, you might have to [set up your development environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment).
 
-- PRs get squashed so individual commit messages are not important (but helpful anyway) but do this to [https://www.conventionalcommits.org/en/v1.0.0-beta.3/](https://www.conventionalcommits.org/en/v1.0.0-beta.3/)))
+Testing out unpublished packages locally can be tricky. We have just the tool to make that easy for you.
+
+Say hello to your new best friend, `gatsby-dev-cli`.
+
+#### gatsby-dev-cli
+
+`gatsby-dev-cli` is a command-line tool for local Gatsby development. When making changes in gatsby packages, this helps copy changes in the packages to a Gatsby site that you can test your changes on.
+
+Learn more about `gatsby-dev-cli` [here](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli)!
+
+### Commit and PR Title
+
+It's good to have descriptive commit messages so that other folks can make sense of what your commit is doing. We like [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3).
+
+However, PRs get squashed when merged into our repository so individual commit messages are not as important as PR titles.
+
+Let's look at some examples of good and bad PR titles:
+
+#### Good PR Titles ✅
+
+- chore(docs): Fix links in contributing page
+- feat(gatsby): Add support for per page manifests
+- fix(gatsby-plugin-sharp): Ensure images exist before attempting conversion
+
+#### Bad PR Titles ❌
+
+- new tests
+- add support for my new cms
+- fix bug in gatsby
 
 ## Giving Feedback
 
