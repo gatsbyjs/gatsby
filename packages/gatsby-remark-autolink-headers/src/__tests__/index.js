@@ -193,6 +193,12 @@ describe(`gatsby-remark-autolink-headers`, () => {
 # With *Bold* {#custom-withbold}
 
 # Invalid {#this_is_italic}
+
+# No custom ID
+
+# {#id-only}
+
+# {#text-after} custom ID
     `)
     const enableCustomId = true
 
@@ -218,6 +224,18 @@ describe(`gatsby-remark-autolink-headers`, () => {
       {
         id: `invalid-thisisitalic`,
         text: `Invalid {#thisisitalic}`,
+      },
+      {
+        id: `no-custom-id`,
+        text: `No custom ID`,
+      },
+      {
+        id: `id-only`,
+        text: `{#id-only}`,
+      },
+      {
+        id: `text-after-custom-id`,
+        text: `{#text-after} custom ID`,
       },
     ])
   })

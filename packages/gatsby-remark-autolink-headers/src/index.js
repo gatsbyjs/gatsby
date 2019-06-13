@@ -29,8 +29,10 @@ module.exports = (
     let id
     if (enableCustomId && node.children.length > 0) {
       const last = node.children[node.children.length - 1]
+      // This regex matches to preceding spaces and {#custom-id} at the end of a string.
+      // Also, checks the text of node won't be empty after the removal of {#custom-id}.
       const match = /^(.*?)\s*\{#([\w-]+)\}$/.exec(toString(last))
-      if (match) {
+      if (match && (match[1] || node.children.length > 1)) {
         id = match[2]
         // Remove the custom ID from the original text.
         if (match[1]) {
