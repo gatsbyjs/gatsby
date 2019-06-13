@@ -81,12 +81,30 @@ module.exports = (
     }
   }
 
-  const getNodeTitle = (node, alt, defaultAlt) => {
-    if (node.title) {
-      return node.title
-    } else if (alt && alt.length > 0 && alt !== defaultAlt) {
-      return alt
+  const getImageCaption = (node, alt, defaultAlt) => {
+    const captionOptions = Array.isArray(options.showCaptions)
+      ? options.showCaptions
+      : options.showCaptions === true
+      ? [`title`, `alt`]
+      : false
+
+    if (captionOptions) {
+      for (const option of captionOptions) {
+        switch (option) {
+          case `title`:
+            if (node.title) {
+              return node.title
+            }
+            break
+          case `alt`:
+            if (alt && alt !== defaultAlt) {
+              return alt
+            }
+            break
+        }
+      }
     }
+
     return ``
   }
 
@@ -251,13 +269,14 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions =
-      options.showCaptions && getNodeTitle(node, alt, defaultAlt)
+    const imageCaption =
+      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
     style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-      showCaptions ? `` : wrapperStyle
+      imageCaption ? `` : wrapperStyle
     } max-width: ${presentationWidth}px;"
   >
     <span
@@ -284,15 +303,11 @@ module.exports = (
     }
 
     // Wrap in figure and use title as caption
-    if (showCaptions) {
+    if (imageCaption) {
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
-      node,
-      alt,
-      defaultAlt
-    )}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
   </figure>
       `.trim()
     }
