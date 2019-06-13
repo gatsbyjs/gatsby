@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
+const { bindActionCreators } = require(`redux`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -85,8 +86,18 @@ const runAPI = (plugin, api, args) => {
       hasNodeChanged,
       getNodeAndSavePathDependency,
     } = require(`../db/nodes`)
-    const { boundActionCreators } = require(`../redux/actions`)
-
+    const {
+      publicActions,
+      restrictedActionsAvailableInAPI,
+    } = require(`../redux/actions`)
+    const availableActions = {
+      ...publicActions,
+      ...(restrictedActionsAvailableInAPI[api] || {}),
+    }
+    const boundActionCreators = bindActionCreators(
+      availableActions,
+      store.dispatch
+    )
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,

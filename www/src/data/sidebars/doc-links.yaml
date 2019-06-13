@@ -88,6 +88,8 @@
               link: /docs/working-with-video/
             - title: Importing Media Content
               link: /docs/importing-media-content/
+            - title: Working with GIFs
+              link: /docs/working-with-gifs/
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
@@ -339,11 +341,18 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
+        - title: Porting to Gatsby
+          link: /docs/porting-to-gatsby/
+          items:
+            - title: Porting from Create React App to Gatsby
+              link: /docs/porting-from-create-react-app-to-gatsby/
     - title: Gatsby API
       link: /docs/api-reference/
       items:
         - title: Gatsby Link
           link: /docs/gatsby-link/
+        - title: Gatsby Image
+          link: /docs/gatsby-image/
         - title: Gatsby Config
           link: /docs/gatsby-config/
         - title: Gatsby Node APIs
@@ -444,7 +453,7 @@
           link: /docs/resource-handling-and-service-workers/
         - title: Data Storage (Redux)*
           link: /docs/data-storage-redux/
-        - title: Build Caching*
+        - title: Build Caching
           link: /docs/build-caching/
         - title: Terminology
           link: /docs/gatsby-internals-terminology/
@@ -460,7 +469,7 @@
         - title: Winning Over Different Stakeholders
           link: /docs/winning-over-stakeholders/
           items:
-            - title: Developers*
+            - title: Developers
               link: /docs/winning-over-developers/
             - title: Engineering Leaders*
               link: /docs/winning-over-engineering-leaders/

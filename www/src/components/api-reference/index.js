@@ -55,18 +55,16 @@ export const pageQuery = graphql`
     ...DocumentationReturnsFragment
   }
 
-  fragment ApiCallFragment on GatsbyAPICallConnection {
-    group(field: name) {
-      name: fieldValue
-      nodes {
-        file
-        codeLocation {
-          start {
-            line
-          }
-          end {
-            line
-          }
+  fragment ApiCallFragment on GatsbyAPICallGroupConnection {
+    name: fieldValue
+    nodes {
+      file
+      codeLocation {
+        start {
+          line
+        }
+        end {
+          line
         }
       }
     }

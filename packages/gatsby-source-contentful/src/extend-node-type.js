@@ -82,14 +82,19 @@ const resolveFixed = (image, options) => {
 
   let desiredAspectRatio = aspectRatio
 
+  // If no dimension is given, set a default width
+  if (options.width === undefined && options.height === undefined) {
+    options.width = 400
+  }
+
   // If we're cropping, calculate the specified aspect ratio.
-  if (options.height) {
+  if (options.width !== undefined && options.height !== undefined) {
     desiredAspectRatio = options.width / options.height
   }
 
-  // If the user selected a height (so cropping) and fit option
+  // If the user selected a height and width (so cropping) and fit option
   // is not set, we'll set our defaults
-  if (options.height) {
+  if (options.width !== undefined && options.height !== undefined) {
     if (!options.resizingBehavior) {
       options.resizingBehavior = `fill`
     }
@@ -142,17 +147,19 @@ const resolveFixed = (image, options) => {
     })
     .join(`,\n`)
 
-  let pickedHeight
+  let pickedHeight, pickedWidth
   if (options.height) {
     pickedHeight = options.height
+    pickedWidth = options.height * desiredAspectRatio
   } else {
     pickedHeight = options.width / desiredAspectRatio
+    pickedWidth = options.width
   }
 
   return {
     aspectRatio: desiredAspectRatio,
     baseUrl,
-    width: Math.round(options.width),
+    width: Math.round(pickedWidth),
     height: Math.round(pickedHeight),
     src: createUrl(baseUrl, {
       ...options,
@@ -170,8 +177,18 @@ const resolveFluid = (image, options) => {
 
   let desiredAspectRatio = aspectRatio
 
+  // If no dimension is given, set a default maxWidth
+  if (options.maxWidth === undefined && options.maxHeight === undefined) {
+    options.maxWidth = 800
+  }
+
+  // If only a maxHeight is given, calculate the maxWidth based on the height and the aspect ratio
+  if (options.maxHeight !== undefined && options.maxWidth === undefined) {
+    options.maxWidth = Math.round(options.maxHeight * desiredAspectRatio)
+  }
+
   // If we're cropping, calculate the specified aspect ratio.
-  if (options.maxHeight) {
+  if (options.maxHeight !== undefined && options.maxWidth !== undefined) {
     desiredAspectRatio = options.maxWidth / options.maxHeight
   }
 
@@ -238,21 +255,30 @@ const resolveResize = (image, options) => {
 
   const { baseUrl, aspectRatio } = getBasicImageProps(image, options)
 
-  // If the user selected a height (so cropping) and fit option
+  // If no dimension is given, set a default width
+  if (options.width === undefined && options.height === undefined) {
+    options.width = 400
+  }
+
+  // If the user selected a height and width (so cropping) and fit option
   // is not set, we'll set our defaults
-  if (options.height) {
+  if (options.width !== undefined && options.height !== undefined) {
     if (!options.resizingBehavior) {
       options.resizingBehavior = `fill`
     }
   }
 
-  const pickedWidth = options.width
-  let pickedHeight
-  if (options.height) {
-    pickedHeight = options.height
-  } else {
+  let pickedHeight = options.height,
+    pickedWidth = options.width
+
+  if (pickedWidth === undefined) {
+    pickedWidth = pickedHeight * aspectRatio
+  }
+
+  if (pickedHeight === undefined) {
     pickedHeight = pickedWidth / aspectRatio
   }
+
   return {
     src: createUrl(image.file.url, options),
     width: Math.round(pickedWidth),

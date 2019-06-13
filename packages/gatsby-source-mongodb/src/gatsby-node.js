@@ -129,7 +129,7 @@ function createNodes(
                 mediaItemFieldKey,
                 node[mediaItemFieldKey],
                 mapObj[mediaItemFieldKey],
-                createNode
+                createContentDigest
               )
 
               node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id
