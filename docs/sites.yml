@@ -6354,6 +6354,18 @@
   built_by: Criston Macarenhas
   built_by_url: https://github.com/cristonkrizz
   featured: false
+- title: The State of CSS Survey
+  main_url: https://stateofcss.com/
+  url: https://stateofcss.com/
+  source_url: https://github.com/StateOfJS/state-of-css-2019
+  description: >
+    Annual CSS survey, brother of The State of JS Survey.
+  categories:
+    - Research
+    - Web Development
+  built_by: Sacha Greif & Contribs
+  built_by_url: https://github.com/StateOfJS
+  featured: false
 - title: Bytom Blockchain
   url: https://bytom.io/
   main_url: https://bytom.io/
