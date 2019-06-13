@@ -6361,7 +6361,7 @@
   description: >
     Annual CSS survey, brother of The State of JS Survey.
   categories:
-    - Survey
+    - Research
     - Web Development
   built_by: Sacha Greif & Contribs
   built_by_url: https://github.com/StateOfJS
