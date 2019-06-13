@@ -14,7 +14,7 @@ In production, you should use a tested and robust solution to handle the authent
 
 ## Building your Gatsby app
 
-Start by creating a new Gatsby project using barebones `hello-world` starter:
+Start by creating a new Gatsby project using the barebones `hello-world` starter:
 
 ```shell
 gatsby new gatsby-auth gatsbyjs/gatsby-starter-hello-world
@@ -253,18 +253,22 @@ Though the routing is working now, you still can access all routes without restr
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=src/components/privateRoute.js
-import React from "react"
+import React, { Component } from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
-
-const PrivateRoute = ({ component: Component, location, ...rest }) => {
-  if (!isLoggedIn() && location.pathname !== `/app/login`) {
-    // If the user is not logged in, redirect to the login page.
-    navigate(`/app/login`)
-    return null
+class PrivateRoute extends Component {
+  componentDidMount() {
+    const { location } = this.props
+    let noOnLoginPage = location.pathname !== `/app/login`
+    if (!isLoggedIn() && noOnLoginPage) {
+      navigate("/app/login")
+      return null
+    }
   }
-
-  return <Component {...rest} />
+  render() {
+    const { component: Component, ...rest } = this.props
+    return <Component {...rest} />
+  }
 }
 
 export default PrivateRoute
@@ -411,3 +415,4 @@ If you want to learn more about using production-ready auth solutions, these lin
 - [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask/)
 - [JAMstack PWA — Let’s Build a Polling App. with Gatsby.js, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
 - [JAMstack Hackathon Starter - Authenticated Gatsby app starter with Netlify Identity](/starters/sw-yx/jamstack-hackathon-starter)
+- [Learn With Jason Livestream: How to use Netlify Identity and Netlify Functions (with Shawn Wang)](https://www.youtube.com/watch?v=vrSoLMmQ46k&feature=youtu.be)

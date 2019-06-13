@@ -1,0 +1,85 @@
+---
+title: Using Client-Side Only Packages
+---
+
+On occasion, you may need to use a function or library that only works client side. This usually is because the library in question accesses something that isn't available during server-side rendering (SSR), like [browser DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) methods.
+
+You'll need to use one of the workarounds outlined below if your project fails to compile with `gatsby develop` or `gatsby build` with an error like:
+
+```bash
+Reference error: Window is not Defined
+```
+
+## Workaround 1: Use a different library or approach
+
+Sometimes the simplest approach is to work around the problem. If you can re-implement your component using a plugin which _doesn't_ break SSR, that's probably best.
+
+## Workaround 2: Add client-side package via CDN
+
+In the component where you need it, load the package via CDN using a [`<script />`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag.
+
+To embed your script, you can:
+
+- Include it in a custom component as needed using [`react-helmet`](https://github.com/nfl/react-helmet).
+- Add the script tag directly in your base html using Gatsby's [html.js](/docs/custom-html/)
+
+You should then follow React's guidelines for [Integrating with DOM Manipulation Plugins](https://reactjs.org/docs/integrating-with-other-libraries.html#integrating-with-dom-manipulation-plugins), using the methods available in the [React Component Lifecycle](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to interact with the library you're using.
+
+```jsx
+import React, { Component } from "react"
+import { Helmet } from "react-helmet"
+
+class MyComponent extends Component {
+  componentDidMount() {
+    // set up and use external package as needed
+    window.externalLibrary.method()
+  }
+
+  render(props) {
+    return (
+      <React.Fragment>
+        <Helmet>
+          <script src="https://cdn.example/path-to-external-library.js" />
+        </Helmet>
+
+        <h1>Hello World</h1>
+        {/* etc */}
+      </React.Fragment>
+    )
+  }
+}
+```
+
+## Workaround 3: Load client-side dependent components with react-loadable
+
+Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client side only package.
+
+```bash
+npm install @loadable/component
+# or use yarn
+yarn add @loadable/component
+```
+
+```jsx
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+
+import Loadable from "@loadable/component"
+
+// these two libraries are client-side only
+import Client from "shopify-buy"
+import ShopifyBuy from "@shopify/buy-button-js"
+
+const ShopifyBuyButton = props => {
+  // custom component using shopify client-side libraries
+  return <div>etc</div>
+}
+
+const LoadableBuyButton = Loadable(() => import("./ShopifyBuyButton"))
+
+export default LoadableBuyButton
+```
+
+> **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions/) and add yours!
+
+If all else fails, you may also want to check out the documentation on [Debugging HTML Builds](/docs/debugging-html-builds/).

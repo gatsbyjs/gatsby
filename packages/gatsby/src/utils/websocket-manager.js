@@ -3,6 +3,7 @@
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
+const pageDataUtil = require(`../utils/page-data`)
 
 type QueryResult = {
   id: string,
@@ -12,46 +13,27 @@ type QueryResult = {
 type QueryResultsMap = Map<string, QueryResult>
 
 /**
- * Get cached query result for given data path.
- * @param {string} dataFileName Cached query result filename.
- * @param {string} directory Root directory of current project.
- */
-const readCachedResults = (dataFileName: string, directory: string): object => {
-  const filePath = path.join(
-    directory,
-    `public`,
-    `static`,
-    `d`,
-    `${dataFileName}.json`
-  )
-  return JSON.parse(fs.readFileSync(filePath, `utf-8`))
-}
-
-/**
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.
  */
-const getCachedPageData = (
+const getCachedPageData = async (
   pagePath: string,
   directory: string
 ): QueryResult => {
-  const { jsonDataPaths, pages } = store.getState()
-  const page = pages.get(pagePath)
-  if (!page) {
-    return null
-  }
-  const dataPath = jsonDataPaths[page.jsonName]
-  if (typeof dataPath === `undefined`) {
+  const { program } = store.getState()
+  const publicDir = path.join(program.directory, `public`)
+  try {
+    const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+    return {
+      result: pageData.result,
+      id: pagePath,
+    }
+  } catch (err) {
     console.log(
       `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
     )
     return undefined
-  }
-
-  return {
-    result: readCachedResults(dataPath, directory),
-    id: pagePath,
   }
 }
 
@@ -65,13 +47,19 @@ const getCachedStaticQueryResults = (
   directory: string
 ): QueryResultsMap => {
   const cachedStaticQueryResults = new Map()
-  const { staticQueryComponents, jsonDataPaths } = store.getState()
+  const { staticQueryComponents } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
     // Don't read from file if results were already passed from query runner
     if (resultsMap.has(staticQueryComponent.hash)) return
-
-    const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
-    if (typeof dataPath === `undefined`) {
+    const filePath = path.join(
+      directory,
+      `public`,
+      `static`,
+      `d`,
+      `${staticQueryComponent.hash}.json`
+    )
+    const fileResult = fs.readFileSync(filePath, `utf-8`)
+    if (fileResult === `undefined`) {
       console.log(
         `Error loading a result for the StaticQuery in "${
           staticQueryComponent.componentPath
@@ -80,7 +68,7 @@ const getCachedStaticQueryResults = (
       return
     }
     cachedStaticQueryResults.set(staticQueryComponent.hash, {
-      result: readCachedResults(dataPath, directory),
+      result: JSON.parse(fileResult),
       id: staticQueryComponent.hash,
     })
   })
@@ -156,9 +144,9 @@ class WebsocketManager {
         }
       }
 
-      const getDataForPath = path => {
+      const getDataForPath = async path => {
         if (!this.pageResults.has(path)) {
-          const result = getCachedPageData(path, this.programDir)
+          const result = await getCachedPageData(path, this.programDir)
           if (result) {
             this.pageResults.set(path, result)
           } else {

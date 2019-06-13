@@ -52,6 +52,11 @@ plugins: [
       // much time was required to fetch and process the data.
       // Defaults to true.
       verbose: true,
+
+      // Number of records to fetch on each request when building the cache
+      // at startup. If your application encounters timeout errors during
+      // startup, try decreasing this number.
+      paginationSize: 250,
     },
   },
 ]
@@ -318,6 +323,26 @@ like the following:
         body
         title
         type
+      }
+    }
+  }
+}
+```
+
+### Query pages
+
+Shopify merchants can create pages to hold static HTML content.
+
+```graphql
+{
+  allShopifyPage {
+    edges {
+      node {
+        id
+        handle
+        title
+        body
+        bodySummary
       }
     }
   }

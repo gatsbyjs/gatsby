@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.3...gatsby-image@2.1.4) (2019-06-12)
+
+### Bug Fixes
+
+- **docs:** improve image docs from workflow evaluation ([#14697](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/14697)) ([16f0baf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/16f0baf))
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.2...gatsby-image@2.1.3) (2019-06-10)
+
+### Features
+
+- **gatsby-image:** add types for gatsby-image/withIEPolyfill to fix [#14592](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/14592) ([#14641](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/14641)) ([39b1c6e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/39b1c6e))
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.1...gatsby-image@2.1.2) (2019-05-29)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.0...gatsby-image@2.1.1) (2019-05-24)
+
+### Features
+
+- **gatsby-image:** export TS interfaces of gatsby-image object types ([#14284](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/14284)) ([b3e306c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/b3e306c))
+
 # [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.0.41...gatsby-image@2.1.0) (2019-05-16)
 
 ### Features

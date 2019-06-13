@@ -10,6 +10,7 @@ import space from "./space"
 import transition from "./transition"
 import fontSizes from "./font-sizes"
 import fonts from "./fonts"
+import zIndices from "./z-indices"
 
 export {
   breakpoints,
@@ -24,4 +25,5 @@ export {
   transition,
   fontSizes,
   fonts,
+  zIndices,
 }
