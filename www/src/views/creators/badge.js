@@ -23,7 +23,7 @@ const styles = {
     padding: `0 ${space[2]}`,
   },
   hiring: {
-    background: colors.ui.light,
+    background: colors.purple[10],
     color: colors.lilac,
   },
   forHire: {

@@ -42,7 +42,7 @@ const styles = {
       width: widthDefault,
       position: `fixed`,
       background: colors.white,
-      borderRight: `1px solid ${colors.gray.border}`,
+      borderRight: `1px solid ${colors.ui.border.subtle}`,
     },
     [mediaQueries.lg]: {
       width: widthLarge,

@@ -8,6 +8,7 @@ import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
+import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 
 class SSRAPIs extends React.Component {
   render() {
@@ -17,6 +18,16 @@ class SSRAPIs extends React.Component {
       ),
       func => func.name
     )
+
+    const normalized = normalizeGatsbyApiCall(this.props.data.ssrAPIs.group)
+
+    const mergedFuncs = funcs.map(func => {
+      return {
+        ...func,
+        ...normalized.find(n => n.name === func.name),
+      }
+    })
+
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
@@ -48,7 +59,7 @@ class SSRAPIs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} showTopLevelSignatures={true} />
+          <APIReference docs={mergedFuncs} showTopLevelSignatures={true} />
         </Container>
       </Layout>
     )
@@ -63,6 +74,11 @@ export const pageQuery = graphql`
       childrenDocumentationJs {
         name
         ...DocumentationFragment
+      }
+    }
+    ssrAPIs: allGatsbyApiCall(filter: { group: { eq: "SSRAPI" } }) {
+      group(field: name) {
+        ...ApiCallFragment
       }
     }
   }
