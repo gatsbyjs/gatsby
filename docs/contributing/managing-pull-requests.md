@@ -2,30 +2,63 @@
 title: Managing Pull Requests
 ---
 
-## Introduction
+## Pull Requests and the Community
 
-Talk about how Gatsby is a community project. Massively supported by the community. We get a lot of PRs (talk about activity cadence).
+Gatsby is an open source project. We have over 2,000 contributors and so much of what makes Gatsby great is contributed by folks like you!
 
-Read up on linked issues or RFC (if there are any) so that you have enough context on the feature or fix (or other proposed situations).
+Needless to say, we get a lot of PRs and we've been merging over a [100 contributions](https://twitter.com/kylemathews/status/1111435640581689345) every week. Yes, _every week_.
 
-(If there isn't an issue already, it's nice to open one for historical purposes and to share context)
+Let's talk a little about how we manage pull requests in the Gatsby repo!
 
 ## What is a Pull Request?
 
-Define it in plain English (since folks reading this could be new to this)
+In case you aren't familiar, here is how the fine folks at GitHub [define a pull request](https://help.github.com/en/articles/about-pull-requests):
 
-Categorise PRs into
+> Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
-- Docs
+Simply put, when someone wants to contribute to Gatsby, they open a request to _pull_ their code into ours. Depending on the type of change, we like to categorise pull requests (or PRs for short) into:
+
+- Documentation
 - Code
-- Starters etc
-- Marketing (blog post)
+- Starters or Site Showcase
+- Blog posts
 
-## Style Guide (Call out)
+When looking at a PR for the first time, it can help to read up on linked issues or RFCs (if there are any) to gain context on what the PR intends to add or fix.
 
-This can be a short call out
+> 💡If there isn't already an issue that describes the problem a PR is trying to solve, it can be helpful to open one. This helps in sharing context and can be very valuable in the future.
 
-(Also applies to code an auxiliary text around code like a description in a PR or README)
+Each kind of PR requires a different set of checks from us before they are merged in!
+
+Let's go over them real quick.
+
+### Documentation
+
+We typically look for the following in PRs that add documentation:
+
+- Correctness — whether the added documentation is technically correct
+- Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
+
+### Code
+
+For PRs that add code (whether a feature or fix), we look for the following:
+
+- Correctness — whether the code does what we think it does
+- Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behaviour! This can be a combination of unit tests for the specific package, snapshot tests and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this!
+- Code Quality — while it isn't good to nit pick, reasonable changes that improve readability are great to point out.
+
+### Starters or Site Showcase
+
+For PRs that add a site or a starter to the showcase, we ought to check:
+
+- Links — checking if the links are working and accessible
+- Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
+
+### Blog posts
+
+We typically look for the following in PRs that add documentation:
+
+- Correctness — whether the added documentation is technically correct
+- Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
 
 ## Checks You Should Wait On/Fix
 
@@ -84,5 +117,8 @@ General points about quality, security vulnerabilities, accessibility, tests
 
 ## Frequently Asked Questions
 
-- [ ] Add questions from team and everyone else
+None at the moment but if you have one, add it here!
+
 - [ ] Who owns what type of questions
+- [ ] Commit conventions and PR title conventions
+- [ ] Talk about bots
