@@ -45,6 +45,15 @@ This is very similar to each entry in the pages manifest. The major difference b
 
 Now, when a page navigation occurs, Gatsby makes a request directly to the server for the `page-data.json`, instead of checking the global manifest (which doesn't exist anymore).
 
+Below is a [webpagetest.org](https://www.webpagetest.org/) comparison of [gatsbyjs.org](https://www.gatsbyjs.org/) (which has about 2,500 pages) [before](https://www.webpagetest.org/result/190530_4Y_26c37e9fa44cdeef1617d2861ee6927e/) and [after](https://www.webpagetest.org/result/190530_7J_5f0c238b0658ed9de9aa7ed30b5538e6/) the change. As you can see, the _First Interactive_ has been reduced by 432% (5.011 seconds saved), and almost all other metrics have improved as well.
+
+<figure>
+  <img alt="Webpagetest.org performance comparison" src="./comparison.png" />
+  <figcaption>
+    Webpagetest.org Comparison of Gatsbyjs.org before and after v2.9.0
+  </figcaption>
+</figure>
+
 ### Don't we have to wait on a network request on each navigation now?
 
 Prefetching FTW! Gatsby already prefetches any links on the page so that when the browser needs them, they're already in the cache. So when Gatsby makes a request for the `page-data.json`, it's already in the browser (assuming the user has been on the page long enough for the prefetches to finish). You can read more about this prefetching behavior in this blog[deep dive on Gatsby's performance optimizations](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#gatsby-link-and-link-relprefetch).
