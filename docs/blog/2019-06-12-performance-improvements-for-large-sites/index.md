@@ -56,7 +56,7 @@ Below is a [webpagetest.org](https://www.webpagetest.org/) comparison of [gatsby
 
 ### Don't we have to wait on a network request on each navigation now?
 
-Prefetching FTW! Gatsby already prefetches any links on the page so that when the browser needs them, they're already in the cache. So when Gatsby makes a request for the `page-data.json`, it's already in the browser (assuming the user has been on the page long enough for the prefetches to finish). You can read more about this prefetching behavior in this blog[deep dive on Gatsby's performance optimizations](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#gatsby-link-and-link-relprefetch).
+Prefetching FTW! Gatsby already prefetches any links on the page so that when the browser needs them, they're already in the cache. So when Gatsby makes a request for the `page-data.json`, it's already in the browser (assuming the user has been on the page long enough for the prefetches to finish). You can read more about this prefetching behavior in this blog [deep dive on Gatsby's performance optimizations](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#gatsby-link-and-link-relprefetch).
 
 ## Other benefits
 
