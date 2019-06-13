@@ -52,10 +52,6 @@ const store = configureStore(readState())
 
 // Persist state.
 const saveState = () => {
-  if (process.env.DANGEROUSLY_DISABLE_OOM) {
-    return Promise.resolve()
-  }
-
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
