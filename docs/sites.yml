@@ -6354,3 +6354,17 @@
   built_by: Criston Macarenhas
   built_by_url: https://github.com/cristonkrizz
   featured: false
+- title: Bytom Blockchain
+  url: https://bytom.io/
+  main_url: https://bytom.io/
+  source_url: https://github.com/bytomlabs/bytom.io
+  description: >
+    Embrace the New Era of Bytom Blockchain
+  categories:
+    - Blockchain
+    - Finance
+    - Open Source
+    - Technology
+  built_by: Bytom Foundation
+  built_by_url: https://bytom.io/
+  featured: false
