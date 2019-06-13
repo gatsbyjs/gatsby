@@ -501,4 +501,19 @@ describe(`showCaptions`, () => {
     expect($(`figcaption`).text()).toEqual(`some title`)
     expect(node.value).toMatchSnapshot()
   })
+
+  it(`fallback to no caption if no match can be found`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`],
+    })
+
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
 })

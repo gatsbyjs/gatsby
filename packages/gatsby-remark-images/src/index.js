@@ -92,12 +92,15 @@ module.exports = (
       for (const option of captionOptions) {
         switch (option) {
           case `title`:
-            if (node.title) return node.title
-          // eslint-disable-next-line no-fallthrough
+            if (node.title) {
+              return node.title
+            }
+            break
           case `alt`:
-            if (alt && alt.length > 0 && alt !== defaultAlt) {
+            if (alt && alt !== defaultAlt) {
               return alt
             }
+            break
         }
       }
     }
@@ -266,14 +269,14 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions =
+    const imageCaption =
       options.showCaptions && getImageCaption(node, alt, defaultAlt)
 
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
     style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-      showCaptions ? `` : wrapperStyle
+      imageCaption ? `` : wrapperStyle
     } max-width: ${presentationWidth}px;"
   >
     <span
@@ -300,11 +303,11 @@ module.exports = (
     }
 
     // Wrap in figure and use title as caption
-    if (showCaptions) {
+    if (imageCaption) {
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${showCaptions}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
   </figure>
       `.trim()
     }
