@@ -304,11 +304,7 @@ module.exports = (
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${getImageCaption(
-      node,
-      alt,
-      defaultAlt
-    )}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${showCaptions}</figcaption>
   </figure>
       `.trim()
     }
