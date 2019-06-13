@@ -136,8 +136,8 @@ class WebsocketManager {
       ) {
         const path = url.parse(s.handshake.headers.referer).path
         if (path) {
-          // todo
-          console.log(`initial path:`, path)
+          activePath = path
+          this.activePaths.add(path)
         }
       }
 
