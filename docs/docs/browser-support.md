@@ -23,6 +23,14 @@ breaking the older browsers as Babel will automatically add the needed polyfill
 
 > Gatsby only automatically adds polyfills for your code (and not for your project's dependencies in `node_modules`) at the moment. You can track work on this in [this issue](https://github.com/gatsbyjs/gatsby/issues/7064).
 
+### Polyfill via Gatsby Plugin
+
+Did we mentioned there's a plugin for that? Well be sure to check out [gatsby-plugin-polyfill-io](https://www.gatsbyjs.org/packages/gatsby-plugin-polyfill-io). 
+
+What is [Polyfill.io](https://polyfill.io/)?
+
+It's a service which accepts a request for a set of browser features and returns only the polyfills that are needed by the requesting browser.
+
 ## Specify what browsers your project supports using "Browserslist"
 
 You may customize your list of supported browser versions by declaring a
