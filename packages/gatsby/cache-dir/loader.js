@@ -3,8 +3,6 @@ import prefetchHelper from "./prefetch"
 import { match } from "@reach/router/lib/utils"
 import normalizePagePath from "./normalize-page-path"
 import stripPrefix from "./strip-prefix"
-// Generated during bootstrap
-import matchPaths from "./match-paths.json"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -13,6 +11,7 @@ const pageNotFoundPaths = new Set()
 let apiRunner
 let syncRequires = {}
 let asyncRequires = {}
+let matchPaths = {}
 
 const fetchedPageData = {}
 const pageDatas = {}
@@ -194,11 +193,20 @@ const loadComponent = componentChunkName => {
 }
 
 const queue = {
+  // gatsby-link can be used as a standalone library. Since it depends
+  // on window.___loader, we have to assume the code calls loader.js
+  // but without a gatsby build having occured. In this case,
+  // `async-requires.js, match-paths.json` etc won't exist. Therefore,
+  // we import those assets in production-app.js, and then dynamically
+  // set them onto the loader
   addDevRequires: devRequires => {
     syncRequires = devRequires
   },
   addProdRequires: prodRequires => {
     asyncRequires = prodRequires
+  },
+  addMatchPaths: _matchPaths => {
+    matchPaths = _matchPaths
   },
   // Hovering on a link is a very strong indication the user is going to
   // click on it soon so let's start prefetching resources for this
