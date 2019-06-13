@@ -31,7 +31,7 @@ We also expect the following from pair programming participants:
 
 ## How to sign up
 
-We allow booking up to 30 days in advance, and spots tend to fill up fast. If we’re all booked up today, check back tomorrow for the next batch of spots. The core team is spread across North America and Europe, so most time zones will have availability during working hours.
+We allow booking up to 30 days in advance, and spots tend to fill up fast. If we’re all booked up today, check back tomorrow for the next batch of spots. The core team is spread across North America, India, and Europe, so most time zones will have availability during working hours.
 
 [Reserve your spot today][cal] and let’s build something amazing together!
 
