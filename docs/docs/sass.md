@@ -1,0 +1,25 @@
+---
+title: Sass
+---
+
+Sass is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS using a Gatsby plugin.
+
+Sass will compile `.sass` and `.scss` files to `.css` files for you, so you can write your stylesheets with more advanced features.
+
+> **Note**: the difference between using a `.sass` or `.scss` file is the syntax that you write your styles in. All valid CSS is valid SCSS as well so it is the easiest to use and most popular. You can read more about the differences in the [Sass documentation](https://sass-lang.com/documentation/syntax).
+
+## Installing and Configuring Sass
+
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs), then come back.
+
+1.  Install the Gatsby plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass/).
+
+`npm install --save gatsby-plugin-sass`
+
+2.  Include the plugin in your `gatsby-config.js` file.
+
+```javascript:title=gatsby-config.js
+plugins: [`gatsby-plugin-sass`],
+```
+
+3.  Write your stylesheets as `.sass` or `.scss` files and require or import them as normal.

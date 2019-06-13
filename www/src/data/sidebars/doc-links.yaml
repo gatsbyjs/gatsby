@@ -212,6 +212,8 @@
                   link: /docs/post-css/
                 - title: Using TailwindCSS
                   link: /docs/tailwind-css/
+                - title: Using Sass/SCSS
+                  link: /docs/sass-scss/
         - title: Adding Components to Content with MDX
           link: /docs/mdx/
           items:
