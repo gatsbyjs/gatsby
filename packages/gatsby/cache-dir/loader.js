@@ -4,6 +4,8 @@ import normalizePagePath from "./normalize-page-path"
 import stripPrefix from "./strip-prefix"
 import { match } from "@reach/router/lib/utils"
 
+const preferDefault = m => (m && m.default) || m
+
 const stripSurroundingSlashes = s => {
   s = s[0] === `/` ? s.slice(1) : s
   s = s.endsWith(`/`) ? s.slice(0, -1) : s
@@ -194,7 +196,7 @@ export class BaseLoader {
   }
 
   loadPageDataJson(pagePath) {
-    return loadPageDataJson(pagePath)
+    return loadPageDataJson({ pagePath })
   }
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
@@ -207,7 +209,7 @@ export class BaseLoader {
     if (this.inFlightDb.has(pagePath)) {
       return this.inFlightDb.get(pagePath)
     }
-    const inFlight = this.loadPageDataJson({ pagePath })
+    const inFlight = this.loadPageDataJson(pagePath)
       .then(result => {
         if (result.status === `error`) {
           return {
@@ -216,27 +218,29 @@ export class BaseLoader {
         }
         const pageData = result.payload
         const { componentChunkName } = pageData
-        return this.loadComponent(componentChunkName).then(component => {
-          const finalResult = { createdAt: new Date() }
-          let pageResources
-          if (!component) {
-            finalResult.status = `error`
-          } else {
-            finalResult.status = `success`
-            if (result.notFound === true) {
-              finalResult.notFound = true
+        return this.loadComponent(componentChunkName)
+          .then(preferDefault)
+          .then(component => {
+            const finalResult = { createdAt: new Date() }
+            let pageResources
+            if (!component) {
+              finalResult.status = `error`
+            } else {
+              finalResult.status = `success`
+              if (result.notFound === true) {
+                finalResult.notFound = true
+              }
+              pageResources = toPageResources(pageData, component)
+              finalResult.payload = pageResources
+              emitter.emit(`onPostLoadPageResources`, {
+                page: pageResources,
+                pageResources,
+              })
             }
-            pageResources = toPageResources(pageData, component)
-            finalResult.payload = pageResources
-            emitter.emit(`onPostLoadPageResources`, {
-              page: pageResources,
-              pageResources,
-            })
-          }
-          this.pageDb.set(pagePath, finalResult)
-          // undefined if final result is an error
-          return pageResources
-        })
+            this.pageDb.set(pagePath, finalResult)
+            // undefined if final result is an error
+            return pageResources
+          })
       })
       .finally(() => {
         this.inFlightDb.delete(pagePath)
@@ -342,7 +346,7 @@ export class ProdLoader extends BaseLoader {
       .then(() =>
         // This was just prefetched, so will return a response from
         // the cache instead of making another request to the server
-        loadPageDataJson(pagePath)
+        this.loadPageDataJson(pagePath)
       )
       .then(result => {
         if (result.status !== `success`) {
