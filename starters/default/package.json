@@ -8,7 +8,7 @@
     "gatsby": "^2.9.2",
     "gatsby-image": "^2.1.4",
     "gatsby-plugin-manifest": "^2.1.1",
-    "gatsby-plugin-offline": "^2.1.2",
+    "gatsby-plugin-offline": "^2.1.3",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-sharp": "^2.1.5",
     "gatsby-source-filesystem": "^2.0.39",
