@@ -25,7 +25,7 @@ Simply put, when someone wants to contribute to Gatsby, they open a request to _
 
 When looking at a PR for the first time, it can help to read up on linked issues or RFCs (if there are any) to gain context on what the PR intends to add or fix.
 
-> 💡If there isn't already an issue that describes the problem a PR is trying to solve, it can be helpful to open one. This helps in sharing context and can be very valuable in the future.
+> 💡 If there isn't already an issue that describes the problem a PR is trying to solve, it can be helpful to open one. This helps in sharing context and can be very valuable in the future.
 
 Each kind of PR requires a different set of checks from us before they are merged in!
 
@@ -44,14 +44,16 @@ For PRs that add code (whether a feature or fix), we look for the following:
 
 - Correctness — whether the code does what we think it does
 - Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behaviour! This can be a combination of unit tests for the specific package, snapshot tests and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this!
-- Code Quality — while it isn't good to nit pick, reasonable changes that improve readability are great to point out.
+- Code Quality — while it isn't good to nit pick, reasonable changes that improve readability are great to point out
 
 ### Starters or Site Showcase
 
 For PRs that add a site or a starter to the showcase, we ought to check:
 
-- Links — checking if the links are working and accessible
-- Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
+- Links — check if the links are working and accessible
+- Tags — ensure the tags are not arbitrary
+- Featured — for the site showcase, we like to default to _not_ featuring a site and typically someone from the Gatsby team features it later if they like!
+-
 
 ### Blog posts
 
@@ -122,3 +124,9 @@ None at the moment but if you have one, add it here!
 - [ ] Who owns what type of questions
 - [ ] Commit conventions and PR title conventions
 - [ ] Talk about bots
+      looking at Marcy’s issue, make sure to cover
+      linting commands while working
+      how to run tests
+      the requirements to merge
+      including some info about Codeowners
+      reviewing pull requests’ and ‘creating pull requests
