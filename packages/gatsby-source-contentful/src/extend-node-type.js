@@ -20,6 +20,8 @@ const {
   ImageCropFocusType,
 } = require(`./schemes`)
 
+const contentful_max_size = 4000
+
 const isImage = image =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
@@ -114,7 +116,9 @@ const resolveFixed = (image, options) => {
   fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width.
-  const filteredSizes = fixedSizes.filter(size => size <= width)
+  const filteredSizes = fixedSizes.filter(
+    size => size <= contentful_max_size || size <= width
+  )
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -215,7 +219,9 @@ const resolveFluid = (image, options) => {
   fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth.
-  const filteredSizes = fluidSizes.filter(size => size <= width)
+  const filteredSizes = fluidSizes.filter(
+    size => size <= contentful_max_size || size <= width
+  )
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
