@@ -1,18 +1,18 @@
+import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import domReady from "@mikaelkristiansson/domready"
-import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { Router, navigate } from "@reach/router"
-import { setLoader, ProdLoader } from "./loader"
-import asyncRequires from "./async-requires"
-import emitter from "./emitter"
-import PageRenderer from "./page-renderer"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import domReady from "@mikaelkristiansson/domready"
 import {
   shouldUpdateScroll,
-  RouteUpdates,
   init as navigationInit,
+  RouteUpdates,
 } from "./navigation"
+import emitter from "./emitter"
+import PageRenderer from "./page-renderer"
+import asyncRequires from "./async-requires"
+import { setLoader, ProdLoader } from "./loader"
 import PageChanger from "./page-changer"
 // Generated during bootstrap
 import matchPaths from "./match-paths.json"
