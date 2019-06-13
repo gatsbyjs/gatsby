@@ -4,7 +4,7 @@ title: Tailwind CSS
 
 Tailwind is a utility-first CSS framework for rapidly building custom user interfaces. This guide will show you how to get started with Gatsby and [Tailwind CSS](https://tailwindcss.com/).
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](https://www.gatsbyjs.org/docs), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start), then come back.
 
 ### Overview
 
@@ -51,7 +51,7 @@ Create a postcss.config.js in your project's root folder with the following cont
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
-  plugins: [require("tailwindcss")("./tailwind.js")],
+  plugins: [require("tailwindcss")],
 })
 ```
 
@@ -86,4 +86,4 @@ const Button = styled.button`
 
 - [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
 - [Tailwind Documentation](https://tailwindcss.com/)
-- [Gatsby starters that use Tailwind](https://www.gatsbyjs.org/starters/?c=Styling%3ATailwind&v=2)
+- [Gatsby starters that use Tailwind](/starters/?c=Styling%3ATailwind&v=2)

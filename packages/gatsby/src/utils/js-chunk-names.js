@@ -1,12 +1,6 @@
 const { kebabCase } = require(`lodash`)
 const path = require(`path`)
-const kebabHash = require(`kebab-hash`)
 const { store } = require(`../redux`)
-
-const generatePathChunkName = path => {
-  const name = path === `/` ? `index` : kebabHash(path)
-  return `path---${name}`
-}
 
 const generateComponentChunkName = componentPath => {
   const program = store.getState().program
@@ -18,5 +12,4 @@ const generateComponentChunkName = componentPath => {
   return `component---${kebabCase(name)}`
 }
 
-exports.generatePathChunkName = generatePathChunkName
 exports.generateComponentChunkName = generateComponentChunkName

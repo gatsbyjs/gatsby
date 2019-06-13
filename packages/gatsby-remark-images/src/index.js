@@ -50,7 +50,7 @@ module.exports = (
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
   let rawHtmlNodes = []
-  visitWithParents(markdownAST, `html`, (node, ancestors) => {
+  visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
     rawHtmlNodes.push({ node, inLink })
@@ -79,6 +79,33 @@ module.exports = (
       url,
       query,
     }
+  }
+
+  const getImageCaption = (node, alt, defaultAlt) => {
+    const captionOptions = Array.isArray(options.showCaptions)
+      ? options.showCaptions
+      : options.showCaptions === true
+      ? [`title`, `alt`]
+      : false
+
+    if (captionOptions) {
+      for (const option of captionOptions) {
+        switch (option) {
+          case `title`:
+            if (node.title) {
+              return node.title
+            }
+            break
+          case `alt`:
+            if (alt && alt !== defaultAlt) {
+              return alt
+            }
+            break
+        }
+      }
+    }
+
+    return ``
   }
 
   // Takes a node and generates the needed images and then returns
@@ -226,6 +253,7 @@ module.exports = (
         file: imageNode,
         args,
         fileArgs: args,
+        cache,
         reporter,
       })
 
@@ -235,14 +263,21 @@ module.exports = (
 
     const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
 
+    const wrapperStyle =
+      typeof options.wrapperStyle === `function`
+        ? options.wrapperStyle(fluidResult)
+        : options.wrapperStyle
+
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && node.title
+    const imageCaption =
+      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+
     let rawHTML = `
   <span
     class="${imageWrapperClass}"
-    style="position: relative; display: block; ${
-      showCaptions ? `` : options.wrapperStyle
-    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+      imageCaption ? `` : wrapperStyle
+    } max-width: ${presentationWidth}px;"
   >
     <span
       class="${imageBackgroundClass}"
@@ -268,11 +303,11 @@ module.exports = (
     }
 
     // Wrap in figure and use title as caption
-    if (showCaptions) {
+    if (imageCaption) {
       rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
+  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
   </figure>
       `.trim()
     }

@@ -1,106 +1,79 @@
 const Redux = require(`redux`)
 const _ = require(`lodash`)
-const fs = require(`fs-extra`)
+
 const mitt = require(`mitt`)
-const stringify = require(`json-stringify-safe`)
+const thunk = require(`redux-thunk`).default
+const reducers = require(`./reducers`)
+const { writeToCache, readFromCache } = require(`./persist`)
 
 // Create event emitter for actions
 const emitter = mitt()
 
-// Reducers
-const reducers = require(`./reducers`)
-
-const objectToMap = obj => {
-  let map = new Map()
-  Object.keys(obj).forEach(key => {
-    map.set(key, obj[key])
-  })
-  return map
+// Read old node data from cache.
+const readState = () => {
+  try {
+    const state = readFromCache()
+    if (state.nodes) {
+      // re-create nodesByType
+      state.nodesByType = new Map()
+      state.nodes.forEach(node => {
+        const { type } = node.internal
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
+        }
+        state.nodesByType.get(type).set(node.id, node)
+      })
+    }
+    // jsonDataPaths was removed in the per-page-manifest
+    // changes. Explicitly delete it here to cover case where user
+    // runs gatsby the first time after upgrading.
+    delete state[`jsonDataPaths`]
+    return state
+  } catch (e) {
+    // ignore errors.
+  }
+  return {}
 }
 
-const mapToObject = map => {
-  const obj = {}
-  for (let [key, value] of map) {
-    obj[key] = value
-  }
-  return obj
-}
+/**
+ * Redux middleware handling array of actions
+ */
+const multi = ({ dispatch }) => next => action =>
+  Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-// Read from cache the old node data.
-let initialState = {}
-try {
-  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  // Apparently the file mocking in node-tracking-test.js
-  // can override the file reading replacing the mocked string with
-  // an already parsed object.
-  if (Buffer.isBuffer(file) || typeof file === `string`) {
-    initialState = JSON.parse(file)
-  }
-  if (initialState.staticQueryComponents) {
-    initialState.staticQueryComponents = objectToMap(
-      initialState.staticQueryComponents
-    )
-  }
-  if (initialState.components) {
-    initialState.components = objectToMap(initialState.components)
-  }
-  if (initialState.nodes) {
-    initialState.nodes = objectToMap(initialState.nodes)
+const configureStore = initialState =>
+  Redux.createStore(
+    Redux.combineReducers({ ...reducers }),
+    initialState,
+    Redux.applyMiddleware(thunk, multi)
+  )
 
-    initialState.nodesByType = new Map()
-    initialState.nodes.forEach(node => {
-      const { type } = node.internal
-      if (!initialState.nodesByType.has(type)) {
-        initialState.nodesByType.set(type, new Map())
-      }
-      initialState.nodesByType.get(type).set(node.id, node)
-    })
-  }
-} catch (e) {
-  // ignore errors.
-}
-
-const store = Redux.createStore(
-  Redux.combineReducers({ ...reducers }),
-  initialState,
-  Redux.applyMiddleware(function multi({ dispatch }) {
-    return next => action =>
-      Array.isArray(action)
-        ? action.filter(Boolean).map(dispatch)
-        : next(action)
-  })
-)
+const store = configureStore(readState())
 
 // Persist state.
-function saveState() {
+const saveState = () => {
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
     `componentDataDependencies`,
-    `jsonDataPaths`,
     `components`,
     `staticQueryComponents`,
+    `webpackCompilationHash`,
   ])
 
-  pickedState.staticQueryComponents = mapToObject(
-    pickedState.staticQueryComponents
-  )
-  pickedState.components = mapToObject(pickedState.components)
-  pickedState.nodes = pickedState.nodes ? mapToObject(pickedState.nodes) : []
-  const stringified = stringify(pickedState, null, 2)
-  return fs.writeFile(`${process.cwd()}/.cache/redux-state.json`, stringified)
+  return writeToCache(pickedState)
 }
-
-exports.saveState = saveState
 
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
 
-/** Event emitter */
-exports.emitter = emitter
-
-/** Redux store */
-exports.store = store
+module.exports = {
+  emitter,
+  store,
+  configureStore,
+  readState,
+  saveState,
+}

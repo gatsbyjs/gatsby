@@ -150,11 +150,16 @@ exports.createResolvers = ({ createResolvers, schema }) => {
       birthday: {
         resolve(source, args, context, info) {
           // original resolver available as "info.originalResolver"
-          if (Number.isNaN(new Date(source['birthday'])) {
-            return info.originalResolver({
-              ...source,
-              birthday: '1970-01-01',
-            }, args, context, info)
+          if (Number.isNaN(new Date(source["birthday"]))) {
+            return info.originalResolver(
+              {
+                ...source,
+                birthday: "1970-01-01",
+              },
+              args,
+              context,
+              info
+            )
           } else {
             return info.originalResolver(source, args, context, info)
           }

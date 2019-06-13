@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.8...gatsby-remark-code-repls@2.1.0) (2019-04-12)
+
+### Features
+
+- **gatsby-remark-code-repls:** include matching css option (CodePen) ([#12110](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/12110)) ([1b8d93e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/commit/1b8d93e)), closes [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/1234) [#1234](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/1234)
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.7...gatsby-remark-code-repls@2.0.8) (2019-03-27)
+
+### Bug Fixes
+
+- **gatsby-remark-code-repls:** handle scoped packages in dependencies ([#12347](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/12347)) ([bc7d472](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/commit/bc7d472)), closes [#12327](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/issues/12327)
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.6...gatsby-remark-code-repls@2.0.7) (2019-03-13)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.5...gatsby-remark-code-repls@2.0.6) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls/compare/gatsby-remark-code-repls@2.0.4...gatsby-remark-code-repls@2.0.5) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-remark-code-repls

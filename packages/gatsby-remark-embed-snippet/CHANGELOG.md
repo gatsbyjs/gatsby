@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.2.3...gatsby-remark-embed-snippet@3.2.4) (2019-03-11)
+
+### Features
+
+- **gatsby-remark-embed-snippet:** Add rb support ([#12416](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/issues/12416)) ([ec8f60b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/commit/ec8f60b))
+
+## [3.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.2.2...gatsby-remark-embed-snippet@3.2.3) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
 ## [3.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.2.1...gatsby-remark-embed-snippet@3.2.2) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-remark-embed-snippet

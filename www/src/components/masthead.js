@@ -1,60 +1,66 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+  letterSpacings,
+  fonts,
+} from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${rhythm(presets.gutters.default)}`,
-      paddingBottom: rhythm(2),
-      paddingTop: rhythm(2),
+      margin: `0 auto`,
+      paddingBottom: space[9],
+      paddingTop: space[9],
+      paddingLeft: space[8],
+      paddingRight: space[8],
       textAlign: `center`,
-      [presets.Md]: {
-        paddingTop: `calc(${presets.headerHeight} + ${
-          presets.bannerHeight
-        } + ${rhythm(1)})`,
-      },
-      [presets.Lg]: {
+      [mediaQueries.md]: {
         paddingBottom: rhythm(3),
+        paddingTop: rhythm(3),
       },
     }}
   >
     <h1
       css={{
         color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 3.5vw)`,
-        letterSpacing: `-1px`,
-        lineHeight: 1.1,
-        margin: `0 auto 1.75rem`,
+        fontSize: `calc(12px + 2vh + 3vw)`,
+        letterSpacing: letterSpacings.tight,
+        lineHeight: lineHeights.solid,
+        margin: `0 auto ${space[6]}`,
         maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,
       }}
     >
-      Fast in every way that matters
+      Fast in every way that&nbsp;matters
     </h1>
     <p
       css={{
-        color: colors.gray.copy,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: scale(1 / 5).fontSize,
-        maxWidth: rhythm(26),
-        margin: `0 auto 2rem`,
+        fontFamily: fonts.header,
+        fontSize: fontSizes[4],
+        lineHeight: lineHeights.dense,
+        maxWidth: rhythm(30),
+        margin: `0 auto ${space[10]}`,
         WebkitFontSmoothing: `antialiased`,
-        [presets.Sm]: {
-          fontSize: scale(2 / 5).fontSize,
+        [mediaQueries.sm]: {
+          fontSize: fontSizes[5],
         },
-        [presets.Lg]: {
-          maxWidth: rhythm(28),
-          fontSize: scale(3 / 5).fontSize,
+        [mediaQueries.lg]: {
+          fontSize: fontSizes[6],
         },
       }}
     >
       Gatsby is a free and open source framework based on React that helps
-      developers build blazing fast <strong>websites</strong> and{` `}
+      developers build blazing fast <strong>websites</strong> and
+      {` `}
       <strong>apps</strong>
     </p>
     <Button

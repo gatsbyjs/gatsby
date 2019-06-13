@@ -1,7 +1,5 @@
 import React from "react"
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
+import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
@@ -9,22 +7,21 @@ import MdStar from "react-icons/lib/md/star"
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
     css={{
-      fontFamily: options.headerFontFamily.join(`,`),
-      color: colors.gray.dark,
+      fontFamily: fonts.header,
       display: `flex`,
       flexWrap: `wrap`,
       width: `100%`,
       minWidth: `320px`,
       flexDirection: `column-reverse`,
-      padding: sharedStyles.gutter,
+      padding: space[6],
       paddingTop: 0,
-      [presets.Sm]: {
+      [mediaQueries.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
         paddingBottom: 0,
       },
-      [presets.Lg]: {
-        padding: sharedStyles.gutterDesktop,
+      [mediaQueries.lg]: {
+        padding: space[8],
         paddingTop: 0,
         paddingBottom: 0,
       },
@@ -32,13 +29,13 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
   >
     <div
       css={{
-        marginTop: rhythm(3 / 4),
+        marginTop: space[6],
         paddingRight: 15,
         display: `flex`,
         flexWrap: `wrap`,
         justifyContent: `space-between`,
         flexShrink: 0,
-        [presets.Sm]: {
+        [mediaQueries.sm]: {
           justifyContent: `flex-start`,
         },
       }}
@@ -46,40 +43,36 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       <div>
         <span
           css={{
+            alignItems: `center`,
             color: colors.accent,
-            paddingRight: 10,
+            display: `inline-flex`,
+            paddingRight: space[5],
           }}
         >
-          <MdStar style={{ verticalAlign: `sub` }} />
+          <MdStar />
           {` `}
-          <span css={{ color: colors.gray.light }}>{starter.stars}</span>
+          <span css={{ color: colors.text.primary, paddingLeft: space[1] }}>
+            {starter.stars}
+          </span>
         </span>
       </div>
 
       <div>
-        <span
-          css={{
-            color: colors.gray.calm,
-            fontFamily: options.headerFontFamily.join(`,`),
-            paddingRight: 8,
-          }}
-        >
-          Updated
-        </span>
+        <span css={{ paddingRight: 8 }}>Updated</span>
         {showDate(starter.lastUpdated)}
       </div>
     </div>
 
     <div
       css={{
-        marginTop: rhythm(3 / 4),
+        marginTop: space[6],
         marginRight: 15,
         display: `flex`,
         flexWrap: `nowrap`,
         flexGrow: 1,
-        borderBottom: `1px solid ${colors.ui.light}`,
-        paddingBottom: rhythm(2 / 4),
-        [presets.Sm]: {
+        borderBottom: `1px solid ${colors.ui.border.subtle}`,
+        paddingBottom: space[3],
+        [mediaQueries.sm]: {
           borderBottom: 0,
         },
       }}
@@ -93,17 +86,15 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           textOverflow: `ellipsis`,
         }}
       >
-        <span css={{ color: colors.gray.light }}>{`By  `}</span>
+        <span css={{ color: colors.text.secondary }}>{`By `}</span>
         <a
           css={{
             "&&": {
-              boxShadow: `none`,
               borderBottom: 0,
               color: colors.lilac,
               cursor: `pointer`,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: fonts.header,
               "&:hover": {
-                background: `transparent`,
                 color: colors.gatsby,
               },
             },
@@ -124,8 +115,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <div
           css={{
             position: `absolute`,
-            right: rhythm(3 / 4),
-            top: rhythm(0 / 8),
+            right: space[6],
+            top: 0,
             left: `auto`,
             zIndex: 1,
             display: `flex`,
@@ -135,22 +126,16 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             href={demo}
             css={{
               border: 0,
-              borderRadius: presets.radius,
-              color: colors.accent,
-              fontFamily: options.headerFontFamily.join(`,`),
+              borderRadius: radii[1],
+              fontFamily: fonts.header,
               fontWeight: `bold`,
-              marginRight: rhythm(1.5 / 4),
-              padding: `${rhythm(1 / 6)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
-              textDecoration: `none`,
+              marginRight: space[2],
+              padding: `${space[1]} ${space[4]}`,
               WebkitFontSmoothing: `antialiased`,
               "&&": {
                 backgroundColor: colors.accent,
                 borderBottom: `none`,
-                boxShadow: `none`,
                 color: colors.gatsby,
-                "&:hover": {
-                  backgroundColor: colors.accent,
-                },
               },
             }}
           >

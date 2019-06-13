@@ -2,7 +2,7 @@ const COUNT_ID = `count`
 
 describe(`hot-reloading hooks`, () => {
   beforeEach(() => {
-    cy.visit(`/hooks`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/hooks`).waitForRouteChange()
   })
 
   it.skip(`can update component`, () => {

@@ -75,7 +75,7 @@ pages are React components but very often these components are just wrappers aro
 `src/templates/post.jsx` is an example of a page component. It queries GraphQL
 for markdown data and then renders the page using this data.
 
-See [part four](/tutorial/part-four/) of the tutorial for a detailed
+See [part seven](/tutorial/part-seven/) of the tutorial for a detailed
 introduction to programmatically creating pages.
 
 Example:

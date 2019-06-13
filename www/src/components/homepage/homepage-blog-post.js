@@ -6,23 +6,31 @@ import Img from "gatsby-image"
 
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
+import Avatar from "../avatar"
+
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import {
+  colors,
+  space,
+  radii,
+  transition,
+  shadows,
+  fontSizes,
+  mediaQueries,
+} from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
   HorizontalScrollerItem.withComponent(`article`)
 )`
   display: flex;
   flex-direction: column;
-  font-family: ${options.systemFontFamily.join(`,`)};
   padding-bottom: ${rhythm(2.5)};
   position: relative;
 
-  .main-body & a {
+  a {
     border: none;
-    box-shadow: none;
     font-family: inherit;
 
     :hover {
@@ -30,61 +38,68 @@ const HomepageBlogPostRoot = styled(
     }
   }
 
-  ${presets.Md} {
-    width: 320px;
+  ${mediaQueries.md} {
+    width: 20rem;
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     flex-shrink: 0;
     margin-right: 0;
-    margin-bottom: ${rhythm(presets.gutters.default)};
+    margin-bottom: ${space[8]};
     padding-bottom: ${rhythm(3.5)};
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
+    transition: transform ${transition.speed.default}
+        ${transition.curve.default},
+      box-shadow ${transition.speed.default} ${transition.curve.default};
 
     :hover {
-      background: ${colors.ui.whisper};
+      transform: translateY(-${space[1]});
+      box-shadow: ${shadows.overlay};
+    }
+
+    :active: {
+      box-shadow: ${shadows.cardActive};
+      transform: translateY(0);
     }
   }
 `
 
 const Cover = styled(Img)`
-  border-radius: ${presets.radiusLg}px ${presets.radiusLg}px 0 0;
+  border-radius: ${radii[2]}px ${radii[2]}px 0 0;
   display: block;
-  margin-bottom: -${rhythm(0.5)};
+  margin-bottom: -${space[3]};
 `
 
 const Header = styled(`h1`)`
-  color: ${colors.gatsbyDarker};
-  font-size: 1.25rem;
+  font-size: ${fontSizes[4]};
   font-weight: bold;
-  line-height: 1.2;
   margin: 0;
   padding: ${rhythm(4 / 5)};
   padding-bottom: 0;
 
-  ${presets.Lg} {
-    font-size: ${props => (props.first ? `1.75rem` : `1.5rem`)};
-    padding: ${rhythm(1.5)};
+  ${mediaQueries.lg} {
+    font-size: ${props => (props.first ? fontSizes[6] : fontSizes[5])};
+    padding: ${space[7]};
     padding-bottom: 0;
   }
 `
 
 const Meta = styled(`div`)`
   align-items: center;
-  color: ${colors.gray.calm};
+  color: ${colors.text.secondary};
   display: flex;
   flex-wrap: wrap;
-  font-size: 0.875rem;
-  margin-top: 1rem;
+  font-size: ${fontSizes[1]};
+  margin-top: ${space[4]};
   padding: 0 ${rhythm(4 / 5)};
 
   & > * {
     flex-shrink: 0;
   }
 
-  ${presets.Lg} {
-    margin-top: 1.5rem;
-    padding: 0 ${rhythm(1.5)};
+  ${mediaQueries.lg} {
+    margin-top: ${space[6]};
+    padding: 0 ${space[7]};
   }
 `
 
@@ -93,42 +108,32 @@ const Author = styled(Link)`
   display: flex;
   z-index: 1;
 
-  img {
-    border-radius: 50%;
-    height: 28px;
-    width: 28px;
-  }
-
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.ui.bright};
-    box-shadow: inset 0 -2px 0px 0px ${colors.ui.bright};
-    margin-left: 0.5rem;
+    border-bottom: 1px solid ${colors.link.border};
   }
 
   a& {
     font-weight: normal;
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     :hover {
       span {
-        background: ${colors.ui.bright};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
 `
 
 const Excerpt = styled(`p`)`
-  color: ${colors.gray.copy};
-  font-size: 0.875rem;
-  line-height: 1.5;
+  color: ${colors.text.primary};
   padding: 0 ${rhythm(4 / 5)};
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     margin: 0;
-    margin-top: 1.5rem;
-    padding: 0 ${rhythm(1.5)};
+    margin-top: ${space[6]};
+    padding: 0 ${space[7]};
   }
 `
 
@@ -139,7 +144,7 @@ const ReadMore = styled(Link)`
   color: ${colors.gatsby};
   display: flex;
   flex-grow: 1;
-  font-size: 0.875rem;
+  font-size: ${fontSizes[1]};
   left: 0;
   padding: ${rhythm(4 / 5)};
   position: absolute;
@@ -152,24 +157,23 @@ const ReadMore = styled(Link)`
   }
 
   svg {
-    height: 18px;
-    width: 18px;
+    height: ${space[4]};
+    width: ${space[4]};
   }
 
   span {
     color: ${colors.gatsby};
-    border-bottom: 1px solid ${colors.ui.bright};
-    box-shadow: inset 0 -2px 0px 0px ${colors.ui.bright};
+    border-bottom: 1px solid ${colors.link.border};
     font-weight: bold;
-    margin-right: 0.2rem;
+    margin-right: ${space[1]};
   }
 
-  ${presets.Lg} {
-    padding: ${rhythm(1.5)};
+  ${mediaQueries.lg} {
+    padding: ${space[7]};
 
     span {
       :hover {
-        background: ${colors.ui.bright};
+        border-color: ${colors.link.hoverBorder};
       }
     }
   }
@@ -227,7 +231,7 @@ const HomepageBlogPost = ({
 
       <Meta>
         <Author to={authorSlug}>
-          <Img fixed={authorFixed} alt={authorName} />
+          <Avatar image={authorFixed} alt={authorName} />
           <span>{authorName}</span>
         </Author>
         &nbsp;on&nbsp;
@@ -250,45 +254,8 @@ HomepageBlogPost.propTypes = {
 }
 
 export const homepageBlogPostFragment = graphql`
-  fragment HomepageBlogPostData on MarkdownRemark {
-    excerpt
-    fields {
-      slug
-    }
-    frontmatter {
-      excerpt
-      title
-      date
-      author {
-        id
-        fields {
-          slug
-        }
-        avatar {
-          childImageSharp {
-            fixed(
-              width: 30
-              height: 30
-              quality: 80
-              traceSVG: {
-                turdSize: 10
-                background: "#f6f2f8"
-                color: "#e0d6eb"
-              }
-            ) {
-              ...GatsbyImageSharpFixed_tracedSVG
-            }
-          }
-        }
-      }
-      cover {
-        childImageSharp {
-          fluid(maxWidth: 700, quality: 80) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-    }
+  fragment HomepageBlogPostData on Mdx {
+    ...BlogPostPreview_item
   }
 `
 

@@ -1,6 +1,6 @@
 describe(`hooks`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`registers one route update on initial route`, () => {
@@ -10,7 +10,7 @@ describe(`hooks`, () => {
   it(`registers new route update on page navigation`, () => {
     cy.getTestElement(`page-two`)
       .click()
-      .waitForAPI(`onRouteUpdate`)
+      .waitForRouteChange()
 
     cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
   })

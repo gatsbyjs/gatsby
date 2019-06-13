@@ -1,7 +1,16 @@
 import React from "react"
+import fs from "fs"
+const { join } = require(`path`)
+
 import DevelopStaticEntry from "../develop-static-entry"
 
-jest.mock(`fs`)
+jest.mock(`fs`, () => {
+  const fs = jest.requireActual(`fs`)
+  return {
+    ...fs,
+    readFileSync: jest.fn(),
+  }
+})
 jest.mock(`gatsby/package.json`, () => {
   return {
     version: `2.0.0`,
@@ -17,39 +26,29 @@ jest.mock(
       },
     }
   },
-  { virtual: true }
-)
-
-jest.mock(
-  `../data.json`,
-  () => {
-    return {
-      dataPaths: [
-        {
-          [`about.json`]: `/400/about`,
-        },
-      ],
-      pages: [
-        {
-          path: `/about/`,
-          componentChunkName: `page-component---src-pages-test-js`,
-          jsonName: `about.json`,
-        },
-      ],
-    }
-  },
-  { virtual: true }
+  {
+    virtual: true,
+  }
 )
 
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
+  [join(
+    process.cwd(),
+    `/public/page-data/about/page-data.json`
+  )]: JSON.stringify({
+    componentChunkName: `page-component---src-pages-test-js`,
+    path: `/about/`,
+    webpackCompilationHash: `1234567890abcdef1234`,
+  }),
 }
 
-require(`fs`).__setMockFiles(MOCK_FILE_INFO)
-
-// Needs to be imported after __setMockFiles is called, and imports get hoisted.
-const StaticEntry = require(`../static-entry`).default
+let StaticEntry
+beforeEach(() => {
+  fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
+  StaticEntry = require(`../static-entry`).default
+})
 
 const reverseHeadersPlugin = {
   plugin: {
@@ -61,13 +60,48 @@ const reverseHeadersPlugin = {
   },
 }
 
+const injectValuePlugin = (hookName, methodName, value) => {
+  return {
+    plugin: {
+      [hookName]: staticEntry => {
+        const method = staticEntry[methodName]
+        method(value)
+      },
+    },
+  }
+}
+
+const checkSanitized = components => {
+  expect(components.includes(null)).toBeFalsy()
+  expect(
+    components.find(val => Array.isArray(val) && val.length === 0)
+  ).toBeFalsy()
+}
+
+const checkNonEmptyHeadersPlugin = {
+  plugin: {
+    onPreRenderHTML: ({
+      getHeadComponents,
+      getPreBodyComponents,
+      getPostBodyComponents,
+    }) => {
+      const headComponents = getHeadComponents()
+      const preBodyComponents = getPreBodyComponents()
+      const postBodyComponents = getPostBodyComponents()
+      checkSanitized(headComponents)
+      checkSanitized(preBodyComponents)
+      checkSanitized(postBodyComponents)
+    },
+  },
+}
+
 const fakeStylesPlugin = {
   plugin: {
     onRenderBody: ({ setHeadComponents }) =>
       setHeadComponents([
-        <style key="style1">.style1 {}</style>,
-        <style key="style2">.style2 {}</style>,
-        <style key="style3">.style3 {}</style>,
+        <style key="style1"> .style1 {} </style>,
+        <style key="style2"> .style2 {} </style>,
+        <style key="style3"> .style3 {} </style>,
       ]),
   },
 }
@@ -89,9 +123,9 @@ const fakeComponentsPluginFactory = type => {
     plugin: {
       onRenderBody: props => {
         props[`set${type}BodyComponents`]([
-          <div key="div1">div1</div>,
-          <div key="div2">div2</div>,
-          <div key="div3">div3</div>,
+          <div key="div1"> div1 </div>,
+          <div key="div2"> div2 </div>,
+          <div key="div3"> div3 </div>,
         ])
       },
     },
@@ -133,9 +167,64 @@ describe(`develop-static-entry`, () => {
   })
 })
 
+describe(`static-entry sanity checks`, () => {
+  beforeEach(() => {
+    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
+  })
+
+  const methodsToCheck = [
+    `replaceHeadComponents`,
+    `replacePreBodyComponents`,
+    `replacePostBodyComponents`,
+  ]
+
+  methodsToCheck.forEach(methodName => {
+    test(`${methodName} can filter out null value`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, null)
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+
+    test(`${methodName} can filter out null values`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [
+        null,
+        null,
+      ])
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+
+    test(`${methodName} can filter out empty array`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [])
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+
+    test(`${methodName} can filter out empty arrays`, done => {
+      const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [[], []])
+      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+
+      StaticEntry(`/about/`, (_, html) => {
+        done()
+      })
+    })
+  })
+})
+
 describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {

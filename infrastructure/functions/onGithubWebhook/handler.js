@@ -1,7 +1,6 @@
 // handler.js
 
 "use strict"
-const axios = require("axios")
 const Libhoney = require("libhoney").default
 const flatten = require("flat")
 const GraphQLClient = require("graphql-request").GraphQLClient

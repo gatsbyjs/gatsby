@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.21](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.20...gatsby-plugin-google-analytics@2.0.21) (2019-06-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Refactor gatsby-plugin-google-analytics gatsby-browser.js ([#14572](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/14572)) ([9f2c0c9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/9f2c0c9))
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.19...gatsby-plugin-google-analytics@2.0.20) (2019-05-14)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.18...gatsby-plugin-google-analytics@2.0.19) (2019-04-30)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.17...gatsby-plugin-google-analytics@2.0.18) (2019-03-26)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** Add preconnect and dns-prefetch ([#12826](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/issues/12826)) ([0640104](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/commit/0640104))
+
+## [2.0.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.16...gatsby-plugin-google-analytics@2.0.17) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
 ## [2.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics/compare/gatsby-plugin-google-analytics@2.0.15...gatsby-plugin-google-analytics@2.0.16) (2019-03-04)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

@@ -33,12 +33,16 @@ function makeHandlers(node, handlers) {
 
 export default function parseMetadata(content, node, options) {
   let components = []
-  options = options || {}
+  const { handlers, resolver: userResolver, ...parseOptions } = options || {}
   try {
     components = parse(
       content,
-      options.resolver || resolver.findAllComponentDefinitions,
-      defaultHandlers.concat(makeHandlers(node, options.handlers))
+      userResolver || resolver.findAllComponentDefinitions,
+      defaultHandlers.concat(makeHandlers(node, handlers)),
+      {
+        ...parseOptions,
+        filename: node.absolutePath,
+      }
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
