@@ -32,7 +32,7 @@ exports.sourceNodes = async (
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
 
-  // Touch existing Drupal nodes so Gatsby doesn`t garbage collect them.
+  // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
   // .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
   // .forEach(n => touchNode({ nodeId: n.id }))
@@ -87,7 +87,7 @@ exports.sourceNodes = async (
           })
         } catch (error) {
           if (error.response && error.response.status == 405) {
-            // The endpoint doesn`t support the GET method, so just skip it.
+            // The endpoint doesn't support the GET method, so just skip it.
             return []
           } else {
             console.error(`Failed to fetch ${url}`, error.message)
@@ -190,7 +190,7 @@ exports.sourceNodes = async (
 
       // Add back reference relationships.
       // Back reference relationships will need to be arrays,
-      // as we can`t control how if node is referenced only once.
+      // as we can't control how if node is referenced only once.
       if (backRefs[datum.id]) {
         backRefs[datum.id].forEach(ref => {
           if (!node.relationships[`${ref.type}___NODE`]) {
@@ -236,7 +236,7 @@ exports.sourceNodes = async (
         fileUrl = node.uri.url
       }
 
-      // Resolve w/ baseUrl if node.uri isn`t absolute.
+      // Resolve w/ baseUrl if node.uri isn't absolute.
       url = new URL(fileUrl, baseUrl)
 
       // Create the remote file from the given node
@@ -314,7 +314,7 @@ exports.sourceNodes = async (
             // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
             fileUrl = node.uri.url
           }
-          // Resolve w/ baseUrl if node.uri isn`t absolute.
+          // Resolve w/ baseUrl if node.uri isn't absolute.
           const url = new URL(fileUrl, baseUrl)
           // If we have basicAuth credentials, add them to the request.
           const auth =
