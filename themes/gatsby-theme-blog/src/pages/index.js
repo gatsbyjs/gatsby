@@ -16,7 +16,7 @@ const BlogIndex = ({
   },
 }) => (
   <Layout location={location} title={siteTitle}>
-    <Main as="main">
+    <Main>
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         const keywords = node.frontmatter.keywords || []
