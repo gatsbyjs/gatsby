@@ -163,9 +163,9 @@ exports.onCreateWebpackConfig = (
     optimization: {
       /**
        * Without this, node can get out of memory errors
-       * when building for production.
+       * when building css for production.
        */
-      minimizer: gatsbyConfig.optimization.minimizer,
+      minimizer: [plugins.minifyCss()].filter(Boolean),
     },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
   }
