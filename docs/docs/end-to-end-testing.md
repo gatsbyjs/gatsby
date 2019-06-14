@@ -166,7 +166,7 @@ describe("Accessibility checks", () => {
     cy.focused()
       .should("have.text", "Gatsby")
       .should("have.attr", "href", "https://www.gatsbyjs.org")
-      .should("have.css", "outline-width", "1px")
+      .should("not.have.css", "outline-width", "0px")
   })
   // highlight-end
 })
