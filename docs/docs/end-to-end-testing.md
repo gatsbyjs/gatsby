@@ -62,7 +62,7 @@ Please read the [Cypress' official documentation](https://docs.cypress.io/guides
 
 ## Writing tests
 
-The first test is an **accessibility** test with [cypress-axe](https://github.com/avanslaars/cypress-axe).
+A good use case for writing automated end-to-end tests is asserting **accessibility** with [cypress-axe](https://github.com/avanslaars/cypress-axe), a Cypress plugin that incorporates the [axe](https://deque.com/axe) accessibility testing API. While some [manual testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) is still required to ensure good web accessibility, automation can ease the burden on human testers.
 
 To use cypress-axe you have to install `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core). You'll also use some commands from [cypress-testing-library](https://testing-library.com/docs/cypress-testing-library/intro) to target elements easier:
 
