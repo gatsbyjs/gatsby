@@ -134,6 +134,12 @@ const _options = {
         color: colors.white,
         fontWeight: `400`,
       },
+      ".gatsby-highlight pre[class='language-mdx']::before": {
+        content: `'mdx'`,
+        background: `#f9ac00`,
+        color: colors.white,
+        fontWeight: `400`,
+      },
       ".gatsby-highlight pre[class='language-shell']::before": {
         content: `'shell'`,
       },

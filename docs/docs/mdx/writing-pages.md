@@ -18,7 +18,7 @@ By default, `gatsby-plugin-mdx` supports [frontmatter](/docs/adding-markdown-pag
 so you can define things like titles and paths to use in your GraphQL
 queries. You can declare frontmatter at the beginning of your MDX document:
 
-```markdown
+```mdx
 ---
 title: Hello, world!
 path: /hello-world
@@ -53,7 +53,7 @@ query {
 Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
 
-```markdown
+```mdx
 ---
 title: "Building with Gatsby"
 author: "Jay Gatsby"
@@ -71,7 +71,7 @@ author: "Jay Gatsby"
 Similarly to what you'd do in plain React, you can import and render JSX components
 directly in MDX files. You can also import other MDX documents.
 
-```markdown:title=src/pages/chart.mdx
+```mdx:title=src/pages/chart.mdx
 import { Chart } from "../components/chart"
 import FAQ from "../components/faq.mdx"
 
@@ -89,7 +89,7 @@ other React component, while the `<FAQ />` component coming from an `.mdx`
 file might look something like this:
 
 <!-- prettier-ignore -->
-```markdown:title=src/components/faq.mdx
+```mdx:title=src/components/faq.mdx
 ## Frequently Asked Questions
 
 ### Why Gatsby?
@@ -132,7 +132,7 @@ variable name you've assigned it.
 You can export variables, objects, or other data structures:
 
 <!-- prettier-ignore -->
-```markdown
+```mdx
 export const metadata = {
   name: "World",
   path: "/world",
@@ -174,7 +174,8 @@ If you have [provided a default layout](/packages/gatsby-plugin-mdx/?=mdx#defaul
 through the `gatsby-plugin-mdx` plugin options, the exported component you define
 from this file will replace the default.
 
-```markdown:title=src/pages/layout-example.mdx
+<!-- prettier-ignore -->
+```mdx:title=src/pages/layout-example.mdx
 import PurpleBorder from "../components/purple-border"
 
 # This will have a purple border
@@ -203,7 +204,7 @@ as a prop, and can be accessed inside any JSX block when writing in
 MDX:
 
 <!-- prettier-ignore -->
-```markdown
+```mdx
 import { graphql } from "gatsby"
 
 # My Awesome Page
