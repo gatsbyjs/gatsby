@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.10...gatsby-remark-graphviz@1.0.11) (2019-06-10)
+
+### Bug Fixes
+
+- **gatsby-remark-graphviz:** fix graphviz on node < 10 ([#14691](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/issues/14691)) ([728a63d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/commit/728a63d))
+
 ## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.9...gatsby-remark-graphviz@1.0.10) (2019-06-04)
 
 ### Features

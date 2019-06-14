@@ -24,6 +24,10 @@ const readState = () => {
         state.nodesByType.get(type).set(node.id, node)
       })
     }
+    // jsonDataPaths was removed in the per-page-manifest
+    // changes. Explicitly delete it here to cover case where user
+    // runs gatsby the first time after upgrading.
+    delete state[`jsonDataPaths`]
     return state
   } catch (e) {
     // ignore errors.
@@ -48,18 +52,14 @@ const store = configureStore(readState())
 
 // Persist state.
 const saveState = () => {
-  if (process.env.DANGEROUSLY_DISABLE_OOM) {
-    return Promise.resolve()
-  }
-
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
     `componentDataDependencies`,
-    `jsonDataPaths`,
     `components`,
     `staticQueryComponents`,
+    `webpackCompilationHash`,
   ])
 
   return writeToCache(pickedState)
