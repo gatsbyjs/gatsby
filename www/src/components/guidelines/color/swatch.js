@@ -77,6 +77,7 @@ export default class Swatch extends React.Component {
                 display: `block`,
               },
             }}
+            aria-label={color.hex}
             onClick={this.handleClick}
           >
             <Box
