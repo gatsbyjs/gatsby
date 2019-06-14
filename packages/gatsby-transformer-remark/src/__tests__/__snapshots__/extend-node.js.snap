@@ -16,22 +16,6 @@ Object {
 }
 `;
 
-exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 2`] = `
-Object {
-  "excerpt": "",
-  "excerptAst": Object {
-    "children": Array [],
-    "data": Object {
-      "quirksMode": false,
-    },
-    "type": "root",
-  },
-  "frontmatter": Object {
-    "title": "my little pony",
-  },
-}
-`;
-
 exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony?",
