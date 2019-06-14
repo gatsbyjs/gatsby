@@ -61,6 +61,7 @@ const Palette = ({ color, handler }) => {
   const node = Object.keys(palette)
     .filter(group => group === color)
     .map(node => node)
+  const name = palette[node].name
 
   return (
     <Box
@@ -102,8 +103,9 @@ const Palette = ({ color, handler }) => {
             css={{
               borderBottom: `1px solid ${theme.colors.link.border}`,
             }}
+            title={`Open “${name}” color modal`}
           >
-            {capitalize(node)}
+            {name}
           </SectionSubheading>
         </Box>
       </Box>
