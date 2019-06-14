@@ -2,7 +2,7 @@
 title: Sass
 ---
 
-Sass is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS using a Gatsby plugin.
+[Sass](https://sass-lang.com) is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. In Gatsby, Sass code can be translated to well-formatted, standard CSS using a plugin.
 
 Sass will compile `.sass` and `.scss` files to `.css` files for you, so you can write your stylesheets with more advanced features.
 
