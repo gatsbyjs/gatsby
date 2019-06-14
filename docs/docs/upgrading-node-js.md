@@ -1,4 +1,6 @@
-# Upgrading your Node.js version
+---
+title: Upgrading your Node.js version
+---
 
 
 ## Gatsby's Node.js support policy
@@ -18,13 +20,13 @@ node -v
 v10.16.0
 ```
 
-This example shows Node version 10.
+This example shows Node version 10, specifically v10.16.0.
 
 ## Upgrading from Node version 6
 
-Node version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsby's dependencies are updating to Node version 8 and above. Gatsby must also update in order release new features and bug fixes.
+Node version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsby's dependencies are updating to Node version 8 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
 
-Generally we'd recommend using [the Node version who's status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
+Generally we'd recommend using [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
 
 > What about Node 7? Stable versions of Node are evenly numbered releases - Node 6, Node 8, Node 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
@@ -107,7 +109,7 @@ to install and use Node version 8.
 
 If you aren't using any of the previously listed installation methods, you can [download a Node installer directly from nodejs.org](https://nodejs.org/en/).
 
-Gatsby's recommended way to install Node is by using Homebrew. See the Homebrew section of this document for more info.
+Gatsby's recommended way to install Node is by using Homebrew. Refer to the previous [Homebrew section of this document](#using-homebrew) for more info.
 
 ## Conclusion
 
@@ -115,4 +117,4 @@ Gatsby takes backwards compatibility seriously and aims to support older version
 
 Gatsby also relies on a huge ecosystem of JavaScript dependencies. As the ecosystem moves away from older, unsupported Node versions we have to keep pace to ensure that bugs can be fixed and new features can be released.
 
-In this document you learned how you upgrade from Node version 6 (which has reached _End of Life_ status), to Node version 8 (which is reached _Maintenance_) status.
+In this document you learned how you upgrade from Node version 6 (which has reached _End of Life_ status), to Node version 8 (which has reached _Maintenance_) status.
