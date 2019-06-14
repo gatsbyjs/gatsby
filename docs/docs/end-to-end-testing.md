@@ -1,5 +1,5 @@
 ---
-title: End-to-end testing
+title: End-to-End Testing
 ---
 
 [Cypress](https://www.cypress.io/) is one of the options when it comes to end-to-end (E2E) testing. Cypress is an all-in-one testing framework focused on E2E testing, meaning that you don't have to install 10 different things to get your test suite set up. You can write your first passing test in minutes without any configuration with the help of Cypress' API, which is easy to read and understand. It runs tests as fast as your browser can render content, which also makes test-driven development possible. You'll also profit from the time travel feature or the extensive debugging capabilities with Chrome DevTools. Of course you can also use it with Gatsby, and this guide will explain how.
@@ -91,7 +91,7 @@ Cypress right now will look for tests inside the `cypress/integration` folder. I
 
 Create a new file inside `cypress/e2e` folder and name it `a11y.test.js`.
 
-You'll use the `beforeEach` hook to run some commands before each test. After cypress loads the homepage you'll use the `checkA11y` method to check for accessibility violations:
+You'll use the `beforeEach` hook to run some commands before each test. After cypress loads the homepage you'll use the `checkA11y` method from `cypress-axe` to check for accessibility violations:
 
 ```js:title=cypress/e2e/a11y.test.js
 /// <reference types="Cypress" />
@@ -110,7 +110,7 @@ describe("Accessibility checks", () => {
 
 You can run `test:e2e` to run the test. If you already have the development server open you can run `cy:open` instead.
 
-One thing to keep in mind is that you can't always see the exact error message from the sidebar (command log). For that, you have to open the developer console and find the message in the output. You can see how an accessibility error looks in the [cypress-axe GitHub page](https://github.com/avanslaars/cypress-axe#output).
+One thing to keep in mind is that you can't always see the exact error message from the sidebar (command log). For that, you have to open the browser developer console and find the message in the output. You can see how an accessibility error looks in the [cypress-axe GitHub page](https://github.com/avanslaars/cypress-axe#output).
 
 You don't have to use the `checkA11y` method only on page load. For example, you can perform a click on a button and check again. This is especially useful if that button opens a modal or a mobile menu for example.
 
