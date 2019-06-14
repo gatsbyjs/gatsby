@@ -109,14 +109,14 @@ Any file with the `module` extension will use CSS Modules.
 
 PostCSS is also included to handle some default optimizations like autoprefixing
 and common cross-browser flexbox bugs. Normally you don't need to think about it, but if
-you'd prefer to add additional postprocessing to your SASS output you can specify plugins
-in the plugin options
+you'd prefer to add additional postprocessing to your Sass output you can specify plugins
+in the plugin options.
 
 ## Relative paths & url()
 
-This plugin resolves `url()` paths relative to the entry SCSS/SASS file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
+This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
 
-Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) may provide a workaround, but at present this is not in the build and implementation would demand customisation.
+Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) may provide a workaround, but at present this is not in the build and implementation would demand customization.
 
 <!-- TODO link to a plugin that adds resolve-url-loader -->
 
