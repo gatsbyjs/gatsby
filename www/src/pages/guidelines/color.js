@@ -100,10 +100,11 @@ class Color extends React.Component {
 
                 <Box>
                   <Text
-                    as="h4"
+                    as="h3"
                     color="grey.50"
                     mb={0}
                     mt={{ xxs: 8, lg: 0 }}
+                    fontSize={2}
                     fontWeight={0}
                   >
                     WCAG Contrast Score
