@@ -27,9 +27,9 @@ Simply put, when someone wants to contribute to Gatsby, they open a request to _
 - Starters or Site Showcase
 - Blog posts
 
-When looking at a PR for the first time, it can help to read up on linked issues or RFCs (if there are any) to gain context on what the PR intends to add or fix.
+When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
-> 💡 We typically recommend opening an issue before a PR if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
+> 💡 We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) before a PR if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
 
 ## Verifying a Pull Request
 
@@ -37,7 +37,7 @@ When looking at a PR for the first time, it can help to read up on linked issues
 
 Some general things to verify in a pull request are:
 
-- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference` instead of `https://www.gatsbyjs.org/docs/some-reference`)
+- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
 - Language ought to be inclusive and accessible
 - Issues and RFCs (if any) that this PR addresses ought to be linked to
 
@@ -45,21 +45,23 @@ Some general things to verify in a pull request are:
 
 Each kind of PR also requires a different set of specific checks from us before they are merged in.
 
-Let's go over them real quick.
+Let's go over them below.
 
 #### Documentation
 
-We typically look for the following in PRs that add documentation:
+We typically look for the following in [PRs that add documentation](/contributing/docs-contributions/):
 
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
+- Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
+- Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
 
 #### Code
 
 For [PRs that add code](/contributing/code-contributions/) (whether a feature or fix), we look for the following:
 
 - Correctness — whether the code does what we think it does
-- Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behaviour. This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
+- Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behavior. This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
 - Code Quality — focus on reasonable changes that will likely improve code maintenance, comprehension, or correctness. Stylistic changes are typically linted for by Prettier. Don't nitpick.
 - Documentation in the package's README if you're adding something
 
@@ -95,7 +97,9 @@ We lint all code and documentation for consistency. You might find that your PR 
 
 If this is your PR and you have the code checked out on your machine, you can run:
 
-> 💡 npm run format
+```bash
+npm run format
+```
 
 This will automatically re-format your changes to match the linting requirements. Don't forget to git commit and push your new changes.
 
@@ -151,7 +155,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 - Try not to [bikeshed](http://bikeshed.com/) too much
 - Note when a suggestion is optional (as opposed to required)
 - Be objective and limit nitpicks (a few are fine if they add value or improve code readability)
-- Don't suggest changes out of scope which are best addressed in a separate PR
+- Don't suggest and expect changes out of scope which are best addressed in a separate PR
 
 ## Rights and Permissions
 
@@ -159,7 +163,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 
 If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
 
-> 💡 Not a member yet? Want to get involved in contributing to open source projects? Make your first contribution and you'll be invited automatically!
+> 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
 
 ### Who can approve a PR?
 
@@ -186,4 +190,4 @@ Gatsbot is our little android friend that automatically merges PRs that are read
 
 ## Frequently Asked Questions
 
-We don't have any at the moment but if you have one, feel free to add it here.
+We don't have any at the moment but if you have one, feel free to contribute it here.
