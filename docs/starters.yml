@@ -2728,8 +2728,8 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
-- url: https://gatsby-starter-anoun-1-markdown.netlify.com/
-  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
+- url: https://gatsby-starter-material-business-markdown.netlify.com/
+  repo: https://github.com/ANOUN/gatsby-starter-material-business-markdown
   description: A clean, modern starter for businesses using Material Design Components
   tags:
     - Business Website
@@ -2738,6 +2738,7 @@
     - Modern Design
     - PWA
     - Styling:Material Design
+    - Styling:Material
     - Styling:SCSS
   features:
     - Minimal, Modern Business Website Design
