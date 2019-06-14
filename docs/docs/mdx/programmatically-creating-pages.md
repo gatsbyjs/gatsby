@@ -18,7 +18,7 @@ support for MDX so you can start your blog. The posts will live in
 - [Add MDX files](#add-mdx-files)
 - [Generate slugs](#generate-slugs)
 - [Create pages](#create-pages-from-sourced-mdx-files)
-- [Make a template](#make-a-template-for-your-post)
+- [Make a template](#make-a-template-for-your-posts)
 
 ## Source MDX pages from the filesystem
 

@@ -7,7 +7,7 @@ tags: ["themes", "tutorials"]
 
 ### What is a Gatsby theme?
 
-<pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</pullquote>
+<Pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</Pullquote>
 
 ## Getting Started
 

@@ -20,7 +20,7 @@ The goal is make sure every contributor has a great experience and to prevent va
 
 Change the slack channel ID to point to your own personal channel while experimenting (find that by [opening up slack in the web](https://gatsbyjs.slack.com) and copying the ID looking thing.
 
-If testing changes, you can also write out the GitHub API response to a file called data.json and then change code in `process.js` to load
+If testing changes, you can also write out the GitHub API response to a file called data.json and then change code in `process-data.js` to load
 that file instead of waiting for API response from `index.js`. This speeds up iteration on design.
 
 You can test the output by copy/pasting the CLI output to https://api.slack.com/tools/block-kit-builder

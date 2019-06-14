@@ -33,12 +33,14 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           No {`${emptyStateReason}`} starters found!
           <div css={{ color: colors.gatsby }}>
             <small>
-              Maybe you should write one and
+              Why not write one and
               {` `}
               <Link to="/contributing/submit-to-starter-library/">
                 submit it
               </Link>
-              ?
+              ? Or learn more
+              {` `}
+              <Link to="/docs/starters">about starters</Link>.
             </small>
           </div>
         </h1>
@@ -48,11 +50,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (count) {
     starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
     return (
-      <div
-        css={{
-          ...styles.showcaseList,
-        }}
-      >
+      <div css={{ ...styles.showcaseList }}>
         {starters.map(({ node: starter }) => {
           const {
             description,
@@ -80,15 +78,11 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   image={starter.childScreenshot}
                   title={`${owner}/${name}`}
                 />
-                <div
-                  css={{
-                    ...styles.meta,
-                  }}
-                >
+                <div css={{ ...styles.meta }}>
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span css={{ color: colors.gray.dark }}>{owner} /</span>
+                    <span css={{ color: colors.text.header }}>{owner} /</span>
                     <span css={{ display: `flex` }}>
                       {gatsbyMajorVersion[0][1] === `2` && (
                         <img
@@ -100,14 +94,14 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                           }}
                         />
                       )}
-                      <div css={{ display: `inline-block` }}>
-                        <MdStar
-                          style={{
-                            color: colors.gray.light,
-                            verticalAlign: `text-top`,
-                          }}
-                        />
-                        {stars}
+                      <div
+                        css={{
+                          alignItems: `center`,
+                          display: `inline-flex`,
+                          fontSize: fontSizes[0],
+                        }}
+                      >
+                        <MdStar /> {stars}
                       </div>
                     </span>
                   </div>

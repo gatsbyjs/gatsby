@@ -13,26 +13,6 @@ HTTPS, asset acceleration, and a lot more.
 Their free tier includes unlimited personal and commercial projects, HTTPS,
 continuous deployment from public or private repos and more.
 
-## Getting Started - Gatsby
-
-First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
-
-```shell
-npm install --global gatsby-cli
-```
-
-Next, we'll create a new Gatsby site:
-
-```shell
-gatsby new my-gatsby-site
-```
-
-Finally, change into the new site directory:
-
-```shell
-cd my-gatsby-site
-```
-
 **NOTE**: There is no need to build the site, Netlify can handle that for us.
 
 ## Getting Started - Netlify

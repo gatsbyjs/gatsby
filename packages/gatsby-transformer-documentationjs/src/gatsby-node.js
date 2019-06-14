@@ -65,33 +65,47 @@ exports.sourceNodes = ({ actions }) => {
       lends: String
       type: DoctrineType
       default: JSON
-      augments: [DocumentationJs]
+      augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
-      implements: [DocumentationJs]
-      params: [DocumentationJs]
-      properties: [DocumentationJs]
-      returns: [DocumentationJs]
-      throws: [DocumentationJs]
-      todos: [DocumentationJs]
-      yields: [DocumentationJs]
+      implements: [DocumentationJs] @link(from: "implements___NODE")
+      params: [DocumentationJs] @link(from: "params___NODE")
+      properties: [DocumentationJs] @link(from: "properties___NODE")
+      returns: [DocumentationJs] @link(from: "returns___NODE")
+      throws: [DocumentationJs] @link(from: "throws___NODE")
+      todos: [DocumentationJs] @link(from: "todos___NODE")
+      yields: [DocumentationJs] @link(from: "yields___NODE")
       members: DocumentationJsMembers
+      codeLocation: DocumenationJSLocationRange
+      docsLocation: DocumenationJSLocationRange
+    }
+
+    type DocumentationJSLocation {
+      line: Int
+      column: Int
+    }
+
+    type DocumenationJSLocationRange {
+      start: DocumentationJSLocation
+      end: DocumentationJSLocation
     }
 
     type DocumentationJsExample {
       caption: String
       description: String
+      highlighted: String
+      raw: String
     }
 
     type DocumentationJsMembers {
-      static: [DocumentationJs]
-      instance: [DocumentationJs]
-      events: [DocumentationJs]
-      global: [DocumentationJs]
-      inner: [DocumentationJs]
+      static: [DocumentationJs] @link(from: "static___NODE")
+      instance: [DocumentationJs] @link(from: "instance___NODE")
+      events: [DocumentationJs] @link(from: "events___NODE")
+      global: [DocumentationJs] @link(from: "global___NODE")
+      inner: [DocumentationJs] @link(from: "inner___NODE")
     }
 
     type DoctrineType {
-      type: String!
+      type: String
       name: String
       elements: [JSON]
       expression: JSON
@@ -99,10 +113,65 @@ exports.sourceNodes = ({ actions }) => {
       params: [JSON]
       fields: [JSON]
       result: JSON
-      typeDef: DocumentationJs
+      typeDef: DocumentationJs @link(from: "typeDef___NODE")
     }
   `
   createTypes(typeDefs)
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    DocumentationJs: {
+      type: {
+        // resolve `typeDef___NODE` recursively
+        resolve: (source, _, context) => {
+          if (!source.type) {
+            return null
+          }
+
+          const fieldsToVisit = [`elements`, `expression`, `applications`]
+
+          const resolve = obj => {
+            if (!obj.typeDef___NODE) {
+              return obj
+            }
+
+            return {
+              ...obj,
+              typeDef: context.nodeModel.getNodeById(
+                { id: obj.typeDef___NODE, type: `DocumentationJs` },
+                { path: context.path }
+              ),
+            }
+          }
+
+          const visit = obj => {
+            if (!obj) {
+              return null
+            }
+
+            const ret = { ...obj }
+
+            fieldsToVisit.forEach(fieldName => {
+              const v = obj[fieldName]
+              if (!v) {
+                return
+              }
+
+              if (Array.isArray(v)) {
+                ret[fieldName] = v.map(t => visit(resolve(t)))
+              } else {
+                ret[fieldName] = visit(resolve(v))
+              }
+            })
+            return ret
+          }
+
+          return visit(resolve(source.type))
+        },
+      },
+    },
+  })
 }
 
 /**
@@ -210,7 +279,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       const children = []
 
-      const picked = _.pick(docsJson, [
+      let picked = _.pick(docsJson, [
         `kind`,
         `memberof`,
         `name`,
@@ -231,6 +300,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `since`,
         `lends`,
         `examples`,
+        `tags`,
       ])
 
       picked.optional = false
@@ -245,6 +315,9 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       }
 
       if (picked.type) {
+        if (picked.type === `OptionalType` && docsJson.expression) {
+          picked = { ...picked, optional: true, ...docsJson.expression }
+        }
         if (picked.type.type === `OptionalType` && picked.type.expression) {
           picked.optional = true
           picked.type = picked.type.expression
@@ -344,6 +417,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       if (docsJson.examples) {
         picked.examples = docsJson.examples.map(example => {
           return {
+            ...example,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,

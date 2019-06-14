@@ -60,8 +60,7 @@ plugins: [
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 
 #### Parameters
 
@@ -81,8 +80,8 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 ### fluid
 
 Create fluid sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
-1600, 2400 – enough to provide close to the optimal image size for every device
+rendered markdown file is 800px, the sizes would then be: 200px, 400px, 800px, 1200px,
+1600px – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
 If you want more control over which sizes are output you can use the `srcSetBreakpoints`

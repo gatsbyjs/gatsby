@@ -1,17 +1,23 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
+const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
+const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
-module.exports = async ({ spaceId, syncToken, ...options }) => {
+module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 
   console.log(`Starting to fetch data from Contentful`)
 
-  const client = contentful.createClient({
-    space: spaceId,
-    ...options,
-  })
+  const contentfulClientOptions = {
+    space: pluginConfig.get(`spaceId`),
+    accessToken: pluginConfig.get(`accessToken`),
+    host: pluginConfig.get(`host`),
+    environment: pluginConfig.get(`environment`),
+  }
+
+  const client = contentful.createClient(contentfulClientOptions)
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
@@ -23,17 +29,40 @@ module.exports = async ({ spaceId, syncToken, ...options }) => {
     console.log(`Fetching default locale`)
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
-    locales = locales.filter(options.localeFilter || (() => true))
+    locales = locales.filter(pluginConfig.get(`localeFilter`))
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
-    console.log(
-      `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`
-    )
-    console.log(
-      `Try running setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.`
-    )
+    let details
+    let errors
+    if (e.code === `ENOTFOUND`) {
+      details = `You seem to be offline`
+    } else if (e.response) {
+      if (e.response.status === 404) {
+        // host and space used to generate url
+        details = `Endpoint not found. Check if ${chalk.yellow(
+          `host`
+        )} and ${chalk.yellow(`spaceId`)} settings are correct`
+        errors = {
+          host: `Check if setting is correct`,
+          spaceId: `Check if setting is correct`,
+        }
+      } else if (e.response.status === 401) {
+        // authorization error
+        details = `Authorization error. Check if ${chalk.yellow(
+          `accessToken`
+        )} and ${chalk.yellow(`environment`)} are correct`
+        errors = {
+          accessToken: `Check if setting is correct`,
+          environment: `Check if setting is correct`,
+        }
+      }
+    }
 
-    process.exit(1)
+    reporter.panic(`Accessing your Contentful space failed.
+Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
+${details ? `\n${details}\n` : ``}
+Used options:
+${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   }
 
   let currentSyncData
@@ -41,8 +70,7 @@ module.exports = async ({ spaceId, syncToken, ...options }) => {
     let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    console.log(`error fetching contentful data`, e)
-    process.exit(1)
+    reporter.panic(`Fetching contentful data failed`, e)
   }
 
   // We need to fetch content types with the non-sync API as the sync API
@@ -120,7 +148,14 @@ function pagedGet(
       aggregatedResponse.items = aggregatedResponse.items.concat(response.items)
     }
     if (skip + pageLimit <= response.total) {
-      return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
+      return pagedGet(
+        client,
+        method,
+        query,
+        skip + pageLimit,
+        pageLimit,
+        aggregatedResponse
+      )
     }
     return aggregatedResponse
   })
