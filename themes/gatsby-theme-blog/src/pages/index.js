@@ -19,7 +19,7 @@ const BlogIndex = ({
     <Main as="main">
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
-        const keywords = node.frontmatter.keywords || [``]
+        const keywords = node.frontmatter.keywords || []
         return (
           <Fragment key={node.fields.slug}>
             <SEO title="Home" keywords={keywords} />
