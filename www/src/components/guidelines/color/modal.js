@@ -193,7 +193,12 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
         <Heading mr={4} mt={0}>
           {palette[color].name}
         </Heading>
-        <CloseButton onClick={handleModalClose}>&times;</CloseButton>
+        <CloseButton
+          onClick={handleModalClose}
+          aria-label={`Close “${palette[color].name}” modal`}
+        >
+          &times;
+        </CloseButton>
       </Flex>
       <Box p={{ xxs: 6, md: 8 }} bg={base.hex}>
         <Heading
