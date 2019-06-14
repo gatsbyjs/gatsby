@@ -2,7 +2,6 @@
 title: Upgrading your Node.js version
 ---
 
-
 ## Gatsby's Node.js support policy
 
 Gatsby aims to support any version of Node that has a release status of _Current_, _Active_, or _Maintenance_. Once a major version of Node reaches _End of Life_ status Gatsby will stop supporting that version.
@@ -74,18 +73,6 @@ There are two popular packages used for managing multiple versions of Node on yo
 
 These packages are very useful for people that regularly work with different versions of Node.
 
-#### n
-
-Run:
-
-```
-n
-```
-
-in a terminal to see if n is installed on your system. If it's installed, you can run `n 8` to install and use Node version 8.
-
-[Check n's documentation for further instructions](https://github.com/tj/n).
-
 #### nvm
 
 Run
@@ -104,6 +91,18 @@ nvm alias default 8
 to install and use Node version 8.
 
 [Check nvm's documentation for further instructions](https://github.com/nvm-sh/nvm).
+
+#### n
+
+Run:
+
+```
+n
+```
+
+in a terminal to see if n is installed on your system. If it's installed, you can run `n 8` to install and use Node version 8.
+
+[Check n's documentation for further instructions](https://github.com/tj/n).
 
 ### Installing from nodejs.org
 
