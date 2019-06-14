@@ -82,15 +82,7 @@ This feature works seamlessly with `pathPrefix`. Build out your application with
 
 When using a custom asset prefix with `gatsby-plugin-offline`, your assets can still be cached offline. However, to ensure the plugin works correctly, there are a few things you need to do.
 
-1. Your asset server needs to have the following headers set:
-
-   ```
-   Access-Control-Allow-Origin: <site origin>
-   Access-Control-Allow-Credentials: true
-   ```
-
-   Note that the origin needs to be specific, rather than using `*` to allow all origins. This is because Gatsby makes requests to fetch resources with `withCredentials` set to `true`, which disallows using `*` to match all origins. This is also why the second header is required. For local testing, use `http://localhost:9000` as the origin.
-
+1. Your asset server needs to have the `Access-Control-Allow-Origin` header set either to `*` or your site's origin.
 2. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the Webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
 
    You can find most of these by looking for the `self.__precacheManifest` variable in your generated `sw.js`. Remember to also include `sw.js` itself, and any icons referenced in your `manifest.webmanifest` if you have one. To check your service worker is functioning as expected, look in Application → Service Workers in your browser dev tools, and check for any failed resources in the Console/Network tabs.
