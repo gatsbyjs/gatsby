@@ -37,6 +37,8 @@
           link: /contributing/how-to-label-an-issue/
         - title: Triaging GitHub Issues
           link: /contributing/triaging-github-issues/
+        - title: Managing Pull Requests
+          link: /contributing/managing-pull-requests/
         - title: Docs Contributions
           link: /contributing/docs-contributions/
           items:
