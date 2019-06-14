@@ -161,9 +161,7 @@ describe("Accessibility checks", () => {
   })
   // highlight-start
   it("Checks if footer link is focusable and has the correct attributes", () => {
-    cy.getAllByText("Gatsby")
-      .focus()
-      .checkA11y()
+    cy.getAllByText("Gatsby").focus()
 
     cy.focused()
       .should("have.text", "Gatsby")
