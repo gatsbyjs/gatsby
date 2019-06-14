@@ -1,5 +1,5 @@
 ---
-title: Headless CMS
+title: Sourcing from Headless CMSs
 overview: true
 ---
 
@@ -13,28 +13,33 @@ Through use of [source plugins](/plugins/?=source), Gatsby has support for dozen
 
 The guides in this section will walk through the process of setting up content sourcing from some of the most popular headless CMSes in use today.
 
-<GuideList slug={props.slug} />
-
 <!--
   Ordering in this section is driven by Gatsby plugin downloads (/plugins/?=gatsby-source-) & CMS vendor size/adoption.
 -->
 
 Other CMS systems you can connect to include:
 
-- [Shopify](/packages/gatsby-source-shopify)
-- [Strapi](/packages/gatsby-source-strapi)
-- [DatoCMS](https://www.datocms.com): [docs](/packages/gatsby-source-datocms), [business case](https://www.gatsbyjs.com/guides/datocms/)
-- [Sanity](https://www.sanity.io/): [docs](/packages/gatsby-source-sanity/), [guide](/docs/sourcing-from-sanity)
-- [Contentstack](https://www.contentstack.com): [docs](/packages/gatsby-source-contentstack), [guide](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack), [starter](/starters/contentstack/gatsby-starter-contentstack/)
-- [ButterCMS](https://buttercms.com): [docs](/packages/gatsby-source-buttercms), [guide](/docs/sourcing-from-buttercms/), [starter](/starters/ButterCMS/gatsby-starter-buttercms/)
-- [Ghost](https://ghost.org): [docs](/docs/sourcing-from-ghost/), [guide](/blog/2019-01-14-modern-publications-with-gatsby-ghost/), [starter](/starters/TryGhost/gatsby-starter-ghost/)
-- [Kentico Cloud](https://kenticocloud.com/): [docs](/packages/gatsby-source-kentico-cloud), [guide](/docs/sourcing-from-kentico-cloud), [launch post](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/), [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)
-- [Directus](/packages/gatsby-source-directus)
-- [GraphCMS](https://graphcms.com/?ref=gatsby-headless-cms-landing]): [docs](/packages/gatsby-source-graphql), [guide](/docs/sourcing-from-graphcms), [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/)
-- [CosmicJS](https://cosmicjs.com/): [docs](/packages/gatsby-source-cosmicjs), [guide](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/)
-- [Cockpit](/packages/gatsby-plugin-cockpit)
-- [Storyblok](/packages/gatsby-source-storyblok)
-- [CraftCMS](/packages/gatsby-source-craftcms)
+| CMS                                           | Guides                                                                                                       | Plugin Docs                                   | Starter                                                             |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------- | ------------------------------------------------------------------- |
+| [Contentful](https://www.contentful.com/)     | [guide](/docs/sourcing-from-contentful/)                                                                     | [docs](/packages/gatsby-source-contentful)    | [starter](/starters/contentful-userland/gatsby-contentful-starter/) |
+| [Drupal](https://www.drupal.com/)             | [guide](/docs/sourcing-from-drupal/)                                                                         | [docs](/packages/gatsby-source-drupal)        |                                                                     |
+| [Prismic](https://www.prismic.io/)            | [guide](/docs/sourcing-from-prismic/)                                                                        | [docs](/packages/gatsby-source-prismic)       |                                                                     |
+| [NetlifyCMS](https://www.netlifycms.com/)     | [guide](/docs/sourcing-from-netlify-cms/)                                                                    | [docs](/packages/gatsby-source-netlifycms)    | [starter](/starters/netlify-templates/gatsby-starter-netlify-cms/)  |
+| [WordPress](https://www.wordpress.com/)       | [guide](/docs/sourcing-from-wordpress/)                                                                      | [docs](/packages/gatsby-source-wordpress)     |                                                                     |
+| [Shopify](https://www.shopify.com/)           |                                                                                                              | [docs](/packages/gatsby-source-shopify)       |                                                                     |
+| [Strapi](https://strapi.io/)                  |                                                                                                              | [docs](/packages/gatsby-source-strapi)        |
+| [DatoCMS](https://www.datocms.com/)           | [guide](https://www.gatsbyjs.com/guides/datocms/)                                                            | [docs](/packages/gatsby-source-datocms)       | [starter](/starters/datocms/gatsby-portfolio/)                      |
+| [Sanity](https://www.sanity.io/)              | [guide](/docs/sourcing-from-sanity)                                                                          | [docs](/packages/gatsby-source-sanity/)       |
+| [Contentstack](https://www.contentstack.com/) | [guide](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack) | [docs](/packages/gatsby-source-contentstack)  | [starter](/starters/contentstack/gatsby-starter-contentstack/)      |
+| [ButterCMS](https://buttercms.com/)           | [guide](/docs/sourcing-from-buttercms/)                                                                      | [docs](/packages/gatsby-source-buttercms)     | [starter](/starters/ButterCMS/gatsby-starter-buttercms/)            |
+| [Ghost](https://ghost.org/)                   | [guide](/docs/sourcing-from-ghost/)                                                                          | [docs](/packages/gatsby-source-ghost/)        | [starter](/starters/TryGhost/gatsby-starter-ghost/)                 |
+| [Kentico Cloud](https://kenticocloud.com/)    | [guide](/docs/sourcing-from-kentico-cloud)                                                                   | [docs](/packages/gatsby-source-kentico-cloud) | [starter](/starters/Kentico/gatsby-starter-kentico-cloud/)          |
+| [Directus](https://directus.io/)              |                                                                                                              | [docs](/packages/gatsby-source-directus)      |
+| [GraphCMS](https://graphcms.com/)             | [guide](/docs/sourcing-from-graphcms)                                                                        | [docs](/packages/gatsby-source-graphql)       | [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/)  |
+| [CosmicJS](https://cosmicjs.com/)             | [guide](/blog/2018-06-07-build-a-gatsby-blog-using-the-cosmic-js-source-plugin/)                             | [docs](/packages/gatsby-source-cosmicjs)      | [starters](/starters/?s=cosmicjs&v=2)                               |
+| [Cockpit](https://getcockpit.com/)            |                                                                                                              | [docs](/packages/gatsby-plugin-cockpit)       |
+| [Storyblok](https://www.storyblok.com/)       |                                                                                                              | [docs](/packages/gatsby-source-storyblok)     |
+| [CraftCMS](https://craftcms.com/)             |                                                                                                              | [docs](/packages/gatsby-source-craftcms)      |
 
 ## How to add new guides to this section
 
