@@ -41,6 +41,7 @@ const argsWhitelist = [
   `jpegProgressive`,
   `grayscale`,
   `rotate`,
+  `trim`,
   `duotone`,
   `fit`,
   `background`,
@@ -57,6 +58,7 @@ const argsWhitelist = [
  * @property {boolean} jpegProgressive
  * @property {boolean} grayscale
  * @property {number} rotate
+ * @property {number} trim
  * @property {object} duotone
  */
 
@@ -88,6 +90,10 @@ exports.processFile = (file, transforms, options = {}) => {
     debug(`Start processing ${outputPath}`)
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
+
+    if (args.trim) {
+      clonedPipeline = clonedPipeline.trim(args.trim)
+    }
 
     if (!args.rotate) {
       clonedPipeline = clonedPipeline.rotate()

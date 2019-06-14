@@ -1,17 +1,16 @@
 ---
 title: Triaging GitHub Issues
-issue: https://github.com/gatsbyjs/gatsby/issues/11810
 ---
 
 ## What is the aim of this document?
 
-On the Gatsby core team, we've found patterns that help us effectively triage incoming GitHub issues, providing answers to the community's questions, identifying bugs, and providing contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
+On the Gatsby core team, we've found patterns that help us effectively triage incoming GitHub issues, provide answers to the community's questions, identify bugs, and provide contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
 
 We want to share these patterns with the broader community, so that if you're interesting in helping us triage, you're able to do so more effectively!
 
 In this document we’ll answer common questions, list guidelines and illustrate a decision tree.
 
-## What is first touch maintenance?
+## First touch maintenance
 
 For Gatsby the first line of communication between a user and the team is the issue tracker on GitHub. Typically, every day 20-30 issues are opened -- that's one every hour!
 
@@ -22,9 +21,9 @@ An opened issue could be:
 - a request for a feature
 - or a discussion on a complicated use case
 
-As a first touch maintainer, you might sift through, triage, communicate and manage this first line of communication.
+On the core team, we regularly designate someone to be a first touch maintainer. That person might sift through, triage, communicate and manage this first line of communication.
 
-You will typically:
+First touch maintainers will typically:
 
 - answer questions that can be answered immediately
 - test and reproduce possible bug reports and label them appropriately

@@ -18,78 +18,83 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   apply(resolver) {
-    resolver.plugin(`relative`, (request, callback) => {
-      const matchingThemes = this.getMatchingThemesForPath(request.path)
+    resolver.hooks.relative.tapAsync(
+      `GatsbyThemeComponentShadowingResolverPlugin`,
+      (request, stack, callback) => {
+        const matchingThemes = this.getMatchingThemesForPath(request.path)
 
-      // 0 matching themes happens a lot for paths we don't want to handle
-      // > 1 matching theme means we have a path like
-      //   `gatsby-theme-blog/src/components/gatsby-theme-something/src/components`
-      if (matchingThemes.length > 1) {
-        throw new Error(
-          `Gatsby can't differentiate between themes ${matchingThemes
-            .map(theme => theme.themeName)
-            .join(` and `)} for path ${request.path}`
+        // 0 matching themes happens a lot for paths we don't want to handle
+        // > 1 matching theme means we have a path like
+        //   `gatsby-theme-blog/src/components/gatsby-theme-something/src/components`
+        if (matchingThemes.length > 1) {
+          throw new Error(
+            `Gatsby can't differentiate between themes ${matchingThemes
+              .map(theme => theme.themeName)
+              .join(` and `)} for path ${request.path}`
+          )
+        }
+
+        if (matchingThemes.length !== 1) {
+          return callback()
+        }
+
+        // theme is the theme package from which we're requiring the relative component
+        const [theme] = matchingThemes
+        // get the location of the component relative to src/
+        const [, component] = request.path.split(
+          path.join(theme.themeDir, `src`)
         )
-      }
 
-      if (matchingThemes.length !== 1) {
-        return callback()
-      }
+        if (
+          /**
+           * if someone adds
+           * ```
+           * modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+           * ```
+           * to the webpack config, `issuer` is `null`, so we skip this check.
+           * note that it's probably a bad idea in general to set `modules`
+           * like this in a theme, but we also shouldn't artificially break
+           * people that do.
+           */
+          request.context.issuer &&
+          /**
+           * An issuer is the file making the require request. It can
+           * be in a user's site or a theme. If the issuer is requesting
+           * a path in the shadow chain that it participates in, then we
+           * will let the request through as normal. Otherwise, we
+           * engage the shadowing algorithm.
+           */
+          this.requestPathIsIssuerShadowPath({
+            requestPath: request.path,
+            issuerPath: request.context.issuer,
+            userSiteDir: path.resolve(`.`),
+          })
+        ) {
+          return resolver.doResolve(
+            resolver.hooks.describedRelative,
+            request,
+            null,
+            {},
+            callback
+          )
+        }
 
-      // theme is the theme package from which we're requiring the relative component
-      const [theme] = matchingThemes
-      // get the location of the component relative to src/
-      const [, component] = request.path.split(path.join(theme.themeDir, `src`))
-
-      if (
-        /**
-         * if someone adds
-         * ```
-         * modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-         * ```
-         * to the webpack config, `issuer` is `null`, so we skip this check.
-         * note that it's probably a bad idea in general to set `modules`
-         * like this in a theme, but we also shouldn't artificially break
-         * people that do.
-         */
-        request.context.issuer &&
-        /**
-         * An issuer is the file making the require request. It can
-         * be in a user's site or a theme. If the issuer is requesting
-         * a path in the shadow chain that it participates in, then we
-         * will let the request through as normal. Otherwise, we
-         * engage the shadowing algorithm.
-         */
-        this.requestPathIsIssuerShadowPath({
-          requestPath: request.path,
-          issuerPath: request.context.issuer,
-          userSiteDir: path.resolve(`.`),
+        // This is the shadowing algorithm.
+        const builtComponentPath = this.resolveComponentPath({
+          matchingTheme: theme.themeName,
+          themes: this.themes,
+          component,
         })
-      ) {
+
         return resolver.doResolve(
-          `describedRelative`,
-          request,
+          resolver.hooks.describedRelative,
+          { ...request, path: builtComponentPath || request.path },
           null,
           {},
           callback
         )
       }
-
-      // This is the shadowing algorithm.
-      const builtComponentPath = this.resolveComponentPath({
-        matchingTheme: theme.themeName,
-        themes: this.themes,
-        component,
-      })
-
-      return resolver.doResolve(
-        `describedRelative`,
-        { ...request, path: builtComponentPath || request.path },
-        null,
-        {},
-        callback
-      )
-    })
+    )
   }
 
   // check the cache, the user's project, and finally the theme files

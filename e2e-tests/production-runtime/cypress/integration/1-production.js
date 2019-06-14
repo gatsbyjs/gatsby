@@ -1,5 +1,14 @@
 /* global Cypress, cy */
 
+// NOTE: This needs to be run before any other integration tests as it
+// sets up the service worker in offline mode. Therefore, if you want
+// to test an individual integration test, you must run this
+// first. E.g to run `compilation-hash.js` test, run
+//
+// cypress run -s \
+// "cypress/integration/1-production.js,cypress/integration/compilation-hash.js" \
+// -b chrome
+
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
     cy.visit(`/`).waitForRouteChange()
@@ -72,6 +81,13 @@ describe(`Production build tests`, () => {
       .waitForRouteChange()
       .getTestElement(`index-link`)
       .should(`exist`)
+  })
+
+  it(`should pass pathContext to props`, () => {
+    cy.visit(`/path-context`).waitForRouteChange()
+
+    // `bar` is set in gatsby-node createPages
+    cy.getTestElement(`path-context-foo`).contains(`bar`)
   })
 
   it(`Uses env vars`, () => {

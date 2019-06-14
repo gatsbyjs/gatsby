@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.5...gatsby-cli@2.6.7) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-cli:** create spawnWithArgs to be able to call spawn with command containing spaces ([#14698](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14698)) ([7b3efe7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/7b3efe7))
+
+## [2.6.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.5...gatsby-cli@2.6.6) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-cli:** create spawnWithArgs to be able to call spawn with command containing spaces ([#14698](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14698)) ([7b3efe7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/7b3efe7))
+
+## [2.6.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.4...gatsby-cli@2.6.5) (2019-06-05)
+
+### Features
+
+- **gatsby-cli:** Add a plugin authoring help in gatsby-cli ([#13450](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/13450)) ([41c0166](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/41c0166))
+
+## [2.6.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.3...gatsby-cli@2.6.4) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.6.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.2...gatsby-cli@2.6.3) (2019-05-29)
 
 ### Bug Fixes
