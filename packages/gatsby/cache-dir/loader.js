@@ -253,7 +253,10 @@ export class BaseLoader {
   // returns undefined if loading page ran into errors
   loadPageSync(rawPath) {
     const pagePath = this.cleanAndFindPath(rawPath)
-    return this.pageDb.get(pagePath).payload
+    if (this.pageDb.has(pagePath)) {
+      return this.pageDb.get(pagePath).payload
+    }
+    return undefined
   }
 
   shouldPrefetch(pagePath) {
@@ -332,7 +335,7 @@ export class ProdLoader extends BaseLoader {
 
   prefetch(pagePath) {
     if (!super.shouldPrefetch(pagePath)) {
-      return
+      return false
     }
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
@@ -360,6 +363,8 @@ export class ProdLoader extends BaseLoader {
           this.onPostPrefetchPathname(pagePath)
         })
       })
+
+    return true
   }
 }
 

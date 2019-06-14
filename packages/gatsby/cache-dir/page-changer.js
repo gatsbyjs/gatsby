@@ -5,18 +5,16 @@ import shallowCompare from "shallow-compare"
 class PageChanger extends React.Component {
   constructor(props) {
     super()
-    let location = props.location
-    let pageResources = loader.loadPageSync(location.pathname)
+    const { location, pageResources } = props
     this.state = {
       location: { ...location },
-      pageResources,
+      pageResources: pageResources || loader.loadPageSync(location.pathname),
     }
   }
 
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location.href !== location.href) {
       const pageResources = loader.loadPageSync(location.pathname)
-
       return {
         pageResources,
         location: { ...location },
@@ -26,7 +24,27 @@ class PageChanger extends React.Component {
     return null
   }
 
+  loadResources(rawPath) {
+    loader.loadPage(rawPath).then(pageResources => {
+      if (pageResources) {
+        this.setState({
+          location: { ...window.location },
+          pageResources,
+        })
+      } else {
+        window.history.replaceState({}, ``, location.href)
+        window.location = rawPath
+      }
+    })
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
+    // Always return false if we're missing resources.
+    if (!nextState.pageResources) {
+      this.loadResources(nextProps.location.pathname)
+      return false
+    }
+
     // Check if the component or json have changed.
     if (this.state.pageResources !== nextState.pageResources) {
       return true
