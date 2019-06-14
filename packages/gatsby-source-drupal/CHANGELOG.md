@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.11...gatsby-source-drupal@3.1.12) (2019-06-14)
+
+### Features
+
+- **gatsby-source-drupal:** Copy relationship meta (if any) to a node's field ([#14562](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/14562)) ([83e2ee3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/83e2ee3))
+
 ## [3.1.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.10...gatsby-source-drupal@3.1.11) (2019-06-10)
 
 **Note:** Version bump only for package gatsby-source-drupal
