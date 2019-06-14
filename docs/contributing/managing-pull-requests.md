@@ -16,7 +16,7 @@ In case you aren't familiar, here is how the fine folks at GitHub [define a pull
 
 > Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
-Simply put, when someone wants to contribute to Gatsby, they open a request to _pull_ their code into ours. Depending on the type of change, we like to categorise pull requests (or PRs for short) into:
+Simply put, when someone wants to contribute to Gatsby, they open a request to _pull_ their code into ours. Depending on the type of change, we like to categorize pull requests (or PRs for short) into:
 
 - Documentation
 - Code
@@ -33,7 +33,7 @@ When looking at a PR for the first time, it can help to read up on linked issues
 
 Some general things to verify in a pull request are:
 
-- Links ought to be relative
+- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference` instead of `https://www.gatsbyjs.org/docs/some-reference`)
 - Language ought to be inclusive and accessible
 
 ### Type Specific Guidelines
@@ -47,14 +47,14 @@ Let's go over them real quick.
 We typically look for the following in PRs that add documentation:
 
 - Correctness — whether the added documentation is technically correct
-- Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
+- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 
 #### Code
 
 For PRs that add code (whether a feature or fix), we look for the following:
 
 - Correctness — whether the code does what we think it does
-- Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behaviour! This can be a combination of unit tests for the specific package, snapshot tests and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this!
+- Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behaviour! This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this!
 - Code Quality — while it isn't good to nit pick, reasonable changes that improve readability are great to point out
 - Documentation in the package's README if you're adding something
 
@@ -62,36 +62,36 @@ For PRs that add code (whether a feature or fix), we look for the following:
 
 For PRs that add a site or a starter to the showcase, we ought to check:
 
-- We check if the site or starter is indeed a Gatsby site or starter respectively
+- Check if the site or starter is built with Gatsby
 - Links — check if the links are working and accessible
-- Tags — ensure the tags are not arbitrary
-- Featured Status — for the site showcase, we like to default to _not_ featuring a site and typically someone from the Gatsby team features it later if they like!
+- Tags — ensure the tags match existing tags
+- Featured Status — new sites should not be marked as featured. Featured sites are occasionally updated by a member of the Gatsby team 
 
 #### Blog posts
 
-For PRs that add a blog posts, we ought to check:
+For PRs that add a blog post, we ought to check:
 
 - Correctness — whether the added documentation is technically correct
-- Style — whether the written language follows our [style guide](https://www.gatsbyjs.org/contributing/gatsby-style-guide/)
+- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Blog posts are similar to documentation in that they're long form writing, but also want to ensure that blog posts on [gatsbyjs.org](https://www.gatsbyjs.org) aren't purely promotional, spammy or inappropriate.
 
 ## Automated Checks
 
 Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds [gatsbyjs.org](https://www.gatsbyjs.org).
 
-We want all of these checks to pass. While it's okay to review a work in progress PR with some failed checks, a PR is only ready to ship when everything is green.
+We want all of these checks to pass. While it's okay to review a work in progress PR with some failed checks, a PR is only ready to ship when all the tests have passed.
 
-Let's go over some common failure cases in our cases and how to approach fixing them:
+Let's go over some common failure cases and how to fix them:
 
 ### Linting
 
-We lint all code and documentation pretty aggressively (consistency is good) and while that is great, you might find some PRs failing the linting check.
+We lint all code and documentation for consistency. You might find that your PR fails on the linting check.
 
-An easy fix for this is to run:
+If this is your PR and you have the code checked out on your machine, you can run:
 
 > 💡 npm run format
 
-This will format all code and documentation and should get rid of those pesky linting issues!
+This will automatically re-format your changes to match the linting requirements. Don't forget to git commit and push your new changes.
 
 ## Other Checks
 
@@ -101,7 +101,7 @@ While we have many _many_ tests in our repository (that are run automatically on
 
 In situations like this, testing the change locally can be very valuable.
 
-> 💡 In case this is the first time you're doing this, you might have to [set up your development environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment).
+> 💡 In case this is the first time you're doing this, you might have to [set up your development environment](/contributing/setting-up-your-local-dev-environment).
 
 Testing out unpublished packages locally can be tricky. We have just the tool to make that easy for you.
 
@@ -135,7 +135,7 @@ Let's look at some examples of good and bad PR titles:
 
 ## Giving Feedback
 
-- Be _nice_. We're stronger everyday because of our community so empathy is important and we want our contributors to feel welcome.
+- Be _kind_. We're stronger every day because of our community, so compassion is important. We want all contributors to feel welcome.
 - Make suggestions using [GitHub's suggestions feature](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) if possible. This makes accepting your suggestions easier for the author.
 - Link to examples when necessary
 - Try not to [bikeshed](http://bikeshed.com/) too much
@@ -146,13 +146,13 @@ Let's look at some examples of good and bad PR titles:
 
 ### Who can review a PR?
 
-If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organisation on GitHub, you can review a PR.
+If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
 
-> 💡 Not a member yet? Love us and want to help? Make your first contribution and get invited!
+> 💡 Not a member yet? Want to get involved in contributing to open source projects? Make your first contribution and you'll be invited automatically!
 
 ### Who can approve a PR?
 
-Every PR opened in the repository needs to be approved before it can be merged. While anyone who is a member of the [gatsbyjs](http://github.com/gatsbyjs) organisation can approve a PR, to be merged in, it needs to be reviewed by a member of the team that owns that part of Gatsby.
+Every PR opened in the repository needs to be approved before it can be merged. While anyone who is a member of the [gatsbyjs](http://github.com/gatsbyjs) organization can approve a PR, to be merged in, it needs to be reviewed by a member of the team that owns that part of Gatsby.
 
 Typically this is:
 
