@@ -14,18 +14,8 @@ class DevLoader extends BaseLoader {
     })
   }
 
-  prefetch(pagePath) {
-    if (!super.shouldPrefetch(pagePath)) {
-      return
-    }
-    // Tell plugins with custom prefetching logic that they should start
-    // prefetching this path.
-    if (!this.prefetchTriggered.has(pagePath)) {
-      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-      this.prefetchTriggered.add(pagePath)
-    }
-
-    require(`./socketIo`).getPageData(pagePath)
+  doPrefetch(pagePath) {
+    return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
   }
 }
 

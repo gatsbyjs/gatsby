@@ -13,7 +13,7 @@ import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
 import { setLoader, ProdLoader } from "./loader"
-import PageChanger from "./page-changer"
+import EnsureResources from "./ensure-resources"
 // Generated during bootstrap
 import matchPaths from "./match-paths.json"
 
@@ -39,7 +39,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     render() {
       let { location } = this.props
       return (
-        <PageChanger location={location}>
+        <EnsureResources location={location}>
           {({ pageResources, location }) => (
             <RouteUpdates location={location}>
               <ScrollContext
@@ -55,7 +55,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
               </ScrollContext>
             </RouteUpdates>
           )}
-        </PageChanger>
+        </EnsureResources>
       )
     }
   }

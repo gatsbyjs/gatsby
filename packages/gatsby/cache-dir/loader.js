@@ -1,8 +1,6 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
-import normalizePagePath from "./normalize-page-path"
-import stripPrefix from "./strip-prefix"
-import { match } from "@reach/router/lib/utils"
+import PathFinder from "./find-path"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -108,37 +106,6 @@ const toPageResources = (pageData, component) => {
   }
 }
 
-const findMatchPath = (matchPaths, trimmedPathname) => {
-  for (const { matchPath, path } of matchPaths) {
-    if (match(matchPath, trimmedPathname)) {
-      return path
-    }
-  }
-  return null
-}
-
-const trimPathname = rawPathname => {
-  let pathname = decodeURIComponent(rawPathname)
-  // Remove the pathPrefix from the pathname.
-  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
-  // Remove any hashfragment
-  if (trimmedPathname.split(`#`).length > 1) {
-    trimmedPathname = trimmedPathname
-      .split(`#`)
-      .slice(0, -1)
-      .join(``)
-  }
-
-  // Remove search query
-  if (trimmedPathname.split(`?`).length > 1) {
-    trimmedPathname = trimmedPathname
-      .split(`?`)
-      .slice(0, -1)
-      .join(``)
-  }
-  return trimmedPathname
-}
-
 export class BaseLoader {
   constructor(loadComponent, matchPaths) {
     // Map of pagePath -> Page. Where Page is an object with: {
@@ -156,43 +123,17 @@ export class BaseLoader {
     // }
     this.pageDb = new Map()
     this.inFlightDb = new Map()
-    this.loadComponent = loadComponent
+    this.pathCache = new Map()
     this.prefetchTriggered = new Set()
+    this.prefetchCompleted = new Set()
     this.matchPaths = matchPaths
-    this.foundPaths = new Map()
+    this.loadComponent = loadComponent
+    this.pathFinder = new PathFinder(matchPaths)
   }
 
   setApiRunner(apiRunner) {
     this.apiRunner = apiRunner
     this.prefetchDisabled = apiRunner(`disableCorePrefetching`).some(a => a)
-  }
-
-  // Given a raw URL path, returns the cleaned version of it (trim off
-  // `#` and query params), or if it matches an entry in
-  // `match-paths.json`, its matched path is returned
-  //
-  // E.g `/foo?bar=far` => `/foo`
-  //
-  // Or if `match-paths.json` contains `{ "/foo*": "/page1", ...}`, then
-  // `/foo?bar=far` => `/page1`
-  cleanAndFindPath(rawPathname) {
-    let trimmedPathname = trimPathname(rawPathname)
-
-    if (this.foundPaths.has(trimmedPathname)) {
-      return this.foundPaths.get(trimmedPathname)
-    }
-
-    let foundPath = findMatchPath(this.matchPaths, trimmedPathname)
-    if (!foundPath) {
-      if (trimmedPathname === `/index.html`) {
-        foundPath = `/`
-      } else {
-        foundPath = trimmedPathname
-      }
-    }
-    foundPath = normalizePagePath(foundPath)
-    this.foundPaths.set(trimmedPathname, foundPath)
-    return foundPath
   }
 
   loadPageDataJson(pagePath) {
@@ -201,7 +142,7 @@ export class BaseLoader {
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
-    const pagePath = this.cleanAndFindPath(rawPath)
+    const pagePath = this.pathFinder.find(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       return Promise.resolve(page.payload)
@@ -218,29 +159,27 @@ export class BaseLoader {
         }
         const pageData = result.payload
         const { componentChunkName } = pageData
-        return this.loadComponent(componentChunkName)
-          .then(preferDefault)
-          .then(component => {
-            const finalResult = { createdAt: new Date() }
-            let pageResources
-            if (!component) {
-              finalResult.status = `error`
-            } else {
-              finalResult.status = `success`
-              if (result.notFound === true) {
-                finalResult.notFound = true
-              }
-              pageResources = toPageResources(pageData, component)
-              finalResult.payload = pageResources
-              emitter.emit(`onPostLoadPageResources`, {
-                page: pageResources,
-                pageResources,
-              })
+        return this.loadComponent(componentChunkName).then(component => {
+          const finalResult = { createdAt: new Date() }
+          let pageResources
+          if (!component) {
+            finalResult.status = `error`
+          } else {
+            finalResult.status = `success`
+            if (result.notFound === true) {
+              finalResult.notFound = true
             }
-            this.pageDb.set(pagePath, finalResult)
-            // undefined if final result is an error
-            return pageResources
-          })
+            pageResources = toPageResources(pageData, component)
+            finalResult.payload = pageResources
+            emitter.emit(`onPostLoadPageResources`, {
+              page: pageResources,
+              pageResources,
+            })
+          }
+          this.pageDb.set(pagePath, finalResult)
+          // undefined if final result is an error
+          return pageResources
+        })
       })
       .finally(() => {
         this.inFlightDb.delete(pagePath)
@@ -252,7 +191,7 @@ export class BaseLoader {
 
   // returns undefined if loading page ran into errors
   loadPageSync(rawPath) {
-    const pagePath = this.cleanAndFindPath(rawPath)
+    const pagePath = this.pathFinder.find(rawPath)
     if (this.pageDb.has(pagePath)) {
       return this.pageDb.get(pagePath).payload
     }
@@ -279,7 +218,28 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
-    throw new Error(`prefetch not implemented`)
+    if (!this.shouldPrefetch(pagePath)) {
+      return false
+    }
+    // Tell plugins with custom prefetching logic that they should start
+    // prefetching this path.
+    if (!this.prefetchTriggered.has(pagePath)) {
+      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
+      this.prefetchTriggered.add(pagePath)
+    }
+
+    this.doPrefetch(pagePath).then(() => {
+      if (!this.prefetchCompleted.has(pagePath)) {
+        this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
+        this.prefetchCompleted.add(pagePath)
+      }
+    })
+
+    return true
+  }
+
+  doPrefetch(pagePath) {
+    throw new Error(`doPrefetch not implemented`)
   }
 
   hovering(rawPath) {
@@ -287,7 +247,7 @@ export class BaseLoader {
   }
 
   getResourceURLsForPathname(rawPath) {
-    const pagePath = this.cleanAndFindPath(rawPath)
+    const pagePath = this.pathFinder.find(rawPath)
     const page = this.loadPageSync(pagePath)
     if (page) {
       return [
@@ -300,7 +260,7 @@ export class BaseLoader {
   }
 
   isPageNotFound(rawPath) {
-    const pagePath = this.cleanAndFindPath(rawPath)
+    const pagePath = this.pathFinder.find(rawPath)
     const page = this.pageDb.get(pagePath)
     return page && page.notFound === true
   }
@@ -313,39 +273,15 @@ const createComponentUrls = componentChunkName =>
 
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = chunkName => asyncRequires.components[chunkName]()
+    const loadComponent = chunkName =>
+      asyncRequires.components[chunkName]().then(preferDefault)
+
     super(loadComponent, matchPaths)
-    this.prefetchCompleted = new Set()
   }
 
-  onPostPrefetchPathname(pathname) {
-    if (!this.prefetchCompleted.has(pathname)) {
-      this.apiRunner(`onPostPrefetchPathname`, { pathname })
-      this.prefetchCompleted.add(pathname)
-    }
-  }
-
-  loadPage(pagePath) {
-    return super.loadPage(pagePath).then(result => {
-      // Was rawPath
-      this.onPostPrefetchPathname(pagePath)
-      return result
-    })
-  }
-
-  prefetch(pagePath) {
-    if (!super.shouldPrefetch(pagePath)) {
-      return false
-    }
-    // Tell plugins with custom prefetching logic that they should start
-    // prefetching this path.
-    if (!this.prefetchTriggered.has(pagePath)) {
-      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-      this.prefetchTriggered.add(pagePath)
-    }
-
+  doPrefetch(pagePath) {
     const pageDataUrl = createPageDataUrl(pagePath)
-    prefetchHelper(pageDataUrl)
+    return prefetchHelper(pageDataUrl)
       .then(() =>
         // This was just prefetched, so will return a response from
         // the cache instead of making another request to the server
@@ -359,12 +295,8 @@ export class ProdLoader extends BaseLoader {
         // Tell plugins the path has been successfully prefetched
         const chunkName = pageData.componentChunkName
         const componentUrls = createComponentUrls(chunkName)
-        return Promise.all(componentUrls.map(prefetchHelper)).then(() => {
-          this.onPostPrefetchPathname(pagePath)
-        })
+        return Promise.all(componentUrls.map(prefetchHelper))
       })
-
-    return true
   }
 }
 

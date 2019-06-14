@@ -10,7 +10,7 @@ import {
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
 import JSONStore from "./json-store"
-import PageChanger from "./page-changer"
+import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"
 
@@ -39,7 +39,7 @@ class RouteHandler extends React.Component {
 
     if (!loader.isPageNotFound(location.pathname)) {
       return (
-        <PageChanger location={location}>
+        <EnsureResources location={location}>
           {locationAndPageResources => (
             <RouteUpdates location={location}>
               <ScrollContext
@@ -50,7 +50,7 @@ class RouteHandler extends React.Component {
               </ScrollContext>
             </RouteUpdates>
           )}
-        </PageChanger>
+        </EnsureResources>
       )
     }
 
