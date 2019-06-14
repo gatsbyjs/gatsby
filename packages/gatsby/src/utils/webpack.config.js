@@ -249,7 +249,6 @@ module.exports = async (program, directory, suppliedStage) => {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.mjs(),
       rules.js(),
       rules.yaml(),
       rules.fonts(),
