@@ -39,7 +39,7 @@ An ideal scenario is work that intersects with all three, or that unblocks or le
 
 Some examples:
 
-- **Shipping roadmap features**. Many Roadmap features are usually high-effort but often - hugely impactful in helping large numbers of Gatsby users.
+- **Shipping roadmap features**. Many roadmap features are usually high-effort, but often hugely impactful in helping large numbers of Gatsby users.
 - **Shipping meaningful, small bug-fixes**. Many small bug-fixes are low-effort and medium-impact. They "move the needle" and improve the day-to-day experience of using Gatsby for a non-trivial amount of users.
 - **Reviewing PRs**. Giving timely, thorough, and fair reviews for pull requests from both the community and other Gatsby Core team members unblocks future work or changes required for merging, and delivers or eventually delivers meaningful fixes or improvements for - the community, at large.
 - **Helpful, targeted use of expertise**. Unblocking a community member or Gatsby team member, which may take just a few minutes of your time may unblock and drastically reduce the time spent on a particularly tough issue by an ally. If someone surfaces a question in - Slack or Discord—if you have a few moments, help them out!
