@@ -19,7 +19,6 @@ your site.
 
    ```sh
    cd my-mdx-starter/
-   npm install
    gatsby develop
    ```
 
@@ -37,18 +36,18 @@ can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) p
 1. **Add `gatsby-mdx`** and MDX as dependencies
 
    ```sh
-   yarn add gatsby-mdx @mdx-js/mdx @mdx-js/react
+   yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
    ```
 
    > **Note:** If you're upgrading from v0, additionally [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
 
-1. **Update your `gatsby-config.js`** to use the `gatsby-mdx` plugin
+1. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
 
    ```javascript:title=gatsby-config.js
    module.exports = {
      plugins: [
        // ....
-       `gatsby-mdx`,
+       `gatsby-plugin-mdx`,
      ],
    }
    ```

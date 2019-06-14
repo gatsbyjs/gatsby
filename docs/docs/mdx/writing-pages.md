@@ -2,19 +2,19 @@
 title: Writing Pages in MDX
 ---
 
-After [installing](/docs/mdx/getting-started) the plugin, MDX files
-written in `src/pages` will turn into pages.
+After [installing](/docs/mdx/getting-started) `gatsby-plugin-mdx`, MDX files
+located in `src/pages` will turn into pages.
 
 Pages are rendered at a URL that is constructed from the filesystem
 path inside `src/pages`. An MDX file at `src/pages/awesome.mdx` will
 result in a page being rendered at `mysite.com/awesome`.
 
-> The `gatsby-mdx` plugin looks for MDX files and automatically
+> `gatsby-plugin-mdx` looks for MDX files and automatically
 > transpiles them so that Gatsby internals can render them.
 
 ## Using frontmatter in MDX
 
-By default, gatsby-mdx supports [frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files)
+By default, `gatsby-plugin-mdx` supports [frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files)
 so you can define things like titles and paths to use in your GraphQL
 queries. You can declare frontmatter at the beginning of your MDX document:
 
@@ -50,7 +50,7 @@ query {
 > source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
 > content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
 
-Frontmatter is also availalbe in `props.pageContext.frontmatter` and
+Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
 
 ```markdown
@@ -68,8 +68,8 @@ author: "Jay Gatsby"
 
 ## Importing JSX components and MDX documents
 
-Similarly to what you'd do in JSX, you can import and render components
-with JSX. You can also import other MDX documents.
+Similarly to what you'd do in plain React, you can import and render JSX components
+directly in MDX files. You can also import other MDX documents.
 
 ```markdown:title=src/pages/chart.mdx
 import { Chart } from "../components/chart"
@@ -123,7 +123,7 @@ don't need to export MDX documents to import them in other files.
 ### Exporting page metadata
 
 You can provide additional data about a given document by exporting.
-`gatsby-mdx` will automatically add it to the GraphQL schema so you
+`gatsby-plugin-mdx` will automatically add it to the GraphQL schema so you
 can use the exported data in your queries and in rendering.
 
 Data exported in MDX documents in this manner is also made available on the
@@ -170,8 +170,8 @@ query MdxExports {
 
 ### Defining a layout
 
-If you have [provided a default layout](/packages/gatsby-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
-through the `gatsby-mdx` plugin's options, the exported component you define
+If you have [provided a default layout](/packages/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
+through the `gatsby-plugin-mdx` plugin options, the exported component you define
 from this file will replace the default.
 
 ```markdown:title=src/pages/layout-example.mdx
