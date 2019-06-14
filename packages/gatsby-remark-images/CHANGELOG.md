@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.14...gatsby-remark-images@3.0.16) (2019-06-14)
+
+### Features
+
+- **gatsby-remark-images:** add option to use alt text as caption fallback ([#14379](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/14379)) ([e5171f1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/e5171f1))
+
 ## [3.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.14...gatsby-remark-images@3.0.15) (2019-06-14)
 
 ### Features
