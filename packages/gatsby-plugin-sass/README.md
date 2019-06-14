@@ -14,7 +14,7 @@ Provides drop-in support for SASS/SCSS stylesheets
 plugins: [`gatsby-plugin-sass`]
 ```
 
-2. Write your stylesheets in SASS/SCSS and require or import them as normal.
+2. Write your stylesheets in Sass/SCSS and require or import them as normal.
 
 ```css:title="src/index.sass"
 html {
