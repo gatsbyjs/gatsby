@@ -60,7 +60,7 @@ For PRs that add code (whether a feature or fix), we look for the following:
 
 - Correctness — whether the code does what we think it does
 - Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behaviour. This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
-- Code Quality — while it isn't good to nitpick (and stylistic changes are typically linted for by Prettier), reasonable changes that improve readability are great to point out
+- Code Quality — focus on reasonable changes that will likely improve code maintenance, comprehension, or correctness. Stylistic changes are typically linted for by Prettier. Don't nitpick.
 - Documentation in the package's README if you're adding something
 
 #### Starters or Site Showcase
@@ -70,7 +70,7 @@ For PRs that add a site or a starter to the showcase, we ought to check:
 - Check if the site or starter is built with Gatsby
 - Links — check if the links are working and accessible
 - Tags — ensure the tags match existing tags
-- Featured Status — new sites should not be marked as featured. Featured sites are occasionally updated by a member of the Gatsby team
+- Featured Status — new sites should not be marked as featured. Featured sites are occasionally updated by a member of the Gatsby team.
 
 #### Blog posts
 
