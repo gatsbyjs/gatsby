@@ -93,14 +93,14 @@ export default class Swatch extends React.Component {
                 lineHeight: `32px`,
                 display: `none`,
                 position: `absolute`,
-                width: 80,
+                width: 160,
               }}
             >
               {this.state.displayCopied ? (
-                `Copied!`
+                <>Copied to clipboard!</>
               ) : (
                 <>
-                  Copy HEX <SrOnly>${color.hex}</SrOnly>
+                  Copy HEX <code>{color.hex}</code>
                 </>
               )}
             </Box>
