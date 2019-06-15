@@ -16,6 +16,7 @@ import {
   letterSpacings,
   lineHeights,
   fonts,
+  fontWeights,
 } from "../../utils/presets"
 
 const stripedBorderHeight = space[1]
@@ -72,7 +73,7 @@ const Name = styled(`h3`)`
   color: ${colors.lilac};
   font-family: ${fonts.header};
   font-size: ${fontSizes[1]};
-  font-weight: normal;
+  font-weight: ${fontWeights[0]};
   letter-spacing: ${letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
@@ -81,6 +82,7 @@ const Name = styled(`h3`)`
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
   font-size: ${fontSizes[4]};
+  font-weight: ${fontWeights[1]};
   line-height: ${lineHeights.dense};
   margin: 0;
   margin-top: ${space[1]};
