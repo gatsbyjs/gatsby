@@ -462,8 +462,6 @@
           link: /docs/convincing-others/
         - title: Your First Professional Project
           link: /docs/first-professional-project/
-        - title: Setting Up Gatsby Without Gatsby New
-          link: /docs/setting-up-gatsby-without-gatsby-new
         - title: Winning Over Different Stakeholders
           link: /docs/winning-over-stakeholders/
           items:
@@ -500,6 +498,8 @@
               items:
                 - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
+                - title: Setting Up Gatsby Without Gatsby New
+                  link: /docs/setting-up-gatsby-without-gatsby-new
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:
