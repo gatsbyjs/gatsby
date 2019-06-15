@@ -1,12 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
-import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
   DocsIcon,
   TutorialIcon,
   PluginsIcon,
   ShowcaseIcon,
+  SvgDefs,
 } from "../assets/mobile-nav-icons"
 import {
   colors,
