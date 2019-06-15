@@ -2,7 +2,6 @@ import React from "react"
 import CopyToClipboard from "react-copy-to-clipboard"
 
 import { Box } from "../system"
-import { SrOnly } from "../typography"
 
 export default class Swatch extends React.Component {
   state = {
