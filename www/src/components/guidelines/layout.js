@@ -15,7 +15,7 @@ import Footer from "../shared/footer-links"
 import { sizes } from "../../utils/presets"
 
 // Import Futura PT typeface
-import "../../fonts/futura"
+import "../../assets/fonts/futura"
 
 const Layout = ({ children, background, pathname, pageTitle }) => (
   <ThemeProvider theme={theme}>

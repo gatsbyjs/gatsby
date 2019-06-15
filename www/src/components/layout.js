@@ -22,7 +22,7 @@ import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 
 // Import Futura PT typeface
-import "../fonts/futura"
+import "../assets/fonts/futura"
 
 import { skipLink } from "../utils/styles"
 

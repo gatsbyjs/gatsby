@@ -13,7 +13,7 @@ import { mediaQueries, sizes, fontSizes } from "../../utils/presets"
 import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
-import "../../fonts/futura"
+import "../../assets/fonts/futura"
 
 const Content = styled(`div`)`
   padding-top: ${sizes.bannerHeight};
