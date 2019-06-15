@@ -212,7 +212,7 @@ Recipes should be short. If you're finding a recipe is becoming too long to fit 
 
 Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an h2 heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
 
-Recipes should fall into these categories to start:
+Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
 
 - Pages/Layouts
 - Styling
@@ -224,20 +224,26 @@ Recipes should fall into these categories to start:
 - Transforming
 - Deploying
 
+Here's a template for a recipe category:
+
+```markdown:title=docs/docs/recipes.md
+## Category name
+```
+
 ### Recipe template
 
 When writing a recipe, try to include each of the below items wherever relevant.
 
-````markdown
-## Recipe name
+````markdown:title=docs/docs/recipes.md
+### Recipe name
 
-### Requirements
+#### Requirements
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby <Link /> component
 - The Gatsby CLI method `gatsby develop`
 
-### Directions
+#### Directions
 
 1. Open the index page component (src/pages/index.js), import the <Link />
    component from Gatsby, add a <Link /> component above the header, and give
@@ -258,8 +264,10 @@ export default () => (
 2. Run `gatsby develop` and navigate to the index page. You should have a link
    that takes you to the contact page when clicked!
 
-// optional:
-For a working example, check out **this example.**
+#### Related links
+
+- Any live demos
+- Other materials to check out
 ````
 
 ## Tutorials
