@@ -195,9 +195,9 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should include requirements and a few short steps to complete a task, listing actionable instructions inline and omitting everything else.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should include requirements and a few short steps to complete a task, listing actionable instructions inline, and omitting everything else.
 
-Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability.
+Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
 The components of a recipe are:
 
@@ -208,7 +208,25 @@ The components of a recipe are:
 
 Recipes should be short. If you're finding a recipe is becoming too long to fit on the Docs Recipes page due to including many prerequisites or steps, consider writing a tutorial instead.
 
+### Recipe categories
+
+Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an h2 heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
+
+Recipes should fall into these categories to start:
+
+- Pages/Layouts
+- Styling
+- Starters
+- Themes
+- Sourcing
+- Querying
+- Images
+- Transforming
+- Deploying
+
 ### Recipe template
+
+When writing a recipe, try to include each of the below items wherever relevant.
 
 ````markdown
 ## Recipe name
