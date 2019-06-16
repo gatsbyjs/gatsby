@@ -11,7 +11,7 @@
 
 const childProcess = require(`child_process`)
 const path = require(`path`)
-const fs = require(`fs`)
+const existsSync = require(`fs-exists-cached`).sync
 const semver = require(`semver`)
 
 const originalConsoleError = console.error
@@ -26,8 +26,8 @@ const getDetailedMessage = () => {
     // if both lock files exist
 
     if (
-      fs.existsSync(path.join(process.cwd(), `package-lock.json`)) &&
-      fs.existsSync(path.join(process.cwd(), `yarn.lock`))
+      existsSync(path.join(process.cwd(), `package-lock.json`)) &&
+      existsSync(path.join(process.cwd(), `yarn.lock`))
     ) {
       return null
     }

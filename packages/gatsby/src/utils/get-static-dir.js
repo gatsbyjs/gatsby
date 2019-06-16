@@ -1,5 +1,6 @@
 const fs = require(`fs-extra`)
 const chokidar = require(`chokidar`)
+const existsSync = require(`fs-exists-cached`).sync
 const nodePath = require(`path`)
 const { store } = require(`../redux`)
 
@@ -17,7 +18,7 @@ exports.copyStaticDirs = () => {
       // create an array of potential theme static folders
       .map(theme => nodePath.resolve(theme.themeDir, `static`))
       // filter out the static folders that don't exist
-      .filter(themeStaticPath => fs.existsSync(themeStaticPath))
+      .filter(themeStaticPath => existsSync(themeStaticPath))
       // copy the files for each folder into the user's build
       .map(folder =>
         fs.copySync(folder, nodePath.join(process.cwd(), `public`))
@@ -25,7 +26,7 @@ exports.copyStaticDirs = () => {
   }
 
   const staticDir = nodePath.join(process.cwd(), `static`)
-  if (!fs.existsSync(staticDir)) return Promise.resolve()
+  if (!existsSync(staticDir)) return Promise.resolve()
   return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`))
 }
 

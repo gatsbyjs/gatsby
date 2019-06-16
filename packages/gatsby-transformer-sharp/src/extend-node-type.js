@@ -18,6 +18,7 @@ const {
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
+const existsSync = require(`fs-exists-cached`).sync
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
@@ -418,7 +419,7 @@ module.exports = ({
           imageName
         )
 
-        if (!fsExtra.existsSync(publicPath)) {
+        if (!existsSync(publicPath)) {
           fsExtra.copy(details.absolutePath, publicPath, err => {
             if (err) {
               console.error(

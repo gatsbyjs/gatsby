@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const ProgressBar = require(`progress`)
-const { existsSync } = require(`fs`)
+const existsSync = require(`fs-exists-cached`).sync
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
 
