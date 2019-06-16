@@ -205,7 +205,6 @@ exports[`showCaptions display alt as caption if specified first in showCaptions 
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;\\"
         alt=\\"some alt\\"
         title=\\"some title\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
@@ -237,7 +236,6 @@ exports[`showCaptions display alt as caption if specified in showCaptions array 
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;\\"
         alt=\\"some alt\\"
         title=\\"some title\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
@@ -300,7 +298,6 @@ exports[`showCaptions display title as caption if specified first in showCaption
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;\\"
         alt=\\"some alt\\"
         title=\\"some title\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
@@ -363,7 +360,6 @@ exports[`showCaptions display title as caption when showCaptions === true 1`] = 
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;\\"
         alt=\\"some alt\\"
         title=\\"some title\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
@@ -395,9 +391,8 @@ exports[`showCaptions fallback to alt as caption if specified second in showCapt
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;\\"
         alt=\\"some alt\\"
-        title=\\"\\"
+        title=\\"some alt\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
@@ -427,7 +422,6 @@ exports[`showCaptions fallback to title as caption if specified second in showCa
     ></span>
     <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;\\"
         alt=\\"my image\\"
         title=\\"some title\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
