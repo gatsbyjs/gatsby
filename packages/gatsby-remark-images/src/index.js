@@ -183,7 +183,6 @@ module.exports = (
         />
         <img
           class="${imageClass}"
-          style="${imageStyle}"
           src="${fallbackSrc}"
           alt="${alt}"
           title="${title}"

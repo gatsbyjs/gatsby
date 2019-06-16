@@ -1,15 +1,8 @@
 import React from "react"
 
-const {
-  defaults,
-  imageClass,
-  imageBackgroundClass,
-  imageWrapperClass,
-} = require(`./constants`)
+const { imageClass } = require(`./constants`)
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  const options = Object.assign({}, defaults, pluginOptions)
-
+exports.onRenderBody = ({ setHeadComponents }) => {
   const style = `
   .${imageClass} {
     width: 100%;
@@ -25,5 +18,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     .replace(/: /g, `:`)
     .replace(/ \{/g, `{`)
 
-  setHeadComponents([<style type="text/css">{style}</style>])
+  setHeadComponents([
+    <style type="text/css" key="gatsby-remark-images-styles">
+      {style}
+    </style>,
+  ])
 }
