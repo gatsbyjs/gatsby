@@ -14,14 +14,14 @@ import "./layout.css"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
-  query SiteTitleQuery {
-    site {
-      siteMetadata {
-        title
+    query SiteTitleQuery {
+      site {
+        siteMetadata {
+          title
+        }
       }
     }
-  }
-`)
+  `)
 
   return (
     <>
@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
         <main>{children}</main>
         <footer>
           © {new Date().getFullYear()}, Built with
-            {` `}
+          {` `}
           <a href="https://www.gatsbyjs.org">Gatsby</a>
         </footer>
       </div>
