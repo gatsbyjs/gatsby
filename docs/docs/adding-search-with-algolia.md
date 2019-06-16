@@ -353,7 +353,7 @@ The `Input` component is where the user enters the search string. It is quite sh
 
 Now let's look at the styled components `SearchIcon`, `Form`, `Input` as well as the ones imported in `index.js`.
 
-## `styled.js`
+## `styles.js`
 
 ```js:title=src/components/search/styles.js
 import React from "react"
@@ -495,7 +495,7 @@ Now you're almost done, two small steps remain. First you need to put together a
 
 ## `hitComps.js`
 
-```js:title=src/components/Search/hitComps.js
+```js:title=src/components/search/hitComps.js
 import React, { Fragment } from "react"
 import { Highlight, Snippet } from "react-instantsearch-dom"
 import { Link } from "gatsby"
