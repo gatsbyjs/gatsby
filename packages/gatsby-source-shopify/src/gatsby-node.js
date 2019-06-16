@@ -1,6 +1,8 @@
 import { pipe } from "lodash/fp"
 import chalk from "chalk"
 import { forEach } from "p-iteration"
+import isOnline from "is-online"
+
 import { createClient, printGraphQLError, queryAll, queryOnce } from "./lib"
 import {
   ArticleNode,
@@ -25,20 +27,54 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache },
+  { actions: { createNode, touchNode }, getNodes, createNodeId, store, cache },
   { shopName, accessToken, verbose = true, paginationSize = 250 }
 ) => {
-  const client = createClient(shopName, accessToken)
+  // Arguments used for file node creation.
+  const imageArgs = { createNode, createNodeId, touchNode, store, cache }
 
   // Convenience function to namespace console messages.
   const formatMsg = msg =>
     chalk`\n{blue gatsby-source-shopify/${shopName}} ${msg}`
 
   try {
-    console.log(formatMsg(`starting to fetch data from Shopify`))
+    const online = await isOnline()
+    // if the user sets the GATSBY_SHOPIFY_OFFLINE environment variable
+    // force a fall-back to cached nodes, but never in production
+    const preferCache =
+      process.env.GATSBY_SHOPIFY_OFFLINE === `true` &&
+      process.env.NODE_ENV !== `production`
 
-    // Arguments used for file node creation.
-    const imageArgs = { createNode, createNodeId, touchNode, store, cache }
+    if (!online || preferCache) {
+      console.log(chalk`{bold.red Using offline cache for Shopify} ⚠️`)
+      console.log(
+        chalk`{bold.red Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files}`
+      )
+
+      // get all nodes created by this source plugin
+      getNodes()
+        .filter(n => n.internal.owner === `gatsby-source-shopify`)
+        .forEach(node => {
+          // touch node to persist in cache
+          touchNode({ nodeId: node.id })
+          // check for image nodes and touch them to persist in cache
+          if (node.image) {
+            touchNode({ nodeId: node.image.localFile___NODE })
+          }
+          if (node.images && node.images.edges) {
+            node.images.edges.map(edge => {
+              touchNode({ nodeId: edge.node.id })
+            })
+          }
+        })
+
+      // exit early
+      return
+    }
+
+    const client = createClient(shopName, accessToken)
+
+    console.log(formatMsg(`starting to fetch data from Shopify`))
 
     // Arguments used for node creation.
     const args = {
