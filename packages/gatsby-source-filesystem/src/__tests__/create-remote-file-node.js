@@ -49,7 +49,11 @@ describe(`create-remote-file-node`, () => {
   const defaultArgs = {
     url: ``,
     store: {},
-    cache: {},
+    cache: {
+      get: jest.fn(),
+      set: jest.fn(),
+      directory: __dirname,
+    },
     createNode: jest.fn(),
     createNodeId: jest.fn(),
   }
@@ -120,10 +124,6 @@ describe(`create-remote-file-node`, () => {
 
       return createRemoteFileNode({
         ...defaultArgs,
-        cache: {
-          get: jest.fn(),
-          set: jest.fn(),
-        },
         store: {
           getState: jest.fn(() => {
             return {

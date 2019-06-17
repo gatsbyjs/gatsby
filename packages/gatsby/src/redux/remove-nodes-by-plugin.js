@@ -22,7 +22,6 @@ const getLookup = state => {
 const getDirtyNodes = (plugins, state) => {
   let dirty = new Map()
   for (let [id, node] of state) {
-    const parent = state.get(node.parent)
     if (node && node.internal && plugins.includes(node.internal.owner)) {
       dirty.set(id, true)
       let children = (node.children || []).slice(0)
@@ -35,7 +34,8 @@ const getDirtyNodes = (plugins, state) => {
         children = children.concat(child.children || [])
       }
 
-      if (parent.children && parent.children.length > 0) {
+      const parent = state.get(node.parent)
+      if (parent && parent.children && parent.children.length > 0) {
         parent.children = parent.children.filter(childId => childId !== id)
         state.set(parent.id, parent)
       }
@@ -50,11 +50,15 @@ const getDirtyNodes = (plugins, state) => {
  * when a plugin version changes
  */
 module.exports = (plugin, state, storeByType = true) => {
-  const plugins = [].concat(plugin)
+  const plugins = [].concat(plugin).filter(Boolean)
   let newState = new Map()
 
+  if (plugins.length === 0) {
+    return new Map()
+  }
+
   const nodes = getLookup(state)
-  const dirty = getDirtyNodes(plugins, state)
+  const dirty = getDirtyNodes(plugins, nodes)
 
   for (let [id, node] of nodes) {
     if (!dirty.has(id)) {

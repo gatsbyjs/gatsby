@@ -168,7 +168,6 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  console.log(`===========I WAS TRIGGERED==========`)
   const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
