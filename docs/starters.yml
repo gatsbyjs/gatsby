@@ -2728,8 +2728,8 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
-- url: https://gatsby-starter-anoun-1-markdown.netlify.com/
-  repo: https://github.com/ANOUN/gatsby-starter-anoun-1-markdown
+- url: https://gatsby-starter-material-business-markdown.netlify.com/
+  repo: https://github.com/ANOUN/gatsby-starter-material-business-markdown
   description: A clean, modern starter for businesses using Material Design Components
   tags:
     - Business Website
@@ -2738,6 +2738,7 @@
     - Modern Design
     - PWA
     - Styling:Material Design
+    - Styling:Material
     - Styling:SCSS
   features:
     - Minimal, Modern Business Website Design
@@ -2994,7 +2995,33 @@
     - Featured post
     - Next and prev post
     - SEO component
-- url: https://gatsby-typescript-starter-default.netlify.com/
+- url: https://anubhavsrivastava.github.io/gatsby-starter-fractal
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-fractal
+  description: Single page starter based on the Fractal site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://minimal-gatsby-ts-starter.netlify.com/
+  repo: https://github.com/TheoBr/minimal-gatsby-typescript-starter
+  description: Minimal Typescript Starter
+  tags:
+    - TypeScript
+    - Minimal
+  features:
+    - TypeScript
+    - ESLint + optional rule enforcement with Husky
+    - Prettier
+    - Netlify ready
+    - url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
   description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
   tags:
