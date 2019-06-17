@@ -3021,4 +3021,3 @@
     - ESLint + optional rule enforcement with Husky
     - Prettier
     - Netlify ready
-    
