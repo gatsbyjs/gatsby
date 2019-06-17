@@ -11,7 +11,7 @@ Some specific things that engineering leaders and managers care about include:
 - **Performance and security** No one wants their product to be noticeably slow or the source of a major security vulnerability. Getting these two key features right can be complicated, even for experienced engineering teams.
 - **Flexibility and scalability** Managers want to pick tools that can grow with their user base and with their long-term product roadmap. They do not want to choose a technology that will limit their growth or risk having to start over if (and when) that tool proves to be too rigid.
 - **Not reinventing the wheel** While many managers appreciate and sympathize with their team's or colleagues' desire to try out cool new tech, they'd rather not spend valuable time and resources on a new thing when the job is already being done to their satisfaction. As the saying goes, "If it ain't broke, don't fix it."
-- **Helping their team work smarter** New tech is interesting to managers when it removes obstacles for their team, helps them be more effective, and/or reduces yak shaving. However, these benefits have to outweight the cost of integrating a new tool and/or re-implementing an existing product.
+- **Helping their team work smarter** New tech is interesting to managers when it removes obstacles for their team, helps them be more effective, and/or reduces [yak shaving](https://www.hanselman.com/blog/YakShavingDefinedIllGetThatDoneAsSoonAsIShaveThisYak.aspx). However, these benefits have to outweigh the cost of integrating a new tool and/or re-implementing an existing product.
 
 ## Basic Explanation
 
@@ -33,7 +33,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Scalability
 
-> The scalability of your traffic handling, product complexity and features, and your development process will all benefit from Gatsby. Gatsby sites can be entirely deployed to a CDN, effectively eliminating your risk of downtime due to traffic spikes. If your site or application needs to support new functionality, Gatsby can pull content from as many sources as you need. With other tools, integrations with external resources are an afterthought and a common source of frustration for developers, causing project delays and outages. Gatsby streamlines the integration process, eliminating many of these headaches and points of failure. Finally, Gatsby equips dev teams to make their own components that can be reused across projects with minimal reworking giving them more time to work on new features.
+> The scalability of your traffic handling, product complexity and features, and your development process will all benefit from Gatsby. Gatsby sites can be entirely deployed to a CDN, effectively eliminating your risk of downtime due to traffic spikes. If your site or application needs to support new functionality, Gatsby can pull content from as many sources as you need. With other tools, integrations with external resources are an afterthought and a common source of frustration for developers, causing project delays and outages. Gatsby streamlines the integration process, eliminating many of these headaches and points of failure. Finally, Gatsby equips dev teams to make their own components that can be reused across projects with minimal reworking, giving them more time to work on new features.
 
 ### Lower costs
 
