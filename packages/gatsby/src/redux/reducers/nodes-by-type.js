@@ -27,6 +27,9 @@ module.exports = (state = new Map(), action) => {
       return state
     }
 
+    /*
+     * Also needs to delete references to nodes
+     */
     case `DELETE_NODE`: {
       const node = action.payload
       if (!node) return state

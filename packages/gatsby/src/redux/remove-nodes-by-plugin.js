@@ -15,15 +15,29 @@ const getLookup = state => {
   return lookup
 }
 
+/*
+ * Traverse downwards through children
+ * to get all dirty nodes of a plugin
+ */
 const getDirtyNodes = (plugins, state) => {
   let dirty = new Map()
   for (let [id, node] of state) {
+    const parent = state.get(node.parent)
     if (node && node.internal && plugins.includes(node.internal.owner)) {
       dirty.set(id, true)
-      let parent = state[node.parent]
-      while (parent) {
-        dirty.set(parent.id, true)
-        parent = state[parent.parent]
+      let children = (node.children || []).slice(0)
+      while (children.length > 0) {
+        const id = children.shift()
+        dirty.set(id, true)
+
+        const child = state.get(id)
+
+        children = children.concat(child.children || [])
+      }
+
+      if (parent.children && parent.children.length > 0) {
+        parent.children = parent.children.filter(childId => childId !== id)
+        state.set(parent.id, parent)
       }
     }
   }
