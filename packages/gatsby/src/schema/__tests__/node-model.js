@@ -3,6 +3,7 @@ const nodeStore = require(`../../db/nodes`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
+const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -16,6 +17,9 @@ describe(`NodeModel`, () => {
     nodes.forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
+    // We need to call this manually because we don't dispatch createNode()
+    // but the raw action type directly
+    nodes.forEach(trackInlineObjectsInRootNode)
 
     const types = `
       union AllFiles = File | RemoteFile
