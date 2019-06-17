@@ -1,15 +1,15 @@
 import React from "react"
 import { css } from "theme-ui"
-import FooterContent from "./footer-content"
+import PostFooterContent from "./post-footer-content"
 
-const Footer = () => (
+const Footer = props => (
   <footer
     css={css({
       mt: 4,
       pt: 3,
     })}
   >
-    <FooterContent />
+    <PostFooterContent {...props} />
   </footer>
 )
 
