@@ -106,8 +106,8 @@ const setupImages = (
       title={`Title for the image`}
       alt={`Alt text for the image`}
       crossOrigin={`anonymous`}
-      {...fluidImages && { fluidImages: fluidImagesShapeMock }}
-      {...!fluidImages && { fixedImages: fixedImagesShapeMock }}
+      {...fluidImages && { fluid: fluidImagesShapeMock }}
+      {...!fluidImages && { fixed: fixedImagesShapeMock }}
       onLoad={onLoad}
       onError={onError}
       itemProp={`item-prop-for-the-image`}

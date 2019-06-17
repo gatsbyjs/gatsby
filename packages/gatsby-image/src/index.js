@@ -37,18 +37,17 @@ const convertProps = props => {
     convertedProps.loading = `eager`
   }
 
+  // convert fluid & fixed to arrays so we only have to work with arrays
+  convertedProps.fluid = [].concat(convertedProps.fluid).filter(Boolean)
+  convertedProps.fixed = [].concat(convertedProps.fixed).filter(Boolean)
+
   return convertedProps
 }
 
 // Find the source of an image to use as a key in the image cache.
-// Use `fixed` or `fluid` if specified, or the first image in
-// either `fixedImages` or `fluidImages`
-const getImageSrcKey = ({ fluid, fixed, fluidImages, fixedImages }) => {
-  const data =
-    fluid ||
-    fixed ||
-    (fluidImages && fluidImages[0]) ||
-    (fixedImages && fixedImages[0])
+// Use `the first image in either `fixed` or `fluid`
+const getImageSrcKey = ({ fluid, fixed }) => {
+  const data = (fluid.length && fluid[0]) || (fixed.length && fixed[0])
   return data.src
 }
 
@@ -356,8 +355,6 @@ class Image extends React.Component {
       placeholderClassName,
       fluid,
       fixed,
-      fluidImages,
-      fixedImages,
       backgroundColor,
       durationFadeIn,
       Tag,
@@ -395,8 +392,8 @@ class Image extends React.Component {
       className: placeholderClassName,
     }
 
-    if (fluid || fluidImages) {
-      const imageVariants = fluidImages ? groupByMedia(fluidImages) : [fluid]
+    if (fluid.length) {
+      const imageVariants = groupByMedia(fluid)
       const image = imageVariants[0]
 
       return (
@@ -494,8 +491,8 @@ class Image extends React.Component {
       )
     }
 
-    if (fixed || fixedImages) {
-      const imageVariants = fixedImages ? groupByMedia(fixedImages) : [fixed]
+    if (fixed.length) {
+      const imageVariants = groupByMedia(fixed)
       const image = imageVariants[0]
 
       const divStyle = {
@@ -634,10 +631,8 @@ const fluidObject = PropTypes.shape({
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
-  fixed: fixedObject,
-  fluid: fluidObject,
-  fixedImages: PropTypes.arrayOf(fixedObject),
-  fluidImages: PropTypes.arrayOf(fluidObject),
+  fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
+  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
   fadeIn: PropTypes.bool,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,
