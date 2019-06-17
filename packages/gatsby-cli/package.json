@@ -55,6 +55,9 @@
     "ink": "^2.0.5",
     "ink-spinner": "^3.0.1"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "files": [
     "lib"
   ],

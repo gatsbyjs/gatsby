@@ -13,9 +13,7 @@ const updateNotifier = require(`update-notifier`)
 // Check if update is available
 updateNotifier({ pkg }).notify()
 
-const MINIMUM_NODE_VERSION = `8.0.0`
-
-if (!semver.satisfies(process.version, `>=${MINIMUM_NODE_VERSION}`)) {
+if (!semver.satisfies(process.version, pkg.engines)) {
   report.panic(
     report.stripIndent(`
       Gatsby requires Node.js v8 or higher (you have ${process.version}).
