@@ -1,6 +1,5 @@
 const path = require(`path`)
 const Url = require(`url`)
-const crypto = require(`crypto`)
 
 /**
  * getParsedPath
