@@ -57,7 +57,7 @@ You may find that your engineering leaders and managers have some concerns about
 
 ### Our content team and other less-technical members of my organization need to be able to make site updates. Are they going to be able to work with a Gatsby site?
 
-> Gatsby can pull content from any source, including all-in-one CMSs, like WordPress and Drupal, and headless CMSs. Your content team can work with whichever content editor suits their needs and preferences, including the CMS they're already using.
+> Gatsby can pull content from any source, including all-in-one CMSs, like WordPress and Drupal, and headless CMSs. Your content team can work with whichever content editor suits their needs and preferences, including the CMS they're already using. You can also enable more collaboration between your content and development teams with [Gatsby Preview](https://www.gatsbyjs.com/preview).
 
 ## Case studies
 
@@ -71,4 +71,4 @@ For examples of Gatsby sites, [check out the Showcase](/showcase/).
 
 ## Conclusion
 
-When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby's pros outweigh the cons - don't be afraid to help your engineering leaders dig into that information. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers/) page for more on that subject.)
+When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites - don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers/) page for more on that subject.)
