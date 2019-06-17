@@ -49,7 +49,7 @@ You may find that your engineering leaders and managers have some concerns about
 
 ### Support for open source software is often unreliable and relatively few projects offer long-term viability. How is Gatsby different?
 
-> Gatsby has an extremely active and communicative community with over 1,700 contributors and tens of thousands of developers building Gatsby sites. The process for filing issues and [contributing to Gatsby](/contributing/) is well-documented. [Gatsby's extensive documentation](/docs/) also includes various guides, tutorials, plugin and starter libraries, troubleshooting, and additional resources. Last but not least, the Gatsby open source project is supported by [Gatsby, Inc](https://www.gatsbyjs.com/). whose team is committed, full-time, to developing and maintaining Gatsby. Gatsby, Inc. also offers support services, training, and partnership opportunities. 
+> Gatsby has an extremely active and communicative community with over 2,000 contributors and tens of thousands of developers building Gatsby sites. The process for filing issues and [contributing to Gatsby](/contributing/) is well-documented. [Gatsby's extensive documentation](/docs/) also includes various guides, tutorials, plugin and starter libraries, troubleshooting, and additional resources. Last but not least, the Gatsby open source project is supported by [Gatsby, Inc](https://www.gatsbyjs.com/). whose team is committed, full-time, to developing and maintaining Gatsby. Gatsby, Inc. also offers support services, training, and partnership opportunities. 
 
 ### Our site uses a lot of dynamic content and components. Didn't you say Gatsby was a static site generator?
 
