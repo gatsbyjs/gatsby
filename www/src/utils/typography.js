@@ -24,6 +24,7 @@ const _options = {
   overrideStyles: ({ rhythm }) => {
     return {
       html: {
+        backgroundColor: colors.white,
         WebkitFontSmoothing: `antialiased`,
         MozOsxFontSmoothing: `grayscale`,
       },
