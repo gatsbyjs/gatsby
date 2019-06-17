@@ -22,6 +22,7 @@
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
     "fs-exists-cached": "^1.0.0",
+    "gatsby-page-utils": "^0.0.1",
     "glob": "^7.1.1",
     "lodash": "^4.17.10",
     "micromatch": "^3.1.10"
