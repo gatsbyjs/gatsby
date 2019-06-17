@@ -25,7 +25,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Performance
 
-> From its inception, Gatsby was built to optimize performance. Gatsby sites are consistently 2-3x faster than similar sites built with other tools, with pages loading in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, progressive image loading, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern/).  If you want to take a deeper dive into Gatsby's performance features, check out Kyle Mathews's article, [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/).
+> From its inception, Gatsby was built to optimize performance. Gatsby sites are consistently 2-3x faster than similar sites built with other tools, with pages loading in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, progressive image loading, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern/).  If you want to take a deeper dive into Gatsby's performance features, check out Kyle Mathews's article, [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/) or Dustin Schau's article, [Behind the Scenes: What makes Gatsby Great](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/).
 
 ### Security
 
