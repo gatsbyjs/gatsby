@@ -9,4 +9,6 @@ A core benefit of this “data from anywhere” approach is that it allows teams
 
 Gatsby uses source plugins to pull in data. [Numerous source plugins already exist](/plugins/?=gatsby-source) for pulling in data from other APIs, CMSs, and databases. Each plugin fetches data from their source, meaning the filesystem source plugin knows how to fetch data from the file system, the WordPress plugin knows how to fetch data from the WordPress API, etc. By including multiple source plugins, you can fetch data and combine it all in one data layer.
 
+_(If there isn’t a plugin yet for your favorite option, consider [contributing](/docs/creating-plugins) one!)_
+
 <GuideList slug={props.slug} />
