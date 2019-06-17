@@ -210,10 +210,6 @@ workflows:
     jobs:
       - bootstrap
       - lint
-      - unit_tests_node6:
-          <<: *ignore_docs
-          requires:
-            - bootstrap
       - unit_tests_node8:
           <<: *ignore_docs
           requires:
