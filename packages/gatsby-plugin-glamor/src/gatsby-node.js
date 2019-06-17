@@ -11,10 +11,10 @@ exports.onCreateWebpackConfig = ({ actions, plugins }) =>
 // Add Glamor babel plugin
 exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({
-    name: `glamor/babel-hoist`,
+    name: require.resolve(`glamor/babel-hoist`),
   })
   actions.setBabelPreset({
-    name: `@babel/preset-react`,
+    name: require.resolve(`@babel/preset-react`),
     options: {
       pragma: `Glamor.createElement`,
     },

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/compare/gatsby-plugin-emotion@4.0.6...gatsby-plugin-emotion@4.0.7) (2019-05-24)
+
+### Bug Fixes
+
+- **PnP:** use `require.resolve` on `setBabelPreset` ([#14288](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/issues/14288)) ([5e54afe](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/commit/5e54afe))
+
 ## [4.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion/compare/gatsby-plugin-emotion@4.0.5...gatsby-plugin-emotion@4.0.6) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-emotion

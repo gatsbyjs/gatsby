@@ -56,4 +56,4 @@ Using Gatsby together with Drupal offers a powerful, full-featured, open-source,
 - Read [a Drupal agency’s introduction to Gatsby](https://www.mediacurrent.com/what-is-gatsby.js/)
 - Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
 - Get started with Robert Ngo’s [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I).
-- [Get expert help](https://www.gatsbyjs.com/support/#contact-us)
+- [Get in touch with the team](https://www.gatsbyjs.com/contact-us)

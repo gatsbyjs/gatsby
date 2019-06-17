@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.9...gatsby-remark-graphviz@1.0.10) (2019-06-04)
+
+### Features
+
+- **gatsby-remark-graphviz:** custom SVG attributes and default styling ([#11624](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/issues/11624)) ([e64ac14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/commit/e64ac14))
+
 ## [1.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.8...gatsby-remark-graphviz@1.0.9) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-remark-graphviz

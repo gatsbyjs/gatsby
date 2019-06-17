@@ -10,14 +10,14 @@ const Card = ({ children }) => (
       [mediaQueries.md]: {
         flex: `0 0 auto`,
         maxWidth: `50%`,
-        boxShadow: `0 1px 0 0 ${colors.ui.light}`,
+        boxShadow: `0 1px 0 0 ${colors.purple[10]}`,
         "&:nth-of-type(5), &:nth-of-type(6)": { boxShadow: `none` },
-        "&:nth-of-type(2n)": { borderLeft: `1px solid ${colors.ui.light}` },
+        "&:nth-of-type(2n)": { borderLeft: `1px solid ${colors.purple[10]}` },
       },
       [mediaQueries.xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
-        borderLeft: `1px solid ${colors.ui.light}`,
+        borderLeft: `1px solid ${colors.purple[10]}`,
         "&:nth-of-type(4)": { boxShadow: `none` },
         "&:nth-of-type(3n+1)": { borderLeft: 0 },
       },

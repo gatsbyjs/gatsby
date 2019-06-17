@@ -84,7 +84,7 @@ class TagsPage extends React.Component {
                 alignItems: `center`,
                 paddingTop: space[9],
                 paddingBottom: space[6],
-                borderBottom: `1px solid ${colors.ui.bright}`,
+                borderBottom: `1px solid ${colors.ui.border.subtle}`,
               }}
             >
               <h1 css={{ margin: 0 }}>
