@@ -1,5 +1,6 @@
 import React from "react"
 import fs from "fs"
+const { join } = require(`path`)
 
 import DevelopStaticEntry from "../develop-static-entry"
 
@@ -30,32 +31,17 @@ jest.mock(
   }
 )
 
-jest.mock(
-  `../data.json`,
-  () => {
-    return {
-      dataPaths: [
-        {
-          [`about.json`]: `/400/about`,
-        },
-      ],
-      pages: [
-        {
-          path: `/about/`,
-          componentChunkName: `page-component---src-pages-test-js`,
-          jsonName: `about.json`,
-        },
-      ],
-    }
-  },
-  {
-    virtual: true,
-  }
-)
-
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
+  [join(
+    process.cwd(),
+    `/public/page-data/about/page-data.json`
+  )]: JSON.stringify({
+    componentChunkName: `page-component---src-pages-test-js`,
+    path: `/about/`,
+    webpackCompilationHash: `1234567890abcdef1234`,
+  }),
 }
 
 let StaticEntry

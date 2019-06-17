@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 
 import GraphiQL from "graphiql"
 import GraphiQLExplorer from "graphiql-explorer"
-import { getIntrospectionQuery, buildClientSchema } from "graphql"
+import { getIntrospectionQuery, buildClientSchema, parse } from "graphql"
 
 import "whatwg-fetch"
 
@@ -27,9 +27,6 @@ function locationQuery(params) {
   return (
     `?` +
     Object.keys(params)
-      .filter(function(key) {
-        return Boolean(params[key])
-      })
       .map(function(key) {
         return encodeURIComponent(key) + `=` + encodeURIComponent(params[key])
       })
@@ -42,6 +39,7 @@ const graphqlParamNames = {
   query: true,
   variables: true,
   operationName: true,
+  explorerIsOpen: true,
 }
 const otherParams = {}
 for (var k in parameters) {
@@ -135,9 +133,14 @@ ${queryExample}
 `
 }
 
-const storedExplorerPaneState = window.localStorage
-  ? window.localStorage.getItem(`graphiql:graphiqlExplorerOpen`) !== `false`
-  : true
+const storedExplorerPaneState =
+  typeof parameters.explorerIsOpen !== `undefined`
+    ? parameters.explorerIsOpen === `false`
+      ? false
+      : true
+    : window.localStorage
+    ? window.localStorage.getItem(`graphiql:graphiqlExplorerOpen`) !== `false`
+    : true
 
 class App extends React.Component {
   state = {
@@ -181,6 +184,70 @@ class App extends React.Component {
 
       this.setState(newState)
     })
+
+    const editor = this._graphiql.getQueryEditor()
+    editor.setOption(`extraKeys`, {
+      ...(editor.options.extraKeys || {}),
+      "Shift-Alt-LeftClick": this._handleInspectOperation,
+    })
+  }
+
+  _handleInspectOperation = (cm, mousePos) => {
+    const parsedQuery = parse(this.state.query || ``)
+
+    if (!parsedQuery) {
+      console.error(`Couldn't parse query document`)
+      return null
+    }
+
+    const token = cm.getTokenAt(mousePos)
+    const start = { line: mousePos.line, ch: token.start }
+    const end = { line: mousePos.line, ch: token.end }
+    const relevantMousePos = {
+      start: cm.indexFromPos(start),
+      end: cm.indexFromPos(end),
+    }
+
+    const position = relevantMousePos
+
+    const def = parsedQuery.definitions.find(definition => {
+      if (!definition.loc) {
+        console.log(`Missing location information for definition`)
+        return false
+      }
+
+      const { start, end } = definition.loc
+      return start <= position.start && end >= position.end
+    })
+
+    if (!def) {
+      console.error(`Unable to find definition corresponding to mouse position`)
+      return null
+    }
+
+    const operationKind =
+      def.kind === `OperationDefinition`
+        ? def.operation
+        : def.kind === `FragmentDefinition`
+        ? `fragment`
+        : `unknown`
+
+    const operationName =
+      def.kind === `OperationDefinition` && !!def.name
+        ? def.name.value
+        : def.kind === `FragmentDefinition` && !!def.name
+        ? def.name.value
+        : `unknown`
+
+    const selector = `.graphiql-explorer-root #${operationKind}-${operationName}`
+
+    const el = document.querySelector(selector)
+    if (el) {
+      el.scrollIntoView()
+      return true
+    }
+
+    return false
   }
 
   _handleEditQuery = query => {
@@ -197,6 +264,8 @@ class App extends React.Component {
         newExplorerIsOpen
       )
     }
+    parameters.explorerIsOpen = newExplorerIsOpen
+    updateURL()
     this.setState({ explorerIsOpen: newExplorerIsOpen })
   }
 
@@ -211,6 +280,9 @@ class App extends React.Component {
           onEdit={this._handleEditQuery}
           explorerIsOpen={this.state.explorerIsOpen}
           onToggleExplorer={this._handleToggleExplorer}
+          onRunOperation={operationName =>
+            this._graphiql.handleRunQuery(operationName)
+          }
         />
         <GraphiQL
           ref={ref => (this._graphiql = ref)}

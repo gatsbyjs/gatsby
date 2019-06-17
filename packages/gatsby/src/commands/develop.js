@@ -16,7 +16,7 @@ const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
 const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
@@ -27,6 +27,7 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const cors = require(`cors`)
 const telemetry = require(`gatsby-telemetry`)
+const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
@@ -41,6 +42,7 @@ const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
 const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
+const requiresWriter = require(`../bootstrap/requires-writer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -65,15 +67,29 @@ onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
 
+const waitJobsFinished = () =>
+  new Promise((resolve, reject) => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
+  const workerPool = WorkerPool.create()
   const createIndexHtml = async () => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
+        workerPool,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -90,13 +106,6 @@ async function startServer(program) {
       )
     }
   }
-
-  // Start bootstrap process.
-  await bootstrap(program)
-
-  db.startAutosave()
-  queryUtil.startListening(queryQueue.createDevelopQueue())
-  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -330,6 +339,37 @@ module.exports = async (program: any) => {
   }
 
   program.port = await detectPortInUseAndPrompt(port, rlInterface)
+  // Start bootstrap process.
+  const { graphqlRunner } = await bootstrap(program)
+
+  // Start the createPages hot reloader.
+  require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
+
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  let activity = report.activityTimer(`run static queries`)
+  activity.start()
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
+  })
+  activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+
+  await waitJobsFinished()
+  requiresWriter.startListener()
+  db.startAutosave()
+  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryWatcher.startWatchDeletePage()
 
   const [compiler] = await startServer(program)
 

@@ -30,6 +30,9 @@ date: 2019-01-29
 
 Which can then be [queried with GraphQL](/docs/querying-with-graphql/):
 
+**Note:** To query `Mdx` content, it must be included in the node system using a
+source like `gatsby-source-filesystem` first.
+
 ```graphql
 query {
   allMdx {
