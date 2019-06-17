@@ -10,6 +10,7 @@ import {
   lineHeights,
   letterSpacings,
   fonts,
+  fontWeights,
 } from "./tokens"
 
 const _options = {
@@ -29,6 +30,9 @@ const _options = {
       a: {
         textDecoration: `none`,
       },
+      h1: {
+        fontWeight: fontWeights[2],
+      },
       "h1, h2, h3, h4, h5, h6": {
         letterSpacing: letterSpacings.tight,
       },
@@ -39,7 +43,7 @@ const _options = {
         marginTop: rhythm(space[9]),
       },
       "h4, h5, h6": { fontSize: fontSizes[3] },
-      "h5, h6": { fontWeight: `normal` },
+      "h5, h6": { fontWeight: fontWeights[0] },
       h6: { fontSize: fontSizes[2] },
       blockquote: {
         paddingLeft: rhythm(space[6]),
@@ -61,7 +65,7 @@ const _options = {
         lineHeight: `inherit`,
       },
       "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code": {
-        fontWeight: `normal`,
+        fontWeight: fontWeights[0],
         fontSize: `82.5%`,
       },
       "tt, code, kbd": {
@@ -120,19 +124,16 @@ const _options = {
         content: `'GraphQL'`,
         background: `#E10098`,
         color: colors.white,
-        fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-html']::before": {
         content: `'html'`,
         background: `#005A9C`,
         color: colors.white,
-        fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-css']::before": {
         content: `'css'`,
         background: `#ff9800`,
         color: colors.white,
-        fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-shell']::before": {
         content: `'shell'`,
@@ -209,7 +210,7 @@ const _options = {
         position: `relative`,
       },
       ".gatsby-resp-image-link + em a, .gatsby-resp-image-wrapper + em a": {
-        fontWeight: `normal`,
+        fontWeight: fontWeights[0],
         color: colors.lilac,
       },
       ".main-body a": {
@@ -220,6 +221,9 @@ const _options = {
       },
       ".main-body a:hover": {
         borderBottomColor: colors.link.hoverBorder,
+      },
+      ".post-body h1": {
+        fontWeight: fontWeights[1],
       },
       ".post-body figure img": {
         marginBottom: 0,
@@ -333,10 +337,10 @@ const _options = {
         color: colors.code.cssString,
       },
       ".token.important": {
-        fontWeight: `normal`,
+        fontWeight: fontWeights[0],
       },
       ".token.bold": {
-        fontWeight: `bold`,
+        fontWeight: fontWeights[1],
       },
       ".token.italic": {
         fontStyle: `italic`,

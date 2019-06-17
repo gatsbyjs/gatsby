@@ -1124,9 +1124,14 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
- * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
- * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ * // Generally you create redirects while creating pages.
+ * exports.createPages = ({ graphql, actions }) => {
+ *   const { createRedirect } = actions
+ *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ *   // Create pages here
+ * }
  */
 actions.createRedirect = ({
   fromPath,
@@ -1148,6 +1153,37 @@ actions.createRedirect = ({
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
+    },
+  }
+}
+
+/**
+ * Create a dependency between a page and data.
+ *
+ * @param {Object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
+ */
+actions.createPageDependency = (
+  {
+    path,
+    nodeId,
+    connection,
+  }: { path: string, nodeId: string, connection: string },
+  plugin: string = ``
+) => {
+  console.warn(
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+  )
+  return {
+    type: `CREATE_COMPONENT_DEPENDENCY`,
+    plugin,
+    payload: {
+      path,
+      nodeId,
+      connection,
     },
   }
 }
