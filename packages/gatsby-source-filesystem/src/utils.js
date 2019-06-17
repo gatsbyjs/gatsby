@@ -72,19 +72,3 @@ export function slash(path) {
 export function createFilePath(directory, filename, ext) {
   return path.join(directory, `${filename}${ext}`)
 }
-
-/**
- * md5Buffer
- * --
- * Hashes the contents of a buffer using MD5
- *
- *
- * @param {Buffer}            buffer
- * @return {String}           hash
- */
-export function md5Buffer(buffer) {
-  return crypto
-    .createHash(`md5`)
-    .update(buffer)
-    .digest(`hex`)
-}

@@ -3,7 +3,8 @@ const path = require(`path`)
 const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { md5Buffer, createFilePath } = require(`./utils`)
+const { createFilePath } = require(`./utils`)
+const { createContentDigest } = require(`gatsby/utils`)
 const cacheId = hash => `create-file-node-from-buffer-${hash}`
 
 /********************
@@ -165,7 +166,7 @@ module.exports = ({
   }
 
   if (!hash) {
-    hash = md5Buffer(buffer)
+    hash = createContentDigest(buffer)
   }
 
   // Check if we already requested node for this remote file
