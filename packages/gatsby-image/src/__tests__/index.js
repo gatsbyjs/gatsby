@@ -167,9 +167,39 @@ describe(`<Image />`, () => {
   })
 
   it(`should have the the "critical" prop set "loading='eager'"`, () => {
+    jest.spyOn(global.console, `log`)
+
     const props = { critical: true }
     const imageTag = setup(false, props).querySelector(`picture img`)
     expect(imageTag.getAttribute(`loading`)).toEqual(`eager`)
+    expect(console.log).toBeCalled()
+  })
+
+  it(`should warn if multiple sources with no media are used.`, () => {
+    jest.spyOn(global.console, `warn`)
+
+    render(
+      <Image
+        backgroundColor
+        className={`fixedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fluid={fluidImagesShapeMock.concat({
+          aspectRatio: 2,
+          src: `test_image_3.jpg`,
+          srcSet: `some other srcSet`,
+          srcSetWebp: `some other srcSetWebp`,
+          sizes: `(max-width: 600px) 100vw, 600px`,
+          base64: `string_of_base64`,
+        })}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    expect(console.warn).toBeCalled()
   })
 
   it(`should call onLoad and onError image events`, () => {

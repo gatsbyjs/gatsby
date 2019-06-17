@@ -131,6 +131,14 @@ function groupByMedia(imageVariants) {
     (variant.media ? withMedia : without).push(variant)
   )
 
+  if (without.length > 1 && process.env.NODE_ENV !== `production`) {
+    console.warn(
+      `We've found ${
+        without.length
+      } sources without a media property. You should only have 1.`
+    )
+  }
+
   return [...withMedia, ...without]
 }
 
