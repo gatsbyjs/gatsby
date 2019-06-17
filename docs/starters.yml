@@ -2994,3 +2994,14 @@
     - Featured post
     - Next and prev post
     - SEO component
+- url: https://minimal-gatsby-ts-starter.netlify.com/
+  repo: https://github.com/TheoBr/minimal-gatsby-typescript-starter
+  description: Minimal Typescript Starter
+  tags:
+    - TypeScript
+    - Minimal
+  features:
+    - TypeScript
+    - ESLint + optional rule enforcement with Husky
+    - Prettier
+    - Netlify ready
