@@ -10,7 +10,7 @@ optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
-_Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It's
+_Note: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
 of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
@@ -340,7 +340,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
 | `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                               |
 | `title`                | `string`            | Passed to the `img` element                                                                                                 |
-| `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
+| `alt`                  | `string`            | Passed to the `img` element. Defaults to an empty string `alt=""`                                                           |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
 | `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |

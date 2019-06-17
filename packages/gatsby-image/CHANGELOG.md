@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.3...gatsby-image@2.1.4) (2019-06-12)
+
+### Bug Fixes
+
+- **docs:** improve image docs from workflow evaluation ([#14697](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/14697)) ([16f0baf](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/16f0baf))
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.2...gatsby-image@2.1.3) (2019-06-10)
 
 ### Features

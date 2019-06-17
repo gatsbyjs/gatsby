@@ -26,7 +26,7 @@ There are several ways Gatsby may support your event:
 - The event must have at least half of the content focused on Gatsby or a Gatsby-related topic (such as JAMstack)
 - Both US and international events qualify for support
 - If you’re requesting the \$300 food credit, then you must submit a receipt for the expense
-- The event must be in harmony with the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and follow the [Gatsby brand guidelines](https://mutability.netlify.com/logo/)
+- The event must be in harmony with the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and follow the [Gatsby brand guidelines](/guidelines/logo/)
 
 ## How do you qualify for Gatsby support?
 

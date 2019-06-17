@@ -4,11 +4,24 @@ const { getNamedType } = require(`graphql`)
 const getQueryFields = ({ filter, sort, group, distinct }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
   const sortFields = (sort && sort.fields) || []
+
+  if (group && !Array.isArray(group)) {
+    group = [group]
+  } else if (group == null) {
+    group = []
+  }
+
+  if (distinct && !Array.isArray(distinct)) {
+    distinct = [distinct]
+  } else if (distinct == null) {
+    distinct = []
+  }
+
   return merge(
     filterFields,
     ...sortFields.map(pathToObject),
-    pathToObject(group),
-    pathToObject(distinct)
+    ...group.map(pathToObject),
+    ...distinct.map(pathToObject)
   )
 }
 
