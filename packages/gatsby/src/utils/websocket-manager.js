@@ -40,12 +40,19 @@ const getCachedPageData = async (
   }
 }
 
-const hashPaths = paths =>
-  paths.map(path =>
-    createHash(`sha256`)
+const hashPaths = paths => {
+  if (!paths) {
+    return undefined
+  }
+  return paths.map(path => {
+    if (!path) {
+      return undefined
+    }
+    return createHash(`sha256`)
       .update(path)
       .digest(`hex`)
-  )
+  })
+}
 
 /**
  * Get cached StaticQuery results for components that Gatsby didn't run query yet.
