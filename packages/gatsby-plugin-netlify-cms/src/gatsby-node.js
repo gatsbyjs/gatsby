@@ -163,7 +163,7 @@ exports.onCreateWebpackConfig = (
     optimization: {
       /**
        * Without this, node can get out of memory errors
-       * when building css for production.
+       * when building for production.
        */
       minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
     },
