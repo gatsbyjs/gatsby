@@ -150,18 +150,30 @@ module.exports = async function build(program: BuildArgs) {
       workerPool,
     })
   } catch (err) {
-    reportFailure(
-      report.stripIndent`
-        Building static HTML failed${
-          err.context && err.context.path
-            ? ` for path "${chalk.bold(err.context.path)}"`
-            : ``
-        }
+    console.log(err.stack)
+    let id = `gatsbyerr-default01` // TODO: verify error IDs exist
+    if (err.message === `ReferenceError: window is not defined`) {
+      id = `gatsbyerr-webpack01`
+    }
+    report.errorThing({
+      id,
+      error: err,
+      context: {
+        errorPath: err.context && err.context.path,
+      },
+    })
+    // reportFailure(
+    //   report.stripIndent`
+    //     Building static HTML failed${
+    //       err.context && err.context.path
+    //         ? ` for path "${chalk.bold(err.context.path)}"`
+    //         : ``
+    //     }
 
-        See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
-      `,
-      err
-    )
+    //     See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
+    //   `,
+    //   err
+    // )
   }
   activity.end()
 

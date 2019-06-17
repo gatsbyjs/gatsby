@@ -6,6 +6,7 @@ const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
 const reporterInstance = require(`./reporters`)
+const stackTrace = require(`stack-trace`)
 
 const errorFormatter = getErrorFormatter()
 
@@ -64,6 +65,22 @@ const reporter: Reporter = {
 
     reporterInstance.error(message)
     if (error) this.log(errorFormatter.render(error))
+  },
+
+  errorThing(errorInfo) {
+    // const makeDocsUrl = id => `https://gatsbyjs.org/docs/errors/${id}`
+    const errorMap = {
+      gatsbyerr0001: {
+        message: `Building static HTML failed. See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html`,
+        category: `REALLY BAD`,
+        docsUrl: `https://gatsby.dev/debug-html`,
+        // docsUrl: makeDocsUrl(),
+      },
+    }
+
+    const stack = stackTrace.parse(errorInfo.error)
+    const finalError = { ...errorInfo, ...errorMap[errorInfo.id], stack }
+    console.dir(finalError)
   },
   /**
    * Set prefix on uptime.
