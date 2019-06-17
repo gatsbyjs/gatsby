@@ -4,7 +4,7 @@ const {
   getRemoteFileExtension,
   getRemoteFileName,
   createProgress,
-  slash
+  slash,
 } = require(`../utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const progress = require(`progress`)
@@ -46,7 +46,7 @@ describe(`createProgress`, () => {
     expect(bar).toHaveProperty(`start`, expect.any(Function))
     expect(bar).toHaveProperty(`tick`, expect.any(Function))
     expect(bar).toHaveProperty(`done`, expect.any(Function))
-    expect(bar).toHaveProperty(`total`);
+    expect(bar).toHaveProperty(`total`)
   })
 })
 
