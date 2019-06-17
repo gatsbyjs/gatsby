@@ -29,7 +29,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Security
 
-> Gatsby is a static site generator. (If that's setting off alarm bells in your head, know that Gatsby sites also support dynamic content - see "Concerns" section.) Static site generators render static HTML pages at build time. That means you don't need a database or content management system running on your public servers, both of which are common sources of security breaches. Static content is much easier to secure. This does not, by any means, eliminate *all* security vulnerabilities for Gatsby sites, but they will be significantly reduced. Learn more about Gatsby security in Alex Moon's article on [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/) and the Docs page on [Answering IT & Security Questions](/docs/answering-it-security/).
+> Gatsby is a modern site generator that outputs static HTML pages at build time. That means you don't need a database or content management system running on your public servers, both of which are common sources of security breaches. Static content is much easier to secure. This does not, by any means, eliminate *all* security vulnerabilities for Gatsby sites, but they will be significantly reduced. Learn more about Gatsby security in Alex Moon's article on [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/) and the Docs page on [Answering IT & Security Questions](/docs/answering-it-security/).
 
 ### Scalability
 
