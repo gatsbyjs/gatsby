@@ -2995,6 +2995,21 @@
     - Featured post
     - Next and prev post
     - SEO component
+- url: https://anubhavsrivastava.github.io/gatsby-starter-fractal
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-fractal
+  description: Single page starter based on the Fractal site template by HTML5 up, with landing and Elements(Component) page
+  tags:
+    - HTML5UP
+    - Onepage
+    - Styling:SCSS
+    - Portfolio
+    - PWA
+  features:
+    - Designed by HTML5 UP
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
 - url: https://minimal-gatsby-ts-starter.netlify.com/
   repo: https://github.com/TheoBr/minimal-gatsby-typescript-starter
   description: Minimal Typescript Starter
