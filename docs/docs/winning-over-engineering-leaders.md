@@ -51,7 +51,7 @@ You may find that your engineering leaders and managers have some concerns about
 
 > Gatsby has an extremely active and communicative community with over 2,000 contributors and tens of thousands of developers building Gatsby sites. The process for filing issues and [contributing to Gatsby](/contributing/) is well-documented. [Gatsby's extensive documentation](/docs/) also includes various guides, tutorials, plugin and starter libraries, troubleshooting, and additional resources. Last but not least, the Gatsby open source project is supported by [Gatsby, Inc](https://www.gatsbyjs.com/). whose team is committed, full-time, to developing and maintaining Gatsby. Gatsby, Inc. also offers support services, training, and partnership opportunities. 
 
-### Our site uses a lot of dynamic content and components. Didn't you say Gatsby was a static site generator?
+### Our site uses a lot of dynamic content and components. Didn't you say Gatsby creates static sites?
 
 > It is, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro/).
 
