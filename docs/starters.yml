@@ -3021,7 +3021,7 @@
     - ESLint + optional rule enforcement with Husky
     - Prettier
     - Netlify ready
-    - url: https://gatsby-typescript-starter-default.netlify.com/
+- url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
   description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
   tags:
