@@ -100,7 +100,7 @@ const noscriptImg = props => {
     ? `crossorigin="${props.crossOrigin}" `
     : ``
 
-  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${srcSetWebp}<img ${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:contain;object-position:center"/></picture>`
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -121,7 +121,7 @@ const Img = React.forwardRef((props, ref) => {
         left: 0,
         width: `100%`,
         height: `100%`,
-        objectFit: `cover`,
+        objectFit: `contain`,
         objectPosition: `center`,
         ...style,
       }}
