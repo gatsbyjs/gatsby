@@ -202,7 +202,12 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({ src, spreadProps, imageVariants, generateSources }) => {
+const Placeholder = ({
+  src,
+  imageVariants,
+  generateSources,
+  ...spreadProps
+}) => {
   const baseImage = <Img src={src} {...spreadProps} />
 
   return imageVariants.length > 1 ? (
@@ -436,7 +441,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               src={image.base64}
-              spreadProps={placeholderImageProps}
+              {...placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateBase64Sources}
             />
@@ -446,7 +451,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               src={image.tracedSVG}
-              spreadProps={placeholderImageProps}
+              {...placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateTracedSVGSources}
             />
@@ -533,7 +538,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               src={image.base64}
-              spreadProps={placeholderImageProps}
+              {...placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateBase64Sources}
             />
@@ -543,7 +548,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               src={image.tracedSVG}
-              spreadProps={placeholderImageProps}
+              {...placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateTracedSVGSources}
             />
