@@ -31,7 +31,6 @@ const fixedImagesShapeMock = [
     srcSet: `some srcSet`,
     srcSetWebp: `some srcSetWebp`,
     base64: `string_of_base64`,
-    media: `only screen and (max-width: 767px)`,
   },
   {
     width: 100,
@@ -52,7 +51,6 @@ const fluidImagesShapeMock = [
     srcSetWebp: `some srcSetWebp`,
     sizes: `(max-width: 600px) 100vw, 600px`,
     base64: `string_of_base64`,
-    media: `only screen and (max-width: 767px)`,
   },
   {
     aspectRatio: 2,
