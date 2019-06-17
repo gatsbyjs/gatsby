@@ -214,6 +214,8 @@
                   link: /docs/post-css/
                 - title: Using TailwindCSS
                   link: /docs/tailwind-css/
+                - title: Using Bulma
+                  link: /docs/bulma/
         - title: Adding Components to Content with MDX
           link: /docs/mdx/
           items:
