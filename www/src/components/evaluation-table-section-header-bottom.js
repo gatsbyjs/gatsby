@@ -1,6 +1,6 @@
 import React from "react"
 
-import logo from "../monogram.svg"
+import logo from "../assets/monogram.svg"
 import jekyll from "../assets/vendor-logos/jekyll.svg"
 import wordpress from "../assets/vendor-logos/wordpress.png"
 import squarespace from "../assets/vendor-logos/squarespace-compressed.png"

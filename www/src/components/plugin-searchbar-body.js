@@ -12,7 +12,7 @@ import { navigate as reachNavigate } from "@reach/router"
 import { Link } from "gatsby"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import AlgoliaLogo from "../assets/algolia.svg"
-import GatsbyIcon from "../monogram.svg"
+import GatsbyIcon from "../assets/monogram.svg"
 import { debounce, unescape } from "lodash-es"
 
 import {

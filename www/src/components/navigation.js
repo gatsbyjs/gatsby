@@ -4,7 +4,7 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
-import logo from "../logo.svg"
+import logo from "../assets/logo.svg"
 import { rhythm } from "../utils/typography"
 import {
   colors,
