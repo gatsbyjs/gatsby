@@ -114,12 +114,6 @@ jobs:
       - <<: *persist_cache
       - run: yarn lint
 
-  unit_tests_node6:
-    executor:
-      name: node
-      image: "6"
-    <<: *test_template
-
   unit_tests_node8:
     executor:
       name: node
