@@ -6380,3 +6380,17 @@
   built_by: Bytom Foundation
   built_by_url: https://bytom.io/
   featured: false
+- title: Oerol Festival
+  url: https://www.oerol.nl/nl/
+  main_url: https://www.oerol.nl/en/
+  description: >
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    The ten-day festival is focused on live, public theatre as well as music and visual arts.
+  categories:
+    - Event
+    - Events
+    - Entertainment
+    - Festival
+  built_by: Oberon
+  built_by_url: https://oberon.nl/
+  featured: false
