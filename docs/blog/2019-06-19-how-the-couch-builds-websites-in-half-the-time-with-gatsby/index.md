@@ -1,6 +1,6 @@
 ---
 title: How The Couch Builds Websites in Half the Time with Gatsby
-date: 2019-06-17
+date: 2019-06-19
 author: Linda Watkins
 tags:
   - case study
