@@ -272,7 +272,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
-    fromPath: `/docs/advanced-tutorials/`,
+    fromPath: `/tutorial/advanced-tutorials/`,
     toPath: `/tutorial/additional-tutorials/`,
     isPermanent: true,
   })
