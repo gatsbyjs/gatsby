@@ -6,19 +6,15 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const ProgressBar = require(`progress`)
+const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-const bar = new ProgressBar(
-  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
+let bar
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
 
 /********************
  * Type Definitions *
@@ -82,6 +78,14 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+})
+
+// when the queue is empty we stop the progressbar
+queue.on(`drain`, () => {
+  if (bar) {
+    bar.done()
+  }
+  totalJobs = 0
 })
 
 /**
@@ -271,9 +275,6 @@ const pushTask = task =>
       })
   })
 
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
-
 /***************
  * Entry Point *
  ***************/
@@ -327,6 +328,11 @@ module.exports = ({
 
   if (!url || isWebUri(url) === undefined) {
     return Promise.reject(`wrong url: ${url}`)
+  }
+
+  if (totalJobs === 0) {
+    bar = createProgress(`Downloading remote files`)
+    bar.start()
   }
 
   totalJobs += 1
