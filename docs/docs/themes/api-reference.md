@@ -68,7 +68,7 @@ exports.createPages = async ({ graphql, actions }, themeOptions) => {
 
 ## Component Shadowing
 
-You can import files from a Gatsby Theme into your project. For example, if you're using `gatsby-theme-tomato`, which has a `Layout` component located at `src/components/layout.js`, you can import it into your poject like this:
+You can import files from a Gatsby Theme into your project. For example, if you're using `gatsby-theme-tomato`, which has a `Layout` component located at `src/components/layout.js`, you can import it into your project like this:
 
 ```js
 import Layout from "gatsby-theme-tomato/src/components/Layout"
