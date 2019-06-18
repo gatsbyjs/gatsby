@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.72](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.71...gatsby-source-contentful@2.0.72) (2019-06-18)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Restricts images to 4000 max image width/height ([#14760](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14760)) ([177d35c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/177d35c))
+
 ## [2.0.71](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.69...gatsby-source-contentful@2.0.71) (2019-06-12)
 
 **Note:** Version bump only for package gatsby-source-contentful

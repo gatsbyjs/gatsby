@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.40](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.39...gatsby-source-filesystem@2.0.40) (2019-06-18)
+
+### Features
+
+- **gatsby-cli:** move progressbar into ink ([#14220](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14220)) ([967597c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/967597c))
+
 ## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.38...gatsby-source-filesystem@2.0.39) (2019-06-10)
 
 ### Features
