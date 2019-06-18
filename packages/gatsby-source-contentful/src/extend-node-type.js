@@ -117,9 +117,14 @@ const resolveFixed = (image, options) => {
   fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width and the contentful image's max size.
-  const filteredSizes = fixedSizes.filter(
-    size => size <= CONTENTFUL_IMAGE_MAX_SIZE && size <= width
-  )
+  const filteredSizes = fixedSizes.filter(size => {
+    const calculatedHeight = Math.round(size / desiredAspectRatio)
+    return (
+      size <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      calculatedHeight <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      size <= width
+    )
+  })
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -220,9 +225,14 @@ const resolveFluid = (image, options) => {
   fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth and the contentful image's max size.
-  const filteredSizes = fluidSizes.filter(
-    size => size <= CONTENTFUL_IMAGE_MAX_SIZE && size <= width
-  )
+  const filteredSizes = fluidSizes.filter(size => {
+    const calculatedHeight = Math.round(size / desiredAspectRatio)
+    return (
+      size <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      calculatedHeight <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      size <= width
+    )
+  })
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
