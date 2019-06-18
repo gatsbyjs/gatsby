@@ -2,7 +2,7 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import {
   space,
-  fontSizes,
+  fontSizes as fontSizeTokens,
   colors,
   transition,
   radii,
@@ -12,6 +12,8 @@ import {
   fonts,
   fontWeights,
 } from "./tokens"
+
+const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
 
 const _options = {
   bodyFontFamily: fonts.system,
