@@ -22,7 +22,7 @@ These approaches jointly served as a gentle guide towards encouraging users to u
 
 ## Why a Breaking Change?
 
-We don't take lightly the potential for breaking changes. Our ultimate goal in publishing versions of Gatsby and plugins is that we _never_ want to make a breaking change without a major version bump. In fact, our approach is to publish early and often so that we can get new features and fixes in user's hands as soon as possible. Our intent is that users will update their Gatsby dependencies regularly and often to get these new features and fixes as quickly as possible.
+We don't take lightly the potential for breaking changes. Our ultimate goal in publishing versions of Gatsby and plugins is that we _never_ want to make a breaking change without a major version bump. In fact, our approach is to publish early and often so that we can get new features and fixes in user's hands as soon as possible. Our intent is that users will update their Gatsby dependencies regularly and often to get these new features and fixes as quickly as possible. This model crucially depends upon trust in being able to upgrade these dependencies as often as we ship them.
 
 However, we have recently found it extremely challenging to keep delivering these valuable features and fixes while still maintaining support for Node 6. Many of our dependencies (and further still, dependencies of our dependencies) have dropped support for Node 6 in minor releases, thereby preventing Gatsby from using these dependencies to get needed features and fixes.
 
