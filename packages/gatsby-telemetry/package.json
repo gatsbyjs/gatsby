@@ -1,7 +1,7 @@
 {
   "name": "gatsby-telemetry",
   "description": "Gatsby Telemetry",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,11 +16,11 @@
     "envinfo": "^5.8.1",
     "fs-extra": "^7.0.1",
     "is-docker": "1.1.0",
+    "lodash": "^4.17.10",
     "node-fetch": "2.3.0",
     "resolve-cwd": "^2.0.0",
     "source-map": "^0.5.7",
     "stack-trace": "^0.0.10",
-    "lodash": "^4.17.10",
     "stack-utils": "1.0.2",
     "uuid": "3.3.2"
   },
