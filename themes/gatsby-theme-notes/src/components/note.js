@@ -5,9 +5,7 @@ import Layout from "./layout"
 
 const WikiPage = ({
   data: {
-    note: {
-      body,
-    },
+    note: { body },
   },
 }) => (
   <Layout>

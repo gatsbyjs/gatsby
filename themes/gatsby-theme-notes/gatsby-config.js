@@ -2,7 +2,7 @@ module.exports = options => {
   const { mdx = true, mdxLayouts = {} } = options
 
   return {
-    __experimentalThemes: [ 'gatsby-theme-ui' ],
+    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {
         resolve: `gatsby-plugin-mdx`,

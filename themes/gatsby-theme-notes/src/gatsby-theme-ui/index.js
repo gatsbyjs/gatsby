@@ -2,7 +2,7 @@ const primary = `rebeccapurple`
 const blue = `#3c58e8`
 
 export default {
-  initialColorMode: 'light',
+  initialColorMode: `light`,
   colors: {
     primary,
     secondary: `#444`,
@@ -22,8 +22,8 @@ export default {
   },
   styles: {
     root: {
-      fontFamily: 'body',
-      lineHeight: 'body',
+      fontFamily: `body`,
+      lineHeight: `body`,
     },
     a: {
       color: blue,

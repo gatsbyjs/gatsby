@@ -9,7 +9,7 @@ module.exports = {
       github: `https://github.com/gatsbyjs/gatsby`,
     },
   },
-  __experimentalThemes: [ 'gatsby-theme-ui' ],
+  __experimentalThemes: [`gatsby-theme-ui`],
   plugins: [
     /*
      * User override content
