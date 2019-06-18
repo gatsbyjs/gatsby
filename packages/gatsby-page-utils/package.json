@@ -2,10 +2,10 @@
   "name": "gatsby-page-utils",
   "version": "0.0.1",
   "description": "Gatsby library that helps creating pages",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir dist/ --ignore **/__tests__",
+    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
@@ -32,6 +32,8 @@
   },
   "peerDependencies": {
     "gatsby": "^2.0.0"
-  }
+  },
+  "files": [
+    "dist/*"
+  ]
 }
-
