@@ -175,7 +175,7 @@ bar).
 
 (_optional_, type: `string`, default: `""`)
 
-Customize the value of the `favicon` tag in your CMS HTML (shows in the browser 
+Customize the value of the `favicon` tag in your CMS HTML (shows in the browser
 bar).
 
 ## Example
