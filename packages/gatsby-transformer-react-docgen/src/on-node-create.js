@@ -25,7 +25,7 @@ function createDescriptionNode(
 ) {
   const { createNode } = actions
 
-  delete node.description;
+  delete node.description
 
   const descriptionNode = {
     id: createNodeId(descId(node.id)),
