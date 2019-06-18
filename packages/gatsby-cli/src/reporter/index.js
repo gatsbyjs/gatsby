@@ -93,88 +93,13 @@ const reporter: Reporter = {
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
 
-    const activity = reporterInstance.createActivity({
-      type: `spinner`,
-      id: name,
-      status: ``,
-    })
+    const activity = reporterInstance.createActivity(name)
 
     return {
-      start() {
-        activity.update({
-          startTime: process.hrtime(),
-        })
-      },
-      setStatus(status) {
-        activity.update({
-          status: status,
-        })
-      },
+      ...activity,
       end() {
         span.finish()
-        activity.done()
-      },
-      span,
-    }
-  },
-
-  /**
-   * Create a progress bar for an activity
-   * @param {string} name - Name of activity.
-   * @param {number} total - Total items to be processed.
-   * @param {number} start - Start count to show.
-   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
-   * @returns {ActivityTracker} The activity tracker.
-   */
-  createProgress(
-    name: string,
-    total,
-    start = 0,
-    activityArgs: ActivityArgs = {}
-  ): ActivityTracker {
-    const { parentSpan } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const span = tracer.startSpan(name, spanArgs)
-
-    let hasStarted = false
-    let current = start
-    const activity = reporterInstance.createActivity({
-      type: `progress`,
-      id: name,
-      current,
-      total,
-    })
-
-    return {
-      start() {
-        if (hasStarted) {
-          return
-        }
-
-        hasStarted = true
-        activity.update({
-          startTime: process.hrtime(),
-        })
-      },
-      setStatus(status) {
-        activity.update({
-          status: status,
-        })
-      },
-      tick() {
-        activity.update({
-          current: ++current,
-        })
-      },
-      done() {
-        span.finish()
-        activity.done()
-      },
-      set total(value) {
-        total = value
-        activity.update({
-          total: value,
-        })
+        activity.end()
       },
       span,
     }
