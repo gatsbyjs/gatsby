@@ -179,6 +179,11 @@ const reporter: Reporter = {
       span,
     }
   },
+  _setStage(stage) {
+    if (reporterInstance.setStage) {
+      reporterInstance.setStage(stage)
+    }
+  },
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
