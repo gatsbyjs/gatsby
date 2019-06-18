@@ -210,6 +210,8 @@
               items:
                 - title: Typography.js
                   link: /docs/typography-js/
+                - title: Using Sass
+                  link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
                 - title: Using TailwindCSS
