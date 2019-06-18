@@ -154,7 +154,7 @@ set to `ENTROPY` or `ATTENTION`.
 The following image shows the effects of each fit option. You can see that the
 `INSIDE` option results in one dimension being smaller than requested, while
 the `OUTSIDE` option results in one dimension being larger than requested.
-![Sharp transform fit options](../../docs/docs/images/sharp-transform-fit-options.png)
+![Sharp transform fit options](./sharp-transform-fit-options.png)
 
 #### rotate
 
