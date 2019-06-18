@@ -2595,17 +2595,6 @@
   built_by: IBM
   built_by_url: https://www.ibm.com/
   featured: false
-- title: McDonald's Design System
-  main_url: https://design.mcdonalds.com/
-  url: https://design.mcdonalds.com/
-  description: >
-    McDonald's Design System
-  categories:
-    - Design
-    - Design System
-  built_by: McDonald's
-  built_by_url: https://www.mcdonalds.com/us/en-us.html
-  featured: false
 - title: Mozilla Mixed Reality
   main_url: https://mixedreality.mozilla.org/
   url: https://mixedreality.mozilla.org/
