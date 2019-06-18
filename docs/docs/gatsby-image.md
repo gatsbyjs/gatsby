@@ -129,7 +129,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-Read more in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/?=#fixed) README.
+Read more about fixed image queries in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#fixed) README.
 
 ### Images that stretch across a _fluid_ container
 
@@ -177,18 +177,17 @@ In a query, you can specify options for fluid images.
 - `maxHeight`(int)
 - `quality` (int, default: 50)
 - `srcSetBreakpoints` (array of int, default: [])
-- `fit` (string, default: `[sharp.fit.cover][6]`)
 - `background` (string, default: `rgba(0,0,0,1)`)
 
 #### Returns
 
 - `base64` (string)
-- `src` (string)
-- `width` (int)
-- `height` (int)
 - `aspectRatio` (float)
 - `src` (string)
 - `srcSet` (string)
+- `srcSetType` (string)
+- `sizes` (string)
+- `originalImg` (string)
 
 This is where fragments like `GatsbyImageSharpFluid` come in handy, as they'll return all the above items in one line without having to type them all out:
 
@@ -204,7 +203,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-Read more in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/?=#fluid) README.
+Read more about fluid image queries in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#fluid) README.
 
 ### Resized images
 
@@ -240,15 +239,19 @@ allImageSharp {
 }
 ```
 
+Read more about resized image queries in the [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#resize) README.
+
 ### Shared query parameters
 
-In addition to `gatsby-plugin-sharp` settings in `gatsby-config.js`, there are additional query options that apply to both _fluid_ and _fixed_ images:
+In addition to `gatsby-plugin-sharp` settings in `gatsby-config.js`, there are additional query options that apply to _fluid_, _fixed_, and _resized_ images:
 
-- `grayscale` (bool, default: false)
-- `duotone` (bool|obj, default: false)
-- `toFormat` (string, default: \`\`)
-- `cropFocus` (string, default: `[sharp.strategy.attention][6]`)
-- `pngCompressionSpeed` (int, default: 4)
+- [`grayscale`](/packages/gatsby-plugin-sharp/#grayscale) (bool, default: false)
+- [`duotone`](/packages/gatsby-plugin-sharp/#duotone) (bool|obj, default: false)
+- [`toFormat`](/packages/gatsby-plugin-sharp/#toformat) (string, default: \`\`)
+- [`cropFocus`](/packages/gatsby-plugin-sharp/#cropfocus) (string, default: `ATTENTION`)
+- [`fit`](/packages/gatsby-plugin-sharp/#fit) (string, default: `COVER`)
+- [`pngCompressionSpeed`](/packages/gatsby-plugin-sharp/#pngcompressionspeed) (int, default: 4)
+- [`rotate`](/packages/gatsby-plugin-sharp/#rotate) (int, default: 0)
 
 Here's an example of using the `duotone` option with a fixed image:
 
@@ -284,13 +287,13 @@ fixed(
   </figcaption>
 </figure>
 
-Read more in the [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) README.
+Read more about shared image query parameters in the [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/#shared-options) README.
 
 ## Image query fragments
 
 GraphQL includes a concept called "query fragments", which are a part of a query that can be reused. To ease building with `gatsby-image`, Gatsby image processing plugins which support `gatsby-image` ship with fragments which you can easily include in your queries.
 
-> Note: using fragments in your queries depends on which data source(s) you have configured. Read more in the [gatsby-image](/packages/gatsby-image#fragments) README.
+> Note: using fragments in your queries depends on which data source(s) you have configured. Read more about image query fragments in the [gatsby-image](/packages/gatsby-image/#fragments) README.
 
 ### Common fragments with `gatsby-transformer-sharp`
 
@@ -366,7 +369,7 @@ After you've made a query, you can pass additional options to the gatsby-image c
 | `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter `{ wasCached: <boolean> }` provided. |
 | `onError`              | `func`              | A callback that is called when the image fails to load.                                                                       |
 | `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                               |
-| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.            |
+| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `contain`.          |
 | `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.          |
 | `loading`              | `string`            | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`. Defaults to `lazy`.                        |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                     |

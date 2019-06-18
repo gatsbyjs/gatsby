@@ -131,6 +131,7 @@ following:
 - `cropFocus` (string, default: 'ATTENTION')
 - `fit` (string, default: 'COVER')
 - `pngCompressionSpeed` (int, default: 4)
+- `rotate` (int, default: 0)
 
 #### toFormat
 
@@ -155,6 +156,11 @@ The following image shows the effects of each fit option. You can see that the
 `INSIDE` option results in one dimension being smaller than requested, while
 the `OUTSIDE` option results in one dimension being larger than requested.
 ![Sharp transform fit options](./sharp-transform-fit-options.png)
+
+#### pngCompressionSpeed
+
+Change the speed/quality tradeoff for PNG compression from 1 (brute-force) to
+10 (fastest). See pngquant's [options][19].
 
 #### rotate
 
@@ -360,3 +366,4 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 [16]: https://github.com/mozilla/mozjpeg
 [17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
 [18]: https://www.npmjs.com/package/color
+[19]: https://pngquant.org/#options
