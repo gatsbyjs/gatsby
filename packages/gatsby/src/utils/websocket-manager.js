@@ -219,7 +219,6 @@ class WebsocketManager {
       })
 
       s.on(`unregisterPath`, path => {
-        console.log(`unregisterPath`, path)
         leaveRoom(path)
       })
     })
