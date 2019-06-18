@@ -20,6 +20,7 @@ const {
   ImageCropFocusType,
 } = require(`./schemes`)
 
+// @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
 const isImage = image =>
