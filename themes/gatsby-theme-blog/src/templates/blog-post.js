@@ -5,7 +5,7 @@ import { Styled, css, Main } from "theme-ui"
 import PostFooter from "../components/post-footer"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { MDXRenderer } from "gatsby-mdx"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class BlogPostTemplate extends React.Component {
           >
             {post.frontmatter.date}
           </Styled.p>
-          <MDXRenderer>{post.code.body}</MDXRenderer>
+          <MDXRenderer>{post.body}</MDXRenderer>
         </Main>
         <PostFooter {...{ previous, next }} />
       </Layout>
@@ -48,9 +48,7 @@ export const pageQuery = graphql`
     mdx(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
-      code {
-        body
-      }
+      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

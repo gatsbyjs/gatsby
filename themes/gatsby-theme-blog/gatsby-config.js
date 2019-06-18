@@ -9,6 +9,7 @@ module.exports = {
       github: `https://github.com/gatsbyjs/gatsby`,
     },
   },
+  __experimentalThemes: [`gatsby-theme-ui`],
   plugins: [
     /*
      * User override content
@@ -47,7 +48,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [

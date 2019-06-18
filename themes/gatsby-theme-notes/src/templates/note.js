@@ -8,9 +8,7 @@ export const pageQuery = graphql`
   query($id: String!, $title: String) {
     note: mdx(id: { eq: $id }) {
       id
-      code {
-        body
-      }
+      body
     }
     image: ogImage {
       src(text: $title)
