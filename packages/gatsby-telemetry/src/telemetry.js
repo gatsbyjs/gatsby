@@ -74,7 +74,7 @@ module.exports = class AnalyticsTracker {
     }
     return undefined
   }
-  captureEvent(type = ``, tags = {}, debounce = { debounce: false }) {
+  captureEvent(type = ``, tags = {}, opts = { debounce: false }) {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -87,7 +87,7 @@ module.exports = class AnalyticsTracker {
     const decoration = this.metadataCache[type]
     const eventType = `${baseEventType}_${type}`
 
-    if (debounce.debounce) {
+    if (opts.debounce) {
       const debounceTime = 5 * 1000
       const now = Date.now()
       const debounceKey = JSON.stringify({ type, decoration })
