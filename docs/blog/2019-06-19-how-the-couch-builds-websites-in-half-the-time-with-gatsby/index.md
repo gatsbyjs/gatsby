@@ -60,11 +60,11 @@ Prima’s CMS costs are also lower than normal because Gatsby pulls all of their
 Being able to work in platforms like Gatsby is a breath of fresh air and allows me to control my environment and build beautiful websites that are super fast and inexpensive to run, which obviously our clients also love.
 </Pullquote>
 
-## Fast Site, Happy Client 
+## Fast Site, Happy Client
 
 The Prima launch was a big success and the site is now enjoying healthy traffic and organic growth thanks to enthusiastic supporters on social media: “They were thrilled. They’ve gotten a super warm reception,” Kevin reported. In particular, users have noticed that “the site is super fast and the experience is really smooth”—no small feat for a content-heavy site like Prima’s.
 
-After initially launching with its educational content only, Prima’s product line has been added to the site this spring, powered by Gatsby’s e-commerce integration with Shopify. 
+After initially launching with its educational content only, Prima’s product line has been added to the site this spring, powered by Gatsby’s e-commerce integration with Shopify.
 
 <Pullquote>
 It’s less a conversation about the tools; it’s about whether they do the best job they possibly can for the client. And in the case of Gatsby, it’s continued to do that for me. The sites that we build are fast by default, rendered statically, and don’t cost our clients a lot of money; it’s hard for me to go any other route.
