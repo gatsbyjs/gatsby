@@ -238,9 +238,11 @@ const resolveFluid = (image, options) => {
   // is available for small images.
   if (
     !filteredSizes.includes(parseInt(width)) &&
-    parseInt(width) < CONTENTFUL_IMAGE_MAX_SIZE
-  )
+    parseInt(width) < CONTENTFUL_IMAGE_MAX_SIZE &&
+    Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
+  ) {
     filteredSizes.push(width)
+  }
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
