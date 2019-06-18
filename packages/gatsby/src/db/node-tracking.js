@@ -120,10 +120,11 @@ const findRootNodeAncestor = (obj, predicate = null) => {
 
     const parent = node.parent && getNode(node.parent)
     const id = getRootNodeId(node)
+    const trackedParent = id && getNode(id)
 
-    if (!parent && !id) return node
+    if (!parent && !trackedParent) return node
 
-    node = parent || getNode(id)
+    node = parent || trackedParent
   }
 
   reporter.error(
