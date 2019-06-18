@@ -2,7 +2,7 @@
 title: Adding Components to Content with MDX
 ---
 
-When writing long-form content in Markdown you might want to embed components.
+When writing long-form content in Markdown you might want to embed [components](/docs/glossary/#components).
 This is often achieved by either writing content in JSX or using plugins that
 use custom syntax. The first approach isn't optimal because JSX isn't the best
 format for content and can make it less approachable to members of a team. Custom
