@@ -11,9 +11,6 @@ function useInterval(callback, delay) {
 
   // Set up the interval.
   useEffect(() => {
-    // Call the function immediately.
-    // savedCallback.current()
-
     function tick() {
       savedCallback.current()
     }
