@@ -74,7 +74,7 @@ You can import files from a Gatsby Theme into your project. For example, if you'
 import Layout from "gatsby-theme-tomato/src/components/Layout"
 ```
 
-Gatsby Themes also allows you to customize any file in a theme's `src` directory by following a file naming convention.
+Gatsby Themes also allow you to customize any file in a theme's `src` directory by following a file naming convention.
 If you're using `gatsby-theme-tomato` which uses a `ProfileCard` component located at `src/components/profile-card.js` you can override the component by creating `src/gatsby-theme-tomato/components/profile-card.js`. If you want to see what props are passed you can do so by putting the props into a `pre` tag:
 
 ```js:title=src/gatsby-theme-tomato/components/profile-card.js
