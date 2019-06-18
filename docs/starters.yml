@@ -3038,10 +3038,12 @@
   description: Gatsby out of the box blog, use TypeScript and highly customized style.
   tags:
     - TypeScript
-    - SwitchTheme
-    - FiraCode
-    - FontaweSome
-    - OutofBox
+    - Styling:SCSS
+    - SEO
+    - Linting
+    - RSS
+    - Pagination
+    - PWA
   features:
     - TypeScript
     - TsLint & Prettier
