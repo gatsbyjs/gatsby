@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.5...gatsby-plugin-sharp@2.1.6) (2019-06-18)
+
+### Features
+
+- **gatsby-cli:** move progressbar into ink ([#14220](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14220)) ([967597c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/967597c))
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.3...gatsby-plugin-sharp@2.1.5) (2019-06-12)
 
 ### Bug Fixes
