@@ -55,6 +55,7 @@ exports.onCreateWebpackConfig = (
     publicPath = `admin`,
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
+    htmlFavicon = ``,
     manualInit = false,
   }
 ) => {
@@ -135,6 +136,7 @@ exports.onCreateWebpackConfig = (
        */
       new HtmlWebpackPlugin({
         title: htmlTitle,
+        favicon: htmlFavicon,
         chunks: [`cms`],
         excludeAssets: [/cms.css/],
       }),
