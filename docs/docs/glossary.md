@@ -52,11 +52,11 @@ A text-based interface to run commands on your computer. The default Command Lin
 
 A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files.
 
-### Components
+### Component
 
 Components are independent and re-usable chunks of code powered by [React](#react) that, when combined, make up your website or app.
 
-A component can include components within it. In fact, [pages](#page) and [templates](#templates) are examples of components.
+A component can include components within it. In fact, [pages](#page) and [templates](#template) are examples of components.
 
 ### Config
 
@@ -158,7 +158,7 @@ A programming language that helps us make the web dynamic and interactive. [Java
 
 ### MDX
 
-Extends [Markdown](#markdown) to support [React](#react) [components](#components) within your content.
+Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 
 ### Markdown
 
@@ -190,7 +190,7 @@ A package usually describes a [JavaScript](#javascript) program that has additio
 
 An [HTML](#html) page.
 
-This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
+This also often refers to [components](#component) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
 
 ### Plugin
 
