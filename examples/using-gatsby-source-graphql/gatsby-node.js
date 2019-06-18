@@ -5,7 +5,7 @@ const dateformat = require(`dateformat`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { makeBlogPath } = require(`./src/utils`)
 
-exports.createPages = async ({ actions, graphql, reporter }) => {
+exports.createPages = async ({ actions, graphql }) => {
   const { data } = await graphql(`
     query {
       cms {
@@ -35,6 +35,7 @@ exports.createResolvers = ({
   createNodeId,
   createResolvers,
   store,
+  reporter,
 }) => {
   const { createNode } = actions
   createResolvers({
