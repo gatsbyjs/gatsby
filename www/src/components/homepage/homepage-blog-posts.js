@@ -16,6 +16,7 @@ import {
   colors,
   space,
   breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
   fonts,
@@ -79,7 +80,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     }
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     background: ${colors.gatsby};
     color: ${colors.white};
     flex-shrink: 0;
@@ -94,13 +95,12 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
       justify-content: flex-start;
 
       &:hover {
-        color: ${colors.gatsby};
-        background: ${colors.ui.whisper};
+        background: ${colors.purple[80]};
       }
     }
   }
 
-  ${breakpoints.xl} {
+  ${mediaQueries.xl} {
     width: 160px;
   }
 `
@@ -130,7 +130,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(breakpoints.Lg)
+    this.desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints.lg}`)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }

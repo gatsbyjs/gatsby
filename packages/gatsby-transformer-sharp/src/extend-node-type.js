@@ -15,7 +15,7 @@ const {
   traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
@@ -41,11 +41,13 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs }) =>
+const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
   traceSVG({
     file,
     args: { ...fieldArgs.traceSVG },
     fileArgs: fieldArgs,
+    cache,
+    reporter,
   })
 
 const fixedNodeType = ({
@@ -63,7 +65,12 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: GraphQLFloat },
@@ -154,10 +161,6 @@ const fixedNodeType = ({
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
       },
-      rotate: {
-        type: GraphQLInt,
-        defaultValue: 0,
-      },
       fit: {
         type: ImageFitType,
         defaultValue: sharp.fit.cover,
@@ -165,6 +168,14 @@ const fixedNodeType = ({
       background: {
         type: GraphQLString,
         defaultValue: `rgba(0,0,0,1)`,
+      },
+      rotate: {
+        type: GraphQLInt,
+        defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
     },
     resolve: (image, fieldArgs, context) => {
@@ -203,7 +214,12 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         src: { type: GraphQLString },
@@ -305,6 +321,10 @@ const fluidNodeType = ({
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
       sizes: {
         type: GraphQLString,
@@ -425,7 +445,12 @@ module.exports = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent => getTracedSVG(parent),
+            resolve: parent =>
+              getTracedSVG({
+                ...parent,
+                cache,
+                reporter,
+              }),
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
@@ -479,10 +504,6 @@ module.exports = ({
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
         },
-        rotate: {
-          type: GraphQLInt,
-          defaultValue: 0,
-        },
         fit: {
           type: ImageFitType,
           defaultValue: sharp.fit.cover,
@@ -490,6 +511,14 @@ module.exports = ({
         background: {
           type: GraphQLString,
           defaultValue: `rgba(0,0,0,1)`,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: 0,
+        },
+        trim: {
+          type: GraphQLFloat,
+          defaultValue: 0,
         },
       },
       resolve: (image, fieldArgs, context) => {

@@ -24,7 +24,12 @@ describe(`Component Shadowing`, () => {
           `a-component`
         )
       )
-    ).toEqual([`a-theme`])
+    ).toEqual([
+      {
+        themeDir: path.join(path.sep, `some`, `place`, `a-theme`),
+        themeName: `a-theme`,
+      },
+    ])
 
     expect(
       // request to a shadowed component in theme b
@@ -41,7 +46,12 @@ describe(`Component Shadowing`, () => {
           `a-component`
         )
       )
-    ).toEqual([`theme-b`])
+    ).toEqual([
+      {
+        themeDir: path.join(path.sep, `some`, `place`, `theme-b`),
+        themeName: `theme-b`,
+      },
+    ])
   })
 
   it(`can determine if the request path is in the shadow chain for the issuer`, () => {

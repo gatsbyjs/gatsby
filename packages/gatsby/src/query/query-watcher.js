@@ -17,10 +17,7 @@ const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
-const {
-  enqueueExtractedQueryId,
-  runQueuedQueries,
-} = require(`./page-query-runner`)
+const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
 const getQueriesSnapshot = () => {
@@ -45,9 +42,9 @@ const handleComponentsWithRemovedQueries = (
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
         type: `REMOVE_STATIC_QUERY`,
-        payload: c.jsonName,
+        payload: c.id,
       })
-      boundActionCreators.deleteComponentsDependencies([c.jsonName])
+      boundActionCreators.deleteComponentsDependencies([c.id])
     }
   })
 }
@@ -60,7 +57,7 @@ const handleQuery = (
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
-    const oldQuery = staticQueryComponents.get(query.jsonName)
+    const oldQuery = staticQueryComponents.get(query.id)
     const isNewQuery = !oldQuery
 
     // Compare query text because text is compiled query with any attached
@@ -76,8 +73,7 @@ const handleQuery = (
       boundActionCreators.replaceStaticQuery({
         name: query.name,
         componentPath: query.path,
-        id: query.jsonName,
-        jsonName: query.jsonName,
+        id: query.id,
         query: query.text,
         hash: query.hash,
       })
@@ -88,8 +84,8 @@ const handleQuery = (
         }.`
       )
 
-      boundActionCreators.deleteComponentsDependencies([query.jsonName])
-      enqueueExtractedQueryId(query.jsonName)
+      boundActionCreators.deleteComponentsDependencies([query.id])
+      queryUtil.enqueueExtractedQueryId(query.id)
     }
     return true
   }
@@ -153,7 +149,7 @@ const updateStateAndRunQueries = isFirstRun => {
       `)
     }
 
-    runQueuedQueries()
+    queryUtil.runQueuedQueries()
 
     return null
   })
@@ -202,33 +198,6 @@ exports.extractQueries = () => {
   })
 }
 
-const queueQueriesForPageComponent = componentPath => {
-  const pages = getPagesForComponent(componentPath)
-  // Remove page data dependencies before re-running queries because
-  // the changing of the query could have changed the data dependencies.
-  // Re-running the queries will add back data dependencies.
-  boundActionCreators.deleteComponentsDependencies(
-    pages.map(p => p.path || p.id)
-  )
-  pages.forEach(page => enqueueExtractedQueryId(page.path))
-  runQueuedQueries()
-}
-
-const runQueryForPage = path => {
-  enqueueExtractedQueryId(path)
-  runQueuedQueries()
-}
-
-exports.queueQueriesForPageComponent = queueQueriesForPageComponent
-exports.runQueryForPage = runQueryForPage
-
-const getPagesForComponent = componentPath => {
-  const state = store.getState()
-  return [...state.pages.values()].filter(
-    p => p.componentPath === componentPath
-  )
-}
-
 const filesToWatch = new Set()
 let watcher
 const watchComponent = componentPath => {
@@ -250,9 +219,6 @@ const watchComponent = componentPath => {
 const debounceCompile = _.debounce(() => {
   updateStateAndRunQueries()
 }, 100)
-
-exports.watchComponent = watchComponent
-exports.debounceCompile = debounceCompile
 
 const watch = rootDir => {
   if (watcher) return

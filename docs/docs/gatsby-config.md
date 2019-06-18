@@ -1,5 +1,5 @@
 ---
-title: Gatsby Config
+title: Gatsby Config API
 ---
 
 Site configuration options for a Gatsby site are placed in a file at the root of the project folder called `gatsby-config.js`.
@@ -63,7 +63,6 @@ It's common for sites to be hosted somewhere other than the root of their domain
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
 }
 ```

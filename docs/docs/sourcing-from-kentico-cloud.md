@@ -53,8 +53,9 @@ module.exports = {
           deliveryClientConfig: {
             projectId: `<YourProjectID>` // Fill in your Project ID
           },
+          // Please note that with the Sample Project generated above, `en-US` is the default language for the project and this config. For a blank project, this needs to be `default`.
           languageCodenames: [
-                    `en-US` // Or whatever languages you have installed in your project (Project settings -> Localization)
+                    `en-US` // Or the languages in your project (Project settings -> Localization)
           ]
       }
     },

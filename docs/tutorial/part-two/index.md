@@ -195,7 +195,7 @@ Now, if you visit `http://localhost:8000/about-css-modules/`, your page should l
 
 #### ✋ Style a component using CSS Modules
 
-In this section, you'll create a list of people with names, avatars, and short latin biographies. You'll create a `<User />` component and style that component using a CSS module.
+In this section, you'll create a list of people with names, avatars, and short Latin biographies. You'll create a `<User />` component and style that component using a CSS module.
 
 1. Create the file for the CSS at `src/pages/about-css-modules.module.css`.
 
@@ -253,7 +253,7 @@ The `console.log(styles)` code will log the resulting import so you can see the 
 
 If you compare that to your CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to `src-pages----about-css-modules-module---avatar---2lRF7`. These are the class names CSS Modules generates. They're guaranteed to be unique across your site. And because you have to import them to use the classes, there's never any question about where some CSS is being used.
 
-4. Create a `User` component..
+4. Create a `User` component.
 
 Create a new `<User />` component inline in the `about-css-modules.js` page
 component. Modify `about-css-modules.js` so it looks like the following:
@@ -309,7 +309,7 @@ CSS-in-JS is a component-oriented styling approach. Most generally, it is a patt
 
 #### Using CSS-in-JS with Gatsby
 
-There are many different CSS-in-JS libraries and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries in particular, [Emotion](/docs/emotion/) and [Styled Components](/docs/styled-components/).
+There are many different CSS-in-JS libraries and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries, in particular, [Emotion](/docs/emotion/) and [Styled Components](/docs/styled-components/).
 
 #### Suggested reading on CSS-in-JS
 
