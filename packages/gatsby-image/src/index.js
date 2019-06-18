@@ -38,17 +38,26 @@ const convertProps = props => {
   }
 
   // convert fluid & fixed to arrays so we only have to work with arrays
-  convertedProps.fluid = [].concat(convertedProps.fluid).filter(Boolean)
-  convertedProps.fixed = [].concat(convertedProps.fixed).filter(Boolean)
+  if (convertedProps.fluid) {
+    convertedProps.fluid = groupByMedia([].concat(convertedProps.fluid))
+  }
+  if (convertedProps.fixed) {
+    convertedProps.fixed = groupByMedia([].concat(convertedProps.fixed))
+  }
 
   return convertedProps
 }
 
-// Find the source of an image to use as a key in the image cache.
-// Use `the first image in either `fixed` or `fluid`
+/**
+ * Find the source of an image to use as a key in the image cache.
+ * Use `the first image in either `fixed` or `fluid`
+ * @param {{fluid: {src: string}[], fixed: {src: string}[]}} args
+ * @return {string}
+ */
 const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = (fluid.length && fluid[0]) || (fixed.length && fixed[0])
-  return data.src
+  const data = (fluid && fluid[0]) || (fixed && fixed[0])
+
+  return data && data.src
 }
 
 // Cache if we've seen an image before so we don't bother with
@@ -135,7 +144,7 @@ function groupByMedia(imageVariants) {
     console.warn(
       `We've found ${
         without.length
-      } sources without a media property. You should only have 1.`
+      } sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
     )
   }
 
@@ -210,12 +219,7 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({
-  src,
-  imageVariants,
-  generateSources,
-  ...spreadProps
-}) => {
+const Placeholder = ({ src, imageVariants, generateSources, spreadProps }) => {
   const baseImage = <Img src={src} {...spreadProps} />
 
   return imageVariants.length > 1 ? (
@@ -406,7 +410,7 @@ class Image extends React.Component {
     }
 
     if (fluid.length) {
-      const imageVariants = groupByMedia(fluid)
+      const imageVariants = fluid
       const image = imageVariants[0]
 
       return (
@@ -449,7 +453,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               src={image.base64}
-              {...placeholderImageProps}
+              spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateBase64Sources}
             />
@@ -459,7 +463,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               src={image.tracedSVG}
-              {...placeholderImageProps}
+              spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateTracedSVGSources}
             />
@@ -505,7 +509,7 @@ class Image extends React.Component {
     }
 
     if (fixed.length) {
-      const imageVariants = groupByMedia(fixed)
+      const imageVariants = fixed
       const image = imageVariants[0]
 
       const divStyle = {
@@ -546,7 +550,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               src={image.base64}
-              {...placeholderImageProps}
+              spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateBase64Sources}
             />
@@ -556,7 +560,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               src={image.tracedSVG}
-              {...placeholderImageProps}
+              spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
               generateSources={generateTracedSVGSources}
             />

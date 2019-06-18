@@ -175,7 +175,7 @@ describe(`<Image />`, () => {
     expect(console.log).toBeCalled()
   })
 
-  it(`should warn if multiple sources with no media are used.`, () => {
+  it(`should warn if image variants provided are missing media keys.`, () => {
     jest.spyOn(global.console, `warn`)
 
     render(
