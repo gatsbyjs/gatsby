@@ -33,7 +33,6 @@
     "object.entries": "^1.1.0",
     "opentracing": "^0.14.3",
     "pretty-error": "^2.1.1",
-    "progress": "^2.0.3",
     "prompts": "^2.1.0",
     "react": "^16.8.4",
     "resolve-cwd": "^2.0.0",
