@@ -1,3 +1,22 @@
+- url: https://gatsby-starter-carraway.netlify.com/
+  repo: https://github.com/endymion1818/gatsby-starter-carraway
+  description: a Gatsby starter theme with Accessibility features, TypeScript, Jest, some basic UI elements, and a CircleCI pipeline
+  tags:
+    - TypeScript
+    - Pagination
+    - Search
+    - Tests
+    - Accessibility
+  features:
+    - Paginated post archive
+    - Site search with Lunr.js
+    - Categories and category archive pages
+    - Minimal CSS defaults using styled-components, including system font stack
+    - Some fundamental Accessibility features including tabbable navigation & "Skip to content" link
+    - UI elements including multi-column layout using CSS Grid (with float fallback), header component with logo, basic navigation & search and a footer with 3-column layout, logo and 2 menu areas
+    - TypeScript & Testing including some sensible TypeScript defaults, tests with @testing-library/react, pre-commit and pre-push hooks. Set up includes enums for repeating values such as font & background colours
+    - Setup for a CircleCI pipeline so you can run the above tests in branches before merging to master
+    - Markdown posts _and_ pages (pages don't appear in the post archive)
 - url: https://gatsby-advanced-blog-system.danilowoz.now.sh/blog
   repo: https://github.com/danilowoz/gatsby-advanced-blog-system
   description: Create a complete blog from scratch with pagination, categories, featured posts, author, SEO and navigation.
