@@ -37,11 +37,7 @@ class RouteHandler extends React.Component {
   render() {
     let { location } = this.props
 
-    // check if page exists - in dev pages are sync loaded, it's safe to use
-    // loader.getPage
-    let page = loader.getPage(location.pathname)
-
-    if (page) {
+    if (!loader.isPageNotFound(location.pathname)) {
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (
@@ -56,30 +52,26 @@ class RouteHandler extends React.Component {
           )}
         </EnsureResources>
       )
-    } else {
-      const dev404PageResources = loader.getResourcesForPathnameSync(
-        `/dev-404-page/`
-      )
-      const real404PageResources = loader.getResourcesForPathnameSync(
-        `/404.html`
-      )
-      let custom404
-      if (real404PageResources) {
-        custom404 = (
-          <JSONStore {...this.props} pageResources={real404PageResources} />
-        )
-      }
+    }
 
-      return (
-        <RouteUpdates location={location}>
-          <JSONStore
-            location={location}
-            pageResources={dev404PageResources}
-            custom404={custom404}
-          />
-        </RouteUpdates>
+    const dev404PageResources = loader.loadPageSync(`/dev-404-page`)
+    const real404PageResources = loader.loadPageSync(`/404.html`)
+    let custom404
+    if (real404PageResources) {
+      custom404 = (
+        <JSONStore {...this.props} pageResources={real404PageResources} />
       )
     }
+
+    return (
+      <RouteUpdates location={location}>
+        <JSONStore
+          location={location}
+          pageResources={dev404PageResources}
+          custom404={custom404}
+        />
+      </RouteUpdates>
+    )
   }
 }
 

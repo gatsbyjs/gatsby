@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.71](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.69...gatsby-source-contentful@2.0.71) (2019-06-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.70](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.69...gatsby-source-contentful@2.0.70) (2019-06-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.69](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.68...gatsby-source-contentful@2.0.69) (2019-06-10)
+
+### Features
+
+- **gatsby-source-contentful:** Remove default image transform width ([#14159](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14159)) ([d24e22f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/d24e22f))
+
+## [2.0.68](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.67...gatsby-source-contentful@2.0.68) (2019-06-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.67](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.66...gatsby-source-contentful@2.0.67) (2019-05-31)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** add query to the subsequent api call ([#14449](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14449)) ([45fcefb](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/45fcefb))
+
+## [2.0.66](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.65...gatsby-source-contentful@2.0.66) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.0.65](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.64...gatsby-source-contentful@2.0.65) (2019-05-29)
 
 ### Bug Fixes

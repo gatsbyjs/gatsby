@@ -11,6 +11,7 @@ import {
   mediaQueries,
   fontSizes,
   fonts,
+  fontWeights,
 } from "../../utils/presets"
 
 const ICON_SIZE = space[7]
@@ -45,7 +46,7 @@ export const Name = styled(`h3`)`
   color: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
   display: flex;
   font-size: ${fontSizes[2]};
-  font-weight: normal;
+  font-weight: ${fontWeights[0]};
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
@@ -73,6 +74,7 @@ const Icon = styled(`span`)`
 export const Title = styled(`h1`)`
   color: ${props => (props.inverse ? colors.yellow[40] : colors.gatsby)};
   font-size: ${fontSizes[6]};
+  font-weight: ${fontWeights[1]};
   margin: 0;
 `
 

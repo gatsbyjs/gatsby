@@ -166,7 +166,7 @@ For instance, if you have a `project` document type in Sanity that you want to g
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage, createPageDependency } = actions
+  const { createPage } = actions
 
   const result = await graphql(`
     {
@@ -204,8 +204,6 @@ exports.createPages = async ({ graphql, actions }) => {
       component: require.resolve("./src/templates/project.js"),
       context: { slug: edge.node.slug.current },
     })
-
-    createPageDependency({ path, nodeId: edge.node.id })
   })
 }
 ```

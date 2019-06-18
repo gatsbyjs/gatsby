@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 
 const { store } = require(`../`)
-const { actions } = require(`../actions.js`)
+const { actions } = require(`./internal.js`)
 
 function createPageDependency({ path, nodeId, connection }) {
   const state = store.getState()
