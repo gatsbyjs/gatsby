@@ -19,31 +19,30 @@ jest.mock(`got`, () => {
     stream: jest.fn(),
   }
 })
+jest.mock(
+  `progress`,
+  () =>
+    class ProgressBar {
+      static total = 0
+      static tick = jest.fn(() => (ProgressBar.total -= 1))
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    createProgress: jest.fn(),
-  }
-})
+      total = ProgressBar.total
+      tick = ProgressBar.tick
+    }
+)
 jest.mock(`../create-file-node`, () => {
   return {
     createFileNode: jest.fn(),
   }
 })
-const { createProgress } = require(`gatsby-cli/lib/reporter`)
-const progressBar = {
-  start: jest.fn(),
-  total: 0,
-  tick: jest.fn(),
-}
-createProgress.mockImplementation(() => progressBar)
-
 const got = require(`got`)
+const ProgressBar = require(`progress`)
 const createRemoteFileNode = require(`../create-remote-file-node`)
 const { createFileNode } = require(`../create-file-node`)
 
 beforeEach(() => {
-  progressBar.tick.mockClear()
+  ProgressBar.total = 0
+  ProgressBar.tick.mockClear()
 })
 
 describe(`create-remote-file-node`, () => {
@@ -74,8 +73,8 @@ describe(`create-remote-file-node`, () => {
 
         expect(value).rejects.toMatch(`wrong url: `)
 
-        expect(progressBar.total).toBe(0)
-        expect(progressBar.tick).not.toHaveBeenCalled()
+        expect(ProgressBar.total).toBe(0)
+        expect(ProgressBar.tick).not.toHaveBeenCalled()
       })
     })
   })
@@ -142,8 +141,7 @@ describe(`create-remote-file-node`, () => {
     it(`invokes ProgressBar tick`, async () => {
       await setup()
 
-      expect(progressBar.total).toBe(1)
-      expect(progressBar.tick).toHaveBeenCalledTimes(1)
+      expect(ProgressBar.tick).toHaveBeenCalledTimes(1)
     })
 
     describe(`requesting remote image`, () => {
