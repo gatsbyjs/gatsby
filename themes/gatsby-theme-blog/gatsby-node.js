@@ -1,6 +1,4 @@
 const fs = require(`fs`)
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onPreBootstrap = ({ reporter }) => {
@@ -14,66 +12,60 @@ exports.onPreBootstrap = ({ reporter }) => {
   })
 }
 
-exports.createPages = ({ graphql, actions }) => {
+const BlogPost = require.resolve(`./src/templates/blog-post.js`)
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const postPage = require.resolve(`./src/templates/blog-post.js`)
-    resolve(
-      graphql(
-        `
-          {
-            allMdx(
-              sort: {
-                fields: [frontmatter___date, frontmatter___title]
-                order: DESC
-              }
-              filter: {
-                fields: {
-                  source: { in: ["blog-default-posts", "blog-posts"] }
-                  slug: { ne: null }
-                }
-              }
-              limit: 1000
-            ) {
-              edges {
-                node {
-                  fields {
-                    slug
-                  }
-                  frontmatter {
-                    title
-                  }
-                }
-              }
+  const result = await graphql(
+    `
+      {
+        allMdx(
+          sort: {
+            fields: [frontmatter___date, frontmatter___title]
+            order: DESC
+          }
+          filter: {
+            fields: {
+              source: { in: ["blog-default-posts", "blog-posts"] }
+              slug: { ne: null }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          console.log(result.errors)
-          reject(result.errors)
+          limit: 1000
+        ) {
+          nodes {
+            fields {
+              slug
+            }
+            frontmatter {
+              title
+            }
+          }
         }
+      }
+    `
+  )
 
-        // Create blog post pages.
-        const posts = result.data.allMdx.edges
-        _.each(posts, (post, index) => {
-          const previous =
-            index === posts.length - 1 ? null : posts[index + 1].node
-          const next = index === 0 ? null : posts[index - 1].node
+  if (result.errors) {
+    reporter.panic(result.errors)
+  }
 
-          createPage({
-            path: post.node.fields.slug,
-            component: postPage,
-            context: {
-              slug: post.node.fields.slug,
-              previous,
-              next,
-            },
-          })
-        })
-      })
-    )
+  // Create blog post pages.
+  const posts = result.data.allMdx.nodes
+
+  posts.forEach((post, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1]
+    const next = index === 0 ? null : posts[index - 1]
+
+    createPage({
+      path: post.fields.slug,
+      component: postPage,
+      context: {
+        slug: post.fields.slug,
+        previous,
+        next,
+      },
+    })
   })
 }
 
