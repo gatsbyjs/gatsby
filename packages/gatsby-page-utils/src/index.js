@@ -1,11 +1,6 @@
-import validatePath from "./validate-path"
-import createPath from "./create-path"
-import ignorePath from "./ignore-path"
-import watchDirectory from "./watch-directory"
-
 module.exports = {
-  validatePath,
-  createPath,
-  ignorePath,
-  watchDirectory,
+  validatePath: require(`./validate-path`),
+  createPath: require(`./create-path`),
+  ignorePath: require(`./ignore-path`),
+  watchDirectory: require(`./watch-directory`),
 }
