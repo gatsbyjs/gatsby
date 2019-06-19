@@ -247,7 +247,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ## That's all, folks
 
-Well, not quite; just for this tutorial. There are also [Advanced Tutorials](/tutorial/advanced-tutorials/) to check out for more guided use cases.
+Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutorial/additional-tutorials/) to check out for more guided use cases.
 
 This is just the beginning. Keep going!
 
