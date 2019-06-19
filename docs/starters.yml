@@ -3021,3 +3021,15 @@
     - ESLint + optional rule enforcement with Husky
     - Prettier
     - Netlify ready
+- url: https://gatsby-typescript-starter-default.netlify.com/
+  repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
+  description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
+  tags:
+    - TypeScript
+    - SEO
+    - Linting
+  features:
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
+    - TypeScript
+    - Prettier & eslint to format & check the code
