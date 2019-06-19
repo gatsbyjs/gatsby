@@ -77,7 +77,7 @@ Finally, if you're interested, I'll now go into some technical detail as to _how
 
 ## Technical Detail of the Breaking Change
 
-The technical detail of this change is actually quite simple. All of our packages rely upon a shared [Babel preset (`babel-preset-gatsby-package`)][babel-preset-gatsby-package]. Upon a publish, we use [`@babel/preset-env`][babel-preset-env] to transpile our packages for our minimum Node.js supported version, which was previously `6.0`. In the [PR introducing this breaking change][pr], we change the `target` to `8.0` which will transpile our packages to Node.js syntax supported in Node 8 and newer.
+The technical details of this change are actually quite simple. All of our packages rely upon a shared [Babel preset (`babel-preset-gatsby-package`)][babel-preset-gatsby-package]. Upon a publish, we use [`@babel/preset-env`][babel-preset-env] to transpile our packages for our minimum Node.js supported version, which was previously `6.0`. In the [PR introducing this breaking change][pr], we change the `target` to `8.0` which will transpile our packages to Node.js syntax supported in Node 8 and newer.
 
 This allows us to transpile less code (e.g. `async` and `await` are natively supported in Node 8) and constitutes the _actual_ breaking change. Any package(s) released with this new preset will no longer work in Node 6. The breaking change is advantageous here because it is clear and deliberate, and we can now safely support Node 8 and above, which allows us to ship features more quickly.
 
