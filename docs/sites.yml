@@ -1380,17 +1380,6 @@
   built_by: Iron Cove Solutions
   built_by_url: "https://ironcovesolutions.com/"
   featured: false
-- title: Eventos orellana
-  description: >-
-    Somos una empresa dedicada a brindar asesoría personalizada y profesional
-    para la elaboración y coordinación de eventos sociales y empresariales.
-  main_url: "https://eventosorellana.com/"
-  url: "https://eventosorellana.com/"
-  featured: false
-  categories:
-    - Gallery
-  built_by: Codedebug
-  built_by_url: "https://codedebug.co/"
 - title: Moetez Chaabene Portfolio / Blog
   main_url: "https://moetez.me/"
   url: "https://moetez.me/"
@@ -1525,14 +1514,6 @@
   categories:
     - Documentation
     - Security
-  featured: false
-- title: Patreon Partners
-  description: |
-    Resources and products to help you do more with Patreon.
-  url: "https://partners.patreon.com/"
-  main_url: "https://partners.patreon.com/"
-  categories:
-    - Directory
   featured: false
 - title: Curbside
   description: |
@@ -2198,18 +2179,6 @@
     - Blog
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
-  featured: false
-- title: Joseph Chambers
-  main_url: "https://joseph.michael-chambers.com/"
-  url: "https://joseph.michael-chambers.com/"
-  description: >
-    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
-  categories:
-    - Portfolio
-    - Freelance
-    - Web Development
-  built_by: Joseph Chambers
-  built_by_url: https://twitter.com/imcodingideas
   featured: false
 - title: Mike's Remote List
   main_url: "https://www.mikesremotelist.com"
@@ -3610,19 +3579,6 @@
     - API
     - Documentation
   featured: false
-- title: Song Wang's Blog
-  main_url: "https://songwang.io/"
-  url: "https://songwang.io/"
-  source_url: "https://github.com/wangsongiam/songwang.io/"
-  description: >
-    The website about Song Wang.
-  categories:
-    - Blog
-    - Technology
-    - Web Development
-  built_by: Song Wang
-  built_by_url: "https://github.com/wangsongiam/"
-  featured: false
 - title: Engel & Völkers Ibiza Holiday Rentals
   main_url: "https://www.ev-ibiza.com/"
   url: "https://www.ev-ibiza.com/"
@@ -4424,18 +4380,6 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
-- title: Josef Aidt
-  url: https://josefaidt.me
-  main_url: https://josefaidt.me
-  source_url: https://github.com/josefaidt/josefaidt.github.io
-  description: >
-    Personal website, blog, portfolio for Josef Aidt
-  categories:
-    - Portfolio
-    - Blog
-    - Web Development
-  built_by: Josef Aidt
-  built_by_url: https://twitter.com/garlicbred
 - title: Hash Tech Guru
   url: https://hashtech.guru
   main_url: https://hashtech.guru
@@ -5105,8 +5049,8 @@
   built_by: Philipp Siegmund, zauberware
   built_by_url: https://www.zauberware.com
 - title: Altstadtdomizil Idstein
-  main_url: https://www.altstadtdomizil-idstein.de/
-  url: https://www.altstadtdomizil-idstein.de/
+  main_url: http://www.altstadtdomizil-idstein.de/
+  url: http://www.altstadtdomizil-idstein.de/
   description: >
     A landing page for a holiday apartment in Idstein, Germany.
   categories:
