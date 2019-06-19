@@ -131,6 +131,7 @@ async function startServer(program) {
     })
   )
 
+  app.use(express.json())
   app.use(cors())
 
   /**
@@ -183,7 +184,9 @@ async function startServer(program) {
 
     if (enableRefresh && authorizedRefresh) {
       console.log(`Refreshing source data`)
-      sourceNodes()
+      sourceNodes({
+        webhookBody: req.body,
+      })
     }
     res.end()
   })
