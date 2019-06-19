@@ -36,7 +36,6 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
   - [Move Babel configuration](#move-babel-configuration)
   - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
   - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
-  - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
   - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
   - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
   - [Browser API `wrapRootComponent` was replaced with `wrapRootElement`](#browser-api-wraprootcomponent-was-replaced-with-wraprootelement)
@@ -533,11 +532,6 @@ Here's links to diffs for three sites with client routes upgraded to @reach/rout
 - [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
 - [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
 - [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
-
-### APIs `onPreRouteUpdate` and `onRouteUpdate` no longer called with the route update action
-
-React Router v4 would tell us the "action" (push/replace) that triggered the route
-transition. We passed this as one of the arguments along with `location` to plugins. @reach/router doesn't support this so we've removed it from the API calls.
 
 ### Browser API `replaceRouterComponent` was removed
 
