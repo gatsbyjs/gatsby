@@ -25,7 +25,7 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache },
+  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
   { shopName, accessToken, verbose = true, paginationSize = 250 }
 ) => {
   const client = createClient(shopName, accessToken)
@@ -38,7 +38,14 @@ export const sourceNodes = async (
     console.log(formatMsg(`starting to fetch data from Shopify`))
 
     // Arguments used for file node creation.
-    const imageArgs = { createNode, createNodeId, touchNode, store, cache }
+    const imageArgs = {
+      createNode,
+      createNodeId,
+      touchNode,
+      store,
+      cache,
+      reporter,
+    }
 
     // Arguments used for node creation.
     const args = {

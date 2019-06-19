@@ -261,6 +261,7 @@ exports.sourceNodes = async (
           createNodeId,
           parentNodeId: node.id,
           auth,
+          reporter,
         })
       } catch (err) {
         reporter.error(err)
