@@ -106,5 +106,5 @@ LOG_LEVEL=info npm run preload-fonts
 set LOG_LEVEL=info & npm run preload-fonts
 ```
 
-Available log levels include `info`, `debug`, `warning`, `error`, and
+Available log levels include `info`, `debug`, `warn`, `error`, and
 `silent`, respectively.

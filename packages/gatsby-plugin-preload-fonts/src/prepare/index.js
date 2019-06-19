@@ -23,7 +23,7 @@ const logger = createLogger(LOG_LEVEL)
 
 const endpoint = path => `http://${HOST}:${PORT}${path}`
 
-async function main() {
+export async function main() {
   logger.newline()
   logger.info(`loading cache`)
   const cache = await load()
@@ -107,4 +107,6 @@ async function main() {
 `)
 }
 
-main().then(process.exit.bind(0))
+if (process.env.NODE_ENV !== `test`) {
+  main().then(process.exit.bind(0))
+}
