@@ -88,7 +88,7 @@ Validate a file path. It veryfies that it doesn't contains specific characters o
 
 #### ignorePath
 
-Determines if path should be ignored regarding of a ignore pattern passed as parameter. It returns true if the passed path should be ignored otherwise it returns false.
+Determines if path should be ignored regarding of a ignore pattern passed as parameter. It returns `true` if the passed path should be ignored otherwise it returns `false`.
 
 | property | description                       | type    |
 | -------- | --------------------------------- | ------- |
