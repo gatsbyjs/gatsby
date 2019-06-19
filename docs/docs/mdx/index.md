@@ -1,5 +1,5 @@
 ---
-title: Adding Components to Content with MDX
+title: Adding Components to Markdown with MDX
 ---
 
 When writing long-form content in Markdown you might want to embed [components](/docs/glossary/#component).
