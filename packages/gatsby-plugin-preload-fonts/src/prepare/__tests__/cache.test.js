@@ -1,0 +1,56 @@
+const { readFileSync, writeFileSync } = require(`fs-extra`)
+const { load, save } = require(`../cache`)
+
+jest.mock(`fs-extra`, () => {
+  return {
+    ensureDir: jest.fn(),
+    readFileSync: jest.fn(),
+    writeFileSync: jest.fn(),
+  }
+})
+jest.mock(`find-cache-dir`, () => () => `/`)
+
+const resetCache = () => save(undefined)
+
+describe(`cache`, () => {
+  const defaultCache = {
+    timestamp: expect.any(Number),
+    hash: `initial-run`,
+    assets: {},
+  }
+
+  afterEach(() => {
+    resetCache()
+  })
+
+  it(`returns default cache on first run`, () => {
+    expect(load()).toMatchObject(defaultCache)
+  })
+
+  it(`loads cache from memory if its already been read from disk`, () => {
+    save({ from: `memory` })
+
+    expect(load()).toMatchObject({ from: `memory` })
+  })
+
+  it(`returns default cache if reading from disk fails`, () => {
+    readFileSync
+      .mockImplementationOnce(() => {
+        throw new Error(`file doesn't exist`)
+      })
+      .mockImplementationOnce(() => `malformed json`)
+
+    expect(load()).toMatchObject(defaultCache)
+    expect(load()).toMatchObject(defaultCache)
+  })
+
+  it(`persists cache to disk`, () => {
+    save({ some: `cache` })
+
+    expect(writeFileSync).toHaveBeenCalledWith(
+      `/cache.json`,
+      `{"some":"cache"}`,
+      `utf-8`
+    )
+  })
+})

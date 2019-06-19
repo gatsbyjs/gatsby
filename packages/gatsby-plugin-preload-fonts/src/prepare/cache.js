@@ -13,6 +13,7 @@ function getPath() {
 
 let cache
 const cacheDir = findCacheDir({ name: `gatsby-plugin-preload-fonts` })
+
 try {
   fs.ensureDir(cacheDir)
 } catch (e) {

@@ -6,7 +6,7 @@ function noop() {}
 const logLevels = {
   info: 0,
   debug: 1,
-  warning: 2,
+  warn: 2,
   error: 3,
   silent: 4,
 }
@@ -49,31 +49,24 @@ module.exports = level => {
     newline: () => adapter(),
     info: logLevel <= logLevels.info ? prepend(chalk.white(`[info]`)) : noop,
     debug: logLevel <= logLevels.debug ? prepend(chalk.blue(`[debug]`)) : noop,
-    warning:
-      logLevel <= logLevels.warning ? prepend(chalk.yellow(`[warn]`)) : noop,
+    warn: logLevel <= logLevels.warn ? prepend(chalk.yellow(`[warn]`)) : noop,
     error: logLevel <= logLevels.error ? prepend(chalk.red(`[error]`)) : noop,
     print: (...args) => adapter(...args),
     fatal: (...args) => adapter(...args) || process.exit(1),
-    ask: async (promptOrInfo, prompt) => {
-      if (!process.stdout.isTTY) return false
-
-      prompt = getPrompt(promptOrInfo, prompt)
-
-      let res = ``
-      while (!res) res = await question(`${prompt}\n ${chalk.dim(`(input)`)} `)
-      adapter()
-      return res
-    },
     confirm: async (promptOrInfo, prompt) => {
       if (!process.stdout.isTTY) return false
 
       prompt = getPrompt(promptOrInfo, prompt)
 
       let res = ``
-      while (!res.match(/(y|n|yes|no)/i))
+      while (!/(y|n|yes|no)/i.test(res)) {
         res = await question(`${prompt} ${chalk.bold(`[y/n]`)} `)
+      }
+
+      // print newline
       adapter()
-      return res.match(/(y|yes)/i)
+
+      return /(y|yes)/i.test(res)
     },
   }
 }
