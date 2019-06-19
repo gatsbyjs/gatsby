@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react"
 import { Box, Color, StdoutContext } from "ink"
 
+// Handy hook from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
   const savedCallback = useRef()
 
@@ -23,6 +24,7 @@ function useInterval(callback, delay) {
   }, [delay])
 }
 
+// Track the width and height of the terminal. Responsive app design baby!
 const useTerminalResize = () => {
   const { stdout } = useContext(StdoutContext)
   const [sizes, setSizes] = useState([stdout.columns, stdout.rows])
@@ -38,6 +40,7 @@ const useTerminalResize = () => {
   return sizes
 }
 
+// Query the site's graphql instance for the latest count.
 const fetchPageQueryCount = url =>
   fetch(`${url}___graphql`, {
     method: `post`,
@@ -59,6 +62,8 @@ const Develop = props => {
   fetchPageQueryCount(props.stage.context.url).then(count =>
     setPagesCount(count)
   )
+  // Query for latest page count every second.
+  // Built-in subscriptions would be nice.
   useInterval(() => {
     // POST to get pages count.
     fetchPageQueryCount(props.stage.context.url).then(count =>
@@ -69,9 +74,7 @@ const Develop = props => {
   const [width] = useTerminalResize()
 
   return (
-    <Box flexDirection="column" marginTop={1}>
-      <Box>{` `}</Box>
-      <Box>{` `}</Box>
+    <Box flexDirection="column" marginTop={2}>
       <Box textWrap={`truncate`}>{`—`.repeat(width)}</Box>
       <Box height={1} flexDirection="row">
         <Color>{pagesCount} pages</Color>
