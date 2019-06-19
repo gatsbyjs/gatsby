@@ -5,7 +5,7 @@
     - TypeScript
     - Pagination
     - Search
-    - Tests
+    - Testing
     - Accessibility
   features:
     - Paginated post archive
