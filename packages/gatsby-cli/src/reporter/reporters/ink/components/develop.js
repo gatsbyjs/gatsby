@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react"
 import { Box, Color, StdoutContext } from "ink"
+import fetch from "node-fetch"
 
 // Handy hook from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
