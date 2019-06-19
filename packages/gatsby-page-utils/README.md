@@ -30,7 +30,7 @@ watchDirectory(
     }
 
     // Filter out anything matching the given ignore patterns and options
-    if (ignorePath(addedPath, ignore)) {
+    if (ignorePath(addedPath, '*/connexion')) {
       return
     }
 
@@ -38,7 +38,7 @@ watchDirectory(
     const createdPath = createPath(addedPath)
     const page = {
       path: createdPath,
-      component: systemPath.join(pagesDirectory, filePath),
+      component: systemPath.join(pagesDirectory, addedPath),
     }
 
     // Add page
@@ -46,8 +46,8 @@ watchDirectory(
   },
   removedPath => {
     // Delete the page for the now deleted component.
+    const componentPath = systemPath.join(pagesDirectory, removedPath)
     store.getState().pages.forEach(page => {
-      const componentPath = systemPath.join(pagesDirectory, removedPath)
       if (page.component === componentPath) {
         deletePage({
           path: createPath(removedPath),
