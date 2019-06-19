@@ -42,28 +42,7 @@ describe(`gatsby-ssr`, () => {
 
     onRenderBody({ setHeadComponents, pathname: `/foo` }, {})
 
-    expect(setHeadComponents.mock.calls[0][0]).toMatchInlineSnapshot(`
-      Array [
-        <link
-          as="font"
-          crossOrigin="anonymous"
-          href="/path/to/font.otf"
-          rel="preload"
-        />,
-        <link
-          as="font"
-          crossOrigin="anonymous"
-          href="/path/to/another.ttf"
-          rel="preload"
-        />,
-        <link
-          as="font"
-          crossOrigin="anonymous"
-          href="/path/to/another/font.woff"
-          rel="preload"
-        />,
-      ]
-    `)
+    expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
   })
 
   it(`accepts boolean \`crossOrigin\` in plugin config`, () => {
@@ -77,15 +56,7 @@ describe(`gatsby-ssr`, () => {
       { setHeadComponents, pathname: `/foo` },
       { crossOrigin: false }
     )
-    expect(setHeadComponents.mock.calls[0][0]).toMatchInlineSnapshot(`
-      Array [
-        <link
-          as="font"
-          href="/path/to/font.otf"
-          rel="preload"
-        />,
-      ]
-    `)
+    expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
   })
 
   it(`accepts string \`crossOrigin\` in plugin config`, () => {
@@ -99,16 +70,7 @@ describe(`gatsby-ssr`, () => {
       { setHeadComponents, pathname: `/foo` },
       { crossOrigin: `use-credentials` }
     )
-    expect(setHeadComponents.mock.calls[0][0]).toMatchInlineSnapshot(`
-      Array [
-        <link
-          as="font"
-          crossOrigin="use-credentials"
-          href="/path/to/font.otf"
-          rel="preload"
-        />,
-      ]
-    `)
+    expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
   })
 
   it(`accepts function \`crossOrigin\` in plugin config`, () => {
@@ -130,24 +92,7 @@ describe(`gatsby-ssr`, () => {
     })
     onRenderBody({ setHeadComponents, pathname: `/bar` }, config)
 
-    expect(setHeadComponents.mock.calls[0][0]).toMatchInlineSnapshot(`
-      Array [
-        <link
-          as="font"
-          href="/path/to/font.otf"
-          rel="preload"
-        />,
-      ]
-    `)
-    expect(setHeadComponents.mock.calls[1][0]).toMatchInlineSnapshot(`
-    Array [
-      <link
-        as="font"
-        crossOrigin="use-credentials"
-        href="/path/to/another.woff"
-        rel="preload"
-      />,
-    ]
-  `)
+    expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
+    expect(setHeadComponents.mock.calls[1][0]).toMatchSnapshot()
   })
 })
