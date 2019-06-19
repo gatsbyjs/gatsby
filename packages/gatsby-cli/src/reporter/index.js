@@ -32,10 +32,8 @@ const createRichError = params => {
   // validate against schema
   const { error } = Joi.validate(richError, errorSchema)
   if (error !== null) {
-    // TODO: something better here
-    console.log(`JOI ERROR VALIDATING ERROR SCHEMA ERROR!`)
-    console.log(error)
-    return false
+    console.log(`Failed to validate error`, error)
+    process.exit(1)
   }
 
   return richError
@@ -87,16 +85,15 @@ const reporter: Reporter = {
   },
 
   error(errorMeta, error) {
-    let details
-
+    let details = {}
     // Three paths to retain backcompat
     // string and Error
     if (arguments.length === 2) {
-      details.context.error = errorMeta
-      details.text = errorMeta.message
+      details.error = error
+      details.text = errorMeta
       // just an Error
     } else if (arguments.length === 1 && errorMeta instanceof Error) {
-      details.context.error = errorMeta
+      details.error = errorMeta
       details.text = error.message
       // object with partial error info
     } else if (arguments.length === 1 && typeof errorMeta === `object`) {
@@ -104,6 +101,7 @@ const reporter: Reporter = {
     }
 
     const richError = createRichError({ details })
+
     if (richError) reporterInstance.error(richError)
 
     // TODO: remove this once Error component can render this info

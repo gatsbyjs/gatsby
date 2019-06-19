@@ -1,31 +1,29 @@
 import React from "react"
-import { Color, Box, Text } from "ink"
+import { Color, Box } from "ink"
 import { get } from "lodash"
 
 const Error = ({ details }) => {
-  const origError = get(details, `error.message`)
+  const origError = get(details, `error.message`, null)
   // const stackLength = get(details, `stack.length`, 0)
 
   return (
     <Box marginTop={1} flexDirection="column">
       <Box flexDirection="column">
-        <Box>
-          <Box marginRight={1}>
-            <Color black bgRed>
-              {details.category.toLowerCase()} {details.id}
-            </Color>
+        <Box flexDirection="column">
+          <Box>
+            <Box marginRight={1}>
+              <Color black bgRed>
+                {` ${details.category.toLowerCase()} `}
+                {details.id && ` ${details.id}`}
+              </Color>
+            </Box>
+            {origError}
           </Box>
-          {details.text}
+          <Box marginTop={1}>{details.text}</Box>
         </Box>
         {details.docsUrl && (
           <Box>
             See our docs page for more info on this error: {details.docsUrl}
-          </Box>
-        )}
-
-        {origError && (
-          <Box marginTop={1}>
-            <Text bold>Source error:</Text> "{origError}"
           </Box>
         )}
       </Box>
