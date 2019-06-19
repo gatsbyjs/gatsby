@@ -4,6 +4,7 @@ import { isCI } from "ci-info"
 import chalk from "chalk"
 import Activity, { calcElapsedTime } from "./components/activity"
 import { Message } from "./components/messages"
+import Error from "./components/error"
 
 const showProgress = process.stdout.isTTY && !isCI
 
@@ -83,21 +84,17 @@ export default class GatsbyReporter extends React.Component {
     this.verbose = isVerbose
   }
 
-  _addMessage(type, str) {
+  _addMessage(type, details) {
     // threat null/undefind as an empty character, it seems like ink can't handle empty str
-    if (!str) {
-      str = `\u2800`
+    if (!details) {
+      details = `\u2800`
     }
+
+    const msg = { type, details }
 
     this.setState(state => {
       return {
-        messages: [
-          ...state.messages,
-          {
-            text: str,
-            type,
-          },
-        ],
+        messages: [...state.messages, msg],
       }
     })
   }
@@ -122,9 +119,16 @@ export default class GatsbyReporter extends React.Component {
           <Static>
             {this.state.messages.map((msg, index) => (
               <Box textWrap="wrap" key={index}>
-                <Message type={msg.type} hideColors={this.state.disableColors}>
-                  {msg.text}
-                </Message>
+                {msg.type === `error` ? (
+                  <Error type={msg.type} details={msg.details} />
+                ) : (
+                  <Message
+                    type={msg.type}
+                    hideColors={this.state.disableColors}
+                  >
+                    {msg.details}
+                  </Message>
+                )}
               </Box>
             ))}
           </Static>

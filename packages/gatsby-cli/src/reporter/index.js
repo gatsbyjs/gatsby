@@ -7,10 +7,39 @@ const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
 const reporterInstance = require(`./reporters`)
 const stackTrace = require(`stack-trace`)
-
+const { errorMap, defaultError } = require(`../util/error-map`)
+const { errorSchema } = require(`../util/error-schema`)
+const Joi = require(`joi`)
 const errorFormatter = getErrorFormatter()
+import { get } from "lodash"
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
+
+// Merge partial error details with information from the errorMap
+// Validate the constructed object against an error schema
+const createRichError = params => {
+  const { details } = params
+  const result = (details.id && errorMap[details.id]) || defaultError
+
+  // merge details and lookedup error
+  const richError = {
+    ...details,
+    ...result,
+    text: get(details, `text`) || result.text(details.context),
+    stack: stackTrace.parse(details.error),
+  }
+
+  // validate against schema
+  const { error } = Joi.validate(richError, errorSchema)
+  if (error !== null) {
+    // TODO: something better here
+    console.log(`JOI ERROR VALIDATING ERROR SCHEMA ERROR!`)
+    console.log(error)
+    return false
+  }
+
+  return richError
+}
 
 /**
  * Reporter module.
@@ -57,31 +86,31 @@ const reporter: Reporter = {
     }
   },
 
-  error(message, error) {
-    if (arguments.length === 1 && typeof message !== `string`) {
-      error = message
-      message = error.message
+  error(errorMeta, error) {
+    let details
+
+    // Three paths to retain backcompat
+    // string and Error
+    if (arguments.length === 2) {
+      details.context.error = errorMeta
+      details.text = errorMeta.message
+      // just an Error
+    } else if (arguments.length === 1 && errorMeta instanceof Error) {
+      details.context.error = errorMeta
+      details.text = error.message
+      // object with partial error info
+    } else if (arguments.length === 1 && typeof errorMeta === `object`) {
+      details = Object.assign({}, errorMeta)
     }
 
-    reporterInstance.error(message)
-    if (error) this.log(errorFormatter.render(error))
+    const richError = createRichError({ details })
+    if (richError) reporterInstance.error(richError)
+
+    // TODO: remove this once Error component can render this info
+    // log formatted stacktrace
+    if (richError.error) this.log(errorFormatter.render(richError.error))
   },
 
-  errorThing(errorInfo) {
-    // const makeDocsUrl = id => `https://gatsbyjs.org/docs/errors/${id}`
-    const errorMap = {
-      gatsbyerr0001: {
-        message: `Building static HTML failed. See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html`,
-        category: `REALLY BAD`,
-        docsUrl: `https://gatsby.dev/debug-html`,
-        // docsUrl: makeDocsUrl(),
-      },
-    }
-
-    const stack = stackTrace.parse(errorInfo.error)
-    const finalError = { ...errorInfo, ...errorMap[errorInfo.id], stack }
-    console.dir(finalError)
-  },
   /**
    * Set prefix on uptime.
    * @param {string} prefix - A string to prefix uptime with.
