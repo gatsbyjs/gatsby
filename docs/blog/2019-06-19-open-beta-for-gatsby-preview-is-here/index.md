@@ -24,19 +24,19 @@ To use Gatsby Preview today, you must have admin access to your GitHub repositor
 We’ve been having lots of conversations with folks who needed something like Gatsby Preview, but didn’t have a current solution. We heard things like:
 
 
-> Our content editors like using Gatsby Preview, but they don’t want to use a separate service to see Preview
+### "Our content editors like using Gatsby Preview, but they don’t want to use a separate service to see their preview"
 
 Contentful, DatoCMS, and Sanity now support a widget to display the Gatsby Preview button in their sidebar, so content editors can make their edits and quickly see them without ever leaving the CMS. We’ll be adding the Gatsby Preview button to as many supported CMSs as possible. 
 
 ![Gatsby Preview button in Contentful](./images/screenshot.png)
 
-> I want to be able to use a service like Gatsby Preview, but our team doesn’t use the CMS you support
+### "I want to be able to use a service like Gatsby Preview, but our team doesn’t use the CMS you support"
 
 We know teams use different CMSs, and we’ve started expanding our support to different CMS. Right now Gatsby Preview will work with Contentful, Contentstack, DatoCMS, and Sanity. We’re actively working on adding several more CMSs, too.
 
 ![Seamless and manual CMS integrations in Gatsby Preview](./images/Screenshot%202019-06-18%2013.11.35.png)
 
-> We had some trouble getting our site connected to Gatsby Preview 
+### "We had some trouble getting our site connected to Gatsby Preview" 
 
 We’ve added an automated integration for Contentful, so it’s easy to set up with just a few clicks! We’ve got more seamless integrations coming soon!
 
