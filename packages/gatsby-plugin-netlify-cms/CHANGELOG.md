@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.0.2...gatsby-plugin-netlify-cms@4.0.3) (2019-06-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** fix minimizer settings ([#14795](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/14795)) ([7973165](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/7973165))
+
 ## [4.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.0.1...gatsby-plugin-netlify-cms@4.0.2) (2019-06-14)
 
 ### Bug Fixes
