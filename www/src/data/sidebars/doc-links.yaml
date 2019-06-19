@@ -214,7 +214,7 @@
                   link: /docs/post-css/
                 - title: Using TailwindCSS
                   link: /docs/tailwind-css/
-        - title: Adding Components to Content with MDX
+         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           items:
             - title: Getting Started with MDX
