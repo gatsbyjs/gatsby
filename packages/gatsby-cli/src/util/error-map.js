@@ -7,7 +7,6 @@ export const errorMap = {
     text: () => `"window" is not available during server side rendering.`,
     category: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
-    // docsUrl: makeDocsUrl(),
   },
   "95313": {
     text: context =>
@@ -15,7 +14,6 @@ export const errorMap = {
         `for path "${context.errorPath}"`}`,
     category: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
-    // docsUrl: makeDocsUrl(),
   },
 }
 
