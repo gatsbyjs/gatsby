@@ -18,10 +18,10 @@ const {
 
 // ...
 
-const pagesDirectory = '/pages'
+const pagesDirectory = "/pages"
 watchDirectory(
   pagesDirectory,
-  '**/*.{js, jsx}',
+  "**/*.{js, jsx}",
   addedPath => {
     // Filter out special components that shouldn't be made into
     // pages.
@@ -30,7 +30,7 @@ watchDirectory(
     }
 
     // Filter out anything matching the given ignore patterns and options
-    if (ignorePath(addedPath, '*/connexion')) {
+    if (ignorePath(addedPath, "*/connexion")) {
       return
     }
 
