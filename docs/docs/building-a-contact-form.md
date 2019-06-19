@@ -4,9 +4,7 @@ title: Building a Contact Form
 
 This guide covers how to create a contact form in a Gatsby site, along with an overview of some strategies for handling form data that has been submitted.
 
-## Adding a Contact Form
-
-Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](https://www.gatsbyjs.org/docs/adding-forms/) section.
+Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](/docs/adding-forms/) section.
 
 ## Creating an Accessible Form
 
@@ -45,13 +43,15 @@ Each method detailed below will start with the following contact form:
 
 ### Netlify
 
-If you're hosting your site with Netlify, you gain access to their excellent form handling feature. Setting this up only invloves adding a few form attributes:
+If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
 
-```jsx:title=src/pages/contact.js
-<form method="post" netlify-honeypot="bot-field" data-netlify="true">
-  <input type="hidden" name="bot-field" />
+Setting this up only invloves adding a few form attributes:
+
+```diff:title=src/pages/contact.js
+- <form method="post" action="#">
++ <form method="post" netlify-honeypot="bot-field" data-netlify="true">
++   <input type="hidden" name="bot-field" />
   ...
-</form>
 ```
 
 Now, all submissions to your form will appear in the Forms tab of your site dashboard. By adding the form attribute `netlify-honeypot="bot-field"` and a corresponding hidden input, Netlify will know to quietly reject any spam submissions you may receive.
@@ -77,7 +77,15 @@ In order to begin leveraging Formspree's features, you must add a form action di
 
 Once you've made the changes you can submit your own form for the first time and register using the email Formspree will send you, and all subsequent form submissions will be sent to your email address. You can find more information on the registration process or setup [on their website](https://formspree.io/).
 
-### Run Your Own Server
+All forms set up in this way come with ReCAPTCHA by default, but you can also enable Honeypot spam filtering by adding a hidden input element with the `name="_gotcha"` field.
+
+```jsx
+<input type="text" name="_gotcha" style="display:none" />
+```
+
+Because the input is hidden, Formspree will know that only a bot could have made the submission, and it will be silently ignore it!
+
+### Run your own server
 
 If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
 
