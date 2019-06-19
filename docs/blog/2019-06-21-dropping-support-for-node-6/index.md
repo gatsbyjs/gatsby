@@ -8,7 +8,11 @@ tags:
   - deprecation
 ---
 
-Effective in Gatsby v2.10.0, we are making a potentially breaking change and dropping support for Node 6. We don't take this decision lightly, and realize that there is _potential_ for breaking applications by not following [semantic versioning][semver] _strictly_ and releasing Gatsby v3.0.0. However, we feel that this decision is in the best interest of our users and enables the Gatsby Core team to focus more efficiently on delivering fixes and features. In this post, I outline the reasoning for why we're making this decision and how it potentially impacts you, a Gatsby user.
+Effective in Gatsby v2.10.0, we are making a potentially breaking change and dropping support for Node 6. We don't take this decision lightly, and realize that there is _potential_ for breaking applications by not following [semantic versioning][semver] _strictly_ and releasing a new major version of Gatsby (v3.0.0).
+
+We are making this decision because Node 6 was transitioned into end-of-life status on April 30th, 2019. As such, we're reluctantly dropping support as more and more of Gatsby's dependencies also drop support for Node 6. Making this explicit change and dropping support allows the Gatsby team to focus more efficiently on delivering fixes and features that directly improve the quality of Gatsby for _all_ users.
+
+Interested in learning more for the technical detail and the _why_ of why we're making this change? Great! Read on below.
 
 ## Why
 
