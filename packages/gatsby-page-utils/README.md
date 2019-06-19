@@ -43,7 +43,7 @@ watchDirectory(
 
     // Add page
     createPage(page)
-  }
+  },
   removedPath => {
     // Delete the page for the now deleted component.
     store.getState().pages.forEach(page => {
