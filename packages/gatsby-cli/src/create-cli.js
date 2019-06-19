@@ -301,6 +301,18 @@ function isLocalGatsbySite() {
   return inGatsbySite
 }
 
+function getVersionInfo() {
+  const { version } = require(`../package.json`)
+  const localVersion = isLocalGatsbySite()
+  if (localVersion) {
+    return `Gatsby CLI version: ${version}
+Gatsby version: ${localVersion.replace(/^[^\d]+/, ``)}
+  Note: this is the Gatsby version for the site at: ${process.cwd()}`
+  } else {
+    return `Gatsby CLI version: ${version}`
+  }
+}
+
 module.exports = argv => {
   let cli = yargs()
   let isLocalSite = isLocalGatsbySite()
@@ -328,7 +340,11 @@ module.exports = argv => {
 
   try {
     const { version } = require(`../package.json`)
-    cli.version(`version`, version)
+    cli.version(
+      `version`,
+      `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
+      getVersionInfo()
+    )
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
     // ignore
