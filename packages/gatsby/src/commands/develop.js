@@ -435,6 +435,7 @@ module.exports = async (program: any) => {
         appName,
       },
     })
+    // Clear the screen now that bootstrap is done.
     console.log(`\x1B[2J\x1B[0f`)
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
