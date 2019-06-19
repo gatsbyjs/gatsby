@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { getDb, colls } = require(`./index`)
+const { trackCli } = require(`gatsby-telemetry`)
 
 /////////////////////////////////////////////////////////////////////
 // Node collection metadata
@@ -203,6 +204,8 @@ function createNode(node, oldNode) {
   invariant(node.internal, `node has no "internal" field`)
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
+
+  trackCli(`CREATE_LOKI_NODE`, {}, { debounce: true })
 
   const type = node.internal.type
 
