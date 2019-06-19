@@ -3,6 +3,7 @@ import { Static, Box } from "ink"
 import chalk from "chalk"
 import Spinner from "./components/spinner"
 import ProgressBar from "./components/progress-bar"
+import Develop from "./components/develop"
 import { Message } from "./components/messages"
 import isTTY from "../../../util/is-tty"
 import calcElapsedTime from "../../../util/calc-elapsed-time"
@@ -32,9 +33,14 @@ export default class GatsbyReporter extends React.Component {
     verbose: false,
     messages: [],
     activities: {},
+    stage: { stage: `init`, context: {} },
   }
 
   format = chalk
+
+  setStage = stage => {
+    this.setState({ stage })
+  }
 
   createActivity = ({ id, ...options }) => {
     this.setState(state => {
@@ -122,7 +128,7 @@ export default class GatsbyReporter extends React.Component {
   }
 
   render() {
-    const { activities, messages, disableColors } = this.state
+    const { activities, messages, disableColors, stage } = this.state
 
     const spinners = []
     const progressBars = []
@@ -165,6 +171,9 @@ export default class GatsbyReporter extends React.Component {
             />
           ))}
         </Box>
+        {stage.stage === `DevelopBootstrapFinished` && (
+          <Develop stage={stage} />
+        )}
       </Box>
     )
   }
