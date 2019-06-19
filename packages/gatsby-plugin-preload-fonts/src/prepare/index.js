@@ -1,6 +1,5 @@
 #! /usr/bin/env node
 
-const path = require(`path`)
 const crypto = require(`crypto`)
 const { URL } = require(`url`)
 
@@ -54,24 +53,21 @@ async function main() {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   let last = ``
-  page.on(`requestfinished`, e => {
-    if (!e._url.match(/(socket\.io|commons\.js)/)) {
-      logger.info(`load`, e._method, e._url)
-    }
+  page.on(`requestfinished`, req => {
+    if (req.url().match(/(socket\.io|commons\.js)/)) return
 
-    if (
-      e._method === `GET` &&
-      path.parse(e._url).ext.match(/^\.(otf|ttf|woff2?)$/)
-    ) {
-      logger.debug(`match`, e._url)
+    logger.info(`load`, req.method(), req.url())
+
+    if (req.method() === `GET` && req.resourceType() === `font`) {
+      logger.debug(`match`, req.url())
 
       const { pathname } = new URL(page.url())
 
       if (!Object.prototype.hasOwnProperty.call(cache.assets, pathname)) {
         cache.assets[pathname] = {}
       }
-      cache.assets[pathname][e._url] = true
-      last = ellipses(`found ${e._url}`, 40)
+      cache.assets[pathname][req.url()] = true
+      last = ellipses(`found ${req.url()}`, 40)
       bar.update({ last })
     }
   })

@@ -99,7 +99,11 @@ If you're still having trouble, you can run `gatsby-preload-fonts` with a lower
 log level to view what paths it's visiting in real time.
 
 ```
-export LOG_LEVEL=info; npm run preload-fonts
+# mac/linux
+LOG_LEVEL=info npm run preload-fonts
+
+# windows
+set LOG_LEVEL=info & npm run preload-fonts
 ```
 
 Available log levels include `info`, `debug`, `warning`, `error`, and

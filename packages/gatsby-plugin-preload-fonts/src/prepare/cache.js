@@ -1,9 +1,7 @@
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 
 const findCacheDir = require(`find-cache-dir`)
-
-const { ensureDir } = require(`./utils`)
 
 module.exports.getPath = getPath
 module.exports.load = load
@@ -16,7 +14,7 @@ function getPath() {
 let cache
 const cacheDir = findCacheDir({ name: `gatsby-plugin-preload-fonts` })
 try {
-  ensureDir(cacheDir)
+  fs.ensureDir(cacheDir)
 } catch (e) {
   console.log(
     `could not write to cache directory, please make sure the following path exists and is writable`

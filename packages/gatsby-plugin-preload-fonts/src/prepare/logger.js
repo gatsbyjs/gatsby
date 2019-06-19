@@ -41,17 +41,17 @@ module.exports = level => {
   const setAdapter = a => (adapter = a)
   const resetAdapter = () => (adapter = console.log)
 
-  const print = tag => (...args) => adapter(tag, ...args)
+  const prepend = tag => (...args) => adapter(tag, ...args)
 
   return {
     setAdapter,
     resetAdapter,
     newline: () => adapter(),
-    info: logLevel <= logLevels.info ? print(chalk.white(`[info]`)) : noop,
-    debug: logLevel <= logLevels.debug ? print(chalk.blue(`[debug]`)) : noop,
+    info: logLevel <= logLevels.info ? prepend(chalk.white(`[info]`)) : noop,
+    debug: logLevel <= logLevels.debug ? prepend(chalk.blue(`[debug]`)) : noop,
     warning:
-      logLevel <= logLevels.warning ? print(chalk.yellow(`[warn]`)) : noop,
-    error: logLevel <= logLevels.error ? print(chalk.red(`[error]`)) : noop,
+      logLevel <= logLevels.warning ? prepend(chalk.yellow(`[warn]`)) : noop,
+    error: logLevel <= logLevels.error ? prepend(chalk.red(`[error]`)) : noop,
     print: (...args) => adapter(...args),
     fatal: (...args) => adapter(...args) || process.exit(1),
     ask: async (promptOrInfo, prompt) => {
