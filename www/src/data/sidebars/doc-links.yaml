@@ -218,10 +218,10 @@
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
-        - title: Adding Components to Content with MDX
+        - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           items:
-            - title: Getting Started
+            - title: Getting Started with MDX
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
