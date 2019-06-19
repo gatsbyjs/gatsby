@@ -81,7 +81,7 @@ import Layout from "../components/layout"
 import { RichText } from "prismic-reactjs" //highlight-line
 
 //highlight-start
-const export query = graphql`
+export const query = graphql`
 {
   prismic {
     allBlog_homes {
@@ -124,7 +124,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt="avatar image" />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} />
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
@@ -145,7 +145,7 @@ const BlogPosts = ({ posts }) => {
     <div>
       {posts.map(post => {
         return (
-          <div key={post.node.id}>
+          <div key={post.node._meta.id}>
             <h2>{RichText.asText(post.node.title)}</h2>
             <p>
               <time>{post.node.date}</time>
@@ -167,7 +167,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt="avatar" />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} />
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
@@ -212,7 +212,7 @@ const BlogPosts = ({ posts }) => {
     <ul>
       {posts.map(post => {
         return (
-          <li key={post.node.id}>
+          <li key={post.node._meta.id}>
             // highlight-start
             <Link to={linkResolver(post.node._meta)}>
               {RichText.asText(post.node.title)}
