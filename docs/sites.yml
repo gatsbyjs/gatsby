@@ -2595,17 +2595,6 @@
   built_by: IBM
   built_by_url: https://www.ibm.com/
   featured: false
-- title: McDonald's Design System
-  main_url: https://design.mcdonalds.com/
-  url: https://design.mcdonalds.com/
-  description: >
-    McDonald's Design System
-  categories:
-    - Design
-    - Design System
-  built_by: McDonald's
-  built_by_url: https://www.mcdonalds.com/us/en-us.html
-  featured: false
 - title: Mozilla Mixed Reality
   main_url: https://mixedreality.mozilla.org/
   url: https://mixedreality.mozilla.org/
@@ -6354,6 +6343,18 @@
   built_by: Criston Macarenhas
   built_by_url: https://github.com/cristonkrizz
   featured: false
+- title: The State of CSS Survey
+  main_url: https://stateofcss.com/
+  url: https://stateofcss.com/
+  source_url: https://github.com/StateOfJS/state-of-css-2019
+  description: >
+    Annual CSS survey, brother of The State of JS Survey.
+  categories:
+    - Research
+    - Web Development
+  built_by: Sacha Greif & Contribs
+  built_by_url: https://github.com/StateOfJS
+  featured: false
 - title: Bytom Blockchain
   url: https://bytom.io/
   main_url: https://bytom.io/
@@ -6367,4 +6368,18 @@
     - Technology
   built_by: Bytom Foundation
   built_by_url: https://bytom.io/
+  featured: false
+- title: Oerol Festival
+  url: https://www.oerol.nl/nl/
+  main_url: https://www.oerol.nl/en/
+  description: >
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    The ten-day festival is focused on live, public theatre as well as music and visual arts.
+  categories:
+    - Event
+    - Events
+    - Entertainment
+    - Festival
+  built_by: Oberon
+  built_by_url: https://oberon.nl/
   featured: false
