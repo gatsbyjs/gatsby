@@ -171,7 +171,9 @@ export default class GatsbyReporter extends React.Component {
             />
           ))}
         </Box>
-        {stage.stage === `BootstrapFinished` && <Develop stage={stage} />}
+        {stage.stage === `DevelopBootstrapFinished` && (
+          <Develop stage={stage} />
+        )}
       </Box>
     )
   }
