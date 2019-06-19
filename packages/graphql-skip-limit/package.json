@@ -31,5 +31,8 @@
     "build": "babel src --out-dir dist",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir dist"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

@@ -36,5 +36,8 @@
   },
   "peerDependencies": {
     "gatsby": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
