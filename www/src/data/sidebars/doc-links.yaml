@@ -530,8 +530,6 @@
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
-    - title: Advanced Tutorials
-      link: /tutorial/advanced-tutorials/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
