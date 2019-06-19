@@ -19,7 +19,7 @@
     "mini-svg-data-uri": "^1.0.0",
     "potrace": "^2.1.1",
     "probe-image-size": "^4.0.0",
-    "progress": "^1.1.8",
+    "progress": "^2.0.3",
     "semver": "^5.6.0",
     "sharp": "^0.22.1",
     "svgo": "^1.2.0"
