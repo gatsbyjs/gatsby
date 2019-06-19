@@ -16,7 +16,8 @@ Note: Before adding a blog post ensure you have approval from a member of the Ga
 
 To add a new blog post to the gatsbyjs.org blog:
 
-- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
+- Fork the [the Gatsby repo](https://github.com/gatsbyjs/gatsby/)
+- Clone your forked repo and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies. ([Why Yarn?](/contributing/setting-up-your-local-dev-environment#using-yarn))
 - Run `npm run develop` to preview the blog at `http://localhost:8000/blog`.
 - The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
