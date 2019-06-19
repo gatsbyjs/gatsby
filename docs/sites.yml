@@ -1380,17 +1380,6 @@
   built_by: Iron Cove Solutions
   built_by_url: "https://ironcovesolutions.com/"
   featured: false
-- title: Eventos orellana
-  description: >-
-    Somos una empresa dedicada a brindar asesoría personalizada y profesional
-    para la elaboración y coordinación de eventos sociales y empresariales.
-  main_url: "https://eventosorellana.com/"
-  url: "https://eventosorellana.com/"
-  featured: false
-  categories:
-    - Gallery
-  built_by: Codedebug
-  built_by_url: "https://codedebug.co/"
 - title: Moetez Chaabene Portfolio / Blog
   main_url: "https://moetez.me/"
   url: "https://moetez.me/"
@@ -2198,18 +2187,6 @@
     - Blog
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
-  featured: false
-- title: Joseph Chambers
-  main_url: "https://joseph.michael-chambers.com/"
-  url: "https://joseph.michael-chambers.com/"
-  description: >
-    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
-  categories:
-    - Portfolio
-    - Freelance
-    - Web Development
-  built_by: Joseph Chambers
-  built_by_url: https://twitter.com/imcodingideas
   featured: false
 - title: Mike's Remote List
   main_url: "https://www.mikesremotelist.com"
