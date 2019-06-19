@@ -34,8 +34,11 @@ Define `docz-theme-default` as a theme inside the `__experimentalThemes` of `gat
 
 ```js:title=gatsby-config.js
 module.exports = {
-  //highlight-next-line
-  __experimentalThemes: [`gatsby-theme-docz`],
+  __experimentalThemes: [
+    {
+      resolve: 'gatsby-theme-docz',
+    },
+  ],
   plugins: [`// your plugins go here`],
 }
 ```
