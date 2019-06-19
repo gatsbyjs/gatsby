@@ -179,6 +179,12 @@ const reporter: Reporter = {
       span,
     }
   },
+  // Make private as we'll probably remove this in a future refactor.
+  _setStage(stage) {
+    if (reporterInstance.setStage) {
+      reporterInstance.setStage(stage)
+    }
+  },
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
