@@ -26,7 +26,7 @@ const createRichError = params => {
     ...details,
     ...result,
     text: get(details, `text`) || result.text(details.context),
-    stack: stackTrace.parse(details.error),
+    stack: details.error ? stackTrace.parse(details.error) : [],
   }
 
   // validate against schema
@@ -76,8 +76,7 @@ const reporter: Reporter = {
   },
 
   panicOnBuild(...args) {
-    const [message, error] = args
-    this.error(message, error)
+    this.error(...args)
     trackError(`BUILD_PANIC`, { error: args })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
@@ -98,6 +97,8 @@ const reporter: Reporter = {
       // object with partial error info
     } else if (arguments.length === 1 && typeof errorMeta === `object`) {
       details = Object.assign({}, errorMeta)
+    } else if (arguments.length === 1 && typeof errorMeta === `string`) {
+      details.text = errorMeta
     }
 
     const richError = createRichError({ details })
