@@ -6327,3 +6327,20 @@
   built_by: Oberon
   built_by_url: https://oberon.nl/
   featured: false
+- title: Riffy Blog
+  main_url: https://blog.rayriffy.com/
+  url: https://blog.rayriffy.com/
+  source_url: https://github.com/rayriffy/rayriffy-blog
+  description: >
+    Riffy Blog is async based beautiful highly maintainable site built by using Gatsby v2 with SEO optimized.
+  categories:
+    - Web Development
+    - Blog
+    - Open Source
+    - Technology
+    - Music
+    - Netlify
+    - SEO
+  built_by: Phumrapee Limpianchop
+  built_by_url: https://rayriffy.com/
+  featured: false
