@@ -53,7 +53,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   return {
     sqip: {
       type: new GraphQLObjectType({
-        name: `Sqip`,
+        name: `SqipSharp`,
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
@@ -150,7 +150,7 @@ async function sqipContentful({ type, cache, store }) {
   return {
     sqip: {
       type: new GraphQLObjectType({
-        name: `Sqip`,
+        name: `SqipContentful`,
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
