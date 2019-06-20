@@ -96,7 +96,7 @@ At the root of a Gatsby site, get helpful environment information which will be 
 
 |       Option        | Description                                             |
 | :-----------------: | ------------------------------------------------------- |
-| `-C`, `--clipboard` | Automagically copy environment information to clipboard |
+| `-C`, `--clipboard` | Automatically copy environment information to clipboard |
 
 ### `clean`
 
