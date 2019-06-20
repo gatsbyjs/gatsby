@@ -1,6 +1,6 @@
 ---
 title: How to make a fully-featured dev blog in under 10 minutes
-date: 2019-06-19
+date: 2019-06-20
 author: Thomas Wang
 tags:
   - blog
