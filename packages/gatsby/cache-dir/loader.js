@@ -196,7 +196,7 @@ export class BaseLoader {
       return this.pageDb.get(pagePath).payload
     }
     if (this.prefetchCompleted.has(pagePath)) {
-      return this.prefetchCompleted.get(pagePath).payload
+      return this.prefetchCompleted.get(pagePath)
     }
     return undefined
   }
@@ -234,7 +234,9 @@ export class BaseLoader {
     this.doPrefetch(pagePath).then(pageData => {
       if (!this.prefetchCompleted.has(pagePath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
-        this.prefetchCompleted.set(pagePath, pageData)
+
+        const realPath = this.pathFinder.find(pagePath)
+        this.prefetchCompleted.set(realPath, toPageResources(pageData, null))
       }
     })
 
