@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-npm-package-search",
   "description": "Search NPM packages and pull NPM & GitHub metadata from Algolia's NPM index",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "author": "james.a.stack@gmail.com",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -10,7 +10,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.1.4",
+    "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.1.4"
   },
   "keywords": [
