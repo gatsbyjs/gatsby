@@ -1,14 +1,14 @@
 ---
 title: How to make a fully-featured dev blog in under 10 minutes
 date: 2019-06-19
-author: Linda Watkins
+author: Thomas Wang
 tags:
   - blog
   - developer experience
-  - hosting
-  - performance
+  - self hosting
   - netlify
   - netlify cms
+  - deletemedium
 canonicalLink: https://www.thomaswang.io/blog/how-to-make-a-fully-featured-dev-blog-in-under-10-minutes/
 ---
 
