@@ -41,6 +41,8 @@ Each method detailed below will start with the following contact form:
 </form>
 ```
 
+## Form submission options in Gatsby
+
 ### Netlify
 
 If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
