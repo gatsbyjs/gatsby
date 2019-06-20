@@ -513,20 +513,6 @@
     - Education
     - Web Development
     - Technology
-- title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru"
-  url: "https://caddysmellsliketrees.ru/en"
-  source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  description: >-
-    We play soul-searching songs for every day. They are merging in our forests
-    in such a way that it is difficult to separate them from each other, and
-    between them bellow bold deer poems.
-  categories:
-    - Music
-    - Gallery
-  built_by: Dmitrij Podabed, Alexander Nikitin
-  built_by_url: https://podabed.org
-  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
