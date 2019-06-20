@@ -88,7 +88,7 @@ const navigate = (to, options = {}) => {
     // back, the browser will just change the URL and expect JS to handle
     // the change, which won't always work since it might not be a Gatsby
     // page.
-    if (!pageResources) {
+    if (!pageResources || pageResources.status === `error`) {
       window.history.replaceState({}, ``, location.href)
       window.location = pathname
     }
