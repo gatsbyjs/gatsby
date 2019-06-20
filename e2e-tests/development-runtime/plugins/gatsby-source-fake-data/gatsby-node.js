@@ -15,13 +15,17 @@ exports.sourceNodes = async function sourceNodes({
   createNodeId,
   createContentDigest,
   getNode,
+  reporter,
+  webhookBody,
 }) {
   const { createNode, deleteNode } = actions
 
-  const [updated, deleted = []] = await api.sync({
+  const helpers = {
     createNodeId,
     createContentDigest,
-  })
+  }
+
+  const [updated, deleted = []] = await api.sync(helpers)
 
   updated.forEach(node => createNode(node))
   deleted.forEach(node => {
@@ -32,4 +36,11 @@ exports.sourceNodes = async function sourceNodes({
       })
     }
   })
+
+  console.log(webhookBody)
+
+  if (webhookBody && webhookBody.items) {
+    reporter.info(`Webhook data detected; creating nodes`)
+    webhookBody.items.forEach(node => createNode(api.getNode(node, helpers)))
+  }
 }
