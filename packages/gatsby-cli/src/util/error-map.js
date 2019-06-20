@@ -1,7 +1,9 @@
 export const errorMap = {
   default: {
-    text: () => `Unknown error`,
+    text: () =>
+      `You found an unknown error! Please open an issue with clear reproduction steps`,
     level: `ERROR`,
+    docsUrl: `https://gatsby.dev/issue-how-to`,
   },
   "95312": {
     text: () => `"window" is not available during server side rendering.`,
@@ -14,6 +16,15 @@ export const errorMap = {
         `for path "${context.errorPath}"`}`,
     level: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
+  },
+  "85901": {
+    text: context =>
+      `Oops! You found an unidentified GraphQL error. Please consider opening an issue with clear reproduction steps.\n\nOriginal error message:\n\n${
+        context.sourceMessage
+      }`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+    docsUrl: `https://gatsby.dev/issue-how-to`,
   },
   "85907": {
     text: context =>

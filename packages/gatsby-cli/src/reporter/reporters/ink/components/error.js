@@ -33,7 +33,7 @@ const Error = ({ details }) => {
           )}
         </Box>
         {details.docsUrl && (
-          <Box>
+          <Box marginTop={1}>
             See our docs page for more info on this error: {details.docsUrl}
           </Box>
         )}

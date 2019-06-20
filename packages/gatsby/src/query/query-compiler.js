@@ -22,6 +22,7 @@ import {
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
+import errorParser from "./error-parser"
 const websocketManager = require(`../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
@@ -85,7 +86,6 @@ class Runner {
 
   reportError(message) {
     const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-    report.panicOnBuild(queryErrorMessage)
     if (process.env.gatsby_executing_command === `develop`) {
       websocketManager.emitError(overlayErrorID, queryErrorMessage)
       lastRunHadErrors = true
@@ -180,25 +180,14 @@ class Runner {
         error: formattedMessage,
       })
 
-      const regex = /Encountered\s\d\serror.*:\n(.*)/gm
-      const str = message
-      let m
-      let newMessage = ``
+      const filePath = namePathMap.get(docName)
+      const structuredError = errorParser({ message, filePath })
+      report.panicOnBuild(structuredError)
 
-      while ((m = regex.exec(str)) !== null) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (m.index === regex.lastIndex) {
-          regex.lastIndex++
-        }
-        newMessage = m[1]
-      }
+      // report error to browser
+      // TODO: move browser error overlay reporting to reporter
+      this.reportError(formattedMessage)
 
-      // this.reportError(formattedMessage)
-      report.error({
-        id: `85907`,
-        context: { message: newMessage },
-        filePath: namePathMap.get(docName),
-      })
       return false
     }
 
