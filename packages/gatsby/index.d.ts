@@ -725,7 +725,7 @@ export interface NodePluginArgs {
   hasNodeChanged: Function
   reporter: Reporter
   getNodeAndSavePathDependency: Function
-  cache: Cache
+  cache: Cache["cache"]
   createNodeId: Function
   createContentDigest: Function
   tracing: Tracing
