@@ -14,7 +14,7 @@ const Error = ({ details }) => {
             <Box marginRight={1}>
               <Color black bgRed>
                 {` ${details.category.toLowerCase()} `}
-                {details.id && ` ${details.id}`}
+                {details.id && `${details.id}`}
               </Color>
             </Box>
             {origError}
