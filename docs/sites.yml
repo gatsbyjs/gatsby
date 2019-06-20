@@ -4401,6 +4401,18 @@
   built_by: Johan Eliasson
   built_by_url: https://github.com/elitan
   featured: false
+- title: Josef Aidt
+  url: https://josefaidt.dev
+  main_url: https://josefaidt.dev
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
 - title: How To egghead
   main_url: https://howtoegghead.com/
   url: https://howtoegghead.com/
