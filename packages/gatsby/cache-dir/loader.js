@@ -92,7 +92,7 @@ const doesConnectionSupportPrefetch = () => {
   return true
 }
 
-const toPageResources = (pageData, component) => {
+const toPageResources = (pageData, component = null) => {
   const page = {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
@@ -123,10 +123,9 @@ export class BaseLoader {
     // }
     this.pageDb = new Map()
     this.inFlightDb = new Map()
-    this.pathCache = new Map()
+    this.pageDataDb = new Map()
     this.prefetchTriggered = new Set()
-    this.prefetchCompleted = new Map()
-    this.matchPaths = matchPaths
+    this.prefetchCompleted = new Set()
     this.loadComponent = loadComponent
     this.pathFinder = new PathFinder(matchPaths)
   }
@@ -136,8 +135,17 @@ export class BaseLoader {
     this.prefetchDisabled = apiRunner(`disableCorePrefetching`).some(a => a)
   }
 
-  loadPageDataJson(pagePath) {
-    return loadPageDataJson({ pagePath })
+  loadPageDataJson(rawPath) {
+    const pagePath = this.pathFinder.find(rawPath)
+    if (this.pageDataDb.has(pagePath)) {
+      return Promise.resolve(this.pageDataDb.get(pagePath))
+    }
+
+    return loadPageDataJson({ pagePath }).then(pageData => {
+      this.pageDataDb.set(pagePath, pageData)
+
+      return pageData
+    })
   }
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
@@ -195,9 +203,6 @@ export class BaseLoader {
     if (this.pageDb.has(pagePath)) {
       return this.pageDb.get(pagePath).payload
     }
-    if (this.prefetchCompleted.has(pagePath)) {
-      return this.prefetchCompleted.get(pagePath)
-    }
     return undefined
   }
 
@@ -236,7 +241,7 @@ export class BaseLoader {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
 
         const realPath = this.pathFinder.find(pagePath)
-        this.prefetchCompleted.set(realPath, toPageResources(pageData, null))
+        this.prefetchCompleted.add(realPath)
       }
     })
 
@@ -253,10 +258,12 @@ export class BaseLoader {
 
   getResourceURLsForPathname(rawPath) {
     const pagePath = this.pathFinder.find(rawPath)
-    const page = this.loadPageSync(pagePath)
+    const page = this.pageDataDb.get(pagePath)
     if (page) {
+      const pageResources = toPageResources(page.payload)
+
       return [
-        ...createComponentUrls(page.page.componentChunkName),
+        ...createComponentUrls(pageResources.page.componentChunkName),
         createPageDataUrl(pagePath),
       ]
     } else {
