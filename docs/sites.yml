@@ -6366,3 +6366,14 @@
   built_by: Phumrapee Limpianchop
   built_by_url: https://rayriffy.com/
   featured: false
+- title: The Coffee Collective
+  url: https://coffeecollective.dk
+  main_url: https://coffeecollective.dk
+  description: >
+    The Coffee Collective website is a JAM-stack based, multilingual, multi currency website/shop selling coffee, related products and subscriptions.
+  categories:
+    - eCommerce
+    - Food
+  built_by: Remotely (Anders Hallundbæk)
+  built_by_url: https://remotely.dk
+  featured: false
