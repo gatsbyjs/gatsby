@@ -6327,3 +6327,13 @@
   built_by: Oberon
   built_by_url: https://oberon.nl/
   featured: false
+- title: Libra
+  main_url: "https://libra.org/"
+  url: "https://libra.org/"
+  description: Libra's mission is to enable a simple global currency and financial infrastructure that empowers billions of people.
+  featured: false
+  categories:
+    - Open Source
+    - Technology
+    - Cryptocurrency
+    - Finance
