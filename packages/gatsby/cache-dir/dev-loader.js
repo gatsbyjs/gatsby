@@ -14,6 +14,17 @@ class DevLoader extends BaseLoader {
     })
   }
 
+  loadPageDataJson(rawPath) {
+    return super.loadPageDataJson(rawPath).then(data => {
+      // when we can't find a proper 404.html we fallback to dev-404-page
+      if (data.status === `failure`) {
+        return this.loadPageDataJson(`/dev-404-page/`)
+      }
+
+      return data
+    })
+  }
+
   doPrefetch(pagePath) {
     return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
   }
