@@ -12,5 +12,8 @@
     "@babel/preset-react": "^7.0.0"
   },
   "license": "MIT",
-  "main": "index.js"
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.0.0"
+  }
 }

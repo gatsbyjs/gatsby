@@ -37,5 +37,8 @@
     "lodash": "^4.17.4",
     "p-iteration": "^1.1.7",
     "prettyjson": "^1.2.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

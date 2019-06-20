@@ -40,5 +40,8 @@
     "build:sw-append": "cpx -v src/sw-append.js .",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

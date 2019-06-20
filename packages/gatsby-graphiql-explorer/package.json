@@ -49,5 +49,8 @@
     "style-loader": "^0.21.0",
     "webpack-cli": "^3.3.2",
     "whatwg-fetch": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
