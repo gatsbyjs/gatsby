@@ -125,7 +125,7 @@ export class BaseLoader {
     this.inFlightDb = new Map()
     this.pathCache = new Map()
     this.prefetchTriggered = new Set()
-    this.prefetchCompleted = new Set()
+    this.prefetchCompleted = new Map()
     this.matchPaths = matchPaths
     this.loadComponent = loadComponent
     this.pathFinder = new PathFinder(matchPaths)
@@ -195,6 +195,9 @@ export class BaseLoader {
     if (this.pageDb.has(pagePath)) {
       return this.pageDb.get(pagePath).payload
     }
+    if (this.prefetchCompleted.has(pagePath)) {
+      return this.prefetchCompleted.get(pagePath).payload
+    }
     return undefined
   }
 
@@ -228,10 +231,10 @@ export class BaseLoader {
       this.prefetchTriggered.add(pagePath)
     }
 
-    this.doPrefetch(pagePath).then(() => {
+    this.doPrefetch(pagePath).then(pageData => {
       if (!this.prefetchCompleted.has(pagePath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
-        this.prefetchCompleted.add(pagePath)
+        this.prefetchCompleted.set(pagePath, pageData)
       }
     })
 
@@ -295,7 +298,9 @@ export class ProdLoader extends BaseLoader {
         // Tell plugins the path has been successfully prefetched
         const chunkName = pageData.componentChunkName
         const componentUrls = createComponentUrls(chunkName)
-        return Promise.all(componentUrls.map(prefetchHelper))
+        return Promise.all(componentUrls.map(prefetchHelper)).then(
+          () => pageData
+        )
       })
   }
 }
