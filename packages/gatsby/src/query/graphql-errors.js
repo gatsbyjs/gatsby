@@ -70,6 +70,8 @@ function extractError(error: Error): { message: string, docName: string } {
     message = error.toString()
   }
 
+  message = message.trim()
+
   return { message, codeBlock, docName }
 }
 

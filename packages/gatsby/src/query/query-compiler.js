@@ -178,7 +178,26 @@ class Runner {
         componentPath: namePathMap.get(docName),
         error: formattedMessage,
       })
-      this.reportError(formattedMessage)
+
+      const regex = /Encountered\s\d\serror.*:\n(.*)/gm
+      const str = message
+      let m
+      let newMessage = ``
+
+      while ((m = regex.exec(str)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++
+        }
+        newMessage = m[1]
+      }
+
+      // this.reportError(formattedMessage)
+      report.error({
+        id: `85907`,
+        context: { message: newMessage },
+        filePath: namePathMap.get(docName),
+      })
       return false
     }
 

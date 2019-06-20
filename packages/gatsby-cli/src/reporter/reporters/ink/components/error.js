@@ -7,19 +7,25 @@ const Error = ({ details }) => {
   // const stackLength = get(details, `stack.length`, 0)
 
   return (
-    <Box marginTop={1} flexDirection="column">
+    <Box marginY={1} flexDirection="column">
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Box>
             <Box marginRight={1}>
               <Color black bgRed>
-                {` ${details.category.toLowerCase()} `}
-                {details.id && `${details.id}`}
+                {` ${details.level} `}
+                {details.id ? `#${details.id} ` : ``}
               </Color>
+              <Color red>{details.type ? ` ` + details.type : ``}</Color>
             </Box>
             {origError}
           </Box>
           <Box marginTop={1}>{details.text}</Box>
+          {details.filePath && (
+            <Box marginTop={1}>
+              File: <Color blue>{details.filePath}</Color>
+            </Box>
+          )}
         </Box>
         {details.docsUrl && (
           <Box>
