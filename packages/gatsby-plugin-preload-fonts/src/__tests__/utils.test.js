@@ -1,4 +1,4 @@
-const { ellipses } = require(`../utils`)
+const { ellipses } = require(`../prepare/utils`)
 
 describe(`utils`, () => {
   describe(`ellipses`, () => {

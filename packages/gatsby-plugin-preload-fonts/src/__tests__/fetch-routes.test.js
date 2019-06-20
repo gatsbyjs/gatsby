@@ -1,6 +1,6 @@
 const { request } = require(`graphql-request`)
 const createMockLogger = require(`logger-mock`)
-const fetchRoutes = require(`../fetch-routes`)
+const fetchRoutes = require(`../prepare/fetch-routes`)
 
 jest.mock(`graphql-request`, () => {
   return { request: jest.fn() }

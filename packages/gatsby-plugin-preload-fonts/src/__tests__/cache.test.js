@@ -1,5 +1,5 @@
 const { readFileSync, writeFileSync } = require(`fs-extra`)
-const { load, save } = require(`../cache`)
+const { load, save } = require(`../prepare/cache`)
 
 jest.mock(`fs-extra`, () => {
   return {

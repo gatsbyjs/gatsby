@@ -1,9 +1,9 @@
-const { save } = require(`../cache`)
-const fetchRoutes = require(`../fetch-routes`)
+const { save } = require(`../prepare/cache`)
+const fetchRoutes = require(`../prepare/fetch-routes`)
 const puppeteer = require(`puppeteer`)
-const { main } = require(`../index`)
+const { main } = require(`../prepare/index`)
 
-jest.mock(`../cache`, () => {
+jest.mock(`../prepare/cache`, () => {
   return {
     load: jest.fn(() => {
       return {
@@ -16,7 +16,7 @@ jest.mock(`../cache`, () => {
     getPath: () => `/cache.json`,
   }
 })
-jest.mock(`../fetch-routes`, () => jest.fn())
+jest.mock(`../prepare/fetch-routes`, () => jest.fn())
 jest.mock(`puppeteer`, () => {
   return {
     launch: jest.fn(),

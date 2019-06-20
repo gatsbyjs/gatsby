@@ -1,5 +1,5 @@
 const { createInterface } = require(`readline`)
-const createLogger = require(`../logger`)
+const createLogger = require(`../prepare/logger`)
 
 jest.mock(`readline`, () => {
   const rl = {
