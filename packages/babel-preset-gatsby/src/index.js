@@ -28,7 +28,10 @@ module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
   const pluginBabelConfig = loadCachedConfig()
-  const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  const { NODE_ENV, BABEL_ENV, GATSBY_BUILD_STAGE } = process.env
+  const stage = GATSBY_BUILD_STAGE || `test`
+
+  const PRODUCTION = (BABEL_ENV || NODE_ENV) === `production`
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -38,6 +41,18 @@ module.exports = function preset(_, options = {}) {
     } else {
       targets = pluginBabelConfig.browserslist
     }
+  }
+
+  const plugins = []
+
+  if (PRODUCTION) {
+    plugins.push([
+      // Remove PropTypes from production build
+      resolve(`babel-plugin-transform-react-remove-prop-types`),
+      {
+        removeImport: true,
+      },
+    ])
   }
 
   return {
@@ -77,6 +92,7 @@ module.exports = function preset(_, options = {}) {
           regenerator: true,
         },
       ],
+      ...plugins,
     ],
   }
 }
