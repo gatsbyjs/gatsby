@@ -3033,7 +3033,7 @@
     - Includes plugins for offline support out of the box
     - TypeScript
     - Prettier & eslint to format & check the code
-- url: https://quietboy.net
+- url: https://www.quietboy.net
   repo: https://github.com/zhouyuexie/gatsby-starter-quiet
   description: Gatsby out of the box blog, use TypeScript and highly customized style.
   tags:
