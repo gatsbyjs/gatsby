@@ -2,6 +2,7 @@
 import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
+const levenshtein = require(`fast-levenshtein`)
 
 import { validate } from "graphql"
 import { IRTransforms } from "@gatsbyjs/relay-compiler"
@@ -210,12 +211,17 @@ class Runner {
       .slice(0, -1)
       .reduce((ctx, transform) => transform(ctx, this.schema), compilerContext)
 
+    const fragments = []
+    compilerContext.documents().forEach(node => {
+      if (node.kind === `Fragment`) {
+        fragments.push(node.name)
+      }
+    })
+
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
-
       const { name } = node
       let filePath = namePathMap.get(name) || ``
-
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
         this.reportError(
@@ -230,11 +236,38 @@ class Runner {
         })
         return
       }
+      let text
+      try {
+        text = filterContextForNode(printContext.getRoot(name), printContext)
+          .documents()
+          .map(GraphQLIRPrinter.print)
+          .join(`\n`)
+      } catch (error) {
+        const regex = /Unknown\sdocument\s`(.*)`/gm
+        const str = error.toString()
+        let m
 
-      let text = filterContextForNode(printContext.getRoot(name), printContext)
-        .documents()
-        .map(GraphQLIRPrinter.print)
-        .join(`\n`)
+        let fragmentName
+        while ((m = regex.exec(str)) !== null) {
+          // This is necessary to avoid infinite loops with zero-width matches
+          if (m.index === regex.lastIndex) regex.lastIndex++
+
+          fragmentName = m[1]
+        }
+
+        const closestFragment = fragments
+          .map(f => {
+            return { fragment: f, score: levenshtein.get(fragmentName, f) }
+          })
+          .filter(f => f.score < 10)
+          .sort((a, b) => a.score > b.score)[0]?.fragment
+
+        report.panicOnBuild({
+          id: `85908`,
+          filePath,
+          context: { fragmentName, closestFragment },
+        })
+      }
 
       const query = {
         name,

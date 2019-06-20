@@ -17,7 +17,20 @@ export const errorMap = {
   },
   "85907": {
     text: context =>
-      `There was an error in your GraphQL query:\n\n ${context.message}`,
+      `There was an error in your GraphQL query:\n\n${context.message}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85908": {
+    text: context => {
+      const closetFragment = context.closestFragment
+        ? `\n\nDid you mean to use ` + `"${context.closestFragment}"?`
+        : ``
+
+      return `There was an error in your GraphQL query:\n\nThe fragment "${
+        context.fragmentName
+      }" does not exist.${closetFragment}`
+    },
     type: `GRAPHQL`,
     level: `ERROR`,
   },
