@@ -8,7 +8,7 @@ jest.mock(`fs-extra`, () => {
     writeFileSync: jest.fn(),
   }
 })
-jest.mock(`find-cache-dir`, () => () => `/`)
+jest.mock(`find-cache-dir`, () => () => ``)
 
 const resetCache = () => save(undefined)
 
@@ -48,7 +48,7 @@ describe(`cache`, () => {
     save({ some: `cache` })
 
     expect(writeFileSync).toHaveBeenCalledWith(
-      `/cache.json`,
+      `cache.json`,
       `{"some":"cache"}`,
       `utf-8`
     )
