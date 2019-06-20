@@ -4,6 +4,7 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 const pageDataUtil = require(`../utils/page-data`)
+const normalizePagePath = require(`../utils/normalize-page-path`)
 const telemetry = require(`gatsby-telemetry`)
 const url = require(`url`)
 const { createHash } = require(`crypto`)
@@ -248,6 +249,7 @@ class WebsocketManager {
   }
 
   emitPageData(data: QueryResult) {
+    data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
