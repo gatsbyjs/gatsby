@@ -32,7 +32,7 @@ const getLabel = type => {
 }
 
 export const Message = ({ type, hideColors, children }) => {
-  if (!type) {
+  if (!type || type === `log`) {
     return <>{children}</>
   }
 

@@ -49,6 +49,10 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  if (args.setStore) {
+    args.setStore(store)
+  }
+
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
   require(`../redux/plugin-runner`)

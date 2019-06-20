@@ -201,7 +201,7 @@ async function startServer(program) {
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
-      logLevel: `trace`,
+      logLevel: `silent`,
       publicPath: devConfig.output.publicPath,
       stats: `errors-only`,
     })
@@ -342,6 +342,11 @@ module.exports = async (program: any) => {
   // Start bootstrap process.
   const { graphqlRunner } = await bootstrap(program)
 
+  // report.stateUpdate({
+  //   id: `webpack`,
+  //   status: `working`,
+  // })
+
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
@@ -428,13 +433,7 @@ module.exports = async (program: any) => {
   }
 
   function printInstructions(appName, urls, useYarn) {
-    report._setStage({
-      stage: `DevelopBootstrapFinished`,
-      context: {
-        url: urls.localUrlForBrowser,
-        appName,
-      },
-    })
+    console.log()
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
 
@@ -513,10 +512,18 @@ module.exports = async (program: any) => {
     })
   }
 
+  compiler.hooks.invalid.tap(`log compiling`, () => {
+    // compiling
+    // report.stateUpdate({
+    //   id: `webpack`,
+    //   status: `working`,
+    // })
+  })
+
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print getsby instructions`, (stats, done) => {
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, (stats, done) => {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
@@ -527,6 +534,35 @@ module.exports = async (program: any) => {
       program.port
     )
     const isSuccessful = !messages.errors.length
+
+    // report.stateUpdate({
+    //   id: `webpack`,
+    //   status: isSuccessful ? `success` : `error`,
+    // })
+
+    // TODO: Would be nice to copy (at least some) of friendly-errors-webpack-plugin
+    // error/warning enhancing
+
+    if (messages.errors.length > 0) {
+      report.statefulMessage({
+        type: `error`,
+        id: `webpack-errors`,
+        text: messages.errors.join(`\n`),
+      })
+    } else {
+      report.clearStatefulMessage({ id: `webpack-errors` })
+    }
+
+    if (messages.warnings.length > 0) {
+      report.statefulMessage({
+        type: `warn`,
+        id: `webpack-warnings`,
+        text: messages.warnings.join(`\n`),
+      })
+    } else {
+      report.clearStatefulMessage({ id: `webpack-warnings` })
+    }
+
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
     // }

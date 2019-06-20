@@ -1,15 +1,65 @@
 // @flow
+
+const semver = require(`semver`)
+const { isCI } = require(`ci-info`)
+
+let inkExists = false
+try {
+  inkExists = require.resolve(`ink`)
+  // eslint-disable-next-line no-empty
+} catch (err) {}
+
+if (!process.env.gatsby_logger) {
+  if (inkExists && semver.satisfies(process.version, `>=8`) && !isCI) {
+    process.env.gatsby_logger = `ink`
+  } else {
+    process.env.gatsby_logger = `yurnalist`
+  }
+}
+// inject logger
+if (process.env.gatsby_logger === `json`) {
+  // implied no-colors
+  process.env.FORCE_COLOR = `0`
+  require(`./loggers/json`)
+} else if (process.env.gatsby_logger === `yurnalist`) {
+  require(`./loggers/yurnalist`)
+} else {
+  require(`./loggers/ink`)
+}
+
 const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
+const convertHrtime = require(`convert-hrtime`)
+
 const { getErrorFormatter } = require(`./errors`)
-const reporterInstance = require(`./reporters`)
+const { dispatch, getStore } = require(`./redux`)
+
+const getElapsedTime = activity => {
+  const elapsed = process.hrtime(activity.startTime)
+  return convertHrtime(elapsed)[`seconds`].toFixed(3)
+}
+
+const getActivity = name => getStore().getState().logs.activities[name]
 
 const errorFormatter = getErrorFormatter()
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
+
+const addMessage = type => text =>
+  dispatch({
+    type: `STRUCTURED_LOG`,
+    payload: {
+      type,
+      text,
+    },
+  })
+
+const addError = addMessage(`error`)
+
+let isVerbose = false
 
 /**
  * Reporter module.
@@ -25,13 +75,15 @@ const reporter: Reporter = {
    * Toggle verbosity.
    * @param {boolean} [isVerbose=true]
    */
-  setVerbose: (isVerbose = true) => reporterInstance.setVerbose(isVerbose),
+  setVerbose: (_isVerbose = true) => {
+    isVerbose = _isVerbose
+  },
   /**
    * Turn off colors in error output.
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
-    reporterInstance.setColors(isNoColor)
+    // reporterInstance.setColors(isNoColor)
 
     if (isNoColor) {
       errorFormatter.withoutColors()
@@ -62,7 +114,7 @@ const reporter: Reporter = {
       message = error.message
     }
 
-    reporterInstance.error(message)
+    addError(message)
     if (error) this.log(errorFormatter.render(error))
   },
   /**
@@ -73,11 +125,43 @@ const reporter: Reporter = {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
 
-  success: reporterInstance.success,
-  verbose: reporterInstance.verbose,
-  info: reporterInstance.info,
-  warn: reporterInstance.warn,
-  log: reporterInstance.log,
+  statefulMessage(payload) {
+    dispatch({
+      type: `STATEFUL_LOG`,
+      payload,
+    })
+  },
+
+  clearStatefulMessage(payload) {
+    dispatch({
+      type: `CLEAR_STATEFUL_LOG`,
+      payload,
+    })
+  },
+
+  // stateUpdate(update) {
+  //   dispatch({
+  //     type: `STATE_UPDATE`,
+  //     payload: update,
+  //   })
+  // },
+
+  verbose: text => {
+    if (isVerbose) {
+      dispatch({
+        type: `STRUCTURED_LOG`,
+        payload: {
+          type: `verbose`,
+          text,
+        },
+      })
+    }
+  },
+
+  success: addMessage(`success`),
+  info: addMessage(`info`),
+  warn: addMessage(`warn`),
+  log: addMessage(`log`),
 
   /**
    * Time an activity.
@@ -93,26 +177,40 @@ const reporter: Reporter = {
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
 
-    const activity = reporterInstance.createActivity({
-      type: `spinner`,
-      id: name,
-      status: ``,
-    })
-
     return {
-      start() {
-        activity.update({
-          startTime: process.hrtime(),
+      start: () => {
+        dispatch({
+          type: `STRUCTURED_ACTIVITY_START`,
+          payload: {
+            name,
+            type: `spinner`,
+          },
         })
       },
-      setStatus(status) {
-        activity.update({
-          status: status,
+      setStatus: status => {
+        dispatch({
+          type: `STRUCTURED_ACTIVITY_UPDATE`,
+          payload: {
+            name,
+            status,
+          },
         })
       },
-      end() {
+      end: () => {
         span.finish()
-        activity.done()
+
+        let activity = getActivity(name)
+        if (activity) {
+          const elapsedTime = getElapsedTime(activity)
+          dispatch({
+            type: `STRUCTURED_ACTIVITY_END`,
+            payload: {
+              ...activity,
+              name,
+              elapsedTime,
+            },
+          })
+        }
       },
       span,
     }
@@ -135,54 +233,68 @@ const reporter: Reporter = {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
-
     let hasStarted = false
-    let current = start
-    const activity = reporterInstance.createActivity({
-      type: `progress`,
-      id: name,
-      current,
-      total,
-    })
 
     return {
-      start() {
+      start: () => {
         if (hasStarted) {
           return
         }
 
         hasStarted = true
-        activity.update({
-          startTime: process.hrtime(),
+
+        dispatch({
+          type: `STRUCTURED_ACTIVITY_START`,
+          payload: {
+            name,
+            type: `progress`,
+            current: start,
+            total,
+          },
         })
       },
-      setStatus(status) {
-        activity.update({
-          status: status,
+      setStatus: status => {
+        dispatch({
+          type: `STRUCTURED_ACTIVITY_UPDATE`,
+          payload: {
+            name,
+            status,
+          },
         })
       },
-      tick() {
-        activity.update({
-          current: ++current,
+      tick: () => {
+        dispatch({
+          type: `STRUCTURED_ACTIVITY_TICK`,
+          payload: {
+            name,
+          },
         })
       },
-      done() {
+      done: () => {
         span.finish()
-        activity.done()
+        let activity = getActivity(name)
+        if (activity) {
+          const elapsedTime = getElapsedTime(activity)
+          dispatch({
+            type: `STRUCTURED_ACTIVITY_END`,
+            payload: {
+              ...activity,
+              name,
+              elapsedTime,
+            },
+          })
+        }
       },
       set total(value) {
-        total = value
-        activity.update({
-          total: value,
+        dispatch({
+          type: `STRUCTURED_ACTIVITY_UPDATE`,
+          payload: {
+            name,
+            total: value,
+          },
         })
       },
       span,
-    }
-  },
-  // Make private as we'll probably remove this in a future refactor.
-  _setStage(stage) {
-    if (reporterInstance.setStage) {
-      reporterInstance.setStage(stage)
     }
   },
 }

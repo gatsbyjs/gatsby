@@ -36,6 +36,8 @@
     "progress": "^2.0.3",
     "prompts": "^2.1.0",
     "react": "^16.8.4",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.0",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.1.1",
     "source-map": "0.5.7",
