@@ -146,7 +146,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 ### Hydration
 
-Once a site that has been [built](#build) by Gatsby is loaded in a web browser and [client-side](#client-side) JavaScript assets have downloaded, it is turned into a full React application that can manipulate the DOM.
+Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
 
 ## I
 
@@ -244,7 +244,7 @@ A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) 
 
 ### Runtime
 
-Runtime is when a program is running (or being executable); it can refer to a few things. [Node.js](#nodejs) is a [server-side](#server-side) runtime that executes JavaScript code. [Client-side JavaScript](#client-side), on the other hand, refers to the [browser](#dom) runtime where JavaScript code executes. Gatsby compiles your site at [build time](#build) and [rehydrates with a React runtime](#hydration) to provide a fast, interactive, and dynamic user experience.
+Runtime is when a program is running (or being executable); it can refer to a few things. [Node.js](#nodejs) is a [server-side](#server-side) runtime that executes JavaScript code. [Client-side JavaScript](#client-side), on the other hand, refers to the browser runtime where traditional JavaScript code executes. Gatsby compiles your site at [build time](#build) and [rehydrates with a React runtime](#hydration) to provide a fast, interactive, and dynamic user experience.
 
 ### Routing
 
