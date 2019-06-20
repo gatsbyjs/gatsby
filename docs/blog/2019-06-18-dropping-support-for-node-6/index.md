@@ -1,6 +1,6 @@
 ---
 title: "Dropping Support for Node 6"
-date: 2019-06-21
+date: 2019-06-18
 author: Dustin Schau
 excerpt: "We're dropping support for Node 6 in minor releases of core Gatsby packages. Learn more about why this decision was made."
 tags:
