@@ -309,3 +309,14 @@
   github: https://github.com/liferay-design
   for_hire: false
   hiring: true
+- name: Sankarsan Kampa
+  type: individual
+  description: >-
+    Hey! I'm Sankarsan (aka Traction). I'm a programmer who likes
+    building & breaking programmable systems, exploring their
+    details and stretching their capabilities.
+  website: "https://traction.one/"
+  github: "https://github.com/k3rn31p4nic"
+  image: images/sankarsan-kampa.jpg
+  for_hire: true
+  portfolio: true
