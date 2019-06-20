@@ -1,10 +1,16 @@
----
-title: Glossary
----
+import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
+
+# Glossary
 
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 [A](#a) | [B](#b) | [C](#c) | [D](#d) | [E](#e) | [F](#f) | [G](#g) | [H](#h) | [I](#i) | [J](#j) | [K](#k) | [L](#l) | [M](#m) | [N](#n) | [O](#o) | [P](#p) | [Q](#q) | [R](#r) | [S](#s) | [T](#t) | [U](#u) | [V](#v) | [W](#w) | [X](#x) | [Y](#y) | [Z](#z)
+
+<HorizontalNavList
+items={"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")}
+slug={props.slug}
+we
+/>
 
 ## A
 
