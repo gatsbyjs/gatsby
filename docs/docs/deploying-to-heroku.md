@@ -31,7 +31,7 @@ Heroku will automatically detect and run the `build` script from your `package.j
 ```json:title=package.json
 {
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build"
   }
 }
 ```
