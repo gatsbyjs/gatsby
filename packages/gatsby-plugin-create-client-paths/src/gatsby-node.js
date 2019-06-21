@@ -18,7 +18,7 @@ exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
       return resolve()
     }
 
-    prefixes.some(prefix => {
+    prefixes.forEach(prefix => {
       if (!re[prefix]) {
         // Remove the * from the prefix and memoize
         const trimmedPrefix = prefix.replace(/\*$/, ``)
