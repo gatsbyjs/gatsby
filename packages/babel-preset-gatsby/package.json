@@ -9,8 +9,7 @@
     "@babel/preset-env": "^7.4.1",
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-macros": "^2.4.2",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "core-js": "^2.6.9"
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
