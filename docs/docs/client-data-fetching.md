@@ -2,7 +2,17 @@
 title: Client data fetching
 ---
 
-Because a Gatsby site hydrates into a React app after loading statically, Gatsby is not just for static sites. You can fetch data dynamically on the client, as needed, as you would with any other React app.
+## Context
+
+In this article it is touched **how** to fetch data and **how** to handle that data using the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/).
+
+When this article says "hydration" it means that Gatsby through ReactJS already know the markup of your site because it was rendered in the server, so React will preserve the markup and attach event handlers to it, the result of this process allows you to have a really nice performant first-load time experience.
+
+Build-time is useful when we know that the markup of our websites will not change or we do not really care if it changes, as mentioned before, the end-result of this process is a really fast first-load time experience as for run-time is appropriate for constantly changing markup like a chat or an email client web app.
+
+We also talk about build-time which is defined for the process when Gatsby loads all the configuration and set-up everything to start up the website and run-time which is defined for the process when Gatsby has loaded everything up and the website is running in the server environment.
+
+Because a Gatsby site [hydrates](/docs/glossary#hydration) into a React app after loading statically, Gatsby is not just for static sites. You can fetch data dynamically on the client, as needed, as you would with any other React app.
 
 To illustrate this, we'll walk through a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. We'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
 
