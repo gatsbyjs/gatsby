@@ -7,6 +7,7 @@ import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import loader, { setApiRunnerForLoader } from "./loader"
 import syncRequires from "./sync-requires"
+import matchPaths from "./match-paths.json"
 
 window.___emitter = emitter
 setApiRunnerForLoader(apiRunner)
@@ -49,6 +50,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   )[0]
 
   loader.addDevRequires(syncRequires)
+  loader.addMatchPaths(matchPaths)
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),

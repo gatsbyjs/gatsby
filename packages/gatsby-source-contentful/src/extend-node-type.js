@@ -20,6 +20,9 @@ const {
   ImageCropFocusType,
 } = require(`./schemes`)
 
+// @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
+const CONTENTFUL_IMAGE_MAX_SIZE = 4000
+
 const isImage = image =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
@@ -113,8 +116,15 @@ const resolveFixed = (image, options) => {
   fixedSizes.push(options.width * 3)
   fixedSizes = fixedSizes.map(Math.round)
 
-  // Filter out sizes larger than the image's width.
-  const filteredSizes = fixedSizes.filter(size => size <= width)
+  // Filter out sizes larger than the image's width and the contentful image's max size.
+  const filteredSizes = fixedSizes.filter(size => {
+    const calculatedHeight = Math.round(size / desiredAspectRatio)
+    return (
+      size <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      calculatedHeight <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      size <= width
+    )
+  })
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -214,12 +224,25 @@ const resolveFluid = (image, options) => {
   fluidSizes.push(options.maxWidth * 3)
   fluidSizes = fluidSizes.map(Math.round)
 
-  // Filter out sizes larger than the image's maxWidth.
-  const filteredSizes = fluidSizes.filter(size => size <= width)
+  // Filter out sizes larger than the image's maxWidth and the contentful image's max size.
+  const filteredSizes = fluidSizes.filter(size => {
+    const calculatedHeight = Math.round(size / desiredAspectRatio)
+    return (
+      size <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      calculatedHeight <= CONTENTFUL_IMAGE_MAX_SIZE &&
+      size <= width
+    )
+  })
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
-  if (!filteredSizes.includes(parseInt(width))) filteredSizes.push(width)
+  if (
+    !filteredSizes.includes(parseInt(width)) &&
+    parseInt(width) < CONTENTFUL_IMAGE_MAX_SIZE &&
+    Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
+  ) {
+    filteredSizes.push(width)
+  }
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
