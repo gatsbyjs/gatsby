@@ -13,8 +13,6 @@ tags:
   - aws
 ---
 
-# Why Gatsby Can Be More Profitable for Your Agency Than WordPress
-
 Are you a WordPress Developer?
 
 If yes, then you can relate to this. Every off-year we're greeted by a sales pitch from some hot new tool that wants to take the website builder throne.
