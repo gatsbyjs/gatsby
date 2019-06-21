@@ -658,16 +658,20 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         return options
       }
 
-      for (const value of generatePowerSet(
+      for (const set of generatePowerSet(
         featureComparisonOptions.cms.map(option => option.key)
       )) {
-        if (value.length > 0) {
-          const optionSet = [...value]
+        if (set.length > 0) {
+          const optionSet = [...set]
+          const options = _.filter(featureComparisonOptions.cms, o =>
+            optionSet.includes(o.key)
+          )
           createPage({
-            path: `/features/cms/gatsby-vs-${value.join(`-vs-`)}`,
+            path: `/features/cms/gatsby-vs-${set.join(`-vs-`)}`,
             component: slash(featureComparisonPageTemplate),
             context: {
-              optionSet,
+              options,
+              featureType: `cms`,
             },
           })
         }
@@ -677,11 +681,15 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       )) {
         if (value.length > 0) {
           const optionSet = [...value]
+          const options = _.filter(featureComparisonOptions.jamstack, o =>
+            optionSet.includes(o.key)
+          )
           createPage({
             path: `/features/jamstack/gatsby-vs-${value.join(`-vs-`)}`,
             component: slash(featureComparisonPageTemplate),
             context: {
-              optionSet,
+              options,
+              featureType: `jamstack`,
             },
           })
         }

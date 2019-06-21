@@ -19,13 +19,15 @@ class EvaluationTable extends Component {
   render() {
     const showTooltip = (section, row) => this.state[`${section},${row}`]
 
-    const {
-      columnHeaders,
-      nodeFieldProperties,
-      sections,
-      sectionHeaders,
-    } = this.props
+    const { options, sections, sectionHeaders } = this.props
     const flatten = arrays => [].concat.apply([], arrays)
+    console.log(options)
+    const columnHeaders = [`Category`, `Gatsby`].concat(
+      options.map(o => o.display)
+    )
+    const nodeFieldProperties = [`Feature`, `Gatsby`].concat(
+      options.map(o => o.nodeField)
+    )
 
     return (
       <div
@@ -104,6 +106,7 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
+                            fontSize: fontSizes[1],
                             paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {

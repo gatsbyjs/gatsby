@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import EvaluationCell from "./evaluation-cell"
 import { colors, mediaQueries, fonts } from "../../utils/presets"
 
-const legendBorderColor = colors.ui.light
+const legendBorderColor = colors.ui.border.subtle
 
 const LegendTable = () => {
   const legendBallStyle = {

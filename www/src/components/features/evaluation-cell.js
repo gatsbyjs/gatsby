@@ -2,8 +2,8 @@ import React from "react"
 import { colors, space } from "../../utils/presets"
 import infoIcon from "../../assets/info-icon.svg"
 
-const bgDefault = colors.accentLight
-const bgFeatureAvailability = colors.accent
+const bgDefault = colors.orange[20]
+const bgFeatureAvailability = colors.orange[50]
 
 const renderText = txt => {
   const words = txt.split(` `)

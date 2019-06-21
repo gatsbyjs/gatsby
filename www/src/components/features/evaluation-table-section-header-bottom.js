@@ -59,7 +59,7 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: colors.ui.whisper,
+          background: colors.ui.background,
           fontWeight: 600,
           lineHeight: lineHeights.dense,
           textAlign: `left`,

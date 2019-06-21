@@ -73,31 +73,24 @@ const JamstackFeaturesPage = ({ data, location }) => {
               )
             )}
             <Button
+              style={{
+                whiteSpace: `pre-wrap`,
+              }}
               to={
                 hasSelected
                   ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
                   : location.pathname
               }
             >
-              Compare
+              Compare with Gatsby
             </Button>
           </div>
           <EvaluationTable
-            columnHeaders={[
-              `Category`,
-              `Gatsby`,
-              `Next.js`,
-              `Jekyll`,
-              `Hugo`,
-              `Nuxt.js`,
-            ]}
-            nodeFieldProperties={[
-              `Feature`,
-              `Gatsby`,
-              `Nextjs`,
-              `Jekyll`,
-              `Hugo`,
-              `Nuxtjs`,
+            options={[
+              { display: `Next.js`, nodeField: `Nextjs` },
+              { display: `Jekyll`, nodeField: `Jekyll` },
+              { display: `Hugo`, nodeField: `Hugo` },
+              { display: `Nuxt.js`, nodeField: `Nuxtjs` },
             ]}
             sections={sections}
             sectionHeaders={sectionHeaders}

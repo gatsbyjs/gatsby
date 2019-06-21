@@ -45,14 +45,16 @@ const CmsFeaturesPage = ({ data, location }) => {
           <FeaturesHeader />
           <h3>Comparison</h3>
           <p>
-            To see a filtered view of Gatsby with specific CMS technologies,
-            choose the technologies to compare and then press Compare:
+            To see a filtered view of Gatsby compared with specific CMS
+            technologies, choose the technologies to compare and then press
+            Compare:
           </p>
           <div
             css={{
               display: `grid`,
               gridTemplateColumns: `repeat(auto-fit, minmax(75px, 120px))`,
               gridGap: space[2],
+              paddingBottom: space[10],
             }}
           >
             {featureComparisonOptions.cms.map(({ key: optionKey, display }) => (
@@ -66,19 +68,30 @@ const CmsFeaturesPage = ({ data, location }) => {
               </CompareButton>
             ))}
             <Button
+              style={{
+                whiteSpace: `pre-wrap`,
+              }}
               to={
                 hasSelected
                   ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`
                   : location.pathname
               }
             >
-              Compare
+              Compare with Gatsby
             </Button>
           </div>
           <LegendTable />
           <EvaluationTable
-            columnHeaders={[`Category`, `Gatsby`, `WordPress`, `Drupal`]}
-            nodeFieldProperties={[`Feature`, `Gatsby`, `WordPress`, `Drupal`]}
+            options={[
+              {
+                display: `WordPress`,
+                nodeField: `WordPress`,
+              },
+              {
+                display: `Drupal`,
+                nodeField: `Drupal`,
+              },
+            ]}
             sections={sections}
             sectionHeaders={sectionHeaders}
           />

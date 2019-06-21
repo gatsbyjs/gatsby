@@ -1,27 +1,42 @@
 import React, { Component } from "react"
-import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
+import Layout from "../components/layout"
 import FooterLinks from "../components/shared/footer-links"
-import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
+import EvaluationTable from "../components/features/evaluation-table"
+import LogoDictionary from "../components/features/logo-dictionary"
+import { itemListFeatures } from "../utils/sidebar/item-list"
+import { getFeaturesData } from "../utils/get-csv-features-data"
 
 class FeatureComparison extends Component {
   render() {
     const {
-      pageContext: { optionSet },
+      pageContext: { options, featureType },
+      data,
     } = this.props
+    const optionsDisplay = options.map(o => o.display)
+    const titleString = `Comparison of Gatsby vs ${optionsDisplay.join(` vs `)}`
+    console.log(optionsDisplay)
+
+    const { sections, sectionHeaders } =
+      featureType === `cms`
+        ? getFeaturesData(data.allGatsbyCmsSpecsCsv.edges)
+        : getFeaturesData(data.allGatsbyJamstackSpecsCsv.edges)
 
     return (
       <Layout location={location} itemList={itemListFeatures}>
         <Helmet>
-          <title>
-            {optionSet
-              .map(o => o.charAt(0).toUpperCase() + o.slice(1))
-              .join(` vs `)}
-          </title>
+          <title>{titleString}</title>
         </Helmet>
         <Container>
-          <main>Comparison of Gatsby vs {optionSet.join(` vs `)}</main>
+          <main>
+            <h1>{titleString}</h1>
+          </main>
+          <EvaluationTable
+            options={options}
+            sections={sections}
+            sectionHeaders={sectionHeaders}
+          />
           <FooterLinks />
         </Container>
       </Layout>

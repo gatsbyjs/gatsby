@@ -1,12 +1,42 @@
 {
   "jamstack": [
-    { "key": "nextjs", "display": "NextJS" },
-    { "key": "jekyll", "display": "Jekyll" },
-    { "key": "hugo", "display": "Hugo" },
-    { "key": "nuxtjs", "display": "NuxtJS" }
+    {
+      "key": "nextjs",
+      "display": "Next.js",
+      "nodeField": "Nextjs",
+      "description": ""
+    },
+    {
+      "key": "jekyll",
+      "display": "Jekyll",
+      "nodeField": "Jekyll",
+      "description": ""
+    },
+    {
+      "key": "hugo",
+      "display": "Hugo",
+      "nodeField": "Hugo",
+      "description": ""
+    },
+    {
+      "key": "nuxtjs",
+      "display": "Nuxt.js",
+      "nodeField": "Nuxtjs",
+      "description": ""
+    }
   ],
   "cms": [
-    { "key": "wordpress", "display": "WordPress" },
-    { "key": "drupal", "display": "Drupal" }
+    {
+      "key": "wordpress",
+      "display": "WordPress",
+      "nodeField": "Wordpress",
+      "description": ""
+    },
+    {
+      "key": "drupal",
+      "display": "Drupal",
+      "nodeField": "Drupal",
+      "description": ""
+    }
   ]
 }
