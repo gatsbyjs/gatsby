@@ -6308,7 +6308,7 @@
   url: https://www.oerol.nl/nl/
   main_url: https://www.oerol.nl/en/
   description: >
-    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June.
     The ten-day festival is focused on live, public theatre as well as music and visual arts.
   categories:
     - Event
@@ -6356,3 +6356,28 @@
   built_by: Remotely (Anders Hallundbæk)
   built_by_url: https://remotely.dk
   featured: false
+- title: Canvas 1839
+  main_url: "https://www.canvas1839.com/"
+  url: "https://www.canvas1839.com/"
+  description: >-
+    Online store for Canvas 1839 products, including pharmacological-grade CBD oil and relief cream.
+  categories:
+    - eCommerce
+    - Health & Wellness
+    - CBD
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Sparkle Stories
+  main_url: "https://app.sparklestories.com/"
+  url: "https://app.sparklestories.com/"
+  description: >-
+    Sparkle Stories is a streaming audio platform for children with over 1,200 original audio stories.
+  categories:
+    - Audiobooks
+    - Children
+    - App
+    - Education
+    - Streaming
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
