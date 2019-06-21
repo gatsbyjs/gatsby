@@ -1,7 +1,7 @@
 // @flow
 
 import { print, visit, GraphQLError, getLocation } from "graphql"
-import babelCodeFrame from "@babel/code-frame"
+import { codeFrameColumns } from "@babel/code-frame"
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
 
@@ -90,11 +90,20 @@ function findLocation(extractedMessage, def) {
   return location
 }
 
-function getCodeFrame(query: string, lineNumber?: number, column?: number) {
-  return babelCodeFrame(query, lineNumber, column, {
-    linesAbove: 10,
-    linesBelow: 10,
-  })
+function getCodeFrame(query: string, line?: number, column?: number) {
+  return codeFrameColumns(
+    query,
+    {
+      start: {
+        line,
+        column,
+      },
+    },
+    {
+      linesAbove: 10,
+      linesBelow: 10,
+    }
+  )
 }
 
 function getCodeFrameFromRelayError(
