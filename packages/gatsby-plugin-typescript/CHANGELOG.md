@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.15...gatsby-plugin-typescript@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-typescript
+
+## [2.0.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.14...gatsby-plugin-typescript@2.0.15) (2019-05-24)
+
+### Bug Fixes
+
+- **PnP:** use `require.resolve` on `setBabelPreset` ([#14288](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/issues/14288)) ([5e54afe](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/commit/5e54afe))
+
 ## [2.0.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript/compare/gatsby-plugin-typescript@2.0.13...gatsby-plugin-typescript@2.0.14) (2019-05-16)
 
 **Note:** Version bump only for package gatsby-plugin-typescript

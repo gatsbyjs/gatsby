@@ -23,6 +23,46 @@ const fluidShapeMock = {
   base64: `string_of_base64`,
 }
 
+const fixedImagesShapeMock = [
+  {
+    width: 100,
+    height: 100,
+    src: `test_image.jpg`,
+    srcSet: `some srcSet`,
+    srcSetWebp: `some srcSetWebp`,
+    base64: `string_of_base64`,
+  },
+  {
+    width: 100,
+    height: 100,
+    src: `test_image_2.jpg`,
+    srcSet: `some other srcSet`,
+    srcSetWebp: `some other srcSetWebp`,
+    base64: `other_string_of_base64`,
+    media: `only screen and (min-width: 768px)`,
+  },
+]
+
+const fluidImagesShapeMock = [
+  {
+    aspectRatio: 1.5,
+    src: `test_image.jpg`,
+    srcSet: `some srcSet`,
+    srcSetWebp: `some srcSetWebp`,
+    sizes: `(max-width: 600px) 100vw, 600px`,
+    base64: `string_of_base64`,
+  },
+  {
+    aspectRatio: 2,
+    src: `test_image_2.jpg`,
+    srcSet: `some other srcSet`,
+    srcSetWebp: `some other srcSetWebp`,
+    sizes: `(max-width: 600px) 100vw, 600px`,
+    base64: `string_of_base64`,
+    media: `only screen and (min-width: 768px)`,
+  },
+]
+
 const setup = (
   fluid = false,
   props = {},
@@ -51,6 +91,32 @@ const setup = (
   return container
 }
 
+const setupImages = (
+  fluidImages = false,
+  onLoad = () => {},
+  onError = () => {}
+) => {
+  const { container } = render(
+    <Image
+      backgroundColor
+      className={`fixedImage`}
+      style={{ display: `inline` }}
+      title={`Title for the image`}
+      alt={`Alt text for the image`}
+      crossOrigin={`anonymous`}
+      {...fluidImages && { fluid: fluidImagesShapeMock }}
+      {...!fluidImages && { fixed: fixedImagesShapeMock }}
+      onLoad={onLoad}
+      onError={onError}
+      itemProp={`item-prop-for-the-image`}
+      placeholderStyle={{ color: `red` }}
+      placeholderClassName={`placeholder`}
+    />
+  )
+
+  return container
+}
+
 describe(`<Image />`, () => {
   it(`should render fixed size images`, () => {
     const component = setup()
@@ -62,6 +128,16 @@ describe(`<Image />`, () => {
     expect(component).toMatchSnapshot()
   })
 
+  it(`should render multiple fixed image variants`, () => {
+    const component = setupImages()
+    expect(component).toMatchSnapshot()
+  })
+
+  it(`should render multiple fluid image variants`, () => {
+    const component = setupImages(true)
+    expect(component).toMatchSnapshot()
+  })
+
   it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
     const imageTag = setup().querySelector(`picture img`)
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
@@ -69,6 +145,7 @@ describe(`<Image />`, () => {
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
     expect(imageTag.getAttribute(`crossOrigin`)).toEqual(`anonymous`)
+    expect(imageTag.getAttribute(`loading`)).toEqual(`lazy`)
   })
 
   it(`should have correct placeholder src, title, style and class attributes`, () => {
@@ -85,8 +162,44 @@ describe(`<Image />`, () => {
   })
 
   it(`should have a transition-delay of 1sec`, () => {
-    const component = setup(false, { durationFadeIn: `1000` })
+    const component = setup(false, { durationFadeIn: 1000 })
     expect(component).toMatchSnapshot()
+  })
+
+  it(`should have the the "critical" prop set "loading='eager'"`, () => {
+    jest.spyOn(global.console, `log`)
+
+    const props = { critical: true }
+    const imageTag = setup(false, props).querySelector(`picture img`)
+    expect(imageTag.getAttribute(`loading`)).toEqual(`eager`)
+    expect(console.log).toBeCalled()
+  })
+
+  it(`should warn if image variants provided are missing media keys.`, () => {
+    jest.spyOn(global.console, `warn`)
+
+    render(
+      <Image
+        backgroundColor
+        className={`fixedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fluid={fluidImagesShapeMock.concat({
+          aspectRatio: 2,
+          src: `test_image_3.jpg`,
+          srcSet: `some other srcSet`,
+          srcSetWebp: `some other srcSetWebp`,
+          sizes: `(max-width: 600px) 100vw, 600px`,
+          base64: `string_of_base64`,
+        })}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    expect(console.warn).toBeCalled()
   })
 
   it(`should call onLoad and onError image events`, () => {

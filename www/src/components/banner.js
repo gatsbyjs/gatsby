@@ -2,7 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import { colors, space, sizes, fonts } from "../utils/presets"
+import { colors, space, sizes, fonts, zIndices } from "../utils/presets"
 
 const horizontalPadding = space[6]
 const backgroundColor = colors.gatsby
@@ -12,7 +12,7 @@ const BannerContainer = styled(`aside`)`
   height: ${sizes.bannerHeight};
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: ${zIndices.banner};
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 `
@@ -26,7 +26,7 @@ const InnerContainer = styled(`div`)`
 `
 
 const Content = styled(`div`)`
-  color: ${colors.ui.bright};
+  color: ${colors.purple[20]};
   font-family: ${fonts.header};
   padding-left: ${horizontalPadding};
   padding-right: ${horizontalPadding};
@@ -48,10 +48,10 @@ const Banner = () => (
   <BannerContainer className="banner">
     <InnerContainer>
       <Content>
-        <OutboundLink href="https://www.gatsbyjs.com/gatsby-themes/">
-          Watch now
+        <OutboundLink href="https://www.gatsbyjs.com/impossible-foods-webinar/">
+          Register now
         </OutboundLink>
-        {`: "Making Gatsby Even Greater With Themes — Better, Faster, Flexible-er".`}
+        {`: "ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale and Flexibility" Webinar 6/26 10am PT`}
       </Content>
     </InnerContainer>
   </BannerContainer>

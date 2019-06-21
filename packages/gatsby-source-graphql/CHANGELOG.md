@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.19...gatsby-source-graphql@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.18...gatsby-source-graphql@2.0.19) (2019-06-10)
+
+### Bug Fixes
+
+- **gatsby:** Dont use createPageDependency from actions ([#14665](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/issues/14665)) ([73ac41a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/commit/73ac41a))
+
 ## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql/compare/gatsby-source-graphql@2.0.17...gatsby-source-graphql@2.0.18) (2019-04-12)
 
 ### Bug Fixes

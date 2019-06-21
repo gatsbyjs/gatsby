@@ -27,13 +27,14 @@ class IndexRoute extends React.Component {
             </h1>
             <p>Gatsby is a blazing fast modern site generator for React.</p>
             <h2>Get Started</h2>
-            <p>There are four main ways to get started with Gatsby:</p>
+            <p>There are five main ways to get started with Gatsby:</p>
             <ol>
               <li>
-                <Link to="/tutorial/">Tutorial</Link>: Step-by-step instructions
-                on how to install Gatsby and start a project: written for people
-                without Gatsby or web development experience, though it has
-                helped developers of all skill levels.
+                <Link to="/tutorial/">Tutorials</Link>: Step-by-step
+                instructions on how to install Gatsby and start a project:
+                written for people without Gatsby or web development experience,
+                though these learning resources have helped developers of all
+                skill levels.
               </li>
               <li>
                 <Link to="/docs/quick-start">Quick start</Link>: One page
@@ -49,18 +50,13 @@ class IndexRoute extends React.Component {
                 Gatsby docs:
                 <ul>
                   <li>
-                    <Link to="/docs/guides/">Guides</Link>: Dive deeper into
-                    different topics around building with Gatsby, like sourcing
-                    data, deployment, and more.
+                    <Link to="/docs/guides/">Reference Guides</Link>: Learn
+                    about the many different topics around building with Gatsby,
+                    like sourcing data, deployment, and more.
                   </li>
                   <li>
-                    <Link to="/ecosystem/">Ecosystem</Link>: Check out libraries
-                    for Gatsby starters and plugins, as well as external
-                    community resources.
-                  </li>
-                  <li>
-                    <Link to="/docs/api-reference/">API Reference</Link>: Learn
-                    more about Gatsby APIs and configuration.
+                    <Link to="/docs/api-reference/">Gatsby API Reference</Link>:
+                    Learn more about Gatsby APIs and configuration.
                   </li>
                   <li>
                     <Link to="/docs/releases-and-migration/">
@@ -74,15 +70,8 @@ class IndexRoute extends React.Component {
                     Read high-level overviews of the Gatsby approach.
                   </li>
                   <li>
-                    <Link to="/docs/behind-the-scenes/">Behind the Scenes</Link>
-                    : Dig into how Gatsby works under the hood.
-                  </li>
-                  <li>
-                    <Link to="/docs/advanced-tutorials/">
-                      Advanced Tutorials
-                    </Link>
-                    : Learn about topics that are too large for a doc and
-                    warrant a tutorial.
+                    <Link to="/docs/gatsby-internals/">Gatsby Internals</Link>:
+                    Dig into how Gatsby works behind the scenes.
                   </li>
                   <li>
                     <Link to="/docs/using-gatsby-professionally/">
@@ -92,12 +81,12 @@ class IndexRoute extends React.Component {
                     at work, so that you have more opportunities to work with
                     Gatsby professionally.
                   </li>
-                  <li>
-                    <Link to="/contributing/">Contributing</Link>: Find guides
-                    on the Gatsby.js community, code of conduct, and how to get
-                    started contributing.
-                  </li>
                 </ul>
+              </li>
+              <li>
+                Check out the <Link to="/ecosystem/">Ecosystem</Link> libraries
+                for Gatsby starters and plugins, as well as external community
+                resources.
               </li>
             </ol>
             <p>
@@ -106,9 +95,8 @@ class IndexRoute extends React.Component {
               get started contributing to Gatsby.
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
-
-            <FooterLinks />
           </Container>
+          <FooterLinks />
         </DocSearchContent>
       </Layout>
     )

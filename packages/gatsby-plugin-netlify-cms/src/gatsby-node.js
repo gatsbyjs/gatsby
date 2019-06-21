@@ -160,7 +160,13 @@ exports.onCreateWebpackConfig = (
      * config, they cause issues for our pre-bundled code.
      */
     mode: stage === `develop` ? `development` : `production`,
-    optimization: {},
+    optimization: {
+      /**
+       * Without this, node can get out of memory errors
+       * when building for production.
+       */
+      minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
+    },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
   }
 

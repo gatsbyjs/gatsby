@@ -1,4 +1,3 @@
-import hex2rgba from "hex2rgba"
 import { keyframes } from "@emotion/core"
 
 import {
@@ -11,11 +10,17 @@ import {
   lineHeights,
   fonts,
 } from "./presets"
+import { zIndices } from "./tokens"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
   "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
+
+export const focusStyle = {
+  outline: 0,
+  boxShadow: `0 0 0 ${space[1]} ${colors.input.focusBoxShadow}`,
+}
 
 export const srOnly = {
   position: `absolute`,
@@ -28,28 +33,11 @@ export const srOnly = {
   border: 0,
 }
 
-export const scrollbarStyles = {
-  WebkitOverflowScrolling: `touch`,
-  "&::-webkit-scrollbar": {
-    width: space[2],
-    height: space[2],
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: colors.ui.bright,
-  },
-  "&::-webkit-scrollbar-thumb:hover": {
-    background: colors.lilac,
-  },
-  "&::-webkit-scrollbar-track": {
-    background: colors.ui.light,
-  },
-}
-
 export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: radii[1],
+    borderRadius: radii[2],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
@@ -74,8 +62,7 @@ export const buttonStyles = {
       borderColor: colors.gatsby,
     },
     ":focus": {
-      outline: 0,
-      boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
+      ...focusStyle,
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
@@ -97,6 +84,7 @@ export const buttonStyles = {
     },
   },
   tiny: {
+    borderRadius: radii[1],
     fontSize: fontSizes[1],
     padding: `${space[1]} ${space[2]}`,
     [mediaQueries.md]: {
@@ -104,17 +92,34 @@ export const buttonStyles = {
     },
   },
   ondark: {
-    border: `1px solid ${colors.ui.light}`,
-    background: colors.gatsbyDark,
+    border: `1px solid ${colors.purple[10]}`,
+    background: colors.purple[80],
   },
 }
 
 export const svgStyles = {
-  active: {
+  stroke: {
     "& .svg-stroke": {
-      strokeWidth: 1.4173,
       strokeMiterlimit: 10,
+      strokeWidth: 1.4173,
     },
+  },
+  default: {
+    "& .svg-stroke-accent": { stroke: colors.purple[40] },
+    "& .svg-stroke-lilac": { stroke: colors.purple[40] },
+    "& .svg-fill-lilac": { fill: colors.purple[40] },
+    "& .svg-fill-gatsby": { fill: colors.purple[40] },
+    "& .svg-fill-brightest": { fill: colors.white },
+    "& .svg-fill-accent": { fill: colors.purple[40] },
+    "& .svg-stroke-gatsby": { stroke: colors.purple[40] },
+    "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
+    "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
+    "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
+    "& .svg-fill-gradient-purple": { fill: colors.purple[40] },
+    "& .svg-stroke-gradient-purple": { stroke: colors.purple[40] },
+    "& .svg-fill-lavender": { fill: `transparent` },
+  },
+  active: {
     "& .svg-stroke-accent": { stroke: colors.accent },
     "& .svg-stroke-lilac": { stroke: colors.lilac },
     "& .svg-stroke-gatsby": { stroke: colors.gatsby },
@@ -122,7 +127,7 @@ export const svgStyles = {
     "& .svg-fill-lilac": { fill: colors.lilac },
     "& .svg-fill-gatsby": { fill: colors.gatsby },
     "& .svg-fill-accent": { fill: colors.accent },
-    "& .svg-fill-wisteria": { fill: colors.wisteria },
+    "& .svg-fill-lavender": { fill: colors.lavender },
     "& .svg-fill-brightest": { fill: colors.white },
     "& .svg-fill-gradient-accent-white-45deg": {
       fill: `url(#accent-white-45deg)`,
@@ -144,7 +149,7 @@ export const linkStyles = {
   padding: `${space[3]} 0`,
   "&&": {
     border: 0,
-    color: colors.gray.calm,
+    color: colors.text.secondary,
     display: `flex`,
     fontWeight: `normal`,
   },
@@ -155,17 +160,29 @@ export const linkStyles = {
 
 export const formInput = {
   backgroundColor: colors.white,
-  border: `1px solid ${colors.ui.bright}`,
-  borderRadius: radii[1],
-  color: colors.brand,
+  border: `1px solid ${colors.input.border}`,
+  borderRadius: radii[2],
   padding: space[2],
+  fontFamily: fonts.system,
   fontSize: fontSizes[2],
   verticalAlign: `middle`,
   transition: `all ${transition.speed.default} ${transition.curve.default}`,
   "::placeholder": {
-    color: colors.lilac,
+    color: colors.text.placeholder,
     opacity: 1,
   },
+}
+
+export const formInputFocus = {
+  borderColor: colors.input.focusBorder,
+  ...focusStyle,
+}
+
+export const pullIntoGutter = {
+  marginLeft: `-${space[6]}`,
+  marginRight: `-${space[6]}`,
+  paddingLeft: space[6],
+  paddingRight: space[6],
 }
 
 export const skipLink = {
@@ -178,7 +195,7 @@ export const skipLink = {
   padding: 0,
   overflow: `hidden`,
   position: `absolute`,
-  zIndex: 100,
+  zIndex: zIndices.skipLink,
   fontSize: fontSizes[1],
   ":focus": {
     padding: space[4],
@@ -192,3 +209,5 @@ export const skipLink = {
     clip: `auto`,
   },
 }
+
+export const breakpointGutter = `@media (min-width: 42rem)`

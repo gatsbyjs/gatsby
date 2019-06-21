@@ -5,7 +5,7 @@ const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
-const reporterInstance = require(`./reporters/yurnalist`)
+const reporterInstance = require(`./reporters`)
 
 const errorFormatter = getErrorFormatter()
 
@@ -61,6 +61,7 @@ const reporter: Reporter = {
       error = message
       message = error.message
     }
+
     reporterInstance.error(message)
     if (error) this.log(errorFormatter.render(error))
   },
@@ -71,11 +72,13 @@ const reporter: Reporter = {
   uptime(prefix) {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
+
   success: reporterInstance.success,
   verbose: reporterInstance.verbose,
   info: reporterInstance.info,
   warn: reporterInstance.warn,
   log: reporterInstance.log,
+
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
@@ -90,22 +93,103 @@ const reporter: Reporter = {
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
 
-    const activity = reporterInstance.createActivity(name)
+    const activity = reporterInstance.createActivity({
+      type: `spinner`,
+      id: name,
+      status: ``,
+    })
 
     return {
-      ...activity,
+      start() {
+        activity.update({
+          startTime: process.hrtime(),
+        })
+      },
+      setStatus(status) {
+        activity.update({
+          status: status,
+        })
+      },
       end() {
         span.finish()
-        activity.end()
+        activity.done()
       },
       span,
+    }
+  },
+
+  /**
+   * Create a progress bar for an activity
+   * @param {string} name - Name of activity.
+   * @param {number} total - Total items to be processed.
+   * @param {number} start - Start count to show.
+   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
+   * @returns {ActivityTracker} The activity tracker.
+   */
+  createProgress(
+    name: string,
+    total,
+    start = 0,
+    activityArgs: ActivityArgs = {}
+  ): ActivityTracker {
+    const { parentSpan } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    const span = tracer.startSpan(name, spanArgs)
+
+    let hasStarted = false
+    let current = start
+    const activity = reporterInstance.createActivity({
+      type: `progress`,
+      id: name,
+      current,
+      total,
+    })
+
+    return {
+      start() {
+        if (hasStarted) {
+          return
+        }
+
+        hasStarted = true
+        activity.update({
+          startTime: process.hrtime(),
+        })
+      },
+      setStatus(status) {
+        activity.update({
+          status: status,
+        })
+      },
+      tick() {
+        activity.update({
+          current: ++current,
+        })
+      },
+      done() {
+        span.finish()
+        activity.done()
+      },
+      set total(value) {
+        total = value
+        activity.update({
+          total: value,
+        })
+      },
+      span,
+    }
+  },
+  // Make private as we'll probably remove this in a future refactor.
+  _setStage(stage) {
+    if (reporterInstance.setStage) {
+      reporterInstance.setStage(stage)
     }
   },
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
-console.warn = (...args) => reporter.warn(util.format(...args))
-console.info = (...args) => reporter.info(util.format(...args))
-console.error = (...args) => reporter.error(util.format(...args))
+console.warn = (...args) => reporter.log(util.format(...args))
+console.info = (...args) => reporter.log(util.format(...args))
+console.error = (...args) => reporter.log(util.format(...args))
 
 module.exports = reporter

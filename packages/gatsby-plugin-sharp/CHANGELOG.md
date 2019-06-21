@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.2.0...gatsby-plugin-sharp@2.2.1) (2019-06-21)
+
+### Features
+
+- **gatsby-image:** Add art direction ([#13395](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/13395)) ([02edcdc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/02edcdc))
+
+# [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.9...gatsby-plugin-sharp@2.2.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.6...gatsby-plugin-sharp@2.1.9) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/2594623))
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.7...gatsby-plugin-sharp@2.1.8) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/2594623))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.6...gatsby-plugin-sharp@2.1.7) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.5...gatsby-plugin-sharp@2.1.6) (2019-06-18)
+
+### Features
+
+- **gatsby-cli:** move progressbar into ink ([#14220](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14220)) ([967597c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/967597c))
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.3...gatsby-plugin-sharp@2.1.5) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** create job before async-queue processing ([#14731](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14731)) ([f566210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/f566210))
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.3...gatsby-plugin-sharp@2.1.4) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** create job before async-queue processing ([#14731](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14731)) ([f566210](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/f566210))
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.2...gatsby-plugin-sharp@2.1.3) (2019-05-31)
+
+### Features
+
+- **image-sharp:** add trim option ([#14137](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14137)) ([cf0e77b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/cf0e77b))
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.1...gatsby-plugin-sharp@2.1.2) (2019-05-29)
+
+### Bug Fixes
+
+- cache tracedSVG calculations when cache is present ([#12044](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/12044)) ([c40bc4b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/c40bc4b))
+- **gatsby-plugin-sharp:** Image rotation ([#14302](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14302)) ([5e4bf34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/5e4bf34))
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.1.0...gatsby-plugin-sharp@2.1.1) (2019-05-24)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.37...gatsby-plugin-sharp@2.1.0) (2019-05-23)
+
+### Features
+
+- **gatsby-plugin-sharp:** remove 3x DPi resolutions ([#14201](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/14201)) ([d821f0e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/d821f0e))
+
 ## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.0.36...gatsby-plugin-sharp@2.0.37) (2019-05-09)
 
 ### Bug Fixes

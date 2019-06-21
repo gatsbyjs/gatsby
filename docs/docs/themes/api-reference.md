@@ -68,7 +68,13 @@ exports.createPages = async ({ graphql, actions }, themeOptions) => {
 
 ## Component Shadowing
 
-Gatsby Themes allow you to customize any file in a theme's `src` directory by following a file naming convention.
+You can import files from a Gatsby Theme into your project. For example, if you're using `gatsby-theme-tomato`, which has a `Layout` component located at `src/components/layout.js`, you can import it into your project like this:
+
+```js
+import Layout from "gatsby-theme-tomato/src/components/Layout"
+```
+
+Gatsby Themes also allow you to customize any file in a theme's `src` directory by following a file naming convention.
 If you're using `gatsby-theme-tomato` which uses a `ProfileCard` component located at `src/components/profile-card.js` you can override the component by creating `src/gatsby-theme-tomato/components/profile-card.js`. If you want to see what props are passed you can do so by putting the props into a `pre` tag:
 
 ```js:title=src/gatsby-theme-tomato/components/profile-card.js

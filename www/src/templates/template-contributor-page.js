@@ -13,7 +13,12 @@ import FooterLinks from "../components/shared/footer-links"
 class ContributorPageTemplate extends React.Component {
   render() {
     const contributor = this.props.data.authorYaml
-    const allMarkdownRemark = this.props.data.allMarkdownRemark
+
+    const posts = this.props.data.allMdx.nodes.filter(
+      post =>
+        post.frontmatter.author && post.frontmatter.author.id === contributor.id
+    )
+
     return (
       <Layout location={this.props.location}>
         <Helmet>
@@ -82,23 +87,16 @@ class ContributorPageTemplate extends React.Component {
               </div>
             </div>
             <div css={{ padding: `${space[7]} ${space[6]}` }}>
-              {allMarkdownRemark.edges.map(({ node }) => {
-                if (node.frontmatter.author) {
-                  if (node.frontmatter.author.id === contributor.id) {
-                    return (
-                      <BlogPostPreviewItem
-                        post={node}
-                        key={node.fields.slug}
-                        css={{ marginBottom: space[9] }}
-                      />
-                    )
-                  }
-                }
-                return null
-              })}
+              {posts.map(node => (
+                <BlogPostPreviewItem
+                  post={node}
+                  key={node.fields.slug}
+                  css={{ marginBottom: space[9] }}
+                />
+              ))}
             </div>
-            <FooterLinks />
           </Container>
+          <FooterLinks />
         </main>
       </Layout>
     )
@@ -129,7 +127,7 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         fields: { released: { eq: true } }
@@ -137,10 +135,8 @@ export const pageQuery = graphql`
         frontmatter: { draft: { ne: true } }
       }
     ) {
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/compare/gatsby-remark-copy-linked-files@2.0.13...gatsby-remark-copy-linked-files@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/compare/gatsby-remark-copy-linked-files@2.0.12...gatsby-remark-copy-linked-files@2.0.13) (2019-05-29)
+
+### Features
+
+- **gatsby-remark-copy-linked-files:** handle flash object tags ([#14381](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/issues/14381)) ([ef173e2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/commit/ef173e2))
+
 ## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files/compare/gatsby-remark-copy-linked-files@2.0.11...gatsby-remark-copy-linked-files@2.0.12) (2019-04-23)
 
 ### Bug Fixes
