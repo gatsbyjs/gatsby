@@ -1,15 +1,15 @@
 import { Router } from "@reach/router"
 import React from "react"
 
-const Index = () => <h1>App Page</h1>
+const App = () => <h1>App Page</h1>
 
 const NotFound = () => <h1>Not Found in App</h1>
 
-const IndexPage = () => (
+const AppPage = () => (
   <Router>
-    <Index path="/" />
+    <App path="/app" />
     <NotFound default />
   </Router>
 )
 
-export default IndexPage
+export default AppPage
