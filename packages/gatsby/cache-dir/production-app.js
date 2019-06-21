@@ -62,17 +62,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const { pagePath, location: browserLoc } = window
+
+  // Explicitly call navigate if the canonical path (window.pagePath)
+  // is different to the browser path (window.location.pathname). But
+  // only if NONE of the following conditions hold:
+  //
+  // - The url matches a client side route (page.matchPath)
+  // - it's a 404 page
+  // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
-    // Make sure the window.page object is defined
     pagePath &&
-    // The canonical path doesn't match the actual path (i.e. the address bar)
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
-    // Ignore 404 pages, since we want to keep the same URL
-    pagePath !== `/404.html` &&
-    !pagePath.match(/^\/404\/?$/) &&
-    // Also ignore the offline shell (since when using the offline plugin, all
-    // pages have this canonical path)
-    !pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+    !(
+      loader.findMatchPath(browserLoc.pathname) ||
+      pagePath === `/404.html` ||
+      pagePath.match(/^\/404\/?$/) ||
+      pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+    )
   ) {
     navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
       replace: true,
