@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
+const { bindActionCreators } = require(`redux`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -37,10 +38,11 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
           // Let action callers override who the plugin is. Shouldn't be
           // used that often.
           if (args.length === 1) {
-            boundActionCreator(args[0], plugin, actionOptions)
+            return boundActionCreator(args[0], plugin, actionOptions)
           } else if (args.length === 2) {
-            boundActionCreator(args[0], args[1], actionOptions)
+            return boundActionCreator(args[0], args[1], actionOptions)
           }
+          return undefined
         }
       }
     }
@@ -84,8 +86,18 @@ const runAPI = (plugin, api, args) => {
       hasNodeChanged,
       getNodeAndSavePathDependency,
     } = require(`../db/nodes`)
-    const { boundActionCreators } = require(`../redux/actions`)
-
+    const {
+      publicActions,
+      restrictedActionsAvailableInAPI,
+    } = require(`../redux/actions`)
+    const availableActions = {
+      ...publicActions,
+      ...(restrictedActionsAvailableInAPI[api] || {}),
+    }
+    const boundActionCreators = bindActionCreators(
+      availableActions,
+      store.dispatch
+    )
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,

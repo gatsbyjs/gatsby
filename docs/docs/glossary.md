@@ -52,11 +52,11 @@ A text-based interface to run commands on your computer. The default Command Lin
 
 A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files.
 
-### Components
+### Component
 
 Components are independent and re-usable chunks of code powered by [React](#react) that, when combined, make up your website or app.
 
-A component can include components within it. In fact, [pages](#page) and [templates](#templates) are examples of components.
+A component can include components within it. In fact, [pages](#page) and [templates](#template) are examples of components.
 
 ### Config
 
@@ -114,7 +114,7 @@ The [public-facing](#public) interface for your website or app, delivered using 
 
 ### Gatsby
 
-Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [Javascript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
+Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [JavaScript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
 
 ### GraphQL
 
@@ -158,7 +158,7 @@ A programming language that helps us make the web dynamic and interactive. [Java
 
 ### MDX
 
-Extends [Markdown](#markdown) to support [React](#react) [components](#components) within your content.
+Extends [Markdown](#markdown) to support [React](#react) [components](#component) within your content.
 
 ### Markdown
 
@@ -190,7 +190,7 @@ A package usually describes a [JavaScript](#javascript) program that has additio
 
 An [HTML](#html) page.
 
-This also often refers to [components](#components) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
+This also often refers to [components](#component) that live in `/src/pages/` and are converted to pages by [Gatsby](#gatsby), as well as [pages created dynamically](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs) in your `gatsby-node.js` file.
 
 ### Plugin
 
@@ -254,7 +254,7 @@ It also refers to the `/static` folder which is automatically copied into `/publ
 
 ### Template
 
-A [component](#component) that is [programatically](#programatically) turned into a page by Gatsby.
+A [component](#component) that is [programmatically](#programmatically) turned into a page by Gatsby.
 
 ### Transformer
 

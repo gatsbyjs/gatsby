@@ -57,6 +57,7 @@ Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed aft
 - `className`: String. Set your own class for the anchor (optional)
 - `maintainCase`: Boolean. Maintains the case for markdown header (optional)
 - `removeAccents`: Boolean. Remove accents from generated headings IDs (optional)
+- `enableCustomId`: Boolean. Enable custom header IDs with `{#id}` (optional)
 
 ```javascript
 // In your gatsby-config.js

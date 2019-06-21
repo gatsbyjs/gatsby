@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.3...gatsby-plugin-offline@2.2.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.2...gatsby-plugin-offline@2.1.3) (2019-06-13)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.1...gatsby-plugin-offline@2.1.2) (2019-06-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** use networkFirst caching for page-data.json files ([#14720](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/14720)) ([5352411](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/5352411))
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.1.0...gatsby-plugin-offline@2.1.1) (2019-05-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Drop preload link for json from offline shell ([#13935](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/issues/13935)) ([d1f0ae6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/commit/d1f0ae6))
+
 # [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline/compare/gatsby-plugin-offline@2.0.25...gatsby-plugin-offline@2.1.0) (2019-05-02)
 
 ### Features

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.12...gatsby-telemetry@1.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.11...gatsby-telemetry@1.0.12) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.10...gatsby-telemetry@1.0.11) (2019-05-31)
+
+### Bug Fixes
+
+- **telemetry:** Ensure we strip paths with additional layer of `\` escaping ([#14461](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/14461)) ([ae1fcc2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/ae1fcc2))
+
+## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.9...gatsby-telemetry@1.0.10) (2019-05-22)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** enable CI name for unsupported CI & fixed cpu count ([#14238](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/14238)) ([7d3d3e4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/7d3d3e4))
+
 ## [1.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.0.8...gatsby-telemetry@1.0.9) (2019-04-24)
 
 ### Bug Fixes

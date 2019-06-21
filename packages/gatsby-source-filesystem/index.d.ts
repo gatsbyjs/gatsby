@@ -10,7 +10,7 @@ export function createFilePath(args: CreateFilePathArgs): string
  */
 export function createRemoteFileNode(
   args: CreateRemoteFileNodeArgs
-): FileSystemNode
+): Promise<FileSystemNode>
 
 export interface CreateFilePathArgs {
   node: Node
@@ -33,6 +33,7 @@ export interface CreateRemoteFileNodeArgs {
   httpHeaders?: object
   ext?: string
   name?: string
+  reporter: object
 }
 
 export interface FileSystemNode extends Node {

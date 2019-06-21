@@ -105,7 +105,7 @@ Gatsby is a sound technological investment, it’s as future-proof as web techno
 
 ## The Limitations
 
-<pullquote citation="Rumpelstiltkin">All magic comes with a price</pullquote>
+<Pullquote citation="Rumpelstiltkin">All magic comes with a price</Pullquote>
 
 In the case of Gatsby, at the moment the price of its magic is the time taken to build static versions of your web pages. In order to deploy content or source code changes to your site, the content has to be fetched, optimized, compiled and rendered into HTML. The time it takes to build your site tends to be proportional to the number of pages.
 
