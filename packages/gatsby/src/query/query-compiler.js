@@ -143,6 +143,28 @@ class Runner {
       let errors = validate(this.schema, doc, validationRules)
 
       if (errors && errors.length) {
+        const locationOfGraphQLDocInSourceFile = doc.definitions[0].templateLoc
+
+        report.panicOnBuild(
+          errors.map(error => {
+            const graphqlLocation = error.locations[0]
+            // get location of error relative to soure file (not just graphql text)
+            const location = {
+              start: {
+                line:
+                  graphqlLocation.line +
+                  locationOfGraphQLDocInSourceFile.start.line -
+                  1,
+                column:
+                  (graphqlLocation.line === 0
+                    ? locationOfGraphQLDocInSourceFile.start.column - 1
+                    : 0) + graphqlLocation.column,
+              },
+            }
+            return errorParser({ message: error.message, filePath, location })
+          })
+        )
+
         this.reportError(graphqlValidationError(errors, filePath))
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,

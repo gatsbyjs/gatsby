@@ -1,5 +1,10 @@
 const Joi = require(`joi`)
 
+const Position = Joi.object().keys({
+  line: Joi.number(),
+  column: Joi.number(),
+})
+
 export const errorSchema = Joi.object().keys({
   id: Joi.string(),
   text: Joi.string(),
@@ -7,7 +12,10 @@ export const errorSchema = Joi.object().keys({
   level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
   type: Joi.string().valid([`GRAPHQL`]),
   filePath: Joi.string(),
-  location: Joi.object(),
+  location: Joi.object({
+    start: Position.required(),
+    end: Position,
+  }),
   docsUrl: Joi.string().uri({
     allowRelative: false,
     relativeOnly: false,

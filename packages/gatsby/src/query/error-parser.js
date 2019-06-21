@@ -1,13 +1,25 @@
-const errorParser = ({ message, filePath }) => {
+const errorParser = ({ message, filePath, location }) => {
   // Handle specific errors from Relay. A list of regexes to match certain
   // errors to specific callbacks
   const handlers = [
     {
-      regex: /Encountered\s\d\serror.*:\n(.*)/gm,
+      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields/m,
+      cb: match => {
+        return {
+          id: `85909`,
+          context: {
+            sourceMessage: match[0],
+            fieldName: match[1],
+            typeName: match[2],
+          },
+        }
+      },
+    },
+    {
+      regex: /Encountered\s\d\serror.*:\n\s*(.*)/m,
       cb: match => {
         return {
           id: `85907`,
-          filePath,
           context: { message: match[1] },
         }
       },
@@ -18,7 +30,6 @@ const errorParser = ({ message, filePath }) => {
       cb: match => {
         return {
           id: `85901`,
-          filePath,
           context: { sourceMessage: match[0] },
         }
       },
@@ -30,7 +41,11 @@ const errorParser = ({ message, filePath }) => {
   for (const { regex, cb } of handlers) {
     let matched = message.match(regex)
     if (matched) {
-      structured = cb(matched)
+      structured = {
+        filePath,
+        location,
+        ...cb(matched),
+      }
       break
     }
   }

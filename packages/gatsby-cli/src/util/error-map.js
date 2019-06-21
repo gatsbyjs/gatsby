@@ -45,6 +45,11 @@ export const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85909": {
+    text: context => context.sourceMessage,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
 }
 
 export const defaultError = errorMap.default
