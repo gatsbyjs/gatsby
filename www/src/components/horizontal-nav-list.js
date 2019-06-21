@@ -19,18 +19,15 @@ const Li = styled.li`
     padding: 0px 6px;
   }
   margin: 0;
-  &:hover {
-    background-color: ${colors.ui.hover};
-  }
 `
 
 const HorizontalNavList = ({ items = [], slug }) => (
   <nav>
     <LinkList>
       {items.map(item => (
-        <Link key={item} to={`${slug.slice(0, -1)}#${item.toLowerCase()}`}>
-          <Li>{item}</Li>
-        </Link>
+        <Li key={item}>
+          <Link to={`${slug.slice(0, -1)}#${item.toLowerCase()}`}>{item}</Link>
+        </Li>
       ))}
     </LinkList>
   </nav>
