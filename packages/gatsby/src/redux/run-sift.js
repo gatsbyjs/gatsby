@@ -112,10 +112,9 @@ module.exports = (args: Object) => {
   // If nodes weren't provided, then load them from the DB
   const nodes = args.nodes || getNodesByType(gqlType.name)
 
-  const { filter, sort } = queryArgs
+  const { filter, sort, group, distinct } = queryArgs
   const siftFilter = getFilters(prepareQueryArgs(filter))
-  const fieldsToSift = getQueryFields({ filter, sort })
-  // FIXME: fieldsToSift must include the `field` arg on `group` and `distinct`
+  const fieldsToSift = getQueryFields({ filter, sort, group, distinct })
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.

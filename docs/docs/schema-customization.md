@@ -12,7 +12,7 @@ the query layer - this is what Gatsby's Schema Customization API provides.
 The following guide walks through some examples to showcase the API.
 
 > This guide is aimed at plugin authors, users trying to fix GraphQL schemas
-> created by automatic type inference, developers optimising builds for larger
+> created by automatic type inference, developers optimizing builds for larger
 > sites, and anyone interested in customizing Gatsby's schema generation.
 > As such, the guide assumes that you're somewhat familiar with GraphQL types
 > and with using Gatsby's Node APIs.
@@ -177,7 +177,7 @@ provided, they will still be handled by Gatsby's type inference.
 There are however advantages to providing full definitions for a node type, and
 bypassing the type inference mechanism altogether. With smaller scale projects
 inference is usually not a performance problem, but as projects grow the
-performance penalty of having to check each field type will become noticable.
+performance penalty of having to check each field type will become noticeable.
 
 Gatsby allows to opt out of inference with the `@dontInfer` type directive - which
 in turn requires that you explicitly provide type definitions for all fields
@@ -328,7 +328,7 @@ For this to work, we have to provide a custom field resolver. (see below for
 more info on `context.nodeModel`)
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ action, schema }) => {
+exports.sourceNodes = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -401,7 +401,7 @@ write field resolvers: the `link` extension has already been discussed above,
 `dateformat` allows adding date formatting options, `fileByRelativePath` is
 similar to `link` but will resolve relative paths when linking to `File` nodes,
 and `proxy` is helpful when dealing with data that contains field names with
-characteres that are invalid in GraphQL.
+characters that are invalid in GraphQL.
 
 To add an extension to a field you can either use a directive in SDL, or the
 `extensions` property when using Gatsby Type Builders:
@@ -551,6 +551,23 @@ exports.createResolvers = ({ createResolvers }) => {
   }
   createResolvers(resolvers)
 }
+```
+
+When using `runQuery` to sort query results, be aware that both `sort.fields`
+and `sort.order` are `GraphQLList` fields. Also, nested fields on `sort.fields`
+have to be provided in dot-notation (not separated by triple underscores).
+For example:
+
+```js
+context.nodeModel.runQuery({
+  query: {
+    sort: {
+      fields: ["frontmatter.publishedAt"],
+      order: ["DESC"],
+    },
+  },
+  type: "MarkdownRemark",
+})
 ```
 
 ### Custom query fields
@@ -784,6 +801,7 @@ exports.createResolvers = ({
   createNodeId,
   createResolvers,
   store,
+  reporter,
 }) => {
   const { createNode } = actions
   createResolvers({
@@ -797,6 +815,7 @@ exports.createResolvers = ({
             cache,
             createNode,
             createNodeId,
+            reporter,
           })
         },
       },

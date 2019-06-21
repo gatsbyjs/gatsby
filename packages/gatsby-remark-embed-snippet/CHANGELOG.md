@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@4.0.0...gatsby-remark-embed-snippet@4.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.2.4...gatsby-remark-embed-snippet@4.0.0) (2019-06-14)
+
+### Features
+
+- **gatsby-remark-embed-snippet:** apply gatsby-remark-prismjs configuration to embedded snippets ([#13973](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/issues/13973)) ([c43c4c8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/commit/c43c4c8))
+
+### BREAKING CHANGES
+
+- **gatsby-remark-embed-snippet:** Configuration of `gatsby-remark-prismjs` is used to generate markup for code snippets. `classPrefix` option has been removed from `gatsby-remark-embed-snippet` (same option in `gatsby-remark-prismjs` will be used instead).
+
 ## [3.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet/compare/gatsby-remark-embed-snippet@3.2.3...gatsby-remark-embed-snippet@3.2.4) (2019-03-11)
 
 ### Features

@@ -1,7 +1,7 @@
 const r = require(`./resolver`)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false } = options
+  const { browser = false, debug = false, nodeVersion = `8.0` } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const PRODUCTION = (BABEL_ENV || NODE_ENV) === `production`
@@ -17,7 +17,7 @@ function preset(context, options = {}) {
 
   const nodeConfig = {
     targets: {
-      node: PRODUCTION ? 6.0 : `current`,
+      node: PRODUCTION ? nodeVersion : `current`,
     },
   }
 

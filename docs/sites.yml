@@ -513,20 +513,6 @@
     - Education
     - Web Development
     - Technology
-- title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru"
-  url: "https://caddysmellsliketrees.ru/en"
-  source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  description: >-
-    We play soul-searching songs for every day. They are merging in our forests
-    in such a way that it is difficult to separate them from each other, and
-    between them bellow bold deer poems.
-  categories:
-    - Music
-    - Gallery
-  built_by: Dmitrij Podabed, Alexander Nikitin
-  built_by_url: https://podabed.org
-  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
@@ -585,7 +571,6 @@
     engagement, generate leads and achieve goals.
   categories:
     - Design
-    - Featured
     - Marketing
     - Portfolio
 - title: Design Systems Weekly
@@ -921,13 +906,6 @@
     - Blog
     - Web Development
     - Music
-- title: Developer Ecosystem
-  main_url: "https://www.developerecosystem.com/"
-  url: "https://www.developerecosystem.com/"
-  featured: false
-  categories:
-    - Blog
-    - Web Development
 - title: Gabriel Adorf's Portfolio
   main_url: "https://www.gabrieladorf.com/"
   url: "https://www.gabrieladorf.com/"
@@ -1253,7 +1231,6 @@
     - Marketing
     - Portfolio
     - Agency
-    - Featured
   built_by: Spacetime
   built_by_url: "https://www.heyspacetime.com/"
 - title: Eric Jinks
@@ -1382,17 +1359,6 @@
   built_by: Iron Cove Solutions
   built_by_url: "https://ironcovesolutions.com/"
   featured: false
-- title: Eventos orellana
-  description: >-
-    Somos una empresa dedicada a brindar asesoría personalizada y profesional
-    para la elaboración y coordinación de eventos sociales y empresariales.
-  main_url: "https://eventosorellana.com/"
-  url: "https://eventosorellana.com/"
-  featured: false
-  categories:
-    - Gallery
-  built_by: Codedebug
-  built_by_url: "https://codedebug.co/"
 - title: Moetez Chaabene Portfolio / Blog
   main_url: "https://moetez.me/"
   url: "https://moetez.me/"
@@ -1527,14 +1493,6 @@
   categories:
     - Documentation
     - Security
-  featured: false
-- title: Patreon Partners
-  description: |
-    Resources and products to help you do more with Patreon.
-  url: "https://partners.patreon.com/"
-  main_url: "https://partners.patreon.com/"
-  categories:
-    - Directory
   featured: false
 - title: Curbside
   description: |
@@ -2201,18 +2159,6 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
-- title: Joseph Chambers
-  main_url: "https://joseph.michael-chambers.com/"
-  url: "https://joseph.michael-chambers.com/"
-  description: >
-    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
-  categories:
-    - Portfolio
-    - Freelance
-    - Web Development
-  built_by: Joseph Chambers
-  built_by_url: https://twitter.com/imcodingideas
-  featured: false
 - title: Mike's Remote List
   main_url: "https://www.mikesremotelist.com"
   url: "https://www.mikesremotelist.com"
@@ -2596,17 +2542,6 @@
     - Documentation
   built_by: IBM
   built_by_url: https://www.ibm.com/
-  featured: false
-- title: McDonald's Design System
-  main_url: https://design.mcdonalds.com/
-  url: https://design.mcdonalds.com/
-  description: >
-    McDonald's Design System
-  categories:
-    - Design
-    - Design System
-  built_by: McDonald's
-  built_by_url: https://www.mcdonalds.com/us/en-us.html
   featured: false
 - title: Mozilla Mixed Reality
   main_url: https://mixedreality.mozilla.org/
@@ -3319,8 +3254,8 @@
     - Web Development
     - Learning
 - title: Tandem
-  main_url: "https://tandem.co.uk"
-  url: "https://tandem.co.uk/the-app"
+  main_url: "https://www.tandem.co.uk"
+  url: "https://www.tandem.co.uk"
   description: >
     We're on a mission to free you of money misery. Our app, card and savings account are designed to help you spend less time worrying about money and more time enjoying life.
   categories:
@@ -3622,19 +3557,6 @@
     - Library
     - API
     - Documentation
-  featured: false
-- title: Song Wang's Blog
-  main_url: "https://songwang.io/"
-  url: "https://songwang.io/"
-  source_url: "https://github.com/wangsongiam/songwang.io/"
-  description: >
-    The website about Song Wang.
-  categories:
-    - Blog
-    - Technology
-    - Web Development
-  built_by: Song Wang
-  built_by_url: "https://github.com/wangsongiam/"
   featured: false
 - title: Engel & Völkers Ibiza Holiday Rentals
   main_url: "https://www.ev-ibiza.com/"
@@ -4437,18 +4359,6 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
-- title: Josef Aidt
-  url: https://josefaidt.me
-  main_url: https://josefaidt.me
-  source_url: https://github.com/josefaidt/josefaidt.github.io
-  description: >
-    Personal website, blog, portfolio for Josef Aidt
-  categories:
-    - Portfolio
-    - Blog
-    - Web Development
-  built_by: Josef Aidt
-  built_by_url: https://twitter.com/garlicbred
 - title: Hash Tech Guru
   url: https://hashtech.guru
   main_url: https://hashtech.guru
@@ -4470,6 +4380,18 @@
   built_by: Johan Eliasson
   built_by_url: https://github.com/elitan
   featured: false
+- title: Josef Aidt
+  url: https://josefaidt.dev
+  main_url: https://josefaidt.dev
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
 - title: How To egghead
   main_url: https://howtoegghead.com/
   url: https://howtoegghead.com/
@@ -5118,8 +5040,8 @@
   built_by: Philipp Siegmund, zauberware
   built_by_url: https://www.zauberware.com
 - title: Altstadtdomizil Idstein
-  main_url: https://www.altstadtdomizil-idstein.de/
-  url: https://www.altstadtdomizil-idstein.de/
+  main_url: http://www.altstadtdomizil-idstein.de/
+  url: http://www.altstadtdomizil-idstein.de/
   description: >
     A landing page for a holiday apartment in Idstein, Germany.
   categories:
@@ -6252,4 +6174,185 @@
     - Personal Development
   built_by: Adriaan Janse van Rensburg
   built_by_url: https://github.com/HurricaneInteractive/
+  featured: false
+- title: The Edit Suite
+  main_url: https://www.theeditsuite.com.au/
+  url: https://www.theeditsuite.com.au/
+  source_url: https://thriveweb.com.au/portfolio/the-edit-suite/
+  description: >-
+    The Edit Suite is an award winning video production and photography company based out of our Mermaid Beach studio on the Gold Coast of Australia but we also have the ability to work mobile from any location.
+  categories:
+    - Photography
+    - Motion graphics
+    - Events
+    - Marketing
+  built_by: Thrive Team - Gold Coast
+  built_by_url: https://thriveweb.com.au/
+  featured: false
+- title: CarineRoitfeld
+  main_url: https://www.carineroitfeld.com/
+  url: https://www.carineroitfeld.com/
+  description: >
+    Online shop for Carine Roitfeld parfume
+  categories:
+    - eCommerce
+    - Beauty
+  built_by: Ask Phill
+  built_by_url: https://askphill.com
+- title: EngineHub.org
+  url: https://enginehub.org
+  main_url: https://enginehub.org
+  source_url: https://github.com/EngineHub/enginehub-website
+  description: >
+    The landing pages for EngineHub, the organisation behind WorldEdit, WorldGuard, CraftBook, and more
+  categories:
+    - Landing Page
+    - Technology
+    - Open Source
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev
+- title: Goulburn Physiotherapy
+  url: https://www.goulburnphysiotherapy.com.au/
+  main_url: https://www.goulburnphysiotherapy.com.au/
+  description: >
+    Goulburn Physiotherapy is a leader in injury prevention, individual and community health, and workplace health solutions across Central Victoria.
+  categories:
+    - Blog
+    - Healthcare
+    - Health & Wellness
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: TomTom Traffic Index
+  main_url: https://www.tomtom.com/en_gb/traffic-index/
+  url: https://www.tomtom.com/en_gb/traffic-index/
+  description: >
+    The TomTom Traffic Index provides drivers, city planners, auto manufacturers and policy makers with unbiased statistics and information about congestion levels in 403 cities across 56 countries on 6 continents.
+  categories:
+    - Travel
+    - Data
+    - Research
+    - Visualization
+    - News
+  built_by: TomTom
+  built_by_url: https://tomtom.com
+  featured: false
+- title: PrintAWorld | A 3D Printing and Fabrication Company
+  main_url: https://prtwd.com/
+  url: https://prtwd.com/
+  description: >
+    PrintAWorld is a NYC based fabrication and manufacturing company that specializes in 3D printing, 3D scanning, CAD Design,
+    laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
+  categories:
+    - Business
+    - Art
+    - 3D Printing
+    - Manufacturing
+  featured: false
+- title: Asjas
+  main_url: https://asjas.co.za
+  url: https://asjas.co.za/blog
+  source_url: https://github.com/Asjas/Personal-Webpage
+  description: >
+    This is a website built with Gatsby v2 that uses Netlify CMS and Gatsby-MDX as a blog (incl. portfolio page).
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+  built_by: A-J Roos
+  built_by_url: https://twitter.com/_asjas
+  featured: false
+- title: Glug-Infinite
+  main_url: https://gluginfinite.github.io
+  url: https://gluginfinite.github.io
+  source_url: https://github.com/cristonkrizz/glug
+  description: >
+    This is a website built with Gatsby v2 that is deployed on github using github pages and netlify .
+  categories:
+    - Web Development
+    - Blog
+    - Portfolio
+    - Student
+    - Club
+    - Agency
+  built_by: Criston Macarenhas
+  built_by_url: https://github.com/cristonkrizz
+  featured: false
+- title: The State of CSS Survey
+  main_url: https://stateofcss.com/
+  url: https://stateofcss.com/
+  source_url: https://github.com/StateOfJS/state-of-css-2019
+  description: >
+    Annual CSS survey, brother of The State of JS Survey.
+  categories:
+    - Research
+    - Web Development
+  built_by: Sacha Greif & Contribs
+  built_by_url: https://github.com/StateOfJS
+  featured: false
+- title: Bytom Blockchain
+  url: https://bytom.io/
+  main_url: https://bytom.io/
+  source_url: https://github.com/bytomlabs/bytom.io
+  description: >
+    Embrace the New Era of Bytom Blockchain
+  categories:
+    - Blockchain
+    - Finance
+    - Open Source
+    - Technology
+  built_by: Bytom Foundation
+  built_by_url: https://bytom.io/
+  featured: false
+- title: Oerol Festival
+  url: https://www.oerol.nl/nl/
+  main_url: https://www.oerol.nl/en/
+  description: >
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    The ten-day festival is focused on live, public theatre as well as music and visual arts.
+  categories:
+    - Event
+    - Events
+    - Entertainment
+    - Festival
+  built_by: Oberon
+  built_by_url: https://oberon.nl/
+  featured: false
+- title: Libra
+  main_url: "https://libra.org/"
+  url: "https://libra.org/"
+  description: Libra's mission is to enable a simple global currency and financial infrastructure that empowers billions of people.
+  featured: false
+  categories:
+    - Open Source
+    - Technology
+    - Cryptocurrency
+    - Finance
+- title: Riffy Blog
+  main_url: https://blog.rayriffy.com/
+  url: https://blog.rayriffy.com/
+  source_url: https://github.com/rayriffy/rayriffy-blog
+  description: >
+    Riffy Blog is async based beautiful highly maintainable site built by using Gatsby v2 with SEO optimized.
+  categories:
+    - Web Development
+    - Blog
+    - Open Source
+    - Technology
+    - Music
+    - Netlify
+    - SEO
+  built_by: Phumrapee Limpianchop
+  built_by_url: https://rayriffy.com/
+  featured: false
+- title: The Coffee Collective
+  url: https://coffeecollective.dk
+  main_url: https://coffeecollective.dk
+  description: >
+    The Coffee Collective website is a JAM-stack based, multilingual, multi currency website/shop selling coffee, related products and subscriptions.
+  categories:
+    - eCommerce
+    - Food
+  built_by: Remotely (Anders Hallundbæk)
+  built_by_url: https://remotely.dk
   featured: false
