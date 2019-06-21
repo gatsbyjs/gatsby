@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.0.3...gatsby-plugin-netlify-cms@4.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 ## [4.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.0.2...gatsby-plugin-netlify-cms@4.0.3) (2019-06-18)
 
 ### Bug Fixes
