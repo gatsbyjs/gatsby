@@ -23,19 +23,19 @@ You know what I'm talking about. Their conference slide decks always have the sa
 
 ### SLIDE 1: WordPress is slow.
 
-### SLIDE 2: WordPress is not secure.
+## SLIDE 2: WordPress is not secure.
 
-### SLIDE 3: WordPress is old
+## SLIDE 3: WordPress is old
 
-### FINAL SLIDE: So use our NewThing.
+## FINAL SLIDE: So use our NewThing.
 
-You sit back and laugh at each time.
+Skeptical minds in the audience might sit back and laugh each time:
 
 *Slow?* C'mon now. You're able to get load time for your client sites down to less than 2 seconds and even faster, thanks to caching and image optimization and CDN services.
 
-*Not secure?* Give me break. You haven't had a site get hacked this decade. You use quality hosting, reputable plugins, and you've turned on automatic core updates. Plus, you create daily off-site backups just in case.
+*Not secure?* Hold up. You haven't had a site get hacked this decade. You use quality hosting, reputable plugins, and you've turned on automatic core updates. Plus, you create daily off-site backups just in case.
 
-*And old!?* That's a joke. You feel like a kid in a candy store, surrounded by all of the innovation WordPress has rolled out the last few years. You've barely taste-tested the WordPress Rest API, or the new React-powered content editor.
+*And old!?* Not in your experience. You feel like a kid in a candy store, surrounded by all of the innovation WordPress has rolled out the last few years. You've barely taste-tested the WordPress Rest API, or the new React-powered content editor.
 
 So if you're a WordPress Developer and you've dismissed Gatsby as this year's NewThing, then I get it.
 
@@ -43,7 +43,7 @@ So if you're a WordPress Developer and you've dismissed Gatsby as this year's Ne
 
 I think you may be surprised. I was skeptical myself, but I found one real difference between WordPress and Gatsby, and it has a true impact on your business:
 
-> Gatsby sites have a dramatically lower "total cost of ownership" than comparable WordPress sites.
+> Gatsby sites have a dramatically lower ["total cost of ownership"](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/) than comparable WordPress sites.
 
 That means more money in your pocket. Or more value and services you can pass on to your clients.
 
@@ -67,7 +67,7 @@ The cheaper hosting for static sites, like the ones Gatsby can produce, can be a
 
 I'm old enough to remember using Movable Type and sneering at WordPress. I worked at Vibe Magazine and didn't choose WordPress as our CMS because at the time it couldn't handle our requirement for multiple authors. However, Movable Type eventually ceded their #1 position to WordPress, in large part due to hosting costs. Hosting for a PHP CMS like WordPress was cheaper and simpler than finding a home for the Perl-powered Movable Type.
 
-Static sites in general, and Gatsby in particular will win because the cost of getting started, and keeping going is so low. And as a bonus, static site hosting truly is more secure and simpler to use. It's rare that a new way of doing things ticks the boxes of FAST, GOOD, and CHEAP with no compromise. But that perfectly describes [the hosting options for Gatsby](https://www.gatsbyjs.org/docs/deploying-and-hosting/).
+Static sites in general, and Gatsby in particular will win because the cost of getting started, and keeping going is so low. And as a bonus, static site hosting truly is more secure and simpler to use. It's rare that a new way of doing things ticks the boxes of FAST, GOOD, and CHEAP with no compromise. But that perfectly describes [the hosting options for Gatsby](/docs/deploying-and-hosting/).
 
 ## Break-Fix happens less, and is solved faster
 
@@ -81,11 +81,11 @@ I know. It's that random bug or issue that takes hours or days longer to fix tha
 
 I once discovered a bug caused by a page builder plugin update that prevented a theme from displaying comments. I spent half a day sussing out the culprit, then another day getting the page builder's support team to take responsibility and recognize it as a true bug. Then a week later it was fixed.
 
-Because WordPress plugins are writing to the same database, using the same platform functions, and jockeying for space in the same admin area, the permutations of potential problems is high.  And solving issues can take a lot of time.  Also, unless you lock down your WordPress projects with as little user privileges as possible, then you're sure to get a call every so often about something your client broke himself.
+Because WordPress plugins are writing to the same database, using the same platform functions, and jockeying for space in the same admin area, the permutations of potential problems is high.  And solving issues can take a lot of time.  Also, unless you lock down your WordPress projects with as little user privileges as possible, then you're sure to get a call every so often about something your client broke themself.
 
 Gatsby is different. Consider this example:
 
-If your client needs ecommerce features on her site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
+If your client needs ecommerce features on their site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
 
 In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue with the build has nothing to do with a problem with the front-end, and vice versa. Gatsby's lower technical maintenance may be the difference between you taking on 5 client sites or 15.
 
@@ -96,7 +96,7 @@ In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue
 
 The WordPress ecosystem is bursting with solutions, paid and free, for any use case your clients have. I'm personally very grateful for that.
 
-Recently, premium plugin companies have discovered that the value of their software, and the cost of customer service are both higher than expected. If you think break-fix is hard for us, imagine having your code run on thousands of different environments, and hosting platforms, and versions of PHP. So, of course, plugin prices have gone up. I don't begrudge the fact that many of my favorite WordPress shops are asking for more.
+Recently, premium plugin companies have discovered that the value of their software, and the cost of customer service, are both higher than expected. If you think break-fix is hard for us, imagine having your code run on thousands of different environments, and hosting platforms, and versions of PHP. So, of course, plugin prices have gone up. I don't begrudge the fact that many of my favorite WordPress shops are asking for more.
 
 Again, the Gatsby ecosystem is different. Like hosting, the standard pricing for third-party website services is a generous free tier.
 
