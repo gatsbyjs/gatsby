@@ -47,6 +47,7 @@ interface GatsbyImageProps {
   Tag?: string
   itemProp?: string
   loading?: `auto` | `lazy` | `eager`
+  draggable?: boolean
 }
 
 export default class GatsbyImage extends React.Component<
