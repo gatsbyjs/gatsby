@@ -57,7 +57,7 @@ const convertProps = props => {
 const getImageSrcKey = ({ fluid, fixed }) => {
   const data = (fluid && fluid[0]) || (fixed && fixed[0])
 
-  return data && data.src
+  return data.src
 }
 
 // Cache if we've seen an image before so we don't bother with
@@ -409,7 +409,7 @@ class Image extends React.Component {
       className: placeholderClassName,
     }
 
-    if (fluid.length) {
+    if (fluid) {
       const imageVariants = fluid
       const image = imageVariants[0]
 
@@ -508,7 +508,7 @@ class Image extends React.Component {
       )
     }
 
-    if (fixed.length) {
+    if (fixed) {
       const imageVariants = fixed
       const image = imageVariants[0]
 
