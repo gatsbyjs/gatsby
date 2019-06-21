@@ -12,7 +12,7 @@ tags:
   - performance
 ---
 
-![The homepage of thecouch.nyc showing a blue background with the message, "The Couch is a digital studio that makes weird and wonderful things for the internet."](./thecouch-nyc.png)
+![The homepage of thecouch.nyc showing a blue background with the message: The Couch is a digital studio that makes weird and wonderful things for the internet.](./thecouch-nyc.png)
 
 We recently spoke with Kevin Green, Co-founder and Lead Engineer at [The Couch](https://thecouch.nyc), about how Gatsby helps them speed up their workflow and offer their clients fast, feature-rich sites with extremely low hosting costs.
 
@@ -32,7 +32,7 @@ When [Prima](https://www.prima.co), an L.A.-based Cannabidiol (CBD) oil company,
 They came to us with a flood of content—something we’re not really that used to.
 </Pullquote>
 
-![The homepage of prima.co showing a young woman holding a bottle of CBD oil next to the message, "Welcome to the uprising rooted in hemp, heart, and real science."](./prima-co.png)
+![The homepage of prima.co showing a young woman holding a bottle of CBD oil next to the message: Welcome to the uprising rooted in hemp, heart, and real science.](./prima-co.png)
 
 Faced with a content-heavy project, Kevin considered his options. Rather than entrusting Prima’s content to a monolithic CMS—and risk slow loading times and an unhappy development experience—Kevin’s thoughts turned to a more modern solution: “Knowing this was going to be a super content- and image-heavy site, I wanted to build it static from the get-go.” By serving Prima’s content as static HTML, Kevin knew he would dramatically reduce the site’s loading time. His positive experiences with Gatsby on three previous production sites made him confident that it was the right tool for the job: “It’s hard for me to go any other route at this point. If I can go static, I’m always going to go static, and Gatsby’s going to be one of my top choices indefinitely.”
 

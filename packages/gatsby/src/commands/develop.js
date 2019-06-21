@@ -428,7 +428,13 @@ module.exports = async (program: any) => {
   }
 
   function printInstructions(appName, urls, useYarn) {
-    console.log()
+    report._setStage({
+      stage: `DevelopBootstrapFinished`,
+      context: {
+        url: urls.localUrlForBrowser,
+        appName,
+      },
+    })
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
 

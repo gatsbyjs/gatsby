@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.13...gatsby-cli@2.7.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.6.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.12...gatsby-cli@2.6.13) (2019-06-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** add missing node-fetch dependency ([#14908](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14908)) ([b7da1e4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/b7da1e4))
+
+## [2.6.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.9...gatsby-cli@2.6.12) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/2594623))
+
+## [2.6.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.10...gatsby-cli@2.6.11) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/2594623))
+
 ## [2.6.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.6.9...gatsby-cli@2.6.10) (2019-06-18)
 
 **Note:** Version bump only for package gatsby-cli
