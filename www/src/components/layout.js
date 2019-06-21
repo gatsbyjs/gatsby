@@ -12,6 +12,7 @@ import {
   shadows,
   sizes,
   fontSizes,
+  zIndices,
 } from "../utils/presets"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
@@ -25,6 +26,7 @@ import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import "../fonts/Webfonts/futurapt_bold_macroman/stylesheet.css"
 
 import { skipLink } from "../utils/styles"
 
@@ -103,7 +105,7 @@ class DefaultLayout extends React.Component {
                 bottom: `unset`,
                 minHeight: `100%`,
                 minWidth: `100%`,
-                zIndex: 10,
+                zIndex: zIndices.modal,
                 overflowY: `auto`,
                 backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },

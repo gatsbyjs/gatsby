@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.4...gatsby-transformer-react-docgen@4.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [4.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.2...gatsby-transformer-react-docgen@4.0.4) (2019-06-19)
+
+### Bug Fixes
+
+- **gatsby-transformer-react-docgen:** always create description nodes ([#14876](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/issues/14876)) ([48a9e10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/commit/48a9e10))
+
+## [4.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.2...gatsby-transformer-react-docgen@4.0.3) (2019-06-19)
+
+### Bug Fixes
+
+- **gatsby-transformer-react-docgen:** always create description nodes ([#14876](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/issues/14876)) ([48a9e10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/commit/48a9e10))
+
+## [4.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.1...gatsby-transformer-react-docgen@4.0.2) (2019-05-30)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
 ## [4.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen/compare/gatsby-transformer-react-docgen@4.0.0...gatsby-transformer-react-docgen@4.0.1) (2019-04-08)
 
 **Note:** Version bump only for package gatsby-transformer-react-docgen

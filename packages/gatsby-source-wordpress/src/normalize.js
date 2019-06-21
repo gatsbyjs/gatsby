@@ -477,6 +477,7 @@ exports.downloadMediaFiles = async ({
   touchNode,
   getNode,
   _auth,
+  reporter,
 }) =>
   Promise.all(
     entities.map(async e => {
@@ -511,6 +512,7 @@ exports.downloadMediaFiles = async ({
               createNodeId,
               parentNodeId: e.id,
               auth: _auth,
+              reporter,
             })
 
             if (fileNode) {

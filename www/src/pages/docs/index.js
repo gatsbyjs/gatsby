@@ -27,13 +27,14 @@ class IndexRoute extends React.Component {
             </h1>
             <p>Gatsby is a blazing fast modern site generator for React.</p>
             <h2>Get Started</h2>
-            <p>There are four main ways to get started with Gatsby:</p>
+            <p>There are five main ways to get started with Gatsby:</p>
             <ol>
               <li>
-                <Link to="/tutorial/">Tutorial</Link>: Step-by-step instructions
-                on how to install Gatsby and start a project: written for people
-                without Gatsby or web development experience, though it has
-                helped developers of all skill levels.
+                <Link to="/tutorial/">Tutorials</Link>: Step-by-step
+                instructions on how to install Gatsby and start a project:
+                written for people without Gatsby or web development experience,
+                though these learning resources have helped developers of all
+                skill levels.
               </li>
               <li>
                 <Link to="/docs/quick-start">Quick start</Link>: One page
@@ -52,11 +53,6 @@ class IndexRoute extends React.Component {
                     <Link to="/docs/guides/">Reference Guides</Link>: Learn
                     about the many different topics around building with Gatsby,
                     like sourcing data, deployment, and more.
-                  </li>
-                  <li>
-                    <Link to="/ecosystem/">Ecosystem</Link>: Check out libraries
-                    for Gatsby starters and plugins, as well as external
-                    community resources.
                   </li>
                   <li>
                     <Link to="/docs/api-reference/">Gatsby API Reference</Link>:
@@ -78,13 +74,6 @@ class IndexRoute extends React.Component {
                     Dig into how Gatsby works behind the scenes.
                   </li>
                   <li>
-                    <Link to="/tutorial/advanced-tutorials/">
-                      Advanced Tutorials
-                    </Link>
-                    : Learn about topics that are too large for a doc and
-                    warrant a tutorial.
-                  </li>
-                  <li>
                     <Link to="/docs/using-gatsby-professionally/">
                       Using Gatsby Professionally
                     </Link>
@@ -93,6 +82,11 @@ class IndexRoute extends React.Component {
                     Gatsby professionally.
                   </li>
                 </ul>
+              </li>
+              <li>
+                Check out the <Link to="/ecosystem/">Ecosystem</Link> libraries
+                for Gatsby starters and plugins, as well as external community
+                resources.
               </li>
             </ol>
             <p>
