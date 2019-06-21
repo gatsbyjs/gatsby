@@ -299,3 +299,13 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Liferay Design
+  type: company
+  image: images/liferay-design.png
+  description: >-
+    We are Liferay's design team — based in Brazil, California, Germany, Italy, Spain, and maybe soon in your hometown. We moved our site to Gatsby in 2018 and haven't looked back since.
+  location: Worldwide
+  website: https://liferay.design
+  github: https://github.com/liferay-design
+  for_hire: false
+  hiring: true

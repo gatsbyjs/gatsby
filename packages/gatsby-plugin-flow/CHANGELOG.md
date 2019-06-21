@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-flow/compare/gatsby-plugin-flow@1.0.6...gatsby-plugin-flow@1.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
 ## [1.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-flow/compare/gatsby-plugin-flow@1.0.5...gatsby-plugin-flow@1.0.6) (2019-05-24)
 
 ### Bug Fixes

@@ -513,20 +513,6 @@
     - Education
     - Web Development
     - Technology
-- title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru"
-  url: "https://caddysmellsliketrees.ru/en"
-  source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  description: >-
-    We play soul-searching songs for every day. They are merging in our forests
-    in such a way that it is difficult to separate them from each other, and
-    between them bellow bold deer poems.
-  categories:
-    - Music
-    - Gallery
-  built_by: Dmitrij Podabed, Alexander Nikitin
-  built_by_url: https://podabed.org
-  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
@@ -920,13 +906,6 @@
     - Blog
     - Web Development
     - Music
-- title: Developer Ecosystem
-  main_url: "https://www.developerecosystem.com/"
-  url: "https://www.developerecosystem.com/"
-  featured: false
-  categories:
-    - Blog
-    - Web Development
 - title: Gabriel Adorf's Portfolio
   main_url: "https://www.gabrieladorf.com/"
   url: "https://www.gabrieladorf.com/"
@@ -4401,6 +4380,18 @@
   built_by: Johan Eliasson
   built_by_url: https://github.com/elitan
   featured: false
+- title: Josef Aidt
+  url: https://josefaidt.dev
+  main_url: https://josefaidt.dev
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
 - title: How To egghead
   main_url: https://howtoegghead.com/
   url: https://howtoegghead.com/
@@ -6317,7 +6308,7 @@
   url: https://www.oerol.nl/nl/
   main_url: https://www.oerol.nl/en/
   description: >
-    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June.
     The ten-day festival is focused on live, public theatre as well as music and visual arts.
   categories:
     - Event
@@ -6327,3 +6318,66 @@
   built_by: Oberon
   built_by_url: https://oberon.nl/
   featured: false
+- title: Libra
+  main_url: "https://libra.org/"
+  url: "https://libra.org/"
+  description: Libra's mission is to enable a simple global currency and financial infrastructure that empowers billions of people.
+  featured: false
+  categories:
+    - Open Source
+    - Technology
+    - Cryptocurrency
+    - Finance
+- title: Riffy Blog
+  main_url: https://blog.rayriffy.com/
+  url: https://blog.rayriffy.com/
+  source_url: https://github.com/rayriffy/rayriffy-blog
+  description: >
+    Riffy Blog is async based beautiful highly maintainable site built by using Gatsby v2 with SEO optimized.
+  categories:
+    - Web Development
+    - Blog
+    - Open Source
+    - Technology
+    - Music
+    - Netlify
+    - SEO
+  built_by: Phumrapee Limpianchop
+  built_by_url: https://rayriffy.com/
+  featured: false
+- title: The Coffee Collective
+  url: https://coffeecollective.dk
+  main_url: https://coffeecollective.dk
+  description: >
+    The Coffee Collective website is a JAM-stack based, multilingual, multi currency website/shop selling coffee, related products and subscriptions.
+  categories:
+    - eCommerce
+    - Food
+  built_by: Remotely (Anders Hallundbæk)
+  built_by_url: https://remotely.dk
+  featured: false
+- title: Canvas 1839
+  main_url: "https://www.canvas1839.com/"
+  url: "https://www.canvas1839.com/"
+  description: >-
+    Online store for Canvas 1839 products, including pharmacological-grade CBD oil and relief cream.
+  categories:
+    - eCommerce
+    - Health & Wellness
+    - CBD
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Sparkle Stories
+  main_url: "https://app.sparklestories.com/"
+  url: "https://app.sparklestories.com/"
+  description: >-
+    Sparkle Stories is a streaming audio platform for children with over 1,200 original audio stories.
+  categories:
+    - Audiobooks
+    - Children
+    - App
+    - Education
+    - Streaming
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"

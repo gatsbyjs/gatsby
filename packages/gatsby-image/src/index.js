@@ -37,7 +37,27 @@ const convertProps = props => {
     convertedProps.loading = `eager`
   }
 
+  // convert fluid & fixed to arrays so we only have to work with arrays
+  if (convertedProps.fluid) {
+    convertedProps.fluid = groupByMedia([].concat(convertedProps.fluid))
+  }
+  if (convertedProps.fixed) {
+    convertedProps.fixed = groupByMedia([].concat(convertedProps.fixed))
+  }
+
   return convertedProps
+}
+
+/**
+ * Find the source of an image to use as a key in the image cache.
+ * Use `the first image in either `fixed` or `fluid`
+ * @param {{fluid: {src: string}[], fixed: {src: string}[]}} args
+ * @return {string}
+ */
+const getImageSrcKey = ({ fluid, fixed }) => {
+  const data = (fluid && fluid[0]) || (fixed && fixed[0])
+
+  return data.src
 }
 
 // Cache if we've seen an image before so we don't bother with
@@ -46,20 +66,14 @@ const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
   // Find src
-  const src = convertedProps.fluid
-    ? convertedProps.fluid.src
-    : convertedProps.fixed.src
-
+  const src = getImageSrcKey(convertedProps)
   return imageCache[src] || false
 }
 
 const activateCacheForImage = props => {
   const convertedProps = convertProps(props)
   // Find src
-  const src = convertedProps.fluid
-    ? convertedProps.fluid.src
-    : convertedProps.fixed.src
-
+  const src = getImageSrcKey(convertedProps)
   imageCache[src] = true
 }
 
@@ -101,6 +115,73 @@ function getIO() {
   return io
 }
 
+function generateImageSources(imageVariants) {
+  return imageVariants.map(({ src, srcSet, srcSetWebp, media, sizes }) => (
+    <React.Fragment key={src}>
+      {srcSetWebp && (
+        <source
+          type="image/webp"
+          media={media}
+          srcSet={srcSetWebp}
+          sizes={sizes}
+        />
+      )}
+      <source media={media} srcSet={srcSet} sizes={sizes} />
+    </React.Fragment>
+  ))
+}
+
+// Return an array ordered by elements having a media prop, does not use
+// native sort, as a stable sort is not guaranteed by all browsers/versions
+function groupByMedia(imageVariants) {
+  const withMedia = []
+  const without = []
+  imageVariants.forEach(variant =>
+    (variant.media ? withMedia : without).push(variant)
+  )
+
+  if (without.length > 1 && process.env.NODE_ENV !== `production`) {
+    console.warn(
+      `We've found ${
+        without.length
+      } sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
+    )
+  }
+
+  return [...withMedia, ...without]
+}
+
+function generateTracedSVGSources(imageVariants) {
+  return imageVariants.map(({ src, media, tracedSVG }) => (
+    <source key={src} media={media} srcSet={tracedSVG} />
+  ))
+}
+
+function generateBase64Sources(imageVariants) {
+  return imageVariants.map(({ src, media, base64 }) => (
+    <source key={src} media={media} srcSet={base64} />
+  ))
+}
+
+function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
+  const src = isWebp ? srcSetWebp : srcSet
+  const mediaAttr = media ? `media="${media}" ` : ``
+  const typeAttr = isWebp ? `type='image/webp' ` : ``
+  const sizesAttr = sizes ? `sizes="${sizes}" ` : ``
+
+  return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
+}
+
+function generateNoscriptSources(imageVariants) {
+  return imageVariants
+    .map(
+      variant =>
+        (variant.srcSetWebp ? generateNoscriptSource(variant, true) : ``) +
+        generateNoscriptSource(variant)
+    )
+    .join(``)
+}
+
 const listenToIntersections = (el, cb) => {
   const observer = getIO()
 
@@ -120,9 +201,6 @@ const noscriptImg = props => {
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
   const sizes = props.sizes ? `sizes="${props.sizes}" ` : ``
-  const srcSetWebp = props.srcSetWebp
-    ? `<source type='image/webp' srcset="${props.srcSetWebp}" ${sizes}/>`
-    : ``
   const srcSet = props.srcSet ? `srcset="${props.srcSet}" ` : ``
   const title = props.title ? `title="${props.title}" ` : ``
   const alt = props.alt ? `alt="${props.alt}" ` : `alt="" ` // required attribute
@@ -133,7 +211,25 @@ const noscriptImg = props => {
     : ``
   const loading = props.loading ? `loading="${props.loading}" ` : ``
 
-  return `<picture>${srcSetWebp}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  let sources = generateNoscriptSources(props.imageVariants)
+
+  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+}
+
+// Earlier versions of gatsby-image during the 2.x cycle did not wrap
+// the `Img` component in a `picture` element. This maintains compatibility
+// until a breaking change can be introduced in the next major release
+const Placeholder = ({ src, imageVariants, generateSources, spreadProps }) => {
+  const baseImage = <Img src={src} {...spreadProps} />
+
+  return imageVariants.length > 1 ? (
+    <picture>
+      {generateSources(imageVariants)}
+      {baseImage}
+    </picture>
+  ) : (
+    baseImage
+  )
 }
 
 const Img = React.forwardRef((props, ref) => {
@@ -314,7 +410,8 @@ class Image extends React.Component {
     }
 
     if (fluid) {
-      const image = fluid
+      const imageVariants = fluid
+      const image = imageVariants[0]
 
       return (
         <Tag
@@ -354,25 +451,28 @@ class Image extends React.Component {
 
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
+            <Placeholder
+              src={image.base64}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateBase64Sources}
+            />
           )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
+            <Placeholder
+              src={image.tracedSVG}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateTracedSVGSources}
+            />
           )}
 
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSetWebp && (
-                <source
-                  type={`image/webp`}
-                  srcSet={image.srcSetWebp}
-                  sizes={image.sizes}
-                />
-              )}
-
+              {generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
@@ -399,6 +499,7 @@ class Image extends React.Component {
                   title,
                   loading,
                   ...image,
+                  imageVariants,
                 }),
               }}
             />
@@ -408,7 +509,9 @@ class Image extends React.Component {
     }
 
     if (fixed) {
-      const image = fixed
+      const imageVariants = fixed
+      const image = imageVariants[0]
+
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
@@ -445,25 +548,28 @@ class Image extends React.Component {
 
           {/* Show the blurry base64 image. */}
           {image.base64 && (
-            <Img src={image.base64} {...placeholderImageProps} />
+            <Placeholder
+              src={image.base64}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateBase64Sources}
+            />
           )}
 
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
-            <Img src={image.tracedSVG} {...placeholderImageProps} />
+            <Placeholder
+              src={image.tracedSVG}
+              spreadProps={placeholderImageProps}
+              imageVariants={imageVariants}
+              generateSources={generateTracedSVGSources}
+            />
           )}
 
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSetWebp && (
-                <source
-                  type={`image/webp`}
-                  srcSet={image.srcSetWebp}
-                  sizes={image.sizes}
-                />
-              )}
-
+              {generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
@@ -492,6 +598,7 @@ class Image extends React.Component {
                   title,
                   loading,
                   ...image,
+                  imageVariants,
                 }),
               }}
             />
@@ -523,6 +630,7 @@ const fixedObject = PropTypes.shape({
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
+  media: PropTypes.string,
 })
 
 const fluidObject = PropTypes.shape({
@@ -534,13 +642,14 @@ const fluidObject = PropTypes.shape({
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
+  media: PropTypes.string,
 })
 
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
-  fixed: fixedObject,
-  fluid: fluidObject,
+  fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
+  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
   fadeIn: PropTypes.bool,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,
