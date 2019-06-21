@@ -30,13 +30,13 @@ jest.mock(`../create-file-node`, () => {
     createFileNode: jest.fn(),
   }
 })
-const { createProgress } = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const progressBar = {
   start: jest.fn(),
   total: 0,
   tick: jest.fn(),
 }
-createProgress.mockImplementation(() => progressBar)
+reporter.createProgress.mockImplementation(() => progressBar)
 
 const got = require(`got`)
 const createRemoteFileNode = require(`../create-remote-file-node`)
@@ -53,6 +53,7 @@ describe(`create-remote-file-node`, () => {
     cache: {},
     createNode: jest.fn(),
     createNodeId: jest.fn(),
+    reporter,
   }
 
   describe(`basic functionality`, () => {

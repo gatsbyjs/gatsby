@@ -1,9 +1,8 @@
 const ProgressBar = require(`progress`)
-const reporter = require(`gatsby-cli/lib/reporter`)
 
 // TODO remove in V3
-export function createProgress(message) {
-  if (reporter.createProgress) {
+export function createProgress(message, reporter) {
+  if (reporter && reporter.createProgress) {
     return reporter.createProgress(message)
   }
 

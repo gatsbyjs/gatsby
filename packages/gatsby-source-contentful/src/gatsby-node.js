@@ -222,6 +222,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getNodes,
+      reporter,
     })
   }
 

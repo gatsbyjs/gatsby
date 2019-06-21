@@ -23,6 +23,7 @@ exports.scheduleJob = async (
   job,
   boundActionCreators,
   pluginOptions,
+  reporter,
   reportStatus = true
 ) => {
   const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
@@ -52,7 +53,7 @@ exports.scheduleJob = async (
     deferred.reject = reject
   })
   if (totalJobs === 0) {
-    bar = createProgress(`Generating image thumbnails`)
+    bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
   }
 

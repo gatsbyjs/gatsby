@@ -31,6 +31,11 @@ let totalJobs = 0
  */
 
 /**
+ * @typedef {Reporter}
+ * @see gatsby/packages/gatsby-cli/lib/reporter.js
+ */
+
+/**
  * @typedef {Auth}
  * @type {Object}
  * @property {String} htaccess_pass
@@ -47,6 +52,7 @@ let totalJobs = 0
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
+ * @param  {Reporter} [options.reporter]
  */
 
 const CACHE_DIR = `.cache`
@@ -301,6 +307,7 @@ module.exports = ({
   createNodeId,
   ext = null,
   name = null,
+  reporter,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -331,7 +338,7 @@ module.exports = ({
   }
 
   if (totalJobs === 0) {
-    bar = createProgress(`Downloading remote files`)
+    bar = createProgress(`Downloading remote files`, reporter)
     bar.start()
   }
 

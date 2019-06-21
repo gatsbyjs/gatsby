@@ -3052,3 +3052,22 @@
     - TypeScript & Testing including some sensible TypeScript defaults, tests with @testing-library/react, pre-commit and pre-push hooks. Set up includes enums for repeating values such as font & background colours
     - Setup for a CircleCI pipeline so you can run the above tests in branches before merging to master
     - Markdown posts _and_ pages (pages don't appear in the post archive)
+- url: https://www.quietboy.net
+  repo: https://github.com/zhouyuexie/gatsby-starter-quiet
+  description: Gatsby out of the box blog, use TypeScript and highly customized style.
+  tags:
+    - TypeScript
+    - Styling:SCSS
+    - SEO
+    - Linting
+    - RSS
+    - Pagination
+    - PWA
+  features:
+    - TypeScript
+    - TsLint & Prettier
+    - Tag list
+    - Custom page layout
+    - Switch the dark mode according to the system theme
+    - Scss
+    - Pagination
