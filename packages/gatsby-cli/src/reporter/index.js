@@ -95,6 +95,10 @@ const reporter: Reporter = {
       details.error = errorMeta
       details.text = error.message
       // object with partial error info
+    } else if (arguments.length === 1 && Array.isArray(errorMeta)) {
+      errorMeta.forEach(errorItem => this.error(errorItem))
+      return
+      // details = Object.assign({}, errorMeta)
     } else if (arguments.length === 1 && typeof errorMeta === `object`) {
       details = Object.assign({}, errorMeta)
     } else if (arguments.length === 1 && typeof errorMeta === `string`) {
