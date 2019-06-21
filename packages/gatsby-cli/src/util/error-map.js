@@ -11,8 +11,9 @@ export const errorMap = {
   },
   "95313": {
     text: context =>
-      `Building static HTML failed ${context.errorPath &&
-        `for path "${context.errorPath}"`}`,
+      `Building static HTML failed${
+        context.errorPath ? ` for path "${context.errorPath}"` : ``
+      }`,
     level: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
