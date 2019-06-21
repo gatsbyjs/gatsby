@@ -15,6 +15,7 @@ import asyncRequires from "./async-requires"
 import matchPaths from "./match-paths.json"
 import loader, { setApiRunnerForLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
+import stripPrefix from "./strip-prefix"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -74,7 +75,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.findMatchPath(browserLoc.pathname) ||
+      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
