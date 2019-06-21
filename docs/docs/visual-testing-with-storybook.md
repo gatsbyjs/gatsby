@@ -117,7 +117,7 @@ config.module.rules.push({
     },
   });
   config.resolve.extensions.push('.ts', '.tsx');
-  
+
   return config
 }
 ```
