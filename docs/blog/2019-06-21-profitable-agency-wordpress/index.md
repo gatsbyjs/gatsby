@@ -98,7 +98,7 @@ Recently, premium plugin companies have discovered that the value of their softw
 
 Again, the Gatsby ecosystem is different. Like hosting, the standard pricing for third-party website services is a generous free tier.
 
-There are a dozen Gatsby-friendly form builders with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under $5.
+There are a dozen [Gatsby-friendly form builders](https://www.gatsbyjs.org/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under $5.
 
 That's amazing!
 
