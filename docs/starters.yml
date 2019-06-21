@@ -3033,3 +3033,22 @@
     - Includes plugins for offline support out of the box
     - TypeScript
     - Prettier & eslint to format & check the code
+- url: https://www.quietboy.net
+  repo: https://github.com/zhouyuexie/gatsby-starter-quiet
+  description: Gatsby out of the box blog, use TypeScript and highly customized style.
+  tags:
+    - TypeScript
+    - Styling:SCSS
+    - SEO
+    - Linting
+    - RSS
+    - Pagination
+    - PWA
+  features:
+    - TypeScript
+    - TsLint & Prettier
+    - Tag list
+    - Custom page layout
+    - Switch the dark mode according to the system theme
+    - Scss
+    - Pagination
