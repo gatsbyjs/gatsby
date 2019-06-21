@@ -77,7 +77,7 @@ const setup = (
       title={`Title for the image`}
       alt={`Alt text for the image`}
       crossOrigin={`anonymous`}
-      draggable="false"
+      draggable={true}
       {...fluid && { fluid: fluidShapeMock }}
       {...!fluid && { fixed: fixedShapeMock }}
       onLoad={onLoad}
@@ -147,7 +147,7 @@ describe(`<Image />`, () => {
     expect(imageTag.getAttribute(`alt`)).toEqual(`Alt text for the image`)
     expect(imageTag.getAttribute(`crossOrigin`)).toEqual(`anonymous`)
     expect(imageTag.getAttribute(`loading`)).toEqual(`lazy`)
-    expect(imageTag.getAttribute(`draggable`)).toEqual(`false`)
+    expect(imageTag.getAttribute(`draggable`)).toEqual(`true`)
   })
 
   it(`should have correct placeholder src, title, style and class attributes`, () => {

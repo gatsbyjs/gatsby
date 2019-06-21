@@ -674,7 +674,7 @@ Image.propTypes = {
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
-  draggable: PropTypes.oneOf([`false`, `true`]),
+  draggable: PropTypes.bool,
 }
 
 export default Image
