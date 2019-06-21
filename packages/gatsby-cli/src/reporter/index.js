@@ -85,20 +85,17 @@ const reporter: Reporter = {
 
   error(errorMeta, error) {
     let details = {}
-    // Three paths to retain backcompat
-    // string and Error
+    // Many paths to retain backcompat :scream:
     if (arguments.length === 2) {
       details.error = error
       details.text = errorMeta
-      // just an Error
     } else if (arguments.length === 1 && errorMeta instanceof Error) {
       details.error = errorMeta
-      details.text = error.message
-      // object with partial error info
+      details.text = errorMeta.message
     } else if (arguments.length === 1 && Array.isArray(errorMeta)) {
+      // when we get an array of messages, call this function once for each error
       errorMeta.forEach(errorItem => this.error(errorItem))
       return
-      // details = Object.assign({}, errorMeta)
     } else if (arguments.length === 1 && typeof errorMeta === `object`) {
       details = Object.assign({}, errorMeta)
     } else if (arguments.length === 1 && typeof errorMeta === `string`) {
