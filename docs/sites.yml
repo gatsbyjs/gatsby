@@ -6315,7 +6315,7 @@
   url: https://www.oerol.nl/nl/
   main_url: https://www.oerol.nl/en/
   description: >
-    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June.
     The ten-day festival is focused on live, public theatre as well as music and visual arts.
   categories:
     - Event
@@ -6362,4 +6362,15 @@
     - Food
   built_by: Remotely (Anders Hallundbæk)
   built_by_url: https://remotely.dk
+  featured: false
+- title: Leadership Development International
+  url: https://ldi.global
+  main_url: https://ldi.global
+  description: >
+    A DatoCMS-backed site for an education and training company based in the US, China and the UAE.
+  categories:
+    - Education
+    - Nonprofit
+  built_by: Grant Holle
+  built_by_url: https://grantholle.com
   featured: false
