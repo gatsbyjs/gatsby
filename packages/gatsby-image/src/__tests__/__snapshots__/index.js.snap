@@ -28,6 +28,7 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
       <img
         alt="Alt text for the image"
         crossorigin="anonymous"
+        draggable="true"
         height="100"
         itemprop="item-prop-for-the-image"
         loading="lazy"
@@ -73,6 +74,7 @@ exports[`<Image /> should render fixed size images 1`] = `
       <img
         alt="Alt text for the image"
         crossorigin="anonymous"
+        draggable="true"
         height="100"
         itemprop="item-prop-for-the-image"
         loading="lazy"
@@ -123,6 +125,7 @@ exports[`<Image /> should render fluid images 1`] = `
       <img
         alt="Alt text for the image"
         crossorigin="anonymous"
+        draggable="true"
         itemprop="item-prop-for-the-image"
         loading="lazy"
         sizes="(max-width: 600px) 100vw, 600px"

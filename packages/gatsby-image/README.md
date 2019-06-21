@@ -410,6 +410,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                                     |
 | `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
 | `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
+| `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
 
 ## Image processing arguments
 
