@@ -1,0 +1,275 @@
+---
+title: "Using Gatsby-Image With Your Site Tutorial"
+---
+
+### Setting Expectations
+
+This tutorial assumes you already have a gatsby project up and running as well as images you'd like to render on your page.
+
+In this tutorial we'll review how to set up `gatsby-image`, a number of ways to use the plugin and some gotchas. Note that this tutorial is using examples of static content stored in yaml files, but similar methods can be used for markdown files.
+
+### Getting started
+
+Image optimization in Gatsby is provided by a plugin called `gatsby-image` which is incredibly performant. In order to make use of it you'll start by using npm to install that plugin and its associated dependencies.
+
+```
+npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
+```
+
+Once that's done, you want to add the newly installed plugins to you `gatsby-config.js` file. The config file ends up looking like this (other plugins already in use have been removed from this snippet for simplicity). Note that once `gatsby-image` has been installed it does not need to be included in the gatsby-config.js file.
+
+```jsx
+plugins: [`gatsby-transformer-sharp`, `gatsby-plugin-sharp`]
+```
+
+### Gatsby-image Configuration
+
+Now you're set up to use `gatsby-image`. The first thing to do determine where your image files are located. In this example they're in `src/data`.
+
+If you haven't already, make sure that your project is set up to see content inside that directory. That means doing two things. If you created your project using `gatsby new <name>` then the first step is already done for you.
+
+```
+npm install gatsby-source-filesystem
+```
+
+The second step is to make sure your `gatsby-config.js` file specifies the correct folder. In this example it would look like this.
+
+```jsx
+{ resolve: `gatsby-source-filesystem`,
+    options: { path: `./src/data/` }
+}
+```
+
+Now you're ready to go.
+
+### Single Image Query
+
+Your first option is to use `graphql` to query an image file directly. You can include the relative path to the image file and determine how you want `gatsby-image` to process the file.
+
+```jsx
+export const query = graphql`
+  query {
+    file(relativePath: { eq: "headers/headshot.jpg" }) {
+      childImageSharp {
+        fixed(width: 125, height: 125) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`
+```
+
+There are a couple of things to note here. You might expect the relative path to be relative to the file the code sits in, in this case that's index.js. However, that doesn't work. The relative path is actually based on the line of code you put in the `gatsby-source-filesystem` config, which points to `src/data`.
+
+Another thing to note is that this query is using `GatsbyImageSharpFixed`. Another option is `GatsbyImageSharpFluid` which will not take specific dimension specifications. In `gatsby-image`, fluid images are meant for images that don’t have a finite size depending on the screen, where as other images are fixed.
+
+The query will return a processed image at the highest depth. The result will be automatically passed into the component and attached to `data`. Using JSX you can display the image.
+
+Start by importing the image tag provided by `gatsby-image`.
+
+```jsx
+import Img from "gatsby-image"
+```
+
+Now you can use it. Note that the key for pointing to the image corresponds to the way in which the image was processed. In this example that is `fixed`.
+
+```jsx
+<Img
+  className="headshot"
+  fixed={data.file.childImageSharp.fixed}
+  alt="headshot"
+/>
+```
+
+### Querying Yaml
+
+Another way to access images is through yaml (or markdown). This example uses the `gatsby-transformer-yaml` plugin to query the yaml files. More information about that plugin can be found [here](https://www.gatsbyjs.org/packages/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
+
+A brief example of a yaml query is this.
+
+```jsx
+{
+    allSpeakingYaml {
+        edges {
+            node {
+                conference
+                year
+            }
+        }
+    }
+}
+```
+
+In this case the query starts with `allSpeakingYaml` to direct `graphql` to look for this data in the speaking.yaml file. If you want to query a file named blog.yaml, for example, you'd start the query with allBlogYaml.
+
+A common error with this is `Unknown field allSpeakingYaml on type Query`. What the error boils down to is that `graphql` is unable to find a matching result. This can mean it couldn't find a file that matched the first line, meaning that no `speaking.yaml` file exists. It can also be triggered by finding the file but not the associated content structure the query asks for. Yet another way to find this error is by leaving out the system-file plugin; without it, the folder that holds the data is not visible to `graphql` and it will throw the same error.
+
+### Yaml and Images
+
+In order to reference your images in yaml make sure that the relative path is accurate. The path to the image should be relative to the location of the `.yaml` file pointing to it. And all of these files need to be in a directory visible to the `gatsby-source-filesystem` plugin.
+
+The inside of the yaml file would look something like this.
+
+```
+- image: speaking/kcdc.jpg
+```
+
+Now, you can create the query. Similar to the single use example above, you can use `gatsby-image` features inside the query. When the query runs, the relative path will point to the location of the image file and the resulting query processes the file as an image for display.
+
+```jsx
+{
+    allSpeakingYaml {
+        edges {
+            node {
+                image {
+                    childImageSharp {
+                        fluid {
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Since the images are stored as part of an array, they can be accessed using the map function in JSX. As with the single image example, the actual processed image is at the `...GatsbyImageSharpFluid` level.
+
+```jsx
+<Img
+  className="selfie"
+  fluid={node.image.childImageSharp.fluid}
+  alt={node.conference}
+/>
+```
+
+### Static Query
+
+If your query is part of a reusable component you may want to use a Static Query hook. The code necessary to do this is almost the same as the single image use case above.
+
+```jsx
+export default () => {
+  const data = useStaticQuery(graphql`
+    query {
+      file(relativePath: { eq: "headers/default.jpg" }) {
+        childImageSharp {
+          fixed(width: 125, height: 125) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+    }
+  `)
+
+  return <Img fixed={data.file.childImageSharp.fixed} />
+}
+```
+
+Instead of a query constant and data that references the result, you can use a static query hook directly in the JXS code and then reference it. Note that the query language didn’t change and neither did the `Img` tag syntax, the only change was the location of the query and the usage of the `useStaticQuery` function to wrap it.
+
+### Multiple Queries and Aliasing
+
+The last use case you may come across is how to handle a situation where you have multiple queries in the same file/page.
+
+This example is attempting to query for all the data in `speaking.yaml` and the direct file query in our first example. In order to do this you want to use aliasing.
+
+The first thing to know is that an alias is assigning a name to a query. Below is a simple example.
+
+```jsx
+talks: allSpeakingYaml {
+        edges {
+            node {
+                image {
+                    childImageSharp {
+                        fluid {
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+When you do that, you’ve changed the reference to that object in your JSX. While it was previously referenced as
+
+```jsx
+{data.allSpeakingYaml.edges.map(({ node }) => ())
+```
+
+giving it an alias does not add a level of complexity to the response object, it just replaces it. So you end up with the same structure referenced as
+
+```jsx
+{data.talks.edges.map(({ node }) => ())
+```
+
+The top-level object name of data is implicit. This is important because when you conduct multiple queries as part of a single component `Gatsby` still passes the entire result to the component.
+
+```jsx
+const SpeakingPage = ({ data}) => {})
+```
+
+everything else gets referenced from that top-level return
+name.
+
+With that understanding, you can combine two queries and use aliasing to distinguish between them.
+
+```jsx
+{
+    allSpeakingYaml {
+        edges {
+            node {
+                image {
+                    childImageSharp {
+                        fluid {
+                            ...GatsbyImageSharpFluid
+                        }
+                    }
+                }
+            }
+        }
+    }
+    banner: file(relativePath: { eq: "headers/default.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+  }
+}
+```
+
+Notice that this example uses aliasing for one query and not the other. This is allowed; there is no requirement that all your queries use aliasing. In this case, the JSX would look like this to access the `speaking.yaml` content.
+
+```jsx
+{data.allSpeakingYaml.edges.map(({ node }) => ())
+```
+
+And then like this to access the image using the alias name `banner`.
+
+```jsx
+<Img fluid={data.banner.childImageSharp.fluid} />
+```
+
+### Aspect Ratio
+
+These examples should handle a fair number of your use cases. A couple bonus things. First, `gatsby-image` has a nice feature that gives you the ability to set an aspect ratio. This can be used for fixed or fluid processed images, it doesn't matter.
+
+```jsx
+<Img sizes={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
+```
+
+### Bonus Error
+
+Now for errors to watch out for. If you change your image processing from `fixed` to `fluid` you may see this error.
+
+![In image cache error message.](https://tenmilesquare.com/wp-content/uploads/2019/02/Screen-Shot-2019-02-18-at-11.46.03-AM-1024x212.png)
+
+Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or visa versa.
+
+### The End
+
+So that's it. This post included a number of different possible use cases, so don't feel as if you need to explore them all. Pick the examples and tips that apply to your implementation.
