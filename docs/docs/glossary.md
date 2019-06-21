@@ -71,6 +71,10 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites metadata that can power your SEO meta tags.
 
+### CSS
+
+[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) stands for Cascading Style Sheets, and it's a major part of the Web Platform along with [HTML](#html) and [JavaScript](#javascript). CSS is a language for styling webpages that was designed to be highly backwards-compatible. As new features are developed and rolled out to end-users, various [CSS parsers](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#CSS_parsing) in their browsers can safely ignore unsupported features and enhance pages with the styling properties they do support. CSS accomplishes this with its _cascading_ design and linear order of operations, and is fundamental to styling with new techniques like [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement) while providing fallbacks for older browsers.
+
 ## D
 
 ### Data Source
@@ -121,7 +125,7 @@ The way files are organized. With Gatsby, it means having files in the same plac
 
 ### Frontend
 
-The [public-facing](#public) interface for your website or app, delivered using web technologies: HTML, CSS, and JavaScript.
+The [public-facing](#public) interface for your website or app, delivered using web technologies: HTML, CSS, and JavaScript. For more insight into how the Web Platform brings these technologies together, check out this article on [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/).
 
 ## G
 
@@ -224,6 +228,10 @@ The [environment](#environment) for the [built](#build) website or app that user
 ### Programmatically
 
 Something that automatically happens based on your code and configuration. For example, you might [configure](#config) your project to create a [page](#page) for every blog post written, or read and display the current year as part of a copyright in your site footer.
+
+### Progressive enhancement
+
+Progressive enhancement is a strategy for the web that emphasizes core page content is loaded from a server before anything else, without [JavaScript](#javascript) as a requirement to load. This strategy then progressively adds more complex layers of presentation and features on top of the content as the end-user's browser/network connection allow. Gatsby's default approach to [building](#build) pages ahead-of-time means content will load first and enhance as scripts download and execute.
 
 ### Public
 
