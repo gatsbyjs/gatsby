@@ -3,9 +3,25 @@ import path from "path"
 import { Color, Box } from "ink"
 import { get } from "lodash"
 
-const File = ({ filePath }) => (
-  <Color blue>{path.relative(process.cwd(), filePath)}</Color>
-)
+const File = ({ filePath, location }) => {
+  const lineNumber = get(location, `start.line`)
+
+  let locString = ``
+  if (lineNumber) {
+    locString += `:${lineNumber}`
+    const columnNumber = get(location, `start.column`)
+    if (columnNumber) {
+      locString += `:${columnNumber}`
+    }
+  }
+
+  return (
+    <Color blue>
+      {path.relative(process.cwd(), filePath)}
+      {locString}
+    </Color>
+  )
+}
 
 const Error = ({ details }) => {
   const origError = get(details, `error.message`, null)
@@ -28,7 +44,8 @@ const Error = ({ details }) => {
           <Box marginTop={1}>{details.text}</Box>
           {details.filePath && (
             <Box marginTop={1}>
-              File: <File filePath={details.filePath} />
+              File:{` `}
+              <File filePath={details.filePath} location={details.location} />
             </Box>
           )}
         </Box>
