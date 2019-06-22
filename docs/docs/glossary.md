@@ -83,7 +83,7 @@ Content and data's origin point, typically integrated into Gatsby with [source p
 
 ### Database
 
-A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database using [back-end technologies](#backend). They're often accessed in Gatsby via a [source plugin](#source-plugin)
+A database is a structured collection of data or content. Often a [CMS](#cms) will save to a database using [backend technologies](#backend). They're often accessed in Gatsby via a [source plugin](#source-plugin)
 
 ### Decoupled
 
