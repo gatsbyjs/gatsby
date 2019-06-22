@@ -87,7 +87,7 @@ A database is a structured collection of data or content. Often a [CMS](#cms) wi
 
 ### Decoupled
 
-Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [Front-End](#frontend) from the [Back-End](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless Wordpress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
+Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless Wordpress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
 
 ### Deploy
 
