@@ -145,7 +145,7 @@ A markup language that every web browser is able to understand. It stands for Hy
 
 ### Headless CMS
 
-A [CMS](#cms) that only handles the [backend](#backend) content management instead of handling both the back-end and [frontend](#frontend). This type of setup is also referred to as [Decoupled](#decoupled).
+A [CMS](#cms) that only handles the [backend](#backend) content management instead of handling both the backend and [frontend](#frontend). This type of setup is also referred to as [Decoupled](#decoupled).
 
 ### Hosting
 
