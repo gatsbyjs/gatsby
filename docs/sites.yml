@@ -6392,3 +6392,16 @@
     - Streaming
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: nehalist.io
+  main_url: https://nehalist.io
+  url: https://nehalist.io
+  source_url: https://github.com/nehalist/nehalist.io
+  description: >
+    nehalist.io is a blog about software development, technology and all that kind of geeky stuff.
+  categories:
+    - Blog
+    - Web Development
+    - Open Source
+  built_by: Kevin Hirczy
+  built_by_url: https://nehalist.io
+  featured: false
