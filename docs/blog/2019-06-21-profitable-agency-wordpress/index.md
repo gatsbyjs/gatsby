@@ -29,11 +29,11 @@ You know what I'm talking about. Their conference slide decks always have the sa
 
 Skeptical minds in the audience might sit back and laugh each time:
 
-*Slow?* C'mon now. You're able to get load time for your client sites down to less than 2 seconds and even faster, thanks to caching and image optimization and CDN services.
+_Slow?_ C'mon now. You're able to get load time for your client sites down to less than 2 seconds and even faster, thanks to caching and image optimization and CDN services.
 
-*Not secure?* Hold up. You haven't had a site get hacked this decade. You use quality hosting, reputable plugins, and you've turned on automatic core updates. Plus, you create daily off-site backups just in case.
+_Not secure?_ Hold up. You haven't had a site get hacked this decade. You use quality hosting, reputable plugins, and you've turned on automatic core updates. Plus, you create daily off-site backups just in case.
 
-*And old!?* Not in your experience. You feel like a kid in a candy store, surrounded by all of the innovation WordPress has rolled out the last few years. You've barely taste-tested the WordPress Rest API, or the new React-powered content editor.
+_And old!?_ Not in your experience. You feel like a kid in a candy store, surrounded by all of the innovation WordPress has rolled out the last few years. You've barely taste-tested the WordPress Rest API, or the new React-powered content editor.
 
 So if you're a WordPress Developer and you've dismissed Gatsby as this year's NewThing, then I get it.
 
@@ -45,13 +45,13 @@ I think you may be surprised. I was skeptical myself, but I found one real diffe
 
 That means more money in your pocket. Or more value and services you can pass on to your clients.
 
-Before we dive into specific areas where costs are lower, let's level set. The WordPress community is huge, and even the title "WordPress Developer" is expansive.  This article is for you if you work independently or at a small agency with a business model of not just building new sites, but maintaining them over time. If the lion's share of your revenue comes from the end-to-end management of sites, with clients paying your retainer, then Gatsby is worth your consideration.
+Before we dive into specific areas where costs are lower, let's level set. The WordPress community is huge, and even the title "WordPress Developer" is expansive. This article is for you if you work independently or at a small agency with a business model of not just building new sites, but maintaining them over time. If the lion's share of your revenue comes from the end-to-end management of sites, with clients paying your retainer, then Gatsby is worth your consideration.
 
 However, if your job is to build custom WordPress solutions for large sites, then never deal with them again, the cost savings I lay out may not matter as much to you.
 
-## Hosting for Gatsby sites starts at $0
+## Hosting for Gatsby sites starts at \$0
 
-Last year I built a WordPress website for an event. I used a few popular membership and ecommerce plugins to get the job done.  The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
+Last year I built a WordPress website for an event. I used a few popular membership and ecommerce plugins to get the job done. The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
 
 I even collected an affiliate fee from the server host. Again, if site maintenance is your bread-and-butter, then you know this model. Every nickel counts.
 
@@ -59,7 +59,7 @@ After the event, my client no longer needed the membership and ecommerce feature
 
 The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing/)
 
-That project opened my eyes. The client had a low traffic website, and they barely used the membership and ecommerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at $115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
+That project opened my eyes. The client had a low traffic website, and they barely used the membership and ecommerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
 
 The cheaper hosting for static sites, like the ones Gatsby can produce, can be a game changer for your business model. That's because the client is willing to pay for an all-inclusive package, and doesn't care if you use an inexpensive static site host, or a costly WordPress host. By making the right choice your profit can increase from day one, and accelerate if you keep the project over months or years.
 
@@ -79,14 +79,13 @@ I know. It's that random bug or issue that takes hours or days longer to fix tha
 
 I once discovered a bug caused by a page builder plugin update that prevented a theme from displaying comments. I spent half a day sussing out the culprit, then another day getting the page builder's support team to take responsibility and recognize it as a true bug. Then a week later it was fixed.
 
-Because WordPress plugins are writing to the same database, using the same platform functions, and jockeying for space in the same admin area, the permutations of potential problems is high.  And solving issues can take a lot of time.  Also, unless you lock down your WordPress projects with as little user privileges as possible, then you're sure to get a call every so often about something your client broke themself.
+Because WordPress plugins are writing to the same database, using the same platform functions, and jockeying for space in the same admin area, the permutations of potential problems is high. And solving issues can take a lot of time. Also, unless you lock down your WordPress projects with as little user privileges as possible, then you're sure to get a call every so often about something your client broke themself.
 
 Gatsby is different. Consider this example:
 
 If your client needs ecommerce features on their site, Gatsby can pull in the product data and shopping cart functionality from two different services, if you so choose. Those two services are not produced by the same server, or writing to the same database. So a problem with one may not affect the other.
 
 In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue with the build has nothing to do with a problem with the front-end, and vice versa. Gatsby's lower technical maintenance may be the difference between you taking on 5 client sites or 15.
-
 
 > Personally I keep forgetting about the static sites under my care because there's literally nothing to work on for them month-to-month.
 
@@ -98,17 +97,17 @@ Recently, premium plugin companies have discovered that the value of their softw
 
 Again, the Gatsby ecosystem is different. Like hosting, the standard pricing for third-party website services is a generous free tier.
 
-There are a dozen [Gatsby-friendly form builders](https://www.gatsbyjs.org/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under $5.
+There are a dozen [Gatsby-friendly form builders](https://www.gatsbyjs.org/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under \$5.
 
 That's amazing!
 
 ## The bottom line - Gatsby will make your agency more profitable
 
-Brian Webster of  Delicious Simplicity shared that using Gatsby for client sites has enabled him to win more bids, because the cost is lower.
+Brian Webster of Delicious Simplicity shared that using Gatsby for client sites has enabled him to win more bids, because the cost is lower.
 
 [Says Brian](https://youtu.be/EfHPJK1TVmM):
 
-> "We're noticing an amazing thing happening when we're pitching clients and they hear about this tech stack. And as a result we're actually seeing our S.O.'s winning a lot more bids. There's a project I think we're going to move forward on and  our budget came in significantly less than their three competing bids."
+> "We're noticing an amazing thing happening when we're pitching clients and they hear about this tech stack. And as a result we're actually seeing our S.O.'s winning a lot more bids. There's a project I think we're going to move forward on and our budget came in significantly less than their three competing bids."
 
 Brian's prospective client even tried to ask his competition if they could match his approach. The competitors balked. If those shops don't adopt Gatsby, or something like it, they're going to lose a lot more business in the coming years.
 
