@@ -6356,6 +6356,17 @@
   built_by: Remotely (Anders Hallundbæk)
   built_by_url: https://remotely.dk
   featured: false
+- title: Leadership Development International
+  url: https://ldi.global
+  main_url: https://ldi.global
+  description: >
+    A DatoCMS-backed site for an education and training company based in the US, China and the UAE.
+  categories:
+    - Education
+    - Nonprofit
+  built_by: Grant Holle
+  built_by_url: https://grantholle.com
+  featured: false
 - title: Canvas 1839
   main_url: "https://www.canvas1839.com/"
   url: "https://www.canvas1839.com/"
