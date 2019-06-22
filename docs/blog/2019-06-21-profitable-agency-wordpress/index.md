@@ -19,7 +19,7 @@ If yes, then you can relate to this. Every off-year we're greeted by a sales pit
 
 You know what I'm talking about. Their conference slide decks always have the same structure:
 
-### SLIDE 1: WordPress is slow.
+## SLIDE 1: WordPress is slow.
 
 ## SLIDE 2: WordPress is not secure.
 
