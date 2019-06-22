@@ -7,17 +7,28 @@ import { createRemoteFileNode } from "gatsby-source-filesystem"
 const TYPE_PREFIX = `Shopify`
 
 // Node types
-const ARTICLE = `Article`
-const BLOG = `Blog`
-const COLLECTION = `Collection`
-const COMMENT = `Comment`
-const PRODUCT = `Product`
-const PRODUCT_OPTION = `ProductOption`
-const PRODUCT_VARIANT = `ProductVariant`
-const PRODUCT_METAFIELD = `ProductMetafield`
-const SHOP_POLICY = `ShopPolicy`
-const PRODUCT_TYPE = `ProductType`
-const PAGE = `Page`
+export const ARTICLE = `Article`
+export const BLOG = `Blog`
+export const COLLECTION = `Collection`
+export const COMMENT = `Comment`
+export const PRODUCT = `Product`
+export const PRODUCT_OPTION = `ProductOption`
+export const PRODUCT_VARIANT = `ProductVariant`
+export const PRODUCT_METAFIELD = `ProductMetafield`
+export const SHOP_POLICY = `ShopPolicy`
+export const PRODUCT_TYPE = `ProductType`
+export const PAGE = `Page`
+export const SHOP = `shop`
+export const CONTENT = `content`
+
+export const NODE_TO_ENDPOINT_MAPPING = {
+  [ARTICLE]: `articles`,
+  [BLOG]: `blogs`,
+  [COLLECTION]: `collections`,
+  [PRODUCT]: `products`,
+  [PRODUCT_TYPE]: `productTypes`,
+  [PAGE]: `pages`,
+}
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
