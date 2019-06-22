@@ -3071,7 +3071,7 @@
     - Switch the dark mode according to the system theme
     - Scss
     - Pagination
-url: https://anubhavsrivastava.github.io/gatsby-starter-resume
+- url: https://anubhavsrivastava.github.io/gatsby-starter-resume
   repo: https://github.com/anubhavsrivastava/gatsby-starter-resume
   description: Single page starter based on the Resume site template by startbootstrap for resume/portfolio page
   tags:
