@@ -33,6 +33,7 @@ export interface CreateRemoteFileNodeArgs {
   httpHeaders?: object
   ext?: string
   name?: string
+  reporter: object
 }
 
 export interface FileSystemNode extends Node {

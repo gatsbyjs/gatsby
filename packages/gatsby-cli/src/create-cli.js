@@ -340,12 +340,10 @@ module.exports = argv => {
     .command({
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
-      handler: handlerP(
-        ({ rootPath, starter = `gatsbyjs/gatsby-starter-default` }) => {
-          const initStarter = require(`./init-starter`)
-          return initStarter(starter, { rootPath })
-        }
-      ),
+      handler: handlerP(({ rootPath, starter }) => {
+        const initStarter = require(`./init-starter`)
+        return initStarter(starter, { rootPath })
+      }),
     })
     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
       yargs

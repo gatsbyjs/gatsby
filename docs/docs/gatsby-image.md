@@ -67,20 +67,22 @@ Automatically create images for different resolutions at a set width or height â
 Once you've queried for a `fixed` image to retrieve its data, you can pass that data into the `Img` component:
 
 ```jsx
-import { useStaticQuery } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 export default () => {
-  const data = useStaticQuery(query`
-    file(relativePath: { eq: "images/default.jpg" }) {
-      childImageSharp {
-        # Specify a fixed image and fragment.
-        # The default width is 400 pixels
-        // highlight-start
-        fixed {
-          ...GatsbyImageSharpFixed
+  const data = useStaticQuery(graphql`
+    query {
+      file(relativePath: { eq: "images/default.jpg" }) {
+        childImageSharp {
+          # Specify a fixed image and fragment.
+          # The default width is 400 pixelss
+          // highlight-start
+          fixed {
+            ...GatsbyImageSharpFixed
+          }
+          // highlight-end
         }
-        // highlight-end
       }
     }
   `)
@@ -136,20 +138,22 @@ Create flexible sizes for an image that stretches to fill its container. E.g. fo
 Once you've queried for a `fluid` image to retrieve its data, you can pass that data into the `Img` component:
 
 ```jsx
-import { useStaticQuery } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 export default () => {
-  const data = useStaticQuery(query`
-    file(relativePath: { eq: "images/default.jpg" }) {
-      childImageSharp {
-        # Specify a fluid image and fragment
-        # The default maxWidth is 800 pixels
-        // highlight-start
-        fluid {
-          ...GatsbyImageSharpFluid
+  const data = useStaticQuery(graphql`
+    query {
+      file(relativePath: { eq: "images/default.jpg" }) {
+        childImageSharp {
+          # Specify a fluid image and fragment
+          # The default maxWidth is 800 pixels
+          // highlight-start
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+          // highlight-end
         }
-        // highlight-end
       }
     }
   `)

@@ -165,7 +165,7 @@ exports.onCreateWebpackConfig = (
        * Without this, node can get out of memory errors
        * when building for production.
        */
-      minimizer: gatsbyConfig.optimization.minimizer,
+      minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
     },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
   }

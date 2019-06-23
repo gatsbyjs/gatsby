@@ -2,7 +2,7 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import {
   space,
-  fontSizes,
+  fontSizes as fontSizeTokens,
   colors,
   transition,
   radii,
@@ -12,6 +12,8 @@ import {
   fonts,
   fontWeights,
 } from "./tokens"
+
+const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
 
 const _options = {
   bodyFontFamily: fonts.system,
@@ -24,6 +26,7 @@ const _options = {
   overrideStyles: ({ rhythm }) => {
     return {
       html: {
+        backgroundColor: colors.white,
         WebkitFontSmoothing: `antialiased`,
         MozOsxFontSmoothing: `grayscale`,
       },
@@ -134,6 +137,12 @@ const _options = {
         content: `'css'`,
         background: `#ff9800`,
         color: colors.white,
+      },
+      ".gatsby-highlight pre[class='language-mdx']::before": {
+        content: `'mdx'`,
+        background: `#f9ac00`,
+        color: colors.white,
+        fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-shell']::before": {
         content: `'shell'`,
