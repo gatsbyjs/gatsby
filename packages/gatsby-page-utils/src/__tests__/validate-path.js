@@ -1,7 +1,6 @@
 const validatePath = require(`../validate-path`)
-const createPath = require(`../create-path`)
 
-describe(`JavaScript page creator`, () => {
+describe(`validatePath`, () => {
   it(`includes the correct file types`, () => {
     const validFiles = [
       { path: `test1.js` },
@@ -115,13 +114,5 @@ describe(`JavaScript page creator`, () => {
     expect(validFiles.filter(file => validatePath(file.path))).toEqual(
       validFiles
     )
-  })
-
-  describe(`create-path`, () => {
-    it(`should create unix paths`, () => {
-      const paths = [`b/c/de`, `bee`, `b/d/c/`]
-
-      expect(paths.map(p => createPath(p))).toMatchSnapshot()
-    })
   })
 })

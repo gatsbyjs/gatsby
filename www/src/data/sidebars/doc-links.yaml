@@ -281,6 +281,8 @@
               link: /docs/building-a-site-with-authentication/
             - title: Adding Forms
               link: /docs/adding-forms/
+            - title: Building a Contact Form
+              link: /docs/building-a-contact-form
             - title: Adding a 404 Page
               link: /docs/add-404-page/
             - title: Adding an SEO Component

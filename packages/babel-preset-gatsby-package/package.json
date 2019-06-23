@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -12,5 +12,8 @@
     "@babel/preset-react": "^7.0.0"
   },
   "license": "MIT",
-  "main": "index.js"
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.0.0"
+  }
 }
