@@ -3086,4 +3086,3 @@
     - Detailed guide on how to deploy using AWS S3 buckets included in README
     - .gitlab-ci.yml file with blanks that can be customized for any Gatsby project
     - Configurations for EditorConfig, Prettier, and ESLint (for TypeScript)
-    
