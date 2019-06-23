@@ -7,6 +7,12 @@ Object {
   },
   "filePath": "test.js",
   "id": "85901",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
 }
 `;
 
@@ -17,5 +23,11 @@ Object {
   },
   "filePath": "test.js",
   "id": "85907",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
 }
 `;

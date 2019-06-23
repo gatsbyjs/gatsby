@@ -5,7 +5,7 @@ const Position = Joi.object().keys({
   column: Joi.number(),
 })
 
-export const errorSchema = Joi.object().keys({
+const errorSchema = Joi.object().keys({
   id: Joi.string(),
   text: Joi.string(),
   stack: Joi.array().items(Joi.object({}).unknown()),
@@ -23,3 +23,5 @@ export const errorSchema = Joi.object().keys({
   error: Joi.object({}).unknown(),
   context: Joi.object({}).unknown(),
 })
+
+module.exports = errorSchema

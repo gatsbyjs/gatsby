@@ -6,38 +6,10 @@ const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
 const reporterInstance = require(`./reporters`)
-const stackTrace = require(`stack-trace`)
-const { errorMap, defaultError } = require(`../util/error-map`)
-const { errorSchema } = require(`../util/error-schema`)
-const Joi = require(`joi`)
+const constructError = require(`../structured-errors/construct-error`)
 const errorFormatter = getErrorFormatter()
-import { get } from "lodash"
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
-
-// Merge partial error details with information from the errorMap
-// Validate the constructed object against an error schema
-const createRichError = params => {
-  const { details } = params
-  const result = (details.id && errorMap[details.id]) || defaultError
-
-  // merge details and lookedup error
-  const richError = {
-    ...details,
-    ...result,
-    text: get(details, `text`) || result.text(details.context),
-    stack: details.error ? stackTrace.parse(details.error) : [],
-  }
-
-  // validate against schema
-  const { error } = Joi.validate(richError, errorSchema)
-  if (error !== null) {
-    console.log(`Failed to validate error`, error)
-    process.exit(1)
-  }
-
-  return richError
-}
 
 /**
  * Reporter module.
@@ -102,13 +74,14 @@ const reporter: Reporter = {
       details.text = errorMeta
     }
 
-    const richError = createRichError({ details })
-
-    if (richError) reporterInstance.error(richError)
+    const structuredError = constructError({ details })
+    if (structuredError) reporterInstance.error(structuredError)
 
     // TODO: remove this once Error component can render this info
     // log formatted stacktrace
-    if (richError.error) this.log(errorFormatter.render(richError.error))
+    if (structuredError.error) {
+      this.log(errorFormatter.render(structuredError.error))
+    }
   },
 
   /**

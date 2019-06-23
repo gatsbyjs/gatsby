@@ -1,4 +1,4 @@
-export const errorMap = {
+const errorMap = {
   default: {
     text: () => `You found an unknown error`,
     level: `ERROR`,
@@ -52,4 +52,4 @@ export const errorMap = {
   },
 }
 
-export const defaultError = errorMap.default
+module.exports = { errorMap, defaultError: errorMap.default }

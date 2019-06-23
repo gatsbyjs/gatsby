@@ -39,7 +39,7 @@ Object {
 }
 `;
 
-exports[`report.error handles "richError" signature correctly 1`] = `
+exports[`report.error handles "structuredError" signature correctly 1`] = `
 Object {
   "docsUrl": "https://gatsby.dev/debug-html",
   "id": "95312",
