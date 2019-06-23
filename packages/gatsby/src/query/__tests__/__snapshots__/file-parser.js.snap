@@ -48,6 +48,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 6,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 2,
+          },
+        },
+        "text": "
+query PageQueryName {
+  foo
+}
+",
         "variableDefinitions": Array [],
       },
     ],
@@ -95,6 +111,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 6,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 31,
+            "line": 2,
+          },
+        },
+        "text": "
+query {
+  foo
+}
+",
         "variableDefinitions": Array [],
       },
     ],
@@ -408,6 +440,18 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 60,
+            "line": 8,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 8,
+          },
+        },
+        "text": "query PageQueryName { foo }",
         "variableDefinitions": Array [],
       },
     ],
@@ -458,6 +502,25 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 9,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "text": "
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -517,6 +580,25 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 9,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "text": "
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -576,6 +658,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 14,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 10,
+          },
+        },
+        "text": "
+  fragment Fragment3 on RootQueryField {
+    baz
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
