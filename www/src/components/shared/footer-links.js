@@ -21,12 +21,12 @@ const FooterList = styled.ul`
 
     &:not(:last-of-type) {
       margin-right: 1em;
-    }
 
-    &:not(:last-of-type):after {
-      color: ${colors.grey[30]};
-      content: "•";
-      padding-left: 1em;
+      &:after {
+        color: ${colors.grey[30]};
+        content: "•";
+        padding-left: 1em;
+      }
     }
 
     a {
