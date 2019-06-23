@@ -186,7 +186,6 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
       fontWeight: `normal`,
       textTransform: `uppercase`,
       letterSpacing: letterSpacings.tracked,
-      textRendering: `optimizelegibility`,
       margin: 0,
       ...(item.level === 0 && { ...styles.level0 }),
       color:

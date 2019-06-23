@@ -88,6 +88,8 @@
               link: /docs/working-with-video/
             - title: Importing Media Content
               link: /docs/importing-media-content/
+            - title: Working with GIFs
+              link: /docs/working-with-gifs/
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
@@ -208,14 +210,18 @@
               items:
                 - title: Typography.js
                   link: /docs/typography-js/
+                - title: Using Sass
+                  link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
                 - title: Using TailwindCSS
                   link: /docs/tailwind-css/
-        - title: Adding Components to Content with MDX
+                - title: Using Bulma
+                  link: /docs/bulma/
+        - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           items:
-            - title: Getting Started
+            - title: Getting Started with MDX
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
@@ -275,6 +281,8 @@
               link: /docs/building-a-site-with-authentication/
             - title: Adding Forms
               link: /docs/adding-forms/
+            - title: Building a Contact Form
+              link: /docs/building-a-contact-form
             - title: Adding a 404 Page
               link: /docs/add-404-page/
             - title: Adding an SEO Component
@@ -337,11 +345,18 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
+        - title: Porting to Gatsby
+          link: /docs/porting-to-gatsby/
+          items:
+            - title: Porting from Create React App to Gatsby
+              link: /docs/porting-from-create-react-app-to-gatsby/
     - title: Gatsby API
       link: /docs/api-reference/
       items:
         - title: Gatsby Link
           link: /docs/gatsby-link/
+        - title: Gatsby Image
+          link: /docs/gatsby-image/
         - title: Gatsby Config
           link: /docs/gatsby-config/
         - title: Gatsby Node APIs
@@ -442,7 +457,7 @@
           link: /docs/resource-handling-and-service-workers/
         - title: Data Storage (Redux)*
           link: /docs/data-storage-redux/
-        - title: Build Caching*
+        - title: Build Caching
           link: /docs/build-caching/
         - title: Terminology
           link: /docs/gatsby-internals-terminology/
@@ -453,12 +468,10 @@
           link: /docs/convincing-others/
         - title: Your First Professional Project
           link: /docs/first-professional-project/
-        - title: Setting Up Gatsby Without Gatsby New
-          link: /docs/setting-up-gatsby-without-gatsby-new
         - title: Winning Over Different Stakeholders
           link: /docs/winning-over-stakeholders/
           items:
-            - title: Developers*
+            - title: Developers
               link: /docs/winning-over-developers/
             - title: Engineering Leaders*
               link: /docs/winning-over-engineering-leaders/
@@ -491,6 +504,8 @@
               items:
                 - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
+                - title: Setting Up Gatsby Without Gatsby New
+                  link: /docs/setting-up-gatsby-without-gatsby-new
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:
@@ -517,8 +532,6 @@
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
-    - title: Advanced Tutorials
-      link: /tutorial/advanced-tutorials/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet

@@ -50,6 +50,7 @@ class Plugins extends Component {
             <h1
               css={{
                 fontSize: fontSizes[6],
+                fontWeight: `700`,
                 marginLeft: space[5],
                 marginRight: space[5],
                 marginBottom: 0,

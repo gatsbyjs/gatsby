@@ -816,6 +816,212 @@ Object {
         expect(results.data).toEqual(expected)
       })
 
+      it(`handles groups added in fragment`, async () => {
+        const query = `
+          fragment GroupTest on MarkdownConnection {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              edges {
+                node {
+                  frontmatter {
+                    title
+                    date(formatString: "YYYY-MM-DD")
+                  }
+                }
+              }
+            }
+          }
+
+          {
+            allMarkdown {
+              ...GroupTest
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "group": Array [
+      Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": "2019-01-01",
+                "title": "Markdown File 1",
+              },
+            },
+          },
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": null,
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        ],
+        "fieldValue": "Author 1",
+      },
+      Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": "2019-01-01",
+                "title": "Markdown File 1",
+              },
+            },
+          },
+        ],
+        "fieldValue": "Author 2",
+      },
+    ],
+  },
+}
+`)
+      })
+
+      it(`handles groups added in inline fragment`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              ... on MarkdownConnection {
+                group(field: frontmatter___authors___name) {
+                  fieldValue
+                  edges {
+                    node {
+                      frontmatter {
+                        title
+                        date(formatString: "YYYY-MM-DD")
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "group": Array [
+      Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": "2019-01-01",
+                "title": "Markdown File 1",
+              },
+            },
+          },
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": null,
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        ],
+        "fieldValue": "Author 1",
+      },
+      Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": "2019-01-01",
+                "title": "Markdown File 1",
+              },
+            },
+          },
+        ],
+        "fieldValue": "Author 2",
+      },
+    ],
+  },
+}
+`)
+      })
+
+      it(`handles groups added in nested fragment`, async () => {
+        const query = `
+          fragment GroupTest on MarkdownConnection {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              edges {
+                node {
+                  frontmatter {
+                    title
+                    date(formatString: "YYYY-MM-DD")
+                  }
+                }
+              }
+            }
+          }
+
+          fragment GroupTestWrapper on MarkdownConnection {
+            ...GroupTest
+          }
+
+          {
+            allMarkdown {
+              ...GroupTestWrapper
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toMatchInlineSnapshot(`
+Object {
+  "allMarkdown": Object {
+    "group": Array [
+      Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": "2019-01-01",
+                "title": "Markdown File 1",
+              },
+            },
+          },
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": null,
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        ],
+        "fieldValue": "Author 1",
+      },
+      Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "frontmatter": Object {
+                "date": "2019-01-01",
+                "title": "Markdown File 1",
+              },
+            },
+          },
+        ],
+        "fieldValue": "Author 2",
+      },
+    ],
+  },
+}
+`)
+      })
+
       it(`groups null result`, async () => {
         const query = `
           {

@@ -13,6 +13,7 @@ import {
   lineHeights,
   fontSizes,
   fonts,
+  fontWeights,
 } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
@@ -252,6 +253,7 @@ const Diagram = () => (
       >
         <h1
           css={{
+            fontWeight: fontWeights[1],
             marginTop: 0,
             marginBottom: space[6],
             [mediaQueries.md]: {

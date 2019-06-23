@@ -44,7 +44,7 @@ If you don't specify a custom starter, your site will be created from the [defau
 
 > **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/setting-up-gatsby-without-gatsby-new/).
 
-## Official starters
+## Official starters
 
 Official starters are maintained by Gatsby.
 
