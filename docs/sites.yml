@@ -6356,6 +6356,17 @@
   built_by: Remotely (Anders Hallundbæk)
   built_by_url: https://remotely.dk
   featured: false
+- title: Leadership Development International
+  url: https://ldi.global
+  main_url: https://ldi.global
+  description: >
+    A DatoCMS-backed site for an education and training company based in the US, China and the UAE.
+  categories:
+    - Education
+    - Nonprofit
+  built_by: Grant Holle
+  built_by_url: https://grantholle.com
+  featured: false
 - title: Canvas 1839
   main_url: "https://www.canvas1839.com/"
   url: "https://www.canvas1839.com/"
@@ -6381,3 +6392,16 @@
     - Streaming
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
+- title: nehalist.io
+  main_url: https://nehalist.io
+  url: https://nehalist.io
+  source_url: https://github.com/nehalist/nehalist.io
+  description: >
+    nehalist.io is a blog about software development, technology and all that kind of geeky stuff.
+  categories:
+    - Blog
+    - Web Development
+    - Open Source
+  built_by: Kevin Hirczy
+  built_by_url: https://nehalist.io
+  featured: false
