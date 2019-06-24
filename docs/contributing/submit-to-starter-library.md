@@ -52,4 +52,4 @@ If you want to edit anything in your site submission later, simply edit the .yml
 
 ### Adding new tag
 
-If you think that there is something is missing in the tag list, check you can update [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) and add a new one. However, we encourage you to use existing tags.
+If you think that there is something missing in the tag list, you can update [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) and add a new one. However, we encourage you to use existing tags.
