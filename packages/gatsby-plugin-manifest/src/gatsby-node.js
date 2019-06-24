@@ -74,7 +74,7 @@ const makeManifest = async (reporter, pluginOptions) => {
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
-    manifest.icons = defaultIcons
+    manifest.icons = [...defaultIcons]
   }
 
   // Specify extra options for each icon (if requested).
@@ -131,10 +131,10 @@ const makeManifest = async (reporter, pluginOptions) => {
     }
 
     if (cacheMode !== `none`) {
-      const iconDigest = createContentDigest(fs.readFileSync(icon))
-
-      manifest.icons.forEach(icon => {
-        icon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
+      manifest.icons = manifest.icons.map(icon => {
+        let newIcon = { ...icon }
+        newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
+        return newIcon
       })
     }
 
