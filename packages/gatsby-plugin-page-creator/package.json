@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-page-creator",
-  "version": "2.0.13",
+  "version": "2.1.1",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
   "scripts": {
@@ -21,20 +21,22 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
-    "chokidar": "2.1.2",
     "fs-exists-cached": "^1.0.0",
+    "gatsby-page-utils": "^0.0.2",
     "glob": "^7.1.1",
     "lodash": "^4.17.10",
-    "micromatch": "^3.1.10",
-    "slash": "^1.0.0"
+    "micromatch": "^3.1.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.1.4",
+    "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.0.5"
   },
   "peerDependencies": {
     "gatsby": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
