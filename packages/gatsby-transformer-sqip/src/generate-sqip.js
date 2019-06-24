@@ -89,26 +89,6 @@ module.exports = async function generateSqip(options) {
       }
 
       await cache.set(cacheKey, primitiveData)
-    } else {
-      debug(`generate sqip for ${name}`)
-      const result = await queue.add(
-        async () =>
-          new Promise((resolve, reject) => {
-            try {
-              const result = sqip({
-                filename: absolutePath,
-                ...sqipOptions,
-              })
-              resolve(result)
-            } catch (error) {
-              reject(error)
-            }
-          })
-      )
-
-      svg = result.final_svg
-
-      await writeFile(cachePath, svg)
     }
 
     primitiveData = {
