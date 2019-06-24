@@ -8,7 +8,7 @@ module.exports = {
       resolve: `gatsby-theme-notes`,
       options: {
         mdx: false,
-        notesPath: `/txt`,
+        notesPath: `/notes`,
         homeText: `HOME`,
         breadcrumbSeparator: `⚡️`,
       },
