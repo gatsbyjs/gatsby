@@ -48,6 +48,7 @@ starter:
   - Styling:SCSS
   - Styling:Tailwind
   - Styling:Other
+  - Styling:None
   - Testing
   - Transitions
 site:

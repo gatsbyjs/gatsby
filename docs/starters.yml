@@ -43,6 +43,7 @@
   description: Great for learning about advanced features and their implementations
   tags:
     - Blog
+    - Styling:None
   features:
     - Does not contain any UI frameworks
     - Provides only a skeleton
@@ -66,6 +67,7 @@
   repo: https://github.com/muhajirdev/gatsby-starter-redux-firebase
   description: A Gatsby + Redux + Firebase Starter. With Authentication
   tags:
+    - Styling:None
     - Firebase
     - Client-side App
   features:
@@ -167,6 +169,7 @@
   description: n/a
   tags:
     - Blog
+    - Styling:None
   features:
     - Same as official gatsby-starter-blog but with all styling removed
 - url: https://gatsby-starter-github-api.netlify.com/
@@ -2245,6 +2248,7 @@
   tags:
     - Stripe
     - eCommerce
+    - Styling:None
   features:
     - Statically generate based on Stripe inventory
     - Dynamically update with live inventory & availability data
