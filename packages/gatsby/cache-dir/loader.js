@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== `production`) {
 // Cache for `cleanAndFindPath()`. In case `match-paths.json` is large
 const cleanAndFindPathCache = {}
 
-const findMatchPath = (matchPaths, trimmedPathname) => {
+const findMatchPath = trimmedPathname => {
   for (const { matchPath, path } of matchPaths) {
     if (match(matchPath, trimmedPathname)) {
       return path
@@ -66,7 +66,7 @@ const cleanAndFindPath = rawPathname => {
     return cleanAndFindPathCache[trimmedPathname]
   }
 
-  let foundPath = findMatchPath(matchPaths, trimmedPathname)
+  let foundPath = findMatchPath(trimmedPathname)
   if (!foundPath) {
     if (trimmedPathname === `/index.html`) {
       foundPath = `/`
@@ -371,6 +371,8 @@ const queue = {
 
   doesPageHtmlExistSync: rawPath =>
     pageHtmlExistsResults[cleanAndFindPath(rawPath)],
+
+  findMatchPath,
 }
 
 export const postInitialRenderWork = () => {
