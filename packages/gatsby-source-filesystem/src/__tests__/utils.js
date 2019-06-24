@@ -1,4 +1,13 @@
-const { getRemoteFileExtension, getRemoteFileName } = require(`../utils`)
+jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`progress`)
+const {
+  getRemoteFileExtension,
+  getRemoteFileName,
+  createProgress,
+  slash,
+} = require(`../utils`)
+const reporter = require(`gatsby-cli/lib/reporter`)
+const progress = require(`progress`)
 
 describe(`create remote file node`, () => {
   it(`can correctly retrieve file name and extensions`, () => {
@@ -20,5 +29,54 @@ describe(`create remote file node`, () => {
       expect(getRemoteFileName(url)).toBe(name)
       expect(getRemoteFileExtension(url)).toBe(ext)
     })
+  })
+})
+
+describe(`createProgress`, () => {
+  beforeEach(() => {
+    progress.mockClear()
+  })
+
+  it(`should use createProgress from gatsby-cli when available`, () => {
+    createProgress(`test`, reporter)
+    expect(reporter.createProgress).toBeCalled()
+    expect(progress).not.toBeCalled()
+  })
+
+  it(`should fallback to a local implementation when createProgress does not exists on reporter`, () => {
+    reporter.createProgress = null
+    const bar = createProgress(`test`, reporter)
+    expect(progress).toHaveBeenCalledTimes(1)
+    expect(bar).toHaveProperty(`start`, expect.any(Function))
+    expect(bar).toHaveProperty(`tick`, expect.any(Function))
+    expect(bar).toHaveProperty(`done`, expect.any(Function))
+    expect(bar).toHaveProperty(`total`)
+  })
+
+  it(`should fallback to a local implementation when no reporter is present`, () => {
+    const bar = createProgress(`test`)
+    expect(progress).toHaveBeenCalledTimes(1)
+    expect(bar).toHaveProperty(`start`, expect.any(Function))
+    expect(bar).toHaveProperty(`tick`, expect.any(Function))
+    expect(bar).toHaveProperty(`done`, expect.any(Function))
+    expect(bar).toHaveProperty(`total`)
+  })
+})
+
+describe(`slash path`, () => {
+  it(`can correctly slash path`, () => {
+    ;[
+      [`foo\\bar`, `foo/bar`],
+      [`foo/bar`, `foo/bar`],
+      [`foo\\中文`, `foo/中文`],
+      [`foo/中文`, `foo/中文`],
+    ].forEach(([path, expectRes]) => {
+      expect(slash(path)).toBe(expectRes)
+    })
+  })
+
+  it(`does not modify extended length paths`, () => {
+    const extended = `\\\\?\\some\\path`
+    expect(slash(extended)).toBe(extended)
   })
 })

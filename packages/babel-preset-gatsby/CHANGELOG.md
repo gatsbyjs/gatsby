@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.11...babel-preset-gatsby@0.2.0) (2019-06-20)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ## [0.1.11](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.10...babel-preset-gatsby@0.1.11) (2019-04-02)
 
 ### Features

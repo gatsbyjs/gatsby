@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.20...gatsby-source-mongodb@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.0.20](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.19...gatsby-source-mongodb@2.0.20) (2019-06-10)
+
+### Bug Fixes
+
+- **gatsby-source-mongodb:** fix mapping function signature ([#14402](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/14402)) ([48dbfd7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/commit/48dbfd7))
+
+## [2.0.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.18...gatsby-source-mongodb@2.0.19) (2019-05-29)
+
+### Bug Fixes
+
+- **gatsby-source-mongodb:** fix null values ([#14356](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/issues/14356)) ([c6bbe4b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/commit/c6bbe4b))
+
 ## [2.0.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-mongodb/compare/gatsby-source-mongodb@2.0.17...gatsby-source-mongodb@2.0.18) (2019-04-18)
 
 **Note:** Version bump only for package gatsby-source-mongodb

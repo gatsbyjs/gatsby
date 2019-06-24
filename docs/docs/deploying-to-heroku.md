@@ -4,7 +4,14 @@ title: Deploying to Heroku
 
 You can use the [heroku buildpack static](https://github.com/heroku/heroku-buildpack-static) to handle the static files of your site.
 
-Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
+Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application.
+
+```shell
+$ heroku buildpacks:set heroku/nodejs
+$ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
+```
+
+You can optionally add the buildpacks to `app.json` if you want to take advantage of the [heroku platform api](https://devcenter.heroku.com/articles/setting-up-apps-using-the-heroku-platform-api)
 
 ```json:title=app.json
 {
@@ -17,13 +24,6 @@ Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your applic
     }
   ]
 }
-```
-
-Sometimes specifying buildpacks via the `app.json` file doesn’t work. If this is your case, try to add them in the Heroku dashboard or via the CLI with the following commands:
-
-```shell
-$ heroku buildpacks:set heroku/nodejs
-$ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git
 ```
 
 Add a `heroku-postbuild` script in your `package.json`:

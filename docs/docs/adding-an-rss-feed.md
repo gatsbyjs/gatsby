@@ -136,6 +136,50 @@ To see your feed in action, run `gatsby build && gatsby serve` and you can then 
 
 > NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
 
+## Syntax for iTunes RSS blocks
+
+If creating a RSS feed for a podcast you probably will want to include iTunes RSS blocks. They take the format of `itunes:author` which GraphQL does not read. Here's an example of how to implement iTunes RSS blocks using this plugin:
+
+```js:title=gatsby.config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        /* highlight-start */
+        setup: () => ({
+          custom_namespaces: {
+            itunes: 'http://www.itunes.com/dtds/podcast-1.0.dtd',
+          },
+          custom_elements: [
+            { 'itunes:author': 'Michael Scott' },
+            { 'itunes:explicit': 'clean' },
+          ],
+        }),
+        /* highlight-end */
+        feeds: [
+          {
+            ...
+          },
+        ],
+      },
+    },
+  ],
+}
+```
+
 ## Happy blogging!
 
 With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!

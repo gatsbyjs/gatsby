@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-coffeescript/compare/gatsby-plugin-coffeescript@2.0.9...gatsby-plugin-coffeescript@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
 ## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-coffeescript/compare/gatsby-plugin-coffeescript@2.0.8...gatsby-plugin-coffeescript@2.0.9) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-coffeescript

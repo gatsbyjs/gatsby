@@ -44,7 +44,7 @@ module.exports = {
 
 Docz searches your directories for `mdx` files and renders them. Create a `docs` folder at the root of your project. Place an `index.mdx` file inside this directory with the following content:
 
-```md:title=docs/index.mdx
+```mdx:title=docs/index.mdx
 ---
 name: Getting Started
 route: /
@@ -102,7 +102,7 @@ The button will display its text by default with a `font-size` of `18px` however
 
 Create a new file in the `docs` directory to document your newly created button component. Call the file `button.mdx`:
 
-```md:title=docs/button.mdx
+```mdx:title=docs/button.mdx
 ---
 name: Button
 menu: Components
@@ -115,7 +115,7 @@ Buttons make common actions more obvious and help users more easily perform them
 
 Docz offers some internal components you can use to display the component and its properties. Import both these and your component itself into the document and use them:
 
-```md:title=docs/button.mdx
+```mdx:title=docs/button.mdx
 ---
 name: Button
 menu: Components

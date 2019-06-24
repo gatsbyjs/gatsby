@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.11...gatsby-remark-prismjs@3.3.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.2.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.10...gatsby-remark-prismjs@3.2.11) (2019-06-07)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.2.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.9...gatsby-remark-prismjs@3.2.10) (2019-06-05)
+
+### Features
+
+- **gatsby-remark-prismjs:** add support for language extensions ([#11932](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/issues/11932)) ([a20afb1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/commit/a20afb1))
+
 ## [3.2.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs/compare/gatsby-remark-prismjs@3.2.8...gatsby-remark-prismjs@3.2.9) (2019-05-02)
 
 **Note:** Version bump only for package gatsby-remark-prismjs

@@ -226,8 +226,13 @@ const mergeTypes = ({
   createdFrom,
   parentSpan,
 }) => {
-  // Only allow user to extend an already existing type.
-  if (!plugin || plugin.name === `default-site-plugin`) {
+  // Only allow user or plugin owning the type to extend already existing type.
+  const typeOwner = typeComposer.getExtension(`plugin`)
+  if (
+    !plugin ||
+    plugin.name === `default-site-plugin` ||
+    plugin.name === typeOwner
+  ) {
     typeComposer.merge(type)
     if (isNamedTypeComposer(type)) {
       typeComposer.extendExtensions(type.getExtensions())
@@ -238,7 +243,7 @@ const mergeTypes = ({
     report.warn(
       `Plugin \`${plugin.name}\` tried to define the GraphQL type ` +
         `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
-        `by the plugin \`${typeComposer.getExtension(`plugin`)}\`.`
+        `by the plugin \`${typeOwner}\`.`
     )
     return false
   }
@@ -489,8 +494,13 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
             const originalFieldConfig = tc.getFieldConfig(fieldName)
             const originalTypeName = originalFieldConfig.type.toString()
             const originalResolver = originalFieldConfig.resolve
-            const fieldTypeName =
-              fieldConfig.type && fieldConfig.type.toString()
+            let fieldTypeName
+            if (fieldConfig.type) {
+              fieldTypeName = Array.isArray(fieldConfig.type)
+                ? stringifyArray(fieldConfig.type)
+                : fieldConfig.type.toString()
+            }
+
             if (
               !fieldTypeName ||
               fieldTypeName.replace(/!/g, ``) ===
@@ -737,6 +747,11 @@ const reportParsingError = error => {
     throw error
   }
 }
+
+const stringifyArray = arr =>
+  `[${arr.map(item =>
+    Array.isArray(item) ? stringifyArray(item) : item.toString()
+  )}]`
 
 // TODO: Import this directly from graphql-compose once we update to v7
 const isNamedTypeComposer = type =>

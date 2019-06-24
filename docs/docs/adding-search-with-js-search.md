@@ -115,7 +115,7 @@ class Search extends Component {
   }
 
   /**
-   * handles the input change and perfom a search with js-search
+   * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
   searchData = e => {
@@ -432,7 +432,7 @@ class ClientSearch extends Component {
     this.setState({ search: dataToSearch, isLoading: false })
   }
   /**
-   * handles the input change and perfom a search with js-search
+   * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
   searchData = e => {

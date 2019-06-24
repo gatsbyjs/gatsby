@@ -18,7 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.getResourcesForPathnameSync(pathname)
+      const pageResources = loader.loadPageSync(pathname)
 
       if (pageResources != null) {
         console.error(
@@ -81,7 +81,29 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.getResourcesForPathname(pathname).then(pageResources => {
+  loader.loadPage(pathname).then(pageResources => {
+    // If the loaded page has a different compilation hash to the
+    // window, then a rebuild has occurred on the server. Reload.
+    if (process.env.NODE_ENV === `production` && pageResources) {
+      if (
+        pageResources.page.webpackCompilationHash !==
+        window.___webpackCompilationHash
+      ) {
+        // Purge plugin-offline cache
+        if (
+          `serviceWorker` in navigator &&
+          navigator.serviceWorker.controller !== null &&
+          navigator.serviceWorker.controller.state === `activated`
+        ) {
+          navigator.serviceWorker.controller.postMessage({
+            gatsbyApi: `resetWhitelist`,
+          })
+        }
+
+        console.log(`Site has changed on server. Reloading browser`)
+        window.location = pathname
+      }
+    }
     reachNavigate(to, options)
     clearTimeout(timeoutId)
   })
