@@ -2,9 +2,7 @@ module.exports = {
   __experimentalThemes: [
     {
       resolve: `gatsby-theme-notes`,
-      options: {
-        notesPath: `/`,
-      },
+      options: {},
     },
   ],
   siteMetadata: {
