@@ -253,7 +253,7 @@ export const query = graphql`
 
 Your demo site should look something like this:
 
-![Demo site example](./images/wordpress-image-tutorial.gif)
+![Demo site example](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/images/wordpress-image-tutorial.gif)
 
 ### Testing your image loading speed and effects
 
@@ -261,6 +261,6 @@ It is useful and can be fun to purposefully slow down your browser to see image 
 
 Open your browser console and change the network speed to something slower. In Chrome, you can click on the “network” tab, then on the drop down arrow next to the word “Online.” Then click “Slow 3G.” Now, reload your page and watch the blur-up and SVG effects in action. The network tab also shows statistics on when each image loaded and how much time it took them to load.
 
-![Network](./images/network.png)
+![Network](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/images/network.png)
 
-![Slow 3G](./images/slow-3g.png)
+![Slow 3G](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/images/slow-3g.png)
