@@ -795,7 +795,7 @@
   description: This is a starter kit for Gatsby.js websites written in TypeScript. It includes the bare essentials for you to get started (styling, Markdown parsing, minimal toolset).
   tags:
     - Styling:CSS-in-JS
-    - TypeScript
+    - Language:TypeScript
     - Markdown
   features:
     - TypeScript
@@ -807,14 +807,14 @@
   repo: https://github.com/haysclark/gatsby-starter-typescript
   description: n/a
   tags:
-    - TypeScript
+    - Language:TypeScript
   features:
     - TypeScript
 - url: https://fabien0102-gatsby-starter.netlify.com/
   repo: https://github.com/fabien0102/gatsby-starter
   description: n/a
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Styling:Other
     - Testing
   features:
@@ -868,7 +868,7 @@
     - Blog
     - Markdown
     - Styling:Grommet
-    - TypeScript
+    - Language:TypeScript
     - Linting
     - Redux
   features:
@@ -887,7 +887,7 @@
   tags:
     - CMS:Contentful
     - CMS:Headless
-    - TypeScript
+    - Language:TypeScript
     - Styling:CSS-in-JS
   features:
     - Based on default starter
@@ -978,7 +978,7 @@
   repo: https://github.com/tdharmon/gatsby-starter-typescript-sass
   description: A basic starter with TypeScript and Sass built in
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Styling:SCSS
     - Linting
   features:
@@ -1020,7 +1020,7 @@
   repo: https://github.com/ikeryo1182/gatsby-typescript-template
   description: This is a standard starter with TypeScript, TSLint, Prettier, Lint-Staged(Husky) and Sass
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Linting
     - Styling:SCSS
   features:
@@ -1040,7 +1040,7 @@
   description: This is a starter blog that looks like the Ghost.io default theme, casper.
   tags:
     - Blog
-    - TypeScript
+    - Language:TypeScript
     - Styling:CSS-in-JS
   features:
     - Emotion CSS-in-JS
@@ -1193,7 +1193,7 @@
   tags:
     - PWA
     - Blog
-    - TypeScript
+    - Language:TypeScript
     - Markdown
   features:
     - Mobile-First approach in development
@@ -1307,7 +1307,7 @@
   repo: https://github.com/leachjustin18/gatsby-typescript-boilerplate
   description: Opinionated Gatsby v2 starter with TypeScript.
   tags:
-    - TypeScript
+    - Language:TypeScript
     - PWA
     - Styling:SCSS
     - Styling:PostCSS
@@ -1352,7 +1352,7 @@
   description: MobX + TypeScript + TSLint + Prettier
   tags:
     - MobX
-    - TypeScript
+    - Language:TypeScript
     - Linting
     - Testing
   features:
@@ -1399,7 +1399,7 @@
   tags:
     - Markdown
     - Pagination
-    - TypeScript
+    - Language:TypeScript
     - PWA
     - Linting
   features:
@@ -1423,7 +1423,7 @@
   repo: https://github.com/frnki/gatsby-typescript-starter-blog
   description: A starter blog for TypeScript-based Gatsby projects with minimal settings.
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Blog
   features:
     - Typescrip & TSLint
@@ -1544,7 +1544,7 @@
   repo: https://github.com/tylergreulich/gatsby-typescript-mdx-prismjs-starter
   description: Gatsby starter using TypeScript, MDX, Prismjs, and styled-components
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Linting
     - Testing
     - Styling:CSS-in-JS
@@ -1666,7 +1666,7 @@
   repo: https://github.com/ueno-llc/ueno-gatsby-starter
   description: Opinionated Gatsby starter by Ueno.
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Styling:SCSS
     - Linting
     - Transitions
@@ -1755,7 +1755,7 @@
   tags:
     - MDX
     - CMS:Netlify
-    - TypeScript
+    - Language:TypeScript
     - Styling:Other
     - Styling:CSS-in-JS
     - Testing
@@ -2043,7 +2043,7 @@
     - Styling:CSS-in-JS
     - Linting
     - Testing
-    - TypeScript
+    - Language:TypeScript
   features:
     - Configurable with theming, CSS Grid & a yaml file for navigation
     - Create your projects by editing a yaml file and putting images into a folder
@@ -2075,7 +2075,7 @@
   repo: https://github.com/OFranke/gatsby-typescript-scss-docker
   description: Gatsby starter TypeScript, SCSS, Docker
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Styling:SCSS
     - Linting
   features:
@@ -2207,7 +2207,7 @@
   description: A GatsbyJS starter template that is connected to a Framer X project
   tags:
     - Framer X
-    - TypeScript
+    - Language:TypeScript
   features:
     - TypeScript support
     - Easily work in GatsbyJS and Framer X at the same time
@@ -2261,7 +2261,7 @@
   description: A template for documentation websites
   tags:
     - Documentation
-    - TypeScript
+    - Language:TypeScript
     - Styling:Ant Design
     - Markdown
     - MDX
@@ -2278,7 +2278,7 @@
   description: A lightweight, mobile first blog starter with infinite scroll and Material-UI design for Gatsby.
   tags:
     - Blog
-    - TypeScript
+    - Language:TypeScript
     - Linting
     - Styling:CSS-in-JS
     - Styling:Material
@@ -2395,7 +2395,7 @@
   description: Gatsby starter blog with TypeScript
   tags:
     - Blog
-    - TypeScript
+    - Language:TypeScript
     - Styling:CSS-in-JS
   features:
     - Includes all features that come with Gatsby's official starter blog
@@ -2727,7 +2727,7 @@
   repo: https://github.com/andykenward/gatsby-starter-default-typescript
   description: Starter Default TypeScript
   tags:
-    - TypeScript
+    - Language:TypeScript
   features:
     - TypeScript
     - Typing generation for GraphQL using GraphQL Code Generator
@@ -2979,7 +2979,7 @@
   repo: https://github.com/TheoBr/minimal-gatsby-typescript-starter
   description: Minimal Typescript Starter
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Minimal
   features:
     - TypeScript
@@ -2990,7 +2990,7 @@
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
   description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
   tags:
-    - TypeScript
+    - Language:TypeScript
     - SEO
     - Linting
   features:
@@ -3002,7 +3002,7 @@
   repo: https://github.com/endymion1818/gatsby-starter-carraway
   description: a Gatsby starter theme with Accessibility features, TypeScript, Jest, some basic UI elements, and a CircleCI pipeline
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Pagination
     - Search
     - Testing
@@ -3020,7 +3020,7 @@
   repo: https://github.com/zhouyuexie/gatsby-starter-quiet
   description: Gatsby out of the box blog, use TypeScript and highly customized style.
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Styling:SCSS
     - SEO
     - Linting
@@ -3067,7 +3067,7 @@
   repo: https://github.com/denningk/gatsby-starter-typescript-jest
   description: Barebones Gatsby starter with Typescript, Jest, GitLab-CI, and other useful configurations
   tags:
-    - TypeScript
+    - Language:TypeScript
     - Testing
     - AWS
     - Linting
