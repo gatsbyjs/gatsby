@@ -5,6 +5,7 @@
     - Pagination
     - Markdown
     - SEO
+    - This should fail peril
   features:
     - Pagination;
     - Category and tag pages (with pagination);
