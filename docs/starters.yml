@@ -3099,3 +3099,18 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-typescript-jest.netlify.com/
+  repo: https://github.com/denningk/gatsby-starter-typescript-jest
+  description: Barebones Gatsby starter with Typescript, Jest, GitLab-CI, and other useful configurations
+  tags:
+    - TypeScript
+    - Testing
+    - AWS
+    - Linting
+    - SEO
+  features:
+    - All components from default Gatsby starter converted to TypeScript
+    - Jest testing configured for TypeScript with ts-jest
+    - Detailed guide on how to deploy using AWS S3 buckets included in README
+    - .gitlab-ci.yml file with blanks that can be customized for any Gatsby project
+    - Configurations for EditorConfig, Prettier, and ESLint (for TypeScript)
