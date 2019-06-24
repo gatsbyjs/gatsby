@@ -681,7 +681,6 @@
     - PWA
     - CMS:Headless
     - CMS:Other
-    - Apollo Client
     - Styling:Material
     - Netlify
   features:
@@ -1351,7 +1350,6 @@
   repo: https://github.com/borekb/gatsby-starter-mobx
   description: MobX + TypeScript + TSLint + Prettier
   tags:
-    - MobX
     - Language:TypeScript
     - Linting
     - Testing
