@@ -3035,3 +3035,46 @@
     - Switch the dark mode according to the system theme
     - Scss
     - Pagination
+- url: https://compassionate-morse-5204bf.netlify.com/
+  repo: https://github.com/deamme/gatsby-starter-prismic-resume
+  description: Gatsby Resume/CV page with Prismic integration
+  tags:
+    - Prismic
+    - Headless CMS
+    - Styling:CSS-in-JS
+    - Onepage
+    - Linting
+  features:
+    - One-page resume/CV
+    - Prismic as Headless CMS
+    - Emotion for styling
+    - Uses multiple features of Prismic - Slices, Labels, Custom Types
+    - ESLint & Prettier
+- url: https://anubhavsrivastava.github.io/gatsby-starter-resume
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-resume
+  description: Single page starter based on the Resume site template by startbootstrap for resume/portfolio page
+  tags:
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-starter-typescript-jest.netlify.com/
+  repo: https://github.com/denningk/gatsby-starter-typescript-jest
+  description: Barebones Gatsby starter with Typescript, Jest, GitLab-CI, and other useful configurations
+  tags:
+    - TypeScript
+    - Testing
+    - AWS
+    - Linting
+    - SEO
+  features:
+    - All components from default Gatsby starter converted to TypeScript
+    - Jest testing configured for TypeScript with ts-jest
+    - Detailed guide on how to deploy using AWS S3 buckets included in README
+    - .gitlab-ci.yml file with blanks that can be customized for any Gatsby project
+    - Configurations for EditorConfig, Prettier, and ESLint (for TypeScript)
