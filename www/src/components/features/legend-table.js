@@ -57,16 +57,16 @@ const LegendTable = () => {
       <h5 style={{ margin: 0 }}>Feature Availability</h5>
     </div>,
     <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
-      Out of the box
+      Excellent (fully available)
     </div>,
     <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
-      Plugins available
+      Good (partially available, e.g. plugins)
     </div>,
     <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
-      Needs customization
+      Fair (needs customization or limited)
     </div>,
     <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
-      Not possible
+      Poor (not possible)
     </div>,
   ]
 
