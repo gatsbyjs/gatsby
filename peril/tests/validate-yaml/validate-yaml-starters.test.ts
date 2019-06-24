@@ -5,8 +5,12 @@ const dm = danger as any
 const mockedUtils = utils as any
 
 let mockedResponses: { [id: string]: any }
-const setStartersYmlContent = (content: string) =>
-  (mockedResponses["docs/starters.yml"] = content)
+const setStartersYmlContent = (content: string) => {
+  mockedResponses["docs/starters.yml"] = content
+}
+const setCategoriesContent = (content: string) => {
+  mockedResponses["docs/categories.yml"] = content
+}
 const resetMockedResponses = () => {
   mockedResponses = {}
 }
@@ -16,6 +20,15 @@ mockedUtils.addErrorMsg = jest.fn()
 
 beforeEach(() => {
   resetMockedResponses()
+  setCategoriesContent(`
+starter:
+  - CMS:Headless,
+  - Styling:CSS-in-JS
+  - Official
+site:
+  - Web Development
+  - WordPress
+`)
   dm.warn.mockClear()
   mockedUtils.addErrorMsg.mockClear()
   dm.danger = {
@@ -111,6 +124,14 @@ describe("a new PR", () => {
       features:
         - 2
         - false
+    - url: www.google.com
+      repo: https://gitlab.com/gatsbyjs/gatsby-starter-default
+      description: lorem
+      features:
+        - It works
+      tags:
+        - I'm a fancy new tag
+        - I don't play by the rules
     `)
 
     await validateYaml()
@@ -162,6 +183,14 @@ describe("a new PR", () => {
     expect(mockedUtils.addErrorMsg).toHaveBeenCalledWith(
       1,
       expect.stringContaining('"1" must be a string'),
+      expect.anything()
+    )
+
+    expect(mockedUtils.addErrorMsg).toHaveBeenCalledWith(
+      2,
+      expect.stringContaining(
+        `"0" must be one of [CMS:Headless,, Styling:CSS-in-JS, Official]`
+      ),
       expect.anything()
     )
   })

@@ -1,0 +1,104 @@
+starter:
+  - AMP
+  - Authentication
+  - AWS
+  - Blog
+  - Client-side App
+  - CMS:Headless,
+  - CMS:Contentful,
+  - CMS:Drupal,
+  - CMS:Prismic,
+  - CMS:Netlify,
+  - CMS:Wordpress,
+  - CMS:Other,
+  - Disqus
+  - Documentation
+  - eCommerce
+  - Firebase
+  - Google Sheets
+  - HTML5UP
+  - i18n
+  - Landing Page
+  - Language:Other
+  - Language:TypeScript
+  - Linting
+  - Markdown
+  - MDX
+  - Netlify
+  - Official
+  - Onepage
+  - Pagination
+  - Portfolio
+  - Presentation
+  - PWA
+  - Redux
+  - RSS
+  - Search
+  - SEO
+  - Shopify
+  - Storybook
+  - Stripe
+  - Styling:Ant Design
+  - Styling:Bootstrap
+  - Styling:Bulma
+  - Styling:CSS-in-JS
+  - Styling:Grommet
+  - Styling:Material
+  - Styling:PostCSS
+  - Styling:SCSS
+  - Styling:Tailwind
+  - Styling:Other
+  - Testing
+  - Transitions
+site:
+  - API
+  - Accessibilit
+  - Agenc
+  - App
+  - Blog
+  - Business
+  - Communit
+  - Conference
+  - Consulting
+  - Data
+  - Design
+  - Design System
+  - Director
+  - Documentation
+  - Education
+  - Entertainment
+  - Entrepreneurship
+  - Event
+  - Featured
+  - Finance
+  - Food
+  - Freelance
+  - Galler
+  - Government
+  - Healthcare
+  - JavaScript
+  - Landing Page
+  - Learning
+  - Librar
+  - Marketing
+  - Mobile Development
+  - Music
+  - Nonprofit
+  - Open Source
+  - Photograph
+  - Podcast
+  - Portfolio
+  - Productivit
+  - Programming
+  - Real Estate
+  - SEO
+  - Science
+  - Securit
+  - Sports
+  - Technolog
+  - Travel
+  - User Experience
+  - Video
+  - Web Development
+  - WordPress
+  - eCommerce

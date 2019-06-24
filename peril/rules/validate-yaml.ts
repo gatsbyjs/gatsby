@@ -225,7 +225,7 @@ const VALID_SHOWCASE_CATEGORIES = [
   `eCommerce`,
 ]
 
-const getSitesSchema = () => {
+const getSitesSchema = categories => {
   return Joi.array()
     .items(
       Joi.object().keys({
@@ -239,7 +239,7 @@ const getSitesSchema = () => {
         source_url: Joi.string().uri(uriOptions),
         description: Joi.string(),
         categories: Joi.array()
-          .items(Joi.string().valid(VALID_SHOWCASE_CATEGORIES))
+          .items(Joi.string().valid(categories.site))
           .required(),
         built_by: Joi.string(),
         built_by_url: Joi.string().uri(uriOptions),
@@ -403,7 +403,7 @@ const VALID_STARTER_CATEGORIES = [
   //  Wordpress => CMS:Wordpress
 ]
 
-const getStartersSchema = () => {
+const getStartersSchema = categories => {
   return Joi.array()
     .items(
       Joi.object().keys({
@@ -416,7 +416,7 @@ const getStartersSchema = () => {
           .required(),
         description: Joi.string().required(),
         tags: Joi.array()
-          .items(Joi.string().valid(VALID_STARTER_CATEGORIES))
+          .items(Joi.string().valid(categories.starter))
           .required(),
         features: Joi.array()
           .items(Joi.string())
@@ -448,6 +448,20 @@ export const utils = {
 }
 
 export const validateYaml = async () => {
+  let categories
+  try {
+    categories = yamlLoad(
+      await danger.github.utils.fileContents("docs/categories.yml")
+    )
+  } catch (e) {
+    warn(
+      `## "docs/categories.yml" is not valid YAML file:\n\n\`\`\`${
+        e.message
+      }\n\`\`\``
+    )
+    return
+  }
+
   return Promise.all(
     Object.entries(fileSchemas).map(async ([filePath, schemaFn]) => {
       if (!danger.git.modified_files.includes(filePath)) {
@@ -464,7 +478,7 @@ export const validateYaml = async () => {
         return
       }
 
-      const result = Joi.validate(content, await schemaFn(), {
+      const result = Joi.validate(content, await schemaFn(categories), {
         abortEarly: false,
       })
       if (result.error) {

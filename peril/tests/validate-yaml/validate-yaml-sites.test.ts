@@ -5,8 +5,12 @@ const dm = danger as any
 const mockedUtils = utils as any
 
 let mockedResponses: { [id: string]: any }
-const setSitesYmlContent = (content: string) =>
-  (mockedResponses["docs/sites.yml"] = content)
+const setSitesYmlContent = (content: string) => {
+  mockedResponses["docs/sites.yml"] = content
+}
+const setCategoriesContent = (content: string) => {
+  mockedResponses["docs/categories.yml"] = content
+}
 const resetMockedResponses = () => {
   mockedResponses = {}
 }
@@ -16,6 +20,15 @@ mockedUtils.addErrorMsg = jest.fn()
 
 beforeEach(() => {
   resetMockedResponses()
+  setCategoriesContent(`
+starter:
+  - CMS:Headless,
+  - Styling:CSS-in-JS
+  - Official
+site:
+  - Web Development
+  - WordPress
+`)
   dm.warn.mockClear()
   mockedUtils.addErrorMsg.mockClear()
   dm.danger = {
@@ -221,7 +234,7 @@ describe("a new PR", () => {
     expect(mockedUtils.addErrorMsg).toHaveBeenCalledWith(
       2,
       expect.stringContaining(
-        `"0" must be one of [API, Accessibility, Agency, App, Blog, Business, Community, Conference, Consulting, Data, Design, Design System, Directory, Documentation, Education, Entertainment, Entrepreneurship, Event, Featured, Finance, Food, Freelance, Gallery, Government, Healthcare, JavaScript, Landing Page, Learning, Library, Marketing, Mobile Development, Music, Nonprofit, Open Source, Photography, Podcast, Portfolio, Productivity, Programming, Real Estate, SEO, Science, Security, Sports, Technology, Travel, User Experience, Video, Web Development, WordPress, eCommerce]`
+        `"0" must be one of [Web Development, WordPress]`
       ),
       expect.anything()
     )
