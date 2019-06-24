@@ -114,6 +114,20 @@ export default ({ children }) => (
 > **Note**: the default export concept used in this code block is explained in more detail
 > in the docs below on [defining layouts](#defining-a-layout)
 
+## Combining frontmatter and imports
+
+If you would like to include frontmatter and import components, frontmatter needs to appear at the top of the file, imports can then follow after it:
+
+```mdx
+---
+title: "Building with Gatsby"
+---
+
+import { Chart } from "../components/chart"
+
+Markdown and more content...
+```
+
 ## Using JavaScript exports
 
 MDX supports `export` syntax as well, which enables specific use cases like providing data
