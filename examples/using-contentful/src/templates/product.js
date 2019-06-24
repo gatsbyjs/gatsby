@@ -94,9 +94,11 @@ export const pageQuery = graphql`
         }
       }
       categories {
-        id
-        title {
-          title
+        ... on ContentfulCategory {
+          id
+          title {
+            title
+          }
         }
       }
     }
