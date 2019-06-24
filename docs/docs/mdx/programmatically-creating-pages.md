@@ -14,11 +14,11 @@ support for MDX so you can start your blog. The posts will live in
 
 ## Table of contents
 
--   [Source from the filesystem](#source-mdx-pages-from-the-filesystem)
--   [Add MDX files](#add-mdx-files)
--   [Generate slugs](#generate-slugs)
--   [Create pages](#create-pages-from-sourced-mdx-files)
--   [Make a template](#make-a-template-for-your-posts)
+- [Source from the filesystem](#source-mdx-pages-from-the-filesystem)
+- [Add MDX files](#add-mdx-files)
+- [Generate slugs](#generate-slugs)
+- [Create pages](#create-pages-from-sourced-mdx-files)
+- [Make a template](#make-a-template-for-your-posts)
 
 ## Source MDX pages from the filesystem
 
@@ -137,8 +137,8 @@ to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
 
--   blog-1.mdx => localhost:8000/blog/blog-1/
--   blog-2.mdx => localhost:8000/blog/blog-2/
+- blog-1.mdx => localhost:8000/blog/blog-1/
+- blog-2.mdx => localhost:8000/blog/blog-2/
 
 [`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
