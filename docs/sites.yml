@@ -513,20 +513,6 @@
     - Education
     - Web Development
     - Technology
-- title: Caddy Smells Like Trees
-  main_url: "https://caddysmellsliketrees.ru"
-  url: "https://caddysmellsliketrees.ru/en"
-  source_url: "https://github.com/podabed/caddysmellsliketrees.github.io"
-  description: >-
-    We play soul-searching songs for every day. They are merging in our forests
-    in such a way that it is difficult to separate them from each other, and
-    between them bellow bold deer poems.
-  categories:
-    - Music
-    - Gallery
-  built_by: Dmitrij Podabed, Alexander Nikitin
-  built_by_url: https://podabed.org
-  featured: false
 - title: Calpa's Blog
   main_url: "https://calpa.me/"
   url: "https://calpa.me/"
@@ -920,13 +906,6 @@
     - Blog
     - Web Development
     - Music
-- title: Developer Ecosystem
-  main_url: "https://www.developerecosystem.com/"
-  url: "https://www.developerecosystem.com/"
-  featured: false
-  categories:
-    - Blog
-    - Web Development
 - title: Gabriel Adorf's Portfolio
   main_url: "https://www.gabrieladorf.com/"
   url: "https://www.gabrieladorf.com/"
@@ -1380,17 +1359,6 @@
   built_by: Iron Cove Solutions
   built_by_url: "https://ironcovesolutions.com/"
   featured: false
-- title: Eventos orellana
-  description: >-
-    Somos una empresa dedicada a brindar asesoría personalizada y profesional
-    para la elaboración y coordinación de eventos sociales y empresariales.
-  main_url: "https://eventosorellana.com/"
-  url: "https://eventosorellana.com/"
-  featured: false
-  categories:
-    - Gallery
-  built_by: Codedebug
-  built_by_url: "https://codedebug.co/"
 - title: Moetez Chaabene Portfolio / Blog
   main_url: "https://moetez.me/"
   url: "https://moetez.me/"
@@ -1525,14 +1493,6 @@
   categories:
     - Documentation
     - Security
-  featured: false
-- title: Patreon Partners
-  description: |
-    Resources and products to help you do more with Patreon.
-  url: "https://partners.patreon.com/"
-  main_url: "https://partners.patreon.com/"
-  categories:
-    - Directory
   featured: false
 - title: Curbside
   description: |
@@ -2199,18 +2159,6 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
-- title: Joseph Chambers
-  main_url: "https://joseph.michael-chambers.com/"
-  url: "https://joseph.michael-chambers.com/"
-  description: >
-    The homepage of Joseph Chambers, a freelance full-stack developer, who is currently looking for work.
-  categories:
-    - Portfolio
-    - Freelance
-    - Web Development
-  built_by: Joseph Chambers
-  built_by_url: https://twitter.com/imcodingideas
-  featured: false
 - title: Mike's Remote List
   main_url: "https://www.mikesremotelist.com"
   url: "https://www.mikesremotelist.com"
@@ -2594,17 +2542,6 @@
     - Documentation
   built_by: IBM
   built_by_url: https://www.ibm.com/
-  featured: false
-- title: McDonald's Design System
-  main_url: https://design.mcdonalds.com/
-  url: https://design.mcdonalds.com/
-  description: >
-    McDonald's Design System
-  categories:
-    - Design
-    - Design System
-  built_by: McDonald's
-  built_by_url: https://www.mcdonalds.com/us/en-us.html
   featured: false
 - title: Mozilla Mixed Reality
   main_url: https://mixedreality.mozilla.org/
@@ -3621,19 +3558,6 @@
     - API
     - Documentation
   featured: false
-- title: Song Wang's Blog
-  main_url: "https://songwang.io/"
-  url: "https://songwang.io/"
-  source_url: "https://github.com/wangsongiam/songwang.io/"
-  description: >
-    The website about Song Wang.
-  categories:
-    - Blog
-    - Technology
-    - Web Development
-  built_by: Song Wang
-  built_by_url: "https://github.com/wangsongiam/"
-  featured: false
 - title: Engel & Völkers Ibiza Holiday Rentals
   main_url: "https://www.ev-ibiza.com/"
   url: "https://www.ev-ibiza.com/"
@@ -4435,18 +4359,6 @@
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
   featured: false
-- title: Josef Aidt
-  url: https://josefaidt.me
-  main_url: https://josefaidt.me
-  source_url: https://github.com/josefaidt/josefaidt.github.io
-  description: >
-    Personal website, blog, portfolio for Josef Aidt
-  categories:
-    - Portfolio
-    - Blog
-    - Web Development
-  built_by: Josef Aidt
-  built_by_url: https://twitter.com/garlicbred
 - title: Hash Tech Guru
   url: https://hashtech.guru
   main_url: https://hashtech.guru
@@ -4468,6 +4380,18 @@
   built_by: Johan Eliasson
   built_by_url: https://github.com/elitan
   featured: false
+- title: Josef Aidt
+  url: https://josefaidt.dev
+  main_url: https://josefaidt.dev
+  source_url: https://github.com/josefaidt/josefaidt.github.io
+  description: >
+    Personal website, blog, portfolio for Josef Aidt
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+  built_by: Josef Aidt
+  built_by_url: https://twitter.com/garlicbred
 - title: How To egghead
   main_url: https://howtoegghead.com/
   url: https://howtoegghead.com/
@@ -5116,8 +5040,8 @@
   built_by: Philipp Siegmund, zauberware
   built_by_url: https://www.zauberware.com
 - title: Altstadtdomizil Idstein
-  main_url: https://www.altstadtdomizil-idstein.de/
-  url: https://www.altstadtdomizil-idstein.de/
+  main_url: http://www.altstadtdomizil-idstein.de/
+  url: http://www.altstadtdomizil-idstein.de/
   description: >
     A landing page for a holiday apartment in Idstein, Germany.
   categories:
@@ -6384,7 +6308,7 @@
   url: https://www.oerol.nl/nl/
   main_url: https://www.oerol.nl/en/
   description: >
-    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June. 
+    Oerol is a cultural festival on the island of Terschelling in the Netherlands that is held annually in June.
     The ten-day festival is focused on live, public theatre as well as music and visual arts.
   categories:
     - Event
@@ -6393,4 +6317,91 @@
     - Festival
   built_by: Oberon
   built_by_url: https://oberon.nl/
+  featured: false
+- title: Libra
+  main_url: "https://libra.org/"
+  url: "https://libra.org/"
+  description: Libra's mission is to enable a simple global currency and financial infrastructure that empowers billions of people.
+  featured: false
+  categories:
+    - Open Source
+    - Technology
+    - Cryptocurrency
+    - Finance
+- title: Riffy Blog
+  main_url: https://blog.rayriffy.com/
+  url: https://blog.rayriffy.com/
+  source_url: https://github.com/rayriffy/rayriffy-blog
+  description: >
+    Riffy Blog is async based beautiful highly maintainable site built by using Gatsby v2 with SEO optimized.
+  categories:
+    - Web Development
+    - Blog
+    - Open Source
+    - Technology
+    - Music
+    - Netlify
+    - SEO
+  built_by: Phumrapee Limpianchop
+  built_by_url: https://rayriffy.com/
+  featured: false
+- title: The Coffee Collective
+  url: https://coffeecollective.dk
+  main_url: https://coffeecollective.dk
+  description: >
+    The Coffee Collective website is a JAM-stack based, multilingual, multi currency website/shop selling coffee, related products and subscriptions.
+  categories:
+    - eCommerce
+    - Food
+  built_by: Remotely (Anders Hallundbæk)
+  built_by_url: https://remotely.dk
+  featured: false
+- title: Leadership Development International
+  url: https://ldi.global
+  main_url: https://ldi.global
+  description: >
+    A DatoCMS-backed site for an education and training company based in the US, China and the UAE.
+  categories:
+    - Education
+    - Nonprofit
+  built_by: Grant Holle
+  built_by_url: https://grantholle.com
+  featured: false
+- title: Canvas 1839
+  main_url: "https://www.canvas1839.com/"
+  url: "https://www.canvas1839.com/"
+  description: >-
+    Online store for Canvas 1839 products, including pharmacological-grade CBD oil and relief cream.
+  categories:
+    - eCommerce
+    - Health & Wellness
+    - CBD
+    - Marketing
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: Sparkle Stories
+  main_url: "https://app.sparklestories.com/"
+  url: "https://app.sparklestories.com/"
+  description: >-
+    Sparkle Stories is a streaming audio platform for children with over 1,200 original audio stories.
+  categories:
+    - Audiobooks
+    - Children
+    - App
+    - Education
+    - Streaming
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+- title: nehalist.io
+  main_url: https://nehalist.io
+  url: https://nehalist.io
+  source_url: https://github.com/nehalist/nehalist.io
+  description: >
+    nehalist.io is a blog about software development, technology and all that kind of geeky stuff.
+  categories:
+    - Blog
+    - Web Development
+    - Open Source
+  built_by: Kevin Hirczy
+  built_by_url: https://nehalist.io
   featured: false

@@ -24,7 +24,15 @@ let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId, createContentDigest },
+  {
+    actions,
+    getNode,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    reporter,
+  },
   {
     baseUrl,
     protocol,
@@ -123,6 +131,7 @@ exports.sourceNodes = async (
     touchNode,
     getNode,
     _auth,
+    reporter,
   })
 
   // Creates links between elements and parent element.
