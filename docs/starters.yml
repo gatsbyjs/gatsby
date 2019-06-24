@@ -1407,7 +1407,8 @@
 - url: https://gatsby-netlify-cms-example.netlify.com/
   repo: https://github.com/robertcoopercode/gatsby-netlify-cms
   description: Gatsby starter using Netlify CMS
-  tags: CMS:Netlify
+  tags:
+    - CMS:Netlify
     - Styling:SCSS
   features:
     - Example of a website for a local developer meetup group
