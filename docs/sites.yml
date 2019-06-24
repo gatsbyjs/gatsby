@@ -13,7 +13,6 @@
     Online shop for women's body care and hair removal products.
   categories:
     - eCommerce
-    - Beauty
     - Featured
   featured: true
 - title: IDEO
@@ -95,7 +94,6 @@
   main_url: "https://gm.capitalone.com/"
   url: "https://gm.capitalone.com/"
   categories:
-    - Credit Card
     - Featured
   featured: true
 - title: Life Without Barriers | Foster Care
@@ -229,7 +227,6 @@
   featured: false
   categories:
     - Gallery
-    - Cinema
 - title: GraphCMS
   main_url: "https://graphcms.com/"
   url: "https://graphcms.com/"
@@ -254,7 +251,6 @@
   description: >-
     Ghost is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance.
   categories:
-    - Publishing
     - Technology
     - Documentation
     - Open Source
@@ -630,7 +626,7 @@
   main_url: "https://housemanager.calstate.aaa.com/"
   url: "https://housemanager.calstate.aaa.com/"
   categories:
-    - Insurance
+    - Marketing
 - title: The freeCodeCamp Guide
   main_url: "https://guide.freecodecamp.org/"
   url: "https://guide.freecodecamp.org/"
@@ -749,7 +745,6 @@
   featured: false
   categories:
     - Marketing
-    - Insurance
 - title: Nexit
   main_url: "https://nexit.sk/"
   url: "https://nexit.sk/references"
@@ -850,7 +845,6 @@
   featured: false
   categories:
     - Marketing
-    - Insurance
 - title: Storybook
   main_url: "https://storybook.js.org/"
   url: "https://storybook.js.org/"
@@ -1089,7 +1083,6 @@
   featured: false
   categories:
     - Entertainment
-    - News
 - title: Dovetail
   main_url: "https://dovetailapp.com/"
   url: "https://dovetailapp.com/"
@@ -1125,7 +1118,6 @@
     - Open Source
     - Technology
     - Documentation
-    - Bot
     - Community
   built_by: Sankarsan Kampa
   built_by_url: "https://sankarsankampa.com"
@@ -1161,7 +1153,6 @@
     - Portfolio
     - Web Development
     - Blog
-
 - title: LekoArts
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
@@ -1307,7 +1298,6 @@
   categories:
     - Blog
     - Education
-    - Personal Development
   built_by: "Stephanie Langers (content), Adrian Wenke (development)"
   built_by_url: "https://twitter.com/AdrianWenke"
 - title: Zensum
@@ -1500,7 +1490,7 @@
   main_url: "https://curbside.com/"
   url: "https://curbside.com/"
   categories:
-    - Mobile Commerce
+    - eCommerce
   featured: false
 - title: Mux Video
   description: |
@@ -1509,8 +1499,6 @@
   url: "https://mux.com/"
   categories:
     - Video
-    - Hosting
-    - Streaming
     - API
   featured: false
 - title: Swapcard
@@ -1522,7 +1510,6 @@
   categories:
     - Event
     - Community
-    - Personal Training
     - Marketing
   built_by: Swapcard
   built_by_url: "https://www.swapcard.com/"
@@ -1550,7 +1537,6 @@
   main_url: "https://hyperplay.leagueoflegends.com/"
   url: "https://hyperplay.leagueoflegends.com/"
   categories:
-    - Video Games
     - Music
   featured: false
 - title: Bad Credit Loans
@@ -1559,7 +1545,7 @@
   main_url: "https://www.creditloan.com/"
   url: "https://www.creditloan.com/"
   categories:
-    - Loans
+    - Finance
   featured: false
 - title: Financial Center
   description: >
@@ -1569,10 +1555,8 @@
   main_url: "https://fcfcu.com/"
   url: "https://fcfcu.com/"
   categories:
-    - Loans
     - Finance
     - Nonprofit
-    - Banking
     - Business
     - Education
   built_by: "https://fcfcu.com/"
@@ -1592,7 +1576,7 @@
   main_url: "https://premium.telegraph.co.uk/"
   url: "https://premium.telegraph.co.uk/"
   categories:
-    - Newspaper
+    - Media
   featured: false
 - title: html2canvas
   description: |
@@ -1612,7 +1596,6 @@
   main_url: "https://www.datocms.com/"
   url: "https://www.datocms.com/"
   categories:
-    - CMS
     - API
   featured: false
 - title: Half Electronics
@@ -1622,7 +1605,6 @@
   url: "https://www.halfelectronic.com/"
   categories:
     - Blog
-    - Electronics
   built_by: Fernando Poumian
   built_by_url: "https://github.com/fpoumian/halfelectronic.com"
   featured: false
@@ -1670,7 +1652,7 @@
   main_url: "https://haacht.com/en/"
   url: "https://haacht.com"
   categories:
-    - Brewery
+    - Marketing
   built_by: Gafas
   built_by_url: "https://gafas.be"
   featured: false
@@ -1689,9 +1671,8 @@
   description: |
     ProPublica data visualization of traffic ticket court outcomes
   categories:
-    - News
+    - Media
     - Nonprofit
-    - Visualization
   url: >-
     https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-status/?initialWidth=782
   main_url: >-
@@ -1707,9 +1688,8 @@
   url: >-
     https://projects.propublica.org/graphics/il/il-city-sticker-tickets-maps/ticket-rate/?initialWidth=782
   categories:
-    - News
+    - Media
     - Nonprofit
-    - Visualization
   built_by: David Eads
   built_by_url: "https://github.com/eads"
   featured: false
@@ -1741,7 +1721,6 @@
   categories:
     - Blog
     - Portfolio
-    - Fashion
   featured: false
 - title: Artem Sapegin
   description: >
@@ -1949,7 +1928,6 @@
     Video game comparison website for the UK, build with GatsbyJS.
   categories:
     - eCommerce
-    - Video Games
   built_by: Koen Kamphuis
   built_by_url: "https://koenkamphuis.com/"
   featured: false
@@ -1986,7 +1964,6 @@
     Tensiq is an e-Residency startup, that provides development in cutting-edge
     technology while delivering secure, resilient, performant solutions.
   categories:
-    - Game Development
     - Web Development
     - Mobile Development
     - Agency
@@ -2003,7 +1980,7 @@
     the blockchain.
   categories:
     - Technology
-    - Banking
+    - Finance
   built_by: Axel Fuhrmann
   built_by_url: "https://axelfuhrmann.com/"
   featured: false
@@ -2013,7 +1990,7 @@
   description: |
     Explorer React Native packages and examples effortlessly.
   categories:
-    - React Native
+    - Education
   featured: false
 - title: 500Tech
   main_url: "https://500tech.com/"
@@ -2088,7 +2065,6 @@
     - API
     - Technology
     - Travel
-    - Bot
   featured: false
 - title: Mokkapps
   main_url: "https://www.mokkapps.de/"
@@ -2111,7 +2087,6 @@
     - Agency
     - Web Development
     - Mobile Development
-    - React Native
   featured: false
 - title: Thorium
   main_url: "https://www.thoriumsim.com/"
@@ -2165,7 +2140,7 @@
   description: >
     A list of remote jobs, updated throughout the day. Built on Gatsby v1 and powered by Contentful, Google Sheets, string and sticky tape.
   categories:
-    - Job Board
+    - Marketing
   featured: false
 - title: Madvoid
   main_url: "https://madvoid.com/"
@@ -2208,7 +2183,7 @@
   url: "https://www.auroraeos.com/"
   featured: false
   categories:
-    - Blockchain
+    - Finance
     - Marketing
     - Blog
   built_by: Corey Ward
@@ -2242,7 +2217,7 @@
   url: https://www.tigerfacilityservices.com/de-en/
   featured: false
   categories:
-    - B2B Services
+    - Marketing
 - title: "Luciano Mammino's blog"
   description: >
     Tech & programming blog of Luciano Mammino a.k.a. "loige", Full-Stack Web Developer and International Speaker
@@ -2353,7 +2328,7 @@
   main_url: https://hawaiinational.bank
   description: Hawaii National Bank's highly personalized service has helped loyal customers & locally owned businesses achieve their financial dreams for over 50 years.
   categories:
-    - Banking
+    - Finance
   built_by: Wall-to-Wall Studios
   built_by_url: https://walltowall.com
   featured: false
@@ -2396,7 +2371,6 @@
   source_url: "https://github.com/gatsbymanor"
   categories:
     - Web Development
-    - Themes
     - Agency
     - Technology
     - Freelance
@@ -2436,7 +2410,6 @@
     - Landing Page
     - Marketing
     - Technology
-    - AI
   built_by: sktt
   built_by_url: https://github.com/sktt
 - title: EZAgrar
@@ -2447,7 +2420,6 @@
   categories:
     - eCommerce
     - Marketing
-    - Multilingual
   built_by: MangoART
   built_by_url: https://www.mangoart.at
   featured: false
@@ -2549,7 +2521,6 @@
   description: >
     Virtual Reality for the free and open Web.
   categories:
-    - Virtual Reality
     - Open Source
   built_by: Mozilla
   built_by_url: https://www.mozilla.org/
@@ -2584,7 +2555,7 @@
   description: >
     Bitbox based bitcoin.com developer platform and resources.
   categories:
-    - Blockchain
+    - Finance
   featured: false
 - title: Barmej
   main_url: "https://app.barmej.com/"
@@ -2629,7 +2600,6 @@
   categories:
     - Community
     - Education
-    - Drones
   built_by: Georgi Yanev
   built_by_url: https://twitter.com/jumpalottahigh
   featured: false
@@ -2641,8 +2611,6 @@
     I write articles about FPV quads (building and flying), web development, smart home automation, life-long learning and other topics from my personal experience.
   categories:
     - Blog
-    - Electronics
-    - Drones
   built_by: Georgi Yanev
   built_by_url: https://twitter.com/jumpalottahigh
   featured: false
@@ -2681,7 +2649,6 @@
     Free entrepreneurship educational portal with more than 20000 users, hundreds of resources, crowdfunding, mentoring and investor pitching events facilitated.
   categories:
     - Education
-    - Crowdfunding
     - Nonprofit
     - Entrepreneurship
   built_by: Cezar Neaga
@@ -2695,7 +2662,6 @@
   categories:
     - Web Development
     - API
-    - SDK
   built_by: Kiko Beats
   built_by_url: https://kikobeats.com/
   featured: false
@@ -2869,7 +2835,6 @@
   categories:
     - Learning
     - Education
-    - Testing
     - JavaScript
   built_by: Kent C. Dodds
   built_by_url: https://kentcdodds.com/
@@ -2881,8 +2846,6 @@
   main_url: https://usehooks.com/
   categories:
     - Learning
-    - Tips
-    - React
   built_by: Gabe Ragland
   built_by_url: https://twitter.com/gabe_ragland
   featured: false
@@ -2916,10 +2879,8 @@
     The intuitive and powerful project management platform loved by software teams of all sizes. Built with Gatsby v2 and Prismic
   categories:
     - Technology
-    - Project Management
     - Blog
     - Productivity
-    - B2B Services
     - Community
     - Design
     - Open Source
@@ -2932,9 +2893,7 @@
   description: >
     Princeton University has a branch dealing with state of art.They have showcased ore than 6,000 works of Asian art are presented alongside ongoing curatorial and scholarly research
   categories:
-    - Art
-    - History
-    - Models
+    - Marketing
   featured: false
 - title: QHacks
   url: https://qhacks.io
@@ -2943,7 +2902,6 @@
   description: >
     QHacks is Queen’s University’s annual hackathon! QHacks was founded in 2016 with a mission to advocate and incubate the tech community at Queen’s University and throughout Canada.
   categories:
-    - Hackathon
     - Education
     - Technology
     - Podcast
@@ -3027,7 +2985,6 @@
   description: >-
     Acclimate is a consulting firm that puts organizations back in control with data-driven strategies and full-stack applications.
   categories:
-    - AI
     - Technology
     - Consulting
   built_by: Andrew Wilson
@@ -3076,7 +3033,6 @@
   description: >-
     Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
   categories:
-    - Fundraising
     - Nonprofit
     - Event
   built_by: Cameron Rison
@@ -3099,7 +3055,6 @@
     COOP is a platform that connects fleet managers that have idle vehicles to businesses that are looking to rent vehicles. COOP simplifies the process and paperwork required to safely share vehicles between business owners.
   categories:
     - Marketing
-    - Asset Sharing
   built_by: Crispin Porter Bogusky
   built_by_url: http://www.cpbgroup.com/
   featured: false
@@ -3119,7 +3074,6 @@
   description: >
     Is a creative production house based in Tallinn, Estonia. We produce music videos, commercials, films and campaigns – from scratch to finish.
   categories:
-    - Cinema
     - Video
     - Portfolio
     - Agency
@@ -3146,10 +3100,8 @@
   description: >-
     DexWallet is a secure, multi-chain, mobile wallet with an upcoming one-click exchange for mobile.
   categories:
-    - Blockchain
     - App
     - Open Source
-    - React Native
   built_by: DexLab
   built_by_url: "https://github.com/dexlab-io"
 - title: Kings Valley Paving
@@ -3159,7 +3111,6 @@
     Kings Valley Paving is an asphalt, paving and concrete company serving the commercial, residential and industrial sectors in the Greater Toronto Area. Site designed by Stephen Bell.
   categories:
     - Marketing
-    - Construction
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
   featured: false
@@ -3244,7 +3195,6 @@
   description: Particle is a fully-integrated IoT platform that offers everything you need to deploy an IoT product.
   categories:
     - Marketing
-    - IOT
 - title: freeCodeCamp curriculum
   main_url: "https://learn.freecodecamp.org"
   url: "https://learn.freecodecamp.org"
@@ -3293,7 +3243,6 @@
   description: >
     Welcome to Portugal's best kept secret and be amazed with our nature. Here you can explore, surf, taste the world's best gastronomy and wine, feel the North Canyon's power with the biggest waves in the world and so many other amazing things. Find us, discover yourself!
   categories:
-    - Tourism
     - Travel
   built_by: Samuel Fialho
   built_by_url: https://samuelfialho.com
@@ -3304,8 +3253,6 @@
   description: Custom HR chatbot for better candidate experience
   categories:
     - App
-    - Bot
-    - HR
     - Technology
   featured: false
 - title: JDCastro Web Design & Development
@@ -3364,7 +3311,6 @@
     LXDX is the world's fastest crypto exchange. Our mission is to bring innovative financial products to retail crypto investors, providing access to the same speed and scalability that institutional investors already depend on us to deliver each and every day.
   categories:
     - Marketing
-    - Blockchain
     - Finance
   built_by: Corey Ward
   built_by_url: http://www.coreyward.me/
@@ -3390,7 +3336,6 @@
     - Learning
     - eCommerce
     - Marketing
-    - VSCode
     - Technology
     - Web Development
   built_by: Ahmad Awais
@@ -3408,7 +3353,6 @@
     - Freelance
     - Technology
     - Web Development
-    - React Native
     - Music
 - title: Ad Hoc Homework
   main_url: https://homework.adhoc.team
@@ -3446,7 +3390,6 @@
     - Landing Page
     - Business
     - Food
-    - Beverage
 - title: Satispay
   url: https://www.satispay.com
   main_url: https://www.satispay.com
@@ -3476,7 +3419,6 @@
   categories:
     - Music
     - Technology
-    - AI
     - Business
     - Entrepreneurship
     - Freelance
@@ -3491,7 +3433,6 @@
   url: https://clinicjs.org/
   main_url: https://clinicjs.org/
   categories:
-    - Performance
     - Technology
     - Documentation
   featured: false
@@ -3543,7 +3484,6 @@
     We solve the world’s toughest communications problems with the most quantifiably potent creative assets.
   categories:
     - Agency
-    - Advertising
     - Design
     - Marketing
   built_by: Crispin Porter Bogusky
@@ -3566,7 +3506,6 @@
   description: >
     Engel & Völkers, one of the most successful real estate agencies in the world, offers luxury holiday villas to rent in Ibiza.
   categories:
-    - Tourism
     - Travel
 - title: Sylvain Hamann's personal website
   url: "https://shamann.fr"
@@ -3633,7 +3572,6 @@
   description: >
     Steak Restaurant in Vienna, Austria (Wien, Österreich).
   categories:
-    - Restaurant
     - Food
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
@@ -3654,7 +3592,7 @@
   description: DayThirty - ideas for the new year.
   featured: false
   categories:
-    - Health & Wellness
+    - Marketing
   built_by: Jack Oliver
   built_by_url: "https://twitter.com/mrjackolai"
 - title: TheAgencyProject
@@ -3729,7 +3667,6 @@
   url: "https://www.theazoorsociety.org"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
-    - Health & Wellness
     - Community
     - Nonprofit
   built_by: Michael Uloth
@@ -3896,7 +3833,6 @@
   categories:
     - Education
     - Event
-    - Hackathon
     - Learning
     - Open Source
     - Nonprofit
@@ -3931,7 +3867,6 @@
     The web’s most comprehensive post-production resource, written by pro filmmakers, for pro filmmakers. Always expanding, always free.
   categories:
     - Education
-    - Cinema
   built_by: Frame.io
   built_by_url: https://frame.io
   featured: false
@@ -3966,9 +3901,7 @@
     Documentation for WPGraphQL, a free open-source WordPress plugin that provides an extendable GraphQL schema and API for any WordPress site.
   categories:
     - API
-    - CMS
     - Documentation
-    - GraphQL
     - Technology
     - Web Development
     - WordPress
@@ -3981,7 +3914,6 @@
   description: >
     Shine Lawyers is an Australian legal services website built with Gatsby v2, Elasticsearch, Isso, and Geolocation services.
   categories:
-    - Legal
     - Business
     - Blog
 - title: Parallel Polis Kosice
@@ -3994,7 +3926,6 @@
     - Blog
     - Education
     - Technology
-    - Blockchain
   built_by: Roman Vesely
   built_by_url: https://romanvesely.
   featured: false
@@ -4113,7 +4044,6 @@
   description: >
     Node.js Foundation Website.
   categories:
-    - Node.js
     - Documentation
     - Web Development
   built_by: Node.js Website Redesign Working Group
@@ -4147,7 +4077,6 @@
   description: >
     Exclusive women's ready-to-wear fashion by designer Constanzia Yurashko.
   categories:
-    - Fashion
     - Portfolio
   built_by: Maxim Andries
   featured: false
@@ -4181,7 +4110,6 @@
   description: >
     GVD Renovations is a home improvement contractor with a well known reputation as a professional, quality contractor in California.
   categories:
-    - Construction
     - Business
   built_by: David Krasniy
   built_by_url: http://dkrasniy.com
@@ -4194,9 +4122,6 @@
     Style props for rapid UI development.
   categories:
     - Design System
-    - Styles
-    - Type Scale
-    - Responsive Design
   built_by: Brent Jackson
   built_by_url: https://jxnblk.com/
 - title: Timehacker
@@ -4340,7 +4265,6 @@
   description: >
     Hybrid (static/dynamic) Gatsby web app for ii's free research, news and analysis, discussion and product marketing site.
   categories:
-    - Banking
     - Business
     - Finance
     - Technology
@@ -4354,7 +4278,6 @@
     Weingut Goeschl is a family winery located in Gols, Burgenland in Austria (Österreich)
   categories:
     - eCommerce
-    - Beverage
     - Business
   built_by: Peter Kroyer
   built_by_url: https://www.peterkroyer.at/
@@ -4445,7 +4368,6 @@
     Extraordinary free HD videos
   categories:
     - Video
-    - Art
     - Design
     - Gallery
     - Video
@@ -4482,7 +4404,6 @@
   description: >
     Online auction site to purchase tax-distressed properties from local taxing authorities.
   categories:
-    - Auction
     - Real Estate
     - Government
   featured: false
@@ -4576,7 +4497,6 @@
   source_url: "https://github.com/sadnessOjisan/re-geo-lp"
   categories:
     - Open Source
-    - Joke
   built_by: sadnessOjisan
   built_by_url: https://twitter.com/sadnessOjisan
   featured: false
@@ -4672,7 +4592,6 @@
   categories:
     - Portfolio
     - Mobile Development
-    - React Native
   built_by: Jean Regisser
   built_by_url: "https://jeanregisser.com/"
 - title: Axcept - Visual Screenshot Testing
@@ -4682,7 +4601,6 @@
     Visual Testing for everyone
   categories:
     - Documentation
-    - Testing
     - Web Development
   built_by: d:code:it
   built_by_url: https://dcodeit.com
@@ -4694,7 +4612,6 @@
     Portfolio of frontend engineer & web developer Chase Ohlson.
   categories:
     - Portfolio
-    - React
     - Web Development
   built_by: Chase Ohlson
   built_by_url: https://chaseohlson.com
@@ -4707,7 +4624,6 @@
     Portfolio site for UI/Motion Developer, Zach Schnackel.
   categories:
     - Portfolio
-    - React
     - Web Development
   built_by: Zach Schnackel
   built_by_url: "https://zslabs.com"
@@ -4718,7 +4634,6 @@
     Gremlin's Failure as a Service finds weaknesses in your system before they cause problems.
   categories:
     - Marketing
-    - Chaos Engineering
 - title: Headless.page
   main_url: https://headless.page/
   url: https://headless.page/
@@ -4797,7 +4712,6 @@
     - Programming
     - Open Source
     - Community
-    - Tutorials
   built_by: Hetzner Online GmbH
   built_by_url: https://www.hetzner.com/
   featured: false
@@ -4837,7 +4751,6 @@
     - Web Development
     - Programming
     - Documentation
-    - Hosting
     - Technology
   built_by: Render Developers
   built_by_url: https://render.com
@@ -5032,8 +4945,6 @@
     A landing page for the mobile app Mission42. Mission42 wants to help you learn new skills.
   categories:
     - App
-    - Tutorials
-    - Personal Training
     - Learning
     - Education
     - Landing Page
@@ -5047,7 +4958,6 @@
   categories:
     - Landing Page
     - Travel
-    - Tourism
     - Real Estate
   built_by: Simon Franzen, zauberware
   built_by_url: https://www.zauberware.com
@@ -5105,7 +5015,6 @@
   description: >
     Kibuk Construction is a fully licensed and insured contractor specializing in Siding, Decks, Windows & Doors!
   categories:
-    - Construction
     - Business
   built_by: David Krasniy
   built_by_url: http://dkrasniy.com
@@ -5116,8 +5025,6 @@
     RedCarpetUp's home page for a predominantly mobile-only customer base in India with major constraints on bandwidth availability
   categories:
     - Finance
-    - Loans
-    - Credit Card
   built_by: RedCarpet Dev Team
   built_by_url: https://www.redcarpetup.com
   featured: false
@@ -5228,7 +5135,6 @@
   description: >
     Pantene is a Swiss-created American brand of hair care products owned by Procter & Gamble
   categories:
-    - Beauty
     - Business
 - title: Prevue
   main_url: https://www.prevue.io
@@ -5259,7 +5165,6 @@
     - Government
     - Science
     - Technology
-    - Space
   built_by: Jonathan Z. Fisher
   built_by_url: "https://jonzfisher.com"
 - title: Sal's Pals
@@ -5299,9 +5204,7 @@
   description: >
     Cycling themed café coming this april in Sint Niklaas, Belgium. One page with funky css-grid and gatsby-image trickery!
   categories:
-    - Coffee
     - Food
-    - Instagram
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
@@ -5325,7 +5228,6 @@
   description: >
     Athlete website with Netlify CMS for blog content.
   categories:
-    - Athlete
     - Blog
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
@@ -5336,8 +5238,7 @@
   description: >
     Workspace for talent development and logopedics. One page site with basic info and small calendar CMS.
   categories:
-    - Personal Development
-    - One Page
+    - Marketing
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
   featured: false
@@ -5348,7 +5249,6 @@
     Artist portfolio website. Powered by a super simple Netlify CMS to easily add blog posts or new art pieces.
   categories:
     - Portfolio
-    - Artist
     - Blog
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
@@ -5360,7 +5260,6 @@
     Artist portfolio website. Powered by a super simple Netlify CMS to easily add blog posts or new art pieces.
   categories:
     - Portfolio
-    - Artist
     - Blog
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
@@ -5372,7 +5271,6 @@
     foodtruck style coffee by pro cyclist Robert Gesink. The site has a webshop with merchandise and coffee beans.
   categories:
     - eCommerce
-    - Coffee
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
 - title: blog.nikodemdeja.pl
@@ -5394,7 +5292,6 @@
   description: >
     The Pella Corporation is a privately held window and door manufacturing
   categories:
-    - Construction
     - Business
 - title: tinney.dev
   url: https://tinney.dev
@@ -5457,7 +5354,6 @@
   description: >
     Front End Remote Jobs features fully remote jobs for front end developers.
   categories:
-    - Job Board
     - WordPress
     - Web Development
   built_by: Ben Robertson
@@ -5470,10 +5366,7 @@
     Penrose Grand Del Mar is a luxury housing project coming soon.
   categories:
     - Real Estate
-    - Contentful
-    - Netlify
     - Design
-    - Animation
   built_by: Chase Ohlson
   built_by_url: https://chaseohlson.com
 - title: JustGraphQL
@@ -5548,7 +5441,6 @@
   description: >
     The Holly Lodge Community Centre - Highgate, London has a shiny new website built with Gatsby v2 that makes important contributions towards a faster, more secure and environmentally friendly web for everyone.
   categories:
-    - Charity
     - Community
     - Event
     - Nonprofit
@@ -5608,7 +5500,6 @@
   categories:
     - Portfolio
     - Gallery
-    - Landing
   built_by: Sebastien Crepin
   built_by_url: https://github.com/opeah
   featured: false
@@ -5661,7 +5552,6 @@
     - Entrepreneurship
     - Open Source
     - Technology
-    - Resource
   built_by: Jp Valery
   built_by_url: https://jpvalery.me
   featured: false
@@ -5673,7 +5563,6 @@
   categories:
     - Business
     - Finance
-    - Loans
   built_by: Lendo developers
   featured: false
 - title: Visual Cloud FX
@@ -5772,7 +5661,6 @@
     - Business
     - Community
     - Government
-    - Landing
     - Marketing
   source_url: https://github.com/Polcius/sindhuka-serif
   built_by: Pol Milian
@@ -5801,8 +5689,6 @@
     Official website of Sandbox, a Northeastern University student group that builds software for researchers.
   categories:
     - Marketing
-    - Research
-    - Student
   built_by: Sandbox at Northeastern
   built_by_url: https://github.com/sandboxneu/
   featured: false
@@ -5815,7 +5701,6 @@
   categories:
     - Accessibility
     - Web Development
-    - Tutorial
     - JavaScript
   built_by: Marcus Herrmann
   built_by_url: https://marcus.io
@@ -5859,7 +5744,6 @@
     - Portfolio
     - Programming
     - Science
-    - Space
     - Technology
     - Web Development
 - title: Measures for Justice
@@ -5878,8 +5762,6 @@
     Raconteur Agency is a London-based content marketing agency for B2B brands. We have rebuilt their site with Gatsby v2 using their existing WordPress backend as the data source. By switching from WordPress to GatsbyJS we have achieved a 200%+ improvement in page load times and went from a Lighthouse performance score of 49 to 100.
   categories:
     - Agency
-    - Publishing
-    - Advertising
     - Marketing
     - WordPress
   built_by: Jacob Herper
@@ -5891,12 +5773,10 @@
   description: >
     Cloud-based intranet software. Get your people going with everything you need, built in.
   categories:
-    - B2B Services
     - Business
     - App
     - Productivity
     - Technology
-    - CMS
   built_by: Effective Digital
   built_by_url: https://effective.digital/
 - title: Purple11
@@ -5917,8 +5797,7 @@
   description: >
     The best content about web performance in spanish language.
   categories:
-    - Performance
-    - Spanish
+    - Web Development
   built_by: Joan León & José M. Pérez
   built_by_url: https://perf.reviews/nosotros/
   featured: false
@@ -6055,7 +5934,6 @@
   description: >
     Global City Data is an open, easily browsable platform to showcase peer-reviewed urban datasets and models created by different research groups.
   categories:
-    - Research
     - Education
     - Open Source
   built_by: Rafi Barash
@@ -6094,7 +5972,6 @@
     - Agency
     - Technology
     - Web Development
-    - Software Engineering
     - Mobile Development
   built_by: Acto
   built_by_url: https://www.acto.dk/
@@ -6147,7 +6024,6 @@
   categories:
     - Directory
     - Government
-    - History
   built_by: Alex Shaw
   built_by_url: https://github.com/Symbitic/
   featured: false
@@ -6159,7 +6035,6 @@
   categories:
     - Marketing
     - Healthcare
-    - Femtech
   built_by: Pill Club
   built_by_url: https://thepillclub.com
 - title: myweekinjs
@@ -6169,9 +6044,7 @@
   description: >
     Challenge to create and/or learn something new in JavaScript each week.
   categories:
-    - Challenge
     - Blog
-    - Personal Development
   built_by: Adriaan Janse van Rensburg
   built_by_url: https://github.com/HurricaneInteractive/
   featured: false
@@ -6183,8 +6056,6 @@
     The Edit Suite is an award winning video production and photography company based out of our Mermaid Beach studio on the Gold Coast of Australia but we also have the ability to work mobile from any location.
   categories:
     - Photography
-    - Motion graphics
-    - Events
     - Marketing
   built_by: Thrive Team - Gold Coast
   built_by_url: https://thriveweb.com.au/
@@ -6196,7 +6067,6 @@
     Online shop for Carine Roitfeld parfume
   categories:
     - eCommerce
-    - Beauty
   built_by: Ask Phill
   built_by_url: https://askphill.com
 - title: EngineHub.org
@@ -6219,7 +6089,6 @@
   categories:
     - Blog
     - Healthcare
-    - Health & Wellness
   built_by: KiwiSprout
   built_by_url: https://kiwisprout.nz/
   featured: false
@@ -6231,9 +6100,6 @@
   categories:
     - Travel
     - Data
-    - Research
-    - Visualization
-    - News
   built_by: TomTom
   built_by_url: https://tomtom.com
   featured: false
@@ -6245,9 +6111,6 @@
     laser cutting, and rapid prototyping. We help artists, agencies and engineers turn their ideas into its physical form.
   categories:
     - Business
-    - Art
-    - 3D Printing
-    - Manufacturing
   featured: false
 - title: Asjas
   main_url: https://asjas.co.za
@@ -6272,8 +6135,6 @@
     - Web Development
     - Blog
     - Portfolio
-    - Student
-    - Club
     - Agency
   built_by: Criston Macarenhas
   built_by_url: https://github.com/cristonkrizz
@@ -6285,7 +6146,6 @@
   description: >
     Annual CSS survey, brother of The State of JS Survey.
   categories:
-    - Research
     - Web Development
   built_by: Sacha Greif & Contribs
   built_by_url: https://github.com/StateOfJS
@@ -6297,7 +6157,6 @@
   description: >
     Embrace the New Era of Bytom Blockchain
   categories:
-    - Blockchain
     - Finance
     - Open Source
     - Technology
@@ -6312,9 +6171,7 @@
     The ten-day festival is focused on live, public theatre as well as music and visual arts.
   categories:
     - Event
-    - Events
     - Entertainment
-    - Festival
   built_by: Oberon
   built_by_url: https://oberon.nl/
   featured: false
@@ -6326,7 +6183,6 @@
   categories:
     - Open Source
     - Technology
-    - Cryptocurrency
     - Finance
 - title: Riffy Blog
   main_url: https://blog.rayriffy.com/
@@ -6340,7 +6196,6 @@
     - Open Source
     - Technology
     - Music
-    - Netlify
     - SEO
   built_by: Phumrapee Limpianchop
   built_by_url: https://rayriffy.com/
@@ -6374,8 +6229,6 @@
     Online store for Canvas 1839 products, including pharmacological-grade CBD oil and relief cream.
   categories:
     - eCommerce
-    - Health & Wellness
-    - CBD
     - Marketing
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
@@ -6385,11 +6238,8 @@
   description: >-
     Sparkle Stories is a streaming audio platform for children with over 1,200 original audio stories.
   categories:
-    - Audiobooks
-    - Children
     - App
     - Education
-    - Streaming
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
 - title: nehalist.io
