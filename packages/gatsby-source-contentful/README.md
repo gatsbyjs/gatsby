@@ -152,14 +152,6 @@ For example, to filter locales on only germany `localeFilter: locale => locale.c
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales
 
-## Notes on Contentful Content Models
-
-There are currently some things to keep in mind when building your content models at Contentful.
-
-1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
-
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
-
 ## How to query for nodes
 
 Two standard node types are available from Contentful: `Asset` and `ContentType`.
@@ -303,6 +295,97 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
 
 When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that gatsby-source-contentful also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
 
+## Notes on Contentful Content Models
+
+### References
+
+Contentful reference fields will create [Union type](https://graphql.org/learn/schema/#union-types) fields. To access data [Inline fragments](https://graphql.org/learn/queries/#inline-fragments) need to be used.
+
+For example, if you have `Product` and `Category` Content Models in Contentful space and `Product` has `categories` field that reference `Category` entries, you can get list of categories for product by querying:
+
+```graphql
+{
+  contentfulProduct {
+    name
+    price
+    categories {
+      # We are using inline fragment on Category type
+      # to access category fields
+      ... on ContentfulCategory {
+        title
+      }
+    }
+  }
+}
+```
+
+### Reverse references
+
+When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. Name of reverse reference will contain field and type names.
+
+For example, if you have `Product` and `Category` Content Models in Contentful space and `Product` has `categories` field that reference `Category` entries, you can get list of all products in given category by quering:
+
+```graphql
+{
+  contentfulCategory {
+    title
+    categoriesProduct {
+      name
+      price
+    }
+  }
+}
+```
+
+For simplicity, it is easier to put the reference field on the child in child/parent relationships.
+
+### Markdown transformers on Long Text fields
+
+Version 3 of `gatsby-source-contentful` creates GraphQL schema directly from Contentful Content Model and is not inferring fields from data anymore. This means that queries won't break if you don't have any fields in Your contentful space. There is however edge case for transformed data - particularly for Long Text fields that can be transformed with `gatsby-transformer-remark` or `gatsby-mdx`. Contentful plugin is not aware of transformers so you might need to provide hints for gatsby to create `childMarkdownRemark`/`childMdx` fields.
+
+Here's example of attaching `childMarkdownRemark`:
+
+```js
+// in your gatsby-node.js
+exports.sourceNodes = ({ actions, schema }) => {
+  actions.createTypes(`
+    # This is needed if there aren't any MarkdownRemark nodes.
+    type MarkdownRemark implements Node {
+      html: String
+    }
+  `)
+
+  actions.createTypes(
+    // list all types that need to have `childMarkdownRemark` attached
+    [`contentfulProductProductDescriptionTextNode`].map(typeName =>
+      schema.buildObjectType({
+        name: typeName,
+        fields: {
+          childMarkdownRemark: {
+            type: `MarkdownRemark`,
+            resolve: async (source, args, context) => {
+              const { path } = context
+              const result = await context.nodeModel.getNodesByIds(
+                { ids: source.children, type: `MarkdownRemark` },
+                { path }
+              )
+              if (result && result.length > 0) {
+                return result[0]
+              } else {
+                return null
+              }
+            },
+          },
+        },
+        extensions: {
+          infer: false,
+        },
+      })
+    )
+  )
+}
+```
+
 ## More on Queries with Contentful and Gatsby
 
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
@@ -348,6 +431,40 @@ documentToReactComponents(node.bodyRichText.json, options)
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Migration to `gatsby-source-contentful` version 3:
+
+- Reference fields are always unions:
+  ```diff
+  {
+    contentfulProduct {
+      name
+      price
+      categories {
+  -     title
+  +     # We are using inline fragment on Category type
+  +     # to access category fields
+  +     ... on ContentfulCategory {
+  +       title
+  +     }
+      }
+    }
+  }
+  ```
+- Reverse reference fields now include referencing field name:
+  ```diff
+  {
+    contentfulCategory {
+      title
+  -   product {
+  +   categoriesProduct {
+        name
+        price
+      }
+    }
+  }
+  ```
+- Rich text fields now don't infer fields. Only available field is `json`. See [Contentful Rich Text](#contentful-rich-text) section how to use it.
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars
