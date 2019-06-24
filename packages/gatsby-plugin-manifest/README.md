@@ -9,9 +9,9 @@ This plugin provides several features beyond manifest configuration to make your
 - [Favicon support](https://www.w3.org/2005/10/howto-favicon)
 - Legacy icon support (iOS)[^1]
 - [Cache busting](https://www.keycdn.com/support/what-is-cache-busting)
-- Localization - Provides unqiue manifests for path-based localization
+- Localization - Provides unqiue manifests for path-based localization ([Gatsby Example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n))
 
-Each of these features has extensive configuration available so you're always in control.
+Each of these features has extensive configuration available so you are always in control.
 
 ## Install
 
