@@ -46,20 +46,20 @@ async function generateIcon(icon, srcIcon) {
 async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   const cacheKey = createContentDigest(`${icon.src}${icon}${srcIconDigest}`)
 
-  let created = cache.get(cacheKey)
+  let created = cache.get(cacheKey, srcIcon)
 
   if (!created) {
     cache.set(cacheKey, true)
 
     try {
-      console.log(`creating icon`, icon.src)
+      // console.log(`creating icon`, icon.src, srcIcon)
       await callback(icon, srcIcon)
     } catch (e) {
       cache.set(cacheKey, false)
       throw e
     }
   } else {
-    console.log(`icon exists`, icon.src)
+    // console.log(`icon exists`, icon.src, srcIcon)
   }
 }
 
@@ -69,24 +69,30 @@ exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
 
   let cache = new Map()
 
+  await makeManifest(cache, reporter, manifest)
+
   if (Array.isArray(localize)) {
-    const locales = manifest.start_url ? localize.concat(manifest) : localize
+    const locales = [...localize]
     await Promise.all(
-      locales.map(locale =>
-        makeManifest(cache, reporter, {
+      locales.map(locale => {
+        let cacheModeOverride = {}
+
+        /* localization requires unique filenames for output files if a different src Icon is defined.
+           otherwise one language would override anothers icons in automatic mode.
+        */
+        if (locale.hasOwnProperty(`icon`) && !locale.hasOwnProperty(`icons`)) {
+          // console.debug(`OVERRIDING CACHE BUSTING`, locale)
+          cacheModeOverride = { cache_busting_mode: `name` }
+        }
+
+        return makeManifest(cache, reporter, {
           ...manifest,
           ...locale,
-          ...{ cache_busting_mode: `name` },
-          /* localization requires unique filenames for output files if a different src Icon is defined.
-           otherwise one language would override anothers icons.
-           there are potentially some other methods to do this but requiring the existing name based cache busting was the easiest.*/
+          ...cacheModeOverride,
         })
-      )
+      })
     )
-  } else {
-    await makeManifest(cache, reporter, manifest)
   }
-
   activity.end()
 }
 
