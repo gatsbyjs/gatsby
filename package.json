@@ -7,6 +7,7 @@
     "babel-jest": "^24.0.0",
     "chokidar": "^1.7.0",
     "cross-env": "^5.1.4",
+    "danger": "^8.0.0",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.13.0",
     "eslint-config-prettier": "^4.3.0",
@@ -25,6 +26,8 @@
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^6.1.0",
     "jest-serializer-path": "^0.1.15",
+    "joi": "^14.3.1",
+    "js-yaml": "^3.13.1",
     "lerna": "^3.10.7",
     "lint-staged": "^8.1.7",
     "markdown-magic": "^0.1.25",
@@ -33,6 +36,8 @@
     "prettier": "1.17.1",
     "rimraf": "^2.6.1",
     "svgo": "1.2.2",
+    "ts-jest": "^22",
+    "typescript": "^2.3.2",
     "yargs": "^10.0.3"
   },
   "engines": {
