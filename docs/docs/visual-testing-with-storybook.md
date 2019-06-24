@@ -99,6 +99,28 @@ module.exports = ({ config }) => {
 
 > Note that if you're using a [StaticQuery](/docs/static-query/) in your components, `babel-plugin-remove-graphql-queries` is required to render them in Storybook. This is because the queries are run at build time in Gatsby, and will not have been run when rendering the components directly.
 
+> When using typescript, add this rule:
+
+```js:title=.storybook/webpack.config.js
+
+config.module.rules.push({
+    test: /\.(ts|tsx)$/,
+    loader: require.resolve('babel-loader'),
+    options: {
+      presets: [['react-app', {flow: false, typescript: true}]],
+      plugins: [
+        require.resolve('@babel/plugin-proposal-class-properties'),
+        // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
+        require.resolve('babel-plugin-remove-graphql-queries'),
+      ],
+    },
+  });
+  config.resolve.extensions.push('.ts', '.tsx');
+
+  return config
+}
+```
+
 **For Storybook v4:**
 
 ```js:title=.storybook/webpack.config.js
