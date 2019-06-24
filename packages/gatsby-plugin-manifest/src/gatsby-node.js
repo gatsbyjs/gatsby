@@ -76,6 +76,10 @@ exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
         makeManifest(cache, reporter, {
           ...manifest,
           ...locale,
+          ...{ cache_busting_mode: `name` },
+          /* localization requires unique filenames for output files if a different src Icon is defined.
+           otherwise one language would override anothers icons.
+           there are potentially some other methods to do this but requiring the existing name based cache busting was the easiest.*/
         })
       )
     )
