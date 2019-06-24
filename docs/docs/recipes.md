@@ -94,6 +94,83 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
 - Use [CSS Modules](/tutorial/part-two/#css-modules)
 
+### Using Styled Components
+
+#### Requirements
+
+- Install the necessary dependencies for styled-components, including the Gatsby plugin
+
+```shell
+npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
+```
+
+- Add it to your site’s gatsby-config.js
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-styled-components`],
+}
+```
+
+#### Directions
+
+1. Open the index page component (src/pages/index.js), import the styled-components package, and create some styled components
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import styled from "styled-components"
+
+const Container = styled.div`
+  margin: 3rem auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+const Avatar = styled.img`
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  margin: 0;
+`
+
+const Username = styled.h2`
+  margin: 0 0 12px 0;
+  padding: 0;
+`
+
+const User = props => (
+  <UserWrapper>
+    <Avatar src={props.avatar} alt="" />
+    <Username>{props.username}</Username>
+  </UserWrapper>
+)
+
+export default () => (
+  <Container>
+    <h1>About Styled Components</h1>
+    <p>Styled Components is cool</p>
+    <User
+      username="Jane Doe"
+      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+    />
+    <User
+      username="Bob Smith"
+      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+    />
+  </Container>
+)
+```
+
+2. Run `gatsby develop` to see the changes
+
+#### Related Links
+
+- [More on Using Styled Components](/docs/styled-components/)
+- [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
+
 ## Creating layouts
 
 To wrap pages with layouts, use normal React components.
