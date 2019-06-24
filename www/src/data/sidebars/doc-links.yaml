@@ -317,6 +317,8 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+            - title: Client Data Fetching
+              link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages
         - title: Improving Performance
