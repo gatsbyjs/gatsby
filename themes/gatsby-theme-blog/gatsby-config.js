@@ -1,5 +1,5 @@
 module.exports = options => {
-  const { mdx = true, mdxLayouts = {} } = options
+  const { mdx = true } = options
 
   return {
     siteMetadata: {

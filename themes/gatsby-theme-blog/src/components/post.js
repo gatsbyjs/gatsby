@@ -16,26 +16,24 @@ const Post = ({
   location,
   previous,
   next,
-}) => {
-  return (
-    <Layout location={location} title={title}>
-      <SEO title={post.frontmatter.title} description={post.excerpt} />
-      <Main>
-        <Styled.h1>{post.frontmatter.title}</Styled.h1>
-        <Styled.p
-          css={css({
-            fontSize: 1,
-            mt: -3,
-            mb: 3,
-          })}
-        >
-          {post.frontmatter.date}
-        </Styled.p>
-        <MDXRenderer>{post.body}</MDXRenderer>
-      </Main>
-      <PostFooter {...{ previous, next }} />
-    </Layout>
-  )
-}
+}) => (
+  <Layout location={location} title={title}>
+    <SEO title={post.frontmatter.title} description={post.excerpt} />
+    <Main>
+      <Styled.h1>{post.frontmatter.title}</Styled.h1>
+      <Styled.p
+        css={css({
+          fontSize: 1,
+          mt: -3,
+          mb: 3,
+        })}
+      >
+        {post.frontmatter.date}
+      </Styled.p>
+      <MDXRenderer>{post.body}</MDXRenderer>
+    </Main>
+    <PostFooter {...{ previous, next }} />
+  </Layout>
+)
 
 export default Post
