@@ -109,16 +109,16 @@
                 # This list should only include the top 5 CMSs by Gatsby plugin usage.
                 # Please do not add your headless CMS here.
                 # Instead, please add links on the /docs/headless-cms/ page
-                - title: Sourcing from WordPress
-                  link: /docs/sourcing-from-wordpress/
-                - title: Sourcing from Drupal
-                  link: /docs/sourcing-from-drupal/
                 - title: Sourcing from Contentful
                   link: /docs/sourcing-from-contentful/
-                - title: Sourcing from Prismic
-                  link: /docs/sourcing-from-prismic/
                 - title: Sourcing from Netlify CMS
                   link: /docs/sourcing-from-netlify-cms/
+                - title: Sourcing from WordPress
+                  link: /docs/sourcing-from-wordpress/
+                - title: Sourcing from Prismic
+                  link: /docs/sourcing-from-prismic/
+                - title: Sourcing from Drupal
+                  link: /docs/sourcing-from-drupal/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           items:
