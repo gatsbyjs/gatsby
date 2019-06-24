@@ -66,9 +66,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               title
               date(formatString: "MMMM DD, YYYY")
             }
-            code {
-              body
-            }
+            body
             parent {
               ... on File {
                 name

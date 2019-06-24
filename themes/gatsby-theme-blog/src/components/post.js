@@ -4,7 +4,7 @@ import { Styled, css, Main } from "theme-ui"
 import PostFooter from "../components/post-footer"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { MDXRenderer } from "gatsby-mdx"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 const Post = ({
   data: {
@@ -31,7 +31,7 @@ const Post = ({
         >
           {post.frontmatter.date}
         </Styled.p>
-        <MDXRenderer>{post.code.body}</MDXRenderer>
+        <MDXRenderer>{post.body}</MDXRenderer>
       </Main>
       <PostFooter {...{ previous, next }} />
     </Layout>

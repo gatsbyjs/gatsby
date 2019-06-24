@@ -18,9 +18,7 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
       }
       excerpt
-      code {
-        body
-      }
+      body
     }
     site: site {
       siteMetadata {
