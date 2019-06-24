@@ -4,13 +4,13 @@ starter:
   - AWS
   - Blog
   - Client-side App
-  - CMS:Headless,
-  - CMS:Contentful,
-  - CMS:Drupal,
-  - CMS:Prismic,
-  - CMS:Netlify,
-  - CMS:Wordpress,
-  - CMS:Other,
+  - CMS:Headless
+  - CMS:Contentful
+  - CMS:Drupal
+  - CMS:Prismic
+  - CMS:Netlify
+  - CMS:Wordpress
+  - CMS:Other
   - Disqus
   - Documentation
   - eCommerce
