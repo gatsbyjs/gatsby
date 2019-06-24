@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -17,6 +17,7 @@
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
     "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.2",
+    "@hapi/joi": "^14.0.0",
     "@mikaelkristiansson/domready": "^1.0.9",
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
     "@reach/router": "^1.1.1",
@@ -82,7 +83,6 @@
     "is-relative-url": "^2.0.0",
     "is-wsl": "^1.1.0",
     "jest-worker": "^23.2.0",
-    "@hapi/joi": "^14.0.0",
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.10",
