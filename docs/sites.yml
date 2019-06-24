@@ -6241,8 +6241,6 @@
   description: >-
     Sparkle Stories is a streaming audio platform for children with over 1,200 original audio stories.
   categories:
-    - Audiobooks
-    - Children
     - App
     - Education
   built_by: Corey Ward
