@@ -1,13 +1,7 @@
 import React from "react"
-
+import styled from "@emotion/styled"
 import logo from "../../monogram.svg"
-import jekyll from "../../assets/jekyll.svg"
-import wordpress from "../../assets/wordpress.png"
-import squarespace from "../../assets/squarespace-compressed.png"
-import nextjs from "../../assets/nextjs.svg"
-import hugo from "../../assets/hugo.png"
-import nuxtjs from "../../assets/nuxtjs.png"
-import drupal from "../../assets/drupal.png"
+import logoDictionary from "./logo-dictionary"
 import {
   colors,
   space,
@@ -16,6 +10,18 @@ import {
   fonts,
 } from "../../utils/presets"
 import { rhythm } from "../../utils/typography"
+
+const Td = styled.td`
+  display: table-cell;
+  background: ${colors.ui.background};
+  font-weight: 600;
+  line-height: ${lineHeights.dense};
+  text-align: left;
+  vertical-align: middle;
+  font-family: ${fonts.header};
+  border-color: ${colors.ui.light};
+  padding: ${space[3]};
+`
 
 const subHeaderTitleStyles = {
   height: space[6],
@@ -27,26 +33,6 @@ const subHeaderTitleStyles = {
   },
 }
 
-const subHeaderTitles = {
-  Category: ``,
-  Gatsby: <img src={logo} css={subHeaderTitleStyles} alt={`Gatsby Logo`} />,
-  Jekyll: <img src={jekyll} css={subHeaderTitleStyles} alt={`Jekyll Logo`} />,
-  WordPress: (
-    <img src={wordpress} css={subHeaderTitleStyles} alt={`WordPress Logo`} />
-  ),
-  Squarespace: (
-    <img
-      src={squarespace}
-      css={subHeaderTitleStyles}
-      alt={`Squarespace Logo`}
-    />
-  ),
-  Nextjs: <img src={nextjs} css={subHeaderTitleStyles} alt={`Next.js Logo`} />,
-  Hugo: <img src={hugo} css={subHeaderTitleStyles} alt={`Next.js Logo`} />,
-  Nuxtjs: <img src={nuxtjs} css={subHeaderTitleStyles} alt={`Nuxt.js Logo`} />,
-  Drupal: <img src={drupal} css={subHeaderTitleStyles} alt={`Nuxt.js Logo`} />,
-}
-
 const renderSubHeader = props => (
   <tr
     key="subhead"
@@ -54,23 +40,22 @@ const renderSubHeader = props => (
       display: !props.display ? `none` : `table-row`,
     }}
   >
-    {props.nodeFieldProperties.map((nodeProperty, i) => (
-      <td
-        key={i}
-        css={{
-          display: `table-cell`,
-          background: colors.ui.background,
-          fontWeight: 600,
-          lineHeight: lineHeights.dense,
-          textAlign: `left`,
-          verticalAlign: `middle`,
-          fontFamily: fonts.header,
-          borderColor: colors.ui.light,
-          padding: space[3],
-        }}
-      >
-        {subHeaderTitles[nodeProperty] || props.category || `Feature`}
-      </td>
+    <Td>{props.category}</Td>
+    <Td>
+      <img src={logo} css={subHeaderTitleStyles} alt="Gatsby logo" />
+    </Td>
+    {props.options.map((option, i) => (
+      <Td key={i}>
+        {(
+          <img
+            src={logoDictionary[option.key]}
+            css={subHeaderTitleStyles}
+            alt={`${option.display} Logo`}
+          />
+        ) ||
+          props.category ||
+          `Feature`}
+      </Td>
     ))}
   </tr>
 )

@@ -84,10 +84,12 @@ const CmsFeaturesPage = ({ data, location }) => {
           <EvaluationTable
             options={[
               {
+                key: `wordpress`,
                 display: `WordPress`,
                 nodeField: `WordPress`,
               },
               {
+                key: `drupal`,
                 display: `Drupal`,
                 nodeField: `Drupal`,
               },

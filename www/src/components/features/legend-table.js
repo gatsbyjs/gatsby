@@ -1,5 +1,4 @@
 import React from "react"
-import { Helmet } from "react-helmet"
 
 import EvaluationCell from "./evaluation-cell"
 import { colors, mediaQueries, fonts } from "../../utils/presets"
@@ -73,9 +72,6 @@ const LegendTable = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>Features</title>
-      </Helmet>
       <div
         css={{
           border: `1px solid ${legendBorderColor}`,

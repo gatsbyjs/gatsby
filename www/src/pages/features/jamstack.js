@@ -87,10 +87,10 @@ const JamstackFeaturesPage = ({ data, location }) => {
           </div>
           <EvaluationTable
             options={[
-              { display: `Next.js`, nodeField: `Nextjs` },
-              { display: `Jekyll`, nodeField: `Jekyll` },
-              { display: `Hugo`, nodeField: `Hugo` },
-              { display: `Nuxt.js`, nodeField: `Nuxtjs` },
+              { key: `nextjs`, display: `Next.js`, nodeField: `Nextjs` },
+              { key: `jekyll`, display: `Jekyll`, nodeField: `Jekyll` },
+              { key: `hugo`, display: `Hugo`, nodeField: `Hugo` },
+              { key: `nuxtjs`, display: `Nuxt.js`, nodeField: `Nuxtjs` },
             ]}
             sections={sections}
             sectionHeaders={sectionHeaders}

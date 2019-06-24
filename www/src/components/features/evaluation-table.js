@@ -21,7 +21,6 @@ class EvaluationTable extends Component {
 
     const { options, sections, sectionHeaders } = this.props
     const flatten = arrays => [].concat.apply([], arrays)
-    console.log(options)
     const columnHeaders = [`Category`, `Gatsby`].concat(
       options.map(o => o.display)
     )
@@ -56,7 +55,7 @@ class EvaluationTable extends Component {
                   section.map((row, i) =>
                     [].concat([
                       <SectionHeaderBottom
-                        nodeFieldProperties={nodeFieldProperties}
+                        options={options}
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
                         key={`section-header-${s}-bottom-${i}`}

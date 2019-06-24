@@ -32,7 +32,7 @@ const FeaturesHeader = () => (
         >
           Jekyll
         </a>
-        {` `}
+        {`, `}
         <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">
           Next.js
         </a>
