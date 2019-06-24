@@ -2,15 +2,41 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-exports.sourceNodes = ({ actions }) => {
-  // This is needed if there aren't any MarkdownRemark nodes.
-  // Once gatsby-transformer-remark has type definitions,
-  // we can remove it
+exports.sourceNodes = ({ actions, schema }) => {
   actions.createTypes(`
+    # This is needed if there aren't any MarkdownRemark nodes.
     type MarkdownRemark implements Node {
       html: String
     }
   `)
+
+  actions.createTypes(
+    [`contentfulProductProductDescriptionTextNode`].map(typeName =>
+      schema.buildObjectType({
+        name: typeName,
+        fields: {
+          childMarkdownRemark: {
+            type: `MarkdownRemark`,
+            resolve: async (source, args, context) => {
+              const { path } = context
+              const result = await context.nodeModel.getNodesByIds(
+                { ids: source.children, type: `MarkdownRemark` },
+                { path }
+              )
+              if (result && result.length > 0) {
+                return result[0]
+              } else {
+                return null
+              }
+            },
+          },
+        },
+        extensions: {
+          infer: false,
+        },
+      })
+    )
+  )
 }
 
 // Implement the Gatsby API “createPages”. This is

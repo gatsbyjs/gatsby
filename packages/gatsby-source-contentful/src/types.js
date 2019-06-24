@@ -41,29 +41,6 @@ const fieldTypeToGraphQLTypeLookup = {
       name: textTypeName,
       fields: {
         [context.fieldName]: `String`,
-        // missing - how to properly add childMarkdownRemark field (and other children that
-        // transform markdown content (i.e. mdx)?
-
-        // We shouldn't directly specify exact type name for parent/children
-        // in this instance: as markdown content can be transformed by
-        // different plugin (i.e "gatsby-transformer-remark" and "gatsby-mdx").
-        // It also would create tight bind between different source/transformer
-        // plugins.
-
-        // Instead I think types should have some metadata
-        // that transformer plugins could subscribe to.
-        // Common thing that transformer look for is "mediaType", so perhaps
-        // types could optionally declare those - this would potentially need
-        // custom config field in `buildObjectType` on top of ones that
-        // graphql-compose uses (?). This is generally problematic
-        // because some transformers use mediaType, but some don't
-        // (i.e. `gatsby-transformer-sharp` or `gatsby-transformer-asciidoc`
-        // check extension field of potential parent File node).
-
-        // I will hack it for now:
-        childMarkdownRemark: `MarkdownRemark`,
-        // but I can't create actual "children" field which
-        // is union combining all children node types
       },
       interfaces: [`Node`],
       extensions: {
