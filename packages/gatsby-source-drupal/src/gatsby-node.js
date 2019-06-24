@@ -167,9 +167,7 @@ exports.sourceNodes = async (
 
     _.each(contentType.data, datum => {
       const node = nodeFromData(datum, createNodeId)
-      
-      node.drupal_parent = node.parent; // Add Drupal parent
-      
+      node.drupal_parent = node.parent // Add Drupal parent
       node.relationships = {}
 
       // Add relationships
