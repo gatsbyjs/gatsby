@@ -25,7 +25,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   // 'not dead' query not available in browserslist used in Gatsby v1
   const DEFAULT_BROWSERS =
-    installedGatsbyVersion() === 1
+    getLocalGatsbyMajorVersion() === 1
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
@@ -37,26 +37,14 @@ function buildLocalCommands(cli, isLocalSite) {
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
-  function installedGatsbyVersion() {
-    let majorVersion
-    try {
-      const packageInfo = require(path.join(
-        process.cwd(),
-        `node_modules`,
-        `gatsby`,
-        `package.json`
-      ))
-      try {
-        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
-      } catch (e) {
-        // ignore
-      }
-      majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
-    } catch (err) {
-      /* ignore */
+  function getLocalGatsbyMajorVersion() {
+    let version = getLocalGatsbyVersion()
+
+    if (version) {
+      version = Number(version.split(`.`)[0])
     }
 
-    return majorVersion
+    return version
   }
 
   function resolveLocalCommand(command) {
@@ -298,7 +286,49 @@ function isLocalGatsbySite() {
   } catch (err) {
     /* ignore */
   }
-  return inGatsbySite
+  return !!inGatsbySite
+}
+
+function getLocalGatsbyVersion() {
+  let version
+  try {
+    const packageInfo = require(path.join(
+      process.cwd(),
+      `node_modules`,
+      `gatsby`,
+      `package.json`
+    ))
+    version = packageInfo.version
+
+    try {
+      setDefaultTags({ installedGatsbyVersion: version })
+    } catch (e) {
+      // ignore
+    }
+  } catch (err) {
+    /* ignore */
+  }
+
+  return version
+}
+
+function getVersionInfo() {
+  const { version } = require(`../package.json`)
+  const isGatsbySite = isLocalGatsbySite()
+  if (isGatsbySite) {
+    // we need to get the version from node_modules
+    let gatsbyVersion = getLocalGatsbyVersion()
+
+    if (!gatsbyVersion) {
+      gatsbyVersion = `unknown`
+    }
+
+    return `Gatsby CLI version: ${version}
+Gatsby version: ${gatsbyVersion}
+  Note: this is the Gatsby version for the site at: ${process.cwd()}`
+  } else {
+    return `Gatsby CLI version: ${version}`
+  }
 }
 
 module.exports = argv => {
@@ -328,7 +358,11 @@ module.exports = argv => {
 
   try {
     const { version } = require(`../package.json`)
-    cli.version(`version`, version)
+    cli.version(
+      `version`,
+      `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
+      getVersionInfo()
+    )
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
     // ignore
