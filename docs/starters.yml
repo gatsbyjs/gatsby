@@ -3086,3 +3086,16 @@
     - Emotion for styling
     - Uses multiple features of Prismic - Slices, Labels, Custom Types
     - ESLint & Prettier
+- url: https://anubhavsrivastava.github.io/gatsby-starter-resume
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-resume
+  description: Single page starter based on the Resume site template by startbootstrap for resume/portfolio page
+  tags:
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
