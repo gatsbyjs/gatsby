@@ -274,17 +274,10 @@ module.exports = (
 
     let rawHTML = `
   <span
-    class="${imageWrapperClass}"
-    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-      imageCaption ? `` : wrapperStyle
-    } max-width: ${presentationWidth}px;"
-  >
-    <span
-      class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
-    ></span>
-    ${imageTag}
-  </span>
+    class="${imageBackgroundClass}"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
+  ></span>
+  ${imageTag}
   `.trim()
 
     // Make linking to original image optional.
@@ -301,6 +294,17 @@ module.exports = (
   </a>
     `.trim()
     }
+
+    rawHTML = `
+    <span
+      class="${imageWrapperClass}"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+        imageCaption ? `` : wrapperStyle
+      } max-width: ${presentationWidth}px;"
+    >
+      ${rawHTML}
+    </span>
+    `.trim()
 
     // Wrap in figure and use title as caption
     if (imageCaption) {
