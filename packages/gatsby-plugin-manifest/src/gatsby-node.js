@@ -17,49 +17,76 @@ try {
   // doesn't support cpu-core-count utility.
 }
 
-function generateIcons(icons, srcIcon) {
-  return Promise.all(
-    icons.map(async icon => {
-      const size = parseInt(
-        icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`))
-      )
-      const imgPath = path.join(`public`, icon.src)
+async function generateIcon(icon, srcIcon) {
+  const imgPath = path.join(`public`, icon.src)
 
-      // For vector graphics, instruct sharp to use a pixel density
-      // suitable for the resolution we're rasterizing to.
-      // For pixel graphics sources this has no effect.
-      // Sharp accept density from 1 to 2400
-      const density = Math.min(2400, Math.max(1, size))
+  // console.log(`generating icon: `, icon.src)
+  // if (fs.existsSync(imgPath)) {
+  //   console.log(`icon already Exists, not regenerating`)
+  //   return true
+  // }
+  const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
 
-      return sharp(srcIcon, { density })
-        .resize({
-          width: size,
-          height: size,
-          fit: `contain`,
-          background: { r: 255, g: 255, b: 255, alpha: 0 },
-        })
-        .toFile(imgPath)
+  // For vector graphics, instruct sharp to use a pixel density
+  // suitable for the resolution we're rasterizing to.
+  // For pixel graphics sources this has no effect.
+  // Sharp accept density from 1 to 2400
+  const density = Math.min(2400, Math.max(1, size))
+
+  return sharp(srcIcon, { density })
+    .resize({
+      width: size,
+      height: size,
+      fit: `contain`,
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
-  )
+    .toFile(imgPath)
+}
+
+async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
+  const cacheKey = createContentDigest(`${icon.src}${icon}${srcIconDigest}`)
+
+  let created = cache.get(cacheKey)
+
+  if (!created) {
+    cache.set(cacheKey, true)
+
+    try {
+      console.log(`creating icon`, icon.src)
+      await callback(icon, srcIcon)
+    } catch (e) {
+      cache.set(cacheKey, false)
+      throw e
+    }
+  } else {
+    console.log(`icon exists`, icon.src)
+  }
 }
 
 exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`)
   activity.start()
 
+  let cache = new Map()
+
   if (Array.isArray(localize)) {
     const locales = manifest.start_url ? localize.concat(manifest) : localize
     await Promise.all(
-      locales.map(locale => makeManifest(reporter, { ...manifest, ...locale }))
+      locales.map(locale =>
+        makeManifest(cache, reporter, {
+          ...manifest,
+          ...locale,
+        })
+      )
     )
   } else {
-    await makeManifest(reporter, manifest)
+    await makeManifest(cache, reporter, manifest)
   }
 
   activity.end()
 }
 
-const makeManifest = async (reporter, pluginOptions) => {
+const makeManifest = async (cache, reporter, pluginOptions) => {
   const { icon, ...manifest } = pluginOptions
   const suffix = pluginOptions.lang ? `_${pluginOptions.lang}` : ``
 
@@ -125,9 +152,15 @@ const makeManifest = async (reporter, pluginOptions) => {
         ? pluginOptions.cache_busting_mode
         : `query`
 
+    const iconDigest = createContentDigest(fs.readFileSync(icon))
+
     //if cacheBusting is being done via url query icons must be generated before cache busting runs
     if (cacheMode === `query`) {
-      await generateIcons(manifest.icons, icon)
+      await Promise.all(
+        manifest.icons.map(dstIcon =>
+          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+        )
+      )
     }
 
     if (cacheMode !== `none`) {
@@ -140,7 +173,11 @@ const makeManifest = async (reporter, pluginOptions) => {
 
     //if file names are being modified by cacheBusting icons must be generated after cache busting runs
     if (cacheMode !== `query`) {
-      await generateIcons(manifest.icons, icon)
+      await Promise.all(
+        manifest.icons.map(dstIcon =>
+          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+        )
+      )
     }
   }
 
