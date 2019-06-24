@@ -6,10 +6,10 @@
     "modules": ["@slack/client", "joi", "js-yaml", "date-fns"]
   },
   "rules": {
-    "issue_comment": ["rules/not-stale.ts"],
-    "issues.opened": ["rules/emptybody.ts", "rules/labeler.ts"],
+    "issue_comment": ["peril/rules/not-stale.ts"],
+    "issues.opened": ["peril/rules/emptybody.ts", "rules/labeler.ts"],
     "pull_request.closed (pull_request.merged == true)": [
-      "rules/invite-collaborator.ts"
+      "peril/rules/invite-collaborator.ts"
     ]
   },
   "repos": {
