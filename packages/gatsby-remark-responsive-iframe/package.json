@@ -18,7 +18,9 @@
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.1.4",
-    "remark": "^9.0.0",
+    "remark": "^10.0.1",
+    "remark-mdx": "^1.0.14",
+    "semver": "^6.0.0",
     "unist-util-find": "^1.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
