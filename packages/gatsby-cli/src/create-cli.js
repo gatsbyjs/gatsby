@@ -314,8 +314,8 @@ function getLocalGatsbyVersion() {
 
 function getVersionInfo() {
   const { version } = require(`../package.json`)
-  const localVersion = isLocalGatsbySite()
-  if (localVersion) {
+  const isGatsbySite = isLocalGatsbySite()
+  if (isGatsbySite) {
     // we need to get the version from node_modules
     let gatsbyVersion = getLocalGatsbyVersion()
 
