@@ -127,6 +127,7 @@ const fieldTypeToGraphQLTypeLookup = {
         context.addBackReference({
           referencingType: context.typeName,
           referencedType: contentType.name,
+          referencingFieldName: context.fieldName,
         })
       })
 
@@ -317,13 +318,20 @@ exports.createTypes = ({ actions, schema, contentTypeItems, reporter }) => {
             gqlTypes: extraTypes,
             typeName: contentType.name,
             fieldName: field.id,
-            addBackReference: ({ referencingType, referencedType }) => {
+            addBackReference: ({
+              referencingType,
+              referencedType,
+              referencingFieldName,
+            }) => {
               let backReferencesForType = backReferences[referencedType]
               if (!backReferencesForType) {
                 backReferencesForType = backReferences[referencedType] = []
               }
 
-              backReferencesForType.push(referencingType)
+              backReferencesForType.push({
+                referencingType,
+                referencingFieldName,
+              })
             },
             ...context,
           })
@@ -371,29 +379,33 @@ exports.createTypes = ({ actions, schema, contentTypeItems, reporter }) => {
       const typeBackReferences = backReferences[typeName]
 
       if (typeBackReferences) {
-        _.uniq(typeBackReferences).forEach(referencedByType => {
-          const gqlTypeName = makeTypeName(referencedByType)
-          const fieldName = _.camelCase(referencedByType)
-
-          if (typeConfig.fields[fieldName]) {
-            reporter.warn(
-              `Can't create "${fieldName}" back reference in "${makeTypeName(
-                typeName
-              )}" type because field already exists`
+        typeBackReferences.forEach(
+          ({ referencingType, referencingFieldName }) => {
+            const gqlTypeName = makeTypeName(referencingType)
+            const fieldName = _.camelCase(
+              `${referencingFieldName} ${referencingType}`
             )
-            return
-          }
 
-          typeConfig.fields[fieldName] = {
-            // back references are always array
-            type: `[${gqlTypeName}]`,
-            extensions: {
-              link: {
-                from: `${fieldName}___NODE`,
+            if (typeConfig.fields[fieldName]) {
+              reporter.warn(
+                `Can't create "${fieldName}" back reference in "${makeTypeName(
+                  typeName
+                )}" type because field already exists`
+              )
+              return
+            }
+
+            typeConfig.fields[fieldName] = {
+              // back references are always array
+              type: `[${gqlTypeName}]`,
+              extensions: {
+                link: {
+                  from: `${fieldName}___NODE`,
+                },
               },
-            },
+            }
           }
-        })
+        )
       }
 
       return schema.buildObjectType(typeConfig)

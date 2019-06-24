@@ -118,11 +118,14 @@ exports.buildForeignReferenceMap = ({
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
-    const contentTypeItemId = _.camelCase(contentTypeItem.name)
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
+          const backRefFieldName = _.camelCase(
+            `${entryItemFieldKey} ${contentTypeItem.name}`
+          )
+
           let entryItemFieldValue =
             entryItemFields[entryItemFieldKey][defaultLocale]
           // If this is an array of single reference object
@@ -144,7 +147,7 @@ exports.buildForeignReferenceMap = ({
                   foreignReferenceMap[v.sys.id] = []
                 }
                 foreignReferenceMap[v.sys.id].push({
-                  name: `${contentTypeItemId}___NODE`,
+                  name: `${backRefFieldName}___NODE`,
                   id: entryItem.sys.id,
                 })
               })
@@ -160,7 +163,7 @@ exports.buildForeignReferenceMap = ({
               foreignReferenceMap[entryItemFieldValue.sys.id] = []
             }
             foreignReferenceMap[entryItemFieldValue.sys.id].push({
-              name: `${contentTypeItemId}___NODE`,
+              name: `${backRefFieldName}___NODE`,
               id: entryItem.sys.id,
             })
           }
