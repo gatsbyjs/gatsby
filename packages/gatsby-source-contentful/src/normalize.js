@@ -298,7 +298,7 @@ exports.createContentTypeNodes = ({
         }
       })
 
-      // // Add reverse linkages if there are any for this node
+      // Add reverse linkages if there are any for this node
       const foreignReferences = foreignReferenceMap[entryItem.sys.id]
       if (foreignReferences) {
         foreignReferences.forEach(foreignReference => {
