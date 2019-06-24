@@ -210,14 +210,18 @@
               items:
                 - title: Typography.js
                   link: /docs/typography-js/
+                - title: Using Sass
+                  link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
                 - title: Using TailwindCSS
                   link: /docs/tailwind-css/
-        - title: Adding Components to Content with MDX
+                - title: Using Bulma
+                  link: /docs/bulma/
+        - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           items:
-            - title: Getting Started
+            - title: Getting Started with MDX
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
@@ -277,6 +281,8 @@
               link: /docs/building-a-site-with-authentication/
             - title: Adding Forms
               link: /docs/adding-forms/
+            - title: Building a Contact Form
+              link: /docs/building-a-contact-form
             - title: Adding a 404 Page
               link: /docs/add-404-page/
             - title: Adding an SEO Component
@@ -311,6 +317,8 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+            - title: Client Data Fetching
+              link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages
         - title: Improving Performance
@@ -467,11 +475,11 @@
           items:
             - title: Developers
               link: /docs/winning-over-developers/
-            - title: Engineering Leaders*
+            - title: Engineering Leaders
               link: /docs/winning-over-engineering-leaders/
             - title: Marketers
               link: /docs/winning-over-marketers/
-            - title: Executives*
+            - title: Executives
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
@@ -526,8 +534,6 @@
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
-    - title: Advanced Tutorials
-      link: /tutorial/advanced-tutorials/
     - title: Commands (Gatsby CLI)
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
