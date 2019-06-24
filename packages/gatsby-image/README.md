@@ -421,7 +421,8 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.
-- Be aware that from a SEO perspective it is advisable to not change the image parameters lightheartdly once the website has been   published. Every time you change properties within the _fluid_ type (like _quality_ or _maxWith_) the image will change its absolute path during the building process (due to the way in which webpack manages the cache). This happens even if the image didn't change it's name. As a result the image could appear on the image SERP as "new" one. (more details [can be found on this issue](https://github.com/gatsbyjs/gatsby/issues/13742) )
+- Be aware that from a SEO perspective it is advisable not to change the image parameters lightheartedly once the website has been published. Every time you change properties within _fluid_ or _fixed_ (like _quality_ or _maxWidth_), the absolute path of the image changes. These properties generate the hash we use in our absolute path. This happens even if the image didn't change its name. As a result, the image could appear on the image SERP as "new" one. (more details [can be found on this issue](https://github.com/gatsbyjs/gatsby/issues/13742))
+``
 - By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.
