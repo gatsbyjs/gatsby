@@ -298,6 +298,7 @@
   repo: https://github.com/datocms/gatsby-portfolio
   description: n/a
   tags:
+    - CMS:DatoCMS
     - CMS:Headless
   features:
     - Simple portfolio to quick start a site with DatoCMS
@@ -559,7 +560,6 @@
   tags:
     - Blog
     - Markdown
-    - Algolia
     - Netlify
     - Styling:Material
   features:
@@ -679,8 +679,8 @@
   description: n/a
   tags:
     - PWA
-    - GraphCMS
     - CMS:Headless
+    - CMS:Other
     - Apollo Client
     - Styling:Material
     - Netlify
@@ -830,7 +830,7 @@
   description: Gatsby starter using WordPress as the content source.
   tags:
     - Styling:CSS-in-JS
-    - CMS:WordPress
+    - CMS:Wordpress
   features:
     - All the features from gatsby-advanced-starter, plus
     - Leverages the WordPress plugin for Gatsby for data
@@ -1003,7 +1003,7 @@
   repo: https://github.com/cosmicjs/gatsby-blog-cosmicjs
   description: Blog that utilizes the power of the Cosmic JS headless CMS for easy content management
   tags:
-    - Cosmic JS
+    - CMS:Cosmic JS
     - CMS:Headless
     - Blog
   features:
@@ -1012,7 +1012,7 @@
   repo: https://github.com/cosmicjs/gatsby-starter
   description: Simple Gatsby starter connected to the Cosmic JS headless CMS for easy content management
   tags:
-    - Cosmic JS
+    - CMS:Cosmic JS
     - CMS:Headless
   features:
     - Uses the Cosmic JS Gatsby source plugin
@@ -1783,7 +1783,7 @@
   repo: https://github.com/sanity-io/example-company-website-gatsby-sanity-combo
   description: This examples combines Gatsby site generation with Sanity.io content management in a neat company website.
   tags:
-    - sanity.io
+    - CMS:sanity.io
     - CMS:Headless
     - Blog
   features:
@@ -1950,7 +1950,7 @@
   repo: https://github.com/pablovila/gatsby-starter-wordpress-community
   description: Starter using gatsby-source-wordpress to display posts and pages from a WordPress site
   tags:
-    - CMS:WordPress
+    - CMS:Wordpress
     - Styling:Bulma
     - Blog
     - Pagination
@@ -2206,7 +2206,6 @@
   repo: https://github.com/simulieren/gatsby-starter-framer-x
   description: A GatsbyJS starter template that is connected to a Framer X project
   tags:
-    - Framer X
     - Language:TypeScript
   features:
     - TypeScript support
@@ -2608,7 +2607,7 @@
   tags:
     - Blog
     - Portfolio
-    - Cosmic JS
+    - CMS:Cosmic JS
   features:
     - Landing Page
     - Home
@@ -2619,7 +2618,7 @@
   repo: https://github.com/cosmicjs/gatsby-localization-app-starter
   description: A localized Gatsby starter application powered by Cosmic JS.
   tags:
-    - Cosmic JS
+    - CMS:Cosmic JS
     - i18n
   features:
     - Gatsby localization starter app
@@ -2627,7 +2626,7 @@
   repo: https://github.com/cosmicjs/gatsby-docs-app
   description: Be able to view and create documentation using Gatsby and Cosmic JS. Leveraging the speed and high powered APIs of the Gatsby framework and the simplicity and scalability of Cosmic JS.
   tags:
-    - Cosmic JS
+    - CMS:Cosmic JS
     - Documentation
   features:
     - manage docs in static web file format for zippy delivery
@@ -2635,7 +2634,7 @@
   repo: https://github.com/a9kitkumar/Gatsby-Ecommerce
   description: A localized Gatsby starter application powered by Cosmic JS.
   tags:
-    - Cosmic JS
+    - CMS:Cosmic JS
     - eCommerce
   features:
     - Stores products, orders using Cosmic JS as a database and a server
@@ -2980,12 +2979,12 @@
   description: Minimal Typescript Starter
   tags:
     - Language:TypeScript
-    - Minimal
   features:
     - TypeScript
     - ESLint + optional rule enforcement with Husky
     - Prettier
     - Netlify ready
+    - Minimal
 - url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
   description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
@@ -3039,8 +3038,8 @@
   repo: https://github.com/deamme/gatsby-starter-prismic-resume
   description: Gatsby Resume/CV page with Prismic integration
   tags:
-    - Prismic
-    - Headless CMS
+    - CMS:Prismic
+    - CMS:Headless
     - Styling:CSS-in-JS
     - Onepage
     - Linting

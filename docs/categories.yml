@@ -4,12 +4,15 @@ starter:
   - AWS
   - Blog
   - Client-side App
+  - CMS:Cosmic JS
   - CMS:Headless
   - CMS:Contentful
+  - CMS:DatoCMS
   - CMS:Drupal
   - CMS:Prismic
   - CMS:Netlify
   - CMS:Wordpress
+  - CMS:sanity.io
   - CMS:Other
   - Disqus
   - Documentation
