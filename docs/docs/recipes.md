@@ -119,6 +119,7 @@ In Gatsby, you access data through a query language called [GraphQL](https://gra
 - Read through a conceptual guide on [querying data with GraphQL in Gatsby](/docs/querying-with-graphql/)
 - Learn more about the `graphql` tag -- [querying data in a Gatsby page](/docs/page-query/)
 - Learn more about `<StaticQuery />` -- [querying data in (non-page) components](/docs/static-query/)
+- Learn about [querying data in non-page components](/docs/querying-data-components)
 
 ## Sourcing data
 
