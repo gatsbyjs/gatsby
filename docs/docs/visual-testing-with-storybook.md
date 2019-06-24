@@ -102,7 +102,6 @@ module.exports = ({ config }) => {
 > When using typescript, add this rule:
 
 ```js:title=.storybook/webpack.config.js
-...
 
 config.module.rules.push({
     test: /\.(ts|tsx)$/,
