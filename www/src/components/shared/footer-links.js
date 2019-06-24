@@ -18,15 +18,15 @@ const FooterList = styled.ul`
 
   li {
     display: inline-block;
+    &:after {
+      color: ${colors.grey[30]};
+      content: "•";
+      padding-left: 1em;
+      padding-right: 1em;
+    }
 
-    &:not(:last-of-type) {
-      margin-right: 1em;
-
-      &:after {
-        color: ${colors.grey[30]};
-        content: "•";
-        padding-left: 1em;
-      }
+    &:last-of-type:after {
+      content: none;
     }
 
     a {
