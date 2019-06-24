@@ -111,8 +111,8 @@
           link: /tutorial/part-eight/#add-page-metadata
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
-    - title: Advanced Tutorials
-      link: /tutorial/advanced-tutorials/
+    - title: Additional Tutorials
+      link: /tutorial/additional-tutorials/
       items:
         - title: Making a Site with User Authentication
           link: /tutorial/authentication-tutorial/

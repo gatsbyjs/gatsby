@@ -299,3 +299,24 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Liferay Design
+  type: company
+  image: images/liferay-design.png
+  description: >-
+    We are Liferay's design team — based in Brazil, California, Germany, Italy, Spain, and maybe soon in your hometown. We moved our site to Gatsby in 2018 and haven't looked back since.
+  location: Worldwide
+  website: https://liferay.design
+  github: https://github.com/liferay-design
+  for_hire: false
+  hiring: true
+- name: Sankarsan Kampa
+  type: individual
+  description: >-
+    Hey! I'm Sankarsan (aka Traction). I'm a programmer who likes
+    building & breaking programmable systems, exploring their
+    details and stretching their capabilities.
+  website: "https://traction.one/"
+  github: "https://github.com/k3rn31p4nic"
+  image: images/sankarsan-kampa.jpg
+  for_hire: true
+  portfolio: true
