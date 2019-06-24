@@ -76,7 +76,7 @@ export const pageQuery = graphql`
           width
         }
       }
-      product {
+      categoriesProduct {
         id
         productName {
           productName
