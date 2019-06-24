@@ -1,4 +1,4 @@
-describe(`develop`, () => {
+describe(`serve`, () => {
   it(`works with the client side path`, () => {
     cy.visit(`/paths/app`).waitForRouteChange()
     cy.get(`h1`).contains(`App Page`)
