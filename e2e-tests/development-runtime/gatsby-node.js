@@ -79,10 +79,12 @@ exports.createPages = async function createPages({
   })
 }
 
-exports.onCreatePage = ({ page, actions }) => {
-  if (page.path === `/client-only-paths/`) {
-    // create client-only-paths
-    page.matchPath = `/client-only-paths/*`
-    actions.createPage(page)
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+
+  if (page.path.match(/^\/paths/)) {
+    page.matchPath = `/paths/*`
   }
+
+  createPage(page)
 }

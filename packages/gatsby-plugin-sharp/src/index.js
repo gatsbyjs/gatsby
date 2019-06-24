@@ -110,7 +110,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const finishedPromise = scheduleJob(
     job,
     boundActionCreators,
-    pluginOptions
+    pluginOptions,
+    reporter
   ).then(() => {
     queue.delete(prefixedSrc)
   })

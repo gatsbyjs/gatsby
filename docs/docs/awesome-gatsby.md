@@ -72,6 +72,7 @@ See the [library of official and community plugins](/plugins/)
 - [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
 - [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
 - [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
+- [GatsbyGuides.com series on building web applications with Gatsby & Drupal](https://gatsbyguides.com/)
 
 ### German
 
