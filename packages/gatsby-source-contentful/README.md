@@ -465,6 +465,18 @@ Check out the examples at [@contentful/rich-text-react-renderer](https://github.
   }
   ```
 - Rich text fields now don't infer fields. Only available field is `json`. See [Contentful Rich Text](#contentful-rich-text) section how to use it.
+- JSON object fields now don't infer fields:
+  ```diff
+  {
+    contentfulSomeType {
+      title
+  -   jsonField {
+  -     someFieldInsideJsonObject
+  -   }
+  +   jsonField
+    }
+  }
+  ```
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars
