@@ -1,6 +1,6 @@
 ---
 title: "Why Gatsby Can Be More Profitable for Your Agency Than WordPress"
-date: 2019-06-21
+date: 2019-06-25
 author: Hashim Warren
 tags:
   - agencies
