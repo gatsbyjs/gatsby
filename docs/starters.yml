@@ -3071,3 +3071,18 @@
     - Switch the dark mode according to the system theme
     - Scss
     - Pagination
+- url: https://compassionate-morse-5204bf.netlify.com/
+  repo: https://github.com/deamme/gatsby-starter-prismic-resume
+  description: Gatsby Resume/CV page with Prismic integration
+  tags:
+    - Prismic
+    - Headless CMS
+    - Styling:CSS-in-JS
+    - Onepage
+    - Linting
+  features:
+    - One-page resume/CV
+    - Prismic as Headless CMS
+    - Emotion for styling
+    - Uses multiple features of Prismic - Slices, Labels, Custom Types
+    - ESLint & Prettier
