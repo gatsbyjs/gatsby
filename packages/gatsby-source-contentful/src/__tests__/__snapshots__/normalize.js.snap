@@ -1921,97 +1921,97 @@ Object {
   "JrePkDVYomE8AwcuCUyMi": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
-      "name": "product___NODE",
+      "name": "brandProduct___NODE",
     },
   ],
   "KTRF62Q4gg60q6WCsWKw8": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
-      "name": "product___NODE",
+      "name": "imageProduct___NODE",
     },
   ],
   "Xc0ny7GWsMEMCeASWO2um": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
-      "name": "product___NODE",
+      "name": "imageProduct___NODE",
     },
   ],
   "c10TkaLheGeQG6qQGqWYqUI": Array [
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
-      "name": "product___NODE",
+      "name": "imageProduct___NODE",
     },
   ],
   "c24DPGBDeGEaYy8ms4Y8QMQ": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
-      "name": "product___NODE",
+      "name": "categoriesProduct___NODE",
     },
   ],
   "c2Y8LhXLnYAYqKCGEWG4EKI": Array [
     Object {
       "id": "c4LgMotpNF6W20YKmuemW0a",
-      "name": "brand___NODE",
+      "name": "logoBrand___NODE",
     },
   ],
   "c3wtvPBbBjiMKqKKga8I2Cu": Array [
     Object {
       "id": "c651CQ8rLoIYCeY6G0QG22q",
-      "name": "brand___NODE",
+      "name": "logoBrand___NODE",
     },
   ],
   "c4LgMotpNF6W20YKmuemW0a": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
-      "name": "product___NODE",
+      "name": "brandProduct___NODE",
     },
   ],
   "c4zj1ZOfHgQ8oqgaSKm4Qo2": Array [
     Object {
       "id": "JrePkDVYomE8AwcuCUyMi",
-      "name": "brand___NODE",
+      "name": "logoBrand___NODE",
     },
   ],
   "c651CQ8rLoIYCeY6G0QG22q": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
-      "name": "product___NODE",
+      "name": "brandProduct___NODE",
     },
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
-      "name": "product___NODE",
+      "name": "brandProduct___NODE",
     },
   ],
   "c6m5AJ9vMPKc8OUoQeoCS4o": Array [
     Object {
       "id": "c7LAnCobuuWYSqks6wAwY2a",
-      "name": "category___NODE",
+      "name": "iconCategory___NODE",
     },
   ],
   "c6t4HKjytPi0mYgs240wkG": Array [
     Object {
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
-      "name": "category___NODE",
+      "name": "iconCategory___NODE",
     },
   ],
   "c7LAnCobuuWYSqks6wAwY2a": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
-      "name": "product___NODE",
+      "name": "categoriesProduct___NODE",
     },
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
-      "name": "product___NODE",
+      "name": "categoriesProduct___NODE",
     },
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
-      "name": "product___NODE",
+      "name": "categoriesProduct___NODE",
     },
   ],
   "wtrHxeu3zEoEce2MokCSi": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
-      "name": "product___NODE",
+      "name": "imageProduct___NODE",
     },
   ],
 }
@@ -2661,6 +2661,11 @@ Array [
   ],
   Array [
     Object {
+      "categoriesProduct___NODE": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
       "categoryDescription___NODE": "uuid-from-gatsby",
       "children": Array [
         "uuid-from-gatsby",
@@ -2671,22 +2676,20 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2305bc1d40307ce90e974bf81e9d4ca1",
+        "contentDigest": "66505d4bb7da38a0fe3fe5c11d8ac8de",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
       "parent": "Category",
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-        "uuid-from-gatsby",
-        "uuid-from-gatsby",
-      ],
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:55:54.077Z",
     },
   ],
   Array [
     Object {
+      "categoriesProduct___NODE": Array [
+        "uuid-from-gatsby",
+      ],
       "categoryDescription___NODE": "uuid-from-gatsby",
       "children": Array [
         "uuid-from-gatsby",
@@ -2697,14 +2700,11 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2864e66f672eb0a9c09b7e90ee44caca",
+        "contentDigest": "f6722bfd16ba6a535da739af830ab171",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
       "parent": "Category",
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-      ],
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:46:43.477Z",
     },
@@ -2781,6 +2781,11 @@ Array [
   ],
   Array [
     Object {
+      "categoriesProduct___NODE": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
       "categoryDescription___NODE": "uuid-from-gatsby",
       "children": Array [
         "uuid-from-gatsby",
@@ -2791,22 +2796,20 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f9b87e4976b67d160556e217dcb422fb",
+        "contentDigest": "cb973bb9b501c72b54092401376b6604",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
       "parent": "Category",
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-        "uuid-from-gatsby",
-        "uuid-from-gatsby",
-      ],
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:55:54.077Z",
     },
   ],
   Array [
     Object {
+      "categoriesProduct___NODE": Array [
+        "uuid-from-gatsby",
+      ],
       "categoryDescription___NODE": "uuid-from-gatsby",
       "children": Array [
         "uuid-from-gatsby",
@@ -2817,14 +2820,11 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c2be85a7c3be49d87f8cf06b71b27884",
+        "contentDigest": "d44f1393f4affd51bb8df1d24c374c8c",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
       "parent": "Category",
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-      ],
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:46:43.477Z",
     },
@@ -2901,6 +2901,10 @@ Array [
   ],
   Array [
     Object {
+      "brandProduct___NODE": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
       "children": Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
@@ -2912,7 +2916,7 @@ Array [
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7bcceb7ce74538054497b63a9a9a3d8c",
+        "contentDigest": "529bde6752a64ab8568b5930a84ed04f",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -2921,10 +2925,6 @@ Array [
       "phone": Array [
         "+45 35 55 44 59",
       ],
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-        "uuid-from-gatsby",
-      ],
       "twitter": "https://twitter.com/NormannCPH",
       "updatedAt": "2017-06-27T09:55:16.820Z",
       "website": "http://www.normann-copenhagen.com/",
@@ -2932,6 +2932,9 @@ Array [
   ],
   Array [
     Object {
+      "brandProduct___NODE": Array [
+        "uuid-from-gatsby",
+      ],
       "children": Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
@@ -2943,22 +2946,22 @@ Array [
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "519b0291d3d4f6b873db1e7041f8a8c6",
+        "contentDigest": "c32befc4b002b10124bf9a2f10aeff1a",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "en-US",
       "parent": "Brand",
       "phone": Array [],
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-      ],
       "updatedAt": "2017-06-27T09:51:15.647Z",
       "website": "http://www.lemnos.jp/en/",
     },
   ],
   Array [
     Object {
+      "brandProduct___NODE": Array [
+        "uuid-from-gatsby",
+      ],
       "children": Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
@@ -2969,15 +2972,12 @@ Array [
       "createdAt": "2017-06-27T09:35:44.988Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5f2c040e8db997a56b94c9c0c2e7708f",
+        "contentDigest": "b9658ac5368f8f154462a44ecb9c7d16",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "en-US",
       "parent": "Brand",
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-      ],
       "updatedAt": "2017-06-27T09:50:36.937Z",
       "website": "http://playsam.com/",
     },
@@ -3102,6 +3102,10 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
   ],
   Array [
     Object {
+      "brandProduct___NODE": Array [
+        "uuid-from-gatsby",
+        "uuid-from-gatsby",
+      ],
       "children": Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
@@ -3113,7 +3117,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "52ad0868929151dfbfaa988f726009cf",
+        "contentDigest": "a2944ddc4066f50a6efd35d1006fdd7f",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3122,10 +3126,6 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "phone": Array [
         "+45 35 55 44 59",
       ],
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-        "uuid-from-gatsby",
-      ],
       "twitter": "https://twitter.com/NormannCPH",
       "updatedAt": "2017-06-27T09:55:16.820Z",
       "website": "http://www.normann-copenhagen.com/",
@@ -3133,6 +3133,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
   ],
   Array [
     Object {
+      "brandProduct___NODE": Array [
+        "uuid-from-gatsby",
+      ],
       "children": Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
@@ -3144,22 +3147,22 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "8e519d7f8faaffd4950e0ac610f60faf",
+        "contentDigest": "abbe0aff1a23e60ddf1cbbe0e7a05b68",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "de",
       "parent": "Brand",
       "phone": Array [],
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-      ],
       "updatedAt": "2017-06-27T09:51:15.647Z",
       "website": "http://www.lemnos.jp/en/",
     },
   ],
   Array [
     Object {
+      "brandProduct___NODE": Array [
+        "uuid-from-gatsby",
+      ],
       "children": Array [
         "uuid-from-gatsby",
         "uuid-from-gatsby",
@@ -3170,15 +3173,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "createdAt": "2017-06-27T09:35:44.988Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "0e2099a7502685eb3e84bdfb936c412a",
+        "contentDigest": "d7f6025448cc8efee4052e23408821b7",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "de",
       "parent": "Brand",
-      "product___NODE": Array [
-        "uuid-from-gatsby",
-      ],
       "updatedAt": "2017-06-27T09:50:36.937Z",
       "website": "http://playsam.com/",
     },
