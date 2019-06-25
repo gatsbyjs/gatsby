@@ -3,8 +3,6 @@ const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 
-const { useApiUrl } = require(`./fetch`)
-
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
@@ -362,7 +360,7 @@ exports.searchReplaceContentUrls = function({
   })
 }
 
-exports.mapEntitiesToMedia = (entities, _siteURL) => {
+exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
 
   return entities.map(e => {

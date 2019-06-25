@@ -119,7 +119,7 @@ exports.sourceNodes = async (
   entities = normalize.mapTagsCategoriesToTaxonomies(entities)
 
   // Creates links from entities to media nodes
-  entities = normalize.mapEntitiesToMedia(entities, _siteURL)
+  entities = normalize.mapEntitiesToMedia(entities)
 
   // Downloads media files and removes "sizes" data as useless in Gatsby context.
   entities = await normalize.downloadMediaFiles({
