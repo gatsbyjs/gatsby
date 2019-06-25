@@ -1,5 +1,6 @@
 const path = require(`path`)
 const Url = require(`url`)
+const ProgressBar = require(`progress`)
 
 /**
  * getParsedPath
@@ -40,6 +41,33 @@ export function getRemoteFileName(url) {
   return getParsedPath(url).name
 }
 
+// TODO remove in V3
+export function createProgress(message, reporter) {
+  if (reporter && reporter.createProgress) {
+    return reporter.createProgress(message)
+  }
+
+  const bar = new ProgressBar(
+    ` [:bar] :current/:total :elapsed s :percent ${message}`,
+    {
+      total: 0,
+      width: 30,
+      clear: true,
+    }
+  )
+
+  return {
+    start() {},
+    tick() {
+      bar.tick()
+    },
+    done() {},
+    set total(value) {
+      bar.total = value
+    },
+  }
+}
+
 /**
  * slash
  * --
@@ -57,4 +85,17 @@ export function slash(path) {
   }
 
   return path.replace(/\\/g, `/`)
+}
+
+/**
+ * createFilePath
+ * --
+ *
+ * @param  {String} directory
+ * @param  {String} filename
+ * @param  {String} url
+ * @return {String}
+ */
+export function createFilePath(directory, filename, ext) {
+  return path.join(directory, `${filename}${ext}`)
 }

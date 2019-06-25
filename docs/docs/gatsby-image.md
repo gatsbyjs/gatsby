@@ -138,7 +138,7 @@ Create flexible sizes for an image that stretches to fill its container. E.g. fo
 Once you've queried for a `fluid` image to retrieve its data, you can pass that data into the `Img` component:
 
 ```jsx
-import { useStaticQuery } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 
 export default () => {

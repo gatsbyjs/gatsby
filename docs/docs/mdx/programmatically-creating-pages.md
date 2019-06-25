@@ -32,7 +32,7 @@ root.
 
 > **NOTE**: `gatsby-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](api-reference/options/extensions) if you want.
+> extension](https://gatsby-mdx.netlify.com/api-reference/options/extensions) if you want.
 
 ```javascript=gatsby-config.js
 module.exports = {
@@ -54,7 +54,7 @@ module.exports = {
 ```
 
 You can read about
-[`gatsby-source-filesystem`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme)
+[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
 if you'd like to learn more.
 
 ## Add MDX Files

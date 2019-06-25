@@ -6,19 +6,19 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const ProgressBar = require(`progress`)
+const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
+const {
+  getRemoteFileExtension,
+  getRemoteFileName,
+  createFilePath,
+} = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-const bar = new ProgressBar(
-  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
+let bar
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
 
 /********************
  * Type Definitions *
@@ -32,6 +32,11 @@ const bar = new ProgressBar(
 /**
  * @typedef {GatsbyCache}
  * @see gatsby/packages/gatsby/utils/cache.js
+ */
+
+/**
+ * @typedef {Reporter}
+ * @see gatsby/packages/gatsby-cli/lib/reporter.js
  */
 
 /**
@@ -51,22 +56,11 @@ const bar = new ProgressBar(
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
+ * @param  {Reporter} [options.reporter]
  */
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} url
- * @return {String}
- */
-const createFilePath = (directory, filename, ext) =>
-  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
@@ -82,6 +76,14 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+})
+
+// when the queue is empty we stop the progressbar
+queue.on(`drain`, () => {
+  if (bar) {
+    bar.done()
+  }
+  totalJobs = 0
 })
 
 /**
@@ -271,9 +273,6 @@ const pushTask = task =>
       })
   })
 
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
-
 /***************
  * Entry Point *
  ***************/
@@ -300,6 +299,7 @@ module.exports = ({
   createNodeId,
   ext = null,
   name = null,
+  reporter,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -327,6 +327,11 @@ module.exports = ({
 
   if (!url || isWebUri(url) === undefined) {
     return Promise.reject(`wrong url: ${url}`)
+  }
+
+  if (totalJobs === 0) {
+    bar = createProgress(`Downloading remote files`, reporter)
+    bar.start()
   }
 
   totalJobs += 1
