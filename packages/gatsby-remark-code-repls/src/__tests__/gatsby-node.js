@@ -105,7 +105,8 @@ describe(`gatsby-remark-code-repls`, () => {
       await createPages(createPagesParams)
 
       expect(createPage).toHaveBeenCalledTimes(2)
-      expect(createPage).toMatchSnapshot()
+      expect(createPage.mock.calls[0][0].path).toContain(`root-file`)
+      expect(createPage.mock.calls[1][0].path).toContain(`path/to/nested/file`)
     })
 
     it(`should use a default redirect template`, async () => {
