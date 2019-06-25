@@ -6,7 +6,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import HomepageSection from "./homepage-section"
 import HomepageBlogPosts from "./homepage-blog-posts"
 
-import { BlogIcon } from "../../assets/mobile-nav-icons"
+import { BlogIcon } from "../../assets/icons"
 
 const HomepageBlog = ({ posts }) => (
   <HomepageSection

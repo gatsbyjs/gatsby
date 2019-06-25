@@ -7,7 +7,7 @@ import { colors, space, fontSizes } from "../../utils/presets"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import V2Icon from "../../assets/v2icon.svg"
+import V2Icon from "../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {

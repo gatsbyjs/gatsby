@@ -7,7 +7,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
   SvgDefs,
-} from "../assets/mobile-nav-icons"
+} from "../assets/icons"
 import {
   colors,
   transition,

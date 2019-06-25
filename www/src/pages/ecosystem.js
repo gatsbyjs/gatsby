@@ -5,8 +5,8 @@ import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
 import FooterLinks from "../components/shared/footer-links"
 
-import { EcosystemIcon } from "../assets/mobile-nav-icons"
-import { PluginsIcon, StartersIcon } from "../assets/ecosystem-icons"
+import { EcosystemIcon } from "../assets/icons"
+import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
 
 class EcosystemPage extends Component {
   render() {
