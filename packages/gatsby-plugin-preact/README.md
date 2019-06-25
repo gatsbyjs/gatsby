@@ -10,7 +10,7 @@ React.
 
 ## Install
 
-`npm install --save gatsby-plugin-preact preact preact-compat`
+`npm install --save gatsby-plugin-preact preact@beta preact-compat`
 
 ## How to use
 
