@@ -4105,8 +4105,8 @@
   built_by: Algolia
   featured: true
 - title: GVD Renovations
-  url: https://www.gvdrenovations.com/
-  main_url: https://www.gvdrenovations.com/
+  url: https://www.gvdrenovationsinc.com/
+  main_url: https://www.gvdrenovationsinc.com/
   description: >
     GVD Renovations is a home improvement contractor with a well known reputation as a professional, quality contractor in California.
   categories:
@@ -6254,6 +6254,38 @@
     - Open Source
   built_by: Kevin Hirczy
   built_by_url: https://nehalist.io
+  featured: false
+- title: March And Ash
+  main_url: https://marchandash.com/
+  url: https://marchandash.com/
+  description: >-
+    March and Ash is a customer-focused, licensed cannabis dispensary located in Mission Valley.
+  categories:
+    - eCommerce
+    - Business
+    - Blog
+  built_by: Desarol
+  built_by_url: https://www.desarol.com
+  featured: false
+- title: T Two Industries
+  description: >
+    T Two Industries is a manufacturing company specializing in building custom truck decks, truck bodies, and trailers.
+  main_url: https://www.ttwo.ca
+  url: https://www.ttwo.ca
+  categories:
+    - Business
+  built_by: https://www.t2.ca
+  built_by_url: https://www.t2.ca
+  featured: false
+- title: Cali's Finest Landscaping
+  url: https://www.calisfinestlandscaping.com/
+  main_url: https://www.calisfinestlandscaping.com/
+  description: >
+    A team of hard-working, quality-obsessed landscaping professionals looking to take dreams and transform them into reality.
+  categories:
+    - Business
+  built_by: David Krasniy
+  built_by_url: http://dkrasniy.com
   featured: false
 - title: Vazco
   url: https://www.vazco.eu
