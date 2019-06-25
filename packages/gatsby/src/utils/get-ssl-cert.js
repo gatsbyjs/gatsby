@@ -3,9 +3,9 @@ const report = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs`)
 const path = require(`path`)
 
-const resolvePath = (directory, filePath) => {
+const absoluteOrDirectory = (directory, filePath) => {
   // Support absolute paths
-  if (filePath[0] === `/`) {
+  if (path.isAbsolute(filePath)) {
     return filePath
   }
   return path.join(directory, filePath)
@@ -21,8 +21,8 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
   }
 
   if (certFile && keyFile) {
-    const keyPath = resolvePath(directory, keyFile)
-    const certPath = resolvePath(directory, certFile)
+    const keyPath = absoluteOrDirectory(directory, keyFile)
+    const certPath = absoluteOrDirectory(directory, certFile)
 
     return await {
       keyPath,
