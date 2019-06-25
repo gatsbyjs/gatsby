@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.1.1...gatsby-remark-images@3.1.2) (2019-06-25)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** Escape HTML characters for image caption ([#14496](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/14496)) ([9fb78f8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/9fb78f8))
+
 ## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.1.0...gatsby-remark-images@3.1.1) (2019-06-25)
 
 ### Bug Fixes
