@@ -23,6 +23,9 @@ See the [library of official and community plugins](/plugins/)
 
 ## Podcasts
 
+- [2019-06-05: Jason Lengstorf on Syntax #150: Gatsby Themes](https://syntax.fm/show/150/gatsby-themes)
+- [2019-05-22: Jason Lengstorf on Full Stack Radio #115: Gatsby for Skeptics](http://www.fullstackradio.com/115)
+- [2019-04-12: Jason Lengstorf on JS Party #71](https://changelog.com/jsparty/71)
 - [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
 - [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
 - [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
