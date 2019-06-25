@@ -308,6 +308,7 @@ const queue = {
           const page = {
             componentChunkName: pageData.componentChunkName,
             path: pageData.path,
+            matchPath: pageData.matchPath,
             webpackCompilationHash: pageData.webpackCompilationHash,
           }
 
