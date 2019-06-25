@@ -1,6 +1,8 @@
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
+---
+title: Glossary
+---
 
-# Glossary
+import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
 
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
@@ -121,7 +123,7 @@ Gatsby supports two environments by default, the [development environment](#deve
 
 ### Filesystem
 
-The way files are organized. With Gatsby, it means having files in the same place as your website's or app's code instead of pulling data from an external [source](#source). Common filesystem usage in Gatsby includes Markdown content, images, data files, and other assets.
+The way files are organized. With Gatsby, it means having files in the same place as your website's or app's code instead of pulling data from an external [source](#data-source). Common filesystem usage in Gatsby includes Markdown content, images, data files, and other assets.
 
 ### Frontend
 
