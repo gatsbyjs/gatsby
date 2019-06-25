@@ -8,7 +8,7 @@ use custom syntax. The first approach isn't optimal because JSX isn't the best
 format for content and can make it less approachable to members of a team. Custom
 syntax and plugins are often too inflexible and don't promote composition. If
 you're finding yourself wanting to add components to your content you can use
-`gatsby-mdx` which is a Gatsby plugin to integrate MDX into your project.
+`gatsby-plugin-mdx` which is a Gatsby plugin to integrate MDX into your project.
 
 ## What's MDX?
 
