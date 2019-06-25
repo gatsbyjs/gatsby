@@ -24,7 +24,7 @@ can name it `gatsby-theme-awesome` and place that as the `name` key in your `pac
 
 If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
 
-```js:gatsby-node.js
+```js:title=gatsby-node.js
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
 
@@ -51,7 +51,7 @@ As a theme author, it's preferable to separate your data gathering and the compo
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
-```js:src/templates/post-list.js
+```js:title=src/templates/post-list.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -90,7 +90,7 @@ export const query = graphql`
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
-```js:src/components/layout.js
+```js:title=src/components/layout.js
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 

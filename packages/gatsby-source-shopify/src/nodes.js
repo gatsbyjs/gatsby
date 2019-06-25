@@ -147,4 +147,4 @@ export const ProductVariantNode = imageArgs =>
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 
-export const PagesNode = createNodeFactory(PAGE)
+export const PageNode = createNodeFactory(PAGE)
