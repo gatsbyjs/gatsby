@@ -6263,8 +6263,17 @@
   categories:
     - eCommerce
     - Business
-    - CBD
     - Blog
   built_by: Desarol
   built_by_url: https://www.desarol.com
+  featured: false
+- title: T Two Industries
+  description: >
+    T Two Industries is a manufacturing company specializing in building custom truck decks, truck bodies, and trailers.
+  main_url: https://www.ttwo.ca
+  url: https://www.ttwo.ca
+  categories:
+    - Business
+  built_by: https://www.t2.ca
+  built_by_url: https://www.t2.ca
   featured: false
