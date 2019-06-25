@@ -116,7 +116,7 @@ export default ({ children }) => (
 
 ## Combining frontmatter and imports
 
-If you would like to include frontmatter and import components, frontmatter needs to appear at the top of the file, imports can then follow after it:
+If you would like to include frontmatter metadata _and_ import components, the frontmatter needs to appear at the top of the file and then imports can follow:
 
 ```mdx
 ---
