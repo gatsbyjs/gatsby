@@ -1,5 +1,5 @@
 ---
-title: "Glossary"
+title: Glossary
 ---
 
 import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
