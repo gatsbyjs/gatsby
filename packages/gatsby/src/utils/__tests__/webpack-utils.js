@@ -16,8 +16,16 @@ describe(`webpack utils`, () => {
       expect(config.rules.js).toEqual(expect.any(Function))
     })
 
-    it(`returns correct rule`, () => {
+    it(`returns default values without any options`, () => {
       const rule = config.rules.js()
+
+      expect(rule).toMatchSnapshot()
+    })
+
+    it(`returns the correct exclude paths`, () => {
+      const rule = config.rules.js({
+        exclude: [`node_modules`],
+      })
 
       expect(rule).toMatchSnapshot()
     })

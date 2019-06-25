@@ -293,10 +293,14 @@ module.exports = async ({
    * JavaScript loader via babel, excludes node_modules
    */
   {
-    let js = (options = {}) => {
+    let js = ({ exclude = [], ...options } = {}) => {
+      const excludeRegex = [
+        `core-js|event-source-polyfill|webpack-hot-middleware/client`,
+      ].concat(exclude)
+
       return {
         test: /\.(js|mjs|jsx)$/,
-        exclude: /core-js|event-source-polyfill|webpack-hot-middleware\/client/,
+        exclude: new RegExp(excludeRegex.join(`|`)),
         type: `javascript/auto`,
         use: [loaders.js(options)],
       }
