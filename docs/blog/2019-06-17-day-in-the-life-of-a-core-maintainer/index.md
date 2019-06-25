@@ -9,7 +9,7 @@ tags:
   - contributor
 ---
 
-_Note: A "core maintainer" is an official member of the Gatsby team--you'll see them around Github day-to-day and they're accessible via the `@gatsbyjs/core` team. Gatsby Core is the open-source Gatsby you know and love, e.g. [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)._
+_Note: A "core maintainer" is an official member of the Gatsby team--you'll see them around GitHub day-to-day and they're accessible via the `@gatsbyjs/core` team. Gatsby Core is the open-source Gatsby you know and love, e.g. [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)._
 
 The day-to-day responsibilities of a core maintainer are some of the most challenging of any in the organization. Constantly being pulled in many, seemingly infinite directions leads to a feeling that it's challenging to get productive work accomplished. Balancing community needs, internally surfaced issues and support requests, and a desire to work on substantive bug-fixes and features is a **hard problem.**
 
