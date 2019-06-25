@@ -4,7 +4,7 @@ title: Client data fetching
 
 ## Context
 
-In this article it is touched **how** to fetch data and **how** to handle that data using the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/).
+This article touches on how to fetch data at both _build time_ and _run time_. It uses the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to fetch data at [build time](/docs/glossary#build) on the server, while it uses the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads.
 
 When this article says "hydration" it means that Gatsby through ReactJS already know the markup of your site because it was rendered in the server, so React will preserve the markup and attach event handlers to it, the result of this process allows you to have a really nice performant first-load time experience.
 
