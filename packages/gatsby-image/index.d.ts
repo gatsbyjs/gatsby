@@ -1,6 +1,6 @@
 import * as React from "react"
 
-interface FixedObject {
+export interface FixedObject {
   width: number
   height: number
   src: string
@@ -9,9 +9,10 @@ interface FixedObject {
   tracedSVG?: string
   srcWebp?: string
   srcSetWebp?: string
+  media?: string
 }
 
-interface FluidObject {
+export interface FluidObject {
   aspectRatio: number
   src: string
   srcSet: string
@@ -20,6 +21,7 @@ interface FluidObject {
   tracedSVG?: string
   srcWebp?: string
   srcSetWebp?: string
+  media?: string
 }
 
 interface GatsbyImageProps {
@@ -27,12 +29,14 @@ interface GatsbyImageProps {
   sizes?: FluidObject
   fixed?: FixedObject
   fluid?: FluidObject
+  fixedImages?: FixedObject[]
+  fluidImages?: FluidObject[]
   fadeIn?: boolean
   title?: string
   alt?: string
   className?: string | object
   critical?: boolean
-  crossOrigin?: string | boolean;
+  crossOrigin?: string | boolean
   style?: object
   imgStyle?: object
   placeholderStyle?: object
@@ -42,6 +46,8 @@ interface GatsbyImageProps {
   onError?: (event: any) => void
   Tag?: string
   itemProp?: string
+  loading?: `auto` | `lazy` | `eager`
+  draggable?: boolean
 }
 
 export default class GatsbyImage extends React.Component<

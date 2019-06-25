@@ -99,7 +99,9 @@ An example of async-requires is:
 ```javascript
 exports.components = {
   "component---src-blog-2-js": () =>
-    import("/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */),
+    import(
+      "/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */
+    ),
   // more components
 }
 

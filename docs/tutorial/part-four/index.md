@@ -63,7 +63,7 @@ See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guid
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
 1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/how-plugins-work/) guide and consider building your own!
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -302,9 +302,8 @@ import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
+// highlight-start
 export default ({ children }) => {
-  // highlight-start
   const data = useStaticQuery(
     graphql`
       query {
@@ -316,8 +315,8 @@ export default ({ children }) => {
       }
     `
   )
-  // highlight-end
   return (
+    // highlight-end
     <div
       css={css`
         margin: 0 auto;
@@ -347,8 +346,10 @@ export default ({ children }) => {
       </Link>
       {children}
     </div>
+    // highlight-start
   )
 }
+// highlight-end
 ```
 
 Another success! 🎉

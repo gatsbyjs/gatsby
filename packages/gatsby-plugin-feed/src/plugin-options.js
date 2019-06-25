@@ -1,4 +1,4 @@
-import Joi from "joi"
+import Joi from "@hapi/joi"
 
 // TODO: make serialize required in next major version bump
 const feed = Joi.object({
@@ -6,6 +6,7 @@ const feed = Joi.object({
   query: Joi.string().required(),
   title: Joi.string(),
   serialize: Joi.func(),
+  match: Joi.string(),
 }).unknown(true)
 
 // TODO: make feeds required in next major version bump

@@ -18,7 +18,7 @@ support for MDX so you can start your blog. The posts will live in
 - [Add MDX files](#add-mdx-files)
 - [Generate slugs](#generate-slugs)
 - [Create pages](#create-pages-from-sourced-mdx-files)
-- [Make a template](#make-a-template-for-your-post)
+- [Make a template](#make-a-template-for-your-posts)
 
 ## Source MDX pages from the filesystem
 
@@ -32,7 +32,7 @@ root.
 
 > **NOTE**: `gatsby-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](api-reference/options/extensions) if you want.
+> extension](https://gatsby-mdx.netlify.com/api-reference/options/extensions) if you want.
 
 ```javascript=gatsby-config.js
 module.exports = {
@@ -54,7 +54,7 @@ module.exports = {
 ```
 
 You can read about
-[`gatsby-source-filesystem`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme)
+[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
 if you'd like to learn more.
 
 ## Add MDX Files
@@ -67,7 +67,7 @@ Make a folder called `content/posts` and create two files in it called
 a terminal by using the following commands from the root of your
 project.
 
-```sh
+```shell
 mkdir -p content/posts
 touch content/posts/blog-{1,2}.mdx
 ```

@@ -25,7 +25,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   // 'not dead' query not available in browserslist used in Gatsby v1
   const DEFAULT_BROWSERS =
-    installedGatsbyVersion() === 1
+    getLocalGatsbyMajorVersion() === 1
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
@@ -37,26 +37,14 @@ function buildLocalCommands(cli, isLocalSite) {
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
-  function installedGatsbyVersion() {
-    let majorVersion
-    try {
-      const packageInfo = require(path.join(
-        process.cwd(),
-        `node_modules`,
-        `gatsby`,
-        `package.json`
-      ))
-      try {
-        setDefaultTags({ installedGatsbyVersion: packageInfo.version })
-      } catch (e) {
-        // ignore
-      }
-      majorVersion = parseInt(packageInfo.version.split(`.`)[0], 10)
-    } catch (err) {
-      /* ignore */
+  function getLocalGatsbyMajorVersion() {
+    let version = getLocalGatsbyVersion()
+
+    if (version) {
+      version = Number(version.split(`.`)[0])
     }
 
-    return majorVersion
+    return version
   }
 
   function resolveLocalCommand(command) {
@@ -298,7 +286,49 @@ function isLocalGatsbySite() {
   } catch (err) {
     /* ignore */
   }
-  return inGatsbySite
+  return !!inGatsbySite
+}
+
+function getLocalGatsbyVersion() {
+  let version
+  try {
+    const packageInfo = require(path.join(
+      process.cwd(),
+      `node_modules`,
+      `gatsby`,
+      `package.json`
+    ))
+    version = packageInfo.version
+
+    try {
+      setDefaultTags({ installedGatsbyVersion: version })
+    } catch (e) {
+      // ignore
+    }
+  } catch (err) {
+    /* ignore */
+  }
+
+  return version
+}
+
+function getVersionInfo() {
+  const { version } = require(`../package.json`)
+  const isGatsbySite = isLocalGatsbySite()
+  if (isGatsbySite) {
+    // we need to get the version from node_modules
+    let gatsbyVersion = getLocalGatsbyVersion()
+
+    if (!gatsbyVersion) {
+      gatsbyVersion = `unknown`
+    }
+
+    return `Gatsby CLI version: ${version}
+Gatsby version: ${gatsbyVersion}
+  Note: this is the Gatsby version for the site at: ${process.cwd()}`
+  } else {
+    return `Gatsby CLI version: ${version}`
+  }
 }
 
 module.exports = argv => {
@@ -328,6 +358,11 @@ module.exports = argv => {
 
   try {
     const { version } = require(`../package.json`)
+    cli.version(
+      `version`,
+      `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
+      getVersionInfo()
+    )
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
     // ignore
@@ -339,13 +374,43 @@ module.exports = argv => {
     .command({
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
-      handler: handlerP(
-        ({ rootPath, starter = `gatsbyjs/gatsby-starter-default` }) => {
-          const initStarter = require(`./init-starter`)
-          return initStarter(starter, { rootPath })
-        }
-      ),
+      handler: handlerP(({ rootPath, starter }) => {
+        const initStarter = require(`./init-starter`)
+        return initStarter(starter, { rootPath })
+      }),
     })
+    .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
+      yargs
+        .command({
+          command: `docs`,
+          desc: `Helpful info about using and creating plugins`,
+          handler: handlerP(() =>
+            console.log(`
+Using a plugin:
+- What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin/)
+- Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site/)
+- What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for/)
+- Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/)
+- Plugin Library (https://www.gatsbyjs.org/plugins/)
+
+Creating a plugin:
+- Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
+- Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
+- Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
+- Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
+- Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
+- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial/)
+- Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
+- Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
+          `)
+          ),
+        })
+        .demandCommand(
+          1,
+          `Pass --help to see all available commands and options.`
+        )
+    )
     .command({
       command: `telemetry`,
       desc: `Enable or disable Gatsby anonymous analytics collection.`,

@@ -210,6 +210,18 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy flash from object elements with the value attribute`, async () => {
+    const path = `myMovie.swf`
+
+    const markdownAST = remark.parse(
+      `<object type="application/x-shockwave-flash">\n<param name="movie" value="${path}" />\n</object>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy HTML videos when some siblings are in ignore extensions`, async () => {
     const path = `videos/sample-video.mp4`
     const path1 = `images/sample-image.jpg`

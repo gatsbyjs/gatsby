@@ -15,7 +15,7 @@ module.exports = function prepareStackTrace(error, source) {
     .filter(
       frame =>
         !frame.getFileName() ||
-        !frame.getFileName().match(/^webpack:\/+webpack\//)
+        !frame.getFileName().match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/)
     )
 
   error.codeFrame = getErrorSource(map, stack[0])
@@ -82,7 +82,7 @@ function CallSiteToString() {
     }
 
     if (fileName) {
-      fileLocation += fileName.replace(/^webpack:\/+/, ``)
+      fileLocation += fileName.replace(/^webpack:\/+(lib\/)?/, ``)
     } else {
       // Source code does not originate from a file and is not native, but we
       // can still get the source position inside the source string, e.g. in

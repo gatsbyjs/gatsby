@@ -1,7 +1,7 @@
 {
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
-  "version": "2.4.15",
+  "version": "2.5.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -13,6 +13,7 @@
     "@babel/runtime": "^7.0.0",
     "chokidar": "^1.7.0",
     "configstore": "^3.1.0",
+    "del": "^3.0.0",
     "execa": "^1.0.0",
     "fs-extra": "^4.0.1",
     "is-absolute": "^0.2.6",
@@ -25,7 +26,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.1.4",
+    "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.0.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",
@@ -36,9 +37,12 @@
   "main": "index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli",
   "scripts": {
-    "build": "babel src --out-dir dist --ignore **/__tests__",
+    "build": "babel src --out-dir dist --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "babel -w src --out-dir dist --ignore **/__tests__"
+    "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\""
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
