@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.1...gatsby-cli@2.7.2) (2019-06-24)
+
+### Bug Fixes
+
+- **gatsby-cli:** Added better-opn as a dependency ([#15078](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/15078)) ([d855e50](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/d855e50))
+
+### Features
+
+- **gatsby-cli:** improve version output ([#14924](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14924)) ([6210ec3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/6210ec3))
+
 ## [2.7.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.0...gatsby-cli@2.7.1) (2019-06-24)
 
 ### Bug Fixes
