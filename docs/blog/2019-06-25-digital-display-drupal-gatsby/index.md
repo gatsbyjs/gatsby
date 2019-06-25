@@ -14,7 +14,7 @@ tags:
   - decoupled
 ---
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![City Springs new homepage on laptop and mobile screens](./images/CitySprings1.jpg "City Springs Drupal homepage")
 
 ## Sandy Springs
 Located north of Atlanta, Sandy Springs is a city built on creative thinking and determination. They captured a bold vision for a unified platform to bring together new and existing information systems.
@@ -31,7 +31,7 @@ A decoupled approach, where front end templating is separate from the content ma
 
 On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages content. On the front end, Gatsby presents content. With this approach, the Sandy Springs team can “create once, publish everywhere,” with a more efficient process for sharing information with the local community.
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Drupal-powered large scale digital signage in a cafe](./images/CitySprings2.jpg "City Spring's large scale digital signage")
 
 ## The Decoupled Dream Team
 [Gatsby](/), is instrumental to the decoupled infrastructure. The static site generator creates flat HTML, CSS, and JS files that post anywhere and load in the browser quickly. The JSON API Drupal module exposes feeds of data from the decoupled Drupal CMS to Gatsby.
@@ -45,7 +45,7 @@ In this [video presentation](https://www.youtube.com/watch?time_continue=3&v=Qio
 * **Speedy**: Gatsby bakes in a lot of performance optimization for the front end, ultimately delivering a faster site.
 * **Hosting**: The Drupal site is never used by a non-editorial user, so fewer hosting resources are needed.
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Drupal-powered digital display kiosk promotes a theatre event](./images/CitySprings3.jpg "City Spring's digital signage kiosk")
 
 
 ## Final Thoughts
