@@ -32,7 +32,7 @@ root.
 
 > **NOTE**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](https://www.npmjs.com/package/gatsby-plugin-mdx#extensions) if you want.
+> extension](/packages/gatsby-plugin-mdx#extensions) if you want.
 
 ```javascript=gatsby-config.js
 module.exports = {
