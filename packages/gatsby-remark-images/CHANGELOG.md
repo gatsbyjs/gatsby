@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.1.0...gatsby-remark-images@3.1.1) (2019-06-25)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** remove clickable whitespace around image when linking ([#11528](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/issues/11528)) ([8b398f4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/commit/8b398f4))
+
 # [3.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images/compare/gatsby-remark-images@3.0.16...gatsby-remark-images@3.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-remark-images
