@@ -66,8 +66,8 @@ aliases:
           - /docs.+/
           - /blog.+/
     requires:
-      # only run whne node 10 passes, don't waste resources
-      - unit_tests_node10
+      - lint
+      - unit_tests_node8
 
 commands:
   e2e-test:
@@ -218,15 +218,17 @@ workflows:
       - unit_tests_node8:
           <<: *ignore_docs
           requires:
-            - lint
+            - bootstrap
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
             - lint
+            - unit_tests_node8
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
+            - unit_tests_node8
       - unit_tests_www
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
