@@ -44,7 +44,7 @@ async function generateIcon(icon, srcIcon) {
 }
 
 async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
-  const cacheKey = createContentDigest(`${icon.src}${icon}${srcIconDigest}`)
+  const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`)
 
   let created = cache.get(cacheKey, srcIcon)
 
