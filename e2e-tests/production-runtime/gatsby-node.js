@@ -27,4 +27,8 @@ exports.onCreatePage = ({ page, actions }) => {
       })
       break
   }
+  if (page.path.match(/^\/paths/)) {
+    page.matchPath = `/paths/*`
+    actions.createPage(page)
+  }
 }
