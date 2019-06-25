@@ -55,8 +55,8 @@ can be accessed in blocks of JSX in your MDX document:
 
 ```mdx
 ---
-title: "Building with Gatsby"
-author: "Jay Gatsby"
+title: Building with Gatsby
+author: Jay Gatsby
 ---
 
 <h1>{props.pageContext.frontmatter.title}</h1>
@@ -120,7 +120,7 @@ If you would like to include frontmatter and import components, frontmatter need
 
 ```mdx
 ---
-title: "Building with Gatsby"
+title: Building with Gatsby
 ---
 
 import { Chart } from "../components/chart"
