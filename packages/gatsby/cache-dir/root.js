@@ -8,8 +8,6 @@ import {
   RouteUpdates,
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
-import syncRequires from "./sync-requires"
-import pages from "./pages.json"
 import loader from "./loader"
 import JSONStore from "./json-store"
 import EnsureResources from "./ensure-resources"
@@ -39,11 +37,7 @@ class RouteHandler extends React.Component {
   render() {
     let { location } = this.props
 
-    // check if page exists - in dev pages are sync loaded, it's safe to use
-    // loader.getPage
-    let page = loader.getPage(location.pathname)
-
-    if (page) {
+    if (!loader.isPageNotFound(location.pathname)) {
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (
@@ -52,48 +46,32 @@ class RouteHandler extends React.Component {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <JSONStore
-                  pages={pages}
-                  {...this.props}
-                  {...locationAndPageResources}
-                />
+                <JSONStore {...this.props} {...locationAndPageResources} />
               </ScrollContext>
             </RouteUpdates>
           )}
         </EnsureResources>
       )
-    } else {
-      const dev404Page = pages.find(p => /^\/dev-404-page\/?$/.test(p.path))
-      const Dev404Page = syncRequires.components[dev404Page.componentChunkName]
+    }
 
-      if (!loader.getPage(`/404.html`)) {
-        return (
-          <RouteUpdates location={location}>
-            <Dev404Page pages={pages} {...this.props} />
-          </RouteUpdates>
-        )
-      }
-
-      return (
-        <EnsureResources location={location}>
-          {locationAndPageResources => (
-            <RouteUpdates location={location}>
-              <Dev404Page
-                pages={pages}
-                custom404={
-                  <JSONStore
-                    pages={pages}
-                    {...this.props}
-                    {...locationAndPageResources}
-                  />
-                }
-                {...this.props}
-              />
-            </RouteUpdates>
-          )}
-        </EnsureResources>
+    const dev404PageResources = loader.loadPageSync(`/dev-404-page`)
+    const real404PageResources = loader.loadPageSync(`/404.html`)
+    let custom404
+    if (real404PageResources) {
+      custom404 = (
+        <JSONStore {...this.props} pageResources={real404PageResources} />
       )
     }
+
+    return (
+      <RouteUpdates location={location}>
+        <JSONStore
+          location={location}
+          pageResources={dev404PageResources}
+          custom404={custom404}
+        />
+      </RouteUpdates>
+    )
   }
 }
 
@@ -101,7 +79,7 @@ const Root = () =>
   createElement(
     Router,
     {
-      basepath: __PATH_PREFIX__,
+      basepath: __BASE_PATH__,
     },
     createElement(RouteHandler, { path: `/*` })
   )

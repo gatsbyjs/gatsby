@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.19...gatsby-dev-cli@2.5.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.4.19](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.18...gatsby-dev-cli@2.4.19) (2019-06-04)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** add missing awaits and other various fixes ([#14510](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/14510)) ([a2c55a7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/a2c55a7))
+
+## [2.4.18](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.17...gatsby-dev-cli@2.4.18) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.4.17](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.16...gatsby-dev-cli@2.4.17) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.4.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.15...gatsby-dev-cli@2.4.16) (2019-05-31)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** refactor, wait for package installation before copying files, handle packages that are not direct deps of local project ([#14347](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/issues/14347)) ([d399dc9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/commit/d399dc9))
+
 ## [2.4.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli/compare/gatsby-dev-cli@2.4.14...gatsby-dev-cli@2.4.15) (2019-04-09)
 
 ### Bug Fixes

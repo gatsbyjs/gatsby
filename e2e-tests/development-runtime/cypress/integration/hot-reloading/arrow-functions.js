@@ -17,7 +17,7 @@ describe(`hot-reloading anonymous arrow functions`, () => {
       .should(`contain`, `%SUB_TITLE%`)
   })
 
-  it(`upates on change`, () => {
+  it(`updates on change`, () => {
     const text = `The title`
     cy.exec(
       `npm run update -- --file src/components/title.js --replacements "TITLE:${text}"`

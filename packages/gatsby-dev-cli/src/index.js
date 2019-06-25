@@ -68,22 +68,17 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
   process.exit()
 }
 
-const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-let packages = Object.keys(
-  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
-)
-
 // get list of packages from monorepo
 const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 
-if (argv.copyAll) {
-  packages = monoRepoPackages
-} else {
-  // intersect dependencies with monoRepoPackags to get list of packages to watch
-  packages = _.intersection(monoRepoPackages, packages)
-}
+const localPkg = JSON.parse(fs.readFileSync(`package.json`))
+// intersect dependencies with monoRepoPackags to get list of packages that are used
+let localPackages = _.intersection(
+  monoRepoPackages,
+  Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))
+)
 
-if (!argv.packages && _.isEmpty(packages)) {
+if (!argv.packages && _.isEmpty(localPackages)) {
   console.error(
     `
 You haven't got any gatsby dependencies into your current package.json
@@ -100,7 +95,8 @@ gatsby-dev will pick them up.
   process.exit()
 }
 
-watch(gatsbyLocation, argv.packages || packages, {
+watch(gatsbyLocation, argv.packages, {
+  localPackages,
   quiet: argv.quiet,
   scanOnce: argv.scanOnce,
   monoRepoPackages,

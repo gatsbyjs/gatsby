@@ -20,18 +20,20 @@ These sessions are intended for people who:
 - would like to work on an issue or pull request related to Gatsby, or
 - are using Gatsby for a personal, open source, charity or education project
 
-If you're interested in support for a commercial Gatsby project, please [get in touch via the support page](https://www.gatsbyjs.com/support/).
+If you're interested in support for a commercial Gatsby project, please [get in touch via the contact page](https://www.gatsbyjs.com/contact-us/).
 
 We also expect the following from pair programming participants:
 
-- If you have a specific goal for the session, that’s helpful, but we can also choose an open issue to tackle if you’re not sure where to start
+- These sessions tend to work best when you have a specific goal for the session.
+- If you're new to building with Gatsby we recommend [working through the tutorial](https://www.gatsbyjs.org/tutorial/) before your session. If you get stuck part way through that's a great time to book a pairing session.
+- If you're new to contributing to open source we recommend following the ("Setting Up Your Local Dev Environment" guide)[https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/] before your session.
 - All participants are expected to adhere to [Gatsby’s code of conduct](/contributing/code-of-conduct/)
 - We will ask if it’s okay to record our session; you are _not_ required to let us record
 - If the session is recorded, we may post the recording on [Gatsby’s YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
 
 ## How to sign up
 
-We allow booking up to 60 days in advance, and spots tend to fill up fast. If we’re all booked up today, check back tomorrow for the next batch of spots. The core team is spread across North America and Europe, so most time zones will have availability during working hours.
+We allow booking up to 30 days in advance, and spots tend to fill up fast. If we’re all booked up today, check back tomorrow for the next batch of spots. The core team is spread across North America, India, and Europe, so most time zones will have availability during working hours.
 
 [Reserve your spot today][cal] and let’s build something amazing together!
 

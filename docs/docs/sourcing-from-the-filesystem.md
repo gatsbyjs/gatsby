@@ -8,7 +8,7 @@ This guide will walk you through sourcing data from the filesystem.
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](https://github.com/gatsbyjs/gatsby/tree/master/docs).
 
-It will also be useful if you are familiar with [Graph_i_QL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
+It will also be useful if you are familiar with [GraphiQL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
 
 ## Using `gatsby-source-filesystem`
 
@@ -43,7 +43,7 @@ module.exports = {
 
 Save the `gatsby-config.js` file, and restart the Gatsby development server.
 
-Open up Graph_i_QL.
+Open up GraphiQL.
 
 If you bring up the autocomplete window, you'll see:
 
@@ -69,7 +69,7 @@ The result is an array of File "nodes" (node is a fancy name for an object in a
 
 ## Transforming File nodes
 
-Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-plugin`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
+Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-filesystem`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
 
 ## Further reference and examples
 

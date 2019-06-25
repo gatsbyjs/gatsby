@@ -1,45 +1,14 @@
-const _ = require(`lodash`)
-const { getNamedType } = require(`graphql`)
+const { getQueryFields, hasFieldResolvers } = require(`./common/query`)
 
 const lokiRunQuery = require(`./loki/nodes-query`)
 const siftRunQuery = require(`../redux/run-sift`)
-
-// FIXME: This is duplicate code (`extractFieldsToSift`)
-const dropQueryOperators = filter =>
-  Object.keys(filter).reduce((acc, key) => {
-    let value = filter[key]
-    let k = Object.keys(value)[0]
-    let v = value[k]
-    if (_.isPlainObject(value) && _.isPlainObject(v)) {
-      acc[key] =
-        k === `elemMatch` ? dropQueryOperators(v) : dropQueryOperators(value)
-    } else {
-      acc[key] = true
-    }
-    return acc
-  }, {})
-
-const hasFieldResolvers = (type, filterFields) => {
-  const fields = type.getFields()
-  return Object.keys(filterFields).some(fieldName => {
-    const filterValue = filterFields[fieldName]
-    const field = fields[fieldName]
-    return (
-      Boolean(field.resolve) ||
-      (filterValue !== true &&
-        hasFieldResolvers(getNamedType(field.type), filterValue))
-    )
-  })
-}
 
 function chooseQueryEngine(args) {
   const { backend } = require(`./nodes`)
 
   const { queryArgs, gqlType } = args
-  // TODO: Resolve nodes on sort fields
-  // TODO: Need to get group and distinct `field` arg from projection
-  const { filter } = queryArgs
-  const fields = filter ? dropQueryOperators(filter) : {}
+  const { filter, sort, group, distinct } = queryArgs
+  const fields = getQueryFields({ filter, sort, group, distinct })
 
   // NOTE: `hasFieldResolvers` is also true for Date fields
   if (

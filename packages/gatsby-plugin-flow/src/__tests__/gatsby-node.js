@@ -1,4 +1,5 @@
 import { onCreateBabelConfig } from "../gatsby-node"
+import * as path from "path"
 
 describe(`gatsby-plugin-flow`, () => {
   describe(`onCreateBabelConfig`, () => {
@@ -9,7 +10,7 @@ describe(`gatsby-plugin-flow`, () => {
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
-        name: `@babel/preset-flow`,
+        name: expect.stringContaining(path.join(`@babel`, `preset-flow`)),
       })
     })
   })

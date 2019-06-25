@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import { rhythm, options } from "../utils/typography"
 import { mq, gutter } from "../utils/presets"
@@ -11,18 +11,6 @@ const Image = styled(Img)`
   margin-bottom: ${rhythm(options.blockMarginBottom * 2)};
   margin-left: ${rhythm(options.blockMarginBottom * 2)};
   margin-right: -${gutter.default};
-
-  ${mq.phablet} {
-    display: none;
-  }
-`
-
-const ImageDesktop = styled(Image)`
-  display: none;
-
-  ${mq.phablet} {
-    display: block;
-  }
 
   ${mq.tablet} {
     margin-right: -${gutter.tablet};
@@ -53,15 +41,14 @@ const FloatingImage = ({
         https://www.gatsbyjs.org/packages/gatsby-image/#gatsby-image-props
     */}
     <Image
-      fixed={imageMobile}
+      fixed={[
+        imageMobile,
+        {
+          ...imageDesktop,
+          media: mq.phablet.replace(`@media`, ``).trim(),
+        },
+      ]}
       backgroundColor={backgroundColor ? backgroundColor : false}
-      style={{ display: `inherit` }}
-      title={title}
-    />
-    <ImageDesktop
-      fixed={imageDesktop}
-      backgroundColor={backgroundColor ? backgroundColor : false}
-      style={{ display: `inherit` }}
       title={title}
     />
   </React.Fragment>
