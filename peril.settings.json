@@ -7,7 +7,7 @@
   },
   "rules": {
     "issue_comment": ["peril/rules/not-stale.ts"],
-    "issues.opened": ["peril/rules/emptybody.ts", "rules/labeler.ts"],
+    "issues.opened": ["peril/rules/emptybody.ts", "peril/rules/labeler.ts"],
     "pull_request.closed (pull_request.merged == true)": [
       "peril/rules/invite-collaborator.ts"
     ]
@@ -42,7 +42,7 @@
     }
   },
   "tasks": {
-    "stale": "tasks/stale.ts"
+    "stale": "peril/tasks/stale.ts"
   },
   "scheduler": {
     "daily": "stale"
