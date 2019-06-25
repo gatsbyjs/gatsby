@@ -60,6 +60,7 @@ class EvaluationTable extends Component {
                         category={row.node.Subcategory}
                         key={`section-header-${s}-bottom-${i}`}
                       />,
+                      // table row with the name of the feature and corresponding scores
                       <tr key={`section-${s}-first-row-${i}`}>
                         {nodeFieldProperties.map((nodeProperty, j) => (
                           <td
@@ -97,6 +98,7 @@ class EvaluationTable extends Component {
                           </td>
                         ))}
                       </tr>,
+                      // table row containing details of each feature
                       <tr
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,

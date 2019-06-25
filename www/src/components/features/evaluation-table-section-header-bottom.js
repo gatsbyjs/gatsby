@@ -46,15 +46,11 @@ const renderSubHeader = props => (
     </Td>
     {props.options.map((option, i) => (
       <Td key={i}>
-        {(
-          <img
-            src={logoDictionary[option.key]}
-            css={subHeaderTitleStyles}
-            alt={`${option.display} Logo`}
-          />
-        ) ||
-          props.category ||
-          `Feature`}
+        <img
+          src={logoDictionary[option.key]}
+          css={subHeaderTitleStyles}
+          alt={`${option.display} Logo`}
+        />
       </Td>
     ))}
   </tr>

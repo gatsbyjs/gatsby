@@ -4,13 +4,13 @@ import { Helmet } from "react-helmet"
 
 import Button from "../components/button"
 import Layout from "../components/layout"
-import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
 import { letterSpacings, space } from "../utils/presets"
+import { itemListFeatures } from "../utils/sidebar/item-list"
 
 const FeaturesHeader = () => (
   <section>
