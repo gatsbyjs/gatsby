@@ -16,7 +16,7 @@ const readdir = require(`recursive-readdir`)
 
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-const { OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = require(`../constants`)
+const { OPTION_DEFAULT_CODEPEN } = require(`../constants`)
 const { createPages } = require(`../gatsby-node`)
 
 const OPTION_DEFAULT_HTML = `<div id="root"></div>`
@@ -110,29 +110,8 @@ describe(`gatsby-remark-code-repls`, () => {
 
       expect(createPage).toHaveBeenCalledTimes(1)
       expect(createPage.mock.calls[0][0].component).toContain(
-        OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH
+        OPTION_DEFAULT_CODEPEN.redirectTemplate
       )
-    })
-
-    it(`should use a specified redirect template override`, async () => {
-      readdir.mockResolvedValue([`file.js`])
-
-      await createPages(createPagesParams, { redirectTemplate: `foo/bar.js` })
-
-      expect(createPage).toHaveBeenCalledTimes(1)
-      expect(createPage.mock.calls[0][0].component).toContain(`foo/bar.js`)
-    })
-
-    it(`should error if an invalid redirect template is specified`, async () => {
-      fs.existsSync.mockImplementation(path => path !== `foo/bar.js`)
-
-      try {
-        await createPages(createPagesParams, { redirectTemplate: `foo/bar.js` })
-      } catch (err) {
-        expect(err).toEqual(
-          Error(`Invalid REPL redirectTemplate specified: "foo/bar.js"`)
-        )
-      }
     })
 
     it(`should propagate any Error from recursive-readdir`, async () => {
@@ -160,6 +139,31 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     describe(`codepen specific`, () => {
+      it(`should use a specified redirect template override`, async () => {
+        readdir.mockResolvedValue([`file.js`])
+
+        await createPages(createPagesParams, {
+          codepen: { redirectTemplate: `foo/bar.js` },
+        })
+
+        expect(createPage).toHaveBeenCalledTimes(1)
+        expect(createPage.mock.calls[0][0].component).toContain(`foo/bar.js`)
+      })
+
+      it(`should error if an invalid redirect template is specified`, async () => {
+        fs.existsSync.mockImplementation(path => path !== `foo/bar.js`)
+
+        try {
+          await createPages(createPagesParams, {
+            codepen: { redirectTemplate: `foo/bar.js` },
+          })
+        } catch (err) {
+          expect(err).toEqual(
+            Error(`Invalid REPL redirectTemplate specified: "foo/bar.js"`)
+          )
+        }
+      })
+
       it(`should load custom externals if specified`, async () => {
         readdir.mockResolvedValue([`file.js`])
 

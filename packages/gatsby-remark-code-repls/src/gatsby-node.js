@@ -7,7 +7,6 @@ const normalizePath = require(`normalize-path`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
-  OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
   OPTION_DEFAULT_CODEPEN,
 } = require(`./constants`)
 
@@ -15,7 +14,6 @@ exports.createPages = async (
   { actions, reporter },
   {
     directory = OPTION_DEFAULT_LINK_TEXT,
-    redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
     codepen = OPTION_DEFAULT_CODEPEN,
   } = {}
 ) => {
@@ -30,9 +28,9 @@ exports.createPages = async (
     reporter.panic(`Invalid REPL directory specified: "${directory}"`)
   }
 
-  if (!fs.existsSync(redirectTemplate)) {
+  if (!fs.existsSync(codepen.redirectTemplate)) {
     reporter.panic(
-      `Invalid REPL redirectTemplate specified: "${redirectTemplate}"`
+      `Invalid REPL redirectTemplate specified: "${codepen.redirectTemplate}"`
     )
   }
 
@@ -78,7 +76,7 @@ exports.createPages = async (
         createPage({
           path: slug,
           // Normalize the path so tests pass on Linux + Windows
-          component: normalizePath(resolve(redirectTemplate)),
+          component: normalizePath(resolve(codepen.redirectTemplate)),
           context: {
             action,
             payload,
