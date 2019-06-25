@@ -7,6 +7,7 @@ const DEFAULT_HTML = `<div id="root"></div>`
 
 const baseOptions = {
   OPTION_DEFAULT_LINK_TEXT: `REPL`,
+  OPTION_DEFAULT_REPL_DIRECTORY: `REPL`,
   PROTOCOL_BABEL: `babel://`,
   PROTOCOL_CODEPEN: `codepen://`,
   PROTOCOL_CODE_SANDBOX: `codesandbox://`,

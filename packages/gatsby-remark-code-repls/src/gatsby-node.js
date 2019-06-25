@@ -1,19 +1,19 @@
 "use strict"
 
 const fs = require(`fs`)
-const { extname, resolve } = require(`path`)
+const { extname, resolve, parse, join } = require(`path`)
 const readdir = require(`recursive-readdir`)
 const normalizePath = require(`normalize-path`)
 
 const {
-  OPTION_DEFAULT_LINK_TEXT,
+  OPTION_DEFAULT_REPL_DIRECTORY,
   OPTION_DEFAULT_CODEPEN,
 } = require(`./constants`)
 
 exports.createPages = async (
   { actions, reporter },
   {
-    directory = OPTION_DEFAULT_LINK_TEXT,
+    directory = OPTION_DEFAULT_REPL_DIRECTORY,
     codepen = OPTION_DEFAULT_CODEPEN,
   } = {}
 ) => {
@@ -42,17 +42,25 @@ exports.createPages = async (
       return
     }
 
+    // escape backslaches for windows
+    const resolvedDirectory = resolve(directory)
     files.forEach(file => {
       if (extname(file) === `.js` || extname(file) === `.jsx`) {
-        const slug = file
-          .substring(0, file.length - extname(file).length)
-          .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
+        const parsedFile = parse(file)
+        const relativeDir = parsedFile.dir.replace(`${resolvedDirectory}`, ``)
+        const slug = `redirect-to-codepen${normalizePath(relativeDir)}/${
+          parsedFile.name
+        }`
+
         const code = fs.readFileSync(file, `utf8`)
 
         let css
         if (codepen.includeMatchingCSS === true) {
           try {
-            css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
+            css = fs.readFileSync(
+              join(parsedFile.dir, `${parsedFile.name}.css`),
+              `utf8`
+            )
           } catch (err) {
             // If the file doesn't exist, we gracefully ignore the error
             if (err.code !== `ENOENT`) {
@@ -75,7 +83,6 @@ exports.createPages = async (
         })
         createPage({
           path: slug,
-          // Normalize the path so tests pass on Linux + Windows
           component: normalizePath(resolve(codepen.redirectTemplate)),
           context: {
             action,

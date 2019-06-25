@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-code-repls gatsby-node should create redirect pages for the code in each example file 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "component": "C:/Users/WardPeeters/projectswin/os/gatsby/packages/gatsby-remark-code-repls/src/default-redirect-template.js",
+        "context": Object {
+          "action": "https://codepen.io/pen/define",
+          "payload": "{\\"editors\\":\\"0010\\",\\"html\\":\\"<div id=/\\"root/\\"></div>\\",\\"js\\":\\"const foo = /\\"bar/\\";\\",\\"js_external\\":\\"\\",\\"js_pre_processor\\":\\"babel\\",\\"layout\\":\\"left\\"}",
+        },
+        "path": "redirect-to-codepen/root-file",
+      },
+    ],
+    Array [
+      Object {
+        "component": "C:/Users/WardPeeters/projectswin/os/gatsby/packages/gatsby-remark-code-repls/src/default-redirect-template.js",
+        "context": Object {
+          "action": "https://codepen.io/pen/define",
+          "payload": "{\\"editors\\":\\"0010\\",\\"html\\":\\"<div id=/\\"root/\\"></div>\\",\\"js\\":\\"const foo = /\\"bar/\\";\\",\\"js_external\\":\\"\\",\\"js_pre_processor\\":\\"babel\\",\\"layout\\":\\"left\\"}",
+        },
+        "path": "redirect-to-codepenpath/to/nested/file/file",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

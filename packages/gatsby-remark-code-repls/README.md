@@ -139,11 +139,6 @@ specified examples directory. (This will avoid broken links at runtime.)
     // eg examples/path/to/file.js
     directory: `${__dirname}/examples/`,
 
-    // Optional path to a custom redirect template.
-    // The redirect page is only shown briefly,
-    // But you can use this setting to override its CSS styling.
-    redirectTemplate: `${__dirname}/src/redirect-template.js`,
-
     // Optional link target.
     // Note that if a target is specified, "noreferrer" will also be added.
     // eg <a href="..." target="_blank" rel="noreferrer">...</a>
@@ -152,6 +147,11 @@ specified examples directory. (This will avoid broken links at runtime.)
 
     // Provider specific options
     codepen: {
+      // Optional path to a custom redirect template.
+      // The redirect page is only shown briefly,
+      // But you can use this setting to override its CSS styling.
+      redirectTemplate: `${__dirname}/src/redirect-template.js`,
+
       // Optional HTML contents to inject into REPL.
       // Defaults to `<div id="root"></div>`.
       // eg '<div id="root"></div>'
