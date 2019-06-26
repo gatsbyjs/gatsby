@@ -299,9 +299,9 @@ When querying images you can use the `fixed`, `fluid` or `resize` nodes to get d
 
 ### References
 
-Contentful reference fields will create [Union type](https://graphql.org/learn/schema/#union-types) fields. To access data [Inline fragments](https://graphql.org/learn/queries/#inline-fragments) need to be used.
+Contentful reference fields will create [Union type](https://graphql.org/learn/schema/#union-types) fields. [Inline fragments](https://graphql.org/learn/queries/#inline-fragments) should be used to access the data on these fields.
 
-For example, if you have `Product` and `Category` Content Models in Contentful space and `Product` has `categories` field that reference `Category` entries, you can get list of categories for product by querying:
+See below for a references example where you query for categories on a product:
 
 ```graphql
 {
@@ -318,12 +318,13 @@ For example, if you have `Product` and `Category` Content Models in Contentful s
   }
 }
 ```
+The above example assumes that you have `Product` and `Category` Content Models in your Contentful space,  and that `Product` has a `categories` field that references `Category` entries.
 
 ### Reverse references
 
-When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. Name of reverse reference will contain field and type names.
+When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. The name of the reverse reference will contain field and type names.
 
-For example, if you have `Product` and `Category` Content Models in Contentful space and `Product` has `categories` field that reference `Category` entries, you can get list of all products in given category by quering:
+See below for a reverse references example where you query for all products in a given category:
 
 ```graphql
 {
@@ -336,14 +337,19 @@ For example, if you have `Product` and `Category` Content Models in Contentful s
   }
 }
 ```
+The above example assumes that you have `Product` and `Category` Content Models in your Contentful space, and `Product` has a `categories` field that references `Category` entries.
 
 For simplicity, it is easier to put the reference field on the child in child/parent relationships.
 
 ### Markdown transformers on Long Text fields
 
-Version 3 of `gatsby-source-contentful` creates GraphQL schema directly from Contentful Content Model and is not inferring fields from data anymore. This means that queries won't break if you don't have any fields in Your contentful space. There is however edge case for transformed data - particularly for Long Text fields that can be transformed with `gatsby-transformer-remark` or `gatsby-mdx`. Contentful plugin is not aware of transformers so you might need to provide hints for gatsby to create `childMarkdownRemark`/`childMdx` fields.
+Version 3 of `gatsby-source-contentful` creates GraphQL schema directly from the Contentful Content Model and no longer infers fields from data. 
 
-Here's example of attaching `childMarkdownRemark`:
+This means that queries will keep working even if your Contentful space doesn't have any fields in it. 
+
+There is however, an edge case for transformed data - particularly for Long Text fields that can be transformed with `gatsby-transformer-remark` or `gatsby-mdx`. The Contentful plugin is not aware of transformers so you might need to provide hints for Gatsby to create `childMarkdownRemark`/`childMdx` fields.
+
+Here's an example of attaching `childMarkdownRemark`:
 
 ```js
 // in your gatsby-node.js
@@ -464,7 +470,7 @@ Check out the examples at [@contentful/rich-text-react-renderer](https://github.
     }
   }
   ```
-- Rich text fields now don't infer fields. Only available field is `json`. See [Contentful Rich Text](#contentful-rich-text) section how to use it.
+- Rich text fields now don't infer fields. Only available field is `json`. See [Contentful Rich Text](#contentful-rich-text) section on how to use it.
 - JSON object fields now don't infer fields:
   ```diff
   {
