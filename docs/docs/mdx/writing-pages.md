@@ -55,8 +55,8 @@ can be accessed in blocks of JSX in your MDX document:
 
 ```mdx
 ---
-title: "Building with Gatsby"
-author: "Jay Gatsby"
+title: Building with Gatsby
+author: Jay Gatsby
 ---
 
 <h1>{props.pageContext.frontmatter.title}</h1>
@@ -113,6 +113,20 @@ export default ({ children }) => (
 
 > **Note**: the default export concept used in this code block is explained in more detail
 > in the docs below on [defining layouts](#defining-a-layout)
+
+## Combining frontmatter and imports
+
+If you would like to include frontmatter metadata _and_ import components, the frontmatter needs to appear at the top of the file and then imports can follow:
+
+```mdx
+---
+title: Building with Gatsby
+---
+
+import { Chart } from "../components/chart"
+
+Markdown and more content...
+```
 
 ## Using JavaScript exports
 

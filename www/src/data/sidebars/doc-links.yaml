@@ -109,16 +109,16 @@
                 # This list should only include the top 5 CMSs by Gatsby plugin usage.
                 # Please do not add your headless CMS here.
                 # Instead, please add links on the /docs/headless-cms/ page
-                - title: Sourcing from WordPress
-                  link: /docs/sourcing-from-wordpress/
-                - title: Sourcing from Drupal
-                  link: /docs/sourcing-from-drupal/
                 - title: Sourcing from Contentful
                   link: /docs/sourcing-from-contentful/
-                - title: Sourcing from Prismic
-                  link: /docs/sourcing-from-prismic/
                 - title: Sourcing from Netlify CMS
                   link: /docs/sourcing-from-netlify-cms/
+                - title: Sourcing from WordPress
+                  link: /docs/sourcing-from-wordpress/
+                - title: Sourcing from Prismic
+                  link: /docs/sourcing-from-prismic/
+                - title: Sourcing from Drupal
+                  link: /docs/sourcing-from-drupal/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           items:
@@ -317,6 +317,8 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+            - title: Client Data Fetching
+              link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages
         - title: Improving Performance
@@ -473,11 +475,11 @@
           items:
             - title: Developers
               link: /docs/winning-over-developers/
-            - title: Engineering Leaders*
+            - title: Engineering Leaders
               link: /docs/winning-over-engineering-leaders/
             - title: Marketers
               link: /docs/winning-over-marketers/
-            - title: Executives*
+            - title: Executives
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/

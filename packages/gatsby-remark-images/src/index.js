@@ -159,11 +159,9 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    const alt = overWrites.alt
-      ? overWrites.alt
-      : node.alt
-      ? node.alt
-      : defaultAlt
+    const alt = _.escape(
+      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+    )
 
     const title = node.title ? node.title : ``
 
@@ -274,17 +272,10 @@ module.exports = (
 
     let rawHTML = `
   <span
-    class="${imageWrapperClass}"
-    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-      imageCaption ? `` : wrapperStyle
-    } max-width: ${presentationWidth}px;"
-  >
-    <span
-      class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
-    ></span>
-    ${imageTag}
-  </span>
+    class="${imageBackgroundClass}"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
+  ></span>
+  ${imageTag}
   `.trim()
 
     // Make linking to original image optional.
@@ -301,6 +292,17 @@ module.exports = (
   </a>
     `.trim()
     }
+
+    rawHTML = `
+    <span
+      class="${imageWrapperClass}"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+        imageCaption ? `` : wrapperStyle
+      } max-width: ${presentationWidth}px;"
+    >
+      ${rawHTML}
+    </span>
+    `.trim()
 
     // Wrap in figure and use title as caption
     if (imageCaption) {
