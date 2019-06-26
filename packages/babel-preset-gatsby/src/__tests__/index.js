@@ -122,8 +122,7 @@ it(`Allows to configure browser targets`, () => {
 
 describe(`in production mode`, () => {
   beforeEach(() => {
-    process.env.BABEL_ENV = `production`
-    process.env.GATSBY_BUILD_STAGE = `test`
+    process.env.GATSBY_BUILD_STAGE = `build-javascript`
   })
 
   it(`specifies proper presets`, () => {
@@ -136,7 +135,7 @@ describe(`in production mode`, () => {
         {
           corejs: 2,
           loose: true,
-          modules: `commonjs`,
+          modules: false,
           useBuiltIns: `usage`,
           targets,
         },

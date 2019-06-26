@@ -28,10 +28,7 @@ module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
   const pluginBabelConfig = loadCachedConfig()
-  const { NODE_ENV, BABEL_ENV, GATSBY_BUILD_STAGE } = process.env
-  const stage = GATSBY_BUILD_STAGE || `test`
-
-  const PRODUCTION = (BABEL_ENV || NODE_ENV) === `production`
+  const stage = process.env.GATSBY_BUILD_STAGE || `test`
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -45,7 +42,7 @@ module.exports = function preset(_, options = {}) {
 
   const plugins = []
 
-  if (PRODUCTION) {
+  if (stage === `build-javascript`) {
     plugins.push([
       // Remove PropTypes from production build
       resolve(`babel-plugin-transform-react-remove-prop-types`),
