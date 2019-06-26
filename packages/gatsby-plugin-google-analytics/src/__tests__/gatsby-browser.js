@@ -6,10 +6,6 @@ jest.useFakeTimers()
 describe(`gatsby-plugin-google-analytics`, () => {
   describe(`gatsby-browser`, () => {
     describe(`onRouteUpdate`, () => {
-      it(`imports`, () => {
-        expect(typeof onRouteUpdate).toEqual(`function`)
-      })
-
       describe(`in non-production env`, () => {
         it(`does not send page view`, () => {
           window.ga = jest.fn()

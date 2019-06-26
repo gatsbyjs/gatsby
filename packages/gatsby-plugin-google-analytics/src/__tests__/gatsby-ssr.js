@@ -3,10 +3,6 @@ import { onRenderBody } from "../gatsby-ssr"
 describe(`gatsby-plugin-google-analytics`, () => {
   describe(`gatsby-ssr`, () => {
     describe(`onRenderBody`, () => {
-      it(`imports`, () => {
-        expect(typeof onRenderBody).toEqual(`function`)
-      })
-
       describe(`in non-production env`, () => {
         it(`does not set tracking script`, () => {
           const setHeadComponents = jest.fn()
