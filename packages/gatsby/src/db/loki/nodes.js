@@ -205,8 +205,6 @@ function createNode(node, oldNode) {
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
-  trackCli(`CREATE_LOKI_NODE`, {}, { debounce: true })
-
   const type = node.internal.type
 
   // Loki doesn't provide "upsert", so if the node already exists, we
