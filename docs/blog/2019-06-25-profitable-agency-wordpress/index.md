@@ -13,6 +13,8 @@ tags:
   - aws
 ---
 
+import { Link } from "gatsby"
+
 Are you a WordPress Developer?
 
 If yes, then you can relate to this. Every off-year we're greeted by a sales pitch from some hot new tool that wants to take the website builder throne.
@@ -41,7 +43,9 @@ So if you're a WordPress Developer and you've dismissed Gatsby as this year's Ne
 
 I think you may be surprised. I was skeptical myself, but I found one real difference between WordPress and Gatsby, and it has a true impact on your business:
 
-> Gatsby sites have a dramatically lower ["total cost of ownership"](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/) than comparable WordPress sites.
+<Pullquote>
+Gatsby sites have a dramatically lower <Link to="/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/">"total cost of ownership"</Link> than comparable WordPress sites.
+</Pullquote>
 
 That means more money in your pocket. Or more value and services you can pass on to your clients.
 
@@ -87,7 +91,9 @@ If your client needs ecommerce features on their site, Gatsby can pull in the pr
 
 In theory, break-fix for Gatsby should be easier to diagnose and solve. An issue with the build has nothing to do with a problem with the front-end, and vice versa. Gatsby's lower technical maintenance may be the difference between you taking on 5 client sites or 15.
 
-> Personally I keep forgetting about the static sites under my care because there's literally nothing to work on for them month-to-month.
+<Pullquote>
+Personally I keep forgetting about the static sites under my care because there's literally nothing to work on for them month-to-month.
+</Pullquote>
 
 ## Freemium is cheaper than pay-per-year Plugins
 
@@ -107,7 +113,9 @@ Brian Webster of Delicious Simplicity shared that using Gatsby for client sites 
 
 [Says Brian](https://youtu.be/EfHPJK1TVmM):
 
-> "We're noticing an amazing thing happening when we're pitching clients and they hear about this tech stack. And as a result we're actually seeing our S.O.'s winning a lot more bids. There's a project I think we're going to move forward on and our budget came in significantly less than their three competing bids."
+<Pullquote citation="Brian Webster">
+We're noticing an amazing thing happening when we're pitching clients and they hear about this tech stack. And as a result we're actually seeing our S.O.'s winning a lot more bids. There's a project I think we're going to move forward on and our budget came in significantly less than their three competing bids.
+</Pullquote>
 
 Brian's prospective client even tried to ask his competition if they could match his approach. The competitors balked. If those shops don't adopt Gatsby, or something like it, they're going to lose a lot more business in the coming years.
 

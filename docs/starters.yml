@@ -179,8 +179,8 @@
     - Portfolio
     - Onepage
   features:
-    - Use your Github as your own portfolio site
-    - List your Github repositories
+    - Use your GitHub as your own portfolio site
+    - List your GitHub repositories
     - GitHub GraphQL API v4
 - url: https://gatsby-starter-blog-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
@@ -2867,7 +2867,7 @@
     - Code diffing with +/-
     - Google Analytics Integration
     - SEO Tags with MDX frontmatter
-    - Edit on Github button
+    - Edit on GitHub button
     - Fully Customisable with rich embeds using React in MDX.
 - url: https://gatsby-starter-blog-with-lunr.netlify.com/
   repo: https://github.com/lukewhitehouse/gatsby-starter-blog-with-lunr
