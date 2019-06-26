@@ -41,7 +41,7 @@ const processTheme = (
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
       const themeObj = await resolveTheme(spec)
-      return processTheme(themeObj)
+      return processTheme(themeObj, { useLegacyThemes })
     }).then(arr =>
       arr.concat([{ themeName, themeConfig, themeSpec, themeDir }])
     )
@@ -56,7 +56,7 @@ module.exports = async (config, { useLegacyThemes = false }) => {
     useLegacyThemes ? config.__experimentalThemes : config.plugins,
     async themeSpec => {
       const themeObj = await resolveTheme(themeSpec)
-      return processTheme(themeObj)
+      return processTheme(themeObj, { useLegacyThemes })
     }
   ).then(arr => _.flattenDeep(arr))
 
