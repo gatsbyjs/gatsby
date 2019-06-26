@@ -11,7 +11,13 @@ const { link, fileByPath } = require(`../resolvers`)
 const { getDateResolver } = require(`../types/date`)
 
 // Reserved for internal use
-const internalExtensionNames = [`createdFrom`, `directives`, `infer`, `plugin`]
+const internalExtensionNames = [
+  `createdFrom`,
+  `directives`,
+  `infer`,
+  `plugin`,
+  `resolvers`,
+]
 
 const typeExtensions = {
   infer: {
@@ -32,6 +38,12 @@ const typeExtensions = {
         description: `Don't add default resolvers to defined fields.`,
         deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
       },
+    },
+  },
+  nodeInterface: {
+    description: `This interface implementations are Nodes, it will get root fields like Node objects.`,
+    directiveOptions: {
+      locations: [DirectiveLocation.INTERFACE],
     },
   },
 }
@@ -105,7 +117,13 @@ const toDirectives = ({ extensions, locations }) =>
   Object.keys(extensions).map(name => {
     const extension = extensions[name]
     const { args, description } = extension
-    return new GraphQLDirective({ name, args, description, locations })
+    return new GraphQLDirective({
+      name,
+      args,
+      description,
+      locations,
+      ...(extension.directiveOptions || {}),
+    })
   })
 
 const addDirectives = ({ schemaComposer }) => {

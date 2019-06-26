@@ -30,7 +30,7 @@ const colls = {
     name: `gatsby:nodeMeta`,
     options: {
       unique: [`id`],
-      indices: [`id`],
+      indices: [`id`, `internal.type`],
     },
   },
   // The list of all node type collections. Each object has keys

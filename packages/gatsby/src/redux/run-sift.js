@@ -1,6 +1,7 @@
 // @flow
 const { default: sift } = require(`sift`)
 const _ = require(`lodash`)
+const { GraphQLUnionType, GraphQLInterfaceType } = require(`graphql`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const { resolveNodes, resolveRecursive } = require(`./prepare-nodes`)
 const { makeRe } = require(`micromatch`)
@@ -105,10 +106,32 @@ function handleMany(siftArgs, nodes, sort) {
 module.exports = (args: Object) => {
   const { getNode, getNodesByType } = require(`../db/nodes`)
 
-  const { queryArgs, gqlType, firstOnly = false } = args
+  const { queryArgs, gqlSchema, gqlType, firstOnly = false } = args
 
-  // If nodes weren't provided, then load them from the DB
-  const nodes = args.nodes || getNodesByType(gqlType.name)
+  let possibleTypeNames
+  if (
+    gqlType instanceof GraphQLUnionType ||
+    gqlType instanceof GraphQLInterfaceType
+  ) {
+    possibleTypeNames = gqlSchema
+      .getPossibleTypes(gqlType)
+      .map(type => type.name)
+  } else {
+    possibleTypeNames = [gqlType.name]
+  }
+
+  let nodes
+
+  if (args.nodes) {
+    nodes = args.nodes
+  } else if (possibleTypeNames.length > 1) {
+    nodes = possibleTypeNames.reduce(
+      (typeName, acc) => acc.concat(getNodesByType(typeName)),
+      []
+    )
+  } else {
+    nodes = getNodesByType(possibleTypeNames[0])
+  }
 
   const { filter, sort, group, distinct } = queryArgs
   const siftFilter = getFilters(prepareQueryArgs(filter))

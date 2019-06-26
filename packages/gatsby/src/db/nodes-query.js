@@ -50,7 +50,7 @@ async function run(args) {
     // We provide nodes in case of abstract types, because `run-sift` should
     // only need to know about node types in the store.
     let nodes
-    const nodeTypeNames = toNodeTypeNames(args.schema, gqlType)
+    const nodeTypeNames = toNodeTypeNames(args.gqlSchema, gqlType)
     if (nodeTypeNames.length > 1) {
       nodes = nodeTypeNames.reduce(
         (acc, typeName) => acc.concat(nodeStore.getNodesByType(typeName)),
@@ -62,7 +62,7 @@ async function run(args) {
       nodes,
     })
   } else {
-    await prepareNodes(args.schema, gqlType, fields)
+    await prepareNodes(args.gqlSchema, gqlType, fields)
 
     return lokiRunQuery(args, fields)
   }
