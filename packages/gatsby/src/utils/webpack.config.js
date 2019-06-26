@@ -250,7 +250,7 @@ module.exports = async (program, directory, suppliedStage) => {
 
     // speedup the build, we only include node_modules on production builds
     // TODO add option to force build node_modules
-    if (stage !== `develop`) {
+    if (stage === `develop`) {
       jsOptions.exclude = [`node_modules`]
     }
 
