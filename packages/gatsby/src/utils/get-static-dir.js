@@ -10,11 +10,11 @@ const { store } = require(`../redux`)
  */
 exports.copyStaticDirs = () => {
   // access the store to get themes
-  const { themes, plugins } = store.getState()
+  const { themes, flattenedPlugins } = store.getState()
   // if there are legacy themes, only use them. Otherwise proceed with plugins
   const themesSet = themes.themes
     ? themes.themes
-    : plugins.map(plugin => {
+    : flattenedPlugins.map(plugin => {
         return {
           themeDir: plugin.pluginFilepath,
           themeName: plugin.name,
