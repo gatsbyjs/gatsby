@@ -31,8 +31,8 @@ const processTheme = (
   { useLegacyThemes }
 ) => {
   const themesList = useLegacyThemes
-    ? themeConfig.__experimentalThemes
-    : themeConfig.plugins
+    ? themeConfig && themeConfig.__experimentalThemes
+    : themeConfig && themeConfig.plugins
   // gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarentee which files theme creators create first
