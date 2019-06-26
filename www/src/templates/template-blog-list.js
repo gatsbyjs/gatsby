@@ -64,7 +64,6 @@ class BlogPostsIndex extends React.Component {
                   marginBottom:
                     index === allMdx.edges.length - 1 ? 0 : space[8],
                   ...pullIntoGutter,
-                  position: `relative`,
                   [breakpointGutter]: {
                     padding: space[9],
                     boxShadow: shadows.raised,

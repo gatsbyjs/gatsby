@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.1.0...gatsby-plugin-page-creator@2.1.1) (2019-06-24)
+
+### Features
+
+- **gatsby-page-utils:** extract logic for watching a directory from gatsby-page-creator so can reuse for custom page creation ([#14051](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/14051)) ([68d9d6f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/commit/68d9d6f))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.13...gatsby-plugin-page-creator@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.12...gatsby-plugin-page-creator@2.0.13) (2019-05-14)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

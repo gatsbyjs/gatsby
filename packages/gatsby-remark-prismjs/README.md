@@ -362,7 +362,7 @@ language; the inner contents will not be changed at all.
 ### Add new language definition or extend an existing language
 
 You can provide a language extension by giving a single object or an array of
-language extension objects as the 'languageExtensions' option.
+language extension objects as the `languageExtensions` option.
 
 A language extension object looks like this:
 
@@ -383,31 +383,36 @@ languageExtensions: [
 ]
 ```
 
-'language' - (optional) The name of the new language.
-'extend' - (optional) The language you wish to extend.
-'definition' - (optional) This is the Prism language definition.
-'insertBefore' - (optional) Is used to define where in the language definition we want to insert our extension.
+used options:
+
+- `language` (optional) The name of the new language.
+- `extend` (optional) The language you wish to extend.
+- `definition` (optional) This is the Prism language definition.
+- `insertBefore` (optional) Is used to define where in the language definition we want to insert our extension.
+
 More information of the format can be found here:
 https://prismjs.com/extending.html
 
-One of the parameters 'language' and 'extend' is needed. If only 'language'
-is given, a new language will be defined from scratch. If only 'extend' is
-given, an extension will be made to the given language. If both 'language'
-and 'extend' is given, a new language that extends the 'extend' language will
-be defined.
+Note:
+
+- One of the parameters `language` and `extend` is needed.
+- If only `language` is given, a new language will be defined from scratch.
+- If only `extend` is given, an extension will be made to the given language.
+- If both `language` and `extend` is given, a new language that extends the `extend` language will
+  be defined.
 
 In case a language is extended, note that the definitions will not be merged.
 If the extended language defintion and the given definition contains the same
 token, the original pattern will be overwritten.
 
-One of the parameters 'definition' and 'insertBefore' needs to be defined.
-'insertBefore' needs to be combined with 'definition' or 'extend' (otherwise
+One of the parameters `definition` and `insertBefore` needs to be defined.
+`insertBefore` needs to be combined with `definition` or `extend` (otherwise
 there will not be any language definition tokens to insert before).
 
 In addition to this extension parameters the css also needs to be updated to
 get a style for the new tokens. Prism will wrap the matched tokens with a
-'span' element and give it the classes 'token' and the token name you defined.
-In the example above we would match 'superif' and 'superelse'. In the html
+`span` element and give it the classes `token` and the token name you defined.
+In the example above we would match `superif` and `superelse`. In the html
 it would result in the following when a match is found:
 
 ```html

@@ -2,7 +2,6 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate } from "@reach/router"
-import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import {
@@ -13,16 +12,18 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
+import matchPaths from "./match-paths.json"
+import loader, { setApiRunnerForLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
+import stripPrefix from "./strip-prefix"
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
+window.___webpackCompilationHash = window.webpackCompilationHash
 
-loader.addPagesArray([window.page])
-loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
 loader.addProdRequires(asyncRequires)
+loader.addMatchPaths(matchPaths)
 setApiRunnerForLoader(apiRunner)
 
 navigationInit()
@@ -61,28 +62,31 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  const { page, location: browserLoc } = window
+  const { pagePath, location: browserLoc } = window
+
+  // Explicitly call navigate if the canonical path (window.pagePath)
+  // is different to the browser path (window.location.pathname). But
+  // only if NONE of the following conditions hold:
+  //
+  // - The url matches a client side route (page.matchPath)
+  // - it's a 404 page
+  // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
-    // Make sure the window.page object is defined
-    page &&
-    // The canonical path doesn't match the actual path (i.e. the address bar)
-    __BASE_PATH__ + page.path !== browserLoc.pathname &&
-    // ...and if matchPage is specified, it also doesn't match the actual path
-    (!page.matchPath ||
-      !match(__BASE_PATH__ + page.matchPath, browserLoc.pathname)) &&
-    // Ignore 404 pages, since we want to keep the same URL
-    page.path !== `/404.html` &&
-    !page.path.match(/^\/404\/?$/) &&
-    // Also ignore the offline shell (since when using the offline plugin, all
-    // pages have this canonical path)
-    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+    pagePath &&
+    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
+    !(
+      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
+      pagePath === `/404.html` ||
+      pagePath.match(/^\/404\/?$/) ||
+      pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
+    )
   ) {
-    navigate(__BASE_PATH__ + page.path + browserLoc.search + browserLoc.hash, {
+    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
       replace: true,
     })
   }
 
-  loader.getResourcesForPathname(browserLoc.pathname).then(() => {
+  loader.loadPage(browserLoc.pathname).then(() => {
     const Root = () =>
       createElement(
         Router,
@@ -116,7 +120,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : void 0,
         () => {
-          postInitialRenderWork()
           apiRunner(`onInitialClientRender`)
         }
       )

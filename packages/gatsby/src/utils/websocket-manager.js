@@ -3,6 +3,11 @@
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
+const pageDataUtil = require(`../utils/page-data`)
+const normalizePagePath = require(`../utils/normalize-page-path`)
+const telemetry = require(`gatsby-telemetry`)
+const url = require(`url`)
+const { createHash } = require(`crypto`)
 
 type QueryResult = {
   id: string,
@@ -12,47 +17,42 @@ type QueryResult = {
 type QueryResultsMap = Map<string, QueryResult>
 
 /**
- * Get cached query result for given data path.
- * @param {string} dataFileName Cached query result filename.
- * @param {string} directory Root directory of current project.
- */
-const readCachedResults = (dataFileName: string, directory: string): object => {
-  const filePath = path.join(
-    directory,
-    `public`,
-    `static`,
-    `d`,
-    `${dataFileName}.json`
-  )
-  return JSON.parse(fs.readFileSync(filePath, `utf-8`))
-}
-
-/**
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.
  */
-const getCachedPageData = (
+const getCachedPageData = async (
   pagePath: string,
   directory: string
 ): QueryResult => {
-  const { jsonDataPaths, pages } = store.getState()
-  const page = pages.get(pagePath)
-  if (!page) {
-    return null
-  }
-  const dataPath = jsonDataPaths[page.jsonName]
-  if (typeof dataPath === `undefined`) {
+  const { program } = store.getState()
+  const publicDir = path.join(program.directory, `public`)
+  try {
+    const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+    return {
+      result: pageData.result,
+      id: pagePath,
+    }
+  } catch (err) {
     console.log(
       `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
     )
     return undefined
   }
+}
 
-  return {
-    result: readCachedResults(dataPath, directory),
-    id: pagePath,
+const hashPaths = paths => {
+  if (!paths) {
+    return undefined
   }
+  return paths.map(path => {
+    if (!path) {
+      return undefined
+    }
+    return createHash(`sha256`)
+      .update(path)
+      .digest(`hex`)
+  })
 }
 
 /**
@@ -65,13 +65,19 @@ const getCachedStaticQueryResults = (
   directory: string
 ): QueryResultsMap => {
   const cachedStaticQueryResults = new Map()
-  const { staticQueryComponents, jsonDataPaths } = store.getState()
+  const { staticQueryComponents } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
     // Don't read from file if results were already passed from query runner
     if (resultsMap.has(staticQueryComponent.hash)) return
-
-    const dataPath = jsonDataPaths[staticQueryComponent.jsonName]
-    if (typeof dataPath === `undefined`) {
+    const filePath = path.join(
+      directory,
+      `public`,
+      `static`,
+      `d`,
+      `${staticQueryComponent.hash}.json`
+    )
+    const fileResult = fs.readFileSync(filePath, `utf-8`)
+    if (fileResult === `undefined`) {
       console.log(
         `Error loading a result for the StaticQuery in "${
           staticQueryComponent.componentPath
@@ -80,7 +86,7 @@ const getCachedStaticQueryResults = (
       return
     }
     cachedStaticQueryResults.set(staticQueryComponent.hash, {
-      result: readCachedResults(dataPath, directory),
+      result: JSON.parse(fileResult),
       id: staticQueryComponent.hash,
     })
   })
@@ -111,6 +117,7 @@ class WebsocketManager {
     this.emitPageData = this.emitPageData.bind(this)
     this.emitStaticQueryData = this.emitStaticQueryData.bind(this)
     this.emitError = this.emitError.bind(this)
+    this.connectedClients = 0
   }
 
   init({ server, directory }) {
@@ -129,6 +136,20 @@ class WebsocketManager {
 
     this.websocket.on(`connection`, s => {
       let activePath = null
+      if (
+        s &&
+        s.handshake &&
+        s.handshake.headers &&
+        s.handshake.headers.referer
+      ) {
+        const path = url.parse(s.handshake.headers.referer).path
+        if (path) {
+          activePath = path
+          this.activePaths.add(path)
+        }
+      }
+
+      this.connectedClients += 1
       // Send already existing static query results
       this.staticQueryResults.forEach(result => {
         this.websocket.send({
@@ -156,9 +177,9 @@ class WebsocketManager {
         }
       }
 
-      const getDataForPath = path => {
+      const getDataForPath = async path => {
         if (!this.pageResults.has(path)) {
-          const result = getCachedPageData(path, this.programDir)
+          const result = await getCachedPageData(path, this.programDir)
           if (result) {
             this.pageResults.set(path, result)
           } else {
@@ -172,6 +193,17 @@ class WebsocketManager {
           why: `getDataForPath`,
           payload: this.pageResults.get(path),
         })
+
+        telemetry.trackCli(
+          `WEBSOCKET_PAGE_DATA_UPDATE`,
+          {
+            siteMeasurements: {
+              clientsCount: this.connectedClients,
+              paths: hashPaths(Array.from(this.activePaths)),
+            },
+          },
+          { debounce: true }
+        )
       }
 
       s.on(`getDataForPath`, getDataForPath)
@@ -184,6 +216,7 @@ class WebsocketManager {
 
       s.on(`disconnect`, s => {
         leaveRoom(activePath)
+        this.connectedClients -= 1
       })
 
       s.on(`unregisterPath`, path => {
@@ -202,13 +235,34 @@ class WebsocketManager {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
+      telemetry.trackCli(
+        `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
+        {
+          siteMeasurements: {
+            clientsCount: this.connectedClients,
+            paths: hashPaths(Array.from(this.activePaths)),
+          },
+        },
+        { debounce: true }
+      )
     }
   }
 
   emitPageData(data: QueryResult) {
+    data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
+      telemetry.trackCli(
+        `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
+        {
+          siteMeasurements: {
+            clientsCount: this.connectedClients,
+            paths: hashPaths(Array.from(this.activePaths)),
+          },
+        },
+        { debounce: true }
+      )
     }
   }
   emitError(id: string, message?: string) {
