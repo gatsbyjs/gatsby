@@ -4,7 +4,7 @@ const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
-module.exports = async ({ syncToken, reporter, pluginConfig }) => {
+module.exports = async ({ reporter, pluginConfig }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 

@@ -2,7 +2,6 @@ const path = require(`path`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
-const resolveResponse = require(`contentful-resolve-response`)
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
@@ -47,7 +46,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode, setPluginStatus } = actions
+  const { createNode, deleteNode, touchNode } = actions
 
   const online = await isOnline()
 
@@ -79,29 +78,6 @@ exports.sourceNodes = async (
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
-  const createStateKey = () =>
-    `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-      `environment`
-    )}-${pluginConfig.get(`host`)}`
-
-  // Get sync token if it exists.
-  let syncToken = null
-  let previousSyncData = null
-  if (
-    !pluginConfig.get(`forceFullSync`) &&
-    store.getState().status.plugins &&
-    store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][
-      createStateKey()
-    ]
-  ) {
-    const pluginState = store.getState().status.plugins[
-      `gatsby-source-contentful`
-    ][createStateKey()]
-    syncToken = pluginState.nextSyncToken
-    previousSyncData = pluginState.previousSyncData
-  }
-
   const {
     currentSyncData,
     contentTypeItems,
@@ -109,22 +85,10 @@ exports.sourceNodes = async (
     locales,
     space,
   } = await fetchData({
-    syncToken,
     reporter,
     pluginConfig,
   })
 
-  //if the new data has somelinks we should resolve them using the previous data
-  //because with progressive sync we don't get all the data needed
-  if (previousSyncData) {
-    currentSyncData.entries = resolveResponse({
-      items: currentSyncData.entries,
-      includes: {
-        Entry: previousSyncData ? previousSyncData.assets : [],
-        Asset: previousSyncData ? previousSyncData.entries : [],
-      },
-    })
-  }
   const entryList = normalize.buildEntryList({
     currentSyncData,
     contentTypeItems,
@@ -176,17 +140,6 @@ exports.sourceNodes = async (
   reporter.info(`Updated assets ${currentSyncData.assets.length}`)
   reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
   console.timeEnd(`Fetch Contentful data`)
-
-  // Update syncToken
-  const nextSyncToken = currentSyncData.nextSyncToken
-
-  // Store our sync state for the next sync.
-  const newState = {}
-  newState[createStateKey()] = {
-    nextSyncToken,
-    previousSyncData: currentSyncData,
-  }
-  setPluginStatus(newState)
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
