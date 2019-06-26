@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.2.2...gatsby-image@2.2.3) (2019-06-24)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.2.1...gatsby-image@2.2.2) (2019-06-24)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.2.0...gatsby-image@2.2.1) (2019-06-21)
+
+### Features
+
+- **gatsby-image:** Add art direction ([#13395](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/issues/13395)) ([02edcdc](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/commit/02edcdc))
+
 # [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image/compare/gatsby-image@2.1.4...gatsby-image@2.2.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-image

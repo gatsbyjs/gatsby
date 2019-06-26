@@ -78,3 +78,13 @@ exports.createPages = async function createPages({
     })
   })
 }
+
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+
+  if (page.path.match(/^\/paths/)) {
+    page.matchPath = `/paths/*`
+  }
+
+  createPage(page)
+}

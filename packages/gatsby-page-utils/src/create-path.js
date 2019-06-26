@@ -1,5 +1,5 @@
 // @flow
-import path from "path"
+const path = require(`path`)
 
 module.exports = (filePath: string): string => {
   const { dir, name } = path.parse(filePath)

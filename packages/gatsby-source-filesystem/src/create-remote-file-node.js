@@ -9,7 +9,11 @@ const fileType = require(`file-type`)
 const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
+const {
+  getRemoteFileExtension,
+  getRemoteFileName,
+  createFilePath,
+} = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 let bar
@@ -57,18 +61,6 @@ let totalJobs = 0
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} url
- * @return {String}
- */
-const createFilePath = (directory, filename, ext) =>
-  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
