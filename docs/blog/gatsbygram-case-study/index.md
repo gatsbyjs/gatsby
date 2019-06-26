@@ -374,7 +374,7 @@ generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
 browsers (Safari/Microsoft Edge) still don't support Service Workers, the
-[Gatsby `<Link>` component](https://www.gatsbyjs.org/docs/linking-between-pages/#the-gatsby-link-component) pre-caches resources for
+[Gatsby `<Link>` component](/docs/linking-between-pages/#the-gatsby-link-component) pre-caches resources for
 pages it links to by loading them into memory.
 
 ## Plugins
