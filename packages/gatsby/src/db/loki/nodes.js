@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { getDb, colls } = require(`./index`)
-const { trackCli } = require(`gatsby-telemetry`)
 
 /////////////////////////////////////////////////////////////////////
 // Node collection metadata
