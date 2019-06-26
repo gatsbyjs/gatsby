@@ -168,22 +168,11 @@ class LocalNodeModel {
       `Querying GraphQLUnion types is not supported.`
     )
 
-    // We provide nodes in case of abstract types, because `run-sift` should
-    // only need to know about node types in the store.
-    let nodes
-    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
-    if (nodeTypeNames.length > 1) {
-      nodes = nodeTypeNames.reduce(
-        (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
-        []
-      )
-    }
-
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
+      schema: this.schema,
       gqlType,
-      nodes,
     })
 
     let result = queryResult

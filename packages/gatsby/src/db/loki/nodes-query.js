@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { getNullableType, getNamedType, GraphQLList } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection } = require(`./nodes`)
 const { emitter } = require(`../../redux`)
@@ -48,14 +49,14 @@ emitter.on(`DELETE_CACHE`, () => {
 //   }
 // }
 function toMongoArgs(gqlFilter, lastFieldType) {
+  lastFieldType = getNullableType(lastFieldType)
   const mongoArgs = {}
   _.each(gqlFilter, (v, k) => {
     if (_.isPlainObject(v)) {
       if (k === `elemMatch`) {
-        const gqlFieldType = lastFieldType.ofType
-        mongoArgs[`$elemMatch`] = toMongoArgs(v, gqlFieldType)
+        mongoArgs[`$elemMatch`] = toMongoArgs(v, lastFieldType)
       } else {
-        const gqlFieldType = lastFieldType.getFields()[k].type
+        const gqlFieldType = getNamedType(lastFieldType).getFields()[k].type
         mongoArgs[k] = toMongoArgs(v, gqlFieldType)
       }
     } else {
@@ -73,25 +74,25 @@ function toMongoArgs(gqlFilter, lastFieldType) {
       } else if (
         k === `eq` &&
         lastFieldType &&
-        lastFieldType.constructor.name === `GraphQLList`
+        lastFieldType instanceof GraphQLList
       ) {
         mongoArgs[`$contains`] = v
       } else if (
         k === `ne` &&
         lastFieldType &&
-        lastFieldType.constructor.name === `GraphQLList`
+        lastFieldType instanceof GraphQLList
       ) {
         mongoArgs[`$containsNone`] = v
       } else if (
         k === `in` &&
         lastFieldType &&
-        lastFieldType.constructor.name === `GraphQLList`
+        lastFieldType instanceof GraphQLList
       ) {
         mongoArgs[`$containsAny`] = v
       } else if (
         k === `nin` &&
         lastFieldType &&
-        lastFieldType.constructor.name === `GraphQLList`
+        lastFieldType instanceof GraphQLList
       ) {
         mongoArgs[`$containsNone`] = v
       } else if (k === `ne` && v === null) {
@@ -180,9 +181,26 @@ const fixNeTrue = filter =>
     return acc
   }, {})
 
+const liftResolvedFields = (args, resolvedFields) => {
+  const dottedFields = toDottedFields(resolvedFields)
+  const finalArgs = {}
+  Object.keys(args).forEach(key => {
+    const value = args[key]
+    if (dottedFields[key]) {
+      finalArgs[`$resolved.${key}`] = value
+    } else {
+      finalArgs[key] = value
+    }
+  })
+  return finalArgs
+}
+
 // Converts graphQL args to a loki filter
-const convertArgs = (gqlArgs, gqlType) =>
-  fixNeTrue(toDottedFields(toMongoArgs(gqlArgs.filter, gqlType)))
+const convertArgs = (gqlArgs, gqlType, resolvedFields) =>
+  liftResolvedFields(
+    fixNeTrue(toDottedFields(toMongoArgs(gqlArgs.filter, gqlType))),
+    resolvedFields
+  )
 
 // Converts graphql Sort args into the form expected by loki, which is
 // a vector where the first value is a field name, and the second is a
@@ -244,12 +262,19 @@ function ensureFieldIndexes(coll, lokiArgs) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery({ gqlType, queryArgs, firstOnly }) {
+async function runQuery(
+  { gqlType, queryArgs, firstOnly },
+  resolvedFields = {}
+) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
-  const lokiArgs = convertArgs(gqlArgs, gqlType)
+
+  const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
+
+  console.log(gqlType.getTypes())
   const coll = getNodeTypeCollection(gqlType.name)
+  console.log(gqlType, gqlType.name, coll)
   ensureFieldIndexes(coll, lokiArgs)
   let chain = coll.chain().find(lokiArgs, firstOnly)
 
@@ -262,10 +287,12 @@ async function runQuery({ gqlType, queryArgs, firstOnly }) {
     for (const sortField of sortFields) {
       coll.ensureIndex(sortField[0])
     }
+    // console.log(sortFields)
     chain = chain.compoundsort(sortFields)
   }
 
-  return chain.data()
+  const result = chain.data()
+  return result
 }
 
 module.exports = runQuery

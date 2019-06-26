@@ -1,5 +1,5 @@
 // @flow
-const sift = require(`sift`)
+const { default: sift } = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const { resolveNodes, resolveRecursive } = require(`./prepare-nodes`)
@@ -54,11 +54,10 @@ function isEqId(firstOnly, fieldsToSift, siftArgs) {
 function handleFirst(siftArgs, nodes) {
   const index = _.isEmpty(siftArgs)
     ? 0
-    : sift.indexOf(
-        {
+    : nodes.findIndex(
+        sift({
           $and: siftArgs,
-        },
-        nodes
+        })
       )
 
   if (index !== -1) {
@@ -71,11 +70,10 @@ function handleFirst(siftArgs, nodes) {
 function handleMany(siftArgs, nodes, sort) {
   let result = _.isEmpty(siftArgs)
     ? nodes
-    : sift(
-        {
+    : nodes.filter(
+        sift({
           $and: siftArgs,
-        },
-        nodes
+        })
       )
 
   if (!result || !result.length) return null

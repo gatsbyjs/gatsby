@@ -14,6 +14,12 @@ interface NodeStore {
   // XXX(freiksenet): types
   runQuery: (...args: any) => any | undefined;
   findRootNodeAncestor: (...args: any) => any | undefined;
+
+  // internal
+  updateNodesByType: (
+    typeName: string,
+    updater: (node: any) => Promise<any>
+  ) => Promise<undefined>;
 }
 
 const backend = process.env.GATSBY_DB_NODES || `redux`

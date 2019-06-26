@@ -1,26 +1,11 @@
-const { getQueryFields, hasFieldResolvers } = require(`./common/query`)
+const { isAbstractType } = require(`graphql`)
+
+const { getQueryFields } = require(`./common/query`)
 
 const lokiRunQuery = require(`./loki/nodes-query`)
 const siftRunQuery = require(`../redux/run-sift`)
 
-function chooseQueryEngine(args) {
-  const { backend } = require(`./nodes`)
-
-  const { queryArgs, gqlType } = args
-  const { filter, sort, group, distinct } = queryArgs
-  const fields = getQueryFields({ filter, sort, group, distinct })
-
-  // NOTE: `hasFieldResolvers` is also true for Date fields
-  if (
-    backend === `loki` &&
-    !args.nodes &&
-    !hasFieldResolvers(gqlType, fields)
-  ) {
-    return lokiRunQuery
-  } else {
-    return siftRunQuery
-  }
-}
+const prepareNodes = require(`./prepare-nodes`)
 
 /**
  * Runs the query over all nodes of type. It must first select the
@@ -43,6 +28,8 @@ function chooseQueryEngine(args) {
  * {Object} queryArgs: The raw graphql query as a js object. E.g `{
  * filter: { fields { slug: { eq: "/somepath" } } } }`
  *
+ * {Object}: schema: Current GraphQL schema
+ *
  * {Object} context: The context from the QueryJob
  *
  * {boolean} firstOnly: Whether to return the first found match, or
@@ -52,10 +39,48 @@ function chooseQueryEngine(args) {
  * a collection of matching objects (even if `firstOnly` is true, in
  * which case it will be a collection of length 1 or zero)
  */
-function run(args) {
-  const queryFunction = chooseQueryEngine(args)
+async function run(args) {
+  const { backend } = require(`./nodes`)
+  const { queryArgs, gqlType } = args
+  const { filter, sort, group, distinct } = queryArgs
+  const fields = getQueryFields({ filter, sort, group, distinct })
 
-  return queryFunction(args)
+  if (backend === `redux`) {
+    const nodeStore = require(`./nodes`)
+    // We provide nodes in case of abstract types, because `run-sift` should
+    // only need to know about node types in the store.
+    let nodes
+    const nodeTypeNames = toNodeTypeNames(args.schema, gqlType)
+    if (nodeTypeNames.length > 1) {
+      nodes = nodeTypeNames.reduce(
+        (acc, typeName) => acc.concat(nodeStore.getNodesByType(typeName)),
+        []
+      )
+    }
+    return siftRunQuery({
+      ...args,
+      nodes,
+    })
+  } else {
+    await prepareNodes(args.schema, gqlType, fields)
+
+    return lokiRunQuery(args, fields)
+  }
+}
+
+const toNodeTypeNames = (schema, gqlTypeName) => {
+  const gqlType =
+    typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
+
+  if (!gqlType) return []
+
+  const possibleTypes = isAbstractType(gqlType)
+    ? schema.getPossibleTypes(gqlType)
+    : [gqlType]
+
+  return possibleTypes
+    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
+    .map(type => type.name)
 }
 
 module.exports.run = run

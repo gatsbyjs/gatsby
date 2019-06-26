@@ -290,6 +290,14 @@ function deleteNodes(nodes) {
   }
 }
 
+const updateNodesByType = async (typeName, updater) => {
+  const nodes = getNodesByType(typeName)
+  const collName = getTypeCollName(typeName)
+  const coll = getDb().getCollection(collName)
+  const updated = await Promise.all(nodes.map(node => updater(node)))
+  coll.update(updated)
+}
+
 /////////////////////////////////////////////////////////////////////
 // Reducer
 /////////////////////////////////////////////////////////////////////
@@ -349,4 +357,6 @@ module.exports = {
   deleteAll,
 
   reducer,
+
+  updateNodesByType,
 }
