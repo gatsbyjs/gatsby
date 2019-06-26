@@ -365,7 +365,7 @@ export default async function compile(): Promise<Map<string, RootQuery>> {
     resolveThemes(
       themes.themes
         ? themes.themes
-        : plugins.map(plugin => {
+        : (plugins || []).map(plugin => {
             return {
               themeDir: plugin.pluginFilepath,
             }
