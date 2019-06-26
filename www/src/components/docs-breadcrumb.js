@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
-import { mediaQueries, space, colors } from "../utils/presets"
+import { mediaQueries, space, colors, fontSizes } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const BreadcrumbLink = styled(Link)`
@@ -25,6 +25,7 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
   <nav
     aria-label="breadcrumb"
     css={{
+      fontSize: fontSizes[1],
       display: `${mobile ? `inherit` : `none`}`,
       [mediaQueries.md]: {
         display: `${mobile ? `none` : `inherit`}`,
