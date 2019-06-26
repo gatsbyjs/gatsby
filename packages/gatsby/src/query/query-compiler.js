@@ -358,11 +358,19 @@ export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, themes } = store.getState()
+  const { program, schema, themes, plugins } = store.getState()
 
   const runner = new Runner(
     program.directory,
-    resolveThemes(themes.themes),
+    resolveThemes(
+      themes.themes
+        ? themes.themes
+        : plugins.map(plugin => {
+            return {
+              themeDir: plugin.pluginFilepath,
+            }
+          })
+    ),
     schema
   )
 
