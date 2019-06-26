@@ -77,6 +77,12 @@ module.exports = function preset(_, options = {}) {
           regenerator: true,
         },
       ],
+      [
+        resolve(`@babel/plugin-transform-spread`),
+        {
+          loose: false, // Fixes #14848
+        },
+      ],
     ],
   }
 }
