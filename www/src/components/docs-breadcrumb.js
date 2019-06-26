@@ -1,36 +1,35 @@
 import React from "react"
+import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries, space, colors } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+
+const BreadcrumbLink = styled(Link)`
+  && {
+    border-bottom: none;
+  }
+  &:hover {
+    color: ${colors.link.hoverBorder};
+  }
+`
 
 const Separator = ({ character = `>` }) => (
-  <span style={{ margin: `0px 5px` }} role="presentation">
+  <span style={{ margin: `0px ${space[1]}` }} role="presentation">
     {character}
   </span>
 )
 
-const BreadcrumbNav = ({ children }) => (
+const BreadcrumbNav = ({ children, mobile = false }) => (
   <nav
     aria-label="breadcrumb"
     css={{
-      display: `none`,
+      display: `${mobile ? `inherit` : `none`}`,
       [mediaQueries.md]: {
-        display: `inherit`,
+        display: `${mobile ? `none` : `inherit`}`,
       },
-    }}
-  >
-    {children}
-  </nav>
-)
-
-const MobileBreadcrumbNav = ({ children }) => (
-  <nav
-    aria-label="breadcrumb"
-    css={{
-      [mediaQueries.md]: {
-        display: `none`,
-      },
+      marginBottom: rhythm(1 / 2),
     }}
   >
     {children}
@@ -48,53 +47,53 @@ const Breadcrumb = ({ itemList, location }) => {
       <>
         {/* only the breadcrumb nav of the proper viewport is displayed */}
         <BreadcrumbNav>
-          <Link to="/">Home</Link>
+          <BreadcrumbLink to="/">Home</BreadcrumbLink>
           <Separator />
           Docs
         </BreadcrumbNav>
-        <MobileBreadcrumbNav>
+        <BreadcrumbNav mobile>
           <Separator character="<" />
-          <Link to="/">Home</Link>
-        </MobileBreadcrumbNav>
-      </>
-    )
-  } else {
-    return (
-      <>
-        <BreadcrumbNav>
-          <Link to="/">Home</Link>
-          <Separator />
-          <Link to="/docs/">Docs</Link>
-          <Separator />
-          {activeItemParents.reverse().map(item => (
-            <React.Fragment key={item.title}>
-              <span>
-                <Link to={item.link}>{item.title}</Link>
-              </span>
-              <Separator />
-            </React.Fragment>
-          ))}
-          {activeItem.title}
+          <BreadcrumbLink to="/">Home</BreadcrumbLink>
         </BreadcrumbNav>
-        {activeItemParents && (
-          <MobileBreadcrumbNav>
-            <Separator character="<" />
-            <Link
-              to={
-                activeItemParents[activeItemParents.length - 1]
-                  ? activeItemParents[activeItemParents.length - 1].link
-                  : `/docs/`
-              }
-            >
-              {activeItemParents[activeItemParents.length - 1]
-                ? activeItemParents[activeItemParents.length - 1].title
-                : `Docs`}
-            </Link>
-          </MobileBreadcrumbNav>
-        )}
       </>
     )
   }
+
+  return (
+    <>
+      <BreadcrumbNav>
+        <BreadcrumbLink to="/">Home</BreadcrumbLink>
+        <Separator />
+        <BreadcrumbLink to="/docs/">Docs</BreadcrumbLink>
+        <Separator />
+        {activeItemParents.reverse().map(item => (
+          <React.Fragment key={item.title}>
+            <span>
+              <BreadcrumbLink to={item.link}>{item.title}</BreadcrumbLink>
+            </span>
+            <Separator />
+          </React.Fragment>
+        ))}
+        {activeItem.title}
+      </BreadcrumbNav>
+      {activeItemParents && (
+        <BreadcrumbNav mobile>
+          <Separator character="<" />
+          <BreadcrumbLink
+            to={
+              activeItemParents[activeItemParents.length - 1]
+                ? activeItemParents[activeItemParents.length - 1].link
+                : `/docs/`
+            }
+          >
+            {activeItemParents[activeItemParents.length - 1]
+              ? activeItemParents[activeItemParents.length - 1].title
+              : `Docs`}
+          </BreadcrumbLink>
+        </BreadcrumbNav>
+      )}
+    </>
+  )
 }
 
 export default Breadcrumb
