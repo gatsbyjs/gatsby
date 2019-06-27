@@ -3,7 +3,7 @@
 
 # All docs must be reviewed by the docs team.
 /docs/                                          @gatsbyjs/learning
-README.md                                       @gatsbyjs/learning
+**/README.md                                    @gatsbyjs/learning
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
