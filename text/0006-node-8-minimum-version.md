@@ -13,7 +13,6 @@ We are doing this for several reasons, specifically:
 - Node 6 is near the end of its life, and will enter into [maintance mode in April 2019][node6-lts]
 - Node 8 supports several features that make documentation and general ease-of-use arguably easier, specifically:
   - native `async/await` support
-  - bundles `npm 5` which contains the `npx` command, which will allow us to move off of documenting global installs of gatsby
 
 Coupled together, the two main benefits of moving to Node 8 as a minimum supported version are
 
@@ -48,13 +47,6 @@ This change will allow us to transpile _less_ code, in particular we will get na
 
 As far as documentation goes, we will (minimally) be able to make the following changes:
 
-- Document `npx`
-
-    ```diff
-    - npm install -g gatsby-cli
-    - gatsby new my-package
-    + npx gatsby new my-package
-    ```
 - Document `async` / `await`
 
     ```diff
@@ -96,7 +88,7 @@ Breaking support for a perfectly valid (and still in LTS) version of Node is _no
 
 - Possibility of a developer unknowingly breaking his build
 - Confusion as to _how_ to solve a broken build
-- Chance of confusion in documenting `async/await` (or `npx`) and developer is using Node < 8
+- Chance of confusion in documenting `async/await` and developer is using Node < 8
 
 # Alternatives
 
@@ -119,7 +111,7 @@ We've internally discussed something called `gatsby doctor` which can be run pri
 
 # How we teach this
 
-This proposal requires documentation to be updated. Our documentation can be considered a code style-guide and oftentimes developers directly copy and paste from our documentation. If we are documenting what we think is a best practice (e.g. Node 6 features like npx and async/await) we are implicitly easing the migration cost of any developer who reads our documentation--which is hopefully all of them!
+This proposal requires documentation to be updated. Our documentation can be considered a code style-guide and oftentimes developers directly copy and paste from our documentation. If we are documenting what we think is a best practice (e.g. Node 6 features like async/await) we are implicitly easing the migration cost of any developer who reads our documentation--which is hopefully all of them!
 
 I strongly feel that tweaking the documentation, as well as minimum version requirements, will lead to developers having a _better_ experience using Gatsby, and Gatsby as a whole becomes easier to teach. It resolves the idiosyncracy of _why_ do I need a global install and _when_ do I use `async` / `await` or `return new Promise`. This change should have a net positive impact on the ease-of-use of teaching Gatsby to new and experienced developers, alike.
 
