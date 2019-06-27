@@ -118,7 +118,7 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Creates back references`, () => {
     expect(
-      nodes[createNodeId(`file-1`)].relationships[`node--article___NODE`]
+      nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-2`),
@@ -126,7 +126,7 @@ describe(`gatsby-source-drupal`, () => {
       ])
     )
     expect(
-      nodes[createNodeId(`tag-1`)].relationships[`node--article___NODE`]
+      nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-1`),
@@ -134,7 +134,7 @@ describe(`gatsby-source-drupal`, () => {
       ])
     )
     expect(
-      nodes[createNodeId(`tag-2`)].relationships[`node--article___NODE`]
+      nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
     ).toEqual(expect.arrayContaining([createNodeId(`article-1`)]))
   })
 
