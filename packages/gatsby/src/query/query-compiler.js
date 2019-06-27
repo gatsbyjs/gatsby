@@ -115,7 +115,12 @@ class Runner {
         []
       )
     files = files.filter(d => !d.match(/\.d\.ts$/))
-    files = files.filter(d => !d.match(/gatsby/))
+
+    // Added this to avoid the duplicate definitions RelayParser error
+    // Worst hack ever
+    files = files.filter(d => !d.match(/\/gatsby-transformer-sharp\//))
+    files = files.filter(d => !d.match(/\/gatsby\//))
+
     files = files.map(normalize)
 
     // Ensure all page components added as they're not necessarily in the
