@@ -6,15 +6,6 @@ import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
 import { mediaQueries, space, colors, fontSizes } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
-const BreadcrumbLink = styled(Link)`
-  && {
-    border-bottom: none;
-  }
-  &:hover {
-    color: ${colors.link.hoverBorder};
-  }
-`
-
 const Separator = ({ character = `>` }) => (
   <span style={{ margin: `0px ${space[1]}` }} role="presentation">
     {character}
@@ -48,13 +39,13 @@ const Breadcrumb = ({ itemList, location }) => {
       <>
         {/* only the breadcrumb nav of the proper viewport is displayed */}
         <BreadcrumbNav>
-          <BreadcrumbLink to="/">Home</BreadcrumbLink>
+          <Link to="/">Home</Link>
           <Separator />
           Docs
         </BreadcrumbNav>
         <BreadcrumbNav mobile>
           <Separator character="<" />
-          <BreadcrumbLink to="/">Home</BreadcrumbLink>
+          <Link to="/">Home</Link>
         </BreadcrumbNav>
       </>
     )
@@ -63,14 +54,14 @@ const Breadcrumb = ({ itemList, location }) => {
   return (
     <>
       <BreadcrumbNav>
-        <BreadcrumbLink to="/">Home</BreadcrumbLink>
+        <Link to="/">Home</Link>
         <Separator />
-        <BreadcrumbLink to="/docs/">Docs</BreadcrumbLink>
+        <Link to="/docs/">Docs</Link>
         <Separator />
         {activeItemParents.reverse().map(item => (
           <React.Fragment key={item.title}>
             <span>
-              <BreadcrumbLink to={item.link}>{item.title}</BreadcrumbLink>
+              <Link to={item.link}>{item.title}</Link>
             </span>
             <Separator />
           </React.Fragment>
@@ -80,7 +71,7 @@ const Breadcrumb = ({ itemList, location }) => {
       {activeItemParents && (
         <BreadcrumbNav mobile>
           <Separator character="<" />
-          <BreadcrumbLink
+          <Link
             to={
               activeItemParents[activeItemParents.length - 1]
                 ? activeItemParents[activeItemParents.length - 1].link
@@ -90,7 +81,7 @@ const Breadcrumb = ({ itemList, location }) => {
             {activeItemParents[activeItemParents.length - 1]
               ? activeItemParents[activeItemParents.length - 1].title
               : `Docs`}
-          </BreadcrumbLink>
+          </Link>
         </BreadcrumbNav>
       )}
     </>
