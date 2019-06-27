@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.10.5...gatsby@2.11.0) (2019-06-27)
+
+### Bug Fixes
+
+- **gatsby:** update tsc definition of cache in NodePluginArgs ([#14955](https://github.com/gatsbyjs/gatsby/issues/14955)) ([65b42e9](https://github.com/gatsbyjs/gatsby/commit/65b42e9))
+
+### Features
+
+- **gatsby:** enable babel-loader for all dependencies ([#14111](https://github.com/gatsbyjs/gatsby/issues/14111)) ([268ed27](https://github.com/gatsbyjs/gatsby/commit/268ed27))
+- **gatsby:** Support absolute certificate paths for developme… ([#14932](https://github.com/gatsbyjs/gatsby/issues/14932)) ([7694c0c](https://github.com/gatsbyjs/gatsby/commit/7694c0c))
+
 ## [2.10.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.10.4...gatsby@2.10.5) (2019-06-25)
 
 **Note:** Version bump only for package gatsby
