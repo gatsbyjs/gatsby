@@ -159,7 +159,7 @@ It takes your GraphQL query and returns the requested data.
 
 #### Requirements
 
-You'll need React and ReactDOM 16.8.0 or later installed.
+- React and ReactDOM 16.8.0 or later installed
 
 #### Directions
 
