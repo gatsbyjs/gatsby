@@ -34,3 +34,24 @@ Some examples using react-helmet:
 - [Official GatsbyJS default starter](https://github.com/gatsbyjs/gatsby/blob/776dc1d6fe8d5ce7b5ea6d884736bb3c76280975/starters/default/src/components/seo.js)
 - [Gatsby Mail](https://github.com/DSchau/gatsby-mail/blob/89b467e5654619ffe3073133ef0ae48b4d7502e3/src/components/meta.js)
 - [Jason Lengstorf’s personal blog](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/e6d25ca927afdc75c759e611d4ba6ba086452bb8/src/components/SEO/SEO.js)
+
+### How structured data works
+
+Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
+For example, here is a JSON-LD structured data snippet that might appear on the contact page of the spooky technologies, describing their contact information:
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Company",
+  "url": "http://www.spookytech.com",
+  "name": "Spooky technologies",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+5-601-785-8543",
+    "contactType": "Customer Support"
+  }
+}
+</script>
+###
+Be sure to test your structured data using the Structured Data Testing tool during development, and the Rich result status reports after deployment, to monitor the health of your pages, which might break after deployment due to templating or serving issues
