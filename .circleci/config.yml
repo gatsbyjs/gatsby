@@ -215,7 +215,10 @@ jobs:
     working_directory: c:\\cache
     steps:
       - checkout
-      - run: node --version # this probably won't work YOLO
+      - run: "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+      - run: choco install nodejs -y
+      - run: "$Env:path += ';C:\Program Files (x86)\nodejs'"
+      - run: node --version
       # - <<: *restore_cache
       # - <<: *install_node_modules
       # - <<: *persist_cache
@@ -225,10 +228,8 @@ workflows:
   version: 2
   build-test:
     jobs:
-      - bootstrap
-      - windows_unit_tests:
-          requires:
-            - bootstrap
+      # - bootstrap
+      - windows_unit_tests
       # - lint:
       #     requires:
       #       - bootstrap
