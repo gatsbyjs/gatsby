@@ -218,6 +218,7 @@ jobs:
       - run: "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
       - run: choco install nodejs -y
       - run: "$Env:path += ';C:\\Program Files\\nodejs'"
+      - run: refreshenv # get the new path variable
       - run: node --version
       # - <<: *restore_cache
       # - <<: *install_node_modules
